@@ -1,0 +1,47 @@
+annotations:
+  artifacthub.io/links: |-
+    - name: support
+    url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: Networking
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/train: stable
+apiVersion: v2
+appVersion: v4.3.5
+dependencies:
+  - name: common
+    version: 28.13.0
+    repository: oci://tccr.io/truecharts
+    condition: ""
+    alias: ""
+    tags: []
+    import-values: []
+  - name: redis
+    version: 17.3.0
+    repository: oci://tccr.io/truecharts
+    condition: redis.enabled
+    alias: ""
+    tags: []
+    import-values: []
+deprecated: false
+description: IP address management (IPAM) and data center infrastructure management (DCIM) tool
+home: https://truecharts.org/charts/stable/netbox
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/netbox.webp
+keywords:
+  - netbox
+  - IPAM
+  - DCIM
+kubeVersion: '>=1.25.0-0'
+maintainers:
+  - name: TrueCharts
+    email: info@truecharts.org
+    url: https://truecharts.org
+name: netbox
+sources:
+  - https://github.com/netbox-community/netbox
+  - https://github.com/netbox-community/netbox-chart
+  - https://github.com/netbox-community/netbox-docker
+  - https://github.com/truecharts/charts/tree/master/charts/stable/netbox
+  - https://ghcr.io/netbox-community/netbox
+type: application
+version: 0.2.0

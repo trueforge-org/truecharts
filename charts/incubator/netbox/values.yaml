@@ -1,0 +1,452 @@
+image:
+  repository: ghcr.io/netbox-community/netbox
+  pullPolicy: IfNotPresent
+  tag: v4.3.5@sha256:a46358d7952caf7f6a574f41dbace5632b969620e49d47a8baf9b25633556179
+netbox:
+  superuser:
+    skipCreation: true
+    name: "admin"
+    email: "admin@example.com"
+    password: "admin"
+    apiToken: ""
+  admins: "[]"
+  banner:
+    top: ""
+    bottom: ""
+    login: ""
+  changelogRetention: 90
+  jobRetention: 90
+  censusReportingEnabled: false
+  cors:
+    originAllowAll: true
+    originWhitelist: ""
+    originRegexWhitelist: ""
+  email:
+    server: "localhost"
+    port: 25
+    username: ""
+    password: ""
+    useSSL: false
+    useTLS: false
+    sslCertFile: ""
+    sslKeyFile: ""
+    timeout: 10
+    from: ""
+  enforceGlobalUnique: false
+  exemptViewPermissions: ""
+  graphQlEnabled: true
+  httpProxies: {}
+  loginPersistence: false
+  loginRequired: true
+  loginTimeout: 1209600
+  maintenanceMode: false
+  mapsUrl: "https://maps.google.com/?q="
+  mediaRoot: "/opt/netbox/netbox/media"
+  maxPageSize: 1000
+  metricsEnabled: true
+  paginateCount: 50
+  powerFeedDefaultAmperage: 15
+  powerFeedMaxUtilisation: 80
+  powerFeedDefaultVoltage: 120
+  preferIPv4: false
+  rackElevationDefaultUnitHeight: 22
+  rackElevationDefaultUnitWidth: 220
+  rqDefaultTimeout: 300
+  isolatedDeployment: false
+  webhooksEnabled: true
+securityContext:
+  container:
+    runAsUser: 1000
+    runAsGroup: 1000
+    PUID: 1000
+  pod:
+    fsGroup: 1000
+service:
+  main:
+    ports:
+      main:
+        port: 8080
+      nginx-status:
+        enabled: true
+        port: 8081
+configmap:
+  netbox-env:
+    enabled: true
+    data:
+      SUPERUSER_NAME: "{{ .Values.netbox.superuser.name }}"
+      SUPERUSER_EMAIL: "{{ .Values.netbox.superuser.email }}"
+      SUPERUSER_PASSWORD: "{{ .Values.netbox.superuser.password }}"
+      SUPERUSER_API_TOKEN: "{{ .Values.netbox.superuser.apiToken }}"
+
+      ADMINS: "{{ .Values.netbox.admins }}"
+      BANNER_TOP: "{{ .Values.netbox.banner.top }}"
+      BANNER_BOTTOM: "{{ .Values.netbox.banner.bottom }}"
+      BANNER_LOGIN: "{{ .Values.netbox.banner.login }}"
+      CHANGELOG_RETENTION: "{{ .Values.netbox.changelogRetention | toString }}"
+      JOB_RETENTION: "{{ .Values.netbox.jobRetention | toString }}"
+      CENSUS_REPORTING_ENABLED: "{{ .Values.netbox.censusReportingEnabled | toString }}"
+      CORS_ORIGIN_ALLOW_ALL: "{{ .Values.netbox.cors.originAllowAll }}"
+      CORS_ORIGIN_WHITELIST: "{{ .Values.netbox.cors.originWhitelist }}"
+      CORS_ORIGIN_REGEX_WHITELIST: "{{ .Values.netbox.cors.originRegexWhitelist }}"
+
+      EMAIL_SERVER: "{{ .Values.netbox.email.server }}"
+      EMAIL_PORT: "{{ .Values.netbox.email.port | toString }}"
+      EMAIL_USERNAME: "{{ .Values.netbox.email.username }}"
+      EMAIL_PASSWORD: "{{ .Values.netbox.email.password }}"
+      EMAIL_USE_SSL: "{{ .Values.netbox.email.useSSL | toString }}"
+      EMAIL_USE_TLS: "{{ .Values.netbox.email.useTLS | toString }}"
+      EMAIL_SSL_CERTFILE: "{{ .Values.netbox.email.sslCertFile }}"
+      EMAIL_SSL_KEYFILE: "{{ .Values.netbox.email.sslKeyFile }}"
+      EMAIL_TIMEOUT: "{{ .Values.netbox.email.timeout | toString }}"
+      EMAIL_FROM: "{{ .Values.netbox.email.from }}"
+
+      ENFORCE_GLOBAL_UNIQUE: "{{ .Values.netbox.enforceGlobalUnique | toString }}"
+      EXEMPT_VIEW_PERMISSIONS: "{{ .Values.netbox.exemptViewPermissions }}"
+      GRAPHQL_ENABLED: "{{ .Values.netbox.graphQlEnabled | toString }}"
+      HTTP_PROXY: "{{ .Values.netbox.httpProxies.http }}"
+      HTTPS_PROXY: "{{ .Values.netbox.httpProxies.https }}"
+      LOGIN_PERSISTENCE: "{{ .Values.netbox.loginPersistence | toString }}"
+      LOGIN_REQUIRED: "{{ .Values.netbox.loginRequired | toString }}"
+      LOGIN_TIMEOUT: "{{ int .Values.netbox.loginTimeout | toString }}"
+      MAINTENANCE_MODE: "{{ .Values.netbox.maintenanceMode | toString }}"
+      MAPS_URL: "{{ .Values.netbox.mapsUrl }}"
+      MEDIA_ROOT: "{{ .Values.netbox.mediaRoot }}"
+      METRICS_ENABLED: "{{ .Values.netbox.metricsEnabled | toString }}"
+      PAGINATE_COUNT: "{{ .Values.netbox.paginateCount | toString }}"
+      POWERFEED_DEFAULT_AMPERAGE: "{{ .Values.netbox.powerFeedDefaultAmperage | toString }}"
+      POWERFEED_DEFAULT_MAX_UTILIZATION: "{{ .Values.netbox.powerFeedMaxUtilisation | toString }}"
+      POWERFEED_DEFAULT_VOLTAGE: "{{ .Values.netbox.powerFeedDefaultVoltage | toString }}"
+      PREFER_IPV4: "{{ .Values.netbox.preferIPv4 | toString }}"
+      RACK_ELEVATION_DEFAULT_UNIT_HEIGHT: "{{ .Values.netbox.rackElevationDefaultUnitHeight | toString }}"
+      RACK_ELEVATION_DEFAULT_UNIT_WIDTH: "{{ .Values.netbox.rackElevationDefaultUnitWidth | toString }}"
+      RQ_DEFAULT_TIMEOUT: "{{ .Values.netbox.rqDefaultTimeout | toString }}"
+      ISOLATED_DEPLOYMENT: "{{ .Values.netbox.isolatedDeployment | toString }}"
+
+      DB_WAIT_DEBUG: "1"
+      DB_NAME: "{{ .Values.cnpg.main.database }}"
+      REDIS_CACHE_DATABASE: "1"
+      REDIS_CACHE_INSECURE_SKIP_TLS_VERIFY: "false"
+      REDIS_CACHE_SSL: "false"
+      REDIS_DATABASE: "0"
+      REDIS_INSECURE_SKIP_TLS_VERIFY: "false"
+      REDIS_SSL: "false"
+
+      RELEASE_CHECK_URL: "https://api.github.com/repos/netbox-community/netbox/releases"
+      SKIP_SUPERUSER: "{{ .Values.netbox.superuser.skipCreation | toString }}"
+      WEBHOOKS_ENABLED: "{{ .Values.netbox.webhooksEnabled | toString }}"
+      TIME_ZONE: "{{ .Values.TZ }}"
+  netbox-extras:
+    enabled: true
+    data:
+      plugins.py: |
+        ### plugins.py content goes here
+
+        PLUGINS = [
+            'plugin1',
+            'plugin2',
+        ]
+
+        PLUGINS_CONFIG = {
+            'plugin1': {
+                'top_level_menu': False,
+            },
+        }
+      extra.py: |
+        ### extra.py content goes here
+
+        FIELD_CHOICES = {
+
+        }
+      ldap_extra.py: |
+        ### ldap/extra.py content goes here
+
+      logging.py: |
+        ### logging.py content goes here
+
+      healthcheck.sh: |
+        ps -aux | grep -v grep | grep -q $1 || exit 1
+persistence:
+  optunit:
+    enabled: true
+    type: emptyDir
+    medium: Memory
+    mountPath: "/opt/unit"
+  optunitstate:
+    enabled: true
+    type: emptyDir
+    medium: Memory
+    mountPath: "/opt/unit/state"
+  extra:
+    enabled: false
+    type: configmap
+    objectName: netbox-extras
+    mountPath: /etc/netbox/config/extra.py
+    subPath: extra.py
+    readOnly: true
+  plugins:
+    enabled: false
+    type: configmap
+    objectName: netbox-extras
+    mountPath: /etc/netbox/config/plugins.py
+    subPath: plugins.py
+    readOnly: true
+  ldap:
+    enabled: false
+    type: configmap
+    objectName: netbox-extras
+    mountPath: /etc/netbox/config/ldap/extra.py
+    subPath: ldap_extra.py
+    readOnly: true
+  logging:
+    enabled: false
+    type: configmap
+    objectName: netbox-extras
+    mountPath: /etc/netbox/config/logging.py
+    subPath: logging.py
+    readOnly: true
+  healthcheck:
+    enabled: true
+    type: configmap
+    objectName: netbox-extras
+    mountPath: /opt/netbox/healthcheck.sh
+    subPath: healthcheck.sh
+    readOnly: true
+    targetSelector:
+      worker:
+        worker: {}
+  media:
+    enabled: true
+    mountPath: "{{ .Values.netbox.mediaRoot }}"
+    targetSelectAll: true
+    accessModes:
+      - ReadWriteMany
+  reports:
+    enabled: true
+    mountPath: "/opt/netbox/netbox/reports"
+    targetSelectAll: true
+    accessModes:
+      - ReadWriteMany
+  scripts:
+    enabled: true
+    mountPath: "/opt/netbox/netbox/scripts"
+    targetSelectAll: true
+    accessModes:
+      - ReadWriteMany
+redis:
+  enabled: true
+  redisUsername: "default"
+cnpg:
+  main:
+    enabled: true
+    user: "netbox"
+    database: "netbox"
+    mode: recovery
+    backups:
+      enabled: true
+      credentials: s3cred
+    recovery:
+      enabled: false
+      credentials: s3cred
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          probes:
+            liveness:
+              enabled: true
+              type: http
+              path: /status/applications/netbox/processes/running
+              port: nginx-status
+            readiness:
+              enabled: true
+              type: http
+              path: /login/
+              port: main
+              httpHeaders:
+                Host: localhost
+            startup:
+              enabled: true
+              type: http
+              path: /login/
+              port: main
+              httpHeaders:
+                Host: localhost
+          env:
+            DB_HOST:
+              secretKeyRef:
+                name: cnpg-main-urls
+                key: host
+            DB_USER:
+              secretKeyRef:
+                name: cnpg-main-user
+                key: username
+            DB_PASSWORD:
+              secretKeyRef:
+                name: cnpg-main-user
+                key: password
+            REDIS_CACHE_HOST:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                key: plainhost
+            REDIS_CACHE_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                key: redis-password
+            REDIS_HOST:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                key: plainhost
+            REDIS_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                key: redis-password
+            SECRET_KEY:
+              secretKeyRef:
+                name: netbox-secrets
+                key: SECRET_KEY
+          envFrom:
+            - configMapRef:
+                name: netbox-env
+  worker:
+    enabled: true
+    type: Deployment
+    dbWait: true
+    podSpec:
+      containers:
+        worker:
+          primary: true
+          enabled: true
+          imageSelector: image
+          probes:
+            liveness:
+              enabled: true
+              type: exec
+              command:
+                - /usr/bin/bash
+                - /opt/netbox/healthcheck.sh
+                - rqworker
+            readiness:
+              enabled: true
+              type: exec
+              command:
+                - /usr/bin/bash
+                - /opt/netbox/healthcheck.sh
+                - rqworker
+            startup:
+              enabled: true
+              type: exec
+              command:
+                - /usr/bin/bash
+                - /opt/netbox/healthcheck.sh
+                - rqworker
+          command:
+            - /opt/netbox/venv/bin/python
+            - /opt/netbox/netbox/manage.py
+            - rqworker
+          env:
+            DB_HOST:
+              secretKeyRef:
+                name: cnpg-main-urls
+                key: host
+            DB_USER:
+              secretKeyRef:
+                name: cnpg-main-user
+                key: username
+            DB_PASSWORD:
+              secretKeyRef:
+                name: cnpg-main-user
+                key: password
+            REDIS_CACHE_HOST:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                key: plainhost
+            REDIS_CACHE_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                key: redis-password
+            REDIS_HOST:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                key: plainhost
+            REDIS_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                key: redis-password
+            SECRET_KEY:
+              secretKeyRef:
+                name: netbox-secrets
+                key: SECRET_KEY
+          envFrom:
+            - configMapRef:
+                name: netbox-env
+  housekeeping:
+    enabled: true
+    type: CronJob
+    schedule: "0 0 * * *"
+    dbWait: true
+    podSpec:
+      containers:
+        housekeeping:
+          primary: true
+          enabled: true
+          imageSelector: image
+          probes:
+            liveness:
+              enabled: false
+            readiness:
+              enabled: false
+            startup:
+              enabled: false
+          command:
+            - /opt/netbox/venv/bin/python
+            - /opt/netbox/netbox/manage.py
+            - housekeeping
+          env:
+            DB_HOST:
+              secretKeyRef:
+                name: cnpg-main-urls
+                key: host
+            DB_USER:
+              secretKeyRef:
+                name: cnpg-main-user
+                key: username
+            DB_PASSWORD:
+              secretKeyRef:
+                name: cnpg-main-user
+                key: password
+            REDIS_CACHE_HOST:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                key: plainhost
+            REDIS_CACHE_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                key: redis-password
+            REDIS_HOST:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                key: plainhost
+            REDIS_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                key: redis-password
+            SECRET_KEY:
+              secretKeyRef:
+                name: netbox-secrets
+                key: SECRET_KEY
+          envFrom:
+            - configMapRef:
+                name: netbox-env
