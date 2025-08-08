@@ -88,7 +88,7 @@ jobs:
       - name: Cache Changelog
         id: cache-changelog
         if: github.event_name == 'push'
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4
         with:
           key: ${{ env.CHANGELOG_CACHE_KEY }}-${{ hashFiles('**/Chart.yaml') }}
           path: changelog.json.gz
@@ -262,7 +262,7 @@ jobs:
 
       - name: Setup astro Cache
         if: needs.check_changes.outputs.changes_detected == 'true'
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4
         with:
           # Cache for build and optimized images.
           key: astro-${{ hashFiles('website/package-lock.json') }}
@@ -271,7 +271,7 @@ jobs:
 
       - name: Setup npm Cache
         if: needs.check_changes.outputs.changes_detected == 'true'
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4
         with:
           # Cache for npm
           path: ~/website/.npm
@@ -281,7 +281,7 @@ jobs:
       - name: Setup node_modules Cache
         id: modulescache
         if: needs.check_changes.outputs.changes_detected == 'true'
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4
         with:
           # Cache for npm and optimized images.
           path: ./website/node_modules
