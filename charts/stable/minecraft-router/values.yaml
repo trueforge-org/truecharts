@@ -14,11 +14,13 @@ service:
         enabled: true
         port: 25564
 
+# manual option
 mcrouter:
-  default: vanilla:25565
-  mappings:
-    - vanilla:25565
-    - forge:25565
+  # vanilla:25565
+  default: ""
+  mappings: []
+    # - vanilla:25565
+    # - forge:25565
 
 workload:
   main:
@@ -44,5 +46,30 @@ workload:
           env:
             API_BINDING: ":{{ .Values.service.api.ports.api.port }}"
             PORT: "{{ .Values.service.main.ports.main.port }}"
+            # enabled for auto discovery to work
+            IN_KUBE_CLUSTER: true
+            # leave blank for all namespaces
+            # KUBE_NAMESPACE: ""
             DEFAULT: "{{ .Values.mcrouter.default }}"
             MAPPING: '{{ join "," .Values.mcrouter.mappings }}'
+
+rbac:
+  main:
+    enabled: true
+    primary: true
+    clusterWide: true
+    rules:
+      - apiGroups: [""]
+        resources:
+          - "services"
+        verbs:
+          - "list"
+          - "watch"
+
+serviceAccount:
+  main:
+    enabled: true
+    primary: true
+
+podOptions:
+  automountServiceAccountToken: true
