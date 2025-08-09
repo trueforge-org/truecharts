@@ -1,4 +1,4 @@
-FROM python:3.12-alpine
+FROM python:3.12-alpine@sha256:9b8808206f4a956130546a32cbdd8633bc973b19db2923b7298e6f90cc26db08
 
 # Install dependencies
 RUN pip install --no-cache-dir requests beautifulsoup4 icalendar pytz
