@@ -85,7 +85,6 @@ jobs:
       #         /repositories/*
       #         /templates/*
 
-
   build:
     permissions:
       actions: read # for detecting the Github Actions environment.
@@ -192,7 +191,7 @@ jobs:
         with:
           platforms: amd64
 
-      - uses: sigstore/cosign-installer@main
+      - uses: sigstore/cosign-installer@d58896d6a1865668819e1d91763c7751a165e159 # v3.9.2
 
       - name: Install Syft
         uses: anchore/sbom-action/download-syft@7b36ad622f042cab6f59a75c2ac24ccb256e9b45 # v0.20.4
@@ -349,7 +348,6 @@ jobs:
           cosign verify-attestation quay.io/tccr/${{ matrix.container }}@${{ steps.push.outputs.digest }} --type slsaprovenance --certificate-oidc-issuer=https://token.actions.githubusercontent.com --certificate-identity=https://github.com/trueforge-org/truecharts/.github/workflows/containers.build.yaml@refs/heads/master | jq '.payload |= @base64d | .payload | fromjson'
         env:
           COSIGN_EXPERIMENTAL: 1
-
 
   # Summarize matrix https://github.community/t/status-check-for-a-matrix-jobs/127354/7
   container-build-complete:

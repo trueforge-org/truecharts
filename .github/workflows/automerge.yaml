@@ -2,17 +2,16 @@ name: Automerge and Approve
 
 on:
   workflow_run:
-    workflows: ["Pull Request: Validate"]  # Name of the main CI workflow
+    workflows: ["Pull Request: Validate"] # Name of the main CI workflow
     types:
       - completed
 
 jobs:
-
   approve:
     runs-on: ubuntu-latest
     steps:
       - name: Approve PR
-        uses: hmarr/auto-approve-action@v3
+        uses: hmarr/auto-approve-action@f0939ea97e9205ef24d872e76833fa908a770363 # v4.0.0
         if: github.actor == 'truecharts-admin'
         with:
           github-token: "${{ secrets.OR_PAT }}"
