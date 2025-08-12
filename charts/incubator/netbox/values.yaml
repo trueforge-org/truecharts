@@ -240,13 +240,6 @@ cnpg:
     enabled: true
     user: "netbox"
     database: "netbox"
-    mode: recovery
-    backups:
-      enabled: true
-      credentials: s3cred
-    recovery:
-      enabled: false
-      credentials: s3cred
 workload:
   main:
     podSpec:
