@@ -35,12 +35,13 @@ netbox:
   enforceGlobalUnique: false
   exemptViewPermissions: ""
   graphQlEnabled: true
+  housekeepingInterval: "0 0 * * *"
   httpProxies: {}
   loginPersistence: false
   loginRequired: true
   loginTimeout: 1209600
   maintenanceMode: false
-  mapsUrl: "https://maps.google.com/?q="
+  mapsUrl: "https://www.openstreetmap.org/search?query="
   mediaRoot: "/opt/netbox/netbox/media"
   maxPageSize: 1000
   metricsEnabled: true
@@ -384,7 +385,7 @@ workload:
   housekeeping:
     enabled: true
     type: CronJob
-    schedule: "0 0 * * *"
+    schedule: "{{ .Values.netbox.housekeepingInterval }}"
     dbWait: true
     podSpec:
       containers:
