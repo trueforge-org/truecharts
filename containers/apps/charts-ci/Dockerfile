@@ -1,6 +1,6 @@
 # Define Chart Releaser
 # hadolint ignore=DL3007
-FROM ghcr.io/actions/actions-runner:2.327.1@sha256:551dc313e6b6ef1ca7b9594d8090a7a6cc7aeb663f1079ba2fec07e9158f3259
+FROM ghcr.io/actions/actions-runner:2.328.0@sha256:db0dcae6d28559e54277755a33aba7d0665f255b3bd2a66cdc5e132712f155e0
 
 SHELL ["/bin/bash", "-c"]
 
