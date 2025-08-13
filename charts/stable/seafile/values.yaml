@@ -31,7 +31,11 @@ workload:
             DB_PASSWORD: "{{ .Values.mariadb.password }}"
             SEAFILE_SERVER_LETSENCRYPT: false
             SEAFILE_SERVER_HOSTNAME: ""
-            REDIS_HOST: "{{ .Values.redis.creds.plainhost }}"
+            REDIS_HOST:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                key: plainhost
             REDIS_PASSWORD: "{{ .Values.redis.creds.redisPassword }}"
             INIT_SEAFILE_ADMIN_EMAIL: me@example.com
             INIT_SEAFILE_ADMIN_PASSWORD: a_very_secret_password
@@ -62,8 +66,6 @@ configmap:
         JWT_PRIVATE_KEY={{ .Values.workload.main.podSpec.containers.main.env.JWT_PRIVATE_KEY }}
         SEAFILE_SERVER_PROTOCOL=http
         SEAFILE_SERVER_HOSTNAME={{ .Values.workload.main.podSpec.containers.main.env.SEAFILE_SERVER_HOSTNAME }}
-        REDIS_HOST: "{{ .Values.redis.creds.plainhost }}"
-        REDIS_PASSWORD: "{{ .Values.redis.creds.redisPassword }}"
         SEAFILE_MYSQL_DB_HOST={{ printf "%v-%v" .Release.Name "mariadb" }}
         SEAFILE_MYSQL_DB_PORT=3306
         SEAFILE_MYSQL_DB_USER={{ .Values.mariadb.mariadbUsername }}
