@@ -21,7 +21,7 @@ workload:
       containers:
         main:
           env:
-            CACHE_PROVIDER: memcached
+            CACHE_PROVIDER: redis
             DB_HOST:
               secretKeyRef:
                 expandObjectName: false
@@ -31,23 +31,26 @@ workload:
             DB_PASSWORD: "{{ .Values.mariadb.password }}"
             SEAFILE_SERVER_LETSENCRYPT: false
             SEAFILE_SERVER_HOSTNAME: ""
+            REDIS_HOST: "{{ .Values.redis.creds.plainhost }}"
+            REDIS_PASSWORD: "{{ .Values.redis.creds.redisPassword }}"
             INIT_SEAFILE_ADMIN_EMAIL: me@example.com
             INIT_SEAFILE_ADMIN_PASSWORD: a_very_secret_password
             FORCE_HTTPS_IN_CONF: false
             JWT_PRIVATE_KEY: a_very_very_very_very_secret_key
             CLUSTER_SERVER: "true"
             CLUSTER_INIT_MODE: "true"
-            CLUSTER_INIT_MEMCACHED_HOST: '{{ printf "%v-%v" .Release.Name "memcached" }}'
 configmap:
   env:
     enabled: true
     data:
       env: |
-        CACHE_PROVIDER= memcached
+        CACHE_PROVIDER: redis
         TIME_ZONE={{ .Values.TZ }}
         JWT_PRIVATE_KEY={{ .Values.workload.main.podSpec.containers.main.env.JWT_PRIVATE_KEY }}
         SEAFILE_SERVER_PROTOCOL=http
         SEAFILE_SERVER_HOSTNAME={{ .Values.workload.main.podSpec.containers.main.env.SEAFILE_SERVER_HOSTNAME }}
+        REDIS_HOST: "{{ .Values.redis.creds.plainhost }}"
+        REDIS_PASSWORD: "{{ .Values.redis.creds.redisPassword }}"
         SEAFILE_MYSQL_DB_HOST={{ printf "%v-%v" .Release.Name "mariadb" }}
         SEAFILE_MYSQL_DB_PORT=3306
         SEAFILE_MYSQL_DB_USER={{ .Values.mariadb.mariadbUsername }}
@@ -79,5 +82,5 @@ mariadb:
   mariadbUsername: seafile
   mariadbDatabase: seafile
 
-memcached:
+redis:
   enabled: true

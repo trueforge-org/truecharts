@@ -25,10 +25,10 @@ dependencies:
     alias: ""
     tags: []
     import-values: []
-  - name: memcached
-    version: 16.2.2
+  - name: redis
+    version: 17.3.0
     repository: oci://tccr.io/truecharts
-    condition: memcached.enabled
+    condition: redis.enabled
     alias: ""
     tags: []
     import-values: []
