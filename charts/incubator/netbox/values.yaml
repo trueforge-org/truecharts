@@ -129,9 +129,9 @@ configmap:
       DB_PASSWORD: "{{ .Values.cnpg.main.creds.password }}"
       DB_NAME: "{{ .Values.cnpg.main.database }}"
 
-      REDIS_HOST: "{{ .Values.redis.creds.plainhost }}"
+      REDIS_HOST: '{{ .Values.redis.creds.plainhost | trimAll "\"" }}'
       REDIS_USERNAME: "{{ .Values.redis.redisUsername }}"
-      REDIS_PASSWORD: "{{ .Values.redis.creds.redisPassword }}"
+      REDIS_PASSWORD: '{{ .Values.redis.creds.redisPassword | trimAll "\"" }}'
       REDIS_DATABASE: "0"
       REDIS_CACHE_DATABASE: "1"
       REDIS_INSECURE_SKIP_TLS_VERIFY: "false"
