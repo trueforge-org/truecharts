@@ -9,10 +9,10 @@ annotations:
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 4.9.1.17
+appVersion: 4.8.11.0
 dependencies:
   - name: common
-    version: 28.15.1
+    version: 28.16.0
     repository: oci://tccr.io/truecharts
     condition: ""
     alias: ""
@@ -33,10 +33,10 @@ maintainers:
     url: https://truecharts.org
 name: emby
 sources:
-  - https://ghcr.io/elfhosted/emby
+  - https://ghcr.io/home-operations/emby
   - https://github.com/linuxserver/docker-emby.git
   - https://github.com/truecharts/charts/tree/master/charts/stable/emby
   - https://hub.docker.com/r/alpine/socat
 type: application
-version: 25.0.0
+version: 25.1.0
 
