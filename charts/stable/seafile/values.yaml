@@ -41,10 +41,11 @@ workload:
             CLUSTER_INIT_MODE: "true"
             SEAFILE_LOG_TO_STDOUT: "true"
             SEAFILE_SERVER_PROTOCOL: "http"
-            DB_MYSQL_HOST:
+            SEAFILE_MYSQL_DB_HOST:
               secretKeyRef:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                key: plainhost
             SEAFILE_MYSQL_DB_PORT: 3306
             SEAFILE_MYSQL_DB_USER: "{{ .Values.mariadb.mariadbUsername }}"
             SEAFILE_MYSQL_DB_PASSWORD: "{{ .Values.mariadb.password }}"
