@@ -55,22 +55,37 @@ netbox:
   rqDefaultTimeout: 300
   isolatedDeployment: false
   webhooksEnabled: true
-securityContext:
-  container:
-    runAsUser: 1000
-    runAsGroup: 1000
-    PUID: 1000
-  pod:
-    fsGroup: 1000
-service:
-  main:
-    ports:
-      main:
-        port: 8080
-      nginx-status:
-        enabled: true
-        port: 8081
 configmap:
+  netbox-extras:
+    enabled: true
+    data:
+      plugins.py: |
+        ### plugins.py content goes here
+
+        PLUGINS = [
+            'plugin1',
+            'plugin2',
+        ]
+
+        PLUGINS_CONFIG = {
+            'plugin1': {
+                'top_level_menu': False,
+            },
+        }
+      extra.py: |
+        ### extra.py content goes here
+
+        FIELD_CHOICES = {
+
+        }
+      ldap_extra.py: |
+        ### ldap/extra.py content goes here
+
+      logging.py: |
+        ### logging.py content goes here
+
+      healthcheck.sh: |
+        ps -aux | grep -v grep | grep -q $1 || exit 1
   netbox-env:
     enabled: true
     data:
@@ -141,60 +156,20 @@ configmap:
       SKIP_SUPERUSER: "{{ .Values.netbox.superuser.skipCreation | toString }}"
       WEBHOOKS_ENABLED: "{{ .Values.netbox.webhooksEnabled | toString }}"
       TIME_ZONE: "{{ .Values.TZ }}"
-  netbox-extras:
-    enabled: true
-    data:
-      plugins.py: |
-        ### plugins.py content goes here
-
-        PLUGINS = [
-            'plugin1',
-            'plugin2',
-        ]
-
-        PLUGINS_CONFIG = {
-            'plugin1': {
-                'top_level_menu': False,
-            },
-        }
-      extra.py: |
-        ### extra.py content goes here
-
-        FIELD_CHOICES = {
-
-        }
-      ldap_extra.py: |
-        ### ldap/extra.py content goes here
-
-      logging.py: |
-        ### logging.py content goes here
-
-      healthcheck.sh: |
-        ps -aux | grep -v grep | grep -q $1 || exit 1
 persistence:
-  optunit:
-    enabled: true
-    type: emptyDir
-    medium: Memory
-    mountPath: "/opt/unit"
-  optunitstate:
-    enabled: true
-    type: emptyDir
-    medium: Memory
-    mountPath: "/opt/unit/state"
-  extra:
-    enabled: false
-    type: configmap
-    objectName: netbox-extras
-    mountPath: /etc/netbox/config/extra.py
-    subPath: extra.py
-    readOnly: true
   plugins:
     enabled: false
     type: configmap
     objectName: netbox-extras
     mountPath: /etc/netbox/config/plugins.py
     subPath: plugins.py
+    readOnly: true
+  extra:
+    enabled: false
+    type: configmap
+    objectName: netbox-extras
+    mountPath: /etc/netbox/config/extra.py
+    subPath: extra.py
     readOnly: true
   ldap:
     enabled: false
@@ -210,16 +185,6 @@ persistence:
     mountPath: /etc/netbox/config/logging.py
     subPath: logging.py
     readOnly: true
-  healthcheck:
-    enabled: true
-    type: configmap
-    objectName: netbox-extras
-    mountPath: /opt/netbox/healthcheck.sh
-    subPath: healthcheck.sh
-    readOnly: true
-    targetSelector:
-      worker:
-        worker: {}
   media:
     enabled: true
     mountPath: "{{ .Values.netbox.mediaRoot }}"
@@ -232,6 +197,41 @@ persistence:
     enabled: true
     mountPath: "/opt/netbox/netbox/scripts"
     targetSelectAll: true
+  healthcheck:
+    enabled: true
+    type: configmap
+    objectName: netbox-extras
+    mountPath: /opt/netbox/healthcheck.sh
+    subPath: healthcheck.sh
+    readOnly: true
+    targetSelector:
+      worker:
+        worker: {}
+  optunit:
+    enabled: true
+    type: emptyDir
+    medium: Memory
+    mountPath: "/opt/unit"
+  optunitstate:
+    enabled: true
+    type: emptyDir
+    medium: Memory
+    mountPath: "/opt/unit/state"
+securityContext:
+  container:
+    runAsUser: 1000
+    runAsGroup: 1000
+    PUID: 1000
+  pod:
+    fsGroup: 1000
+service:
+  main:
+    ports:
+      main:
+        port: 8080
+      nginx-status:
+        enabled: true
+        port: 8081
 redis:
   enabled: true
   redisUsername: "default"
