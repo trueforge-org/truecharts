@@ -52,6 +52,7 @@ workload:
             SEAFILE_MYSQL_DB_CCNET_DB_NAME: ccnet
             SEAFILE_MYSQL_DB_SEAFILE_DB_NAME: seafile
             SEAFILE_MYSQL_DB_SEAHUB_DB_NAME: seahub
+            INIT_SEAFILE_MYSQL_ROOT_PASSWORD: "{{ .Values.mariadb.rootPassword }}"
 configmap:
   env:
     enabled: true
@@ -70,6 +71,7 @@ configmap:
         SEAFILE_MYSQL_DB_CCNET_DB_NAME=ccnet
         SEAFILE_MYSQL_DB_SEAFILE_DB_NAME=seafile
         SEAFILE_MYSQL_DB_SEAHUB_DB_NAME=seahub
+        INIT_SEAFILE_MYSQL_ROOT_PASSWORD: "{{ .Values.mariadb.rootPassword }}"
 persistence:
   storage:
     enabled: true
