@@ -39,12 +39,20 @@ workload:
             JWT_PRIVATE_KEY: a_very_very_very_very_secret_key
             CLUSTER_SERVER: "true"
             CLUSTER_INIT_MODE: "true"
+            SEAFILE_LOG_TO_STDOUT: "true"
+            SEAFILE_SERVER_PROTOCOL: "http"
+            SEAFILE_MYSQL_DB_HOST: "{{ printf '%v-%v' .Release.Name 'mariadb' }}"
+            SEAFILE_MYSQL_DB_PORT: 3306
+            SEAFILE_MYSQL_DB_USER: "{{ .Values.mariadb.mariadbUsername }}"
+            SEAFILE_MYSQL_DB_PASSWORD: "{{ .Values.mariadb.password }}"
+            SEAFILE_MYSQL_DB_CCNET_DB_NAME: ccnet
+            SEAFILE_MYSQL_DB_SEAFILE_DB_NAME: seafile
+            SEAFILE_MYSQL_DB_SEAHUB_DB_NAME: seahub
 configmap:
   env:
     enabled: true
     data:
       env: |
-        CACHE_PROVIDER: redis
         TIME_ZONE={{ .Values.TZ }}
         JWT_PRIVATE_KEY={{ .Values.workload.main.podSpec.containers.main.env.JWT_PRIVATE_KEY }}
         SEAFILE_SERVER_PROTOCOL=http
