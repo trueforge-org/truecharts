@@ -265,6 +265,11 @@ workload:
               port: main
               httpHeaders:
                 Host: localhost
+          env:
+            SECRET_KEY:
+              secretKeyRef:
+                name: netbox-secrets
+                key: SECRET_KEY
           envFrom:
             - configMapRef:
                 name: netbox-env
@@ -304,6 +309,11 @@ workload:
             - /opt/netbox/venv/bin/python
             - /opt/netbox/netbox/manage.py
             - rqworker
+          env:
+            SECRET_KEY:
+              secretKeyRef:
+                name: netbox-secrets
+                key: SECRET_KEY
           envFrom:
             - configMapRef:
                 name: netbox-env
@@ -329,6 +339,11 @@ workload:
             - /opt/netbox/venv/bin/python
             - /opt/netbox/netbox/manage.py
             - housekeeping
+          env:
+            SECRET_KEY:
+              secretKeyRef:
+                name: netbox-secrets
+                key: SECRET_KEY
           envFrom:
             - configMapRef:
                 name: netbox-env
