@@ -1,7 +1,7 @@
 image:
-  repository: ghcr.io/elfhosted/zilean
+  repository: docker.io/ipromknight/zilean
   pullPolicy: IfNotPresent
-  tag: v3.5.0@sha256:f6e178c96e783edc419a8bd4aa89618ef636b59328055a366278a792b98d5b40
+  tag: v3.5.0@sha256:1b828ac0604235de7adb7757d11c88c1b3bb1a6319071b0c9d99325bc0f9d477
 
 service:
   main:
@@ -33,5 +33,5 @@ persistence:
 cnpg:
   main:
     enabled: true
-    user: zilean
+    user: postgres
     database: zilean
