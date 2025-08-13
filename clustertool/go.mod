@@ -25,7 +25,7 @@ require (
 	helm.sh/helm/v3 v3.18.4
 	k8s.io/api v0.34.0-rc.1
 	k8s.io/apimachinery v0.34.0-rc.1
-	k8s.io/client-go v0.34.0-rc.1
+	k8s.io/client-go v11.0.0+incompatible
 	sigs.k8s.io/controller-runtime v0.21.0
 	sigs.k8s.io/kustomize/api v0.20.1
 	sigs.k8s.io/kustomize/kyaml v0.20.1
