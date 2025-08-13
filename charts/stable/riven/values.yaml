@@ -85,6 +85,12 @@ workload:
             DIALECT: "postgres"
             DATABASE_URL: '{{ printf "postgresql://%s:%s@%s.%s/%s" .Values.cnpg.main.user .Values.cnpg.main.creds.password (.Values.cnpg.main.creds.host | trimAll "\"") .Release.Namespace .Values.cnpg.main.database }}'
 
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
+    runAsNonRoot: false
+    runAsGroup: 0
+    runAsUser: 0
 persistence:
   logs:
     enabled: true
