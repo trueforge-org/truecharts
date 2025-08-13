@@ -124,9 +124,9 @@ configmap:
       ISOLATED_DEPLOYMENT: "{{ .Values.netbox.isolatedDeployment | toString }}"
 
       DB_WAIT_DEBUG: "1"
-      DB_HOST: "{{ .Values.cnpg.main.host }}"
-      DB_USER: "{{ .Values.cnpg.main.username }}"
-      DB_PASSWORD: "{{ .Values.cnpg.main.password }}"
+      DB_HOST: "{{ .Values.cnpg.main.creds.host }}"
+      DB_USER: "{{ .Values.cnpg.main.user }}"
+      DB_PASSWORD: "{{ .Values.cnpg.main.creds.password }}"
       DB_NAME: "{{ .Values.cnpg.main.database }}"
 
       REDIS_HOST: "{{ .Values.redis.creds.plainhost }}"
