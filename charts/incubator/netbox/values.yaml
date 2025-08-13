@@ -124,11 +124,16 @@ configmap:
       ISOLATED_DEPLOYMENT: "{{ .Values.netbox.isolatedDeployment | toString }}"
 
       DB_WAIT_DEBUG: "1"
+      DB_HOST: "{{ .Values.cnpg.main.host }}"
+      DB_USER: "{{ .Values.cnpg.main.username }}"
+      DB_PASSWORD: "{{ .Values.cnpg.main.password }}"
       DB_NAME: "{{ .Values.cnpg.main.database }}"
-      REDIS_CACHE_DATABASE: "1"
-      REDIS_CACHE_INSECURE_SKIP_TLS_VERIFY: "false"
-      REDIS_CACHE_SSL: "false"
+
+      REDIS_HOST: "{{ .Values.redis.creds.plainhost }}"
+      REDIS_USERNAME: "{{ .Values.redis.redisUsername }}"
+      REDIS_PASSWORD: "{{ .Values.redis.creds.redisPassword }}"
       REDIS_DATABASE: "0"
+      REDIS_CACHE_DATABASE: "1"
       REDIS_INSECURE_SKIP_TLS_VERIFY: "false"
       REDIS_SSL: "false"
 
@@ -219,20 +224,14 @@ persistence:
     enabled: true
     mountPath: "{{ .Values.netbox.mediaRoot }}"
     targetSelectAll: true
-    accessModes:
-      - ReadWriteMany
   reports:
     enabled: true
     mountPath: "/opt/netbox/netbox/reports"
     targetSelectAll: true
-    accessModes:
-      - ReadWriteMany
   scripts:
     enabled: true
     mountPath: "/opt/netbox/netbox/scripts"
     targetSelectAll: true
-    accessModes:
-      - ReadWriteMany
 redis:
   enabled: true
   redisUsername: "default"
@@ -266,43 +265,6 @@ workload:
               port: main
               httpHeaders:
                 Host: localhost
-          env:
-            DB_HOST:
-              secretKeyRef:
-                name: cnpg-main-urls
-                key: host
-            DB_USER:
-              secretKeyRef:
-                name: cnpg-main-user
-                key: username
-            DB_PASSWORD:
-              secretKeyRef:
-                name: cnpg-main-user
-                key: password
-            REDIS_CACHE_HOST:
-              secretKeyRef:
-                expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
-                key: plainhost
-            REDIS_CACHE_PASSWORD:
-              secretKeyRef:
-                expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
-                key: redis-password
-            REDIS_HOST:
-              secretKeyRef:
-                expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
-                key: plainhost
-            REDIS_PASSWORD:
-              secretKeyRef:
-                expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
-                key: redis-password
-            SECRET_KEY:
-              secretKeyRef:
-                name: netbox-secrets
-                key: SECRET_KEY
           envFrom:
             - configMapRef:
                 name: netbox-env
@@ -342,43 +304,6 @@ workload:
             - /opt/netbox/venv/bin/python
             - /opt/netbox/netbox/manage.py
             - rqworker
-          env:
-            DB_HOST:
-              secretKeyRef:
-                name: cnpg-main-urls
-                key: host
-            DB_USER:
-              secretKeyRef:
-                name: cnpg-main-user
-                key: username
-            DB_PASSWORD:
-              secretKeyRef:
-                name: cnpg-main-user
-                key: password
-            REDIS_CACHE_HOST:
-              secretKeyRef:
-                expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
-                key: plainhost
-            REDIS_CACHE_PASSWORD:
-              secretKeyRef:
-                expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
-                key: redis-password
-            REDIS_HOST:
-              secretKeyRef:
-                expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
-                key: plainhost
-            REDIS_PASSWORD:
-              secretKeyRef:
-                expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
-                key: redis-password
-            SECRET_KEY:
-              secretKeyRef:
-                name: netbox-secrets
-                key: SECRET_KEY
           envFrom:
             - configMapRef:
                 name: netbox-env
@@ -404,43 +329,6 @@ workload:
             - /opt/netbox/venv/bin/python
             - /opt/netbox/netbox/manage.py
             - housekeeping
-          env:
-            DB_HOST:
-              secretKeyRef:
-                name: cnpg-main-urls
-                key: host
-            DB_USER:
-              secretKeyRef:
-                name: cnpg-main-user
-                key: username
-            DB_PASSWORD:
-              secretKeyRef:
-                name: cnpg-main-user
-                key: password
-            REDIS_CACHE_HOST:
-              secretKeyRef:
-                expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
-                key: plainhost
-            REDIS_CACHE_PASSWORD:
-              secretKeyRef:
-                expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
-                key: redis-password
-            REDIS_HOST:
-              secretKeyRef:
-                expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
-                key: plainhost
-            REDIS_PASSWORD:
-              secretKeyRef:
-                expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
-                key: redis-password
-            SECRET_KEY:
-              secretKeyRef:
-                name: netbox-secrets
-                key: SECRET_KEY
           envFrom:
             - configMapRef:
                 name: netbox-env
