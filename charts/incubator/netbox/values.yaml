@@ -253,6 +253,9 @@ workload:
               cpu: 2000m
             requests:
               cpu: 200m
+          probeTimeouts:
+            startup:
+              initialDelaySeconds: 30
           probes:
             liveness:
               enabled: true
