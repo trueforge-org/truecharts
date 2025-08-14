@@ -299,7 +299,7 @@ workload:
               until wget --no-check-certificate --spider --quiet "$serverUrl";
               do
                 echo "Still waiting for Netbox Server [$serverUrl] to be ready..."
-                sleep 15
+                sleep 3
               done
 
               echo "Netbox [$serverUrl] is ready..."
