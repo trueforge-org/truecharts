@@ -3,6 +3,7 @@ image:
   pullPolicy: IfNotPresent
   tag: v4.3.5@sha256:a46358d7952caf7f6a574f41dbace5632b969620e49d47a8baf9b25633556179
 netbox:
+  secretKey: ""
   superuser:
     skipCreation: true
     name: "admin"
@@ -89,6 +90,8 @@ configmap:
   netbox-env:
     enabled: true
     data:
+      SECRET_KEY: "{{ .Values.netbox.secretKey }}"
+
       SUPERUSER_NAME: "{{ .Values.netbox.superuser.name }}"
       SUPERUSER_EMAIL: "{{ .Values.netbox.superuser.email }}"
       SUPERUSER_PASSWORD: "{{ .Values.netbox.superuser.password }}"
@@ -229,7 +232,7 @@ service:
     ports:
       main:
         port: 8080
-      nginx-status:
+      nginxstatus:
         enabled: true
         port: 8081
 redis:
@@ -245,12 +248,17 @@ workload:
     podSpec:
       containers:
         main:
+          resources:
+            limits:
+              cpu: 2000m
+            requests:
+              cpu: 200m
           probes:
             liveness:
               enabled: true
               type: http
               path: /status/applications/netbox/processes/running
-              port: nginx-status
+              port: nginxstatus
             readiness:
               enabled: true
               type: http
@@ -265,11 +273,6 @@ workload:
               port: main
               httpHeaders:
                 Host: localhost
-          env:
-            SECRET_KEY:
-              secretKeyRef:
-                name: netbox-secrets
-                key: SECRET_KEY
           envFrom:
             - configMapRef:
                 name: netbox-env
@@ -278,6 +281,26 @@ workload:
     type: Deployment
     dbWait: true
     podSpec:
+      initContainers:
+        wait-for-main:
+          enabled: true
+          type: init
+          imageSelector: alpineImage
+          command:
+            - /bin/sh
+          args:
+            - -c
+            - |
+              serverUrl=http://{{ include "tc.v1.common.lib.chart.names.fullname" $ }}:{{ .Values.service.main.ports.nginxstatus.port }}/status/applications/netbox/processes/running
+              echo "Waiting for Netbox Server [$serverUrl] to be ready..."
+              until wget --no-check-certificate --spider --quiet "$serverUrl";
+              do
+                echo "Still waiting for Netbox Server [$serverUrl] to be ready..."
+                sleep 15
+              done
+
+              echo "Netbox [$serverUrl] is ready..."
+              echo "Starting Worker..."
       containers:
         worker:
           primary: true
@@ -309,11 +332,6 @@ workload:
             - /opt/netbox/venv/bin/python
             - /opt/netbox/netbox/manage.py
             - rqworker
-          env:
-            SECRET_KEY:
-              secretKeyRef:
-                name: netbox-secrets
-                key: SECRET_KEY
           envFrom:
             - configMapRef:
                 name: netbox-env
@@ -339,11 +357,6 @@ workload:
             - /opt/netbox/venv/bin/python
             - /opt/netbox/netbox/manage.py
             - housekeeping
-          env:
-            SECRET_KEY:
-              secretKeyRef:
-                name: netbox-secrets
-                key: SECRET_KEY
           envFrom:
             - configMapRef:
                 name: netbox-env
