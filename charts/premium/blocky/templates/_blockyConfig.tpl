@@ -199,12 +199,18 @@ conditional:
 blocking:
   blockType: {{ .Values.blocking.blockType }}
   blockTTL: {{ .Values.blocking.blockTTL }}
-  refreshPeriod: {{ .Values.blocking.refreshPeriod }}
-  downloadTimeout: {{ .Values.blocking.downloadTimeout }}
-  downloadAttempts: {{ .Values.blocking.downloadAttempts }}
-  downloadCooldown: {{ .Values.blocking.downloadCooldown }}
-  startStrategy: {{ .Values.blocking.startStrategy }}
-  processingConcurrency: {{ .Values.blocking.processingConcurrency }}
+  loading:
+    refreshPeriod: {{ .Values.blocking.refreshPeriod }}
+    downloads:
+      timeout: {{ .Values.blocking.downloadTimeout }}
+      writeTimeout: {{ .Values.blocking.writeTimeout }}
+      readTimeout: {{ .Values.blocking.readTimeout }}
+      readHeaderTimeout: {{ .Values.blocking.readHeaderTimeout }}
+      attempts: {{ .Values.blocking.downloadAttempts }}
+      cooldown: {{ .Values.blocking.downloadCooldown }}
+    concurrency: {{ .Values.blocking.processingConcurrency }}
+    strategy: {{ .Values.blocking.startStrategy }}
+    maxErrorsPerSource: {{ .Values.blocking.maxErrorsPerSource }}
 
   whiteLists:
     default:
