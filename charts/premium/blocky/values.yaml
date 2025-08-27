@@ -92,10 +92,17 @@ service:
 
 certFile: ""
 keyFile: ""
+
+# -- logging configuration
+# Log level (one from trace, debug, info, warn, error)
 logLevel: info
+# Log format (text or json)
 logFormat: text
+# log timestamps (true or false)
 logTimestamp: true
+# Obfuscate log output (replace all alphanumeric characters with *) for user sensitive data like request domains or responses to increase privacy. (true or false)
 logPrivacy: false
+
 dohUserAgent: ""
 minTlsServeVersion: 1.2
 

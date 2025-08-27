@@ -15,9 +15,11 @@ redis:
   required: true
   connectionAttempts: 10
   connectionCooldown: 3s
+
 prometheus:
   enable: true
   path: /metrics
+
 queryLog:
   # optional one of: postgresql, csv, csv-client. If empty, log to console
   type: {{ .Values.queryLog.type }}
@@ -70,6 +72,9 @@ keyFile: {{ .Values.keyFile }}
 log:
   {{- if .Values.logLevel }}
   level: {{ .Values.logLevel }}
+  {{- end }}
+  {{- if .Values.logFormat }}
+  format: {{ .Values.logFormat }}
   {{- end }}
   {{- if .Values.logTimestamp }}
   timestamp: {{ .Values.logTimestamp }}
