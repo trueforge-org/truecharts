@@ -64,7 +64,6 @@ ports:
 {{- if .Values.certFile }}
 certFile: {{ .Values.certFile }}
 {{- end }}
-
 {{- if .Values.keyFile }}
 keyFile: {{ .Values.keyFile }}
 {{- end }}

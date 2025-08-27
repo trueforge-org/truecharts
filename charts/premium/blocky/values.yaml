@@ -90,6 +90,7 @@ service:
         protocol: udp
         targetPort: 5353
 
+# -- Path to cert and key file for SSL encryption. If not set, self-signed certificate will be generated
 certFile: ""
 keyFile: ""
 
@@ -103,6 +104,7 @@ logTimestamp: true
 # Obfuscate log output (replace all alphanumeric characters with *) for user sensitive data like request domains or responses to increase privacy. (true or false)
 logPrivacy: false
 
+# -- Mininal TLS version that the DoH and DoT server will use
 minTlsServeVersion: 1.2
 
 # -- set the default DNS upstream servers
