@@ -130,11 +130,11 @@ filtering:
 
 {{- if or .Values.customDNS.filterUnmappedTypes .Values.customDNS.customTTL .Values.customDNS.rewrite .Values.customDNS.mapping }}
 customDNS:
-{{- if .Values.customDNS.upstream }}
-  upstream: {{ .Values.customDNS.upstream }}
-{{- end }}
 {{- if .Values.customDNS.customTTL }}
   customTTL: {{ .Values.customDNS.customTTL }}
+{{- end }}
+{{- if .Values.customDNS.filterUnmappedTypes }}
+  filterUnmappedTypes: {{ .Values.customDNS.filterUnmappedTypes }}
 {{- end }}
 {{- if .Values.customDNS.rewrite }}
   rewrite:
