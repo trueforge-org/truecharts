@@ -184,8 +184,8 @@ caching:
   cacheTimeNegative: 30m
 
 # -- set conditional settings
-# Primarily designed for inclusion in the TrueNAS SCALE GUI
 conditional:
+  fallbackUpstream: false
   rewrite: []
   # - in: something.com
   #   out: somethingelse.com

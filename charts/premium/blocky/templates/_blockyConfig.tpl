@@ -174,6 +174,9 @@ clientLookup:
 
 {{- if or .Values.conditional.rewrite .Values.conditional.mapping ( and .Values.k8sgateway.enabled .Values.k8sgateway.domains ) }}
 conditional:
+{{- if .Values.conditional.fallbackUpstream }}
+  fallbackUpstream: {{ .Values.conditional.fallbackUpstream }}
+{{- end }}
 {{- if .Values.conditional.rewrite }}
   rewrite:
 {{- range $id, $value := .Values.conditional.rewrite }}
