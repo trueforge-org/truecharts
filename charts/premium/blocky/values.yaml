@@ -245,9 +245,45 @@ blocking:
 # Allows for using the hosts configured in kubernetes and such
 hostsFile:
   enabled: false
-  filePath: /etc/hosts
-  hostsTTL: 60m
-  refreshPeriod: 30m
+  sources:
+    - /etc/hosts
+    - https://example.com/hosts
+    - |
+      # inline hosts
+      127.0.0.1 example.com
+  # optional: TTL, default: 1h
+  hostsTTL: 30m
+  # optional: Whether loopback hosts addresses (127.0.0.0/8 and ::1) should be filtered or not
+  # default: false
+  filterLoopback: true
+  # optional: Configure how sources are loaded
+  loading:
+    # optional: file refresh period in duration format.
+    # Set to a value <= 0 to disable.
+    # default: 4h
+    refreshPeriod: 24h
+    # optional: Applies only to files that are downloaded (HTTP URLs).
+    downloads:
+      # optional: timeout for file download (each url). Use large values for big files or slow internet connections
+      # default: 5s
+      timeout: 60s
+      # optional: Maximum download attempts
+      # default: 3
+      attempts: 5
+      # optional: Time between the download attempts
+      # default: 500ms
+      cooldown: 10s
+    # optional: Maximum number of files to process in parallel.
+    # default: 4
+    concurrency: 16
+    # Configure startup behavior.
+    # accepted: blocking, failOnError, fast
+    # default: blocking
+    strategy: failOnError
+    # Number of errors allowed in a file before it is considered invalid.
+    # A value of -1 disables the limit.
+    # default: 5
+    maxErrorsPerSource: 5
 
 podOptions:
   automountServiceAccountToken: true
