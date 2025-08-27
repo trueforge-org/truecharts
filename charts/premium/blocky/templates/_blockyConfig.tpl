@@ -35,15 +35,15 @@ queryLog:
   # optional: Time between the creation attempts
   creationCooldown: {{ .Values.queryLog.creationAttempts | default "2s" }}
 
-upstream:
-  default:
-{{- .Values.defaultUpstreams | toYaml | nindent 8 }}
+upstreams:
+  groups:
+    default:
+{{- .Values.defaultUpstreams | toYaml | nindent 10 }}
 {{- range $id, $value := .Values.upstreams }}
-  {{ $value.name }}:
-{{- $value.dnsservers | toYaml | nindent 8 }}
+    {{ $value.name }}:
+{{- $value.dnsservers | toYaml | nindent 10 }}
 {{- end }}
-
-upstreamTimeout: {{ .Values.upstreamTimeout | default "1s" }}
+  timeout: {{ .Values.upstreamTimeout | default "1s" }}
 
 ports:
   {{- if .Values.service.dns.enabled }}

@@ -89,7 +89,7 @@ service:
         port: 5353
         protocol: udp
         targetPort: 5353
-## TODO Add support for SCALE certificates and certificates secrets here
+
 certFile: ""
 keyFile: ""
 logLevel: info
@@ -98,8 +98,8 @@ logTimestamp: true
 logPrivacy: false
 dohUserAgent: ""
 minTlsServeVersion: 1.2
+
 # -- set the default DNS upstream servers
-# Primarily designed for inclusion in the TrueNAS SCALE GUI
 defaultUpstreams:
   # Cloudflare
   - 1.1.1.1
@@ -116,12 +116,15 @@ defaultUpstreams:
   # ComodoSecure DNS
   - 8.26.56.26
   - 8.20.247.20
+
 # -- set additional upstreams
-# Primarily designed for inclusion in the TrueNAS SCALE GUI
 upstreams:
 #  - name: group2
 #    dnsservers:
 #      - 1.1.1.1
+
+# -- optional: timeout to query the upstream resolver. Default: 1s
+upstreamTimeout: 1s
 
 # -- set bootstrap dns (not needed)
 # Ensures bootstrap encryption and ensure it doesn't use k8s dns
