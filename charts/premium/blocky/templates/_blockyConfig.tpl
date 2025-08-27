@@ -83,10 +83,6 @@ log:
   privacy: {{ .Values.logPrivacy }}
   {{- end }}
 
-{{- if .Values.dohUserAgent }}
-dohUserAgent: {{ .Values.dohUserAgent }}
-{{- end }}
-
 {{- if .Values.minTlsServeVersion }}
 minTlsServeVersion: {{ .Values.minTlsServeVersion }}
 {{- end }}
