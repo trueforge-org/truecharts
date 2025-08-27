@@ -183,7 +183,6 @@ conditional:
     {{ $value.in }}: {{ $value.out }}
 {{- end }}
 {{- end }}
-
 {{- if or .Values.conditional.mapping ( and .Values.k8sgateway.enabled .Values.k8sgateway.domains ) }}
   mapping:
 {{- if and .Values.k8sgateway.enabled .Values.k8sgateway.domains }}
