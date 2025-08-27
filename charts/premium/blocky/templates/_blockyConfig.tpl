@@ -35,7 +35,7 @@ queryLog:
   # optional: Max attempts to create specific query log writer
   creationAttempts: {{ .Values.queryLog.creationAttempts | default 3 }}
   # optional: Time between the creation attempts
-  creationCooldown: {{ .Values.queryLog.creationAttempts | default "2s" }}
+  creationCooldown: {{ .Values.queryLog.creationCooldown | default "2s" }}
 
 upstreams:
   groups:
