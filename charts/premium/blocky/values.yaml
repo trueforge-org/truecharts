@@ -150,6 +150,7 @@ additionalBootstrapDns: []
 filtering:
   # -- Ensures filtering by query type
   queryTypes: []
+
 # -- Set manual custom DNS resolution
 customDNS:
   customTTL: 1h
@@ -160,6 +161,7 @@ customDNS:
   mapping: []
   # - domain: something.com
   #   dnsserver: 192.168.178.1
+
 # -- Setup client-name lookup
 clientLookup:
   # -- upstream used for client-name lookup
@@ -168,7 +170,8 @@ clientLookup:
   clients:
   # - domain: laptop
   #   ips: []
-# -- Setup caching
+
+# -- Configuration for caching of DNS responsesg
 caching:
   minTime: 15m
   maxTime: 0
@@ -178,6 +181,7 @@ caching:
   prefetchThreshold: 5
   prefetchMaxItemsCount: 0
   cacheTimeNegative: 30m
+
 # -- set conditional settings
 # Primarily designed for inclusion in the TrueNAS SCALE GUI
 conditional:
@@ -187,6 +191,7 @@ conditional:
   mapping: []
   # - domain: something.com
   #   dnsserver: 192.168.178.1
+
 # -- set blocking settings using Lists
 # Primarily designed for inclusion in the TrueNAS SCALE GUI
 blocking:
@@ -252,6 +257,7 @@ serviceAccount:
     # -- Specifies whether a service account should be created
     enabled: true
     primary: true
+
 # -- Create a ClusterRole and ClusterRoleBinding
 # @default -- See below
 rbac:
@@ -278,6 +284,7 @@ rbac:
         verbs:
           - list
           - watch
+
 k8sgateway:
   enabled: true
   # -- TTL for non-apex responses (in seconds)
@@ -298,7 +305,6 @@ k8sgateway:
   #   dnsChallenge:
   #     enabled: false
   #     domain: dns01.clouddns.com
-
   forward:
     enabled: false
     primary: tls://1.1.1.1
