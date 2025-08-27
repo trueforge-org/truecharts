@@ -212,7 +212,7 @@ blocking:
     strategy: {{ .Values.blocking.startStrategy }}
     maxErrorsPerSource: {{ .Values.blocking.maxErrorsPerSource }}
 
-  whiteLists:
+  allowlists:
     default:
       - https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/optional-list.txt
       - https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt
@@ -222,8 +222,7 @@ blocking:
 {{- $value.lists | toYaml | nindent 10 }}
 {{- end }}
 
-
-  blackLists:
+  denylists:
     default:
       - https://big.oisd.nl/domainswild
       - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
