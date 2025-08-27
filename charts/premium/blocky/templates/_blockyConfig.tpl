@@ -142,7 +142,6 @@ customDNS:
     {{ $value.in }}: {{ $value.out }}
 {{- end }}
 {{- end }}
-
 {{- if .Values.customDNS.mapping }}
   mapping:
 {{- range $id, $value := .Values.customDNS.mapping }}
