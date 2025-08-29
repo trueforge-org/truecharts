@@ -208,7 +208,7 @@ pagefind: false
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update container image tccr.io/truecharts/zwavejs2mqtt to v8.0.0 ([#3851](https://github.com/truecharts/charts/issues/3851))
+- update container image oci.trueforge.org/truecharts/zwavejs2mqtt to v8.0.0 ([#3851](https://github.com/truecharts/charts/issues/3851))
 
 ## [zwavejs2mqtt-11.0.39](https://github.com/truecharts/charts/compare/zwavejs2mqtt-11.0.37...zwavejs2mqtt-11.0.39) (2022-09-22)
 
@@ -460,7 +460,7 @@ pagefind: false
 
 ### Chore
 
-- update container image tccr.io/truecharts/zwavejs2mqtt to v7.0.0 ([#3670](https://github.com/truecharts/charts/issues/3670))
+- update container image oci.trueforge.org/truecharts/zwavejs2mqtt to v7.0.0 ([#3670](https://github.com/truecharts/charts/issues/3670))
 
 ## [zwavejs2mqtt-11.0.35](https://github.com/truecharts/charts/compare/zwavejs2mqtt-11.0.33...zwavejs2mqtt-11.0.35) (2022-08-30)
 

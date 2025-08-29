@@ -92,7 +92,7 @@ func TestLoadValuesFile(t *testing.T) {
                     Version:    "1.0.0",
                 },
                 "tccrImage": {
-                    Repository: "tccr.io/tccr/image",
+                    Repository: "oci.trueforge.org/tccr/image",
                     Tag:        "1.0.0",
                     Link:       "https://github.com/truecharts/containers/tree/master/apps/image",
                     Version:    "1.0.0",

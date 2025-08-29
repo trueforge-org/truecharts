@@ -14,7 +14,7 @@ For more information about this Chart, please check the docs on the TrueCharts [
 
 To install TrueCharts Helm charts using Helm, you can use our OCI Repository.
 
-`helm install mychart oci://tccr.io/truecharts/cstrike1-6`
+`helm install mychart oci://oci.trueforge.org/truecharts/cstrike1-6`
 
 For more information on how to install TrueCharts Helm charts, checkout the [instructions on the website](/guides)
 

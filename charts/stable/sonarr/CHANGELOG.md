@@ -279,7 +279,7 @@ pagefind: false
 
 ### Chore
 
-- update container image tccr.io/truecharts/exportarr to v1.6.0 ([#13761](https://github.com/truecharts/charts/issues/13761))
+- update container image oci.trueforge.org/truecharts/exportarr to v1.6.0 ([#13761](https://github.com/truecharts/charts/issues/13761))
 
 ## [sonarr-16.0.3](https://github.com/truecharts/charts/compare/sonarr-16.0.2...sonarr-16.0.3) (2023-10-07)
 
@@ -291,7 +291,7 @@ pagefind: false
 
 ### Chore
 
-- update container image tccr.io/truecharts/exportarr to v1.5.5 ([#13227](https://github.com/truecharts/charts/issues/13227))
+- update container image oci.trueforge.org/truecharts/exportarr to v1.5.5 ([#13227](https://github.com/truecharts/charts/issues/13227))
 
 ## [sonarr-16.0.1](https://github.com/truecharts/charts/compare/sonarr-16.0.0...sonarr-16.0.1) (2023-10-02)
 
@@ -425,7 +425,7 @@ pagefind: false
 
 ### Chore
 
-- update container image tccr.io/truecharts/sonarr to v3.0.10.1567 ([#8525](https://github.com/truecharts/charts/issues/8525))
+- update container image oci.trueforge.org/truecharts/sonarr to v3.0.10.1567 ([#8525](https://github.com/truecharts/charts/issues/8525))
 
 ## [sonarr-15.0.10](https://github.com/truecharts/charts/compare/sonarr-15.0.9...sonarr-15.0.10) (2023-04-25)
 

@@ -13,14 +13,14 @@ appVersion: 2.0.0
 dependencies:
   - name: common
     version: 28.16.2
-    repository: oci://tccr.io/truecharts
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: clickhouse
     version: 16.4.3
-    repository: oci://tccr.io/truecharts
+    repository: oci://oci.trueforge.org/truecharts
     condition: clickhouse.enabled
     alias: ""
     tags: []

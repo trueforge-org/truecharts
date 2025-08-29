@@ -454,7 +454,7 @@ pagefind: false
 
 ### Chore
 
-- update container image tccr.io/truecharts/mattermost to v7.3 ([#3683](https://github.com/truecharts/charts/issues/3683))
+- update container image oci.trueforge.org/truecharts/mattermost to v7.3 ([#3683](https://github.com/truecharts/charts/issues/3683))
 
 ## [mattermost-3.0.39](https://github.com/truecharts/charts/compare/mattermost-3.0.38...mattermost-3.0.39) (2022-09-02)
 

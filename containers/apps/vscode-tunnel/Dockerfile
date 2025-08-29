@@ -1,4 +1,4 @@
-FROM tccr.io/truecharts/ubuntu:latest@sha256:144d3bfe7088dfef5c6a62abadcb17cfb911bad92fc6eae0293ab5e633f2a1f7
+FROM oci.trueforge.org/truecharts/ubuntu:latest@sha256:144d3bfe7088dfef5c6a62abadcb17cfb911bad92fc6eae0293ab5e633f2a1f7
 
 ARG TARGETPLATFORM
 ARG VERSION

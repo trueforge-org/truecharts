@@ -14,7 +14,7 @@ For more information about this Chart, please check the docs on the TrueCharts [
 
 To install TrueCharts Helm charts using Helm, you can use our OCI Repository.
 
-`helm install mychart oci://tccr.io/truecharts/wifi-card`
+`helm install mychart oci://oci.trueforge.org/truecharts/wifi-card`
 
 For more information on how to install TrueCharts Helm charts, checkout the [instructions on the website](/guides)
 

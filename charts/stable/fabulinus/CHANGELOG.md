@@ -899,7 +899,7 @@ pagefind: false
 
 - Bump all charts to generate config and container references due to huge increase of repository
 - update helm general non-major helm releases ([#3268](https://github.com/truecharts/apps/issues/3268))
-- update container image tccr.io/truecharts/jackett to v0.20.1326 ([#3267](https://github.com/truecharts/apps/issues/3267))
+- update container image oci.trueforge.org/truecharts/jackett to v0.20.1326 ([#3267](https://github.com/truecharts/apps/issues/3267))
 
 ## [jackett-11.0.44](https://github.com/truecharts/apps/compare/jackett-11.0.43...jackett-11.0.44) (2022-07-20)
 

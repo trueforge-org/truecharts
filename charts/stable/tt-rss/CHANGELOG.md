@@ -833,7 +833,7 @@ pagefind: false
 
 #### Chore
 
-- update container image tccr.io/truecharts/tt-rss to v2.0.9113 ([#2459](https://github.com/truecharts/apps/issues/2459))
+- update container image oci.trueforge.org/truecharts/tt-rss to v2.0.9113 ([#2459](https://github.com/truecharts/apps/issues/2459))
 
 <a name="tt-rss-5.0.18"></a>
 
