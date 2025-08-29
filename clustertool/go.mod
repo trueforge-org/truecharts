@@ -6,7 +6,7 @@ require (
 	filippo.io/age v1.2.1
 	github.com/Masterminds/semver/v3 v3.4.0
 	github.com/beevik/ntp v1.4.3
-	github.com/budimanjojo/talhelper/v3 v3.0.32
+	github.com/budimanjojo/talhelper/v3 v3.0.33
 	github.com/getsops/sops/v3 v3.10.2
 	github.com/go-git/go-git/v5 v5.16.2
 	github.com/go-logr/zerologr v1.2.3
@@ -134,7 +134,7 @@ require (
 	github.com/go-openapi/swag v0.23.1 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
-	github.com/go-viper/mapstructure/v2 v2.3.0 // indirect
+	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang-jwt/jwt/v5 v5.2.2 // indirect
@@ -225,7 +225,7 @@ require (
 	github.com/siderolabs/crypto v0.6.3 // indirect
 	github.com/siderolabs/gen v0.8.5 // indirect
 	github.com/siderolabs/go-pointer v1.0.1 // indirect
-	github.com/siderolabs/image-factory v0.7.6 // indirect
+	github.com/siderolabs/image-factory v0.8.3 // indirect
 	github.com/siderolabs/net v0.4.0 // indirect
 	github.com/siderolabs/protoenc v0.2.2 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
@@ -257,7 +257,7 @@ require (
 	go.yaml.in/yaml/v2 v2.4.2 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/exp v0.0.0-20250506013437-ce4c2cf36ca6 // indirect
-	golang.org/x/mod v0.26.0 // indirect
+	golang.org/x/mod v0.27.0 // indirect
 	golang.org/x/net v0.42.0 // indirect
 	golang.org/x/oauth2 v0.30.0 // indirect
 	golang.org/x/sync v0.16.0 // indirect
