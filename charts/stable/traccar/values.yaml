@@ -19,7 +19,10 @@ cnpg:
     database: traccar
 securityContext:
   container:
+    runAsNonRoot: false
     readOnlyRootFilesystem: false
+    runAsUser: 0
+    runAsGroup: 0
 workload:
   main:
     podSpec:
