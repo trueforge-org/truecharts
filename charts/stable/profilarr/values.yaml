@@ -13,6 +13,6 @@ persistence:
   config:
     enabled: true
     mountPath: "/config"
-securityContext:
-  container:
-    readOnlyRootFilesystem: false
+  appuser:
+    enabled: true
+    mountPath: "/home/appuser"
