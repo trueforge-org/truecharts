@@ -9,10 +9,10 @@ annotations:
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 1141.0.3
+appVersion: 1142.0.1
 dependencies:
   - name: common
-    version: 28.16.2
+    version: 28.16.4
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,5 +36,4 @@ sources:
   - https://github.com/linuxserver/docker-firefox
   - https://github.com/truecharts/charts/tree/master/charts/stable/firefox
 type: application
-version: 28.1.4
-
+version: 29.0.1
