@@ -9,10 +9,10 @@ annotations:
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 5.185.0
+appVersion: 5.187.0
 dependencies:
   - name: common
-    version: 28.16.2
+    version: 28.16.4
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -34,5 +34,4 @@ sources:
   - https://github.com/truecharts/charts/tree/master/charts/stable/xen-orchestra
   - https://hub.docker.com/r/ronivay/xen-orchestra
 type: application
-version: 11.6.0
-
+version: 11.7.1
