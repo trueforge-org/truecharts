@@ -13,3 +13,6 @@ persistence:
   config:
     enabled: true
     mountPath: "/config"
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
