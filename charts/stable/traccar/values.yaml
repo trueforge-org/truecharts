@@ -11,12 +11,15 @@ service:
 persistence:
   data:
     enabled: true
-    mountPath: "/opt/traccar/"
+    mountPath: "/opt/traccar/data"
 cnpg:
   main:
     enabled: true
     user: traccar
     database: traccar
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
 workload:
   main:
     podSpec:
