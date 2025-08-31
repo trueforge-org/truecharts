@@ -231,20 +231,20 @@ jobs:
       - name: Add Dependencies
         run: |
           if [[ "${{ matrix.values }}" =~ (ingress|metrics|cnpg|volsync).*-values.yaml ]]; then
-            helm install prometheus-operator oci://tccr.io/truecharts/prometheus-operator --namespace prometheus-operator --create-namespace --wait
+            helm install prometheus-operator oci://oci.trueforge.org/truecharts/prometheus-operator --namespace prometheus-operator --create-namespace --wait
           fi
           if [[ "${{ matrix.values }}" =~ cnpg.*-values.yaml ]]; then
-            helm install cloudnative-pg oci://tccr.io/truecharts/cloudnative-pg --namespace cloudnative-pg --create-namespace --wait
+            helm install cloudnative-pg oci://oci.trueforge.org/truecharts/cloudnative-pg --namespace cloudnative-pg --create-namespace --wait
           fi
           if [[ "${{ matrix.values }}" =~ ingress.*-values.yaml ]]; then
-            helm install cert-manager oci://tccr.io/truecharts/cert-manager --namespace cert-manager --create-namespace --wait
-            # helm install traefik-crds oci://tccr.io/truecharts/traefik-crds --namespace traefik-crds --create-namespace --wait
-            helm install traefik oci://tccr.io/truecharts/traefik --namespace traefik --create-namespace --wait \
+            helm install cert-manager oci://oci.trueforge.org/truecharts/cert-manager --namespace cert-manager --create-namespace --wait
+            # helm install traefik-crds oci://oci.trueforge.org/truecharts/traefik-crds --namespace traefik-crds --create-namespace --wait
+            helm install traefik oci://oci.trueforge.org/truecharts/traefik --namespace traefik --create-namespace --wait \
               --set service.main.type=ClusterIP --set service.tcp.type=ClusterIP
           fi
           if [[ "${{ matrix.values }}" =~ volsync.*-values.yaml ]]; then
-            helm install volumesnapshots oci://tccr.io/truecharts/volumesnapshots --namespace volumesnapshots --create-namespace --wait
-            helm install volsync oci://tccr.io/truecharts/volsync --namespace volsync --create-namespace --wait
+            helm install volumesnapshots oci://oci.trueforge.org/truecharts/volumesnapshots --namespace volumesnapshots --create-namespace --wait
+            helm install volsync oci://oci.trueforge.org/truecharts/volsync --namespace volsync --create-namespace --wait
           fi
 
       - name: Run chart-testing (install)

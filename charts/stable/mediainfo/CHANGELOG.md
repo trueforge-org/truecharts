@@ -139,7 +139,7 @@ pagefind: false
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update container image tccr.io/truecharts/mediainfo to v22.10.1 ([#4098](https://github.com/truecharts/charts/issues/4098))
+- update container image oci.trueforge.org/truecharts/mediainfo to v22.10.1 ([#4098](https://github.com/truecharts/charts/issues/4098))
 
 ## [mediainfo-1.0.16](https://github.com/truecharts/charts/compare/mediainfo-1.0.15...mediainfo-1.0.16) (2022-10-12)
 

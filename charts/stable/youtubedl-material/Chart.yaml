@@ -12,15 +12,15 @@ apiVersion: v2
 appVersion: 2024.10.01
 dependencies:
   - name: common
-    version: 28.16.2
-    repository: oci://tccr.io/truecharts
+    version: 28.16.5
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mongodb
-    version: 16.3.4
-    repository: oci://tccr.io/truecharts
+    version: 16.3.6
+    repository: oci://oci.trueforge.org/truecharts
     condition: mongodb.enabled
     alias: ""
     tags: []
@@ -42,5 +42,5 @@ sources:
   - https://github.com/Tzahi12345/YoutubeDL-Material
   - https://github.com/truecharts/charts/tree/master/charts/stable/youtubedl-material
 type: application
-version: 13.6.6
+version: 13.6.9
 

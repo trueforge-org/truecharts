@@ -12,15 +12,15 @@ apiVersion: v2
 appVersion: 15.6.0
 dependencies:
   - name: common
-    version: 28.16.2
-    repository: oci://tccr.io/truecharts
+    version: 28.16.5
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
     version: 16.3.2
-    repository: oci://tccr.io/truecharts
+    repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
     tags: []
@@ -45,5 +45,5 @@ sources:
   - https://github.com/linuxserver/docker-piwigo
   - https://github.com/truecharts/charts/tree/master/charts/stable/piwigo
 type: application
-version: 16.7.5
+version: 16.7.8
 

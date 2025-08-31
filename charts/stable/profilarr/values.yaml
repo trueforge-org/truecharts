@@ -1,7 +1,7 @@
 image:
   repository: docker.io/santiagosayshey/profilarr
   pullPolicy: IfNotPresent
-  tag: v1.0.1@sha256:16ea5790e612889e02e297094ae0b0d605c5770511a7564d6a43e663cafebf26
+  tag: v1.1.3@sha256:c8ad91a8e5d60b3816321b3a1f68332b29a23f910f6bd2c2d7b4a83f881f032f
 service:
   main:
     ports:
@@ -13,3 +13,9 @@ persistence:
   config:
     enabled: true
     mountPath: "/config"
+securityContext:
+  container:
+    runAsNonRoot: false
+    readOnlyRootFilesystem: false
+    runAsUser: 0
+    runAsGroup: 0

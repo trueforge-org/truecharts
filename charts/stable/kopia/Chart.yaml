@@ -9,11 +9,11 @@ annotations:
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 20250812.0.11140
+appVersion: 20250822.0.54743
 dependencies:
   - name: common
-    version: 28.16.2
-    repository: oci://tccr.io/truecharts
+    version: 28.16.5
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
@@ -36,5 +36,5 @@ sources:
   - https://hub.docker.com/r/kopia/kopia
   - https://kopia.io/docs/installation/#docker-images
 type: application
-version: 16.1.2
+version: 17.0.2
 

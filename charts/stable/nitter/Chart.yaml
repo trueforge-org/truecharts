@@ -12,15 +12,15 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.16.2
-    repository: oci://tccr.io/truecharts
+    version: 28.16.5
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: redis
-    version: 17.4.3
-    repository: oci://tccr.io/truecharts
+    version: 17.4.5
+    repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
     tags: []
@@ -43,5 +43,5 @@ sources:
   - https://github.com/zedeus/nitter
   - https://hub.docker.com/r/zedeus/nitter
 type: application
-version: 10.7.5
+version: 10.7.8
 

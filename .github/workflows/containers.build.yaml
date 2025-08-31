@@ -219,7 +219,7 @@ jobs:
           # list of Docker images to use as base name for tags
           images: |
             quay.io/tccr/${{ matrix.container }}
-            tccr.io/tccr/${{ matrix.container }}
+            oci.trueforge.org/tccr/${{ matrix.container }}
 
       # Install and configure Buildx
       - name: Set up Docker Buildx
@@ -250,7 +250,7 @@ jobs:
           file: ./containers/${{ steps.prep.outputs.category }}/${{ matrix.container }}/Dockerfile
           load: true
           tags: |
-            tccr.io/tccr/${{ matrix.container }}:test
+            oci.trueforge.org/tccr/${{ matrix.container }}:test
           cache-from: ${{ steps.prep.outputs.cache_from }}
           cache-to: ${{ steps.prep.outputs.cache_to }}
 
@@ -262,7 +262,7 @@ jobs:
         run: |
           for i in $(seq 1 ${{ env.GOSS_ITERATIONS }}); do
             echo "Running GOSS test iteration $i of ${{ env.GOSS_ITERATIONS }}..."
-            dgoss run tccr.io/tccr/${{ matrix.container }}:test
+            dgoss run oci.trueforge.org/tccr/${{ matrix.container }}:test
           done
 
       # Push if not a PR, otherwise just test the build process for all requested platforms

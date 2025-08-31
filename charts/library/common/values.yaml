@@ -545,43 +545,43 @@ notes:
 ####
 
 gluetunImage:
-  repository: tccr.io/tccr/gluetun
+  repository: oci.trueforge.org/tccr/gluetun
   tag: v3.40.0@sha256:a8189e29155e0f8142be1500ae068a92b189b1b25abbba036321e74d6389bf2b
   pullPolicy: IfNotPresent
 
 netshootImage:
-  repository: tccr.io/tccr/netshoot
+  repository: oci.trueforge.org/tccr/netshoot
   tag: v0.14.0@sha256:28ede4317d22391e7d89a15eb78dc2afc3587ece02c76c983dde7239a0e43679
   pullPolicy: IfNotPresent
 
 tailscaleImage:
-  repository: tccr.io/tccr/tailscale
-  tag: v1.86.2@sha256:7694928c789a246fe2fb58e10dd604f66b18b4ef961409095b689f7762523ed1
+  repository: oci.trueforge.org/tccr/tailscale
+  tag: v1.86.5@sha256:e57ede47a3217211d234228f3f971298569013497054076276aa5a1beef207c0
   pullPolicy: IfNotPresent
 
 codeserverImage:
-  repository: tccr.io/tccr/code-server
-  tag: v4.103.1@sha256:b754400a938e74eaaf07fa6fb9b64a24a4e6c5d88c94f914748b202f1fb57ce6
+  repository: oci.trueforge.org/tccr/code-server
+  tag: v4.103.2@sha256:3b619e2ecd2764f206f477abfde98a406b710782ae8d7ae709a7e319305a7d48
   pullPolicy: IfNotPresent
 
 alpineImage:
-  repository: tccr.io/tccr/alpine
+  repository: oci.trueforge.org/tccr/alpine
   tag: v3.22.1
   pullPolicy: IfNotPresent
 
 scratchImage:
-  repository: tccr.io/tccr/scratch
+  repository: oci.trueforge.org/tccr/scratch
   tag: latest@sha256:4aef9dbf99ea2a8857ed4ce9d9bf79d330b79044884c7374e392445d122ec746
   pullPolicy: IfNotPresent
 
 kubectlImage:
-  repository: tccr.io/tccr/kubectl
-  tag: latest@sha256:b16dca4e8ec1c9128a8b7712ebd3713f69d3dd24d622799a482e7ce3929a702b
+  repository: oci.trueforge.org/tccr/kubectl
+  tag: latest@sha256:7e2d7043f4cac6cc040e1474940f3a11f126a90c789dd72199a9a27324063a93
   pullPolicy: IfNotPresent
 
 wgetImage:
-  repository: tccr.io/tccr/wget
-  tag: v1.0.0@sha256:961566b0149f766abfaa82326aad9c3089e3311eca5d4910ff2d4faf70ddbb10
+  repository: oci.trueforge.org/tccr/wget
+  tag: v1.0.0@sha256:4cfc0cb48cc8303cbd914f6bc54016b89c4d549c196370e2b0b41cdf38744603
   pullPolicy: IfNotPresent
 
 yqImage:
@@ -590,22 +590,22 @@ yqImage:
   tag: 4.47.1@sha256:b9285dd3b0bea3c34d0c54415dd48d767dabd9644d489bd6e253660847b58419
 
 postgresClientImage:
-  repository: tccr.io/tccr/db-wait-postgres
-  tag: v1.1.0@sha256:182687540102534aeb28fce4d124274e81a849a43556214977c378ae2a580b35
+  repository: oci.trueforge.org/tccr/db-wait-postgres
+  tag: v1.1.0@sha256:67ff700c4e746c5a1205b4629d4f0910a21f44d1e993941fb69c750e651c0b39
   pullPolicy: IfNotPresent
 
 mariadbClientImage:
-  repository: tccr.io/tccr/db-wait-mariadb
-  tag: v1.1.0@sha256:bd60b6087bacaf5e697243f764065ea5d04da1af703b2009be3752c1aede6d32
+  repository: oci.trueforge.org/tccr/db-wait-mariadb
+  tag: v1.1.0@sha256:8614f77d546e1f03c5104cf75387eb04efa7cb1ea4557a2d51112f35c69c0905
   pullPolicy: IfNotPresent
 
 redisClientImage:
-  repository: tccr.io/tccr/db-wait-redis
-  tag: v1.1.0@sha256:14c792c5d2faf5b5c7f8325e387700d70571bf930d321de81483aa704c198e40
+  repository: oci.trueforge.org/tccr/db-wait-redis
+  tag: v1.1.0@sha256:ddebe75743f37c431507c51832b5961cc63aa1de61af4f5c75b7554239c8b732
   pullPolicy: IfNotPresent
 
 mongodbClientImage:
-  repository: tccr.io/tccr/db-wait-mongodb
+  repository: oci.trueforge.org/tccr/db-wait-mongodb
   tag: v1.2.0@sha256:fe22e616bd3facd3d2e959cfaae9795a8503c8fb6bb90487a14dfd14cbd3ffe3
   pullPolicy: IfNotPresent
 
@@ -643,7 +643,7 @@ postgresVectors16Image:
 # @default -- See below
 openvpnImage:
   # -- Specify the openvpn client image
-  repository: tccr.io/tccr/openvpn-client
+  repository: oci.trueforge.org/tccr/openvpn-client
   # -- Specify the openvpn client image tag
   tag: latest@sha256:9bfdf50791d6e51056e31c03f73c9db329b2b72e7746155cfdc63e0c8b49b55a
   # -- Specify the openvpn client image pull policy
@@ -653,7 +653,7 @@ openvpnImage:
 # @default -- See below
 wireguardImage:
   # -- Specify the WireGuard image
-  repository: tccr.io/tccr/wireguard
+  repository: oci.trueforge.org/tccr/wireguard
   # -- Specify the WireGuard image tag
   tag: v1.0.20210914@sha256:683b8b74d64ebd07f9955147539834c2a4b60fee51d2a36fa76b9aba689601bf
   # -- Specify the WireGuard image pull policy

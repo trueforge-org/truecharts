@@ -845,7 +845,7 @@ pagefind: false
 #### Chore
 
 - update helm general non-major helm releases ([#2803](https://github.com/truecharts/apps/issues/2803))
-- update container image tccr.io/truecharts/ispy-agent-dvr to v4.0.0.0 ([#2769](https://github.com/truecharts/apps/issues/2769))
+- update container image oci.trueforge.org/truecharts/ispy-agent-dvr to v4.0.0.0 ([#2769](https://github.com/truecharts/apps/issues/2769))
 
 <a name="ispy-agent-dvr-1.0.27"></a>
 

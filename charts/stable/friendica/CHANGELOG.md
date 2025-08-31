@@ -1145,7 +1145,7 @@ pagefind: false
 
 #### Chore
 
-- update container image tccr.io/truecharts/friendica to v2022.02 ([#1896](https://github.com/truecharts/apps/issues/1896))
+- update container image oci.trueforge.org/truecharts/friendica to v2022.02 ([#1896](https://github.com/truecharts/apps/issues/1896))
 
 <a name="friendica-0.0.38"></a>
 

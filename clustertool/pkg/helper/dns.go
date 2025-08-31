@@ -30,7 +30,7 @@ func checkAllDomains(domains []string, verbose bool) {
 
 func CheckReqDomains() {
     domains := []string{
-        "tccr.io",
+        "oci.trueforge.org",
         "ghcr.io",
         "github.com",
         "docker.com",

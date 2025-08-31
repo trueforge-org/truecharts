@@ -12,15 +12,15 @@ apiVersion: v2
 appVersion: 31.0.7
 dependencies:
   - name: common
-    version: 28.16.2
-    repository: oci://tccr.io/truecharts
+    version: 28.16.5
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: redis
-    version: 17.4.3
-    repository: oci://tccr.io/truecharts
+    version: 17.4.5
+    repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
     tags: []
@@ -45,12 +45,9 @@ sources:
   - https://github.com/nextcloud/docker
   - https://github.com/nextcloud/helm
   - https://github.com/truecharts/charts/tree/master/charts/premium/nextcloud
-  - https://github.com/truecharts/containers/tree/master/apps/nextcloud-fpm
-  - https://github.com/truecharts/containers/tree/master/apps/nextcloud-imaginary
-  - https://github.com/truecharts/containers/tree/master/apps/nextcloud-push-notify
   - https://hub.docker.com/r/clamav/clamav
   - https://hub.docker.com/r/collabora/code
   - https://hub.docker.com/r/nginxinc/nginx-unprivileged
 type: application
-version: 36.7.7
+version: 36.7.11
 

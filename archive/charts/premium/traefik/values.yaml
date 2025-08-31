@@ -1,5 +1,5 @@
 image:
-  repository: tccr.io/tccr/traefik
+  repository: oci.trueforge.org/tccr/traefik
   tag: v3.3.3@sha256:bfea9053dcccd6b2208e2eceb5b04c99d9d1ba4804eca5908734cd6dee4f4732
   pullPolicy: IfNotPresent
 
@@ -152,7 +152,7 @@ defaultCertificate: ""
 tlsStore: {}
 
 # -- TLS Options to be created as TLSOption CRDs
-# https://doc.traefik.io/tccr.io/truecharts/https/tls/#tls-options
+# https://doc.traefik.io/oci.trueforge.org/truecharts/https/tls/#tls-options
 # Example:
 tlsOptions:
   default:

@@ -12,15 +12,15 @@ apiVersion: v2
 appVersion: 0.26.0
 dependencies:
   - name: common
-    version: 28.16.2
-    repository: oci://tccr.io/truecharts
+    version: 28.16.5
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: redis
-    version: 17.4.3
-    repository: oci://tccr.io/truecharts
+    version: 17.4.5
+    repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
     tags: []
@@ -47,4 +47,3 @@ sources:
   - https://quay.io/oriedge/k8s_gateway
 type: application
 version: 18.8.0
-

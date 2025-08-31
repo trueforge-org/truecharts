@@ -22,12 +22,12 @@ You **CANNOT** use it to run docker, docker stacks or docker compose
 Navigate to `Home` -> `local`
 
 - Click `Helm` on the sidebar
-- Type `oci://tccr.io/truecharts` under the `Additional Repositories`
+- Type `oci://oci.trueforge.org/truecharts` under the `Additional Repositories`
 - Click `Add repository`
 
 ## Replacing default Helm repository with TrueCharts Helm repository
 
 Navigate to `Settings` on the sidebar
 
-- Under `Helm Repository` replace `URL` with `oci://tccr.io/truecharts`
+- Under `Helm Repository` replace `URL` with `oci://oci.trueforge.org/truecharts`
 - Click `Save settings`

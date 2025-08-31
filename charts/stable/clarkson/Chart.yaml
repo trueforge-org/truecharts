@@ -12,15 +12,15 @@ apiVersion: v2
 appVersion: 1.1.2
 dependencies:
   - name: common
-    version: 28.16.2
-    repository: oci://tccr.io/truecharts
+    version: 28.16.5
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
     version: 16.3.2
-    repository: oci://tccr.io/truecharts
+    repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
     tags: []
@@ -46,5 +46,5 @@ sources:
   - https://github.com/linuxserver/Clarkson
   - https://github.com/truecharts/charts/tree/master/charts/stable/clarkson
 type: application
-version: 15.6.4
+version: 15.6.6
 

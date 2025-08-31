@@ -375,7 +375,7 @@ operator:
     ##
     relabelings: []
   ## Prometheus Configmap-reload image to use for reloading configmaps
-  ## defaults to Bitnami Prometheus Operator (ref: https://hub.docker.com/r/tccr.io/truecharts/prometheus-operator/tags/)
+  ## defaults to Bitnami Prometheus Operator (ref: https://hub.docker.com/r/oci.trueforge.org/truecharts/prometheus-operator/tags/)
   ##
   prometheusConfigReloader:
     containerSecurityContext:
@@ -411,7 +411,7 @@ prometheus:
   ##
   enabled: true
   ## Bitnami Prometheus image version
-  ## ref: https://hub.docker.com/r/tccr.io/truecharts/prometheus/tags/
+  ## ref: https://hub.docker.com/r/oci.trueforge.org/truecharts/prometheus/tags/
   ## @param prometheus.image.registry Prometheus image registry
   ## @param prometheus.image.repository Prometheus image repository
   ## @param prometheus.image.tag Prometheus Image tag (immutable tags are recommended)
@@ -829,7 +829,7 @@ prometheus:
     ##
     create: false
     ## Bitnami Thanos image
-    ## ref: https://hub.docker.com/r/tccr.io/truecharts/thanos/tags/
+    ## ref: https://hub.docker.com/r/oci.trueforge.org/truecharts/thanos/tags/
     ## @param prometheus.thanos.image.registry Thanos image registry
     ## @param prometheus.thanos.image.repository Thanos image name
     ## @param prometheus.thanos.image.tag Thanos image tag

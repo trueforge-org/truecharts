@@ -807,7 +807,7 @@ pagefind: false
 
 #### Chore
 
-- update container image tccr.io/truecharts/unifi to v7.0.23 ([#2048](https://github.com/truecharts/apps/issues/2048))
+- update container image oci.trueforge.org/truecharts/unifi to v7.0.23 ([#2048](https://github.com/truecharts/apps/issues/2048))
 - Remove `-icon` string from icon png's ([#2040](https://github.com/truecharts/apps/issues/2040))
 
 <a name="unifi-10.0.0"></a>
