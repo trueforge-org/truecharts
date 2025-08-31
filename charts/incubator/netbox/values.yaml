@@ -2,6 +2,13 @@ image:
   repository: ghcr.io/netbox-community/netbox
   pullPolicy: IfNotPresent
   tag: v4.3.5@sha256:a46358d7952caf7f6a574f41dbace5632b969620e49d47a8baf9b25633556179
+## You'll probably want to uncomment this on first install or bigger upgrades, which are resource hungry and take time.
+## Maybe also extend the install timeout.
+#resources:
+#  limits:
+#    cpu: 4000m
+#  requests:
+#    cpu: 400m
 netbox:
   secretKey: ""
   superuser:
@@ -248,11 +255,6 @@ workload:
     podSpec:
       containers:
         main:
-          resources:
-            limits:
-              cpu: 2000m
-            requests:
-              cpu: 200m
           probeTimeouts:
             startup:
               initialDelaySeconds: 30
