@@ -134,9 +134,9 @@ upstreams:
 # -- optional: timeout to query the upstream resolver. Default: 1s
 upstreamTimeout: 1s
 
-### NOTE: TEMPLATE NOT CORRECT FOR BLOCKY v0.26.2, MAYBE SOMEBODY CAN FIX
 # -- set bootstrap dns (not needed)
 # Ensures bootstrap encryption and ensure it doesn't use k8s dns
+# When using an upstream specified by IP, and not by hostname, you can write only the upstream and skip ips.
 bootstrapDns:
   # -- Upstream
   upstream: ""
