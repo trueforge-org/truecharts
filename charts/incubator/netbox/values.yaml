@@ -2,8 +2,8 @@ image:
   repository: ghcr.io/netbox-community/netbox
   pullPolicy: IfNotPresent
   tag: v4.3.5@sha256:a46358d7952caf7f6a574f41dbace5632b969620e49d47a8baf9b25633556179
-## You'll probably want to uncomment this on first install or bigger upgrades, which are resource hungry and take time.
-## Maybe also extend the install timeout.
+## You'll probably want to uncomment this on first install or upgrades, which is resource hungry and could take time, especially with lots of plugins.
+## Maybe also increase the chart install timeout if resource constrained.
 #resources:
 #  limits:
 #    cpu: 4000m
