@@ -1,5 +1,5 @@
 # hadolint ignore=DL3007
-FROM ubuntu:latest@sha256:7c06e91f61fa88c08cc74f7e1b7c69ae24910d745357e0dfe1d2c0322aaf20f9
+FROM ubuntu:latest@sha256:f3b7f1bdfaf22a0a8db05bb2b758535fe0e70d82bea4206f7549f89aa12922f4
 
 ARG TARGETPLATFORM
 ARG VERSION
