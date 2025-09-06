@@ -99,7 +99,7 @@ Go to your `Reponsitories/oci` directory and create this file.
 ``` yaml
 //capacitor-manifests.yaml
 
-apiVersion: source.toolkit.fluxcd.io/v1beta2
+apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
   name: capacitor
