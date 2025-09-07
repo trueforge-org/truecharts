@@ -74,12 +74,6 @@ RUN set -ex; \
     apt-get dist-clean
     rm -rf /var/lib/apt/lists/*
 
-# See https://github.com/nextcloud/docker/issues/763
-RUN set -ex \
-  \
-  && touch /usr/local/etc/php/conf.d/redis-session.ini \
-  && chmod 777 /usr/local/etc/php/conf.d/redis-session.ini
-
 # Copy occ script to /usr/bin/occ
 COPY --chmod=755 ./containers/apps/nextcloud-fpm/scripts/occ /usr/bin/occ
 
