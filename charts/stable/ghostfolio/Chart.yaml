@@ -9,7 +9,7 @@ annotations:
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 2.196.0
+appVersion: 2.197.0
 dependencies:
   - name: common
     version: 28.16.6
@@ -41,8 +41,9 @@ name: ghostfolio
 sources:
   - https://ghostfol.io/
   - https://github.com/ghostfolio/ghostfolio
+  - https://github.com/truecharts/charts/tree/master/charts/stable/ghostfolio
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ghostfolio
   - https://hub.docker.com/r/ghostfolio/ghostfolio
 type: application
-version: 8.18.2
+version: 8.19.0
 
