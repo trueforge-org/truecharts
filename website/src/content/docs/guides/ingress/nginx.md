@@ -58,7 +58,7 @@ controller:
     enabled: false
   resources:
     requests:
-      cpu: 100m
+      cpu: 75m
     limits:
       memory: 500Mi
 defaultBackend:
@@ -110,7 +110,7 @@ controller:
     enabled: false
   resources:
     requests:
-      cpu: 100m
+      cpu: 75m
     limits:
       memory: 500Mi
 defaultBackend:

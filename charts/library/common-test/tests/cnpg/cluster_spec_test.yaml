@@ -45,11 +45,11 @@ tests:
               inProgress: false
             resources:
               limits:
-                cpu: 1000m
-                memory: 1500Mi
+                cpu: 1500m
+                memory: 2400Mi
               requests:
-                cpu: 100m
-                memory: 250Mi
+                cpu: 75m
+                memory: 200Mi
             storage:
               pvcTemplate:
                 accessModes:
@@ -114,11 +114,11 @@ tests:
               inProgress: false
             resources:
               limits:
-                cpu: 1000m
-                memory: 1500Mi
+                cpu: 1500m
+                memory: 2400Mi
               requests:
-                cpu: 100m
-                memory: 250Mi
+                cpu: 75m
+                memory: 200Mi
             storage:
               pvcTemplate:
                 accessModes:

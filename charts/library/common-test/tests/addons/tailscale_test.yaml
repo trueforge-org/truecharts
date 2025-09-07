@@ -67,12 +67,12 @@ tests:
           content:
             resources:
               limits:
-                cpu: 1000m
-                memory: 1500Mi
+                cpu: 1500m
+                memory: 2400Mi
                 nvidia.com/gpu: 1
               requests:
-                cpu: 100m
-                memory: 250Mi
+                cpu: 75m
+                memory: 200Mi
       - documentIndex: *DeploymentDocument
         equal:
           path: spec.template.spec.containers[1].name
@@ -83,11 +83,11 @@ tests:
           content:
             resources:
               limits:
-                cpu: 1000m
-                memory: 1500Mi
+                cpu: 1500m
+                memory: 2400Mi
               requests:
-                cpu: 100m
-                memory: 250Mi
+                cpu: 75m
+                memory: 200Mi
       - documentIndex: *DeploymentDocument
         contains:
           path: spec.template.spec.containers[1].env
@@ -174,12 +174,12 @@ tests:
           content:
             resources:
               limits:
-                cpu: 1000m
-                memory: 1500Mi
+                cpu: 1500m
+                memory: 2400Mi
                 nvidia.com/gpu: 1
               requests:
-                cpu: 100m
-                memory: 250Mi
+                cpu: 75m
+                memory: 200Mi
       - documentIndex: *DeploymentDocument
         equal:
           path: spec.template.spec.containers[1].name
@@ -190,11 +190,11 @@ tests:
           content:
             resources:
               limits:
-                cpu: 1000m
-                memory: 1500Mi
+                cpu: 1500m
+                memory: 2400Mi
               requests:
-                cpu: 100m
-                memory: 250Mi
+                cpu: 75m
+                memory: 200Mi
       - documentIndex: *DeploymentDocument
         contains:
           path: spec.template.spec.containers[1].env

@@ -99,11 +99,11 @@ tests:
           content:
             resources:
               limits:
-                cpu: 1000m
-                memory: 1500Mi
+                cpu: 1500m
+                memory: 2400Mi
               requests:
-                cpu: 100m
-                memory: 250Mi
+                cpu: 75m
+                memory: 200Mi
       - documentIndex: *DeploymentDocument
         equal:
           path: spec.template.spec.containers[1].name
@@ -114,12 +114,12 @@ tests:
           content:
             resources:
               limits:
-                cpu: 1000m
-                memory: 1500Mi
+                cpu: 1500m
+                memory: 2400Mi
                 nvidia.com/gpu: 1
               requests:
-                cpu: 100m
-                memory: 250Mi
+                cpu: 75m
+                memory: 200Mi
       - documentIndex: *AddonServiceDocument
         equal:
           path: metadata.name
@@ -358,11 +358,11 @@ tests:
           content:
             resources:
               limits:
-                cpu: 1000m
-                memory: 1500Mi
+                cpu: 1500m
+                memory: 2400Mi
               requests:
-                cpu: 100m
-                memory: 250Mi
+                cpu: 75m
+                memory: 200Mi
 
   - it: should fail if more than 1 workload selected
     set:

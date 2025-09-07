@@ -115,7 +115,7 @@ prometheus:
     retentionSize: 50GB
     resources:
       requests:
-        cpu: 100m
+        cpu: 75m
         memory: 500Mi
       limits:
         memory: 2000Mi
