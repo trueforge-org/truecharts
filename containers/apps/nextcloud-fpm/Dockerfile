@@ -1,5 +1,25 @@
-FROM public.ecr.aws/docker/library/nextcloud:31.0.7-fpm@sha256:b4a97459cda814c868316ca782af777d409c72ffbe59cdcd11ed4a2ec52ed961
-# hadolint ignore=DL3008,DL3015,SC2086,SC2155,DL4006
+FROM public.ecr.aws/docker/library/nextcloud:31.0.8-fpm@sha256:46e91aaad714d2196868dae2719e0bacde27a16e2c3c7a6fc991e68b79146f8c
+
+# Adds SURY PHP repository (This is a workaround because IMAP php extension is no longer available in Debian Trixie)
+# https://github.com/nextcloud/docker/issues/2456
+# https://www.voodoo.business/blog/2025/08/11/trixie-php8-4-imap-missing/
+# https://wiki.debian.org/AdditionalPHPVersions (Quotes "The SURY repository is a reputable repository by web hosting professionals worldwide, but IT'S NOT A OFFICIAL DEBIAN REPOSITORY. You have been warned.")
+RUN set -ex \
+  && apt-get update \
+  && apt-get install -y --no-install-recommends gnupg2 lsb-release \
+  && echo "deb https://packages.sury.org/php $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/sury-php.list \
+  && curl -fsSL https://packages.sury.org/php/apt.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/sury-php.gpg \
+  \
+  && apt-get update \
+  # Development files for c-client mail API (used by IMAP)
+  && apt-get install -y --no-install-recommends libc-client-dev \
+  && apt-get dist-clean \
+  \
+  # Block the repository completely for future use
+  && echo "Package: *" > /etc/apt/preferences.d/99-pin-sury \
+  && echo "Pin: origin packages.sury.org" >> /etc/apt/preferences.d/99-pin-sury \
+  && echo "Pin-Priority: -1" >> /etc/apt/preferences.d/99-pin-sury
+
 RUN set -ex; \
     \
     echo "deb http://ftp.debian.org/debian $(cat /etc/os-release | grep VERSION_CODENAME | cut -d= -f2) non-free" >> \
@@ -11,6 +31,7 @@ RUN set -ex; \
         procps \
         ffmpeg \
         libheif1 \
+        ocrmypdf \
         smbclient \
         libde265-0 \
         libfcgi-bin \
@@ -25,7 +46,6 @@ RUN set -ex; \
     apt-get install -y --no-install-recommends \
         libbz2-dev \
         libkrb5-dev \
-        libc-client-dev \
         libsmbclient-dev \
         libmagickcore-dev \
     ; \
@@ -34,6 +54,7 @@ RUN set -ex; \
     docker-php-ext-install \
         bz2 \
         imap \
+        soap \
     ; \
     pecl install smbclient; \
     docker-php-ext-enable smbclient; \
@@ -50,7 +71,14 @@ RUN set -ex; \
         | xargs -rt apt-mark manual; \
     \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
+    apt-get dist-clean
     rm -rf /var/lib/apt/lists/*
+
+# See https://github.com/nextcloud/docker/issues/763
+RUN set -ex \
+  \
+  && touch /usr/local/etc/php/conf.d/redis-session.ini \
+  && chmod 777 /usr/local/etc/php/conf.d/redis-session.ini
 
 # Copy occ script to /usr/bin/occ
 COPY --chmod=755 ./containers/apps/nextcloud-fpm/scripts/occ /usr/bin/occ
