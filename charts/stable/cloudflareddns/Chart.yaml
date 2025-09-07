@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.16.6
+    version: 28.17.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,8 +35,9 @@ name: cloudflareddns
 sources:
   - https://ghcr.io/hotio/cloudflareddns
   - https://github.com/hotio/cloudflareddns
+  - https://github.com/truecharts/charts/tree/master/charts/stable/cloudflareddns
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/cloudflareddns
   - https://hotio.dev/containers/cloudflareddns/
 type: application
-version: 12.3.7
+version: 12.4.0
 

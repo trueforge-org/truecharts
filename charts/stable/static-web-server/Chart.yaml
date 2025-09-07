@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 2.38.0
 dependencies:
   - name: common
-    version: 28.16.6
+    version: 28.17.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,8 +35,9 @@ name: static-web-server
 sources:
   - https://ghcr.io/static-web-server/static-web-server
   - https://github.com/static-web-server/static-web-server
+  - https://github.com/truecharts/charts/tree/master/charts/stable/static-web-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/static-web-server
   - https://static-web-server.net
 type: application
-version: 7.4.5
+version: 7.5.0
 

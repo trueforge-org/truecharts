@@ -13,7 +13,7 @@ apiVersion: v2
 appVersion: 8.3.0
 dependencies:
   - name: common
-    version: 28.16.6
+    version: 28.17.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -41,7 +41,8 @@ sources:
   - https://github.com/kubernetes-csi/external-snapshotter/
   - https://github.com/snapshot-controller/snapshot-controller
   - https://github.com/snapshot-controller/snapshot-controller-helm-chart
+  - https://github.com/truecharts/charts/tree/master/charts/system/snapshot-controller
   - https://github.com/trueforge-org/truecharts/tree/master/charts/system/snapshot-controller
 type: application
-version: 4.3.5
+version: 4.4.0
 
