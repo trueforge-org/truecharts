@@ -71,7 +71,6 @@ RUN set -ex; \
         | xargs -rt apt-mark manual; \
     \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
-    apt-get dist-clean \
     rm -rf /var/lib/apt/lists/*
 
 # Copy occ script to /usr/bin/occ
