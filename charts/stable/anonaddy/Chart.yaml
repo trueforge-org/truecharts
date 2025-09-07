@@ -26,7 +26,7 @@ dependencies:
     tags: []
     import-values: []
   - name: redis
-    version: 17.4.6
+    version: 17.5.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -46,8 +46,9 @@ maintainers:
 name: anonaddy
 sources:
   - https://github.com/anonaddy/docker
+  - https://github.com/truecharts/charts/tree/master/charts/stable/anonaddy
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/anonaddy
   - https://hub.docker.com/r/anonaddy/anonaddy
 type: application
-version: 24.7.11
+version: 24.8.0
 
