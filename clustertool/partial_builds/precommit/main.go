@@ -4,7 +4,7 @@ import (
     "os"
 
     "github.com/rs/zerolog/log"
-    "github.com/truecharts/public/clustertool/pkg/sops"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/sops"
 )
 
 func main() {

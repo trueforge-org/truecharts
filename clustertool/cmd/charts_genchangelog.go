@@ -6,7 +6,7 @@ import (
     "github.com/rs/zerolog/log"
 
     "github.com/spf13/cobra"
-    "github.com/truecharts/public/clustertool/pkg/charts/changelog"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/charts/changelog"
 )
 
 var chartsGenChangelogLongHelp = strings.TrimSpace(`

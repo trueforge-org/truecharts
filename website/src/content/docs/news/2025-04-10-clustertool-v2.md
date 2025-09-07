@@ -73,7 +73,7 @@ Clusters upgrading to v2 will need to account for several changes:
       url: oci://ghcr.io/home-operations/charts-mirror
     ```
 
-  - Please compare your [Repositories](https://github.com/truecharts/public/tree/master/clustertool/embed/generic/root/repositories/helm) with this template.
+  - Please compare your [Repositories](https://github.com/trueforge-org/truecharts/tree/master/clustertool/embed/generic/root/repositories/helm) with this template.
   - Charts such as Cilium, Metrics Server, Node-Feature-Discovery, Longhorn, Metallb, and OpenEBS are now
     pulled via an OCI mirror
 - 🔥 Traefik Removal:

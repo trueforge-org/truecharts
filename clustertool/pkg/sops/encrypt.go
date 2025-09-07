@@ -6,7 +6,7 @@ import (
     "regexp"
 
     "github.com/rs/zerolog/log"
-    "github.com/truecharts/public/clustertool/pkg/helper"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/helper"
 )
 
 // EncryptAllFiles encrypts all unencrypted files as specified in the .sops.yaml configuration.

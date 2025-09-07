@@ -16,9 +16,9 @@ import (
     "gopkg.in/yaml.v3"
 
     age "filippo.io/age"
-    "github.com/truecharts/public/clustertool/pkg/fluxhandler"
-    "github.com/truecharts/public/clustertool/pkg/helper"
-    "github.com/truecharts/public/clustertool/pkg/talassist"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/fluxhandler"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/helper"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/talassist"
     corev1 "k8s.io/api/core/v1"
 )
 

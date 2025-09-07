@@ -10,7 +10,7 @@ import (
     "unicode"
 
     "github.com/rs/zerolog/log"
-    "github.com/truecharts/public/clustertool/pkg/helper"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/helper"
 )
 
 func LoadTalEnv(noFail bool) error {

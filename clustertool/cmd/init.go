@@ -4,8 +4,8 @@ import (
     "strings"
 
     "github.com/spf13/cobra"
-    "github.com/truecharts/public/clustertool/pkg/initfiles"
-    "github.com/truecharts/public/clustertool/pkg/sops"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/initfiles"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/sops"
 )
 
 var initLongHelp = strings.TrimSpace(`

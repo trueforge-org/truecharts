@@ -6,7 +6,7 @@ import (
 
     "github.com/spf13/cobra"
     "github.com/spf13/cobra/doc"
-    "github.com/truecharts/public/clustertool/pkg/helper"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/helper"
 )
 
 var gendocsCmd = &cobra.Command{

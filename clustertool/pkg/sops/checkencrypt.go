@@ -10,7 +10,7 @@ import (
     "strings"
 
     "github.com/rs/zerolog/log"
-    "github.com/truecharts/public/clustertool/pkg/helper"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/helper"
     "gopkg.in/yaml.v3"
 )
 

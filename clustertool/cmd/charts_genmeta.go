@@ -8,8 +8,8 @@ import (
     "slices"
 
     "github.com/spf13/cobra"
-    "github.com/truecharts/public/clustertool/pkg/charts/chartFile"
-    "github.com/truecharts/public/clustertool/pkg/helper"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/charts/chartFile"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/helper"
 )
 
 var chartsGenMetaLongHelp = strings.TrimSpace(`

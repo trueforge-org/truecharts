@@ -17,6 +17,6 @@ Additionally, all charts required in our Quick Start guide come preinstalled.
 Clustertool also includes a fully configured VS Code devcontainer that automatically installs all the necessary tools for managing and maintaining your Talos clusters.
 This addition is a significant time-saver for people setting up their environments.
 
-Check out the Release Page on github for changelogs and download: [Github](https://github.com/truecharts/public/releases)
+Check out the Release Page on github for changelogs and download: [Github](https://github.com/trueforge-org/truecharts/releases)
 
 The documentation for all the features Clustertool provides can be found [here](clustertool)

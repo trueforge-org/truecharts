@@ -5,10 +5,10 @@ import (
 
     "github.com/rs/zerolog/log"
     "github.com/spf13/cobra"
-    "github.com/truecharts/public/clustertool/pkg/gencmd"
-    "github.com/truecharts/public/clustertool/pkg/initfiles"
-    "github.com/truecharts/public/clustertool/pkg/sops"
-    "github.com/truecharts/public/clustertool/pkg/talassist"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/gencmd"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/initfiles"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/sops"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/talassist"
 )
 
 var advKubeconfigLongHelp = strings.TrimSpace(`

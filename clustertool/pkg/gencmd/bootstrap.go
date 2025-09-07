@@ -7,12 +7,12 @@ import (
 
     "github.com/rs/zerolog/log"
 
-    "github.com/truecharts/public/clustertool/pkg/fluxhandler"
-    "github.com/truecharts/public/clustertool/pkg/helper"
-    "github.com/truecharts/public/clustertool/pkg/kubectlcmds"
-    "github.com/truecharts/public/clustertool/pkg/nodestatus"
-    "github.com/truecharts/public/clustertool/pkg/sops"
-    "github.com/truecharts/public/clustertool/pkg/talassist"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/fluxhandler"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/helper"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/kubectlcmds"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/nodestatus"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/sops"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/talassist"
 )
 
 var HelmRepos map[string]*fluxhandler.HelmRepo

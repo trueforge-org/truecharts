@@ -1,4 +1,4 @@
-module github.com/truecharts/public/clustertool
+module github.com/trueforge-org/truecharts/clustertool
 
 go 1.24.5
 

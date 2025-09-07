@@ -6,8 +6,8 @@ import (
     "time"
 
     "github.com/rs/zerolog/log"
-    "github.com/truecharts/public/clustertool/pkg/helper"
-    "github.com/truecharts/public/clustertool/pkg/nodestatus"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/helper"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/nodestatus"
 )
 
 func ExecCmd(cmd string) {

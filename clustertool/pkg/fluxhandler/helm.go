@@ -11,7 +11,7 @@ import (
     "time"
 
     "github.com/rs/zerolog/log"
-    "github.com/truecharts/public/clustertool/pkg/helper"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/helper"
     "helm.sh/helm/v3/pkg/action"
     "helm.sh/helm/v3/pkg/chart/loader"
     "helm.sh/helm/v3/pkg/cli"

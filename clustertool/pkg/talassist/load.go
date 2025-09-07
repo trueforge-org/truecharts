@@ -12,7 +12,7 @@ import (
     "github.com/rs/zerolog/log"
     sideroConfig "github.com/siderolabs/talos/pkg/machinery/config"
     "github.com/siderolabs/talos/pkg/machinery/config/generate/secrets"
-    "github.com/truecharts/public/clustertool/pkg/helper"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/helper"
 )
 
 var (

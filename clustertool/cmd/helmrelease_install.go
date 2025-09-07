@@ -5,8 +5,8 @@ import (
     "strings"
 
     "github.com/spf13/cobra"
-    "github.com/truecharts/public/clustertool/pkg/fluxhandler"
-    "github.com/truecharts/public/clustertool/pkg/initfiles"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/fluxhandler"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/initfiles"
 )
 
 var hrInstalLongHelp = strings.TrimSpace(`

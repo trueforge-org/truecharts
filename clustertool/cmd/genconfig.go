@@ -4,7 +4,7 @@ import (
     "strings"
 
     "github.com/spf13/cobra"
-    "github.com/truecharts/public/clustertool/pkg/gencmd"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/gencmd"
 )
 
 var genConfigLongHelp = strings.TrimSpace(`

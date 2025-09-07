@@ -15,7 +15,7 @@ import (
     "github.com/getsops/sops/v3/keyservice"
     "github.com/getsops/sops/v3/version"
     "github.com/rs/zerolog/log"
-    "github.com/truecharts/public/clustertool/pkg/helper"
+    "github.com/trueforge-org/truecharts/clustertool/pkg/helper"
 )
 
 var encrConfig *EncryptionConfig
