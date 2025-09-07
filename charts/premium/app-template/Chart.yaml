@@ -9,7 +9,7 @@ annotations:
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/train: premium
 apiVersion: v2
-appVersion: 0.22.2431
+appVersion: 0.22.2438
 dependencies:
   - name: common
     version: 28.16.6
@@ -32,7 +32,8 @@ maintainers:
 name: app-template
 sources:
   - https://ghcr.io/linuxserver/jackett
+  - https://github.com/truecharts/charts/tree/master/charts/premium/app-template
   - https://github.com/trueforge-org/truecharts/tree/master/charts/premium/app-template
 type: application
-version: 15.4.20
+version: 15.4.21
 
