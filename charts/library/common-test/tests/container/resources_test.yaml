@@ -648,7 +648,7 @@ tests:
                 probes: *probes
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected [resources.requests.cpu] to have one of the following formats [(Plain Integer - eg. 1), (Float - eg. 0.5), (Milicpu - eg. 500m)], but got [100MB]
+          errorMessage: Container - Expected [resources.requests.cpu] to have one of the following formats [(Plain Integer - eg. 1), (Float - eg. 0.5), (Milicpu - eg. 500m)], but got [75mB]
 
   - it: should fail with invalid format in limits.cpu
     set:
@@ -674,7 +674,7 @@ tests:
                 probes: *probes
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected [resources.limits.cpu] to have one of the following formats [(Plain Integer - eg. 1), (Float - eg. 0.5), (Milicpu - eg. 500m)], but got [100MB]
+          errorMessage: Container - Expected [resources.limits.cpu] to have one of the following formats [(Plain Integer - eg. 1), (Float - eg. 0.5), (Milicpu - eg. 500m)], but got [75mB]
 
   - it: should fail with invalid format in requests.memory
     set:
