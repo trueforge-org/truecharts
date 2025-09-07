@@ -28,7 +28,7 @@ requests:
   cpu: {{ $resources.requests.cpu }}
   memory: {{ $resources.requests.memory }}
     {{- if not $objectData.resources.excludeExtra -}}
-      {{- range $k, $v := (omit $resources.limits "cpu" "memory") }} {{/* Omit cpu and memory, as they are handled above */}}
+      {{- range $k, $v := (omit $resources.requests "cpu" "memory") }} {{/* Omit cpu and memory, as they are handled above */}}
         {{- if or (not $v) (eq (toString $v) "0") -}}
           {{- continue -}}
         {{- end }}
