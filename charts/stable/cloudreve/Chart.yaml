@@ -9,17 +9,17 @@ annotations:
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 4.6.0
+appVersion: 4.7.0
 dependencies:
   - name: common
-    version: 28.16.5
+    version: 28.16.6
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: redis
-    version: 17.4.5
+    version: 17.4.6
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -44,5 +44,4 @@ sources:
   - https://github.com/truecharts/charts/tree/master/charts/stable/cloudreve
   - https://hub.docker.com/r/cloudreve/cloudreve
 type: application
-version: 10.12.3
-
+version: 10.13.1
