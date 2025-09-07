@@ -9,7 +9,7 @@ annotations:
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 2025.8.25
+appVersion: 2025.9.7
 dependencies:
   - name: common
     version: 28.16.6
@@ -34,6 +34,7 @@ maintainers:
 name: jupyter
 sources:
   - https://github.com/jupyter/docker-stacks
+  - https://github.com/truecharts/charts/tree/master/charts/stable/jupyter
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/jupyter
   - https://quay.io/jupyter/all-spark-notebook
   - https://quay.io/jupyter/base-notebook
@@ -44,5 +45,5 @@ sources:
   - https://quay.io/jupyter/scipy-notebook
   - https://quay.io/jupyter/tensorflow-notebook
 type: application
-version: 12.19.30
+version: 12.27.0
 
