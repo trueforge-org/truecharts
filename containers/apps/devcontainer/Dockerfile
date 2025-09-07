@@ -1,7 +1,7 @@
 # hadolint ignore=DL3007
 FROM mcr.microsoft.com/devcontainers/base:alpine@sha256:1f8a1ea669115b1c87835427e89f6278f58a934a2e3f20eca3af7b6366ee5af2
 
-ARG CLUSTERTOOL_VERSION=2.0.0
+ARG CLUSTERTOOL_VERSION=2.0.6
 ARG CONTAINER_NAME
 
 # hadolint ignore=DL3008,DL3015,SC2086,SC2155
