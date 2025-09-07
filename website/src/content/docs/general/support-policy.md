@@ -92,17 +92,18 @@ For all issues not covered by support you can make a thread in an appropriate [D
 
 | Helm version    | Branch   | Supported with updates | Accepting Support tickets | Accepting Bug Reports | Notes |
 | --------------- | -------- | ---------------------- | ------------------------- | --------------------- | ----- |
-| 3.13 and prior  | `master` | ❌                     | ❌                        | ❌                    |       |
-| 3.14 - 3.17     | `master` | ✅                     | ✅                        | ✅                    |       |
-| 3.18.0           | `master` | ❌                     | ❌                        | ❌                    | Bug indentifed on 3.18.0, we cannot support this version. https://github.com/helm/helm/pull/30902 |
+| 3.13 and prior  | `master` | ❌                     | ❌                       | ❌                    |       |
+| 3.14 - 3.17     | `master` | ✅                     | ✅                       | ✅                    |       |
+| 3.18.0          | `master` | ❌                     | ❌                       | ❌                    | Bug indentifed on 3.18.0, we cannot support this version. https://github.com/helm/helm/pull/30902 |
+| 3.18.x          | `master` | ✅                     | ✅                       | ✅                    |       |
 
 ## Supported Kubernetes Versions
 
 | Kube version    | Branch   | Supported with updates | Accepting Support tickets | Accepting Bug Reports | Notes |
 | --------------- | -------- | ---------------------- | ------------------------- | --------------------- | ----- |
-| 1.23 and prior  | `master` | ❌                     | ❌                        | ❌                    |       |
-| 1.24 - 1.32     | `master` | ✅                     | ✅                        | ✅                    |       |
-| 1.33.0          | `master` | ✅                     | ✅                        | ✅                    | Known issue with error "failed to set MOUNT_ATTR_IDMAP". Can be corrected by setting hostUsers to True. https://truecharts.org/common/podoptions/#hostusers |
+| 1.23 and prior  | `master` | ❌                     | ❌                       | ❌                    |       |
+| 1.24 - 1.33     | `master` | ✅                     | ✅                       | ✅                    |       |
+| 1.34.x          | `master` | ✅                     | ✅                       | ✅                    |       |
 
 :::caution[China]
 
