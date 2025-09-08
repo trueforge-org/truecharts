@@ -18,7 +18,7 @@ require (
 	github.com/knadh/koanf/v2 v2.2.2
 	github.com/leaanthony/debme v1.2.1
 	github.com/rs/zerolog v1.34.0
-	github.com/siderolabs/talos/pkg/machinery v1.11.0
+	github.com/siderolabs/talos/pkg/machinery v1.11.1
 	github.com/spf13/cobra v1.10.1
 	golang.org/x/crypto v0.41.0
 	gopkg.in/yaml.v3 v3.0.1
@@ -254,7 +254,7 @@ require (
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/exp v0.0.0-20250506013437-ce4c2cf36ca6 // indirect
 	golang.org/x/mod v0.27.0 // indirect
-	golang.org/x/net v0.42.0 // indirect
+	golang.org/x/net v0.43.0 // indirect
 	golang.org/x/oauth2 v0.30.0 // indirect
 	golang.org/x/sync v0.16.0 // indirect
 	golang.org/x/sys v0.35.0 // indirect
