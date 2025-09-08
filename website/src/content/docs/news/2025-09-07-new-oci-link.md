@@ -2,7 +2,7 @@
 slug: "news/new-oci-link"
 title: "Updated OCI Repository Link"
 authors: [alfi0812]
-date: 2025-09-27
+date: 2025-09-07
 tags:
   - "2025"
 ---
