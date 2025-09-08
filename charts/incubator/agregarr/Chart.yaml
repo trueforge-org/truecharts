@@ -1,0 +1,39 @@
+annotations:
+  artifacthub.io/links: |-
+    - name: support
+    url: https://discord.com/invite/tVsPTHWTtr
+  max_scale_version: 24.04.1
+  min_scale_version: 24.04.0
+  truecharts.org/category: media
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/train: incubator
+apiVersion: v2
+appVersion: 1.2.
+dependencies:
+  - name: common
+    version: 28.17.0
+    repository: oci://oci.trueforge.org/truecharts
+    condition: ""
+    alias: ""
+    tags: []
+    import-values: []
+deprecated: false
+description: Home/Collection manager for Plex.
+home: https://truecharts.org/charts/incubator/agregarr
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/agregarr.webp
+keywords:
+  - agregarr
+  - plex
+kubeVersion: '>=1.24.0-0'
+maintainers:
+  - name: TrueCharts
+    email: info@truecharts.org
+    url: https://truecharts.org
+name: agregarr
+sources:
+  - https://ghcr.io/agregarr/agregarr
+  - https://github.com/agregarr/agregarr
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/incubator/agregarr
+type: application
+version: 0.0.1
