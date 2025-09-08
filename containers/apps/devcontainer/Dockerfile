@@ -1,5 +1,5 @@
 # hadolint ignore=DL3007
-FROM mcr.microsoft.com/devcontainers/base:alpine@sha256:1f8a1ea669115b1c87835427e89f6278f58a934a2e3f20eca3af7b6366ee5af2
+FROM mcr.microsoft.com/devcontainers/base:alpine@sha256:544600b91515e13c054e53df8fdd2e6ce7037deae97c585d247b911a87bb317a
 
 ARG CLUSTERTOOL_VERSION=2.0.6
 ARG CONTAINER_NAME
