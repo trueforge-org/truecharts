@@ -3,15 +3,35 @@ image:
   pullPolicy: IfNotPresent
   tag: 1.2.2@sha256:6bcf50f619790b921d2439cc3b7f3f0c09c2ffa57d6e16d0b215aced1be9f1a4
 securityContext:
-  readOnlyRootFilesystem: false
+  container:
+    readOnlyRootFilesystem: false
+    runAsNonRoot: false
+    runAsGroup: 0
+    runAsUser: 0
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          probes:
+            liveness:
+              type: http
+              path: /
+            readiness:
+              type: http
+              path: /
+            startup:
+              type: http
+              path: /
+          env: {}
 service:
   main:
     ports:
       main:
+        port: 7171
         protocol: http
         targetPort: 7171
-        port: 7171
 persistence:
   config:
     enabled: true
-    mountPath: "/app/config"
+    mountPath: /app/config
