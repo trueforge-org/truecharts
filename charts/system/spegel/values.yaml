@@ -59,13 +59,10 @@ workload:
           probes:
             liveness:
               path: /livez
-              type: tcp
             readiness:
               path: /readyz
-              type: tcp
             startup:
               path: /readyz
-              type: tcp
 
 configmap:
   dashboard:
