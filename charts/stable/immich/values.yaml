@@ -75,6 +75,20 @@ persistence:
       machinelearning:
         machinelearning:
           mountPath: /mlcache
+  mlcache2:
+    enabled: true
+    type: emptyDir
+    targetSelector:
+      machinelearning:
+        machinelearning:
+          mountPath: /.cache
+  mlconfig:
+    enabled: true
+    type: emptyDir
+    targetSelector:
+      machinelearning:
+        machinelearning:
+          mountPath: /.config
   microcache:
     enabled: true
     type: emptyDir
