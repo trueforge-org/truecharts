@@ -71,6 +71,8 @@ service:
       main:
         port: 27017
         targetPort: 27017
+        protocol: tcp
+        
 securityContext:
   container:
     runAsGroup: 0
