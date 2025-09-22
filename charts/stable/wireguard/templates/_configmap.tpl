@@ -6,7 +6,7 @@ data:
   IPTABLES_BACKEND: nft
   KILLSWITCH: {{ .Values.wg.killswitch | quote }}
   {{- if .Values.wg.killswitch }}
-    {{- $excludedIP4Networks := prepend .Values.wg.excludedIP4networks "172.16.0.0/12" }}
+    {{- $excludedIP4Networks := prepend .Values.wg.excludedIP4networks .Values.chartContext.podCIDR }}
     {{- $excludedIP4net := (join ";" $excludedIP4Networks) }}
   KILLSWITCH_EXCLUDEDNETWORKS_IPV4: {{ $excludedIP4net | quote }}
     {{- $excludedIP6net := (join ";" .Values.wg.excludedIP6networks) }}
