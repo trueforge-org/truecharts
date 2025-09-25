@@ -58,7 +58,7 @@ spec:
     {{- if $volsyncData.customCA }}
     customCA:
       secretName: {{ $volsyncData.customCA }}
-      key: tls.crt
+      key: ca.crt
     {{- end }}
     copyMethod: {{ $copyMethod }}
     capacity: {{ $capacity }}

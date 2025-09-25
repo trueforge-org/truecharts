@@ -140,10 +140,8 @@
                   "labels" ($volsync.labels | default dict)
                   "annotations" ($volsync.annotations | default dict)
                   "data" (dict
-                      "certificate" ($credentials.customCA | toString)
-                      "privatekey" ""
+                      "ca.crt" $credentials.customCA
                   )
-                  "type" "certificate"
               ) -}}
 
               {{- include "tc.v1.common.class.secret" (dict "rootCtx" $ "objectData" $volsyncCASecretData) -}}

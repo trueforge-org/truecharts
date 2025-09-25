@@ -56,7 +56,7 @@ spec:
     {{- if $volsyncData.customCA }}
     customCA:
       secretName: {{ $volsyncData.customCA }}
-      key: tls.crt
+      key: ca.crt
     {{- end }}
     copyMethod: {{ $volsyncData.copyMethod | default "Snapshot" }}
     pruneIntervalDays: {{ $volsyncData.src.pruneIntervalDays | default 7 }}
