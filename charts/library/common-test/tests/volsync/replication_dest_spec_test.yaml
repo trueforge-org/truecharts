@@ -397,13 +397,13 @@ tests:
               -----BEGIN CERTIFICATE-----
               ...
               -----END CERTIFICATE-----
-      - documentIndex: *replicationDestDoc
+      - documentIndex: &replicationCaDestDoc 2
         isKind:
           of: ReplicationDestination
-      - documentIndex: *replicationDestDoc
+      - documentIndex: *replicationCaDestDoc
         isAPIVersion:
           of: volsync.backube/v1alpha1
-      - documentIndex: *replicationDestDoc
+      - documentIndex: *replicationCaDestDoc
         equal:
           path: spec
           value:
