@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.8.1
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,7 +36,8 @@ name: adguardhome-sync
 sources:
   - https://ghcr.io/bakito/adguardhome-sync
   - https://github.com/bakito/adguardhome-sync/
+  - https://github.com/truecharts/charts/tree/master/charts/stable/adguardhome-sync
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/adguardhome-sync
 type: application
-version: 9.7.0
+version: 9.7.1
 

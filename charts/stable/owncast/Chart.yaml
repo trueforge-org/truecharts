@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.2.3
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -37,9 +37,10 @@ maintainers:
 name: owncast
 sources:
   - https://github.com/owncast/owncast
+  - https://github.com/truecharts/charts/tree/master/charts/stable/owncast
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/owncast
   - https://hub.docker.com/r/gabekangas/owncast
   - https://owncast.online/
 type: application
-version: 16.6.0
+version: 16.6.1
 

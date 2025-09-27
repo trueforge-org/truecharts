@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2025.1.0
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -38,7 +38,8 @@ name: minecraft-proxy
 sources:
   - https://ghcr.io/itzg/mc-proxy
   - https://github.com/itzg/docker-mc-proxy
+  - https://github.com/truecharts/charts/tree/master/charts/stable/minecraft-proxy
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/minecraft-proxy
 type: application
-version: 2.6.0
+version: 2.6.1
 

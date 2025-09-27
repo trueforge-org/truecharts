@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2025.6.3
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -34,8 +34,9 @@ maintainers:
 name: rss-bridge
 sources:
   - https://github.com/RSS-Bridge/rss-bridge
+  - https://github.com/truecharts/charts/tree/master/charts/stable/rss-bridge
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/rss-bridge
   - https://hub.docker.com/r/rssbridge/rss-bridge
 type: application
-version: 14.6.0
+version: 14.6.1
 

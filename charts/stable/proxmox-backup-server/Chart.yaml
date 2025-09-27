@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 4.0.13
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -34,8 +34,9 @@ maintainers:
     url: https://truecharts.org
 name: proxmox-backup-server
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/proxmox-backup-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/proxmox-backup-server
   - https://hub.docker.com/r/ayufan/proxmox-backup-server
 type: application
-version: 7.4.0
+version: 7.4.1
 

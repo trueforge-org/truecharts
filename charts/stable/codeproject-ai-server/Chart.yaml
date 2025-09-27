@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2.6.5
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,8 +35,9 @@ maintainers:
 name: codeproject-ai-server
 sources:
   - https://github.com/codeproject/CodeProject.AI-Server
+  - https://github.com/truecharts/charts/tree/master/charts/stable/codeproject-ai-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/codeproject-ai-server
   - https://hub.docker.com/r/codeproject/ai-server
 type: application
-version: 5.6.0
+version: 5.6.1
 

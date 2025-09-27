@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.13.1
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,10 +36,11 @@ name: volsync
 sources:
   - https://github.com/backube/helm-charts
   - https://github.com/backube/volsync
+  - https://github.com/truecharts/charts/tree/master/charts/system/volsync
   - https://github.com/trueforge-org/truecharts/tree/master/charts/system/volsync
   - https://quay.io/backube/volsync
   - https://quay.io/brancz/kube-rbac-proxy
   - https://volsync.readthedocs.io/
 type: application
-version: 3.8.1
+version: 3.8.2
 

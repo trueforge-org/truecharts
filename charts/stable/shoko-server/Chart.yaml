@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 5.1.0
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,8 +35,9 @@ maintainers:
 name: shoko-server
 sources:
   - https://github.com/ShokoAnime/ShokoServer
+  - https://github.com/truecharts/charts/tree/master/charts/stable/shoko-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/shoko-server
   - https://hub.docker.com/r/shokoanime/server
 type: application
-version: 13.6.0
+version: 13.6.1
 

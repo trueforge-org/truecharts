@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 3.4.3
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,8 +36,9 @@ name: joplin-server
 sources:
   - https://github.com/laurent22/joplin
   - https://github.com/laurent22/joplin/tree/dev/packages/server
+  - https://github.com/truecharts/charts/tree/master/charts/stable/joplin-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/joplin-server
   - https://hub.docker.com/r/joplin/server
 type: application
-version: 21.7.0
+version: 21.7.1
 

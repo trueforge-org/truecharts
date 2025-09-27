@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 3.5.4
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,8 +35,9 @@ maintainers:
 name: local-ai
 sources:
   - https://github.com/go-skynet/LocalAI
+  - https://github.com/truecharts/charts/tree/master/charts/stable/local-ai
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/local-ai
   - https://hub.docker.com/r/localai/localai
 type: application
-version: 16.22.0
+version: 16.22.1
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.23.71
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -34,7 +34,8 @@ maintainers:
 name: app-template
 sources:
   - https://ghcr.io/linuxserver/jackett
+  - https://github.com/truecharts/charts/tree/master/charts/premium/app-template
   - https://github.com/trueforge-org/truecharts/tree/master/charts/premium/app-template
 type: application
-version: 15.8.5
+version: 15.8.6
 

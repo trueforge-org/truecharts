@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 3.7.4
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,9 +36,10 @@ maintainers:
     url: https://truecharts.org
 name: apt-cacher-ng
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/apt-cacher-ng
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/apt-cacher-ng
   - https://quay.io/sameersbn/apt-cacher-ng
   - https://www.unix-ag.uni-kl.de/~bloch/acng/
 type: application
-version: 11.6.0
+version: 11.6.1
 

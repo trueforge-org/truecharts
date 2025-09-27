@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -38,8 +38,9 @@ name: tubesync
 sources:
   - https://ghcr.io/meeb/tubesync
   - https://github.com/meeb/tubesync
+  - https://github.com/truecharts/charts/tree/master/charts/stable/tubesync
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/tubesync
   - https://registry.hub.docker.com/r/ghcr.io/meeb/tubesync
 type: application
-version: 8.6.2
+version: 8.6.3
 
