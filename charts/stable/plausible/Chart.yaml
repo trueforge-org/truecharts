@@ -21,7 +21,7 @@ dependencies:
     tags: []
     import-values: []
   - name: clickhouse
-    version: 16.8.3
+    version: 16.9.0
     repository: oci://oci.trueforge.org/truecharts
     condition: clickhouse.enabled
     alias: ""
@@ -43,10 +43,11 @@ name: plausible
 sources:
   - https://github.com/plausible/analytics
   - https://github.com/plausible/hosting
+  - https://github.com/truecharts/charts/tree/master/charts/stable/plausible
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/plausible
   - https://hub.docker.com/r/plausible/analytics
   - https://plausible.io/
   - https://plausible.io/docs/self-hosting
 type: application
-version: 14.14.3
+version: 14.15.0
 
