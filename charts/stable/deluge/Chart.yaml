@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: media
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 2.2.0
@@ -35,7 +37,7 @@ name: deluge
 sources:
   - https://ghcr.io/linuxserver/deluge
   - https://github.com/deluge-torrent/deluge
-  - https://github.com/truecharts/charts/tree/master/charts/stable/deluge
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/deluge
 type: application
 version: 21.6.0
 

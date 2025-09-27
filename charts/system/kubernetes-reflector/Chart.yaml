@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: operators
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: system
 apiVersion: v2
 appVersion: 9.1.32
@@ -37,7 +39,6 @@ name: kubernetes-reflector
 sources:
   - https://ghcr.io/emberstack/kubernetes-reflector
   - https://github.com/emberstack/kubernetes-reflector
-  - https://github.com/truecharts/charts/tree/master/charts/system/kubernetes-reflector
   - https://github.com/trueforge-org/truecharts/tree/master/charts/system/kubernetes-reflector
 type: application
 version: 7.6.1

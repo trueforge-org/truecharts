@@ -4,7 +4,9 @@ annotations:
     url: https://discord.com/invite/tVsPTHWTtr
   truecharts.org/category: productivity
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 2.3.0
@@ -47,7 +49,7 @@ maintainers:
 name: mixpost
 sources:
   - https://github.com/inovector/mixpost
-  - https://github.com/truecharts/charts/tree/master/charts/stable/mixpost
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mixpost
   - https://hub.docker.com/r/inovector/mixpost
 type: application
 version: 6.6.2

@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: monitoring
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 1.23.16
@@ -33,7 +35,7 @@ maintainers:
 name: uptime-kuma
 sources:
   - https://github.com/louislam/uptime-kuma
-  - https://github.com/truecharts/charts/tree/master/charts/stable/uptime-kuma
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/uptime-kuma
   - https://hub.docker.com/r/louislam/uptime-kuma
 type: application
 version: 13.6.0

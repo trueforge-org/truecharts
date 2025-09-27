@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: Social
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 2025.9.0
@@ -44,7 +46,7 @@ maintainers:
 name: misskey
 sources:
   - https://github.com/misskey-dev/misskey/
-  - https://github.com/truecharts/charts/tree/master/charts/stable/misskey
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/misskey
   - https://hub.docker.com/r/misskey/misskey
 type: application
 version: 13.16.1

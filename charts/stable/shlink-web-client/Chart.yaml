@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: utilities
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 4.5.1
@@ -34,7 +36,6 @@ maintainers:
 name: shlink-web-client
 sources:
   - https://github.com/shlinkio/shlink-web-client
-  - https://github.com/truecharts/charts/tree/master/charts/stable/shlink-web-client
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/shlink-web-client
   - https://hub.docker.com/r/shlinkio/shlink-web-client
 type: application

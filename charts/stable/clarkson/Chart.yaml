@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: vehicle
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 1.1.2
@@ -44,7 +46,7 @@ name: clarkson
 sources:
   - https://ghcr.io/linuxserver/clarkson
   - https://github.com/linuxserver/Clarkson
-  - https://github.com/truecharts/charts/tree/master/charts/stable/clarkson
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/clarkson
 type: application
 version: 16.4.1
 

@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: Other
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: latest
@@ -32,7 +34,7 @@ maintainers:
     url: https://truecharts.org
 name: chowdown
 sources:
-  - https://github.com/truecharts/charts/tree/master/charts/stable/chowdown
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/chowdown
   - https://hub.docker.com/r/gregyankovoy/chowdown
 type: application
 version: 8.6.0

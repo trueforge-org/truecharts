@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: media
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 2025.04.22
@@ -34,7 +36,7 @@ maintainers:
 name: minio
 sources:
   - https://github.com/minio/minio
-  - https://github.com/truecharts/charts/tree/master/charts/stable/minio
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/minio
   - https://quay.io/minio/minio
 type: application
 version: 16.6.0

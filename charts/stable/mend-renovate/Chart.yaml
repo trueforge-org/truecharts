@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: media
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 11.3.0
@@ -34,7 +36,7 @@ name: mend-renovate
 sources:
   - https://ghcr.io/mend/renovate-ce
   - https://github.com/mend/renovate-ce-ee
-  - https://github.com/truecharts/charts/tree/master/charts/stable/mend-renovate
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mend-renovate
 type: application
 version: 4.7.0
 

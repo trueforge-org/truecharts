@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: productivity
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 17.7.0
@@ -33,7 +35,7 @@ maintainers:
 name: xwiki
 sources:
   - https://gallery.ecr.aws/docker/library/xwiki
-  - https://github.com/truecharts/charts/tree/master/charts/stable/xwiki
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/xwiki
   - https://github.com/xwiki/xwiki-docker
 type: application
 version: 16.8.0

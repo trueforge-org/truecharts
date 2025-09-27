@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: Cloud
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 6.3.0
@@ -36,7 +38,6 @@ maintainers:
 name: fileshelter
 sources:
   - https://github.com/epoupon/fileshelter
-  - https://github.com/truecharts/charts/tree/master/charts/stable/fileshelter
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/fileshelter
   - https://hub.docker.com/r/epoupon/fileshelter
 type: application

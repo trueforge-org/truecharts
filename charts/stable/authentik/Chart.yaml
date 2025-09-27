@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: authentication
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 2025.8.3
@@ -44,7 +46,7 @@ sources:
   - https://ghcr.io/goauthentik/server
   - https://ghcr.io/maxmind/geoipupdate
   - https://github.com/goauthentik/authentik
-  - https://github.com/truecharts/charts/tree/master/charts/stable/authentik
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/authentik
   - https://goauthentik.io/docs/
 type: application
 version: 33.17.1

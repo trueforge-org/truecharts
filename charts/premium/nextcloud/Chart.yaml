@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: cloud
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: premium
 apiVersion: v2
 appVersion: 31.0.9
@@ -44,7 +46,10 @@ name: nextcloud
 sources:
   - https://github.com/nextcloud/docker
   - https://github.com/nextcloud/helm
-  - https://github.com/truecharts/charts/tree/master/charts/premium/nextcloud
+  - https://github.com/truecharts/containers/tree/master/apps/nextcloud-fpm
+  - https://github.com/truecharts/containers/tree/master/apps/nextcloud-imaginary
+  - https://github.com/truecharts/containers/tree/master/apps/nextcloud-push-notify
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/premium/nextcloud
   - https://github.com/trueforge/truecharts/tree/master/charts/premium/nextcloud
   - https://hub.docker.com/r/clamav/clamav
   - https://hub.docker.com/r/collabora/code

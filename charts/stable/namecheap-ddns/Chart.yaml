@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: Tools-Utilities
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: latest
@@ -35,7 +37,7 @@ maintainers:
 name: namecheap-ddns
 sources:
   - https://github.com/EdwardChamberlain/namecheap_ddns
-  - https://github.com/truecharts/charts/tree/master/charts/stable/namecheap-ddns
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/namecheap-ddns
   - https://hub.docker.com/r/edchamberlain/namecheap_ddns
 type: application
 version: 8.6.0

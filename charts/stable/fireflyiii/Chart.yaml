@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: finacial
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 6.2.21
@@ -40,7 +42,7 @@ maintainers:
 name: fireflyiii
 sources:
   - https://github.com/firefly-iii/firefly-iii/
-  - https://github.com/truecharts/charts/tree/master/charts/stable/fireflyiii
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/fireflyiii
   - https://hub.docker.com/r/fireflyiii/core
 type: application
 version: 30.13.1

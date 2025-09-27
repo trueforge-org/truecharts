@@ -6,7 +6,9 @@ annotations:
     url: https://discord.com/invite/tVsPTHWTtr
   truecharts.org/category: unsorted
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: library
 apiVersion: v2
 appVersion: 1.11.0
@@ -30,7 +32,20 @@ sources:
   - https://ghcr.io/cloudnative-pg/postgresql
   - https://ghcr.io/tensorchord/cloudnative-pgvecto.rs
   - https://ghcr.io/traefik/whoami
-  - https://github.com/truecharts/charts/tree/master/charts/library/common
+  - https://github.com/truecharts/containers/tree/master/apps/alpine
+  - https://github.com/truecharts/containers/tree/master/apps/code-server
+  - https://github.com/truecharts/containers/tree/master/apps/db-wait-mariadb
+  - https://github.com/truecharts/containers/tree/master/apps/db-wait-mongodb
+  - https://github.com/truecharts/containers/tree/master/apps/db-wait-postgres
+  - https://github.com/truecharts/containers/tree/master/apps/db-wait-redis
+  - https://github.com/truecharts/containers/tree/master/apps/gluetun
+  - https://github.com/truecharts/containers/tree/master/apps/kubectl
+  - https://github.com/truecharts/containers/tree/master/apps/netshoot
+  - https://github.com/truecharts/containers/tree/master/apps/openvpn-client
+  - https://github.com/truecharts/containers/tree/master/apps/scratch
+  - https://github.com/truecharts/containers/tree/master/apps/tailscale
+  - https://github.com/truecharts/containers/tree/master/apps/wget
+  - https://github.com/truecharts/containers/tree/master/apps/wireguard
   - https://github.com/trueforge-org/truecharts/tree/master/charts/library/common
   - https://hub.docker.com/_/
   - https://hub.docker.com/r/mikefarah/yq

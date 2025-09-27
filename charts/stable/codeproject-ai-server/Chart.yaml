@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: AI
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 2.6.5
@@ -33,7 +35,6 @@ maintainers:
 name: codeproject-ai-server
 sources:
   - https://github.com/codeproject/CodeProject.AI-Server
-  - https://github.com/truecharts/charts/tree/master/charts/stable/codeproject-ai-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/codeproject-ai-server
   - https://hub.docker.com/r/codeproject/ai-server
 type: application

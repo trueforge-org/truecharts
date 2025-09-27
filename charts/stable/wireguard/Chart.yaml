@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: network
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 1.0.20210914
@@ -34,7 +36,7 @@ name: wireguard
 sources:
   - https://ghcr.io/k8s-at-home/wireguard
   - https://github.com/k8s-at-home/container-images/tree/main/apps/wireguard
-  - https://github.com/truecharts/charts/tree/master/charts/stable/wireguard
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/wireguard
 type: application
 version: 11.6.1
+

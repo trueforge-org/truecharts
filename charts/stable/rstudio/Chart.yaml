@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: Productivity
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 4.5.1
@@ -34,7 +36,7 @@ name: rstudio
 sources:
   - https://ghcr.io/rocker-org/rstudio
   - https://github.com/rocker-org/rocker-versioned2
-  - https://github.com/truecharts/charts/tree/master/charts/stable/rstudio
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/rstudio
 type: application
 version: 9.6.0
 

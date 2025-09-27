@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: productivity
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 0.87.4
@@ -40,7 +42,7 @@ maintainers:
 name: outline
 sources:
   - https://github.com/outline/outline
-  - https://github.com/truecharts/charts/tree/master/charts/stable/outline
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/outline
   - https://hub.docker.com/r/outlinewiki/outline
 type: application
 version: 16.15.1

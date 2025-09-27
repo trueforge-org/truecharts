@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: media
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 0.23.2
@@ -35,7 +37,7 @@ name: slskd
 sources:
   - https://ghcr.io/slskd/slskd
   - https://github.com/ansible-slskd/slskd
-  - https://github.com/truecharts/charts/tree/master/charts/stable/slskd
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/slskd
 type: application
 version: 4.7.0
 

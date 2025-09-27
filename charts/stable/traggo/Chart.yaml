@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: productivity
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 0.7.1
@@ -33,7 +35,6 @@ maintainers:
 name: traggo
 sources:
   - https://github.com/traggo/server
-  - https://github.com/truecharts/charts/tree/master/charts/stable/traggo
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/traggo
   - https://hub.docker.com/r/traggo/server
 type: application

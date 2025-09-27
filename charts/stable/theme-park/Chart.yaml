@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: customization
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 1.21.2
@@ -34,7 +36,6 @@ name: theme-park
 sources:
   - https://ghcr.io/home-operations/theme-park
   - https://github.com/gilbn/theme.park
-  - https://github.com/truecharts/charts/tree/master/charts/stable/theme-park
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/theme-park
 type: application
 version: 12.6.0

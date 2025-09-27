@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: cms
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 5.24.1
@@ -33,7 +35,6 @@ maintainers:
 name: strapi
 sources:
   - https://github.com/naskio/docker-strapi
-  - https://github.com/truecharts/charts/tree/master/charts/stable/strapi
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/strapi
   - https://hub.docker.com/r/vshadbolt/strapi
   - https://truecharts.org/charts/stable/strapi

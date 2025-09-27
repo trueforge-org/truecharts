@@ -4,7 +4,9 @@ annotations:
     url: https://discord.com/invite/tVsPTHWTtr
   truecharts.org/category: security
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 3.5.0
@@ -29,7 +31,7 @@ maintainers:
     url: https://truecharts.org
 name: zilean
 sources:
-  - https://github.com/truecharts/charts/tree/master/charts/stable/zilean
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/zilean
   - https://hub.docker.com/r/ipromknight/zilean
 type: application
 version: 4.4.0
