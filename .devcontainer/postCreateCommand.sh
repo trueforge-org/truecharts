@@ -22,7 +22,10 @@ fisher install PatrickF1/fzf.fish
   ./"${KREW}" install krew
 )
 
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+KREW_PATH="${KREW_ROOT:-$HOME/.krew}/bin"
+export PATH="$KREW_PATH:$PATH"
+# add KREW_PATH to fish shell path
+/usr/bin/fish -c "fish_add_path $KREW_PATH"
 
 kubectl krew install pv-mounter
 kubectl krew install cnpg

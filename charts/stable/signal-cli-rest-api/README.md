@@ -4,7 +4,7 @@ title: README
 
 ## General Info
 
-For more information about this Chart, please check the docs on the TrueCharts [website](https://truecharts.org/charts/incubator/signal-cli-rest-api)
+For more information about this Chart, please check the docs on the TrueCharts [website](https://truecharts.org/charts/stable/signal-cli-rest-api)
 
 **This chart is not maintained by the upstream project and any issues with the chart should be raised [here](https://github.com/trueforge-org/truecharts/issues/new/choose)**
 
@@ -16,21 +16,21 @@ To install TrueCharts Helm charts using Helm, you can use our OCI Repository.
 
 `helm install mychart oci://oci.trueforge.org/truecharts/signal-cli-rest-api`
 
-For more information on how to install TrueCharts Helm charts, checkout the [instructions on the website](/guides)
+For more information on how to install TrueCharts Helm charts, checkout the [instructions on the website](https://truecharts.org/guides/)
 
 ## Chart Specific Guides and information
 
 All our charts have dedicated documentation pages.
 The documentation for this chart can be found here:
-https://truecharts.org/charts/incubator/signal-cli-rest-api
+https://truecharts.org/charts/stable/signal-cli-rest-api
 
 ## Configuration Options
 
 To view the chart specific options, please view Values.yaml included in the chart.
-The most recent version of which, is available here: https://github.com/trueforge-org/truecharts/blob/master/charts/incubator/signal-cli-rest-api/values.yaml
+The most recent version of which, is available here: https://github.com/trueforge-org/truecharts/blob/master/charts/stable/signal-cli-rest-api/values.yaml
 
 All our Charts use a shared "common" library chart that contains most of the templating and options.
-For the complete overview of all available options, please checkout the documentation for them on the [common docs on our website](/common)
+For the complete overview of all available options, please checkout the documentation for them on the [common docs on our website](https://truecharts.org/common/)
 
 For information about the common chart and all defaults included with it, please review its values.yaml file available here: https://github.com/trueforge-org/truecharts/blob/master/charts/library/common/values.yaml
 
@@ -45,6 +45,6 @@ For information about the common chart and all defaults included with it, please
 ## Sponsor TrueCharts
 
 TrueCharts can only exist due to the incredible effort of our staff.
-Please consider making a [donation](/general/sponsor) or contributing back to the project any way you can!
+Please consider making a [donation](https://truecharts.org/general/sponsor/) or contributing back to the project any way you can!
 
 _All Rights Reserved - The TrueCharts Project_

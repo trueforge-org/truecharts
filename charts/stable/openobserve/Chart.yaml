@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: inventory
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 0.15.1
@@ -36,7 +38,7 @@ name: openobserve
 sources:
   - https://gallery.ecr.aws/zinclabs/openobserve
   - https://github.com/openobserve/openobserve
-  - https://github.com/truecharts/charts/tree/master/charts/stable/openobserve
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/openobserve
 type: application
 version: 1.5.0
 

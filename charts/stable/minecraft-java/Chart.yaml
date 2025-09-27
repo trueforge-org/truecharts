@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: games
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 2025.9.2
@@ -34,7 +36,7 @@ name: minecraft-java
 sources:
   - https://ghcr.io/itzg/minecraft-server
   - https://github.com/itzg/docker-minecraft-server
-  - https://github.com/truecharts/charts/tree/master/charts/stable/minecraft-java
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/minecraft-java
   - https://hub.docker.com/r/itzg/mc-backup
 type: application
 version: 23.28.0

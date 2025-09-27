@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: security
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 4.39.10
@@ -51,7 +53,7 @@ sources:
   - https://ghcr.io/authelia/authelia
   - https://github.com/authelia/authelia
   - https://github.com/authelia/chartrepo
-  - https://github.com/truecharts/charts/tree/master/charts/stable/authelia
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/authelia
 type: application
 version: 29.13.1
 

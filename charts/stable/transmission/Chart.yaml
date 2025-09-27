@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: download-tools
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 4.0.6
@@ -35,7 +37,7 @@ name: transmission
 sources:
   - https://github.com/linuxserver/docker-transmission
   - https://github.com/transmission/transmission
-  - https://github.com/truecharts/charts/tree/master/charts/stable/transmission
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/transmission
   - https://hub.docker.com/r/linuxserver/transmission
 type: application
 version: 24.6.1

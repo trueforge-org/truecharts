@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: vpn
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 0.7.36
@@ -34,7 +36,7 @@ maintainers:
 name: firezone
 sources:
   - https://github.com/firezone/firezone
-  - https://github.com/truecharts/charts/tree/master/charts/stable/firezone
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/firezone
   - https://hub.docker.com/r/firezone/firezone
 type: application
 version: 6.6.0

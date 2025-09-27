@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: incubator
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 2025.1.0
@@ -31,7 +33,7 @@ maintainers:
     url: https://truecharts.org
 name: domoticz
 sources:
-  - https://github.com/truecharts/charts/tree/master/charts/stable/domoticz
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/domoticz
   - https://hub.docker.com/r/domoticz/domoticz
 type: application
 version: 15.6.0

@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: media
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 2025.1.0
@@ -32,7 +34,7 @@ maintainers:
 name: meshroom
 sources:
   - https://github.com/alicevision/meshroom
-  - https://github.com/truecharts/charts/tree/master/charts/stable/meshroom
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/meshroom
   - https://hub.docker.com/r/alicevision/meshroom
 type: application
 version: 13.3.0

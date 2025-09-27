@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: dashboard
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 1.0.3
@@ -33,7 +35,6 @@ maintainers:
 name: bender
 sources:
   - https://github.com/jez500/bender
-  - https://github.com/truecharts/charts/tree/master/charts/stable/bender
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/bender
   - https://hub.docker.com/r/jez500/bender
 type: application

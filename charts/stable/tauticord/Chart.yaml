@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: discord
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 5.15.0
@@ -35,7 +37,7 @@ name: tauticord
 sources:
   - https://ghcr.io/nwithan8/tauticord
   - https://github.com/nwithan8/tauticord
-  - https://github.com/truecharts/charts/tree/master/charts/stable/tauticord
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/tauticord
 type: application
 version: 9.8.0
 

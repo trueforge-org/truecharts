@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: operators
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: premium
 apiVersion: v2
 appVersion: latest
@@ -40,7 +42,8 @@ maintainers:
 name: kubernetes-dashboard
 sources:
   - https://github.com/kubernetes-dashboard/kubernetes-dashboard
-  - https://github.com/truecharts/charts/tree/master/charts/premium/kubernetes-dashboard
+  - https://github.com/truecharts/containers/tree/master/apps/kube-sa-proxy
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/premium/kubernetes-dashboard
   - https://github.com/trueforge/truecharts/tree/master/charts/premium/kubernetes-dashboard
   - https://hub.docker.com/r/kubernetesui/dashboard-api
   - https://hub.docker.com/r/kubernetesui/dashboard-auth

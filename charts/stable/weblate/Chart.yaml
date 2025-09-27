@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: media
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 4.16.4
@@ -42,7 +44,7 @@ sources:
   - https://github.com/WeblateOrg/docker
   - https://github.com/WeblateOrg/docker-compose
   - https://github.com/WeblateOrg/weblate
-  - https://github.com/truecharts/charts/tree/master/charts/stable/weblate
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/weblate
   - https://hub.docker.com/r/weblate/weblate
 type: application
 version: 17.13.1

@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: metrics
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: premium
 apiVersion: v2
 appVersion: 12.2.0
@@ -35,7 +37,6 @@ maintainers:
 name: grafana
 sources:
   - https://github.com/bitnami/bitnami-docker-grafana
-  - https://github.com/truecharts/charts/tree/master/charts/premium/grafana
   - https://github.com/trueforge-org/truecharts/tree/master/charts/premium/grafana
   - https://grafana.com/
   - https://hub.docker.com/r/grafana/grafana

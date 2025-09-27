@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: networking
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 2025.08.0
@@ -34,7 +36,6 @@ sources:
   - https://ghcr.io/pi-hole/pihole
   - https://github.com/pi-hole
   - https://github.com/pi-hole/docker-pi-hole
-  - https://github.com/truecharts/charts/tree/master/charts/stable/pihole
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/pihole
   - https://pi-hole.net/
 type: application

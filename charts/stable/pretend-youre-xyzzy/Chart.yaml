@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: media
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 4.0.0
@@ -36,7 +38,7 @@ name: pretend-youre-xyzzy
 sources:
   - https://github.com/ajanata/PretendYoureXyzzy
   - https://github.com/emcniece/DockerYourXyzzy
-  - https://github.com/truecharts/charts/tree/master/charts/stable/pretend-youre-xyzzy
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/pretend-youre-xyzzy
   - https://hub.docker.com/r/emcniece/dockeryourxyzzy
 type: application
 version: 16.6.0

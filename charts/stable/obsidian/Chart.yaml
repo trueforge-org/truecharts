@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: productivity
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 0.1.1
@@ -35,7 +37,6 @@ sources:
   - https://ghcr.io/sytone/obsidian-remote
   - https://github.com/sytone/obsidian-remote
   - https://github.com/sytone/obsidian-remote/pkgs/container/obsidian-remote
-  - https://github.com/truecharts/charts/tree/master/charts/stable/obsidian
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/obsidian
 type: application
 version: 9.6.0

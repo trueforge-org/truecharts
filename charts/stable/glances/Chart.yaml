@@ -4,7 +4,9 @@ annotations:
     url: https://discord.com/invite/tVsPTHWTtr
   truecharts.org/category: metrics
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 4.3.0.8
@@ -31,7 +33,6 @@ maintainers:
 name: glances
 sources:
   - https://github.com/nicolargo/glances
-  - https://github.com/truecharts/charts/tree/master/charts/stable/glances
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/glances
   - https://hub.docker.com/r/nicolargo/glances
 type: application

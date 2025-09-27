@@ -4,7 +4,9 @@ annotations:
     url: https://discord.com/invite/tVsPTHWTtr
   truecharts.org/category: media
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 0.94.0
@@ -33,7 +35,6 @@ maintainers:
 name: signal-cli-rest-api
 sources:
   - https://github.com/bbernhard/signal-cli-rest-api
-  - https://github.com/truecharts/charts/tree/master/charts/stable/signal-cli-rest-api
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/signal-cli-rest-api
   - https://hub.docker.com/r/bbernhard/signal-cli-rest-api
 type: application

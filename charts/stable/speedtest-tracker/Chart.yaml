@@ -6,7 +6,9 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: metrics
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 1.6.8
@@ -42,7 +44,6 @@ sources:
   - https://ghcr.io/linuxserver/speedtest-tracker
   - https://github.com/alexjustesen/speedtest-tracker
   - https://github.com/linuxserver/docker-speedtest-tracker
-  - https://github.com/truecharts/charts/tree/master/charts/stable/speedtest-tracker
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/speedtest-tracker
 type: application
 version: 8.13.2

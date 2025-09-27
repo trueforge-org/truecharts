@@ -4,7 +4,9 @@ annotations:
     url: https://discord.com/invite/tVsPTHWTtr
   truecharts.org/category: security
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 2.0.0
@@ -29,7 +31,7 @@ maintainers:
     url: https://truecharts.org
 name: renovate
 sources:
-  - https://github.com/truecharts/charts/tree/master/charts/stable/renovate
+  - https://github.com/truecharts/containers/tree/master/apps/renovate
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/renovate
 type: application
 version: 2.6.0

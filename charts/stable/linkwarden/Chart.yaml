@@ -6,10 +6,12 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: bookmarks
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 2.12.2
+appVersion: 2.13.0
 dependencies:
   - name: common
     version: 28.20.0
@@ -35,8 +37,7 @@ name: linkwarden
 sources:
   - https://ghcr.io/linkwarden/linkwarden
   - https://github.com/linkwarden/linkwarden
-  - https://github.com/truecharts/charts/tree/master/charts/stable/linkwarden
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/linkwarden
 type: application
-version: 7.7.0
+version: 7.8.0
 
