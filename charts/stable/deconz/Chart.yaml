@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2.31.1
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -38,8 +38,9 @@ name: deconz
 sources:
   - https://github.com/dresden-elektronik/deconz-rest-plugin
   - https://github.com/marthoc/docker-deconz
+  - https://github.com/truecharts/charts/tree/master/charts/stable/deconz
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/deconz
   - https://hub.docker.com/r/deconzcommunity/deconz
 type: application
-version: 18.7.0
+version: 18.7.1
 

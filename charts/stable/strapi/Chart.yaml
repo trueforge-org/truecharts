@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 5.24.1
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,9 +35,10 @@ maintainers:
 name: strapi
 sources:
   - https://github.com/naskio/docker-strapi
+  - https://github.com/truecharts/charts/tree/master/charts/stable/strapi
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/strapi
   - https://hub.docker.com/r/vshadbolt/strapi
   - https://truecharts.org/charts/stable/strapi
 type: application
-version: 17.11.0
+version: 17.11.1
 

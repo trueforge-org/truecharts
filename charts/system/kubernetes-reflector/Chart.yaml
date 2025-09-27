@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 9.1.32
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -39,7 +39,8 @@ name: kubernetes-reflector
 sources:
   - https://ghcr.io/emberstack/kubernetes-reflector
   - https://github.com/emberstack/kubernetes-reflector
+  - https://github.com/truecharts/charts/tree/master/charts/system/kubernetes-reflector
   - https://github.com/trueforge-org/truecharts/tree/master/charts/system/kubernetes-reflector
 type: application
-version: 7.6.1
+version: 7.6.2
 

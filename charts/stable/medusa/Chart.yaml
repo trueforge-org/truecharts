@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.0.22
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -40,8 +40,9 @@ name: medusa
 sources:
   - https://ghcr.io/linuxserver/medusa
   - https://github.com/linuxserver/docker-medusa
+  - https://github.com/truecharts/charts/tree/master/charts/stable/medusa
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/medusa
   - https://pymedusa.com/
 type: application
-version: 13.6.1
+version: 13.6.2
 

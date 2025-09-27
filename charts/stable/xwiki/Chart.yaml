@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 17.7.0
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,8 +35,9 @@ maintainers:
 name: xwiki
 sources:
   - https://gallery.ecr.aws/docker/library/xwiki
+  - https://github.com/truecharts/charts/tree/master/charts/stable/xwiki
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/xwiki
   - https://github.com/xwiki/xwiki-docker
 type: application
-version: 16.8.0
+version: 16.8.1
 

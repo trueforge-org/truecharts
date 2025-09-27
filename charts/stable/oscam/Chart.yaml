@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 11887.0.0
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,7 +35,8 @@ name: oscam
 sources:
   - https://ghcr.io/linuxserver/oscam
   - https://git.streamboard.tv/common/oscam
+  - https://github.com/truecharts/charts/tree/master/charts/stable/oscam
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/oscam
 type: application
-version: 16.6.0
+version: 16.6.1
 

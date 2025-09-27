@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.56.7
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -34,8 +34,9 @@ maintainers:
 name: metabase
 sources:
   - https://github.com/metabase/metabase
+  - https://github.com/truecharts/charts/tree/master/charts/stable/metabase
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/metabase
   - https://hub.docker.com/r/metabase/metabase
 type: application
-version: 6.7.1
+version: 6.7.2
 

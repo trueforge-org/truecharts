@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -44,7 +44,8 @@ name: mongo-express
 sources:
   - https://gallery.ecr.aws/docker/library/mongo-express
   - https://github.com/mongo-express/mongo-express
+  - https://github.com/truecharts/charts/tree/master/charts/stable/mongo-express
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mongo-express
 type: application
-version: 9.12.1
+version: 9.12.2
 

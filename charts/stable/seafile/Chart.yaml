@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 12.0.14
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -50,9 +50,10 @@ maintainers:
     url: https://truecharts.org
 name: seafile
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/seafile
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/seafile
   - https://hub.docker.com/r/seafileltd/seafile-mc
   - https://seafile.com
 type: application
-version: 11.4.1
+version: 11.4.2
 

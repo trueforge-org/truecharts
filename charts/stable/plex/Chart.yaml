@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.42.2.10156
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,7 +36,8 @@ name: plex
 sources:
   - https://ghcr.io/home-operations/plex
   - https://github.com/k8s-at-home/container-images/pkgs/container/plex
+  - https://github.com/truecharts/charts/tree/master/charts/stable/plex
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/plex
 type: application
-version: 20.7.1
+version: 20.7.2
 

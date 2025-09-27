@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2025.9.1
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -34,8 +34,9 @@ maintainers:
     url: https://truecharts.org
 name: cloudflared
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/cloudflared
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/cloudflared
   - https://hub.docker.com/r/cloudflare/cloudflared
 type: application
-version: 14.8.0
+version: 14.8.1
 

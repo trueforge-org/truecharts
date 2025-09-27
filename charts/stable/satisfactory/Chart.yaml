@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.9.10
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -33,9 +33,10 @@ maintainers:
     url: https://truecharts.org
 name: satisfactory
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/satisfactory
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/satisfactory
   - https://github.com/wolveix/satisfactory-server
   - https://hub.docker.com/r/wolveix/satisfactory-server
 type: application
-version: 13.6.0
+version: 13.6.1
 

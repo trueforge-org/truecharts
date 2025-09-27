@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.7.7
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,7 +36,8 @@ name: smtp-relay
 sources:
   - https://ghcr.io/ix-ai/smtp
   - https://github.com/ix-ai/smtp
+  - https://github.com/truecharts/charts/tree/master/charts/stable/smtp-relay
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/smtp-relay
 type: application
-version: 6.6.0
+version: 6.6.1
 

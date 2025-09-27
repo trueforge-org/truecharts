@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -43,9 +43,10 @@ name: rsshub
 sources:
   - https://docs.rsshub.app/en/install/
   - https://github.com/DIYgod/RSSHub
+  - https://github.com/truecharts/charts/tree/master/charts/stable/rsshub
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/rsshub
   - https://hub.docker.com/r/browserless/chrome
   - https://hub.docker.com/r/diygod/rsshub
 type: application
-version: 16.13.3
+version: 16.13.4
 

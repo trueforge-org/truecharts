@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 9.0.4
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -42,8 +42,9 @@ name: onlyoffice-document-server
 sources:
   - https://github.com/ONLYOFFICE/Docker-DocumentServer
   - https://github.com/ONLYOFFICE/DocumentServer
+  - https://github.com/truecharts/charts/tree/master/charts/stable/onlyoffice-document-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/onlyoffice-document-server
   - https://hub.docker.com/r/onlyoffice/documentserver
 type: application
-version: 22.13.1
+version: 22.13.2
 

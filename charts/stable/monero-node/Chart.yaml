@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.18.4.2
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.20.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -38,7 +38,8 @@ name: monero-node
 sources:
   - https://ghcr.io/sethforprivacy/simple-monerod
   - https://github.com/kannix/monero-full-node
+  - https://github.com/truecharts/charts/tree/master/charts/stable/monero-node
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/monero-node
 type: application
-version: 9.6.0
+version: 9.6.1
 
