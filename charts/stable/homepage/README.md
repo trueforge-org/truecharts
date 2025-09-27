@@ -27,12 +27,12 @@ https://truecharts.org/charts/stable/homepage
 ## Configuration Options
 
 To view the chart specific options, please view Values.yaml included in the chart.
-The most recent version of which, is available here: https://github.com/trueforge/truecharts/blob/master/charts/stable/homepage/values.yaml
+The most recent version of which, is available here: https://github.com/trueforge-org/truecharts/blob/master/charts/stable/homepage/values.yaml
 
 All our Charts use a shared "common" library chart that contains most of the templating and options.
 For the complete overview of all available options, please checkout the documentation for them on the [common docs on our website](/common)
 
-For information about the common chart and all defaults included with it, please review its values.yaml file available here: https://github.com/trueforge/truecharts/blob/master/charts/library/common/values.yaml
+For information about the common chart and all defaults included with it, please review its values.yaml file available here: https://github.com/trueforge-org/truecharts/blob/master/charts/library/common/values.yaml
 
 ## Support
 
