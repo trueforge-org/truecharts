@@ -133,7 +133,8 @@ jobs:
 
  # check-contributors:
  #   name: Check Contributors
- #   runs-on: actions-runners
+ #   runs-on:
+ #     group: default
  #   steps:
  #     - name: Checkout
  #       uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4
