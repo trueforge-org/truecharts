@@ -116,7 +116,8 @@ jobs:
           git push
 
   lock-threads:
-    runs-on: actions-runners
+    runs-on:
+      group: default
     steps:
       - uses: dessant/lock-threads@1bf7ec25051fe7c00bdd17e6a7cf3d7bfb7dc771 # v5
         with:
