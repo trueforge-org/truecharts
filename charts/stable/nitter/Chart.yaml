@@ -21,7 +21,7 @@ dependencies:
     tags: []
     import-values: []
   - name: redis
-    version: 17.8.1
+    version: 17.8.2
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -41,9 +41,10 @@ maintainers:
     url: https://truecharts.org
 name: nitter
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/nitter
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/nitter
   - https://github.com/zedeus/nitter
   - https://hub.docker.com/r/zedeus/nitter
 type: application
-version: 10.13.2
+version: 10.13.3
 
