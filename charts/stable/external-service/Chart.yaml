@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 3.22.1
 dependencies:
   - name: common
-    version: 28.20.1
+    version: 28.21.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -34,8 +34,9 @@ maintainers:
     url: https://truecharts.org
 name: external-service
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/external-service
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/external-service
   - https://hub.docker.com/_/alpine
 type: application
-version: 16.6.1
+version: 16.7.0
 

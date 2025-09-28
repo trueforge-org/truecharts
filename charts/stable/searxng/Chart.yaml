@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.20.1
+    version: 28.21.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,8 +36,9 @@ maintainers:
 name: searxng
 sources:
   - https://github.com/searxng/searxng
+  - https://github.com/truecharts/charts/tree/master/charts/stable/searxng
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/searxng
   - https://hub.docker.com/r/searxng/searxng
 type: application
-version: 10.6.3
+version: 10.7.0
 

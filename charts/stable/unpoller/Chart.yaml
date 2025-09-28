@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2.15.4
 dependencies:
   - name: common
-    version: 28.20.1
+    version: 28.21.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,8 +36,9 @@ maintainers:
 name: unpoller
 sources:
   - https://ghcr.io/unpoller/unpoller
+  - https://github.com/truecharts/charts/tree/master/charts/stable/unpoller
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/unpoller
   - https://github.com/unifi-poller/unifi-poller
 type: application
-version: 13.6.1
+version: 13.7.0
 

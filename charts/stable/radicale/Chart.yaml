@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 3.5.6.0
 dependencies:
   - name: common
-    version: 28.20.1
+    version: 28.21.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -41,9 +41,10 @@ name: radicale
 sources:
   - https://github.com/Kozea/Radicale
   - https://github.com/tomsquest/docker-radicale
+  - https://github.com/truecharts/charts/tree/master/charts/stable/radicale
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/radicale
   - https://hub.docker.com/r/tomsquest/docker-radicale
   - https://radicale.org/
 type: application
-version: 8.6.1
+version: 8.7.0
 

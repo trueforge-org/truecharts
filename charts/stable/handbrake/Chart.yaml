@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 25.09.2
 dependencies:
   - name: common
-    version: 28.20.1
+    version: 28.21.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -37,8 +37,9 @@ name: handbrake
 sources:
   - https://ghcr.io/jlesage/handbrake
   - https://github.com/jlesage/docker-handbrake
+  - https://github.com/truecharts/charts/tree/master/charts/stable/handbrake
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/handbrake
   - https://handbrake.fr/
 type: application
-version: 25.7.1
+version: 25.8.0
 

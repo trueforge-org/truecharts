@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.16.0
 dependencies:
   - name: common
-    version: 28.20.1
+    version: 28.21.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,8 +35,9 @@ maintainers:
 name: truenas-exporter
 sources:
   - https://github.com/Supporterino/truenas-graphite-to-prometheus/tree/main
+  - https://github.com/truecharts/charts/tree/master/charts/stable/truenas-exporter
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/truenas-exporter
   - https://hub.docker.com/r/prom/graphite-exporter
 type: application
-version: 4.6.1
+version: 4.7.0
 

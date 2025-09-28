@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.5.0
 dependencies:
   - name: common
-    version: 28.20.1
+    version: 28.21.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,8 +35,9 @@ maintainers:
 name: vocechat-server
 sources:
   - https://github.com/Privoce/vocechat-server-rust
+  - https://github.com/truecharts/charts/tree/master/charts/stable/vocechat-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/vocechat-server
   - https://hub.docker.com/r/privoce/vocechat-server
 type: application
-version: 6.7.1
+version: 6.8.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 18.04.1
 dependencies:
   - name: common
-    version: 28.20.1
+    version: 28.21.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -38,8 +38,9 @@ name: sqlitebrowser
 sources:
   - https://ghcr.io/linuxserver/sqlitebrowser
   - https://github.com/linuxserver/docker-sqlitebrowser
+  - https://github.com/truecharts/charts/tree/master/charts/stable/sqlitebrowser
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/sqlitebrowser
   - https://sqlitebrowser.org/
 type: application
-version: 13.6.1
+version: 13.7.0
 

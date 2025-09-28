@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 20250925.0.175035
 dependencies:
   - name: common
-    version: 28.20.1
+    version: 28.21.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -34,9 +34,10 @@ maintainers:
 name: kopia
 sources:
   - https://github.com/kopia/kopia
+  - https://github.com/truecharts/charts/tree/master/charts/stable/kopia
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/kopia
   - https://hub.docker.com/r/kopia/kopia
   - https://kopia.io/docs/installation/#docker-images
 type: application
-version: 21.0.1
+version: 21.1.0
 

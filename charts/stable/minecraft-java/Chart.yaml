@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2025.9.2
 dependencies:
   - name: common
-    version: 28.20.1
+    version: 28.21.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,8 +36,9 @@ name: minecraft-java
 sources:
   - https://ghcr.io/itzg/minecraft-server
   - https://github.com/itzg/docker-minecraft-server
+  - https://github.com/truecharts/charts/tree/master/charts/stable/minecraft-java
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/minecraft-java
   - https://hub.docker.com/r/itzg/mc-backup
 type: application
-version: 23.28.1
+version: 23.29.0
 

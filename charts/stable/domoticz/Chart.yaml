@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2025.1.0
 dependencies:
   - name: common
-    version: 28.20.1
+    version: 28.21.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -33,8 +33,9 @@ maintainers:
     url: https://truecharts.org
 name: domoticz
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/domoticz
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/domoticz
   - https://hub.docker.com/r/domoticz/domoticz
 type: application
-version: 15.6.1
+version: 15.7.0
 

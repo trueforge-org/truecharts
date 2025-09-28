@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.20.1
+    version: 28.21.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,8 +36,9 @@ maintainers:
 name: nosqlclient
 sources:
   - https://github.com/nosqlclient/nosqlclient
+  - https://github.com/truecharts/charts/tree/master/charts/stable/nosqlclient
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/nosqlclient
   - https://hub.docker.com/r/mongoclient/mongoclient
 type: application
-version: 8.6.1
+version: 8.7.0
 

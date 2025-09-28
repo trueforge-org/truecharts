@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.14.0
 dependencies:
   - name: common
-    version: 28.20.1
+    version: 28.21.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,8 +36,9 @@ maintainers:
 name: smartctl-exporter
 sources:
   - https://github.com/prometheus-community/smartctl_exporter
+  - https://github.com/truecharts/charts/tree/master/charts/stable/smartctl-exporter
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/smartctl-exporter
   - https://quay.io/prometheuscommunity/smartctl-exporter
 type: application
-version: 5.6.1
+version: 5.7.0
 

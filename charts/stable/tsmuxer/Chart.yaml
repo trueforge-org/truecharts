@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 25.07.2
 dependencies:
   - name: common
-    version: 28.20.1
+    version: 28.21.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,8 +35,9 @@ maintainers:
 name: tsmuxer
 sources:
   - https://github.com/jlesage/docker-tsmuxer
+  - https://github.com/truecharts/charts/tree/master/charts/stable/tsmuxer
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/tsmuxer
   - https://hub.docker.com/r/jlesage/tsmuxer
 type: application
-version: 13.7.1
+version: 13.8.0
 

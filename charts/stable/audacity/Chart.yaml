@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 3.0.2
 dependencies:
   - name: common
-    version: 28.20.1
+    version: 28.21.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -39,8 +39,9 @@ name: audacity
 sources:
   - https://ghcr.io/linuxserver/audacity
   - https://github.com/linuxserver/docker-audacity
+  - https://github.com/truecharts/charts/tree/master/charts/stable/audacity
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/audacity
   - https://www.audacityteam.org/
 type: application
-version: 15.6.1
+version: 15.7.0
 

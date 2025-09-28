@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: alpine
 dependencies:
   - name: common
-    version: 28.20.1
+    version: 28.21.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,8 +35,9 @@ maintainers:
 name: pwm
 sources:
   - https://github.com/pwm-project/pwm
+  - https://github.com/truecharts/charts/tree/master/charts/stable/pwm
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/pwm
   - https://hub.docker.com/r/fjudith/pwm
 type: application
-version: 8.6.1
+version: 8.7.0
 
