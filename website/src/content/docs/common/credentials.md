@@ -106,6 +106,30 @@ credentials:
 
 ---
 
+#### `customCA`
+
+Define a custom CA certificate to be used when connecting to the endpoint
+defined by `url` over HTTPS.
+
+|            |                                                               |
+| ---------- | ------------------------------------------------------------- |
+| Key        | `credentials.$name.customCA`                                  |
+| Type       | `string`                                                      |
+| Required   | ❌                                                            |
+| Helm `tpl` | ❌                                                            |
+| Example    | `-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----` |
+
+```yaml
+credentials:
+  credentials-name:
+    customCA: |-
+      -----BEGIN CERTIFICATE-----
+      ...
+      -----END CERTIFICATE-----
+```
+
+---
+
 #### `path`
 
 Define the optional path-override of the credentials

@@ -53,6 +53,11 @@ spec:
     schedule: {{ $schedule }}
   {{ $volsyncData.type }}:
     repository: {{ $volsyncData.repository }}
+    {{- if $volsyncData.customCA }}
+    customCA:
+      secretName: {{ $volsyncData.customCA }}
+      key: ca.crt
+    {{- end }}
     copyMethod: {{ $volsyncData.copyMethod | default "Snapshot" }}
     pruneIntervalDays: {{ $volsyncData.src.pruneIntervalDays | default 7 }}
     unlock: {{ now | date "20060102150405" | quote }}

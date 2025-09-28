@@ -55,6 +55,11 @@ spec:
     manual: restore-once
   {{ $volsyncData.type }}:
     repository: {{ $volsyncData.repository }}
+    {{- if $volsyncData.customCA }}
+    customCA:
+      secretName: {{ $volsyncData.customCA }}
+      key: ca.crt
+    {{- end }}
     copyMethod: {{ $copyMethod }}
     capacity: {{ $capacity }}
     {{- if eq $copyMethod "Direct" }}

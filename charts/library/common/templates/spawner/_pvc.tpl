@@ -128,6 +128,25 @@
             ) -}}
 
             {{- include "tc.v1.common.class.secret" (dict "rootCtx" $ "objectData" $volsyncSecretData) -}}
+
+            {{/* Create Custom CA Secret for VolSync */}}
+            {{- if $credentials.customCA -}}
+              {{- $volsyncCASecretName := printf "%s-volsync-ca-%s" (include "tc.v1.common.lib.chart.names.fullname" $ ) $volsync.credentials -}}
+
+              {{- $_ := set $volsyncData "customCA" $volsyncCASecretName -}}
+
+              {{- $volsyncCASecretData := (dict
+                  "name" $volsyncCASecretName
+                  "labels" ($volsync.labels | default dict)
+                  "annotations" ($volsync.annotations | default dict)
+                  "data" (dict
+                      "ca.crt" $credentials.customCA
+                  )
+              ) -}}
+
+              {{- include "tc.v1.common.class.secret" (dict "rootCtx" $ "objectData" $volsyncCASecretData) -}}
+            {{- end -}}
+
              {{/* Create VolSync resources*/}}
             {{- if $srcEnabled -}}
               {{- include "tc.v1.common.class.replicationsource" (dict "rootCtx" $ "objectData" $objectData "volsyncData" $volsyncData) -}}
