@@ -22,21 +22,21 @@ dependencies:
     import-values: []
   - name: mariadb
     version: 17.4.2
-    repository: oci://tccr.io/truecharts
+    repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
     tags: []
     import-values: []
   - name: redis
     version: 17.8.2
-    repository: oci://tccr.io/truecharts
+    repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
     tags: []
     import-values: []
   - name: mongodb
     version: 16.7.2
-    repository: oci://tccr.io/truecharts
+    repository: oci://oci.trueforge.org/truecharts
     condition: mongodb.enabled
     alias: ""
     tags: []
@@ -58,5 +58,5 @@ sources:
   - https://github.com/truecharts/charts/tree/master/charts/premium/app-template
   - https://github.com/trueforge-org/truecharts/tree/master/charts/premium/app-template
 type: application
-version: 15.9.1
+version: 15.9.2
 
