@@ -21,7 +21,7 @@ dependencies:
     tags: []
     import-values: []
   - name: memcached
-    version: 16.7.1
+    version: 16.7.2
     repository: oci://oci.trueforge.org/truecharts
     condition: memcached.enabled
     alias: ""
@@ -47,8 +47,9 @@ name: gitea
 sources:
   - https://gitea.com/gitea/helm-chart
   - https://github.com/go-gitea/gitea
+  - https://github.com/truecharts/charts/tree/master/charts/stable/gitea
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/gitea
   - https://hub.docker.com/r/gitea/gitea
 type: application
-version: 22.12.2
+version: 22.12.3
 
