@@ -21,7 +21,7 @@ dependencies:
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.4.1
+    version: 17.4.2
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -46,7 +46,8 @@ name: clarkson
 sources:
   - https://ghcr.io/linuxserver/clarkson
   - https://github.com/linuxserver/Clarkson
+  - https://github.com/truecharts/charts/tree/master/charts/stable/clarkson
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/clarkson
 type: application
-version: 16.4.2
+version: 16.4.3
 

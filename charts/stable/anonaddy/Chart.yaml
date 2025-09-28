@@ -21,7 +21,7 @@ dependencies:
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.4.1
+    version: 17.4.2
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -48,8 +48,9 @@ maintainers:
 name: anonaddy
 sources:
   - https://github.com/anonaddy/docker
+  - https://github.com/truecharts/charts/tree/master/charts/stable/anonaddy
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/anonaddy
   - https://hub.docker.com/r/anonaddy/anonaddy
 type: application
-version: 25.6.3
+version: 25.6.4
 

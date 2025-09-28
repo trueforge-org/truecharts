@@ -21,7 +21,7 @@ dependencies:
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.4.1
+    version: 17.4.2
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -42,8 +42,9 @@ maintainers:
 name: servas
 sources:
   - https://github.com/beromir/Servas
+  - https://github.com/truecharts/charts/tree/master/charts/stable/servas
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/servas
   - https://hub.docker.com/r/beromir/servas
 type: application
-version: 9.4.2
+version: 9.4.3
 

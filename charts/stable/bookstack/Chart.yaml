@@ -21,7 +21,7 @@ dependencies:
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.4.1
+    version: 17.4.2
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -46,8 +46,9 @@ maintainers:
 name: bookstack
 sources:
   - https://ghcr.io/linuxserver/bookstack
+  - https://github.com/truecharts/charts/tree/master/charts/stable/bookstack
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/bookstack
   - https://www.bookstackapp.com/
 type: application
-version: 18.4.2
+version: 18.4.3
 
