@@ -21,7 +21,7 @@ dependencies:
     tags: []
     import-values: []
   - name: redis
-    version: 17.8.2
+    version: 17.9.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -46,8 +46,9 @@ sources:
   - https://ghcr.io/goauthentik/server
   - https://ghcr.io/maxmind/geoipupdate
   - https://github.com/goauthentik/authentik
+  - https://github.com/truecharts/charts/tree/master/charts/stable/authentik
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/authentik
   - https://goauthentik.io/docs/
 type: application
-version: 33.18.0
+version: 33.19.0
 

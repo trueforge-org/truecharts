@@ -21,7 +21,7 @@ dependencies:
     tags: []
     import-values: []
   - name: redis
-    version: 17.8.2
+    version: 17.9.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -42,7 +42,8 @@ maintainers:
 name: manyfold
 sources:
   - https://ghcr.io/manyfold3d/manyfold
+  - https://github.com/truecharts/charts/tree/master/charts/stable/manyfold
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/manyfold
 type: application
-version: 4.20.0
+version: 4.21.0
 

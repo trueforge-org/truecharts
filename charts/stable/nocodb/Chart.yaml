@@ -21,7 +21,7 @@ dependencies:
     tags: []
     import-values: []
   - name: redis
-    version: 17.8.2
+    version: 17.9.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -41,8 +41,9 @@ maintainers:
 name: nocodb
 sources:
   - https://github.com/nocodb/nocodb
+  - https://github.com/truecharts/charts/tree/master/charts/stable/nocodb
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/nocodb
   - https://hub.docker.com/r/nocodb/nocodb
 type: application
-version: 17.15.0
+version: 17.16.0
 
