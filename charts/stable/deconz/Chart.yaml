@@ -11,7 +11,7 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 2.31.1
+appVersion: 2.31.2
 dependencies:
   - name: common
     version: 28.21.0
@@ -38,8 +38,9 @@ name: deconz
 sources:
   - https://github.com/dresden-elektronik/deconz-rest-plugin
   - https://github.com/marthoc/docker-deconz
+  - https://github.com/truecharts/charts/tree/master/charts/stable/deconz
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/deconz
   - https://hub.docker.com/r/deconzcommunity/deconz
 type: application
-version: 18.8.0
+version: 18.8.1
 
