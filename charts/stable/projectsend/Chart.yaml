@@ -21,7 +21,7 @@ dependencies:
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.4.2
+    version: 17.5.0
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -43,7 +43,8 @@ name: projectsend
 sources:
   - https://ghcr.io/linuxserver/projectsend
   - https://github.com/projectsend/projectsend
+  - https://github.com/truecharts/charts/tree/master/charts/stable/projectsend
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/projectsend
 type: application
-version: 16.5.0
+version: 16.6.0
 

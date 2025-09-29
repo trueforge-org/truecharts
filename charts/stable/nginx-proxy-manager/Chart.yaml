@@ -21,7 +21,7 @@ dependencies:
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.4.2
+    version: 17.5.0
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -43,9 +43,10 @@ maintainers:
 name: nginx-proxy-manager
 sources:
   - https://github.com/NginxProxyManager/nginx-proxy-manager
+  - https://github.com/truecharts/charts/tree/master/charts/stable/nginx-proxy-manager
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/nginx-proxy-manager
   - https://hub.docker.com/r/jc21/nginx-proxy-manager
   - https://nginxproxymanager.com/
 type: application
-version: 13.5.0
+version: 13.6.0
 
