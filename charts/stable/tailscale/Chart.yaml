@@ -11,7 +11,7 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 1.88.2
+appVersion: 1.88.3
 dependencies:
   - name: common
     version: 28.21.0
@@ -35,8 +35,9 @@ maintainers:
 name: tailscale
 sources:
   - https://github.com/tailscale/tailscale/blob/main/docs/k8s/run.sh
+  - https://github.com/truecharts/charts/tree/master/charts/stable/tailscale
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/tailscale
   - https://hub.docker.com/r/tailscale/tailscale
 type: application
-version: 11.9.0
+version: 11.9.1
 
