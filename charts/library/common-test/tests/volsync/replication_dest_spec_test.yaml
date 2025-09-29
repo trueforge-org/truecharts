@@ -350,3 +350,78 @@ tests:
                 fsGroup: 568
                 runAsUser: 568
                 runAsGroup: 568
+
+  - it: should generate correct spec with customCA
+    set:
+      persistence:
+        destbackup:
+          enabled: true
+          type: pvc
+          mountPath: /backedup
+          volsync:
+            - name: mybackup1
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: true
+              src:
+                enabled: false
+      credentials:
+        mys3:
+          type: s3
+          url: https://s3.some-url
+          bucket: some-bucket
+          encrKey: some-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+          customCA: |-
+            -----BEGIN CERTIFICATE-----
+            ...
+            -----END CERTIFICATE-----
+    asserts:
+      - documentIndex: &secretCaDoc 1
+        isKind:
+          of: Secret
+      - documentIndex: *secretCaDoc
+        isAPIVersion:
+          of: v1
+      - documentIndex: *secretCaDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-volsync-ca-mys3
+      - documentIndex: *secretCaDoc
+        equal:
+          path: stringData
+          value:
+            ca.crt: |-
+              -----BEGIN CERTIFICATE-----
+              ...
+              -----END CERTIFICATE-----
+      - documentIndex: &replicationCaDestDoc 2
+        isKind:
+          of: ReplicationDestination
+      - documentIndex: *replicationCaDestDoc
+        isAPIVersion:
+          of: volsync.backube/v1alpha1
+      - documentIndex: *replicationCaDestDoc
+        equal:
+          path: spec
+          value:
+            trigger:
+              manual: restore-once
+            restic:
+              repository: test-release-name-common-test-destbackup-volsync-mybackup1
+              customCA:
+                secretName: test-release-name-common-test-volsync-ca-mys3
+                key: ca.crt
+              copyMethod: Snapshot
+              cleanupTempPVC: false
+              cleanupCachePVC: false
+              cacheCapacity: 10Gi
+              capacity: 100Gi
+              accessModes:
+                - ReadWriteOnce
+              moverSecurityContext:
+                fsGroup: 568
+                runAsUser: 568
+                runAsGroup: 568

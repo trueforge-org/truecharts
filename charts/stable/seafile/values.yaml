@@ -1,83 +1,81 @@
 image:
   repository: docker.io/seafileltd/seafile-mc
-  tag: 12.0.14@sha256:8d0dd6b682c12cb0e1d4f1f73ba223b0176e9e3d43805408a2f631706e9c10e8
+  tag: 13.0.11@sha256:4dd0e2e737bce194fc576d008d14346d85f10f632862d9758e6fb79546d85ae4
   pullPolicy: IfNotPresent
+
 service:
   main:
     ports:
       main:
-        port: 13080
+        port: 80
         protocol: http
-        targetPort: 80
+
 securityContext:
   container:
     readOnlyRootFilesystem: false
     runAsNonRoot: false
     runAsUser: 0
     runAsGroup: 0
+
 workload:
   main:
     podSpec:
       containers:
         main:
           env:
-            CACHE_PROVIDER: memcached
-            DB_HOST:
+            # Init for Seafile admin
+            INIT_SEAFILE_ADMIN_EMAIL: "me@example.com"
+            INIT_SEAFILE_ADMIN_PASSWORD: "a_very_secret_password"
+            # for Seafile server
+            TIME_ZONE: "UTC"
+            SEAFILE_LOG_TO_STDOUT: "true"
+            SITE_ROOT: "/"
+            SEAFILE_SERVER_HOSTNAME: "seafile.mydomain.com"
+            SEAFILE_SERVER_PROTOCOL: "https"
+            # other secrets
+            JWT_PRIVATE_KEY: "a_very_very_very_very_secret_key"
+            # for database
+            SEAFILE_MYSQL_DB_HOST:
               secretKeyRef:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
                 key: plainhost
-            DB_ROOT_PASSWD: "{{ .Values.mariadb.rootPassword }}"
-            DB_PASSWORD: "{{ .Values.mariadb.password }}"
-            SEAFILE_SERVER_LETSENCRYPT: false
-            SEAFILE_SERVER_HOSTNAME: ""
-            INIT_SEAFILE_ADMIN_EMAIL: me@example.com
-            INIT_SEAFILE_ADMIN_PASSWORD: a_very_secret_password
-            FORCE_HTTPS_IN_CONF: false
-            JWT_PRIVATE_KEY: a_very_very_very_very_secret_key
-            CLUSTER_SERVER: "true"
-            CLUSTER_INIT_MODE: "true"
-            CLUSTER_INIT_MEMCACHED_HOST: '{{ printf "%v-%v" .Release.Name "memcached" }}'
-configmap:
-  env:
-    enabled: true
-    data:
-      env: |
-        CACHE_PROVIDER= memcached
-        TIME_ZONE={{ .Values.TZ }}
-        JWT_PRIVATE_KEY={{ .Values.workload.main.podSpec.containers.main.env.JWT_PRIVATE_KEY }}
-        SEAFILE_SERVER_PROTOCOL=http
-        SEAFILE_SERVER_HOSTNAME={{ .Values.workload.main.podSpec.containers.main.env.SEAFILE_SERVER_HOSTNAME }}
-        SEAFILE_MYSQL_DB_HOST={{ printf "%v-%v" .Release.Name "mariadb" }}
-        SEAFILE_MYSQL_DB_PORT=3306
-        SEAFILE_MYSQL_DB_USER={{ .Values.mariadb.mariadbUsername }}
-        SEAFILE_MYSQL_DB_PASSWORD={{ .Values.mariadb.password }}
-        SEAFILE_MYSQL_DB_CCNET_DB_NAME=ccnet
-        SEAFILE_MYSQL_DB_SEAFILE_DB_NAME=seafile
-        SEAFILE_MYSQL_DB_SEAHUB_DB_NAME=seahub
+            SEAFILE_MYSQL_DB_PORT: "3306"
+            SEAFILE_MYSQL_DB_USER: "seafile"
+            SEAFILE_MYSQL_DB_CCNET_DB_NAME: "ccnet_db"
+            SEAFILE_MYSQL_DB_SEAFILE_DB_NAME: "seafile_db"
+            SEAFILE_MYSQL_DB_SEAHUB_DB_NAME: "seahub_db"
+            INIT_SEAFILE_MYSQL_ROOT_PASSWORD: "{{ .Values.mariadb.rootPassword }}"
+            SEAFILE_MYSQL_DB_PASSWORD: "{{ .Values.mariadb.password }}"
+            # for cached
+            CACHE_PROVIDER: "redis"
+            ## for redis
+            REDIS_HOST:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                key: plainhost
+            REDIS_PORT: "6379"
+            REDIS_PASSWORD: "{{ .Values.redis.password }}"
+            # for notification
+            ENABLE_NOTIFICATION_SERVER: "false"
+            NOTIFICATION_SERVER_URL: ""
+            # for seadoc
+            ENABLE_SEADOC: "false"
+            SEADOC_SERVER_URL: ""  # only valid in ENABLE_SEADOC = true
+            # Seafile AI
+            ENABLE_SEAFILE_AI: "false"
+            SEAFILE_AI_SERVER_URL: "<required when ENABLE_SEAFILE_AI=true>"
+            # Matedata server
+            MD_FILE_COUNT_LIMIT: "100000"
+
 persistence:
   storage:
     enabled: true
     mountPath: "/shared/seafile"
-  env:
-    enabled: true
-    type: configmap
-    objectName: env
-    expandObjectName: true
-    optional: false
-    defaultMode: "0777"
-    items:
-      - key: env
-        path: env
-    targetSelector:
-      main:
-        main:
-          mountPath: /shared/seafile/conf/.env
-          subPath: env
+
 mariadb:
   enabled: true
-  mariadbUsername: seafile
-  mariadbDatabase: seafile
 
-memcached:
+redis:
   enabled: true

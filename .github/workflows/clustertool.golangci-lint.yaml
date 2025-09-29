@@ -31,7 +31,8 @@ permissions:
 jobs:
   golangci:
     name: lint
-    runs-on: actions-runners
+    runs-on:
+      group: default
     steps:
       - uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # v6
         with:

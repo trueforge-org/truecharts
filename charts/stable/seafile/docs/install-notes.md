@@ -19,11 +19,10 @@ workload:
 ingress:
   main:
     enabled: true
+    ingressClassName: internal
     hosts:
       - host: seafile.${DOMAIN}
     integrations:
-      traefik:
-        enabled: true
       certManager:
         enabled: true
         certificateIssuer: cloudflare

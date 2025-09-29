@@ -49,7 +49,8 @@ jobs:
             - 'clustertool/**'
 
   build:
-    runs-on: actions-runners
+    runs-on:
+      group: default
     if: needs.check_changes.outputs.changes_detected == 'true'
     steps:
       - uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # v6

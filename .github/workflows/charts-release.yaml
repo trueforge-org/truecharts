@@ -50,7 +50,8 @@ jobs:
     permissions:
       pull-requests: write
     name: "${{ github.ref == 'refs/heads/master' && '(Production)' || '(Preview)' }}"
-    runs-on: actions-runners
+    runs-on:
+      group: default
     needs: check_changes
     steps:
       - name: Checkout

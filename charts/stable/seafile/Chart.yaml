@@ -2,8 +2,6 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
   truecharts.org/category: file-storage
   truecharts.org/max_helm_version: "3.17"
   truecharts.org/max_kubernetes_version: 1.32.0
@@ -11,26 +9,26 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 12.0.14
+appVersion: 13.0.11
 dependencies:
   - name: common
-    version: 28.20.0
+    version: 28.21.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.4.1
+    version: 17.5.0
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
     tags: []
     import-values: []
-  - name: memcached
-    version: 16.7.1
+  - name: redis
+    version: 17.9.0
     repository: oci://oci.trueforge.org/truecharts
-    condition: memcached.enabled
+    condition: redis.enabled
     alias: ""
     tags: []
     import-values: []
@@ -50,9 +48,10 @@ maintainers:
     url: https://truecharts.org
 name: seafile
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/seafile
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/seafile
   - https://hub.docker.com/r/seafileltd/seafile-mc
   - https://seafile.com
 type: application
-version: 11.4.1
+version: 12.2.0
 

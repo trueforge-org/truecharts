@@ -198,7 +198,7 @@ jobs:
         uses: anchore/sbom-action/download-syft@f8bdd1d8ac5e901a77a92f111440fdb1b593736b # v0.20.6
 
       - name: Login to Quay
-        uses: docker/login-action@184bdaa0721073962dff0199f1fb9940f07167d1 # v3
+        uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3
         if: github.event_name != 'pull_request'
         with:
           registry: quay.io
@@ -206,7 +206,7 @@ jobs:
           password: ${{ secrets.QUAY_TCCR_TOKEN }}
 
       - name: Login to GHCR
-        uses: docker/login-action@184bdaa0721073962dff0199f1fb9940f07167d1 # v3
+        uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3
         if: github.event_name != 'pull_request'
         with:
           registry: ghcr.io
