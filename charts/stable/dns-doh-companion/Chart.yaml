@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,8 +35,9 @@ maintainers:
 name: dns-doh-companion
 sources:
   - https://developers.cloudflare.com/1.1.1.1/dns-over-https/cloudflared-proxy/
+  - https://github.com/truecharts/charts/tree/master/charts/stable/dns-doh-companion
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/dns-doh-companion
   - https://hub.docker.com/r/testdasi/simple-dns-doh
 type: application
-version: 8.7.0
+version: 8.7.1
 

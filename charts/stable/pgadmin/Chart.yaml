@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 9.8.0
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,9 +35,10 @@ maintainers:
     url: https://truecharts.org
 name: pgadmin
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/pgadmin
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/pgadmin
   - https://hub.docker.com/r/dpage/pgadmin4
   - https://www.pgadmin.org/
 type: application
-version: 19.10.0
+version: 19.10.1
 

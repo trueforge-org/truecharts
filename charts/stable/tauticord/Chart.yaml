@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 5.15.0
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -37,7 +37,8 @@ name: tauticord
 sources:
   - https://ghcr.io/nwithan8/tauticord
   - https://github.com/nwithan8/tauticord
+  - https://github.com/truecharts/charts/tree/master/charts/stable/tauticord
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/tauticord
 type: application
-version: 9.9.0
+version: 9.9.1
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.17.0
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,9 +36,10 @@ name: kasm
 sources:
   - https://github.com/linuxserver/docker-kasm#readme
   - https://github.com/orgs/linuxserver/packages/container/package/kasm
+  - https://github.com/truecharts/charts/tree/master/charts/stable/kasm
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/kasm
   - https://hub.docker.com/r/kasmweb/workspaces
   - https://www.kasmweb.com/
 type: application
-version: 11.7.0
+version: 11.7.1
 

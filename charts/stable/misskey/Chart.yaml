@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2025.9.0
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -46,8 +46,9 @@ maintainers:
 name: misskey
 sources:
   - https://github.com/misskey-dev/misskey/
+  - https://github.com/truecharts/charts/tree/master/charts/stable/misskey
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/misskey
   - https://hub.docker.com/r/misskey/misskey
 type: application
-version: 13.18.0
+version: 13.18.1
 

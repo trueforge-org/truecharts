@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2.2.0
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -37,7 +37,8 @@ name: deluge
 sources:
   - https://ghcr.io/linuxserver/deluge
   - https://github.com/deluge-torrent/deluge
+  - https://github.com/truecharts/charts/tree/master/charts/stable/deluge
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/deluge
 type: application
-version: 21.7.0
+version: 21.7.1
 

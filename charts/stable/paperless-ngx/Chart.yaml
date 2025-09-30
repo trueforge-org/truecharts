@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 2.18.4
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -43,10 +43,11 @@ name: paperless-ngx
 sources:
   - https://ghcr.io/paperless-ngx/paperless-ngx
   - https://github.com/paperless-ngx/paperless-ngx
+  - https://github.com/truecharts/charts/tree/master/charts/stable/paperless-ngx
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/paperless-ngx
   - https://hub.docker.com/r/apache/tika
   - https://hub.docker.com/r/gotenberg/gotenberg
   - https://paperless-ngx.readthedocs.io/en/latest/
 type: application
-version: 11.19.1
+version: 11.19.2
 

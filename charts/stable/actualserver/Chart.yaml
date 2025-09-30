@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 25.9.0
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,7 +36,8 @@ name: actualserver
 sources:
   - https://ghcr.io/actualbudget/actual
   - https://github.com/Kippenhof/docker-templates
+  - https://github.com/truecharts/charts/tree/master/charts/stable/actualserver
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/actualserver
 type: application
-version: 14.9.0
+version: 14.9.1
 

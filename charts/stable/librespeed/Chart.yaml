@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 5.4.20240804
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,7 +36,8 @@ name: librespeed
 sources:
   - https://ghcr.io/linuxserver/librespeed
   - https://github.com/librespeed/speedtest
+  - https://github.com/truecharts/charts/tree/master/charts/stable/librespeed
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/librespeed
 type: application
-version: 16.7.0
+version: 16.7.1
 

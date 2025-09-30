@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 10.0.1
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,9 +35,10 @@ maintainers:
     url: https://truecharts.org
 name: splunk
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/splunk
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/splunk
   - https://hub.docker.com/r/splunk/splunk
   - https://splunk.github.io/docker-splunk
 type: application
-version: 12.5.0
+version: 12.5.1
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,7 +35,8 @@ name: snapdrop
 sources:
   - https://fleet.linuxserver.io/image?name=linuxserver/snapdrop
   - https://github.com/linuxserver/docker-snapdrop
+  - https://github.com/truecharts/charts/tree/master/charts/stable/snapdrop
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/snapdrop
 type: application
-version: 12.7.0
+version: 12.7.1
 

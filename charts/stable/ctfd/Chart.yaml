@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 3.8.0
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -50,7 +50,8 @@ name: ctfd
 sources:
   - https://ghcr.io/ctfd/ctfd
   - https://github.com/CTFd/CTFd
+  - https://github.com/truecharts/charts/tree/master/charts/stable/ctfd
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ctfd
 type: application
-version: 9.8.0
+version: 9.8.1
 

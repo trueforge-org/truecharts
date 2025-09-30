@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,8 +36,9 @@ maintainers:
 name: crypto-exchanges-gateway
 sources:
   - https://github.com/aloysius-pgast/crypto-exchanges-gateway
+  - https://github.com/truecharts/charts/tree/master/charts/stable/crypto-exchanges-gateway
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/crypto-exchanges-gateway
   - https://hub.docker.com/r/apendergast/crypto-exchanges-gateway
 type: application
-version: 8.7.0
+version: 8.7.1
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.7.2
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,8 +35,9 @@ maintainers:
 name: duplicacy
 sources:
   - https://ghcr.io/hotio/duplicacy
+  - https://github.com/truecharts/charts/tree/master/charts/stable/duplicacy
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/duplicacy
   - https://hotio.dev/containers/duplicacy
 type: application
-version: 9.7.0
+version: 9.7.1
 

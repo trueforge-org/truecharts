@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,8 +35,9 @@ maintainers:
 name: emby-sync
 sources:
   - https://github.com/cameronurnes/emby-sync
+  - https://github.com/truecharts/charts/tree/master/charts/stable/emby-sync
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/emby-sync
   - https://hub.docker.com/r/lastelement21/emby-sync
 type: application
-version: 8.7.0
+version: 8.7.1
 

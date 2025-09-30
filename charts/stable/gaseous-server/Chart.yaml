@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.7.14
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -42,8 +42,9 @@ maintainers:
 name: gaseous-server
 sources:
   - https://github.com/gaseous-project/gaseous-server
+  - https://github.com/truecharts/charts/tree/master/charts/stable/gaseous-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/gaseous-server
   - https://hub.docker.com/r/gaseousgames/gaseousserver
 type: application
-version: 5.6.0
+version: 5.6.1
 

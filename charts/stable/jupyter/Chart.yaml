@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2025.9.23
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,6 +36,7 @@ maintainers:
 name: jupyter
 sources:
   - https://github.com/jupyter/docker-stacks
+  - https://github.com/truecharts/charts/tree/master/charts/stable/jupyter
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/jupyter
   - https://quay.io/jupyter/all-spark-notebook
   - https://quay.io/jupyter/base-notebook
@@ -46,5 +47,5 @@ sources:
   - https://quay.io/jupyter/scipy-notebook
   - https://quay.io/jupyter/tensorflow-notebook
 type: application
-version: 12.31.0
+version: 12.31.1
 

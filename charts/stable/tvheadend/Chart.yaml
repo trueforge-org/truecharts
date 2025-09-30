@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -37,9 +37,10 @@ maintainers:
 name: tvheadend
 sources:
   - https://ghcr.io/linuxserver/tvheadend
+  - https://github.com/truecharts/charts/tree/master/charts/stable/tvheadend
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/tvheadend
   - https://github.com/trueforge/truecharts/tree/master/charts/stable/tvheadend
   - https://github.com/tvheadend/tvheadend
 type: application
-version: 22.7.0
+version: 22.7.1
 

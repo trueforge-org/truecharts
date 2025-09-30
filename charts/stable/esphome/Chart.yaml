@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2025.9.2
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -34,8 +34,9 @@ maintainers:
 name: esphome
 sources:
   - https://github.com/esphome/esphome
+  - https://github.com/truecharts/charts/tree/master/charts/stable/esphome
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/esphome
   - https://hub.docker.com/r/esphome/esphome
 type: application
-version: 23.10.1
+version: 23.10.2
 

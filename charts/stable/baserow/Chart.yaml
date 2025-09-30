@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.35.1
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -40,9 +40,10 @@ maintainers:
     url: https://truecharts.org
 name: baserow
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/baserow
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/baserow
   - https://gitlab.com/bramw/baserow/
   - https://hub.docker.com/r/baserow/baserow
 type: application
-version: 16.17.0
+version: 16.17.1
 

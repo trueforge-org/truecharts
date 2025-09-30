@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.1.4
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -34,8 +34,9 @@ maintainers:
 name: anki-sync-server
 sources:
   - https://github.com/ankicommunity/anki-devops-services
+  - https://github.com/truecharts/charts/tree/master/charts/stable/anki-sync-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/anki-sync-server
   - https://hub.docker.com/r/ankicommunity/anki-sync-server-rs
 type: application
-version: 10.7.0
+version: 10.7.1
 

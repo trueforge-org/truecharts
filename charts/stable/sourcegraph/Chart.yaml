@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 6.8.0
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -38,8 +38,9 @@ maintainers:
     url: https://truecharts.org
 name: sourcegraph
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/sourcegraph
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/sourcegraph
   - https://hub.docker.com/r/sourcegraph/server
 type: application
-version: 9.10.0
+version: 9.10.1
 
