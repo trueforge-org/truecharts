@@ -9,17 +9,15 @@
     {{- include "tc.v1.common.lib.service.integration.traefik.validate" (dict "objectData" $objectData) -}}
 
     {{- $forceTLS := $traefik.forceTLS | default false -}}
-    {{- $hasSingleHTTPSPort := false -}}
+    {{- $hasOnlyHTTPSPorts := (ge (len $objectData.ports) 1) -}}
 
-    {{- if and (not $forceTLS) (eq (len $objectData.ports) 1) -}}
-      {{- range $portName, $port := $objectData.ports -}}
-        {{- if and $port.enabled (eq (tpl ($port.protocol | default "") $rootCtx) "https") -}}
-          {{- $hasSingleHTTPSPort = true -}}
-        {{- end -}}
+    {{- range $portName, $port := $objectData.ports -}}
+      {{- if and $port.enabled (ne (tpl ($port.protocol | default "") $rootCtx) "https") -}}
+        {{- $hasOnlyHTTPSPorts = false -}}
       {{- end -}}
     {{- end -}}
 
-    {{- if or $hasSingleHTTPSPort $forceTLS -}}
+    {{- if or $hasOnlyHTTPSPorts $forceTLS -}}
       {{- $_ := set $objectData.annotations "traefik.ingress.kubernetes.io/service.serversscheme" "https" -}}
     {{- end -}}
 
