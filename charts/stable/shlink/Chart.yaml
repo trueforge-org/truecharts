@@ -14,14 +14,14 @@ apiVersion: v2
 appVersion: 4.5.2
 dependencies:
   - name: common
-    version: 28.21.0
+    version: 28.21.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: redis
-    version: 17.9.0
+    version: 17.9.1
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -42,9 +42,8 @@ maintainers:
 name: shlink
 sources:
   - https://github.com/shlinkio/shlink
-  - https://github.com/truecharts/charts/tree/master/charts/stable/shlink
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/shlink
   - https://hub.docker.com/r/shlinkio/shlink
 type: application
-version: 18.16.0
+version: 18.16.2
 
