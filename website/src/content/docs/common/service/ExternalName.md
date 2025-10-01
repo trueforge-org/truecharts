@@ -71,4 +71,12 @@ service:
         targetSelector: container-name
         port: 80
         protocol: HTTP
+    integrations:
+      traefik:
+        enabled: true
+        forceTLS: true
+        insecureSkipVerify: false
+        serverName: "my.service.com"
+        rootCAs:
+          - my-ca-secret
 ```

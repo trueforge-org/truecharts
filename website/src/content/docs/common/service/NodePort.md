@@ -72,4 +72,12 @@ service:
         protocol: http
         targetPort: 8080
         nodePort: 30080
+    integrations:
+      traefik:
+        enabled: true
+        forceTLS: true
+        insecureSkipVerify: false
+        serverName: "my.service.com"
+        rootCAs:
+          - my-ca-secret
 ```
