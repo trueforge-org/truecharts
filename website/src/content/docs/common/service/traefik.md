@@ -85,8 +85,8 @@ Skip TLS verification when taling to an HTTPS backend service
 
 Allows talking to HTTPS backend services which use self-signed certs.
 
-Alternatively you can set a [server name](/common/service/traefik#serverName)
-and [root CAs](/common/service/traefik#rootCAs) to use when performing TLS validation.
+Alternatively you can set a [server name](/common/service/traefik#servername)
+and [root CAs](/common/service/traefik#rootcas) to use when performing TLS validation.
 
 :::
 
