@@ -11,7 +11,7 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 1.35.1
+appVersion: 1.35.2
 dependencies:
   - name: common
     version: 28.21.1
@@ -40,9 +40,10 @@ maintainers:
     url: https://truecharts.org
 name: baserow
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/baserow
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/baserow
   - https://gitlab.com/bramw/baserow/
   - https://hub.docker.com/r/baserow/baserow
 type: application
-version: 16.17.2
+version: 16.17.3
 
