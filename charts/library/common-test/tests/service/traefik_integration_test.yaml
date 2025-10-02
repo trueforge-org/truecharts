@@ -115,3 +115,59 @@ tests:
           path: spec
           value:
             insecureSkipVerify: false
+
+  - it: should pass with traefik integration and insecureSkipVerify enabled
+    set:
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          type: ClusterIP
+          integrations:
+            traefik:
+              enabled: true
+              insecureSkipVerify: true
+          ports:
+            port-name:
+              enabled: true
+              primary: true
+              port: 12345
+              protocol: https
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+    asserts:
+      - documentIndex: *serviceDoc
+        isKind:
+          of: Service
+      - documentIndex: *serviceDoc
+        isAPIVersion:
+          of: v1
+      - documentIndex: *serviceDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentIndex: *serviceDoc
+        isSubset:
+          path: metadata.annotations
+          content:
+            traefik.ingress.kubernetes.io/service.serversscheme: "https"
+            traefik.ingress.kubernetes.io/service.serverstransport: "test-release-namespace-test-release-name-common-test@kubernetescrd"
+      - documentIndex: *serversTransportDoc
+        isKind:
+          of: ServersTransport
+      - documentIndex: *serversTransportDoc
+        isAPIVersion:
+          of: traefik.io/v1alpha1
+      - documentIndex: *serversTransportDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentIndex: *serversTransportDoc
+        equal:
+          path: spec
+          value:
+            insecureSkipVerify: true
