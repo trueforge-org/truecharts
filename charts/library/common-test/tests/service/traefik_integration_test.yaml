@@ -43,6 +43,7 @@ tests:
           path: metadata.annotations
           content:
             traefik.ingress.kubernetes.io/service.serversscheme: "https"
+            traefik.ingress.kubernetes.io/service.serverstransport: "test-release-namespace-test-release-name-serverstransport@kubernetescrd"
   - it: should pass with traefik integration and forceTLS enabled
     set:
       service:
@@ -82,3 +83,4 @@ tests:
           path: metadata.annotations
           content:
             traefik.ingress.kubernetes.io/service.serversscheme: "https"
+            traefik.ingress.kubernetes.io/service.serverstransport: "test-release-namespace-test-release-name-serverstransport@kubernetescrd"
