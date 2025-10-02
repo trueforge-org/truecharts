@@ -44,6 +44,21 @@ tests:
           content:
             traefik.ingress.kubernetes.io/service.serversscheme: "https"
             traefik.ingress.kubernetes.io/service.serverstransport: "test-release-namespace-test-release-name-common-test@kubernetescrd"
+      - documentIndex: &serversTransportDoc 2
+        isKind:
+          of: ServersTransport
+      - documentIndex: *serversTransportDoc
+        isAPIVersion:
+          of: traefik.io/v1alpha1
+      - documentIndex: *serversTransportDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentIndex: *serversTransportDoc
+        equal:
+          path: spec
+          value:
+            insecureSkipVerify: false
 
   - it: should pass with traefik integration and forceTLS enabled
     set:
@@ -85,3 +100,18 @@ tests:
           content:
             traefik.ingress.kubernetes.io/service.serversscheme: "https"
             traefik.ingress.kubernetes.io/service.serverstransport: "test-release-namespace-test-release-name-common-test@kubernetescrd"
+      - documentIndex: *serversTransportDoc
+        isKind:
+          of: ServersTransport
+      - documentIndex: *serversTransportDoc
+        isAPIVersion:
+          of: traefik.io/v1alpha1
+      - documentIndex: *serversTransportDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentIndex: *serversTransportDoc
+        equal:
+          path: spec
+          value:
+            insecureSkipVerify: false
