@@ -24,7 +24,7 @@
     {{/* Add the ServersTransport annotation. */}}
     {{- $_ := set $objectData.annotations
       "traefik.ingress.kubernetes.io/service.serverstransport"
-      (printf "%s-%s-serverstransport@kubernetescrd"
+      (printf "%s-%s@kubernetescrd"
         (include "tc.v1.common.lib.metadata.namespace" (dict "rootCtx" $rootCtx "objectData" $objectData "caller" "Service"))
         $objectData.name) -}}
 

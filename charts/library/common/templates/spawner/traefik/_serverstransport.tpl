@@ -46,9 +46,6 @@
       {{- $objectName = (printf "%s-%s" $fullname $name) -}}
     {{- end -}}
 
-    {{/* Append serverstransport to the name */}}
-    {{- $objectName = (printf "%s-serverstransport" $objectName) -}}
-
     {{/* Create a copy of the traefik integration dict */}}
     {{- $objectData := (mustDeepCopy $traefik) -}}
     {{- $_ := set $objectData "name" $objectName -}}
