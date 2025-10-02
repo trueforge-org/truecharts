@@ -68,7 +68,7 @@ tests:
           type: Deployment
           podSpec: {}
     asserts:
-      - documentIndex: &serviceDoc 1
+      - documentIndex: *serviceDoc
         isKind:
           of: Service
       - documentIndex: *serviceDoc
