@@ -65,7 +65,7 @@ objectData: The object data to be used to render the rootCAs section.
           {{- $objectName = (printf "%s-%s" (include "tc.v1.common.lib.chart.names.fullname" $rootCtx) $objectName) -}}
         {{- end }}
 
-        {{- if eq $ref "secretRef" -}}
+        {{- if eq $ref "secretRef" }}
 - secret: {{ $objectName | quote }}
         {{- else }}
 - configMap: {{ $objectName | quote }}
