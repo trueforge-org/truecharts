@@ -159,7 +159,7 @@ tests:
 
   - it: should pass with traefik integration enabled, serverName and rootCA secret
     set:
-      configMap:
+      configmap:
         my-map:
           enabled: true
           data:
