@@ -11,7 +11,7 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: premium
 apiVersion: v2
-appVersion: 0.24.24
+appVersion: 0.24.31
 dependencies:
   - name: common
     version: 28.21.1
@@ -55,7 +55,8 @@ maintainers:
 name: app-template
 sources:
   - https://ghcr.io/linuxserver/jackett
+  - https://github.com/truecharts/charts/tree/master/charts/premium/app-template
   - https://github.com/trueforge-org/truecharts/tree/master/charts/premium/app-template
 type: application
-version: 15.13.4
+version: 15.13.5
 
