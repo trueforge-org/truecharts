@@ -117,7 +117,7 @@ Set the hostname to use when talking to a backend service
 |            |                                                 |
 | ---------- | ----------------------------------------------- |
 | Key        | `service.$name.integrations.traefik.serverName` |
-| Type       | `bool`                                          |
+| Type       | `string`                                        |
 | Required   | ❌                                              |
 | Helm `tpl` | ❌                                              |
 | Default    | ""                                              |
