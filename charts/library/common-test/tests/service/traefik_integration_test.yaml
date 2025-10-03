@@ -159,6 +159,13 @@ tests:
 
   - it: should pass with traefik integration enabled, serverName and rootCA secret
     set:
+      configMap:
+        my-map:
+          data:
+            ca.crt: |-
+              -----BEGIN CERTIFICATE-----
+              ...
+              -----END CERTIFICATE-----
       service:
         my-service:
           enabled: true
@@ -172,36 +179,38 @@ tests:
                 - secretRef:
                     name: my-domain-ca-secret
                     expandObjectName: false
+                - configMapRef:
+                    name: my-map
           ports: *ports
       workload: *workload
     asserts:
-      - documentIndex: *serviceDoc
+      - documentIndex: &serviceDocWithRootCAs 2
         isKind:
           of: Service
-      - documentIndex: *serviceDoc
+      - documentIndex: *serviceDocWithRootCAs
         isAPIVersion:
           of: v1
-      - documentIndex: *serviceDoc
+      - documentIndex: *serviceDocWithRootCAs
         equal:
           path: metadata.name
           value: test-release-name-common-test
-      - documentIndex: *serviceDoc
+      - documentIndex: *serviceDocWithRootCAs
         isSubset:
           path: metadata.annotations
           content:
             traefik.ingress.kubernetes.io/service.serversscheme: "https"
             traefik.ingress.kubernetes.io/service.serverstransport: "test-release-namespace-test-release-name-common-test@kubernetescrd"
-      - documentIndex: *serversTransportDoc
+      - documentIndex: &serversTransportDocWithRootCAs 3
         isKind:
           of: ServersTransport
-      - documentIndex: *serversTransportDoc
+      - documentIndex: *serversTransportDocWithRootCAs
         isAPIVersion:
           of: traefik.io/v1alpha1
-      - documentIndex: *serversTransportDoc
+      - documentIndex: *serversTransportDocWithRootCAs
         equal:
           path: metadata.name
           value: test-release-name-common-test
-      - documentIndex: *serversTransportDoc
+      - documentIndex: *serversTransportDocWithRootCAs
         equal:
           path: spec
           value:
@@ -209,3 +218,4 @@ tests:
             insecureSkipVerify: false
             rootCAs:
               - secret: my-domain-ca-secret
+              - configMap: test-release-name-common-test-my-map
