@@ -42,8 +42,8 @@
   {{- end -}}
 
   {{- range $i, $ca := ($traefik.rootCAs | default list) -}}
-    {{- if not (kindIs "string" $ca) -}}
-      {{- fail (printf "Service - Expected [integrations.traefik.rootCAs[%d]] to be a [string], but got [%s]" $i (kindOf $ca)) -}}
+    {{- if not (kindIs "map" $ca) -}}
+      {{- fail (printf "Service - Expected [integrations.traefik.rootCAs[%d]] to be a [map], but got [%s]" $i (kindOf $ca)) -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}

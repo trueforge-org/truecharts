@@ -279,7 +279,9 @@ service:
     ## Optional - K8s secrets containing CA certs to use when performing TLS
     ## verification when taling to a backend service
     #     rootCAs:
-    #       - root-ca-secret
+    #       - secretRef: # OR configMapRef
+    #           name: root-ca-secret
+    #           expandObjectName: true
     enabled: true
     primary: true
     ports:

@@ -169,7 +169,9 @@ tests:
               enabled: true
               serverName: "my.domain.com"
               rootCAs:
-                - my-domain-ca-secret
+                - secretRef:
+                    name: my-domain-ca-secret
+                    expandObjectName: false
           ports: *ports
       workload: *workload
     asserts:

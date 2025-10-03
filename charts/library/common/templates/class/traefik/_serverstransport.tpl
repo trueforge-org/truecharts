@@ -37,9 +37,9 @@ spec:
   {{- end }}
   insecureSkipVerify: {{ $objectData.insecureSkipVerify | default false }}
   {{- if $objectData.rootCAs }}
+    {{- with (include "tc.v1.common.class.traefik.rootCARefs" (dict "rootCtx" $rootCtx "objectData" $objectData) | trim) }}
   rootCAs:
-    {{- range $objectData.rootCAs }}
-    - secret: {{ . }}
+    {{- . | nindent 4 }}
     {{- end }}
   {{- end }}
 {{- end -}}

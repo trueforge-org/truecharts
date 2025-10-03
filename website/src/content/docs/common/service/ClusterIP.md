@@ -58,5 +58,10 @@ service:
         insecureSkipVerify: false
         serverName: "my.service.com"
         rootCAs:
-          - my-ca-secret
+          - configMapRef:
+              name: configmap-name
+              expandObjectName: false
+          - secretRef:
+              name: secret-name
+              expandObjectName: true
 ```
