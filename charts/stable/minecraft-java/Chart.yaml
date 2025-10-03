@@ -11,7 +11,7 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 2025.9.2
+appVersion: 2025.10.0
 dependencies:
   - name: common
     version: 28.21.1
@@ -36,8 +36,9 @@ name: minecraft-java
 sources:
   - https://ghcr.io/itzg/minecraft-server
   - https://github.com/itzg/docker-minecraft-server
+  - https://github.com/truecharts/charts/tree/master/charts/stable/minecraft-java
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/minecraft-java
   - https://hub.docker.com/r/itzg/mc-backup
 type: application
-version: 23.29.2
+version: 23.40.0
 
