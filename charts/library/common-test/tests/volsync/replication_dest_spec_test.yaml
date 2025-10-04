@@ -461,17 +461,17 @@ tests:
             name: mys3-ca-secret
             key: ca.crt
     asserts:
-      - documentIndex: *secretCaDoc
+      - documentIndex: *secretDoc
         isKind:
           of: Secret
-      - documentIndex: *secretCaDoc
+      - documentIndex: *secretDoc
         isAPIVersion:
           of: v1
-      - documentIndex: *secretCaDoc
+      - documentIndex: *secretDoc
         equal:
           path: metadata.name
           value: test-release-name-common-test-mys3-ca-secret
-      - documentIndex: *secretCaDoc
+      - documentIndex: *secretDoc
         equal:
           path: stringData
           value:
