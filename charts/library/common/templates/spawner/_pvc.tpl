@@ -129,8 +129,9 @@
 
             {{- include "tc.v1.common.class.secret" (dict "rootCtx" $ "objectData" $volsyncSecretData) -}}
 
-            {{/* Get the customCA secret name */}}
             {{- if $credentials.customCASecretRef -}}
+              {{/* Get the customCA secret name */}}
+
               {{- $customCASecretRef := $credentials.customCASecretRef -}}
               {{- $expandName := (include "tc.v1.common.lib.util.expandName" (dict
                               "rootCtx" $ "objectData" $customCASecretRef
@@ -144,11 +145,9 @@
               {{- end -}}
 
               {{- $_ := set $volsyncData "customCA" (dict "name" $CAsecretName "key" $customCASecretRef.key) -}}
-            {{- end -}}
+            {{- else if $credentials.customCA -}}
+              {{/* Create Custom CA Secret for VolSync */}}
 
-            {{/* Create Custom CA Secret for VolSync
-               * NOTE: This is deprecated in favour of `$credentials.customCASecretRef` and should be removed in the next major release */}}
-            {{- if $credentials.customCA -}}
               {{- $volsyncCASecretName := printf "%s-volsync-ca-%s" (include "tc.v1.common.lib.chart.names.fullname" $ ) $volsync.credentials -}}
               {{- $volsyncCAKey := "ca.crt" -}}
 

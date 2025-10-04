@@ -111,6 +111,13 @@ credentials:
 Reference a secret containing a custom CA to be used when connecting to the
 endpoint defined by `url` over HTTPS.
 
+:::note
+
+Defining both this and [customCA](/common/credentials#customca) is invalid and
+will result in an error.
+
+:::
+
 |            |                                                               |
 | ---------- | ------------------------------------------------------------- |
 | Key        | `credentials.$name.customCASecretRef`                         |
@@ -202,11 +209,10 @@ credentials:
 Define a custom CA certificate to be used when connecting to the endpoint
 defined by `url` over HTTPS.
 
-:::warning
+:::note
 
-**DEPRECATED**
-
-Use [customCASecretRef](/common/credentials#customcasecretref) instead.
+Defining both this and [customCASecretRef](/common/credentials#customcasecretref)
+is invalid and will result in an error.
 
 :::
 

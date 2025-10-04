@@ -35,13 +35,8 @@
     {{- fail (printf "%s - Both [customCA] and [customCASecretRef] defined in [credentials.%s]. Choose one" $caller $credName) -}}
   {{- end -}}
 
-  {{- if $customCA -}}
-    {{- include "add.warning" (dict
-          "rootCtx" $rootCtx
-          "warn" (printf "WARNING: %s - Use of [customCA] (defined in [credentials.%s]) is deprecated and will be removed in a future release. Use [customCASecretRef] instead" $caller $credName)) -}}
-    {{- if not (kindIs "string" $customCA ) -}}
-      {{- fail (printf "%s - Expected [customCA] in [credentials.%s] to be a string. Got [%s]" $caller $credName (kindOf $customCA)) -}}
-    {{- end -}}
+  {{- if and $customCA (not (kindIs "string" $customCA )) -}}
+    {{- fail (printf "%s - Expected [customCA] in [credentials.%s] to be a string. Got [%s]" $caller $credName (kindOf $customCA)) -}}
   {{- end -}}
 
   {{- if $customCASecretRef -}}
