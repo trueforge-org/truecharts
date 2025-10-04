@@ -10,7 +10,7 @@ title: TrueCharts
 
 ---
 
-TrueCharts is a catalog of highly optimised Helm Charts. Made for the community, By the community!
+TrueCharts is a catalog of highly optimised Helm Charts. Made for the community, by the community!
 
 All our charts are supposed to work together and be easy to setup using any helm-compatible deployment tool, above all, give the average user more than enough options to tune things to their liking.
 
@@ -454,7 +454,7 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 ---
 
 Truecharts, is primarily based on the AGPL-v3 license, this ensures almost everyone can use and modify our charts.
-Licences can vary on a per-Chart basis. This can easily be seen by the presence of a "LICENSE" file in said folder.
+Licences can vary on a per-Chart basis. This can easily be seen by the presence of a "LICENSE" file in that folder.
 
 An exception to this, has been made for every document inside folders labeled as `docs` or `doc` and their subfolders: those folders are not licensed under AGPL-v3 and are considered "all rights reserved". Said content can be modified and changes submitted per PR, in accordance to the github End User License Agreement.
 
