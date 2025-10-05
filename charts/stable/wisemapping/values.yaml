@@ -23,16 +23,7 @@ service:
 
 workload:
   main:
-    podSpec:
-      containers:
-        main:
-          probes:
-            liveness:
-              type: tcp
-            readiness:
-              type: tcp
-            startup:
-              type: tcp
+    podSpec:   
       initContainers:
         init-config:
           enabled: true
@@ -51,6 +42,13 @@ workload:
               fi
       containers:
         main:
+          probes:
+            liveness:
+              type: tcp
+            readiness:
+              type: tcp
+            startup:
+              type: tcp
           env:
             ADMIN_EMAIL: "change@me.com"
 
