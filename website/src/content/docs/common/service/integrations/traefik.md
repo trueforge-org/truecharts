@@ -5,7 +5,8 @@ title: Traefik Integration
 :::note
 
 - Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/common/service/traefik#full-examples) section for complete examples.
+- See the [Full Examples](/common/service/integrations/traefik#full-examples)
+section for complete examples.
 
 :::
 
@@ -85,8 +86,9 @@ Skip TLS verification when taling to an HTTPS backend service
 
 Allows talking to HTTPS backend services which use self-signed certs.
 
-Alternatively you can set a [server name](/common/service/traefik#servername)
-and [root CAs](/common/service/traefik#rootcas) to use when performing TLS validation.
+Alternatively you can set a [server name](/common/service/integrations/traefik#servername)
+and [root CAs](/common/service/integrations/traefik#rootcas) to use when performing
+TLS validation.
 
 :::
 
@@ -200,7 +202,8 @@ Define the secret name
 :::note
 
 This will be automatically expanded to `fullname-secret-name`.
-You can opt out of this by setting [`expandObjectName`](/common/service/traefik#rootcassecretrefexpandobjectname) to `false`
+You can opt out of this by setting [`expandObjectName`](/common/service/integrations/traefik#rootcassecretrefexpandobjectname)
+to `false`
 
 :::
 
@@ -285,7 +288,8 @@ Define the configmap name
 :::note
 
 This will be automatically expanded to `fullname-configmap-name`.
-You can opt out of this by setting [`expandObjectName`](/common/service/traefik#rootcasconfigmaprefexpandobjectname) to `false`
+You can opt out of this by setting [`expandObjectName`](/common/service/integrations/traefik#rootcasconfigmaprefexpandobjectname)
+to `false`
 
 :::
 
