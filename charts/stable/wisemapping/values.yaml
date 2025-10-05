@@ -24,6 +24,15 @@ service:
 workload:
   main:
     podSpec:
+      containers:
+        main:
+          probes:
+            liveness:
+              type: tcp
+            readiness:
+              type: tcp
+            startup:
+              type: tcp
       initContainers:
         init-config:
           enabled: true
