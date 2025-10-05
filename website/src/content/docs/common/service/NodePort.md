@@ -72,17 +72,4 @@ service:
         protocol: http
         targetPort: 8080
         nodePort: 30080
-    integrations:
-      traefik:
-        enabled: true
-        forceTLS: true
-        insecureSkipVerify: false
-        serverName: "my.service.com"
-        rootCAs:
-          - configMapRef:
-              name: configmap-name
-              expandObjectName: false
-          - secretRef:
-              name: secret-name
-              expandObjectName: true
 ```
