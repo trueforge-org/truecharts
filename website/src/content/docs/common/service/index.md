@@ -507,7 +507,7 @@ service:
 
 Define the traefik integration for this service
 
-See more details in [Traefik Integration](/common/service/traefik)
+See more details in [Traefik Integration](/common/service/integrations/traefik)
 
 |            |                                      |
 | ---------- | ------------------------------------ |
