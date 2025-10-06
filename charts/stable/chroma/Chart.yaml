@@ -11,7 +11,7 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 1.1.0
+appVersion: 1.1.1
 dependencies:
   - name: common
     version: 28.21.1
@@ -37,7 +37,8 @@ name: chroma
 sources:
   - https://ghcr.io/chroma-core/chroma
   - https://github.com/chroma-core/chroma
+  - https://github.com/truecharts/charts/tree/master/charts/stable/chroma
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/chroma
 type: application
-version: 6.8.1
+version: 6.8.2
 

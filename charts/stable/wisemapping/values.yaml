@@ -1,7 +1,7 @@
 image:
   repository: docker.io/wisemapping/wisemapping
   pullPolicy: IfNotPresent
-  tag: latest@sha256:4242fce8570c3f288c664c3615e5efe197249fed9def881c35528bcc0287699e
+  tag: latest@sha256:0a2a4961a1db05dd21d41df795584c0a91f16bdf90932c3f7ca59e24eb1c9042
 
 # When this is defined, the contents will be mounted
 # as configmap into the container at /usr/local/tomcat/webapps/ROOT/WEB-INF/app.properties.
@@ -23,7 +23,7 @@ service:
 
 workload:
   main:
-    podSpec:
+    podSpec:   
       initContainers:
         init-config:
           enabled: true
@@ -42,6 +42,13 @@ workload:
               fi
       containers:
         main:
+          probes:
+            liveness:
+              type: tcp
+            readiness:
+              type: tcp
+            startup:
+              type: tcp
           env:
             ADMIN_EMAIL: "change@me.com"
 

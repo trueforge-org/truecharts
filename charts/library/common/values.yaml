@@ -269,6 +269,19 @@ service:
     #
     #   traefik:
     #     enabled: false
+    ## Optional - ensures `serversscheme: https` annotation is set
+    #     forceTLS: false
+    ## Optional to make Traefik skip TLS verification when taling to an HTTPS
+    ## backend service
+    #     insecureSkipVerify: false
+    ## Optional to specify the hostname to use when talking to a backend service
+    #     serverName: ""
+    ## Optional - K8s secrets containing CA certs to use when performing TLS
+    ## verification when taling to a backend service
+    #     rootCAs:
+    #       - secretRef: # OR configMapRef
+    #           name: root-ca-secret
+    #           expandObjectName: true
     enabled: true
     primary: true
     ports:
