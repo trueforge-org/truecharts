@@ -37,19 +37,20 @@ workload:
                 key: SECRET_KEY
                 name: recipes-secrets
             SHOPPING_MIN_AUTOSYNC_INTERVAL: 5
-          probes:
-            liveness:
-              path: /accounts/login/
-            readiness:
-              path: /accounts/login/
-            startup:
-              path: /accounts/login/
+          #probes:
+          #  liveness:
+          #    path: /accounts/login/
+          #  readiness:
+          #    path: /accounts/login/
+          #  startup:
+          #    path: /accounts/login/
 service:
   main:
     ports:
       main:
-        port: 10029
-        targetPort: 80
+        port: 80
+        #port: 10029
+        #targetPort: 80
 ingress:
   main:
     integrations:
