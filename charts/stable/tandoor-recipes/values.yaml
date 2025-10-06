@@ -37,6 +37,13 @@ workload:
                 key: SECRET_KEY
                 name: recipes-secrets
             SHOPPING_MIN_AUTOSYNC_INTERVAL: 5
+          probes:
+            liveness:
+              path: /accounts/login/
+            readiness:
+              path: /accounts/login/
+            startup:
+              path: /accounts/login/
 service:
   main:
     ports:
