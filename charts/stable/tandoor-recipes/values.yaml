@@ -1,5 +1,5 @@
 image:
-  repository: docker.io/vabene1111/recipes
+  repository: ghcr.io/tandoorrecipes/recipes
   pullPolicy: IfNotPresent
   tag: 2.3.0@sha256:94a048d2ca34209654ecb984e29de1f621625b632925b28243735f1de4187d58
 securityContext:
@@ -11,6 +11,16 @@ securityContext:
 workload:
   main:
     podSpec:
+      initContainers:
+        init-mkdir:
+          enabled: true
+          type: init
+          imageSelector: "image"
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - mkdir -p /run/nginx
       containers:
         main:
           env:
@@ -26,31 +36,25 @@ workload:
                 name: cnpg-main-user
                 key: password
             POSTGRES_DB: "{{ .Values.cnpg.main.database }}"
+            TANDOOR_PORT: "{{ .Values.service.main.ports.main.port }}"
             ALLOWED_HOSTS: "*"
             COMMENT_PREF_DEFAULT: 1
             CSRF_TRUSTED_ORIGINS: ""
             DEBUG: 0
             FRACTION_PREF_DEFAULT: 0
-            GUNICORN_MEDIA: 1
+            GUNICORN_MEDIA: 0
             SECRET_KEY:
               secretKeyRef:
                 key: SECRET_KEY
                 name: recipes-secrets
             SHOPPING_MIN_AUTOSYNC_INTERVAL: 5
-          # probes:
-          #  liveness:
-          #    path: /accounts/login/
-          #  readiness:
-          #    path: /accounts/login/
-          #  startup:
-          #    path: /accounts/login/
+
 service:
   main:
     ports:
       main:
-        port: 80
-        # port: 10029
-        # targetPort: 80
+        port: 10029
+
 ingress:
   main:
     integrations:
