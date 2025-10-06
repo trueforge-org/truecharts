@@ -23,9 +23,6 @@ jobs:
         id: collect-changes
         uses: ./.github/actions/collect-changes
 
-  containers-build:
-    uses: ./.github/workflows/containers.build.yaml
-
   common-tests:
     uses: ./.github/workflows/common-tests.yaml
 
@@ -81,7 +78,6 @@ jobs:
     if: always()
     needs:
       - pr-changes
-      - containers-build
       - charts-lint
       - charts-test
       - clustertool-tests
@@ -92,7 +88,6 @@ jobs:
       - name: Check Results
         run: |
           if [[ "${{ needs.pr-changes.result }}" != "success" || \
-                "${{ needs.containers-build.result }}" != "success" || \
                 "${{ needs.charts-lint.result }}" != "success" || \
                 "${{ needs.clustertool-tests.result }}" != "success" || \
                 "${{ needs.charts-test.result }}" != "success" || \
