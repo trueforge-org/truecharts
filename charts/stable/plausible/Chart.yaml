@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2.0.0
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -43,10 +43,11 @@ name: plausible
 sources:
   - https://github.com/plausible/analytics
   - https://github.com/plausible/hosting
+  - https://github.com/truecharts/charts/tree/master/charts/stable/plausible
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/plausible
   - https://hub.docker.com/r/plausible/analytics
   - https://plausible.io/
   - https://plausible.io/docs/self-hosting
 type: application
-version: 14.17.2
+version: 14.18.0
 

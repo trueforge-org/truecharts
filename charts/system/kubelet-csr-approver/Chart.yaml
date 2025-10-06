@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.2.11
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,7 +36,8 @@ name: kubelet-csr-approver
 sources:
   - https://ghcr.io/postfinance/kubelet-csr-approver
   - https://github.com/kubelet-csr-approver/kubelet-csr-approver
+  - https://github.com/truecharts/charts/tree/master/charts/system/kubelet-csr-approver
   - https://github.com/trueforge-org/truecharts/tree/master/charts/system/kubelet-csr-approver
 type: application
-version: 2.7.1
+version: 2.8.0
 

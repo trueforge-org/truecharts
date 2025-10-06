@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.88.3
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,8 +35,9 @@ maintainers:
 name: tailscale
 sources:
   - https://github.com/tailscale/tailscale/blob/main/docs/k8s/run.sh
+  - https://github.com/truecharts/charts/tree/master/charts/stable/tailscale
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/tailscale
   - https://hub.docker.com/r/tailscale/tailscale
 type: application
-version: 11.9.2
+version: 11.10.0
 

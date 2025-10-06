@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.8.0
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -37,8 +37,9 @@ maintainers:
 name: firefox-syncserver
 sources:
   - https://ghcr.io/crazy-max/firefox-syncserver
+  - https://github.com/truecharts/charts/tree/master/charts/stable/firefox-syncserver
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/firefox-syncserver
   - https://moz-services-docs.readthedocs.io/en/latest/howtos/run-sync-1.5.html
 type: application
-version: 20.7.1
+version: 20.8.0
 

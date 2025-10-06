@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.24.6
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -47,8 +47,9 @@ name: gitea
 sources:
   - https://gitea.com/gitea/helm-chart
   - https://github.com/go-gitea/gitea
+  - https://github.com/truecharts/charts/tree/master/charts/stable/gitea
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/gitea
   - https://hub.docker.com/r/gitea/gitea
 type: application
-version: 22.14.2
+version: 22.15.0
 

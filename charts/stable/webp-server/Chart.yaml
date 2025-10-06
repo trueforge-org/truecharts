@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -39,9 +39,10 @@ maintainers:
     url: https://truecharts.org
 name: webp-server
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/webp-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/webp-server
   - https://github.com/webp-sh/webp_server_go
   - https://hub.docker.com/r/webpsh/webps
 type: application
-version: 8.7.1
+version: 8.8.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.19.0
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,7 +36,8 @@ maintainers:
 name: external-dns
 sources:
   - https://github.com/kubernetes-sigs/external-dns
+  - https://github.com/truecharts/charts/tree/master/charts/stable/external-dns
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/external-dns
 type: application
-version: 7.8.1
+version: 7.9.0
 

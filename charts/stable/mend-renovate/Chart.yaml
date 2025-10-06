@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 11.4.0
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,7 +36,8 @@ name: mend-renovate
 sources:
   - https://ghcr.io/mend/renovate-ce
   - https://github.com/mend/renovate-ce-ee
+  - https://github.com/truecharts/charts/tree/master/charts/stable/mend-renovate
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mend-renovate
 type: application
-version: 4.9.1
+version: 4.10.0
 
