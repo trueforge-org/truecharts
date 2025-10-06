@@ -37,7 +37,7 @@ workload:
                 key: SECRET_KEY
                 name: recipes-secrets
             SHOPPING_MIN_AUTOSYNC_INTERVAL: 5
-            TIMEZONE: "{{ .Values.TZ }}"
+            TZ: "{{ .Values.TZ }}"
 service:
   main:
     ports:
