@@ -297,7 +297,12 @@ credentials:
   #   url: ""
   #   ## Provide a custom certificate authority in cases where the URL endpoint
   #   ## uses a self-signed certificate
+  #   ## NOTE: DEPRECATED, use customCASecretRef instead
   #   customCA: ""
+  #   customCASecretRef:
+  #     name: my-secret
+  #     key: ca.crt
+  #     # expandObjectName: false # default true
   #   path: ""
   #   bucket: ""
   #   accessKey: ""
