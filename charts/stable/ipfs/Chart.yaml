@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.38.0
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,8 +35,9 @@ maintainers:
 name: ipfs
 sources:
   - https://github.com/ipfs/kubo
+  - https://github.com/truecharts/charts/tree/master/charts/stable/ipfs
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ipfs
   - https://hub.docker.com/r/ipfs/kubo
 type: application
-version: 13.10.0
+version: 13.11.0
 

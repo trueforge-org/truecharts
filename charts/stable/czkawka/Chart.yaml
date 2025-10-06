@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 25.08.1
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -37,8 +37,9 @@ name: czkawka
 sources:
   - https://github.com/jlesage/docker-czkawka
   - https://github.com/qarmin/czkawka
+  - https://github.com/truecharts/charts/tree/master/charts/stable/czkawka
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/czkawka
   - https://hub.docker.com/r/jlesage/czkawka
 type: application
-version: 13.9.1
+version: 13.10.0
 

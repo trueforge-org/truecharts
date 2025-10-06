@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 9.1.0
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -38,8 +38,9 @@ maintainers:
 name: lyrion-music-server
 sources:
   - https://github.com/LMS-Community/slimserver
+  - https://github.com/truecharts/charts/tree/master/charts/stable/lyrion-music-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/lyrion-music-server
   - https://hub.docker.com/r/lmscommunity/lyrionmusicserver
 type: application
-version: 5.7.3
+version: 5.8.0
 

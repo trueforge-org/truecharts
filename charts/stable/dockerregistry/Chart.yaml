@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 3.0.0
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -39,9 +39,10 @@ maintainers:
 name: dockerregistry
 sources:
   - https://github.com/distribution/distribution
+  - https://github.com/truecharts/charts/tree/master/charts/stable/dockerregistry
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/dockerregistry
   - https://hub.docker.com/_/registry
   - https://registry.hub.docker.com/_/registry/
 type: application
-version: 9.7.1
+version: 9.8.0
 

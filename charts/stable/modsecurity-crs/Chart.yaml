@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 3.3.4
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,8 +36,9 @@ maintainers:
 name: modsecurity-crs
 sources:
   - https://github.com/coreruleset/modsecurity-crs-docker
+  - https://github.com/truecharts/charts/tree/master/charts/stable/modsecurity-crs
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/modsecurity-crs
   - https://hub.docker.com/r/owasp/modsecurity-crs
 type: application
-version: 6.7.1
+version: 6.8.0
 

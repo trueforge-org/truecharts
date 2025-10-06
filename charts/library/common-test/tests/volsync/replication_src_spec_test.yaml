@@ -425,3 +425,96 @@ tests:
         matchRegex:
           path: spec.restic.unlock
           pattern: "^[0-9]{14}$"
+
+  - it: should generate correct spec with customCASecretRef
+    set:
+      secret:
+        mys3-ca-secret:
+          enabled: true
+          data:
+            ca.crt: |-
+              -----BEGIN CERTIFICATE-----
+              ...
+              -----END CERTIFICATE-----
+      persistence:
+        srcbackup:
+          enabled: true
+          type: pvc
+          mountPath: /backedup
+          volsync:
+            - name: mybackup1
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: false
+              src:
+                enabled: true
+      credentials:
+        mys3:
+          type: s3
+          url: http://some-url
+          bucket: some-bucket
+          encrKey: some-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+          customCASecretRef:
+            name: mys3-ca-secret
+            key: ca.crt
+    asserts:
+      - documentIndex: *secretDoc
+        isKind:
+          of: Secret
+      - documentIndex: *secretDoc
+        isAPIVersion:
+          of: v1
+      - documentIndex: *secretDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mys3-ca-secret
+      - documentIndex: *secretDoc
+        equal:
+          path: stringData
+          value:
+            ca.crt: |-
+              -----BEGIN CERTIFICATE-----
+              ...
+              -----END CERTIFICATE-----
+      - documentIndex: *replicationCaDestDoc
+        isKind:
+          of: ReplicationSource
+      - documentIndex: *replicationCaDestDoc
+        isAPIVersion:
+          of: volsync.backube/v1alpha1
+      - documentIndex: *replicationCaDestDoc
+        isSubset:
+          path: spec
+          content:
+            sourcePVC: test-release-name-common-test-srcbackup
+            trigger:
+              schedule: "0 0 * * *"
+      - documentIndex: *replicationCaDestDoc
+        isSubset:
+          path: spec.restic
+          content:
+            repository: test-release-name-common-test-srcbackup-volsync-mybackup1
+            customCA:
+              secretName: test-release-name-common-test-mys3-ca-secret
+              key: ca.crt
+            copyMethod: Snapshot
+            pruneIntervalDays: 7
+            retain:
+              hourly: 6
+              daily: 5
+              weekly: 4
+              monthly: 3
+              yearly: 1
+            accessModes:
+              - ReadWriteOnce
+            moverSecurityContext:
+              fsGroup: 568
+              runAsUser: 568
+              runAsGroup: 568
+      - documentIndex: *replicationCaDestDoc
+        matchRegex:
+          path: spec.restic.unlock
+          pattern: "^[0-9]{14}$"

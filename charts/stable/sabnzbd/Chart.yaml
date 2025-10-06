@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 4.5.3
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,8 +36,9 @@ name: sabnzbd
 sources:
   - https://ghcr.io/home-operations/sabnzbd
   - https://ghcr.io/onedr0p/exportarr
+  - https://github.com/truecharts/charts/tree/master/charts/stable/sabnzbd
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/sabnzbd
   - https://sabnzbd.org/
 type: application
-version: 22.8.1
+version: 22.9.0
 

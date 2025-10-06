@@ -481,6 +481,53 @@ service:
 
 ---
 
+#### `integrations`
+
+Define the integrations for this service
+
+|            |                              |
+| ---------- | ---------------------------- |
+| Key        | `service.$name.integrations` |
+| Type       | `map`                        |
+| Required   | ❌                           |
+| Helm `tpl` | ❌                           |
+| Default    | `{}`                         |
+
+Example
+
+```yaml
+service:
+  service-name:
+    integrations: {}
+```
+
+---
+
+##### `integrations.traefik`
+
+Define the traefik integration for this service
+
+See more details in [Traefik Integration](/common/service/integrations/traefik)
+
+|            |                                      |
+| ---------- | ------------------------------------ |
+| Key        | `service.$name.integrations.traefik` |
+| Type       | `map`                                |
+| Required   | ❌                                   |
+| Helm `tpl` | ❌                                   |
+| Default    | `{}`                                 |
+
+Example
+
+```yaml
+service:
+  service-name:
+    integrations:
+      traefik: {}
+```
+
+---
+
 ## Full Examples
 
 Full examples can be found under each service type

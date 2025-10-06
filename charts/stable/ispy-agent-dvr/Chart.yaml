@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 6.6.6.0
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,8 +36,9 @@ maintainers:
 name: ispy-agent-dvr
 sources:
   - https://github.com/doitandbedone/ispyagentdvr-docker
+  - https://github.com/truecharts/charts/tree/master/charts/stable/ispy-agent-dvr
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ispy-agent-dvr
   - https://hub.docker.com/r/doitandbedone/ispyagentdvr
 type: application
-version: 13.8.1
+version: 13.9.0
 

@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 1.1.14
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -32,9 +32,10 @@ maintainers:
 name: rustdesk
 sources:
   - https://github.com/rustdesk/rustdesk-server
+  - https://github.com/truecharts/charts/tree/master/charts/stable/rustdesk
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/rustdesk
   - https://hub.docker.com/r/rustdesk/rustdesk-server-s6
   - https://rustdesk.com/de/
 type: application
-version: 2.7.1
+version: 2.8.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 360b2295
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -36,7 +36,8 @@ name: pyload
 sources:
   - https://ghcr.io/linuxserver/pyload
   - https://github.com/pyload/pyload
+  - https://github.com/truecharts/charts/tree/master/charts/stable/pyload
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/pyload
 type: application
-version: 16.7.1
+version: 16.8.0
 

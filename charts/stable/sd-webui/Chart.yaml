@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -37,7 +37,8 @@ name: sd-webui-docker
 sources:
   - https://ghcr.io/neggles/sd-webui-docker
   - https://github.com/ahmetoner/sd-webui-docker/
+  - https://github.com/truecharts/charts/tree/master/charts/stable/sd-webui-docker
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/sd-webui-docker
 type: application
-version: 4.7.1
+version: 4.8.0
 

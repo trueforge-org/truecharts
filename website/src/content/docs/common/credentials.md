@@ -106,10 +106,115 @@ credentials:
 
 ---
 
+#### `customCASecretRef`
+
+Reference a secret containing a custom CA to be used when connecting to the
+endpoint defined by `url` over HTTPS.
+
+:::note
+
+Defining both this and [customCA](/common/credentials#customca) is invalid and
+will result in an error.
+
+:::
+
+|            |                                                               |
+| ---------- | ------------------------------------------------------------- |
+| Key        | `credentials.$name.customCASecretRef`                         |
+| Type       | `map`                                                         |
+| Required   | ❌                                                            |
+| Helm `tpl` | ❌                                                            |
+| Example    | `{}`                                                          |
+
+```yaml
+credentials:
+  credentials-name:
+    customCASecretRef: {}
+```
+
+---
+
+##### `customCASecretRef.name`
+
+Define the secret name
+
+:::note
+
+This will be automatically expanded to `fullname-secret-name`.
+You can opt out of this by setting [`expandObjectName`](/common/credentials#customcasecretrefexpandobjectname) to `false`
+
+:::
+
+|            |                                            |
+| ---------- | ------------------------------------------ |
+| Key        | `credentials.$name.customCASecretRef.name` |
+| Type       | `string`                                   |
+| Required   | ✅                                         |
+| Helm `tpl` | ✅                                         |
+| Example    | `""`                                       |
+
+```yaml
+credentials:
+  credentials-name:
+    customCASecretRef:
+      name: secret-name
+```
+
+---
+
+##### `customCASecretRef.key`
+
+Define the key in the secret data containing the CA
+
+|            |                                            |
+| ---------- | ------------------------------------------ |
+| Key        | `credentials.$name.customCASecretRef.key`  |
+| Type       | `string`                                   |
+| Required   | ✅                                         |
+| Helm `tpl` | ❌                                         |
+| Example    | `""`                                       |
+
+```yaml
+credentials:
+  credentials-name:
+    customCASecretRef:
+      key: ca.crt
+```
+
+---
+
+##### `customCASecretRef.expandObjectName`
+
+Whether to expand (adding the fullname as prefix) the secret name
+
+|            |                                                        |
+| ---------- | ------------------------------------------------------ |
+| Key        | `credentials.$name.customCASecretRef.expandObjectName` |
+| Type       | `bool`                                                 |
+| Required   | ❌                                                     |
+| Helm `tpl` | ❌                                                     |
+| Example    | `true`                                                 |
+
+```yaml
+credentials:
+  credentials-name:
+    customCASecretRef:
+      expandObjectName: false
+```
+
+---
+
 #### `customCA`
 
 Define a custom CA certificate to be used when connecting to the endpoint
 defined by `url` over HTTPS.
+
+:::note
+
+Defining both this and [customCASecretRef](/common/credentials#customcasecretref)
+is invalid and will result in an error.
+
+:::
 
 |            |                                                               |
 | ---------- | ------------------------------------------------------------- |

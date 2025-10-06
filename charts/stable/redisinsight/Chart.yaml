@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2.70.1
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,9 +35,10 @@ maintainers:
 name: redisinsight
 sources:
   - https://github.com/RedisInsight/RedisInsight
+  - https://github.com/truecharts/charts/tree/master/charts/stable/redisinsight
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/redisinsight
   - https://hub.docker.com/r/redislabs/redisinsight
   - https://redis.com/redis-enterprise/redis-insight/
 type: application
-version: 10.7.1
+version: 10.8.0
 

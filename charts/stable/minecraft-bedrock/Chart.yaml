@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2025.9.0
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -34,8 +34,9 @@ maintainers:
 name: minecraft-bedrock
 sources:
   - https://github.com/itzg/docker-minecraft-server
+  - https://github.com/truecharts/charts/tree/master/charts/stable/minecraft-bedrock
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/minecraft-bedrock
   - https://hub.docker.com/r/itzg/minecraft-bedrock-server
 type: application
-version: 12.9.1
+version: 12.10.0
 

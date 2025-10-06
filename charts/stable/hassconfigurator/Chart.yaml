@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: x86_64
 dependencies:
   - name: common
-    version: 28.21.1
+    version: 28.22.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,8 +35,9 @@ maintainers:
 name: hassconfigurator
 sources:
   - https://github.com/danielperna84/hass-configurator
+  - https://github.com/truecharts/charts/tree/master/charts/stable/hassconfigurator
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/hassconfigurator
   - https://hub.docker.com/r/causticlab/hass-configurator-docker
 type: application
-version: 8.7.1
+version: 8.8.0
 
