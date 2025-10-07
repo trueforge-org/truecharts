@@ -28,7 +28,7 @@ dependencies:
     tags: []
     import-values: []
   - name: redis
-    version: 17.9.1
+    version: 17.10.1
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -55,7 +55,8 @@ maintainers:
 name: app-template
 sources:
   - https://ghcr.io/linuxserver/jackett
+  - https://github.com/truecharts/charts/tree/master/charts/premium/app-template
   - https://github.com/trueforge-org/truecharts/tree/master/charts/premium/app-template
 type: application
-version: 15.15.0
+version: 15.16.0
 

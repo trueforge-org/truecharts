@@ -19,7 +19,7 @@ dependencies:
     tags: []
     import-values: []
   - name: redis
-    version: 17.9.1
+    version: 17.10.1
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -49,8 +49,9 @@ maintainers:
 name: mixpost
 sources:
   - https://github.com/inovector/mixpost
+  - https://github.com/truecharts/charts/tree/master/charts/stable/mixpost
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mixpost
   - https://hub.docker.com/r/inovector/mixpost
 type: application
-version: 6.10.0
+version: 6.11.0
 

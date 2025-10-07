@@ -21,7 +21,7 @@ dependencies:
     tags: []
     import-values: []
   - name: redis
-    version: 17.9.1
+    version: 17.10.1
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -46,8 +46,9 @@ maintainers:
 name: misskey
 sources:
   - https://github.com/misskey-dev/misskey/
+  - https://github.com/truecharts/charts/tree/master/charts/stable/misskey
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/misskey
   - https://hub.docker.com/r/misskey/misskey
 type: application
-version: 13.19.0
+version: 13.20.0
 

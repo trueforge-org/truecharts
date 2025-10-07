@@ -21,7 +21,7 @@ dependencies:
     tags: []
     import-values: []
   - name: redis
-    version: 17.9.1
+    version: 17.10.1
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -44,7 +44,8 @@ sources:
   - https://ghcr.io/linuxserver/speedtest-tracker
   - https://github.com/alexjustesen/speedtest-tracker
   - https://github.com/linuxserver/docker-speedtest-tracker
+  - https://github.com/truecharts/charts/tree/master/charts/stable/speedtest-tracker
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/speedtest-tracker
 type: application
-version: 8.16.0
+version: 8.17.0
 

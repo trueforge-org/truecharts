@@ -28,7 +28,7 @@ dependencies:
     tags: []
     import-values: []
   - name: redis
-    version: 17.9.1
+    version: 17.10.1
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -50,7 +50,8 @@ name: ctfd
 sources:
   - https://ghcr.io/ctfd/ctfd
   - https://github.com/CTFd/CTFd
+  - https://github.com/truecharts/charts/tree/master/charts/stable/ctfd
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ctfd
 type: application
-version: 9.10.0
+version: 9.11.0
 

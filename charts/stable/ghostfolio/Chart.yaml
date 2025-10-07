@@ -21,7 +21,7 @@ dependencies:
     tags: []
     import-values: []
   - name: redis
-    version: 17.9.1
+    version: 17.10.1
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -43,8 +43,9 @@ name: ghostfolio
 sources:
   - https://ghostfol.io/
   - https://github.com/ghostfolio/ghostfolio
+  - https://github.com/truecharts/charts/tree/master/charts/stable/ghostfolio
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ghostfolio
   - https://hub.docker.com/r/ghostfolio/ghostfolio
 type: application
-version: 8.36.0
+version: 8.37.0
 
