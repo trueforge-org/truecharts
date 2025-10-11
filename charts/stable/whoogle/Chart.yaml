@@ -11,7 +11,7 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 0.9.4
+appVersion: 1.1.0
 dependencies:
   - name: common
     version: 28.22.0
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A self-hosted, ad-free, privacy-respecting metasearch engine
-home: https://trueforge.org/truecharts/stable/whoogle
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/whoogle.webp
+home: https://truecharts.org/charts/stable/whoogle
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/whoogle.webp
 keywords:
   - whoogle
   - search
@@ -37,8 +37,9 @@ maintainers:
 name: whoogle
 sources:
   - https://github.com/benbusby/whoogle-search
+  - https://github.com/truecharts/charts/tree/master/charts/stable/whoogle
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/whoogle
   - https://hub.docker.com/r/benbusby/whoogle-search
 type: application
-version: 13.8.0
+version: 14.0.0
 
