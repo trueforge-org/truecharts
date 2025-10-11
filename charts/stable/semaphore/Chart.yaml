@@ -11,7 +11,7 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 2.16.31
+appVersion: 2.16.34
 dependencies:
   - name: common
     version: 28.22.0
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Semaphore is a modern, open source alternative to Ansible Tower. It is a self-hosted web-based solution that allows you to create and manage Ansible projects, playbooks, and roles, while also providing a web interface for running and monitoring Ansible tasks.
-home: https://trueforge.org/truecharts/stable/semaphore
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/semaphore.webp
+home: https://truecharts.org/charts/stable/semaphore
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/semaphore.webp
 keywords:
   - ansible
   - semaphore
@@ -36,8 +36,9 @@ maintainers:
 name: semaphore
 sources:
   - https://github.com/ansible-semaphore/semaphore
+  - https://github.com/truecharts/charts/tree/master/charts/stable/semaphore
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/semaphore
   - https://hub.docker.com/r/semaphoreui/semaphore
 type: application
-version: 6.9.0
+version: 6.9.1
 
