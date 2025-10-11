@@ -11,7 +11,7 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 1.3.1
+appVersion: 1.4.0
 dependencies:
   - name: common
     version: 28.22.0
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Home and Collection manager for Plex.
-home: https://trueforge.org/truecharts/stable/agregarr
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/agregarr.webp
+home: https://truecharts.org/charts/stable/agregarr
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/agregarr.webp
 keywords:
   - agregarr
 kubeVersion: '>=1.24.0-0'
@@ -35,7 +35,8 @@ name: agregarr
 sources:
   - https://ghcr.io/agregarr/agregarr
   - https://github.com/agregarr/agregarr
+  - https://github.com/truecharts/charts/tree/master/charts/stable/agregarr
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/agregarr
 type: application
-version: 1.5.0
+version: 1.6.0
 

@@ -11,7 +11,7 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 28.5.0
+appVersion: 28.5.1
 dependencies:
   - name: common
     version: 28.22.0
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Dedicated App for using Docker-in-Docker
-home: https://trueforge.org/truecharts/stable/docker
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/docker.webp
+home: https://truecharts.org/charts/stable/docker
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/docker.webp
 keywords:
   - docker
 kubeVersion: '>=1.24.0-0'
@@ -33,8 +33,9 @@ maintainers:
     url: https://truecharts.org
 name: docker
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/docker
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/docker
   - https://hub.docker.com/_/docker
 type: application
-version: 11.10.0
+version: 11.10.1
 

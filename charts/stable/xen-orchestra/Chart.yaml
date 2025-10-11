@@ -11,7 +11,7 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 5.190.0
+appVersion: 5.190.1
 dependencies:
   - name: common
     version: 28.22.0
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Xen-Orchestra is a Web-UI for managing your existing XenServer infrastructure.
-home: https://trueforge.org/truecharts/stable/xen-orchestra
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/xen-orchestra.webp
+home: https://truecharts.org/charts/stable/xen-orchestra
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/xen-orchestra.webp
 keywords:
   - xen-orchestra
 kubeVersion: '>=1.24.0-0'
@@ -33,8 +33,9 @@ maintainers:
     url: https://truecharts.org
 name: xen-orchestra
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/xen-orchestra
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/xen-orchestra
   - https://hub.docker.com/r/ronivay/xen-orchestra
 type: application
-version: 11.15.0
+version: 11.15.1
 
