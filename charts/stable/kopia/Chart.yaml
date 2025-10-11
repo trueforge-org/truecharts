@@ -11,7 +11,7 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 20250925.0.175035
+appVersion: 20251008.0.52618
 dependencies:
   - name: common
     version: 28.22.0
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Kopia is a simple, cross-platform tool for managing encrypted backups in the cloud. It provides fast, incremental backups, secure, client-side end-to-end encryption, compression and data deduplication.
-home: https://trueforge.org/truecharts/stable/kopia
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/kopia.webp
+home: https://truecharts.org/charts/stable/kopia
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/kopia.webp
 keywords:
   - backup
 kubeVersion: '>=1.24.0-0'
@@ -34,9 +34,10 @@ maintainers:
 name: kopia
 sources:
   - https://github.com/kopia/kopia
+  - https://github.com/truecharts/charts/tree/master/charts/stable/kopia
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/kopia
   - https://hub.docker.com/r/kopia/kopia
   - https://kopia.io/docs/installation/#docker-images
 type: application
-version: 21.2.0
+version: 22.0.0
 
