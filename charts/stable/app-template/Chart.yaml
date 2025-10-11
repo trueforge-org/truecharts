@@ -9,9 +9,9 @@ annotations:
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: premium
+  truecharts.org/train: stable
 apiVersion: v2
-appVersion: 0.24.95
+appVersion: 0.24.111
 dependencies:
   - name: common
     version: 28.22.0
@@ -43,8 +43,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Advanced Template to create your own TrueCharts-based Charts
-home: https://trueforge.org/truecharts/stable/app-template
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/app-template.webp
+home: https://truecharts.org/charts/stable/app-template
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/app-template.webp
 keywords:
   - custom
 kubeVersion: '>=1.24.0-0'
@@ -58,5 +58,5 @@ sources:
   - https://github.com/truecharts/charts/tree/master/charts/stable/app-template
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/app-template
 type: application
-version: 15.16.3
+version: 15.16.4
 
