@@ -9,7 +9,7 @@ annotations:
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: premium
+  truecharts.org/train: stable
 apiVersion: v2
 appVersion: 32.0.0
 dependencies:
@@ -29,8 +29,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A private cloud server that puts the control and security of your own data back into your hands.
-home: https://trueforge.org/truecharts/stable/nextcloud
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/nextcloud.webp
+home: https://truecharts.org/charts/stable/nextcloud
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/nextcloud.webp
 keywords:
   - nextcloud
   - storage
@@ -46,14 +46,12 @@ name: nextcloud
 sources:
   - https://github.com/nextcloud/docker
   - https://github.com/nextcloud/helm
-  - https://github.com/truecharts/containers/tree/master/apps/nextcloud-fpm
-  - https://github.com/truecharts/containers/tree/master/apps/nextcloud-imaginary
-  - https://github.com/truecharts/containers/tree/master/apps/nextcloud-push-notify
+  - https://github.com/truecharts/charts/tree/master/charts/stable/nextcloud
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/nextcloud
   - https://github.com/trueforge/truecharts/tree/master/charts/stable/nextcloud
   - https://hub.docker.com/r/clamav/clamav
   - https://hub.docker.com/r/collabora/code
   - https://hub.docker.com/r/nginxinc/nginx-unprivileged
 type: application
-version: 38.3.1
+version: 38.3.2
 
