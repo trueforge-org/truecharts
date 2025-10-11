@@ -11,7 +11,7 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 3.18.13
+appVersion: 3.18.14
 dependencies:
   - name: common
     version: 28.22.0
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: FlexGet is a multipurpose automation tool for all of your media
-home: https://trueforge.org/truecharts/stable/flexget
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/flexget.webp
+home: https://truecharts.org/charts/stable/flexget
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/flexget.webp
 keywords:
   - flexget
   - automation
@@ -34,9 +34,10 @@ maintainers:
     url: https://truecharts.org
 name: flexget
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/flexget
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/flexget
   - https://github.com/wiserain/docker-flexget
   - https://hub.docker.com/r/wiserain/flexget
 type: application
-version: 12.10.1
+version: 12.10.2
 
