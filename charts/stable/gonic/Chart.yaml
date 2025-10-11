@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.18.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.23.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Music streaming server / subsonic server API implementation
-home: https://trueforge.org/truecharts/stable/gonic
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/gonic.webp
+home: https://truecharts.org/charts/stable/gonic
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/gonic.webp
 keywords:
   - music
   - subsonic
@@ -35,8 +35,9 @@ maintainers:
 name: gonic
 sources:
   - https://github.com/sentriz/gonic
+  - https://github.com/truecharts/charts/tree/master/charts/stable/gonic
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/gonic
   - https://hub.docker.com/r/sentriz/gonic
 type: application
-version: 16.10.0
+version: 16.11.0
 

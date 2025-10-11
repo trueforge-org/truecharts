@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.9.4
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.23.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A self-hosted, ad-free, privacy-respecting metasearch engine
-home: https://trueforge.org/truecharts/stable/whoogle
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/whoogle.webp
+home: https://truecharts.org/charts/stable/whoogle
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/whoogle.webp
 keywords:
   - whoogle
   - search
@@ -37,8 +37,9 @@ maintainers:
 name: whoogle
 sources:
   - https://github.com/benbusby/whoogle-search
+  - https://github.com/truecharts/charts/tree/master/charts/stable/whoogle
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/whoogle
   - https://hub.docker.com/r/benbusby/whoogle-search
 type: application
-version: 13.8.0
+version: 13.9.0
 
