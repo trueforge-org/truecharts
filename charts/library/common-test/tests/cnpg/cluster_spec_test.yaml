@@ -730,7 +730,7 @@ tests:
           database: test-db
           password: test-password
           cluster:
-            envFrom:
+            envList:
               - name: VAR1
                 value: VALUE1
               - name: VAR2
@@ -772,8 +772,8 @@ tests:
         secret-name:
           enabled: true
           data:
-            key1: value1
-            key2: value2
+            key3: value3
+            key4: value4
       postgres16Image:
         repository: ghcr.io/cloudnative-pg/postgresql
         tag: "16.3"
