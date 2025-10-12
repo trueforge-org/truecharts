@@ -193,6 +193,30 @@ spec:
   primaryUpdateMethod: {{ $primaryUpdateMethod }}
   logLevel: {{ $logLevel }}
   instances: {{ $instances }}
+  {{- /* Create a dict for storing env's so it can be checked for dupes */ -}}
+  {{- $_ := set $objectData.cluster "envDupe" dict -}}
+  {{- with (include "tc.v1.common.helper.container.envFrom" (dict
+              "rootCtx" $rootCtx "objectData" $objectData.cluster "caller" "CNPG Cluster"
+              "name" $objectData.shortName "key" "cluster") | trim) }}
+  envFrom:
+    {{- . | nindent 4 }}
+  {{- end }}
+  {{- $env := include "tc.v1.common.helper.container.env" (dict
+            "rootCtx" $rootCtx "objectData" $objectData.cluster "caller" "CNPG Cluster"
+            "name" $objectData.shortName "key" "cluster") | trim -}}
+  {{- $envList := include "tc.v1.common.helper.container.envList" (dict
+            "rootCtx" $rootCtx "objectData" $objectData.cluster "caller" "CNPG Cluster"
+            "name" $objectData.shortName "key" "cluster") | trim -}}
+  {{- $_ := unset $objectData.cluster "envDupe" -}}
+  {{- if or $env $envList }}
+  env:
+    {{- if $env }}
+      {{- $env | nindent 4 -}}
+    {{- end }}
+    {{- if $envList }}
+      {{- $envList | nindent 4 -}}
+    {{- end }}
+  {{- end }}
   {{- if or $objectData.cluster.postgresql $preloadLibraries }}
   postgresql:
     {{- with $objectData.cluster.postgresql }}
