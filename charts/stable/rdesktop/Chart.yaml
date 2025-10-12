@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Full desktop environments in many popular flavors for Alpine, Ubuntu, Arch, and Fedora accessible via RDP.
-home: https://trueforge.org/truecharts/stable/rdesktop
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/rdesktop.webp
+home: https://truecharts.org/charts/stable/rdesktop
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/rdesktop.webp
 keywords:
   - rdesktop
   - desktops
@@ -37,7 +37,8 @@ sources:
   - https://fleet.linuxserver.io/image?name=linuxserver/rdesktop
   - https://github.com/linuxserver/docker-rdesktop#readme
   - https://github.com/orgs/linuxserver/packages/container/package/rdesktop
+  - https://github.com/truecharts/charts/tree/master/charts/stable/rdesktop
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/rdesktop
 type: application
-version: 11.8.0
+version: 11.9.0
 

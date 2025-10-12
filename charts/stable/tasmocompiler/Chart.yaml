@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: TasmoCompiler is a simple web GUI which allows you to compile fantastic Tasmota firmware with your own settings
-home: https://trueforge.org/truecharts/stable/tasmocompiler
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/tasmocompiler.webp
+home: https://truecharts.org/charts/stable/tasmocompiler
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/tasmocompiler.webp
 keywords:
   - tasmocompiler
   - home-automation
@@ -36,8 +36,9 @@ maintainers:
 name: tasmocompiler
 sources:
   - https://github.com/benzino77/tasmocompiler
+  - https://github.com/truecharts/charts/tree/master/charts/stable/tasmocompiler
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/tasmocompiler
   - https://hub.docker.com/r/benzino77/tasmocompiler
 type: application
-version: 9.8.0
+version: 9.9.0
 

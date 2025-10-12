@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 25.10.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Actual is a super fast privacy-focused app for managing your finances.
-home: https://trueforge.org/truecharts/stable/actualserver
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/actualserver.webp
+home: https://truecharts.org/charts/stable/actualserver
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/actualserver.webp
 keywords:
   - actualserver
   - finance
@@ -36,7 +36,8 @@ name: actualserver
 sources:
   - https://ghcr.io/actualbudget/actual
   - https://github.com/Kippenhof/docker-templates
+  - https://github.com/truecharts/charts/tree/master/charts/stable/actualserver
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/actualserver
 type: application
-version: 14.11.0
+version: 14.12.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: aria server for downloading web content
-home: https://trueforge.org/truecharts/stable/aria2
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/aria2.webp
+home: https://truecharts.org/charts/stable/aria2
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/aria2.webp
 keywords:
   - aria2
 kubeVersion: '>=1.24.0-0'
@@ -34,8 +34,9 @@ maintainers:
 name: aria2
 sources:
   - https://github.com/P3TERX/Aria2-Pro-Docker
+  - https://github.com/truecharts/charts/tree/master/charts/stable/aria2
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/aria2
   - https://hub.docker.com/r/p3terx/aria2-pro
 type: application
-version: 15.8.0
+version: 15.9.0
 

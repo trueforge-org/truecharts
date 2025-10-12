@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: This Chart will allow you to use the Hetzner DNS Service (https://www.hetzner.com/dns-console) as a Dynamic DNS (DDNS) Provider.
-home: https://trueforge.org/truecharts/stable/hetzner-ddns
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/hetzner-ddns.webp
+home: https://truecharts.org/charts/stable/hetzner-ddns
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/hetzner-ddns.webp
 keywords:
   - hetzner-ddns
   - Network-DNS
@@ -35,8 +35,9 @@ maintainers:
 name: hetzner-ddns
 sources:
   - https://github.com/kutzilla/docker-hetzner-ddns
+  - https://github.com/truecharts/charts/tree/master/charts/stable/hetzner-ddns
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/hetzner-ddns
   - https://hub.docker.com/r/kutzilla/hetzner-ddns
 type: application
-version: 8.8.0
+version: 8.9.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 25.09.2
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: HandBrake is a tool for converting video from nearly any format to a selection of modern, widely supported codecs.
-home: https://trueforge.org/truecharts/stable/handbrake
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/handbrake.webp
+home: https://truecharts.org/charts/stable/handbrake
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/handbrake.webp
 keywords:
   - handbrake
   - encode
@@ -37,8 +37,9 @@ name: handbrake
 sources:
   - https://ghcr.io/jlesage/handbrake
   - https://github.com/jlesage/docker-handbrake
+  - https://github.com/truecharts/charts/tree/master/charts/stable/handbrake
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/handbrake
   - https://handbrake.fr/
 type: application
-version: 25.9.0
+version: 25.10.0
 

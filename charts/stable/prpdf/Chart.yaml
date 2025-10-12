@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: This tool is for Preview and Rename scanned PDF-Documents. Rulebased autoscan with OCR. Merge etc.
-home: https://trueforge.org/truecharts/stable/prpdf
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/prpdf.webp
+home: https://truecharts.org/charts/stable/prpdf
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/prpdf.webp
 keywords:
   - prpdf
   - Productivity
@@ -36,8 +36,9 @@ maintainers:
 name: prpdf
 sources:
   - https://github.com/maschhoff/prpdf
+  - https://github.com/truecharts/charts/tree/master/charts/stable/prpdf
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/prpdf
   - https://hub.docker.com/r/knex666/prpdf
 type: application
-version: 8.8.0
+version: 8.9.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 25.06.1
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: An open source time-tracker with an interactive user experience and powerful reporting.
-home: https://trueforge.org/truecharts/stable/timetagger
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/timetagger.webp
+home: https://truecharts.org/charts/stable/timetagger
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/timetagger.webp
 keywords:
   - time
   - timetagger
@@ -36,8 +36,9 @@ name: timetagger
 sources:
   - https://ghcr.io/almarklein/timetagger
   - https://github.com/almarklein/timetagger
+  - https://github.com/truecharts/charts/tree/master/charts/stable/timetagger
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/timetagger
   - https://timetagger.app
 type: application
-version: 10.8.0
+version: 10.9.0
 

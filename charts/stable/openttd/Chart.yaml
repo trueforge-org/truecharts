@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: This Chart will download and install the version of OpenTTD that you enter in the variable 'GAME_VERSION' (if you define 'latest' it will always pull the latest build, if you define 'testing' it will always pull down the latest testing build).
-home: https://trueforge.org/truecharts/stable/openttd
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/openttd.webp
+home: https://truecharts.org/charts/stable/openttd
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/openttd.webp
 keywords:
   - openttd
   - GameServers
@@ -35,8 +35,9 @@ maintainers:
 name: openttd
 sources:
   - https://ghcr.io/ich777/openttdserver
+  - https://github.com/truecharts/charts/tree/master/charts/stable/openttd
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/openttd
   - https://www.openttd.org/
 type: application
-version: 8.8.0
+version: 8.9.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 4.5.3
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Free and easy binary newsreader
-home: https://trueforge.org/truecharts/stable/sabnzbd
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/sabnzbd.webp
+home: https://truecharts.org/charts/stable/sabnzbd
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/sabnzbd.webp
 keywords:
   - sabnzbd
   - usenet
@@ -36,8 +36,9 @@ name: sabnzbd
 sources:
   - https://ghcr.io/home-operations/sabnzbd
   - https://ghcr.io/onedr0p/exportarr
+  - https://github.com/truecharts/charts/tree/master/charts/stable/sabnzbd
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/sabnzbd
   - https://sabnzbd.org/
 type: application
-version: 22.9.0
+version: 22.10.0
 

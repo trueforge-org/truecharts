@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.127.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Fast, cost-effective monitoring solution and time series database
-home: https://trueforge.org/truecharts/stable/victoriametrics
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/victoriametrics.webp
+home: https://truecharts.org/charts/stable/victoriametrics
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/victoriametrics.webp
 keywords:
   - victoriametrics
   - database
@@ -36,8 +36,9 @@ maintainers:
 name: victoriametrics
 sources:
   - https://github.com/VictoriaMetrics/VictoriaMetrics/tree/master
+  - https://github.com/truecharts/charts/tree/master/charts/stable/victoriametrics
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/victoriametrics
   - https://hub.docker.com/r/victoriametrics/victoria-metrics
 type: application
-version: 4.15.2
+version: 4.16.0
 

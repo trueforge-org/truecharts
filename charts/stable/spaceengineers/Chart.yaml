@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Space Engineers Dedicated Server.
-home: https://trueforge.org/truecharts/stable/spaceengineers
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/spaceengineers.webp
+home: https://truecharts.org/charts/stable/spaceengineers
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/spaceengineers.webp
 keywords:
   - spaceengineers
   - GameServers
@@ -35,8 +35,9 @@ maintainers:
 name: spaceengineers
 sources:
   - https://github.com/Devidian/docker-spaceengineers
+  - https://github.com/truecharts/charts/tree/master/charts/stable/spaceengineers
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/spaceengineers
   - https://hub.docker.com/r/devidian/spaceengineers
 type: application
-version: 9.8.0
+version: 9.9.0
 

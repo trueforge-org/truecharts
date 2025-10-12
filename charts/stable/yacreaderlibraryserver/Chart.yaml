@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Headless version of the YACReaderLibraryServer.
-home: https://trueforge.org/truecharts/stable/yacreaderlibraryserver
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/yacreaderlibraryserver.webp
+home: https://truecharts.org/charts/stable/yacreaderlibraryserver
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/yacreaderlibraryserver.webp
 keywords:
   - yacreaderlibraryserver
   - MediaServer-Other
@@ -34,9 +34,10 @@ maintainers:
     url: https://truecharts.org
 name: yacreaderlibraryserver
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/yacreaderlibraryserver
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/yacreaderlibraryserver
   - https://hub.docker.com/r/xthursdayx/yacreaderlibrary-server-docker
   - https://www.yacreader.com
 type: application
-version: 8.8.0
+version: 8.9.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.5.4
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Spotweb is a decentralized usenet community based on the Spotnet protocol.
-home: https://trueforge.org/truecharts/stable/spotweb
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/spotweb.webp
+home: https://truecharts.org/charts/stable/spotweb
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/spotweb.webp
 keywords:
   - usenet
   - spotweb
@@ -37,8 +37,9 @@ name: spotweb
 sources:
   - https://github.com/joachimbaten/spotweb-docker
   - https://github.com/spotweb/spotweb
+  - https://github.com/truecharts/charts/tree/master/charts/stable/spotweb
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/spotweb
   - https://hub.docker.com/r/jbaten/spotweb
 type: application
-version: 15.8.0
+version: 15.9.0
 

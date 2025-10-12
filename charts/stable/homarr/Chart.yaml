@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.16.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Homarr is a simple and lightweight homepage for your server, that helps you easily access all of your services in one place.
-home: https://trueforge.org/truecharts/stable/homarr
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/homarr.webp
+home: https://truecharts.org/charts/stable/homarr
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/homarr.webp
 keywords:
   - dashboard
 kubeVersion: '>=1.24.0-0'
@@ -35,7 +35,8 @@ name: homarr
 sources:
   - https://ghcr.io/ajnart/homarr
   - https://github.com/ajnart/homarr
+  - https://github.com/truecharts/charts/tree/master/charts/stable/homarr
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/homarr
 type: application
-version: 13.9.0
+version: 13.10.0
 

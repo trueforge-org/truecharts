@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.88.3
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Tailscale lets you connect your devices and users together in your own secure virtual private network
-home: https://trueforge.org/truecharts/stable/tailscale
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/tailscale.webp
+home: https://truecharts.org/charts/stable/tailscale
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/tailscale.webp
 keywords:
   - vpn
   - tailscale
@@ -35,8 +35,9 @@ maintainers:
 name: tailscale
 sources:
   - https://github.com/tailscale/tailscale/blob/main/docs/k8s/run.sh
+  - https://github.com/truecharts/charts/tree/master/charts/stable/tailscale
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/tailscale
   - https://hub.docker.com/r/tailscale/tailscale
 type: application
-version: 11.10.0
+version: 11.11.0
 

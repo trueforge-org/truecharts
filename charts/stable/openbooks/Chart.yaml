@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 4.5.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: IRC Highway eBook Downloads.
-home: https://trueforge.org/truecharts/stable/openbooks
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/openbooks.webp
+home: https://truecharts.org/charts/stable/openbooks
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/openbooks.webp
 keywords:
   - openbooks
   - media
@@ -35,8 +35,9 @@ maintainers:
 name: openbooks
 sources:
   - https://github.com/evan-buss/openbooks
+  - https://github.com/truecharts/charts/tree/master/charts/stable/openbooks
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/openbooks
   - https://hub.docker.com/r/evanbuss/openbooks
 type: application
-version: 7.8.0
+version: 7.9.0
 

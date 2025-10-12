@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 7dtd
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: This chart will download and install SteamCMD. It will also install 7 Days to Die and run it.
-home: https://trueforge.org/truecharts/stable/sdtd
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/sdtd.webp
+home: https://truecharts.org/charts/stable/sdtd
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/sdtd.webp
 keywords:
   - sevendaystodie
   - game-servers
@@ -35,8 +35,9 @@ maintainers:
 name: sdtd
 sources:
   - https://ghcr.io/ich777/steamcmd
+  - https://github.com/truecharts/charts/tree/master/charts/stable/sdtd
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/sdtd
   - https://www.steampowered.com/
 type: application
-version: 11.8.0
+version: 11.9.0
 

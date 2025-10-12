@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: This is a Basic Vintage Story Server it will download and install Vintage Story Server and run it.
-home: https://trueforge.org/truecharts/stable/vintage-story
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/vintage-story.webp
+home: https://truecharts.org/charts/stable/vintage-story
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/vintage-story.webp
 keywords:
   - vintage-story
   - GameServers
@@ -35,8 +35,9 @@ maintainers:
 name: vintage-story
 sources:
   - https://ghcr.io/ich777/vintagestory
+  - https://github.com/truecharts/charts/tree/master/charts/stable/vintage-story
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/vintage-story
   - https://www.vintagestory.at/
 type: application
-version: 8.8.0
+version: 8.9.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.38.1
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: IPFS is a global, versioned, peer-to-peer Interplanetary Filesystem.
-home: https://trueforge.org/truecharts/stable/ipfs
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/ipfs.webp
+home: https://truecharts.org/charts/stable/ipfs
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/ipfs.webp
 keywords:
   - ipfs
   - kubo
@@ -35,8 +35,9 @@ maintainers:
 name: ipfs
 sources:
   - https://github.com/ipfs/kubo
+  - https://github.com/truecharts/charts/tree/master/charts/stable/ipfs
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ipfs
   - https://hub.docker.com/r/ipfs/kubo
 type: application
-version: 13.11.1
+version: 13.12.0
 

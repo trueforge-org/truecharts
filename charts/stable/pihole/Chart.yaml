@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2025.08.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: DNS and Ad-filtering for your network
-home: https://trueforge.org/truecharts/stable/pihole
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/pihole.webp
+home: https://truecharts.org/charts/stable/pihole
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/pihole.webp
 keywords:
   - DNS
 kubeVersion: '>=1.24.0-0'
@@ -36,8 +36,9 @@ sources:
   - https://ghcr.io/pi-hole/pihole
   - https://github.com/pi-hole
   - https://github.com/pi-hole/docker-pi-hole
+  - https://github.com/truecharts/charts/tree/master/charts/stable/pihole
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/pihole
   - https://pi-hole.net/
 type: application
-version: 20.10.0
+version: 20.11.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2.7.3
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Jellyseerr is a fork of Overseerr with support for Jellyfin and Emby. It can be used to manage requests for your media library.
-home: https://trueforge.org/truecharts/stable/jellyseerr
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/jellyseerr.webp
+home: https://truecharts.org/charts/stable/jellyseerr
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/jellyseerr.webp
 keywords:
   - jellyseerr
 kubeVersion: '>=1.24.0-0'
@@ -35,7 +35,8 @@ name: jellyseerr
 sources:
   - https://ghcr.io/fallenbagel/jellyseerr
   - https://github.com/Fallenbagel/jellyseerr
+  - https://github.com/truecharts/charts/tree/master/charts/stable/jellyseerr
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/jellyseerr
 type: application
-version: 13.8.0
+version: 13.9.0
 

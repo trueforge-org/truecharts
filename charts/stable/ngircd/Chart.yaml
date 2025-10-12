@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2021.11.21
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Ngircd is a free, portable and lightweight Internet Relay Chat server for small or private networks.
-home: https://trueforge.org/truecharts/stable/ngircd
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/ngircd.webp
+home: https://truecharts.org/charts/stable/ngircd
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/ngircd.webp
 keywords:
   - ngircd
 kubeVersion: '>=1.24.0-0'
@@ -34,7 +34,8 @@ maintainers:
 name: ngircd
 sources:
   - https://ghcr.io/linuxserver/ngircd
+  - https://github.com/truecharts/charts/tree/master/charts/stable/ngircd
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ngircd
 type: application
-version: 12.8.0
+version: 12.9.0
 

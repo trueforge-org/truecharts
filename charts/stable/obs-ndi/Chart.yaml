@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Docker Open Broadcaster Software (obs).
-home: https://trueforge.org/truecharts/stable/obs-ndi
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/obs-ndi.webp
+home: https://truecharts.org/charts/stable/obs-ndi
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/obs-ndi.webp
 keywords:
   - obs-ndi
   - GameServers
@@ -38,8 +38,9 @@ maintainers:
 name: obs-ndi
 sources:
   - https://github.com/patrickstigler/docker-obs-ndi
+  - https://github.com/truecharts/charts/tree/master/charts/stable/obs-ndi
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/obs-ndi
   - https://hub.docker.com/r/patrickstigler/obs-ndi
 type: application
-version: 9.8.0
+version: 9.9.0
 

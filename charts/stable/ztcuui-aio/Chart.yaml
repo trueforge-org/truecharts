@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2024.1.28
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: ZeroTier network controller user interface in a Docker container
-home: https://trueforge.org/truecharts/stable/ztcuui-aio
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/ztcuui-aio.webp
+home: https://truecharts.org/charts/stable/ztcuui-aio
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/ztcuui-aio.webp
 keywords:
   - ztcuui-aio
 kubeVersion: '>=1.24.0-0'
@@ -35,7 +35,8 @@ name: ztcuui-aio
 sources:
   - https://ghcr.io/kmahyyg/ztncui-aio
   - https://github.com/kmahyyg/ztncui-aio
+  - https://github.com/truecharts/charts/tree/master/charts/stable/ztcuui-aio
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ztcuui-aio
 type: application
-version: 11.8.0
+version: 11.9.0
 

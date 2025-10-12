@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Aurora Files is an open-source file storage platform for small teams and personal users. Afterlogic Aurora Files image for Chart using Nginx, PHP-FPM 8.1, MySQL on Alpine Linux. Loosely based on khromov/alpine-nginx-php8 package.
-home: https://trueforge.org/truecharts/stable/aurora-files
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/aurora-files.webp
+home: https://truecharts.org/charts/stable/aurora-files
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/aurora-files.webp
 keywords:
   - aurora-files
   - Cloud
@@ -37,8 +37,9 @@ maintainers:
 name: aurora-files
 sources:
   - https://github.com/afterlogic/docker-aurora-files
+  - https://github.com/truecharts/charts/tree/master/charts/stable/aurora-files
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/aurora-files
   - https://hub.docker.com/r/afterlogic/docker-aurora-files
 type: application
-version: 8.8.0
+version: 8.9.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Channels DVR Server
-home: https://trueforge.org/truecharts/stable/channels-dvr
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/channels-dvr.webp
+home: https://truecharts.org/charts/stable/channels-dvr
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/channels-dvr.webp
 keywords:
   - channels-dvr
 kubeVersion: '>=1.24.0-0'
@@ -33,8 +33,9 @@ maintainers:
     url: https://truecharts.org
 name: channels-dvr
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/channels-dvr
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/channels-dvr
   - https://hub.docker.com/r/fancybits/channels-dvr
 type: application
-version: 9.8.0
+version: 9.9.0
 

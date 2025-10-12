@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.6.3
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: The Wyoming integration of piper
-home: https://trueforge.org/truecharts/stable/wyoming-piper
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/wyoming-piper.webp
+home: https://truecharts.org/charts/stable/wyoming-piper
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/wyoming-piper.webp
 keywords:
   - wyoming-piper
 kubeVersion: '>=1.24.0-0'
@@ -34,8 +34,9 @@ maintainers:
 name: wyoming-piper
 sources:
   - https://github.com/home-assistant/addons/tree/master/piper
+  - https://github.com/truecharts/charts/tree/master/charts/stable/wyoming-piper
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/wyoming-piper
   - https://hub.docker.com/r/rhasspy/wyoming-piper
 type: application
-version: 7.8.0
+version: 7.9.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: sqlite-web is a web-based SQLite database browser written in Python.
-home: https://trueforge.org/truecharts/stable/sqlite-web
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/sqlite-web.webp
+home: https://truecharts.org/charts/stable/sqlite-web
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/sqlite-web.webp
 keywords:
   - sqlite-web
   - Productivity
@@ -37,8 +37,9 @@ maintainers:
 name: sqlite-web
 sources:
   - https://github.com/coleifer/sqlite-web
+  - https://github.com/truecharts/charts/tree/master/charts/stable/sqlite-web
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/sqlite-web
   - https://hub.docker.com/r/coleifer/sqlite-web
 type: application
-version: 8.8.0
+version: 8.9.0
 

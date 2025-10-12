@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.103.1
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Openvscode-server provides a version of VS Code that runs a server on a remote machine.
-home: https://trueforge.org/truecharts/stable/openvscode-server
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/openvscode-server.webp
+home: https://truecharts.org/charts/stable/openvscode-server
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/openvscode-server.webp
 keywords:
   - openvscode-server
 kubeVersion: '>=1.24.0-0'
@@ -34,7 +34,8 @@ maintainers:
 name: openvscode-server
 sources:
   - https://ghcr.io/linuxserver/openvscode-server
+  - https://github.com/truecharts/charts/tree/master/charts/stable/openvscode-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/openvscode-server
 type: application
-version: 12.10.0
+version: 12.11.0
 

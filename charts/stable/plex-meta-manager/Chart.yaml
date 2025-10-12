@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.21.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Python script to update metadata and automatically build collections.
-home: https://trueforge.org/truecharts/stable/plex-meta-manager
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/plex-meta-manager.webp
+home: https://truecharts.org/charts/stable/plex-meta-manager
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/plex-meta-manager.webp
 keywords:
   - plex-meta-manager
 kubeVersion: '>=1.24.0-0'
@@ -34,8 +34,9 @@ maintainers:
 name: plex-meta-manager
 sources:
   - https://github.com/meisnate12/Plex-Meta-Manager
+  - https://github.com/truecharts/charts/tree/master/charts/stable/plex-meta-manager
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/plex-meta-manager
   - https://hub.docker.com/r/meisnate12/plex-meta-manager
 type: application
-version: 9.8.0
+version: 9.9.0
 

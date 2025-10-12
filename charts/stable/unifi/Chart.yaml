@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 9.4.19
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Ubiquiti Network's Unifi Controller
-home: https://trueforge.org/truecharts/stable/unifi
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/unifi.webp
+home: https://truecharts.org/charts/stable/unifi
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/unifi.webp
 keywords:
   - ubiquiti
   - unifi
@@ -36,8 +36,9 @@ name: unifi
 sources:
   - https://ghcr.io/goofball222/unifi
   - https://github.com/jacobalberty/unifi-docker
+  - https://github.com/truecharts/charts/tree/master/charts/stable/unifi
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/unifi
   - https://unifi-network.ui.com
 type: application
-version: 24.10.0
+version: 24.11.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.24.6
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -29,8 +29,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Self hosted GIT repositories
-home: https://trueforge.org/truecharts/stable/gitea
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/gitea.webp
+home: https://truecharts.org/charts/stable/gitea
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/gitea.webp
 keywords:
   - git
   - issue tracker
@@ -47,8 +47,9 @@ name: gitea
 sources:
   - https://gitea.com/gitea/helm-chart
   - https://github.com/go-gitea/gitea
+  - https://github.com/truecharts/charts/tree/master/charts/stable/gitea
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/gitea
   - https://hub.docker.com/r/gitea/gitea
 type: application
-version: 22.16.0
+version: 22.17.0
 

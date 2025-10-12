@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: This Chart will download and install Thunderbird in the preferred version and language.
-home: https://trueforge.org/truecharts/stable/thunderbird
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/thunderbird.webp
+home: https://truecharts.org/charts/stable/thunderbird
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/thunderbird.webp
 keywords:
   - thunderbird
   - mail
@@ -35,8 +35,9 @@ maintainers:
 name: thunderbird
 sources:
   - https://ghcr.io/ich777/thunderbird
+  - https://github.com/truecharts/charts/tree/master/charts/stable/thunderbird
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/thunderbird
   - https://www.thunderbird.net/
 type: application
-version: 8.8.0
+version: 8.9.0
 

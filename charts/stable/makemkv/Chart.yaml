@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 25.10.1
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: MakeMKV is your one-click solution to convert video that you own into free and patents-unencumbered format that can be played everywhere.
-home: https://trueforge.org/truecharts/stable/makemkv
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/makemkv.webp
+home: https://truecharts.org/charts/stable/makemkv
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/makemkv.webp
 keywords:
   - mkv
 kubeVersion: '>=1.24.0-0'
@@ -35,7 +35,8 @@ name: makemkv
 sources:
   - https://ghcr.io/jlesage/makemkv
   - https://github.com/jlesage/docker-makemkv
+  - https://github.com/truecharts/charts/tree/master/charts/stable/makemkv
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/makemkv
 type: application
-version: 14.11.0
+version: 14.12.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: alpine
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: PWM is a free and opensource password self-service application enabling end-users to reset their enterprise password themselves.
-home: https://trueforge.org/truecharts/stable/pwm
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/pwm.webp
+home: https://truecharts.org/charts/stable/pwm
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/pwm.webp
 keywords:
   - pwm
   - Security
@@ -35,8 +35,9 @@ maintainers:
 name: pwm
 sources:
   - https://github.com/pwm-project/pwm
+  - https://github.com/truecharts/charts/tree/master/charts/stable/pwm
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/pwm
   - https://hub.docker.com/r/fjudith/pwm
 type: application
-version: 8.8.0
+version: 8.9.0
 

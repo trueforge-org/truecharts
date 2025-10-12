@@ -10,12 +10,12 @@ annotations:
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: system
+  truecharts.org/train: stable
 apiVersion: v2
 appVersion: 8.3.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -27,8 +27,8 @@ description: |
   this chart is meant for cases where it is not.
   Also deploys the Snapshot Validation Webhook and configures your cluster to validate every `VolumeSnapshot` and
   `VolumeSnapshotContent` resource by sending it to the webhook.
-home: https://trueforge.org/truecharts/stable/snapshot-controller
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/snapshot-controller.webp
+home: https://truecharts.org/charts/stable/snapshot-controller
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/snapshot-controller.webp
 keywords:
   - storage
   - snapshot
@@ -43,7 +43,8 @@ sources:
   - https://github.com/kubernetes-csi/external-snapshotter/
   - https://github.com/snapshot-controller/snapshot-controller
   - https://github.com/snapshot-controller/snapshot-controller-helm-chart
+  - https://github.com/truecharts/charts/tree/master/charts/stable/snapshot-controller
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/snapshot-controller
 type: application
-version: 4.8.0
+version: 4.9.0
 

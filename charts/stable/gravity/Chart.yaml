@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.28.1
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Fully-replicated DNS and DHCP Server with ad-blocking powered by etcd.
-home: https://trueforge.org/truecharts/stable/gravity
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/gravity.webp
+home: https://truecharts.org/charts/stable/gravity
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/gravity.webp
 keywords:
   - gravity
   - dns
@@ -37,7 +37,8 @@ name: gravity
 sources:
   - https://ghcr.io/beryju/gravity
   - https://github.com/BeryJu/gravity
+  - https://github.com/truecharts/charts/tree/master/charts/stable/gravity
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/gravity
 type: application
-version: 6.9.0
+version: 6.10.0
 

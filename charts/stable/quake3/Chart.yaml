@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: This Chart will download and install Quake III Server (You have to copy your .pk3 files from your game directory to your server).
-home: https://trueforge.org/truecharts/stable/quake3
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/quake3.webp
+home: https://truecharts.org/charts/stable/quake3
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/quake3.webp
 keywords:
   - quake3
   - GameServers
@@ -35,8 +35,9 @@ maintainers:
 name: quake3
 sources:
   - https://ghcr.io/ich777/quake3
+  - https://github.com/truecharts/charts/tree/master/charts/stable/quake3
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/quake3
   - https://www.idsoftware.com/
 type: application
-version: 8.8.0
+version: 8.9.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Dynamic DNS for Amazon Route 53‎ on a time-based schedule
-home: https://trueforge.org/truecharts/stable/ddns-route53
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/ddns-route53.webp
+home: https://truecharts.org/charts/stable/ddns-route53
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/ddns-route53.webp
 keywords:
   - ddns-route53
   - Network-DNS
@@ -35,8 +35,9 @@ maintainers:
 name: ddns-route53
 sources:
   - https://github.com/crazy-max/ddns-route53
+  - https://github.com/truecharts/charts/tree/master/charts/stable/ddns-route53
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ddns-route53
   - https://hub.docker.com/r/crazymax/ddns-route53
 type: application
-version: 8.8.0
+version: 8.9.0
 

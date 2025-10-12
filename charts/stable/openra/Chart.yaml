@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Mudislanders Template for mounting OpenRA's dedicated server by rmoriz [br][br]
-home: https://trueforge.org/truecharts/stable/openra
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/openra.webp
+home: https://truecharts.org/charts/stable/openra
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/openra.webp
 keywords:
   - openra
   - Network-Other
@@ -34,8 +34,9 @@ maintainers:
     url: https://truecharts.org
 name: openra
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/openra
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/openra
   - https://hub.docker.com/r/rmoriz/openra
 type: application
-version: 8.8.0
+version: 8.9.0
 

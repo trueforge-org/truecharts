@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 6.6.6.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: iSpy's Agent DVR, a standalone DVR service to manage IP cameras.
-home: https://trueforge.org/truecharts/stable/ispy-agent-dvr
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/ispy-agent-dvr.webp
+home: https://truecharts.org/charts/stable/ispy-agent-dvr
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/ispy-agent-dvr.webp
 keywords:
   - dvr
   - ispy
@@ -36,8 +36,9 @@ maintainers:
 name: ispy-agent-dvr
 sources:
   - https://github.com/doitandbedone/ispyagentdvr-docker
+  - https://github.com/truecharts/charts/tree/master/charts/stable/ispy-agent-dvr
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ispy-agent-dvr
   - https://hub.docker.com/r/doitandbedone/ispyagentdvr
 type: application
-version: 13.9.0
+version: 13.10.0
 

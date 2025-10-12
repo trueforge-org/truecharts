@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Automatically backup github repositories on schedule. Allows for custom configuration.
-home: https://trueforge.org/truecharts/stable/llalon-github-backup
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/llalon-github-backup.webp
+home: https://truecharts.org/charts/stable/llalon-github-backup
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/llalon-github-backup.webp
 keywords:
   - llalon-github-backup
   - Backup
@@ -35,8 +35,9 @@ maintainers:
 name: llalon-github-backup
 sources:
   - https://github.com/abusesa/github-backup
+  - https://github.com/truecharts/charts/tree/master/charts/stable/llalon-github-backup
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/llalon-github-backup
   - https://hub.docker.com/r/llalon/github-backup
 type: application
-version: 8.8.0
+version: 8.9.0
 

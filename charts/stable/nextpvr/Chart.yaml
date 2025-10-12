@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: stable
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: NextPVR is a personal video recorder application, with the goal making it easy to watch or record live TV.
-home: https://trueforge.org/truecharts/stable/nextpvr
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/nextpvr.webp
+home: https://truecharts.org/charts/stable/nextpvr
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/nextpvr.webp
 keywords:
   - pvr
   - recorder
@@ -35,8 +35,9 @@ maintainers:
 name: nextpvr
 sources:
   - https://github.com/sub3/NextPVR/wiki/Install-Docker
+  - https://github.com/truecharts/charts/tree/master/charts/stable/nextpvr
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/nextpvr
   - https://hub.docker.com/r/nextpvr/nextpvr_amd64
 type: application
-version: 12.8.0
+version: 12.9.0
 

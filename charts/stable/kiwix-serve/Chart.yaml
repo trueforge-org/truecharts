@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 3.7.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Kiwix enables you to have the whole Wikipedia at hand wherever you go!
-home: https://trueforge.org/truecharts/stable/kiwix-serve
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/kiwix-serve.webp
+home: https://truecharts.org/charts/stable/kiwix-serve
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/kiwix-serve.webp
 keywords:
   - kiwix-serve
   - Productivity
@@ -36,8 +36,9 @@ name: kiwix-serve
 sources:
   - https://ghcr.io/kiwix/kiwix-serve
   - https://github.com/kiwix/kiwix-tools/blob/master/docker/server
+  - https://github.com/truecharts/charts/tree/master/charts/stable/kiwix-serve
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/kiwix-serve
   - https://www.kiwix.org/
 type: application
-version: 11.8.0
+version: 11.9.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2021.11.21
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Endlessh is an SSH tarpit that very slowly sends an endless, random SSH banner.
-home: https://trueforge.org/truecharts/stable/endlessh
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/endlessh.webp
+home: https://truecharts.org/charts/stable/endlessh
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/endlessh.webp
 keywords:
   - endlessh
 kubeVersion: '>=1.24.0-0'
@@ -34,7 +34,8 @@ maintainers:
 name: endlessh
 sources:
   - https://ghcr.io/linuxserver/endlessh
+  - https://github.com/truecharts/charts/tree/master/charts/stable/endlessh
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/endlessh
 type: application
-version: 12.8.0
+version: 12.9.0
 

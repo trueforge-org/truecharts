@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 6.0.4
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A high-performance, enterprise-grade system for backing up Linux, Windows and macOS PCs and laptops to a server's disk.
-home: https://trueforge.org/truecharts/stable/backuppc
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/backuppc.webp
+home: https://truecharts.org/charts/stable/backuppc
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/backuppc.webp
 keywords:
   - backuppc
   - Backup
@@ -37,8 +37,9 @@ name: backuppc
 sources:
   - https://backuppc.github.io/backuppc/index.html
   - https://github.com/tiredofit/docker-backuppc
+  - https://github.com/truecharts/charts/tree/master/charts/stable/backuppc
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/backuppc
   - https://hub.docker.com/r/tiredofit/backuppc
 type: application
-version: 9.8.0
+version: 9.9.0
 

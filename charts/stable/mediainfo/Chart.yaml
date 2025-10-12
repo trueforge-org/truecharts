@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 25.10.1
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: MediaInfo is a convenient unified display of the most relevant technical and tag data for video and audio files.
-home: https://trueforge.org/truecharts/stable/mediainfo
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/mediainfo.webp
+home: https://truecharts.org/charts/stable/mediainfo
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/mediainfo.webp
 keywords:
   - info
   - media
@@ -35,8 +35,9 @@ maintainers:
 name: mediainfo
 sources:
   - https://github.com/jlesage/docker-mediainfo
+  - https://github.com/truecharts/charts/tree/master/charts/stable/mediainfo
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mediainfo
   - https://hub.docker.com/r/jlesage/mediainfo
 type: application
-version: 13.10.0
+version: 13.11.0
 

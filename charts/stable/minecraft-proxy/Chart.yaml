@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2025.1.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: the front-end of a cluster of minecraft-java containers.
-home: https://trueforge.org/truecharts/stable/minecraft-proxy
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/minecraft-proxy.webp
+home: https://truecharts.org/charts/stable/minecraft-proxy
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/minecraft-proxy.webp
 keywords:
   - minecraft-proxy
   - minecraft-bungeecord
@@ -38,7 +38,8 @@ name: minecraft-proxy
 sources:
   - https://ghcr.io/itzg/mc-proxy
   - https://github.com/itzg/docker-mc-proxy
+  - https://github.com/truecharts/charts/tree/master/charts/stable/minecraft-proxy
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/minecraft-proxy
 type: application
-version: 2.8.0
+version: 2.9.0
 

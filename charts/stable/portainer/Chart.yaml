@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2.34.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Container management made easy
-home: https://trueforge.org/truecharts/stable/portainer
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/portainer.webp
+home: https://truecharts.org/charts/stable/portainer
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/portainer.webp
 keywords:
   - portainer
 kubeVersion: '>=1.24.0-0'
@@ -35,9 +35,10 @@ name: portainer
 sources:
   - https://docs.portainer.io/start/install-ce/server
   - https://docs.portainer.io/start/install/server
+  - https://github.com/truecharts/charts/tree/master/charts/stable/portainer
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/portainer
   - https://hub.docker.com/r/portainer/portainer-ce
   - https://hub.docker.com/r/portainer/portainer-ee
 type: application
-version: 11.12.0
+version: 11.13.0
 

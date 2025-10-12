@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: insurgencysandstorm
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: This Chart will download and install SteamCMD. It will also install Insurgency Sandstorm and run it.
-home: https://trueforge.org/truecharts/stable/insurgencysandstorm
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/insurgencysandstorm.webp
+home: https://truecharts.org/charts/stable/insurgencysandstorm
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/insurgencysandstorm.webp
 keywords:
   - insurgencysandstorm
   - GameServers
@@ -35,8 +35,9 @@ maintainers:
 name: insurgencysandstorm
 sources:
   - https://ghcr.io/ich777/steamcmd
+  - https://github.com/truecharts/charts/tree/master/charts/stable/insurgencysandstorm
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/insurgencysandstorm
   - https://www.steampowered.com/
 type: application
-version: 8.8.0
+version: 8.9.0
 

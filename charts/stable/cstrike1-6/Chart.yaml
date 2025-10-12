@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: cstrike1.6
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: This Chart will download and install SteamCMD. It will also install Counter-Strike 1.6 and run it.
-home: https://trueforge.org/truecharts/stable/cstrike1-6
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/cstrike1-6.webp
+home: https://truecharts.org/charts/stable/cstrike1-6
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/cstrike1-6.webp
 keywords:
   - cstrike1-6
   - GameServers
@@ -35,8 +35,9 @@ maintainers:
 name: cstrike1-6
 sources:
   - https://ghcr.io/ich777/steamcmd
+  - https://github.com/truecharts/charts/tree/master/charts/stable/cstrike1-6
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/cstrike1-6
   - https://www.steampowered.com/
 type: application
-version: 8.8.0
+version: 8.9.0
 

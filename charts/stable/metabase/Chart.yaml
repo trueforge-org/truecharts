@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.56.9
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Business intelligence, dashboards, and data visualization tools
-home: https://trueforge.org/truecharts/stable/metabase
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/metabase.webp
+home: https://truecharts.org/charts/stable/metabase
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/metabase.webp
 keywords:
   - metabase
 kubeVersion: '>=1.24.0-0'
@@ -34,8 +34,9 @@ maintainers:
 name: metabase
 sources:
   - https://github.com/metabase/metabase
+  - https://github.com/truecharts/charts/tree/master/charts/stable/metabase
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/metabase
   - https://hub.docker.com/r/metabase/metabase
 type: application
-version: 6.9.1
+version: 6.10.0
 

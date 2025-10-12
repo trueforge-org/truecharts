@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: stable
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Vertex
-home: https://trueforge.org/truecharts/stable/vertex
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/vertex.webp
+home: https://truecharts.org/charts/stable/vertex
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/vertex.webp
 keywords:
   - vertex
   - home-automation
@@ -35,9 +35,10 @@ maintainers:
     url: https://truecharts.org
 name: vertex
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/vertex
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/vertex
   - https://gitlab.lswl.in/lswl/vertex
   - https://hub.docker.com/r/lswl/vertex
 type: application
-version: 8.8.0
+version: 8.9.0
 

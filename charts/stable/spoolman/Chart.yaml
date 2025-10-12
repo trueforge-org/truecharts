@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.22.1
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Keep track of your inventory of 3D-printer filament spools.
-home: https://trueforge.org/truecharts/stable/spoolman
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/spoolman.webp
+home: https://truecharts.org/charts/stable/spoolman
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/spoolman.webp
 keywords:
   - spoolman
   - inventory
@@ -36,7 +36,8 @@ name: spoolman
 sources:
   - https://ghcr.io/donkie/spoolman
   - https://github.com/Donkie/Spoolman
+  - https://github.com/truecharts/charts/tree/master/charts/stable/spoolman
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/spoolman
 type: application
-version: 1.6.0
+version: 1.7.0
 

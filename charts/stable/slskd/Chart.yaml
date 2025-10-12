@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.23.2
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Slskd is a modern client-server application for the Soulseek file sharing network.
-home: https://trueforge.org/truecharts/stable/slskd
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/slskd.webp
+home: https://truecharts.org/charts/stable/slskd
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/slskd.webp
 keywords:
   - slskd
   - music
@@ -37,7 +37,8 @@ name: slskd
 sources:
   - https://ghcr.io/slskd/slskd
   - https://github.com/ansible-slskd/slskd
+  - https://github.com/truecharts/charts/tree/master/charts/stable/slskd
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/slskd
 type: application
-version: 4.9.0
+version: 4.10.0
 

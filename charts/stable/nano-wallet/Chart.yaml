@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2021.12.16
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Nano-wallet is a digital payment protocol designed to be accessible and lightweight.
-home: https://trueforge.org/truecharts/stable/nano-wallet
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/nano-wallet.webp
+home: https://truecharts.org/charts/stable/nano-wallet
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/nano-wallet.webp
 keywords:
   - nano-wallet
 kubeVersion: '>=1.24.0-0'
@@ -34,7 +34,8 @@ maintainers:
 name: nano-wallet
 sources:
   - https://ghcr.io/linuxserver/nano-wallet
+  - https://github.com/truecharts/charts/tree/master/charts/stable/nano-wallet
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/nano-wallet
 type: application
-version: 12.8.0
+version: 12.9.0
 

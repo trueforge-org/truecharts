@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: vlmcsd is a replacement for Microsoft's KMS server.
-home: https://trueforge.org/truecharts/stable/vlmcsd-kms-server
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/vlmcsd-kms-server.webp
+home: https://truecharts.org/charts/stable/vlmcsd-kms-server
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/vlmcsd-kms-server.webp
 keywords:
   - vlmcsd-kms-server
   - Cloud
@@ -37,8 +37,9 @@ maintainers:
 name: vlmcsd-kms-server
 sources:
   - https://github.com/mikolatero/docker-vlmcsd
+  - https://github.com/truecharts/charts/tree/master/charts/stable/vlmcsd-kms-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/vlmcsd-kms-server
   - https://hub.docker.com/r/mikolatero/vlmcsd
 type: application
-version: 8.8.0
+version: 8.9.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.3.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Unmanic is a simple tool for optimising your file library.
-home: https://trueforge.org/truecharts/stable/unmanic
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/unmanic.webp
+home: https://truecharts.org/charts/stable/unmanic
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/unmanic.webp
 keywords:
   - media
 kubeVersion: '>=1.24.0-0'
@@ -34,8 +34,9 @@ maintainers:
 name: unmanic
 sources:
   - https://github.com/Unmanic/unmanic
+  - https://github.com/truecharts/charts/tree/master/charts/stable/unmanic
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/unmanic
   - https://hub.docker.com/r/josh5/unmanic
 type: application
-version: 13.9.0
+version: 13.10.0
 

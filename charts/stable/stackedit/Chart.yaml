@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: StackEdits Markdown syntax highlighting is unique. The refined text formatting of the editor helps you visualize the final rendering of your files.
-home: https://trueforge.org/truecharts/stable/stackedit
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/stackedit.webp
+home: https://truecharts.org/charts/stable/stackedit
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/stackedit.webp
 keywords:
   - stackedit
   - Productivity
@@ -35,9 +35,10 @@ maintainers:
     url: https://truecharts.org
 name: stackedit
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/stackedit
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/stackedit
   - https://hub.docker.com/r/qmcgaw/stackedit
   - https://stackedit.io/
 type: application
-version: 8.8.0
+version: 8.9.0
 

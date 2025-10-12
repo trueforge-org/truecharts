@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 3.1.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Aggregated management of TrueNAS devices
-home: https://trueforge.org/truecharts/stable/truecommand
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/truecommand.webp
+home: https://truecharts.org/charts/stable/truecommand
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/truecommand.webp
 keywords:
   - truecommand
 kubeVersion: '>=1.24.0-0'
@@ -33,8 +33,9 @@ maintainers:
     url: https://truecharts.org
 name: truecommand
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/truecommand
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/truecommand
   - https://hub.docker.com/r/ixsystems/truecommand
 type: application
-version: 22.8.0
+version: 22.9.0
 

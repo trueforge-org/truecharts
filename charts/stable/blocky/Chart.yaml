@@ -9,12 +9,12 @@ annotations:
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: premium
+  truecharts.org/train: stable
 apiVersion: v2
 appVersion: 0.26.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -29,8 +29,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Blocky is a DNS proxy, DNS enhancer and ad-blocker for the local network written in Go
-home: https://trueforge.org/truecharts/stable/blocky
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/blocky.webp
+home: https://truecharts.org/charts/stable/blocky
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/blocky.webp
 keywords:
   - dns
   - blocky
@@ -44,9 +44,10 @@ sources:
   - https://0xerr0r.github.io/blocky/
   - https://github.com/0xERR0R/blocky
   - https://github.com/Mozart409/blocky-frontend
+  - https://github.com/truecharts/charts/tree/master/charts/stable/blocky
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/blocky
   - https://hub.docker.com/r/spx01/blocky
   - https://quay.io/oriedge/k8s_gateway
 type: application
-version: 18.18.0
+version: 18.19.0
 

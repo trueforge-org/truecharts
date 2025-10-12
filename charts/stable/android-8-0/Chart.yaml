@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Android in Chart solution with noVNC supported and video recording. Work way better with Intel CPUs because AMD doesn't an cpu graphics card. So with amd cpus can be unusable.
-home: https://trueforge.org/truecharts/stable/android-8-0
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/android-8-0.webp
+home: https://truecharts.org/charts/stable/android-8-0
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/android-8-0.webp
 keywords:
   - android-8-0
   - Other
@@ -34,9 +34,10 @@ maintainers:
     url: https://truecharts.org
 name: android-8-0
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/android-8-0
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/android-8-0
   - https://hub.docker.com/r/ulisses1478/docker-android
   - https://registry.hub.docker.com/r/ulisses1478/docker-android
 type: application
-version: 8.8.0
+version: 8.9.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 6.21.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Chartised version of XMRig for CPU Mining. Helps turn your server into a Monero / cryptocurrency mining rig. Now optionally works with GPU algorithms as well.
-home: https://trueforge.org/truecharts/stable/xmrig
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/xmrig.webp
+home: https://truecharts.org/charts/stable/xmrig
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/xmrig.webp
 keywords:
   - xmrig
   - Crypto
@@ -34,8 +34,9 @@ maintainers:
     url: https://truecharts.org
 name: xmrig
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/xmrig
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/xmrig
   - https://hub.docker.com/r/cooleye72/xmrig
 type: application
-version: 9.8.0
+version: 9.9.0
 

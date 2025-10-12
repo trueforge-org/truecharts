@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Print a neat little card with your WiFi info and stick it on the fridge.
-home: https://trueforge.org/truecharts/stable/wifi-card
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/wifi-card.webp
+home: https://truecharts.org/charts/stable/wifi-card
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/wifi-card.webp
 keywords:
   - wifi-card
   - Other
@@ -35,8 +35,9 @@ maintainers:
 name: wifi-card
 sources:
   - https://github.com/bndw/wifi-card
+  - https://github.com/truecharts/charts/tree/master/charts/stable/wifi-card
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/wifi-card
   - https://hub.docker.com/r/bndw/wifi-card
 type: application
-version: 8.8.0
+version: 8.9.0
 

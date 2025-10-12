@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.14.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Prometheus exporter for SMART using smartctl binary to gather metrics.
-home: https://trueforge.org/truecharts/stable/smartctl-exporter
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/smartctl-exporter.webp
+home: https://truecharts.org/charts/stable/smartctl-exporter
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/smartctl-exporter.webp
 keywords:
   - prometheus
   - smartctl-exporter
@@ -36,8 +36,9 @@ maintainers:
 name: smartctl-exporter
 sources:
   - https://github.com/prometheus-community/smartctl_exporter
+  - https://github.com/truecharts/charts/tree/master/charts/stable/smartctl-exporter
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/smartctl-exporter
   - https://quay.io/prometheuscommunity/smartctl-exporter
 type: application
-version: 5.8.0
+version: 5.9.0
 

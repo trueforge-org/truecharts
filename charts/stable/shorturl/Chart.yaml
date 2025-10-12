@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.1.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Self hosted web app for shortening urls (URL shortener)
-home: https://trueforge.org/truecharts/stable/shorturl
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/shorturl.webp
+home: https://truecharts.org/charts/stable/shorturl
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/shorturl.webp
 keywords:
   - url
   - shortener
@@ -39,7 +39,8 @@ sources:
   - https://ghcr.io/nicholaswilde/shorturl
   - https://github.com/nicholaswilde/docker-shorturl
   - https://github.com/prologic/shorturl
+  - https://github.com/truecharts/charts/tree/master/charts/stable/shorturl
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/shorturl
 type: application
-version: 13.8.0
+version: 13.9.0
 

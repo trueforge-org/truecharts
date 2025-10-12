@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 10.19.4
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: CyberChef is a simple, intuitive web app for carrying out all manner of "cyber" operations within a web browser.
-home: https://trueforge.org/truecharts/stable/cyberchef
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/cyberchef.webp
+home: https://truecharts.org/charts/stable/cyberchef
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/cyberchef.webp
 keywords:
   - cyberchef
 kubeVersion: '>=1.24.0-0'
@@ -33,8 +33,9 @@ maintainers:
     url: https://truecharts.org
 name: cyberchef
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/cyberchef
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/cyberchef
   - https://hub.docker.com/r/mpepping/cyberchef
 type: application
-version: 12.8.0
+version: 12.9.0
 

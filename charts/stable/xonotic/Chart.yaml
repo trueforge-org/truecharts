@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: This Chart will download and install the preferred version of Xonotic.
-home: https://trueforge.org/truecharts/stable/xonotic
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/xonotic.webp
+home: https://truecharts.org/charts/stable/xonotic
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/xonotic.webp
 keywords:
   - xonotic
   - GameServers
@@ -35,8 +35,9 @@ maintainers:
 name: xonotic
 sources:
   - https://ghcr.io/ich777/xonotic
+  - https://github.com/truecharts/charts/tree/master/charts/stable/xonotic
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/xonotic
   - https://www.xonotic.org/
 type: application
-version: 8.8.0
+version: 8.9.0
 

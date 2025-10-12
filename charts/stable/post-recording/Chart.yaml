@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Watches for .ts files made by Live TV recordings, convert them to a friendly format, extract .srt file, add chapters with comchap or remove them with comcut. Tested with Emby recordings.
-home: https://trueforge.org/truecharts/stable/post-recording
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/post-recording.webp
+home: https://truecharts.org/charts/stable/post-recording
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/post-recording.webp
 keywords:
   - post-recording
   - MediaApp-Video
@@ -35,8 +35,9 @@ maintainers:
 name: post-recording
 sources:
   - https://github.com/chacawaca/docker-post-recording
+  - https://github.com/truecharts/charts/tree/master/charts/stable/post-recording
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/post-recording
   - https://hub.docker.com/r/chacawaca/post-recording
 type: application
-version: 8.8.0
+version: 8.9.0
 

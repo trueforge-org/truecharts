@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.4.1
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Prometheus exporter for Nvidia GPU's using nvidia-smi binary to gather metrics.
-home: https://trueforge.org/truecharts/stable/nvidia-gpu-exporter
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/nvidia-gpu-exporter.webp
+home: https://truecharts.org/charts/stable/nvidia-gpu-exporter
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/nvidia-gpu-exporter.webp
 keywords:
   - prometheus
   - nvidia-gpu-exporter
@@ -35,9 +35,10 @@ maintainers:
     url: https://truecharts.org
 name: nvidia-gpu-exporter
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/nvidia-gpu-exporter
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/nvidia-gpu-exporter
   - https://github.com/utkuozdemir/nvidia_gpu_exporter
   - https://hub.docker.com/r/utkuozdemir/nvidia_gpu_exporter
 type: application
-version: 5.9.1
+version: 5.10.0
 

@@ -30,4 +30,10 @@
   {{- with (include (printf "tc.v1.common.lib.cnpg.provider.%s.secret" $provider) (dict "creds" $creds) | fromYaml) -}}
     {{- $_ := set $rootCtx.Values.secret (printf "cnpg-%s-provider-%s-%s-creds" $objectData.shortName $type $provider) . -}}
   {{- end -}}
+
+  {{- if $creds.customCA -}}
+    {{- with (include (printf "tc.v1.common.lib.cnpg.provider.%s.customCA.secret" $provider) (dict "creds" $creds) | fromYaml) -}}
+      {{- $_ := set $rootCtx.Values.secret (printf "cnpg-%s-provider-%s-%s-ca" $objectData.shortName $type $provider) . -}}
+    {{- end -}}
+  {{- end -}}
 {{- end -}}

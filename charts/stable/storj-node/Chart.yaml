@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Storj is an S3-compatible platform and suite of decentralized applications that allows you to store data in a secure and decentralized manner
-home: https://trueforge.org/truecharts/stable/storj-node
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/storj-node.webp
+home: https://truecharts.org/charts/stable/storj-node
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/storj-node.webp
 keywords:
   - storj
   - storage
@@ -36,8 +36,9 @@ name: storj-node
 sources:
   - https://docs.storj.io/node/
   - https://github.com/storj/storj
+  - https://github.com/truecharts/charts/tree/master/charts/stable/storj-node
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/storj-node
   - https://hub.docker.com/r/storjlabs/storagenode
 type: application
-version: 12.8.0
+version: 12.9.0
 

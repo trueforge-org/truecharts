@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 25.04.6.1.1
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: An awesome, Online Office suite image suitable for home use.
-home: https://trueforge.org/truecharts/stable/collabora
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/collabora.webp
+home: https://truecharts.org/charts/stable/collabora
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/collabora.webp
 keywords:
   - office
   - document
@@ -35,8 +35,9 @@ maintainers:
 name: collabora
 sources:
   - https://github.com/CollaboraOnline/online
+  - https://github.com/truecharts/charts/tree/master/charts/stable/collabora
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/collabora
   - https://hub.docker.com/r/collabora/code
 type: application
-version: 9.8.0
+version: 9.9.0
 

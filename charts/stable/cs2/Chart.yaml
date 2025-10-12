@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: cs2
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A custom SteamCMD chart that runs CS2.
-home: https://trueforge.org/truecharts/stable/cs2
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/cs2.webp
+home: https://truecharts.org/charts/stable/cs2
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/cs2.webp
 keywords:
   - cs2
   - counter-strike
@@ -36,7 +36,8 @@ name: cs2
 sources:
   - https://ghcr.io/ich777/steamcmd
   - https://github.com/ich777/docker-steamcmd-server/tree/cs2
+  - https://github.com/truecharts/charts/tree/master/charts/stable/cs2
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/cs2
 type: application
-version: 6.8.1
+version: 6.9.0
 

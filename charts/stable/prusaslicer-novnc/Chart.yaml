@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Enjoy Prusaslicer directly in your browser with this easy to use Chart Chart.
-home: https://trueforge.org/truecharts/stable/prusaslicer-novnc
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/prusaslicer-novnc.webp
+home: https://truecharts.org/charts/stable/prusaslicer-novnc
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/prusaslicer-novnc.webp
 keywords:
   - prusaslicer-novnc
   - home-automation
@@ -35,9 +35,10 @@ maintainers:
     url: https://truecharts.org
 name: prusaslicer-novnc
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/prusaslicer-novnc
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/prusaslicer-novnc
   - https://hub.docker.com/r/mikeah/prusaslicer-novnc
   - https://www.prusa3d.com/prusaslicer/
 type: application
-version: 11.8.0
+version: 11.9.0
 

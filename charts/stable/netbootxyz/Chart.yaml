@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.7.6
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Your favorite operating systems in one place!
-home: https://trueforge.org/truecharts/stable/netbootxyz
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/netbootxyz.webp
+home: https://truecharts.org/charts/stable/netbootxyz
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/netbootxyz.webp
 keywords:
   - netbootxyz
   - pxe
@@ -36,7 +36,8 @@ name: netbootxyz
 sources:
   - https://ghcr.io/netbootxyz/netbootxyz
   - https://github.com/netbootxyz/netboot.xyz
+  - https://github.com/truecharts/charts/tree/master/charts/stable/netbootxyz
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/netbootxyz
 type: application
-version: 7.8.0
+version: 7.9.0
 

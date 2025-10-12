@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2025.9.1
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Client for Cloudflare Tunnel, a daemon that exposes private services through the Cloudflare edge.
-home: https://trueforge.org/truecharts/stable/cloudflared
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/cloudflared.webp
+home: https://truecharts.org/charts/stable/cloudflared
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/cloudflared.webp
 keywords:
   - cloudflared
   - networking
@@ -34,8 +34,9 @@ maintainers:
     url: https://truecharts.org
 name: cloudflared
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/cloudflared
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/cloudflared
   - https://hub.docker.com/r/cloudflare/cloudflared
 type: application
-version: 14.10.0
+version: 14.11.0
 

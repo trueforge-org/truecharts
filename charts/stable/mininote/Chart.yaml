@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A simple, self-hosted, encrypted Markdown note-taking app built with Vue 3, and Express.
-home: https://trueforge.org/truecharts/stable/mininote
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/mininote.webp
+home: https://truecharts.org/charts/stable/mininote
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/mininote.webp
 keywords:
   - mininote
   - Productivity
@@ -36,8 +36,9 @@ maintainers:
 name: mininote
 sources:
   - https://github.com/muety/mininote
+  - https://github.com/truecharts/charts/tree/master/charts/stable/mininote
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mininote
   - https://hub.docker.com/r/n1try/mininote
 type: application
-version: 8.8.0
+version: 8.9.0
 

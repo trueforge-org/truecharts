@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: This Chart is a full Debian Bullseye Xfce4 Desktop environment with a noVNC webGUI and all the basic tools pre-installed.
-home: https://trueforge.org/truecharts/stable/debian-bullseye
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/debian-bullseye.webp
+home: https://truecharts.org/charts/stable/debian-bullseye
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/debian-bullseye.webp
 keywords:
   - debian-bullseye
   - Productivity
@@ -36,8 +36,9 @@ maintainers:
 name: debian-bullseye
 sources:
   - https://ghcr.io/ich777/debian-bullseye
+  - https://github.com/truecharts/charts/tree/master/charts/stable/debian-bullseye
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/debian-bullseye
   - https://www.debian.org/
 type: application
-version: 8.8.0
+version: 8.9.0
 

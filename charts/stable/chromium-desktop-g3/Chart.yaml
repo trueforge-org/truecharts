@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Headless Ubuntu/Xfce Charts with VNC/noVNC for diagramming, image editing and 2D/3D drawing
-home: https://trueforge.org/truecharts/stable/chromium-desktop-g3
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/chromium-desktop-g3.webp
+home: https://truecharts.org/charts/stable/chromium-desktop-g3
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/chromium-desktop-g3.webp
 keywords:
   - chromium-desktop-g3
   - Tools-Utilities
@@ -36,8 +36,9 @@ maintainers:
 name: chromium-desktop-g3
 sources:
   - https://github.com/accetto/headless-drawing-g3/
+  - https://github.com/truecharts/charts/tree/master/charts/stable/chromium-desktop-g3
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/chromium-desktop-g3
   - https://hub.docker.com/r/accetto/ubuntu-vnc-xfce-chromium-g3
 type: application
-version: 8.8.0
+version: 8.9.0
 

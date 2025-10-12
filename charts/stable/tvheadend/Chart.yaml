@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: TVheadend - a TV streaming server and digital video recorder
-home: https://trueforge.org/truecharts/stable/tvheadend
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/tvheadend.webp
+home: https://truecharts.org/charts/stable/tvheadend
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/tvheadend.webp
 keywords:
   - tvheadend
   - tv
@@ -37,9 +37,10 @@ maintainers:
 name: tvheadend
 sources:
   - https://ghcr.io/linuxserver/tvheadend
+  - https://github.com/truecharts/charts/tree/master/charts/stable/tvheadend
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/tvheadend
   - https://github.com/trueforge/truecharts/tree/master/charts/stable/tvheadend
   - https://github.com/tvheadend/tvheadend
 type: application
-version: 22.8.1
+version: 22.9.0
 

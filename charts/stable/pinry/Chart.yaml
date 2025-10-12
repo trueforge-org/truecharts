@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2.1.13
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: The open-source core of Pinry, a tiling image board system for people who want to save, tag, and share images, videos and webpages in an easy to skim through format.
-home: https://trueforge.org/truecharts/stable/pinry
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/pinry.webp
+home: https://truecharts.org/charts/stable/pinry
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/pinry.webp
 keywords:
   - pinry
 kubeVersion: '>=1.24.0-0'
@@ -34,8 +34,9 @@ maintainers:
 name: pinry
 sources:
   - https://github.com/pinry/pinry/
+  - https://github.com/truecharts/charts/tree/master/charts/stable/pinry
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/pinry
   - https://hub.docker.com/r/getpinry/pinry
 type: application
-version: 12.8.0
+version: 12.9.0
 
