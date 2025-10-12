@@ -37,7 +37,7 @@ tests:
                     value: 123
     asserts:
       - failedTemplate:
-          errorMessage: Container - Environment Variable [VAR1] in [containers.container-name1.envList] tried to override the Environment Variable that is already defined in [env]
+          errorMessage: Container - Environment Variable [VAR1] in [containers.container-name1.envList] tried to override the Environment Variable that is already defined in [containers.container-name1.env]
 
   - it: should fail with dupe env in env and envFrom configmap
     set:
