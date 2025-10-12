@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.10.2
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -29,8 +29,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: YOURLS is a set of PHP scripts that will allow you to run Your Own URL Shortener.
-home: https://trueforge.org/truecharts/stable/yourls
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/yourls.webp
+home: https://truecharts.org/charts/stable/yourls
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/yourls.webp
 keywords:
   - yourls
   - Cloud
@@ -44,8 +44,9 @@ maintainers:
     url: https://truecharts.org
 name: yourls
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/yourls
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/yourls
   - https://hub.docker.com/_/yourls
 type: application
-version: 10.8.0
+version: 10.9.0
 

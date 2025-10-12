@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Store securely encrypted backups on cloud storage services!
-home: https://trueforge.org/truecharts/stable/duplicati
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/duplicati.webp
+home: https://truecharts.org/charts/stable/duplicati
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/duplicati.webp
 keywords:
   - duplicati
 kubeVersion: '>=1.24.0-0'
@@ -34,8 +34,9 @@ maintainers:
 name: duplicati
 sources:
   - https://github.com/duplicati/duplicati
+  - https://github.com/truecharts/charts/tree/master/charts/stable/duplicati
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/duplicati
   - https://hub.docker.com/r/duplicati/duplicati
 type: application
-version: 16.8.0
+version: 16.9.0
 

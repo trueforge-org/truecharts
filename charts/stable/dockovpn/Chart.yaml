@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.14.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Out of the box stateless VPN server docker image which starts in just a few seconds and doesn't require persistent storage.
-home: https://trueforge.org/truecharts/stable/dockovpn
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/dockovpn.webp
+home: https://truecharts.org/charts/stable/dockovpn
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/dockovpn.webp
 keywords:
   - vpn
   - openvpn
@@ -35,8 +35,9 @@ maintainers:
 name: dockovpn
 sources:
   - https://github.com/dockovpn/dockovpn
+  - https://github.com/truecharts/charts/tree/master/charts/stable/dockovpn
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/dockovpn
   - https://hub.docker.com/r/alekslitvinenk/openvpn
 type: application
-version: 4.8.0
+version: 4.9.0
 

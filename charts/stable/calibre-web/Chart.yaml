@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.6.25
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Calibre-Web is a web app providing a clean interface for browsing, reading and downloading eBooks using an existing Calibre database.
-home: https://trueforge.org/truecharts/stable/calibre-web
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/calibre-web.webp
+home: https://truecharts.org/charts/stable/calibre-web
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/calibre-web.webp
 keywords:
   - calibre-web
   - calibre
@@ -37,7 +37,8 @@ name: calibre-web
 sources:
   - https://fleet.linuxserver.io/image?name=linuxserver/calibre-web
   - https://github.com/janeczku/calibre-web
+  - https://github.com/truecharts/charts/tree/master/charts/stable/calibre-web
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/calibre-web
 type: application
-version: 21.8.0
+version: 21.9.0
 

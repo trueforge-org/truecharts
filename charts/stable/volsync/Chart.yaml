@@ -9,12 +9,12 @@ annotations:
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: system
+  truecharts.org/train: stable
 apiVersion: v2
 appVersion: 0.13.1
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: volsync is a storage backup and synchronisation tool.
-home: https://trueforge.org/truecharts/stable/volsync
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/volsync.webp
+home: https://truecharts.org/charts/stable/volsync
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/volsync.webp
 keywords:
   - volsync
   - ingress
@@ -36,10 +36,11 @@ name: volsync
 sources:
   - https://github.com/backube/helm-charts
   - https://github.com/backube/volsync
+  - https://github.com/truecharts/charts/tree/master/charts/stable/volsync
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/volsync
   - https://quay.io/backube/volsync
   - https://quay.io/brancz/kube-rbac-proxy
   - https://volsync.readthedocs.io/
 type: application
-version: 3.10.0
+version: 3.11.0
 

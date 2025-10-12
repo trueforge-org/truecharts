@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: This webapp is a browser and desktop password manager compatible with KeePass databases. It doesn't require any server or additional resources. The app can run either in browser, or as a desktop app.
-home: https://trueforge.org/truecharts/stable/keeweb
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/keeweb.webp
+home: https://truecharts.org/charts/stable/keeweb
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/keeweb.webp
 keywords:
   - keeweb
   - Productivity
@@ -38,8 +38,9 @@ maintainers:
 name: keeweb
 sources:
   - https://github.com/keeweb/keeweb
+  - https://github.com/truecharts/charts/tree/master/charts/stable/keeweb
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/keeweb
   - https://hub.docker.com/r/antelle/keeweb
 type: application
-version: 8.8.0
+version: 8.9.0
 

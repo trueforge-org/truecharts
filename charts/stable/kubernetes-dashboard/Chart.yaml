@@ -9,12 +9,12 @@ annotations:
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: premium
+  truecharts.org/train: stable
 apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -29,8 +29,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: The default Kubernetes Dashboard
-home: https://trueforge.org/truecharts/stable/kubernetes-dashboard
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/kubernetes-dashboard.webp
+home: https://truecharts.org/charts/stable/kubernetes-dashboard
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/kubernetes-dashboard.webp
 keywords:
   - kubernetes-dashboard
   - loadbalancer
@@ -42,7 +42,7 @@ maintainers:
 name: kubernetes-dashboard
 sources:
   - https://github.com/kubernetes-dashboard/kubernetes-dashboard
-  - https://github.com/truecharts/containers/tree/master/apps/kube-sa-proxy
+  - https://github.com/truecharts/charts/tree/master/charts/stable/kubernetes-dashboard
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/kubernetes-dashboard
   - https://github.com/trueforge/truecharts/tree/master/charts/stable/kubernetes-dashboard
   - https://hub.docker.com/r/kubernetesui/dashboard-api
@@ -51,5 +51,5 @@ sources:
   - https://hub.docker.com/r/kubernetesui/dashboard-web
   - https://kubernetes-dashboard.universe.tf
 type: application
-version: 2.8.0
+version: 2.9.0
 

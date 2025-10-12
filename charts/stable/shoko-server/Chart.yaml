@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 5.1.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Anime cataloging program designed to automate the cataloging of your collection.
-home: https://trueforge.org/truecharts/stable/shoko-server
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/shoko-server.webp
+home: https://truecharts.org/charts/stable/shoko-server
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/shoko-server.webp
 keywords:
   - shoko-server
   - Tools-Utilities
@@ -35,8 +35,9 @@ maintainers:
 name: shoko-server
 sources:
   - https://github.com/ShokoAnime/ShokoServer
+  - https://github.com/truecharts/charts/tree/master/charts/stable/shoko-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/shoko-server
   - https://hub.docker.com/r/shokoanime/server
 type: application
-version: 13.8.0
+version: 13.9.0
 

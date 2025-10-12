@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 9.8.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Web-Based postgresql database management utility
-home: https://trueforge.org/truecharts/stable/pgadmin
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/pgadmin.webp
+home: https://truecharts.org/charts/stable/pgadmin
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/pgadmin.webp
 keywords:
   - pgadmin
   - db
@@ -35,9 +35,10 @@ maintainers:
     url: https://truecharts.org
 name: pgadmin
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/pgadmin
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/pgadmin
   - https://hub.docker.com/r/dpage/pgadmin4
   - https://www.pgadmin.org/
 type: application
-version: 19.11.0
+version: 19.12.0
 

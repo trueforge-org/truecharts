@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: This is a Basic Mindustry Server. It will download the preferred version of Mindustry and run it.
-home: https://trueforge.org/truecharts/stable/mindustry
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/mindustry.webp
+home: https://truecharts.org/charts/stable/mindustry
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/mindustry.webp
 keywords:
   - mindustry
   - GameServers
@@ -36,7 +36,8 @@ name: mindustry
 sources:
   - https://anuke.itch.io/mindustry
   - https://ghcr.io/ich777/mindustry-server
+  - https://github.com/truecharts/charts/tree/master/charts/stable/mindustry
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mindustry
 type: application
-version: 8.8.0
+version: 8.9.0
 

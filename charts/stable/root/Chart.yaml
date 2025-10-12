@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: ROOT is a framework for data processing, born at CERN, at the heart of the research on high-energy physics. Every day, thousands of physicists use ROOT applications to analyze their data or to perform simulations.
-home: https://trueforge.org/truecharts/stable/root
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/root.webp
+home: https://truecharts.org/charts/stable/root
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/root.webp
 keywords:
   - root
   - Productivity
@@ -35,9 +35,10 @@ maintainers:
     url: https://truecharts.org
 name: root
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/root
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/root
   - https://hub.docker.com/r/bgameiro/arch-cern-root
   - https://root.cern/
 type: application
-version: 8.8.0
+version: 8.9.0
 

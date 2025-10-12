@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: l4d
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: This Chart will download and install SteamCMD. It will also install Left4Dead and run it.
-home: https://trueforge.org/truecharts/stable/left4dead
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/left4dead.webp
+home: https://truecharts.org/charts/stable/left4dead
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/left4dead.webp
 keywords:
   - left4dead
   - GameServers
@@ -35,8 +35,9 @@ maintainers:
 name: left4dead
 sources:
   - https://ghcr.io/ich777/steamcmd
+  - https://github.com/truecharts/charts/tree/master/charts/stable/left4dead
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/left4dead
   - https://www.steampowered.com/
 type: application
-version: 8.8.0
+version: 8.9.0
 

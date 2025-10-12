@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 4.16.4
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -29,8 +29,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Weblate is a copylefted libre software web-based continuous localization system
-home: https://trueforge.org/truecharts/stable/weblate
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/weblate.webp
+home: https://truecharts.org/charts/stable/weblate
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/weblate.webp
 keywords:
   - translate
 kubeVersion: '>=1.24.0-0'
@@ -44,8 +44,9 @@ sources:
   - https://github.com/WeblateOrg/docker
   - https://github.com/WeblateOrg/docker-compose
   - https://github.com/WeblateOrg/weblate
+  - https://github.com/truecharts/charts/tree/master/charts/stable/weblate
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/weblate
   - https://hub.docker.com/r/weblate/weblate
 type: application
-version: 17.17.0
+version: 17.18.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.5.1
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A lightweight, self-hosted paste platform.
-home: https://trueforge.org/truecharts/stable/pastey
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/pastey.webp
+home: https://truecharts.org/charts/stable/pastey
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/pastey.webp
 keywords:
   - pastey
   - Productivity
@@ -36,8 +36,9 @@ maintainers:
 name: pastey
 sources:
   - https://github.com/Cesura/pastey
+  - https://github.com/truecharts/charts/tree/master/charts/stable/pastey
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/pastey
   - https://hub.docker.com/r/cesura/pastey
 type: application
-version: 9.8.0
+version: 9.9.0
 

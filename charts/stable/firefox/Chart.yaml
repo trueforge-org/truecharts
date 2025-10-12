@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1143.0.3
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: a free and open-source web browser developed by the Mozilla Foundation and its subsidiary, the Mozilla Corporation.
-home: https://trueforge.org/truecharts/stable/firefox
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/firefox.webp
+home: https://truecharts.org/charts/stable/firefox
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/firefox.webp
 keywords:
   - firefox
   - browser
@@ -36,7 +36,8 @@ name: firefox
 sources:
   - https://ghcr.io/linuxserver/firefox
   - https://github.com/linuxserver/docker-firefox
+  - https://github.com/truecharts/charts/tree/master/charts/stable/firefox
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/firefox
 type: application
-version: 30.2.0
+version: 30.3.0
 

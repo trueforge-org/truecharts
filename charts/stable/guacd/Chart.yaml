@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.6.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Guacd - Apache Guacamole is a clientless remote desktop gateway.
-home: https://trueforge.org/truecharts/stable/guacd
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/guacd.webp
+home: https://truecharts.org/charts/stable/guacd
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/guacd.webp
 keywords:
   - guacd
   - guacamole
@@ -36,8 +36,9 @@ maintainers:
 name: guacd
 sources:
   - https://github.com/apache/guacamole-server
+  - https://github.com/truecharts/charts/tree/master/charts/stable/guacd
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/guacd
   - https://hub.docker.com/r/guacamole/guacd
 type: application
-version: 12.8.0
+version: 12.9.0
 

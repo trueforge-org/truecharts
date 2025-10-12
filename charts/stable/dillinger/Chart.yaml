@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 3.39.1
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Dillinger is a cloud-enabled, mobile-ready, offline-storage, AngularJS powered HTML5 Markdown editor.
-home: https://trueforge.org/truecharts/stable/dillinger
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/dillinger.webp
+home: https://truecharts.org/charts/stable/dillinger
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/dillinger.webp
 keywords:
   - dillinger
 kubeVersion: '>=1.24.0-0'
@@ -34,7 +34,8 @@ maintainers:
 name: dillinger
 sources:
   - https://ghcr.io/linuxserver/dillinger
+  - https://github.com/truecharts/charts/tree/master/charts/stable/dillinger
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/dillinger
 type: application
-version: 12.8.0
+version: 12.9.0
 

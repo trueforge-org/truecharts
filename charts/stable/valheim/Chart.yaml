@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Valheim dedicated gameserver with automatic update and world backup support
-home: https://trueforge.org/truecharts/stable/valheim
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/valheim.webp
+home: https://truecharts.org/charts/stable/valheim
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/valheim.webp
 keywords:
   - valheim
 kubeVersion: '>=1.24.0-0'
@@ -35,7 +35,8 @@ name: valheim
 sources:
   - https://ghcr.io/lloesche/valheim-server
   - https://github.com/lloesche/valheim-server-docker
+  - https://github.com/truecharts/charts/tree/master/charts/stable/valheim
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/valheim
 type: application
-version: 13.8.0
+version: 13.9.0
 

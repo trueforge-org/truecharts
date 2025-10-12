@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.42.2.10156
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Plex Media Server
-home: https://trueforge.org/truecharts/stable/plex
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/plex.webp
+home: https://truecharts.org/charts/stable/plex
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/plex.webp
 keywords:
   - plex
   - plex-media-server
@@ -36,7 +36,8 @@ name: plex
 sources:
   - https://ghcr.io/home-operations/plex
   - https://github.com/k8s-at-home/container-images/pkgs/container/plex
+  - https://github.com/truecharts/charts/tree/master/charts/stable/plex
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/plex
 type: application
-version: 20.9.0
+version: 20.10.0
 

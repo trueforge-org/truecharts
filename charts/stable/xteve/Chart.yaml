@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2.2.0.200
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: M3U Proxy for Plex DVR and Emby Live TV.
-home: https://trueforge.org/truecharts/stable/xteve
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/xteve.webp
+home: https://truecharts.org/charts/stable/xteve
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/xteve.webp
 keywords:
   - xteve
   - iptv
@@ -38,8 +38,9 @@ name: xteve
 sources:
   - https://ghcr.io/k8s-at-home/xteve
   - https://github.com/k8s-at-home/container-images
+  - https://github.com/truecharts/charts/tree/master/charts/stable/xteve
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/xteve
   - https://github.com/xteve-project/xTeVe
 type: application
-version: 16.8.0
+version: 16.9.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 3.0.2
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: An easy-to-use, multi-track audio editor and recorder
-home: https://trueforge.org/truecharts/stable/audacity
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/audacity.webp
+home: https://truecharts.org/charts/stable/audacity
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/audacity.webp
 keywords:
   - audacity
   - music
@@ -39,8 +39,9 @@ name: audacity
 sources:
   - https://ghcr.io/linuxserver/audacity
   - https://github.com/linuxserver/docker-audacity
+  - https://github.com/truecharts/charts/tree/master/charts/stable/audacity
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/audacity
   - https://www.audacityteam.org/
 type: application
-version: 15.8.0
+version: 15.9.0
 

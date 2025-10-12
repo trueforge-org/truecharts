@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Memcached is a memory-backed database caching solution
-home: https://trueforge.org/truecharts/stable/memcached
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/memcached.webp
+home: https://truecharts.org/charts/stable/memcached
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/memcached.webp
 keywords:
   - memcached
   - database
@@ -36,8 +36,9 @@ maintainers:
 name: memcached
 sources:
   - https://github.com/bitnami/bitnami-docker-memcached
+  - https://github.com/truecharts/charts/tree/master/charts/stable/memcached
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/memcached
   - https://hub.docker.com/r/bitnamisecure/memcached
 type: application
-version: 16.9.0
+version: 16.10.0
 

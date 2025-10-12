@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: home-assistant App for TrueNAS SCALE
-home: https://trueforge.org/truecharts/stable/wisemapping
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/wisemapping.webp
+home: https://truecharts.org/charts/stable/wisemapping
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/wisemapping.webp
 keywords:
   - mapping
   - mind-mapping
@@ -36,10 +36,11 @@ maintainers:
 name: wisemapping
 sources:
   - https://bitbucket.org/wisemapping/wisemapping-open-source/src/develop/
+  - https://github.com/truecharts/charts/tree/master/charts/stable/wisemapping
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/wisemapping
   - https://github.com/trueforge/truecharts/tree/master/charts/stable/wisemapping
   - https://hub.docker.com/r/wisemapping/wisemapping
   - https://www.wisemapping.com/
 type: application
-version: 4.8.0
+version: 4.9.0
 

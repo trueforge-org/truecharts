@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.0.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A bookmarking and link shortening service that enables easy saving and sharing of links.
-home: https://trueforge.org/truecharts/stable/slash
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/slash.webp
+home: https://truecharts.org/charts/stable/slash
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/slash.webp
 keywords:
   - slash
   - bookmarks
@@ -36,8 +36,9 @@ maintainers:
 name: slash
 sources:
   - https://github.com/boojack/slash
+  - https://github.com/truecharts/charts/tree/master/charts/stable/slash
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/slash
   - https://hub.docker.com/r/yourselfhosted/slash
 type: application
-version: 7.8.0
+version: 7.9.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Selfhosted web manga reader.
-home: https://trueforge.org/truecharts/stable/tanoshi
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/tanoshi.webp
+home: https://truecharts.org/charts/stable/tanoshi
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/tanoshi.webp
 keywords:
   - tanoshi
   - Productivity
@@ -37,8 +37,9 @@ maintainers:
 name: tanoshi
 sources:
   - https://github.com/faldez/tanoshi
+  - https://github.com/truecharts/charts/tree/master/charts/stable/tanoshi
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/tanoshi
   - https://hub.docker.com/r/faldez/tanoshi
 type: application
-version: 8.8.0
+version: 8.9.0
 

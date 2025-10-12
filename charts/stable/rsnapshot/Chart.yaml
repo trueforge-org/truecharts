@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.4.5
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Rsnapshot is a filesystem snapshot utility based on rsync.
-home: https://trueforge.org/truecharts/stable/rsnapshot
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/rsnapshot.webp
+home: https://truecharts.org/charts/stable/rsnapshot
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/rsnapshot.webp
 keywords:
   - rsnapshot
 kubeVersion: '>=1.24.0-0'
@@ -34,7 +34,8 @@ maintainers:
 name: rsnapshot
 sources:
   - https://ghcr.io/linuxserver/rsnapshot
+  - https://github.com/truecharts/charts/tree/master/charts/stable/rsnapshot
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/rsnapshot
 type: application
-version: 12.8.0
+version: 12.9.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: ee8a20c
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A self-hosted static file serving app which does nothing more than just serve up static files from a mounted volume.
-home: https://trueforge.org/truecharts/stable/static
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/static.webp
+home: https://truecharts.org/charts/stable/static
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/static.webp
 keywords:
   - app
   - web
@@ -39,7 +39,8 @@ sources:
   - https://ghcr.io/nicholaswilde/static
   - https://github.com/nicholaswilde/docker-static
   - https://github.com/prologic/static
+  - https://github.com/truecharts/charts/tree/master/charts/stable/static
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/static
 type: application
-version: 13.8.0
+version: 13.9.0
 

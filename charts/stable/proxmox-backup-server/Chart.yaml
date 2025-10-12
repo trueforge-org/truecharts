@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 4.0.13
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Container for proxmox backup server
-home: https://trueforge.org/truecharts/stable/proxmox-backup-server
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/proxmox-backup-server.webp
+home: https://truecharts.org/charts/stable/proxmox-backup-server
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/proxmox-backup-server.webp
 keywords:
   - proxmox-backup-server
   - pbs
@@ -34,8 +34,9 @@ maintainers:
     url: https://truecharts.org
 name: proxmox-backup-server
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/proxmox-backup-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/proxmox-backup-server
   - https://hub.docker.com/r/ayufan/proxmox-backup-server
 type: application
-version: 7.6.0
+version: 7.7.0
 

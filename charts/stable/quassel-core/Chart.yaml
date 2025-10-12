@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.14.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Quassel-core is a modern, cross-platform, distributed IRC client.
-home: https://trueforge.org/truecharts/stable/quassel-core
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/quassel-core.webp
+home: https://truecharts.org/charts/stable/quassel-core
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/quassel-core.webp
 keywords:
   - quassel-core
 kubeVersion: '>=1.24.0-0'
@@ -34,7 +34,8 @@ maintainers:
 name: quassel-core
 sources:
   - https://ghcr.io/linuxserver/quassel-core
+  - https://github.com/truecharts/charts/tree/master/charts/stable/quassel-core
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/quassel-core
 type: application
-version: 14.8.0
+version: 14.9.0
 

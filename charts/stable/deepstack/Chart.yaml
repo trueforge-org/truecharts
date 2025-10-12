@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2022.01.1
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: DeepStack AI provides AI features including Face Recognition, Object Detection, Scene Recognition and custom AI Models
-home: https://trueforge.org/truecharts/stable/deepstack
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/deepstack.webp
+home: https://truecharts.org/charts/stable/deepstack
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/deepstack.webp
 keywords:
   - AI
 kubeVersion: '>=1.24.0-0'
@@ -34,9 +34,10 @@ maintainers:
 name: deepstack
 sources:
   - https://github.com/johnolafenwa/DeepStack
+  - https://github.com/truecharts/charts/tree/master/charts/stable/deepstack
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/deepstack
   - https://hub.docker.com/r/deepquestai/deepstack
   - https://www.deepstack.cc/
 type: application
-version: 14.8.0
+version: 14.9.0
 

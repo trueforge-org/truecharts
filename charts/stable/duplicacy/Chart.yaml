@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.7.2
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A new generation cross-platform cloud backup tool.
-home: https://trueforge.org/truecharts/stable/duplicacy
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/duplicacy.webp
+home: https://truecharts.org/charts/stable/duplicacy
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/duplicacy.webp
 keywords:
   - duplicacy
   - Backup
@@ -35,8 +35,9 @@ maintainers:
 name: duplicacy
 sources:
   - https://ghcr.io/hotio/duplicacy
+  - https://github.com/truecharts/charts/tree/master/charts/stable/duplicacy
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/duplicacy
   - https://hotio.dev/containers/duplicacy
 type: application
-version: 9.8.0
+version: 9.9.0
 

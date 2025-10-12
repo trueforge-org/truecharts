@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 3.5.3
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -29,8 +29,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Papermerge is an open source document management system (DMS) primarily designed for archiving and retrieving your digital documents.
-home: https://trueforge.org/truecharts/stable/papermerge
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/papermerge.webp
+home: https://truecharts.org/charts/stable/papermerge
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/papermerge.webp
 keywords:
   - papermerge
 kubeVersion: '>=1.24.0-0'
@@ -41,8 +41,9 @@ maintainers:
 name: papermerge
 sources:
   - https://github.com/ciur/papermerge
+  - https://github.com/truecharts/charts/tree/master/charts/stable/papermerge
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/papermerge
   - https://hub.docker.com/r/papermerge/papermerge
 type: application
-version: 17.17.0
+version: 17.18.0
 

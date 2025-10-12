@@ -9,12 +9,12 @@ annotations:
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: system
+  truecharts.org/train: stable
 apiVersion: v2
 appVersion: 0.4.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Stateless cluster local OCI registry mirror.
-home: https://trueforge.org/truecharts/stable/spegel
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/spegel.webp
+home: https://truecharts.org/charts/stable/spegel
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/spegel.webp
 keywords:
   - spegel
 kubeVersion: '>=1.24.0-0'
@@ -34,7 +34,8 @@ maintainers:
 name: spegel
 sources:
   - https://ghcr.io/spegel-org/spegel
+  - https://github.com/truecharts/charts/tree/master/charts/stable/spegel
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/spegel
 type: application
-version: 4.9.0
+version: 4.10.0
 

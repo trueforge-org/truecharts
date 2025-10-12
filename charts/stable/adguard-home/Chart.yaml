@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.107.67
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Free and open source, powerful network-wide ads & trackers blocking DNS server.
-home: https://trueforge.org/truecharts/stable/adguard-home
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/adguard-home.webp
+home: https://truecharts.org/charts/stable/adguard-home
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/adguard-home.webp
 keywords:
   - adblock
   - adguard
@@ -34,8 +34,9 @@ maintainers:
     url: https://truecharts.org
 name: adguard-home
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/adguard-home
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/adguard-home
   - https://hub.docker.com/r/adguard/adguardhome
 type: application
-version: 12.8.0
+version: 12.9.0
 

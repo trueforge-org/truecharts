@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2.12.6
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -29,8 +29,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Managing Nginx proxy hosts with a simple, powerful interface.
-home: https://trueforge.org/truecharts/stable/nginx-proxy-manager
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/nginx-proxy-manager.webp
+home: https://truecharts.org/charts/stable/nginx-proxy-manager
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/nginx-proxy-manager.webp
 keywords:
   - nginx-proxy-manager
   - nginx
@@ -43,9 +43,10 @@ maintainers:
 name: nginx-proxy-manager
 sources:
   - https://github.com/NginxProxyManager/nginx-proxy-manager
+  - https://github.com/truecharts/charts/tree/master/charts/stable/nginx-proxy-manager
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/nginx-proxy-manager
   - https://hub.docker.com/r/jc21/nginx-proxy-manager
   - https://nginxproxymanager.com/
 type: application
-version: 13.8.0
+version: 13.9.0
 

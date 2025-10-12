@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Cross-platform and self hosted, easy to use, intuitive mongodb management tool - Formerly Mongoclient
-home: https://trueforge.org/truecharts/stable/nosqlclient
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/nosqlclient.webp
+home: https://truecharts.org/charts/stable/nosqlclient
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/nosqlclient.webp
 keywords:
   - nosqlclient
   - Tools-Utilities
@@ -36,8 +36,9 @@ maintainers:
 name: nosqlclient
 sources:
   - https://github.com/nosqlclient/nosqlclient
+  - https://github.com/truecharts/charts/tree/master/charts/stable/nosqlclient
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/nosqlclient
   - https://hub.docker.com/r/mongoclient/mongoclient
 type: application
-version: 8.8.0
+version: 8.9.0
 

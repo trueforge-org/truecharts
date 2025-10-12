@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -29,8 +29,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: The WordPress rich content management system can utilize plugins, widgets, and themes.
-home: https://trueforge.org/truecharts/stable/wordpress
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/wordpress.webp
+home: https://truecharts.org/charts/stable/wordpress
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/wordpress.webp
 keywords:
   - wordpress
   - cms
@@ -41,9 +41,10 @@ maintainers:
     url: https://truecharts.org
 name: wordpress
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/wordpress
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/wordpress
   - https://hub.docker.com/r/bitnamisecure/wordpress
   - https://www.wordpress.org
 type: application
-version: 11.8.0
+version: 11.9.0
 

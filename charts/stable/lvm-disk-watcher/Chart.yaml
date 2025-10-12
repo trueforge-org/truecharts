@@ -9,12 +9,12 @@ annotations:
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: system
+  truecharts.org/train: stable
 apiVersion: v2
 appVersion: 1.1.9
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Watches for empty disk to setup with LVM for use with TopoLVM
-home: https://trueforge.org/truecharts/stable/lvm-disk-watcher
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/lvm-disk-watcher.webp
+home: https://truecharts.org/charts/stable/lvm-disk-watcher
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/lvm-disk-watcher.webp
 keywords:
   - lvm-disk-watcher
   - loadbalancer
@@ -35,9 +35,9 @@ maintainers:
 name: lvm-disk-watcher
 sources:
   - https://github.com/lvm-disk-watcher/lvm-disk-watcher
-  - https://github.com/truecharts/containers/tree/master/apps/lvm-disk-watcher
+  - https://github.com/truecharts/charts/tree/master/charts/stable/lvm-disk-watcher
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/lvm-disk-watcher
   - https://lvm-disk-watcher.universe.tf
 type: application
-version: 3.8.0
+version: 3.9.0
 

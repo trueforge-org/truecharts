@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.23.5
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A comics/mangas server to serve/stream pages via API
-home: https://trueforge.org/truecharts/stable/komga
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/komga.webp
+home: https://truecharts.org/charts/stable/komga
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/komga.webp
 keywords:
   - komga
   - comics
@@ -37,9 +37,10 @@ maintainers:
 name: komga
 sources:
   - https://github.com/gotson/komga
+  - https://github.com/truecharts/charts/tree/master/charts/stable/komga
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/komga
   - https://hub.docker.com/r/gotson/komga
   - https://komga.org/
 type: application
-version: 16.9.1
+version: 16.10.0
 

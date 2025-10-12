@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.9.16
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: The self-hosted firearm tracker website.
-home: https://trueforge.org/truecharts/stable/cannery
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/cannery.webp
+home: https://truecharts.org/charts/stable/cannery
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/cannery.webp
 keywords:
   - cannery
   - asset-tracker
@@ -35,8 +35,9 @@ maintainers:
 name: cannery
 sources:
   - https://gitea.bubbletea.dev/shibao/cannery
+  - https://github.com/truecharts/charts/tree/master/charts/stable/cannery
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/cannery
   - https://hub.docker.com/r/shibaobun/cannery
 type: application
-version: 2.8.0
+version: 2.9.0
 

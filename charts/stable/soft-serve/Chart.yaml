@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.10.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A tasty, self-hostable Git server for the command line.
-home: https://trueforge.org/truecharts/stable/soft-serve
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/soft-serve.webp
+home: https://truecharts.org/charts/stable/soft-serve
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/soft-serve.webp
 keywords:
   - soft-serve
   - git
@@ -35,8 +35,9 @@ maintainers:
 name: soft-serve
 sources:
   - https://github.com/charmbracelet/soft-serve
+  - https://github.com/truecharts/charts/tree/master/charts/stable/soft-serve
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/soft-serve
   - https://hub.docker.com/r/charmcli/soft-serve
 type: application
-version: 9.9.0
+version: 9.10.0
 

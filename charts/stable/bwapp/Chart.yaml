@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: bWAPP, or a buggy web application, is a free and open source deliberately insecure web application.
-home: https://trueforge.org/truecharts/stable/bwapp
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/bwapp.webp
+home: https://truecharts.org/charts/stable/bwapp
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/bwapp.webp
 keywords:
   - bwapp
   - Tools-Utilities
@@ -35,9 +35,10 @@ maintainers:
     url: https://truecharts.org
 name: bwapp
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/bwapp
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/bwapp
   - https://hub.docker.com/r/raesene/bwapp
   - https://sourceforge.net/projects/bwapp/
 type: application
-version: 8.8.0
+version: 8.9.0
 

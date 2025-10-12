@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.27.1
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: FreshRSS is a self-hosted RSS feed aggregator
-home: https://trueforge.org/truecharts/stable/freshrss
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/freshrss.webp
+home: https://truecharts.org/charts/stable/freshrss
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/freshrss.webp
 keywords:
   - freshrss
   - rss
@@ -36,7 +36,8 @@ name: freshrss
 sources:
   - https://ghcr.io/linuxserver/freshrss
   - https://github.com/FreshRSS/FreshRSS
+  - https://github.com/truecharts/charts/tree/master/charts/stable/freshrss
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/freshrss
 type: application
-version: 21.9.1
+version: 21.10.0
 

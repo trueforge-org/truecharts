@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: URL Shortener in python based on flask
-home: https://trueforge.org/truecharts/stable/shortipy
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/shortipy.webp
+home: https://truecharts.org/charts/stable/shortipy
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/shortipy.webp
 keywords:
   - shortipy
   - Tools-Utilities
@@ -36,8 +36,9 @@ maintainers:
 name: shortipy
 sources:
   - https://github.com/maschhoff/shortipy
+  - https://github.com/truecharts/charts/tree/master/charts/stable/shortipy
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/shortipy
   - https://hub.docker.com/r/knex666/shortipy
 type: application
-version: 8.8.0
+version: 8.9.0
 

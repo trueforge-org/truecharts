@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: palworld
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A custom SteamCMD chart that runs Palworld.
-home: https://trueforge.org/truecharts/stable/palworld
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/palworld.webp
+home: https://truecharts.org/charts/stable/palworld
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/palworld.webp
 keywords:
   - palworld
   - GameServers
@@ -36,7 +36,8 @@ name: palworld
 sources:
   - https://ghcr.io/ich777/steamcmd
   - https://github.com/ich777/docker-steamcmd-server/tree/palworld
+  - https://github.com/truecharts/charts/tree/master/charts/stable/palworld
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/palworld
 type: application
-version: 6.8.0
+version: 6.9.0
 

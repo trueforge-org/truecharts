@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Tonido Server allows you to access all your files on your computer from a web browser, smartphone, tablet or even DLNA enabled devices. No setup necessary.
-home: https://trueforge.org/truecharts/stable/tonido
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/tonido.webp
+home: https://truecharts.org/charts/stable/tonido
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/tonido.webp
 keywords:
   - tonido
   - Cloud
@@ -34,9 +34,10 @@ maintainers:
     url: https://truecharts.org
 name: tonido
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/tonido
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/tonido
   - https://hub.docker.com/r/captinsano/tonido
   - https://registry.hub.docker.com/r/captinsano/tonido/
 type: application
-version: 8.8.0
+version: 8.9.0
 

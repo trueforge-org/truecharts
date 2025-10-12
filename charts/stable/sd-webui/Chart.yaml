@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: sd-webui-docker Chart
-home: https://trueforge.org/truecharts/stable/sd-webui-docker
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/sd-webui-docker.webp
+home: https://truecharts.org/charts/stable/sd-webui-docker
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/sd-webui-docker.webp
 keywords:
   - Whisper
   - AI
@@ -37,7 +37,8 @@ name: sd-webui-docker
 sources:
   - https://ghcr.io/neggles/sd-webui-docker
   - https://github.com/ahmetoner/sd-webui-docker/
+  - https://github.com/truecharts/charts/tree/master/charts/stable/sd-webui-docker
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/sd-webui-docker
 type: application
-version: 4.8.0
+version: 4.9.0
 

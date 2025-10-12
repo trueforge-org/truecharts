@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 13.0.11
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -34,8 +34,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Reliable and Performant File Sync and Share Solution
-home: https://trueforge.org/truecharts/stable/seafile
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/seafile.webp
+home: https://truecharts.org/charts/stable/seafile
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/seafile.webp
 keywords:
   - seafile
   - files
@@ -48,9 +48,10 @@ maintainers:
     url: https://truecharts.org
 name: seafile
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/seafile
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/seafile
   - https://hub.docker.com/r/seafileltd/seafile-mc
   - https://seafile.com
 type: application
-version: 12.5.0
+version: 12.6.0
 

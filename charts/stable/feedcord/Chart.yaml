@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A dead simple RSS Feed with Discord Webhooks
-home: https://trueforge.org/truecharts/stable/feedcord
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/feedcord.webp
+home: https://truecharts.org/charts/stable/feedcord
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/feedcord.webp
 keywords:
   - feedcord
   - discord
@@ -36,8 +36,9 @@ maintainers:
 name: feedcord
 sources:
   - https://github.com/Qolors/FeedCord
+  - https://github.com/truecharts/charts/tree/master/charts/stable/feedcord
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/feedcord
   - https://hub.docker.com/r/qolors/feedcord
 type: application
-version: 1.7.0
+version: 1.8.0
 

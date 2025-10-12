@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 10.10.7
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Jellyfin is a Free Software Media System
-home: https://trueforge.org/truecharts/stable/jellyfin
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/jellyfin.webp
+home: https://truecharts.org/charts/stable/jellyfin
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/jellyfin.webp
 keywords:
   - jellyfin
   - plex
@@ -37,8 +37,9 @@ name: jellyfin
 sources:
   - https://ghcr.io/jellyfin/jellyfin
   - https://github.com/jellyfin/jellyfin
+  - https://github.com/truecharts/charts/tree/master/charts/stable/jellyfin
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/jellyfin
   - https://hub.docker.com/r/alpine/socat
 type: application
-version: 21.8.0
+version: 21.9.0
 

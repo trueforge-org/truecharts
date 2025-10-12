@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: x86_64
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Home Assistant online configurator Chart from https://github.com/danielperna84/hass-configurator
-home: https://trueforge.org/truecharts/stable/hassconfigurator
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/hassconfigurator.webp
+home: https://truecharts.org/charts/stable/hassconfigurator
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/hassconfigurator.webp
 keywords:
   - hassconfigurator
   - home-automation
@@ -35,8 +35,9 @@ maintainers:
 name: hassconfigurator
 sources:
   - https://github.com/danielperna84/hass-configurator
+  - https://github.com/truecharts/charts/tree/master/charts/stable/hassconfigurator
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/hassconfigurator
   - https://hub.docker.com/r/causticlab/hass-configurator-docker
 type: application
-version: 8.8.0
+version: 8.9.0
 

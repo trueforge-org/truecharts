@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 15.6.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -29,8 +29,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A photo gallery software for the web.
-home: https://trueforge.org/truecharts/stable/piwigo
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/piwigo.webp
+home: https://truecharts.org/charts/stable/piwigo
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/piwigo.webp
 keywords:
   - piwigo
   - gallery
@@ -45,7 +45,8 @@ name: piwigo
 sources:
   - https://ghcr.io/linuxserver/piwigo
   - https://github.com/linuxserver/docker-piwigo
+  - https://github.com/truecharts/charts/tree/master/charts/stable/piwigo
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/piwigo
 type: application
-version: 17.8.1
+version: 17.9.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Duckdns is a free service which will point a DNS (sub domains of duckdns.org) to an IP of your choice.
-home: https://trueforge.org/truecharts/stable/duckdns
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/duckdns.webp
+home: https://truecharts.org/charts/stable/duckdns
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/duckdns.webp
 keywords:
   - duckdns
 kubeVersion: '>=1.24.0-0'
@@ -34,7 +34,8 @@ maintainers:
 name: duckdns
 sources:
   - https://ghcr.io/linuxserver/duckdns
+  - https://github.com/truecharts/charts/tree/master/charts/stable/duckdns
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/duckdns
 type: application
-version: 12.8.1
+version: 12.9.0
 

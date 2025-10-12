@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: 'MediaGoblin is a free software media publishing platform that anyone can run. You can think of it as a decentralized alternative to Flickr, YouTube, SoundCloud, etc. [br][br][b][u][span style=''color: #ff9900;'']Default user/password[/span][/u][/b][br]User: [B][u]admin[/B][/u][br]Password: [B][u]admin[/B][/u][/b]'
-home: https://trueforge.org/truecharts/stable/mediagoblin
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/mediagoblin.webp
+home: https://truecharts.org/charts/stable/mediagoblin
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/mediagoblin.webp
 keywords:
   - mediagoblin
   - MediaApp-Photos
@@ -34,9 +34,10 @@ maintainers:
     url: https://truecharts.org
 name: mediagoblin
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/mediagoblin
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mediagoblin
   - https://hub.docker.com/r/mtlynch/mediagoblin
   - https://mediagoblin.org/
 type: application
-version: 8.8.0
+version: 8.9.0
 

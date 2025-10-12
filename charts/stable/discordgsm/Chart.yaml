@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2.19.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A discord bot that monitors your game server and tracks the live data of your game servers.
-home: https://trueforge.org/truecharts/stable/discordgsm
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/discordgsm.webp
+home: https://truecharts.org/charts/stable/discordgsm
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/discordgsm.webp
 keywords:
   - discordgsm
   - game-server
@@ -36,8 +36,9 @@ maintainers:
 name: discordgsm
 sources:
   - https://github.com/DiscordGSM/GameServerMonitor
+  - https://github.com/truecharts/charts/tree/master/charts/stable/discordgsm
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/discordgsm
   - https://hub.docker.com/r/discordgsm/discord-game-server-monitor
 type: application
-version: 10.8.0
+version: 10.9.0
 

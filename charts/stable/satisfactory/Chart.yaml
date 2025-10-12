@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.9.10
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Satisfactory Dedicated Server
-home: https://trueforge.org/truecharts/stable/satisfactory
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/satisfactory.webp
+home: https://truecharts.org/charts/stable/satisfactory
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/satisfactory.webp
 keywords:
   - satisfactory
 kubeVersion: '>=1.24.0-0'
@@ -33,9 +33,10 @@ maintainers:
     url: https://truecharts.org
 name: satisfactory
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/satisfactory
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/satisfactory
   - https://github.com/wolveix/satisfactory-server
   - https://hub.docker.com/r/wolveix/satisfactory-server
 type: application
-version: 13.8.0
+version: 13.9.0
 

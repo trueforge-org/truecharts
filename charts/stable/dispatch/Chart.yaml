@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Web-based IRC client in Go.
-home: https://trueforge.org/truecharts/stable/dispatch
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/dispatch.webp
+home: https://truecharts.org/charts/stable/dispatch
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/dispatch.webp
 keywords:
   - dispatch
   - Network-Messenger
@@ -35,8 +35,9 @@ maintainers:
 name: dispatch
 sources:
   - https://github.com/khlieng/dispatch
+  - https://github.com/truecharts/charts/tree/master/charts/stable/dispatch
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/dispatch
   - https://hub.docker.com/r/khlieng/dispatch
 type: application
-version: 8.8.0
+version: 8.9.0
 

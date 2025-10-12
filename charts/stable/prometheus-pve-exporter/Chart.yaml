@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 3.5.5
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A Prometheus exporter for Proxmox Virtual Environment metrics.
-home: https://trueforge.org/truecharts/stable/prometheus-pve-exporter
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/prometheus-pve-exporter.webp
+home: https://truecharts.org/charts/stable/prometheus-pve-exporter
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/prometheus-pve-exporter.webp
 keywords:
   - prometheus
   - prometheus-pve-exporter
@@ -37,9 +37,10 @@ maintainers:
 name: prometheus-pve-exporter
 sources:
   - https://github.com/prometheus-pve/prometheus-pve-exporter
+  - https://github.com/truecharts/charts/tree/master/charts/stable/prometheus-pve-exporter
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/prometheus-pve-exporter
   - https://grafana.com/grafana/dashboards/10347-proxmox-via-prometheus/
   - https://hub.docker.com/r/prompve/prometheus-pve-exporter
 type: application
-version: 2.8.0
+version: 2.9.0
 

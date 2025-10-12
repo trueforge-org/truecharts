@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2.7.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Netdata is high-fidelity infrastructure monitoring and troubleshooting.
-home: https://trueforge.org/truecharts/stable/netdata
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/netdata.webp
+home: https://truecharts.org/charts/stable/netdata
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/netdata.webp
 keywords:
   - netdata
   - monitoring
@@ -35,8 +35,9 @@ maintainers:
 name: netdata
 sources:
   - https://github.com/netdata
+  - https://github.com/truecharts/charts/tree/master/charts/stable/netdata
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/netdata
   - https://quay.io/netdata/netdata
 type: application
-version: 13.10.0
+version: 13.11.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.24.6
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -29,8 +29,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: The to-do app to organize your life.
-home: https://trueforge.org/truecharts/stable/vikunja
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/vikunja.webp
+home: https://truecharts.org/charts/stable/vikunja
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/vikunja.webp
 keywords:
   - vikunja
 kubeVersion: '>=1.24.0-0'
@@ -40,9 +40,10 @@ maintainers:
     url: https://truecharts.org
 name: vikunja
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/vikunja
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/vikunja
   - https://hub.docker.com/r/vikunja/vikunja
   - https://vikunja.io/docs
 type: application
-version: 17.17.0
+version: 17.18.0
 

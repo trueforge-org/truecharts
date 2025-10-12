@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 4.3.1
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A administrative platform for devices flashed with Tasmota.
-home: https://trueforge.org/truecharts/stable/tasmoadmin
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/tasmoadmin.webp
+home: https://truecharts.org/charts/stable/tasmoadmin
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/tasmoadmin.webp
 keywords:
   - tasmoadmin
   - home-automation
@@ -37,7 +37,8 @@ name: tasmoadmin
 sources:
   - https://ghcr.io/tasmoadmin/tasmoadmin
   - https://github.com/TasmoAdmin/TasmoAdmin
+  - https://github.com/truecharts/charts/tree/master/charts/stable/tasmoadmin
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/tasmoadmin
 type: application
-version: 11.8.0
+version: 11.9.0
 

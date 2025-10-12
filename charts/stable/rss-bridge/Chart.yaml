@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2025.6.3
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: RSS-Bridge is a PHP project capable of generating RSS and Atom feeds for websites that don't have one.
-home: https://trueforge.org/truecharts/stable/rss-bridge
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/rss-bridge.webp
+home: https://truecharts.org/charts/stable/rss-bridge
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/rss-bridge.webp
 keywords:
   - rss-bridge
 kubeVersion: '>=1.24.0-0'
@@ -34,8 +34,9 @@ maintainers:
 name: rss-bridge
 sources:
   - https://github.com/RSS-Bridge/rss-bridge
+  - https://github.com/truecharts/charts/tree/master/charts/stable/rss-bridge
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/rss-bridge
   - https://hub.docker.com/r/rssbridge/rss-bridge
 type: application
-version: 14.8.0
+version: 14.9.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.5.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: ClamAV is an open source antivirus engine for detecting trojans, viruses, malware & other malicious threats.
-home: https://trueforge.org/truecharts/stable/clamav
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/clamav.webp
+home: https://truecharts.org/charts/stable/clamav
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/clamav.webp
 keywords:
   - clamav
   - antivirus
@@ -36,8 +36,9 @@ name: clamav
 sources:
   - https://docs.clamav.net/
   - https://github.com/Cisco-Talos/clamav
+  - https://github.com/truecharts/charts/tree/master/charts/stable/clamav
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/clamav
   - https://hub.docker.com/r/clamav/clamav
 type: application
-version: 13.9.0
+version: 13.10.0
 

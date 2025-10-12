@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Chronograf is InfluxData’s open source web application. Use Chronograf with the other components of the TICK stack to visualize your monitoring data and easily create alerting and automation rules.
-home: https://trueforge.org/truecharts/stable/chronograf
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/chronograf.webp
+home: https://truecharts.org/charts/stable/chronograf
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/chronograf.webp
 keywords:
   - chronograf
   - Tools-System
@@ -34,9 +34,10 @@ maintainers:
     url: https://truecharts.org
 name: chronograf
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/chronograf
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/chronograf
   - https://hub.docker.com/_/chronograf
   - https://www.influxdata.com/time-series-platform/chronograf/
 type: application
-version: 8.8.0
+version: 8.9.0
 

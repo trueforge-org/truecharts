@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 3.22.1
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Allow external services to be used like Apps.
-home: https://trueforge.org/truecharts/stable/external-service
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/external-service.webp
+home: https://truecharts.org/charts/stable/external-service
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/external-service.webp
 keywords:
   - external-service
   - reverse-proxy
@@ -34,8 +34,9 @@ maintainers:
     url: https://truecharts.org
 name: external-service
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/external-service
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/external-service
   - https://hub.docker.com/_/alpine
 type: application
-version: 16.8.0
+version: 16.9.0
 

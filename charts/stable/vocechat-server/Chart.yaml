@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.5.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A superlight rust written social server.
-home: https://trueforge.org/truecharts/stable/vocechat-server
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/vocechat-server.webp
+home: https://truecharts.org/charts/stable/vocechat-server
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/vocechat-server.webp
 keywords:
   - vocechat-server
   - social
@@ -35,8 +35,9 @@ maintainers:
 name: vocechat-server
 sources:
   - https://github.com/Privoce/vocechat-server-rust
+  - https://github.com/truecharts/charts/tree/master/charts/stable/vocechat-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/vocechat-server
   - https://hub.docker.com/r/privoce/vocechat-server
 type: application
-version: 6.9.0
+version: 6.10.0
 

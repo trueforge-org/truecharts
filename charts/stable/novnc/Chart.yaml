@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.2.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: The open source VNC client
-home: https://trueforge.org/truecharts/stable/novnc
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/novnc.webp
+home: https://truecharts.org/charts/stable/novnc
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/novnc.webp
 keywords:
   - novnc
   - vnc
@@ -37,8 +37,9 @@ maintainers:
 name: novnc
 sources:
   - https://ghcr.io/nicholaswilde/novnc
+  - https://github.com/truecharts/charts/tree/master/charts/stable/novnc
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/novnc
   - https://novnc.com/
 type: application
-version: 13.8.0
+version: 13.9.0
 

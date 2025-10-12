@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 5.26.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Automated service health dashboard
-home: https://trueforge.org/truecharts/stable/gatus
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/gatus.webp
+home: https://truecharts.org/charts/stable/gatus
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/gatus.webp
 keywords:
   - gatus
 kubeVersion: '>=1.24.0-0'
@@ -34,8 +34,9 @@ maintainers:
 name: gatus
 sources:
   - https://github.com/TwiN/gatus
+  - https://github.com/truecharts/charts/tree/master/charts/stable/gatus
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/gatus
   - https://hub.docker.com/r/twinproduction/gatus
 type: application
-version: 2.15.0
+version: 2.16.0
 

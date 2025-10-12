@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 0.95.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,8 +20,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Dockerized Signal Messenger REST API.
-home: https://trueforge.org/truecharts/stable/signal-cli-rest-api
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/signal-cli-rest-api.webp
+home: https://truecharts.org/charts/stable/signal-cli-rest-api
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/signal-cli-rest-api.webp
 keywords:
   - signal
   - signal-cli
@@ -35,8 +35,9 @@ maintainers:
 name: signal-cli-rest-api
 sources:
   - https://github.com/bbernhard/signal-cli-rest-api
+  - https://github.com/truecharts/charts/tree/master/charts/stable/signal-cli-rest-api
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/signal-cli-rest-api
   - https://hub.docker.com/r/bbernhard/signal-cli-rest-api
 type: application
-version: 1.9.0
+version: 1.10.0
 

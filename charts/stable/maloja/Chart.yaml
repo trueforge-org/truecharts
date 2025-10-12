@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Self-hosted music scrobble database to create personal listening statistics and charts as a substitute for Last.fm / Libre.fm / GNU FM.
-home: https://trueforge.org/truecharts/stable/maloja
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/maloja.webp
+home: https://truecharts.org/charts/stable/maloja
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/maloja.webp
 keywords:
   - maloja
   - MediaServer-Music
@@ -34,9 +34,10 @@ maintainers:
     url: https://truecharts.org
 name: maloja
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/maloja
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/maloja
   - https://hub.docker.com/r/krateng/maloja
   - https://maloja.krateng.ch/
 type: application
-version: 8.8.0
+version: 8.9.0
 

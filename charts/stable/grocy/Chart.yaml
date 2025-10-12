@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 4.5.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: ERP beyond your fridge - grocy is a web-based self-hosted groceries & household management solution for your home
-home: https://trueforge.org/truecharts/stable/grocy
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/grocy.webp
+home: https://truecharts.org/charts/stable/grocy
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/grocy.webp
 keywords:
   - grocy
   - home-automation
@@ -36,7 +36,8 @@ name: grocy
 sources:
   - https://ghcr.io/linuxserver/grocy
   - https://github.com/grocy/grocy
+  - https://github.com/truecharts/charts/tree/master/charts/stable/grocy
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/grocy
 type: application
-version: 21.8.1
+version: 21.9.0
 

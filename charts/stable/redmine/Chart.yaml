@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 6.0.6
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Redmine is a flexible project management web application written using Ruby on Rails framework.
-home: https://trueforge.org/truecharts/stable/redmine
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/redmine.webp
+home: https://truecharts.org/charts/stable/redmine
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/redmine.webp
 keywords:
   - project
   - management
@@ -38,8 +38,9 @@ maintainers:
 name: redmine
 sources:
   - https://github.com/redmine/redmine
+  - https://github.com/truecharts/charts/tree/master/charts/stable/redmine
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/redmine
   - https://hub.docker.com/_/redmine
 type: application
-version: 15.8.0
+version: 15.9.0
 

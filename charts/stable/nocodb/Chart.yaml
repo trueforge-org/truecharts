@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.265.1
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -29,8 +29,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Turns any MySQL, PostgreSQL, SQL Server, SQLite & MariaDB into a smart-spreadsheet.
-home: https://trueforge.org/truecharts/stable/nocodb
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/nocodb.webp
+home: https://truecharts.org/charts/stable/nocodb
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/nocodb.webp
 keywords:
   - nocodb
 kubeVersion: '>=1.24.0-0'
@@ -41,8 +41,9 @@ maintainers:
 name: nocodb
 sources:
   - https://github.com/nocodb/nocodb
+  - https://github.com/truecharts/charts/tree/master/charts/stable/nocodb
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/nocodb
   - https://hub.docker.com/r/nocodb/nocodb
 type: application
-version: 17.19.0
+version: 17.20.0
 

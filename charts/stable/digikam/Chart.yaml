@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 8.7.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Professional Photo Management with the Power of Open Source
-home: https://trueforge.org/truecharts/stable/digikam
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/digikam.webp
+home: https://truecharts.org/charts/stable/digikam
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/digikam.webp
 keywords:
   - digikam
   - photo
@@ -39,8 +39,9 @@ name: digikam
 sources:
   - https://ghcr.io/linuxserver/digikam
   - https://github.com/linuxserver/docker-digikam
+  - https://github.com/truecharts/charts/tree/master/charts/stable/digikam
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/digikam
   - https://www.digikam.org/
 type: application
-version: 15.8.1
+version: 15.9.0
 

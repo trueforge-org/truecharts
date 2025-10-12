@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.1.1
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: the AI-native open-source embedding database.
-home: https://trueforge.org/truecharts/stable/chroma
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/chroma.webp
+home: https://truecharts.org/charts/stable/chroma
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/chroma.webp
 keywords:
   - chroma
   - embedding
@@ -37,7 +37,8 @@ name: chroma
 sources:
   - https://ghcr.io/chroma-core/chroma
   - https://github.com/chroma-core/chroma
+  - https://github.com/truecharts/charts/tree/master/charts/stable/chroma
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/chroma
 type: application
-version: 6.9.0
+version: 6.10.0
 

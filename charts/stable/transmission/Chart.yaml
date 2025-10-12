@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 4.0.6
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: fast, easy, and free BitTorrent client.
-home: https://trueforge.org/truecharts/stable/transmission
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/transmission.webp
+home: https://truecharts.org/charts/stable/transmission
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/transmission.webp
 keywords:
   - transmission
   - torrent
@@ -37,8 +37,9 @@ name: transmission
 sources:
   - https://github.com/linuxserver/docker-transmission
   - https://github.com/transmission/transmission
+  - https://github.com/truecharts/charts/tree/master/charts/stable/transmission
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/transmission
   - https://hub.docker.com/r/linuxserver/transmission
 type: application
-version: 24.8.1
+version: 24.9.0
 

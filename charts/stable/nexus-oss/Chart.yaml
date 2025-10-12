@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 3.85.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Sonatype Nexus open source is a artifact repository manager
-home: https://trueforge.org/truecharts/stable/nexus-oss
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/nexus-oss.webp
+home: https://truecharts.org/charts/stable/nexus-oss
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/nexus-oss.webp
 keywords:
   - nexus-oss
   - productivity
@@ -34,8 +34,9 @@ maintainers:
     url: https://truecharts.org
 name: nexus-oss
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/nexus-oss
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/nexus-oss
   - https://hub.docker.com/r/sonatype/nexus3
 type: application
-version: 8.12.0
+version: 8.13.0
 

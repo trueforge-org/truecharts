@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.17.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Kasm Workspaces is a streaming platform for delivering browser-based access to desktops, applications, and web services.
-home: https://trueforge.org/truecharts/stable/kasm
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/kasm.webp
+home: https://truecharts.org/charts/stable/kasm
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/kasm.webp
 keywords:
   - kasm
   - Other
@@ -36,9 +36,10 @@ name: kasm
 sources:
   - https://github.com/linuxserver/docker-kasm#readme
   - https://github.com/orgs/linuxserver/packages/container/package/kasm
+  - https://github.com/truecharts/charts/tree/master/charts/stable/kasm
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/kasm
   - https://hub.docker.com/r/kasmweb/workspaces
   - https://www.kasmweb.com/
 type: application
-version: 11.8.0
+version: 11.9.0
 

@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2025.1.0
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Meshroom is a free, open-source 3D Reconstruction Software based on the AliceVision Photogrammetric Computer Vision framework.
-home: https://trueforge.org/truecharts/stable/meshroom
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/meshroom.webp
+home: https://truecharts.org/charts/stable/meshroom
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/meshroom.webp
 keywords:
   - meshroom
 kubeVersion: '>=1.24.0-0'
@@ -34,8 +34,9 @@ maintainers:
 name: meshroom
 sources:
   - https://github.com/alicevision/meshroom
+  - https://github.com/truecharts/charts/tree/master/charts/stable/meshroom
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/meshroom
   - https://hub.docker.com/r/alicevision/meshroom
 type: application
-version: 13.5.0
+version: 13.6.0
 

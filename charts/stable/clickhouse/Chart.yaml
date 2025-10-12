@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 25.9.3.48
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: ClickHouse is a column-oriented database management system (DBMS) for online analytical processing of queries (OLAP).
-home: https://trueforge.org/truecharts/stable/clickhouse
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/clickhouse.webp
+home: https://truecharts.org/charts/stable/clickhouse
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/clickhouse.webp
 keywords:
   - database
   - clickhouse
@@ -36,8 +36,9 @@ maintainers:
 name: clickhouse
 sources:
   - https://clickhouse.com/
+  - https://github.com/truecharts/charts/tree/master/charts/stable/clickhouse
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/clickhouse
   - https://hub.docker.com/r/clickhouse/clickhouse-server
 type: application
-version: 16.11.1
+version: 16.12.0
 

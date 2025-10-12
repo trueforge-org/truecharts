@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.34.15
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Two-way-sync between trakt.tv and Plex Media Server.
-home: https://trueforge.org/truecharts/stable/plextraktsync
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/plextraktsync.webp
+home: https://truecharts.org/charts/stable/plextraktsync
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/plextraktsync.webp
 keywords:
   - plextraktsync
   - Tools-Utilities
@@ -37,7 +37,8 @@ name: plextraktsync
 sources:
   - https://ghcr.io/taxel/plextraktsync
   - https://github.com/Taxel/PlexTraktSync
+  - https://github.com/truecharts/charts/tree/master/charts/stable/plextraktsync
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/plextraktsync
 type: application
-version: 11.8.0
+version: 11.9.0
 

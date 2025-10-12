@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 0.8.1
 dependencies:
   - name: common
-    version: 28.22.0
+    version: 28.24.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +22,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: SheetAble is an easy to use music sheet organiser for all the music enthusiasts out there.
-home: https://trueforge.org/truecharts/stable/sheetable
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/sheetable.webp
+home: https://truecharts.org/charts/stable/sheetable
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/sheetable.webp
 keywords:
   - sheetable
 kubeVersion: '>=1.24.0-0'
@@ -34,9 +34,10 @@ maintainers:
 name: sheetable
 sources:
   - https://github.com/SheetAble
+  - https://github.com/truecharts/charts/tree/master/charts/stable/sheetable
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/sheetable
   - https://hub.docker.com/r/vallezw/sheetable
   - https://sheetable.net/docs
 type: application
-version: 9.8.0
+version: 9.9.0
 
