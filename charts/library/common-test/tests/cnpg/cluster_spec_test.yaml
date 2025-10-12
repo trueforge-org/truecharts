@@ -652,3 +652,161 @@ tests:
                 key: custom-queries
               - name: test-query3
                 key: test-key
+
+  - it: should create the correct env with env key
+    set:
+      configmap:
+        configmap-name:
+          enabled: true
+          data:
+            key1: value1
+            key2: value2
+      secret:
+        secret-name:
+          enabled: true
+          data:
+            key1: value1
+            key2: value2
+      postgres16Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "16.3"
+        pullPolicy: IfNotPresent
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          cluster:
+            env:
+              VAR1: some-value
+              VAR2:
+                configMapKeyRef:
+                  name: configmap-name
+                  key: key1
+              VAR3:
+                secretKeyRef:
+                  name: secret-name
+                  key: key2
+    asserts:
+      - documentIndex: *clusterDoc
+        isKind:
+          of: Cluster
+      - documentIndex: *clusterDoc
+        isAPIVersion:
+          of: postgresql.cnpg.io/v1
+      - documentIndex: *clusterDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-my-pg
+      - documentIndex: *clusterDoc
+        isSubset:
+          path: spec
+          content:
+            env:
+              - name: VAR1
+                value: some-value
+              - name: VAR2
+                valueFrom:
+                  configMapKeyRef:
+                    key: key1
+                    name: test-release-name-common-test-configmap-name
+              - name: VAR3
+                valueFrom:
+                  secretKeyRef:
+                    key: key2
+                    name: test-release-name-common-test-secret-name
+
+  - it: should create the correct env with envList key
+    set:
+      postgres16Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "16.3"
+        pullPolicy: IfNotPresent
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          cluster:
+            envFrom:
+              - name: VAR1
+                value: VALUE1
+              - name: VAR2
+                value: VALUE2
+              - name: VAR3
+                value: ""
+    asserts:
+      - documentIndex: *clusterDoc
+        isKind:
+          of: Cluster
+      - documentIndex: *clusterDoc
+        isAPIVersion:
+          of: postgresql.cnpg.io/v1
+      - documentIndex: *clusterDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-my-pg
+      - documentIndex: *clusterDoc
+        isSubset:
+          path: spec
+          content:
+            env:
+              - name: VAR1
+                value: VALUE1
+              - name: VAR2
+                value: VALUE2
+              - name: VAR3
+                value: ""
+
+  - it: should create the correct env with envFrom key
+    set:
+      configmap:
+        configmap-name:
+          enabled: true
+          data:
+            key1: value1
+            key2: value2
+      secret:
+        secret-name:
+          enabled: true
+          data:
+            key1: value1
+            key2: value2
+      postgres16Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "16.3"
+        pullPolicy: IfNotPresent
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          cluster:
+            envFrom:
+              - configMapRef:
+                  name: configmap-name
+              - secretRef:
+                  name: secret-name
+    asserts:
+      - documentIndex: *clusterDoc
+        isKind:
+          of: Cluster
+      - documentIndex: *clusterDoc
+        isAPIVersion:
+          of: postgresql.cnpg.io/v1
+      - documentIndex: *clusterDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-my-pg
+      - documentIndex: *clusterDoc
+        isSubset:
+          path: spec
+          content:
+            envFrom:
+              - configMapRef:
+                  name: test-release-name-common-test-configmap-name
+              - secretRef:
+                  name: test-release-name-common-test-secret-name
