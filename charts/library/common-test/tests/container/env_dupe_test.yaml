@@ -176,7 +176,7 @@ tests:
                   TZ: some_value
     asserts:
       - failedTemplate:
-          errorMessage: Container - Environment Variable [TZ] in [containers.container-name1.env] tried to override the Environment Variable that is already defined in [fixedEnv]
+          errorMessage: Container - Environment Variable [TZ] in [containers.container-name1.env] tried to override the Environment Variable that is already defined in [containers.container-name1.fixedEnv]
 
   - it: should fail with dupe env in fixedEnv and envList
     set:
@@ -198,7 +198,7 @@ tests:
                     value: some_value
     asserts:
       - failedTemplate:
-          errorMessage: Container - Environment Variable [TZ] in [containers.container-name1.envList] tried to override the Environment Variable that is already defined in [fixedEnv]
+          errorMessage: Container - Environment Variable [TZ] in [containers.container-name1.envList] tried to override the Environment Variable that is already defined in [containers.container-name1.fixedEnv]
 
   - it: should fail with dupe env in fixedEnv and envFrom configmap
     set:
