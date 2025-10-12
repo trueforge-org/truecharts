@@ -1,10 +1,10 @@
 {{/* Returns Env */}}
 {{/* Call this template:
-{{ include "tc.v1.common.lib.container.env" (dict "rootCtx" $ "objectData" $objectData) }}
+{{ include "tc.v1.common.helper.container.env" (dict "rootCtx" $ "objectData" $objectData) }}
 rootCtx: The root context of the chart.
 objectData: The object data to be used to render the container.
 */}}
-{{- define "tc.v1.common.lib.container.env" -}}
+{{- define "tc.v1.common.helper.container.env" -}}
   {{- $rootCtx := .rootCtx -}}
   {{- $objectData := .objectData -}}
   {{- $key := .key -}}
