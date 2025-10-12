@@ -1162,6 +1162,10 @@ cnpg:
       # Additional Labels and annotations for cnpg cluster
       labels: {}
       annotations: {}
+      # Additional environment variables to set on all pods created in the cluster
+      env: {}
+      envFrom: {}
+      envList: {}
 
       # Number of instances
       instances: 2
