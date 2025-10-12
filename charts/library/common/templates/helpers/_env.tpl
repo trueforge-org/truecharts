@@ -83,7 +83,7 @@ objectData: The object data to be used to render the container.
       {{- if hasKey $v "fieldRef" }}
     fieldRef:
         {{- if not $v.fieldRef.fieldPath -}}
-          {{- fail "%s - Expected non-empty [%s.%s.env.fieldRef.fieldPath]" $caller $key $name -}}
+          {{- fail (printf "%s - Expected non-empty [%s.%s.env.fieldRef.fieldPath]" $caller $key $name) -}}
         {{- end }}
       fieldPath: {{ $v.fieldRef.fieldPath | quote }}
         {{- if $v.fieldRef.apiVersion }}
