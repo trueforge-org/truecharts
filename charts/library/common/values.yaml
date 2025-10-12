@@ -308,6 +308,9 @@ credentials:
   #   secretKey: ""
   #   ## Is used in cases where things are encrypted by a backup utility
   #   encrKey: ""
+  #   ## Is used in cases where the region cannot be determined from the URL. If
+  #   ## a backup/restore is failing, try setting the region manually using this field
+  #   region: ""
 
 ingressMiddlewares:
   traefik:
