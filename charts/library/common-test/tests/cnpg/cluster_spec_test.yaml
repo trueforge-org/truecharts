@@ -572,6 +572,55 @@ tests:
                   - CREATE EXTENSION IF NOT EXISTS vectors;
                   - CREATE EXTENSION IF NOT EXISTS some-extension;
 
+  - it: should pass with vectorchord
+    set:
+      postgresVectorchord16Image:
+        repository: docker.io/vectors/vectors
+        tag: "some-tag"
+      cnpg:
+        my-pg:
+          enabled: true
+          user: app
+          database: app
+          password: test-password
+          type: vectorchord
+          cluster:
+            initdb:
+              postInitApplicationSQL:
+                - CREATE EXTENSION IF NOT EXISTS some-extension;
+            postgresql:
+              key1: value1
+              key2: '{{ printf "test-tpl" }}'
+            preloadLibraries:
+              - pg_stat_statements
+              - pg_cron
+    asserts:
+      - documentIndex: *clusterDoc
+        isKind:
+          of: Cluster
+      - documentIndex: *clusterDoc
+        isSubset:
+          path: spec
+          content:
+            postgresql:
+              parameters:
+                key1: value1
+                key2: test-tpl
+              shared_preload_libraries:
+                - pg_stat_statements
+                - pg_cron
+                - vchord.so
+            bootstrap:
+              initdb:
+                secret:
+                  name: test-release-name-common-test-cnpg-my-pg-user
+                database: app
+                owner: app
+                dataChecksums: true
+                postInitApplicationSQL:
+                  - CREATE EXTENSION IF NOT EXISTS vchord CASCADE;
+                  - CREATE EXTENSION IF NOT EXISTS some-extension;
+
   - it: should pass with enabled monitoring
     set:
       postgresTimescaledb16Image:
