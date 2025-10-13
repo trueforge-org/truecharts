@@ -123,6 +123,9 @@
   {{- if eq $objectData.type "vectors" -}}
     {{- $preloadLibraries = mustAppend $preloadLibraries "vectors.so" -}}
   {{- end -}}
+  {{- if eq $objectData.type "vectorchord" -}}
+    {{- $preloadLibraries = mustAppend $preloadLibraries "vchord.so" -}}
+  {{- end -}}
 
   {{/* Storage */}}
   {{- with $objectData.cluster.storage.size -}}

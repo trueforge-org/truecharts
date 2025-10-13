@@ -662,6 +662,16 @@ postgresVectors16Image:
   tag: "16.3-v0.2.1"
   pullPolicy: IfNotPresent
 
+postgresVectorchord15Image:
+  repository: ghcr.io/tensorchord/cloudnative-vectorchord
+  tag: "15.14-0.5.3"
+  pullPolicy: IfNotPresent
+
+postgresVectorchord16Image:
+  repository: ghcr.io/tensorchord/cloudnative-vectorchord
+  tag: "16.10-0.5.3"
+  pullPolicy: IfNotPresent
+
 # -- OpenVPN specific configuration
 # @default -- See below
 openvpnImage:
@@ -1139,6 +1149,7 @@ cnpg:
     # * `postgis`
     # * `timescaledb`
     # * `vectors`
+    # * `vectorchord`
     type: postgres
 
     # Version of Postgresql to use, changes cluster naming scheme
