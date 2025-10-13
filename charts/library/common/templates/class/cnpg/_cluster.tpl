@@ -195,16 +195,16 @@ spec:
   instances: {{ $instances }}
   {{- /* Create a dict for storing env's so it can be checked for dupes */ -}}
   {{- $_ := set $objectData.cluster "envDupe" dict -}}
-  {{- with (include "tc.v1.common.helper.container.envFrom" (dict
+  {{- with (include "tc.v1.common.lib.container.envFrom" (dict
               "rootCtx" $rootCtx "objectData" $objectData.cluster "caller" "CNPG Cluster"
               "name" $objectData.shortName "key" "cluster") | trim) }}
   envFrom:
     {{- . | nindent 4 }}
   {{- end }}
-  {{- $env := include "tc.v1.common.helper.container.env" (dict
+  {{- $env := include "tc.v1.common.lib.container.env" (dict
             "rootCtx" $rootCtx "objectData" $objectData.cluster "caller" "CNPG Cluster"
             "name" $objectData.shortName "key" "cluster") | trim -}}
-  {{- $envList := include "tc.v1.common.helper.container.envList" (dict
+  {{- $envList := include "tc.v1.common.lib.container.envList" (dict
             "rootCtx" $rootCtx "objectData" $objectData.cluster "caller" "CNPG Cluster"
             "name" $objectData.shortName "key" "cluster") | trim -}}
   {{- $_ := unset $objectData.cluster "envDupe" -}}
