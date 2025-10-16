@@ -308,7 +308,7 @@ cnpg:
 
 #### `user`
 
-Define the databse user
+Define the database user
 
 |            |                           |
 | ---------- | ------------------------- |
