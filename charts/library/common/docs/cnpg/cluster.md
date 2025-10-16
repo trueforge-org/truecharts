@@ -236,7 +236,7 @@ The clsuter log level. Avalilable values:
 
 :::note
 
-If you are a chart developer, changing the default value is not recommented,
+If you are a chart developer, changing the default value is not recommended,
 as users are expected to change this themselves if they are running into
 issues with CNPG.
 
