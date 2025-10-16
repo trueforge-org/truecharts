@@ -226,7 +226,7 @@ cnpg:
 
 ## `logLevel`
 
-The clsuter log level. Avalilable values:
+The cluster log level. Available values:
 
 - `error`
 - `warning`
