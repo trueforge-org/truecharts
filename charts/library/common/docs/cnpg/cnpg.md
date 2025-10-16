@@ -330,7 +330,7 @@ cnpg:
 
 #### `password`
 
-Define the databse password
+Define the database password
 
 :::tip
 
