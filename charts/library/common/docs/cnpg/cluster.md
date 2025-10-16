@@ -74,7 +74,7 @@ cnpg:
 
 ## `env`
 
-Define additional environment variables for of the cluster's pods
+Define additional environment variables for the cluster's pods
 
 :::tip
 
