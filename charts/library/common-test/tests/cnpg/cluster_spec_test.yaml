@@ -717,49 +717,6 @@ tests:
                     key: key2
                     name: test-release-name-common-test-secret-name
 
-  - it: should create the correct env with envList key
-    set:
-      postgres16Image:
-        repository: ghcr.io/cloudnative-pg/postgresql
-        tag: "16.3"
-        pullPolicy: IfNotPresent
-      cnpg:
-        my-pg:
-          enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          cluster:
-            envList:
-              - name: VAR1
-                value: VALUE1
-              - name: VAR2
-                value: VALUE2
-              - name: VAR3
-                value: ""
-    asserts:
-      - documentIndex: *clusterDoc
-        isKind:
-          of: Cluster
-      - documentIndex: *clusterDoc
-        isAPIVersion:
-          of: postgresql.cnpg.io/v1
-      - documentIndex: *clusterDoc
-        equal:
-          path: metadata.name
-          value: test-release-name-common-test-cnpg-my-pg
-      - documentIndex: *clusterDoc
-        isSubset:
-          path: spec
-          content:
-            env:
-              - name: VAR1
-                value: VALUE1
-              - name: VAR2
-                value: VALUE2
-              - name: VAR3
-                value: ""
-
   - it: should create the correct env with envFrom key
     set:
       configmap:

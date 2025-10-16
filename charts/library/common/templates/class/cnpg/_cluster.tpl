@@ -201,21 +201,11 @@ spec:
   envFrom:
     {{- . | nindent 4 }}
   {{- end }}
-  {{- $env := include "tc.v1.common.lib.container.env" (dict
-            "rootCtx" $rootCtx "objectData" $objectData.cluster "caller" "CNPG Cluster"
-            "name" $objectData.shortName "key" "cluster") | trim -}}
-  {{- $envList := include "tc.v1.common.lib.container.envList" (dict
-            "rootCtx" $rootCtx "objectData" $objectData.cluster "caller" "CNPG Cluster"
-            "name" $objectData.shortName "key" "cluster") | trim -}}
-  {{- $_ := unset $objectData.cluster "envDupe" -}}
-  {{- if or $env $envList }}
+  {{- with (include "tc.v1.common.lib.container.env" (dict
+              "rootCtx" $rootCtx "objectData" $objectData.cluster "caller" "CNPG Cluster"
+              "name" $objectData.shortName "key" "cluster") | trim) }}
   env:
-    {{- if $env }}
-      {{- $env | nindent 4 -}}
-    {{- end }}
-    {{- if $envList }}
-      {{- $envList | nindent 4 -}}
-    {{- end }}
+    {{- . | nindent 4 }}
   {{- end }}
   {{- if or $objectData.cluster.postgresql $preloadLibraries }}
   postgresql:

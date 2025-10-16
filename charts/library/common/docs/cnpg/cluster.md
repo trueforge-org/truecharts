@@ -137,37 +137,6 @@ cnpg:
 
 ---
 
-## `envList`
-
-Define additional environment variables for of the cluster's pods
-
-:::tip
-
-See container envList options in the [container envList](/truecharts-common/container/envList) section.
-
-:::
-
-|            |                              |
-| ---------- | ---------------------------- |
-| Key        | `cnpg.$name.cluster.envList` |
-| Type       | `map`                        |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
-| Default    | `[]`                         |
-
-Example
-
-```yaml
-cnpg:
-  cnpg-name:
-    cluster:
-      envList:
-        - name: key
-          value: value
-```
-
----
-
 ## `instances`
 
 Number of instances
