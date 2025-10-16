@@ -286,7 +286,7 @@ cnpg:
 
 #### `database`
 
-Define the databse name
+Define the database name
 
 |            |                           |
 | ---------- | ------------------------- |
