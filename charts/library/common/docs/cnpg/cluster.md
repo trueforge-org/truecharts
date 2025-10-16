@@ -168,7 +168,7 @@ Setting this to `true` would allow PVCs to be kept on instance restart.
 
 :::note
 
-If you are a chart developer, changing the default value is not recommented,
+If you are a chart developer, changing the default value is not recommended,
 as users are expected to change this themselves **if** they are running your
 chart on a single-node cluster.
 
