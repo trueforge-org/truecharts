@@ -260,7 +260,7 @@ Cluster mode of operation. Available modes:
 
 :::note
 
-If you are a chart developer, changing the default value is not recommented,
+If you are a chart developer, changing the default value is not recommended,
 as users are expected to change this themselves **if** they want to configure
 a CNPG restore.
 
