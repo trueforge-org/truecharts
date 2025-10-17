@@ -1,0 +1,42 @@
+annotations:
+  artifacthub.io/links: |-
+    - name: support
+    url: https://discord.com/invite/tVsPTHWTtr
+  max_scale_version: 24.04.1
+  min_scale_version: 24.04.0
+  truecharts.org/category: media
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: incubator
+apiVersion: v2
+appVersion: 0.10.4
+dependencies:
+  - name: common
+    version: 28.25.0
+    repository: oci://oci.trueforge.org/truecharts
+    condition: ""
+    alias: ""
+    tags: []
+    import-values: []
+deprecated: false
+description: Your Ultimate IPTV & Stream Management Companion
+home: https://truecharts.org/charts/incubator/dispatcharr
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/dispatcharr.webp
+keywords:
+  - dispatcharr
+  - MediaApp-Other
+kubeVersion: '>=1.24.0-0'
+maintainers:
+  - name: TrueCharts
+    email: info@truecharts.org
+    url: https://truecharts.org
+name: dispatcharr
+sources:
+  - https://github.com/Dispatcharr/Dispatcharr
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/incubator/dispatcharr
+  - https://hub.docker.com/r/dispatcharr/dispatcharr
+  - https://github.com/Dispatcharr/Dispatcharr/blob/main/docker/docker-compose.aio.yml
+type: application
+version: 0.0.1
