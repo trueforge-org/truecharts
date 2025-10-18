@@ -50,13 +50,21 @@ objectData: The object data to be used to render the Pod.
   {{- include "tc.v1.common.lib.container.securityContext" (dict "rootCtx" $rootCtx "objectData" $objectData) | trim | nindent 4 }}
   {{- /* Create a dict for storing env's so it can be checked for dupes */ -}}
   {{- $_ := set $objectData "envDupe" dict -}}
-  {{- with (include "tc.v1.common.lib.container.envFrom" (dict "rootCtx" $rootCtx "objectData" $objectData) | trim) }}
+  {{- with (include "tc.v1.common.lib.container.envFrom" (dict
+              "rootCtx" $rootCtx "objectData" $objectData "caller" "Container"
+              "name" $objectData.shortName "key" "containers") | trim) }}
   envFrom:
     {{- . | nindent 4 }}
   {{- end }}
   env:
-    {{- include "tc.v1.common.lib.container.fixedEnv" (dict "rootCtx" $rootCtx "objectData" $objectData) | trim | nindent 4 -}}
-    {{- include "tc.v1.common.lib.container.env" (dict "rootCtx" $rootCtx "objectData" $objectData) | trim | nindent 4 -}}
-    {{- include "tc.v1.common.lib.container.envList" (dict "rootCtx" $rootCtx "objectData" $objectData) | trim | nindent 4 -}}
+    {{- include "tc.v1.common.lib.container.fixedEnv" (dict
+              "rootCtx" $rootCtx "objectData" $objectData "caller" "Container"
+              "name" $objectData.shortName "key" "containers") | trim | nindent 4 -}}
+    {{- include "tc.v1.common.lib.container.env" (dict
+              "rootCtx" $rootCtx "objectData" $objectData "caller" "Container"
+              "name" $objectData.shortName "key" "containers") | trim | nindent 4 -}}
+    {{- include "tc.v1.common.lib.container.envList" (dict
+              "rootCtx" $rootCtx "objectData" $objectData "caller" "Container"
+              "name" $objectData.shortName "key" "containers") | trim | nindent 4 -}}
   {{- $_ := unset $objectData "envDupe" -}}
 {{- end -}}

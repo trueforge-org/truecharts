@@ -16,6 +16,7 @@
   {{- $endpointURL := $calcData.creds.url -}}
   {{- $customCA := $calcData.creds.customCA -}}
   {{- $customCASecretRef := $calcData.creds.customCASecretRef -}}
+  {{- $region := $calcData.creds.region -}}
   {{- $bucket := $calcData.creds.bucket -}}
   {{- $path := $calcData.creds.path -}}
   {{- $key := $calcData.key -}}
@@ -59,6 +60,11 @@ endpointCA:
 destinationPath: {{ $destinationPath }}
 serverName: {{ $serverName }}
 s3Credentials:
+  {{- if $region }}
+  region:
+    name: {{ $secretName }}
+    key: REGION
+  {{- end }}
   accessKeyId:
     name: {{ $secretName }}
     key: ACCESS_KEY_ID

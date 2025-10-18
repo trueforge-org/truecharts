@@ -37,7 +37,7 @@ tests:
                     value: 123
     asserts:
       - failedTemplate:
-          errorMessage: Container - Environment Variable [VAR1] in [envList] tried to override the Environment Variable that is already defined in [env]
+          errorMessage: Container - Environment Variable [VAR1] in [containers.container-name1.envList] tried to override the Environment Variable that is already defined in [containers.container-name1.env]
 
   - it: should fail with dupe env in env and envFrom configmap
     set:
@@ -66,7 +66,7 @@ tests:
                       name: configmap-name
     asserts:
       - failedTemplate:
-          errorMessage: Container - Environment Variable [VAR1] in [env] tried to override the Environment Variable that is already defined in [ConfigMap - configmap-name]
+          errorMessage: Container - Environment Variable [VAR1] in [containers.container-name1.env] tried to override the Environment Variable that is already defined in [ConfigMap - configmap-name]
 
   - it: should fail with dupe env in env and envFrom secret
     set:
@@ -95,7 +95,7 @@ tests:
                       name: secret-name
     asserts:
       - failedTemplate:
-          errorMessage: Container - Environment Variable [VAR1] in [env] tried to override the Environment Variable that is already defined in [Secret - secret-name]
+          errorMessage: Container - Environment Variable [VAR1] in [containers.container-name1.env] tried to override the Environment Variable that is already defined in [Secret - secret-name]
 
   - it: should fail with dupe env in envList and envFrom secret
     set:
@@ -125,7 +125,7 @@ tests:
                       name: secret-name
     asserts:
       - failedTemplate:
-          errorMessage: Container - Environment Variable [VAR1] in [envList] tried to override the Environment Variable that is already defined in [Secret - secret-name]
+          errorMessage: Container - Environment Variable [VAR1] in [containers.container-name1.envList] tried to override the Environment Variable that is already defined in [Secret - secret-name]
 
   - it: should fail with dupe env in envList and envFrom configmap
     set:
@@ -155,7 +155,7 @@ tests:
                       name: configmap-name
     asserts:
       - failedTemplate:
-          errorMessage: Container - Environment Variable [VAR1] in [envList] tried to override the Environment Variable that is already defined in [ConfigMap - configmap-name]
+          errorMessage: Container - Environment Variable [VAR1] in [containers.container-name1.envList] tried to override the Environment Variable that is already defined in [ConfigMap - configmap-name]
 
   - it: should fail with dupe env in fixedEnv and env
     set:
@@ -176,7 +176,7 @@ tests:
                   TZ: some_value
     asserts:
       - failedTemplate:
-          errorMessage: Container - Environment Variable [TZ] in [env] tried to override the Environment Variable that is already defined in [fixedEnv]
+          errorMessage: Container - Environment Variable [TZ] in [containers.container-name1.env] tried to override the Environment Variable that is already defined in [containers.container-name1.fixedEnv]
 
   - it: should fail with dupe env in fixedEnv and envList
     set:
@@ -198,7 +198,7 @@ tests:
                     value: some_value
     asserts:
       - failedTemplate:
-          errorMessage: Container - Environment Variable [TZ] in [envList] tried to override the Environment Variable that is already defined in [fixedEnv]
+          errorMessage: Container - Environment Variable [TZ] in [containers.container-name1.envList] tried to override the Environment Variable that is already defined in [containers.container-name1.fixedEnv]
 
   - it: should fail with dupe env in fixedEnv and envFrom configmap
     set:
@@ -225,7 +225,7 @@ tests:
                       name: configmap-name
     asserts:
       - failedTemplate:
-          errorMessage: Container - Environment Variable [TZ] in [fixedEnv] tried to override the Environment Variable that is already defined in [ConfigMap - configmap-name]
+          errorMessage: Container - Environment Variable [TZ] in [containers.container-name1.fixedEnv] tried to override the Environment Variable that is already defined in [ConfigMap - configmap-name]
 
   - it: should fail with dupe env in fixedEnv and envFrom secret
     set:
@@ -252,4 +252,4 @@ tests:
                       name: secret-name
     asserts:
       - failedTemplate:
-          errorMessage: Container - Environment Variable [TZ] in [fixedEnv] tried to override the Environment Variable that is already defined in [Secret - secret-name]
+          errorMessage: Container - Environment Variable [TZ] in [containers.container-name1.fixedEnv] tried to override the Environment Variable that is already defined in [Secret - secret-name]

@@ -14,14 +14,14 @@ apiVersion: v2
 appVersion: 25.07.20250804
 dependencies:
   - name: common
-    version: 28.25.0
+    version: 28.26.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.7.0
+    version: 17.8.1
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -50,5 +50,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/bookstack
   - https://www.bookstackapp.com/
 type: application
-version: 18.11.0
+version: 18.13.0
 

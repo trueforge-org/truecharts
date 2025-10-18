@@ -154,6 +154,88 @@ tests:
                       key: ACCESS_SECRET_KEY
                       name: test-release-name-common-test-cnpg-my-pg-provider-recovery-s3-creds
 
+  - it: should generate correct spec with recovery/objectStore and overridden region (s3)
+    set:
+      credentials:
+        test:
+          type: s3
+          accessKey: some-access-key
+          secretKey: some-secret-key
+          bucket: some-bucket
+          encrKey: some-encr-key
+          url: https://s3.some-region.amazonaws.com
+          region: some-region
+          path: some-path
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          mode: recovery
+          recovery:
+            method: object_store
+            credentials: test
+    asserts:
+      - documentIndex: *secretDoc
+        isKind:
+          of: Secret
+      - documentIndex: *secretDoc
+        isAPIVersion:
+          of: v1
+      - documentIndex: *secretDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-my-pg-provider-recovery-s3-creds
+      - documentIndex: *secretDoc
+        equal:
+          path: stringData
+          value:
+            REGION: some-region
+            ACCESS_KEY_ID: some-access-key
+            ACCESS_SECRET_KEY: some-secret-key
+      - documentIndex: *clusterDoc
+        isKind:
+          of: Cluster
+      - documentIndex: *clusterDoc
+        isAPIVersion:
+          of: postgresql.cnpg.io/v1
+      - documentIndex: *clusterDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-my-pg
+      - documentIndex: *clusterDoc
+        isSubset:
+          path: spec
+          content:
+            bootstrap:
+              recovery:
+                secret:
+                  name: test-release-name-common-test-cnpg-my-pg-user
+                owner: test-user
+                database: test-db
+                source: test-release-name-common-test-cnpg-my-pg
+      - documentIndex: *clusterDoc
+        isSubset:
+          path: spec
+          content:
+            externalClusters:
+              - name: test-release-name-common-test-cnpg-my-pg
+                barmanObjectStore:
+                  serverName: test-release-name-common-test-cnpg-my-pg
+                  destinationPath: s3://some-bucket/some-path/test-release-name/cnpg
+                  endpointURL: https://s3.some-region.amazonaws.com
+                  s3Credentials:
+                    region:
+                      key: REGION
+                      name: test-release-name-common-test-cnpg-my-pg-provider-recovery-s3-creds
+                    accessKeyId:
+                      key: ACCESS_KEY_ID
+                      name: test-release-name-common-test-cnpg-my-pg-provider-recovery-s3-creds
+                    secretAccessKey:
+                      key: ACCESS_SECRET_KEY
+                      name: test-release-name-common-test-cnpg-my-pg-provider-recovery-s3-creds
+
   - it: should generate correct spec with recovery/objectStore using customCA (s3)
     set:
       credentials:

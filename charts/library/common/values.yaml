@@ -308,6 +308,9 @@ credentials:
   #   secretKey: ""
   #   ## Is used in cases where things are encrypted by a backup utility
   #   encrKey: ""
+  #   ## Is used in cases where the region cannot be determined from the URL. If
+  #   ## a backup/restore is failing, try setting the region manually using this field
+  #   region: ""
 
 ingressMiddlewares:
   traefik:
@@ -657,6 +660,16 @@ postgresVectors15Image:
 postgresVectors16Image:
   repository: ghcr.io/tensorchord/cloudnative-pgvecto.rs
   tag: "16.3-v0.2.1"
+  pullPolicy: IfNotPresent
+
+postgresVectorchord15Image:
+  repository: ghcr.io/tensorchord/cloudnative-vectorchord
+  tag: "15.14-0.5.3"
+  pullPolicy: IfNotPresent
+
+postgresVectorchord16Image:
+  repository: ghcr.io/tensorchord/cloudnative-vectorchord
+  tag: "16.10-0.5.3"
   pullPolicy: IfNotPresent
 
 # -- OpenVPN specific configuration
@@ -1136,6 +1149,7 @@ cnpg:
     # * `postgis`
     # * `timescaledb`
     # * `vectors`
+    # * `vectorchord`
     type: postgres
 
     # Version of Postgresql to use, changes cluster naming scheme
@@ -1159,6 +1173,9 @@ cnpg:
       # Additional Labels and annotations for cnpg cluster
       labels: {}
       annotations: {}
+      # Additional environment variables to set on all pods created in the cluster
+      env: {}
+      envFrom: {}
 
       # Number of instances
       instances: 2

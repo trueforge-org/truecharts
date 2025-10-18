@@ -78,6 +78,84 @@ tests:
               retentionPolicy: 10d
               target: primary
 
+  - it: should generate correct spec with backups and overridden region (s3)
+    set:
+      credentials:
+        test:
+          type: s3
+          accessKey: some-access-key
+          secretKey: some-secret-key
+          bucket: some-bucket
+          encrKey: some-encr-key
+          url: http://some-url
+          region: some-region
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          backups:
+            enabled: true
+            target: primary
+            retentionPolicy: 10d
+            credentials: test
+            destinationPath: some-path
+    asserts:
+      - documentIndex: *secretDoc
+        isKind:
+          of: Secret
+      - documentIndex: *secretDoc
+        isAPIVersion:
+          of: v1
+      - documentIndex: *secretDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-my-pg-provider-backup-s3-creds
+      - documentIndex: *secretDoc
+        equal:
+          path: stringData
+          value:
+            REGION: some-region
+            ACCESS_KEY_ID: some-access-key
+            ACCESS_SECRET_KEY: some-secret-key
+      - documentIndex: *clusterDoc
+        isKind:
+          of: Cluster
+      - documentIndex: *clusterDoc
+        isAPIVersion:
+          of: postgresql.cnpg.io/v1
+      - documentIndex: *clusterDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-my-pg
+      - documentIndex: *clusterDoc
+        isSubset:
+          path: spec
+          content:
+            backup:
+              barmanObjectStore:
+                data:
+                  compression: bzip2
+                  jobs: 2
+                destinationPath: some-path
+                endpointURL: http://some-url
+                s3Credentials:
+                  region:
+                    key: REGION
+                    name: test-release-name-common-test-cnpg-my-pg-provider-backup-s3-creds
+                  accessKeyId:
+                    key: ACCESS_KEY_ID
+                    name: test-release-name-common-test-cnpg-my-pg-provider-backup-s3-creds
+                  secretAccessKey:
+                    key: ACCESS_SECRET_KEY
+                    name: test-release-name-common-test-cnpg-my-pg-provider-backup-s3-creds
+                serverName: test-release-name-common-test-cnpg-my-pg
+                wal:
+                  compression: bzip2
+              retentionPolicy: 10d
+              target: primary
+
   - it: should generate correct spec with backups using customCA (s3)
     set:
       credentials:

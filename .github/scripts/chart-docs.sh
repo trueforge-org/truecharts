@@ -2,8 +2,8 @@
 [ "$DEBUG" == 'true' ] && set -x
 [ "$STRICT" == 'true' ] && set -e
 
-docs_base="website/src/content/docs/truecharts/charts"
-tmp_docs_base="tmpwebsite/src/content/docs/truecharts/charts"
+docs_base="website/src/content/docs/truetech/truecharts/charts"
+tmp_docs_base="tmpwebsite/src/content/docs/truetech/truecharts/charts"
 safe_docs=(
   "CHANGELOG.md"
 )
@@ -51,7 +51,7 @@ copy_new_docs() {
   local chart="$2"
 
   echo "copying new docs to website for ${chart}"
-  cp -rf charts/${train}/${chart}/docs/* website/src/content/docs/truecharts/charts/${train}/${chart}/ 2>/dev/null || :
+  cp -rf charts/${train}/${chart}/docs/* website/src/content/docs/truetech/truecharts/charts/${train}/${chart}/ 2>/dev/null || :
   cp -rf charts/${train}/${chart}/icon.webp website/public/img/hotlink-ok/chart-icons/${chart}.webp 2>/dev/null || :
   cp -rf charts/${train}/${chart}/icon-small.webp website/public/img/hotlink-ok/chart-icons-small/${chart}.webp 2>/dev/null || :
   cp -rf charts/${train}/${chart}/screenshots/* website/public/img/hotlink-ok/chart-screenshots/${chart}/ 2>/dev/null || :
