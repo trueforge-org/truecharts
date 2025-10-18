@@ -123,6 +123,9 @@
   {{- if eq $objectData.type "vectors" -}}
     {{- $preloadLibraries = mustAppend $preloadLibraries "vectors.so" -}}
   {{- end -}}
+  {{- if eq $objectData.type "vectorchord" -}}
+    {{- $preloadLibraries = mustAppend $preloadLibraries "vchord.so" -}}
+  {{- end -}}
 
   {{/* Storage */}}
   {{- with $objectData.cluster.storage.size -}}
@@ -193,6 +196,20 @@ spec:
   primaryUpdateMethod: {{ $primaryUpdateMethod }}
   logLevel: {{ $logLevel }}
   instances: {{ $instances }}
+  {{- /* Create a dict for storing env's so it can be checked for dupes */ -}}
+  {{- $_ := set $objectData.cluster "envDupe" dict -}}
+  {{- with (include "tc.v1.common.lib.container.envFrom" (dict
+              "rootCtx" $rootCtx "objectData" $objectData.cluster "caller" "CNPG Cluster"
+              "name" $objectData.shortName "key" "cluster") | trim) }}
+  envFrom:
+    {{- . | nindent 4 }}
+  {{- end }}
+  {{- with (include "tc.v1.common.lib.container.env" (dict
+              "rootCtx" $rootCtx "objectData" $objectData.cluster "caller" "CNPG Cluster"
+              "name" $objectData.shortName "key" "cluster") | trim) }}
+  env:
+    {{- . | nindent 4 }}
+  {{- end }}
   {{- if or $objectData.cluster.postgresql $preloadLibraries }}
   postgresql:
     {{- with $objectData.cluster.postgresql }}

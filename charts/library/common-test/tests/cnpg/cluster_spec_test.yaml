@@ -572,6 +572,55 @@ tests:
                   - CREATE EXTENSION IF NOT EXISTS vectors;
                   - CREATE EXTENSION IF NOT EXISTS some-extension;
 
+  - it: should pass with vectorchord
+    set:
+      postgresVectorchord16Image:
+        repository: docker.io/vectorchord/vectorchord
+        tag: "some-tag"
+      cnpg:
+        my-pg:
+          enabled: true
+          user: app
+          database: app
+          password: test-password
+          type: vectorchord
+          cluster:
+            initdb:
+              postInitApplicationSQL:
+                - CREATE EXTENSION IF NOT EXISTS some-extension;
+            postgresql:
+              key1: value1
+              key2: '{{ printf "test-tpl" }}'
+            preloadLibraries:
+              - pg_stat_statements
+              - pg_cron
+    asserts:
+      - documentIndex: *clusterDoc
+        isKind:
+          of: Cluster
+      - documentIndex: *clusterDoc
+        isSubset:
+          path: spec
+          content:
+            postgresql:
+              parameters:
+                key1: value1
+                key2: test-tpl
+              shared_preload_libraries:
+                - pg_stat_statements
+                - pg_cron
+                - vchord.so
+            bootstrap:
+              initdb:
+                secret:
+                  name: test-release-name-common-test-cnpg-my-pg-user
+                database: app
+                owner: app
+                dataChecksums: true
+                postInitApplicationSQL:
+                  - CREATE EXTENSION IF NOT EXISTS vchord CASCADE;
+                  - CREATE EXTENSION IF NOT EXISTS some-extension;
+
   - it: should pass with enabled monitoring
     set:
       postgresTimescaledb16Image:
@@ -652,3 +701,118 @@ tests:
                 key: custom-queries
               - name: test-query3
                 key: test-key
+
+  - it: should create the correct env with env key
+    set:
+      configmap:
+        configmap-name:
+          enabled: true
+          data:
+            key1: value1
+            key2: value2
+      secret:
+        secret-name:
+          enabled: true
+          data:
+            key1: value1
+            key2: value2
+      postgres16Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "16.3"
+        pullPolicy: IfNotPresent
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          cluster:
+            env:
+              VAR1: some-value
+              VAR2:
+                configMapKeyRef:
+                  name: configmap-name
+                  key: key1
+              VAR3:
+                secretKeyRef:
+                  name: secret-name
+                  key: key2
+    asserts:
+      - documentIndex: *clusterDoc
+        isKind:
+          of: Cluster
+      - documentIndex: *clusterDoc
+        isAPIVersion:
+          of: postgresql.cnpg.io/v1
+      - documentIndex: *clusterDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-my-pg
+      - documentIndex: *clusterDoc
+        isSubset:
+          path: spec
+          content:
+            env:
+              - name: VAR1
+                value: some-value
+              - name: VAR2
+                valueFrom:
+                  configMapKeyRef:
+                    key: key1
+                    name: test-release-name-common-test-configmap-name
+              - name: VAR3
+                valueFrom:
+                  secretKeyRef:
+                    key: key2
+                    name: test-release-name-common-test-secret-name
+
+  - it: should create the correct env with envFrom key
+    set:
+      configmap:
+        configmap-name:
+          enabled: true
+          data:
+            key1: value1
+            key2: value2
+      secret:
+        secret-name:
+          enabled: true
+          data:
+            key3: value3
+            key4: value4
+      postgres16Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "16.3"
+        pullPolicy: IfNotPresent
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          cluster:
+            envFrom:
+              - configMapRef:
+                  name: configmap-name
+              - secretRef:
+                  name: secret-name
+    asserts:
+      - documentIndex: *clusterDoc
+        isKind:
+          of: Cluster
+      - documentIndex: *clusterDoc
+        isAPIVersion:
+          of: postgresql.cnpg.io/v1
+      - documentIndex: *clusterDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-my-pg
+      - documentIndex: *clusterDoc
+        isSubset:
+          path: spec
+          content:
+            envFrom:
+              - configMapRef:
+                  name: test-release-name-common-test-configmap-name
+              - secretRef:
+                  name: test-release-name-common-test-secret-name

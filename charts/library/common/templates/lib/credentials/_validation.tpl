@@ -69,4 +69,9 @@
     {{- end -}}
   {{- end -}}
 
+  {{- $region := get $credentials "region" -}}
+  {{- if and $region (not (kindIs "string" $region )) -}}
+    {{- fail (printf "%s - Expected [region] in [credentials.%s] to be a string. Got [%s]" $caller $credName (kindOf $region)) -}}
+  {{- end -}}
+
 {{- end -}}
