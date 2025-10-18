@@ -19,6 +19,18 @@ workload:
     podSpec:
       containers:
         main:
+          probes:
+            liveness:
+              type: tcp
+            readiness:
+              type: tcp
+            startup:
+              type: tcp
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
           env:
             MAX_UPLOAD: 5000
             PHP_MEMORY_LIMIT: "512M"
