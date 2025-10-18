@@ -13,7 +13,7 @@ service:
     ports:
       main:
         targetPort: 80
-        port: 10127
+        port: 10127       
 workload:
   main:
     podSpec:
@@ -26,11 +26,6 @@ workload:
               type: tcp
             startup:
               type: tcp
-workload:
-  main:
-    podSpec:
-      containers:
-        main:
           env:
             MAX_UPLOAD: 5000
             PHP_MEMORY_LIMIT: "512M"
