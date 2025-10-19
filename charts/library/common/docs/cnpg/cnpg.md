@@ -201,6 +201,7 @@ Type of the CNPG database. Available types:
 - `postgis`
 - `timescaledb`
 - `vectors`
+- `vectorchord`
 
 |            |                   |
 | ---------- | ----------------- |
