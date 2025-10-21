@@ -1,8 +1,8 @@
 ---
-title: Booklore installation notes
+title: Add Books Directory
 ---
 
-## Your own books folder-mounts
+Following is an example on how to add your own book shares:
 
 ```yaml
 persistence:
@@ -22,23 +22,4 @@ persistence:
      path: /mnt/tank/booklore/bookdrop
      server: ${NFS_SERVER_IP}
      type: nfs
-```
-
-
-## Mariadb backup
-
-```yaml
-mariadb:
-  enabled: true
-  mariadbUsername: booklore   
-    persistence:
-      data:
-        volsync:
-          - name: booklore-db
-            type: restic
-            credentials: minio
-            dest:
-              enabled: true
-            src:
-              enabled: true
 ```
