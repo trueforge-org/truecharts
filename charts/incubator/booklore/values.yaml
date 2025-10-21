@@ -2,11 +2,6 @@ image:
   pullPolicy: IfNotPresent
   repository: ghcr.io/booklore-app/booklore
   tag: v1.8.1@sha256:6b2250cd1a8e13f4e458b5dd2ffe30ed9696482061f27954a97463ffcce677a2
-securityContext:
-  container:
-    readOnlyRootFilesystem: false
-    runAsGroup: 0
-    runAsUser: 0
 service:
   main:
     ports:
