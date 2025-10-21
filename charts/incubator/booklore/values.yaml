@@ -1,0 +1,90 @@
+image:
+  pullPolicy: IfNotPresent
+  repository: ghcr.io/booklore-app/booklore
+  tag: v1.8.1@sha256:6b2250cd1a8e13f4e458b5dd2ffe30ed9696482061f27954a97463ffcce677a2
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
+    runAsGroup: 0
+    runAsUser: 0
+service:
+  main:
+    ports:
+      main:
+        protocol: http
+        targetPort: 6060
+        port: 6060
+workload:
+  main:
+    podSpec:
+      initContainers:
+        fix-nginx-run:
+          enabled: true
+          type: init
+          name: fix-nginx-run
+          image: alpine:3.22
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -e
+              mkdir -p /run/nginx
+              chown -R 0:0 /run/nginx
+              chmod 755 /run /run/nginx
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+      containers:
+        main:
+          env:
+            DATABASE_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                key: jdbc-mariadb
+            DATABASE_USERNAME: booklore
+            DATABASE_PASSWORD: PLACEHOLDERPASSWORD
+            BOOKLORE_PORT: 6060
+persistence:
+  run:
+    enabled: true
+    type: emptyDir
+    mountPath: /run
+    targetSelector:
+      main:
+        main:
+          mountPath: /run
+        fix-nginx-run:
+          mountPath: /run
+  data:
+    enabled: true
+    mountPath: /app/data
+  #  Your own books directory (if needed)
+  #  books:
+  #    enabled: true
+  #    mountPath: /books
+  #    path: /mnt/tank/booklore/books
+  #    server: ${NFS_SERVER_IP}
+  #    type: nfs
+
+  #  Your own bookdrop directory for easily importing books
+  #  bookdrop:
+  #    enabled: true
+  #    mountPath: /books
+  #    path: /mnt/tank/booklore/bookdrop
+  #    server: ${NFS_SERVER_IP}
+  #    type: nfs
+mariadb:
+  enabled: true
+  mariadbUsername: booklore
+  #  Example of how to set up volsync backups for the database
+  #  persistence:
+  #  data:
+  #    volsync:
+  #      - name: booklore-db
+  #        type: restic
+  #        credentials: minio
+  #        dest:
+  #          enabled: true
+  #        src:
+  #          enabled: true
