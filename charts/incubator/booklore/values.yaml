@@ -12,7 +12,6 @@ service:
     ports:
       main:
         protocol: http
-        targetPort: 6060
         port: 6060
 workload:
   main:
@@ -42,9 +41,9 @@ workload:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
                 key: jdbc-mariadb
-            DATABASE_USERNAME: booklore
-            DATABASE_PASSWORD: PLACEHOLDERPASSWORD
-            BOOKLORE_PORT: 6060
+            DATABASE_USERNAME: "{{ .Values.mariadb.mariadbUsername }}"
+            DATABASE_PASSWORD: "{{ .Values.mariadb.password }}"
+            BOOKLORE_PORT: "{{ .Values.service.main.ports.main.port }}"
 persistence:
   run:
     enabled: true
@@ -59,32 +58,7 @@ persistence:
   data:
     enabled: true
     mountPath: /app/data
-  #  Your own books directory (if needed)
-  #  books:
-  #    enabled: true
-  #    mountPath: /books
-  #    path: /mnt/tank/booklore/books
-  #    server: ${NFS_SERVER_IP}
-  #    type: nfs
 
-  #  Your own bookdrop directory for easily importing books
-  #  bookdrop:
-  #    enabled: true
-  #    mountPath: /books
-  #    path: /mnt/tank/booklore/bookdrop
-  #    server: ${NFS_SERVER_IP}
-  #    type: nfs
 mariadb:
   enabled: true
   mariadbUsername: booklore
-  #  Example of how to set up volsync backups for the database
-  #  persistence:
-  #  data:
-  #    volsync:
-  #      - name: booklore-db
-  #        type: restic
-  #        credentials: minio
-  #        dest:
-  #          enabled: true
-  #        src:
-  #          enabled: true

@@ -20,6 +20,13 @@ dependencies:
     alias: ""
     tags: []
     import-values: []
+  - name: mariadb
+    version: 17.9.1
+    repository: oci://oci.trueforge.org/truecharts
+    condition: mariadb.enabled
+    alias: ""
+    tags: []
+    import-values: []
 deprecated: false
 description: A self-hosted, multi-user digital library with smart shelves, auto metadata, Kobo & KOReader sync, BookDrop imports, OPDS support, and a built-in reader for EPUB, PDF, and comics
 home: https://truecharts.org/charts/incubator/booklore
