@@ -8,6 +8,11 @@ service:
       main:
         protocol: http
         port: 6060
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
+    runAsGroup: 0
+    runAsUser: 0
 workload:
   main:
     podSpec:
