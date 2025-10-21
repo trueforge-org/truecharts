@@ -18,7 +18,7 @@ workload:
     podSpec:
       initContainers:
         fix-nginx-run:
-          enabled: true
+          enabled: false
           type: init
           name: fix-nginx-run
           image: alpine:3.22
@@ -46,7 +46,7 @@ workload:
             BOOKLORE_PORT: "{{ .Values.service.main.ports.main.port }}"
 persistence:
   run:
-    enabled: true
+    enabled: false
     type: emptyDir
     mountPath: /run
     targetSelector:
@@ -58,6 +58,8 @@ persistence:
   data:
     enabled: true
     mountPath: /app/data
+  varrun:
+    enabled: true
 
 mariadb:
   enabled: true
