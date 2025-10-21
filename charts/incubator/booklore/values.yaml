@@ -16,23 +16,6 @@ service:
 workload:
   main:
     podSpec:
-      initContainers:
-        fix-nginx-run:
-          enabled: false
-          type: init
-          name: fix-nginx-run
-          image: alpine:3.22
-          command:
-            - /bin/sh
-            - -c
-            - |
-              set -e
-              mkdir -p /run/nginx
-              chown -R 0:0 /run/nginx
-              chmod 755 /run /run/nginx
-          securityContext:
-            runAsUser: 0
-            runAsGroup: 0
       containers:
         main:
           env:
@@ -45,22 +28,11 @@ workload:
             DATABASE_PASSWORD: "{{ .Values.mariadb.password }}"
             BOOKLORE_PORT: "{{ .Values.service.main.ports.main.port }}"
 persistence:
-  run:
-    enabled: false
-    type: emptyDir
-    mountPath: /run
-    targetSelector:
-      main:
-        main:
-          mountPath: /run
-        fix-nginx-run:
-          mountPath: /run
   data:
     enabled: true
     mountPath: /app/data
   varrun:
     enabled: false
-
 mariadb:
   enabled: true
   mariadbUsername: booklore
