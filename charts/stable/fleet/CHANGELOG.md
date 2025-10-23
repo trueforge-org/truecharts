@@ -3,7 +3,7 @@ title: Changelog
 pagefind: false
 ---
 
-## [fleet-4.0.0](https://github.com/truecharts/charts/compare/fleet-3.0.48...fleet-4.0.0) (2022-11-10)
+## [fleet-4.0.0](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.48...fleet-4.0.0) (2022-11-10)
 
 ### Chore
 
@@ -15,15 +15,15 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Major Change to GUI
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
 ### Fix
 
 - change container config label
 
-## [fleet-3.0.51](https://github.com/truecharts/charts/compare/fleet-3.0.48...fleet-3.0.51) (2022-11-08)
+## [fleet-3.0.51](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.48...fleet-3.0.51) (2022-11-08)
 
 ### Chore
 
@@ -33,23 +33,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [fleet-3.0.50](https://github.com/truecharts/charts/compare/fleet-3.0.48...fleet-3.0.50) (2022-11-08)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [fleet-3.0.50](https://github.com/truecharts/charts/compare/fleet-3.0.48...fleet-3.0.50) (2022-11-08)
+## [fleet-3.0.50](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.48...fleet-3.0.50) (2022-11-08)
 
 ### Chore
 
@@ -57,84 +45,96 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [fleet-3.0.50](https://github.com/truecharts/charts/compare/fleet-3.0.48...fleet-3.0.50) (2022-11-08)
+## [fleet-3.0.50](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.48...fleet-3.0.50) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [fleet-3.0.49](https://github.com/truecharts/charts/compare/fleet-3.0.48...fleet-3.0.49) (2022-11-07)
+## [fleet-3.0.50](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.48...fleet-3.0.50) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [fleet-3.0.49](https://github.com/truecharts/charts/compare/fleet-3.0.48...fleet-3.0.49) (2022-11-06)
+## [fleet-3.0.49](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.48...fleet-3.0.49) (2022-11-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [fleet-3.0.48](https://github.com/truecharts/charts/compare/fleet-3.0.47...fleet-3.0.48) (2022-11-06)
+## [fleet-3.0.49](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.48...fleet-3.0.49) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4317](https://github.com/truecharts/charts/issues/4317))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [fleet-3.0.47](https://github.com/truecharts/charts/compare/fleet-3.0.46...fleet-3.0.47) (2022-11-05)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
-
-## [fleet-3.0.46](https://github.com/truecharts/charts/compare/fleet-3.0.45...fleet-3.0.46) (2022-11-02)
+## [fleet-3.0.48](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.47...fleet-3.0.48) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
+- update helm general non-major ([#4317](https://github.com/trueforge-org/truecharts/issues/4317))
 
-## [fleet-3.0.45](https://github.com/truecharts/charts/compare/fleet-3.0.44...fleet-3.0.45) (2022-11-01)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#4260](https://github.com/truecharts/charts/issues/4260))
-
-## [fleet-3.0.44](https://github.com/truecharts/charts/compare/fleet-3.0.43...fleet-3.0.44) (2022-10-25)
+## [fleet-3.0.47](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.46...fleet-3.0.47) (2022-11-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
 
-## [fleet-3.0.43](https://github.com/truecharts/charts/compare/fleet-3.0.42...fleet-3.0.43) (2022-10-19)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
-
-## [fleet-3.0.42](https://github.com/truecharts/charts/compare/fleet-3.0.41...fleet-3.0.42) (2022-10-12)
+## [fleet-3.0.46](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.45...fleet-3.0.46) (2022-11-02)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4071](https://github.com/truecharts/charts/issues/4071))
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
 
-## [fleet-3.0.41](https://github.com/truecharts/charts/compare/fleet-3.0.40...fleet-3.0.41) (2022-10-07)
+## [fleet-3.0.45](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.44...fleet-3.0.45) (2022-11-01)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4260](https://github.com/trueforge-org/truecharts/issues/4260))
+
+## [fleet-3.0.44](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.43...fleet-3.0.44) (2022-10-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
+
+## [fleet-3.0.43](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.42...fleet-3.0.43) (2022-10-19)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
+
+## [fleet-3.0.42](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.41...fleet-3.0.42) (2022-10-12)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4071](https://github.com/trueforge-org/truecharts/issues/4071))
+
+## [fleet-3.0.41](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.40...fleet-3.0.41) (2022-10-07)
 
 ### Chore
 
@@ -142,35 +142,35 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [fleet-3.0.41](https://github.com/truecharts/charts/compare/fleet-3.0.40...fleet-3.0.41) (2022-10-07)
+## [fleet-3.0.41](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.40...fleet-3.0.41) (2022-10-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [fleet-3.0.40](https://github.com/truecharts/charts/compare/fleet-3.0.39...fleet-3.0.40) (2022-10-05)
+## [fleet-3.0.40](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.39...fleet-3.0.40) (2022-10-05)
 
 ### Chore
 
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
 - update helm general non-major
 
-## [fleet-3.0.38](https://github.com/truecharts/charts/compare/fleet-3.0.37...fleet-3.0.38) (2022-09-27)
+## [fleet-3.0.38](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.37...fleet-3.0.38) (2022-09-27)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3918](https://github.com/truecharts/charts/issues/3918))
+- update helm general non-major ([#3918](https://github.com/trueforge-org/truecharts/issues/3918))
 
-## [fleet-3.0.37](https://github.com/truecharts/charts/compare/fleet-3.0.36...fleet-3.0.37) (2022-09-25)
+## [fleet-3.0.37](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.36...fleet-3.0.37) (2022-09-25)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
 
-## [fleet-3.0.36](https://github.com/truecharts/charts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-22)
+## [fleet-3.0.36](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-22)
 
 ### Chore
 
@@ -188,10 +188,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [fleet-3.0.36](https://github.com/truecharts/charts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-21)
+## [fleet-3.0.36](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-21)
 
 ### Chore
 
@@ -208,10 +208,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [fleet-3.0.36](https://github.com/truecharts/charts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-21)
+## [fleet-3.0.36](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-21)
 
 ### Chore
 
@@ -227,10 +227,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [fleet-3.0.36](https://github.com/truecharts/charts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-20)
+## [fleet-3.0.36](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-20)
 
 ### Chore
 
@@ -245,10 +245,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [fleet-3.0.36](https://github.com/truecharts/charts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-20)
+## [fleet-3.0.36](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-20)
 
 ### Chore
 
@@ -262,10 +262,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [fleet-3.0.36](https://github.com/truecharts/charts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-19)
+## [fleet-3.0.36](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-19)
 
 ### Chore
 
@@ -278,10 +278,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [fleet-3.0.36](https://github.com/truecharts/charts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-19)
+## [fleet-3.0.36](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-19)
 
 ### Chore
 
@@ -293,10 +293,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [fleet-3.0.36](https://github.com/truecharts/charts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-19)
+## [fleet-3.0.36](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-19)
 
 ### Chore
 
@@ -307,10 +307,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [fleet-3.0.36](https://github.com/truecharts/charts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-17)
+## [fleet-3.0.36](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-17)
 
 ### Chore
 
@@ -320,61 +320,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [fleet-3.0.36](https://github.com/truecharts/charts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-18)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [fleet-3.0.36](https://github.com/truecharts/charts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [fleet-3.0.36](https://github.com/truecharts/charts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [fleet-3.0.36](https://github.com/truecharts/charts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-15)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [fleet-3.0.36](https://github.com/truecharts/charts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-15)
-
-### Chore
-
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [fleet-3.0.35](https://github.com/truecharts/charts/compare/fleet-3.0.34...fleet-3.0.35) (2022-09-13)
-
-### Chore
-
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-
-## [fleet-3.0.34](https://github.com/truecharts/charts/compare/fleet-3.0.33...fleet-3.0.34) (2022-09-12)
+## [fleet-3.0.36](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-18)
 
 ### Chore
 
@@ -382,10 +331,50 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [fleet-3.0.34](https://github.com/truecharts/charts/compare/fleet-3.0.33...fleet-3.0.34) (2022-09-12)
+## [fleet-3.0.36](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [fleet-3.0.36](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [fleet-3.0.36](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-15)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [fleet-3.0.36](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.35...fleet-3.0.36) (2022-09-15)
+
+### Chore
+
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [fleet-3.0.35](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.34...fleet-3.0.35) (2022-09-13)
+
+### Chore
+
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+
+## [fleet-3.0.34](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.33...fleet-3.0.34) (2022-09-12)
 
 ### Chore
 
@@ -393,92 +382,103 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [fleet-3.0.34](https://github.com/truecharts/charts/compare/fleet-3.0.33...fleet-3.0.34) (2022-09-11)
+## [fleet-3.0.34](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.33...fleet-3.0.34) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [fleet-3.0.34](https://github.com/truecharts/charts/compare/fleet-3.0.33...fleet-3.0.34) (2022-09-11)
+## [fleet-3.0.34](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.33...fleet-3.0.34) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [fleet-3.0.34](https://github.com/truecharts/charts/compare/fleet-3.0.33...fleet-3.0.34) (2022-09-11)
+## [fleet-3.0.34](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.33...fleet-3.0.34) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [fleet-3.0.34](https://github.com/truecharts/charts/compare/fleet-3.0.33...fleet-3.0.34) (2022-09-11)
-
-### Chore
-
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-
-## [fleet-3.0.33](https://github.com/truecharts/charts/compare/fleet-3.0.32...fleet-3.0.33) (2022-08-30)
+## [fleet-3.0.34](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.33...fleet-3.0.34) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [fleet-3.0.32](https://github.com/truecharts/charts/compare/fleet-3.0.31...fleet-3.0.32) (2022-08-30)
-
-### Chore
-
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
-
-## [fleet-3.0.31](https://github.com/truecharts/charts/compare/fleet-3.0.29...fleet-3.0.31) (2022-08-29)
+## [fleet-3.0.34](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.33...fleet-3.0.34) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major ([#3621](https://github.com/truecharts/charts/issues/3621))
-- update helm general non-major ([#3619](https://github.com/truecharts/charts/issues/3619))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [fleet-3.0.29](https://github.com/truecharts/charts/compare/fleet-3.0.28...fleet-3.0.29) (2022-08-23)
-
-### Chore
-
-- update helm general non-major helm releases ([#3545](https://github.com/truecharts/charts/issues/3545))
-
-## [fleet-3.0.28](https://github.com/truecharts/charts/compare/fleet-3.0.27...fleet-3.0.28) (2022-08-17)
+## [fleet-3.0.33](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.32...fleet-3.0.33) (2022-08-30)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3484](https://github.com/truecharts/charts/issues/3484))
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
 
-## [fleet-3.0.27](https://github.com/truecharts/charts/compare/fleet-3.0.26...fleet-3.0.27) (2022-08-12)
+## [fleet-3.0.32](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.31...fleet-3.0.32) (2022-08-30)
+
+### Chore
+
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
+
+## [fleet-3.0.31](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.29...fleet-3.0.31) (2022-08-29)
+
+### Chore
+
+- update helm general non-major ([#3621](https://github.com/trueforge-org/truecharts/issues/3621))
+- update helm general non-major ([#3619](https://github.com/trueforge-org/truecharts/issues/3619))
+
+## [fleet-3.0.29](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.28...fleet-3.0.29) (2022-08-23)
+
+### Chore
+
+- update helm general non-major helm releases ([#3545](https://github.com/trueforge-org/truecharts/issues/3545))
+
+## [fleet-3.0.28](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.27...fleet-3.0.28) (2022-08-17)
+
+### Chore
+
+- update helm general non-major helm releases ([#3484](https://github.com/trueforge-org/truecharts/issues/3484))
+
+## [fleet-3.0.27](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.26...fleet-3.0.27) (2022-08-12)
 
 ### Chore
 
 - add documentation checkbox/section to all SCALE Apps
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
 
 ### Fix
 
-- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/truecharts/charts/issues/3447))
+- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/trueforge-org/truecharts/issues/3447))
 
-## [fleet-3.0.26](https://github.com/truecharts/charts/compare/fleet-3.0.25...fleet-3.0.26) (2022-08-09)
-
-### Chore
-
-- update helm general non-major helm releases to v10.4.9 ([#3413](https://github.com/truecharts/charts/issues/3413))
-
-## [fleet-3.0.25](https://github.com/truecharts/charts/compare/fleet-3.0.24...fleet-3.0.25) (2022-08-08)
+## [fleet-3.0.26](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.25...fleet-3.0.26) (2022-08-09)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update helm general non-major helm releases to v10.4.9 ([#3413](https://github.com/trueforge-org/truecharts/issues/3413))
+
+## [fleet-3.0.25](https://github.com/trueforge-org/truecharts/compare/fleet-3.0.24...fleet-3.0.25) (2022-08-08)
+
+### Chore
+
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
 
 ## [fleet-3.0.24](https://github.com/truecharts/apps/compare/fleet-3.0.23...fleet-3.0.24) (2022-07-26)
 

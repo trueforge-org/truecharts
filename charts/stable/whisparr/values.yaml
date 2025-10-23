@@ -1,7 +1,7 @@
 image:
   repository: ghcr.io/hotio/whisparr
   pullPolicy: IfNotPresent
-  tag: v3-3.0.0.1075@sha256:1c56c55f81f94f64e3835576445ad68eeb29104eee46d287eae4f1c82e0c92fd
+  tag: v3-3.0.1.1319@sha256:771f1e03bbf03856a7d092c69881cf5b98d958182441ab4f066980a45772e557
 securityContext:
   container:
     readOnlyRootFilesystem: false
@@ -37,7 +37,7 @@ workload:
                     - /usr/bin/env
                     - bash
                     - -c
-                    - curl --fail localhost:6969/api/v3/system/status?apiKey=`IFS=\> && while read -d \< E C; do if [[ $E = "ApiKey" ]]; then echo $C; fi; done < /config/config.xml`
+                    - curl --fail localhost:6969/api/v3/stable/status?apiKey=`IFS=\> && while read -d \< E C; do if [[ $E = "ApiKey" ]]; then echo $C; fi; done < /config/config.xml`
                 failureThreshold: 5
                 initialDelaySeconds: 60
                 periodSeconds: 10

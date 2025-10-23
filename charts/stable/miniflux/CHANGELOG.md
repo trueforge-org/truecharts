@@ -3,7 +3,7 @@ title: Changelog
 pagefind: false
 ---
 
-## [miniflux-8.0.0](https://github.com/truecharts/charts/compare/miniflux-7.0.52...miniflux-8.0.0) (2022-11-10)
+## [miniflux-8.0.0](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.52...miniflux-8.0.0) (2022-11-10)
 
 ### Chore
 
@@ -15,15 +15,15 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Major Change to GUI
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
 ### Fix
 
 - change container config label
 
-## [miniflux-7.0.55](https://github.com/truecharts/charts/compare/miniflux-7.0.52...miniflux-7.0.55) (2022-11-08)
+## [miniflux-7.0.55](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.52...miniflux-7.0.55) (2022-11-08)
 
 ### Chore
 
@@ -33,23 +33,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [miniflux-7.0.54](https://github.com/truecharts/charts/compare/miniflux-7.0.52...miniflux-7.0.54) (2022-11-08)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [miniflux-7.0.54](https://github.com/truecharts/charts/compare/miniflux-7.0.52...miniflux-7.0.54) (2022-11-08)
+## [miniflux-7.0.54](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.52...miniflux-7.0.54) (2022-11-08)
 
 ### Chore
 
@@ -57,127 +45,139 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [miniflux-7.0.54](https://github.com/truecharts/charts/compare/miniflux-7.0.52...miniflux-7.0.54) (2022-11-08)
+## [miniflux-7.0.54](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.52...miniflux-7.0.54) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [miniflux-7.0.53](https://github.com/truecharts/charts/compare/miniflux-7.0.52...miniflux-7.0.53) (2022-11-07)
+## [miniflux-7.0.54](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.52...miniflux-7.0.54) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [miniflux-7.0.53](https://github.com/truecharts/charts/compare/miniflux-7.0.52...miniflux-7.0.53) (2022-11-06)
-
-### Chore
-
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [miniflux-7.0.52](https://github.com/truecharts/charts/compare/miniflux-7.0.51...miniflux-7.0.52) (2022-11-06)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4317](https://github.com/truecharts/charts/issues/4317))
-
-## [miniflux-7.0.51](https://github.com/truecharts/charts/compare/miniflux-7.0.50...miniflux-7.0.51) (2022-11-05)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
-
-## [miniflux-7.0.50](https://github.com/truecharts/charts/compare/miniflux-7.0.49...miniflux-7.0.50) (2022-11-02)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
-
-## [miniflux-7.0.49](https://github.com/truecharts/charts/compare/miniflux-7.0.48...miniflux-7.0.49) (2022-10-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major
-
-## [miniflux-7.0.48](https://github.com/truecharts/charts/compare/miniflux-7.0.47...miniflux-7.0.48) (2022-10-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
-
-## [miniflux-7.0.47](https://github.com/truecharts/charts/compare/miniflux-7.0.46...miniflux-7.0.47) (2022-10-19)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
-
-## [miniflux-7.0.46](https://github.com/truecharts/charts/compare/miniflux-7.0.45...miniflux-7.0.46) (2022-10-18)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#4120](https://github.com/truecharts/charts/issues/4120))
-
-## [miniflux-7.0.45](https://github.com/truecharts/charts/compare/miniflux-7.0.44...miniflux-7.0.45) (2022-10-12)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4071](https://github.com/truecharts/charts/issues/4071))
-
-## [miniflux-7.0.44](https://github.com/truecharts/charts/compare/miniflux-7.0.43...miniflux-7.0.44) (2022-10-07)
+## [miniflux-7.0.53](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.52...miniflux-7.0.53) (2022-11-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [miniflux-7.0.44](https://github.com/truecharts/charts/compare/miniflux-7.0.43...miniflux-7.0.44) (2022-10-07)
+## [miniflux-7.0.53](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.52...miniflux-7.0.53) (2022-11-06)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
+
+## [miniflux-7.0.52](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.51...miniflux-7.0.52) (2022-11-06)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4317](https://github.com/trueforge-org/truecharts/issues/4317))
+
+## [miniflux-7.0.51](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.50...miniflux-7.0.51) (2022-11-05)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
+
+## [miniflux-7.0.50](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.49...miniflux-7.0.50) (2022-11-02)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
+
+## [miniflux-7.0.49](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.48...miniflux-7.0.49) (2022-10-25)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [miniflux-7.0.43](https://github.com/truecharts/charts/compare/miniflux-7.0.42...miniflux-7.0.43) (2022-10-05)
+## [miniflux-7.0.48](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.47...miniflux-7.0.48) (2022-10-25)
 
 ### Chore
 
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
+
+## [miniflux-7.0.47](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.46...miniflux-7.0.47) (2022-10-19)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
+
+## [miniflux-7.0.46](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.45...miniflux-7.0.46) (2022-10-18)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4120](https://github.com/trueforge-org/truecharts/issues/4120))
+
+## [miniflux-7.0.45](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.44...miniflux-7.0.45) (2022-10-12)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4071](https://github.com/trueforge-org/truecharts/issues/4071))
+
+## [miniflux-7.0.44](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.43...miniflux-7.0.44) (2022-10-07)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [miniflux-7.0.41](https://github.com/truecharts/charts/compare/miniflux-7.0.40...miniflux-7.0.41) (2022-09-27)
+## [miniflux-7.0.44](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.43...miniflux-7.0.44) (2022-10-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3918](https://github.com/truecharts/charts/issues/3918))
+- update helm general non-major
 
-## [miniflux-7.0.40](https://github.com/truecharts/charts/compare/miniflux-7.0.39...miniflux-7.0.40) (2022-09-25)
+## [miniflux-7.0.43](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.42...miniflux-7.0.43) (2022-10-05)
+
+### Chore
+
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
+- update helm general non-major
+
+## [miniflux-7.0.41](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.40...miniflux-7.0.41) (2022-09-27)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
+- update helm general non-major ([#3918](https://github.com/trueforge-org/truecharts/issues/3918))
 
-## [miniflux-7.0.39](https://github.com/truecharts/charts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-22)
+## [miniflux-7.0.40](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.39...miniflux-7.0.40) (2022-09-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
+
+## [miniflux-7.0.39](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-22)
 
 ### Chore
 
@@ -195,10 +195,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [miniflux-7.0.39](https://github.com/truecharts/charts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-21)
+## [miniflux-7.0.39](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-21)
 
 ### Chore
 
@@ -215,10 +215,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [miniflux-7.0.39](https://github.com/truecharts/charts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-21)
+## [miniflux-7.0.39](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-21)
 
 ### Chore
 
@@ -234,10 +234,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [miniflux-7.0.39](https://github.com/truecharts/charts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-20)
+## [miniflux-7.0.39](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-20)
 
 ### Chore
 
@@ -252,10 +252,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [miniflux-7.0.39](https://github.com/truecharts/charts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-20)
+## [miniflux-7.0.39](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-20)
 
 ### Chore
 
@@ -269,10 +269,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [miniflux-7.0.39](https://github.com/truecharts/charts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-19)
+## [miniflux-7.0.39](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-19)
 
 ### Chore
 
@@ -285,10 +285,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [miniflux-7.0.39](https://github.com/truecharts/charts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-19)
+## [miniflux-7.0.39](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-19)
 
 ### Chore
 
@@ -300,10 +300,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [miniflux-7.0.39](https://github.com/truecharts/charts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-19)
+## [miniflux-7.0.39](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-19)
 
 ### Chore
 
@@ -314,10 +314,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [miniflux-7.0.39](https://github.com/truecharts/charts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-17)
+## [miniflux-7.0.39](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-17)
 
 ### Chore
 
@@ -327,61 +327,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [miniflux-7.0.39](https://github.com/truecharts/charts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-18)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [miniflux-7.0.39](https://github.com/truecharts/charts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [miniflux-7.0.39](https://github.com/truecharts/charts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [miniflux-7.0.39](https://github.com/truecharts/charts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-15)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [miniflux-7.0.39](https://github.com/truecharts/charts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-15)
-
-### Chore
-
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [miniflux-7.0.38](https://github.com/truecharts/charts/compare/miniflux-7.0.37...miniflux-7.0.38) (2022-09-13)
-
-### Chore
-
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-
-## [miniflux-7.0.37](https://github.com/truecharts/charts/compare/miniflux-7.0.36...miniflux-7.0.37) (2022-09-12)
+## [miniflux-7.0.39](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-18)
 
 ### Chore
 
@@ -389,10 +338,50 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [miniflux-7.0.37](https://github.com/truecharts/charts/compare/miniflux-7.0.36...miniflux-7.0.37) (2022-09-12)
+## [miniflux-7.0.39](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [miniflux-7.0.39](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [miniflux-7.0.39](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-15)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [miniflux-7.0.39](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.38...miniflux-7.0.39) (2022-09-15)
+
+### Chore
+
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [miniflux-7.0.38](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.37...miniflux-7.0.38) (2022-09-13)
+
+### Chore
+
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+
+## [miniflux-7.0.37](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.36...miniflux-7.0.37) (2022-09-12)
 
 ### Chore
 
@@ -400,100 +389,111 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [miniflux-7.0.37](https://github.com/truecharts/charts/compare/miniflux-7.0.36...miniflux-7.0.37) (2022-09-11)
+## [miniflux-7.0.37](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.36...miniflux-7.0.37) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [miniflux-7.0.37](https://github.com/truecharts/charts/compare/miniflux-7.0.36...miniflux-7.0.37) (2022-09-11)
+## [miniflux-7.0.37](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.36...miniflux-7.0.37) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [miniflux-7.0.37](https://github.com/truecharts/charts/compare/miniflux-7.0.36...miniflux-7.0.37) (2022-09-11)
+## [miniflux-7.0.37](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.36...miniflux-7.0.37) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [miniflux-7.0.37](https://github.com/truecharts/charts/compare/miniflux-7.0.36...miniflux-7.0.37) (2022-09-11)
-
-### Chore
-
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-
-## [miniflux-7.0.36](https://github.com/truecharts/charts/compare/miniflux-7.0.34...miniflux-7.0.36) (2022-08-30)
+## [miniflux-7.0.37](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.36...miniflux-7.0.37) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [miniflux-7.0.35](https://github.com/truecharts/charts/compare/miniflux-7.0.34...miniflux-7.0.35) (2022-08-30)
-
-### Chore
-
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
-
-## [miniflux-7.0.34](https://github.com/truecharts/charts/compare/miniflux-7.0.32...miniflux-7.0.34) (2022-08-29)
+## [miniflux-7.0.37](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.36...miniflux-7.0.37) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major ([#3621](https://github.com/truecharts/charts/issues/3621))
-- update helm general non-major ([#3619](https://github.com/truecharts/charts/issues/3619))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [miniflux-7.0.32](https://github.com/truecharts/charts/compare/miniflux-7.0.31...miniflux-7.0.32) (2022-08-23)
-
-### Chore
-
-- update helm general non-major helm releases ([#3545](https://github.com/truecharts/charts/issues/3545))
-
-## [miniflux-7.0.31](https://github.com/truecharts/charts/compare/miniflux-7.0.30...miniflux-7.0.31) (2022-08-17)
+## [miniflux-7.0.36](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.34...miniflux-7.0.36) (2022-08-30)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3484](https://github.com/truecharts/charts/issues/3484))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
 
-## [miniflux-7.0.30](https://github.com/truecharts/charts/compare/miniflux-7.0.29...miniflux-7.0.30) (2022-08-14)
+## [miniflux-7.0.35](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.34...miniflux-7.0.35) (2022-08-30)
 
 ### Chore
 
-- update docker general non-major docker tags ([#3465](https://github.com/truecharts/charts/issues/3465))
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
 
-## [miniflux-7.0.29](https://github.com/truecharts/charts/compare/miniflux-7.0.28...miniflux-7.0.29) (2022-08-12)
+## [miniflux-7.0.34](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.32...miniflux-7.0.34) (2022-08-29)
+
+### Chore
+
+- update helm general non-major ([#3621](https://github.com/trueforge-org/truecharts/issues/3621))
+- update helm general non-major ([#3619](https://github.com/trueforge-org/truecharts/issues/3619))
+
+## [miniflux-7.0.32](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.31...miniflux-7.0.32) (2022-08-23)
+
+### Chore
+
+- update helm general non-major helm releases ([#3545](https://github.com/trueforge-org/truecharts/issues/3545))
+
+## [miniflux-7.0.31](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.30...miniflux-7.0.31) (2022-08-17)
+
+### Chore
+
+- update helm general non-major helm releases ([#3484](https://github.com/trueforge-org/truecharts/issues/3484))
+
+## [miniflux-7.0.30](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.29...miniflux-7.0.30) (2022-08-14)
+
+### Chore
+
+- update docker general non-major docker tags ([#3465](https://github.com/trueforge-org/truecharts/issues/3465))
+
+## [miniflux-7.0.29](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.28...miniflux-7.0.29) (2022-08-12)
 
 ### Chore
 
 - add documentation checkbox/section to all SCALE Apps
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
 
 ### Fix
 
-- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/truecharts/charts/issues/3447))
+- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/trueforge-org/truecharts/issues/3447))
 
-## [miniflux-7.0.28](https://github.com/truecharts/charts/compare/miniflux-7.0.27...miniflux-7.0.28) (2022-08-09)
-
-### Chore
-
-- update helm general non-major helm releases to v10.4.9 ([#3413](https://github.com/truecharts/charts/issues/3413))
-
-## [miniflux-7.0.27](https://github.com/truecharts/charts/compare/miniflux-7.0.26...miniflux-7.0.27) (2022-08-08)
+## [miniflux-7.0.28](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.27...miniflux-7.0.28) (2022-08-09)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update helm general non-major helm releases to v10.4.9 ([#3413](https://github.com/trueforge-org/truecharts/issues/3413))
+
+## [miniflux-7.0.27](https://github.com/trueforge-org/truecharts/compare/miniflux-7.0.26...miniflux-7.0.27) (2022-08-08)
+
+### Chore
+
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
 
 ## [miniflux-7.0.26](https://github.com/truecharts/apps/compare/miniflux-7.0.25...miniflux-7.0.26) (2022-07-26)
 

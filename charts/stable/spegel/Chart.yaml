@@ -1,0 +1,41 @@
+annotations:
+  artifacthub.io/links: |-
+    - name: support
+    url: https://discord.com/invite/tVsPTHWTtr
+  max_scale_version: 24.04.1
+  min_scale_version: 24.04.0
+  truecharts.org/category: incubator
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
+apiVersion: v2
+appVersion: 0.4.0
+dependencies:
+  - name: common
+    version: 28.26.1
+    repository: oci://oci.trueforge.org/truecharts
+    condition: ""
+    alias: ""
+    tags: []
+    import-values: []
+deprecated: false
+description: Stateless cluster local OCI registry mirror.
+home: https://truecharts.org/charts/stable/spegel
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/spegel.webp
+keywords:
+  - spegel
+kubeVersion: '>=1.24.0-0'
+maintainers:
+  - name: TrueCharts
+    email: info@truecharts.org
+    url: https://truecharts.org
+name: spegel
+sources:
+  - https://ghcr.io/spegel-org/spegel
+  - https://github.com/truecharts/charts/tree/master/charts/stable/spegel
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/spegel
+type: application
+version: 4.12.1
+

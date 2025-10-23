@@ -55,7 +55,7 @@ Metrics are standard enabled per widget and can be shown in the widgets by click
 ## Enabling Integration in Charts
 
 To enable the integration for a chart you need to add the homepage addon to the ingress section.
-Detailed configuration details: https://truecharts.org/common/ingress/homepage/
+Detailed configuration details: https://trueforge.org/common/ingress/homepage/
 
 - **name** can be left blank to use the charts deployment name or use the name of your choice.
 - **description** can be left blank for using the chart description of TrueCharts or you can use the description of your choice.

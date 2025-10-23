@@ -6,7 +6,7 @@ This tutorial explains installing some themes for Redmine.
 
 ## Chart deploy configuration
 
-- Add ingress with [codeserver](https://truecharts.org/guides/addons/code-server/) addon.
+- Add ingress with [codeserver](https://trueforge.org/truecharts/guides/addons/code-server/) addon.
 - Add additional `themes` PVC persistence with `mountPath: "/usr/src/redmine/themes"` Since Redmine v6 location is changed to ./redmine/themes instead of /redmine/public/themes.
 - Optional add `plugins` PVC persistence with `mountPath: "/usr/src/redmine/plugins"` This is the folder where you need to unzip your plugins if you want to use some.
 

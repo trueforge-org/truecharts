@@ -6,21 +6,23 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: media
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 1.7.11
+appVersion: 1.7.14
 dependencies:
   - name: common
-    version: 25.4.10
-    repository: oci://tccr.io/truecharts
+    version: 28.26.1
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 15.9.0
-    repository: oci://tccr.io/truecharts
+    version: 17.9.1
+    repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
     tags: []
@@ -41,7 +43,8 @@ name: gaseous-server
 sources:
   - https://github.com/gaseous-project/gaseous-server
   - https://github.com/truecharts/charts/tree/master/charts/stable/gaseous-server
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/gaseous-server
   - https://hub.docker.com/r/gaseousgames/gaseousserver
 type: application
-version: 3.13.1
+version: 5.14.2
 

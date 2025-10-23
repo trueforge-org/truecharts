@@ -6,14 +6,16 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: media
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 0.22.2002
+appVersion: 0.24.175
 dependencies:
   - name: common
-    version: 25.4.10
-    repository: oci://tccr.io/truecharts
+    version: 28.26.1
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
@@ -33,10 +35,11 @@ maintainers:
     url: https://truecharts.org
 name: jackett
 sources:
-  - https://ghcr.io/elfhosted/jackett
+  - https://ghcr.io/home-operations/jackett
   - https://github.com/Jackett/Jackett
   - https://github.com/geek-cookbook/containers/pkgs/container/jackett
   - https://github.com/truecharts/charts/tree/master/charts/stable/jackett
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/jackett
 type: application
-version: 23.3.117
+version: 25.11.6
 

@@ -1,0 +1,79 @@
+image:
+  pullPolicy: IfNotPresent
+  repository: docker.io/dispatcharr/dispatcharr
+  tag: 0.11.1@sha256:894aa15b61a45d3238a66dc06411e684ced0d687453a5be21d10a81b12e476a3
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
+    runAsUser: 0
+    runAsGroup: 0
+service:
+  main:
+    ports:
+      main:
+        protocol: http
+        targetPort: 9191
+        port: 9191
+workload:
+  main:
+    podSpec:
+      initContainers:
+        setup-postgres-dirs:
+          enabled: true
+          type: init
+          name: setup-postgres-dirs
+          image: alpine:3.22
+          command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Setting up PostgreSQL directories..."
+
+              # Create and set permissions for /var/run/postgresql
+              mkdir -p /var/run/postgresql
+              chown 999:999 /var/run/postgresql
+              chmod 2775 /var/run/postgresql
+              echo "✓ /var/run/postgresql created (999:999, 2775)"
+
+              # Fix permissions for /data/db (restored from backup)
+              if [ -d /data/db ]; then
+                echo "Found existing /data/db, fixing permissions..."
+                # Recursively fix ownership of ALL files inside /data/db
+                chown -R 999:999 /data/db
+                # Set directory permissions to 0700
+                chmod 0700 /data/db
+                # Fix permissions on all subdirectories and files
+                find /data/db -type d -exec chmod 0700 {} \;
+                find /data/db -type f -exec chmod 0600 {} \;
+                echo "✓ /data/db permissions fixed recursively (999:999, 0700)"
+              else
+                echo "Creating /data/db..."
+                mkdir -p /data/db
+                chown 999:999 /data/db
+                chmod 0700 /data/db
+                echo "✓ /data/db created (999:999, 0700)"
+              fi
+
+              # Verify permissions
+              echo "Checking /data/db permissions:"
+              ls -la /data/db | head -10
+              ls -la /var/run/ | grep postgresql || echo "Warning: postgres dir not found"
+              echo "Setup complete."
+      containers:
+        main:
+          env:
+            DISPATCHARR_ENV: aio  # Set to 'aio' for all-in-one mode with embedded PostgreSQL. Currently, only 'aio' is supported.
+            # DISPATCHARR_LOG_LEVEL: info
+persistence:
+  data:
+    enabled: true
+    mountPath: /data
+    targetSelector:
+      main:
+        main:
+          mountPath: /data
+        setup-postgres-dirs:
+          mountPath: /data
+  postgres-run:
+    enabled: true
+    mountPath: /var/run/postgresql

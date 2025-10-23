@@ -6,14 +6,16 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: incubator
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 2.1.5
+appVersion: 3.1.0
 dependencies:
   - name: common
-    version: 25.4.10
-    repository: oci://tccr.io/truecharts
+    version: 28.26.1
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
@@ -33,6 +35,7 @@ name: ubooquity
 sources:
   - https://ghcr.io/linuxserver/ubooquity
   - https://github.com/truecharts/charts/tree/master/charts/stable/ubooquity
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ubooquity
 type: application
-version: 12.5.7
+version: 14.8.1
 

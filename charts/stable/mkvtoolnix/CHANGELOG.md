@@ -132,7 +132,7 @@ pagefind: false
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update container image tccr.io/truecharts/mkvtoolnix to v22.10.1 ([#4123](https://github.com/truecharts/charts/issues/4123))
+- update container image oci.trueforge.org/truecharts/mkvtoolnix to v22.10.1 ([#4123](https://github.com/truecharts/charts/issues/4123))
 
 ## [mkvtoolnix-2.0.39](https://github.com/truecharts/charts/compare/mkvtoolnix-2.0.38...mkvtoolnix-2.0.39) (2022-10-12)
 

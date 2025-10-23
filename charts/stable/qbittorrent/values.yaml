@@ -1,11 +1,11 @@
 image:
   repository: ghcr.io/home-operations/qbittorrent
   pullPolicy: IfNotPresent
-  tag: 5.1.0@sha256:37aefd713ba31d51255995261616f1144378887bc5f21665a0ebf851fb85f69a
+  tag: 5.1.2@sha256:31ac39705e31f7cdcc04dc46c1c0b0cdf8dc6f9865d4894efc097a33adc41524
 qbitportforwardImage:
   repository: docker.io/mjmeli/qbittorrent-port-forward-gluetun-server
   pullPolicy: IfNotPresent
-  tag: latest@sha256:67d0d21ed792cf80716d4211e7162b6d375af5c12f3cf096c9032ad705dddaa8
+  tag: latest@sha256:4bd94ad0d289d3d52facdcb708a019e693c8df41e386f6aee80b870fa90baeec
 
 securityContext:
   container:

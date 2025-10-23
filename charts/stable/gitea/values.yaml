@@ -1,6 +1,6 @@
 image:
   repository: docker.io/gitea/gitea
-  tag: 1.23.8-rootless@sha256:331875f35bdcc3c1110fc8410a4e809e3103ebb091ef424fec2df53ac1b658fc
+  tag: 1.24.6-rootless@sha256:91f2b27e080739f0d19dba716c3214f17257c632cf762e545b44ca577e37052c
   pullPolicy: IfNotPresent
 service:
   main:
@@ -28,10 +28,13 @@ persistence:
 signing:
   enabled: true
   gpgHome: /data/git/.gnupg
+  
 admin:
+  # existingSecret: gitea-admin-secret
   username: giteaadmin
   password: r8sA8CPHD9!bt6d
   email: "gitea@local.domain"
+  passwordMode: keepUpdated  # Options: initialOnlyNoReset, initialOnlyRequireReset, or keepUpdated
 metrics:
   main:
     enabled: true

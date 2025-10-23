@@ -714,7 +714,7 @@ pagefind: false
 
 #### Chore
 
-- update container image tccr.io/truecharts/drawio to v20.0.0 ([#2862](https://github.com/truecharts/apps/issues/2862))
+- update container image oci.trueforge.org/truecharts/drawio to v20.0.0 ([#2862](https://github.com/truecharts/apps/issues/2862))
 
 <a name="drawio-2.0.5"></a>
 
@@ -740,7 +740,7 @@ pagefind: false
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update container image tccr.io/truecharts/drawio to v19.0.1 ([#2841](https://github.com/truecharts/apps/issues/2841))
+- update container image oci.trueforge.org/truecharts/drawio to v19.0.1 ([#2841](https://github.com/truecharts/apps/issues/2841))
 
 <a name="drawio-2.0.3"></a>
 
@@ -749,7 +749,7 @@ pagefind: false
 #### Chore
 
 - Auto-update chart README [skip ci]
-- update container image tccr.io/truecharts/drawio to v19.0.1 ([#2841](https://github.com/truecharts/apps/issues/2841))
+- update container image oci.trueforge.org/truecharts/drawio to v19.0.1 ([#2841](https://github.com/truecharts/apps/issues/2841))
 
 <a name="drawio-2.0.3"></a>
 
@@ -757,7 +757,7 @@ pagefind: false
 
 #### Chore
 
-- update container image tccr.io/truecharts/drawio to v19.0.1 ([#2841](https://github.com/truecharts/apps/issues/2841))
+- update container image oci.trueforge.org/truecharts/drawio to v19.0.1 ([#2841](https://github.com/truecharts/apps/issues/2841))
 
 <a name="drawio-2.0.2"></a>
 
@@ -938,7 +938,7 @@ pagefind: false
 
 #### Chore
 
-- update container image tccr.io/truecharts/drawio to v18.0.0 ([#2607](https://github.com/truecharts/apps/issues/2607))
+- update container image oci.trueforge.org/truecharts/drawio to v18.0.0 ([#2607](https://github.com/truecharts/apps/issues/2607))
 
 <a name="drawio-1.0.3"></a>
 

@@ -193,7 +193,7 @@ pagefind: false
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update container image tccr.io/truecharts/sourcegraph to v4.0.0 ([#3862](https://github.com/truecharts/charts/issues/3862))
+- update container image oci.trueforge.org/truecharts/sourcegraph to v4.0.0 ([#3862](https://github.com/truecharts/charts/issues/3862))
 
 ## [sourcegraph-0.0.27](https://github.com/truecharts/charts/compare/sourcegraph-0.0.26...sourcegraph-0.0.27) (2022-09-22)
 

@@ -12,7 +12,7 @@ LLDAP is a `stable` train chart and therefore isn't supported at the same level 
 
 :::
 
-- Follow the easy steps included in the [Installation Notes](/charts/stable/lldap/installation-notes) for [LLDAP](/charts/stable/lldap/). Change `dc=example,dc=com` to your domain, e.g. `dc=MYDOMAIN,dc=net` and then change your password.
+- Follow the easy steps included in the [Installation Notes](/truecharts/charts/stable/lldap/installation-notes) for [LLDAP](/truecharts/charts/stable/lldap/). Change `dc=example,dc=com` to your domain, e.g. `dc=MYDOMAIN,dc=net` and then change your password.
 
 - Once in `LLDAP`, create a user inside the `lldap_password_manager` group and change your default `admin` password. That `lldap_password_manager` user will be used to bind to `Authelia`. Here I've created a user called `manager`, but you can use anything
 
@@ -57,6 +57,7 @@ authelia:
         minimum_version: TLS1.2
         skip_verify: false
   access_control:
+    default_policy: 'deny'
     rules:
       # basic rule for one factor (username/password) login for users in the admin group
       - domain:
@@ -105,7 +106,7 @@ middlewares:
 
 ### Adding the forwardauth to your Apps
 
-The last step is adding the `forwardauth` along with the standard `ingress` settings for your app, for more info on setting ingress see the [ClusterIssuer Guide](/charts/premium/clusterissuer/how-to).
+The last step is adding the `forwardauth` along with the standard `ingress` settings for your app, for more info on setting ingress see the [ClusterIssuer Guide](/truecharts/charts/stable/clusterissuer/how-to).
 
 - In this example we use the same name as above, or `auth`.
 

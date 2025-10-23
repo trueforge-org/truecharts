@@ -1,6 +1,6 @@
 {{/* Traefik Middleware Spawner */}}
 {{/* Call this template:
-{{ include "tc.v1.common.spawner.configmap" $ -}}
+{{ include "tc.v1.common.spawner.traefik.middleware" $ -}}
 */}}
 
 {{- define "tc.v1.common.spawner.traefik.middleware" -}}

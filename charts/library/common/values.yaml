@@ -123,11 +123,11 @@ securityContext:
 # Can be overruled per container
 resources:
   limits:
-    cpu: 1000m
-    memory: 1500Mi
+    cpu: 1500m
+    memory: 2400Mi
   requests:
-    cpu: 100m
-    memory: 250Mi
+    cpu: 75m
+    memory: 200Mi
 
 containerOptions:
   NVIDIA_CAPS:
@@ -143,6 +143,7 @@ podOptions:
   # If this key exists, takes precedence over the automated calculation
   # hostUsers: false
   shareProcessNamespace: false
+  affinity: {}
   dnsPolicy: ClusterFirst
   dnsConfig:
     options:
@@ -153,6 +154,7 @@ podOptions:
     kubernetes.io/arch: "amd64"
   # -- Used to enforce a good spread for Deployments and StatefulSets by default
   defaultSpread: true
+  defaultAffinity: true
   topologySpreadConstraints: []
   tolerations: []
   schedulerName: ""
@@ -204,14 +206,14 @@ vpa:
     #   updateMode: auto
     resourcePolicy:
       containerPolicies:
-      - containerName: '*'
-        minAllowed:
-          cpu: 50m
-          memory: 50Mi
-        maxAllowed:
-          cpu: 8000m
-          memory: 20Gi
-        controlledResources: ["cpu", "memory"]
+        - containerName: "*"
+          minAllowed:
+            cpu: 50m
+            memory: 50Mi
+          maxAllowed:
+            cpu: 8000m
+            memory: 20Gi
+          controlledResources: ["cpu", "memory"]
 
 # -- Horizontal pod autoscaler
 hpa:
@@ -250,7 +252,6 @@ hpa:
     #         value: 4
     #         periodSeconds: 60
 
-
 # -- (docs/service/README.md)
 service:
   main:
@@ -268,6 +269,19 @@ service:
     #
     #   traefik:
     #     enabled: false
+    ## Optional - ensures `serversscheme: https` annotation is set
+    #     forceTLS: false
+    ## Optional to make Traefik skip TLS verification when taling to an HTTPS
+    ## backend service
+    #     insecureSkipVerify: false
+    ## Optional to specify the hostname to use when talking to a backend service
+    #     serverName: ""
+    ## Optional - K8s secrets containing CA certs to use when performing TLS
+    ## verification when taling to a backend service
+    #     rootCAs:
+    #       - secretRef: # OR configMapRef
+    #           name: root-ca-secret
+    #           expandObjectName: true
     enabled: true
     primary: true
     ports:
@@ -281,12 +295,22 @@ credentials:
   # mys3:
   #   type: s3
   #   url: ""
+  #   ## Provide a custom certificate authority in cases where the URL endpoint
+  #   ## uses a self-signed certificate
+  #   customCA: ""
+  #   customCASecretRef:
+  #     name: my-secret
+  #     key: ca.crt
+  #     # expandObjectName: false # default true
   #   path: ""
   #   bucket: ""
   #   accessKey: ""
   #   secretKey: ""
   #   ## Is used in cases where things are encrypted by a backup utility
   #   encrKey: ""
+  #   ## Is used in cases where the region cannot be determined from the URL. If
+  #   ## a backup/restore is failing, try setting the region manually using this field
+  #   region: ""
 
 ingressMiddlewares:
   traefik:
@@ -534,7 +558,7 @@ notes:
     https://truecharts.org
 
     OpenSource can only exist with your help, please consider supporting TrueCharts:
-    https://truecharts.org/sponsor
+    https://trueforge.org/sponsor
   warnings: []
 
 ####
@@ -544,78 +568,78 @@ notes:
 ####
 
 gluetunImage:
-  repository: tccr.io/tccr/gluetun
-  tag: v3.40.0@sha256:f5d434869d03fe3c91f832915ecabf7cb65c330732c5ba39ac03feb5e917f552
+  repository: oci.trueforge.org/tccr/gluetun
+  tag: v3.40.0@sha256:a8189e29155e0f8142be1500ae068a92b189b1b25abbba036321e74d6389bf2b
   pullPolicy: IfNotPresent
 
 netshootImage:
-  repository: tccr.io/tccr/netshoot
-  tag: v0.13.0@sha256:d1e6942d828ce14180e5de6136caa9ba2d89fcd25bfe3d3aaf9851ec73366879
+  repository: oci.trueforge.org/tccr/netshoot
+  tag: v0.14.0@sha256:28ede4317d22391e7d89a15eb78dc2afc3587ece02c76c983dde7239a0e43679
   pullPolicy: IfNotPresent
 
 tailscaleImage:
-  repository: tccr.io/tccr/tailscale
-  tag: v1.84.0@sha256:cbe64db00bf9d2cc1961ed76e499809ead55fe14bcbab0747a31e35f70d3b7a1
+  repository: oci.trueforge.org/tccr/tailscale
+  tag: v1.88.3@sha256:878612592f133bc0728e978558b10a1c457371ac5949985d0584664c8e92c2f9
   pullPolicy: IfNotPresent
 
 codeserverImage:
-  repository: tccr.io/tccr/code-server
-  tag: v4.100.3@sha256:6eb0e4d3d2fbc1ef8f3e0fb15096eb90838efa5bc0f70e30ea685930bc714cbb
+  repository: oci.trueforge.org/tccr/code-server
+  tag: v4.104.2@sha256:82dfb0c655c7ea13280ac882ee544cdaed92875c7689e53e5271f6d03ea99ba0
   pullPolicy: IfNotPresent
 
 alpineImage:
-  repository: tccr.io/tccr/alpine
-  tag: v3.22.0
+  repository: oci.trueforge.org/tccr/alpine
+  tag: v3.22.1
   pullPolicy: IfNotPresent
 
 scratchImage:
-  repository: tccr.io/tccr/scratch
+  repository: oci.trueforge.org/tccr/scratch
   tag: latest@sha256:4aef9dbf99ea2a8857ed4ce9d9bf79d330b79044884c7374e392445d122ec746
   pullPolicy: IfNotPresent
 
 kubectlImage:
-  repository: tccr.io/tccr/kubectl
-  tag: latest@sha256:945f44d44720e6ca42969817c903e8643c6e34b9dafd90b338710dd104530588
+  repository: oci.trueforge.org/tccr/kubectl
+  tag: latest@sha256:7e2d7043f4cac6cc040e1474940f3a11f126a90c789dd72199a9a27324063a93
   pullPolicy: IfNotPresent
 
 wgetImage:
-  repository: tccr.io/tccr/wget
-  tag: v1.0.0@sha256:2c26ff54ed4bed9e4f1a97132119ba22f75710655d08c400bcef15dc08f9e0d1
+  repository: oci.trueforge.org/tccr/wget
+  tag: v1.0.0@sha256:4cfc0cb48cc8303cbd914f6bc54016b89c4d549c196370e2b0b41cdf38744603
   pullPolicy: IfNotPresent
 
 yqImage:
   pullPolicy: IfNotPresent
   repository: docker.io/mikefarah/yq
-  tag: 4.45.4@sha256:7cf28e5d67782f4b274a93a7bc54a840b553447a0807efd843d069f46bff718c
+  tag: 4.48.1@sha256:75b3a60dce1fa4641b0f02bdb4465eddc5da95e62028118a292239ca8e3921e5
 
 postgresClientImage:
-  repository: tccr.io/tccr/db-wait-postgres
-  tag: v1.1.0@sha256:15f27128ba0927c11ebc361d3997c4e48824bfde56cd1deacfc6660b2b234ffe
+  repository: oci.trueforge.org/tccr/db-wait-postgres
+  tag: v1.1.0@sha256:67ff700c4e746c5a1205b4629d4f0910a21f44d1e993941fb69c750e651c0b39
   pullPolicy: IfNotPresent
 
 mariadbClientImage:
-  repository: tccr.io/tccr/db-wait-mariadb
-  tag: v1.1.0@sha256:e2f91d35efd33d1fe179f452405bb9e673fb56c00ed08de079ee048120776c30
+  repository: oci.trueforge.org/tccr/db-wait-mariadb
+  tag: v1.1.0@sha256:8614f77d546e1f03c5104cf75387eb04efa7cb1ea4557a2d51112f35c69c0905
   pullPolicy: IfNotPresent
 
 redisClientImage:
-  repository: tccr.io/tccr/db-wait-redis
-  tag: v1.1.0@sha256:13b78f5b48d130a21ee601549c883064588c6a639d778c7a60a6cb44a03c7e77
+  repository: oci.trueforge.org/tccr/db-wait-redis
+  tag: v1.1.0@sha256:ddebe75743f37c431507c51832b5961cc63aa1de61af4f5c75b7554239c8b732
   pullPolicy: IfNotPresent
 
 mongodbClientImage:
-  repository: tccr.io/tccr/db-wait-mongodb
-  tag: v1.2.0@sha256:53b6fafbea7e11139116220e8088fdd7f043689a1d31721631f728caf8127071
+  repository: oci.trueforge.org/tccr/db-wait-mongodb
+  tag: v1.2.0@sha256:e6b0462907022ab0fa7975e2b22e464fc1469f53cb80fd7f61bbbffe305cf210
   pullPolicy: IfNotPresent
 
 postgres15Image:
   repository: ghcr.io/cloudnative-pg/postgresql
-  tag: "15.13"
+  tag: "15.14"
   pullPolicy: IfNotPresent
 
 postgres16Image:
   repository: ghcr.io/cloudnative-pg/postgresql
-  tag: "16.9"
+  tag: "16.10"
   pullPolicy: IfNotPresent
 
 postgresPostgis15Image:
@@ -638,11 +662,21 @@ postgresVectors16Image:
   tag: "16.3-v0.2.1"
   pullPolicy: IfNotPresent
 
+postgresVectorchord15Image:
+  repository: ghcr.io/tensorchord/cloudnative-vectorchord
+  tag: "15.14-0.5.3"
+  pullPolicy: IfNotPresent
+
+postgresVectorchord16Image:
+  repository: ghcr.io/tensorchord/cloudnative-vectorchord
+  tag: "16.10-0.5.3"
+  pullPolicy: IfNotPresent
+
 # -- OpenVPN specific configuration
 # @default -- See below
 openvpnImage:
   # -- Specify the openvpn client image
-  repository: tccr.io/tccr/openvpn-client
+  repository: oci.trueforge.org/tccr/openvpn-client
   # -- Specify the openvpn client image tag
   tag: latest@sha256:9bfdf50791d6e51056e31c03f73c9db329b2b72e7746155cfdc63e0c8b49b55a
   # -- Specify the openvpn client image pull policy
@@ -652,7 +686,7 @@ openvpnImage:
 # @default -- See below
 wireguardImage:
   # -- Specify the WireGuard image
-  repository: tccr.io/tccr/wireguard
+  repository: oci.trueforge.org/tccr/wireguard
   # -- Specify the WireGuard image tag
   tag: v1.0.20210914@sha256:683b8b74d64ebd07f9955147539834c2a4b60fee51d2a36fa76b9aba689601bf
   # -- Specify the WireGuard image pull policy
@@ -927,12 +961,12 @@ addons:
             - NET_ADMIN
             - NET_RAW
             - MKNOD
-        env:
-          DOT: "off"
-          DNS_KEEP_NAMESERVER: "on"
-          FIREWALL: "off"
-          FIREWALL_OUTBOUND_SUBNETS: ""
-          FIREWALL_INPUT_PORTS: ""
+      env:
+        DOT: "off"
+        DNS_KEEP_NAMESERVER: "on"
+        FIREWALL: "off"
+        FIREWALL_OUTBOUND_SUBNETS: ""
+        FIREWALL_INPUT_PORTS: ""
 
   # -- Tailscale specific configuration
   # @default -- See below
@@ -1115,6 +1149,7 @@ cnpg:
     # * `postgis`
     # * `timescaledb`
     # * `vectors`
+    # * `vectorchord`
     type: postgres
 
     # Version of Postgresql to use, changes cluster naming scheme
@@ -1138,6 +1173,9 @@ cnpg:
       # Additional Labels and annotations for cnpg cluster
       labels: {}
       annotations: {}
+      # Additional environment variables to set on all pods created in the cluster
+      env: {}
+      envFrom: {}
 
       # Number of instances
       instances: 2

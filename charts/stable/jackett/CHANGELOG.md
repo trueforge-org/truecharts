@@ -3,34 +3,15 @@ title: Changelog
 pagefind: false
 ---
 
-## [jackett-12.0.0](https://github.com/truecharts/charts/compare/jackett-11.1.0...jackett-12.0.0) (2022-11-10)
+## [jackett-12.0.0](https://github.com/trueforge-org/truecharts/compare/jackett-11.1.0...jackett-12.0.0) (2022-11-10)
 
 ### Chore
 
 - Major Change to GUI
 
-## [jackett-11.1.0](https://github.com/truecharts/charts/compare/jackett-11.0.130...jackett-11.1.0) (2022-11-10)
+## [jackett-11.1.0](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.130...jackett-11.1.0) (2022-11-10)
 
-## [jackett-11.0.130](https://github.com/truecharts/charts/compare/jackett-11.0.125...jackett-11.0.130) (2022-11-10)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update docker general non-major ([#4343](https://github.com/truecharts/charts/issues/4343))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update docker general non-major ([#4355](https://github.com/truecharts/charts/issues/4355))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-- update docker general non-major ([#4366](https://github.com/truecharts/charts/issues/4366))
-
-## [jackett-11.0.129](https://github.com/truecharts/charts/compare/jackett-11.0.125...jackett-11.0.129) (2022-11-09)
+## [jackett-11.0.130](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.125...jackett-11.0.130) (2022-11-10)
 
 ### Chore
 
@@ -41,13 +22,15 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4355](https://github.com/truecharts/charts/issues/4355))
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update docker general non-major ([#4343](https://github.com/truecharts/charts/issues/4343))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update docker general non-major ([#4343](https://github.com/trueforge-org/truecharts/issues/4343))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update docker general non-major ([#4355](https://github.com/trueforge-org/truecharts/issues/4355))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
+- update docker general non-major ([#4366](https://github.com/trueforge-org/truecharts/issues/4366))
 
-## [jackett-11.0.128](https://github.com/truecharts/charts/compare/jackett-11.0.125...jackett-11.0.128) (2022-11-08)
+## [jackett-11.0.129](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.125...jackett-11.0.129) (2022-11-09)
 
 ### Chore
 
@@ -57,12 +40,14 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update docker general non-major ([#4343](https://github.com/truecharts/charts/issues/4343))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4355](https://github.com/trueforge-org/truecharts/issues/4355))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update docker general non-major ([#4343](https://github.com/trueforge-org/truecharts/issues/4343))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [jackett-11.0.127](https://github.com/truecharts/charts/compare/jackett-11.0.125...jackett-11.0.127) (2022-11-08)
+## [jackett-11.0.128](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.125...jackett-11.0.128) (2022-11-08)
 
 ### Chore
 
@@ -71,11 +56,13 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update docker general non-major ([#4343](https://github.com/truecharts/charts/issues/4343))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update docker general non-major ([#4343](https://github.com/trueforge-org/truecharts/issues/4343))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [jackett-11.0.127](https://github.com/truecharts/charts/compare/jackett-11.0.125...jackett-11.0.127) (2022-11-08)
+## [jackett-11.0.127](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.125...jackett-11.0.127) (2022-11-08)
 
 ### Chore
 
@@ -83,181 +70,194 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update docker general non-major ([#4343](https://github.com/truecharts/charts/issues/4343))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update docker general non-major ([#4343](https://github.com/trueforge-org/truecharts/issues/4343))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [jackett-11.0.127](https://github.com/truecharts/charts/compare/jackett-11.0.125...jackett-11.0.127) (2022-11-08)
+## [jackett-11.0.127](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.125...jackett-11.0.127) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update docker general non-major ([#4343](https://github.com/truecharts/charts/issues/4343))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update docker general non-major ([#4343](https://github.com/trueforge-org/truecharts/issues/4343))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [jackett-11.0.126](https://github.com/truecharts/charts/compare/jackett-11.0.125...jackett-11.0.126) (2022-11-07)
+## [jackett-11.0.127](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.125...jackett-11.0.127) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [jackett-11.0.126](https://github.com/truecharts/charts/compare/jackett-11.0.125...jackett-11.0.126) (2022-11-06)
-
-### Chore
-
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update docker general non-major ([#4343](https://github.com/trueforge-org/truecharts/issues/4343))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [jackett-11.0.125](https://github.com/truecharts/charts/compare/jackett-11.0.124...jackett-11.0.125) (2022-11-06)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4317](https://github.com/truecharts/charts/issues/4317))
-
-## [jackett-11.0.124](https://github.com/truecharts/charts/compare/jackett-11.0.123...jackett-11.0.124) (2022-11-05)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
-
-## [jackett-11.0.123](https://github.com/truecharts/charts/compare/jackett-11.0.122...jackett-11.0.123) (2022-11-05)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#4301](https://github.com/truecharts/charts/issues/4301))
-
-## [jackett-11.0.122](https://github.com/truecharts/charts/compare/jackett-11.0.121...jackett-11.0.122) (2022-11-03)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#4286](https://github.com/truecharts/charts/issues/4286))
-
-## [jackett-11.0.121](https://github.com/truecharts/charts/compare/jackett-11.0.120...jackett-11.0.121) (2022-11-02)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
-- update docker general non-major ([#4280](https://github.com/truecharts/charts/issues/4280))
-
-## [jackett-11.0.120](https://github.com/truecharts/charts/compare/jackett-11.0.119...jackett-11.0.120) (2022-11-01)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#4260](https://github.com/truecharts/charts/issues/4260))
-
-## [jackett-11.0.119](https://github.com/truecharts/charts/compare/jackett-11.0.118...jackett-11.0.119) (2022-10-30)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#4238](https://github.com/truecharts/charts/issues/4238))
-
-## [jackett-11.0.118](https://github.com/truecharts/charts/compare/jackett-11.0.117...jackett-11.0.118) (2022-10-28)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#4218](https://github.com/truecharts/charts/issues/4218))
-
-## [jackett-11.0.117](https://github.com/truecharts/charts/compare/jackett-11.0.116...jackett-11.0.117) (2022-10-27)
+## [jackett-11.0.126](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.125...jackett-11.0.126) (2022-11-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4201](https://github.com/truecharts/charts/issues/4201))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [jackett-11.0.117](https://github.com/truecharts/charts/compare/jackett-11.0.116...jackett-11.0.117) (2022-10-27)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#4201](https://github.com/truecharts/charts/issues/4201))
-
-## [jackett-11.0.116](https://github.com/truecharts/charts/compare/jackett-11.0.115...jackett-11.0.116) (2022-10-25)
+## [jackett-11.0.126](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.125...jackett-11.0.126) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [jackett-11.0.115](https://github.com/truecharts/charts/compare/jackett-11.0.114...jackett-11.0.115) (2022-10-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#4181](https://github.com/truecharts/charts/issues/4181))
-
-## [jackett-11.0.114](https://github.com/truecharts/charts/compare/jackett-11.0.112...jackett-11.0.114) (2022-10-24)
+## [jackett-11.0.125](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.124...jackett-11.0.125) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4171](https://github.com/truecharts/charts/issues/4171))
+- update helm general non-major ([#4317](https://github.com/trueforge-org/truecharts/issues/4317))
 
-## [jackett-11.0.112](https://github.com/truecharts/charts/compare/jackett-11.0.111...jackett-11.0.112) (2022-10-22)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#4155](https://github.com/truecharts/charts/issues/4155))
-
-## [jackett-11.0.111](https://github.com/truecharts/charts/compare/jackett-11.0.110...jackett-11.0.111) (2022-10-21)
+## [jackett-11.0.124](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.123...jackett-11.0.124) (2022-11-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4139](https://github.com/truecharts/charts/issues/4139))
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
 
-## [jackett-11.0.110](https://github.com/truecharts/charts/compare/jackett-11.0.109...jackett-11.0.110) (2022-10-19)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
-- update docker general non-major ([#4128](https://github.com/truecharts/charts/issues/4128))
-
-## [jackett-11.0.109](https://github.com/truecharts/charts/compare/jackett-11.0.108...jackett-11.0.109) (2022-10-17)
+## [jackett-11.0.123](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.122...jackett-11.0.123) (2022-11-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4119](https://github.com/truecharts/charts/issues/4119))
+- update docker general non-major ([#4301](https://github.com/trueforge-org/truecharts/issues/4301))
 
-## [jackett-11.0.108](https://github.com/truecharts/charts/compare/jackett-11.0.107...jackett-11.0.108) (2022-10-14)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#4084](https://github.com/truecharts/charts/issues/4084))
-
-## [jackett-11.0.107](https://github.com/truecharts/charts/compare/jackett-11.0.106...jackett-11.0.107) (2022-10-12)
+## [jackett-11.0.122](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.121...jackett-11.0.122) (2022-11-03)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4071](https://github.com/truecharts/charts/issues/4071))
+- update docker general non-major ([#4286](https://github.com/trueforge-org/truecharts/issues/4286))
 
-## [jackett-11.0.106](https://github.com/truecharts/charts/compare/jackett-11.0.105...jackett-11.0.106) (2022-10-11)
+## [jackett-11.0.121](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.120...jackett-11.0.121) (2022-11-02)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4070](https://github.com/truecharts/charts/issues/4070))
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
+- update docker general non-major ([#4280](https://github.com/trueforge-org/truecharts/issues/4280))
+
+## [jackett-11.0.120](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.119...jackett-11.0.120) (2022-11-01)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4260](https://github.com/trueforge-org/truecharts/issues/4260))
+
+## [jackett-11.0.119](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.118...jackett-11.0.119) (2022-10-30)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4238](https://github.com/trueforge-org/truecharts/issues/4238))
+
+## [jackett-11.0.118](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.117...jackett-11.0.118) (2022-10-28)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4218](https://github.com/trueforge-org/truecharts/issues/4218))
+
+## [jackett-11.0.117](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.116...jackett-11.0.117) (2022-10-27)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4201](https://github.com/trueforge-org/truecharts/issues/4201))
+
+## [jackett-11.0.117](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.116...jackett-11.0.117) (2022-10-27)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4201](https://github.com/trueforge-org/truecharts/issues/4201))
+
+## [jackett-11.0.116](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.115...jackett-11.0.116) (2022-10-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
+
+## [jackett-11.0.115](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.114...jackett-11.0.115) (2022-10-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4181](https://github.com/trueforge-org/truecharts/issues/4181))
+
+## [jackett-11.0.114](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.112...jackett-11.0.114) (2022-10-24)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4171](https://github.com/trueforge-org/truecharts/issues/4171))
+
+## [jackett-11.0.112](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.111...jackett-11.0.112) (2022-10-22)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4155](https://github.com/trueforge-org/truecharts/issues/4155))
+
+## [jackett-11.0.111](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.110...jackett-11.0.111) (2022-10-21)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4139](https://github.com/trueforge-org/truecharts/issues/4139))
+
+## [jackett-11.0.110](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.109...jackett-11.0.110) (2022-10-19)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
+- update docker general non-major ([#4128](https://github.com/trueforge-org/truecharts/issues/4128))
+
+## [jackett-11.0.109](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.108...jackett-11.0.109) (2022-10-17)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4119](https://github.com/trueforge-org/truecharts/issues/4119))
+
+## [jackett-11.0.108](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.107...jackett-11.0.108) (2022-10-14)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4084](https://github.com/trueforge-org/truecharts/issues/4084))
+
+## [jackett-11.0.107](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.106...jackett-11.0.107) (2022-10-12)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4071](https://github.com/trueforge-org/truecharts/issues/4071))
+
+## [jackett-11.0.106](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.105...jackett-11.0.106) (2022-10-11)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4070](https://github.com/trueforge-org/truecharts/issues/4070))
 - update docker general non-major
 
-## [jackett-11.0.105](https://github.com/truecharts/charts/compare/jackett-11.0.104...jackett-11.0.105) (2022-10-07)
+## [jackett-11.0.105](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.104...jackett-11.0.105) (2022-10-07)
 
 ### Chore
 
@@ -265,71 +265,71 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [jackett-11.0.105](https://github.com/truecharts/charts/compare/jackett-11.0.104...jackett-11.0.105) (2022-10-07)
+## [jackett-11.0.105](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.104...jackett-11.0.105) (2022-10-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [jackett-11.0.104](https://github.com/truecharts/charts/compare/jackett-11.0.103...jackett-11.0.104) (2022-10-07)
+## [jackett-11.0.104](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.103...jackett-11.0.104) (2022-10-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update docker general non-major
 
-## [jackett-11.0.103](https://github.com/truecharts/charts/compare/jackett-11.0.102...jackett-11.0.103) (2022-10-05)
+## [jackett-11.0.103](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.102...jackett-11.0.103) (2022-10-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [jackett-11.0.102](https://github.com/truecharts/charts/compare/jackett-11.0.101...jackett-11.0.102) (2022-10-04)
+## [jackett-11.0.102](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.101...jackett-11.0.102) (2022-10-04)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
-- update docker general non-major ([#4001](https://github.com/truecharts/charts/issues/4001))
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
+- update docker general non-major ([#4001](https://github.com/trueforge-org/truecharts/issues/4001))
 - update docker general non-major
 
-## [jackett-11.0.101](https://github.com/truecharts/charts/compare/jackett-11.0.100...jackett-11.0.101) (2022-10-01)
+## [jackett-11.0.101](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.100...jackett-11.0.101) (2022-10-01)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#3975](https://github.com/truecharts/charts/issues/3975))
+- update docker general non-major ([#3975](https://github.com/trueforge-org/truecharts/issues/3975))
 
-## [jackett-11.0.100](https://github.com/truecharts/charts/compare/jackett-11.0.99...jackett-11.0.100) (2022-09-30)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3965](https://github.com/truecharts/charts/issues/3965))
-
-## [jackett-11.0.99](https://github.com/truecharts/charts/compare/jackett-11.0.98...jackett-11.0.99) (2022-09-28)
-
-### Chore
-
-- update docker general non-major ([#3938](https://github.com/truecharts/charts/issues/3938))
-
-## [jackett-11.0.96](https://github.com/truecharts/charts/compare/jackett-11.0.95...jackett-11.0.96) (2022-09-27)
+## [jackett-11.0.100](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.99...jackett-11.0.100) (2022-09-30)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3918](https://github.com/truecharts/charts/issues/3918))
+- update docker general non-major ([#3965](https://github.com/trueforge-org/truecharts/issues/3965))
 
-## [jackett-11.0.95](https://github.com/truecharts/charts/compare/jackett-11.0.94...jackett-11.0.95) (2022-09-26)
+## [jackett-11.0.99](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.98...jackett-11.0.99) (2022-09-28)
+
+### Chore
+
+- update docker general non-major ([#3938](https://github.com/trueforge-org/truecharts/issues/3938))
+
+## [jackett-11.0.96](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.95...jackett-11.0.96) (2022-09-27)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#3906](https://github.com/truecharts/charts/issues/3906))
+- update helm general non-major ([#3918](https://github.com/trueforge-org/truecharts/issues/3918))
 
-## [jackett-11.0.94](https://github.com/truecharts/charts/compare/jackett-11.0.93...jackett-11.0.94) (2022-09-25)
+## [jackett-11.0.95](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.94...jackett-11.0.95) (2022-09-26)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3906](https://github.com/trueforge-org/truecharts/issues/3906))
+
+## [jackett-11.0.94](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.93...jackett-11.0.94) (2022-09-25)
 
 ### Chore
 
@@ -339,28 +339,28 @@ pagefind: false
 
 - arbitrary bump
 
-## [jackett-11.0.93](https://github.com/truecharts/charts/compare/jackett-11.0.92...jackett-11.0.93) (2022-09-25)
+## [jackett-11.0.93](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.92...jackett-11.0.93) (2022-09-25)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
 
-## [jackett-11.0.92](https://github.com/truecharts/charts/compare/jackett-11.0.91...jackett-11.0.92) (2022-09-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3881](https://github.com/truecharts/charts/issues/3881))
-
-## [jackett-11.0.91](https://github.com/truecharts/charts/compare/jackett-11.0.90...jackett-11.0.91) (2022-09-23)
+## [jackett-11.0.92](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.91...jackett-11.0.92) (2022-09-25)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#3850](https://github.com/truecharts/charts/issues/3850))
+- update docker general non-major ([#3881](https://github.com/trueforge-org/truecharts/issues/3881))
 
-## [jackett-11.0.90](https://github.com/truecharts/charts/compare/jackett-11.0.83...jackett-11.0.90) (2022-09-22)
+## [jackett-11.0.91](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.90...jackett-11.0.91) (2022-09-23)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3850](https://github.com/trueforge-org/truecharts/issues/3850))
+
+## [jackett-11.0.90](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.83...jackett-11.0.90) (2022-09-22)
 
 ### Chore
 
@@ -378,15 +378,15 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3790](https://github.com/truecharts/charts/issues/3790))
-- update docker general non-major ([#3818](https://github.com/truecharts/charts/issues/3818))
-- update docker general non-major ([#3839](https://github.com/truecharts/charts/issues/3839))
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update docker general non-major ([#3790](https://github.com/trueforge-org/truecharts/issues/3790))
+- update docker general non-major ([#3818](https://github.com/trueforge-org/truecharts/issues/3818))
+- update docker general non-major ([#3839](https://github.com/trueforge-org/truecharts/issues/3839))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 - try bump again
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [jackett-11.0.88](https://github.com/truecharts/charts/compare/jackett-11.0.83...jackett-11.0.88) (2022-09-22)
+## [jackett-11.0.88](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.83...jackett-11.0.88) (2022-09-22)
 
 ### Chore
 
@@ -403,14 +403,14 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3839](https://github.com/truecharts/charts/issues/3839))
-- update docker general non-major ([#3790](https://github.com/truecharts/charts/issues/3790))
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update docker general non-major ([#3818](https://github.com/truecharts/charts/issues/3818))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3839](https://github.com/trueforge-org/truecharts/issues/3839))
+- update docker general non-major ([#3790](https://github.com/trueforge-org/truecharts/issues/3790))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update docker general non-major ([#3818](https://github.com/trueforge-org/truecharts/issues/3818))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [jackett-11.0.87](https://github.com/truecharts/charts/compare/jackett-11.0.83...jackett-11.0.87) (2022-09-21)
+## [jackett-11.0.87](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.83...jackett-11.0.87) (2022-09-21)
 
 ### Chore
 
@@ -426,13 +426,13 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3790](https://github.com/truecharts/charts/issues/3790))
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update docker general non-major ([#3818](https://github.com/truecharts/charts/issues/3818))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3790](https://github.com/trueforge-org/truecharts/issues/3790))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update docker general non-major ([#3818](https://github.com/trueforge-org/truecharts/issues/3818))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [jackett-11.0.87](https://github.com/truecharts/charts/compare/jackett-11.0.83...jackett-11.0.87) (2022-09-20)
+## [jackett-11.0.87](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.83...jackett-11.0.87) (2022-09-20)
 
 ### Chore
 
@@ -447,13 +447,13 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3790](https://github.com/truecharts/charts/issues/3790))
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update docker general non-major ([#3818](https://github.com/truecharts/charts/issues/3818))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3790](https://github.com/trueforge-org/truecharts/issues/3790))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update docker general non-major ([#3818](https://github.com/trueforge-org/truecharts/issues/3818))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [jackett-11.0.87](https://github.com/truecharts/charts/compare/jackett-11.0.83...jackett-11.0.87) (2022-09-20)
+## [jackett-11.0.87](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.83...jackett-11.0.87) (2022-09-20)
 
 ### Chore
 
@@ -467,13 +467,13 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3818](https://github.com/truecharts/charts/issues/3818))
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update docker general non-major ([#3790](https://github.com/truecharts/charts/issues/3790))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3818](https://github.com/trueforge-org/truecharts/issues/3818))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update docker general non-major ([#3790](https://github.com/trueforge-org/truecharts/issues/3790))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [jackett-11.0.86](https://github.com/truecharts/charts/compare/jackett-11.0.83...jackett-11.0.86) (2022-09-19)
+## [jackett-11.0.86](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.83...jackett-11.0.86) (2022-09-19)
 
 ### Chore
 
@@ -486,12 +486,12 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update docker general non-major ([#3790](https://github.com/truecharts/charts/issues/3790))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update docker general non-major ([#3790](https://github.com/trueforge-org/truecharts/issues/3790))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [jackett-11.0.86](https://github.com/truecharts/charts/compare/jackett-11.0.83...jackett-11.0.86) (2022-09-19)
+## [jackett-11.0.86](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.83...jackett-11.0.86) (2022-09-19)
 
 ### Chore
 
@@ -503,97 +503,28 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3790](https://github.com/truecharts/charts/issues/3790))
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3790](https://github.com/trueforge-org/truecharts/issues/3790))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [jackett-11.0.86](https://github.com/truecharts/charts/compare/jackett-11.0.83...jackett-11.0.86) (2022-09-19)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- refactor Services SCALE GUI
-- update docker general non-major ([#3790](https://github.com/truecharts/charts/issues/3790))
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [jackett-11.0.85](https://github.com/truecharts/charts/compare/jackett-11.0.83...jackett-11.0.85) (2022-09-17)
+## [jackett-11.0.86](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.83...jackett-11.0.86) (2022-09-19)
 
 ### Chore
 
+- Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3790](https://github.com/trueforge-org/truecharts/issues/3790))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [jackett-11.0.84](https://github.com/truecharts/charts/compare/jackett-11.0.83...jackett-11.0.84) (2022-09-18)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [jackett-11.0.84](https://github.com/truecharts/charts/compare/jackett-11.0.83...jackett-11.0.84) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [jackett-11.0.84](https://github.com/truecharts/charts/compare/jackett-11.0.83...jackett-11.0.84) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [jackett-11.0.84](https://github.com/truecharts/charts/compare/jackett-11.0.83...jackett-11.0.84) (2022-09-15)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [jackett-11.0.84](https://github.com/truecharts/charts/compare/jackett-11.0.83...jackett-11.0.84) (2022-09-15)
-
-### Chore
-
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [jackett-11.0.83](https://github.com/truecharts/charts/compare/jackett-11.0.82...jackett-11.0.83) (2022-09-13)
-
-### Chore
-
-- update docker general non-major ([#3755](https://github.com/truecharts/charts/issues/3755))
-
-## [jackett-11.0.82](https://github.com/truecharts/charts/compare/jackett-11.0.80...jackett-11.0.82) (2022-09-12)
+## [jackett-11.0.85](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.83...jackett-11.0.85) (2022-09-17)
 
 ### Chore
 
@@ -602,11 +533,67 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#3743](https://github.com/truecharts/charts/issues/3743))
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
+- refactor Services SCALE GUI
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [jackett-11.0.82](https://github.com/truecharts/charts/compare/jackett-11.0.80...jackett-11.0.82) (2022-09-12)
+## [jackett-11.0.84](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.83...jackett-11.0.84) (2022-09-18)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [jackett-11.0.84](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.83...jackett-11.0.84) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [jackett-11.0.84](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.83...jackett-11.0.84) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [jackett-11.0.84](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.83...jackett-11.0.84) (2022-09-15)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [jackett-11.0.84](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.83...jackett-11.0.84) (2022-09-15)
+
+### Chore
+
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [jackett-11.0.83](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.82...jackett-11.0.83) (2022-09-13)
+
+### Chore
+
+- update docker general non-major ([#3755](https://github.com/trueforge-org/truecharts/issues/3755))
+
+## [jackett-11.0.82](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.80...jackett-11.0.82) (2022-09-12)
 
 ### Chore
 
@@ -614,222 +601,235 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#3743](https://github.com/truecharts/charts/issues/3743))
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3743](https://github.com/trueforge-org/truecharts/issues/3743))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [jackett-11.0.82](https://github.com/truecharts/charts/compare/jackett-11.0.80...jackett-11.0.82) (2022-09-12)
+## [jackett-11.0.82](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.80...jackett-11.0.82) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#3743](https://github.com/truecharts/charts/issues/3743))
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3743](https://github.com/trueforge-org/truecharts/issues/3743))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [jackett-11.0.81](https://github.com/truecharts/charts/compare/jackett-11.0.80...jackett-11.0.81) (2022-09-11)
+## [jackett-11.0.82](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.80...jackett-11.0.82) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3743](https://github.com/trueforge-org/truecharts/issues/3743))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [jackett-11.0.81](https://github.com/truecharts/charts/compare/jackett-11.0.80...jackett-11.0.81) (2022-09-11)
+## [jackett-11.0.81](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.80...jackett-11.0.81) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [jackett-11.0.81](https://github.com/truecharts/charts/compare/jackett-11.0.80...jackett-11.0.81) (2022-09-11)
-
-### Chore
-
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
-
-## [jackett-11.0.80](https://github.com/truecharts/charts/compare/jackett-11.0.79...jackett-11.0.80) (2022-09-10)
-
-### Chore
-
-- update docker general non-major ([#3727](https://github.com/truecharts/charts/issues/3727))
-
-## [jackett-11.0.79](https://github.com/truecharts/charts/compare/jackett-11.0.78...jackett-11.0.79) (2022-09-07)
+## [jackett-11.0.81](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.80...jackett-11.0.81) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#3710](https://github.com/truecharts/charts/issues/3710))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [jackett-11.0.79](https://github.com/truecharts/charts/compare/jackett-11.0.78...jackett-11.0.79) (2022-09-06)
-
-### Chore
-
-- update docker general non-major ([#3710](https://github.com/truecharts/charts/issues/3710))
-
-## [jackett-11.0.78](https://github.com/truecharts/charts/compare/jackett-11.0.77...jackett-11.0.78) (2022-09-05)
+## [jackett-11.0.81](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.80...jackett-11.0.81) (2022-09-11)
 
 ### Chore
 
-- update docker general non-major ([#3700](https://github.com/truecharts/charts/issues/3700))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [jackett-11.0.77](https://github.com/truecharts/charts/compare/jackett-11.0.76...jackett-11.0.77) (2022-09-04)
-
-### Chore
-
-- update docker general non-major ([#3681](https://github.com/truecharts/charts/issues/3681))
-
-## [jackett-11.0.76](https://github.com/truecharts/charts/compare/jackett-11.0.75...jackett-11.0.76) (2022-09-02)
+## [jackett-11.0.80](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.79...jackett-11.0.80) (2022-09-10)
 
 ### Chore
 
-- update docker general non-major ([#3660](https://github.com/truecharts/charts/issues/3660))
+- update docker general non-major ([#3727](https://github.com/trueforge-org/truecharts/issues/3727))
 
-## [jackett-11.0.75](https://github.com/truecharts/charts/compare/jackett-11.0.74...jackett-11.0.75) (2022-08-31)
-
-### Chore
-
-- update docker general non-major ([#3640](https://github.com/truecharts/charts/issues/3640))
-
-## [jackett-11.0.74](https://github.com/truecharts/charts/compare/jackett-11.0.72...jackett-11.0.74) (2022-08-30)
+## [jackett-11.0.79](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.78...jackett-11.0.79) (2022-09-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
+- update docker general non-major ([#3710](https://github.com/trueforge-org/truecharts/issues/3710))
 
-## [jackett-11.0.73](https://github.com/truecharts/charts/compare/jackett-11.0.72...jackett-11.0.73) (2022-08-30)
-
-### Chore
-
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
-
-## [jackett-11.0.72](https://github.com/truecharts/charts/compare/jackett-11.0.71...jackett-11.0.72) (2022-08-29)
+## [jackett-11.0.79](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.78...jackett-11.0.79) (2022-09-06)
 
 ### Chore
 
-- update helm general non-major ([#3619](https://github.com/truecharts/charts/issues/3619))
+- update docker general non-major ([#3710](https://github.com/trueforge-org/truecharts/issues/3710))
 
-## [jackett-11.0.71](https://github.com/truecharts/charts/compare/jackett-11.0.70...jackett-11.0.71) (2022-08-29)
-
-### Chore
-
-- update docker general non-major ([#3606](https://github.com/truecharts/charts/issues/3606))
-
-## [jackett-11.0.70](https://github.com/truecharts/charts/compare/jackett-11.0.69...jackett-11.0.70) (2022-08-28)
+## [jackett-11.0.78](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.77...jackett-11.0.78) (2022-09-05)
 
 ### Chore
 
-- update docker general non-major ([#3600](https://github.com/truecharts/charts/issues/3600))
+- update docker general non-major ([#3700](https://github.com/trueforge-org/truecharts/issues/3700))
 
-## [jackett-11.0.69](https://github.com/truecharts/charts/compare/jackett-11.0.68...jackett-11.0.69) (2022-08-27)
-
-### Chore
-
-- update docker general non-major ([#3587](https://github.com/truecharts/charts/issues/3587))
-
-## [jackett-11.0.68](https://github.com/truecharts/charts/compare/jackett-11.0.67...jackett-11.0.68) (2022-08-25)
+## [jackett-11.0.77](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.76...jackett-11.0.77) (2022-09-04)
 
 ### Chore
 
-- update docker general non-major ([#3561](https://github.com/truecharts/charts/issues/3561))
+- update docker general non-major ([#3681](https://github.com/trueforge-org/truecharts/issues/3681))
 
-## [jackett-11.0.67](https://github.com/truecharts/charts/compare/jackett-11.0.66...jackett-11.0.67) (2022-08-24)
-
-### Chore
-
-- update docker general non-major ([#3552](https://github.com/truecharts/charts/issues/3552))
-
-## [jackett-11.0.66](https://github.com/truecharts/charts/compare/jackett-11.0.65...jackett-11.0.66) (2022-08-23)
+## [jackett-11.0.76](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.75...jackett-11.0.76) (2022-09-02)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3545](https://github.com/truecharts/charts/issues/3545))
+- update docker general non-major ([#3660](https://github.com/trueforge-org/truecharts/issues/3660))
 
-## [jackett-11.0.65](https://github.com/truecharts/charts/compare/jackett-11.0.64...jackett-11.0.65) (2022-08-23)
-
-### Chore
-
-- update docker general non-major docker tags ([#3544](https://github.com/truecharts/charts/issues/3544))
-
-## [jackett-11.0.64](https://github.com/truecharts/charts/compare/jackett-11.0.63...jackett-11.0.64) (2022-08-22)
+## [jackett-11.0.75](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.74...jackett-11.0.75) (2022-08-31)
 
 ### Chore
 
-- update docker general non-major ([#3530](https://github.com/truecharts/charts/issues/3530))
+- update docker general non-major ([#3640](https://github.com/trueforge-org/truecharts/issues/3640))
 
-## [jackett-11.0.63](https://github.com/truecharts/charts/compare/jackett-11.0.62...jackett-11.0.63) (2022-08-21)
-
-### Chore
-
-- update docker general non-major docker tags ([#3523](https://github.com/truecharts/charts/issues/3523))
-
-## [jackett-11.0.62](https://github.com/truecharts/charts/compare/jackett-11.0.61...jackett-11.0.62) (2022-08-20)
+## [jackett-11.0.74](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.72...jackett-11.0.74) (2022-08-30)
 
 ### Chore
 
-- update docker general non-major docker tags ([#3518](https://github.com/truecharts/charts/issues/3518))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
 
-## [jackett-11.0.61](https://github.com/truecharts/charts/compare/jackett-11.0.60...jackett-11.0.61) (2022-08-19)
-
-### Chore
-
-- update docker general non-major docker tags ([#3512](https://github.com/truecharts/charts/issues/3512))
-
-## [jackett-11.0.60](https://github.com/truecharts/charts/compare/jackett-11.0.59...jackett-11.0.60) (2022-08-18)
+## [jackett-11.0.73](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.72...jackett-11.0.73) (2022-08-30)
 
 ### Chore
 
-- update docker general non-major ([#3503](https://github.com/truecharts/charts/issues/3503))
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
 
-## [jackett-11.0.59](https://github.com/truecharts/charts/compare/jackett-11.0.58...jackett-11.0.59) (2022-08-17)
-
-### Chore
-
-- update docker general non-major ([#3478](https://github.com/truecharts/charts/issues/3478))
-
-## [jackett-11.0.58](https://github.com/truecharts/charts/compare/jackett-11.0.57...jackett-11.0.58) (2022-08-14)
+## [jackett-11.0.72](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.71...jackett-11.0.72) (2022-08-29)
 
 ### Chore
 
-- update docker general non-major docker tags ([#3465](https://github.com/truecharts/charts/issues/3465))
+- update helm general non-major ([#3619](https://github.com/trueforge-org/truecharts/issues/3619))
 
-## [jackett-11.0.57](https://github.com/truecharts/charts/compare/jackett-11.0.56...jackett-11.0.57) (2022-08-12)
+## [jackett-11.0.71](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.70...jackett-11.0.71) (2022-08-29)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- update docker general non-major ([#3606](https://github.com/trueforge-org/truecharts/issues/3606))
 
-## [jackett-11.0.56](https://github.com/truecharts/charts/compare/jackett-11.0.55...jackett-11.0.56) (2022-08-12)
+## [jackett-11.0.70](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.69...jackett-11.0.70) (2022-08-28)
+
+### Chore
+
+- update docker general non-major ([#3600](https://github.com/trueforge-org/truecharts/issues/3600))
+
+## [jackett-11.0.69](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.68...jackett-11.0.69) (2022-08-27)
+
+### Chore
+
+- update docker general non-major ([#3587](https://github.com/trueforge-org/truecharts/issues/3587))
+
+## [jackett-11.0.68](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.67...jackett-11.0.68) (2022-08-25)
+
+### Chore
+
+- update docker general non-major ([#3561](https://github.com/trueforge-org/truecharts/issues/3561))
+
+## [jackett-11.0.67](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.66...jackett-11.0.67) (2022-08-24)
+
+### Chore
+
+- update docker general non-major ([#3552](https://github.com/trueforge-org/truecharts/issues/3552))
+
+## [jackett-11.0.66](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.65...jackett-11.0.66) (2022-08-23)
+
+### Chore
+
+- update helm general non-major helm releases ([#3545](https://github.com/trueforge-org/truecharts/issues/3545))
+
+## [jackett-11.0.65](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.64...jackett-11.0.65) (2022-08-23)
+
+### Chore
+
+- update docker general non-major docker tags ([#3544](https://github.com/trueforge-org/truecharts/issues/3544))
+
+## [jackett-11.0.64](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.63...jackett-11.0.64) (2022-08-22)
+
+### Chore
+
+- update docker general non-major ([#3530](https://github.com/trueforge-org/truecharts/issues/3530))
+
+## [jackett-11.0.63](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.62...jackett-11.0.63) (2022-08-21)
+
+### Chore
+
+- update docker general non-major docker tags ([#3523](https://github.com/trueforge-org/truecharts/issues/3523))
+
+## [jackett-11.0.62](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.61...jackett-11.0.62) (2022-08-20)
+
+### Chore
+
+- update docker general non-major docker tags ([#3518](https://github.com/trueforge-org/truecharts/issues/3518))
+
+## [jackett-11.0.61](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.60...jackett-11.0.61) (2022-08-19)
+
+### Chore
+
+- update docker general non-major docker tags ([#3512](https://github.com/trueforge-org/truecharts/issues/3512))
+
+## [jackett-11.0.60](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.59...jackett-11.0.60) (2022-08-18)
+
+### Chore
+
+- update docker general non-major ([#3503](https://github.com/trueforge-org/truecharts/issues/3503))
+
+## [jackett-11.0.59](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.58...jackett-11.0.59) (2022-08-17)
+
+### Chore
+
+- update docker general non-major ([#3478](https://github.com/trueforge-org/truecharts/issues/3478))
+
+## [jackett-11.0.58](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.57...jackett-11.0.58) (2022-08-14)
+
+### Chore
+
+- update docker general non-major docker tags ([#3465](https://github.com/trueforge-org/truecharts/issues/3465))
+
+## [jackett-11.0.57](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.56...jackett-11.0.57) (2022-08-12)
+
+### Chore
+
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
+
+## [jackett-11.0.56](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.55...jackett-11.0.56) (2022-08-12)
 
 ### Chore
 
 - add documentation checkbox/section to all SCALE Apps
-- update docker general non-major ([#3453](https://github.com/truecharts/charts/issues/3453))
+- update docker general non-major ([#3453](https://github.com/trueforge-org/truecharts/issues/3453))
 
 ### Fix
 
-- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/truecharts/charts/issues/3447))
+- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/trueforge-org/truecharts/issues/3447))
 
-## [jackett-11.0.55](https://github.com/truecharts/charts/compare/jackett-11.0.54...jackett-11.0.55) (2022-08-09)
-
-### Chore
-
-- update docker general non-major ([#3377](https://github.com/truecharts/charts/issues/3377))
-
-## [jackett-11.0.54](https://github.com/truecharts/charts/compare/jackett-11.0.52...jackett-11.0.54) (2022-08-08)
+## [jackett-11.0.55](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.54...jackett-11.0.55) (2022-08-09)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- update docker general non-major ([#3356](https://github.com/truecharts/charts/issues/3356))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update docker general non-major ([#3377](https://github.com/trueforge-org/truecharts/issues/3377))
+
+## [jackett-11.0.54](https://github.com/trueforge-org/truecharts/compare/jackett-11.0.52...jackett-11.0.54) (2022-08-08)
+
+### Chore
+
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- update docker general non-major ([#3356](https://github.com/trueforge-org/truecharts/issues/3356))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
 
 ## [jackett-11.0.52](https://github.com/truecharts/apps/compare/jackett-11.0.51...jackett-11.0.52) (2022-07-29)
 
@@ -899,7 +899,7 @@ pagefind: false
 
 - Bump all charts to generate config and container references due to huge increase of repository
 - update helm general non-major helm releases ([#3268](https://github.com/truecharts/apps/issues/3268))
-- update container image tccr.io/truecharts/jackett to v0.20.1326 ([#3267](https://github.com/truecharts/apps/issues/3267))
+- update container image oci.trueforge.org/truecharts/jackett to v0.20.1326 ([#3267](https://github.com/truecharts/apps/issues/3267))
 
 ## [jackett-11.0.44](https://github.com/truecharts/apps/compare/jackett-11.0.43...jackett-11.0.44) (2022-07-20)
 

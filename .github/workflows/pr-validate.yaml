@@ -17,20 +17,14 @@ jobs:
       addedOrModifiedCharts: ${{ steps.collect-changes.outputs.addedOrModifiedCharts }}
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
 
       - name: Collect changes
         id: collect-changes
         uses: ./.github/actions/collect-changes
 
-  containers-build:
-    uses: ./.github/workflows/containers.build.yaml
-
   common-tests:
     uses: ./.github/workflows/common-tests.yaml
-
-  clustertool-tests:
-    uses: ./.github/workflows/clustertool.tests.yaml
 
   charts-lint:
     uses: ./.github/workflows/charts-lint.yaml
@@ -63,7 +57,7 @@ jobs:
       pr-title: ${{ github.event.pull_request.title }}
     steps:
       - name: Get repo
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: verbose head git commit message
@@ -81,10 +75,8 @@ jobs:
     if: always()
     needs:
       - pr-changes
-      - containers-build
       - charts-lint
       - charts-test
-      - clustertool-tests
       - website-and-docs
       - print_head_msg
       - common-tests
@@ -92,9 +84,7 @@ jobs:
       - name: Check Results
         run: |
           if [[ "${{ needs.pr-changes.result }}" != "success" || \
-                "${{ needs.containers-build.result }}" != "success" || \
                 "${{ needs.charts-lint.result }}" != "success" || \
-                "${{ needs.clustertool-tests.result }}" != "success" || \
                 "${{ needs.charts-test.result }}" != "success" || \
                 "${{ needs.website-and-docs.result }}" != "success" || \
                 "${{ needs.common-tests.result }}" != "success" || \

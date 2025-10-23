@@ -33,6 +33,11 @@
       "CREATE EXTENSION IF NOT EXISTS vectors;") -}}
   {{- end -}}
 
+  {{- if eq $objectData.type "vectorchord" -}}
+    {{- $postInitApplicationSQL = concat $postInitApplicationSQL (list
+      "CREATE EXTENSION IF NOT EXISTS vchord CASCADE;") -}}
+  {{- end -}}
+
   {{- if $objectData.cluster.initdb -}}
     {{- $postInitApplicationSQL = concat $postInitApplicationSQL ( $objectData.cluster.initdb.postInitApplicationSQL | default list ) -}}
     {{- $postInitSQL = concat $postInitSQL ( $objectData.cluster.initdb.postInitSQL | default list ) -}}

@@ -523,7 +523,7 @@ pagefind: false
 
 ### Chore
 
-- update container image tccr.io/truecharts/node-red to v3.0.0 ([#3187](https://github.com/truecharts/apps/issues/3187))
+- update container image oci.trueforge.org/truecharts/node-red to v3.0.0 ([#3187](https://github.com/truecharts/apps/issues/3187))
 
 ## [node-red-11.0.18](https://github.com/truecharts/apps/compare/node-red-11.0.17...node-red-11.0.18) (2022-07-14)
 

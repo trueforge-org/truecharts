@@ -6,7 +6,7 @@ This guide will help you go through the steps to use Cloudflareddns to update yo
 
 ## Prerequisites
 
-This guide assumes you've followed our [clusterissuer guide](/charts/premium/clusterissuer/how-to) with your domain and done the configuration for your DNS on Cloudflare
+This guide assumes you've followed our [clusterissuer guide](/truecharts/charts/stable/clusterissuer/how-to) with your domain and done the configuration for your DNS on Cloudflare
 
 The recommended way is to setup CNAMEs for your subdomains (charts) and keep your A record pointed to your base domain, such as below
 

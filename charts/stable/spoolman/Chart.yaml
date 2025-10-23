@@ -1,0 +1,43 @@
+annotations:
+  artifacthub.io/links: |-
+    - name: support
+    url: https://discord.com/invite/tVsPTHWTtr
+  max_scale_version: 24.04.1
+  min_scale_version: 24.04.0
+  truecharts.org/category: inventory
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
+apiVersion: v2
+appVersion: 0.22.1
+dependencies:
+  - name: common
+    version: 28.26.1
+    repository: oci://oci.trueforge.org/truecharts
+    condition: ""
+    alias: ""
+    tags: []
+    import-values: []
+deprecated: false
+description: Keep track of your inventory of 3D-printer filament spools.
+home: https://truecharts.org/charts/stable/spoolman
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/spoolman.webp
+keywords:
+  - spoolman
+  - inventory
+kubeVersion: '>=1.24.0-0'
+maintainers:
+  - name: TrueCharts
+    email: info@truecharts.org
+    url: https://truecharts.org
+name: spoolman
+sources:
+  - https://ghcr.io/donkie/spoolman
+  - https://github.com/Donkie/Spoolman
+  - https://github.com/truecharts/charts/tree/master/charts/stable/spoolman
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/spoolman
+type: application
+version: 1.9.1
+

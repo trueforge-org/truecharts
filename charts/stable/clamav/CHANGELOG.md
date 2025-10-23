@@ -3,7 +3,7 @@ title: Changelog
 pagefind: false
 ---
 
-## [clamav-4.0.0](https://github.com/truecharts/charts/compare/clamav-3.0.50...clamav-4.0.0) (2022-11-10)
+## [clamav-4.0.0](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.50...clamav-4.0.0) (2022-11-10)
 
 ### Chore
 
@@ -15,15 +15,15 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Major Change to GUI
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
 ### Fix
 
 - change container config label
 
-## [clamav-3.0.53](https://github.com/truecharts/charts/compare/clamav-3.0.50...clamav-3.0.53) (2022-11-08)
+## [clamav-3.0.53](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.50...clamav-3.0.53) (2022-11-08)
 
 ### Chore
 
@@ -33,23 +33,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [clamav-3.0.52](https://github.com/truecharts/charts/compare/clamav-3.0.50...clamav-3.0.52) (2022-11-08)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [clamav-3.0.52](https://github.com/truecharts/charts/compare/clamav-3.0.50...clamav-3.0.52) (2022-11-08)
+## [clamav-3.0.52](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.50...clamav-3.0.52) (2022-11-08)
 
 ### Chore
 
@@ -57,84 +45,96 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [clamav-3.0.52](https://github.com/truecharts/charts/compare/clamav-3.0.50...clamav-3.0.52) (2022-11-08)
+## [clamav-3.0.52](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.50...clamav-3.0.52) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [clamav-3.0.51](https://github.com/truecharts/charts/compare/clamav-3.0.50...clamav-3.0.51) (2022-11-07)
+## [clamav-3.0.52](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.50...clamav-3.0.52) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [clamav-3.0.51](https://github.com/truecharts/charts/compare/clamav-3.0.50...clamav-3.0.51) (2022-11-06)
+## [clamav-3.0.51](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.50...clamav-3.0.51) (2022-11-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [clamav-3.0.50](https://github.com/truecharts/charts/compare/clamav-3.0.49...clamav-3.0.50) (2022-11-06)
+## [clamav-3.0.51](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.50...clamav-3.0.51) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4317](https://github.com/truecharts/charts/issues/4317))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [clamav-3.0.49](https://github.com/truecharts/charts/compare/clamav-3.0.48...clamav-3.0.49) (2022-11-05)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
-
-## [clamav-3.0.48](https://github.com/truecharts/charts/compare/clamav-3.0.47...clamav-3.0.48) (2022-11-02)
+## [clamav-3.0.50](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.49...clamav-3.0.50) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
+- update helm general non-major ([#4317](https://github.com/trueforge-org/truecharts/issues/4317))
 
-## [clamav-3.0.47](https://github.com/truecharts/charts/compare/clamav-3.0.46...clamav-3.0.47) (2022-10-29)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#4230](https://github.com/truecharts/charts/issues/4230))
-
-## [clamav-3.0.46](https://github.com/truecharts/charts/compare/clamav-3.0.45...clamav-3.0.46) (2022-10-25)
+## [clamav-3.0.49](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.48...clamav-3.0.49) (2022-11-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
 
-## [clamav-3.0.45](https://github.com/truecharts/charts/compare/clamav-3.0.44...clamav-3.0.45) (2022-10-19)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
-
-## [clamav-3.0.44](https://github.com/truecharts/charts/compare/clamav-3.0.43...clamav-3.0.44) (2022-10-12)
+## [clamav-3.0.48](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.47...clamav-3.0.48) (2022-11-02)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4071](https://github.com/truecharts/charts/issues/4071))
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
 
-## [clamav-3.0.43](https://github.com/truecharts/charts/compare/clamav-3.0.42...clamav-3.0.43) (2022-10-07)
+## [clamav-3.0.47](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.46...clamav-3.0.47) (2022-10-29)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4230](https://github.com/trueforge-org/truecharts/issues/4230))
+
+## [clamav-3.0.46](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.45...clamav-3.0.46) (2022-10-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
+
+## [clamav-3.0.45](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.44...clamav-3.0.45) (2022-10-19)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
+
+## [clamav-3.0.44](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.43...clamav-3.0.44) (2022-10-12)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4071](https://github.com/trueforge-org/truecharts/issues/4071))
+
+## [clamav-3.0.43](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.42...clamav-3.0.43) (2022-10-07)
 
 ### Chore
 
@@ -142,36 +142,36 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [clamav-3.0.43](https://github.com/truecharts/charts/compare/clamav-3.0.42...clamav-3.0.43) (2022-10-07)
+## [clamav-3.0.43](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.42...clamav-3.0.43) (2022-10-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [clamav-3.0.42](https://github.com/truecharts/charts/compare/clamav-3.0.41...clamav-3.0.42) (2022-10-05)
+## [clamav-3.0.42](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.41...clamav-3.0.42) (2022-10-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
 - update helm general non-major
 
-## [clamav-3.0.41](https://github.com/truecharts/charts/compare/clamav-3.0.40...clamav-3.0.41) (2022-09-27)
+## [clamav-3.0.41](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.40...clamav-3.0.41) (2022-09-27)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3918](https://github.com/truecharts/charts/issues/3918))
+- update helm general non-major ([#3918](https://github.com/trueforge-org/truecharts/issues/3918))
 
-## [clamav-3.0.40](https://github.com/truecharts/charts/compare/clamav-3.0.39...clamav-3.0.40) (2022-09-25)
+## [clamav-3.0.40](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.39...clamav-3.0.40) (2022-09-25)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
 
-## [clamav-3.0.39](https://github.com/truecharts/charts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-22)
+## [clamav-3.0.39](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-22)
 
 ### Chore
 
@@ -189,10 +189,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [clamav-3.0.39](https://github.com/truecharts/charts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-21)
+## [clamav-3.0.39](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-21)
 
 ### Chore
 
@@ -209,10 +209,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [clamav-3.0.39](https://github.com/truecharts/charts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-21)
+## [clamav-3.0.39](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-21)
 
 ### Chore
 
@@ -228,10 +228,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [clamav-3.0.39](https://github.com/truecharts/charts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-20)
+## [clamav-3.0.39](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-20)
 
 ### Chore
 
@@ -246,10 +246,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [clamav-3.0.39](https://github.com/truecharts/charts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-20)
+## [clamav-3.0.39](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-20)
 
 ### Chore
 
@@ -263,10 +263,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [clamav-3.0.39](https://github.com/truecharts/charts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-19)
+## [clamav-3.0.39](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-19)
 
 ### Chore
 
@@ -279,10 +279,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [clamav-3.0.39](https://github.com/truecharts/charts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-19)
+## [clamav-3.0.39](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-19)
 
 ### Chore
 
@@ -294,10 +294,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [clamav-3.0.39](https://github.com/truecharts/charts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-19)
+## [clamav-3.0.39](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-19)
 
 ### Chore
 
@@ -308,10 +308,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [clamav-3.0.39](https://github.com/truecharts/charts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-17)
+## [clamav-3.0.39](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-17)
 
 ### Chore
 
@@ -321,55 +321,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [clamav-3.0.39](https://github.com/truecharts/charts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-18)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [clamav-3.0.39](https://github.com/truecharts/charts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [clamav-3.0.39](https://github.com/truecharts/charts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [clamav-3.0.39](https://github.com/truecharts/charts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-15)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [clamav-3.0.39](https://github.com/truecharts/charts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-15)
-
-### Chore
-
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [clamav-3.0.38](https://github.com/truecharts/charts/compare/clamav-3.0.37...clamav-3.0.38) (2022-09-12)
+## [clamav-3.0.39](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-18)
 
 ### Chore
 
@@ -377,109 +332,154 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [clamav-3.0.38](https://github.com/truecharts/charts/compare/clamav-3.0.37...clamav-3.0.38) (2022-09-12)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-
-## [clamav-3.0.38](https://github.com/truecharts/charts/compare/clamav-3.0.37...clamav-3.0.38) (2022-09-11)
+## [clamav-3.0.39](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-16)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [clamav-3.0.38](https://github.com/truecharts/charts/compare/clamav-3.0.37...clamav-3.0.38) (2022-09-11)
+## [clamav-3.0.39](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [clamav-3.0.39](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-15)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [clamav-3.0.39](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.38...clamav-3.0.39) (2022-09-15)
+
+### Chore
+
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [clamav-3.0.38](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.37...clamav-3.0.38) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [clamav-3.0.38](https://github.com/truecharts/charts/compare/clamav-3.0.37...clamav-3.0.38) (2022-09-11)
+## [clamav-3.0.38](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.37...clamav-3.0.38) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [clamav-3.0.38](https://github.com/truecharts/charts/compare/clamav-3.0.37...clamav-3.0.38) (2022-09-11)
-
-### Chore
-
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-
-## [clamav-3.0.37](https://github.com/truecharts/charts/compare/clamav-3.0.36...clamav-3.0.37) (2022-09-01)
+## [clamav-3.0.38](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.37...clamav-3.0.38) (2022-09-11)
 
 ### Chore
 
-- update docker general non-major ([#3649](https://github.com/truecharts/charts/issues/3649))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [clamav-3.0.36](https://github.com/truecharts/charts/compare/clamav-3.0.35...clamav-3.0.36) (2022-08-30)
-
-### Chore
-
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
-
-## [clamav-3.0.35](https://github.com/truecharts/charts/compare/clamav-3.0.34...clamav-3.0.35) (2022-08-30)
+## [clamav-3.0.38](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.37...clamav-3.0.38) (2022-09-11)
 
 ### Chore
 
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [clamav-3.0.34](https://github.com/truecharts/charts/compare/clamav-3.0.33...clamav-3.0.34) (2022-08-29)
-
-### Chore
-
-- update helm general non-major ([#3619](https://github.com/truecharts/charts/issues/3619))
-
-## [clamav-3.0.33](https://github.com/truecharts/charts/compare/clamav-3.0.32...clamav-3.0.33) (2022-08-23)
+## [clamav-3.0.38](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.37...clamav-3.0.38) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3545](https://github.com/truecharts/charts/issues/3545))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [clamav-3.0.32](https://github.com/truecharts/charts/compare/clamav-3.0.31...clamav-3.0.32) (2022-08-14)
-
-### Chore
-
-- update docker general non-major docker tags ([#3465](https://github.com/truecharts/charts/issues/3465))
-
-## [clamav-3.0.31](https://github.com/truecharts/charts/compare/clamav-3.0.30...clamav-3.0.31) (2022-08-12)
+## [clamav-3.0.38](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.37...clamav-3.0.38) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [clamav-3.0.30](https://github.com/truecharts/charts/compare/clamav-3.0.29...clamav-3.0.30) (2022-08-12)
+## [clamav-3.0.37](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.36...clamav-3.0.37) (2022-09-01)
+
+### Chore
+
+- update docker general non-major ([#3649](https://github.com/trueforge-org/truecharts/issues/3649))
+
+## [clamav-3.0.36](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.35...clamav-3.0.36) (2022-08-30)
+
+### Chore
+
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
+
+## [clamav-3.0.35](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.34...clamav-3.0.35) (2022-08-30)
+
+### Chore
+
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
+
+## [clamav-3.0.34](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.33...clamav-3.0.34) (2022-08-29)
+
+### Chore
+
+- update helm general non-major ([#3619](https://github.com/trueforge-org/truecharts/issues/3619))
+
+## [clamav-3.0.33](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.32...clamav-3.0.33) (2022-08-23)
+
+### Chore
+
+- update helm general non-major helm releases ([#3545](https://github.com/trueforge-org/truecharts/issues/3545))
+
+## [clamav-3.0.32](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.31...clamav-3.0.32) (2022-08-14)
+
+### Chore
+
+- update docker general non-major docker tags ([#3465](https://github.com/trueforge-org/truecharts/issues/3465))
+
+## [clamav-3.0.31](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.30...clamav-3.0.31) (2022-08-12)
+
+### Chore
+
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
+
+## [clamav-3.0.30](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.29...clamav-3.0.30) (2022-08-12)
 
 ### Chore
 
 - add documentation checkbox/section to all SCALE Apps
-- update docker general non-major ([#3453](https://github.com/truecharts/charts/issues/3453))
+- update docker general non-major ([#3453](https://github.com/trueforge-org/truecharts/issues/3453))
 
 ### Fix
 
-- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/truecharts/charts/issues/3447))
+- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/trueforge-org/truecharts/issues/3447))
 
-## [clamav-3.0.29](https://github.com/truecharts/charts/compare/clamav-3.0.27...clamav-3.0.29) (2022-08-08)
+## [clamav-3.0.29](https://github.com/trueforge-org/truecharts/compare/clamav-3.0.27...clamav-3.0.29) (2022-08-08)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- update docker general non-major ([#3356](https://github.com/truecharts/charts/issues/3356))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- update docker general non-major ([#3356](https://github.com/trueforge-org/truecharts/issues/3356))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
 
 ## [clamav-3.0.27](https://github.com/truecharts/apps/compare/clamav-3.0.26...clamav-3.0.27) (2022-07-28)
 

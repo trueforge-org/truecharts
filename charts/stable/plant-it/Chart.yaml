@@ -4,28 +4,30 @@ annotations:
     url: https://discord.com/invite/tVsPTHWTtr
   truecharts.org/category: productivity
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 0.10.0
 dependencies:
   - name: common
-    version: 25.4.10
-    repository: oci://tccr.io/truecharts
+    version: 28.26.1
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 15.9.0
-    repository: oci://tccr.io/truecharts
+    version: 17.9.1
+    repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
     tags: []
     import-values: []
   - name: redis
-    version: 16.0.5
-    repository: oci://tccr.io/truecharts
+    version: 17.13.1
+    repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
     tags: []
@@ -46,7 +48,8 @@ name: plant-it
 sources:
   - https://github.com/MDeLuise/plant-it
   - https://github.com/truecharts/charts/tree/master/charts/stable/plant-it
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/plant-it
   - https://hub.docker.com/r/msdeluise/plant-it-server
 type: application
-version: 3.0.5
+version: 5.19.2
 

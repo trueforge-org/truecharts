@@ -6,14 +6,16 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: management
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 2.30.1
+appVersion: 2.35.0
 dependencies:
   - name: common
-    version: 25.4.10
-    repository: oci://tccr.io/truecharts
+    version: 28.26.1
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
@@ -34,8 +36,9 @@ sources:
   - https://docs.portainer.io/start/install-ce/server
   - https://docs.portainer.io/start/install/server
   - https://github.com/truecharts/charts/tree/master/charts/stable/portainer
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/portainer
   - https://hub.docker.com/r/portainer/portainer-ce
   - https://hub.docker.com/r/portainer/portainer-ee
 type: application
-version: 10.16.1
+version: 11.16.1
 

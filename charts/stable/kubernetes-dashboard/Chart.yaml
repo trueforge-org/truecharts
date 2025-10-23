@@ -1,0 +1,55 @@
+annotations:
+  artifacthub.io/links: |-
+    - name: support
+    url: https://discord.com/invite/tVsPTHWTtr
+  max_scale_version: 24.04.1
+  min_scale_version: 24.04.0
+  truecharts.org/category: operators
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
+apiVersion: v2
+appVersion: latest
+dependencies:
+  - name: common
+    version: 28.26.1
+    repository: oci://oci.trueforge.org/truecharts
+    condition: ""
+    alias: ""
+    tags: []
+    import-values: []
+  - name: kong
+    version: 2.52.0
+    repository: https://charts.konghq.com
+    condition: kong.enabled
+    alias: ""
+    tags: []
+    import-values: []
+deprecated: false
+description: The default Kubernetes Dashboard
+home: https://truecharts.org/charts/stable/kubernetes-dashboard
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/kubernetes-dashboard.webp
+keywords:
+  - kubernetes-dashboard
+  - loadbalancer
+kubeVersion: '>=1.24.0-0'
+maintainers:
+  - name: TrueCharts
+    email: info@truecharts.org
+    url: https://truecharts.org
+name: kubernetes-dashboard
+sources:
+  - https://github.com/kubernetes-dashboard/kubernetes-dashboard
+  - https://github.com/truecharts/charts/tree/master/charts/stable/kubernetes-dashboard
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/kubernetes-dashboard
+  - https://github.com/trueforge/truecharts/tree/master/charts/stable/kubernetes-dashboard
+  - https://hub.docker.com/r/kubernetesui/dashboard-api
+  - https://hub.docker.com/r/kubernetesui/dashboard-auth
+  - https://hub.docker.com/r/kubernetesui/dashboard-metrics-scraper
+  - https://hub.docker.com/r/kubernetesui/dashboard-web
+  - https://kubernetes-dashboard.universe.tf
+type: application
+version: 2.11.1
+

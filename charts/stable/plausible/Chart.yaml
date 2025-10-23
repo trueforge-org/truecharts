@@ -6,21 +6,23 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: analytics
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 2.0.0
 dependencies:
   - name: common
-    version: 25.4.10
-    repository: oci://tccr.io/truecharts
+    version: 28.26.1
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: clickhouse
-    version: 15.4.1
-    repository: oci://tccr.io/truecharts
+    version: 16.14.1
+    repository: oci://oci.trueforge.org/truecharts
     condition: clickhouse.enabled
     alias: ""
     tags: []
@@ -42,9 +44,10 @@ sources:
   - https://github.com/plausible/analytics
   - https://github.com/plausible/hosting
   - https://github.com/truecharts/charts/tree/master/charts/stable/plausible
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/plausible
   - https://hub.docker.com/r/plausible/analytics
   - https://plausible.io/
   - https://plausible.io/docs/self-hosting
 type: application
-version: 13.4.1
+version: 14.25.2
 

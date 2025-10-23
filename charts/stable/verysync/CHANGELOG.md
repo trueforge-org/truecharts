@@ -3,7 +3,7 @@ title: Changelog
 pagefind: false
 ---
 
-## [verysync-3.0.0](https://github.com/truecharts/charts/compare/verysync-2.0.45...verysync-3.0.0) (2022-11-10)
+## [verysync-3.0.0](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.45...verysync-3.0.0) (2022-11-10)
 
 ### Chore
 
@@ -16,11 +16,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Major Change to GUI non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
+- Major Change to GUI non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
 
-## [verysync-2.0.48](https://github.com/truecharts/charts/compare/verysync-2.0.45...verysync-2.0.48) (2022-11-08)
+## [verysync-2.0.48](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.45...verysync-2.0.48) (2022-11-08)
 
 ### Chore
 
@@ -30,146 +30,146 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]342](https://github.com/truecharts/charts/issues/4342))
+- Auto-update chart README [skip ci]342](https://github.com/trueforge-org/truecharts/issues/4342))
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]329](https://github.com/trueforge-org/truecharts/issues/4329))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]m/truecharts/charts/compare/verysync-2.0.45...verysync-2.0.47) (2022-11-08)
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
   ##- Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [verysync-2.0.47](https://github.com/truecharts/charts/compare/verysync-2.0.45...verysync-2.0.47) (2022-11-08)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [verysync-2.0.46](https://github.com/truecharts/charts/compare/verysync-2.0.45...verysync-2.0.46) (2022-11-07)
+## [verysync-2.0.47](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.45...verysync-2.0.47) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
+
+## [verysync-2.0.46](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.45...verysync-2.0.46) (2022-11-07)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
   ##- Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [verysync-2.0.45](https://github.com/truecharts/charts/compare/verysync-2.0.44...verysync-2.0.45) (2022-11-06)
+## [verysync-2.0.45](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.44...verysync-2.0.45) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4317](https://github.com/truecharts/charts/issues/4317))
+- update helm general non-major ([#4317](https://github.com/trueforge-org/truecharts/issues/4317))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]m/truecharts/charts/compare/verysync-2.0.43...verysync-2.0.44) (2022-11-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
 
-## [verysync-2.0.43](https://github.com/truecharts/charts/compare/verysync-2.0.42...verysync-2.0.43) (2022-11-02)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
-
-## [verysync-2.0.42](https://github.com/truecharts/charts/compare/verysync-2.0.41...verysync-2.0.42) (2022-10-25)
+## [verysync-2.0.43](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.42...verysync-2.0.43) (2022-11-02)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4317](https://github.com/truecharts/charts/issues/4317))2.0.41) (2022-10-19)
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
+
+## [verysync-2.0.42](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.41...verysync-2.0.42) (2022-10-25)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4317](https://github.com/trueforge-org/truecharts/issues/4317))2.0.41) (2022-10-19)
 
-## [verysync-2.0.40](https://github.com/truecharts/charts/compare/verysync-2.0.39...verysync-2.0.40) (2022-10-12)
+### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4071](https://github.com/truecharts/charts/issues/4071))
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
 
-## [verysync-2.0.39](https://github.com/truecharts/charts/compare/verysync-2.0.38...verysync-2.0.39) (2022-10-07)
+## [verysync-2.0.40](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.39...verysync-2.0.40) (2022-10-12)
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4071](https://github.com/trueforge-org/truecharts/issues/4071))
+
+## [verysync-2.0.39](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.38...verysync-2.0.39) (2022-10-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
 
-## [verysync-2.0.39](https://github.com/truecharts/charts/compare/verysync-2.0.38...verysync-2.0.39) (2022-10-07)
+## [verysync-2.0.39](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.38...verysync-2.0.39) (2022-10-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update docker general non-major
 
-## [verysync-2.0.37](https://github.com/truecharts/charts/compare/verysync-2.0.36...verysync-2.0.37) (2022-10-05)
+## [verysync-2.0.37](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.36...verysync-2.0.37) (2022-10-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
 - update helm general non-major
 
-## [verysync-2.0.36](https://github.com/truecharts/charts/compare/verysync-2.0.35...verysync-2.0.36) (2022-09-27)
+## [verysync-2.0.36](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.35...verysync-2.0.36) (2022-09-27)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4071](https://github.com/truecharts/charts/issues/4071))
+- update helm general non-major ([#4071](https://github.com/trueforge-org/truecharts/issues/4071))
 
-## [verysync-2.0.35](https://github.com/truecharts/charts/compare/verysync-2.0.34...verysync-2.0.35) (2022-09-25)
+## [verysync-2.0.35](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.34...verysync-2.0.35) (2022-09-25)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
 
-## [verysync-2.0.34](https://github.com/truecharts/charts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-22)
+## [verysync-2.0.34](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-22)
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
@@ -187,9 +187,9 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [verysync-2.0.34](https://github.com/truecharts/charts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-21)
+## [verysync-2.0.34](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-21)
 
 - Auto-update chart README [skip ci]
 - update docker general non-major
@@ -202,35 +202,34 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [verysync-2.0.34](https://github.com/truecharts/charts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-21)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3918](https://github.com/truecharts/charts/issues/3918))
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-
-## [verysync-2.0.34](https://github.com/truecharts/charts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-20)
+## [verysync-2.0.34](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-21)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
+- update helm general non-major ([#3918](https://github.com/trueforge-org/truecharts/issues/3918))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+
+## [verysync-2.0.34](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-20)
+
+### Chore
+
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
@@ -241,7 +240,8 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]767](https://github.com/truecharts/charts/issues/3767))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]767](https://github.com/trueforge-org/truecharts/issues/3767))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]m/truecharts/charts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-20)
 - Auto-update chart README [skip ci]
@@ -267,13 +267,13 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [verysync-2.0.34](https://github.com/truecharts/charts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-19)
+## [verysync-2.0.34](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-19)
 
 ### Chore
 
@@ -286,7 +286,7 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]767](https://github.com/truecharts/charts/issues/3767))
+- Auto-update chart README [skip ci]767](https://github.com/trueforge-org/truecharts/issues/3767))
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUIthub.com/truecharts/charts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-19)
 
@@ -299,7 +299,7 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]767](https://github.com/truecharts/charts/issues/3767))
+- Auto-update chart README [skip ci]767](https://github.com/trueforge-org/truecharts/issues/3767))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]m/truecharts/charts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-17)
 - Auto-update chart README [skip ci]
@@ -309,11 +309,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [verysync-2.0.34](https://github.com/truecharts/charts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-18)
+## [verysync-2.0.34](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-18)
 
 ### Chore
 
@@ -321,7 +321,7 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]767](https://github.com/truecharts/charts/issues/3767))
+- Auto-update chart README [skip ci]767](https://github.com/trueforge-org/truecharts/issues/3767))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]m/truecharts/charts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-16)
 - Auto-update chart README [skip ci]
@@ -330,15 +330,15 @@ pagefind: false
 - refactor Services SCALE GUIp ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [verysync-2.0.34](https://github.com/truecharts/charts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-16)
+## [verysync-2.0.34](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-16)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]767](https://github.com/truecharts/charts/issues/3767))
+- Auto-update chart README [skip ci]767](https://github.com/trueforge-org/truecharts/issues/3767))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]m/truecharts/charts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-15)
 - Auto-update chart README [skip ci]
@@ -346,15 +346,15 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [verysync-2.0.34](https://github.com/truecharts/charts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-15)
+## [verysync-2.0.34](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.33...verysync-2.0.34) (2022-09-15)
 
 ### Chore
 
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [verysync-2.0.33](https://github.com/truecharts/charts/compare/verysync-2.0.32...verysync-2.0.33) (2022-09-12)
+## [verysync-2.0.33](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.32...verysync-2.0.33) (2022-09-12)
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
@@ -363,9 +363,9 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- refactor Services SCALE GUIor ([#3711](https://github.com/truecharts/charts/issues/3711))
+- refactor Services SCALE GUIor ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [verysync-2.0.33](https://github.com/truecharts/charts/compare/verysync-2.0.32...verysync-2.0.33) (2022-09-12)
+## [verysync-2.0.33](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.32...verysync-2.0.33) (2022-09-12)
 
 ### Chore
 
@@ -380,74 +380,74 @@ pagefind: false
   ##- Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [verysync-2.0.33](https://github.com/truecharts/charts/compare/verysync-2.0.32...verysync-2.0.33) (2022-09-11)
+## [verysync-2.0.33](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.32...verysync-2.0.33) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]711](https://github.com/trueforge-org/truecharts/issues/3711))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]m/truecharts/charts/compare/verysync-2.0.32...verysync-2.0.33) (2022-09-11)
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [verysync-2.0.33](https://github.com/truecharts/charts/compare/verysync-2.0.32...verysync-2.0.33) (2022-09-11)
+## [verysync-2.0.33](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.32...verysync-2.0.33) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]m/truecharts/charts/compare/verysync-2.0.30...verysync-2.0.32) (2022-08-30)
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
 
-## [verysync-2.0.31](https://github.com/truecharts/charts/compare/verysync-2.0.30...verysync-2.0.31) (2022-08-30)
+## [verysync-2.0.31](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.30...verysync-2.0.31) (2022-08-30)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
   ##- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
 ### Chore
 
-- update helm general non-major ([#3619](https://github.com/truecharts/charts/issues/3619))
+- update helm general non-major ([#3619](https://github.com/trueforge-org/truecharts/issues/3619))
 
-## [verysync-2.0.29](https://github.com/truecharts/charts/compare/verysync-2.0.28...verysync-2.0.29) (2022-08-23)
+## [verysync-2.0.29](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.28...verysync-2.0.29) (2022-08-23)
 
 ### Fixdate chart README [skip ci]
 
 - Auto-update chart README [skip ci]
 
-## [verysync-2.0.28](https://github.com/truecharts/charts/compare/verysync-2.0.27...verysync-2.0.28) (2022-08-12)
+## [verysync-2.0.28](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.27...verysync-2.0.28) (2022-08-12)
 
 ### Chore
 
 - add documentation checkbox/section to all SCALE Apps
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
 
 ### Fix
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))arts/issues/3447))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))arts/issues/3447))
 
-## [verysync-2.0.27](https://github.com/truecharts/charts/compare/verysync-2.0.26...verysync-2.0.27) (2022-08-08)
+## [verysync-2.0.27](https://github.com/trueforge-org/truecharts/compare/verysync-2.0.26...verysync-2.0.27) (2022-08-08)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
 
 ## [verysync-2.0.26](https://github.com/truecharts/apps/compare/verysync-2.0.25...verysync-2.0.26) (2022-07-26)
 
@@ -463,7 +463,7 @@ pagefind: false
 - - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]#3295](https://github.com/truecharts/apps/issues/3295))
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))0.25) (2022-07-25)
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))0.25) (2022-07-25)
 
 ### Chore
 
@@ -490,7 +490,7 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))ues/3280))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))ues/3280))
 
 ## [verysync-2.0.23](https://github.com/truecharts/apps/compare/verysync-2.0.21...verysync-2.0.23) (2022-07-22)
 
@@ -511,7 +511,7 @@ pagefind: false
 
 - regenerate catalog and update template
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))0.19) (2022-07-14)
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))0.19) (2022-07-14)
 
 ### Fix
 
@@ -530,7 +530,7 @@ pagefind: false
 
 - bump to regenerate documentation
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
 
 ### [verysync-2.0.13](https://github.com/truecharts/apps/compare/verysync-2.0.12...verysync-2.0.13) (2022-07-12)
 
@@ -569,7 +569,7 @@ pagefind: false
 #### Chore
 
 - add documentation checkbox/section to all SCALE Apps
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
 
 <a name="verysync-2.0.8"></a>
 
@@ -583,8 +583,8 @@ pagefind: false
 
 ### [verysync-2.0.7](https://github.com/truecharts/apps/compare/verysync-2.0.6...verysync-2.0.7) (2022-06-25)
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
 - update helm general non-major helm releases ([#2977](https://github.com/truecharts/apps/issues/2977))
 
 <a name="verysync-2.0.6"></a>

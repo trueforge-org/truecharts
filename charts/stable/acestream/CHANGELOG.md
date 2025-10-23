@@ -3,7 +3,7 @@ title: Changelog
 pagefind: false
 ---
 
-## [acestream-1.0.0](https://github.com/truecharts/charts/compare/acestream-0.0.35...acestream-1.0.0) (2022-11-10)
+## [acestream-1.0.0](https://github.com/trueforge-org/truecharts/compare/acestream-0.0.35...acestream-1.0.0) (2022-11-10)
 
 ### Chore
 
@@ -15,25 +15,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Major Change to GUI
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [acestream-0.0.38](https://github.com/truecharts/charts/compare/acestream-0.0.35...acestream-0.0.38) (2022-11-08)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [acestream-0.0.37](https://github.com/truecharts/charts/compare/acestream-0.0.35...acestream-0.0.37) (2022-11-08)
+## [acestream-0.0.38](https://github.com/trueforge-org/truecharts/compare/acestream-0.0.35...acestream-0.0.38) (2022-11-08)
 
 ### Chore
 
@@ -42,10 +28,12 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [acestream-0.0.37](https://github.com/truecharts/charts/compare/acestream-0.0.35...acestream-0.0.37) (2022-11-08)
+## [acestream-0.0.37](https://github.com/trueforge-org/truecharts/compare/acestream-0.0.35...acestream-0.0.37) (2022-11-08)
 
 ### Chore
 
@@ -53,84 +41,96 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [acestream-0.0.37](https://github.com/truecharts/charts/compare/acestream-0.0.35...acestream-0.0.37) (2022-11-08)
+## [acestream-0.0.37](https://github.com/trueforge-org/truecharts/compare/acestream-0.0.35...acestream-0.0.37) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [acestream-0.0.36](https://github.com/truecharts/charts/compare/acestream-0.0.35...acestream-0.0.36) (2022-11-07)
+## [acestream-0.0.37](https://github.com/trueforge-org/truecharts/compare/acestream-0.0.35...acestream-0.0.37) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [acestream-0.0.36](https://github.com/truecharts/charts/compare/acestream-0.0.35...acestream-0.0.36) (2022-11-06)
+## [acestream-0.0.36](https://github.com/trueforge-org/truecharts/compare/acestream-0.0.35...acestream-0.0.36) (2022-11-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [acestream-0.0.35](https://github.com/truecharts/charts/compare/acestream-0.0.34...acestream-0.0.35) (2022-11-06)
+## [acestream-0.0.36](https://github.com/trueforge-org/truecharts/compare/acestream-0.0.35...acestream-0.0.36) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4317](https://github.com/truecharts/charts/issues/4317))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [acestream-0.0.34](https://github.com/truecharts/charts/compare/acestream-0.0.33...acestream-0.0.34) (2022-11-05)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
-
-## [acestream-0.0.33](https://github.com/truecharts/charts/compare/acestream-0.0.32...acestream-0.0.33) (2022-11-02)
+## [acestream-0.0.35](https://github.com/trueforge-org/truecharts/compare/acestream-0.0.34...acestream-0.0.35) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
+- update helm general non-major ([#4317](https://github.com/trueforge-org/truecharts/issues/4317))
 
-## [acestream-0.0.32](https://github.com/truecharts/charts/compare/acestream-0.0.31...acestream-0.0.32) (2022-10-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
-
-## [acestream-0.0.31](https://github.com/truecharts/charts/compare/acestream-0.0.30...acestream-0.0.31) (2022-10-19)
+## [acestream-0.0.34](https://github.com/trueforge-org/truecharts/compare/acestream-0.0.33...acestream-0.0.34) (2022-11-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
 
-## [acestream-0.0.30](https://github.com/truecharts/charts/compare/acestream-0.0.29...acestream-0.0.30) (2022-10-15)
+## [acestream-0.0.33](https://github.com/trueforge-org/truecharts/compare/acestream-0.0.32...acestream-0.0.33) (2022-11-02)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
+
+## [acestream-0.0.32](https://github.com/trueforge-org/truecharts/compare/acestream-0.0.31...acestream-0.0.32) (2022-10-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
+
+## [acestream-0.0.31](https://github.com/trueforge-org/truecharts/compare/acestream-0.0.30...acestream-0.0.31) (2022-10-19)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
+
+## [acestream-0.0.30](https://github.com/trueforge-org/truecharts/compare/acestream-0.0.29...acestream-0.0.30) (2022-10-15)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update docker general non-major
 
-## [acestream-0.0.29](https://github.com/truecharts/charts/compare/acestream-0.0.28...acestream-0.0.29) (2022-10-12)
+## [acestream-0.0.29](https://github.com/trueforge-org/truecharts/compare/acestream-0.0.28...acestream-0.0.29) (2022-10-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4071](https://github.com/truecharts/charts/issues/4071))
+- update helm general non-major ([#4071](https://github.com/trueforge-org/truecharts/issues/4071))
 
-## [acestream-0.0.28](https://github.com/truecharts/charts/compare/acestream-0.0.27...acestream-0.0.28) (2022-10-07)
+## [acestream-0.0.28](https://github.com/trueforge-org/truecharts/compare/acestream-0.0.27...acestream-0.0.28) (2022-10-07)
 
 ### Chore
 
@@ -138,44 +138,44 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [acestream-0.0.28](https://github.com/truecharts/charts/compare/acestream-0.0.27...acestream-0.0.28) (2022-10-07)
+## [acestream-0.0.28](https://github.com/trueforge-org/truecharts/compare/acestream-0.0.27...acestream-0.0.28) (2022-10-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [acestream-0.0.27](https://github.com/truecharts/charts/compare/acestream-0.0.26...acestream-0.0.27) (2022-10-05)
+## [acestream-0.0.27](https://github.com/trueforge-org/truecharts/compare/acestream-0.0.26...acestream-0.0.27) (2022-10-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
 - update helm general non-major
-- update docker general non-major ([#3920](https://github.com/truecharts/charts/issues/3920))
+- update docker general non-major ([#3920](https://github.com/trueforge-org/truecharts/issues/3920))
 
-## [acestream-0.0.26](https://github.com/truecharts/charts/compare/acestream-0.0.25...acestream-0.0.26) (2022-09-27)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3918](https://github.com/truecharts/charts/issues/3918))
-
-## [acestream-0.0.25](https://github.com/truecharts/charts/compare/acestream-0.0.24...acestream-0.0.25) (2022-09-26)
+## [acestream-0.0.26](https://github.com/trueforge-org/truecharts/compare/acestream-0.0.25...acestream-0.0.26) (2022-09-27)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#3906](https://github.com/truecharts/charts/issues/3906))
+- update helm general non-major ([#3918](https://github.com/trueforge-org/truecharts/issues/3918))
 
-## [actualserver-0.0.28](https://github.com/truecharts/charts/compare/actualserver-0.0.27...actualserver-0.0.28) (2022-09-25)
+## [acestream-0.0.25](https://github.com/trueforge-org/truecharts/compare/acestream-0.0.24...acestream-0.0.25) (2022-09-26)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
+- update docker general non-major ([#3906](https://github.com/trueforge-org/truecharts/issues/3906))
 
-## [actualserver-0.0.27](https://github.com/truecharts/charts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-22)
+## [actualserver-0.0.28](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.27...actualserver-0.0.28) (2022-09-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
+
+## [actualserver-0.0.27](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-22)
 
 ### Chore
 
@@ -193,10 +193,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [actualserver-0.0.27](https://github.com/truecharts/charts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-21)
+## [actualserver-0.0.27](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-21)
 
 ### Chore
 
@@ -213,10 +213,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [actualserver-0.0.27](https://github.com/truecharts/charts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-21)
+## [actualserver-0.0.27](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-21)
 
 ### Chore
 
@@ -232,10 +232,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [actualserver-0.0.27](https://github.com/truecharts/charts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-20)
+## [actualserver-0.0.27](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-20)
 
 ### Chore
 
@@ -250,10 +250,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [actualserver-0.0.27](https://github.com/truecharts/charts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-20)
+## [actualserver-0.0.27](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-20)
 
 ### Chore
 
@@ -267,10 +267,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [actualserver-0.0.27](https://github.com/truecharts/charts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-19)
+## [actualserver-0.0.27](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-19)
 
 ### Chore
 
@@ -283,10 +283,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [actualserver-0.0.27](https://github.com/truecharts/charts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-19)
+## [actualserver-0.0.27](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-19)
 
 ### Chore
 
@@ -298,10 +298,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [actualserver-0.0.27](https://github.com/truecharts/charts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-19)
+## [actualserver-0.0.27](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-19)
 
 ### Chore
 
@@ -312,10 +312,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [actualserver-0.0.27](https://github.com/truecharts/charts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-17)
+## [actualserver-0.0.27](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-17)
 
 ### Chore
 
@@ -325,55 +325,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [actualserver-0.0.27](https://github.com/truecharts/charts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-18)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [actualserver-0.0.27](https://github.com/truecharts/charts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [actualserver-0.0.27](https://github.com/truecharts/charts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [actualserver-0.0.27](https://github.com/truecharts/charts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-15)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [actualserver-0.0.27](https://github.com/truecharts/charts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-15)
-
-### Chore
-
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [actualserver-0.0.26](https://github.com/truecharts/charts/compare/actualserver-0.0.25...actualserver-0.0.26) (2022-09-12)
+## [actualserver-0.0.27](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-18)
 
 ### Chore
 
@@ -381,10 +336,44 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [actualserver-0.0.26](https://github.com/truecharts/charts/compare/actualserver-0.0.25...actualserver-0.0.26) (2022-09-12)
+## [actualserver-0.0.27](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [actualserver-0.0.27](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [actualserver-0.0.27](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-15)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [actualserver-0.0.27](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.26...actualserver-0.0.27) (2022-09-15)
+
+### Chore
+
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [actualserver-0.0.26](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.25...actualserver-0.0.26) (2022-09-12)
 
 ### Chore
 
@@ -392,101 +381,112 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [actualserver-0.0.26](https://github.com/truecharts/charts/compare/actualserver-0.0.25...actualserver-0.0.26) (2022-09-11)
+## [actualserver-0.0.26](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.25...actualserver-0.0.26) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [actualserver-0.0.26](https://github.com/truecharts/charts/compare/actualserver-0.0.25...actualserver-0.0.26) (2022-09-11)
+## [actualserver-0.0.26](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.25...actualserver-0.0.26) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [actualserver-0.0.26](https://github.com/truecharts/charts/compare/actualserver-0.0.25...actualserver-0.0.26) (2022-09-11)
+## [actualserver-0.0.26](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.25...actualserver-0.0.26) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [actualserver-0.0.26](https://github.com/truecharts/charts/compare/actualserver-0.0.25...actualserver-0.0.26) (2022-09-11)
-
-### Chore
-
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-
-## [actualserver-0.0.25](https://github.com/truecharts/charts/compare/actualserver-0.0.24...actualserver-0.0.25) (2022-08-30)
+## [actualserver-0.0.26](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.25...actualserver-0.0.26) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [actualserver-0.0.24](https://github.com/truecharts/charts/compare/actualserver-0.0.23...actualserver-0.0.24) (2022-08-30)
-
-### Chore
-
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
-
-## [actualserver-0.0.23](https://github.com/truecharts/charts/compare/actualserver-0.0.22...actualserver-0.0.23) (2022-08-29)
+## [actualserver-0.0.26](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.25...actualserver-0.0.26) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major ([#3619](https://github.com/truecharts/charts/issues/3619))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [actualserver-0.0.22](https://github.com/truecharts/charts/compare/actualserver-0.0.20...actualserver-0.0.22) (2022-08-26)
+## [actualserver-0.0.25](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.24...actualserver-0.0.25) (2022-08-30)
+
+### Chore
+
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
+
+## [actualserver-0.0.24](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.23...actualserver-0.0.24) (2022-08-30)
+
+### Chore
+
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
+
+## [actualserver-0.0.23](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.22...actualserver-0.0.23) (2022-08-29)
+
+### Chore
+
+- update helm general non-major ([#3619](https://github.com/trueforge-org/truecharts/issues/3619))
+
+## [actualserver-0.0.22](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.20...actualserver-0.0.22) (2022-08-26)
 
 ### Fix
 
-- some cleanup ([#3586](https://github.com/truecharts/charts/issues/3586))
+- some cleanup ([#3586](https://github.com/trueforge-org/truecharts/issues/3586))
 
-## [actualserver-0.0.20](https://github.com/truecharts/charts/compare/actualserver-0.0.19...actualserver-0.0.20) (2022-08-23)
+## [actualserver-0.0.20](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.19...actualserver-0.0.20) (2022-08-23)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3545](https://github.com/truecharts/charts/issues/3545))
+- update helm general non-major helm releases ([#3545](https://github.com/trueforge-org/truecharts/issues/3545))
 
-## [actualserver-0.0.19](https://github.com/truecharts/charts/compare/actualserver-0.0.18...actualserver-0.0.19) (2022-08-12)
+## [actualserver-0.0.19](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.18...actualserver-0.0.19) (2022-08-12)
 
 ### Chore
 
 - add documentation checkbox/section to all SCALE Apps
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
 
 ### Fix
 
-- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/truecharts/charts/issues/3447))
+- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/trueforge-org/truecharts/issues/3447))
 
-## [actualserver-0.0.18](https://github.com/truecharts/charts/compare/actualserver-0.0.17...actualserver-0.0.18) (2022-08-10)
-
-### Chore
-
-- update docker general non-major ([#3421](https://github.com/truecharts/charts/issues/3421))
-
-## [actualserver-0.0.17](https://github.com/truecharts/charts/compare/actualserver-0.0.15...actualserver-0.0.17) (2022-08-09)
+## [actualserver-0.0.18](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.17...actualserver-0.0.18) (2022-08-10)
 
 ### Chore
 
-- update docker general non-major ([#3377](https://github.com/truecharts/charts/issues/3377))
+- update docker general non-major ([#3421](https://github.com/trueforge-org/truecharts/issues/3421))
+
+## [actualserver-0.0.17](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.15...actualserver-0.0.17) (2022-08-09)
+
+### Chore
+
+- update docker general non-major ([#3377](https://github.com/trueforge-org/truecharts/issues/3377))
 
 ### Fix
 
-- cleanup ([#3388](https://github.com/truecharts/charts/issues/3388))
+- cleanup ([#3388](https://github.com/trueforge-org/truecharts/issues/3388))
 
-## [actualserver-0.0.15](https://github.com/truecharts/charts/compare/actualserver-0.0.14...actualserver-0.0.15) (2022-08-08)
+## [actualserver-0.0.15](https://github.com/trueforge-org/truecharts/compare/actualserver-0.0.14...actualserver-0.0.15) (2022-08-08)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
 
 ## [actualserver-0.0.14](https://github.com/truecharts/apps/compare/actualserver-0.0.13...actualserver-0.0.14) (2022-07-26)
 

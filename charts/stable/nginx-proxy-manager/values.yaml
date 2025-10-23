@@ -1,7 +1,7 @@
 image:
   repository: docker.io/jc21/nginx-proxy-manager
   pullPolicy: IfNotPresent
-  tag: 2.12.3@sha256:e5eecad9bf040f1e7ddc9db6bbc812d690503aa119005e3aa0c24803746b49ea
+  tag: 2.12.6@sha256:6ab097814f54b1362d5fd3c5884a01ddd5878aaae9992ffd218439180f0f92f3
 service:
   main:
     ports:
@@ -36,7 +36,6 @@ persistence:
     size: 256Gi
 mariadb:
   enabled: true
-  includeCommon: true
   mariadbUsername: npm
   mariadbDatabase: npm
 

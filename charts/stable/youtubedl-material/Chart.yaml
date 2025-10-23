@@ -6,21 +6,23 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: media
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 2024.10.01
 dependencies:
   - name: common
-    version: 25.4.10
-    repository: oci://tccr.io/truecharts
+    version: 28.26.1
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mongodb
-    version: 15.3.17
-    repository: oci://tccr.io/truecharts
+    version: 16.12.1
+    repository: oci://oci.trueforge.org/truecharts
     condition: mongodb.enabled
     alias: ""
     tags: []
@@ -41,6 +43,7 @@ sources:
   - https://ghcr.io/tzahi12345/youtubedl-material
   - https://github.com/Tzahi12345/YoutubeDL-Material
   - https://github.com/truecharts/charts/tree/master/charts/stable/youtubedl-material
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/youtubedl-material
 type: application
-version: 12.11.17
+version: 13.22.2
 

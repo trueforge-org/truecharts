@@ -1,0 +1,166 @@
+image:
+  repository: ghcr.io/spegel-org/spegel
+  pullPolicy: IfNotPresent
+  tag: v0.4.0
+
+securityContext:
+  container:
+    runAsUser: 0
+    runAsGroup: 0
+    readOnlyRootFilesystem: false
+  pod:
+    fsGroup: 0
+
+service:
+  main:
+    ports:
+      main:
+        port: 5000
+        targetPort: 5000
+        hostPort: 30020
+        nodePort: 30021
+  router:
+    enabled: true
+    clusterIP: None
+    publishNotReadyAddresses: true
+    ports:
+      router:
+        enabled: true
+        port: 5001
+        targetPort: 5001
+  metrics:
+    enabled: true
+    ports:
+      metrics:
+        enabled: true
+        port: 9090
+        targetPort: 9090
+
+workload:
+  main:
+    type: DaemonSet
+    podSpec:
+      initContainers:
+        configuration:
+          enabled: true
+          type: init
+          args: []
+          env:
+            NODE_IP:
+              fieldRef:
+                fieldPath: status.hostIP
+      containers:
+        main:
+          args: []
+          env:
+            NODE_IP:
+              fieldRef:
+                fieldPath: status.hostIP
+          probes:
+            liveness:
+              path: /livez
+            readiness:
+              path: /readyz
+            startup:
+              path: /readyz
+
+configmap:
+  dashboard:
+    enabled: true
+    labels:
+      grafana_dashboard: "1"
+    data:
+      spegel.json: >-
+        {{ .Files.Get "dashboard.json" | indent 8 }}
+
+podOptions:
+  automountServiceAccountToken: true
+  priorityClassName: "system-node-critical"
+  nodeSelector:
+    kubernetes.io/arch: ""
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+    - effect: NoExecute
+      operator: Exists
+    - effect: NoSchedule
+      operator: Exists
+
+metrics:
+  main:
+    enabled: true
+    type: servicemonitor
+    endpoints:
+      - port: metrics
+    targetSelector: metrics
+
+persistence:
+  containerd-sock:
+    enabled: true
+    type: hostPath
+    mountPath: "{{ .Values.spegel.containerdSock }}"
+    hostPath: "{{ .Values.spegel.containerdSock }}"
+    hostPathType: Socket
+  containerd-content:
+    enabled: true
+    type: hostPath
+    mountPath: "{{ .Values.spegel.containerdContentPath }}"
+    hostPath: "{{ .Values.spegel.containerdContentPath }}"
+    hostPathType: Directory
+    readOnly: true
+  containerd-config:
+    enabled: true
+    type: hostPath
+    hostPath: "{{ .Values.spegel.containerdRegistryConfigPath }}"
+    hostPathType: DirectoryOrCreate
+    targetSelector:
+      main:
+        configuration:
+          mountPath: "{{ .Values.spegel.containerdRegistryConfigPath }}"
+
+spegel:
+  # -- Minimum log level to output. Value should be DEBUG, INFO, WARN, or ERROR.
+  logLevel: "INFO"
+  # -- Registries for which mirror configuration will be created.
+  ## NOTE: If using Talos, Talos does NOT fall-back to the main url for talos containers
+  ## Include main url in mirror list in that case!
+  mirroredRegistries:
+    - https://cgr.dev
+    - https://docker.io
+    - https://ghcr.io
+    - https://quay.io
+    - https://mcr.microsoft.com
+    - https://public.ecr.aws
+    - https://gcr.io
+    - https://registry.k8s.io
+    - https://k8s.gcr.io
+    - https://oci.trueforge.org
+    - https://factory.talos.dev
+  # -- Additional target mirror registries other than Spegel.
+  additionalMirrorTargets: []
+  # -- Max ammount of mirrors to attempt.
+  mirrorResolveRetries: 3
+  # -- Max duration spent finding a mirror.
+  mirrorResolveTimeout: "20ms"
+  # -- Path to Containerd socket.
+  containerdSock: "/run/containerd/containerd.sock"
+  # -- Containerd namespace where images are stored.
+  containerdNamespace: "k8s.io"
+  # -- Path to Containerd mirror configuration.
+  containerdRegistryConfigPath: "/etc/cri/conf.d/hosts"
+  # -- Path to Containerd content store..
+  containerdContentPath: "/var/lib/containerd/io.containerd.content.v1.content"
+  # -- If true Spegel will add mirror configuration to the node.
+  containerdMirrorAdd: true
+  # -- When true Spegel will resolve tags to digests.
+  resolveTags: true
+  # -- When true latest tags will be resolved to digests.
+  resolveLatestTag: true
+  # -- When true existing mirror configuration will be appended to instead of replaced.
+  prependExisting: true
+
+# -- The service account the pods will use to interact with the Kubernetes API
+serviceAccount:
+  main:
+    enabled: true
+    primary: true

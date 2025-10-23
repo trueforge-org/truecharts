@@ -1,0 +1,21 @@
+image:
+  repository: ghcr.io/agregarr/agregarr
+  pullPolicy: IfNotPresent
+  tag: 1.4.2@sha256:1dc4d4c5a6f32a08da8d3911fcc65c548b08da908ba7c1aeae694c47b0712699
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
+    runAsNonRoot: false
+    runAsGroup: 0
+    runAsUser: 0
+service:
+  main:
+    ports:
+      main:
+        protocol: http
+        port: 7171
+        targetPort: 7171
+persistence:
+  config:
+    enabled: true
+    mountPath: "/app/config"

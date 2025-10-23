@@ -6,14 +6,16 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: home-automation
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 5.8.1
 dependencies:
   - name: common
-    version: 25.4.10
-    repository: oci://tccr.io/truecharts
+    version: 28.26.1
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
@@ -34,8 +36,9 @@ maintainers:
 name: cura-novnc
 sources:
   - https://github.com/truecharts/charts/tree/master/charts/stable/cura-novnc
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/cura-novnc
   - https://hub.docker.com/r/mikeah/cura-novnc
   - https://ultimaker.com/software/ultimaker-cura
 type: application
-version: 10.5.1
+version: 11.11.1
 

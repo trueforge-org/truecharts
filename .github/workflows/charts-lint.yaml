@@ -23,13 +23,13 @@ jobs:
     steps:
       - name: Checkout [master]
         if: inputs.chartChangesDetected == 'true'
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
         with:
           fetch-depth: 1
           ref: master
 
       - name: Checkout [commit]
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
         with:
           fetch-depth: 1
           ref: ${{ inputs.checkoutCommit }}
@@ -53,16 +53,16 @@ jobs:
 
       - name: Install Helm
         if: inputs.chartChangesDetected == 'true'
-        uses: azure/setup-helm@b9e51907a09c216f16ebe8536097933489208112 # v4
+        uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4
         with:
-          version: v3.14.0
+          version: v3.18.6
 
       - name: Install ./clustertool
         shell: bash
         run: |
           VERSION="2.0.0-BETA-17"
           FILENAME="clustertool_${VERSION}_linux_amd64.tar.gz"
-          URL="https://github.com/truecharts/public/releases/download/v${VERSION}/${FILENAME}"
+          URL="https://github.com/trueforge-org/truecharts/releases/download/v${VERSION}/${FILENAME}"
 
           mkdir -p temp
           cd temp

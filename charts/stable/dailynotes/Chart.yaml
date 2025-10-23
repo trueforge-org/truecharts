@@ -6,14 +6,16 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: Other
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 25.4.10
-    repository: oci://tccr.io/truecharts
+    version: 28.26.1
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
@@ -34,7 +36,8 @@ maintainers:
 name: dailynotes
 sources:
   - https://github.com/truecharts/charts/tree/master/charts/stable/dailynotes
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/dailynotes
   - https://hub.docker.com/r/m0ngr31/dailynotes
 type: application
-version: 7.5.1
+version: 8.11.1
 

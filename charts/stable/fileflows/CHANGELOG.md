@@ -470,7 +470,7 @@ pagefind: false
 
 ### Chore
 
-- update container image tccr.io/truecharts/fileflows to v1.0.0 ([#3466](https://github.com/truecharts/charts/issues/3466))
+- update container image oci.trueforge.org/truecharts/fileflows to v1.0.0 ([#3466](https://github.com/truecharts/charts/issues/3466))
 
 ## [fileflows-2.0.33](https://github.com/truecharts/charts/compare/fileflows-node-0.0.15...fileflows-2.0.33) (2022-08-12)
 

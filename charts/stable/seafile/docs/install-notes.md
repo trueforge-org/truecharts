@@ -19,11 +19,10 @@ workload:
 ingress:
   main:
     enabled: true
+    ingressClassName: internal
     hosts:
       - host: seafile.${DOMAIN}
     integrations:
-      traefik:
-        enabled: true
       certManager:
         enabled: true
         certificateIssuer: cloudflare
@@ -47,7 +46,7 @@ By default WebDAV is disabled by default, as per [upstream docs](https://manual.
 - Restart Seafile and your WebDAV share will be accessible using your domain.com/seafdav
 
 **Option 2:**
-- Add [codeserver](https://truecharts.org/guides/addons/code-server/) as addon to the deplyment.
+- Add [codeserver](https://trueforge.org/truecharts/guides/addons/code-server/) as addon to the deplyment.
 - Browse to `/shared/seafile/conf/seafdav.conf`
 - Change `enabled = false` to `enabled = true`
 - Restart Seafile and your WebDAV share will be accessible using your domain.com/seafdav

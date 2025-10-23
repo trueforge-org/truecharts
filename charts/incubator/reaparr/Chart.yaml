@@ -1,0 +1,48 @@
+annotations:
+  artifacthub.io/links: |-
+    - name: support
+    url: https://discord.com/invite/tVsPTHWTtr
+  max_scale_version: 24.04.1
+  min_scale_version: 24.04.0
+  truecharts.org/category: media
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: incubator
+apiVersion: v2
+appVersion: 0.34.0
+dependencies:
+  - name: common
+    version: 28.26.1
+    repository: oci://oci.trueforge.org/truecharts
+    condition: ""
+    alias: ""
+    tags: []
+    import-values: []
+deprecated: false
+description: Plex downloader that brings content from any server to yours!
+home: https://truecharts.org/charts/incubator/reaparr
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/reaparr.webp
+keywords:
+  - reaparr
+  - Backup
+  - Downloaders
+  - MediaApp-Video
+  - MediaApp-Music
+  - MediaApp-Photos
+  - MediaApp-Other
+kubeVersion: '>=1.24.0-0'
+maintainers:
+  - name: TrueCharts
+    email: info@truecharts.org
+    url: https://truecharts.org
+name: reaparr
+sources:
+  - https://github.com/reaparr/reaparr/
+  - https://github.com/truecharts/charts/tree/master/charts/incubator/reaparr
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/incubator/reaparr
+  - https://hub.docker.com/r/reaparr/reaparr
+type: application
+version: 0.4.0
+

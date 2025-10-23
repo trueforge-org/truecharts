@@ -1,0 +1,32 @@
+image:
+  pullPolicy: IfNotPresent
+  repository: docker.io/reaparr/reaparr
+  tag: 0.34.0@sha256:b8b806d9f456dc4d2cd2479bc9c49641f43a47663083718a326e56da5894788b
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
+    runAsGroup: 0
+    runAsUser: 0
+service:
+  main:
+    ports:
+      main:
+        protocol: http
+        targetPort: 7000
+        port: 7000
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            LOG_LEVEL: "INFORMATION"
+            LOG_ENV_VARS: false
+            UNMASKED: false
+persistence:
+  config:
+    enabled: true
+    mountPath: /Config
+  downloads:
+    enabled: true
+    mountPath: /Downloads

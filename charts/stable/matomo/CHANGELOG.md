@@ -3,7 +3,7 @@ title: Changelog
 pagefind: false
 ---
 
-## [matomo-4.0.0](https://github.com/truecharts/charts/compare/matomo-3.0.90...matomo-4.0.0) (2022-11-10)
+## [matomo-4.0.0](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.90...matomo-4.0.0) (2022-11-10)
 
 ### Chore
 
@@ -16,16 +16,16 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Major Change to GUI
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update docker general non-major ([#4355](https://github.com/truecharts/charts/issues/4355))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update docker general non-major ([#4355](https://github.com/trueforge-org/truecharts/issues/4355))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
 ### Fix
 
 - change container config label
 
-## [matomo-3.0.94](https://github.com/truecharts/charts/compare/matomo-3.0.90...matomo-3.0.94) (2022-11-09)
+## [matomo-3.0.94](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.90...matomo-3.0.94) (2022-11-09)
 
 ### Chore
 
@@ -36,26 +36,12 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4355](https://github.com/truecharts/charts/issues/4355))
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update docker general non-major ([#4355](https://github.com/trueforge-org/truecharts/issues/4355))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [matomo-3.0.93](https://github.com/truecharts/charts/compare/matomo-3.0.90...matomo-3.0.93) (2022-11-08)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [matomo-3.0.92](https://github.com/truecharts/charts/compare/matomo-3.0.90...matomo-3.0.92) (2022-11-08)
+## [matomo-3.0.93](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.90...matomo-3.0.93) (2022-11-08)
 
 ### Chore
 
@@ -64,10 +50,12 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [matomo-3.0.92](https://github.com/truecharts/charts/compare/matomo-3.0.90...matomo-3.0.92) (2022-11-08)
+## [matomo-3.0.92](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.90...matomo-3.0.92) (2022-11-08)
 
 ### Chore
 
@@ -75,215 +63,227 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [matomo-3.0.92](https://github.com/truecharts/charts/compare/matomo-3.0.90...matomo-3.0.92) (2022-11-08)
+## [matomo-3.0.92](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.90...matomo-3.0.92) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [matomo-3.0.91](https://github.com/truecharts/charts/compare/matomo-3.0.90...matomo-3.0.91) (2022-11-07)
+## [matomo-3.0.92](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.90...matomo-3.0.92) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [matomo-3.0.91](https://github.com/truecharts/charts/compare/matomo-3.0.90...matomo-3.0.91) (2022-11-06)
-
-### Chore
-
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [matomo-3.0.90](https://github.com/truecharts/charts/compare/matomo-3.0.88...matomo-3.0.90) (2022-11-06)
+## [matomo-3.0.91](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.90...matomo-3.0.91) (2022-11-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4317](https://github.com/truecharts/charts/issues/4317))
-- update docker general non-major ([#4312](https://github.com/truecharts/charts/issues/4312))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [matomo-3.0.89](https://github.com/truecharts/charts/compare/matomo-3.0.88...matomo-3.0.89) (2022-11-06)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#4312](https://github.com/truecharts/charts/issues/4312))
-
-## [matomo-3.0.88](https://github.com/truecharts/charts/compare/matomo-3.0.87...matomo-3.0.88) (2022-11-05)
+## [matomo-3.0.91](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.90...matomo-3.0.91) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [matomo-3.0.87](https://github.com/truecharts/charts/compare/matomo-3.0.86...matomo-3.0.87) (2022-11-03)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#4286](https://github.com/truecharts/charts/issues/4286))
-
-## [matomo-3.0.86](https://github.com/truecharts/charts/compare/matomo-3.0.85...matomo-3.0.86) (2022-11-02)
+## [matomo-3.0.90](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.88...matomo-3.0.90) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4317](https://github.com/trueforge-org/truecharts/issues/4317))
+- update docker general non-major ([#4312](https://github.com/trueforge-org/truecharts/issues/4312))
 
-## [matomo-3.0.85](https://github.com/truecharts/charts/compare/matomo-3.0.84...matomo-3.0.85) (2022-10-31)
+## [matomo-3.0.89](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.88...matomo-3.0.89) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4249](https://github.com/truecharts/charts/issues/4249))
+- update docker general non-major ([#4312](https://github.com/trueforge-org/truecharts/issues/4312))
 
-## [matomo-3.0.84](https://github.com/truecharts/charts/compare/matomo-3.0.83...matomo-3.0.84) (2022-10-28)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#4218](https://github.com/truecharts/charts/issues/4218))
-
-## [matomo-3.0.83](https://github.com/truecharts/charts/compare/matomo-3.0.82...matomo-3.0.83) (2022-10-25)
+## [matomo-3.0.88](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.87...matomo-3.0.88) (2022-11-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
 
-## [matomo-3.0.82](https://github.com/truecharts/charts/compare/matomo-3.0.81...matomo-3.0.82) (2022-10-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#4181](https://github.com/truecharts/charts/issues/4181))
-
-## [matomo-3.0.81](https://github.com/truecharts/charts/compare/matomo-3.0.80...matomo-3.0.81) (2022-10-22)
+## [matomo-3.0.87](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.86...matomo-3.0.87) (2022-11-03)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4155](https://github.com/truecharts/charts/issues/4155))
+- update docker general non-major ([#4286](https://github.com/trueforge-org/truecharts/issues/4286))
 
-## [matomo-3.0.80](https://github.com/truecharts/charts/compare/matomo-3.0.79...matomo-3.0.80) (2022-10-21)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#4139](https://github.com/truecharts/charts/issues/4139))
-
-## [matomo-3.0.79](https://github.com/truecharts/charts/compare/matomo-3.0.78...matomo-3.0.79) (2022-10-19)
+## [matomo-3.0.86](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.85...matomo-3.0.86) (2022-11-02)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
-- update docker general non-major ([#4128](https://github.com/truecharts/charts/issues/4128))
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
 
-## [matomo-3.0.78](https://github.com/truecharts/charts/compare/matomo-3.0.77...matomo-3.0.78) (2022-10-15)
+## [matomo-3.0.85](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.84...matomo-3.0.85) (2022-10-31)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4249](https://github.com/trueforge-org/truecharts/issues/4249))
+
+## [matomo-3.0.84](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.83...matomo-3.0.84) (2022-10-28)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4218](https://github.com/trueforge-org/truecharts/issues/4218))
+
+## [matomo-3.0.83](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.82...matomo-3.0.83) (2022-10-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
+
+## [matomo-3.0.82](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.81...matomo-3.0.82) (2022-10-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4181](https://github.com/trueforge-org/truecharts/issues/4181))
+
+## [matomo-3.0.81](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.80...matomo-3.0.81) (2022-10-22)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4155](https://github.com/trueforge-org/truecharts/issues/4155))
+
+## [matomo-3.0.80](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.79...matomo-3.0.80) (2022-10-21)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4139](https://github.com/trueforge-org/truecharts/issues/4139))
+
+## [matomo-3.0.79](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.78...matomo-3.0.79) (2022-10-19)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
+- update docker general non-major ([#4128](https://github.com/trueforge-org/truecharts/issues/4128))
+
+## [matomo-3.0.78](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.77...matomo-3.0.78) (2022-10-15)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update docker general non-major
 
-## [matomo-3.0.77](https://github.com/truecharts/charts/compare/matomo-3.0.76...matomo-3.0.77) (2022-10-14)
+## [matomo-3.0.77](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.76...matomo-3.0.77) (2022-10-14)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4084](https://github.com/truecharts/charts/issues/4084))
+- update docker general non-major ([#4084](https://github.com/trueforge-org/truecharts/issues/4084))
 
-## [matomo-3.0.76](https://github.com/truecharts/charts/compare/matomo-3.0.75...matomo-3.0.76) (2022-10-12)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4071](https://github.com/truecharts/charts/issues/4071))
-
-## [matomo-3.0.75](https://github.com/truecharts/charts/compare/matomo-3.0.74...matomo-3.0.75) (2022-10-11)
+## [matomo-3.0.76](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.75...matomo-3.0.76) (2022-10-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4070](https://github.com/truecharts/charts/issues/4070))
+- update helm general non-major ([#4071](https://github.com/trueforge-org/truecharts/issues/4071))
 
-## [matomo-3.0.74](https://github.com/truecharts/charts/compare/matomo-3.0.72...matomo-3.0.74) (2022-10-08)
+## [matomo-3.0.75](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.74...matomo-3.0.75) (2022-10-11)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4070](https://github.com/trueforge-org/truecharts/issues/4070))
+
+## [matomo-3.0.74](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.72...matomo-3.0.74) (2022-10-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4030](https://github.com/truecharts/charts/issues/4030))
+- update docker general non-major ([#4030](https://github.com/trueforge-org/truecharts/issues/4030))
 - update helm general non-major
 
-## [matomo-3.0.73](https://github.com/truecharts/charts/compare/matomo-3.0.72...matomo-3.0.73) (2022-10-07)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major
-
-## [matomo-3.0.72](https://github.com/truecharts/charts/compare/matomo-3.0.71...matomo-3.0.72) (2022-10-05)
+## [matomo-3.0.73](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.72...matomo-3.0.73) (2022-10-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [matomo-3.0.71](https://github.com/truecharts/charts/compare/matomo-3.0.70...matomo-3.0.71) (2022-10-04)
+## [matomo-3.0.72](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.71...matomo-3.0.72) (2022-10-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
-- update docker general non-major ([#4001](https://github.com/truecharts/charts/issues/4001))
+- update helm general non-major
 
-## [matomo-3.0.70](https://github.com/truecharts/charts/compare/matomo-3.0.69...matomo-3.0.70) (2022-10-01)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3975](https://github.com/truecharts/charts/issues/3975))
-
-## [matomo-3.0.69](https://github.com/truecharts/charts/compare/matomo-3.0.68...matomo-3.0.69) (2022-09-30)
-
-### Chore
-
-- update docker general non-major ([#3965](https://github.com/truecharts/charts/issues/3965))
-
-## [matomo-3.0.67](https://github.com/truecharts/charts/compare/matomo-3.0.66...matomo-3.0.67) (2022-09-27)
+## [matomo-3.0.71](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.70...matomo-3.0.71) (2022-10-04)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3918](https://github.com/truecharts/charts/issues/3918))
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
+- update docker general non-major ([#4001](https://github.com/trueforge-org/truecharts/issues/4001))
 
-## [matomo-3.0.66](https://github.com/truecharts/charts/compare/matomo-3.0.65...matomo-3.0.66) (2022-09-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
-
-## [matomo-3.0.65](https://github.com/truecharts/charts/compare/matomo-3.0.64...matomo-3.0.65) (2022-09-23)
+## [matomo-3.0.70](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.69...matomo-3.0.70) (2022-10-01)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#3850](https://github.com/truecharts/charts/issues/3850))
+- update docker general non-major ([#3975](https://github.com/trueforge-org/truecharts/issues/3975))
 
-## [matomo-3.0.64](https://github.com/truecharts/charts/compare/matomo-3.0.61...matomo-3.0.64) (2022-09-22)
+## [matomo-3.0.69](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.68...matomo-3.0.69) (2022-09-30)
+
+### Chore
+
+- update docker general non-major ([#3965](https://github.com/trueforge-org/truecharts/issues/3965))
+
+## [matomo-3.0.67](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.66...matomo-3.0.67) (2022-09-27)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3918](https://github.com/trueforge-org/truecharts/issues/3918))
+
+## [matomo-3.0.66](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.65...matomo-3.0.66) (2022-09-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
+
+## [matomo-3.0.65](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.64...matomo-3.0.65) (2022-09-23)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3850](https://github.com/trueforge-org/truecharts/issues/3850))
+
+## [matomo-3.0.64](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.61...matomo-3.0.64) (2022-09-22)
 
 ### Chore
 
@@ -301,14 +301,14 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3790](https://github.com/truecharts/charts/issues/3790))
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update docker general non-major ([#3818](https://github.com/truecharts/charts/issues/3818))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3790](https://github.com/trueforge-org/truecharts/issues/3790))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update docker general non-major ([#3818](https://github.com/trueforge-org/truecharts/issues/3818))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [matomo-3.0.64](https://github.com/truecharts/charts/compare/matomo-3.0.61...matomo-3.0.64) (2022-09-21)
+## [matomo-3.0.64](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.61...matomo-3.0.64) (2022-09-21)
 
 ### Chore
 
@@ -325,14 +325,14 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3790](https://github.com/truecharts/charts/issues/3790))
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update docker general non-major ([#3818](https://github.com/truecharts/charts/issues/3818))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3790](https://github.com/trueforge-org/truecharts/issues/3790))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update docker general non-major ([#3818](https://github.com/trueforge-org/truecharts/issues/3818))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [matomo-3.0.64](https://github.com/truecharts/charts/compare/matomo-3.0.61...matomo-3.0.64) (2022-09-21)
+## [matomo-3.0.64](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.61...matomo-3.0.64) (2022-09-21)
 
 ### Chore
 
@@ -348,14 +348,14 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3790](https://github.com/truecharts/charts/issues/3790))
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update docker general non-major ([#3818](https://github.com/truecharts/charts/issues/3818))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3790](https://github.com/trueforge-org/truecharts/issues/3790))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update docker general non-major ([#3818](https://github.com/trueforge-org/truecharts/issues/3818))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [matomo-3.0.64](https://github.com/truecharts/charts/compare/matomo-3.0.61...matomo-3.0.64) (2022-09-20)
+## [matomo-3.0.64](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.61...matomo-3.0.64) (2022-09-20)
 
 ### Chore
 
@@ -370,14 +370,14 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3790](https://github.com/truecharts/charts/issues/3790))
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update docker general non-major ([#3818](https://github.com/truecharts/charts/issues/3818))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3790](https://github.com/trueforge-org/truecharts/issues/3790))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update docker general non-major ([#3818](https://github.com/trueforge-org/truecharts/issues/3818))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [matomo-3.0.64](https://github.com/truecharts/charts/compare/matomo-3.0.61...matomo-3.0.64) (2022-09-20)
+## [matomo-3.0.64](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.61...matomo-3.0.64) (2022-09-20)
 
 ### Chore
 
@@ -391,14 +391,14 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3818](https://github.com/truecharts/charts/issues/3818))
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update docker general non-major ([#3790](https://github.com/truecharts/charts/issues/3790))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3818](https://github.com/trueforge-org/truecharts/issues/3818))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update docker general non-major ([#3790](https://github.com/trueforge-org/truecharts/issues/3790))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [matomo-3.0.63](https://github.com/truecharts/charts/compare/matomo-3.0.61...matomo-3.0.63) (2022-09-19)
+## [matomo-3.0.63](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.61...matomo-3.0.63) (2022-09-19)
 
 ### Chore
 
@@ -411,13 +411,13 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update docker general non-major ([#3790](https://github.com/truecharts/charts/issues/3790))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update docker general non-major ([#3790](https://github.com/trueforge-org/truecharts/issues/3790))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [matomo-3.0.63](https://github.com/truecharts/charts/compare/matomo-3.0.61...matomo-3.0.63) (2022-09-19)
+## [matomo-3.0.63](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.61...matomo-3.0.63) (2022-09-19)
 
 ### Chore
 
@@ -429,13 +429,13 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update docker general non-major ([#3790](https://github.com/truecharts/charts/issues/3790))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update docker general non-major ([#3790](https://github.com/trueforge-org/truecharts/issues/3790))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [matomo-3.0.63](https://github.com/truecharts/charts/compare/matomo-3.0.61...matomo-3.0.63) (2022-09-19)
+## [matomo-3.0.63](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.61...matomo-3.0.63) (2022-09-19)
 
 ### Chore
 
@@ -446,13 +446,13 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3790](https://github.com/truecharts/charts/issues/3790))
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3790](https://github.com/trueforge-org/truecharts/issues/3790))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [matomo-3.0.62](https://github.com/truecharts/charts/compare/matomo-3.0.61...matomo-3.0.62) (2022-09-17)
+## [matomo-3.0.62](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.61...matomo-3.0.62) (2022-09-17)
 
 ### Chore
 
@@ -462,72 +462,12 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [matomo-3.0.62](https://github.com/truecharts/charts/compare/matomo-3.0.61...matomo-3.0.62) (2022-09-18)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [matomo-3.0.62](https://github.com/truecharts/charts/compare/matomo-3.0.61...matomo-3.0.62) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [matomo-3.0.62](https://github.com/truecharts/charts/compare/matomo-3.0.61...matomo-3.0.62) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [matomo-3.0.62](https://github.com/truecharts/charts/compare/matomo-3.0.61...matomo-3.0.62) (2022-09-15)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [matomo-3.0.62](https://github.com/truecharts/charts/compare/matomo-3.0.61...matomo-3.0.62) (2022-09-15)
-
-### Chore
-
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [matomo-3.0.61](https://github.com/truecharts/charts/compare/matomo-3.0.60...matomo-3.0.61) (2022-09-13)
-
-### Chore
-
-- update docker general non-major ([#3755](https://github.com/truecharts/charts/issues/3755))
-
-## [matomo-3.0.60](https://github.com/truecharts/charts/compare/matomo-3.0.59...matomo-3.0.60) (2022-09-12)
+## [matomo-3.0.62](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.61...matomo-3.0.62) (2022-09-18)
 
 ### Chore
 
@@ -535,167 +475,227 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [matomo-3.0.60](https://github.com/truecharts/charts/compare/matomo-3.0.59...matomo-3.0.60) (2022-09-12)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-
-## [matomo-3.0.60](https://github.com/truecharts/charts/compare/matomo-3.0.59...matomo-3.0.60) (2022-09-11)
+## [matomo-3.0.62](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.61...matomo-3.0.62) (2022-09-16)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [matomo-3.0.60](https://github.com/truecharts/charts/compare/matomo-3.0.59...matomo-3.0.60) (2022-09-11)
+## [matomo-3.0.62](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.61...matomo-3.0.62) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [matomo-3.0.62](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.61...matomo-3.0.62) (2022-09-15)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [matomo-3.0.62](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.61...matomo-3.0.62) (2022-09-15)
+
+### Chore
+
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [matomo-3.0.61](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.60...matomo-3.0.61) (2022-09-13)
+
+### Chore
+
+- update docker general non-major ([#3755](https://github.com/trueforge-org/truecharts/issues/3755))
+
+## [matomo-3.0.60](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.59...matomo-3.0.60) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [matomo-3.0.60](https://github.com/truecharts/charts/compare/matomo-3.0.59...matomo-3.0.60) (2022-09-11)
+## [matomo-3.0.60](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.59...matomo-3.0.60) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [matomo-3.0.60](https://github.com/truecharts/charts/compare/matomo-3.0.59...matomo-3.0.60) (2022-09-11)
-
-### Chore
-
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-
-## [matomo-3.0.59](https://github.com/truecharts/charts/compare/matomo-3.0.58...matomo-3.0.59) (2022-09-10)
-
-### Chore
-
-- update docker general non-major ([#3727](https://github.com/truecharts/charts/issues/3727))
-
-## [matomo-3.0.58](https://github.com/truecharts/charts/compare/matomo-3.0.57...matomo-3.0.58) (2022-09-05)
-
-### Chore
-
-- update docker general non-major ([#3700](https://github.com/truecharts/charts/issues/3700))
-
-## [matomo-3.0.57](https://github.com/truecharts/charts/compare/matomo-3.0.56...matomo-3.0.57) (2022-09-02)
-
-### Chore
-
-- update docker general non-major ([#3660](https://github.com/truecharts/charts/issues/3660))
-
-## [matomo-3.0.56](https://github.com/truecharts/charts/compare/matomo-3.0.54...matomo-3.0.56) (2022-08-30)
+## [matomo-3.0.60](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.59...matomo-3.0.60) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [matomo-3.0.55](https://github.com/truecharts/charts/compare/matomo-3.0.54...matomo-3.0.55) (2022-08-30)
-
-### Chore
-
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
-
-## [matomo-3.0.54](https://github.com/truecharts/charts/compare/matomo-3.0.53...matomo-3.0.54) (2022-08-30)
+## [matomo-3.0.60](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.59...matomo-3.0.60) (2022-09-11)
 
 ### Chore
 
-- update docker general non-major ([#3623](https://github.com/truecharts/charts/issues/3623))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [matomo-3.0.53](https://github.com/truecharts/charts/compare/matomo-3.0.51...matomo-3.0.53) (2022-08-29)
-
-### Chore
-
-- update helm general non-major ([#3621](https://github.com/truecharts/charts/issues/3621))
-- update helm general non-major ([#3619](https://github.com/truecharts/charts/issues/3619))
-
-## [matomo-3.0.51](https://github.com/truecharts/charts/compare/matomo-3.0.50...matomo-3.0.51) (2022-08-25)
+## [matomo-3.0.60](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.59...matomo-3.0.60) (2022-09-11)
 
 ### Chore
 
-- update docker general non-major ([#3561](https://github.com/truecharts/charts/issues/3561))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [matomo-3.0.50](https://github.com/truecharts/charts/compare/matomo-3.0.49...matomo-3.0.50) (2022-08-23)
-
-### Chore
-
-- update helm general non-major helm releases ([#3545](https://github.com/truecharts/charts/issues/3545))
-
-## [matomo-3.0.49](https://github.com/truecharts/charts/compare/matomo-3.0.48...matomo-3.0.49) (2022-08-23)
+## [matomo-3.0.60](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.59...matomo-3.0.60) (2022-09-11)
 
 ### Chore
 
-- update docker general non-major docker tags ([#3544](https://github.com/truecharts/charts/issues/3544))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [matomo-3.0.48](https://github.com/truecharts/charts/compare/matomo-3.0.47...matomo-3.0.48) (2022-08-20)
-
-### Chore
-
-- update docker general non-major docker tags ([#3518](https://github.com/truecharts/charts/issues/3518))
-
-## [matomo-3.0.47](https://github.com/truecharts/charts/compare/matomo-3.0.46...matomo-3.0.47) (2022-08-17)
+## [matomo-3.0.59](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.58...matomo-3.0.59) (2022-09-10)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3484](https://github.com/truecharts/charts/issues/3484))
-- update docker general non-major ([#3478](https://github.com/truecharts/charts/issues/3478))
+- update docker general non-major ([#3727](https://github.com/trueforge-org/truecharts/issues/3727))
 
-## [matomo-3.0.46](https://github.com/truecharts/charts/compare/matomo-3.0.45...matomo-3.0.46) (2022-08-12)
+## [matomo-3.0.58](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.57...matomo-3.0.58) (2022-09-05)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- update docker general non-major ([#3700](https://github.com/trueforge-org/truecharts/issues/3700))
 
-## [matomo-3.0.45](https://github.com/truecharts/charts/compare/matomo-3.0.44...matomo-3.0.45) (2022-08-12)
+## [matomo-3.0.57](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.56...matomo-3.0.57) (2022-09-02)
+
+### Chore
+
+- update docker general non-major ([#3660](https://github.com/trueforge-org/truecharts/issues/3660))
+
+## [matomo-3.0.56](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.54...matomo-3.0.56) (2022-08-30)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
+
+## [matomo-3.0.55](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.54...matomo-3.0.55) (2022-08-30)
+
+### Chore
+
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
+
+## [matomo-3.0.54](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.53...matomo-3.0.54) (2022-08-30)
+
+### Chore
+
+- update docker general non-major ([#3623](https://github.com/trueforge-org/truecharts/issues/3623))
+
+## [matomo-3.0.53](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.51...matomo-3.0.53) (2022-08-29)
+
+### Chore
+
+- update helm general non-major ([#3621](https://github.com/trueforge-org/truecharts/issues/3621))
+- update helm general non-major ([#3619](https://github.com/trueforge-org/truecharts/issues/3619))
+
+## [matomo-3.0.51](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.50...matomo-3.0.51) (2022-08-25)
+
+### Chore
+
+- update docker general non-major ([#3561](https://github.com/trueforge-org/truecharts/issues/3561))
+
+## [matomo-3.0.50](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.49...matomo-3.0.50) (2022-08-23)
+
+### Chore
+
+- update helm general non-major helm releases ([#3545](https://github.com/trueforge-org/truecharts/issues/3545))
+
+## [matomo-3.0.49](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.48...matomo-3.0.49) (2022-08-23)
+
+### Chore
+
+- update docker general non-major docker tags ([#3544](https://github.com/trueforge-org/truecharts/issues/3544))
+
+## [matomo-3.0.48](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.47...matomo-3.0.48) (2022-08-20)
+
+### Chore
+
+- update docker general non-major docker tags ([#3518](https://github.com/trueforge-org/truecharts/issues/3518))
+
+## [matomo-3.0.47](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.46...matomo-3.0.47) (2022-08-17)
+
+### Chore
+
+- update helm general non-major helm releases ([#3484](https://github.com/trueforge-org/truecharts/issues/3484))
+- update docker general non-major ([#3478](https://github.com/trueforge-org/truecharts/issues/3478))
+
+## [matomo-3.0.46](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.45...matomo-3.0.46) (2022-08-12)
+
+### Chore
+
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
+
+## [matomo-3.0.45](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.44...matomo-3.0.45) (2022-08-12)
 
 ### Chore
 
 - add documentation checkbox/section to all SCALE Apps
-- update docker general non-major ([#3453](https://github.com/truecharts/charts/issues/3453))
+- update docker general non-major ([#3453](https://github.com/trueforge-org/truecharts/issues/3453))
 
 ### Fix
 
-- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/truecharts/charts/issues/3447))
+- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/trueforge-org/truecharts/issues/3447))
 
-## [matomo-3.0.44](https://github.com/truecharts/charts/compare/matomo-3.0.43...matomo-3.0.44) (2022-08-10)
-
-### Chore
-
-- update docker general non-major ([#3421](https://github.com/truecharts/charts/issues/3421))
-
-## [matomo-3.0.43](https://github.com/truecharts/charts/compare/matomo-3.0.42...matomo-3.0.43) (2022-08-09)
+## [matomo-3.0.44](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.43...matomo-3.0.44) (2022-08-10)
 
 ### Chore
 
-- update helm general non-major helm releases to v10.4.9 ([#3413](https://github.com/truecharts/charts/issues/3413))
+- update docker general non-major ([#3421](https://github.com/trueforge-org/truecharts/issues/3421))
 
-## [matomo-3.0.42](https://github.com/truecharts/charts/compare/matomo-3.0.41...matomo-3.0.42) (2022-08-09)
-
-### Chore
-
-- update docker general non-major ([#3377](https://github.com/truecharts/charts/issues/3377))
-
-## [matomo-3.0.41](https://github.com/truecharts/charts/compare/matomo-3.0.39...matomo-3.0.41) (2022-08-08)
+## [matomo-3.0.43](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.42...matomo-3.0.43) (2022-08-09)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- update docker general non-major ([#3356](https://github.com/truecharts/charts/issues/3356))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update helm general non-major helm releases to v10.4.9 ([#3413](https://github.com/trueforge-org/truecharts/issues/3413))
+
+## [matomo-3.0.42](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.41...matomo-3.0.42) (2022-08-09)
+
+### Chore
+
+- update docker general non-major ([#3377](https://github.com/trueforge-org/truecharts/issues/3377))
+
+## [matomo-3.0.41](https://github.com/trueforge-org/truecharts/compare/matomo-3.0.39...matomo-3.0.41) (2022-08-08)
+
+### Chore
+
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- update docker general non-major ([#3356](https://github.com/trueforge-org/truecharts/issues/3356))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
 
 ## [matomo-3.0.39](https://github.com/truecharts/apps/compare/matomo-3.0.38...matomo-3.0.39) (2022-07-28)
 

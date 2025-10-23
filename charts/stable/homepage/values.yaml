@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/gethomepage/homepage
-  tag: v1.3.2@sha256:4f923bf0e9391b3a8bc5527e539b022e92dcc8a3a13e6ab66122ea9ed030e196
+  tag: v1.5.0@sha256:e7fc26f914cf5e7dcd6c566e24ca218addb879aa76478ad4a553b1f9ae48b1d7
   pullPolicy: IfNotPresent
 
 workload:
@@ -204,14 +204,19 @@ configmap:
   config:
     enabled: true
     data:
+      # https://gethomepage.dev/configs/custom-css-js/
       custom.js: ""
       custom.css: ""
       kubernetes.yaml: |
+        ---
+        # For configuration options and examples, please see:
+        # https://gethomepage.dev/configs/kubernetes/
+
         mode: cluster
       settings.yaml: |
         ---
         # For configuration options and examples, please see:
-        # https://gethomepage.dev/latest/configs/settings
+        # https://gethomepage.dev/configs/
 
         providers:
           openweathermap: openweathermapapikey
@@ -219,7 +224,7 @@ configmap:
       widgets.yaml: |
         ---
         # For configuration options and examples, please see:
-        # https://gethomepage.dev/latest/configs/widgets
+        # https://gethomepage.dev/widgets/
 
         - resources:
             cpu: true
@@ -233,7 +238,7 @@ configmap:
       services.yaml: |
         ---
         # For configuration options and examples, please see:
-        # https://gethomepage.dev/latest/configs/services
+        # https://gethomepage.dev/configs/services/
 
         - Arr:
             - My First Service:
@@ -252,7 +257,7 @@ configmap:
       bookmarks.yaml: |
         ---
         # For configuration options and examples, please see:
-        # https://gethomepage.dev/latest/configs/bookmarks
+        # https://gethomepage.dev/configs/bookmarks/
 
         - Developer:
             - Github:
@@ -272,7 +277,7 @@ configmap:
         - TrueCharts:
             - TrueCharts:
               - abbr: TC
-                icon: https://truecharts.org/svg/favicon.svg
+                icon: https://trueforge.org/svg/favicon.svg
                 href: https://truecharts.org
                 description: "TrueCharts Website"
             - Github:
@@ -288,7 +293,7 @@ configmap:
             - Discord:
               - abbr: DC
                 icon: https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://discord.com&size=32
-                href: https://truecharts.org/s/discord
+                href: https://trueforge.org/s/discord
                 description: "TrueCharts Discord"
 
 forceConfigFromValues: false

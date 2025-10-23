@@ -3,7 +3,7 @@ title: Changelog
 pagefind: false
 ---
 
-## [goaccess-1.0.0](https://github.com/truecharts/charts/compare/goaccess-npm-logs-0.0.40...goaccess-1.0.0) (2022-11-10)
+## [goaccess-1.0.0](https://github.com/trueforge-org/truecharts/compare/goaccess-npm-logs-0.0.40...goaccess-1.0.0) (2022-11-10)
 
 ### Chore
 
@@ -15,25 +15,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Major Change to GUI
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [goaccess-0.0.37](https://github.com/truecharts/charts/compare/goaccess-npm-logs-0.0.40...goaccess-0.0.37) (2022-11-08)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [goaccess-0.0.36](https://github.com/truecharts/charts/compare/goaccess-npm-logs-0.0.40...goaccess-0.0.36) (2022-11-08)
+## [goaccess-0.0.37](https://github.com/trueforge-org/truecharts/compare/goaccess-npm-logs-0.0.40...goaccess-0.0.37) (2022-11-08)
 
 ### Chore
 
@@ -42,10 +28,12 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [goaccess-0.0.36](https://github.com/truecharts/charts/compare/goaccess-npm-logs-0.0.40...goaccess-0.0.36) (2022-11-08)
+## [goaccess-0.0.36](https://github.com/trueforge-org/truecharts/compare/goaccess-npm-logs-0.0.40...goaccess-0.0.36) (2022-11-08)
 
 ### Chore
 
@@ -53,77 +41,89 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [goaccess-0.0.36](https://github.com/truecharts/charts/compare/goaccess-npm-logs-0.0.40...goaccess-0.0.36) (2022-11-08)
+## [goaccess-0.0.36](https://github.com/trueforge-org/truecharts/compare/goaccess-npm-logs-0.0.40...goaccess-0.0.36) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [goaccess-0.0.35](https://github.com/truecharts/charts/compare/goaccess-npm-logs-0.0.40...goaccess-0.0.35) (2022-11-07)
+## [goaccess-0.0.36](https://github.com/trueforge-org/truecharts/compare/goaccess-npm-logs-0.0.40...goaccess-0.0.36) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [goaccess-0.0.35](https://github.com/truecharts/charts/compare/goaccess-npm-logs-0.0.40...goaccess-0.0.35) (2022-11-06)
+## [goaccess-0.0.35](https://github.com/trueforge-org/truecharts/compare/goaccess-npm-logs-0.0.40...goaccess-0.0.35) (2022-11-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [goaccess-0.0.34](https://github.com/truecharts/charts/compare/goaccess-npm-logs-0.0.39...goaccess-0.0.34) (2022-11-06)
+## [goaccess-0.0.35](https://github.com/trueforge-org/truecharts/compare/goaccess-npm-logs-0.0.40...goaccess-0.0.35) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4317](https://github.com/truecharts/charts/issues/4317))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [goaccess-0.0.33](https://github.com/truecharts/charts/compare/goaccess-0.0.32...goaccess-0.0.33) (2022-11-05)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
-
-## [goaccess-0.0.32](https://github.com/truecharts/charts/compare/goaccess-0.0.31...goaccess-0.0.32) (2022-11-02)
+## [goaccess-0.0.34](https://github.com/trueforge-org/truecharts/compare/goaccess-npm-logs-0.0.39...goaccess-0.0.34) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
+- update helm general non-major ([#4317](https://github.com/trueforge-org/truecharts/issues/4317))
 
-## [goaccess-0.0.31](https://github.com/truecharts/charts/compare/goaccess-0.0.30...goaccess-0.0.31) (2022-10-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
-
-## [goaccess-0.0.30](https://github.com/truecharts/charts/compare/goaccess-npm-logs-0.0.35...goaccess-0.0.30) (2022-10-19)
+## [goaccess-0.0.33](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.32...goaccess-0.0.33) (2022-11-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
 
-## [goaccess-0.0.29](https://github.com/truecharts/charts/compare/goaccess-npm-logs-0.0.34...goaccess-0.0.29) (2022-10-12)
+## [goaccess-0.0.32](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.31...goaccess-0.0.32) (2022-11-02)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4071](https://github.com/truecharts/charts/issues/4071))
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
 
-## [goaccess-0.0.28](https://github.com/truecharts/charts/compare/goaccess-npm-logs-0.0.33...goaccess-0.0.28) (2022-10-07)
+## [goaccess-0.0.31](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.30...goaccess-0.0.31) (2022-10-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
+
+## [goaccess-0.0.30](https://github.com/trueforge-org/truecharts/compare/goaccess-npm-logs-0.0.35...goaccess-0.0.30) (2022-10-19)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
+
+## [goaccess-0.0.29](https://github.com/trueforge-org/truecharts/compare/goaccess-npm-logs-0.0.34...goaccess-0.0.29) (2022-10-12)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4071](https://github.com/trueforge-org/truecharts/issues/4071))
+
+## [goaccess-0.0.28](https://github.com/trueforge-org/truecharts/compare/goaccess-npm-logs-0.0.33...goaccess-0.0.28) (2022-10-07)
 
 ### Chore
 
@@ -131,35 +131,35 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [goaccess-0.0.28](https://github.com/truecharts/charts/compare/goaccess-npm-logs-0.0.33...goaccess-0.0.28) (2022-10-07)
+## [goaccess-0.0.28](https://github.com/trueforge-org/truecharts/compare/goaccess-npm-logs-0.0.33...goaccess-0.0.28) (2022-10-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [goaccess-0.0.27](https://github.com/truecharts/charts/compare/goaccess-npm-logs-0.0.32...goaccess-0.0.27) (2022-10-05)
+## [goaccess-0.0.27](https://github.com/trueforge-org/truecharts/compare/goaccess-npm-logs-0.0.32...goaccess-0.0.27) (2022-10-05)
 
 ### Chore
 
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
 - update helm general non-major
 
-## [goaccess-0.0.26](https://github.com/truecharts/charts/compare/goaccess-0.0.25...goaccess-0.0.26) (2022-09-27)
+## [goaccess-0.0.26](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.25...goaccess-0.0.26) (2022-09-27)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3918](https://github.com/truecharts/charts/issues/3918))
+- update helm general non-major ([#3918](https://github.com/trueforge-org/truecharts/issues/3918))
 
-## [goaccess-0.0.25](https://github.com/truecharts/charts/compare/goaccess-0.0.24...goaccess-0.0.25) (2022-09-25)
+## [goaccess-0.0.25](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.24...goaccess-0.0.25) (2022-09-25)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
 
-## [goaccess-0.0.24](https://github.com/truecharts/charts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-22)
+## [goaccess-0.0.24](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-22)
 
 ### Chore
 
@@ -177,10 +177,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [goaccess-0.0.24](https://github.com/truecharts/charts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-21)
+## [goaccess-0.0.24](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-21)
 
 ### Chore
 
@@ -197,10 +197,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [goaccess-0.0.24](https://github.com/truecharts/charts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-21)
+## [goaccess-0.0.24](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-21)
 
 ### Chore
 
@@ -216,10 +216,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [goaccess-0.0.24](https://github.com/truecharts/charts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-20)
+## [goaccess-0.0.24](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-20)
 
 ### Chore
 
@@ -234,10 +234,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [goaccess-0.0.24](https://github.com/truecharts/charts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-20)
+## [goaccess-0.0.24](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-20)
 
 ### Chore
 
@@ -251,10 +251,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [goaccess-0.0.24](https://github.com/truecharts/charts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-19)
+## [goaccess-0.0.24](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-19)
 
 ### Chore
 
@@ -267,10 +267,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [goaccess-0.0.24](https://github.com/truecharts/charts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-19)
+## [goaccess-0.0.24](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-19)
 
 ### Chore
 
@@ -282,10 +282,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [goaccess-0.0.24](https://github.com/truecharts/charts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-19)
+## [goaccess-0.0.24](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-19)
 
 ### Chore
 
@@ -296,10 +296,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [goaccess-0.0.24](https://github.com/truecharts/charts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-17)
+## [goaccess-0.0.24](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-17)
 
 ### Chore
 
@@ -309,55 +309,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [goaccess-0.0.24](https://github.com/truecharts/charts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-18)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [goaccess-0.0.24](https://github.com/truecharts/charts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [goaccess-0.0.24](https://github.com/truecharts/charts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [goaccess-0.0.24](https://github.com/truecharts/charts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-15)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [goaccess-0.0.24](https://github.com/truecharts/charts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-15)
-
-### Chore
-
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [goaccess-0.0.23](https://github.com/truecharts/charts/compare/goaccess-0.0.22...goaccess-0.0.23) (2022-09-12)
+## [goaccess-0.0.24](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-18)
 
 ### Chore
 
@@ -365,10 +320,44 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [goaccess-0.0.23](https://github.com/truecharts/charts/compare/goaccess-0.0.22...goaccess-0.0.23) (2022-09-12)
+## [goaccess-0.0.24](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [goaccess-0.0.24](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [goaccess-0.0.24](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-15)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [goaccess-0.0.24](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.23...goaccess-0.0.24) (2022-09-15)
+
+### Chore
+
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [goaccess-0.0.23](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.22...goaccess-0.0.23) (2022-09-12)
 
 ### Chore
 
@@ -376,87 +365,98 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [goaccess-0.0.23](https://github.com/truecharts/charts/compare/goaccess-0.0.22...goaccess-0.0.23) (2022-09-11)
+## [goaccess-0.0.23](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.22...goaccess-0.0.23) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [goaccess-0.0.23](https://github.com/truecharts/charts/compare/goaccess-0.0.22...goaccess-0.0.23) (2022-09-11)
+## [goaccess-0.0.23](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.22...goaccess-0.0.23) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [goaccess-0.0.23](https://github.com/truecharts/charts/compare/goaccess-0.0.22...goaccess-0.0.23) (2022-09-11)
+## [goaccess-0.0.23](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.22...goaccess-0.0.23) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [goaccess-0.0.23](https://github.com/truecharts/charts/compare/goaccess-0.0.22...goaccess-0.0.23) (2022-09-11)
-
-### Chore
-
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-
-## [goaccess-0.0.22](https://github.com/truecharts/charts/compare/goaccess-0.0.20...goaccess-0.0.22) (2022-08-30)
+## [goaccess-0.0.23](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.22...goaccess-0.0.23) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [goaccess-0.0.21](https://github.com/truecharts/charts/compare/goaccess-0.0.20...goaccess-0.0.21) (2022-08-30)
-
-### Chore
-
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
-
-## [goaccess-0.0.20](https://github.com/truecharts/charts/compare/goaccess-0.0.19...goaccess-0.0.20) (2022-08-29)
+## [goaccess-0.0.23](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.22...goaccess-0.0.23) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major ([#3619](https://github.com/truecharts/charts/issues/3619))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [goaccess-0.0.19](https://github.com/truecharts/charts/compare/goaccess-npm-logs-0.0.20...goaccess-0.0.19) (2022-08-26)
+## [goaccess-0.0.22](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.20...goaccess-0.0.22) (2022-08-30)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
+
+## [goaccess-0.0.21](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.20...goaccess-0.0.21) (2022-08-30)
+
+### Chore
+
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
+
+## [goaccess-0.0.20](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.19...goaccess-0.0.20) (2022-08-29)
+
+### Chore
+
+- update helm general non-major ([#3619](https://github.com/trueforge-org/truecharts/issues/3619))
+
+## [goaccess-0.0.19](https://github.com/trueforge-org/truecharts/compare/goaccess-npm-logs-0.0.20...goaccess-0.0.19) (2022-08-26)
 
 ### Fix
 
-- some cleanup ([#3586](https://github.com/truecharts/charts/issues/3586))
+- some cleanup ([#3586](https://github.com/trueforge-org/truecharts/issues/3586))
 
-## [goaccess-0.0.17](https://github.com/truecharts/charts/compare/goaccess-npm-logs-0.0.19...goaccess-0.0.17) (2022-08-23)
+## [goaccess-0.0.17](https://github.com/trueforge-org/truecharts/compare/goaccess-npm-logs-0.0.19...goaccess-0.0.17) (2022-08-23)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3545](https://github.com/truecharts/charts/issues/3545))
+- update helm general non-major helm releases ([#3545](https://github.com/trueforge-org/truecharts/issues/3545))
 
-## [goaccess-0.0.16](https://github.com/truecharts/charts/compare/goaccess-npm-logs-0.0.16...goaccess-0.0.16) (2022-08-12)
+## [goaccess-0.0.16](https://github.com/trueforge-org/truecharts/compare/goaccess-npm-logs-0.0.16...goaccess-0.0.16) (2022-08-12)
 
 ### Chore
 
 - add documentation checkbox/section to all SCALE Apps
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
 
 ### Fix
 
-- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/truecharts/charts/issues/3447))
+- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/trueforge-org/truecharts/issues/3447))
 
-## [goaccess-0.0.15](https://github.com/truecharts/charts/compare/goaccess-0.0.14...goaccess-0.0.15) (2022-08-08)
+## [goaccess-0.0.15](https://github.com/trueforge-org/truecharts/compare/goaccess-0.0.14...goaccess-0.0.15) (2022-08-08)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
 
 ## [goaccess-0.0.14](https://github.com/truecharts/apps/compare/goaccess-0.0.13...goaccess-0.0.14) (2022-07-26)
 

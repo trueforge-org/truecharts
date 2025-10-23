@@ -6,14 +6,16 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: media
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 0.31.1
+appVersion: 0.32.0
 dependencies:
   - name: common
-    version: 25.4.10
-    repository: oci://tccr.io/truecharts
+    version: 28.26.1
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
@@ -39,7 +41,8 @@ name: plexripper
 sources:
   - https://github.com/PlexRipper/PlexRipper/
   - https://github.com/truecharts/charts/tree/master/charts/stable/plexripper
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/plexripper
   - https://hub.docker.com/r/plexripper/plexripper
 type: application
-version: 10.16.1
+version: 11.12.1
 

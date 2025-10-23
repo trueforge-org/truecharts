@@ -32,7 +32,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
 
       - name: Filter paths
         id: filter
@@ -50,11 +50,12 @@ jobs:
     permissions:
       pull-requests: write
     name: "${{ github.ref == 'refs/heads/master' && '(Production)' || '(Preview)' }}"
-    runs-on: actions-runners
+    runs-on:
+      group: default
     needs: check_changes
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
         with:
           fetch-depth: 0
 
@@ -63,7 +64,7 @@ jobs:
         run: |
           VERSION="2.0.0-BETA-17"
           FILENAME="clustertool_${VERSION}_linux_amd64.tar.gz"
-          URL="https://github.com/truecharts/public/releases/download/v${VERSION}/${FILENAME}"
+          URL="https://github.com/trueforge-org/truecharts/releases/download/v${VERSION}/${FILENAME}"
 
           mkdir -p temp
           cd temp
@@ -88,7 +89,7 @@ jobs:
       - name: Cache Changelog
         id: cache-changelog
         if: github.event_name == 'push'
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           key: ${{ env.CHANGELOG_CACHE_KEY }}-${{ hashFiles('**/Chart.yaml') }}
           path: changelog.json.gz
@@ -132,9 +133,9 @@ jobs:
           find . -name '*.sh' | xargs chmod +x
 
       - name: Install Helm
-        uses: azure/setup-helm@b9e51907a09c216f16ebe8536097933489208112 # v4
+        uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4
         with:
-          version: v3.17.2
+          version: v3.18.6
 
       # Optional step if GPG signing is used
       - name: Prepare GPG key
@@ -174,8 +175,17 @@ jobs:
         if: github.event_name == 'push'
         run: helm registry logout quay.io
 
+      - name: Checkout website repo
+        if: github.event_name == 'push'
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+        with:
+          repository: trueforge-org/website
+          path: website   # checkout into ./website
+          ref: main       # branch to push to
+          token: "${{ secrets.BOT_TOKEN }}"
+
       - name: Copy docs to website
-        if: needs.check_changes.outputs.changes_detected == 'true'
+        if: github.event_name == 'push'
         shell: bash
         run: |
           #!/bin/bash
@@ -185,15 +195,17 @@ jobs:
           mkdir -p website/src/assets || echo "assets path already exists, continuing..."
 
           ./temp/clustertool charts genchartlist ./charts
-          mv charts.json website/src/assets/charts.json
-
+          mv -f charts.json website/src/assets/charts.json
+          mv -f ./website/src/content/docs/truetech/truecharts/charts/description-list.mdx ./description-list.mdx
           echo "Copying changelogs to docs"
-          mkdir -p ./website/src/content/docs/charts/
+          rm -rf ./website/src/content/docs/truetech/truecharts/charts/stable ./website/src/content/docs/truetech/truecharts/charts/incubator ./website/src/content/docs/truetech/truecharts/charts/library
+          mkdir -p ./website/src/content/docs/truetech/truecharts/charts/
+          mv -f ./description-list.mdx ./website/src/content/docs/truetech/truecharts/charts/description-list.mdx
           mkdir -p ./changelogs
 
           # Check if there are any directories in changelogs
           if [ -n "$(find ./changelogs -mindepth 1 -type d)" ]; then
-              cp -r ./changelogs/** ./website/src/content/docs/charts/
+              cp -r ./changelogs/** ./website/src/content/docs/truetech/truecharts/charts/
           else
               echo "No directories in ./changelogs. Skipping copy."
           fi
@@ -207,26 +219,12 @@ jobs:
             IFS='/' read -r -a chart_parts <<<"$item"
             ./.github/scripts/chart-docs.sh "${chart_parts[1]}/${chart_parts[2]}"
           done
-
-      - name: Comment deploy start
-        if: github.event_name != 'push' && needs.check_changes.outputs.changes_detected == 'true'
-        continue-on-error: true
-        uses: mshick/add-pr-comment@b8f338c590a895d50bcbfa6c5859251edc8952fc # v2
-        with:
-          message-id: cloudflare-deploy
-          message: |
-            ### 🚧 Deploy Preview building...
-
-            |  Name               | Link                                                                          |
-            |---------------------|-------------------------------------------------------------------------------|
-            |🔨 Latest commit     | ${{ github.sha }}                                                             |
-            |🔍 Latest deploy log | https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} |
-            ---
-
+          rm -rf ./website/src/content/docs/truetech/truecharts-common
+          mv ./website/src/content/docs/truetech/truecharts/charts/library/common ./website/src/content/docs/truetech/truecharts-common
 
       - name: Prefetch contributor icons
         shell: bash
-        if: needs.check_changes.outputs.changes_detected == 'true'
+        if: github.event_name == 'push'
         run: |
           #!/bin/bash
 
@@ -250,88 +248,16 @@ jobs:
           #
           #done < src/assets/contributors.json
 
-      - name: Setup Node
-        if: needs.check_changes.outputs.changes_detected == 'true' && needs.check_changes.outputs.changes_detected == 'true'
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
-        with:
-          node-version-file: ./website/.nvmrc
-
-      - name: Fix Package-Lock
-        if: needs.check_changes.outputs.changes_detected == 'true'
-        run: cd website && npm i --package-lock-only
-
-      - name: Setup astro Cache
-        if: needs.check_changes.outputs.changes_detected == 'true'
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
-        with:
-          # Cache for build and optimized images.
-          key: astro-${{ hashFiles('website/package-lock.json') }}
-          path: ./website/.astro
-          restore-keys: astro-
-
-      - name: Setup npm Cache
-        if: needs.check_changes.outputs.changes_detected == 'true'
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
-        with:
-          # Cache for npm
-          path: ~/website/.npm
-          key: npm-${{ hashFiles('website/package-lock.json') }}
-          restore-keys: npm-
-
-      - name: Setup node_modules Cache
-        id: modulescache
-        if: needs.check_changes.outputs.changes_detected == 'true'
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
-        with:
-          # Cache for npm and optimized images.
-          path: ./website/node_modules
-          key: modules-${{ hashFiles('website/package-lock.json') }}
-
-      - name: Install Packages
-        if: steps.modulescache.outputs.cache-hit != 'true' && needs.check_changes.outputs.changes_detected == 'true'
-        run: cd website && npm ci
-
-      - name: Check
-        if: needs.check_changes.outputs.changes_detected == 'true'
-        run: cd website && npm run check
-
-      - name: Build
-        if: needs.check_changes.outputs.changes_detected == 'true'
-        run: cd website && npm run build
-
-      - name: Publish to Cloudflare Pages
-        if: needs.check_changes.outputs.changes_detected == 'true'
-        id: cloudflare
-        continue-on-error: true
-        uses: cloudflare/pages-action@f0a1cd58cd66095dee69bfa18fa5efd1dde93bca # v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # By default Cloudflare marks `main` as the "production" branch.
-          # So when this workflow is pushed to refs/heads/main, we set the branch to `main`/"production".
-          branch: ${{ github.ref == 'refs/heads/master' && 'main' || github.head_ref }}
-          # The project name in Cloudflare
-          projectName: website
-          directory: ./website/build
-          wranglerVersion: "3"
-
-      - name: Comment deploy url
-        if: github.event_name != 'push' && needs.check_changes.outputs.changes_detected == 'true'
-        continue-on-error: true
-        uses: mshick/add-pr-comment@b8f338c590a895d50bcbfa6c5859251edc8952fc # v2
-        with:
-          message-id: cloudflare-deploy
-          message: |
-            ### ✅ Deploy Preview ready!
-
-            |  Name                | Link                                                                          |
-            |----------------------|-------------------------------------------------------------------------------|
-            |🔨 Latest commit      | ${{ github.sha }}                                                             |
-            |🔍 Latest deploy log  | https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} |
-            |😎 Deploy Preview Url | [${{ steps.cloudflare.outputs.url }}](${{ steps.cloudflare.outputs.url }})    |
-            |🌳 Environment        | ${{ steps.cloudflare.outputs.environment }}                                   |
-            ---
-
-      - name: Release-and-Website Completed
-        if: needs.check_changes.outputs.changes_detected == 'true'
-        run: echo "DONE"
+      - name: Commit and push changes
+        if: github.event_name == 'push'
+        run: |
+          cd website
+          git config user.name "TrueForge-Bot"
+          git config user.email "bot@trueforge.org"
+          # Ensure we rebase in case there are changes from other sources in-between
+          git stash push --include-untracked -m "autogenerated TrueCharts changes"
+          git pull --rebase origin main
+          git stash pop
+          git add .
+          git diff-index --quiet HEAD || git commit -m "Update website with latest charts and docs"
+          git push origin main

@@ -1,15 +1,15 @@
 image:
   repository: docker.io/cthulhoo/ttrss-fpm-pgsql-static
   pullPolicy: IfNotPresent
-  tag: latest@sha256:cce4bc8168f4f2d1b930199ef78ecbb1fa3fd4e17bfdccbac4e1a1a7f1a24c1e
+  tag: latest@sha256:ef867182f55c1218ce2889df7da31a801b0f7ff170974d1536c95c1d89d3e86c
 nginxImage:
   repository: docker.io/cthulhoo/ttrss-web-nginx
   pullPolicy: IfNotPresent
-  tag: latest@sha256:c94943144f3b0ee402510660285731b27f72bfa5f37aea80641d8f27d22ac0c3
+  tag: latest@sha256:c064fc0e5865f81d2c4e244768488eabaa1340a9f2b6119aaf239df300095bf0
 updaterImage:
   repository: docker.io/cthulhoo/ttrss-fpm-pgsql-static
   pullPolicy: IfNotPresent
-  tag: latest@sha256:cce4bc8168f4f2d1b930199ef78ecbb1fa3fd4e17bfdccbac4e1a1a7f1a24c1e
+  tag: latest@sha256:ef867182f55c1218ce2889df7da31a801b0f7ff170974d1536c95c1d89d3e86c
 securityContext:
   container:
     readOnlyRootFilesystem: false
@@ -202,7 +202,7 @@ configmap:
           sendfile on;
           index index.php;
           # Removed during app integration to Truecharts.
-          # See: https://github.com/truecharts/charts/pull/17293#discussion_r1461102952
+          # See: https://github.com/trueforge-org/truecharts/pull/17293#discussion_r1461102952
           #resolver ${RESOLVER} valid=5s;
           server {
             listen {{ .Values.service.main.ports.main.port }};

@@ -6,14 +6,16 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: media
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: 1.6.0
 dependencies:
   - name: common
-    version: 25.4.10
-    repository: oci://tccr.io/truecharts
+    version: 28.26.1
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
@@ -39,6 +41,7 @@ sources:
   - https://ghcr.io/linuxserver/beets
   - https://github.com/linuxserver/docker-beets
   - https://github.com/truecharts/charts/tree/master/charts/stable/beets
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/beets
 type: application
-version: 13.5.1
+version: 14.11.1
 

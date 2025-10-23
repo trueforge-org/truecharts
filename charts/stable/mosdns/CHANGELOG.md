@@ -462,7 +462,7 @@ pagefind: false
 
 ### Chore
 
-- update container image tccr.io/truecharts/mosdns to v4.1.9 ([#3470](https://github.com/truecharts/charts/issues/3470))
+- update container image oci.trueforge.org/truecharts/mosdns to v4.1.9 ([#3470](https://github.com/truecharts/charts/issues/3470))
 
 ## [mosdns-2.0.26](https://github.com/truecharts/charts/compare/mosdns-2.0.25...mosdns-2.0.26) (2022-08-12)
 
@@ -570,7 +570,7 @@ pagefind: false
 
 #### Chore
 
-- update container image tccr.io/truecharts/mosdns to v4.1.3 ([#3035](https://github.com/truecharts/apps/issues/3035))
+- update container image oci.trueforge.org/truecharts/mosdns to v4.1.3 ([#3035](https://github.com/truecharts/apps/issues/3035))
 
 <a name="mosdns-2.0.10"></a>
 

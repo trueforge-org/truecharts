@@ -1,0 +1,44 @@
+annotations:
+  artifacthub.io/links: |-
+    - name: support
+    url: https://discord.com/invite/tVsPTHWTtr
+  max_scale_version: 24.04.1
+  min_scale_version: 24.04.0
+  truecharts.org/category: Tools-Utilities
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
+apiVersion: v2
+appVersion: 1.0.11
+dependencies:
+  - name: common
+    version: 28.26.1
+    repository: oci://oci.trueforge.org/truecharts
+    condition: ""
+    alias: ""
+    tags: []
+    import-values: []
+deprecated: false
+description: A stupid simple asset tracker for keeping track of your physical assets, their components, and applicable warranties and routine maintenance.
+home: https://truecharts.org/charts/stable/dumbassets
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/dumbassets.webp
+keywords:
+  - dumbassets
+  - dumbwareio
+  - asset-tracker
+kubeVersion: '>=1.24.0-0'
+maintainers:
+  - name: TrueCharts
+    email: info@truecharts.org
+    url: https://truecharts.org
+name: dumbassets
+sources:
+  - https://github.com/DumbWareio/dumbassets
+  - https://github.com/truecharts/charts/tree/master/charts/stable/dumbassets
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/dumbassets
+  - https://hub.docker.com/r/dumbwareio/dumbassets
+type: application
+version: 2.11.1
+

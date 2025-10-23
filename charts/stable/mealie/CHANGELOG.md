@@ -3,7 +3,7 @@ title: Changelog
 pagefind: false
 ---
 
-## [mealie-12.0.0](https://github.com/truecharts/charts/compare/mealie-11.0.3...mealie-12.0.0) (2022-11-10)
+## [mealie-12.0.0](https://github.com/trueforge-org/truecharts/compare/mealie-11.0.3...mealie-12.0.0) (2022-11-10)
 
 ### Chore
 
@@ -15,15 +15,15 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Major Change to GUI
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
 ### Fix
 
 - change container config label
 
-## [mealie-11.0.6](https://github.com/truecharts/charts/compare/mealie-11.0.3...mealie-11.0.6) (2022-11-08)
+## [mealie-11.0.6](https://github.com/trueforge-org/truecharts/compare/mealie-11.0.3...mealie-11.0.6) (2022-11-08)
 
 ### Chore
 
@@ -33,23 +33,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [mealie-11.0.5](https://github.com/truecharts/charts/compare/mealie-11.0.3...mealie-11.0.5) (2022-11-08)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [mealie-11.0.5](https://github.com/truecharts/charts/compare/mealie-11.0.3...mealie-11.0.5) (2022-11-08)
+## [mealie-11.0.5](https://github.com/trueforge-org/truecharts/compare/mealie-11.0.3...mealie-11.0.5) (2022-11-08)
 
 ### Chore
 
@@ -57,127 +45,139 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [mealie-11.0.5](https://github.com/truecharts/charts/compare/mealie-11.0.3...mealie-11.0.5) (2022-11-08)
+## [mealie-11.0.5](https://github.com/trueforge-org/truecharts/compare/mealie-11.0.3...mealie-11.0.5) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [mealie-11.0.4](https://github.com/truecharts/charts/compare/mealie-11.0.3...mealie-11.0.4) (2022-11-07)
+## [mealie-11.0.5](https://github.com/trueforge-org/truecharts/compare/mealie-11.0.3...mealie-11.0.5) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [mealie-11.0.4](https://github.com/truecharts/charts/compare/mealie-11.0.3...mealie-11.0.4) (2022-11-06)
-
-### Chore
-
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [mealie-11.0.3](https://github.com/truecharts/charts/compare/mealie-11.0.2...mealie-11.0.3) (2022-11-06)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4317](https://github.com/truecharts/charts/issues/4317))
-
-## [mealie-11.0.2](https://github.com/truecharts/charts/compare/mealie-11.0.1...mealie-11.0.2) (2022-11-05)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
-
-## [mealie-11.0.1](https://github.com/truecharts/charts/compare/mealie-11.0.0...mealie-11.0.1) (2022-11-02)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
-
-## [mealie-11.0.0](https://github.com/truecharts/charts/compare/mealie-10.0.10...mealie-11.0.0) (2022-11-01)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- use API_PORT variable to change api port ([#4270](https://github.com/truecharts/charts/issues/4270))
-
-## [mealie-10.0.10](https://github.com/truecharts/charts/compare/mealie-10.0.9...mealie-10.0.10) (2022-10-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major
-
-## [mealie-10.0.9](https://github.com/truecharts/charts/compare/mealie-10.0.8...mealie-10.0.9) (2022-10-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
-
-## [mealie-10.0.8](https://github.com/truecharts/charts/compare/mealie-10.0.7...mealie-10.0.8) (2022-10-19)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
-
-## [mealie-10.0.7](https://github.com/truecharts/charts/compare/mealie-10.0.6...mealie-10.0.7) (2022-10-12)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4071](https://github.com/truecharts/charts/issues/4071))
-
-## [mealie-10.0.6](https://github.com/truecharts/charts/compare/mealie-10.0.5...mealie-10.0.6) (2022-10-07)
+## [mealie-11.0.4](https://github.com/trueforge-org/truecharts/compare/mealie-11.0.3...mealie-11.0.4) (2022-11-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [mealie-10.0.6](https://github.com/truecharts/charts/compare/mealie-10.0.5...mealie-10.0.6) (2022-10-07)
+## [mealie-11.0.4](https://github.com/trueforge-org/truecharts/compare/mealie-11.0.3...mealie-11.0.4) (2022-11-06)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
+
+## [mealie-11.0.3](https://github.com/trueforge-org/truecharts/compare/mealie-11.0.2...mealie-11.0.3) (2022-11-06)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4317](https://github.com/trueforge-org/truecharts/issues/4317))
+
+## [mealie-11.0.2](https://github.com/trueforge-org/truecharts/compare/mealie-11.0.1...mealie-11.0.2) (2022-11-05)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
+
+## [mealie-11.0.1](https://github.com/trueforge-org/truecharts/compare/mealie-11.0.0...mealie-11.0.1) (2022-11-02)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
+
+## [mealie-11.0.0](https://github.com/trueforge-org/truecharts/compare/mealie-10.0.10...mealie-11.0.0) (2022-11-01)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- use API_PORT variable to change api port ([#4270](https://github.com/trueforge-org/truecharts/issues/4270))
+
+## [mealie-10.0.10](https://github.com/trueforge-org/truecharts/compare/mealie-10.0.9...mealie-10.0.10) (2022-10-25)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [mealie-10.0.5](https://github.com/truecharts/charts/compare/mealie-10.0.4...mealie-10.0.5) (2022-10-05)
+## [mealie-10.0.9](https://github.com/trueforge-org/truecharts/compare/mealie-10.0.8...mealie-10.0.9) (2022-10-25)
 
 ### Chore
 
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
+
+## [mealie-10.0.8](https://github.com/trueforge-org/truecharts/compare/mealie-10.0.7...mealie-10.0.8) (2022-10-19)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
+
+## [mealie-10.0.7](https://github.com/trueforge-org/truecharts/compare/mealie-10.0.6...mealie-10.0.7) (2022-10-12)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4071](https://github.com/trueforge-org/truecharts/issues/4071))
+
+## [mealie-10.0.6](https://github.com/trueforge-org/truecharts/compare/mealie-10.0.5...mealie-10.0.6) (2022-10-07)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [mealie-10.0.2](https://github.com/truecharts/charts/compare/mealie-10.0.1...mealie-10.0.2) (2022-09-27)
+## [mealie-10.0.6](https://github.com/trueforge-org/truecharts/compare/mealie-10.0.5...mealie-10.0.6) (2022-10-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3918](https://github.com/truecharts/charts/issues/3918))
+- update helm general non-major
 
-## [mealie-10.0.1](https://github.com/truecharts/charts/compare/mealie-10.0.0...mealie-10.0.1) (2022-09-25)
+## [mealie-10.0.5](https://github.com/trueforge-org/truecharts/compare/mealie-10.0.4...mealie-10.0.5) (2022-10-05)
+
+### Chore
+
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
+- update helm general non-major
+
+## [mealie-10.0.2](https://github.com/trueforge-org/truecharts/compare/mealie-10.0.1...mealie-10.0.2) (2022-09-27)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
+- update helm general non-major ([#3918](https://github.com/trueforge-org/truecharts/issues/3918))
 
-## [mealie-10.0.0](https://github.com/truecharts/charts/compare/mealie-9.0.3...mealie-10.0.0) (2022-09-23)
+## [mealie-10.0.1](https://github.com/trueforge-org/truecharts/compare/mealie-10.0.0...mealie-10.0.1) (2022-09-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
+
+## [mealie-10.0.0](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.3...mealie-10.0.0) (2022-09-23)
 
 ### Chore
 
@@ -185,9 +185,9 @@ pagefind: false
 
 ### Feat
 
-- Adapt to the new multi container upstream release ([#3858](https://github.com/truecharts/charts/issues/3858))
+- Adapt to the new multi container upstream release ([#3858](https://github.com/trueforge-org/truecharts/issues/3858))
 
-## [mealie-9.0.3](https://github.com/truecharts/charts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-22)
+## [mealie-9.0.3](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-22)
 
 ### Chore
 
@@ -205,10 +205,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [mealie-9.0.3](https://github.com/truecharts/charts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-21)
+## [mealie-9.0.3](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-21)
 
 ### Chore
 
@@ -225,10 +225,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [mealie-9.0.3](https://github.com/truecharts/charts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-21)
+## [mealie-9.0.3](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-21)
 
 ### Chore
 
@@ -244,10 +244,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [mealie-9.0.3](https://github.com/truecharts/charts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-20)
+## [mealie-9.0.3](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-20)
 
 ### Chore
 
@@ -262,10 +262,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [mealie-9.0.3](https://github.com/truecharts/charts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-20)
+## [mealie-9.0.3](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-20)
 
 ### Chore
 
@@ -279,10 +279,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [mealie-9.0.3](https://github.com/truecharts/charts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-19)
+## [mealie-9.0.3](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-19)
 
 ### Chore
 
@@ -295,10 +295,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [mealie-9.0.3](https://github.com/truecharts/charts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-19)
+## [mealie-9.0.3](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-19)
 
 ### Chore
 
@@ -310,10 +310,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [mealie-9.0.3](https://github.com/truecharts/charts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-19)
+## [mealie-9.0.3](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-19)
 
 ### Chore
 
@@ -324,10 +324,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [mealie-9.0.3](https://github.com/truecharts/charts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-17)
+## [mealie-9.0.3](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-17)
 
 ### Chore
 
@@ -337,61 +337,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [mealie-9.0.3](https://github.com/truecharts/charts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-18)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [mealie-9.0.3](https://github.com/truecharts/charts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [mealie-9.0.3](https://github.com/truecharts/charts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [mealie-9.0.3](https://github.com/truecharts/charts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-15)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [mealie-9.0.3](https://github.com/truecharts/charts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-15)
-
-### Chore
-
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [mealie-9.0.2](https://github.com/truecharts/charts/compare/mealie-9.0.1...mealie-9.0.2) (2022-09-13)
-
-### Chore
-
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-
-## [mealie-9.0.1](https://github.com/truecharts/charts/compare/mealie-9.0.0...mealie-9.0.1) (2022-09-12)
+## [mealie-9.0.3](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-18)
 
 ### Chore
 
@@ -399,10 +348,50 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [mealie-9.0.1](https://github.com/truecharts/charts/compare/mealie-9.0.0...mealie-9.0.1) (2022-09-12)
+## [mealie-9.0.3](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [mealie-9.0.3](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [mealie-9.0.3](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-15)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [mealie-9.0.3](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.2...mealie-9.0.3) (2022-09-15)
+
+### Chore
+
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [mealie-9.0.2](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.1...mealie-9.0.2) (2022-09-13)
+
+### Chore
+
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+
+## [mealie-9.0.1](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.0...mealie-9.0.1) (2022-09-12)
 
 ### Chore
 
@@ -410,39 +399,50 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [mealie-9.0.1](https://github.com/truecharts/charts/compare/mealie-9.0.0...mealie-9.0.1) (2022-09-11)
+## [mealie-9.0.1](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.0...mealie-9.0.1) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [mealie-9.0.1](https://github.com/truecharts/charts/compare/mealie-9.0.0...mealie-9.0.1) (2022-09-11)
+## [mealie-9.0.1](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.0...mealie-9.0.1) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [mealie-9.0.1](https://github.com/truecharts/charts/compare/mealie-9.0.0...mealie-9.0.1) (2022-09-11)
+## [mealie-9.0.1](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.0...mealie-9.0.1) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [mealie-9.0.1](https://github.com/truecharts/charts/compare/mealie-9.0.0...mealie-9.0.1) (2022-09-11)
+## [mealie-9.0.1](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.0...mealie-9.0.1) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [mealie-9.0.0](https://github.com/truecharts/charts/compare/mealie-8.0.35...mealie-9.0.0) (2022-09-07)
+## [mealie-9.0.1](https://github.com/trueforge-org/truecharts/compare/mealie-9.0.0...mealie-9.0.1) (2022-09-11)
+
+### Chore
+
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+
+## [mealie-9.0.0](https://github.com/trueforge-org/truecharts/compare/mealie-8.0.35...mealie-9.0.0) (2022-09-07)
 
 ### Chore
 
@@ -450,70 +450,70 @@ pagefind: false
 
 ### Fix
 
-- use the new var for defining db type ([#3714](https://github.com/truecharts/charts/issues/3714))
+- use the new var for defining db type ([#3714](https://github.com/trueforge-org/truecharts/issues/3714))
 
-## [mealie-9.0.0](https://github.com/truecharts/charts/compare/mealie-8.0.35...mealie-9.0.0) (2022-09-07)
+## [mealie-9.0.0](https://github.com/trueforge-org/truecharts/compare/mealie-8.0.35...mealie-9.0.0) (2022-09-07)
 
 ### Fix
 
-- use the new var for defining db type ([#3714](https://github.com/truecharts/charts/issues/3714))
+- use the new var for defining db type ([#3714](https://github.com/trueforge-org/truecharts/issues/3714))
 
-## [mealie-8.0.35](https://github.com/truecharts/charts/compare/mealie-8.0.33...mealie-8.0.35) (2022-08-30)
+## [mealie-8.0.35](https://github.com/trueforge-org/truecharts/compare/mealie-8.0.33...mealie-8.0.35) (2022-08-30)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
 
-## [mealie-8.0.34](https://github.com/truecharts/charts/compare/mealie-8.0.33...mealie-8.0.34) (2022-08-30)
-
-### Chore
-
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
-
-## [mealie-8.0.33](https://github.com/truecharts/charts/compare/mealie-8.0.31...mealie-8.0.33) (2022-08-29)
+## [mealie-8.0.34](https://github.com/trueforge-org/truecharts/compare/mealie-8.0.33...mealie-8.0.34) (2022-08-30)
 
 ### Chore
 
-- update helm general non-major ([#3621](https://github.com/truecharts/charts/issues/3621))
-- update helm general non-major ([#3619](https://github.com/truecharts/charts/issues/3619))
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
 
-## [mealie-8.0.31](https://github.com/truecharts/charts/compare/mealie-8.0.30...mealie-8.0.31) (2022-08-23)
-
-### Chore
-
-- update helm general non-major helm releases ([#3545](https://github.com/truecharts/charts/issues/3545))
-
-## [mealie-8.0.30](https://github.com/truecharts/charts/compare/mealie-8.0.29...mealie-8.0.30) (2022-08-17)
+## [mealie-8.0.33](https://github.com/trueforge-org/truecharts/compare/mealie-8.0.31...mealie-8.0.33) (2022-08-29)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3484](https://github.com/truecharts/charts/issues/3484))
+- update helm general non-major ([#3621](https://github.com/trueforge-org/truecharts/issues/3621))
+- update helm general non-major ([#3619](https://github.com/trueforge-org/truecharts/issues/3619))
 
-## [mealie-8.0.29](https://github.com/truecharts/charts/compare/mealie-8.0.28...mealie-8.0.29) (2022-08-12)
+## [mealie-8.0.31](https://github.com/trueforge-org/truecharts/compare/mealie-8.0.30...mealie-8.0.31) (2022-08-23)
+
+### Chore
+
+- update helm general non-major helm releases ([#3545](https://github.com/trueforge-org/truecharts/issues/3545))
+
+## [mealie-8.0.30](https://github.com/trueforge-org/truecharts/compare/mealie-8.0.29...mealie-8.0.30) (2022-08-17)
+
+### Chore
+
+- update helm general non-major helm releases ([#3484](https://github.com/trueforge-org/truecharts/issues/3484))
+
+## [mealie-8.0.29](https://github.com/trueforge-org/truecharts/compare/mealie-8.0.28...mealie-8.0.29) (2022-08-12)
 
 ### Chore
 
 - add documentation checkbox/section to all SCALE Apps
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
 
 ### Fix
 
-- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/truecharts/charts/issues/3447))
+- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/trueforge-org/truecharts/issues/3447))
 
-## [mealie-8.0.28](https://github.com/truecharts/charts/compare/mealie-8.0.27...mealie-8.0.28) (2022-08-09)
-
-### Chore
-
-- update helm general non-major helm releases to v10.4.9 ([#3413](https://github.com/truecharts/charts/issues/3413))
-
-## [mealie-8.0.27](https://github.com/truecharts/charts/compare/mealie-8.0.26...mealie-8.0.27) (2022-08-08)
+## [mealie-8.0.28](https://github.com/trueforge-org/truecharts/compare/mealie-8.0.27...mealie-8.0.28) (2022-08-09)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update helm general non-major helm releases to v10.4.9 ([#3413](https://github.com/trueforge-org/truecharts/issues/3413))
+
+## [mealie-8.0.27](https://github.com/trueforge-org/truecharts/compare/mealie-8.0.26...mealie-8.0.27) (2022-08-08)
+
+### Chore
+
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
 
 ## [mealie-8.0.26](https://github.com/truecharts/apps/compare/mealie-8.0.25...mealie-8.0.26) (2022-07-26)
 

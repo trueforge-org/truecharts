@@ -6,21 +6,23 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: media
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 25.4.10
-    repository: oci://tccr.io/truecharts
+    version: 28.26.1
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: redis
-    version: 16.0.5
-    repository: oci://tccr.io/truecharts
+    version: 17.13.1
+    repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
     tags: []
@@ -40,8 +42,9 @@ maintainers:
 name: nitter
 sources:
   - https://github.com/truecharts/charts/tree/master/charts/stable/nitter
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/nitter
   - https://github.com/zedeus/nitter
   - https://hub.docker.com/r/zedeus/nitter
 type: application
-version: 9.0.5
+version: 10.23.2
 

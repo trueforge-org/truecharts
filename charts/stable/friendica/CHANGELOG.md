@@ -3,7 +3,7 @@ title: Changelog
 pagefind: false
 ---
 
-## [friendica-5.0.0](https://github.com/truecharts/charts/compare/friendica-4.0.62...friendica-5.0.0) (2022-11-10)
+## [friendica-5.0.0](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.62...friendica-5.0.0) (2022-11-10)
 
 ### Chore
 
@@ -15,15 +15,15 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Major Change to GUI
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
 ### Fix
 
 - change container config label
 
-## [friendica-4.0.65](https://github.com/truecharts/charts/compare/friendica-4.0.62...friendica-4.0.65) (2022-11-08)
+## [friendica-4.0.65](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.62...friendica-4.0.65) (2022-11-08)
 
 ### Chore
 
@@ -33,23 +33,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [friendica-4.0.64](https://github.com/truecharts/charts/compare/friendica-4.0.62...friendica-4.0.64) (2022-11-08)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [friendica-4.0.64](https://github.com/truecharts/charts/compare/friendica-4.0.62...friendica-4.0.64) (2022-11-08)
+## [friendica-4.0.64](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.62...friendica-4.0.64) (2022-11-08)
 
 ### Chore
 
@@ -57,77 +45,89 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [friendica-4.0.64](https://github.com/truecharts/charts/compare/friendica-4.0.62...friendica-4.0.64) (2022-11-08)
+## [friendica-4.0.64](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.62...friendica-4.0.64) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [friendica-4.0.63](https://github.com/truecharts/charts/compare/friendica-4.0.62...friendica-4.0.63) (2022-11-07)
+## [friendica-4.0.64](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.62...friendica-4.0.64) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [friendica-4.0.63](https://github.com/truecharts/charts/compare/friendica-4.0.62...friendica-4.0.63) (2022-11-06)
+## [friendica-4.0.63](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.62...friendica-4.0.63) (2022-11-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [friendica-4.0.62](https://github.com/truecharts/charts/compare/friendica-4.0.61...friendica-4.0.62) (2022-11-06)
+## [friendica-4.0.63](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.62...friendica-4.0.63) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4317](https://github.com/truecharts/charts/issues/4317))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [friendica-4.0.61](https://github.com/truecharts/charts/compare/friendica-4.0.60...friendica-4.0.61) (2022-11-05)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
-
-## [friendica-4.0.60](https://github.com/truecharts/charts/compare/friendica-4.0.59...friendica-4.0.60) (2022-11-02)
+## [friendica-4.0.62](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.61...friendica-4.0.62) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
+- update helm general non-major ([#4317](https://github.com/trueforge-org/truecharts/issues/4317))
 
-## [friendica-4.0.59](https://github.com/truecharts/charts/compare/friendica-4.0.58...friendica-4.0.59) (2022-10-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
-
-## [friendica-4.0.58](https://github.com/truecharts/charts/compare/friendica-4.0.57...friendica-4.0.58) (2022-10-19)
+## [friendica-4.0.61](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.60...friendica-4.0.61) (2022-11-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
 
-## [friendica-4.0.57](https://github.com/truecharts/charts/compare/friendica-4.0.56...friendica-4.0.57) (2022-10-12)
+## [friendica-4.0.60](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.59...friendica-4.0.60) (2022-11-02)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4071](https://github.com/truecharts/charts/issues/4071))
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
 
-## [friendica-4.0.56](https://github.com/truecharts/charts/compare/friendica-4.0.55...friendica-4.0.56) (2022-10-07)
+## [friendica-4.0.59](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.58...friendica-4.0.59) (2022-10-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
+
+## [friendica-4.0.58](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.57...friendica-4.0.58) (2022-10-19)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
+
+## [friendica-4.0.57](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.56...friendica-4.0.57) (2022-10-12)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4071](https://github.com/trueforge-org/truecharts/issues/4071))
+
+## [friendica-4.0.56](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.55...friendica-4.0.56) (2022-10-07)
 
 ### Chore
 
@@ -135,35 +135,35 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [friendica-4.0.56](https://github.com/truecharts/charts/compare/friendica-4.0.55...friendica-4.0.56) (2022-10-07)
+## [friendica-4.0.56](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.55...friendica-4.0.56) (2022-10-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [friendica-4.0.55](https://github.com/truecharts/charts/compare/friendica-4.0.54...friendica-4.0.55) (2022-10-05)
+## [friendica-4.0.55](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.54...friendica-4.0.55) (2022-10-05)
 
 ### Chore
 
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
 - update helm general non-major
 
-## [friendica-4.0.53](https://github.com/truecharts/charts/compare/friendica-4.0.52...friendica-4.0.53) (2022-09-27)
+## [friendica-4.0.53](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.52...friendica-4.0.53) (2022-09-27)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3918](https://github.com/truecharts/charts/issues/3918))
+- update helm general non-major ([#3918](https://github.com/trueforge-org/truecharts/issues/3918))
 
-## [friendica-4.0.52](https://github.com/truecharts/charts/compare/friendica-4.0.51...friendica-4.0.52) (2022-09-25)
+## [friendica-4.0.52](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.51...friendica-4.0.52) (2022-09-25)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
 
-## [friendica-4.0.51](https://github.com/truecharts/charts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-22)
+## [friendica-4.0.51](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-22)
 
 ### Chore
 
@@ -181,11 +181,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [friendica-4.0.51](https://github.com/truecharts/charts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-21)
+## [friendica-4.0.51](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-21)
 
 ### Chore
 
@@ -202,11 +202,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [friendica-4.0.51](https://github.com/truecharts/charts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-21)
+## [friendica-4.0.51](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-21)
 
 ### Chore
 
@@ -222,11 +222,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [friendica-4.0.51](https://github.com/truecharts/charts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-20)
+## [friendica-4.0.51](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-20)
 
 ### Chore
 
@@ -241,11 +241,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [friendica-4.0.51](https://github.com/truecharts/charts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-20)
+## [friendica-4.0.51](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-20)
 
 ### Chore
 
@@ -259,11 +259,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [friendica-4.0.51](https://github.com/truecharts/charts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-19)
+## [friendica-4.0.51](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-19)
 
 ### Chore
 
@@ -276,11 +276,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [friendica-4.0.51](https://github.com/truecharts/charts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-19)
+## [friendica-4.0.51](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-19)
 
 ### Chore
 
@@ -292,11 +292,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [friendica-4.0.51](https://github.com/truecharts/charts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-19)
+## [friendica-4.0.51](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-19)
 
 ### Chore
 
@@ -307,11 +307,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [friendica-4.0.51](https://github.com/truecharts/charts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-17)
+## [friendica-4.0.51](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-17)
 
 ### Chore
 
@@ -321,66 +321,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [friendica-4.0.51](https://github.com/truecharts/charts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-18)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [friendica-4.0.51](https://github.com/truecharts/charts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [friendica-4.0.51](https://github.com/truecharts/charts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [friendica-4.0.51](https://github.com/truecharts/charts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-15)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [friendica-4.0.51](https://github.com/truecharts/charts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-15)
-
-### Chore
-
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [friendica-4.0.50](https://github.com/truecharts/charts/compare/friendica-4.0.49...friendica-4.0.50) (2022-09-13)
-
-### Chore
-
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-
-## [friendica-4.0.49](https://github.com/truecharts/charts/compare/friendica-4.0.48...friendica-4.0.49) (2022-09-12)
+## [friendica-4.0.51](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-18)
 
 ### Chore
 
@@ -388,139 +333,194 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [friendica-4.0.49](https://github.com/truecharts/charts/compare/friendica-4.0.48...friendica-4.0.49) (2022-09-12)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-
-## [friendica-4.0.49](https://github.com/truecharts/charts/compare/friendica-4.0.48...friendica-4.0.49) (2022-09-11)
+## [friendica-4.0.51](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-16)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [friendica-4.0.49](https://github.com/truecharts/charts/compare/friendica-4.0.48...friendica-4.0.49) (2022-09-11)
+## [friendica-4.0.51](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [friendica-4.0.51](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-15)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [friendica-4.0.51](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.50...friendica-4.0.51) (2022-09-15)
+
+### Chore
+
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [friendica-4.0.50](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.49...friendica-4.0.50) (2022-09-13)
+
+### Chore
+
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+
+## [friendica-4.0.49](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.48...friendica-4.0.49) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [friendica-4.0.49](https://github.com/truecharts/charts/compare/friendica-4.0.48...friendica-4.0.49) (2022-09-11)
+## [friendica-4.0.49](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.48...friendica-4.0.49) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [friendica-4.0.49](https://github.com/truecharts/charts/compare/friendica-4.0.48...friendica-4.0.49) (2022-09-11)
-
-### Chore
-
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-
-## [friendica-4.0.48](https://github.com/truecharts/charts/compare/friendica-4.0.47...friendica-4.0.48) (2022-09-03)
+## [friendica-4.0.49](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.48...friendica-4.0.49) (2022-09-11)
 
 ### Chore
 
-- update docker general non-major ([#3668](https://github.com/truecharts/charts/issues/3668))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [friendica-4.0.47](https://github.com/truecharts/charts/compare/friendica-4.0.46...friendica-4.0.47) (2022-08-30)
-
-### Chore
-
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
-
-## [friendica-4.0.46](https://github.com/truecharts/charts/compare/friendica-4.0.45...friendica-4.0.46) (2022-08-30)
+## [friendica-4.0.49](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.48...friendica-4.0.49) (2022-09-11)
 
 ### Chore
 
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [friendica-4.0.45](https://github.com/truecharts/charts/compare/friendica-4.0.44...friendica-4.0.45) (2022-08-30)
-
-### Chore
-
-- update helm general non-major ([#3624](https://github.com/truecharts/charts/issues/3624))
-
-## [friendica-4.0.44](https://github.com/truecharts/charts/compare/friendica-4.0.42...friendica-4.0.44) (2022-08-29)
+## [friendica-4.0.49](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.48...friendica-4.0.49) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major ([#3621](https://github.com/truecharts/charts/issues/3621))
-- update helm general non-major ([#3619](https://github.com/truecharts/charts/issues/3619))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [friendica-4.0.42](https://github.com/truecharts/charts/compare/friendica-4.0.41...friendica-4.0.42) (2022-08-25)
-
-### Chore
-
-- update docker general non-major ([#3561](https://github.com/truecharts/charts/issues/3561))
-
-## [friendica-4.0.41](https://github.com/truecharts/charts/compare/friendica-4.0.40...friendica-4.0.41) (2022-08-24)
+## [friendica-4.0.49](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.48...friendica-4.0.49) (2022-09-11)
 
 ### Chore
 
-- update docker general non-major ([#3552](https://github.com/truecharts/charts/issues/3552))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [friendica-4.0.40](https://github.com/truecharts/charts/compare/friendica-4.0.39...friendica-4.0.40) (2022-08-23)
-
-### Chore
-
-- update helm general non-major helm releases ([#3545](https://github.com/truecharts/charts/issues/3545))
-
-## [friendica-4.0.39](https://github.com/truecharts/charts/compare/friendica-4.0.38...friendica-4.0.39) (2022-08-17)
+## [friendica-4.0.48](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.47...friendica-4.0.48) (2022-09-03)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3484](https://github.com/truecharts/charts/issues/3484))
+- update docker general non-major ([#3668](https://github.com/trueforge-org/truecharts/issues/3668))
 
-## [friendica-4.0.38](https://github.com/truecharts/charts/compare/friendica-4.0.37...friendica-4.0.38) (2022-08-12)
+## [friendica-4.0.47](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.46...friendica-4.0.47) (2022-08-30)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
 
-## [friendica-4.0.37](https://github.com/truecharts/charts/compare/friendica-4.0.36...friendica-4.0.37) (2022-08-12)
+## [friendica-4.0.46](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.45...friendica-4.0.46) (2022-08-30)
+
+### Chore
+
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
+
+## [friendica-4.0.45](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.44...friendica-4.0.45) (2022-08-30)
+
+### Chore
+
+- update helm general non-major ([#3624](https://github.com/trueforge-org/truecharts/issues/3624))
+
+## [friendica-4.0.44](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.42...friendica-4.0.44) (2022-08-29)
+
+### Chore
+
+- update helm general non-major ([#3621](https://github.com/trueforge-org/truecharts/issues/3621))
+- update helm general non-major ([#3619](https://github.com/trueforge-org/truecharts/issues/3619))
+
+## [friendica-4.0.42](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.41...friendica-4.0.42) (2022-08-25)
+
+### Chore
+
+- update docker general non-major ([#3561](https://github.com/trueforge-org/truecharts/issues/3561))
+
+## [friendica-4.0.41](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.40...friendica-4.0.41) (2022-08-24)
+
+### Chore
+
+- update docker general non-major ([#3552](https://github.com/trueforge-org/truecharts/issues/3552))
+
+## [friendica-4.0.40](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.39...friendica-4.0.40) (2022-08-23)
+
+### Chore
+
+- update helm general non-major helm releases ([#3545](https://github.com/trueforge-org/truecharts/issues/3545))
+
+## [friendica-4.0.39](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.38...friendica-4.0.39) (2022-08-17)
+
+### Chore
+
+- update helm general non-major helm releases ([#3484](https://github.com/trueforge-org/truecharts/issues/3484))
+
+## [friendica-4.0.38](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.37...friendica-4.0.38) (2022-08-12)
+
+### Chore
+
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
+
+## [friendica-4.0.37](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.36...friendica-4.0.37) (2022-08-12)
 
 ### Chore
 
 - add documentation checkbox/section to all SCALE Apps
-- update docker general non-major ([#3453](https://github.com/truecharts/charts/issues/3453))
+- update docker general non-major ([#3453](https://github.com/trueforge-org/truecharts/issues/3453))
 
 ### Fix
 
-- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/truecharts/charts/issues/3447))
+- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/trueforge-org/truecharts/issues/3447))
 
-## [friendica-4.0.36](https://github.com/truecharts/charts/compare/friendica-4.0.35...friendica-4.0.36) (2022-08-09)
-
-### Chore
-
-- update helm general non-major helm releases to v10.4.9 ([#3413](https://github.com/truecharts/charts/issues/3413))
-
-## [friendica-4.0.35](https://github.com/truecharts/charts/compare/friendica-4.0.34...friendica-4.0.35) (2022-08-09)
+## [friendica-4.0.36](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.35...friendica-4.0.36) (2022-08-09)
 
 ### Chore
 
-- update docker general non-major ([#3377](https://github.com/truecharts/charts/issues/3377))
+- update helm general non-major helm releases to v10.4.9 ([#3413](https://github.com/trueforge-org/truecharts/issues/3413))
 
-## [friendica-4.0.34](https://github.com/truecharts/charts/compare/friendica-4.0.33...friendica-4.0.34) (2022-08-08)
+## [friendica-4.0.35](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.34...friendica-4.0.35) (2022-08-09)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update docker general non-major ([#3377](https://github.com/trueforge-org/truecharts/issues/3377))
+
+## [friendica-4.0.34](https://github.com/trueforge-org/truecharts/compare/friendica-4.0.33...friendica-4.0.34) (2022-08-08)
+
+### Chore
+
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
 
 ## [friendica-4.0.33](https://github.com/truecharts/apps/compare/friendica-4.0.32...friendica-4.0.33) (2022-07-26)
 
@@ -1145,7 +1145,7 @@ pagefind: false
 
 #### Chore
 
-- update container image tccr.io/truecharts/friendica to v2022.02 ([#1896](https://github.com/truecharts/apps/issues/1896))
+- update container image oci.trueforge.org/truecharts/friendica to v2022.02 ([#1896](https://github.com/truecharts/apps/issues/1896))
 
 <a name="friendica-0.0.38"></a>
 

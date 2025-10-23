@@ -7,28 +7,31 @@ objectData: The object data to be used to render the container.
 {{- define "tc.v1.common.lib.container.envFrom" -}}
   {{- $rootCtx := .rootCtx -}}
   {{- $objectData := .objectData -}}
+  {{- $key := .key -}}
+  {{- $name := (.name | toString) -}}
+  {{- $caller := .caller -}}
 
   {{- $refs := (list "configMapRef" "secretRef") -}}
   {{- range $envFrom := $objectData.envFrom -}}
     {{- if and (not $envFrom.secretRef) (not $envFrom.configMapRef) -}}
-      {{- fail (printf "Container - Expected [envFrom] entry to have one of [%s]" (join ", " $refs)) -}}
+      {{- fail (printf "%s - Expected [envFrom] entry in [%s.%s] to have one of [%s]" $caller $key $name (join ", " $refs)) -}}
     {{- end -}}
 
     {{- if and $envFrom.secretRef $envFrom.configMapRef -}}
-      {{- fail (printf "Container - Expected [envFrom] entry to have only one of [%s], but got both" (join ", " $refs)) -}}
+      {{- fail (printf "%s - Expected [envFrom] entry in [%s.%s] to have only one of [%s], but got both" $caller $key $name (join ", " $refs)) -}}
     {{- end -}}
 
     {{- range $ref := $refs -}}
       {{- with (get $envFrom $ref) -}}
         {{- if not .name -}}
-          {{- fail (printf "Container - Expected non-empty [envFrom.%s.name]" $ref) -}}
+          {{- fail (printf "%s - Expected non-empty [%s.%s.envFrom.%s.name]" $caller $key $name $ref) -}}
         {{- end -}}
 
         {{- $objectName := tpl .name $rootCtx -}}
 
         {{- $expandName := (include "tc.v1.common.lib.util.expandName" (dict
                         "rootCtx" $rootCtx "objectData" .
-                        "name" $ref "caller" "Container"
+                        "name" $ref "caller" $caller
                         "key" "envFrom")) -}}
 
         {{- if eq $expandName "true" -}}
@@ -43,10 +46,10 @@ objectData: The object data to be used to render the container.
           {{- end -}}
 
             {{- if not $object -}}
-              {{- fail (printf "Container - Expected %s [%s] defined in [envFrom] to exist" $source $objectName) -}}
+              {{- fail (printf "%s - Expected %s [%s] defined in [%s.%s.envFrom] to exist" $caller $source $objectName $key $name) -}}
             {{- end -}}
           {{- range $k, $v := $object.data -}}
-            {{- include "tc.v1.common.helper.container.envDupeCheck" (dict "rootCtx" $rootCtx "objectData" $objectData "source" (printf "%s - %s" $source $objectName) "key" $k) -}}
+            {{- include "tc.v1.common.helper.container.envDupeCheck" (dict "rootCtx" $rootCtx "objectData" $objectData "source" (printf "%s - %s" $source $objectName) "key" $k "caller" $caller) -}}
           {{- end -}}
 
           {{- $objectName = (printf "%s-%s" (include "tc.v1.common.lib.chart.names.fullname" $rootCtx) $objectName) -}}

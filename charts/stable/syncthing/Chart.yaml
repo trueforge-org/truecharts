@@ -6,14 +6,16 @@ annotations:
   min_scale_version: 24.04.0
   truecharts.org/category: media
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 1.29.7
+appVersion: 2.0.10
 dependencies:
   - name: common
-    version: 25.4.10
-    repository: oci://tccr.io/truecharts
+    version: 28.26.1
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
@@ -33,8 +35,9 @@ name: syncthing
 sources:
   - https://github.com/syncthing/syncthing
   - https://github.com/truecharts/charts/tree/master/charts/stable/syncthing
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/syncthing
   - https://hub.docker.com/r/syncthing/syncthing
   - https://syncthing.net/
 type: application
-version: 20.7.6
+version: 22.9.1
 

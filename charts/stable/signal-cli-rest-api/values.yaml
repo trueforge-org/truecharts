@@ -1,0 +1,54 @@
+image:
+  repository: docker.io/bbernhard/signal-cli-rest-api
+  pullPolicy: IfNotPresent
+  tag: 0.95@sha256:e09c9ce6996a6aba130f6301aa85539578fb01ad972c32c8c4ee52c8ab1d1209
+
+service:
+  main:
+    ports:
+      main:
+        port: 8080
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            MODE: normal  ## normal, native or json-rpc  ### json-rpc, will not work because of "start-stop-daemon: matching only on non-root pidfile /var/run/supervisord.pid is insecure"
+            # AUTO_RECEIVE_SCHEDULE: 0 5 * * *  ## cron schedule expressions
+            # DEFAULT_SIGNAL_TEXT_MODE: normal  ## normal or styled
+            # LOG_LEVEL: info  ## debug, info, warn, error
+            # SWAGGER_HOST:
+            # SWAGGER_IP: "{{ .Values.service.main.loadBalancerIP }}"
+            # SWAGGER_USE_HTTPS_AS_PREFERRED_SCHEME:
+            SIGNAL_CLI_UID: 568
+            SIGNAL_CLI_GID: 568
+            PORT: "{{ .Values.service.main.ports.main.port }}"
+          probes:
+            liveness:
+              path: /v1/health
+            readiness:
+              path: /v1/health
+            startup:
+              path: /v1/health
+
+persistence:
+  config:
+    enabled: true
+    targetSelector:
+      main:
+        main:
+          mountPath: /home/.local/share/signal-cli
+
+securityContext:
+  container:
+    runAsUser: 0
+    runAsGroup: 0
+    readOnlyRootFilesystem: false
+
+resources:
+  requests:
+    cpu: 25m
+  limits:
+    cpu: 250m

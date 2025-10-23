@@ -1,9 +1,7 @@
 image:
   pullPolicy: IfNotPresent
   repository: yourls
-  tag: latest@sha256:9aea81b0f9a2691c0ea8cb82a7a5a7d67384e2ff2e51771cfbbf25ab9e13085d
-persistence: {}
-
+  tag: 1.10.2@sha256:4d352d48719d66fd799f557fc0ad36f780304f9aae6ac397b9d6ee98fcef23d9
 securityContext:
   container:
     readOnlyRootFilesystem: false
@@ -13,20 +11,35 @@ service:
   main:
     ports:
       main:
-        port: 80
+        port: 8080
         protocol: tcp
-        targetPort: 80
+        targetPort: 8080
 workload:
   main:
     podSpec:
       containers:
         main:
           env:
-            YOURLS_DB_HOST: ""
-            YOURLS_DB_NAME: ""
-            YOURLS_DB_PASS: ""
-            YOURLS_HOURS_OFFSET: ""
-            YOURLS_PASS: ""
-            YOURLS_PRIVATE: ""
-            YOURLS_SITE: ""
+            YOURLS_DB_HOST:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                key: plainhost
+            YOURLS_DB_NAME: "{{ .Values.mariadb.mariadbDatabase }}"
+            YOURLS_DB_USER: "{{ .Values.mariadb.mariadbUsername }}"
+            YOURLS_DB_PASS:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                key: mariadb-password
+            # YOURLS_HOURS_OFFSET: ""
+            # protect admin form
+            YOURLS_PRIVATE: false
+            YOURLS_SITE: "{{ .Values.chartContext.appUrl }}"
             YOURLS_USER: ""
+            YOURLS_PASS: ""
+
+mariadb:
+  enabled: true
+  mariadbUsername: yourls
+  mariadbDatabase: yourls

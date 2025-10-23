@@ -3,33 +3,33 @@ title: Changelog
 pagefind: false
 ---
 
-## [sonarr-19.0.14](https://github.com/truecharts/charts/compare/sonarr-19.0.12...sonarr-19.0.14) (2023-12-31)
+## [sonarr-19.0.14](https://github.com/trueforge-org/truecharts/compare/sonarr-19.0.12...sonarr-19.0.14) (2023-12-31)
 
 ### Chore
 
 - fix more
 - fix more
 
-## [sonarr-19.0.13](https://github.com/truecharts/charts/compare/sonarr-19.0.12...sonarr-19.0.13) (2023-12-31)
+## [sonarr-19.0.13](https://github.com/trueforge-org/truecharts/compare/sonarr-19.0.12...sonarr-19.0.13) (2023-12-31)
 
 ### Chore
 
 - fix more
 
-## [sonarr-19.0.12](https://github.com/truecharts/charts/compare/sonarr-19.0.10...sonarr-19.0.12) (2023-12-31)
+## [sonarr-19.0.12](https://github.com/trueforge-org/truecharts/compare/sonarr-19.0.10...sonarr-19.0.12) (2023-12-31)
 
 ### Chore
 
 - correct lists
 - fix titles
 
-## [sonarr-19.0.10](https://github.com/truecharts/charts/compare/sonarr-19.0.9...sonarr-19.0.10) (2023-12-31)
+## [sonarr-19.0.10](https://github.com/trueforge-org/truecharts/compare/sonarr-19.0.9...sonarr-19.0.10) (2023-12-31)
 
 ### Chore
 
 - print title
 
-## [sonarr-19.0.9](https://github.com/truecharts/charts/compare/sonarr-19.0.0...sonarr-19.0.9) (2023-12-31)
+## [sonarr-19.0.9](https://github.com/trueforge-org/truecharts/compare/sonarr-19.0.0...sonarr-19.0.9) (2023-12-31)
 
 ### Chore
 
@@ -44,9 +44,9 @@ pagefind: false
 
 ### Fix
 
-- fix auth ([#16697](https://github.com/truecharts/charts/issues/16697))
+- fix auth ([#16697](https://github.com/trueforge-org/truecharts/issues/16697))
 
-## [sonarr-19.0.7](https://github.com/truecharts/charts/compare/sonarr-19.0.0...sonarr-19.0.7) (2023-12-31)
+## [sonarr-19.0.7](https://github.com/trueforge-org/truecharts/compare/sonarr-19.0.0...sonarr-19.0.7) (2023-12-31)
 
 ### Chore
 
@@ -59,9 +59,9 @@ pagefind: false
 
 ### Fix
 
-- fix auth ([#16697](https://github.com/truecharts/charts/issues/16697))
+- fix auth ([#16697](https://github.com/trueforge-org/truecharts/issues/16697))
 
-## [sonarr-19.0.6](https://github.com/truecharts/charts/compare/sonarr-19.0.0...sonarr-19.0.6) (2023-12-31)
+## [sonarr-19.0.6](https://github.com/trueforge-org/truecharts/compare/sonarr-19.0.0...sonarr-19.0.6) (2023-12-31)
 
 ### Chore
 
@@ -73,9 +73,9 @@ pagefind: false
 
 ### Fix
 
-- fix auth ([#16697](https://github.com/truecharts/charts/issues/16697))
+- fix auth ([#16697](https://github.com/trueforge-org/truecharts/issues/16697))
 
-## [sonarr-19.0.5](https://github.com/truecharts/charts/compare/sonarr-19.0.0...sonarr-19.0.5) (2023-12-31)
+## [sonarr-19.0.5](https://github.com/trueforge-org/truecharts/compare/sonarr-19.0.0...sonarr-19.0.5) (2023-12-31)
 
 ### Chore
 
@@ -85,86 +85,86 @@ pagefind: false
 - bump
 - bump
 
-## [sonarr-19.0.0](https://github.com/truecharts/charts/compare/sonarr-18.1.0...sonarr-19.0.0) (2023-12-31)
+## [sonarr-19.0.0](https://github.com/trueforge-org/truecharts/compare/sonarr-18.1.0...sonarr-19.0.0) (2023-12-31)
 
 ### Chore
 
-- update container image ghcr.io/onedr0p/sonarr to v4.0.0.741[@6f288ad](https://github.com/6f288ad) by renovate ([#16693](https://github.com/truecharts/charts/issues/16693))
-- lints some docs, uses front-matter instead of # h1, and fix list items in changelog ([#16589](https://github.com/truecharts/charts/issues/16589))
+- update container image ghcr.io/onedr0p/sonarr to v4.0.0.741[@6f288ad](https://github.com/6f288ad) by renovate ([#16693](https://github.com/trueforge-org/truecharts/issues/16693))
+- lints some docs, uses front-matter instead of # h1, and fix list items in changelog ([#16589](https://github.com/trueforge-org/truecharts/issues/16589))
 
-## [sonarr-18.1.0](https://github.com/truecharts/charts/compare/sonarr-18.0.1...sonarr-18.1.0) (2023-12-30)
-
-### Chore
-
-- update helm general minor by renovate ([#16579](https://github.com/truecharts/charts/issues/16579))
-
-## [sonarr-18.0.1](https://github.com/truecharts/charts/compare/sonarr-18.0.0...sonarr-18.0.1) (2023-12-26)
+## [sonarr-18.1.0](https://github.com/trueforge-org/truecharts/compare/sonarr-18.0.1...sonarr-18.1.0) (2023-12-30)
 
 ### Chore
 
-- update helm general non-major by renovate ([#16545](https://github.com/truecharts/charts/issues/16545))
+- update helm general minor by renovate ([#16579](https://github.com/trueforge-org/truecharts/issues/16579))
 
-## [sonarr-18.0.0](https://github.com/truecharts/charts/compare/sonarr-17.0.12...sonarr-18.0.0) (2023-12-25)
-
-### Chore
-
-- update helm chart common to 17.1.0 by renovate ([#16532](https://github.com/truecharts/charts/issues/16532))
-
-## [sonarr-17.0.12](https://github.com/truecharts/charts/compare/sonarr-17.0.11...sonarr-17.0.12) (2023-12-24)
+## [sonarr-18.0.1](https://github.com/trueforge-org/truecharts/compare/sonarr-18.0.0...sonarr-18.0.1) (2023-12-26)
 
 ### Chore
 
-- update helm general non-major by renovate ([#16384](https://github.com/truecharts/charts/issues/16384))
+- update helm general non-major by renovate ([#16545](https://github.com/trueforge-org/truecharts/issues/16545))
 
-## [sonarr-17.0.11](https://github.com/truecharts/charts/compare/sonarr-17.0.10...sonarr-17.0.11) (2023-12-24)
-
-### Chore
-
-- update helm general non-major by renovate ([#16376](https://github.com/truecharts/charts/issues/16376))
-
-## [sonarr-17.0.10](https://github.com/truecharts/charts/compare/sonarr-17.0.9...sonarr-17.0.10) (2023-12-23)
+## [sonarr-18.0.0](https://github.com/trueforge-org/truecharts/compare/sonarr-17.0.12...sonarr-18.0.0) (2023-12-25)
 
 ### Chore
 
-- update helm general non-major by renovate ([#16373](https://github.com/truecharts/charts/issues/16373))
+- update helm chart common to 17.1.0 by renovate ([#16532](https://github.com/trueforge-org/truecharts/issues/16532))
 
-## [sonarr-17.0.9](https://github.com/truecharts/charts/compare/sonarr-17.0.8...sonarr-17.0.9) (2023-12-23)
-
-### Chore
-
-- update helm general non-major by renovate ([#16369](https://github.com/truecharts/charts/issues/16369))
-
-## [sonarr-17.0.8](https://github.com/truecharts/charts/compare/sonarr-17.0.7...sonarr-17.0.8) (2023-12-23)
+## [sonarr-17.0.12](https://github.com/trueforge-org/truecharts/compare/sonarr-17.0.11...sonarr-17.0.12) (2023-12-24)
 
 ### Chore
 
-- update helm general non-major by renovate ([#16361](https://github.com/truecharts/charts/issues/16361))
+- update helm general non-major by renovate ([#16384](https://github.com/trueforge-org/truecharts/issues/16384))
 
-## [sonarr-17.0.7](https://github.com/truecharts/charts/compare/sonarr-17.0.6...sonarr-17.0.7) (2023-12-22)
+## [sonarr-17.0.11](https://github.com/trueforge-org/truecharts/compare/sonarr-17.0.10...sonarr-17.0.11) (2023-12-24)
 
 ### Chore
 
-- update helm general non-major by renovate ([#16359](https://github.com/truecharts/charts/issues/16359))
+- update helm general non-major by renovate ([#16376](https://github.com/trueforge-org/truecharts/issues/16376))
 
-## [sonarr-17.0.6](https://github.com/truecharts/charts/compare/sonarr-17.0.5...sonarr-17.0.6) (2023-12-22)
+## [sonarr-17.0.10](https://github.com/trueforge-org/truecharts/compare/sonarr-17.0.9...sonarr-17.0.10) (2023-12-23)
+
+### Chore
+
+- update helm general non-major by renovate ([#16373](https://github.com/trueforge-org/truecharts/issues/16373))
+
+## [sonarr-17.0.9](https://github.com/trueforge-org/truecharts/compare/sonarr-17.0.8...sonarr-17.0.9) (2023-12-23)
+
+### Chore
+
+- update helm general non-major by renovate ([#16369](https://github.com/trueforge-org/truecharts/issues/16369))
+
+## [sonarr-17.0.8](https://github.com/trueforge-org/truecharts/compare/sonarr-17.0.7...sonarr-17.0.8) (2023-12-23)
+
+### Chore
+
+- update helm general non-major by renovate ([#16361](https://github.com/trueforge-org/truecharts/issues/16361))
+
+## [sonarr-17.0.7](https://github.com/trueforge-org/truecharts/compare/sonarr-17.0.6...sonarr-17.0.7) (2023-12-22)
+
+### Chore
+
+- update helm general non-major by renovate ([#16359](https://github.com/trueforge-org/truecharts/issues/16359))
+
+## [sonarr-17.0.6](https://github.com/trueforge-org/truecharts/compare/sonarr-17.0.5...sonarr-17.0.6) (2023-12-22)
 
 ### Fix
 
-- remove postgres ([#16350](https://github.com/truecharts/charts/issues/16350))
+- remove postgres ([#16350](https://github.com/trueforge-org/truecharts/issues/16350))
 
-## [sonarr-17.0.5](https://github.com/truecharts/charts/compare/sonarr-17.0.4...sonarr-17.0.5) (2023-12-22)
+## [sonarr-17.0.5](https://github.com/trueforge-org/truecharts/compare/sonarr-17.0.4...sonarr-17.0.5) (2023-12-22)
 
 ### Fix
 
 - expose custom options for homepage integration
 
-## [sonarr-17.0.4](https://github.com/truecharts/charts/compare/sonarr-17.0.3...sonarr-17.0.4) (2023-12-21)
+## [sonarr-17.0.4](https://github.com/trueforge-org/truecharts/compare/sonarr-17.0.3...sonarr-17.0.4) (2023-12-21)
 
 ### Fix
 
 - bump to release middleware fix
 
-## [sonarr-17.0.3](https://github.com/truecharts/charts/compare/sonarr-17.0.2...sonarr-17.0.3) (2023-12-21)
+## [sonarr-17.0.3](https://github.com/trueforge-org/truecharts/compare/sonarr-17.0.2...sonarr-17.0.3) (2023-12-21)
 
 ### Chore
 
@@ -174,63 +174,63 @@ pagefind: false
 
 - ensure the cnpg GUI is included on CNPG apps
 
-## [sonarr-17.0.2](https://github.com/truecharts/charts/compare/sonarr-17.0.1...sonarr-17.0.2) (2023-12-21)
+## [sonarr-17.0.2](https://github.com/trueforge-org/truecharts/compare/sonarr-17.0.1...sonarr-17.0.2) (2023-12-21)
 
 ### Chore
 
-- update helm general non-major by renovate ([#16341](https://github.com/truecharts/charts/issues/16341))
+- update helm general non-major by renovate ([#16341](https://github.com/trueforge-org/truecharts/issues/16341))
 
-## [sonarr-17.0.1](https://github.com/truecharts/charts/compare/sonarr-17.0.0...sonarr-17.0.1) (2023-12-20)
+## [sonarr-17.0.1](https://github.com/trueforge-org/truecharts/compare/sonarr-17.0.0...sonarr-17.0.1) (2023-12-20)
 
 ### Chore
 
 - bump patch versions on all charts for new GUI release
 
-## [sonarr-17.0.0](https://github.com/truecharts/charts/compare/sonarr-16.0.18...sonarr-17.0.0) (2023-12-20)
+## [sonarr-17.0.0](https://github.com/trueforge-org/truecharts/compare/sonarr-16.0.18...sonarr-17.0.0) (2023-12-20)
 
 ### Chore
 
-- update helm general major by renovate (major) ([#14631](https://github.com/truecharts/charts/issues/14631))
+- update helm general major by renovate (major) ([#14631](https://github.com/trueforge-org/truecharts/issues/14631))
 
-## [sonarr-16.0.18](https://github.com/truecharts/charts/compare/sonarr-16.0.17...sonarr-16.0.18) (2023-12-20)
+## [sonarr-16.0.18](https://github.com/trueforge-org/truecharts/compare/sonarr-16.0.17...sonarr-16.0.18) (2023-12-20)
 
 ### Chore
 
 - Bump everything to force min/max scale version update
 
-## [sonarr-16.0.17](https://github.com/truecharts/charts/compare/sonarr-16.0.15...sonarr-16.0.17) (2023-12-16)
+## [sonarr-16.0.17](https://github.com/trueforge-org/truecharts/compare/sonarr-16.0.15...sonarr-16.0.17) (2023-12-16)
 
 ### Chore
 
 - fix move mistake and cleanup metadata
-- update helm general non-major ([#14784](https://github.com/truecharts/charts/issues/14784))
+- update helm general non-major ([#14784](https://github.com/trueforge-org/truecharts/issues/14784))
 
-## [sonarr-16.0.17](https://github.com/truecharts/charts/compare/sonarr-16.0.15...sonarr-16.0.17) (2023-12-16)
-
-### Chore
-
-- fix move mistake and cleanup metadata
-- update helm general non-major ([#14784](https://github.com/truecharts/charts/issues/14784))
-
-## [sonarr-16.0.16](https://github.com/truecharts/charts/compare/sonarr-16.0.15...sonarr-16.0.16) (2023-12-16)
+## [sonarr-16.0.17](https://github.com/trueforge-org/truecharts/compare/sonarr-16.0.15...sonarr-16.0.17) (2023-12-16)
 
 ### Chore
 
 - fix move mistake and cleanup metadata
+- update helm general non-major ([#14784](https://github.com/trueforge-org/truecharts/issues/14784))
 
-## [sonarr-16.0.15](https://github.com/truecharts/charts/compare/sonarr-16.0.14...sonarr-16.0.15) (2023-12-09)
-
-### Chore
-
-- update container image ghcr.io/onedr0p/sonarr to 3.0.10.1567[@90200b6](https://github.com/90200b6) ([#15903](https://github.com/truecharts/charts/issues/15903))
-
-## [sonarr-16.0.14](https://github.com/truecharts/charts/compare/sonarr-16.0.13...sonarr-16.0.14) (2023-12-04)
+## [sonarr-16.0.16](https://github.com/trueforge-org/truecharts/compare/sonarr-16.0.15...sonarr-16.0.16) (2023-12-16)
 
 ### Chore
 
-- update container image ghcr.io/onedr0p/sonarr to 3.0.10.1567[@6577c90](https://github.com/6577c90) ([#15654](https://github.com/truecharts/charts/issues/15654))
+- fix move mistake and cleanup metadata
 
-## [sonarr-16.0.13](https://github.com/truecharts/charts/compare/sonarr-16.0.12...sonarr-16.0.13) (2023-12-03)
+## [sonarr-16.0.15](https://github.com/trueforge-org/truecharts/compare/sonarr-16.0.14...sonarr-16.0.15) (2023-12-09)
+
+### Chore
+
+- update container image ghcr.io/onedr0p/sonarr to 3.0.10.1567[@90200b6](https://github.com/90200b6) ([#15903](https://github.com/trueforge-org/truecharts/issues/15903))
+
+## [sonarr-16.0.14](https://github.com/trueforge-org/truecharts/compare/sonarr-16.0.13...sonarr-16.0.14) (2023-12-04)
+
+### Chore
+
+- update container image ghcr.io/onedr0p/sonarr to 3.0.10.1567[@6577c90](https://github.com/6577c90) ([#15654](https://github.com/trueforge-org/truecharts/issues/15654))
+
+## [sonarr-16.0.13](https://github.com/trueforge-org/truecharts/compare/sonarr-16.0.12...sonarr-16.0.13) (2023-12-03)
 
 ### Chore
 
@@ -238,352 +238,352 @@ pagefind: false
 - fix annotations again
 - update annotations
 
-## [sonarr-16.0.12](https://github.com/truecharts/charts/compare/sonarr-16.0.11...sonarr-16.0.12) (2023-11-18)
+## [sonarr-16.0.12](https://github.com/trueforge-org/truecharts/compare/sonarr-16.0.11...sonarr-16.0.12) (2023-11-18)
 
-## [sonarr-16.0.11](https://github.com/truecharts/charts/compare/sonarr-16.0.10...sonarr-16.0.11) (2023-11-17)
+## [sonarr-16.0.11](https://github.com/trueforge-org/truecharts/compare/sonarr-16.0.10...sonarr-16.0.11) (2023-11-17)
 
-## [sonarr-16.0.10](https://github.com/truecharts/charts/compare/sonarr-16.0.9...sonarr-16.0.10) (2023-11-16)
+## [sonarr-16.0.10](https://github.com/trueforge-org/truecharts/compare/sonarr-16.0.9...sonarr-16.0.10) (2023-11-16)
 
-## [sonarr-16.0.9](https://github.com/truecharts/charts/compare/sonarr-16.0.8...sonarr-16.0.9) (2023-11-08)
-
-### Chore
-
-- update helm general non-major ([#14465](https://github.com/truecharts/charts/issues/14465))
-
-## [sonarr-16.0.8](https://github.com/truecharts/charts/compare/sonarr-16.0.7...sonarr-16.0.8) (2023-11-08)
+## [sonarr-16.0.9](https://github.com/trueforge-org/truecharts/compare/sonarr-16.0.8...sonarr-16.0.9) (2023-11-08)
 
 ### Chore
 
-- update helm general non-major ([#14454](https://github.com/truecharts/charts/issues/14454))
+- update helm general non-major ([#14465](https://github.com/trueforge-org/truecharts/issues/14465))
 
-## [sonarr-16.0.7](https://github.com/truecharts/charts/compare/sonarr-16.0.6...sonarr-16.0.7) (2023-11-05)
-
-### Chore
-
-- update helm general non-major ([#14365](https://github.com/truecharts/charts/issues/14365))
-
-## [sonarr-16.0.6](https://github.com/truecharts/charts/compare/sonarr-16.0.5...sonarr-16.0.6) (2023-11-03)
+## [sonarr-16.0.8](https://github.com/trueforge-org/truecharts/compare/sonarr-16.0.7...sonarr-16.0.8) (2023-11-08)
 
 ### Chore
 
-- update helm general non-major ([#14287](https://github.com/truecharts/charts/issues/14287))
+- update helm general non-major ([#14454](https://github.com/trueforge-org/truecharts/issues/14454))
 
-## [sonarr-16.0.5](https://github.com/truecharts/charts/compare/sonarr-16.0.4...sonarr-16.0.5) (2023-10-29)
-
-### Chore
-
-- Fix typo in categories and make them singular ([#13693](https://github.com/truecharts/charts/issues/13693))
-- update helm general non-major ([#14094](https://github.com/truecharts/charts/issues/14094))
-
-## [sonarr-16.0.4](https://github.com/truecharts/charts/compare/sonarr-16.0.3...sonarr-16.0.4) (2023-10-19)
+## [sonarr-16.0.7](https://github.com/trueforge-org/truecharts/compare/sonarr-16.0.6...sonarr-16.0.7) (2023-11-05)
 
 ### Chore
 
-- update container image tccr.io/truecharts/exportarr to v1.6.0 ([#13761](https://github.com/truecharts/charts/issues/13761))
+- update helm general non-major ([#14365](https://github.com/trueforge-org/truecharts/issues/14365))
 
-## [sonarr-16.0.3](https://github.com/truecharts/charts/compare/sonarr-16.0.2...sonarr-16.0.3) (2023-10-07)
-
-### Chore
-
-- update helm general non-major ([#13386](https://github.com/truecharts/charts/issues/13386))
-
-## [sonarr-16.0.2](https://github.com/truecharts/charts/compare/sonarr-16.0.1...sonarr-16.0.2) (2023-10-04)
+## [sonarr-16.0.6](https://github.com/trueforge-org/truecharts/compare/sonarr-16.0.5...sonarr-16.0.6) (2023-11-03)
 
 ### Chore
 
-- update container image tccr.io/truecharts/exportarr to v1.5.5 ([#13227](https://github.com/truecharts/charts/issues/13227))
+- update helm general non-major ([#14287](https://github.com/trueforge-org/truecharts/issues/14287))
 
-## [sonarr-16.0.1](https://github.com/truecharts/charts/compare/sonarr-16.0.0...sonarr-16.0.1) (2023-10-02)
-
-## [sonarr-16.0.0](https://github.com/truecharts/charts/compare/sonarr-15.1.3...sonarr-16.0.0) (2023-07-31)
-
-## [sonarr-15.1.3](https://github.com/truecharts/charts/compare/sonarr-15.1.2...sonarr-15.1.3) (2023-07-29)
+## [sonarr-16.0.5](https://github.com/trueforge-org/truecharts/compare/sonarr-16.0.4...sonarr-16.0.5) (2023-10-29)
 
 ### Chore
 
-- update helm general non-major ([#10955](https://github.com/truecharts/charts/issues/10955))
+- Fix typo in categories and make them singular ([#13693](https://github.com/trueforge-org/truecharts/issues/13693))
+- update helm general non-major ([#14094](https://github.com/trueforge-org/truecharts/issues/14094))
 
-## [sonarr-15.1.2](https://github.com/truecharts/charts/compare/sonarr-15.1.1...sonarr-15.1.2) (2023-07-22)
-
-## [sonarr-15.1.1](https://github.com/truecharts/charts/compare/sonarr-15.1.0...sonarr-15.1.1) (2023-07-21)
-
-## [sonarr-15.1.0](https://github.com/truecharts/charts/compare/sonarr-15.0.30...sonarr-15.1.0) (2023-07-21)
-
-## [sonarr-15.0.30](https://github.com/truecharts/charts/compare/sonarr-15.0.29...sonarr-15.0.30) (2023-07-01)
+## [sonarr-16.0.4](https://github.com/trueforge-org/truecharts/compare/sonarr-16.0.3...sonarr-16.0.4) (2023-10-19)
 
 ### Chore
 
-- update helm general non-major ([#10069](https://github.com/truecharts/charts/issues/10069))
+- update container image oci.trueforge.org/truecharts/exportarr to v1.6.0 ([#13761](https://github.com/trueforge-org/truecharts/issues/13761))
 
-## [sonarr-15.0.29](https://github.com/truecharts/charts/compare/sonarr-15.0.28...sonarr-15.0.29) (2023-06-13)
-
-### Chore
-
-- update helm chart common to 12.14.2 ([#9599](https://github.com/truecharts/charts/issues/9599))
-
-## [sonarr-15.0.28](https://github.com/truecharts/charts/compare/sonarr-15.0.27...sonarr-15.0.28) (2023-06-11)
+## [sonarr-16.0.3](https://github.com/trueforge-org/truecharts/compare/sonarr-16.0.2...sonarr-16.0.3) (2023-10-07)
 
 ### Chore
 
-- update helm general non-major ([#9558](https://github.com/truecharts/charts/issues/9558))
+- update helm general non-major ([#13386](https://github.com/trueforge-org/truecharts/issues/13386))
 
-## [sonarr-15.0.27](https://github.com/truecharts/charts/compare/sonarr-15.0.25...sonarr-15.0.27) (2023-06-07)
+## [sonarr-16.0.2](https://github.com/trueforge-org/truecharts/compare/sonarr-16.0.1...sonarr-16.0.2) (2023-10-04)
+
+### Chore
+
+- update container image oci.trueforge.org/truecharts/exportarr to v1.5.5 ([#13227](https://github.com/trueforge-org/truecharts/issues/13227))
+
+## [sonarr-16.0.1](https://github.com/trueforge-org/truecharts/compare/sonarr-16.0.0...sonarr-16.0.1) (2023-10-02)
+
+## [sonarr-16.0.0](https://github.com/trueforge-org/truecharts/compare/sonarr-15.1.3...sonarr-16.0.0) (2023-07-31)
+
+## [sonarr-15.1.3](https://github.com/trueforge-org/truecharts/compare/sonarr-15.1.2...sonarr-15.1.3) (2023-07-29)
+
+### Chore
+
+- update helm general non-major ([#10955](https://github.com/trueforge-org/truecharts/issues/10955))
+
+## [sonarr-15.1.2](https://github.com/trueforge-org/truecharts/compare/sonarr-15.1.1...sonarr-15.1.2) (2023-07-22)
+
+## [sonarr-15.1.1](https://github.com/trueforge-org/truecharts/compare/sonarr-15.1.0...sonarr-15.1.1) (2023-07-21)
+
+## [sonarr-15.1.0](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.30...sonarr-15.1.0) (2023-07-21)
+
+## [sonarr-15.0.30](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.29...sonarr-15.0.30) (2023-07-01)
+
+### Chore
+
+- update helm general non-major ([#10069](https://github.com/trueforge-org/truecharts/issues/10069))
+
+## [sonarr-15.0.29](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.28...sonarr-15.0.29) (2023-06-13)
+
+### Chore
+
+- update helm chart common to 12.14.2 ([#9599](https://github.com/trueforge-org/truecharts/issues/9599))
+
+## [sonarr-15.0.28](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.27...sonarr-15.0.28) (2023-06-11)
+
+### Chore
+
+- update helm general non-major ([#9558](https://github.com/trueforge-org/truecharts/issues/9558))
+
+## [sonarr-15.0.27](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.25...sonarr-15.0.27) (2023-06-07)
 
 ### Feat
 
-- install operators before testing ([#9455](https://github.com/truecharts/charts/issues/9455))
+- install operators before testing ([#9455](https://github.com/trueforge-org/truecharts/issues/9455))
 
-## [sonarr-15.0.25](https://github.com/truecharts/charts/compare/sonarr-15.0.24...sonarr-15.0.25) (2023-06-07)
-
-### Chore
-
-- update helm general non-major ([#9457](https://github.com/truecharts/charts/issues/9457))
-
-## [sonarr-15.0.24](https://github.com/truecharts/charts/compare/sonarr-15.0.23...sonarr-15.0.24) (2023-06-07)
+## [sonarr-15.0.25](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.24...sonarr-15.0.25) (2023-06-07)
 
 ### Chore
 
-- update helm general non-major ([#9423](https://github.com/truecharts/charts/issues/9423))
+- update helm general non-major ([#9457](https://github.com/trueforge-org/truecharts/issues/9457))
 
-## [sonarr-15.0.23](https://github.com/truecharts/charts/compare/sonarr-15.0.22...sonarr-15.0.23) (2023-06-04)
-
-### Chore
-
-- update helm general non-major ([#9393](https://github.com/truecharts/charts/issues/9393))
-
-## [sonarr-15.0.22](https://github.com/truecharts/charts/compare/sonarr-15.0.21...sonarr-15.0.22) (2023-05-30)
+## [sonarr-15.0.24](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.23...sonarr-15.0.24) (2023-06-07)
 
 ### Chore
 
-- Add some checks to tc-lint.sh and update chart-tests to GITHUB_OUTPUT ([#9289](https://github.com/truecharts/charts/issues/9289))
+- update helm general non-major ([#9423](https://github.com/trueforge-org/truecharts/issues/9423))
 
-## [sonarr-15.0.21](https://github.com/truecharts/charts/compare/sonarr-15.0.20...sonarr-15.0.21) (2023-05-29)
+## [sonarr-15.0.23](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.22...sonarr-15.0.23) (2023-06-04)
 
 ### Chore
 
-- improve CI performance ([#9257](https://github.com/truecharts/charts/issues/9257))
+- update helm general non-major ([#9393](https://github.com/trueforge-org/truecharts/issues/9393))
 
-## [sonarr-15.0.20](https://github.com/truecharts/charts/compare/sonarr-15.0.19...sonarr-15.0.20) (2023-05-28)
+## [sonarr-15.0.22](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.21...sonarr-15.0.22) (2023-05-30)
+
+### Chore
+
+- Add some checks to tc-lint.sh and update chart-tests to GITHUB_OUTPUT ([#9289](https://github.com/trueforge-org/truecharts/issues/9289))
+
+## [sonarr-15.0.21](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.20...sonarr-15.0.21) (2023-05-29)
+
+### Chore
+
+- improve CI performance ([#9257](https://github.com/trueforge-org/truecharts/issues/9257))
+
+## [sonarr-15.0.20](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.19...sonarr-15.0.20) (2023-05-28)
 
 ### Feat
 
-- hide advanced ingress options behind checbox ([#9203](https://github.com/truecharts/charts/issues/9203))
+- hide advanced ingress options behind checbox ([#9203](https://github.com/trueforge-org/truecharts/issues/9203))
 
 ### Fix
 
-- quote modified charts list ([#9228](https://github.com/truecharts/charts/issues/9228))
+- quote modified charts list ([#9228](https://github.com/trueforge-org/truecharts/issues/9228))
 
-## [sonarr-15.0.19](https://github.com/truecharts/charts/compare/sonarr-15.0.18...sonarr-15.0.19) (2023-05-27)
-
-### Chore
-
-- update helm general non-major ([#9197](https://github.com/truecharts/charts/issues/9197))
-
-## [sonarr-15.0.18](https://github.com/truecharts/charts/compare/sonarr-15.0.17...sonarr-15.0.18) (2023-05-26)
+## [sonarr-15.0.19](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.18...sonarr-15.0.19) (2023-05-27)
 
 ### Chore
 
-- update helm general non-major ([#9156](https://github.com/truecharts/charts/issues/9156))
+- update helm general non-major ([#9197](https://github.com/trueforge-org/truecharts/issues/9197))
 
-## [sonarr-15.0.17](https://github.com/truecharts/charts/compare/sonarr-15.0.16...sonarr-15.0.17) (2023-05-24)
-
-### Chore
-
-- update helm general non-major ([#9125](https://github.com/truecharts/charts/issues/9125))
-
-## [sonarr-15.0.16](https://github.com/truecharts/charts/compare/sonarr-15.0.15...sonarr-15.0.16) (2023-05-22)
+## [sonarr-15.0.18](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.17...sonarr-15.0.18) (2023-05-26)
 
 ### Chore
 
-- update helm general non-major ([#9089](https://github.com/truecharts/charts/issues/9089))
+- update helm general non-major ([#9156](https://github.com/trueforge-org/truecharts/issues/9156))
 
-## [sonarr-15.0.15](https://github.com/truecharts/charts/compare/sonarr-15.0.14...sonarr-15.0.15) (2023-05-22)
+## [sonarr-15.0.17](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.16...sonarr-15.0.17) (2023-05-24)
+
+### Chore
+
+- update helm general non-major ([#9125](https://github.com/trueforge-org/truecharts/issues/9125))
+
+## [sonarr-15.0.16](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.15...sonarr-15.0.16) (2023-05-22)
+
+### Chore
+
+- update helm general non-major ([#9089](https://github.com/trueforge-org/truecharts/issues/9089))
+
+## [sonarr-15.0.15](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.14...sonarr-15.0.15) (2023-05-22)
 
 ### Feat
 
-- Add Global Pod Options ([#9007](https://github.com/truecharts/charts/issues/9007))
+- Add Global Pod Options ([#9007](https://github.com/trueforge-org/truecharts/issues/9007))
 
-## [sonarr-15.0.14](https://github.com/truecharts/charts/compare/sonarr-15.0.13...sonarr-15.0.14) (2023-05-16)
-
-### Chore
-
-- update helm general non-major ([#8979](https://github.com/truecharts/charts/issues/8979))
-
-## [sonarr-15.0.13](https://github.com/truecharts/charts/compare/sonarr-15.0.12...sonarr-15.0.13) (2023-05-05)
+## [sonarr-15.0.14](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.13...sonarr-15.0.14) (2023-05-16)
 
 ### Chore
 
-- update helm general non-major ([#8782](https://github.com/truecharts/charts/issues/8782))
+- update helm general non-major ([#8979](https://github.com/trueforge-org/truecharts/issues/8979))
 
-## [sonarr-15.0.12](https://github.com/truecharts/charts/compare/sonarr-15.0.11...sonarr-15.0.12) (2023-05-03)
-
-### Chore
-
-- update helm general non-major ([#8739](https://github.com/truecharts/charts/issues/8739))
-
-## [sonarr-15.0.11](https://github.com/truecharts/charts/compare/sonarr-15.0.10...sonarr-15.0.11) (2023-04-30)
+## [sonarr-15.0.13](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.12...sonarr-15.0.13) (2023-05-05)
 
 ### Chore
 
-- update container image tccr.io/truecharts/sonarr to v3.0.10.1567 ([#8525](https://github.com/truecharts/charts/issues/8525))
+- update helm general non-major ([#8782](https://github.com/trueforge-org/truecharts/issues/8782))
 
-## [sonarr-15.0.10](https://github.com/truecharts/charts/compare/sonarr-15.0.9...sonarr-15.0.10) (2023-04-25)
-
-### Chore
-
-- update helm general non-major ([#8153](https://github.com/truecharts/charts/issues/8153))
-
-## [sonarr-15.0.9](https://github.com/truecharts/charts/compare/sonarr-15.0.8...sonarr-15.0.9) (2023-04-25)
+## [sonarr-15.0.12](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.11...sonarr-15.0.12) (2023-05-03)
 
 ### Chore
 
-- update helm general non-major ([#8145](https://github.com/truecharts/charts/issues/8145))
+- update helm general non-major ([#8739](https://github.com/trueforge-org/truecharts/issues/8739))
 
-## [sonarr-15.0.8](https://github.com/truecharts/charts/compare/sonarr-15.0.7...sonarr-15.0.8) (2023-04-20)
-
-### Chore
-
-- update helm general non-major ([#8087](https://github.com/truecharts/charts/issues/8087))
-
-## [sonarr-15.0.7](https://github.com/truecharts/charts/compare/sonarr-15.0.6...sonarr-15.0.7) (2023-04-16)
+## [sonarr-15.0.11](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.10...sonarr-15.0.11) (2023-04-30)
 
 ### Chore
 
-- update helm general non-major ([#8071](https://github.com/truecharts/charts/issues/8071))
+- update container image oci.trueforge.org/truecharts/sonarr to v3.0.10.1567 ([#8525](https://github.com/trueforge-org/truecharts/issues/8525))
 
-## [sonarr-15.0.6](https://github.com/truecharts/charts/compare/sonarr-15.0.5...sonarr-15.0.6) (2023-04-16)
-
-### Chore
-
-- update helm general non-major ([#8061](https://github.com/truecharts/charts/issues/8061))
-
-## [sonarr-15.0.5](https://github.com/truecharts/charts/compare/sonarr-15.0.4...sonarr-15.0.5) (2023-04-15)
+## [sonarr-15.0.10](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.9...sonarr-15.0.10) (2023-04-25)
 
 ### Chore
 
-- update helm general non-major ([#7998](https://github.com/truecharts/charts/issues/7998))
+- update helm general non-major ([#8153](https://github.com/trueforge-org/truecharts/issues/8153))
 
-## [sonarr-15.0.4](https://github.com/truecharts/charts/compare/sonarr-15.0.3...sonarr-15.0.4) (2023-04-14)
-
-## [sonarr-15.0.3](https://github.com/truecharts/charts/compare/sonarr-15.0.2...sonarr-15.0.3) (2023-04-14)
+## [sonarr-15.0.9](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.8...sonarr-15.0.9) (2023-04-25)
 
 ### Chore
 
-- bump common on the 222 ([#7959](https://github.com/truecharts/charts/issues/7959))
+- update helm general non-major ([#8145](https://github.com/trueforge-org/truecharts/issues/8145))
+
+## [sonarr-15.0.8](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.7...sonarr-15.0.8) (2023-04-20)
+
+### Chore
+
+- update helm general non-major ([#8087](https://github.com/trueforge-org/truecharts/issues/8087))
+
+## [sonarr-15.0.7](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.6...sonarr-15.0.7) (2023-04-16)
+
+### Chore
+
+- update helm general non-major ([#8071](https://github.com/trueforge-org/truecharts/issues/8071))
+
+## [sonarr-15.0.6](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.5...sonarr-15.0.6) (2023-04-16)
+
+### Chore
+
+- update helm general non-major ([#8061](https://github.com/trueforge-org/truecharts/issues/8061))
+
+## [sonarr-15.0.5](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.4...sonarr-15.0.5) (2023-04-15)
+
+### Chore
+
+- update helm general non-major ([#7998](https://github.com/trueforge-org/truecharts/issues/7998))
+
+## [sonarr-15.0.4](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.3...sonarr-15.0.4) (2023-04-14)
+
+## [sonarr-15.0.3](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.2...sonarr-15.0.3) (2023-04-14)
+
+### Chore
+
+- bump common on the 222 ([#7959](https://github.com/trueforge-org/truecharts/issues/7959))
 
 ### Fix
 
 - remove postgresql dependency and update common
 
-## [sonarr-15.0.2](https://github.com/truecharts/charts/compare/sonarr-15.0.1...sonarr-15.0.2) (2023-04-12)
+## [sonarr-15.0.2](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.1...sonarr-15.0.2) (2023-04-12)
 
-## [sonarr-15.0.1](https://github.com/truecharts/charts/compare/sonarr-15.0.0...sonarr-15.0.1) (2023-04-11)
+## [sonarr-15.0.1](https://github.com/trueforge-org/truecharts/compare/sonarr-15.0.0...sonarr-15.0.1) (2023-04-11)
 
 ### Fix
 
-- bump common on the 222 ([#7927](https://github.com/truecharts/charts/issues/7927))
+- bump common on the 222 ([#7927](https://github.com/trueforge-org/truecharts/issues/7927))
 
-## [sonarr-15.0.0](https://github.com/truecharts/charts/compare/sonarr-14.0.0...sonarr-15.0.0) (2023-04-11)
+## [sonarr-15.0.0](https://github.com/trueforge-org/truecharts/compare/sonarr-14.0.0...sonarr-15.0.0) (2023-04-11)
 
 ### Feat
 
-- BREAKING CHANGE migrate to new common part 1 ([#7900](https://github.com/truecharts/charts/issues/7900))
+- BREAKING CHANGE migrate to new common part 1 ([#7900](https://github.com/trueforge-org/truecharts/issues/7900))
 
-## [sonarr-14.0.0](https://github.com/truecharts/charts/compare/sonarr-13.0.8...sonarr-14.0.0) (2023-02-28)
+## [sonarr-14.0.0](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.8...sonarr-14.0.0) (2023-02-28)
 
-## [sonarr-13.0.8](https://github.com/truecharts/charts/compare/sonarr-13.0.7...sonarr-13.0.8) (2023-02-10)
+## [sonarr-13.0.8](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.7...sonarr-13.0.8) (2023-02-10)
 
 ### Fix
 
 - ensure new helm deps repo is used in latest releases as well.
 
-## [sonarr-13.0.7](https://github.com/truecharts/charts/compare/sonarr-13.0.6...sonarr-13.0.7) (2022-12-27)
+## [sonarr-13.0.7](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.6...sonarr-13.0.7) (2022-12-27)
 
 ### Chore
 
-- update helm general non-major ([#5856](https://github.com/truecharts/charts/issues/5856))
+- update helm general non-major ([#5856](https://github.com/trueforge-org/truecharts/issues/5856))
 
-## [sonarr-13.0.6](https://github.com/truecharts/charts/compare/sonarr-13.0.5...sonarr-13.0.6) (2022-12-26)
-
-### Chore
-
-- update helm general non-major ([#5839](https://github.com/truecharts/charts/issues/5839))
-
-## [sonarr-13.0.5](https://github.com/truecharts/charts/compare/sonarr-13.0.4...sonarr-13.0.5) (2022-12-25)
+## [sonarr-13.0.6](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.5...sonarr-13.0.6) (2022-12-26)
 
 ### Chore
 
-- update helm general non-major
+- update helm general non-major ([#5839](https://github.com/trueforge-org/truecharts/issues/5839))
 
-## [sonarr-13.0.4](https://github.com/truecharts/charts/compare/sonarr-13.0.3...sonarr-13.0.4) (2022-12-19)
+## [sonarr-13.0.5](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.4...sonarr-13.0.5) (2022-12-25)
 
 ### Chore
 
 - update helm general non-major
 
-## [sonarr-13.0.3](https://github.com/truecharts/charts/compare/sonarr-13.0.2...sonarr-13.0.3) (2022-12-13)
+## [sonarr-13.0.4](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.3...sonarr-13.0.4) (2022-12-19)
 
 ### Chore
 
 - update helm general non-major
 
-## [sonarr-13.0.2](https://github.com/truecharts/charts/compare/sonarr-13.0.1...sonarr-13.0.2) (2022-11-30)
-
-## [sonarr-13.0.2](https://github.com/truecharts/charts/compare/sonarr-13.0.1...sonarr-13.0.2) (2022-11-30)
-
-## [sonarr-13.0.2](https://github.com/truecharts/charts/compare/sonarr-13.0.1...sonarr-13.0.2) (2022-11-30)
-
-## [sonarr-13.0.2](https://github.com/truecharts/charts/compare/sonarr-13.0.1...sonarr-13.0.2) (2022-11-30)
-
-## [sonarr-13.0.2](https://github.com/truecharts/charts/compare/sonarr-13.0.1...sonarr-13.0.2) (2022-11-30)
-
-## [sonarr-13.0.2](https://github.com/truecharts/charts/compare/sonarr-13.0.1...sonarr-13.0.2) (2022-11-30)
-
-## [sonarr-13.0.2](https://github.com/truecharts/charts/compare/sonarr-13.0.1...sonarr-13.0.2) (2022-11-30)
-
-## [sonarr-13.0.2](https://github.com/truecharts/charts/compare/sonarr-13.0.1...sonarr-13.0.2) (2022-11-30)
-
-## [sonarr-13.0.2](https://github.com/truecharts/charts/compare/sonarr-13.0.1...sonarr-13.0.2) (2022-11-30)
-
-## [sonarr-13.0.2](https://github.com/truecharts/charts/compare/sonarr-13.0.1...sonarr-13.0.2) (2022-11-30)
-
-## [sonarr-13.0.1](https://github.com/truecharts/charts/compare/sonarr-13.0.0...sonarr-13.0.1) (2022-11-15)
+## [sonarr-13.0.3](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.2...sonarr-13.0.3) (2022-12-13)
 
 ### Chore
 
-- update helm general non-major ([#4463](https://github.com/truecharts/charts/issues/4463))
+- update helm general non-major
 
-## [sonarr-13.0.1](https://github.com/truecharts/charts/compare/sonarr-13.0.0...sonarr-13.0.1) (2022-11-15)
+## [sonarr-13.0.2](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.1...sonarr-13.0.2) (2022-11-30)
 
-### Chore
+## [sonarr-13.0.2](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.1...sonarr-13.0.2) (2022-11-30)
 
-- update helm general non-major ([#4463](https://github.com/truecharts/charts/issues/4463))
+## [sonarr-13.0.2](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.1...sonarr-13.0.2) (2022-11-30)
 
-## [sonarr-13.0.1](https://github.com/truecharts/charts/compare/sonarr-13.0.0...sonarr-13.0.1) (2022-11-15)
+## [sonarr-13.0.2](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.1...sonarr-13.0.2) (2022-11-30)
 
-### Chore
+## [sonarr-13.0.2](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.1...sonarr-13.0.2) (2022-11-30)
 
-- update helm general non-major ([#4463](https://github.com/truecharts/charts/issues/4463))
+## [sonarr-13.0.2](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.1...sonarr-13.0.2) (2022-11-30)
 
-## [sonarr-13.0.1](https://github.com/truecharts/charts/compare/sonarr-13.0.0...sonarr-13.0.1) (2022-11-15)
+## [sonarr-13.0.2](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.1...sonarr-13.0.2) (2022-11-30)
 
-### Chore
+## [sonarr-13.0.2](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.1...sonarr-13.0.2) (2022-11-30)
 
-- update helm general non-major ([#4463](https://github.com/truecharts/charts/issues/4463))
+## [sonarr-13.0.2](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.1...sonarr-13.0.2) (2022-11-30)
 
-## [sonarr-13.0.0](https://github.com/truecharts/charts/compare/sonarr-12.0.4...sonarr-13.0.0) (2022-11-14)
+## [sonarr-13.0.2](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.1...sonarr-13.0.2) (2022-11-30)
 
-### Chore
-
-- update helm general major (major) ([#4424](https://github.com/truecharts/charts/issues/4424))
-
-## [sonarr-12.0.4](https://github.com/truecharts/charts/compare/sonarr-12.0.3...sonarr-12.0.4) (2022-11-12)
+## [sonarr-13.0.1](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.0...sonarr-13.0.1) (2022-11-15)
 
 ### Chore
 
-- update helm general non-major ([#4395](https://github.com/truecharts/charts/issues/4395))
+- update helm general non-major ([#4463](https://github.com/trueforge-org/truecharts/issues/4463))
 
-## [sonarr-12.0.3](https://github.com/truecharts/charts/compare/sonarr-12.0.2...sonarr-12.0.3) (2022-11-11)
+## [sonarr-13.0.1](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.0...sonarr-13.0.1) (2022-11-15)
+
+### Chore
+
+- update helm general non-major ([#4463](https://github.com/trueforge-org/truecharts/issues/4463))
+
+## [sonarr-13.0.1](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.0...sonarr-13.0.1) (2022-11-15)
+
+### Chore
+
+- update helm general non-major ([#4463](https://github.com/trueforge-org/truecharts/issues/4463))
+
+## [sonarr-13.0.1](https://github.com/trueforge-org/truecharts/compare/sonarr-13.0.0...sonarr-13.0.1) (2022-11-15)
+
+### Chore
+
+- update helm general non-major ([#4463](https://github.com/trueforge-org/truecharts/issues/4463))
+
+## [sonarr-13.0.0](https://github.com/trueforge-org/truecharts/compare/sonarr-12.0.4...sonarr-13.0.0) (2022-11-14)
+
+### Chore
+
+- update helm general major (major) ([#4424](https://github.com/trueforge-org/truecharts/issues/4424))
+
+## [sonarr-12.0.4](https://github.com/trueforge-org/truecharts/compare/sonarr-12.0.3...sonarr-12.0.4) (2022-11-12)
+
+### Chore
+
+- update helm general non-major ([#4395](https://github.com/trueforge-org/truecharts/issues/4395))
+
+## [sonarr-12.0.3](https://github.com/trueforge-org/truecharts/compare/sonarr-12.0.2...sonarr-12.0.3) (2022-11-11)
 
 ### Chore
 
@@ -593,7 +593,7 @@ pagefind: false
 
 - readd ingressList to all Apps that already have Ingress itself
 
-## [sonarr-12.0.2](https://github.com/truecharts/charts/compare/sonarr-12.0.0...sonarr-12.0.2) (2022-11-11)
+## [sonarr-12.0.2](https://github.com/trueforge-org/truecharts/compare/sonarr-12.0.0...sonarr-12.0.2) (2022-11-11)
 
 ### Chore
 
@@ -604,7 +604,7 @@ pagefind: false
 - remove removed includes
 - remove references to targetPort
 
-## [sonarr-12.0.1](https://github.com/truecharts/charts/compare/sonarr-12.0.0...sonarr-12.0.1) (2022-11-11)
+## [sonarr-12.0.1](https://github.com/trueforge-org/truecharts/compare/sonarr-12.0.0...sonarr-12.0.1) (2022-11-11)
 
 ### Chore
 
@@ -615,7 +615,7 @@ pagefind: false
 - remove removed includes
 - remove references to targetPort
 
-## [sonarr-12.0.0](https://github.com/truecharts/charts/compare/sonarr-11.0.45...sonarr-12.0.0) (2022-11-10)
+## [sonarr-12.0.0](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.45...sonarr-12.0.0) (2022-11-10)
 
 ### Chore
 
@@ -628,11 +628,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Major Change to GUI
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [sonarr-12.0.0](https://github.com/truecharts/charts/compare/sonarr-11.0.45...sonarr-12.0.0) (2022-11-10)
+## [sonarr-12.0.0](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.45...sonarr-12.0.0) (2022-11-10)
 
 ### Chore
 
@@ -644,25 +644,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Major Change to GUI
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [sonarr-11.0.48](https://github.com/truecharts/charts/compare/sonarr-11.0.45...sonarr-11.0.48) (2022-11-08)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [sonarr-11.0.47](https://github.com/truecharts/charts/compare/sonarr-11.0.45...sonarr-11.0.47) (2022-11-08)
+## [sonarr-11.0.48](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.45...sonarr-11.0.48) (2022-11-08)
 
 ### Chore
 
@@ -671,10 +657,12 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [sonarr-11.0.47](https://github.com/truecharts/charts/compare/sonarr-11.0.45...sonarr-11.0.47) (2022-11-08)
+## [sonarr-11.0.47](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.45...sonarr-11.0.47) (2022-11-08)
 
 ### Chore
 
@@ -682,77 +670,89 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [sonarr-11.0.47](https://github.com/truecharts/charts/compare/sonarr-11.0.45...sonarr-11.0.47) (2022-11-08)
+## [sonarr-11.0.47](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.45...sonarr-11.0.47) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [sonarr-11.0.46](https://github.com/truecharts/charts/compare/sonarr-11.0.45...sonarr-11.0.46) (2022-11-07)
+## [sonarr-11.0.47](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.45...sonarr-11.0.47) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [sonarr-11.0.46](https://github.com/truecharts/charts/compare/sonarr-11.0.45...sonarr-11.0.46) (2022-11-06)
+## [sonarr-11.0.46](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.45...sonarr-11.0.46) (2022-11-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [sonarr-11.0.45](https://github.com/truecharts/charts/compare/sonarr-11.0.44...sonarr-11.0.45) (2022-11-06)
+## [sonarr-11.0.46](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.45...sonarr-11.0.46) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4317](https://github.com/truecharts/charts/issues/4317))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [sonarr-11.0.44](https://github.com/truecharts/charts/compare/sonarr-11.0.43...sonarr-11.0.44) (2022-11-05)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
-
-## [sonarr-11.0.43](https://github.com/truecharts/charts/compare/sonarr-11.0.42...sonarr-11.0.43) (2022-11-02)
+## [sonarr-11.0.45](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.44...sonarr-11.0.45) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
+- update helm general non-major ([#4317](https://github.com/trueforge-org/truecharts/issues/4317))
 
-## [sonarr-11.0.42](https://github.com/truecharts/charts/compare/sonarr-11.0.41...sonarr-11.0.42) (2022-10-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
-
-## [sonarr-11.0.41](https://github.com/truecharts/charts/compare/sonarr-11.0.40...sonarr-11.0.41) (2022-10-19)
+## [sonarr-11.0.44](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.43...sonarr-11.0.44) (2022-11-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
 
-## [sonarr-11.0.40](https://github.com/truecharts/charts/compare/sonarr-11.0.39...sonarr-11.0.40) (2022-10-12)
+## [sonarr-11.0.43](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.42...sonarr-11.0.43) (2022-11-02)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4071](https://github.com/truecharts/charts/issues/4071))
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
 
-## [sonarr-11.0.39](https://github.com/truecharts/charts/compare/sonarr-11.0.38...sonarr-11.0.39) (2022-10-07)
+## [sonarr-11.0.42](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.41...sonarr-11.0.42) (2022-10-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
+
+## [sonarr-11.0.41](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.40...sonarr-11.0.41) (2022-10-19)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
+
+## [sonarr-11.0.40](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.39...sonarr-11.0.40) (2022-10-12)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4071](https://github.com/trueforge-org/truecharts/issues/4071))
+
+## [sonarr-11.0.39](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.38...sonarr-11.0.39) (2022-10-07)
 
 ### Chore
 
@@ -760,43 +760,43 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [sonarr-11.0.39](https://github.com/truecharts/charts/compare/sonarr-11.0.38...sonarr-11.0.39) (2022-10-07)
+## [sonarr-11.0.39](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.38...sonarr-11.0.39) (2022-10-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [sonarr-11.0.38](https://github.com/truecharts/charts/compare/sonarr-11.0.37...sonarr-11.0.38) (2022-10-05)
+## [sonarr-11.0.38](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.37...sonarr-11.0.38) (2022-10-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
 - update helm general non-major
 
-## [sonarr-11.0.37](https://github.com/truecharts/charts/compare/sonarr-11.0.36...sonarr-11.0.37) (2022-09-27)
+## [sonarr-11.0.37](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.36...sonarr-11.0.37) (2022-09-27)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3918](https://github.com/truecharts/charts/issues/3918))
+- update helm general non-major ([#3918](https://github.com/trueforge-org/truecharts/issues/3918))
 
-## [sonarr-11.0.36](https://github.com/truecharts/charts/compare/sonarr-11.0.35...sonarr-11.0.36) (2022-09-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
-
-## [sonarr-11.0.35](https://github.com/truecharts/charts/compare/sonarr-11.0.34...sonarr-11.0.35) (2022-09-25)
+## [sonarr-11.0.36](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.35...sonarr-11.0.36) (2022-09-25)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#3881](https://github.com/truecharts/charts/issues/3881))
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
 
-## [sonarr-11.0.34](https://github.com/truecharts/charts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-22)
+## [sonarr-11.0.35](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.34...sonarr-11.0.35) (2022-09-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3881](https://github.com/trueforge-org/truecharts/issues/3881))
+
+## [sonarr-11.0.34](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-22)
 
 ### Chore
 
@@ -814,9 +814,9 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [sonarr-11.0.34](https://github.com/truecharts/charts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-21)
+## [sonarr-11.0.34](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-21)
 
 ### Chore
 
@@ -833,9 +833,9 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [sonarr-11.0.34](https://github.com/truecharts/charts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-21)
+## [sonarr-11.0.34](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-21)
 
 ### Chore
 
@@ -851,9 +851,9 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [sonarr-11.0.34](https://github.com/truecharts/charts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-20)
+## [sonarr-11.0.34](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-20)
 
 ### Chore
 
@@ -868,9 +868,9 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [sonarr-11.0.34](https://github.com/truecharts/charts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-20)
+## [sonarr-11.0.34](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-20)
 
 ### Chore
 
@@ -884,9 +884,9 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [sonarr-11.0.34](https://github.com/truecharts/charts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-19)
+## [sonarr-11.0.34](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-19)
 
 ### Chore
 
@@ -899,9 +899,9 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [sonarr-11.0.34](https://github.com/truecharts/charts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-19)
+## [sonarr-11.0.34](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-19)
 
 ### Chore
 
@@ -913,9 +913,9 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [sonarr-11.0.34](https://github.com/truecharts/charts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-19)
+## [sonarr-11.0.34](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-19)
 
 ### Chore
 
@@ -926,9 +926,9 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [sonarr-11.0.34](https://github.com/truecharts/charts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-17)
+## [sonarr-11.0.34](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-17)
 
 ### Chore
 
@@ -938,49 +938,9 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [sonarr-11.0.34](https://github.com/truecharts/charts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-18)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-
-## [sonarr-11.0.34](https://github.com/truecharts/charts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-
-## [sonarr-11.0.34](https://github.com/truecharts/charts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-
-## [sonarr-11.0.34](https://github.com/truecharts/charts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-15)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-
-## [sonarr-11.0.34](https://github.com/truecharts/charts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-15)
-
-### Chore
-
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-
-## [sonarr-11.0.33](https://github.com/truecharts/charts/compare/sonarr-11.0.32...sonarr-11.0.33) (2022-09-12)
+## [sonarr-11.0.34](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-18)
 
 ### Chore
 
@@ -988,10 +948,39 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [sonarr-11.0.33](https://github.com/truecharts/charts/compare/sonarr-11.0.32...sonarr-11.0.33) (2022-09-12)
+## [sonarr-11.0.34](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+
+## [sonarr-11.0.34](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+
+## [sonarr-11.0.34](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-15)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+
+## [sonarr-11.0.34](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.33...sonarr-11.0.34) (2022-09-15)
+
+### Chore
+
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+
+## [sonarr-11.0.33](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.32...sonarr-11.0.33) (2022-09-12)
 
 ### Chore
 
@@ -999,93 +988,104 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [sonarr-11.0.33](https://github.com/truecharts/charts/compare/sonarr-11.0.32...sonarr-11.0.33) (2022-09-11)
+## [sonarr-11.0.33](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.32...sonarr-11.0.33) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [sonarr-11.0.33](https://github.com/truecharts/charts/compare/sonarr-11.0.32...sonarr-11.0.33) (2022-09-11)
+## [sonarr-11.0.33](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.32...sonarr-11.0.33) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [sonarr-11.0.33](https://github.com/truecharts/charts/compare/sonarr-11.0.32...sonarr-11.0.33) (2022-09-11)
+## [sonarr-11.0.33](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.32...sonarr-11.0.33) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [sonarr-11.0.33](https://github.com/truecharts/charts/compare/sonarr-11.0.32...sonarr-11.0.33) (2022-09-11)
-
-### Chore
-
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-
-## [sonarr-11.0.32](https://github.com/truecharts/charts/compare/sonarr-11.0.30...sonarr-11.0.32) (2022-08-30)
+## [sonarr-11.0.33](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.32...sonarr-11.0.33) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [sonarr-11.0.31](https://github.com/truecharts/charts/compare/sonarr-11.0.30...sonarr-11.0.31) (2022-08-30)
-
-### Chore
-
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
-
-## [sonarr-11.0.30](https://github.com/truecharts/charts/compare/sonarr-11.0.29...sonarr-11.0.30) (2022-08-29)
+## [sonarr-11.0.33](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.32...sonarr-11.0.33) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major ([#3619](https://github.com/truecharts/charts/issues/3619))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [sonarr-11.0.29](https://github.com/truecharts/charts/compare/sonarr-11.0.28...sonarr-11.0.29) (2022-08-23)
-
-### Chore
-
-- update helm general non-major helm releases ([#3545](https://github.com/truecharts/charts/issues/3545))
-
-## [sonarr-11.0.28](https://github.com/truecharts/charts/compare/sonarr-11.0.27...sonarr-11.0.28) (2022-08-12)
+## [sonarr-11.0.32](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.30...sonarr-11.0.32) (2022-08-30)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
 
-## [sonarr-11.0.27](https://github.com/truecharts/charts/compare/sonarr-11.0.26...sonarr-11.0.27) (2022-08-12)
+## [sonarr-11.0.31](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.30...sonarr-11.0.31) (2022-08-30)
+
+### Chore
+
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
+
+## [sonarr-11.0.30](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.29...sonarr-11.0.30) (2022-08-29)
+
+### Chore
+
+- update helm general non-major ([#3619](https://github.com/trueforge-org/truecharts/issues/3619))
+
+## [sonarr-11.0.29](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.28...sonarr-11.0.29) (2022-08-23)
+
+### Chore
+
+- update helm general non-major helm releases ([#3545](https://github.com/trueforge-org/truecharts/issues/3545))
+
+## [sonarr-11.0.28](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.27...sonarr-11.0.28) (2022-08-12)
+
+### Chore
+
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
+
+## [sonarr-11.0.27](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.26...sonarr-11.0.27) (2022-08-12)
 
 ### Chore
 
 - add documentation checkbox/section to all SCALE Apps
-- update docker general non-major ([#3453](https://github.com/truecharts/charts/issues/3453))
+- update docker general non-major ([#3453](https://github.com/trueforge-org/truecharts/issues/3453))
 
 ### Fix
 
-- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/truecharts/charts/issues/3447))
+- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/trueforge-org/truecharts/issues/3447))
 
-## [sonarr-11.0.26](https://github.com/truecharts/charts/compare/sonarr-11.0.25...sonarr-11.0.26) (2022-08-10)
-
-### Chore
-
-- update docker general non-major ([#3421](https://github.com/truecharts/charts/issues/3421))
-
-## [sonarr-11.0.25](https://github.com/truecharts/charts/compare/sonarr-11.0.24...sonarr-11.0.25) (2022-08-08)
+## [sonarr-11.0.26](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.25...sonarr-11.0.26) (2022-08-10)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update docker general non-major ([#3421](https://github.com/trueforge-org/truecharts/issues/3421))
+
+## [sonarr-11.0.25](https://github.com/trueforge-org/truecharts/compare/sonarr-11.0.24...sonarr-11.0.25) (2022-08-08)
+
+### Chore
+
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
 
 ## [sonarr-11.0.24](https://github.com/truecharts/apps/compare/sonarr-11.0.23...sonarr-11.0.24) (2022-07-26)
 

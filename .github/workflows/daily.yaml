@@ -14,13 +14,12 @@ concurrency:
 
 jobs:
   generate-readme:
-    runs-on: actions-runners
+    runs-on:
+      group: default
     name: "Generate readme files"
-    container:
-      image: ghcr.io/truecharts/devcontainer:3.1.10@sha256:c239addf725eb5cedf79517f8089fdafdc32b5270d1893ee87ae6e511b9bcae3
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
         with:
           token: ${{ secrets.OR_PAT }}
           fetch-depth: 1
@@ -28,13 +27,7 @@ jobs:
       - name: Setting repo parent dir as safe safe.directory
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
-      - name: Install cwebp
-        shell: bash
-        run: |
-          sudo apt-get -y update
-          sudo apt-get -y install webp
-
-      - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5
+      - uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # v6
         with:
           go-version: stable
           cache: true
@@ -45,9 +38,9 @@ jobs:
       - name: Install ./clustertool
         shell: bash
         run: |
-          VERSION="2.0.0-BETA-17"
+          VERSION="2.0.6"
           FILENAME="clustertool_${VERSION}_linux_amd64.tar.gz"
-          URL="https://github.com/truecharts/public/releases/download/v${VERSION}/${FILENAME}"
+          URL="https://github.com/trueforge-org/truecharts/releases/download/v${VERSION}/${FILENAME}"
 
           mkdir -p temp
           cd temp
@@ -123,7 +116,8 @@ jobs:
           git push
 
   lock-threads:
-    runs-on: actions-runners
+    runs-on:
+      group: default
     steps:
       - uses: dessant/lock-threads@1bf7ec25051fe7c00bdd17e6a7cf3d7bfb7dc771 # v5
         with:
@@ -139,7 +133,8 @@ jobs:
 
  # check-contributors:
  #   name: Check Contributors
- #   runs-on: actions-runners
+ #   runs-on:
+ #     group: default
  #   steps:
  #     - name: Checkout
  #       uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4

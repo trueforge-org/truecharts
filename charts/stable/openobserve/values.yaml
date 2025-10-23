@@ -1,0 +1,34 @@
+image:
+  repository: public.ecr.aws/zinclabs/openobserve
+  tag: v0.15.2@sha256:0ee0e41175147d54145a9fe434e646461d8e8a0209e0cad7027da1c0005de602
+  pullPolicy: IfNotPresent
+
+persistence:
+  data:
+    enabled: true
+    mountPath: "/data"
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            ZO_ROOT_USER_EMAIL: admin@example.com
+            ZO_ROOT_USER_PASSWORD: changeme
+            ZO_DATA_DIR: /data
+            ZO_WEB_URL: "https://logs.example.com"
+            ZO_TELEMETRY: "false"
+          probes:
+            liveness:
+              path: "/healthz"
+            readiness:
+              path: "/healthz"
+            startup:
+              path: "/healthz"
+
+service:
+  main:
+    ports:
+      main:
+        port: 5080
