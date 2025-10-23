@@ -56,19 +56,21 @@ workload:
             REDIS_PASSWORD: '{{ .Values.redis.creds.redisPassword | trimAll "\"" }}'
             REDIS_PORT: "6379"
             REDIS_DBINDEX: "0"
-          probes:
-            liveness:
-              enabled: true
-              type: exec
-              command: /usr/src/app/bin/immich-healthcheck
             readiness:
               enabled: true
-              type: exec
-              command: /usr/src/app/bin/immich-healthcheck
+              type: http
+              path: /api/server/ping
+              port: "{{ .Values.service.main.ports.main.port }}"
+            liveness:
+              enabled: true
+              type: http
+              path: /api/server/ping
+              port: "{{ .Values.service.main.ports.main.port }}"
             startup:
               enabled: true
-              type: exec
-              command: /usr/src/app/bin/immich-healthcheck
+              type: http
+              path: /api/server/ping
+              port: "{{ .Values.service.main.ports.main.port }}"
   machinelearning:
     enabled: true
     type: Deployment
@@ -160,15 +162,15 @@ workload:
             readiness:
               enabled: true
               type: exec
-              command: /usr/src/app/bin/immich-healthcheck
+              command: immich-healthcheck
             liveness:
               enabled: true
               type: exec
-              command: /usr/src/app/bin/immich-healthcheck
+              command: immich-healthcheck
             startup:
               enabled: true
               type: exec
-              command: /usr/src/app/bin/immich-healthcheck
+              command: immich-healthcheck
 service:
   main:
     # Main service targets the server
