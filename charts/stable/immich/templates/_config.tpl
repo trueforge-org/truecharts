@@ -8,13 +8,6 @@ configmap:
       IMMICH_PORT: {{ .Values.service.main.ports.main.port | quote }}
       IMMICH_WORKERS_INCLUDE: api
 
-  micro-config:
-    enabled: true
-    data:
-      IMMICH_PORT: {{ .Values.service.microservices.ports.microservices.port | quote }}
-      REVERSE_GEOCODING_DUMP_DIRECTORY: {{ .Values.persistence.microcache.targetSelector.microservices.microservices.mountPath }}
-      IMMICH_WORKERS_EXCLUDE: api
-
   {{- if .Values.immich.enable_ml }}
   ml-config:
     enabled: true
