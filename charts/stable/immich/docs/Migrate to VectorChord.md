@@ -227,15 +227,8 @@ ERROR:  cannot execute ALTER TABLE in a read-only transaction
 ```
 Exec into the other CNPG pod and try again.
 
-## Clean up and change chart version
+## Testing
 
-- Change your `chart version` to `25.0.0`
-- Remove:
-```yaml
-    cnpg:
-      main:
-        type: vectorchord
-```
 - Remove:
 ```yaml
     workload:
@@ -243,7 +236,7 @@ Exec into the other CNPG pod and try again.
         replicas: 0
 ```
 
-- Now let it all deploy and upgrade
+- Now let it all deploy, all pods will be go up include machinelearning and microservices
 
 - Check the logs: Immich will now create new indices using VectorChord, will looks like this:
 
@@ -267,8 +260,19 @@ Postgres notice: {
 [Nest] 22  - 10/23/2025, 9:10:26 PM     LOG [Api:MachineLearningRepository] Machine learning server became healthy (http://immich-machinelearning:10003).
 ```
 
-- You are ready to use Immich again! Have fun!
+- All went OK
 
+## Change chart version
+
+- Change your `chart version` to `25.0.0`
+- Remove:
+```yaml
+    cnpg:
+      main:
+        type: vectorchord
+```
+
+- You are ready to use Immich again! Have fun!
 
 ## References
 
