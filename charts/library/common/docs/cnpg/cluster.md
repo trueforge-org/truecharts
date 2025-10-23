@@ -32,8 +32,8 @@ Additional labels for CNPG cluster
 | ---------- | --------------------------- |
 | Key        | `cnpg.$name.cluster.labels` |
 | Type       | `map`                       |
-| Required   | ❌                          |
-| Helm `tpl` | ✅ (On value only)          |
+| Required   | ❌                           |
+| Helm `tpl` | ✅ (On value only)           |
 | Default    | `{}`                        |
 
 Example
@@ -56,8 +56,8 @@ Additional annotations for CNPG cluster
 | ---------- | -------------------------------- |
 | Key        | `cnpg.$name.cluster.annotations` |
 | Type       | `map`                            |
-| Required   | ❌                               |
-| Helm `tpl` | ✅ (On value only)               |
+| Required   | ❌                                |
+| Helm `tpl` | ✅ (On value only)                |
 | Default    | `{}`                             |
 
 Example
@@ -86,8 +86,8 @@ See container env options in the [container env](/truecharts-common/container/en
 | ---------- | ------------------------ |
 | Key        | `cnpg.$name.cluster.env` |
 | Type       | `map`                    |
-| Required   | ❌                       |
-| Helm `tpl` | ❌                       |
+| Required   | ❌                        |
+| Helm `tpl` | ❌                        |
 | Default    | `{}`                     |
 
 Example
@@ -113,11 +113,11 @@ See container envFrom options in the [container envFrom](/truecharts-common/cont
 :::
 
 |            |                              |
-| ---------- | ------------------------     |
+| ---------- | ---------------------------- |
 | Key        | `cnpg.$name.cluster.envFrom` |
 | Type       | `map`                        |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
+| Required   | ❌                            |
+| Helm `tpl` | ❌                            |
 | Default    | `[]`                         |
 
 Example
@@ -145,8 +145,8 @@ Number of instances
 | ---------- | ------------------------------ |
 | Key        | `cnpg.$name.cluster.instances` |
 | Type       | `int`                          |
-| Required   | ❌                             |
-| Helm `tpl` | ❌                             |
+| Required   | ❌                              |
+| Helm `tpl` | ❌                              |
 | Default    | `2`                            |
 
 Example
@@ -178,8 +178,8 @@ chart on a single-node cluster.
 | ---------- | ------------------------------- |
 | Key        | `cnpg.$name.cluster.singleNode` |
 | Type       | `bool`                          |
-| Required   | ❌                              |
-| Helm `tpl` | ❌                              |
+| Required   | ❌                               |
+| Helm `tpl` | ❌                               |
 | Default    | `false`                         |
 
 Example
@@ -215,8 +215,8 @@ issues with CNPG.
 | ---------- | ----------------------------- |
 | Key        | `cnpg.$name.cluster.logLevel` |
 | Type       | `enum`                        |
-| Required   | ❌                            |
-| Helm `tpl` | ❌                            |
+| Required   | ❌                             |
+| Helm `tpl` | ❌                             |
 | Default    | `info`                        |
 
 Example
@@ -274,9 +274,6 @@ cnpg:
         annotation2: annotation2
       env:
         key: value
-      envList:
-        - name: key
-          value: value
       envFrom:
         - secretRef:
           name: my-secret
