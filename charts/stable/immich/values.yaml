@@ -43,7 +43,7 @@ workload:
               disableS6Caps: true
           env:
             IMMICH_MACHINE_LEARNING_ENABLED: "{{ .Values.workload.machinelearning.enabled | quote }}"
-            IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machinelearning:%d" (include "tc.v1.common.lib.chart.names.fullname" .) .Values.service.machinelearning.ports.machinelearning.port }}'
+            IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machinelearning:%v" (include "tc.v1.common.lib.chart.names.fullname" .) .Values.service.machinelearning.ports.machinelearning.port }}'
             IMMICH_PORT: "{{ .Values.service.main.ports.main.port | quote }}"
             IMMICH_WORKERS_INCLUDE: api
             NODE_ENV: production
@@ -130,8 +130,8 @@ workload:
           command:
             - /bin/bash
             - -c
-            - |
-              {{- tpl .Values.waitServerScript $ -}}
+            - |-
+              {{ tpl .Values.waitServerScript $ | trim }}
       containers:
         microservices:
           enabled: true
@@ -142,7 +142,7 @@ workload:
               disableS6Caps: true
           env:
             IMMICH_MACHINE_LEARNING_ENABLED: "{{ .Values.workload.machinelearning.enabled | quote }}"
-            IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machinelearning:%d" (include "tc.v1.common.lib.chart.names.fullname" .) .Values.service.machinelearning.ports.machinelearning.port }}'
+            IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machinelearning:%v" (include "tc.v1.common.lib.chart.names.fullname" .) .Values.service.machinelearning.ports.machinelearning.port }}'
             NODE_ENV: production
             IMMICH_PORT: "{{ .Values.service.microservices.ports.microservices.port | quote }}"
             REVERSE_GEOCODING_DUMP_DIRECTORY: "{{ .Values.persistence.microcache.targetSelector.microservices.microservices.mountPath }}"
@@ -299,8 +299,8 @@ ingress:
         widget:
           version: 2
 
-waitServerScript: |
-  {{- $url := printf "http://%s:%d/api/server/ping" (include "tc.v1.common.lib.chart.names.fullname" .) .Values.service.main.ports.main.port }}
+waitServerScript: >-
+  {{- $url := printf "http://%v:%v/api/server/ping" (include "tc.v1.common.lib.chart.names.fullname" .) .Values.service.main.ports.main.port }}
   echo "Pinging [{{ $url }}] until it is ready..."
   until wget --spider --quiet --timeout=3 --tries 1 "{{ $url }}"; do
     echo "Waiting for [{{ $url }}] to be ready..."
