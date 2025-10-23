@@ -56,9 +56,6 @@ workload:
             REDIS_PASSWORD: "{{ .Values.redis.creds.redisPassword }}"
             REDIS_PORT: "6379"
             REDIS_DBINDEX: "0"
-          envFrom:
-            - configMapRef:
-                name: common-config
           probes:
             liveness:
               enabled: true
@@ -169,9 +166,6 @@ workload:
             REDIS_PASSWORD: "{{ .Values.redis.creds.redisPassword }}"
             REDIS_PORT: "6379"
             REDIS_DBINDEX: "0"
-          envFrom:
-            - configMapRef:
-                name: common-config
           probes:
             readiness:
               enabled: true
