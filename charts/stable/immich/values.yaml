@@ -42,7 +42,7 @@ workload:
             capabilities:
               disableS6Caps: true
           env:
-            IMMICH_MACHINE_LEARNING_ENABLED: "true"
+            IMMICH_MACHINE_LEARNING_ENABLED: "{{ .Values.workload.machinelearning.enabled | quote }}"
             IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machinelearning:%d" (include "tc.v1.common.lib.chart.names.fullname" .) .Values.service.machinelearning.ports.machinelearning.port }}'
             IMMICH_PORT: "{{ .Values.service.main.ports.main.port | quote }}"
             IMMICH_WORKERS_INCLUDE: api
@@ -151,7 +151,7 @@ workload:
             capabilities:
               disableS6Caps: true
           env:
-            IMMICH_MACHINE_LEARNING_ENABLED: "true"
+            IMMICH_MACHINE_LEARNING_ENABLED: "{{ .Values.workload.machinelearning.enabled | quote }}"
             IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machinelearning:%d" (include "tc.v1.common.lib.chart.names.fullname" .) .Values.service.machinelearning.ports.machinelearning.port }}'
             NODE_ENV: production
             IMMICH_PORT: "{{ .Values.service.microservices.ports.microservices.port | quote }}"
