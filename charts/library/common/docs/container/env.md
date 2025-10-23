@@ -13,7 +13,7 @@ title: Env
 
 Variable names will be scanned for duplicates across all
 [secrets](/truecharts-common/secret), [configmaps](/truecharts-common/configmap),
-[env](/truecharts-common/container/env), [envList](/truecharts-common/container/envlist) and [fixedEnv](/truecharts-common/container/fixedenv)
+[env](/truecharts-common/container/env) and [fixedEnv](/truecharts-common/container/fixedenv)
 and will throw an error if it finds any.
 
 :::
@@ -33,8 +33,8 @@ Define env(s) for the container
 | ---------- | --------------------------------------------- |
 | Key        | `workload.$name.podSpec.containers.$name.env` |
 | Type       | `map`                                         |
-| Required   | ❌                                            |
-| Helm `tpl` | ✅ (Only value)                               |
+| Required   | ❌                                             |
+| Helm `tpl` | ✅ (Only value)                                |
 | Default    | `{}`                                          |
 
 Example
@@ -58,8 +58,8 @@ Define the env key
 | ---------- | -------------------------------------------------- |
 | Key        | `workload.$name.podSpec.containers.$name.env.$key` |
 | Type       | `string` or `map`                                  |
-| Required   | ✅                                                 |
-| Helm `tpl` | ✅ (Only on value, when it's a string)             |
+| Required   | ✅                                                  |
+| Helm `tpl` | ✅ (Only on value, when it's a string)              |
 | Default    | `""`                                               |
 
 Example
@@ -84,8 +84,8 @@ Define variable from configMapKeyRef
 | ---------- | ------------------------------------------------------------------ |
 | Key        | `workload.$name.podSpec.containers.$name.env.$key.configMapKeyRef` |
 | Type       | `map`                                                              |
-| Required   | ❌                                                                 |
-| Helm `tpl` | ❌                                                                 |
+| Required   | ❌                                                                  |
+| Helm `tpl` | ❌                                                                  |
 | Default    | `{}`                                                               |
 
 Example
@@ -118,8 +118,8 @@ You can opt out of this by setting [`expandObjectName`](/truecharts-common/conta
 | ---------- | ----------------------------------------------------------------------- |
 | Key        | `workload.$name.podSpec.containers.$name.env.$key.configMapKeyRef.name` |
 | Type       | `string`                                                                |
-| Required   | ✅                                                                      |
-| Helm `tpl` | ✅                                                                      |
+| Required   | ✅                                                                       |
+| Helm `tpl` | ✅                                                                       |
 | Default    | `""`                                                                    |
 
 Example
@@ -146,8 +146,8 @@ Define the configMap key
 | ---------- | ---------------------------------------------------------------------- |
 | Key        | `workload.$name.podSpec.containers.$name.env.$key.configMapKeyRef.key` |
 | Type       | `string`                                                               |
-| Required   | ✅                                                                     |
-| Helm `tpl` | ❌                                                                     |
+| Required   | ✅                                                                      |
+| Helm `tpl` | ❌                                                                      |
 | Default    | `""`                                                                   |
 
 Example
@@ -174,8 +174,8 @@ Whether to expand (adding the fullname as prefix) the configmap name
 | ---------- | ----------------------------------------------------------------------------------- |
 | Key        | `workload.$name.podSpec.containers.$name.env.$key.configMapKeyRef.expandObjectName` |
 | Type       | `bool`                                                                              |
-| Required   | ❌                                                                                  |
-| Helm `tpl` | ❌                                                                                  |
+| Required   | ❌                                                                                   |
+| Helm `tpl` | ❌                                                                                   |
 | Default    | `true`                                                                              |
 
 Example
@@ -202,8 +202,8 @@ Define variable from secretKeyRef
 | ---------- | --------------------------------------------------------------- |
 | Key        | `workload.$name.podSpec.containers.$name.env.$key.secretKeyRef` |
 | Type       | `map`                                                           |
-| Required   | ❌                                                              |
-| Helm `tpl` | ❌                                                              |
+| Required   | ❌                                                               |
+| Helm `tpl` | ❌                                                               |
 | Default    | `{}`                                                            |
 
 Example
@@ -236,8 +236,8 @@ You can opt out of this by setting [`expandObjectName`](/truecharts-common/conta
 | ---------- | -------------------------------------------------------------------- |
 | Key        | `workload.$name.podSpec.containers.$name.env.$key.secretKeyRef.name` |
 | Type       | `string`                                                             |
-| Required   | ✅                                                                   |
-| Helm `tpl` | ✅                                                                   |
+| Required   | ✅                                                                    |
+| Helm `tpl` | ✅                                                                    |
 | Default    | `""`                                                                 |
 
 Example
@@ -264,8 +264,8 @@ Define the secret key
 | ---------- | ------------------------------------------------------------------- |
 | Key        | `workload.$name.podSpec.containers.$name.env.$key.secretKeyRef.key` |
 | Type       | `string`                                                            |
-| Required   | ✅                                                                  |
-| Helm `tpl` | ❌                                                                  |
+| Required   | ✅                                                                   |
+| Helm `tpl` | ❌                                                                   |
 | Default    | `""`                                                                |
 
 Example
@@ -292,8 +292,8 @@ Whether to expand (adding the fullname as prefix) the secret name
 | ---------- | -------------------------------------------------------------------------------- |
 | Key        | `workload.$name.podSpec.containers.$name.env.$key.secretKeyRef.expandObjectName` |
 | Type       | `bool`                                                                           |
-| Required   | ❌                                                                               |
-| Helm `tpl` | ❌                                                                               |
+| Required   | ❌                                                                                |
+| Helm `tpl` | ❌                                                                                |
 | Default    | `true`                                                                           |
 
 Example
@@ -320,8 +320,8 @@ Define variable from fieldRef
 | ---------- | ----------------------------------------------------------- |
 | Key        | `workload.$name.podSpec.containers.$name.env.$key.fieldRef` |
 | Type       | `map`                                                       |
-| Required   | ❌                                                          |
-| Helm `tpl` | ❌                                                          |
+| Required   | ❌                                                           |
+| Helm `tpl` | ❌                                                           |
 | Default    | `{}`                                                        |
 
 Example
@@ -347,8 +347,8 @@ Define the field path
 | ---------- | --------------------------------------------------------------------- |
 | Key        | `workload.$name.podSpec.containers.$name.env.$key.fieldRef.fieldPath` |
 | Type       | `string`                                                              |
-| Required   | ✅                                                                    |
-| Helm `tpl` | ❌                                                                    |
+| Required   | ✅                                                                     |
+| Helm `tpl` | ❌                                                                     |
 | Default    | `""`                                                                  |
 
 Example
@@ -375,8 +375,8 @@ Define the apiVersion
 | ---------- | ---------------------------------------------------------------------- |
 | Key        | `workload.$name.podSpec.containers.$name.env.$key.fieldRef.apiVersion` |
 | Type       | `string`                                                               |
-| Required   | ❌                                                                     |
-| Helm `tpl` | ❌                                                                     |
+| Required   | ❌                                                                      |
+| Helm `tpl` | ❌                                                                      |
 | Default    | `""`                                                                   |
 
 Example

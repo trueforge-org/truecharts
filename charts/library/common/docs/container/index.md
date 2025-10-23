@@ -37,8 +37,8 @@ Define if the container is enabled or not
 | ---------- | ------------------------------------------------- |
 | Key        | `workload.$name.podSpec.containers.$name.enabled` |
 | Type       | `bool`                                            |
-| Required   | ✅                                                |
-| Helm `tpl` | ✅                                                |
+| Required   | ✅                                                 |
+| Helm `tpl` | ✅                                                 |
 | Default    | `false`                                           |
 
 Example
@@ -69,8 +69,8 @@ Define the type of container
 | ---------- | -------------------------------------------------- |
 | Key        | `workload.$name.podSpec.initContainers.$name.type` |
 | Type       | `string`                                           |
-| Required   | ✅                                                 |
-| Helm `tpl` | ✅                                                 |
+| Required   | ✅                                                  |
+| Helm `tpl` | ✅                                                  |
 | Default    | `init`                                             |
 
 Valid Values:
@@ -100,8 +100,8 @@ Define the image `map` to use
 | ---------- | ------------------------------------------------------- |
 | Key        | `workload.$name.podSpec.containers.$name.imageSelector` |
 | Type       | `string`                                                |
-| Required   | ✅                                                      |
-| Helm `tpl` | ✅                                                      |
+| Required   | ✅                                                       |
+| Helm `tpl` | ✅                                                       |
 | Default    | `image`                                                 |
 
 Example
@@ -131,8 +131,8 @@ Does **not** apply to `initContainers`
 | ---------- | ------------------------------------------------- |
 | Key        | `workload.$name.podSpec.containers.$name.primary` |
 | Type       | `bool`                                            |
-| Required   | ✅                                                |
-| Helm `tpl` | ❌                                                |
+| Required   | ✅                                                 |
+| Helm `tpl` | ❌                                                 |
 | Default    | `false`                                           |
 
 Example
@@ -156,8 +156,8 @@ Define if the container should have stdin enabled or not
 | ---------- | ----------------------------------------------- |
 | Key        | `workload.$name.podSpec.containers.$name.stdin` |
 | Type       | `bool`                                          |
-| Required   | ❌                                              |
-| Helm `tpl` | ❌                                              |
+| Required   | ❌                                               |
+| Helm `tpl` | ❌                                               |
 | Default    | `false`                                         |
 
 Example
@@ -181,8 +181,8 @@ Define if the container should have tty enabled or not
 | ---------- | --------------------------------------------- |
 | Key        | `workload.$name.podSpec.containers.$name.tty` |
 | Type       | `bool`                                        |
-| Required   | ❌                                            |
-| Helm `tpl` | ❌                                            |
+| Required   | ❌                                             |
+| Helm `tpl` | ❌                                             |
 | Default    | `false`                                       |
 
 Example
@@ -273,12 +273,6 @@ See [fixedEnv](/truecharts-common/container/fixedenv)
 ## `env`
 
 See [env](/truecharts-common/container/env)
-
----
-
-## `envList`
-
-See [envList](/truecharts-common/container/envlist)
 
 ---
 

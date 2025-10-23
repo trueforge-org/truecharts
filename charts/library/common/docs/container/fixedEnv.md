@@ -13,7 +13,7 @@ title: FixedEnv
 
 Variable names will be scanned for duplicates across all
 [secrets](/truecharts-common/secret), [configmaps](/truecharts-common/configmap),
-[env](/truecharts-common/container/env), [envList](/truecharts-common/container/envlist) and [fixedEnv](/truecharts-common/container/fixedenv)
+[env](/truecharts-common/container/env) and [fixedEnv](/truecharts-common/container/fixedenv)
 and will throw an error if it finds any.
 
 :::
@@ -51,8 +51,8 @@ By default it will set the following environment variables:
 | ---------- | -------------------------------------------------- |
 | Key        | `workload.$name.podSpec.containers.$name.fixedEnv` |
 | Type       | `map`                                              |
-| Required   | ❌                                                 |
-| Helm `tpl` | ❌                                                 |
+| Required   | ❌                                                  |
+| Helm `tpl` | ❌                                                  |
 | Default    | `{}`                                               |
 
 Example
@@ -76,9 +76,9 @@ Override the timezone for the container
 | ---------- | ----------------------------------------------------- |
 | Key        | `workload.$name.podSpec.containers.$name.fixedEnv.TZ` |
 | Type       | `string`                                              |
-| Required   | ❌                                                    |
-| Helm `tpl` | ❌                                                    |
-| Default    | See [here](/truecharts-common#tz)                        |
+| Required   | ❌                                                     |
+| Helm `tpl` | ❌                                                     |
+| Default    | See [here](/truecharts-common#tz)                     |
 
 Example
 
@@ -98,12 +98,12 @@ workload:
 
 Override the umask for the container
 
-|            |                                                                            |
-| ---------- | -------------------------------------------------------------------------- |
-| Key        | `workload.$name.podSpec.containers.$name.fixedEnv.UMASK`                   |
-| Type       | `string`                                                                   |
-| Required   | ❌                                                                         |
-| Helm `tpl` | ❌                                                                         |
+|            |                                                                               |
+| ---------- | ----------------------------------------------------------------------------- |
+| Key        | `workload.$name.podSpec.containers.$name.fixedEnv.UMASK`                      |
+| Type       | `string`                                                                      |
+| Required   | ❌                                                                             |
+| Helm `tpl` | ❌                                                                             |
 | Default    | See [here](/truecharts-common/securitycontext/#securitycontextcontainerumask) |
 
 Example
@@ -124,12 +124,12 @@ workload:
 
 Override the PUID for the container
 
-|            |                                                                           |
-| ---------- | ------------------------------------------------------------------------- |
-| Key        | `workload.$name.podSpec.containers.$name.fixedEnv.PUID`                   |
-| Type       | `string`                                                                  |
-| Required   | ❌                                                                        |
-| Helm `tpl` | ❌                                                                        |
+|            |                                                                              |
+| ---------- | ---------------------------------------------------------------------------- |
+| Key        | `workload.$name.podSpec.containers.$name.fixedEnv.PUID`                      |
+| Type       | `string`                                                                     |
+| Required   | ❌                                                                            |
+| Helm `tpl` | ❌                                                                            |
 | Default    | See [here](/truecharts-common/securitycontext/#securitycontextcontainerpuid) |
 
 Example
@@ -154,9 +154,9 @@ Override the NVIDIA_CAPS for the container
 | ---------- | -------------------------------------------------------------- |
 | Key        | `workload.$name.podSpec.containers.$name.fixedEnv.NVIDIA_CAPS` |
 | Type       | `list`                                                         |
-| Required   | ❌                                                             |
-| Helm `tpl` | ❌                                                             |
-| Default    | See [here](/truecharts-common/containeroptions#nvidia_caps)       |
+| Required   | ❌                                                              |
+| Helm `tpl` | ❌                                                              |
+| Default    | See [here](/truecharts-common/containeroptions#nvidia_caps)    |
 
 Example
 
