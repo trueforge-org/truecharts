@@ -8,7 +8,10 @@ tests:
   # Failures
   - it: should fail with dupe env in env and envFrom configmap
     set:
-      image: *image
+      image: &image
+        repository: nginx
+        tag: 1.19.0
+        pullPolicy: IfNotPresent
       configmap:
         configmap-name:
           enabled: true
@@ -25,7 +28,13 @@ tests:
                 enabled: true
                 primary: true
                 imageSelector: image
-                probes: *probes
+                probes: &probes
+                  readiness:
+                    enabled: false
+                  liveness:
+                    enabled: false
+                  startup:
+                    enabled: false
                 env:
                   VAR1: some_value
                 envFrom:
