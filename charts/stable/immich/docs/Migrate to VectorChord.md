@@ -72,7 +72,7 @@ Reminder: Make sure backups are available.
 
 2. Check if all deployments are now scaled down and only cnpg and redis pods are their.
 
-- run: `get deployments,pods -n immich`
+- run: `kubectl get deployments,pods -n immich`
 
 ```bash
 kubectl get deployments,pods -n immich
@@ -106,7 +106,7 @@ SELECT atttypmod as dimsize
 - **Write down** the dimsize NUMBER, given as output
 
 - run: 
-```
+```bash
 DROP INDEX IF EXISTS clip_index;
 DROP INDEX IF EXISTS face_index;
 ALTER TABLE smart_search ALTER COLUMN embedding SET DATA TYPE real[];
@@ -151,6 +151,8 @@ immich=#
       main:
         type: vectorchord
 ```
+Check:
+- run: `kubectl get deployments,pods -n immich`
 
 After deployment, most likely `immich-cnpg-main-2` is upgraded and `immich-cnpg-main-1` in a CrashLoopBackOff state, when that is the case:
 - run: `kubectl delete pod immich-cnpg-main-1 -n immich`
@@ -160,7 +162,7 @@ Make sure the machinelearning and microservices will be scaled down again:
 - run: `kubectl scale --replicas=0 deployment/immich-microservices -n immich`
 
 Check if all is in the desired state:
-- run: `get deployments,pods -n immich`
+- run: `kubectl get deployments,pods -n immich`
 
 ```bash
 kubectl get deployments,pods -n immich
@@ -264,7 +266,7 @@ Postgres notice: {
 
 ## Change chart version
 
-- Change your `chart version` to `25.0.0`
+- Change your `chart version` to `25.0.1`
 - Remove:
 ```yaml
     cnpg:
