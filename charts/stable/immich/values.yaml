@@ -48,7 +48,11 @@ workload:
           env:
             IMMICH_MACHINE_LEARNING_ENABLED: "{{ .Values.immich.enable_ml }}"
             IMMICH_MACHINE_LEARNING_URL: >-
-              {{ if .Values.immich.enable_ml }} '{{ printf "http://%s-machinelearning:%v" (include "tc.v1.common.lib.chart.names.fullname" .) .Values.service.machinelearning.ports.machinelearning.port }}' {{ end }}
+              {{- if .Values.immich.enable_ml -}}
+                {{- printf "http://%s-machinelearning:%v" (include "tc.v1.common.lib.chart.names.fullname" .) .Values.service.machinelearning.ports.machinelearning.port -}}
+              {{- else -}}
+                false
+              {{- end -}}
             IMMICH_PORT: "{{ .Values.service.main.ports.main.port }}"
             IMMICH_WORKERS_INCLUDE: api
             NODE_ENV: production
@@ -151,7 +155,11 @@ workload:
           env:
             IMMICH_MACHINE_LEARNING_ENABLED: "{{ .Values.immich.enable_ml }}"
             IMMICH_MACHINE_LEARNING_URL: >-
-              {{ if .Values.immich.enable_ml }} '{{ printf "http://%s-machinelearning:%v" (include "tc.v1.common.lib.chart.names.fullname" .) .Values.service.machinelearning.ports.machinelearning.port }}' {{ end }}
+              {{- if .Values.immich.enable_ml -}}
+                {{- printf "http://%s-machinelearning:%v" (include "tc.v1.common.lib.chart.names.fullname" .) .Values.service.machinelearning.ports.machinelearning.port -}}
+              {{- else -}}
+                false
+              {{- end -}}
             NODE_ENV: production
             IMMICH_PORT: "{{ .Values.service.microservices.ports.microservices.port }}"
             REVERSE_GEOCODING_DUMP_DIRECTORY: "{{ .Values.persistence.microcache.targetSelector.microservices.microservices.mountPath }}"
