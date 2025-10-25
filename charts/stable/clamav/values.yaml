@@ -61,7 +61,7 @@ workload:
           env:
             CLAMAV_NO_CLAMD: false
             CLAMAV_NO_FRESHCLAMD: false
-            CLAMAV_NO_MILTERD: "{{ .not .Values.service.milter.enabled }}"
+            CLAMAV_NO_MILTERD: "{{ not .Values.service.milter.enabled }}"
             CLAMD_STARTUP_TIMEOUT: 1800
             FRESHCLAM_CHECKS: 1
 persistence:
