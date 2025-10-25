@@ -35,18 +35,22 @@ tests:
                 schedule: "0 0 * * 0"
                 immediate: true
                 backupOwnerReference: cluster
+              - name: daily-magic-value
+                schedule: "@daily"
+              - name: continuous
+                schedule: "* * * * *"
     asserts:
-      - documentIndex: &cnpgDoc 0
+      - documentIndex: &cnpgDoc0 0
         isKind:
           of: ScheduledBackup
-      - documentIndex: *cnpgDoc
+      - documentIndex: *cnpgDoc0
         isAPIVersion:
           of: postgresql.cnpg.io/v1
-      - documentIndex: *cnpgDoc
+      - documentIndex: *cnpgDoc0
         equal:
           path: metadata.name
           value: test-release-name-common-test-cnpg-my-pg-sched-backup-daily
-      - documentIndex: *cnpgDoc
+      - documentIndex: *cnpgDoc0
         equal:
           path: spec
           value:
@@ -56,17 +60,17 @@ tests:
             immediate: false
             cluster:
               name: test-release-name-common-test-cnpg-my-pg
-      - documentIndex: &otherCnpgDoc 1
+      - documentIndex: &cnpgDoc1 1
         isKind:
           of: ScheduledBackup
-      - documentIndex: *otherCnpgDoc
+      - documentIndex: *cnpgDoc1
         isAPIVersion:
           of: postgresql.cnpg.io/v1
-      - documentIndex: *otherCnpgDoc
+      - documentIndex: *cnpgDoc1
         equal:
           path: metadata.name
           value: test-release-name-common-test-cnpg-my-pg-sched-backup-weekly
-      - documentIndex: *otherCnpgDoc
+      - documentIndex: *cnpgDoc1
         equal:
           path: spec
           value:
@@ -74,5 +78,45 @@ tests:
             backupOwnerReference: cluster
             suspend: false
             immediate: true
+            cluster:
+              name: test-release-name-common-test-cnpg-my-pg
+      - documentIndex: &cnpgDoc2 2
+        isKind:
+          of: ScheduledBackup
+      - documentIndex: *cnpgDoc2
+        isAPIVersion:
+          of: postgresql.cnpg.io/v1
+      - documentIndex: *cnpgDoc2
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-my-pg-sched-backup-daily-magic-value
+      - documentIndex: *cnpgDoc2
+        equal:
+          path: spec
+          value:
+            schedule: "@daily"
+            backupOwnerReference: none
+            suspend: false
+            immediate: false
+            cluster:
+              name: test-release-name-common-test-cnpg-my-pg
+      - documentIndex: &cnpgDoc3 3
+        isKind:
+          of: ScheduledBackup
+      - documentIndex: *cnpgDoc3
+        isAPIVersion:
+          of: postgresql.cnpg.io/v1
+      - documentIndex: *cnpgDoc3
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-my-pg-sched-backup-continuous
+      - documentIndex: *cnpgDoc3
+        equal:
+          path: spec
+          value:
+            schedule: "* * * * *"
+            backupOwnerReference: none
+            suspend: false
+            immediate: false
             cluster:
               name: test-release-name-common-test-cnpg-my-pg

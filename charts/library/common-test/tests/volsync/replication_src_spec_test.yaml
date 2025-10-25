@@ -176,7 +176,11 @@ tests:
               src:
                 enabled: true
                 trigger:
-                  schedule: "1 0 * * *"
+                  # Case where schedule starts with a non-alphanumric character,
+                  # such as when using magic-value schedules or schedule that
+                  # starts with an asterisk (e.g. `* * * * *`). This checks if
+                  # the rendered yaml value is quoted
+                  schedule: "@daily"
                 retain:
                   hourly: 20
                   daily: 5
@@ -198,7 +202,7 @@ tests:
           content:
             sourcePVC: test-release-name-common-test-srcbackup
             trigger:
-              schedule: "1 0 * * *"
+              schedule: "@daily"
       - documentIndex: *replicationDestDoc
         isSubset:
           path: spec.restic
