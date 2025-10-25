@@ -11,7 +11,7 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 0.26.0
+appVersion: 0.27.0
 dependencies:
   - name: common
     version: 28.26.1
@@ -21,7 +21,7 @@ dependencies:
     tags: []
     import-values: []
   - name: redis
-    version: 17.13.1
+    version: 17.13.2
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -42,11 +42,12 @@ maintainers:
 name: blocky
 sources:
   - https://0xerr0r.github.io/blocky/
+  - https://ghcr.io/0xerr0r/blocky
+  - https://ghcr.io/k8s-gateway/k8s_gateway
   - https://github.com/0xERR0R/blocky
   - https://github.com/Mozart409/blocky-frontend
   - https://github.com/truecharts/charts/tree/master/charts/stable/blocky
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/blocky
-  - https://hub.docker.com/r/spx01/blocky
-  - https://quay.io/oriedge/k8s_gateway
 type: application
-version: 19.0.0
+version: 19.0.1
+
