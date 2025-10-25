@@ -30,6 +30,10 @@ securityContext:
     runAsUser: 0
     runAsGroup: 0
 
+immich:
+  enable_ml: true
+  mlImageType: mlImage
+
 workload:
   main:
     podSpec:
@@ -42,7 +46,7 @@ workload:
             capabilities:
               disableS6Caps: true
           env:
-            IMMICH_MACHINE_LEARNING_ENABLED: "{{ .Values.workload.machinelearning.enabled }}"
+            IMMICH_MACHINE_LEARNING_ENABLED: "{{ .Values.immich.enable_ml }}"
             IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machinelearning:%v" (include "tc.v1.common.lib.chart.names.fullname" .) .Values.service.machinelearning.ports.machinelearning.port }}'
             IMMICH_PORT: "{{ .Values.service.main.ports.main.port }}"
             IMMICH_WORKERS_INCLUDE: api
@@ -73,7 +77,7 @@ workload:
               path: /api/server/ping
               port: "{{ .Values.service.main.ports.main.port }}"
   machinelearning:
-    enabled: true
+    enabled: {{ .Values.immich.enable_ml }}
     type: Deployment
     podSpec:
       initContainers:
@@ -92,7 +96,7 @@ workload:
         machinelearning:
           enabled: true
           primary: true
-          imageSelector: mlImage
+          imageSelector: {{ .Values.immich.mlImageType }}
           resources:
             excludeExtra: true
           securityContext:
@@ -193,7 +197,7 @@ service:
         protocol: http
         targetSelector: microservices
   machinelearning:
-    enabled: true
+    enabled: {{ .Values.immich.enable_ml }}
     type: ClusterIP
     targetSelector: machinelearning
     ports:
@@ -206,7 +210,7 @@ service:
 
 persistence:
   mlcache:
-    enabled: true
+    enabled: {{ .Values.immich.enable_ml }}
     type: emptyDir
     targetSelector:
       machinelearning:
