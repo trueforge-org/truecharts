@@ -266,7 +266,7 @@ Postgres notice: {
 
 ## Change chart version
 
-- Change your `chart version` to `25.0.1`
+- Change your `chart version` to `25.0.0`
 - Remove:
 ```yaml
     cnpg:
