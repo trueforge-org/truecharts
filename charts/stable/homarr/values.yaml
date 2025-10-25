@@ -19,3 +19,10 @@ persistence:
   appdata:
     enabled: true
     mountPath: "/appdata"
+resources:
+  limits:
+    cpu: 3000m
+    memory: 4800Mi
+  requests:
+    cpu: 150m
+    memory: 400Mi
