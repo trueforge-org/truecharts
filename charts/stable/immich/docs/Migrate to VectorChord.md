@@ -14,9 +14,10 @@ Since chart version 25 the PostgreSQL extension is changed from pgvecto.rs to Ve
 
 ## Prerequisite
 
-In this guide we are using the shell of the CNPG pods. How to exec in a pod, is something we assume you're familiar with.  
-Also you need to be familiar with running 'kubectl' commands.
-We assume Immich is in the namespace `Immich`, when different adapt accordingly.
+- This guide is made and tested with Immich chart 24.13.2. Make sure you are on chart version 24.x.x . 
+- In this guide we are using the shell of the CNPG pods. How to exec in a pod, is something we assume you're familiar with.  
+- Also you need to be familiar with running 'kubectl' commands.
+- We assume Immich is in the namespace `Immich`, when different adapt accordingly.
 
 ## Change database user rights
 
