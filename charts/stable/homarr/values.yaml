@@ -19,5 +19,6 @@ persistence:
   appdata:
     enabled: true
     mountPath: "/appdata"
-  varrun:
-    enabled: false
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
