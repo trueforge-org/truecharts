@@ -50,7 +50,7 @@ metadata:
 spec:
   sourcePVC: {{ $objectData.name }}
   trigger:
-    {{ /* Quote schedule so rendering does not break when it starts with non-aphanumeric symbols (e.g `* * * * *`) */ }}
+    {{/* Quote schedule so rendering does not break when it starts with non-aphanumeric symbols (e.g `* * * * *`) */}}
     schedule: {{ $schedule | quote }}
   {{ $volsyncData.type }}:
     repository: {{ $volsyncData.repository }}
