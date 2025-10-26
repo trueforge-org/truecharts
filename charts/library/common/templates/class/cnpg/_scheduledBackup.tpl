@@ -49,7 +49,6 @@ metadata:
     {{- . | nindent 4 }}
   {{- end }}
 spec:
-  {{/* Quote schedule so rendering does not break when it starts with non-aphanumeric symbols (e.g `* * * * *`) */}}
   schedule: {{ $objectData.schedData.schedule | quote }}
   backupOwnerReference: {{ $objectData.schedData.backupOwnerReference | default "none" }}
   suspend: {{ $suspend }}
