@@ -9,7 +9,7 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 13.0.11
+appVersion: 13.0.12
 dependencies:
   - name: common
     version: 28.26.1
@@ -19,14 +19,14 @@ dependencies:
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.9.1
+    version: 17.9.2
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
     tags: []
     import-values: []
   - name: redis
-    version: 17.13.1
+    version: 17.13.2
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -53,5 +53,5 @@ sources:
   - https://hub.docker.com/r/seafileltd/seafile-mc
   - https://seafile.com
 type: application
-version: 12.13.2
+version: 12.13.5
 

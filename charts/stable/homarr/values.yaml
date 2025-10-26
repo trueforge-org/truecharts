@@ -1,6 +1,6 @@
 image:
-  repository: ghcr.io/ajnart/homarr
-  tag: 0.16.0@sha256:737ec361ed248b6d2b62b037da816f283b0484e0b94bc9876945c7c602e7307c
+  repository: ghcr.io/homarr-labs/homarr
+  tag: v1.43.0@sha256:fd9bf160a3a19fe7fd05e4ceb3f95578b2c356ebc230ebcaca65bd7cd1fd8a0f
   pullPolicy: IfNotPresent
 workload:
   main:
@@ -8,10 +8,7 @@ workload:
       containers:
         main:
           env:
-            NEXTAUTH_SECRET:
-              secretKeyRef:
-                name: homarr-secrets
-                key: NEXTAUTH_SECRET
+            SECRET_ENCRYPTION_KEY: "changemeplease"
 service:
   main:
     ports:
@@ -19,12 +16,14 @@ service:
         port: 10245
         targetPort: 7575
 persistence:
-  config:
+  appdata:
     enabled: true
-    mountPath: "/app/data/configs"
-  icons:
-    enabled: true
-    mountPath: "/app/public/icons"
-  data:
-    enabled: true
-    mountPath: "/data"
+    mountPath: "/appdata"
+  varrun:
+    enabled: false
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
+    runAsNonRoot: false
+    runAsUser: 0
+    runAsGroup: 0

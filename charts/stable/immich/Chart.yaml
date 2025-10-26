@@ -2,8 +2,6 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
   truecharts.org/category: media
   truecharts.org/max_helm_version: "3.17"
   truecharts.org/max_kubernetes_version: 1.32.0
@@ -21,7 +19,7 @@ dependencies:
     tags: []
     import-values: []
   - name: redis
-    version: 17.13.1
+    version: 17.13.2
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -46,5 +44,5 @@ sources:
   - https://github.com/truecharts/charts/tree/master/charts/stable/immich
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/immich
 type: application
-version: 24.13.2
+version: 25.0.1
 
