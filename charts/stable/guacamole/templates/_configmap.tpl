@@ -84,9 +84,9 @@ guacamole-config:
   {{/* DUO */}}
   {{- if (get .Values.guacamole "duo").DUO_API_HOSTNAME }}
     {{ include "guac.env" (dict "ob" "duo" "key" "DUO_API_HOSTNAME" "rootCtx" $) }}
-    {{ include "guac.env" (dict "ob" "duo" "key" "DUO_INTEGRATION_KEY" "rootCtx" $) }}
-    {{ include "guac.env" (dict "ob" "duo" "key" "DUO_SECRET_KEY" "rootCtx" $) }}
-    {{ include "guac.env" (dict "ob" "duo" "key" "DUO_APPLICATION_KEY" "rootCtx" $) }}
+    {{ include "guac.env" (dict "ob" "duo" "key" "DUO_CLIENT_ID" "rootCtx" $) }}
+    {{ include "guac.env" (dict "ob" "duo" "key" "DUO_CLIENT_SECRET" "rootCtx" $) }}
+    {{ include "guac.env" (dict "ob" "duo" "key" "DUO_REDIRECT_URI" "rootCtx" $) }}
   {{- end }}
   {{/* API */}}
     {{ include "guac.env" (dict "ob" "api" "key" "API_SESSION_TIMEOUT" "rootCtx" $) }}
