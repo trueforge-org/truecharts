@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 1.34.3
 dependencies:
   - name: common
-    version: 28.26.1
+    version: 28.26.2
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -38,10 +38,11 @@ maintainers:
     url: https://truecharts.org
 name: vaultwarden
 sources:
+  - https://ghcr.io/dani-garcia/vaultwarden
   - https://ghcr.io/timshel/vaultwarden
   - https://github.com/dani-garcia/vaultwarden
   - https://github.com/truecharts/charts/tree/master/charts/stable/vaultwarden
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/vaultwarden
-  - https://quay.io/vaultwarden/server
 type: application
-version: 29.11.2
+version: 29.11.3
+

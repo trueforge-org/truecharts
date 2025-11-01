@@ -14,7 +14,7 @@ apiVersion: v2
 appVersion: 2025.04.22
 dependencies:
   - name: common
-    version: 28.26.1
+    version: 28.26.2
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -38,6 +38,7 @@ sources:
   - https://github.com/minio/minio
   - https://github.com/truecharts/charts/tree/master/charts/stable/minio
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/minio
-  - https://quay.io/minio/minio
+  - https://hub.docker.com/r/minio/minio
 type: application
-version: 16.11.2
+version: 16.11.3
+

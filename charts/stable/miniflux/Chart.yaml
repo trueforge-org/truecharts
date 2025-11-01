@@ -11,10 +11,10 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 2.2.13
+appVersion: 2.2.14
 dependencies:
   - name: common
-    version: 28.26.1
+    version: 28.26.2
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,9 +35,10 @@ maintainers:
     url: https://truecharts.org
 name: miniflux
 sources:
+  - https://ghcr.io/miniflux/miniflux
   - https://github.com/miniflux/v2
   - https://github.com/truecharts/charts/tree/master/charts/stable/miniflux
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/miniflux
-  - https://quay.io/miniflux/miniflux
 type: application
-version: 17.11.2
+version: 17.11.3
+
