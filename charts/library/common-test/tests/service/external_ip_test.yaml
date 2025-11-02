@@ -127,7 +127,7 @@ tests:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: common-test
             app.kubernetes.io/version: *appVer
-            endpointslice.kubernetes.io/managed-by: helm
+            endpointslice.kubernetes.io/managed-by: Helm
             helm-revision: "0"
             helm.sh/chart: common-test-1.0.0
             kubernetes.io/service-name: test-release-name-common-test
@@ -218,7 +218,7 @@ tests:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: common-test
             app.kubernetes.io/version: *appVer
-            endpointslice.kubernetes.io/managed-by: helm
+            endpointslice.kubernetes.io/managed-by: Helm
             helm-revision: "0"
             helm.sh/chart: common-test-1.0.0
             kubernetes.io/service-name: test-release-name-common-test
