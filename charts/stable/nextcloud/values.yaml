@@ -1,20 +1,18 @@
 image:
-  repository: oci.trueforge.org/tccr/nextcloud-fpm
+  repository: oci.trueforge.org/containerforge/nextcloud-fpm
   pullPolicy: IfNotPresent
-  tag: v32.0.0@sha256:a497dd98051cc1f2afb0d6cfb64ec074fa606bceae13fb1838703b16830acf5c
+  tag: v32.0.0
 nginxImage:
   repository: docker.io/nginxinc/nginx-unprivileged
   pullPolicy: IfNotPresent
   tag: 1.29.2@sha256:552407349aa673f06dc15c2c489fd585a1ff953b37533ed843ba0601e4d02d77
 imaginaryImage:
-  repository: oci.trueforge.org/tccr/nextcloud-imaginary
+  repository: oci.trueforge.org/containerforge/nextcloud-imaginary
   pullPolicy: IfNotPresent
-  tag: v20230401@sha256:5391f9f3488fbc7afd3102cf7f1f6d93224191f81356bc763b5f677b54bfa354
-hpbImage:
-  repository: oci.trueforge.org/tccr/nextcloud-push-notify
+  tag: v20230401
+  repository: oci.trueforge.org/containerforge/nextcloud-push-notify
   pullPolicy: IfNotPresent
-  tag: v1.2.0@sha256:04099cc419dfa6d7e3971eac45cb1cb9628984342819f04553abd6abcb688334
-clamavImage:
+  tag: v1.2.0@sha256:ca8a991857d3378e674285f8669483ab9c7f193a983dc304e964d536feb17fec
   repository: docker.io/clamav/clamav
   pullPolicy: IfNotPresent
   tag: 1.5.1@sha256:323cec50d1d950d9b5f5c42f64610a4a4102d6f18c38060af6d8513f43137805
