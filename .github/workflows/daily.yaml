@@ -95,12 +95,6 @@ jobs:
         run: |
            ./temp/clustertool charts genmeta
 
-      - name: Ensure Go Mod Tidy
-        run:  |
-          cd ./clustertool
-          go mod tidy
-          cd ..
-
       - name: Cleanup
         run: |
           rm -rf changes.json
