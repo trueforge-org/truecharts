@@ -16,7 +16,8 @@ on:
 jobs:
   generate-install-matrix:
     name: Generate matrix for install
-    runs-on: ubuntu-latest
+    runs-on:
+      group: default
     outputs:
       matrix1: |
         {
@@ -156,7 +157,7 @@ jobs:
           python-version: "3.11"
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@0d28d3144d3a25ea2cc349d6e59901c4ff469b3b # v2.7.0
+        uses: helm/chart-testing-action@6ec842c01de15ebb84c8627d2744a0c2f2755c9f # v2.8.0
 
       - name: Update containerd config
         if: contains(matrix.chart, 'Spegel')
@@ -228,7 +229,7 @@ jobs:
           python-version: "3.11"
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@0d28d3144d3a25ea2cc349d6e59901c4ff469b3b # v2.7.0
+        uses: helm/chart-testing-action@6ec842c01de15ebb84c8627d2744a0c2f2755c9f # v2.8.0
 
       - name: Update containerd config
         if: contains(matrix.chart, 'Spegel')
@@ -300,7 +301,7 @@ jobs:
           python-version: "3.11"
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@0d28d3144d3a25ea2cc349d6e59901c4ff469b3b # v2.7.0
+        uses: helm/chart-testing-action@6ec842c01de15ebb84c8627d2744a0c2f2755c9f # v2.8.0
 
       - name: Update containerd config
         if: contains(matrix.chart, 'Spegel')
@@ -372,7 +373,7 @@ jobs:
           python-version: "3.11"
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@0d28d3144d3a25ea2cc349d6e59901c4ff469b3b # v2.7.0
+        uses: helm/chart-testing-action@6ec842c01de15ebb84c8627d2744a0c2f2755c9f # v2.8.0
 
       - name: Update containerd config
         if: contains(matrix.chart, 'Spegel')
@@ -444,7 +445,7 @@ jobs:
           python-version: "3.11"
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@0d28d3144d3a25ea2cc349d6e59901c4ff469b3b # v2.7.0
+        uses: helm/chart-testing-action@6ec842c01de15ebb84c8627d2744a0c2f2755c9f # v2.8.0
 
       - name: Update containerd config
         if: contains(matrix.chart, 'Spegel')
@@ -517,7 +518,7 @@ jobs:
           python-version: "3.11"
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@0d28d3144d3a25ea2cc349d6e59901c4ff469b3b # v2.7.0
+        uses: helm/chart-testing-action@6ec842c01de15ebb84c8627d2744a0c2f2755c9f # v2.8.0
 
       - name: Update containerd config
         if: contains(matrix.chart, 'Spegel')
@@ -574,7 +575,8 @@ jobs:
       - install-charts6
     if: ${{ always() }}
     name: Install successful
-    runs-on: ubuntu-latest
+    runs-on:
+      group: default
     steps:
       - name: Check install matrix status
         run: |

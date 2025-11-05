@@ -26,7 +26,8 @@ defaults:
 
 jobs:
   check_changes:
-    runs-on: ubuntu-latest
+    runs-on:
+      group: default
     outputs:
       changes_detected: ${{ steps.filter.outputs.changed }}
 

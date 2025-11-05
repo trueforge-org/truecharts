@@ -9,7 +9,8 @@ on:
 jobs:
 
   approve:
-    runs-on: ubuntu-latest
+    runs-on:
+      group: default
     steps:
       - name: Approve PR
         uses: hmarr/auto-approve-action@v3

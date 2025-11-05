@@ -19,6 +19,7 @@ on:
 jobs:
   lint-and-verify:
     name: Lint Charts and Verify Dependencies
+    ## TODO: Move to our own runners
     runs-on: ubuntu-latest
     steps:
       - name: Checkout [master]

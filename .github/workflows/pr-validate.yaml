@@ -10,7 +10,8 @@ concurrency:
 jobs:
   pr-changes:
     name: Collect PR changes
-    runs-on: ubuntu-latest
+    runs-on:
+      group: default
     outputs:
       addedOrModified: ${{ steps.collect-changes.outputs.changesDetected }}
       addedOrModifiedFiles: ${{ steps.collect-changes.outputs.addedOrModifiedFiles }}
@@ -51,7 +52,8 @@ jobs:
 
   print_head_msg:
     name: Print commit message
-    runs-on: ubuntu-latest
+    runs-on:
+      group: default
     outputs:
       head-commit-message: ${{ steps.get_head_commit_message.outputs.headCommitMsg }}
       pr-title: ${{ github.event.pull_request.title }}
@@ -71,7 +73,8 @@ jobs:
 
   finished:
     name: Finished PR Tests
-    runs-on: ubuntu-latest
+    runs-on:
+      group: default
     if: always()
     needs:
       - pr-changes
