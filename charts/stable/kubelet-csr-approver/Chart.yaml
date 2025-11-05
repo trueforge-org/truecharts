@@ -11,7 +11,7 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 1.2.11
+appVersion: 1.2.12
 dependencies:
   - name: common
     version: 28.26.3
@@ -36,7 +36,8 @@ name: kubelet-csr-approver
 sources:
   - https://ghcr.io/postfinance/kubelet-csr-approver
   - https://github.com/kubelet-csr-approver/kubelet-csr-approver
+  - https://github.com/truecharts/charts/tree/master/charts/stable/kubelet-csr-approver
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/kubelet-csr-approver
 type: application
-version: 2.11.3
+version: 2.11.4
 
