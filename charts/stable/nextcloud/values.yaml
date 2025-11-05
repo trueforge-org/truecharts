@@ -3,9 +3,9 @@ image:
   pullPolicy: IfNotPresent
   tag: "32.0.1"
 nginxImage:
-  repository: docker.io/nginxinc/nginx-unprivileged
+  repository: oci.trueforge.org/tccr/nginx
   pullPolicy: IfNotPresent
-  tag: 1.29.2@sha256:552407349aa673f06dc15c2c489fd585a1ff953b37533ed843ba0601e4d02d77
+  tag: "1.24.0"
 imaginaryImage:
   repository: oci.trueforge.org/containerforge/nextcloud-imaginary
   pullPolicy: IfNotPresent
