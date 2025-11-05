@@ -11,7 +11,7 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 1143.0.3
+appVersion: 1144.0.2
 dependencies:
   - name: common
     version: 28.26.3
@@ -36,7 +36,8 @@ name: firefox
 sources:
   - https://ghcr.io/linuxserver/firefox
   - https://github.com/linuxserver/docker-firefox
+  - https://github.com/truecharts/charts/tree/master/charts/stable/firefox
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/firefox
 type: application
-version: 30.5.3
+version: 31.0.0
 
