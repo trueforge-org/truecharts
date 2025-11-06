@@ -326,7 +326,7 @@ nginx-config:
           # with the `ngx_pagespeed` module, uncomment this line to disable it.
           #pagespeed off;
 
-          include mime.types;
+          include /etc/nginx/mime.types;
           types {
               text/javascript js mjs;
           }
