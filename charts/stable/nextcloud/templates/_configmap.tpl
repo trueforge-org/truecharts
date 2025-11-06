@@ -407,7 +407,7 @@ nginx-config:
 
             try_files $fastcgi_script_name =404;
 
-            include fastcgi_params;
+            include /etc/nginx/fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
             fastcgi_param PATH_INFO $path_info;
             #fastcgi_param HTTPS on;
