@@ -21,7 +21,7 @@ dependencies:
     tags: []
     import-values: []
   - name: redis
-    version: 17.13.5
+    version: 17.13.6
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -40,9 +40,10 @@ maintainers:
     url: https://truecharts.org
 name: vikunja
 sources:
+  - https://github.com/truecharts/charts/tree/master/charts/stable/vikunja
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/vikunja
   - https://hub.docker.com/r/vikunja/vikunja
   - https://vikunja.io/docs
 type: application
-version: 17.23.8
+version: 17.23.9
 
