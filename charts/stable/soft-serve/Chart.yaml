@@ -11,7 +11,7 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 0.10.0
+appVersion: 0.11.0
 dependencies:
   - name: common
     version: 28.26.3
@@ -35,8 +35,9 @@ maintainers:
 name: soft-serve
 sources:
   - https://github.com/charmbracelet/soft-serve
+  - https://github.com/truecharts/charts/tree/master/charts/stable/soft-serve
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/soft-serve
   - https://hub.docker.com/r/charmcli/soft-serve
 type: application
-version: 9.12.3
+version: 9.13.0
 
