@@ -458,7 +458,7 @@ persistence:
     targetSelector:
       nginx:
         nginx:
-          mountPath: /etc/nginx/nginx.conf
+          mountPath: /config/nginx.conf
           subPath: nginx.conf
           readOnly: true
   nginx-temp:
