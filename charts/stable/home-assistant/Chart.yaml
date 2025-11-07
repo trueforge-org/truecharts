@@ -11,7 +11,7 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 2025.11.0
+appVersion: 2025.11.1
 dependencies:
   - name: common
     version: 28.26.3
@@ -37,8 +37,9 @@ name: home-assistant
 sources:
   - https://github.com/cdr/code-server
   - https://github.com/home-assistant/home-assistant
+  - https://github.com/truecharts/charts/tree/master/charts/stable/home-assistant
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/home-assistant
   - https://hub.docker.com/r/homeassistant/home-assistant
 type: application
-version: 28.15.0
+version: 28.15.1
 
