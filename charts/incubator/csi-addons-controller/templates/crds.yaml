@@ -1,0 +1,2162 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.17.3
+  name: csiaddonsnodes.csiaddons.openshift.io
+spec:
+  group: csiaddons.openshift.io
+  names:
+    kind: CSIAddonsNode
+    listKind: CSIAddonsNodeList
+    plural: csiaddonsnodes
+    singular: csiaddonsnode
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .metadata.namespace
+      name: namespace
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    - jsonPath: .spec.driver.name
+      name: DriverName
+      type: string
+    - jsonPath: .spec.driver.endpoint
+      name: Endpoint
+      type: string
+    - jsonPath: .spec.driver.nodeID
+      name: NodeID
+      type: string
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: CSIAddonsNode is the Schema for the csiaddonsnode API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: CSIAddonsNodeSpec defines the desired state of CSIAddonsNode
+            properties:
+              driver:
+                description: |-
+                  Driver is the information of the CSI Driver existing on a node.
+                  If the driver is uninstalled, this can become empty.
+                properties:
+                  endpoint:
+                    description: |-
+                      EndPoint is url that contains the ip-address to which the CSI-Addons
+                      side-car listens to.
+                    type: string
+                  name:
+                    description: |-
+                      Name is the name of the CSI driver that this object refers to.
+                      This must be the same name returned by the CSI-Addons GetIdentity()
+                      call for that driver. The name of the driver is in the format:
+                      `example.csi.ceph.com`
+                    type: string
+                    x-kubernetes-validations:
+                    - message: name is immutable
+                      rule: self == oldSelf
+                  nodeID:
+                    description: |-
+                      NodeID is the ID of the node to identify on which node the side-car
+                      is running.
+                    type: string
+                    x-kubernetes-validations:
+                    - message: nodeID is immutable
+                      rule: self == oldSelf
+                required:
+                - endpoint
+                - name
+                - nodeID
+                type: object
+            required:
+            - driver
+            type: object
+          status:
+            description: CSIAddonsNodeStatus defines the observed state of CSIAddonsNode
+            properties:
+              capabilities:
+                description: A list of capabilities advertised by the sidecar
+                items:
+                  type: string
+                type: array
+              message:
+                description: |-
+                  Message is a human-readable message indicating details about why the CSIAddonsNode
+                  is in this state.
+                type: string
+              networkFenceClientStatus:
+                description: NetworkFenceClientStatus contains the status of the clients
+                  required for fencing.
+                items:
+                  description: NetworkFenceClientStatus contains the status of the
+                    clients required for fencing.
+                  properties:
+                    ClientDetails:
+                      items:
+                        description: ClientDetail contains the details of the client
+                          required for fencing.
+                        properties:
+                          cidrs:
+                            description: Cidrs is the list of CIDR blocks that are
+                              fenced.
+                            items:
+                              type: string
+                            type: array
+                          id:
+                            description: Id is the unique identifier of the client
+                              where it belongs to.
+                            type: string
+                        required:
+                        - cidrs
+                        - id
+                        type: object
+                      type: array
+                    networkFenceClassName:
+                      type: string
+                  required:
+                  - ClientDetails
+                  - networkFenceClassName
+                  type: object
+                type: array
+              reason:
+                description: |-
+                  Reason is a brief CamelCase string that describes any failure and is meant
+                  for machine parsing and tidy display in the CLI.
+                type: string
+              state:
+                description: |-
+                  State represents the state of the CSIAddonsNode object.
+                  It informs whether or not the CSIAddonsNode is Connected
+                  to the CSI Driver.
+                type: string
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.17.3
+  name: encryptionkeyrotationcronjobs.csiaddons.openshift.io
+spec:
+  group: csiaddons.openshift.io
+  names:
+    kind: EncryptionKeyRotationCronJob
+    listKind: EncryptionKeyRotationCronJobList
+    plural: encryptionkeyrotationcronjobs
+    singular: encryptionkeyrotationcronjob
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.schedule
+      name: Schedule
+      type: string
+    - jsonPath: .spec.suspend
+      name: Suspend
+      type: boolean
+    - jsonPath: .status.active.name
+      name: Active
+      type: string
+    - jsonPath: .status.lastScheduleTime
+      name: Lastschedule
+      type: date
+    - jsonPath: .status.lastSuccessfulTime
+      name: Lastsuccessfultime
+      priority: 1
+      type: date
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: EncryptionKeyRotationCronJob is the Schema for the encryptionkeyrotationcronjobs
+          API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: EncryptionKeyRotationCronJobSpec defines the desired state
+              of EncryptionKeyRotationCronJob
+            properties:
+              concurrencyPolicy:
+                default: Forbid
+                description: |-
+                  Specifies how to treat concurrent executions of a Job.
+                  Valid values are:
+                  - "Forbid" (default): forbids concurrent runs, skipping next run if
+                    previous run hasn't finished yet;
+                  - "Replace": cancels currently running job and replaces it
+                    with a new one
+                enum:
+                - Forbid
+                - Replace
+                type: string
+              failedJobsHistoryLimit:
+                default: 1
+                description: |-
+                  The number of failed finished jobs to retain. Value must be non-negative integer.
+                  Defaults to 1.
+                format: int32
+                maximum: 60
+                minimum: 0
+                type: integer
+              jobTemplate:
+                description: Specifies the job that will be created when executing
+                  a CronJob.
+                properties:
+                  metadata:
+                    description: |-
+                      Standard object's metadata of the jobs created from this template.
+                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+                    type: object
+                  spec:
+                    description: |-
+                      Specification of the desired behavior of the job.
+                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+                    properties:
+                      backOffLimit:
+                        default: 6
+                        description: |-
+                          BackOffLimit specifies the number of retries allowed before marking reclaim
+                          space operation as failed. If not specified, defaults to 6. Maximum allowed
+                          value is 60 and minimum allowed value is 0.
+                        format: int32
+                        maximum: 60
+                        minimum: 0
+                        type: integer
+                      retryDeadlineSeconds:
+                        default: 600
+                        description: |-
+                          RetryDeadlineSeconds specifies the duration in seconds relative to the
+                          start time that the operation may be retried; value MUST be positive integer.
+                          If not specified, defaults to 600 seconds. Maximum allowed
+                          value is 1800.
+                        format: int64
+                        maximum: 1800
+                        minimum: 0
+                        type: integer
+                      target:
+                        description: |-
+                          Target represents tvolume target on which operation will be
+                          performed.
+                        properties:
+                          persistentVolumeClaim:
+                            description: PersistentVolumeClaim specifies the target
+                              PersistentVolumeClaim name.
+                            type: string
+                            x-kubernetes-validations:
+                            - message: persistentVolumeClaim is immutable
+                              rule: self == oldSelf
+                        type: object
+                      timeout:
+                        description: |-
+                          Timeout specifies the timeout in seconds for the grpc request sent to the
+                          CSI driver.
+                          Minimum allowed value is 60.
+                        format: int64
+                        minimum: 60
+                        type: integer
+                    required:
+                    - target
+                    type: object
+                required:
+                - spec
+                type: object
+              schedule:
+                description: The schedule in Cron format, see https://en.wikipedia.org/wiki/Cron.
+                pattern: .+
+                type: string
+              startingDeadlineSeconds:
+                description: |-
+                  Optional deadline in seconds for starting the job if it misses scheduled
+                  time for any reason.  Missed jobs executions will be counted as failed ones.
+                format: int64
+                type: integer
+              successfulJobsHistoryLimit:
+                default: 3
+                description: |-
+                  The number of successful finished jobs to retain. Value must be non-negative integer.
+                  Defaults to 3.
+                format: int32
+                maximum: 60
+                minimum: 0
+                type: integer
+              suspend:
+                description: |-
+                  This flag tells the controller to suspend subsequent executions, it does
+                  not apply to already started executions.  Defaults to false.
+                type: boolean
+            required:
+            - jobTemplate
+            - schedule
+            type: object
+          status:
+            description: EncryptionKeyRotationCronJobStatus defines the observed state
+              of EncryptionKeyRotationCronJob
+            properties:
+              active:
+                description: A pointer to currently running job.
+                properties:
+                  apiVersion:
+                    description: API version of the referent.
+                    type: string
+                  fieldPath:
+                    description: |-
+                      If referring to a piece of an object instead of an entire object, this string
+                      should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2].
+                      For example, if the object reference is to a container within a pod, this would take on a value like:
+                      "spec.containers{name}" (where "name" refers to the name of the container that triggered
+                      the event) or if no container name is specified "spec.containers[2]" (container with
+                      index 2 in this pod). This syntax is chosen only to have some well-defined way of
+                      referencing a part of an object.
+                    type: string
+                  kind:
+                    description: |-
+                      Kind of the referent.
+                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+                    type: string
+                  name:
+                    description: |-
+                      Name of the referent.
+                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                    type: string
+                  namespace:
+                    description: |-
+                      Namespace of the referent.
+                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+                    type: string
+                  resourceVersion:
+                    description: |-
+                      Specific resourceVersion to which this reference is made, if any.
+                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
+                    type: string
+                  uid:
+                    description: |-
+                      UID of the referent.
+                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids
+                    type: string
+                type: object
+                x-kubernetes-map-type: atomic
+              lastScheduleTime:
+                description: Information when was the last time the job was successfully
+                  scheduled.
+                format: date-time
+                type: string
+              lastSuccessfulTime:
+                description: Information when was the last time the job successfully
+                  completed.
+                format: date-time
+                type: string
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.17.3
+  name: encryptionkeyrotationjobs.csiaddons.openshift.io
+spec:
+  group: csiaddons.openshift.io
+  names:
+    kind: EncryptionKeyRotationJob
+    listKind: EncryptionKeyRotationJobList
+    plural: encryptionkeyrotationjobs
+    singular: encryptionkeyrotationjob
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .metadata.namespace
+      name: Namespace
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    - jsonPath: .status.retries
+      name: Retries
+      type: integer
+    - jsonPath: .status.result
+      name: Result
+      type: string
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: EncryptionKeyRotationJob is the Schema for the encryptionkeyrotationjobs
+          API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: EncryptionKeyRotationJobSpec defines the desired state of
+              EncryptionKeyRotationJob
+            properties:
+              backOffLimit:
+                default: 6
+                description: |-
+                  BackOffLimit specifies the number of retries allowed before marking reclaim
+                  space operation as failed. If not specified, defaults to 6. Maximum allowed
+                  value is 60 and minimum allowed value is 0.
+                format: int32
+                maximum: 60
+                minimum: 0
+                type: integer
+              retryDeadlineSeconds:
+                default: 600
+                description: |-
+                  RetryDeadlineSeconds specifies the duration in seconds relative to the
+                  start time that the operation may be retried; value MUST be positive integer.
+                  If not specified, defaults to 600 seconds. Maximum allowed
+                  value is 1800.
+                format: int64
+                maximum: 1800
+                minimum: 0
+                type: integer
+              target:
+                description: |-
+                  Target represents tvolume target on which operation will be
+                  performed.
+                properties:
+                  persistentVolumeClaim:
+                    description: PersistentVolumeClaim specifies the target PersistentVolumeClaim
+                      name.
+                    type: string
+                    x-kubernetes-validations:
+                    - message: persistentVolumeClaim is immutable
+                      rule: self == oldSelf
+                type: object
+              timeout:
+                description: |-
+                  Timeout specifies the timeout in seconds for the grpc request sent to the
+                  CSI driver.
+                  Minimum allowed value is 60.
+                format: int64
+                minimum: 60
+                type: integer
+            required:
+            - target
+            type: object
+          status:
+            description: EncryptionKeyRotationJobStatus defines the observed state
+              of EncryptionKeyRotationJob
+            properties:
+              completionTime:
+                format: date-time
+                type: string
+              conditions:
+                description: Conditions are the list of conditions and their status.
+                items:
+                  description: Condition contains details for one aspect of the current
+                    state of this API Resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        lastTransitionTime is the last time the condition transitioned from one status to another.
+                        This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        message is a human readable message indicating details about the transition.
+                        This may be an empty string.
+                      maxLength: 32768
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        observedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      minimum: 0
+                      type: integer
+                    reason:
+                      description: |-
+                        reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                        Producers of specific condition types may define expected values and meanings for this field,
+                        and whether the values are considered a guaranteed API.
+                        The value should be a CamelCase string.
+                        This field may not be empty.
+                      maxLength: 1024
+                      minLength: 1
+                      pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+                      type: string
+                    status:
+                      description: status of the condition, one of True, False, Unknown.
+                      enum:
+                      - "True"
+                      - "False"
+                      - Unknown
+                      type: string
+                    type:
+                      description: type of condition in CamelCase or in foo.example.com/CamelCase.
+                      maxLength: 316
+                      pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - message
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              message:
+                description: Message contains any message from the EncryptionKeyRotationJob.
+                type: string
+              result:
+                description: Result indicates the result of EncryptionKeyRotationJob.
+                type: string
+              retries:
+                description: Retries indicates the number of times the operation is
+                  retried.
+                format: int32
+                type: integer
+              startTime:
+                format: date-time
+                type: string
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.17.3
+  name: networkfenceclasses.csiaddons.openshift.io
+spec:
+  group: csiaddons.openshift.io
+  names:
+    kind: NetworkFenceClass
+    listKind: NetworkFenceClassList
+    plural: networkfenceclasses
+    singular: networkfenceclass
+  scope: Cluster
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: NetworkFenceClass is the Schema for the networkfenceclasses API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: |-
+              NetworkFenceClassSpec specifies parameters that an underlying storage system uses
+              to get client for network fencing. Upon creating a NetworkFenceClass object, a RPC will be set
+              to the storage system that matches the provisioner to get the client for network fencing.
+            properties:
+              parameters:
+                additionalProperties:
+                  type: string
+                description: |-
+                  Parameters is a key-value map with storage provisioner specific configurations for
+                  creating volume replicas
+                type: object
+                x-kubernetes-validations:
+                - message: parameters are immutable
+                  rule: self == oldSelf
+              provisioner:
+                description: Provisioner is the name of storage provisioner
+                type: string
+                x-kubernetes-validations:
+                - message: provisioner is immutable
+                  rule: self == oldSelf
+            required:
+            - provisioner
+            type: object
+            x-kubernetes-validations:
+            - message: parameters are immutable
+              rule: has(self.parameters) == has(oldSelf.parameters)
+          status:
+            description: NetworkFenceClassStatus defines the observed state of NetworkFenceClass
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.17.3
+  name: networkfences.csiaddons.openshift.io
+spec:
+  group: csiaddons.openshift.io
+  names:
+    kind: NetworkFence
+    listKind: NetworkFenceList
+    plural: networkfences
+    singular: networkfence
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.driver
+      name: Driver
+      type: string
+    - jsonPath: .spec.cidrs
+      name: Cidrs
+      type: string
+    - jsonPath: .spec.fenceState
+      name: FenceState
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    - jsonPath: .status.result
+      name: Result
+      type: string
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: NetworkFence is the Schema for the networkfences API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: NetworkFenceSpec defines the desired state of NetworkFence
+            properties:
+              cidrs:
+                description: Cidrs contains a list of CIDR blocks, which are required
+                  to be fenced.
+                items:
+                  type: string
+                type: array
+              driver:
+                description: Driver contains the name of CSI driver, required if NetworkFenceClassName
+                  is absent
+                type: string
+                x-kubernetes-validations:
+                - message: driver is immutable
+                  rule: self == oldSelf
+              fenceState:
+                default: Fenced
+                description: |-
+                  FenceState contains the desired state for the CIDRs
+                  mentioned in the Spec. i.e. Fenced or Unfenced
+                enum:
+                - Fenced
+                - Unfenced
+                type: string
+              networkFenceClassName:
+                description: NetworkFenceClassName contains the name of the NetworkFenceClass
+                type: string
+                x-kubernetes-validations:
+                - message: networkFenceClassName is immutable
+                  rule: self == oldSelf
+              parameters:
+                additionalProperties:
+                  type: string
+                description: Parameters is used to pass additional parameters to the
+                  CSI driver.
+                type: object
+                x-kubernetes-validations:
+                - message: parameters are immutable
+                  rule: self == oldSelf
+              secret:
+                description: Secret is a kubernetes secret, which is required to perform
+                  the fence/unfence operation.
+                properties:
+                  name:
+                    description: Name specifies the name of the secret.
+                    type: string
+                    x-kubernetes-validations:
+                    - message: name is immutable
+                      rule: self == oldSelf
+                  namespace:
+                    description: |-
+                      Namespace specifies the namespace in which the secret
+                      is located.
+                    type: string
+                    x-kubernetes-validations:
+                    - message: namespace is immutable
+                      rule: self == oldSelf
+                type: object
+                x-kubernetes-validations:
+                - message: secrets are immutable
+                  rule: self == oldSelf
+                - message: secret is immutable
+                  rule: self == oldSelf
+            required:
+            - cidrs
+            - fenceState
+            type: object
+            x-kubernetes-validations:
+            - message: one of driver or networkFenceClassName must be present
+              rule: has(self.driver) || has(self.networkFenceClassName)
+            - message: secret must be present when networkFenceClassName is not specified
+              rule: has(self.networkFenceClassName) || has(self.secret)
+          status:
+            description: NetworkFenceStatus defines the observed state of NetworkFence
+            properties:
+              conditions:
+                description: Conditions are the list of conditions and their status.
+                items:
+                  description: Condition contains details for one aspect of the current
+                    state of this API Resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        lastTransitionTime is the last time the condition transitioned from one status to another.
+                        This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        message is a human readable message indicating details about the transition.
+                        This may be an empty string.
+                      maxLength: 32768
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        observedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      minimum: 0
+                      type: integer
+                    reason:
+                      description: |-
+                        reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                        Producers of specific condition types may define expected values and meanings for this field,
+                        and whether the values are considered a guaranteed API.
+                        The value should be a CamelCase string.
+                        This field may not be empty.
+                      maxLength: 1024
+                      minLength: 1
+                      pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+                      type: string
+                    status:
+                      description: status of the condition, one of True, False, Unknown.
+                      enum:
+                      - "True"
+                      - "False"
+                      - Unknown
+                      type: string
+                    type:
+                      description: type of condition in CamelCase or in foo.example.com/CamelCase.
+                      maxLength: 316
+                      pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - message
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              message:
+                description: Message contains any message from the NetworkFence operation.
+                type: string
+              result:
+                description: Result indicates the result of Network Fence/Unfence
+                  operation.
+                type: string
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.17.3
+  name: reclaimspacecronjobs.csiaddons.openshift.io
+spec:
+  group: csiaddons.openshift.io
+  names:
+    kind: ReclaimSpaceCronJob
+    listKind: ReclaimSpaceCronJobList
+    plural: reclaimspacecronjobs
+    singular: reclaimspacecronjob
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.schedule
+      name: Schedule
+      type: string
+    - jsonPath: .spec.suspend
+      name: Suspend
+      type: boolean
+    - jsonPath: .status.active.name
+      name: Active
+      type: string
+    - jsonPath: .status.lastScheduleTime
+      name: Lastschedule
+      type: date
+    - jsonPath: .status.lastSuccessfulTime
+      name: Lastsuccessfultime
+      priority: 1
+      type: date
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: ReclaimSpaceCronJob is the Schema for the reclaimspacecronjobs
+          API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ReclaimSpaceCronJobSpec defines the desired state of ReclaimSpaceJob
+            properties:
+              concurrencyPolicy:
+                default: Forbid
+                description: |-
+                  Specifies how to treat concurrent executions of a Job.
+                  Valid values are:
+                  - "Forbid" (default): forbids concurrent runs, skipping next run if
+                    previous run hasn't finished yet;
+                  - "Replace": cancels currently running job and replaces it
+                    with a new one
+                enum:
+                - Forbid
+                - Replace
+                type: string
+              failedJobsHistoryLimit:
+                default: 1
+                description: |-
+                  The number of failed finished jobs to retain. Value must be non-negative integer.
+                  Defaults to 1.
+                format: int32
+                maximum: 60
+                minimum: 0
+                type: integer
+              jobTemplate:
+                description: Specifies the job that will be created when executing
+                  a CronJob.
+                properties:
+                  metadata:
+                    description: |-
+                      Standard object's metadata of the jobs created from this template.
+                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+                    type: object
+                  spec:
+                    description: |-
+                      Specification of the desired behavior of the job.
+                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+                    properties:
+                      backOffLimit:
+                        default: 6
+                        description: |-
+                          BackOffLimit specifies the number of retries allowed before marking reclaim
+                          space operation as failed. If not specified, defaults to 6. Maximum allowed
+                          value is 60 and minimum allowed value is 0.
+                        format: int32
+                        maximum: 60
+                        minimum: 0
+                        type: integer
+                      retryDeadlineSeconds:
+                        default: 600
+                        description: |-
+                          RetryDeadlineSeconds specifies the duration in seconds relative to the
+                          start time that the operation may be retried; value MUST be positive integer.
+                          If not specified, defaults to 600 seconds. Maximum allowed
+                          value is 1800.
+                        format: int64
+                        maximum: 1800
+                        minimum: 0
+                        type: integer
+                      target:
+                        description: |-
+                          Target represents volume target on which the operation will be
+                          performed.
+                        properties:
+                          persistentVolumeClaim:
+                            description: PersistentVolumeClaim specifies the target
+                              PersistentVolumeClaim name.
+                            type: string
+                            x-kubernetes-validations:
+                            - message: persistentVolumeClaim is immutable
+                              rule: self == oldSelf
+                        type: object
+                      timeout:
+                        description: |-
+                          Timeout specifies the timeout in seconds for the grpc request sent to the
+                          CSI driver. If not specified, defaults to global reclaimspace timeout.
+                          Minimum allowed value is 60.
+                        format: int64
+                        minimum: 60
+                        type: integer
+                    required:
+                    - target
+                    type: object
+                required:
+                - spec
+                type: object
+              schedule:
+                description: The schedule in Cron format, see https://en.wikipedia.org/wiki/Cron.
+                pattern: .+
+                type: string
+              startingDeadlineSeconds:
+                description: |-
+                  Optional deadline in seconds for starting the job if it misses scheduled
+                  time for any reason.  Missed jobs executions will be counted as failed ones.
+                format: int64
+                type: integer
+              successfulJobsHistoryLimit:
+                default: 3
+                description: |-
+                  The number of successful finished jobs to retain. Value must be non-negative integer.
+                  Defaults to 3.
+                format: int32
+                maximum: 60
+                minimum: 0
+                type: integer
+              suspend:
+                description: |-
+                  This flag tells the controller to suspend subsequent executions, it does
+                  not apply to already started executions.  Defaults to false.
+                type: boolean
+            required:
+            - jobTemplate
+            - schedule
+            type: object
+          status:
+            description: ReclaimSpaceCronJobStatus defines the observed state of ReclaimSpaceJob
+            properties:
+              active:
+                description: A pointer to currently running job.
+                properties:
+                  apiVersion:
+                    description: API version of the referent.
+                    type: string
+                  fieldPath:
+                    description: |-
+                      If referring to a piece of an object instead of an entire object, this string
+                      should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2].
+                      For example, if the object reference is to a container within a pod, this would take on a value like:
+                      "spec.containers{name}" (where "name" refers to the name of the container that triggered
+                      the event) or if no container name is specified "spec.containers[2]" (container with
+                      index 2 in this pod). This syntax is chosen only to have some well-defined way of
+                      referencing a part of an object.
+                    type: string
+                  kind:
+                    description: |-
+                      Kind of the referent.
+                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+                    type: string
+                  name:
+                    description: |-
+                      Name of the referent.
+                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                    type: string
+                  namespace:
+                    description: |-
+                      Namespace of the referent.
+                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+                    type: string
+                  resourceVersion:
+                    description: |-
+                      Specific resourceVersion to which this reference is made, if any.
+                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
+                    type: string
+                  uid:
+                    description: |-
+                      UID of the referent.
+                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids
+                    type: string
+                type: object
+                x-kubernetes-map-type: atomic
+              lastScheduleTime:
+                description: Information when was the last time the job was successfully
+                  scheduled.
+                format: date-time
+                type: string
+              lastSuccessfulTime:
+                description: Information when was the last time the job successfully
+                  completed.
+                format: date-time
+                type: string
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.17.3
+  name: reclaimspacejobs.csiaddons.openshift.io
+spec:
+  group: csiaddons.openshift.io
+  names:
+    kind: ReclaimSpaceJob
+    listKind: ReclaimSpaceJobList
+    plural: reclaimspacejobs
+    singular: reclaimspacejob
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .metadata.namespace
+      name: Namespace
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    - jsonPath: .status.retries
+      name: Retries
+      type: integer
+    - jsonPath: .status.result
+      name: Result
+      type: string
+    - jsonPath: .status.reclaimedSpace
+      name: ReclaimedSpace
+      priority: 1
+      type: string
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: ReclaimSpaceJob is the Schema for the reclaimspacejobs API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ReclaimSpaceJobSpec defines the desired state of ReclaimSpaceJob
+            properties:
+              backOffLimit:
+                default: 6
+                description: |-
+                  BackOffLimit specifies the number of retries allowed before marking reclaim
+                  space operation as failed. If not specified, defaults to 6. Maximum allowed
+                  value is 60 and minimum allowed value is 0.
+                format: int32
+                maximum: 60
+                minimum: 0
+                type: integer
+              retryDeadlineSeconds:
+                default: 600
+                description: |-
+                  RetryDeadlineSeconds specifies the duration in seconds relative to the
+                  start time that the operation may be retried; value MUST be positive integer.
+                  If not specified, defaults to 600 seconds. Maximum allowed
+                  value is 1800.
+                format: int64
+                maximum: 1800
+                minimum: 0
+                type: integer
+              target:
+                description: |-
+                  Target represents volume target on which the operation will be
+                  performed.
+                properties:
+                  persistentVolumeClaim:
+                    description: PersistentVolumeClaim specifies the target PersistentVolumeClaim
+                      name.
+                    type: string
+                    x-kubernetes-validations:
+                    - message: persistentVolumeClaim is immutable
+                      rule: self == oldSelf
+                type: object
+              timeout:
+                description: |-
+                  Timeout specifies the timeout in seconds for the grpc request sent to the
+                  CSI driver. If not specified, defaults to global reclaimspace timeout.
+                  Minimum allowed value is 60.
+                format: int64
+                minimum: 60
+                type: integer
+            required:
+            - target
+            type: object
+          status:
+            description: ReclaimSpaceJobStatus defines the observed state of ReclaimSpaceJob
+            properties:
+              completionTime:
+                format: date-time
+                type: string
+              conditions:
+                description: Conditions are the list of conditions and their status.
+                items:
+                  description: Condition contains details for one aspect of the current
+                    state of this API Resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        lastTransitionTime is the last time the condition transitioned from one status to another.
+                        This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        message is a human readable message indicating details about the transition.
+                        This may be an empty string.
+                      maxLength: 32768
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        observedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      minimum: 0
+                      type: integer
+                    reason:
+                      description: |-
+                        reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                        Producers of specific condition types may define expected values and meanings for this field,
+                        and whether the values are considered a guaranteed API.
+                        The value should be a CamelCase string.
+                        This field may not be empty.
+                      maxLength: 1024
+                      minLength: 1
+                      pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+                      type: string
+                    status:
+                      description: status of the condition, one of True, False, Unknown.
+                      enum:
+                      - "True"
+                      - "False"
+                      - Unknown
+                      type: string
+                    type:
+                      description: type of condition in CamelCase or in foo.example.com/CamelCase.
+                      maxLength: 316
+                      pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - message
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              message:
+                description: Message contains any message from the ReclaimSpaceJob.
+                type: string
+              reclaimedSpace:
+                anyOf:
+                - type: integer
+                - type: string
+                description: ReclaimedSpace indicates the amount of space reclaimed.
+                pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                x-kubernetes-int-or-string: true
+              result:
+                description: Result indicates the result of ReclaimSpaceJob.
+                type: string
+              retries:
+                description: Retries indicates the number of times the operation is
+                  retried.
+                format: int32
+                type: integer
+              startTime:
+                format: date-time
+                type: string
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.17.3
+  name: volumegroupreplicationclasses.replication.storage.openshift.io
+spec:
+  group: replication.storage.openshift.io
+  names:
+    kind: VolumeGroupReplicationClass
+    listKind: VolumeGroupReplicationClassList
+    plural: volumegroupreplicationclasses
+    shortNames:
+    - vgrc
+    singular: volumegroupreplicationclass
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.provisioner
+      name: provisioner
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: VolumeGroupReplicationClass is the Schema for the volumegroupreplicationclasses
+          API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: |-
+              VolumeGroupReplicationClassSpec specifies parameters that an underlying storage system uses
+              when creating a volumegroup replica. A specific VolumeGroupReplicationClass is used by specifying
+              its name in a VolumeGroupReplication object.
+            properties:
+              parameters:
+                additionalProperties:
+                  type: string
+                description: |-
+                  Parameters is a key-value map with storage provisioner specific configurations for
+                  creating volume group replicas
+                type: object
+                x-kubernetes-validations:
+                - message: parameters are immutable
+                  rule: self == oldSelf
+              provisioner:
+                description: Provisioner is the name of storage provisioner
+                type: string
+                x-kubernetes-validations:
+                - message: provisioner is immutable
+                  rule: self == oldSelf
+            required:
+            - provisioner
+            type: object
+            x-kubernetes-validations:
+            - message: parameters are immutable
+              rule: has(self.parameters) == has(oldSelf.parameters)
+          status:
+            description: VolumeGroupReplicationClassStatus defines the observed state
+              of VolumeGroupReplicationClass
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.17.3
+  name: volumegroupreplicationcontents.replication.storage.openshift.io
+spec:
+  group: replication.storage.openshift.io
+  names:
+    kind: VolumeGroupReplicationContent
+    listKind: VolumeGroupReplicationContentList
+    plural: volumegroupreplicationcontents
+    shortNames:
+    - vgrcontent
+    singular: volumegroupreplicationcontent
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.volumeGroupReplicationClassName
+      name: VolumeGroupReplicationClass
+      type: string
+    - jsonPath: .spec.volumeGroupReplicationRef.name
+      name: VolumeGroupReplication
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: VolumeGroupReplicationContent is the Schema for the volumegroupreplicationcontents
+          API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: VolumeGroupReplicationContentSpec defines the desired state
+              of VolumeGroupReplicationContent
+            properties:
+              provisioner:
+                description: |-
+                  provisioner is the name of the CSI driver used to create the physical
+                  volume group on
+                  the underlying storage system.
+                  This MUST be the same as the name returned by the CSI GetPluginName() call for
+                  that driver.
+                  Required.
+                type: string
+              source:
+                description: |-
+                  Source specifies whether the volume group is (or should be) dynamically provisioned
+                  or already exists using the volumes listed here, and just requires a
+                  Kubernetes object representation.
+                  Required.
+                properties:
+                  volumeHandles:
+                    description: |-
+                      VolumeHandles is a list of volume handles on the backend to be grouped
+                      and replicated.
+                    items:
+                      type: string
+                    type: array
+                required:
+                - volumeHandles
+                type: object
+              volumeGroupAttributes:
+                additionalProperties:
+                  type: string
+                description: volumeGroupAttributes holds the contextual information
+                  of the volume group.
+                type: object
+                x-kubernetes-validations:
+                - message: field is immutable
+                  rule: self == oldSelf
+              volumeGroupReplicationClassName:
+                description: |-
+                  VolumeGroupReplicationClassName is the name of the VolumeGroupReplicationClass from
+                  which this group replication was (or will be) created.
+                  Required.
+                type: string
+              volumeGroupReplicationHandle:
+                description: |-
+                  VolumeGroupReplicationHandle is a unique id returned by the CSI driver
+                  to identify the VolumeGroupReplication on the storage system.
+                type: string
+              volumeGroupReplicationRef:
+                description: |-
+                  VolumeGroupreplicationRef specifies the VolumeGroupReplication object to which this
+                  VolumeGroupReplicationContent object is bound.
+                  VolumeGroupReplication.Spec.VolumeGroupReplicationContentName field must reference to
+                  this VolumeGroupReplicationContent's name for the bidirectional binding to be valid.
+                  For a pre-existing VolumeGroupReplication object, MUST provide an empty/nil value for
+                  VolumeGroupReplicationRef for the auto-binding to happen.
+                properties:
+                  apiVersion:
+                    description: API version of the referent.
+                    type: string
+                  fieldPath:
+                    description: |-
+                      If referring to a piece of an object instead of an entire object, this string
+                      should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2].
+                      For example, if the object reference is to a container within a pod, this would take on a value like:
+                      "spec.containers{name}" (where "name" refers to the name of the container that triggered
+                      the event) or if no container name is specified "spec.containers[2]" (container with
+                      index 2 in this pod). This syntax is chosen only to have some well-defined way of
+                      referencing a part of an object.
+                    type: string
+                  kind:
+                    description: |-
+                      Kind of the referent.
+                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+                    type: string
+                  name:
+                    description: |-
+                      Name of the referent.
+                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                    type: string
+                  namespace:
+                    description: |-
+                      Namespace of the referent.
+                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+                    type: string
+                  resourceVersion:
+                    description: |-
+                      Specific resourceVersion to which this reference is made, if any.
+                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
+                    type: string
+                  uid:
+                    description: |-
+                      UID of the referent.
+                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids
+                    type: string
+                type: object
+                x-kubernetes-map-type: atomic
+                x-kubernetes-validations:
+                - message: volumeGroupReplicationRef.name, volumeGroupReplicationRef.namespace
+                    and volumeGroupReplicationRef.uid must be set if volumeGroupReplicationRef
+                    is defined
+                  rule: 'self != null ? has(self.name) && has(self.__namespace__)
+                    && has(self.uid) : true'
+            required:
+            - provisioner
+            - source
+            - volumeGroupReplicationClassName
+            type: object
+          status:
+            description: VolumeGroupReplicationContentStatus defines the status of
+              VolumeGroupReplicationContent
+            properties:
+              persistentVolumeRefList:
+                description: |-
+                  PersistentVolumeRefList is the list of PV for the group replication
+                  The maximum number of allowed PV in the group is 100.
+                items:
+                  description: |-
+                    LocalObjectReference contains enough information to let you locate the
+                    referenced object inside the same namespace.
+                  properties:
+                    name:
+                      default: ""
+                      description: |-
+                        Name of the referent.
+                        This field is effectively required, but due to backwards compatibility is
+                        allowed to be empty. Instances of this type with an empty value here are
+                        almost certainly wrong.
+                        More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                      type: string
+                  type: object
+                  x-kubernetes-map-type: atomic
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.17.3
+  name: volumegroupreplications.replication.storage.openshift.io
+spec:
+  group: replication.storage.openshift.io
+  names:
+    kind: VolumeGroupReplication
+    listKind: VolumeGroupReplicationList
+    plural: volumegroupreplications
+    shortNames:
+    - vgr
+    singular: volumegroupreplication
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.volumeGroupReplicationClassName
+      name: VolumeGroupReplicationClass
+      type: string
+    - jsonPath: .spec.volumeGroupReplicationContentName
+      name: VolumeGroupReplicationContent
+      type: string
+    - jsonPath: .spec.replicationState
+      name: desiredState
+      type: string
+    - jsonPath: .status.state
+      name: currentState
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: VolumeGroupReplication is the Schema for the volumegroupreplications
+          API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: VolumeGroupReplicationSpec defines the desired state of VolumeGroupReplication
+            properties:
+              autoResync:
+                default: false
+                description: |-
+                  AutoResync represents the group to be auto resynced when
+                  ReplicationState is "secondary"
+                type: boolean
+              external:
+                default: false
+                description: |-
+                  External represents if VolumeGroupReplication should be reconciled by the csi-addons controller
+                  or an external controller managed by the storage vendor.
+                type: boolean
+                x-kubernetes-validations:
+                - message: source is immutable
+                  rule: self == oldSelf
+              replicationState:
+                description: |-
+                  ReplicationState represents the replication operation to be performed on the group.
+                  Supported operations are "primary", "secondary" and "resync"
+                enum:
+                - primary
+                - secondary
+                - resync
+                type: string
+              source:
+                description: |-
+                  Source specifies where a group replications will be created from.
+                  This field is immutable after creation.
+                  Required.
+                properties:
+                  selector:
+                    description: |-
+                      Selector is a label query over persistent volume claims that are to be
+                      grouped together for replication.
+                    properties:
+                      matchExpressions:
+                        description: matchExpressions is a list of label selector
+                          requirements. The requirements are ANDed.
+                        items:
+                          description: |-
+                            A label selector requirement is a selector that contains values, a key, and an operator that
+                            relates the key and values.
+                          properties:
+                            key:
+                              description: key is the label key that the selector
+                                applies to.
+                              type: string
+                            operator:
+                              description: |-
+                                operator represents a key's relationship to a set of values.
+                                Valid operators are In, NotIn, Exists and DoesNotExist.
+                              type: string
+                            values:
+                              description: |-
+                                values is an array of string values. If the operator is In or NotIn,
+                                the values array must be non-empty. If the operator is Exists or DoesNotExist,
+                                the values array must be empty. This array is replaced during a strategic
+                                merge patch.
+                              items:
+                                type: string
+                              type: array
+                              x-kubernetes-list-type: atomic
+                          required:
+                          - key
+                          - operator
+                          type: object
+                        type: array
+                        x-kubernetes-list-type: atomic
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
+                          map is equivalent to an element of matchExpressions, whose key field is "key", the
+                          operator is "In", and the values array contains only "value". The requirements are ANDed.
+                        type: object
+                    type: object
+                    x-kubernetes-map-type: atomic
+                    x-kubernetes-validations:
+                    - message: selector is immutable
+                      rule: self == oldSelf
+                required:
+                - selector
+                type: object
+                x-kubernetes-validations:
+                - message: source is immutable
+                  rule: self == oldSelf
+              volumeGroupReplicationClassName:
+                description: volumeGroupReplicationClassName is the volumeGroupReplicationClass
+                  name for this VolumeGroupReplication resource
+                type: string
+                x-kubernetes-validations:
+                - message: volumeGroupReplicationClassName is immutable
+                  rule: self == oldSelf
+              volumeGroupReplicationContentName:
+                description: Name of the VolumeGroupReplicationContent object created
+                  for this volumeGroupReplication
+                type: string
+                x-kubernetes-validations:
+                - message: volumeGroupReplicationContentName is immutable
+                  rule: self == oldSelf
+              volumeReplicationClassName:
+                description: |-
+                  volumeReplicationClassName is the volumeReplicationClass name for the VolumeReplication object
+                  created for this volumeGroupReplication
+                type: string
+                x-kubernetes-validations:
+                - message: volumeReplicationClassName is immutable
+                  rule: self == oldSelf
+              volumeReplicationName:
+                description: Name of the VolumeReplication object created for this
+                  volumeGroupReplication
+                type: string
+                x-kubernetes-validations:
+                - message: volumeReplicationName is immutable
+                  rule: self == oldSelf
+            required:
+            - autoResync
+            - replicationState
+            - source
+            - volumeGroupReplicationClassName
+            type: object
+          status:
+            description: VolumeGroupReplicationStatus defines the observed state of
+              VolumeGroupReplication
+            properties:
+              conditions:
+                description: Conditions are the list of conditions and their status.
+                items:
+                  description: Condition contains details for one aspect of the current
+                    state of this API Resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        lastTransitionTime is the last time the condition transitioned from one status to another.
+                        This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        message is a human readable message indicating details about the transition.
+                        This may be an empty string.
+                      maxLength: 32768
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        observedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      minimum: 0
+                      type: integer
+                    reason:
+                      description: |-
+                        reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                        Producers of specific condition types may define expected values and meanings for this field,
+                        and whether the values are considered a guaranteed API.
+                        The value should be a CamelCase string.
+                        This field may not be empty.
+                      maxLength: 1024
+                      minLength: 1
+                      pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+                      type: string
+                    status:
+                      description: status of the condition, one of True, False, Unknown.
+                      enum:
+                      - "True"
+                      - "False"
+                      - Unknown
+                      type: string
+                    type:
+                      description: type of condition in CamelCase or in foo.example.com/CamelCase.
+                      maxLength: 316
+                      pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - message
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              lastCompletionTime:
+                format: date-time
+                type: string
+              lastStartTime:
+                format: date-time
+                type: string
+              lastSyncBytes:
+                format: int64
+                type: integer
+              lastSyncDuration:
+                type: string
+              lastSyncTime:
+                format: date-time
+                type: string
+              message:
+                type: string
+              observedGeneration:
+                description: observedGeneration is the last generation change the
+                  operator has dealt with
+                format: int64
+                type: integer
+              persistentVolumeClaimsRefList:
+                description: |-
+                  PersistentVolumeClaimsRefList is the list of PVCs for the volume group replication.
+                  The maximum number of allowed PVCs in the group is 100.
+                items:
+                  description: |-
+                    LocalObjectReference contains enough information to let you locate the
+                    referenced object inside the same namespace.
+                  properties:
+                    name:
+                      default: ""
+                      description: |-
+                        Name of the referent.
+                        This field is effectively required, but due to backwards compatibility is
+                        allowed to be empty. Instances of this type with an empty value here are
+                        almost certainly wrong.
+                        More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                      type: string
+                  type: object
+                  x-kubernetes-map-type: atomic
+                type: array
+              state:
+                description: State captures the latest state of the replication operation.
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.17.3
+  name: volumereplicationclasses.replication.storage.openshift.io
+spec:
+  group: replication.storage.openshift.io
+  names:
+    kind: VolumeReplicationClass
+    listKind: VolumeReplicationClassList
+    plural: volumereplicationclasses
+    shortNames:
+    - vrc
+    singular: volumereplicationclass
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.provisioner
+      name: provisioner
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: VolumeReplicationClass is the Schema for the volumereplicationclasses
+          API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: |-
+              VolumeReplicationClassSpec specifies parameters that an underlying storage system uses
+              when creating a volume replica. A specific VolumeReplicationClass is used by specifying
+              its name in a VolumeReplication object.
+            properties:
+              parameters:
+                additionalProperties:
+                  type: string
+                description: |-
+                  Parameters is a key-value map with storage provisioner specific configurations for
+                  creating volume replicas
+                type: object
+                x-kubernetes-validations:
+                - message: parameters are immutable
+                  rule: self == oldSelf
+              provisioner:
+                description: Provisioner is the name of storage provisioner
+                type: string
+                x-kubernetes-validations:
+                - message: provisioner is immutable
+                  rule: self == oldSelf
+            required:
+            - provisioner
+            type: object
+            x-kubernetes-validations:
+            - message: parameters are immutable
+              rule: has(self.parameters) == has(oldSelf.parameters)
+          status:
+            description: VolumeReplicationClassStatus defines the observed state of
+              VolumeReplicationClass.
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.17.3
+  name: volumereplications.replication.storage.openshift.io
+spec:
+  group: replication.storage.openshift.io
+  names:
+    kind: VolumeReplication
+    listKind: VolumeReplicationList
+    plural: volumereplications
+    shortNames:
+    - vr
+    singular: volumereplication
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    - jsonPath: .spec.volumeReplicationClass
+      name: volumeReplicationClass
+      type: string
+    - jsonPath: .spec.dataSource.kind
+      name: SourceKind
+      type: string
+    - jsonPath: .spec.dataSource.name
+      name: SourceName
+      type: string
+    - jsonPath: .spec.replicationState
+      name: desiredState
+      type: string
+    - jsonPath: .status.state
+      name: currentState
+      type: string
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: VolumeReplication is the Schema for the volumereplications API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: VolumeReplicationSpec defines the desired state of VolumeReplication.
+            properties:
+              autoResync:
+                default: false
+                description: |-
+                  AutoResync represents the volume to be auto resynced when
+                  ReplicationState is "secondary"
+                type: boolean
+              dataSource:
+                description: DataSource represents the object associated with the
+                  volume
+                properties:
+                  apiGroup:
+                    description: |-
+                      APIGroup is the group for the resource being referenced.
+                      If APIGroup is not specified, the specified Kind must be in the core API group.
+                      For any other third-party types, APIGroup is required.
+                    type: string
+                  kind:
+                    description: Kind is the type of resource being referenced
+                    type: string
+                  name:
+                    description: Name is the name of resource being referenced
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+                x-kubernetes-map-type: atomic
+                x-kubernetes-validations:
+                - message: dataSource is immutable
+                  rule: self == oldSelf
+              replicationHandle:
+                description: replicationHandle represents an existing (but new) replication
+                  id
+                type: string
+              replicationState:
+                description: |-
+                  ReplicationState represents the replication operation to be performed on the volume.
+                  Supported operations are "primary", "secondary" and "resync"
+                enum:
+                - primary
+                - secondary
+                - resync
+                type: string
+              volumeReplicationClass:
+                description: VolumeReplicationClass is the VolumeReplicationClass
+                  name for this VolumeReplication resource
+                type: string
+                x-kubernetes-validations:
+                - message: volumeReplicationClass is immutable
+                  rule: self == oldSelf
+            required:
+            - autoResync
+            - dataSource
+            - replicationState
+            - volumeReplicationClass
+            type: object
+          status:
+            description: VolumeReplicationStatus defines the observed state of VolumeReplication.
+            properties:
+              conditions:
+                description: Conditions are the list of conditions and their status.
+                items:
+                  description: Condition contains details for one aspect of the current
+                    state of this API Resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        lastTransitionTime is the last time the condition transitioned from one status to another.
+                        This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        message is a human readable message indicating details about the transition.
+                        This may be an empty string.
+                      maxLength: 32768
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        observedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      minimum: 0
+                      type: integer
+                    reason:
+                      description: |-
+                        reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                        Producers of specific condition types may define expected values and meanings for this field,
+                        and whether the values are considered a guaranteed API.
+                        The value should be a CamelCase string.
+                        This field may not be empty.
+                      maxLength: 1024
+                      minLength: 1
+                      pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+                      type: string
+                    status:
+                      description: status of the condition, one of True, False, Unknown.
+                      enum:
+                      - "True"
+                      - "False"
+                      - Unknown
+                      type: string
+                    type:
+                      description: type of condition in CamelCase or in foo.example.com/CamelCase.
+                      maxLength: 316
+                      pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - message
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              lastCompletionTime:
+                format: date-time
+                type: string
+              lastStartTime:
+                format: date-time
+                type: string
+              lastSyncBytes:
+                format: int64
+                type: integer
+              lastSyncDuration:
+                type: string
+              lastSyncTime:
+                format: date-time
+                type: string
+              message:
+                type: string
+              observedGeneration:
+                description: observedGeneration is the last generation change the
+                  operator has dealt with
+                format: int64
+                type: integer
+              state:
+                description: State captures the latest state of the replication operation.
+                type: string
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
