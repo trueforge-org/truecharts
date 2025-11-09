@@ -21,7 +21,7 @@ dependencies:
     tags: []
     import-values: []
   - name: redis
-    version: 17.13.6
+    version: 17.13.7
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -46,7 +46,8 @@ sources:
   - https://ghcr.io/k8s-gateway/k8s_gateway
   - https://github.com/0xERR0R/blocky
   - https://github.com/Mozart409/blocky-frontend
+  - https://github.com/truecharts/charts/tree/master/charts/stable/blocky
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/blocky
 type: application
-version: 19.0.8
+version: 19.0.9
 
