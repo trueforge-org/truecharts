@@ -2,13 +2,13 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "npm": {
     "fileMatch": [
-      "(^|/)website/.+/astro\\.config\\.(mjs|js|ts)$", // Matches Astro config files in /website and any subdirectory
-      "(^|/)website/.+/package\\.json$", // Matches package.json files in /website and any subdirectory
-      "(^|/)website/.+/package-lock\\.json$" // Matches package.json files in /website and any subdirectory
+      "^astro\\.config\\.(mjs|js|ts)$",  // Only matches astro.config.* in the root
+      "^package\\.json$",                // Only matches package.json in the root
+      "^package-lock\\.json$"            // Only matches package-lock.json in the root
     ],
     "branchPrefix": "renovate/astro-",
-    "enabled": true, // Enable updates for website dependencies
-    "updateTypes": ["major", "minor", "patch", "digest", "pin", "lockfile"], // Allow updates for all version types
+    "enabled": true,
+    "updateTypes": ["major", "minor", "patch", "digest", "pin", "lockfile"],
     "semanticCommitScope": "website"
-  },
+  }
 }
