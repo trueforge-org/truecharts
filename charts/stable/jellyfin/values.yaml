@@ -1,7 +1,7 @@
 image:
-  repository: ghcr.io/jellyfin/jellyfin
+  repository: oci.trueforge.org/containerforge/jellyfin
   pullPolicy: IfNotPresent
-  tag: 10.11.3@sha256:fab30d85f4ec3e19556ca1d91b82b12329fc4a6d2a4b330673354af9218e1d28
+  tag: 10.11.3
 broadcastProxyImage:
   repository: docker.io/alpine/socat
   pullPolicy: IfNotPresent
@@ -24,6 +24,13 @@ persistence:
   config:
     enabled: true
     mountPath: "/config"
+  data:
+    enabled: true
+    mountPath: "/data"
+  logs:
+    enabled: true
+    mountPath: "/logs"
+    type: "emptyDir"
   cache:
     enabled: true
     mountPath: "/cache"
@@ -42,6 +49,10 @@ workload:
       containers:
         main:
           env:
+            JELLYFIN_DATA_DIR: /data
+            JELLYFIN_CONFIG_DIR: /config
+            JELLYFIN_LOG_DIR: /logs
+            JELLYFIN_CACHE_DIR: /cache
             JELLYFIN_PublishedServerUrl: "{{ $.Values.chartContext.appUrl }}"
   broadcastproxy:
     enabled: false
