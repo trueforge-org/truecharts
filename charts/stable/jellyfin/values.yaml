@@ -39,10 +39,6 @@ persistence:
     enabled: true
     mountPath: "/cache/transcodes"
     type: "emptyDir"
-
-securityContext:
-  container:
-    readOnlyRootFilesystem: false
 workload:
   main:
     podSpec:
