@@ -587,24 +587,9 @@ codeserverImage:
   tag: v4.104.2@sha256:82dfb0c655c7ea13280ac882ee544cdaed92875c7689e53e5271f6d03ea99ba0
   pullPolicy: IfNotPresent
 
-alpineImage:
-  repository: oci.trueforge.org/tccr/alpine
-  tag: v3.22.1
-  pullPolicy: IfNotPresent
-
-scratchImage:
-  repository: oci.trueforge.org/tccr/scratch
-  tag: latest@sha256:4aef9dbf99ea2a8857ed4ce9d9bf79d330b79044884c7374e392445d122ec746
-  pullPolicy: IfNotPresent
-
 kubectlImage:
   repository: oci.trueforge.org/tccr/kubectl
   tag: latest@sha256:7e2d7043f4cac6cc040e1474940f3a11f126a90c789dd72199a9a27324063a93
-  pullPolicy: IfNotPresent
-
-wgetImage:
-  repository: oci.trueforge.org/tccr/wget
-  tag: v1.0.0@sha256:4cfc0cb48cc8303cbd914f6bc54016b89c4d549c196370e2b0b41cdf38744603
   pullPolicy: IfNotPresent
 
 yqImage:
