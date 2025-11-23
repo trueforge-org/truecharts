@@ -1,11 +1,11 @@
 image:
   repository: oci.trueforge.org/containerforge/jellyfin
   pullPolicy: IfNotPresent
-  tag: 10.11.3@sha256:3d703e500983426486fc479362d7e9211f9fc2b9eb360f05464d5ba4f189e514
+  tag: 10.11.3@sha256:b796216c3ae76a9872719f77803fe17452660eb75c8ef53d29d7a556cd0c660b
 broadcastProxyImage:
   repository: docker.io/alpine/socat
   pullPolicy: IfNotPresent
-  tag: 1.8.0.3@sha256:f4dc5a76723971bef121e9b9355ba350186e58461122b7a712ec3e0018e71465
+  tag: 1.8.0.3@sha256:8370cf9b250bfae9d67a5309750bfdf882ca8b7053b6c88c943d230eca92e762
 service:
   main:
     ports:
@@ -39,10 +39,6 @@ persistence:
     enabled: true
     mountPath: "/cache/transcodes"
     type: "emptyDir"
-
-securityContext:
-  container:
-    readOnlyRootFilesystem: false
 workload:
   main:
     podSpec:

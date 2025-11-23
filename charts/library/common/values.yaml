@@ -592,14 +592,19 @@ alpineImage:
   tag: v3.22.1
   pullPolicy: IfNotPresent
 
+ubuntuImage:
+  repository: oci.trueforge.org/containerforge/ubuntu
+  tag: "24.04"
+  pullPolicy: IfNotPresent
+
 scratchImage:
-  repository: oci.trueforge.org/tccr/scratch
-  tag: latest@sha256:4aef9dbf99ea2a8857ed4ce9d9bf79d330b79044884c7374e392445d122ec746
+  repository: oci.trueforge.org/containerforge/scratch
+  tag: "1.0.0"
   pullPolicy: IfNotPresent
 
 kubectlImage:
-  repository: oci.trueforge.org/tccr/kubectl
-  tag: latest@sha256:7e2d7043f4cac6cc040e1474940f3a11f126a90c789dd72199a9a27324063a93
+  repository: oci.trueforge.org/containerforge/kubectl
+  tag: "1.31.1"
   pullPolicy: IfNotPresent
 
 wgetImage:

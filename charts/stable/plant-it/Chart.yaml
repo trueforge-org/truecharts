@@ -19,14 +19,14 @@ dependencies:
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.9.6
+    version: 17.9.7
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
     tags: []
     import-values: []
   - name: redis
-    version: 17.13.7
+    version: 17.13.8
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -50,5 +50,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/plant-it
   - https://hub.docker.com/r/msdeluise/plant-it-server
 type: application
-version: 5.19.13
+version: 5.19.14
 
