@@ -601,16 +601,10 @@ mariadbClientImage:
   tag: "13.0.2@sha256:1343d11c7efc5345ab5cadf75457912efbd5069e7a49323c1527fd55c39d75fb"
   pullPolicy: IfNotPresent
 
-redisClientImage:
-  repository: oci.trueforge.org/containerforge/valkey-tools
-  tag: "1.1.0@sha256:39c25256ddcc04381e0be7eab150b5ddce54a4287782a29ddf37e781c68d1dad"
-  pullPolicy: IfNotPresent
-
 valkeyClientImage:
   repository: oci.trueforge.org/containerforge/valkey-tools
   tag: "1.1.0@sha256:39c25256ddcc04381e0be7eab150b5ddce54a4287782a29ddf37e781c68d1dad"
   pullPolicy: IfNotPresent
-
 mongodbClientImage:
   repository: oci.trueforge.org/containerforge/mongosh
   tag: "2.14.1@sha256:3dca8f9bde2eec214ae0718ac2a9de2f27809761f150b634a1533d98b53a6d08"
