@@ -2,6 +2,12 @@ image:
   repository: docker.io/homeassistant/home-assistant
   pullPolicy: IfNotPresent
   tag: 2025.11.3@sha256:f971850a6ec1fb5c5fd4e1748058e9e1f589aaf0da933b8d88bb5dee03f5b5e8
+
+yqImage:
+  pullPolicy: IfNotPresent
+  repository: oci.trueforge.org/containerforge/go-yq
+  tag: "4.48.2"
+
 service:
   main:
     ports:
