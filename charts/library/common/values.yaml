@@ -618,23 +618,28 @@ yqImage:
   tag: "4.48.2"
 
 postgresClientImage:
-  repository: oci.trueforge.org/tccr/db-wait-postgres
-  tag: v1.1.0@sha256:67ff700c4e746c5a1205b4629d4f0910a21f44d1e993941fb69c750e651c0b39
+  repository: oci.trueforge.org/containerforge/postgresql-client
+  tag: "1.1.0"
   pullPolicy: IfNotPresent
 
 mariadbClientImage:
-  repository: oci.trueforge.org/tccr/db-wait-mariadb
-  tag: v1.1.0@sha256:8614f77d546e1f03c5104cf75387eb04efa7cb1ea4557a2d51112f35c69c0905
+  repository: oci.trueforge.org/containerforge/mariadb-client
+  tag: "1.1.0"
   pullPolicy: IfNotPresent
 
 redisClientImage:
-  repository: oci.trueforge.org/tccr/db-wait-redis
-  tag: v1.1.0@sha256:ddebe75743f37c431507c51832b5961cc63aa1de61af4f5c75b7554239c8b732
+  repository: oci.trueforge.org/containerforge/valkey-tools
+  tag: "1.1.0"
+  pullPolicy: IfNotPresent
+
+valkeyClientImage:
+  repository: oci.trueforge.org/containerforge/valkey-tools
+  tag: "1.1.0"
   pullPolicy: IfNotPresent
 
 mongodbClientImage:
-  repository: oci.trueforge.org/tccr/db-wait-mongodb
-  tag: v1.2.0@sha256:e6b0462907022ab0fa7975e2b22e464fc1469f53cb80fd7f61bbbffe305cf210
+  repository: oci.trueforge.org/containerforge/mongosh
+  tag: "1.2.0"
   pullPolicy: IfNotPresent
 
 postgres15Image:
