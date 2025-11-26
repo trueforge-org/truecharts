@@ -1,8 +1,14 @@
 image:
-  repository: ghcr.io/linuxserver/jackett
+  repository: oci.trueforge.org/containerforge/jackett
   pullPolicy: IfNotPresent
-  tag: 0.24.360@sha256:ab074f9cd0728a5d8af7bf411ea377e8aa1f3bde96fc2e23a56715b79d74bbba
-
+  tag: 0.24.348
+service:
+  main:
+    ports:
+      main:
+        protocol: http
+        targetPort: 9117
+        port: 9117
 workload:
   main:
     podSpec:
@@ -10,11 +16,16 @@ workload:
         main:
           probes:
             liveness:
-              type: tcp
+              path: "/health"
             readiness:
-              type: tcp
+              path: "/health"
             startup:
-              type: tcp
+              path: "/health"
+persistence:
+  config:
+    enabled: true
+    mountPath: "/config"
+
 
 redis:
   enabled: false
