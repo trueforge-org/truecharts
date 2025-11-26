@@ -51,8 +51,8 @@ workload:
             - secretRef:
                 name: "secret"
 
-# persistence:
-#   config:
-#     enabled: true
-#     mountPath: /config
-#     targetSelectAll: true
+persistence:
+  config:
+    enabled: true
+    mountPath: /config
+    targetSelectAll: true
