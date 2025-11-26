@@ -33,21 +33,6 @@ service:
         port: "{{ .Values.service.torrent.ports.tcp.port }}"
         targetPort: "{{ .Values.service.torrent.ports.tcp.targetPort }}"
         protocol: udp
-workload:
-  main:
-    podSpec:
-      containers:
-        main:
-          probes:
-            liveness:
-              type: http
-              path: /
-            readiness:
-              type: http
-              path: /
-            startup:
-              type: http
-              path: /
 persistence:
   config:
     enabled: true
