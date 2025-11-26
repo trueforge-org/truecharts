@@ -24,10 +24,6 @@ workload:
             - secretRef:
                 name: "kopia-secrets"
           args:
-            - server
-            - start
-            - --address=http://0.0.0.0:{{ .Values.service.main.ports.main.port }}
-            - --insecure
             - --server-username={{ .Values.kopia.server_username }}
             - --server-password={{ .Values.kopia.server_password }}
           probes:
