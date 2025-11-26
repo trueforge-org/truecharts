@@ -27,7 +27,7 @@ service:
         port: "{{ .Values.service.torrent.ports.tcp.port }}"
         targetPort: "{{ .Values.service.torrent.ports.tcp.targetPort }}"
         protocol: udp
-# persistence:
-#   config:
-#     enabled: true
-#     mountPath: /config
+persistence:
+  config:
+    enabled: true
+    mountPath: /config
