@@ -9,10 +9,3 @@ service:
         protocol: http
         targetPort: 8080
         port: 18082
-persistence:
-  cache:
-    enabled: true
-    type: emptyDir
-    mountPath: "/var/cache/nginx"
-  tmp:
-    enabled: false
