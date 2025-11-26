@@ -2,12 +2,6 @@ image:
   repository: oci.trueforge.org/containerforge/cloudflareddns
   pullPolicy: IfNotPresent
   tag: "3.0.0.4856"
-securityContext:
-  container:
-    runAsNonRoot: false
-    readOnlyRootFilesystem: false
-    runAsUser: 0
-    runAsGroup: 0
 cloudflareddns:
   user: your.cf.email@example.com
   api_token: ""
