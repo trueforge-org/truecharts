@@ -7,13 +7,26 @@ service:
     ports:
       main:
         protocol: http
-        targetPort: 8080
+        targetPort: 80
         port: 18082
+workload:
+  main:
+    podSpec:
+      initContainers:
+        init-mkdir:
+          enabled: true
+          type: init
+          imageSelector: "image"
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - mkdir -p /tmp/nginx-temp
 persistence:
   cache:
     enabled: true
     type: emptyDir
     mountPath: "/var/cache/nginx"
-securityContext:
-  container:
-    readOnlyRootFilesystem: false
+# securityContext:
+# container:
+#    readOnlyRootFilesystem: false
