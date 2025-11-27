@@ -9,19 +9,6 @@ service:
         protocol: http
         targetPort: 8080
         port: 18082
-workload:
-  main:
-    podSpec:
-      initContainers:
-        init-mkdir:
-          enabled: true
-          type: init
-          imageSelector: "image"
-          command:
-            - /bin/sh
-            - -c
-          args:
-            - mkdir -p /tmp/nginx-temp
 persistence:
   cache:
     enabled: true
