@@ -27,6 +27,6 @@ persistence:
     enabled: true
     type: emptyDir
     mountPath: "/var/cache/nginx"
-# securityContext:
-# container:
-#    readOnlyRootFilesystem: false
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
