@@ -6,9 +6,9 @@
       "^package\\.json$",                // Only matches package.json in the root
       "^package-lock\\.json$"            // Only matches package-lock.json in the root
     ],
-    "branchPrefix": "renovate/astro-",
+    "branchPrefix": "renovate/npm-",
     "enabled": true,
     "updateTypes": ["major", "minor", "patch", "digest", "pin", "lockfile"],
-    "semanticCommitScope": "website"
+    "semanticCommitScope": "npm"
   }
 }

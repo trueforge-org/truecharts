@@ -584,102 +584,102 @@ tailscaleImage:
 
 codeserverImage:
   repository: oci.trueforge.org/containerforge/code-server
-  tag: "4.105.1"
+  tag: "4.105.1@sha256:b7d6b37ac38e1108497520694b68abc9d2d4057e200c011522eeab14330e13af"
   pullPolicy: IfNotPresent
 
 alpineImage:
   repository: oci.trueforge.org/tccr/alpine
-  tag: v3.22.1
+  tag: v3.22.1@sha256:6dc807ae4f2867cb2d00d061f8f579f1966420ad792c179ac68072ab235109f8
   pullPolicy: IfNotPresent
 
 ubuntuImage:
   repository: oci.trueforge.org/containerforge/ubuntu
-  tag: "24.04"
+  tag: "24.04@sha256:435d3cfa071624ce5e12c531ede975f9ba55b0acd5b5d20c3f8e082a745b639e"
   pullPolicy: IfNotPresent
 
 scratchImage:
   repository: oci.trueforge.org/containerforge/scratch
-  tag: "1.0.0"
+  tag: "1.0.0@sha256:b6f7b7d519f32e7157d64c8df7b36b7dc8808283e6185a6cb6134fd326db9c13"
   pullPolicy: IfNotPresent
 
 kubectlImage:
   repository: oci.trueforge.org/containerforge/kubectl
-  tag: "1.31.1"
+  tag: "1.31.1@sha256:94fea8d7a48bc7cb028f1845aba1affb724c461182516bb54b214314ca5a571a"
   pullPolicy: IfNotPresent
 
 wgetImage:
   repository: oci.trueforge.org/containerforge/ubuntu
-  tag: "24.04"
+  tag: "24.04@sha256:435d3cfa071624ce5e12c531ede975f9ba55b0acd5b5d20c3f8e082a745b639e"
   pullPolicy: IfNotPresent
 
 yqImage:
   pullPolicy: IfNotPresent
   repository: oci.trueforge.org/containerforge/go-yq
-  tag: "4.48.2"
+  tag: "4.48.2@sha256:d2cbd9295159a43fe5e8873871768305810bb5d1e85ea61fad69d972c7d26ef4"
 
 postgresClientImage:
   repository: oci.trueforge.org/containerforge/postgresql-client
-  tag: "1.1.0"
+  tag: "1.1.0@sha256:99c15c699dd53fb62c0795a7313402557219ab4e29b84b6bedddf6c4c8373fba"
   pullPolicy: IfNotPresent
 
 mariadbClientImage:
   repository: oci.trueforge.org/containerforge/mariadb-client
-  tag: "1.1.0"
+  tag: "1.1.0@sha256:340be121addd297f79e95bec027dd0d567c8a98817d0354269011e2f7dbdd31b"
   pullPolicy: IfNotPresent
 
 redisClientImage:
   repository: oci.trueforge.org/containerforge/valkey-tools
-  tag: "1.1.0"
+  tag: "1.1.0@sha256:272f59fc2e77b1b918b8fe17aa121c3ee8d8472bd72d8525e69990a8480a03e2"
   pullPolicy: IfNotPresent
 
 valkeyClientImage:
   repository: oci.trueforge.org/containerforge/valkey-tools
-  tag: "1.1.0"
+  tag: "1.1.0@sha256:272f59fc2e77b1b918b8fe17aa121c3ee8d8472bd72d8525e69990a8480a03e2"
   pullPolicy: IfNotPresent
 
 mongodbClientImage:
   repository: oci.trueforge.org/containerforge/mongosh
-  tag: "1.2.0"
+  tag: "1.2.0@sha256:e0d10ebea7e3a8178e2e12269a9031e69d68fb427af4d3c8372da603b26f2bab"
   pullPolicy: IfNotPresent
 
 postgres15Image:
   repository: ghcr.io/cloudnative-pg/postgresql
-  tag: "15.15"
+  tag: "15.15@sha256:036436c682db5a72cb270de5396caf6e660f1b2c12249ca9ba2c891303f38a74"
   pullPolicy: IfNotPresent
 
 postgres16Image:
   repository: ghcr.io/cloudnative-pg/postgresql
-  tag: "16.11"
+  tag: "16.11@sha256:9f8ea5c7c1bd7bc1c02b7c848f50a4eba37b80469c6194c67c453dc59be74b26"
   pullPolicy: IfNotPresent
 
 postgresPostgis15Image:
   repository: ghcr.io/cloudnative-pg/postgis
-  tag: "15-3.4"
+  tag: "15-3.4@sha256:4596b193991cd2463a07d40e3d3d62c59f046a7dece8f163ad1aba15925a38e4"
   pullPolicy: IfNotPresent
 
 postgresPostgis16Image:
   repository: ghcr.io/cloudnative-pg/postgis
-  tag: "16-3.4"
+  tag: "16-3.4@sha256:bb5a8590a8c934767482e34e1d103253f412aec703b77bbc52ad9044bf6e56f9"
   pullPolicy: IfNotPresent
 
 postgresVectors15Image:
   repository: ghcr.io/tensorchord/cloudnative-pgvecto.rs
-  tag: "15.7-v0.2.1"
+  tag: "15.7-v0.2.1@sha256:dbdeddf0d635f76df41f745407816c87c7468df35e3b7b0665ca4e0500ff3048"
   pullPolicy: IfNotPresent
 
 postgresVectors16Image:
   repository: ghcr.io/tensorchord/cloudnative-pgvecto.rs
-  tag: "16.3-v0.2.1"
+  tag: "16.3-v0.2.1@sha256:f1a19d4fc4073b0671a72ad34ef012aa20d21b3ddf5b4b0c9077d54450db679a"
   pullPolicy: IfNotPresent
 
 postgresVectorchord15Image:
   repository: ghcr.io/tensorchord/cloudnative-vectorchord
-  tag: "15.14-0.5.3"
+  tag: "15.14-0.5.3@sha256:1978732dc1e7e9ef94b9e806a094fcb123afab1e50a7e878e2d29de8b849cf47"
   pullPolicy: IfNotPresent
 
 postgresVectorchord16Image:
   repository: ghcr.io/tensorchord/cloudnative-vectorchord
-  tag: "16.10-0.5.3"
+  tag: "16.10-0.5.3@sha256:a0776b514bb23858d8aa59b08587223f8b449bba1b278ffbcf85e097d6504eb0"
   pullPolicy: IfNotPresent
 
 # -- OpenVPN specific configuration
