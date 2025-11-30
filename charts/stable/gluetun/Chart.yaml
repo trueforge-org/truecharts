@@ -1,11 +1,49 @@
+annotations:
+  artifacthub.io/links: |-
+    - name: support
+      url: https://discord.gg/tVsPTHWTtr
+  truecharts.org/train: stable
+  truecharts.org/category: network
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/max_helm_version: "3.17"
+
 apiVersion: v2
 name: gluetun
-version: 0.1.0
-appVersion: "3.39.1"
-description: VPN middleware container for routing traffic via WireGuard or OpenVPN
+description: A VPN gateway container supporting WireGuard and OpenVPN, used to route application traffic securely.
 type: application
+
+version: 0.1.0 # <-- Your chart version (increment when making changes)
+appVersion: "latest" # Gluetun container version
+
+home: https://github.com/qdm12/gluetun/
+icon: https://raw.githubusercontent.com/qdm12/gluetun/master/logo.png
+
+keywords:
+  - vpn
+  - wireguard
+  - openvpn
+  - networking
+  - privacy
+  - secure-routing
+
+sources:
+  - https://github.com/qdm12/gluetun
+  - https://truecharts.org/
 
 dependencies:
   - name: common
-    repository: https://library-charts.truecharts.org
-    version: 25.0.0 # (match current truecharts common version)
+    version: 28.29.2
+    repository: oci://oci.trueforge.org/truecharts
+    condition: ""
+    alias: ""
+    tags: []
+    import-values: []
+
+maintainers:
+  - name: The TrueCharts Community
+    email: info@truecharts.org
+    url: https://truecharts.org
+
+deprecated: false
