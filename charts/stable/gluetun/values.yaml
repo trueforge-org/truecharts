@@ -1,0 +1,73 @@
+# Default values for gluetun.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: qmcgaw/gluetun
+  tag: latest
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+workload:
+  main:
+    podSpec:
+      containers:
+        gluten:
+          enabled: true
+          image:
+            repository: ghcr.io/qmcgaw/gluetun
+            tag: latest
+            pullPolicy: IfNotPresent
+          args:
+            - "-type=socks"
+            - "-upstream={{ .Values.gluten.upstream }}"
+
+          ports:
+            - name: socks
+              containerPort: {{ .Values.gluten.socksPort }}
+          env:  
+            FIREWALL: "on" # optional: enable firewall
+            FIREWALL_OUTBOUND_SUBNETS: "192.168.178.0/24" 
+            FIREWALL_VPN_INPUT_PORTS: "59241" # Open port for qBittorrent
+            VPN_TYPE: "wireguard" # VPN type: wireguard or openvpn
+            VPN_SERVICE_PROVIDER: "Provider"
+            WIREGUARD_PRIVATE_KEY: "replace_with_your_private_key"
+            WIREGUARD_ADDRESSES: "replace_with_your_address"
+            SERVER_CITIES: "VPN_Location"
+            WIREGUARD_ENDPOINT_PORT: "Replace_with_your_Endpoint_Port"
+            WIREGUARD_PUBLIC_KEY: "Replace_with_your_Public_Key"
+            WIREGUARD_ENDPOINT_IP: "Replace_with_your_Endpoint_IP" 
+            TZ: "America/New_York" # Set your timezone
+            HTTPPROXY: "on" # option to enable HTTP proxy
+            HTTPPROXY_LOG: "on" # option to enable HTTP proxy logging
+            HTTPPROXY_LISTENING_ADDRESS: :8888 # port for HTTP proxy
+            SHADOWSOCKS: "on" # option to enable Shadowsocks
+            SHADOWSOCKS_PORT: "8388" # port for Shadowsocks
+            SHADOWSOCKS_LOG: "on" # option to enable Shadowsocks logging
+            SHADOWSOCKS_CIPHER: "aes-256-gcm" # Shadowsocks cipher (chacha20-ietf-poly1305, aes-128-gcm, aes-256-gcm)
+            SHADOWSOCKS_PASSWORD: "h1ILO39owvq8BH5vDaYtytnta0RgOe35oh4OJAB7cLw=" # Optional: Shadowsocks password
+          probes:
+            liveness:
+              enabled: false
+            readiness:
+              enabled: false
+            startup:
+              enabled: false
+
+
+securityContext:
+  readOnlyRootFilesystem: false
+  runAsUser: 0
+  runAsGroup: 0
+  runAsNonRoot: false
+
+persistence:
+  config:
+    enabled: true
+    size: 1Gi
+    mountPath: "/gluetun"
+    storageClass: "nfs-client"
+
+securityContext:
+  privileged: true
