@@ -1,0 +1,11 @@
+apiVersion: v2
+name: gluetun
+version: 0.1.0
+appVersion: "3.39.1"
+description: VPN middleware container for routing traffic via WireGuard or OpenVPN
+type: application
+
+dependencies:
+  - name: common
+    repository: https://library-charts.truecharts.org
+    version: 25.0.0 # (match current truecharts common version)
