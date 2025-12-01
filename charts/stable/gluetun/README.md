@@ -55,7 +55,9 @@ vpn:
   username: "username" # username for openvpn
   password: "password" # password for openvpn
   region: "Canada East" # region for openvpn
-
+```
+# Example firewall and proxy sections
+```yaml
 firewall:
   outboundSubnets: "192.168.178.0/24" # You can leave this as default
   vpnInputPorts: "59241" # You can leave this as default
