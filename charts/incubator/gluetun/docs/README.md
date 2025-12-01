@@ -22,7 +22,7 @@ This setup is ideal for apps like:
 
 ## Installation
 
-Download the values.yaml file and configure the Proxy, firewall and vpn Sections
+Download the vpn-config.yaml file and configure the Proxy and vpn Sections
 
 ## Example vpn section for wireguard
 
@@ -51,7 +51,7 @@ vpn:
   endpointPort:  # VPN endpoint port for wireguard
   publicKey: "" # VPN public key for wireguard
   privateKey: "" # VPN private key for wireguard
-  endpointIp: " # VPN endpoint IP for wireguard
+  endpointIp: "" # VPN endpoint IP for wireguard
   username: "username" # username for openvpn
   password: "password" # password for openvpn
   region: "Canada East" # region for openvpn
@@ -77,6 +77,6 @@ proxy:
 
 To install TrueCharts Helm charts using Helm, you can use our OCI Repository.
 
-`helm install mychart oci://oci.trueforge.org/truecharts/gluetun -f values.yaml`
+`helm install mychart oci://oci.trueforge.org/truecharts/gluetun -f vpn-config.yaml`
 
 For more information on how to install TrueCharts Helm charts, checkout the [instructions on the website](https://trueforge.org/truecharts/guides/)

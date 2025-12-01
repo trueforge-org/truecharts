@@ -10,10 +10,8 @@ annotations:
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/max_helm_version: "3.17"
-
-
 apiVersion: v2
-appVersion: "v3.40.3" # Gluetun container version
+appVersion: "v3.40.3"  # Gluetun container version
 dependencies:
   - name: common
     version: 28.29.2
@@ -23,7 +21,7 @@ dependencies:
     tags: []
     import-values: []
 deprecated: false
-description: A VPN gateway container supporting WireGuard and OpenVPN with a socks5 proxy, used to route application traffic securely.
+description: A VPN gateway container supporting WireGuard and OpenVPN with a http,shadowsocks and socks5 proxy, used to route application traffic securely.
 home: https://github.com/qdm12/gluetun/
 icon: https://raw.githubusercontent.com/qdm12/gluetun/master/logo.png
 keywords:
@@ -44,7 +42,5 @@ sources:
   - https://github.com/qdm12/gluetun
   - https://github.com/serjs/socks5-server
   - https://truecharts.org/
-
-
 type: application
 version: 0.1.0

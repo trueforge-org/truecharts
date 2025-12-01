@@ -1,0 +1,23 @@
+proxy:
+  http:
+    log: true
+  shadowsocks:
+    log: true
+    cipher: aes-256-gcm # Shadowsocks cipher (chacha20-ietf-poly1305, aes-128-gcm, aes-256-gcm)
+    password: "" # Optional: Shadowsocks password
+  socks5:
+    username: "" # required: Username for SOCKS5 auth
+    password: "" # required: Password for SOCKS5 auth
+
+vpn:
+  type: "" # wireguard or openvpn
+  provider:  # VPN service provider
+  address: "" # VPN address for wireguard
+  city: "" # VPN server city for wireguard and openvpn
+  endpointPort: # VPN endpoint port for wireguard
+  publicKey: "" # VPN public key for wireguard
+  privateKey: "" # VPN private key for wireguard
+  endpointIp: "" # VPN endpoint IP for wireguard
+  username: "" # username for openvpn
+  password: "" # password for openvpn
+  region: "" # region for openvpn
