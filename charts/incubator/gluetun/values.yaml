@@ -1,0 +1,138 @@
+# Default values for gluetun.
+replicaCount: 1
+
+image:
+  repository: https://ghcr.io/qmcgaw/gluetun
+  tag: v3.40.3
+  pullPolicy: IfNotPresent
+socks5Image:
+  repository: https://ghcr.io/serjs/go-socks5-proxy
+  pullPolicy: IfNotPresent
+  tag: v0.0.4
+proxy:
+  http:
+    log: true
+  shadowsocks:
+    log: true
+    cipher: aes-256-gcm # Shadowsocks cipher (chacha20-ietf-poly1305, aes-128-gcm, aes-256-gcm)
+    password: "" # Optional: Shadowsocks password
+  socks5:
+    username: "" # required: Username for SOCKS5 auth
+    password: "" # required: Password for SOCKS5 auth
+
+service:
+  main:
+    type: ClusterIP
+    ports:
+      main:
+        enabled: true
+        port: 8888 # http proxy port
+        protocol: tcp
+      shadowsocks:
+        enabled: true
+        port: 8388 # shadowsocks proxy port TCP
+        protocol: tcp
+      shadowsocks-udp:
+        enabled: true
+        port: 8388 # shadowsocks proxy port UDP
+        protocol: udp
+      socks5:
+        enabled: true
+        port: 1080 # socks5 proxy port
+        protocol: tcp
+
+firewall:
+  outboundSubnets: "192.168.178.0/24"
+  vpnInputPorts: "59241" # is the port forward port
+
+vpn:
+  type: "" # wireguard or openvpn
+  provider:  # VPN service provider
+  address: "" # VPN address for wireguard
+  city: "" # VPN server city for wireguard and openvpn
+  endpointPort: # VPN endpoint port for wireguard
+  publicKey: "" # VPN public key for wireguard
+  privateKey: "" # VPN private key for wireguard
+  endpointIp: "" # VPN endpoint IP for wireguard
+  username: "" # username for openvpn
+  password: "" # password for openvpn
+  region: "" # region for openvpn
+
+persistence:
+  config:
+    size: 1Gi
+    mountPath: "/gluetun"
+
+# You Typically won't need to change the values below this line
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            FIREWALL: "on"
+            FIREWALL_OUTBOUND_SUBNETS: "{{ .Values.firewall.outboundSubnets }}"
+            FIREWALL_VPN_INPUT_PORTS: "{{ .Values.firewall.vpnInputPorts }}"
+
+            VPN_TYPE: "{{ .Values.vpn.type | required \"A VPN type must be specified\" }}"
+            SERVER_CITIES: "{{ .Values.vpn.city | required \"A VPN city must be specified\" }}"
+            VPN_SERVICE_PROVIDER: "{{ .Values.vpn.provider | required \"A VPN provider must be specified\" }}"
+
+            WIREGUARD_PRIVATE_KEY: "{{ .Values.vpn.privateKey | default \"\" }}"
+            WIREGUARD_ADDRESSES: "{{ .Values.vpn.address | default \"\" }}"
+            WIREGUARD_ENDPOINT_PORT: "{{ .Values.vpn.endpointPort | default \"\" }}"
+            WIREGUARD_PUBLIC_KEY: "{{ .Values.vpn.publicKey | default \"\" }}"
+            WIREGUARD_ENDPOINT_IP: "{{ .Values.vpn.endpointIp | default \"\" }}"
+
+            OPENVPN_USER: "{{ .Values.vpn.username | default \"\" }}"
+            OPENVPN_PASSWORD: "{{ .Values.vpn.password | default \"\" }}"
+            SERVER_REGIONS: "{{ .Values.vpn.region |  default \"\" }}"
+
+            # HTTP Proxy Options
+            HTTPPROXY: "{{ ternary \"on\" \"off\" .Values.service.main.ports.main.enabled }}"
+            HTTPPROXY_LOG: "{{ ternary \"on\" \"off\" .Values.proxy.http.log }}" # option to enable HTTP proxy logging
+            HTTPPROXY_LISTENING_ADDRESS: ":{{ .Values.service.main.ports.main.port }}"
+            # Shadowsocks Options
+            SHADOWSOCKS: "{{ ternary \"on\" \"off\" .Values.service.main.ports.shadowsocks.enabled }}"
+            SHADOWSOCKS_LISTENING_ADDRESS: ":{{ .Values.service.main.ports.shadowsocks.port }}"
+            SHADOWSOCKS_LOG: "{{ ternary \"on\" \"off\" .Values.proxy.shadowsocks.log }}"
+            SHADOWSOCKS_CIPHER: "{{ .Values.proxy.shadowsocks.cipher }}" # Shadowsocks cipher (chacha20-ietf-poly1305, aes-128-gcm, aes-256-gcm)
+            SHADOWSOCKS_PASSWORD: "{{ .Values.proxy.shadowsocks.password }}" # Shadowsocks password
+        socks5:
+          enabled: true
+          imageSelector: socks5Image  # A popular, lightweight SOCKS5 server
+          ports:
+            socks5:
+              enabled: true
+              port: "{{ .Values.service.main.ports.socks5.port }}"
+              protocol: tcp
+          env:
+            PORT: "{{ .Values.service.main.ports.socks5.port }}"
+            PROXY_USER: "{{ .Values.proxy.socks5.username  }}" # required: Username for SOCKS5 auth
+            PROXY_PASSWORD: "{{ .Values.proxy.socks5.password }}" # required: Password for SOCKS5 auth
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+          probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
+    runAsUser: 0
+    runAsGroup: 0
+    runAsNonRoot: false
+    privileged: true
+    capabilities:
+      add:
+        - NET_ADMIN
+        - SYS_ADMIN
+        - NET_RAW
+  pod:
+    privileged: true
