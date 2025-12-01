@@ -24,7 +24,9 @@ This setup is ideal for apps like:
 
 Downloads the values.yaml file and configure the Proxy, firewall and vpn Sections
 
-  **example vpn section for wireguard**
+## Example vpn section for wireguard
+
+```yaml
 vpn:
   type: "wireguard" # wireguard or openvpn
   provider: "mullvad" # VPN service provider
@@ -37,8 +39,10 @@ vpn:
   username: "" # username for openvpn
   password: "" # password for openvpn
   region: "" # region for openvpn
+```
+## Example vpn section for openvpn
 
-  **example vpn section for openvpn**
+```yaml
 vpn:
   type: "openvpn" # wireguard or openvpn
   provider: "windscribe" # VPN service provider
@@ -66,7 +70,7 @@ proxy:
   socks5:
     username: "Changeme" # required: Username for SOCKS5 auth
     password: "Changeme" # required: Password for SOCKS5 auth
-
+```
 ### Helm-Chart installation
 
 To install TrueCharts Helm charts using Helm, you can use our OCI Repository.
