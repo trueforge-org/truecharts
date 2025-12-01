@@ -1,6 +1,6 @@
 # Gluetun VPN Proxy Service for Kubernetes
 
-This repository provides a standalone deployment of **Gluetun VPN** running with a **SOCKS5 / HTTP / Shadowsocks proxy sidecar** (using `serjs/go-socks5-proxy`) to allow other Kubernetes workloads to route outbound traffic through a single VPN tunnel — **without needing a TUN device or per-application VPN container**.
+This chart provides a standalone deployment of **Gluetun VPN** running with a **SOCKS5 / HTTP / Shadowsocks proxy sidecar** (using `serjs/go-socks5-proxy`) to allow other Kubernetes workloads to route outbound traffic through a single VPN tunnel — **without needing a TUN device or per-application VPN container**.
 
 This setup is ideal for apps like:
 - qBittorrent
@@ -22,7 +22,7 @@ This setup is ideal for apps like:
 
 ## Installation
 
-Downloads the values.yaml file and configure the Proxy, firewall and vpn Sections
+Download the values.yaml file and configure the Proxy, firewall and vpn Sections
 
 ## Example vpn section for wireguard
 

@@ -2,13 +2,13 @@
 replicaCount: 1
 
 image:
-  repository: https://ghcr.io/qmcgaw/gluetun
-  tag: v3.40.3
+  repository: https://ghcr.io/qdm12/gluetun
+  tag: v3.40.3@sha256:ef4a44819a60469682c7b5e69183e6401171891feaa60186652d292c59e41b30
   pullPolicy: IfNotPresent
 socks5Image:
-  repository: https://ghcr.io/serjs/go-socks5-proxy
+  repository: docker.io/serjs/go-socks5-proxy
   pullPolicy: IfNotPresent
-  tag: v0.0.4
+  tag: v0.0.4@sha256:0af522996f402c03ecd985a87997158eabeb28935365e3a384df37eafcf740ea
 proxy:
   http:
     log: true
@@ -22,7 +22,6 @@ proxy:
 
 service:
   main:
-    type: ClusterIP
     ports:
       main:
         enabled: true
