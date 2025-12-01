@@ -44,8 +44,8 @@ service:
         protocol: tcp
 
 firewall:
-  outboundSubnets: "" # Replace
-  vpnInputPorts: "" # Replace
+  outboundSubnets: "192.168.178.0/24"
+  vpnInputPorts: "59241" # is the port forward port
 
 vpn:
   type: "" # wireguard or openvpn
