@@ -2,8 +2,8 @@
 replicaCount: 1
 
 image:
-  repository: https://ghcr.io/qdm12/gluetun
-  tag: v3.40.3@sha256:ef4a44819a60469682c7b5e69183e6401171891feaa60186652d292c59e41b30
+  repository: ghcr.io/qdm12/gluetun
+  tag: v3.40.3@sha256:6a59b7901068b7c50ef52200152db3afd4b9cebc13e272b2169de4cdcad91006
   pullPolicy: IfNotPresent
 socks5Image:
   repository: docker.io/serjs/go-socks5-proxy
@@ -59,8 +59,10 @@ vpn:
 
 persistence:
   config:
+    enabled: true
     size: 1Gi
     mountPath: "/gluetun"
+    storageClass: "nfs-client"
 
 # You Typically won't need to change the values below this line
 
@@ -114,12 +116,12 @@ workload:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
           probes:
-              liveness:
-                enabled: false
-              readiness:
-                enabled: false
-              startup:
-                enabled: false
+            liveness:
+              enabled: false
+            readiness:
+              enabled: false
+            startup:
+              enabled: false
 
 securityContext:
   container:
