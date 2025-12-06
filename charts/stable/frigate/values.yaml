@@ -1,11 +1,11 @@
 image:
   repository: ghcr.io/blakeblackshear/frigate
   pullPolicy: IfNotPresent
-  tag: 0.16.2@sha256:4041ad318224500cf9513c513b1bb927d9dd252f63bbd3d11c92006c1172c86c
+  tag: 0.16.3@sha256:b748e567bcc046dd8851c0fb7817245308336e7f4d3226517c45b5e83fc560ec
 tensorrtImage:
   repository: ghcr.io/blakeblackshear/frigate
   pullPolicy: IfNotPresent
-  tag: 0.16.2-tensorrt@sha256:7351ca2ddbce6d712c8a13842eeb4248844e5334565e71b4f6ae438ddaf9d04d
+  tag: 0.16.3-tensorrt@sha256:5f3150afac88b13b6a39e19ab18c68f7b84a0d3b8675e58aace0c55c69d98909
 
 # When this is defined, the contents will be mounted
 # as configmap into the container at /config/config.yml.
