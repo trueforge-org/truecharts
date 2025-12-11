@@ -78,7 +78,8 @@ configmap:
             "socketDir": "{{ tpl .Values.persistence.hostrun.mountPath $ }}/multus/",
             "cniConfigDir": "{{ tpl .Values.persistence.cniconf.mountPath $ }}",
             "multusAutoconfigDir": "{{ tpl .Values.persistence.cniconf.mountPath $ }}",
-            "multusConfigFile": "auto"
+            "multusConfigFile": "auto",
+            "retryDeleteOnError": true
         }
 
 persistence:
