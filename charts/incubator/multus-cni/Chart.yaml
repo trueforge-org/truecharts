@@ -1,0 +1,42 @@
+annotations:
+  artifacthub.io/links: |-
+    - name: support
+    url: https://discord.com/invite/tVsPTHWTtr
+  max_scale_version: 24.04.1
+  min_scale_version: 24.04.0
+  truecharts.org/SCALE-support: "false"
+  truecharts.org/category: network
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: incubator
+apiVersion: v2
+appVersion: 4.2.3
+dependencies:
+  - name: common
+    version: 28.26.3
+    repository: oci://oci.trueforge.org/truecharts
+    condition: ""
+    alias: ""
+    tags: []
+    import-values: []
+deprecated: false
+description: |
+  A CNI meta-plugin for multi-homed pods in Kubernetes
+home: https://truecharts.org/charts/incubator/multus-cni
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/multus-cni.webp
+keywords:
+  - cni
+  - networking
+kubeVersion: '>=1.24.0-0'
+maintainers:
+  - name: TrueCharts
+    email: info@truecharts.org
+    url: https://truecharts.org
+name: multus-cni
+sources:
+  - https://github.com/k8snetworkplumbingwg/multus-cni
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/incubator/multus-cni
+type: application
+version: 0.1.0
