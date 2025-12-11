@@ -29,15 +29,6 @@ multus:
   cleanup:
     enabled: false
 
-service:
-  main:
-    enabled: false
-#     ports:
-#       main:
-#         enabled: true
-#         port: 8080
-#         protocol: http
-
 podOptions:
   hostNetwork: true
   hostPID: true
@@ -72,6 +63,10 @@ configmap:
             "readinessindicatorfile": "{{ tpl .Values.persistence.cniconf.mountPath $ }}/{{ .Values.multus.primaryCniConfigFile }}",
             {{ else }}
             "readinessindicatorfile": "",
+            {{ end -}}
+
+            {{- if .Values.metrics.main.enabled -}}
+            "metricsPort": {{ .Values.service.main.ports.main.port }},
             {{ end -}}
 
             "chrootDir": "{{ tpl .Values.persistence.hostroot.mountPath $ }}",
@@ -304,14 +299,23 @@ workload:
                 - -c
                 - cat "{{ tpl .Values.persistence.cniconf.mountPath $ }}"/00-multus.conf*
 
-# metrics: # TODO
-#   main:
-#     enabled: true
-#     type: servicemonitor
-#     endpoints:
-#       - port: main
-#         path: /metrics
-#     targetSelector: main
+metrics:
+  main:
+    enabled: true
+    type: servicemonitor
+    endpoints:
+      - port: main
+        path: /metrics
+    targetSelector: main
+
+service:
+  main:
+    enabled: "{{ .Values.metrics.main.enabled }}"
+    ports:
+      main:
+        enabled: true
+        port: 8080
+        protocol: http
 
 serviceAccount:
   main:
