@@ -1,7 +1,7 @@
 image:
   pullPolicy: IfNotPresent
   repository: docker.io/m0ngr31/dailynotes
-  tag: latest@sha256:fee45ab299434cbc9d4a380f28a29448eac52284a3adb6b0854bdf38fd9a1b12
+  tag: latest@sha256:d2a9e353de7db428e73f1b918a820b85b54f3634b3a5a6f3afa009bae81c854e
 persistence:
   config:
     enabled: true
@@ -18,7 +18,7 @@ service:
       main:
         port: 5000
         protocol: tcp
-        targetPort: 5000
+        targetPort: 8000
 workload:
   main:
     podSpec:
