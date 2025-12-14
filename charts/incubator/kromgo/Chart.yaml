@@ -9,10 +9,10 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: incubator
 apiVersion: v2
-appVersion: 0.34.0
+appVersion: 0.7.4
 dependencies:
   - name: common
-    version: 28.29.10
+    version: 28.29.11
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,8 +35,9 @@ maintainers:
     url: https://truecharts.org
 name: kromgo
 sources:
-  - https://https://github.com/kashalls/kromgo
+  - https://ghcr.io/kashalls/kromgo
   - https://github.com/trueforge-org/truecharts/tree/master/charts/incubator/kromgo
+  - https://https://github.com/kashalls/kromgo
 type: application
-version: 0.0.1
+version: 0.0.2
 
