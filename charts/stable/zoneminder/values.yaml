@@ -22,8 +22,8 @@ service:
     ports:
       main:
         port: 10292
-        protocol: https
-        targetPort: 443
+        protocol: http
+        targetPort: 80
   zmninja:
     enabled: true
     ports:
