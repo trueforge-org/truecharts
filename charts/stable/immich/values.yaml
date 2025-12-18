@@ -1,26 +1,26 @@
 image:
   repository: ghcr.io/immich-app/immich-server
-  tag: v2.3.1@sha256:f8d06a32b1b2a81053d78e40bf8e35236b9faefb5c3903ce9ca8712c9ed78445
+  tag: v2.4.0@sha256:7e2d0df478651551df3358072e68c235200b875eccd6eb4a5c5d8879a7095cf4
   pullPolicy: IfNotPresent
 
 mlImage:
   repository: ghcr.io/immich-app/immich-machine-learning
-  tag: v2.3.1@sha256:379e31b8c75107b0af8141904baa8cc933d7454b88fdb204265ef11749d7d908
+  tag: v2.4.0@sha256:204825c8cc626a3f44fb4b61f30ca5c76c3b4c557c9fb8bfc719902bf88daae4
   pullPolicy: IfNotPresent
 
 mlCudaImage:
   repository: ghcr.io/immich-app/immich-machine-learning
-  tag: v2.3.1-cuda@sha256:723c82610d713bc9bc15d90d8426f96915c2cbd634ef5bec1bf45a098d82d81d
+  tag: v2.4.0-cuda@sha256:da15902766b4b97ea84363bcc37af6af986c5a02fe1ce4ee35e4a8b66d75f2aa
   pullPolicy: IfNotPresent
 
 mlOpenvinoImage:
   repository: ghcr.io/immich-app/immich-machine-learning
-  tag: v2.3.1-openvino@sha256:b717d8afc7d9d4d7e2abf29f0aa33aa2b42c8bdcd78b9c88cf267360a9a8d53c
+  tag: v2.4.0-openvino@sha256:5975e2c3ae59279bbc825e6e66287af40aa8fd00ac01b15ca72eb5e364259c3f
   pullPolicy: IfNotPresent
 
 mlRocmImage:
   repository: ghcr.io/immich-app/immich-machine-learning
-  tag: v2.2.3-rocm@sha256:4160fd7a090fe47da8334130d6401df63e79ed4dc71afc9e554cdffe982789c8
+  tag: v2.4.0-rocm@sha256:bb11ddca7ce229a917750252e97c85e980e5471d26af665dc74a707ad8e34ab6
   pullPolicy: IfNotPresent
 
 securityContext:
