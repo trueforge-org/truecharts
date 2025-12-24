@@ -147,4 +147,4 @@ serviceAccount:
 
 # Need automountServiceAccountToken to allow sidecar to use the ServiceAccount
 podOptions:
-  automountServiceAccountToken: true
+  automountServiceAccountToken: "{{ .Values.sidecar.enable }}"
