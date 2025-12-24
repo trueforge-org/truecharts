@@ -29,7 +29,7 @@ service:
 
 persistence:
   configmain:
-    enabled: {{ .Values.sidecar.enable }}
+    enabled: "{{ .Values.sidecar.enable }}"
     mountPath: /config
     readOnly: false
     targetSelectAll: true
@@ -69,7 +69,7 @@ workload:
             GATUS_CONFIG_PATH: "{{ .Values.persistence.configmain.mountPath }}"
             GATUS_DELAY_START_SECONDS: 10
         sidecar:
-          enabled: {{ .Values.sidecar.enable }}
+          enabled: "{{ .Values.sidecar.enable }}"
           imageSelector: sidecarImage
           probes:
             liveness:
@@ -109,7 +109,7 @@ securityContext:
 # Need RBAC to allow sidecar to watch Services and Ingresses
 rbac:
   main:
-    enabled: {{ .Values.sidecar.enable }}
+    enabled: "{{ .Values.sidecar.enable }}"
     primary: true
     clusterWide: true
     rules:
@@ -142,7 +142,7 @@ rbac:
 # Need ServiceAccount for RBAC
 serviceAccount:
   main:
-    enabled: {{ .Values.sidecar.enable }}
+    enabled: "{{ .Values.sidecar.enable }}"
     primary: true
 
 # Need automountServiceAccountToken to allow sidecar to use the ServiceAccount
