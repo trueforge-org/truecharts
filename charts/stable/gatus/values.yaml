@@ -81,7 +81,7 @@ workload:
             startup:
               enabled: true
               port: "{{ .Values.service.main.ports.main.port }}"
-          extraArgs:
+          args:
             - --output=/config/gatus-sidecar.yaml
             - --enable-service={{ .Values.sidecar.enableService }}
             - --enable-ingress={{ .Values.sidecar.enableIngress }}
@@ -142,7 +142,7 @@ rbac:
 # Need ServiceAccount for RBAC
 serviceAccount:
   main:
-    enabled: "{{ .Values.sidecar.enable }}"
+    enabled: true
     primary: true
 
 # Need automountServiceAccountToken to allow sidecar to use the ServiceAccount
