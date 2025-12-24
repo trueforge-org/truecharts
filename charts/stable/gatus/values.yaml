@@ -109,7 +109,7 @@ securityContext:
 # Need RBAC to allow sidecar to watch Services and Ingresses
 rbac:
   main:
-    enabled: "{{ .Values.sidecar.enable }}"
+    enabled: true
     primary: true
     clusterWide: true
     rules:
@@ -142,9 +142,9 @@ rbac:
 # Need ServiceAccount for RBAC
 serviceAccount:
   main:
-    enabled: "{{ .Values.sidecar.enable }}"
+    enabled: true
     primary: true
 
 # Need automountServiceAccountToken to allow sidecar to use the ServiceAccount
 podOptions:
-  automountServiceAccountToken: "{{ .Values.sidecar.enable }}"
+  automountServiceAccountToken: true
