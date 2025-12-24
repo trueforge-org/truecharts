@@ -142,9 +142,9 @@ rbac:
 # Need ServiceAccount for RBAC
 serviceAccount:
   main:
-    enabled: true
+    enabled: "{{ .Values.sidecar.enable }}"
     primary: true
 
 # Need automountServiceAccountToken to allow sidecar to use the ServiceAccount
 podOptions:
-  automountServiceAccountToken: "{{ .Values.sidecar.enable }}"
+  automountServiceAccountToken: true
