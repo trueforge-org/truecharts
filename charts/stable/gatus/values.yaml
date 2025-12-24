@@ -109,7 +109,7 @@ securityContext:
 # Need RBAC to allow sidecar to watch Services and Ingresses
 rbac:
   main:
-    enabled: true
+    enabled: "{{ .Values.sidecar.enable }}"
     primary: true
     clusterWide: true
     rules:
