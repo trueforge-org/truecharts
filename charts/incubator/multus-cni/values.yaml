@@ -311,6 +311,7 @@ metrics:
 service:
   main:
     enabled: "{{ .Values.metrics.main.enabled }}"
+    clusterIP: None # No need for ClusterIP with host networking
     ports:
       main:
         enabled: true
