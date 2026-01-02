@@ -8,8 +8,8 @@ multus:
   # - "", in which case the aphabetically first file in the CNI JSON
   #   configuration directory (pointed to by `persistence.cniconf.mountPath`)
   #   will be used
-  # - The name of a CNI config file in the CNI JSON configuration directory
-  #   (pointed to by `persistence.cniconf.mountPath`). For example
+  # - The relative path to a CNI config file inside the CNI JSON configuration
+  #   directory (pointed to by `persistence.cniconf.mountPath`). For example
   #   `05-cilium.conflist`
   primaryCniConfigFile: ""
   # Set to true to make Multus wait for the primary CNI to be ready before
