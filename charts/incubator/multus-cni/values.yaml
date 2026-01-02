@@ -15,7 +15,7 @@ multus:
   # Set to true to make Multus wait for the primary CNI to be ready before
   # it starts attaching extra networks to pods. This can help with pods
   # crash-looping when primary CNI is not ready
-  readinessIndicatorEnabled: null
+  readinessIndicatorEnabled: false
   logLevel: verbose # "debug", "error", "verbose", or "panic"
   namespaceIsolation: false
   globalNamespaces: []
@@ -59,19 +59,12 @@ configmap:
             "globalNamespaces": "{{ join "," .Values.multus.globalNamespaces }}",
             "multusMasterCNI": "{{ .Values.multus.primaryCniConfigFile }}",
             "multusNamespace": "{{ .Release.Namespace }}",
-
-            {{- $readinessIndicatorEnabled := .Values.multus.readinessIndicatorEnabled -}}
-            {{- if and (eq $readinessIndicatorEnabled nil) .Values.multus.primaryCniConfigFile -}}
-              {{- $readinessIndicatorEnabled = true -}}
-            {{- end }}
-
-            {{- if $readinessIndicatorEnabled }}
+            {{- if .Values.multus.readinessIndicatorEnabled }}
               {{- if not .Values.multus.primaryCniConfigFile -}}
-               {{- fail "Invalid configuration: When [multus.readinessIndicatorEnabled] is set to [true], [multus.primaryCniConfigFile] must be set to a non-empty value." -}}
+                {{- fail "Invalid configuration: When [multus.readinessIndicatorEnabled] is set to [true], [multus.primaryCniConfigFile] must be set to a non-empty value." -}}
               {{- end }}
             "readinessindicatorfile": "{{ tpl .Values.persistence.cniconf.mountPath $ }}/{{ .Values.multus.primaryCniConfigFile }}",
             {{- end }}
-
             {{- if .Values.metrics.main.enabled }}
             "metricsPort": {{ .Values.service.main.ports.main.port }},
             {{- end }}
