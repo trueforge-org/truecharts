@@ -3,6 +3,16 @@ image:
   repository: ghcr.io/k8snetworkplumbingwg/multus-cni
   tag: v4.2.3-thick
 
+craneImage:
+  pullPolicy: IfNotPresent
+  repository: docker.io/alpine/crane
+  tag: 0.20.7
+
+talosCniImage:
+  pullPolicy: IfNotPresent
+  repository: ghcr.io/siderolabs/cni
+  tag: v1.11.0
+
 multus:
   # Primary CNI value can be:
   # - "", in which case the aphabetically first file in the CNI JSON
@@ -26,7 +36,23 @@ multus:
   integrations:
     talos:
       enabled: true
+      # Select extra reference CNIs to be installed
+      # Note:
+      # - If you are installing any of the reference CNIs, it is strongly
+      #   recommended to override the `talosCniImage.tag` to match your
+      #   Talos version
+      # - To install CNIs that are present in the `talosCniImage` but not listed
+      #   below, simply add them below in the form of `<binary_name>: true`
+      installCni:
+        macvlan: true
+        ipvlan: true
   cleanup:
+    # Note:
+    # If the Talos integration is enabled, this chart assumes full control over
+    # all CNIs listed in `integrations.talos.installCni` that are set to `true`.
+    # During cleanup, it will remove all CNIs that are currently enabled (`true`).
+    # If this is undesired, set the relevant CNI's values to `false` before
+    # enabling the cheanup mode of this chart.
     enabled: false
 
 podOptions:
@@ -90,6 +116,7 @@ persistence:
       main:
         cleanup: {}
         multus-plugin-installer: {}
+        talos-reference-cni-plugin-installer: {}
         main: {}
   cniconf:
     enabled: true
@@ -179,6 +206,49 @@ workload:
     type: DaemonSet
     podSpec:
       initContainers:
+        talos-reference-cni-plugin-installer:
+          enabled: "{{- $cnisMustBeInstalled := false -}}
+            {{- range $key, $value := .Values.multus.integrations.talos.installCni -}}
+              {{- if $value -}}
+                {{- $cnisMustBeInstalled = true -}}
+              {{- end -}}
+            {{- end -}}
+
+            {{ and (not .Values.multus.cleanup.enabled)
+              .Values.multus.integrations.talos.enabled
+              $cnisMustBeInstalled }}"
+          type: init
+          imageSelector: craneImage
+          command:
+            - sh
+            - -c
+            - |
+              set -euo pipefail
+              cd /tmp
+
+              echo "Pulling '{{ .Values.talosCniImage.repository }}:{{ .Values.talosCniImage.tag }}' image..."
+              crane export {{ .Values.talosCniImage.repository }}:{{ .Values.talosCniImage.tag }} cni.tar
+
+              echo "Extracting CNI binaries..."
+              mkdir -p cniBins
+              tar -xvf cni.tar --strip-components=3 -C cniBins opt/cni/bin >/dev/null
+
+              {{- $cniBinMountPath := (tpl .Values.persistence.cnibin.mountPath $) -}}
+              {{- range $key, $value := .Values.multus.integrations.talos.installCni -}}
+                {{- if $value }}
+              echo "Copying {{ $key }} to '{{ $cniBinMountPath }}/{{ $key }}'"
+              cp cniBins/{{ $key }} "{{ $cniBinMountPath }}/{{ $key }}"
+                {{- end }}
+              {{- end -}}
+          securityContext: # TODO
+            privileged: true
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "15Mi"
         multus-plugin-installer:
           enabled: "{{ not .Values.multus.cleanup.enabled }}"
           type: init
@@ -228,6 +298,15 @@ workload:
               echo "Cleaning up Multus CNI plugins..."
               echoRun rm -f "{{ tpl .Values.persistence.cnibin.mountPath $ }}"/multus*
               echoRun rm -f "{{ tpl .Values.persistence.cnibin.mountPath $ }}"/passthru
+
+              {{- if .Values.multus.integrations.talos.enabled }}
+                {{- $cniBinMountPath := (tpl .Values.persistence.cnibin.mountPath $) -}}
+                {{- range $key, $value := .Values.multus.integrations.talos.installCni -}}
+                  {{- if $value }}
+              echoRun rm -f "{{ $cniBinMountPath }}/{{ $key }}"
+                  {{- end }}
+                {{- end -}}
+              {{- end }}
 
               echo "Cleanup completed! You can now safely uninstall this chart."
               sleep infinity
