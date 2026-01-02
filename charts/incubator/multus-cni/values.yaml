@@ -62,22 +62,19 @@ configmap:
 
             {{- $readinessIndicatorEnabled := .Values.multus.readinessIndicatorEnabled -}}
             {{- if and (eq $readinessIndicatorEnabled nil) .Values.multus.primaryCniConfigFile -}}
-              {{ $readinessIndicatorEnabled = true }}
-            {{- end -}}
+              {{- $readinessIndicatorEnabled = true -}}
+            {{- end }}
 
             {{- if $readinessIndicatorEnabled }}
               {{- if not .Values.multus.primaryCniConfigFile -}}
                {{- fail "Invalid configuration: When [multus.readinessIndicatorEnabled] is set to [true], [multus.primaryCniConfigFile] must be set to a non-empty value." -}}
               {{- end }}
             "readinessindicatorfile": "{{ tpl .Values.persistence.cniconf.mountPath $ }}/{{ .Values.multus.primaryCniConfigFile }}",
-            {{ else }}
-            "readinessindicatorfile": "",
-            {{ end -}}
+            {{- end }}
 
-            {{- if .Values.metrics.main.enabled -}}
+            {{- if .Values.metrics.main.enabled }}
             "metricsPort": {{ .Values.service.main.ports.main.port }},
-            {{ end -}}
-
+            {{- end }}
             "chrootDir": "{{ tpl .Values.persistence.hostroot.mountPath $ }}",
             "socketDir": "{{ tpl .Values.persistence.hostrun.mountPath $ }}/multus/",
             "cniConfigDir": "{{ tpl .Values.persistence.cniconf.mountPath $ }}",
