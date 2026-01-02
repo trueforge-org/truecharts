@@ -253,15 +253,6 @@ workload:
           args:
             - --config
             - "{{ tpl .Values.persistence.daemonconfig.mountPath $ }}"
-          lifecycle:
-            # The "thick" plugin does not have a `--cleanup-config-on-exit`
-            # option, like the "thin" one does, so we implement our own
-            preStop:
-              type: exec
-              command:
-                - sh
-                - -c
-                - rm -f "{{ tpl .Values.persistence.cniconf.mountPath $ }}/00-multus."*
           securityContext: # TODO
             privileged: true
             runAsNonRoot: false
