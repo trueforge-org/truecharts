@@ -46,14 +46,16 @@ multus:
       installCni:
         macvlan: true
         ipvlan: true
-  cleanup:
-    # Note:
-    # If the Talos integration is enabled, this chart assumes full control over
-    # all CNIs listed in `integrations.talos.installCni` that are set to `true`.
-    # During cleanup, it will remove all CNIs that are currently enabled (`true`).
-    # If this is undesired, set the relevant CNI's values to `false` before
-    # enabling the cheanup mode of this chart.
-    enabled: false
+  # Enable the chart's uninstall mode. This will clean up leftover chart
+  # configuration data and CNI plugins, allowing for a cleaner uninstall.
+  #
+  # Note:
+  # If the Talos integration is enabled, this chart assumes it has full control
+  # over all CNIs listed in `integrations.talos.installCni`(and set to `true`).
+  # During uninstall, it will remove all CNIs that are enabled (`true`). If this
+  # is undesired, set the keys of the relevant CNI names to `false` before
+  # enabling the uninstall mode.
+  uninstall: false
 
 podOptions:
   hostNetwork: true
@@ -214,7 +216,7 @@ workload:
               {{- end -}}
             {{- end -}}
 
-            {{ and (not .Values.multus.cleanup.enabled)
+            {{ and (not .Values.multus.uninstall)
               .Values.multus.integrations.talos.enabled
               $cnisMustBeInstalled }}"
           type: init
@@ -250,7 +252,7 @@ workload:
               cpu: "10m"
               memory: "15Mi"
         multus-plugin-installer:
-          enabled: "{{ not .Values.multus.cleanup.enabled }}"
+          enabled: "{{ not .Values.multus.uninstall }}"
           type: init
           imageSelector: image
           command:
@@ -273,7 +275,7 @@ workload:
             messagePolicy: FallbackToLogsOnError
       containers:
         cleanup:
-          enabled: "{{ .Values.multus.cleanup.enabled }}"
+          enabled: "{{ .Values.multus.uninstall }}"
           type: init
           imageSelector: alpineImage
           command:
@@ -323,7 +325,7 @@ workload:
             startup:
               enabled: false
         main:
-          enabled: "{{ not .Values.multus.cleanup.enabled }}"
+          enabled: "{{ not .Values.multus.uninstall }}"
           env:
             MULTUS_NODE_NAME:
               fieldRef:
