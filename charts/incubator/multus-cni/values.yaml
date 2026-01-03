@@ -26,7 +26,7 @@ multus:
   # it starts attaching extra networks to pods. This can help with pods
   # crash-looping when primary CNI is not ready
   readinessIndicatorEnabled: false
-  logLevel: verbose # "debug", "error", "verbose", or "panic"
+  logLevel: verbose  # "debug", "error", "verbose", or "panic"
   # Whether to isolate `NetworkAttachmentDefinition`s by namespace.
   # Setting this to `true` will prevent sharing NAD resources across namespaces
   namespaceIsolation: false
@@ -154,7 +154,7 @@ persistence:
       main:
         cleanup: {}
         main: {}
-  cnimultusdata: # Used for multus cache data
+  cnimultusdata:  # Used for multus cache data
     enabled: true
     type: hostPath
     mountPath: /var/lib/cni/multus
@@ -411,7 +411,7 @@ metrics:
 service:
   main:
     enabled: "{{ .Values.metrics.main.enabled }}"
-    clusterIP: None # No need for ClusterIP with host networking
+    clusterIP: None  # No need for ClusterIP with host networking
     ports:
       main:
         enabled: true
@@ -437,4 +437,4 @@ rbac:
         verbs: ["get", "list", "update", "watch"]
       - apiGroups: ["", "events.k8s.io"]
         resources: ["events"]
-        verbs: ["create" , "patch" , "update"]
+        verbs: ["create", "patch", "update"]
