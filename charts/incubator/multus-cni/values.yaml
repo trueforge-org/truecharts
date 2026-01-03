@@ -136,7 +136,7 @@ persistence:
     # multus-daemon expects that cnibin path to be identical between pod and host
     mountPath: "{{ tpl .Values.persistence.cnibin.hostPath $ }}"
     hostPath: /opt/cni/bin
-    hostPathType: Directory
+    hostPathType: DirectoryOrCreate
     mountPropagation: Bidirectional
     targetSelector:
       main:
@@ -149,7 +149,7 @@ persistence:
     type: hostPath
     mountPath: /host/etc/cni/net.d
     hostPath: /etc/cni/net.d
-    hostPathType: Directory
+    hostPathType: DirectoryOrCreate
     targetSelector:
       main:
         cleanup: {}
@@ -211,7 +211,7 @@ persistence:
     # also shows under `/run/netns`.
     mountPath: /var/run/netns
     hostPath: "{{- if .Values.multus.integrations.talos.enabled -}}/var{{- end -}}/run/netns"
-    hostPathType: Directory
+    hostPathType: DirectoryOrCreate
     mountPropagation: HostToContainer
   hostrunk8scnicncfio:
     enabled: true
