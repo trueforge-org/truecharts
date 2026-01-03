@@ -27,8 +27,22 @@ multus:
   # crash-looping when primary CNI is not ready
   readinessIndicatorEnabled: false
   logLevel: verbose # "debug", "error", "verbose", or "panic"
+  # Whether to isolate `NetworkAttachmentDefinition`s by namespace.
+  # Setting this to `true` will prevent sharing NAD resources across namespaces
   namespaceIsolation: false
+  # A list of namespaces for which the `namespaceIsolation` (when set to `true`)
+  # does not apply. `NetworkAttachmentDefinition`s defined in these namespaces
+  # can be used across all namespaces. Note Multus treats the `default` namespace
+  # as global by default (when `globalNamespaces` is empty)
   globalNamespaces: []
+  # A list of additional networks to attach to every pod
+  # The items of this list can be the names of `NetworkAttachmentDefinition`s,
+  # names of CNI configuration files, paths to CNI configuation files and more.
+  # See Multus documentation for more information
+  defaultNetworks: []
+  # A list namespaces, which are excluded from attaching networks from the
+  # `defaultNetworks` list. By default, this chart's namespace is excluded.
+  systemNamespaces: []
   # You should not need to change the Multus CNI config version, however,
   # if you get an error about version incompatibility with the primary CNI it
   # might help to match the multus CNI version to your primary CNI version
@@ -85,6 +99,12 @@ configmap:
             "logLevel": "{{ .Values.multus.logLevel }}",
             "namespaceIsolation": {{ .Values.multus.namespaceIsolation }},
             "globalNamespaces": "{{ join "," .Values.multus.globalNamespaces }}",
+            {{- if .Values.multus.systemNamespaces }}
+            "systemNamespaces": {{ .Values.multus.systemNamespaces | toJson }},
+            {{- else }}
+            "systemNamespaces": ["{{ .Release.Namespace }}"],
+            {{- end }}
+            "defaultNetworks": {{ .Values.multus.defaultNetworks | toJson }},
             "multusMasterCNI": "{{ .Values.multus.primaryCniConfigFile }}",
             "multusNamespace": "{{ .Release.Namespace }}",
             {{- if .Values.multus.readinessIndicatorEnabled }}
