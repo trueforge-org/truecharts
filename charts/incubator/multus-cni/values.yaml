@@ -266,11 +266,13 @@ workload:
               cp cniBins/{{ $key }} "{{ $cniBinMountPath }}/{{ $key }}"
                 {{- end }}
               {{- end -}}
-          securityContext: # TODO
+          securityContext:
             privileged: true
-            runAsNonRoot: false
             runAsUser: 0
             runAsGroup: 0
+            capabilities:
+              drop:
+                - ALL
           resources:
             requests:
               cpu: "10m"
@@ -286,11 +288,13 @@ workload:
             - "{{ tpl .Values.persistence.cnibin.mountPath $ }}"
             - "-t"
             - "thick"
-          securityContext: # TODO
+          securityContext:
             privileged: true
-            runAsNonRoot: false
             runAsUser: 0
             runAsGroup: 0
+            capabilities:
+              drop:
+                - ALL
           resources:
             requests:
               cpu: "10m"
@@ -336,11 +340,13 @@ workload:
 
               echo "Cleanup completed! You can now safely uninstall this chart."
               sleep infinity
-          securityContext: # TODO
+          securityContext:
             privileged: true
-            runAsNonRoot: false
             runAsUser: 0
             runAsGroup: 0
+            capabilities:
+              drop:
+                - ALL
           probes:
             liveness:
               enabled: false
@@ -357,9 +363,8 @@ workload:
           args:
             - --config
             - "{{ tpl .Values.persistence.daemonconfig.mountPath $ }}"
-          securityContext: # TODO
+          securityContext:
             privileged: true
-            runAsNonRoot: false
             runAsUser: 0
             runAsGroup: 0
           resources:
