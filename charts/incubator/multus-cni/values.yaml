@@ -43,6 +43,9 @@ multus:
   # A list namespaces, which are excluded from attaching networks from the
   # `defaultNetworks` list. By default, this chart's namespace is excluded.
   systemNamespaces: []
+  # A map of capabilities, that are supported by at least one of the used CNI
+  # plugins. See Multus documentation for more information
+  capabilities: {}
   # You should not need to change the Multus CNI config version, however,
   # if you get an error about version incompatibility with the primary CNI it
   # might help to match the multus CNI version to your primary CNI version
@@ -105,6 +108,7 @@ configmap:
             "systemNamespaces": ["{{ .Release.Namespace }}"],
             {{- end }}
             "defaultNetworks": {{ .Values.multus.defaultNetworks | toJson }},
+            "capabilities": {{ .Values.multus.capabilities | toJson }},
             "multusMasterCNI": "{{ .Values.multus.primaryCniConfigFile }}",
             "multusNamespace": "{{ .Release.Namespace }}",
             {{- if .Values.multus.readinessIndicatorEnabled }}
