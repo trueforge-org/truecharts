@@ -229,7 +229,7 @@ persistence:
 
 workload:
   main:
-    type: DaemonSet
+    type: StatefulSet
     podSpec:
       initContainers:
         talos-reference-cni-plugin-installer:
