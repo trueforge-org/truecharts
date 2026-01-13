@@ -31,6 +31,6 @@ persistence:
     # Must match the mount path specified in the `multus-cni` chart
     # under `persistence.cniconf.mountPath`
     mountPath: "/host/etc/cni/net.d/123-dummy.conf"
-    objectName: config
+    objectName: dummy
     subPath: 123-dummy.conf
     readOnly: true
