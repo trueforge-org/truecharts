@@ -1,5 +1,5 @@
 configmap:
-  dummyPrimaryCni:
+  dummy:
     enabled: true
     data:
       123-dummy.conf: |
@@ -24,7 +24,7 @@ configmap:
         }
 
 persistence:
-  dummyPrimaryCni:
+  dummy:
     enabled: true
     type: configmap
     # NOTE:
