@@ -37,17 +37,15 @@ echo "Done installing kube-prometheus-stack chart"
 
 # TODO: Needs to be moved to nginx instead of traefik
 if [[ $nginx_needed == "true" ]]; then
-    echo "Installing traefik chart"
-    helm install traefik oci://oci.trueforge.org/truecharts/traefik --namespace traefik --create-namespace \
-        --set service.tcp.ports.web.port=9080 --set service.tcp.ports.websecure.port=9443 --wait
+    echo "Installing ingress-nginx chart"
+    helm install ingress-nginx oci://ghcr.io/home-operations/charts-mirror/ingress-nginx --namespace ingress-nginx --create-namespace --wait
     if [[ "$?" != "0" ]]; then
-        echo "Failed to install traefik chart"
+        echo "Failed to install ingress-nginx chart"
         exit 1
     fi
-    echo "Done installing traefik chart"
+    echo "Done installing ingress-nginx chart"
 fi
 
-# TODO: volumesnapshots?
 if [[ "$curr_chart" == "charts/stable/volsync" ]]; then
     echo "Installing snapshot-controller chart"
     helm install snapshot-controller oci://oci.trueforge.org/truecharts/snapshot-controller --namespace snapshot-controller --create-namespace --wait
