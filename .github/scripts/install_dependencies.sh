@@ -35,7 +35,7 @@ fi
 echo "Done installing kube-prometheus-stack chart"
 
 
-# Needs to be moved to nginx instead of traefik
+# TODO: Needs to be moved to nginx instead of traefik
 if [[ $nginx_needed == "true" ]]; then
     echo "Installing traefik chart"
     helm install traefik oci://oci.trueforge.org/truecharts/traefik --namespace traefik --create-namespace \
@@ -47,6 +47,7 @@ if [[ $nginx_needed == "true" ]]; then
     echo "Done installing traefik chart"
 fi
 
+# TODO: volumesnapshots?
 if [[ "$curr_chart" == "charts/stable/volsync" ]]; then
     echo "Installing volumesnapshots chart"
     helm install volumesnapshots oci://oci.trueforge.org/truecharts/volumesnapshots --namespace volumesnapshots --create-namespace --wait
@@ -79,7 +80,7 @@ fi
 
 if [[ "$cnpg_enabled" == "true" ]]; then
     echo "Installing cloudnative-pg chart"
-    helm install cloudnative-pg oci://oci.trueforge.org/truecharts/cloudnative-pg --namespace cloudnative-pg --create-namespace --wait
+    helm install cloudnative-pg oci://ghcr.io/cloudnative-pg/charts/cloudnative-pg --namespace cloudnative-pg --create-namespace --wait
     if [[ "$?" != "0" ]]; then
         echo "Failed to install cloudnative-pg chart"
         exit 1
@@ -89,7 +90,7 @@ fi
 
 if [[ "$curr_chart" == "charts/stable/kubernetes-dashboard" ]]; then
     echo "Installing metrics-server chart"
-    helm install metrics-server oci://oci.trueforge.org/truecharts/metrics-server --namespace metrics-server --create-namespace --wait
+    helm install metrics-server oci://ghcr.io/home-operations/charts-mirror/metrics-server --namespace metrics-server --create-namespace --wait
     if [[ "$?" != "0" ]]; then
         echo "Failed to install metrics-server chart"
         exit 1
