@@ -49,13 +49,13 @@ fi
 
 # TODO: volumesnapshots?
 if [[ "$curr_chart" == "charts/stable/volsync" ]]; then
-    echo "Installing volumesnapshots chart"
-    helm install volumesnapshots oci://oci.trueforge.org/truecharts/volumesnapshots --namespace volumesnapshots --create-namespace --wait
+    echo "Installing snapshot-controller chart"
+    helm install snapshot-controller oci://oci.trueforge.org/truecharts/snapshot-controller --namespace snapshot-controller --create-namespace --wait
     if [[ "$?" != "0" ]]; then
-        echo "Failed to install volumesnapshots chart"
+        echo "Failed to install snapshot-controller chart"
         exit 1
     fi
-    echo "Done installing volumesnapshots chart"
+    echo "Done installing snapshot-controller chart"
 fi
 
 if [[ "$curr_chart" == "charts/stable/metallb-config" ]]; then
