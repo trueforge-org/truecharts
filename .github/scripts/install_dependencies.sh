@@ -70,7 +70,7 @@ fi
 
 if [[ "$curr_chart" == "charts/stable/clusterissuer" ]]; then
     echo "Installing cert-manager chart"
-    helm install cert-manager oci://quay.io/jetstack/charts/cert-manager --namespace cert-manager --create-namespace --wait
+    helm install cert-manager oci://quay.io/jetstack/charts/cert-manager --namespace cert-manager --create-namespace --set crds.enabled=true --wait
     if [[ "$?" != "0" ]]; then
         echo "Failed to install cert-manager chart"
         exit 1
