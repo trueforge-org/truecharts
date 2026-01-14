@@ -60,7 +60,7 @@ fi
 
 if [[ "$curr_chart" == "charts/stable/metallb-config" ]]; then
     echo "Installing metallb chart"
-    helm install metallb oci://quay.io/metallb/chart --namespace metallb --create-namespace --wait
+    helm install metallb oci://quay.io/metallb/chart/metallb --namespace metallb --create-namespace --wait
     if [[ "$?" != "0" ]]; then
         echo "Failed to install metallb chart"
         exit 1
