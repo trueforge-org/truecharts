@@ -12,62 +12,53 @@ values_yaml=$(cat "$curr_chart/values.yaml")
 cnpg_enabled=$(go-yq '.cnpg | map(.enabled) | any' <<<"$values_yaml")
 ingress_required=$(go-yq '.ingress | map(.required) | any' <<<"$values_yaml")
 ingress_enabled=$(go-yq '.ingress | map(.enabled) | any' <<<"$values_yaml")
-traefik_needed="false"
+nginx_needed="false"
 if [[ "$ingress_required" == "true" ]] || [[ "$ingress_enabled" == "true" ]]; then
-    traefik_needed="true"
+    nginx_needed="true"
 else
     for ci_values in "$curr_chart"/ci/*values.yaml; do
         ci_values_yaml=$(cat "$ci_values")
         ingress_enabled=$(go-yq '.ingress | map(.enabled) | any' <<<"$ci_values_yaml")
         if [[ "$ingress_enabled" == "true" ]]; then
-            traefik_needed="true"
+            nginx_needed="true"
             break
         fi
     done
 fi
 
-if [[ "$curr_chart" != "charts/stable/prometheus-operator" ]]; then
-    echo "Installing prometheus-operator chart"
-    helm install prometheus-operator oci://oci.trueforge.org/truecharts/prometheus-operator --namespace prometheus-operator --create-namespace --wait
+echo "Installing kube-prometheus-stack chart"
+helm install kube-prometheus-stack oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack --namespace kube-prometheus-stack --create-namespace \
+    --set alertmanager.enabled=false --set grafana.enabled=false --set kubeProxy.enabled=false --wait
+if [[ "$?" != "0" ]]; then
+    echo "Failed to install kube-prometheus-stack chart"
+    exit 1
+fi
+echo "Done installing kube-prometheus-stack chart"
+
+if [[ $nginx_needed == "true" ]]; then
+    echo "Installing ingress-nginx chart"
+    helm install ingress-nginx oci://ghcr.io/home-operations/charts-mirror/ingress-nginx --namespace ingress-nginx --create-namespace \
+        --set controller.ingressClassResource.default=true --set controller.publishService.enabled=false --set controller.service.type="ClusterIP" --wait
     if [[ "$?" != "0" ]]; then
-        echo "Failed to install prometheus-operator chart"
+        echo "Failed to install ingress-nginx chart"
         exit 1
     fi
-    echo "Done installing prometheus-operator chart"
-fi
-
-if [[ "$curr_chart" == "charts/stable/traefik" ]]; then
-    helm install traefik oci://oci.trueforge.org/truecharts/traefik-crds --wait
-    if [[ "$?" != "0" ]]; then
-        echo "Failed to install traefik-crds chart"
-    fi
-    echo "Done installing traefik-crds chart"
-fi
-
-if [[ "$curr_chart" != "charts/stable/traefik" ]] && [[ $traefik_needed == "true" ]]; then
-    echo "Installing traefik chart"
-    helm install traefik oci://oci.trueforge.org/truecharts/traefik --namespace traefik --create-namespace \
-        --set service.tcp.ports.web.port=9080 --set service.tcp.ports.websecure.port=9443 --wait
-    if [[ "$?" != "0" ]]; then
-        echo "Failed to install traefik chart"
-        exit 1
-    fi
-    echo "Done installing traefik chart"
+    echo "Done installing ingress-nginx chart"
 fi
 
 if [[ "$curr_chart" == "charts/stable/volsync" ]]; then
-    echo "Installing volumesnapshots chart"
-    helm install volumesnapshots oci://oci.trueforge.org/truecharts/volumesnapshots --namespace volumesnapshots --create-namespace --wait
+    echo "Installing snapshot-controller chart"
+    helm install snapshot-controller oci://oci.trueforge.org/truecharts/snapshot-controller --namespace snapshot-controller --create-namespace --wait
     if [[ "$?" != "0" ]]; then
-        echo "Failed to install volumesnapshots chart"
+        echo "Failed to install snapshot-controller chart"
         exit 1
     fi
-    echo "Done installing volumesnapshots chart"
+    echo "Done installing snapshot-controller chart"
 fi
 
 if [[ "$curr_chart" == "charts/stable/metallb-config" ]]; then
     echo "Installing metallb chart"
-    helm install metallb oci://oci.trueforge.org/truecharts/metallb --namespace metallb --create-namespace --wait
+    helm install metallb oci://quay.io/metallb/chart/metallb --namespace metallb --create-namespace --wait
     if [[ "$?" != "0" ]]; then
         echo "Failed to install metallb chart"
         exit 1
@@ -77,7 +68,7 @@ fi
 
 if [[ "$curr_chart" == "charts/stable/clusterissuer" ]]; then
     echo "Installing cert-manager chart"
-    helm install cert-manager oci://oci.trueforge.org/truecharts/cert-manager --namespace cert-manager --create-namespace --wait
+    helm install cert-manager oci://quay.io/jetstack/charts/cert-manager --namespace cert-manager --create-namespace --set crds.enabled=true --wait
     if [[ "$?" != "0" ]]; then
         echo "Failed to install cert-manager chart"
         exit 1
@@ -87,7 +78,7 @@ fi
 
 if [[ "$cnpg_enabled" == "true" ]]; then
     echo "Installing cloudnative-pg chart"
-    helm install cloudnative-pg oci://oci.trueforge.org/truecharts/cloudnative-pg --namespace cloudnative-pg --create-namespace --wait
+    helm install cloudnative-pg oci://ghcr.io/cloudnative-pg/charts/cloudnative-pg --namespace cloudnative-pg --create-namespace --wait
     if [[ "$?" != "0" ]]; then
         echo "Failed to install cloudnative-pg chart"
         exit 1
@@ -95,19 +86,9 @@ if [[ "$cnpg_enabled" == "true" ]]; then
     echo "Done installing cloudnative-pg chart"
 fi
 
-if [[ "$curr_chart" == "charts/stable/intel-device-plugins-operator" ]]; then
-    echo "Installing cert-manager chart"
-    helm install cert-manager oci://oci.trueforge.org/truecharts/cert-manager --namespace cert-manager --create-namespace --wait
-    if [[ "$?" != "0" ]]; then
-        echo "Failed to install cert-manager chart"
-        exit 1
-    fi
-    echo "Done installing cert-manager chart"
-fi
-
 if [[ "$curr_chart" == "charts/stable/kubernetes-dashboard" ]]; then
     echo "Installing metrics-server chart"
-    helm install metrics-server oci://oci.trueforge.org/truecharts/metrics-server --namespace metrics-server --create-namespace --wait
+    helm install metrics-server oci://ghcr.io/home-operations/charts-mirror/metrics-server --namespace metrics-server --create-namespace --wait
     if [[ "$?" != "0" ]]; then
         echo "Failed to install metrics-server chart"
         exit 1
