@@ -12,39 +12,31 @@ values_yaml=$(cat "$curr_chart/values.yaml")
 cnpg_enabled=$(go-yq '.cnpg | map(.enabled) | any' <<<"$values_yaml")
 ingress_required=$(go-yq '.ingress | map(.required) | any' <<<"$values_yaml")
 ingress_enabled=$(go-yq '.ingress | map(.enabled) | any' <<<"$values_yaml")
-traefik_needed="false"
+nginx_needed="false"
 if [[ "$ingress_required" == "true" ]] || [[ "$ingress_enabled" == "true" ]]; then
-    traefik_needed="true"
+    nginx_needed="true"
 else
     for ci_values in "$curr_chart"/ci/*values.yaml; do
         ci_values_yaml=$(cat "$ci_values")
         ingress_enabled=$(go-yq '.ingress | map(.enabled) | any' <<<"$ci_values_yaml")
         if [[ "$ingress_enabled" == "true" ]]; then
-            traefik_needed="true"
+            nginx_needed="true"
             break
         fi
     done
 fi
 
-if [[ "$curr_chart" != "charts/stable/prometheus-operator" ]]; then
-    echo "Installing prometheus-operator chart"
-    helm install prometheus-operator oci://oci.trueforge.org/truecharts/prometheus-operator --namespace prometheus-operator --create-namespace --wait
-    if [[ "$?" != "0" ]]; then
-        echo "Failed to install prometheus-operator chart"
-        exit 1
-    fi
-    echo "Done installing prometheus-operator chart"
+echo "Installing prometheus-operator chart"
+helm install prometheus-operator oci://oci.trueforge.org/truecharts/prometheus-operator --namespace prometheus-operator --create-namespace --wait
+if [[ "$?" != "0" ]]; then
+    echo "Failed to install prometheus-operator chart"
+    exit 1
 fi
+echo "Done installing prometheus-operator chart"
 
-if [[ "$curr_chart" == "charts/stable/traefik" ]]; then
-    helm install traefik oci://oci.trueforge.org/truecharts/traefik-crds --wait
-    if [[ "$?" != "0" ]]; then
-        echo "Failed to install traefik-crds chart"
-    fi
-    echo "Done installing traefik-crds chart"
-fi
 
-if [[ "$curr_chart" != "charts/stable/traefik" ]] && [[ $traefik_needed == "true" ]]; then
+# Needs to be moved to nginx instead of traefik
+if [[ $nginx_needed == "true" ]]; then
     echo "Installing traefik chart"
     helm install traefik oci://oci.trueforge.org/truecharts/traefik --namespace traefik --create-namespace \
         --set service.tcp.ports.web.port=9080 --set service.tcp.ports.websecure.port=9443 --wait
@@ -93,16 +85,6 @@ if [[ "$cnpg_enabled" == "true" ]]; then
         exit 1
     fi
     echo "Done installing cloudnative-pg chart"
-fi
-
-if [[ "$curr_chart" == "charts/stable/intel-device-plugins-operator" ]]; then
-    echo "Installing cert-manager chart"
-    helm install cert-manager oci://oci.trueforge.org/truecharts/cert-manager --namespace cert-manager --create-namespace --wait
-    if [[ "$?" != "0" ]]; then
-        echo "Failed to install cert-manager chart"
-        exit 1
-    fi
-    echo "Done installing cert-manager chart"
 fi
 
 if [[ "$curr_chart" == "charts/stable/kubernetes-dashboard" ]]; then
