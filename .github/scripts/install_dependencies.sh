@@ -27,7 +27,8 @@ else
 fi
 
 echo "Installing kube-prometheus-stack chart"
-helm install kube-prometheus-stack oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack --namespace kube-prometheus-stack --create-namespace --wait
+helm install kube-prometheus-stack oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack --namespace kube-prometheus-stack --create-namespace \
+    --set alertmanager.enabled=false --set grafana.enabled=false --set kubeProxy.enabled=false --wait
 if [[ "$?" != "0" ]]; then
     echo "Failed to install kube-prometheus-stack chart"
     exit 1
