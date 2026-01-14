@@ -26,13 +26,13 @@ else
     done
 fi
 
-echo "Installing prometheus-operator chart"
-helm install prometheus-operator oci://oci.trueforge.org/truecharts/prometheus-operator --namespace prometheus-operator --create-namespace --wait
+echo "Installing kube-prometheus-stack chart"
+helm install kube-prometheus-stack oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack --namespace kube-prometheus-stack --create-namespace --wait
 if [[ "$?" != "0" ]]; then
-    echo "Failed to install prometheus-operator chart"
+    echo "Failed to install kube-prometheus-stack chart"
     exit 1
 fi
-echo "Done installing prometheus-operator chart"
+echo "Done installing kube-prometheus-stack chart"
 
 
 # Needs to be moved to nginx instead of traefik
@@ -59,7 +59,7 @@ fi
 
 if [[ "$curr_chart" == "charts/stable/metallb-config" ]]; then
     echo "Installing metallb chart"
-    helm install metallb oci://oci.trueforge.org/truecharts/metallb --namespace metallb --create-namespace --wait
+    helm install metallb oci://quay.io/metallb/chart --namespace metallb --create-namespace --wait
     if [[ "$?" != "0" ]]; then
         echo "Failed to install metallb chart"
         exit 1
@@ -69,7 +69,7 @@ fi
 
 if [[ "$curr_chart" == "charts/stable/clusterissuer" ]]; then
     echo "Installing cert-manager chart"
-    helm install cert-manager oci://oci.trueforge.org/truecharts/cert-manager --namespace cert-manager --create-namespace --wait
+    helm install cert-manager oci://quay.io/jetstack/charts/cert-manager --namespace cert-manager --create-namespace --wait
     if [[ "$?" != "0" ]]; then
         echo "Failed to install cert-manager chart"
         exit 1
