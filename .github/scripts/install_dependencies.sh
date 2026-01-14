@@ -38,7 +38,8 @@ echo "Done installing kube-prometheus-stack chart"
 # TODO: Needs to be moved to nginx instead of traefik
 if [[ $nginx_needed == "true" ]]; then
     echo "Installing ingress-nginx chart"
-    helm install ingress-nginx oci://ghcr.io/home-operations/charts-mirror/ingress-nginx --namespace ingress-nginx --create-namespace --wait
+    helm install ingress-nginx oci://ghcr.io/home-operations/charts-mirror/ingress-nginx --namespace ingress-nginx --create-namespace \
+        --set controller.ingressClassResource.default=true --wait
     if [[ "$?" != "0" ]]; then
         echo "Failed to install ingress-nginx chart"
         exit 1
