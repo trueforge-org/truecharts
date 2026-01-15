@@ -14,14 +14,14 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.29.17
+    version: 28.29.18
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.11.5
+    version: 17.11.6
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -48,5 +48,5 @@ sources:
   - https://hub.docker.com/r/serverlein/tsn-ranksystem-webserver
   - https://ts-ranksystem.com/
 type: application
-version: 5.18.6
+version: 5.18.7
 

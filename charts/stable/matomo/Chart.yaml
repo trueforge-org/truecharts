@@ -14,14 +14,14 @@ apiVersion: v2
 appVersion: 5.6.2
 dependencies:
   - name: common
-    version: 28.29.17
+    version: 28.29.18
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.11.5
+    version: 17.11.6
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -45,5 +45,5 @@ sources:
   - https://github.com/matomo-org/matomo
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/matomo
 type: application
-version: 17.20.10
+version: 17.20.11
 
