@@ -46,7 +46,6 @@ workload:
           envFrom:
             - secretRef:
                 name: "secret"
-          env: {}
 persistence:
   config:
     enabled: true
