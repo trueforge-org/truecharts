@@ -232,19 +232,18 @@ jobs:
       - name: Add Dependencies
         run: |
           if [[ "${{ matrix.values }}" =~ (ingress|metrics|cnpg|volsync).*-values.yaml ]]; then
-            helm install prometheus-operator oci://oci.trueforge.org/truecharts/prometheus-operator --namespace prometheus-operator --create-namespace --wait
+            helm install kube-prometheus-stack oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack --namespace kube-prometheus-stack --create-namespace --set alertmanager.enabled=false --set grafana.enabled=false --set kubeProxy.enabled=false --wait
           fi
           if [[ "${{ matrix.values }}" =~ cnpg.*-values.yaml ]]; then
-            helm install cloudnative-pg oci://oci.trueforge.org/truecharts/cloudnative-pg --namespace cloudnative-pg --create-namespace --wait
+            helm install cloudnative-pg oci://ghcr.io/cloudnative-pg/charts/cloudnative-pg --namespace cloudnative-pg --create-namespace --wait
           fi
           if [[ "${{ matrix.values }}" =~ ingress.*-values.yaml ]]; then
-            helm install cert-manager oci://oci.trueforge.org/truecharts/cert-manager --namespace cert-manager --create-namespace --wait
-            # helm install traefik-crds oci://oci.trueforge.org/truecharts/traefik-crds --namespace traefik-crds --create-namespace --wait
-            helm install traefik oci://oci.trueforge.org/truecharts/traefik --namespace traefik --create-namespace --wait \
-              --set service.main.type=ClusterIP --set service.tcp.type=ClusterIP
+            helm install cert-manager oci://quay.io/jetstack/charts/cert-manager --namespace cert-manager --create-namespace --set crds.enabled=true --wait
+            helm install ingress-nginx oci://ghcr.io/home-operations/charts-mirror/ingress-nginx --namespace ingress-nginx --create-namespace \
+            --set controller.ingressClassResource.default=true --set controller.publishService.enabled=false --set controller.service.type="ClusterIP" --set controller.config.allow-snippet-annotations=true --set controller.config.annotations-risk-level="Critical" --wait
           fi
           if [[ "${{ matrix.values }}" =~ volsync.*-values.yaml ]]; then
-            helm install volumesnapshots oci://oci.trueforge.org/truecharts/volumesnapshots --namespace volumesnapshots --create-namespace --wait
+            helm install snapshot-controller oci://oci.trueforge.org/truecharts/snapshot-controller --namespace snapshot-controller --create-namespace --wait
             helm install volsync oci://oci.trueforge.org/truecharts/volsync --namespace volsync --create-namespace --wait
           fi
 
