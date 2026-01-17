@@ -14,7 +14,7 @@ workload:
       containers:
         main:
           extraArgs:
-          - --config=/exporter/config.yaml
+            - --config=/exporter/config.yaml
           probes:
             liveness:
               type: tcp
@@ -50,7 +50,7 @@ metrics:
 exporter:
   exporter_port: 9787
   devices:
-  - name: Fritz!Box 7590
-    hostname: '192.168.1.1'
-    username: 'fritz_box'
-    password: '123456789'
+    - name: Fritz!Box 7590
+      hostname: '192.168.1.1'
+      username: 'fritz_box'
+      password: '123456789'
