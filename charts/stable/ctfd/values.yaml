@@ -26,12 +26,6 @@ workload:
               secretKeyRef:
                 name: ctfd-secrets
                 key: SECRET_KEY
-            DATABASE_PROTOCOL: postgresql
-            DATABASE_PORT: "5432"
-            DATABASE_NAME: "{{ .Values.cnpg.main.database }}"
-            DATABASE_USER: "{{ .Values.cnpg.main.user }}"
-            DATABASE_HOST: "{{ .Values.cnpg.main.creds.host }}"
-            DATABASE_PASSWORD: "{{ .Values.cnpg.main.creds.password  }}"
             REDIS_URL:
               secretKeyRef:
                 expandObjectName: false
@@ -51,11 +45,6 @@ workload:
             # majorleaguecyber
             OAUTH_CLIENT_ID: ""
             OAUTH_CLIENT_SECRET: ""
-cnpg:
-  main:
-    enabled: true
-    user: ctfd
-    database: ctfd
 redis:
   enabled: true
   redisUsername: default
