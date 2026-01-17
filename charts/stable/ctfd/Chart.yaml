@@ -20,13 +20,6 @@ dependencies:
     alias: ""
     tags: []
     import-values: []
-  - name: mariadb
-    version: 17.11.7
-    repository: oci://oci.trueforge.org/truecharts
-    condition: mariadb.enabled
-    alias: ""
-    tags: []
-    import-values: []
   - name: redis
     version: 17.15.9
     repository: oci://oci.trueforge.org/truecharts
@@ -52,4 +45,4 @@ sources:
   - https://github.com/CTFd/CTFd
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ctfd
 type: application
-version: 9.23.10
+version: 10.0.0
