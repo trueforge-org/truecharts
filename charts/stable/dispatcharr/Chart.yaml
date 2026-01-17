@@ -9,9 +9,9 @@ annotations:
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: incubator
+  truecharts.org/train: stable
 apiVersion: v2
-appVersion: 0.34.0
+appVersion: 0.17.0
 dependencies:
   - name: common
     version: 28.29.18
@@ -21,27 +21,22 @@ dependencies:
     tags: []
     import-values: []
 deprecated: false
-description: Plex downloader that brings content from any server to yours!
-home: https://truecharts.org/charts/incubator/reaparr
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/reaparr.webp
+description: Your Ultimate IPTV & Stream Management Companion
+home: https://truecharts.org/charts/stable/dispatcharr
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/dispatcharr.webp
 keywords:
-  - reaparr
-  - Backup
-  - Downloaders
-  - MediaApp-Video
-  - MediaApp-Music
-  - MediaApp-Photos
+  - dispatcharr
   - MediaApp-Other
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
     email: info@truecharts.org
     url: https://truecharts.org
-name: reaparr
+name: dispatcharr
 sources:
-  - https://github.com/reaparr/reaparr/
-  - https://github.com/trueforge-org/truecharts/tree/master/charts/incubator/reaparr
-  - https://hub.docker.com/r/reaparr/reaparr
+  - https://github.com/Dispatcharr/Dispatcharr
+  - https://github.com/Dispatcharr/Dispatcharr/blob/main/docker/docker-compose.aio.yml
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/dispatcharr
+  - https://hub.docker.com/r/dispatcharr/dispatcharr
 type: application
-version: 0.6.6
-
+version: 1.0.0
