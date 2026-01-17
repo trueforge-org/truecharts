@@ -40,6 +40,9 @@ workload:
               enabled: false
             startup:
               enabled: false
+          env:
+            UPDATE_IPV4: true
+            UPDATE_IPV6: true
           envFrom:
             - secretRef:
                 name: "secret"
