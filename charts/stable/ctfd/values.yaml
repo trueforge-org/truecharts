@@ -26,6 +26,7 @@ workload:
               secretKeyRef:
                 name: ctfd-secrets
                 key: SECRET_KEY
+            DATABASE_PROTOCOL: postgresql
             DATABASE_PORT: "5432"
             DATABASE_NAME: "{{ .Values.cnpg.main.database }}"
             DATABASE_USER: "{{ .Values.cnpg.main.user }}"
