@@ -9,7 +9,7 @@ annotations:
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: incubator
+  truecharts.org/train: stable
 apiVersion: v2
 appVersion: 1.4.5
 dependencies:
@@ -29,7 +29,7 @@ dependencies:
     import-values: []
 deprecated: false
 description: Streaming access manager for Plex, Jellyfin, and Emby with account sharing detection.
-home: https://truecharts.org/charts/incubator/tracearr
+home: https://truecharts.org/charts/stable/tracearr
 icon: https://truecharts.org/img/hotlink-ok/chart-icons/tracearr.webp
 keywords:
   - tracearr
@@ -44,7 +44,6 @@ sources:
   - https://ghcr.io/connorgallopo/tracearr
   - https://github.com/connorgallopo/Tracearr
   - https://github.com/connorgallopo/Tracearr/blob/main/docker/docker-compose.yml
-  - https://github.com/trueforge-org/truecharts/tree/master/charts/incubator/tracearr
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/tracearr
 type: application
-version: 0.2.5
-
+version: 1.0.0
