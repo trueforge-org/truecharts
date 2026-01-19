@@ -14,14 +14,14 @@ apiVersion: v2
 appVersion: 3.5.4
 dependencies:
   - name: common
-    version: 28.29.20
+    version: 28.29.23
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.11.8
+    version: 17.11.9
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -35,7 +35,7 @@ dependencies:
     tags: []
     import-values: []
   - name: mongodb
-    version: 16.14.10
+    version: 16.14.11
     repository: oci://oci.trueforge.org/truecharts
     condition: mongodb.enabled
     alias: ""
@@ -57,5 +57,5 @@ sources:
   - https://ghcr.io/miguelndecarvalho/speedtest-exporter
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/app-template
 type: application
-version: 15.29.60
+version: 15.29.62
 
