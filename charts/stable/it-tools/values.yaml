@@ -1,7 +1,7 @@
 image:
   repository: oci.trueforge.org/containerforge/it-tools
   pullPolicy: IfNotPresent
-  tag: "2024.10.22"
+  tag: 2024.10.22@sha256:f701920b75cc2ab2c14a8bb208d634434cdfcec33012419922d355074d1cb0d6
 service:
   main:
     ports:
@@ -14,6 +14,3 @@ persistence:
     enabled: true
     type: emptyDir
     mountPath: "/var/cache/nginx"
-securityContext:
-  container:
-    readOnlyRootFilesystem: false
