@@ -1,0 +1,41 @@
+image:
+  repository: docker.io/garethgeorge/backrest
+  tag: v1.11.1@sha256:aeb0e208365981a645e94ef38e44ef5a98c6d2c8049787254db0480a4a7bc84f
+  pullPolicy: IfNotPresent
+
+service:
+  main:
+    ports:
+      main:
+        port: 9898
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            BACKREST_PORT: "0.0.0.0:{{ .Values.service.main.ports.main.port }}"
+            BACKREST_DATA: /data
+            BACKREST_CONFIG: /config/config.json
+            XDG_CACHE_HOME: /cache
+            TMPDIR: /tmp
+
+persistence:
+  data:
+    enabled: true
+    mountPath: /data
+  config:
+    enabled: true
+    mountPath: /config
+  cache:
+    enabled: true
+    mountPath: /cache
+  tmp:
+    enabled: true
+    type: emptyDir
+    mountPath: /tmp
+  userdata:
+    enabled: false
+    mountPath: /userdata
+    readOnly: true

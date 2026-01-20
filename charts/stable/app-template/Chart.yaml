@@ -11,31 +11,31 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 0.24.361
+appVersion: 3.5.4
 dependencies:
   - name: common
-    version: 28.29.1
+    version: 28.29.27
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.10.1
+    version: 17.11.11
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
     tags: []
     import-values: []
   - name: redis
-    version: 17.14.0
+    version: 17.15.13
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
     tags: []
     import-values: []
   - name: mongodb
-    version: 16.14.0
+    version: 16.14.13
     repository: oci://oci.trueforge.org/truecharts
     condition: mongodb.enabled
     alias: ""
@@ -54,7 +54,8 @@ maintainers:
     url: https://truecharts.org
 name: app-template
 sources:
-  - https://ghcr.io/linuxserver/jackett
+  - https://ghcr.io/miguelndecarvalho/speedtest-exporter
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/app-template
 type: application
-version: 15.28.0
+version: 15.29.65
+

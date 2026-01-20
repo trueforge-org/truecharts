@@ -24,13 +24,13 @@ jobs:
     steps:
       - name: Checkout [master]
         if: inputs.chartChangesDetected == 'true'
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
         with:
           fetch-depth: 1
           ref: master
 
       - name: Checkout [commit]
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
         with:
           fetch-depth: 1
           ref: ${{ inputs.checkoutCommit }}
@@ -61,7 +61,7 @@ jobs:
       - name: Install ./clustertool
         shell: bash
         run: |
-          VERSION="2.0.0-BETA-17"
+          VERSION="2.0.6"
           FILENAME="clustertool_${VERSION}_linux_amd64.tar.gz"
           URL="https://github.com/trueforge-org/truecharts/releases/download/v${VERSION}/${FILENAME}"
 

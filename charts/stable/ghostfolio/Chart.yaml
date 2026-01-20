@@ -11,17 +11,17 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 2.219.0
+appVersion: 2.232.0
 dependencies:
   - name: common
-    version: 28.29.1
+    version: 28.29.27
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: redis
-    version: 17.14.0
+    version: 17.15.13
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -46,5 +46,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ghostfolio
   - https://hub.docker.com/r/ghostfolio/ghostfolio
 type: application
-version: 8.58.0
+version: 8.72.2
 

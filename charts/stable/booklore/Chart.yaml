@@ -11,17 +11,17 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 1.12.0
+appVersion: 1.17.0
 dependencies:
   - name: common
-    version: 28.29.1
+    version: 28.29.27
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.10.1
+    version: 17.11.11
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -45,5 +45,4 @@ sources:
   - https://github.com/booklore-app/booklore
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/booklore
 type: application
-version: 1.4.0
-
+version: 1.10.10

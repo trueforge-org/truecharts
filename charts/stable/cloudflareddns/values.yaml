@@ -1,27 +1,7 @@
 image:
   repository: oci.trueforge.org/containerforge/cloudflareddns
   pullPolicy: IfNotPresent
-  tag: "3.0.0.4856@sha256:d8500f224f1f92977d2749cd44374a3c66542144fe50671f08db3007fa70abba"
-cloudflareddns:
-  user: your.cf.email@example.com
-  api_token: ""
-  api_key: ""
-  api_token_zone: ""
-  interval: 300
-  detect_mode: dig-whoami.cloudflare
-  detect_override: ""
-  log_level: 3
-  host_zone_record: []
-  # - domain: example.com
-#   zone: A1jajaja
-#   record: A
-# - domain: foobar.com
-#   zone: B1aksksa
-#   record: A
-# - domain: foobar.com
-#   zone: Cs11kdkkasks
-#   record: AAAA
-
+  tag: 3.0.0@sha256:247294efc322e716b815ed9143f05cd31d8ab663c316947c7cf9a2c8f7ef0025
 service:
   main:
     enabled: false
@@ -40,10 +20,16 @@ workload:
               enabled: false
             startup:
               enabled: false
-          envFrom:
-            - secretRef:
-                name: "secret"
-          env: {}
+          env:
+            UPDATE_IPV4: true
+            UPDATE_IPV6: true
+            DETECTION_MODE: "dig-whoami.cloudflare"
+            LOG_LEVEL: 3
+            CF_APITOKEN: "CLOUDFLARETOKEN"
+            #  CF_USER: not needed with API Token
+            #  CF_APIKEY: not needed with API Token
+            CF_HOSTS: "subdomain.example.com, subdomain.example.org"
+            INTERVAL: 300
 persistence:
   config:
     enabled: true

@@ -14,8 +14,8 @@ Since chart version 25 the PostgreSQL extension is changed from pgvecto.rs to Ve
 
 ## Prerequisite
 
-- This guide is made and tested with Immich chart 24.13.2. Make sure you are on chart version 24.x.x . 
-- In this guide we are using the shell of the CNPG pods. How to exec in a pod, is something we assume you're familiar with.  
+- This guide is made and tested with Immich chart 24.13.2. Make sure you are on chart version 24.x.x .
+- In this guide we are using the shell of the CNPG pods. How to exec in a pod, is something we assume you're familiar with.
 - Also you need to be familiar with running 'kubectl' commands.
 - We assume Immich is in the namespace `Immich`, when different adapt accordingly.
 
@@ -36,7 +36,7 @@ Type "help" for help.
 
 immich=# ALTER USER immich WITH SUPERUSER;
 ALTER ROLE
-immich=# 
+immich=#
 ```
 
 
@@ -92,7 +92,7 @@ pod/immich-redis-0       1/1     Running   0          3m39s
 
 - Exec into pod "immich-cnpg-main-1"
 - run: `psql immich`
-- run: 
+- run:
 
 ```bash
 SELECT atttypmod as dimsize
@@ -106,7 +106,7 @@ SELECT atttypmod as dimsize
 
 - **Write down** the dimsize NUMBER, given as output
 
-- run: 
+- run:
 ```bash
 DROP INDEX IF EXISTS clip_index;
 DROP INDEX IF EXISTS face_index;
@@ -128,7 +128,7 @@ immich=# SELECT atttypmod as dimsize
     AND f.attnum > 0
     AND c.relname = 'smart_search'::text
     AND f.attname = 'embedding'::text;
- dimsize 
+ dimsize
 ---------
      512
 (1 row)
@@ -141,7 +141,7 @@ DROP INDEX
 DROP INDEX
 ALTER TABLE
 ALTER TABLE
-immich=# 
+immich=#
 ```
 
 ## Migration Step 2, change deployment to VectorChord
@@ -198,7 +198,7 @@ kubectl get pods -n immich -o yaml| grep "image:"
 
 - Exec into pod "immich-cnpg-main-2"  (most lickely main-1 is now a read-only, so therefore we use main-2)
 - run: `psql immich`
-- run, with **Replacing <number> with the number from step 1**: 
+- run, with **Replacing <number> with the number from step 1**:
 ```bash
 CREATE EXTENSION IF NOT EXISTS vchord CASCADE;
 ALTER TABLE smart_search ALTER COLUMN embedding SET DATA TYPE vector(<number>);
@@ -219,7 +219,7 @@ NOTICE:  installing required extension "vector"
 CREATE EXTENSION
 ALTER TABLE
 ALTER TABLE
-immich=# 
+immich=#
 ```
 
 If you get this as output:
@@ -259,7 +259,7 @@ Postgres notice: {
 
 ```
 [Nest] 22  - 10/23/2025, 9:09:26 PM     LOG [Api:NestApplication] Nest application successfully started
-[Nest] 22  - 10/23/2025, 9:09:26 PM     LOG [Api:Bootstrap] Immich Server is listening on http://[::1]:10323 [v2.1.0] [production] 
+[Nest] 22  - 10/23/2025, 9:09:26 PM     LOG [Api:Bootstrap] Immich Server is listening on http://[::1]:10323 [v2.1.0] [production]
 [Nest] 22  - 10/23/2025, 9:10:26 PM     LOG [Api:MachineLearningRepository] Machine learning server became healthy (http://immich-machinelearning:10003).
 ```
 

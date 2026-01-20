@@ -11,17 +11,17 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 2025.11.0
+appVersion: 2025.12.2
 dependencies:
   - name: common
-    version: 28.29.1
+    version: 28.29.27
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: redis
-    version: 17.14.0
+    version: 17.15.13
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -49,5 +49,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/misskey
   - https://hub.docker.com/r/misskey/misskey
 type: application
-version: 13.31.0
+version: 13.33.16
 

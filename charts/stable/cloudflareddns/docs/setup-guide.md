@@ -21,11 +21,6 @@ In your profile, go to **API Tokens** and click **Create Token**, then select **
 Permissions
 
 - Zone - DNS - Edit
-- Zone - Zone - Read
-
-And the following Zone resources
-
-- Include - Specific zone - yourdomain.com
 
 ![cloudflare-token](./img/cloudflare-token.png)
 
@@ -35,18 +30,23 @@ Use the API Token previously created for the **api_token** field.
 
 - Change **domain** to your DNS Zone A record (yourdomain.com)
 - Change **record** to 'A' if you're only changing your main domain
-- Change **zone** to DNS Zone ID found on the Cloudflare Overview Page for your domain.
 
 An example configuration could look like that:
 
 ```yaml
 values:
-  cloudflareddns:
-    api_token: ${DOMAIN_0_CLOUDFLARE_TOKEN}
-    host_zone_record:
-      - domain: ${DOMAIN_0}
-        record: A
-        zone: ${DOMAIN_0}
+  workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                UPDATE_IPV6: false
+                DETECTION_MODE: "dig-whoami.cloudflare"
+                LOG_LEVEL: 3
+                CF_APITOKEN: ${CLOUDFLARE_TOKEN}
+                CF_HOSTS: "minecraft.${DOMAIN_0},wireguard.${DOMAIN_1}"
+                INTERVAL: 300
 ```
 
 If you're using or changing specific A records or CNAMEs you may want to refer to the upstream documentation for more examples [here](https://hotio.dev/containers/cloudflareddns/))

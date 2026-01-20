@@ -33,7 +33,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
 
       - name: Filter paths
         id: filter
@@ -56,14 +56,14 @@ jobs:
     needs: check_changes
     steps:
       - name: Checkout
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
         with:
           fetch-depth: 0
 
       - name: Install ./clustertool
         shell: bash
         run: |
-          VERSION="2.0.0-BETA-17"
+          VERSION="2.0.6"
           FILENAME="clustertool_${VERSION}_linux_amd64.tar.gz"
           URL="https://github.com/trueforge-org/truecharts/releases/download/v${VERSION}/${FILENAME}"
 
@@ -90,7 +90,7 @@ jobs:
       - name: Cache Changelog
         id: cache-changelog
         if: github.event_name == 'push'
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5
         with:
           key: ${{ env.CHANGELOG_CACHE_KEY }}-${{ hashFiles('**/Chart.yaml') }}
           path: changelog.json.gz
@@ -178,7 +178,7 @@ jobs:
 
       - name: Checkout website repo
         if: github.event_name == 'push'
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
         with:
           repository: trueforge-org/website
           path: website   # checkout into ./website
