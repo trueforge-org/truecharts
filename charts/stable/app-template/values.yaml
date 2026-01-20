@@ -10,15 +10,11 @@ workload:
         main:
           probes:
             liveness:
-              path: "/health"
+              type: tcp
             readiness:
-              path: "/health"
+              type: tcp
             startup:
-              path: "/health"
-persistence:
-  config:
-    enabled: true
-    mountPath: "/config"
+              type: tcp
 
 redis:
   enabled: false
