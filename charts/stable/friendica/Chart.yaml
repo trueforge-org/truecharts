@@ -14,21 +14,21 @@ apiVersion: v2
 appVersion: 2024.12.0
 dependencies:
   - name: common
-    version: 28.29.24
+    version: 28.29.27
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.11.10
+    version: 17.11.11
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
     tags: []
     import-values: []
   - name: redis
-    version: 17.15.11
+    version: 17.15.13
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -52,5 +52,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/friendica
   - https://hub.docker.com/_/friendica
 type: application
-version: 19.23.19
+version: 19.23.21
 

@@ -14,14 +14,14 @@ apiVersion: v2
 appVersion: 32.0.5
 dependencies:
   - name: common
-    version: 28.29.24
+    version: 28.29.27
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: redis
-    version: 17.15.11
+    version: 17.15.13
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -51,5 +51,5 @@ sources:
   - https://hub.docker.com/r/clamav/clamav
   - https://hub.docker.com/r/collabora/code
 type: application
-version: 40.6.5
+version: 40.6.7
 

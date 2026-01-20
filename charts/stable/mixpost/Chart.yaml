@@ -12,21 +12,21 @@ apiVersion: v2
 appVersion: 2.4.0
 dependencies:
   - name: common
-    version: 28.29.24
+    version: 28.29.27
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: redis
-    version: 17.15.11
+    version: 17.15.13
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.11.10
+    version: 17.11.11
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -52,5 +52,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mixpost
   - https://hub.docker.com/r/inovector/mixpost
 type: application
-version: 6.24.13
+version: 6.24.15
 
