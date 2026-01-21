@@ -1,0 +1,42 @@
+annotations:
+  artifacthub.io/links: |-
+    - name: support
+    url: https://discord.com/invite/tVsPTHWTtr
+  max_scale_version: 24.04.1
+  min_scale_version: 24.04.0
+  truecharts.org/category: gaming
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
+apiVersion: v2
+appVersion: 3.0.0
+dependencies:
+  - name: common
+    version: 28.29.18
+    repository: oci://oci.trueforge.org/truecharts
+    condition: ""
+    alias: ""
+    tags: []
+    import-values: []
+deprecated: false
+description: Automate Cloudflare DNS records for those with a dynamic IP.
+home: https://truecharts.org/charts/stable/hytale
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/hytale.webp
+keywords:
+  - hytale
+  - gaming
+  - multiplayer
+kubeVersion: '>=1.24.0-0'
+maintainers:
+  - name: TrueCharts
+    email: info@truecharts.org
+    url: https://truecharts.org
+name: hytale
+sources:
+  - https://hytale.com
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/hytale
+  - https://github.com/trueforge-org/containerforge
+type: application
+version: 1.0.0
