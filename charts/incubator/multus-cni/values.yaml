@@ -74,19 +74,19 @@ multus:
   # enabling the uninstall mode.
   uninstall: false
 
-podOptions:
-  hostNetwork: true
-  hostPID: true
-  automountServiceAccountToken: true
-  priorityClassName: system-node-critical
-  # Add a toleration to always allow scheduling
-  # This is used to allow scheduling while there is no working primary CNI (yet),
-  # as in such cases the node is usually tainted with "NoSchedule" since it is
-  # not ready for regular workloads. However, depending on config, it may be
-  # desired (or even enforced) for Multus to start first, to ensure that all
-  # pod interface configuration passes through it after a node reboot.
-  tolerations:
-    - operator: Exists
+# podOptions:
+#   hostNetwork: true
+#   hostPID: true
+#   automountServiceAccountToken: true
+#   priorityClassName: system-node-critical
+#   # Add a toleration to always allow scheduling
+#   # This is used to allow scheduling while there is no working primary CNI (yet),
+#   # as in such cases the node is usually tainted with "NoSchedule" since it is
+#   # not ready for regular workloads. However, depending on config, it may be
+#   # desired (or even enforced) for Multus to start first, to ensure that all
+#   # pod interface configuration passes through it after a node reboot.
+#   tolerations:
+#     - operator: Exists
 
 configmap:
   config:
