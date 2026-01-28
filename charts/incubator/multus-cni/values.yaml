@@ -142,7 +142,7 @@ persistence:
       main:
         cleanup: {}
         multus-plugin-installer: {}
-        talos-reference-cni-plugin-installer: {}
+        talos-plugin-installer: {}
         main: {}
   cniconf:
     enabled: true
@@ -232,7 +232,7 @@ workload:
     type: DaemonSet
     podSpec:
       initContainers:
-        talos-reference-cni-plugin-installer:
+        talos-plugin-installer:
           enabled: "{{- $cnisMustBeInstalled := false -}}
             {{- range $key, $value := .Values.multus.integrations.talos.installCni -}}
               {{- if $value -}}
