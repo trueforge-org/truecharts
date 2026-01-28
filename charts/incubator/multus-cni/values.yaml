@@ -258,6 +258,8 @@ workload:
               echo "Extracting CNI binaries..."
               mkdir -p cniBins
               tar -xvf cni.tar --strip-components=3 -C cniBins opt/cni/bin >/dev/null
+              ls cniBins # print available binaries for ease of debugging
+              echo
 
               {{- $cniBinMountPath := (tpl .Values.persistence.cnibin.mountPath $) -}}
               {{- range $key, $value := .Values.multus.integrations.talos.installCni -}}
