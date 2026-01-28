@@ -144,6 +144,7 @@ persistence:
         multus-plugin-installer: {}
         talos-plugin-installer: {}
         main: {}
+        dhcp-daemon: {}
   cniconf:
     enabled: true
     type: hostPath
@@ -193,6 +194,11 @@ persistence:
     mountPath: /host/run
     hostPath: /run
     hostPathType: Directory
+    targetSelector:
+      main:
+        cleanup: {}
+        main: {}
+        dhcp-daemon: {}
   hostrunnetns:
     enabled: true
     type: hostPath
@@ -213,6 +219,10 @@ persistence:
     hostPath: "{{- if .Values.multus.integrations.talos.enabled -}}/var{{- end -}}/run/netns"
     hostPathType: DirectoryOrCreate
     mountPropagation: HostToContainer
+    targetSelector:
+      main:
+        main: {}
+        dhcp-daemon: {}
   hostrunk8scnicncfio:
     enabled: true
     type: hostPath
@@ -333,9 +343,13 @@ workload:
 
               {{- if .Values.multus.integrations.talos.enabled }}
                 {{- $cniBinMountPath := (tpl .Values.persistence.cnibin.mountPath $) -}}
+                {{- $hostRunMountPath := (tpl .Values.persistence.hostrun.mountPath $) -}}
                 {{- range $key, $value := .Values.multus.integrations.talos.installCni -}}
                   {{- if $value }}
               echoRun rm -f "{{ $cniBinMountPath }}/{{ $key }}"
+                    {{- if eq $key "dhcp" }}
+              echoRun rm -f "{{ $hostRunMountPath }}/cni/dhcp.sock"
+                    {{- end }}
                   {{- end }}
                 {{- end -}}
               {{- end }}
@@ -400,6 +414,70 @@ workload:
                 - sh
                 - -c
                 - cat "{{ tpl .Values.persistence.cniconf.mountPath $ }}"/00-multus.conf*
+        dhcp-daemon:
+          enabled: "{{ and (not .Values.multus.uninstall)
+            .Values.multus.integrations.talos.enabled
+            (.Values.multus.integrations.talos.installCni | dig \"dhcp\" false) }}"
+          imageSelector: alpineImage
+          command:
+            - sh
+            - -c
+            - |
+              set -euo pipefail
+
+              SOCKET_PATH="{{ tpl .Values.persistence.hostrun.mountPath $ }}/cni/dhcp.sock"
+              CNI_BIN_DIR="{{ (tpl .Values.persistence.cnibin.mountPath $) }}"
+
+              # Make sure the unix socket has been removed
+              rm -f "$SOCKET_PATH"
+
+              # Start the daemon
+              "$CNI_BIN_DIR/dhcp" daemon -socketpath "$SOCKET_PATH" &
+              DAEMON_PID=$!
+
+              if kill -0 $DAEMON_PID 2>/dev/null; then
+                  echo "DHCP daemon started successfully"
+              else
+                  echo "DHCP daemon failed to start..."
+                  exit 1
+              fi
+
+              wait $DAEMON_PID
+          securityContext:
+            privileged: true
+            runAsUser: 0
+            runAsGroup: 0
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "50Mi"
+            limits:
+              cpu: "100m"
+              memory: "100Mi"
+          termination:
+            messagePolicy: FallbackToLogsOnError
+          probes:
+            liveness:
+              enabled: true
+              type: exec
+              command:
+                - sh
+                - -c
+                - test -S "{{ tpl .Values.persistence.hostrun.mountPath $ }}/cni/dhcp.sock"
+            readiness:
+              enabled: true
+              type: exec
+              command:
+                - sh
+                - -c
+                - test -S "{{ tpl .Values.persistence.hostrun.mountPath $ }}/cni/dhcp.sock"
+            startup:
+              enabled: true
+              type: exec
+              command:
+                - sh
+                - -c
+                - test -S "{{ tpl .Values.persistence.hostrun.mountPath $ }}/cni/dhcp.sock"
 
 metrics:
   main:
