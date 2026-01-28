@@ -168,8 +168,8 @@ persistence:
     # NOTE:
     # `mountPath` and `hostPath` MUST exactly match `cnimultusdata`'s mount and
     # host path parent directories.
-    mountPath: "{{ dir (tpl .Values.persistence.cnimultusdata.mountPath $) }}"
-    hostPath: "{{ dir (tpl .Values.persistence.cnimultusdata.hostPath $) }}"
+    mountPath: "{{ (tpl .Values.persistence.cnimultusdata.mountPath $) | clean | dir }}"
+    hostPath: "{{ (tpl .Values.persistence.cnimultusdata.hostPath $) | clean | dir }}"
     hostPathType: DirectoryOrCreate
     targetSelector:
       main:
