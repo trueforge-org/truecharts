@@ -1,11 +1,11 @@
 image:
   repository: docker.io/grafana/grafana
   pullPolicy: IfNotPresent
-  tag: 12.3.1@sha256:2175aaa91c96733d86d31cf270d5310b278654b03f5718c59de12a865380a31f
+  tag: 12.3.2@sha256:ba93c9d192e58b23e064c7f501d453426ccf4a85065bf25b705ab1e98602bfb1
 
 sidecarImage:
   repository: ghcr.io/kiwigrid/k8s-sidecar
-  tag: 2.3.0@sha256:e57a47722113abcda1e5a1bf8a29807aa19ffa0ba7dfb295a758c929e1acb7e4
+  tag: 2.5.0@sha256:a6b3f707f883108376514489a94d6629109a327b2978e1d826cd104c4ca436df
 
 # Define extra dashboards to be provisioned
 # Supports 2 formats:

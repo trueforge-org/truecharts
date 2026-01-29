@@ -14,21 +14,14 @@ apiVersion: v2
 appVersion: 3.8.1
 dependencies:
   - name: common
-    version: 28.29.18
+    version: 28.29.40
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
-  - name: mariadb
-    version: 17.11.6
-    repository: oci://oci.trueforge.org/truecharts
-    condition: mariadb.enabled
-    alias: ""
-    tags: []
-    import-values: []
   - name: redis
-    version: 17.15.8
+    version: 17.15.18
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -52,5 +45,5 @@ sources:
   - https://github.com/CTFd/CTFd
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ctfd
 type: application
-version: 9.23.8
+version: 10.0.14
 

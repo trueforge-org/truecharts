@@ -1,6 +1,6 @@
 image:
   repository: docker.io/vikunja/vikunja
-  tag: 0.24.6@sha256:ed1f3ed467fecec0b57e9de7bc6607f8bbcbb23ffced6a81f5dfefc794cdbe3b
+  tag: 1.0.0@sha256:096e8d4067483b770f3899e20655d6235b0b4c6c9c6ec5ef39bae5b270e1a92a
   pullPolicy: IfNotPresent
 workload:
   main:
@@ -22,6 +22,7 @@ workload:
               path: /health
 vikunja:
   service:
+    publicurl: http://localhost/
     jwtttl: 259200
     jwtttllong: 2592000
     motd: Welcome to your new Vikunja instance

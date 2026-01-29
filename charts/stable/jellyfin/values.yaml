@@ -1,11 +1,11 @@
 image:
   repository: oci.trueforge.org/containerforge/jellyfin
   pullPolicy: IfNotPresent
-  tag: 10.11.4@sha256:10a27f8186aee2a978b28be8db5ac26dbaaddc48801bcae97d872135054891a1
+  tag: 10.11.6@sha256:faa694b5a8f321f866d7a8c67c00bdffd4a2493a693f65e573687f1eb679f4f4
 broadcastProxyImage:
   repository: docker.io/alpine/socat
   pullPolicy: IfNotPresent
-  tag: 1.8.0.3@sha256:1edb826a9432ab0b0f8c865181fc278e48b792fc80bebfa0e19205cda71bbbd1
+  tag: 1.8.0.3@sha256:bd8d6a251eb7d1b8c08f7117e3e583e14ec86f43f25d2bf31a6e16ff5dc15f58
 service:
   main:
     ports:

@@ -4,40 +4,44 @@ annotations:
     url: https://discord.com/invite/tVsPTHWTtr
   max_scale_version: 24.04.1
   min_scale_version: 24.04.0
-  truecharts.org/category: backup
+  truecharts.org/category: media
   truecharts.org/max_helm_version: "3.17"
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: incubator
+  truecharts.org/train: stable
 apiVersion: v2
-appVersion: 1.11.1
+appVersion: 0.35.0
 dependencies:
   - name: common
-    version: 28.29.18
+    version: 28.29.40
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
 deprecated: false
-description: Web-accessible backup solution built on top of restic.
-home: https://truecharts.org/charts/incubator/backrest
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/backrest.webp
+description: Plex downloader that brings content from any server to yours!
+home: https://truecharts.org/charts/stable/reaparr
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/reaparr.webp
 keywords:
-  - backrest
-  - backup
-  - restic
+  - reaparr
+  - Backup
+  - Downloaders
+  - MediaApp-Video
+  - MediaApp-Music
+  - MediaApp-Photos
+  - MediaApp-Other
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
     email: info@truecharts.org
     url: https://truecharts.org
-name: backrest
+name: reaparr
 sources:
-  - https://github.com/garethgeorge/backrest
-  - https://github.com/trueforge-org/truecharts/tree/master/charts/incubator/backrest
-  - https://hub.docker.com/r/garethgeorge/backrest
+  - https://github.com/reaparr/reaparr/
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/reaparr
+  - https://hub.docker.com/r/reaparr/reaparr
 type: application
-version: 0.2.0
+version: 1.1.5
 

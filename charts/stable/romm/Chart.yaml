@@ -11,24 +11,24 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 4.5.0
+appVersion: 4.6.0
 dependencies:
   - name: common
-    version: 28.29.18
+    version: 28.29.40
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.11.6
+    version: 17.11.16
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
     tags: []
     import-values: []
   - name: redis
-    version: 17.15.8
+    version: 17.15.18
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -52,5 +52,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/romm
   - https://github.com/zurdi15/romm
 type: application
-version: 14.26.2
+version: 14.27.3
 

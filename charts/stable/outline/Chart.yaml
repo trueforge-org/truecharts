@@ -11,17 +11,17 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
 apiVersion: v2
-appVersion: 1.1.0
+appVersion: 1.4.0
 dependencies:
   - name: common
-    version: 28.29.18
+    version: 28.29.40
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: redis
-    version: 17.15.8
+    version: 17.15.18
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -45,5 +45,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/outline
   - https://hub.docker.com/r/outlinewiki/outline
 type: application
-version: 17.5.8
+version: 18.2.1
 
