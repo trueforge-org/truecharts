@@ -2,7 +2,7 @@
 title: Multus
 ---
 
-It is strongly recommended to check out the Multus [poject documentation](https://github.com/k8snetworkplumbingwg/multus-cni/tree/master/docs) before
+It is strongly recommended to check out the Multus [project documentation](https://github.com/k8snetworkplumbingwg/multus-cni/tree/master/docs) before
 you start configuring this chart.
 
 ## Integrations
