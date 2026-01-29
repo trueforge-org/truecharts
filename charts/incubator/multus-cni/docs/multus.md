@@ -20,7 +20,7 @@ cni:
 
 ### Talos
 
-Talos does no ship all reference CNI plugins by default. You can check which
+Talos does not ship all reference CNI plugins by default. You can check which
 CNI plugins are available in your talos install using the following command:
 
 ```bash
@@ -199,7 +199,7 @@ mounts). These changes cannot be reversed by simply uninstalling the chart.
 To combat this, this chart provides an "uninstall" mode, which takes care of
 cleaning up any host filesystem changes made by this chart.
 
-Therefore, when uninstalling, it is recommended first configure the chart in
+Therefore, when uninstalling, it is recommended to first configure the chart in
 "uninstall" mode like so:
 
 ```yaml
@@ -255,8 +255,21 @@ You can try to prevent this from happening by first scaling down primary CNI to
 0 replicas, and checking its config file has been removed from the host file
 system.
 
-If a stale file is left after chaning the config file location, you must manually
-remove it, as otherwise after a node reboot the cluster will see the stale
-primary CNI file and immediately try to use it instead of waiting for Multus to
-start.
+If a stale file is left after changing the config file location, you must manually
+remove it from the filesystem of **all** nodes. Otherwise, after a node reboot the cluster will see the stale primary CNI file and immediately try to use it instead of waiting for Multus to start.
+
+An easy way to access a node's filesystem is using the `kubectl debug` command like
+so:
+
+```bash
+kubectl debug node/<NODE_NAME> --profile=sysadmin exec -it --image ubuntu -n kube-system -- sh
+```
+
+Once inside the pod, the host's filesystem will be mounted under `/host`.
+
+When done clean up the completed node debug pod(s) using the following command:
+
+```bash
+kubectl get pods -n kube-system -o name | grep "node-debugger" | xargs kubectl delete -n kube-system
+```
 :::
