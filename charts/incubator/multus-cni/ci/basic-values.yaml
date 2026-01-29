@@ -1,3 +1,10 @@
+workload:
+  main:
+    # This is a workaround for CI and should be removed once
+    # https://github.com/trueforge-org/truecharts/issues/43512
+    # is fixed
+    type: Deployment
+
 configmap:
   dummy:
     enabled: true
