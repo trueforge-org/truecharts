@@ -37,6 +37,7 @@ secret:
           type: redis
 
         service:
+          publicurl: {{ .Values.vikunja.service.publicurl | quote }}
           interface: {{ printf ":%v" .Values.service.main.ports.main.port }}
           JWTSecret: {{ $jwtSecret }}
           timezone: {{ .Values.TZ | quote }}
