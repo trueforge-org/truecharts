@@ -103,12 +103,24 @@ vikunja:
     openid:
       enabled: false
       redirecturl: ""
-      providers: []
-      # - name: ""
-      #   authurl: ""
-      #   logouturl: ""
-      #   clientid: ""
-      #   clientsecret: ""
+      providers: {}
+      # Example configuration for multiple OpenID providers:
+      # providers:
+      #   provider-id1:
+      #     name: "Provider 1"
+      #     authurl: "https://auth.example.com"  # Used for OIDC Discovery, usually the issuer
+      #     logouturl: ""  # Optional
+      #     clientid: "vikunja-client-id"
+      #     clientsecret: "vikunja-client-secret"
+      #     scope: "openid profile email"
+      #     forceuserinfo: false  # Optional: Set to true to always use UserInfo endpoint instead of ID token claims
+      #   provider-id2:
+      #     name: "Provider 2"
+      #     authurl: "https://auth2.example.com"
+      #     clientid: "vikunja-client-id-2"
+      #     clientsecret: "vikunja-client-secret-2"
+      #     scope: "openid profile email"
+      #     forceuserinfo: false
   migration:
     todoist:
       enable: false

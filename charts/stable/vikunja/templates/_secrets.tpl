@@ -151,14 +151,23 @@ secret:
             {{- end }}
             {{- with .Values.vikunja.auth.openid.providers }}
             providers:
-              {{- range . }}
-              - name: {{ .name | quote }}
-                authurl: {{ .authurl | quote }}
-                {{- with .logouturl }}
+              {{- range $key, $value := . }}
+              {{ $key }}:
+                name: {{ $value.name | quote }}
+                authurl: {{ $value.authurl | quote }}
+                {{- with $value.logouturl }}
                 logouturl: {{ . | quote }}
                 {{- end }}
-                clientid: {{ .clientid | quote }}
-                clientsecret: {{ .clientsecret | quote }}
+                clientid: {{ $value.clientid | quote }}
+                clientsecret: {{ $value.clientsecret | quote }}
+                {{- if hasKey $value "scope" }}
+                scope: {{ $value.scope | quote }}
+                {{- end }}
+                {{- if hasKey $value "forceuserinfo" }}
+                forceuserinfo: {{ $value.forceuserinfo }}
+                {{- else }}
+                forceuserinfo: false
+                {{- end }}
               {{- end }}
             {{- end }}
 
