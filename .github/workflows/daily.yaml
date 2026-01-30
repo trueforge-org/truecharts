@@ -35,12 +35,12 @@ jobs:
             **/go.mod
             **/go.sum
 
-      - name: Install ./clustertool
+      - name: Install ./forgetool
         shell: bash
         run: |
-          VERSION="2.0.6"
-          FILENAME="clustertool_${VERSION}_linux_amd64.tar.gz"
-          URL="https://github.com/trueforge-org/truecharts/releases/download/v${VERSION}/${FILENAME}"
+          VERSION="3.0.0"
+          FILENAME="forgetool_${VERSION}_linux_amd64.tar.gz"
+          URL="https://github.com/trueforge-org/forgetool/releases/download/v${VERSION}/${FILENAME}"
 
           mkdir -p temp
           cd temp
@@ -93,7 +93,7 @@ jobs:
       - name: Fix Chart.yaml
         shell: bash
         run: |
-           ./temp/clustertool charts genmeta
+           ./temp/forgetool charts genmeta
 
       - name: Cleanup
         run: |

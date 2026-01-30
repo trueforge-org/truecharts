@@ -60,12 +60,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install ./clustertool
+      - name: Install ./forgetool
         shell: bash
         run: |
-          VERSION="2.0.6"
-          FILENAME="clustertool_${VERSION}_linux_amd64.tar.gz"
-          URL="https://github.com/trueforge-org/truecharts/releases/download/v${VERSION}/${FILENAME}"
+          VERSION="3.0.0"
+          FILENAME="forgetool_${VERSION}_linux_amd64.tar.gz"
+          URL="https://github.com/trueforge-org/forgetool/releases/download/v${VERSION}/${FILENAME}"
 
           mkdir -p temp
           cd temp
@@ -113,7 +113,7 @@ jobs:
             gunzip "$JSON_FILE.gz" --force # Force overwrite if file already exists
           fi
 
-          ./temp/clustertool charts genchangelog "$REPO_PATH" "$TEMPLATE_PATH" "$OUTPUT_DIR"
+          ./temp/forgetool charts genchangelog "$REPO_PATH" "$TEMPLATE_PATH" "$OUTPUT_DIR"
 
           # TODO: Test remove later
           echo "temp content:"
@@ -195,7 +195,7 @@ jobs:
           mkdir -p website/public/img/hotlink-ok/chart-icons-small || echo "chart-icons-small path already exists, continuing..."
           mkdir -p website/src/assets || echo "assets path already exists, continuing..."
 
-          ./temp/clustertool charts genchartlist ./charts
+          ./temp/forgetool charts genchartlist ./charts
           mv -f charts.json website/src/assets/charts.json
           mv -f ./website/src/content/docs/truetech/truecharts/charts/description-list.mdx ./description-list.mdx
           echo "Copying changelogs to docs"
