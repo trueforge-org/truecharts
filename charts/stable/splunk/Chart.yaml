@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: Tools-Utilities
   trueforge.org/max_helm_version: "3.17"
   trueforge.org/max_kubernetes_version: 1.32.0
@@ -20,8 +26,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: This is a Chartfile for Splunk designed for OpenShift and TrueNAS based on Alpine Linux - https://www.splunk.com
-home: https://trueforge.org/truetech/truecharts/truetech/truecharts/charts/stable/splunk
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/splunk.webp
+home: https://truecharts.org/charts/stable/splunk
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/splunk.webp
 keywords:
   - splunk
   - Tools-Utilities
@@ -29,12 +35,13 @@ keywords:
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: splunk
 sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/splunk
   - https://hub.docker.com/r/splunk/splunk
   - https://splunk.github.io/docker-splunk
 type: application
-version: 12.12.5
+version: 12.12.6
+
