@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: incubator
   trueforge.org/max_helm_version: "3.17"
   trueforge.org/max_kubernetes_version: 1.32.0
@@ -20,18 +26,19 @@ dependencies:
     import-values: []
 deprecated: false
 description: MySQL Workbench is a unified visual tool for database architects, developers and DBAs.
-home: https://trueforge.org/truetech/truecharts/truetech/truecharts/charts/stable/mysql-workbench
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/mysql-workbench.webp
+home: https://truecharts.org/charts/stable/mysql-workbench
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/mysql-workbench.webp
 keywords:
   - mysql-workbench
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: mysql-workbench
 sources:
   - https://ghcr.io/linuxserver/mysql-workbench
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mysql-workbench
 type: application
-version: 12.13.23
+version: 12.13.24
+
