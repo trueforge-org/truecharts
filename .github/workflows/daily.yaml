@@ -69,13 +69,15 @@ jobs:
               fi
 
               # Transcode to icon-small.webp
-              if [[ "$EXT" != "webp" && ! -f "${DIR}/icon-small.webp" ]]; then
+              if [[! -f "${DIR}/icon-small.webp" ]]; then
                   echo "converting file to icon-small.webp: $FILE"
                   cwebp -resize 32 32 -m 6 -mt -q $QUALITY "$FILE" -o "${DIR}/icon-small.webp" &>/dev/null || echo "transcode failed for icon-small.webp"
               fi
 
-              # Remove the original file if it's not a .webp file after both transcodes
-              if [[ "$EXT" != "webp" ]]; then
+              # Only remove the original file if:
+              # 1. it's not already a webp
+              # 2. icon.webp exists in the same directory
+              if [[ "$EXT" != "webp" && -f "${DIR}/icon.webp" ]]; then
                   rm "$FILE"
               fi
           done
