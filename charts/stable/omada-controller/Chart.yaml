@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: media
   trueforge.org/max_helm_version: "3.17"
   trueforge.org/max_kubernetes_version: 1.32.0
@@ -20,19 +26,20 @@ dependencies:
     import-values: []
 deprecated: false
 description: Omada is a SDN tool for TP-Link Omada hardware
-home: https://trueforge.org/truetech/truecharts/truetech/truecharts/charts/stable/omada-controller
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/omada-controller.webp
+home: https://truecharts.org/charts/stable/omada-controller
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/omada-controller.webp
 keywords:
   - omada-controller
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: omada-controller
 sources:
   - https://github.com/mbentley/docker-omada-controller
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/omada-controller
   - https://hub.docker.com/r/mbentley/omada-controller
 type: application
-version: 18.3.6
+version: 18.3.7
+
