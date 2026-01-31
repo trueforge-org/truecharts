@@ -65,11 +65,11 @@ jobs:
               # Transcode to icon.webp
               if [[ "$EXT" != "webp" && ! -f "${DIR}/icon.webp" ]]; then
                   echo "converting file to icon.webp: $FILE"
-                  cwebp -resize 150 150  -m 6 -mt -q $QUALITY "$FILE" -o "${FILE/%.$EXT/.webp}" &>/dev/null || echo "transcode failed for icon.webp"
+                  cwebp -resize 150 150  -m 6 -mt -q $QUALITY "$FILE" -o "${DIR}/icon.webp" &>/dev/null || echo "transcode failed for icon.webp"
               fi
 
               # Transcode to icon-small.webp
-              if [[! -f "${DIR}/icon-small.webp" ]]; then
+              if [[ ! -f "${DIR}/icon-small.webp" ]]; then
                   echo "converting file to icon-small.webp: $FILE"
                   cwebp -resize 32 32 -m 6 -mt -q $QUALITY "$FILE" -o "${DIR}/icon-small.webp" &>/dev/null || echo "transcode failed for icon-small.webp"
               fi
