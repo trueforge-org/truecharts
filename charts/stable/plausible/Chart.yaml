@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: analytics
   trueforge.org/max_helm_version: "3.20"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -18,7 +24,7 @@ dependencies:
     tags: []
     import-values: []
   - name: clickhouse
-    version: 16.19.15
+    version: 17.0.0
     repository: oci://oci.trueforge.org/truecharts
     condition: clickhouse.enabled
     alias: ""
@@ -26,16 +32,16 @@ dependencies:
     import-values: []
 deprecated: false
 description: Plausible is lightweight and open source web analytics. No cookies and fully compliant with GDPR, CCPA and PECR.
-home: https://trueforge.org/truetech/truecharts/charts/stable/plausible
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/plausible.webp
+home: https://truecharts.org/charts/stable/plausible
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/plausible.webp
 keywords:
   - plausible
   - analytics
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: plausible
 sources:
   - https://github.com/plausible/analytics
@@ -45,5 +51,5 @@ sources:
   - https://plausible.io/
   - https://plausible.io/docs/self-hosting
 type: application
-version: 14.32.25
+version: 15.0.0
 
