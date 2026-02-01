@@ -10,6 +10,11 @@ annotations:
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: library
+  trueforge.org/category: unsorted
+  trueforge.org/max_helm_version: "3.20"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: library
 apiVersion: v2
 appVersion: 1.11.0
 dependencies: []
@@ -31,10 +36,24 @@ sources:
   - https://ghcr.io/cloudnative-pg/postgis
   - https://ghcr.io/cloudnative-pg/postgresql
   - https://ghcr.io/tensorchord/cloudnative-pgvecto.rs
+  - https://ghcr.io/tensorchord/cloudnative-vectorchord
   - https://ghcr.io/traefik/whoami
-  - https://github.com/truecharts/charts/tree/master/charts/library/common
+  - https://github.com/truecharts/containers/tree/master/apps/alpine
+  - https://github.com/truecharts/containers/tree/master/apps/gluetun
+  - https://github.com/truecharts/containers/tree/master/apps/netshoot
+  - https://github.com/truecharts/containers/tree/master/apps/openvpn-client
+  - https://github.com/truecharts/containers/tree/master/apps/tailscale
+  - https://github.com/truecharts/containers/tree/master/apps/wireguard
+  - https://github.com/trueforge-org/containers/tree/main/apps/code-server
+  - https://github.com/trueforge-org/containers/tree/main/apps/go-yq
+  - https://github.com/trueforge-org/containers/tree/main/apps/kubectl
+  - https://github.com/trueforge-org/containers/tree/main/apps/mariadb-client
+  - https://github.com/trueforge-org/containers/tree/main/apps/mongosh
+  - https://github.com/trueforge-org/containers/tree/main/apps/postgresql-client
+  - https://github.com/trueforge-org/containers/tree/main/apps/scratch
+  - https://github.com/trueforge-org/containers/tree/main/apps/ubuntu
+  - https://github.com/trueforge-org/containers/tree/main/apps/valkey-tools
   - https://github.com/trueforge-org/truecharts/tree/master/charts/library/common
   - https://hub.docker.com/_/
-  - https://hub.docker.com/r/mikefarah/yq
 type: library
 version: 29.0.0

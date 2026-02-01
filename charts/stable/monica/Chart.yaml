@@ -2,26 +2,23 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: crm
-  truecharts.org/max_helm_version: "3.17"
-  truecharts.org/max_kubernetes_version: 1.32.0
-  truecharts.org/min_helm_version: "3.14"
-  truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: stable
+  trueforge.org/category: crm
+  trueforge.org/max_helm_version: "3.20"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
 appVersion: 4.1.2
 dependencies:
   - name: common
-    version: 28.26.1
+    version: 28.29.40
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.9.1
+    version: 17.11.16
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -29,21 +26,20 @@ dependencies:
     import-values: []
 deprecated: false
 description: Monica is a great open source personal relationship management system.
-home: https://truecharts.org/charts/stable/monica
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/monica.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/monica
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/monica.webp
 keywords:
   - crm
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: monica
 sources:
   - https://github.com/monicahq/monica
-  - https://github.com/truecharts/charts/tree/master/charts/stable/monica
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/monica
   - https://hub.docker.com/_/monica
 type: application
-version: 16.14.3
+version: 16.18.33
 

@@ -2,19 +2,16 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: AI
-  truecharts.org/max_helm_version: "3.17"
-  truecharts.org/max_kubernetes_version: 1.32.0
-  truecharts.org/min_helm_version: "3.14"
-  truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: stable
+  trueforge.org/category: AI
+  trueforge.org/max_helm_version: "3.20"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
 appVersion: 2.6.5
 dependencies:
   - name: common
-    version: 28.26.1
+    version: 28.29.40
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,22 +19,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: A standalone, self-hosted, fast, free and Open Source Artificial Intelligence microserver for any platform, any language.
-home: https://truecharts.org/charts/stable/codeproject-ai-server
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/codeproject-ai-server.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/codeproject-ai-server
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/codeproject-ai-server.webp
 keywords:
   - ai-server
   - sense-ai
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: codeproject-ai-server
 sources:
   - https://github.com/codeproject/CodeProject.AI-Server
-  - https://github.com/truecharts/charts/tree/master/charts/stable/codeproject-ai-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/codeproject-ai-server
   - https://hub.docker.com/r/codeproject/ai-server
 type: application
-version: 5.11.1
+version: 5.13.15
 

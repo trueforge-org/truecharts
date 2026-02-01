@@ -2,19 +2,16 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: Other
-  truecharts.org/max_helm_version: "3.17"
-  truecharts.org/max_kubernetes_version: 1.32.0
-  truecharts.org/min_helm_version: "3.14"
-  truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: stable
+  trueforge.org/category: Other
+  trueforge.org/max_helm_version: "3.20"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.26.1
+    version: 28.29.40
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,24 +19,23 @@ dependencies:
     import-values: []
 deprecated: false
 description: pyLoad(https://pyload.net/) is a Free and Open Source download manager written in Python and designed to be extremely lightweight, easily extensible and fully manageable via web.
-home: https://truecharts.org/charts/stable/pyload-ng
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/pyload-ng.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/pyload-ng
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/pyload-ng.webp
 keywords:
   - pyload-ng
   - Other
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: pyload-ng
 sources:
   - https://fleet.linuxserver.io/image?name=linuxserver/pyload-ng
   - https://github.com/linuxserver/docker-pyload-ng#readme
   - https://github.com/orgs/linuxserver/packages/container/package/pyload-ng
-  - https://github.com/truecharts/charts/tree/master/charts/stable/pyload-ng
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/pyload-ng
   - https://pyload.net/
 type: application
-version: 8.11.2
+version: 8.13.23
 

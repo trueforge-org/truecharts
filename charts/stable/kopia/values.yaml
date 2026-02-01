@@ -1,8 +1,7 @@
 image:
-  repository: docker.io/kopia/kopia
-  tag: 20251015.0.22854@sha256:322189265e63a21bca4d908c5a4056df0c1872a29b2195bdbc33a987e596d816
+  repository: oci.trueforge.org/containerforge/kopia
+  tag: 0.22.3@sha256:f6fe7a8d1f048164203c05e1f8ead63d3ef807df93a92fbb57ef1eb7447300f6
   pullPolicy: IfNotPresent
-
 service:
   main:
     ports:
@@ -25,10 +24,6 @@ workload:
             - secretRef:
                 name: "kopia-secrets"
           args:
-            - server
-            - start
-            - --address=http://0.0.0.0:{{ .Values.service.main.ports.main.port }}
-            - --insecure
             - --server-username={{ .Values.kopia.server_username }}
             - --server-password={{ .Values.kopia.server_password }}
           probes:

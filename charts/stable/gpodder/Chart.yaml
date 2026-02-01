@@ -2,19 +2,16 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: Downloaders
-  truecharts.org/max_helm_version: "3.17"
-  truecharts.org/max_kubernetes_version: 1.32.0
-  truecharts.org/min_helm_version: "3.14"
-  truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: stable
+  trueforge.org/category: Downloaders
+  trueforge.org/max_helm_version: "3.20"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.26.1
+    version: 28.29.40
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +19,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: gPodder is a simple, open source podcast client written in Python using GTK+. In development since 2005 with a proven, mature codebase.&amp;#xD;
-home: https://truecharts.org/charts/stable/gpodder
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/gpodder.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/gpodder
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/gpodder.webp
 keywords:
   - gpodder
   - Downloaders
@@ -31,14 +28,13 @@ keywords:
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: gpodder
 sources:
-  - https://github.com/truecharts/charts/tree/master/charts/stable/gpodder
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/gpodder
   - https://gpodder.github.io/
   - https://hub.docker.com/r/xthursdayx/gpodder-docker
 type: application
-version: 8.11.1
+version: 8.13.15
 

@@ -1,7 +1,7 @@
 image:
   repository: ghcr.io/linuxserver/projectsend
   pullPolicy: IfNotPresent
-  tag: latest@sha256:b75dbce3af839b9181b310ea9bc186fb1113a8598379fe495e3b1abd3f7e9b5e
+  tag: latest@sha256:27151816b5dc3f3a2565230cf186977122dc9f6db87c46d94415a85a61e97ca8
 securityContext:
   container:
     runAsNonRoot: false
@@ -13,7 +13,7 @@ service:
     ports:
       main:
         targetPort: 80
-        port: 10127       
+        port: 10127
 workload:
   main:
     podSpec:

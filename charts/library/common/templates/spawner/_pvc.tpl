@@ -153,7 +153,7 @@
             {{- else if $credentials.customCA -}}
               {{/* Create Custom CA Secret for VolSync */}}
 
-              {{- $volsyncCASecretName := printf "%s-volsync-ca-%s" (include "tc.v1.common.lib.chart.names.fullname" $ ) $volsync.credentials -}}
+              {{- $volsyncCASecretName := printf "%s-volsync-ca-%s" (include "tc.v1.common.lib.chart.names.fullname" $ ) (lower $volsync.credentials) -}}
               {{- $volsyncCAKey := "ca.crt" -}}
 
               {{- $_ := set $volsyncData "customCA" $volsyncCASecretName -}}

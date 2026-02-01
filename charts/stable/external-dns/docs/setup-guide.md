@@ -15,7 +15,21 @@ Inspired by Kubernetes DNS, Kubernetes' cluster-internal DNS server, ExternalDNS
 
 ## Installation instructions
 
-This guide will cover 2 scenarios, `Cloudflare` and `Pi-hole`. For more external DNS record providers, see [External-DNS Docs](https://github.com/kubernetes-sigs/external-dns/tree/master/docs/tutorials).
+This guide will cover 3 scenarios, `Cloudflare`, `Pi-hole` and `PowerDNS`. For more external DNS record providers, see [External-DNS Docs](https://github.com/kubernetes-sigs/external-dns/tree/master/docs/tutorials).
+
+### PowerDNS
+
+These instructions taken from [external-dns powerdns tutorial](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/pdns.md)
+
+### Step 1
+
+Set pdns provider with externaldns.provider: pdns
+
+### Step 2
+
+Set externaldns.pdns.pdnsApiKey and externaldns.pdns.pdnsServerUrl. <br>
+The ApiKey must provide Zone Read/Write on all zones covered by domainFilters<br>
+The pdnsServerUrl is the full URL of the powerdns api endpoint, including the port (http://pdns-server-api.tld:9191/)
 
 ### Cloudflare
 

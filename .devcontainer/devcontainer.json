@@ -1,14 +1,35 @@
 {
-    "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
-    "name": "TrueCharts",
-    "image": "oci.trueforge.org/tccr/devcontainer:v2.0.6@sha256:5292842e56b61c27c83b4e8b3daabf5679066df695a72e12596693518b908157",
-    "postCreateCommand": {
-      "setup": "bash ${containerWorkspaceFolder}/.devcontainer/postCreateCommand.sh"
-    },
-    "postStartCommand": {
-      "git": "git config --global --add safe.directory ${containerWorkspaceFolder}"
-    },
-    "postAttachCommand": "fish",
-    "updateRemoteUserUID": false,
-    "runArgs": ["--privileged"]
+  "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
+  "name": "TrueCharts",
+  "image": "oci.trueforge.org/containerforge/devcontainer:3.0.1@sha256:218881df673fee2d9ad1086108180a99b3024b08a80ca3ea264bed4d591bb77b",
+  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "albert.TabOut",
+        "mikestead.dotenv",
+        "mitchdenny.ecdc",
+        "signageos.signageos-vscode-sops",
+        "EditorConfig.editorconfig",
+        "PKief.material-icon-theme",
+        "usernamehw.errorlens",
+        "redhat.vscode-yaml",
+        "weaveworks.vscode-gitops-tools",
+        "Tim-Koehler.helm-intellisense",
+        "ms-kubernetes-tools.vscode-kubernetes-tools",
+        "sandipchitale.vscode-kubernetes-helm-extras",
+        "VadzimNestsiarenka.helm-template-preview-and-more",
+        "karyan40024.helmix",
+        "eamodio.gitlens",
+        "formulahendry.code-runner",
+        "streetsidesoftware.code-spell-checker",
+        "Codium.codium",
+        "mhutchie.git-graph",
+        "yzhang.markdown-all-in-one",
+        "searKing.preview-vscode",
+        "DavidAnson.vscode-markdownlint",
+        "GitHub.copilot"
+      ]
+    }
   }
+}

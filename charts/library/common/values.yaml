@@ -583,68 +583,78 @@ tailscaleImage:
   pullPolicy: IfNotPresent
 
 codeserverImage:
-  repository: oci.trueforge.org/tccr/code-server
-  tag: v4.104.2@sha256:82dfb0c655c7ea13280ac882ee544cdaed92875c7689e53e5271f6d03ea99ba0
+  repository: oci.trueforge.org/containerforge/code-server
+  tag: "4.105.1@sha256:2c31241f42178f3f5d27d51882a41c4f8a8fa0542c97fefef90573149f265a4f"
+  pullPolicy: IfNotPresent
+
+ubuntuImage:
+  repository: oci.trueforge.org/containerforge/ubuntu
+  tag: "24.04@sha256:431129004c8b82702e6a1c82ffc20d64c770179547c8d77deb7133c314a6d3b8"
   pullPolicy: IfNotPresent
 
 kubectlImage:
-  repository: oci.trueforge.org/tccr/kubectl
-  tag: latest@sha256:7e2d7043f4cac6cc040e1474940f3a11f126a90c789dd72199a9a27324063a93
+  repository: oci.trueforge.org/containerforge/kubectl
+  tag: "1.31.1@sha256:f97e8a1f4e8d2d5880b53b973dfaa099d2c18b5488bebaad78958e5f6ae7f159"
   pullPolicy: IfNotPresent
 
 postgresClientImage:
-  repository: oci.trueforge.org/tccr/db-wait-postgres
-  tag: v1.1.0@sha256:67ff700c4e746c5a1205b4629d4f0910a21f44d1e993941fb69c750e651c0b39
+  repository: oci.trueforge.org/containerforge/postgresql-client
+  tag: "1.1.0@sha256:9096db20fdeb452347a1ea16e5dda8a21d6aba03f63b79c2c694f13e72d213b6"
   pullPolicy: IfNotPresent
 
 mariadbClientImage:
-  repository: oci.trueforge.org/tccr/db-wait-mariadb
-  tag: v1.1.0@sha256:8614f77d546e1f03c5104cf75387eb04efa7cb1ea4557a2d51112f35c69c0905
+  repository: oci.trueforge.org/containerforge/mariadb-client
+  tag: "1.1.0@sha256:67e74083d952ab67a31a6adbf43ef429889b9ef084a5583b0c939a892d3b1b9b"
+  pullPolicy: IfNotPresent
+
+valkeyClientImage:
+  repository: oci.trueforge.org/containerforge/valkey-tools
+  tag: "1.1.0@sha256:ff58ea59c54d579152516df543f0e4ae42294f05e24d7f4d54f80000085fa571"
   pullPolicy: IfNotPresent
 
 mongodbClientImage:
-  repository: oci.trueforge.org/tccr/db-wait-mongodb
-  tag: v1.2.0@sha256:e6b0462907022ab0fa7975e2b22e464fc1469f53cb80fd7f61bbbffe305cf210
+  repository: oci.trueforge.org/containerforge/mongosh
+  tag: "1.2.0@sha256:cfe9c574adbc5ddd892dbe90db7109bc4da33b0fa8b4343e009644a7e0f92ba6"
   pullPolicy: IfNotPresent
 
 postgres15Image:
   repository: ghcr.io/cloudnative-pg/postgresql
-  tag: "15.14"
+  tag: "15.15@sha256:0451cd9181b66273a697738b6dd1d0258a5385dfd1c5d6d372b7fba5ed59f3d2"
   pullPolicy: IfNotPresent
 
 postgres16Image:
   repository: ghcr.io/cloudnative-pg/postgresql
-  tag: "16.10"
+  tag: "16.11@sha256:44ae136890c37438f5324e4fe5b1f79e556440585688fe558604cc0d408bc560"
   pullPolicy: IfNotPresent
 
 postgresPostgis15Image:
   repository: ghcr.io/cloudnative-pg/postgis
-  tag: "15-3.4"
+  tag: "15-3.4@sha256:4596b193991cd2463a07d40e3d3d62c59f046a7dece8f163ad1aba15925a38e4"
   pullPolicy: IfNotPresent
 
 postgresPostgis16Image:
   repository: ghcr.io/cloudnative-pg/postgis
-  tag: "16-3.4"
+  tag: "16-3.4@sha256:bb5a8590a8c934767482e34e1d103253f412aec703b77bbc52ad9044bf6e56f9"
   pullPolicy: IfNotPresent
 
 postgresVectors15Image:
   repository: ghcr.io/tensorchord/cloudnative-pgvecto.rs
-  tag: "15.7-v0.2.1"
+  tag: "15.7-v0.2.1@sha256:dbdeddf0d635f76df41f745407816c87c7468df35e3b7b0665ca4e0500ff3048"
   pullPolicy: IfNotPresent
 
 postgresVectors16Image:
   repository: ghcr.io/tensorchord/cloudnative-pgvecto.rs
-  tag: "16.3-v0.2.1"
+  tag: "16.3-v0.2.1@sha256:f1a19d4fc4073b0671a72ad34ef012aa20d21b3ddf5b4b0c9077d54450db679a"
   pullPolicy: IfNotPresent
 
 postgresVectorchord15Image:
   repository: ghcr.io/tensorchord/cloudnative-vectorchord
-  tag: "15.14-0.5.3"
+  tag: "15.14-0.5.3@sha256:1978732dc1e7e9ef94b9e806a094fcb123afab1e50a7e878e2d29de8b849cf47"
   pullPolicy: IfNotPresent
 
 postgresVectorchord16Image:
   repository: ghcr.io/tensorchord/cloudnative-vectorchord
-  tag: "16.10-0.5.3"
+  tag: "16.10-0.5.3@sha256:a0776b514bb23858d8aa59b08587223f8b449bba1b278ffbcf85e097d6504eb0"
   pullPolicy: IfNotPresent
 
 # -- OpenVPN specific configuration
@@ -1014,6 +1024,9 @@ addons:
     # -- Enable running a code-server container in the pod
     container:
       enabled: true
+      env:
+        PORT: 12321
+        DEFAULT_WORKSPACE: /
       probes:
         liveness:
           enabled: true
@@ -1035,12 +1048,6 @@ addons:
         runAsGroup: 0
         runAsNonRoot: false
         readOnlyRootFilesystem: false
-      args:
-        - "--port"
-        - "12321"
-        - "/"
-        - --auth
-        - none
       # - --user-data-dir
       # - "/config/.vscode"
       # -- Select a workload to add the addon to

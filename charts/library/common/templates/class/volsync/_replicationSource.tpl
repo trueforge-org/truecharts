@@ -50,7 +50,7 @@ metadata:
 spec:
   sourcePVC: {{ $objectData.name }}
   trigger:
-    schedule: {{ $schedule }}
+    schedule: {{ $schedule | quote }}
   {{ $volsyncData.type }}:
     repository: {{ $volsyncData.repository }}
     {{- if $volsyncData.customCA }}

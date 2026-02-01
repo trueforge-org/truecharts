@@ -124,7 +124,7 @@ command:
     do
       response=$(
           timeout -s 3 2 \
-          redis-cli \
+          valkey-cli \
             -h "$REDIS_HOST" \
             -p "$REDIS_PORT" \
             ping

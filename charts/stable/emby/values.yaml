@@ -1,11 +1,11 @@
 image:
-  repository: ghcr.io/home-operations/emby
+  repository: oci.trueforge.org/containerforge/emby
   pullPolicy: IfNotPresent
-  tag: 4.9.1.80@sha256:28462287162b7daa3ff91ee1810e6cc26331e35f7b7c3955b303d4864f32ec6a
+  tag: 4.9.4.1@sha256:b08bafe9d43c01062529879e420182afc8bfb77d3077de4074c815d33d0e230b
 broadcastProxyImage:
   repository: docker.io/alpine/socat
   pullPolicy: IfNotPresent
-  tag: 1.8.0.3@sha256:4c5f173141228e8f823824afa3fb40f2490ee06bcba4950a0cfe2f83e203327c
+  tag: 1.8.0.3@sha256:bd8d6a251eb7d1b8c08f7117e3e583e14ec86f43f25d2bf31a6e16ff5dc15f58
 service:
   main:
     ports:

@@ -2,19 +2,16 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: Productivity
-  truecharts.org/max_helm_version: "3.17"
-  truecharts.org/max_kubernetes_version: 1.32.0
-  truecharts.org/min_helm_version: "3.14"
-  truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: stable
+  trueforge.org/category: Productivity
+  trueforge.org/max_helm_version: "3.20"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.26.1
+    version: 28.29.40
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +19,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Krusader is an advanced orthodox file manager for KDE and other desktops in the Unix world. It is similar to the console-based GNU Midnight Commander, GNOME Commander for the GNOME desktop environment, or Total Commander for Windows, all of which can trace their paradigmatic features to the original Norton Commander for DOS. It supports extensive archive handling, mounted filesystem support, FTP, advanced search, viewer/editor, directory synchronisation, file content comparisons, batch renaming, etc.
-home: https://truecharts.org/charts/stable/krusader
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/krusader.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/krusader
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/krusader.webp
 keywords:
   - krusader
   - Productivity
@@ -31,14 +28,13 @@ keywords:
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: krusader
 sources:
   - https://ghcr.io/ich777/krusader
-  - https://github.com/truecharts/charts/tree/master/charts/stable/krusader
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/krusader
   - https://krusader.org/
 type: application
-version: 8.11.1
+version: 8.13.17
 

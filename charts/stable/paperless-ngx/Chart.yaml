@@ -2,24 +2,23 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  truecharts.org/category: productivity
-  truecharts.org/max_helm_version: "3.17"
-  truecharts.org/max_kubernetes_version: 1.32.0
-  truecharts.org/min_helm_version: "3.14"
-  truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: stable
+  trueforge.org/category: productivity
+  trueforge.org/max_helm_version: "3.20"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
-appVersion: 2.19.1
+appVersion: 2.20.6
 dependencies:
   - name: common
-    version: 28.26.1
+    version: 28.29.40
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: redis
-    version: 17.13.1
+    version: 17.15.18
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -27,8 +26,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Paperless-ngx is an application by Daniel Quinn and contributors that indexes your scanned documents.
-home: https://truecharts.org/charts/stable/paperless-ngx
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/paperless-ngx.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/paperless-ngx
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/paperless-ngx.webp
 keywords:
   - paperless-ng
   - paperless-ngx
@@ -37,17 +36,16 @@ keywords:
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: paperless-ngx
 sources:
   - https://ghcr.io/paperless-ngx/paperless-ngx
   - https://github.com/paperless-ngx/paperless-ngx
-  - https://github.com/truecharts/charts/tree/master/charts/stable/paperless-ngx
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/paperless-ngx
   - https://hub.docker.com/r/apache/tika
   - https://hub.docker.com/r/gotenberg/gotenberg
   - https://paperless-ngx.readthedocs.io/en/latest/
 type: application
-version: 11.29.1
+version: 11.36.3
 

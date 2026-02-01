@@ -2,17 +2,16 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  truecharts.org/category: security
-  truecharts.org/max_helm_version: "3.17"
-  truecharts.org/max_kubernetes_version: 1.32.0
-  truecharts.org/min_helm_version: "3.14"
-  truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: stable
+  trueforge.org/category: security
+  trueforge.org/max_helm_version: "3.20"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
 appVersion: 3.5.0
 dependencies:
   - name: common
-    version: 28.26.1
+    version: 28.29.40
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,20 +19,19 @@ dependencies:
     import-values: []
 deprecated: false
 description: Zilean self-hosted
-home: https://truecharts.org/charts/stable/zilean
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/zilean.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/zilean
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/zilean.webp
 keywords:
   - zilean
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: zilean
 sources:
-  - https://github.com/truecharts/charts/tree/master/charts/stable/zilean
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/zilean
   - https://hub.docker.com/r/ipromknight/zilean
 type: application
-version: 4.9.1
+version: 4.11.15
 

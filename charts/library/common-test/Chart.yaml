@@ -2,12 +2,11 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  truecharts.org/category: unsorted
-  truecharts.org/max_helm_version: "3.17"
-  truecharts.org/max_kubernetes_version: 1.32.0
-  truecharts.org/min_helm_version: "3.14"
-  truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: library
+  trueforge.org/category: unsorted
+  trueforge.org/max_helm_version: "3.20"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: library
 apiVersion: v2
 appVersion: unknown
 dependencies:
@@ -20,7 +19,7 @@ dependencies:
     import-values: []
 deprecated: false
 description: Helper chart to test different use cases of the common library
-home: https://trueforge.org/truecharts/library/common-test
+home: https://trueforge.org/truetech/truecharts/charts/library/common-test
 icon: https://trueforge.org/img/hotlink-ok/chart-icons/common-test.webp
 keywords:
   - common-test
@@ -30,10 +29,11 @@ keywords:
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: common-test
 sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/library/common-test
 type: application
 version: 1.0.0
+

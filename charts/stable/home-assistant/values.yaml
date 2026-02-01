@@ -1,7 +1,13 @@
 image:
-  repository: docker.io/homeassistant/home-assistant
+  repository: oci.trueforge.org/containerforge/home-assistant
   pullPolicy: IfNotPresent
-  tag: 2025.10.3@sha256:22376034bddcb952cfd3f3b4101b932b5a561f050acccd16ef879e88c7ff8233
+  tag: "2026.1.3@sha256:5e482cef76c8b6782bb89c6b77de27ecf6cd480f7c1c78d64a529c680de304df"
+
+yqImage:
+  pullPolicy: IfNotPresent
+  repository: oci.trueforge.org/containerforge/go-yq
+  tag: "4.48.2@sha256:95e1380ccf726d1c8cf762aed17fecdddfa4c59dd7c416a39c92230c22397fea"
+
 service:
   main:
     ports:

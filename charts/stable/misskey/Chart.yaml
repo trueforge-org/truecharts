@@ -2,26 +2,23 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: Social
-  truecharts.org/max_helm_version: "3.17"
-  truecharts.org/max_kubernetes_version: 1.32.0
-  truecharts.org/min_helm_version: "3.14"
-  truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: stable
+  trueforge.org/category: Social
+  trueforge.org/max_helm_version: "3.20"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
-appVersion: 2025.10.0
+appVersion: 2025.12.2
 dependencies:
   - name: common
-    version: 28.26.1
+    version: 28.29.40
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: redis
-    version: 17.13.1
+    version: 17.15.18
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -29,8 +26,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Open source decentralized social media platform that's free forever!
-home: https://truecharts.org/charts/stable/misskey
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/misskey.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/misskey
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/misskey.webp
 keywords:
   - Misskey
   - Social
@@ -41,14 +38,13 @@ keywords:
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: misskey
 sources:
   - https://github.com/misskey-dev/misskey/
-  - https://github.com/truecharts/charts/tree/master/charts/stable/misskey
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/misskey
   - https://hub.docker.com/r/misskey/misskey
 type: application
-version: 13.27.2
+version: 13.33.24
 

@@ -1,7 +1,24 @@
 image:
-  repository: twinproduction/gatus
+  repository: ghcr.io/twin/gatus
   pullPolicy: IfNotPresent
-  tag: v5.27.2@sha256:fc9deba937f25f21973f3245217a4d8499339bf9b5f20be83ccdcf1789184901
+  tag: v5.34.0@sha256:3fff895e77d35ee62e898860f4613755bc2344127d93e3f326429d40270e2115
+
+sidecarImage:
+  repository: ghcr.io/home-operations/gatus-sidecar
+  pullPolicy: IfNotPresent
+  tag: 0.0.12@sha256:83bf82d422e9b0529a8076cb584d557a12158d9d8a4c373b4d27afcb87a17569
+
+sidecar:
+  enable: false
+  enableService: false
+  enableIngress: false
+  enableHttproute: false
+  autoService: false
+  autoIngress: false
+  autoHttproute: false
+  namespace: ""  # Namespace to watch (empty for all namespaces), only one namespace is supported (string)
+  ingressClass: ""  # Ingress class to filter Ingresses, only one ingress class is supported (string)
+  gatewayName: ""  # Gateway name to filter HTTPRoutes, only one gateway name is supported (string)
 
 service:
   main:
@@ -11,6 +28,11 @@ service:
         targetPort: 8080
 
 persistence:
+  configmain:
+    enabled: "{{ .Values.sidecar.enable }}"
+    mountPath: /config
+    readOnly: false
+    targetSelectAll: true
   config:
     enabled: true
     mountPath: /config/config.yaml
@@ -38,8 +60,91 @@ configmap:
               - "[STATUS] == 200"
               - "[BODY] == pat(*<h1>Example Domain</h1>*)"
 
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            GATUS_CONFIG_PATH: "{{ .Values.persistence.configmain.mountPath }}"
+            GATUS_DELAY_START_SECONDS: 10
+        sidecar:
+          enabled: "{{ .Values.sidecar.enable }}"
+          imageSelector: sidecarImage
+          probes:
+            liveness:
+              enabled: true
+              port: "{{ .Values.service.main.ports.main.port }}"
+            readiness:
+              enabled: true
+              port: "{{ .Values.service.main.ports.main.port }}"
+            startup:
+              enabled: true
+              port: "{{ .Values.service.main.ports.main.port }}"
+          args:
+            - --output=/config/gatus-sidecar.yaml
+            - --enable-service={{ .Values.sidecar.enableService }}
+            - --enable-ingress={{ .Values.sidecar.enableIngress }}
+            - --enable-httproute={{ .Values.sidecar.enableHttproute }}
+            - --auto-service={{ .Values.sidecar.autoService }}
+            - --auto-ingress={{ .Values.sidecar.autoIngress }}
+            - --auto-httproute={{ .Values.sidecar.autoHttproute }}
+            - --namespace={{ .Values.sidecar.namespace }}
+            - --ingress-class={{ .Values.sidecar.ingressClass }}
+            - --gateway-name={{ .Values.sidecar.gatewayName }}
+
 cnpg:
   main:
     enabled: true
     user: gatus
     database: gatus
+
+# Need sysctl to allow ICMP ping from non-root containers
+securityContext:
+  pod:
+    sysctls:
+      - name: net.ipv4.ping_group_range
+        value: "0 2147483647"
+
+# Need RBAC to allow sidecar to watch Services and Ingresses
+rbac:
+  main:
+    enabled: "{{ .Values.sidecar.enable }}"
+    primary: true
+    clusterWide: true
+    rules:
+      - apiGroups: [""]
+        resources:
+          - "services"
+        verbs:
+          - "get"
+          - "list"
+          - "watch"
+      - apiGroups:
+          - "networking.k8s.io"
+        resources:
+          - "ingresses"
+          - "ingressclasses"
+        verbs:
+          - "get"
+          - "list"
+          - "watch"
+      - apiGroups:
+          - "gateway.networking.k8s.io"
+        resources:
+          - "httproutes"
+          - "gateways"
+        verbs:
+          - "get"
+          - "list"
+          - "watch"
+
+# Need ServiceAccount for RBAC
+serviceAccount:
+  main:
+    enabled: true
+    primary: true
+
+# Need automountServiceAccountToken to allow sidecar to use the ServiceAccount
+podOptions:
+  automountServiceAccountToken: true

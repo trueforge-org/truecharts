@@ -2,19 +2,16 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: Tools-Utilities
-  truecharts.org/max_helm_version: "3.17"
-  truecharts.org/max_kubernetes_version: 1.32.0
-  truecharts.org/min_helm_version: "3.14"
-  truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: stable
+  trueforge.org/category: Tools-Utilities
+  trueforge.org/max_helm_version: "3.20"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.26.1
+    version: 28.29.40
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +19,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: SUI Startpage is a simple and clean server start page or homepage that you can quickly and easily setup to access your server resources and quick booksmarks and also lets you search on various provider sites via a search bar at the top as well.
-home: https://truecharts.org/charts/stable/suistartpage
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/suistartpage.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/suistartpage
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/suistartpage.webp
 keywords:
   - suistartpage
   - Tools-Utilities
@@ -31,14 +28,13 @@ keywords:
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: suistartpage
 sources:
   - https://github.com/CorneliousJD/SUI-Startpage
-  - https://github.com/truecharts/charts/tree/master/charts/stable/suistartpage
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/suistartpage
   - https://hub.docker.com/r/corneliousjd/sui-startpage
 type: application
-version: 8.11.1
+version: 8.13.15
 

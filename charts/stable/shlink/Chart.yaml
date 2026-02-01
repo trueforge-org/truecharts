@@ -2,26 +2,23 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: utilities
-  truecharts.org/max_helm_version: "3.17"
-  truecharts.org/max_kubernetes_version: 1.32.0
-  truecharts.org/min_helm_version: "3.14"
-  truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: stable
+  trueforge.org/category: utilities
+  trueforge.org/max_helm_version: "3.20"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
-appVersion: 4.5.3
+appVersion: 5.0.0
 dependencies:
   - name: common
-    version: 28.26.1
+    version: 28.29.40
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: redis
-    version: 17.13.1
+    version: 17.15.18
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -29,22 +26,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: A PHP-based self-hosted URL shortener that can be used to serve shortened URLs under your own custom domain.
-home: https://truecharts.org/charts/stable/shlink
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/shlink.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/shlink
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/shlink.webp
 keywords:
   - url
   - shortener
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: shlink
 sources:
   - https://github.com/shlinkio/shlink
-  - https://github.com/truecharts/charts/tree/master/charts/stable/shlink
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/shlink
   - https://hub.docker.com/r/shlinkio/shlink
 type: application
-version: 18.24.2
+version: 19.0.17
 

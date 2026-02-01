@@ -1,27 +1,27 @@
 image:
-  repository: oci.trueforge.org/tccr/nextcloud-fpm
+  repository: oci.trueforge.org/containerforge/nextcloud-fpm
   pullPolicy: IfNotPresent
-  tag: v32.0.0@sha256:a497dd98051cc1f2afb0d6cfb64ec074fa606bceae13fb1838703b16830acf5c
+  tag: "32.0.5@sha256:6d799dfb8d01d4ba63582cb82f62dfdc0268b7a3562606f349eeb74ea6fbe5da"
 nginxImage:
-  repository: docker.io/nginxinc/nginx-unprivileged
+  repository: oci.trueforge.org/containerforge/nginx
   pullPolicy: IfNotPresent
-  tag: 1.29.2@sha256:991161869875a38dc8b6b3226e6d41c4e6481edc5521ca716362e35880b21a25
+  tag: "1.24.0@sha256:53096ab5104128d57235fd02f6dc61f1d87d738d6e3807bdc338518b3f620a74"
 imaginaryImage:
-  repository: oci.trueforge.org/tccr/nextcloud-imaginary
+  repository: oci.trueforge.org/containerforge/nextcloud-imaginary
   pullPolicy: IfNotPresent
-  tag: v20230401@sha256:5391f9f3488fbc7afd3102cf7f1f6d93224191f81356bc763b5f677b54bfa354
+  tag: "20230401@sha256:ac3c0e6e645440315622f42abe6125d3d393902e2bcf45df6d9d082c65551d3c"
 hpbImage:
-  repository: oci.trueforge.org/tccr/nextcloud-push-notify
+  repository: oci.trueforge.org/containerforge/nextcloud-notify-push
   pullPolicy: IfNotPresent
-  tag: v1.2.0@sha256:04099cc419dfa6d7e3971eac45cb1cb9628984342819f04553abd6abcb688334
+  tag: "1.3.0@sha256:51927e905ecef6135416e1a2e1e3dac26c1d0fd94091ebde305290ed5ec45983"
 clamavImage:
   repository: docker.io/clamav/clamav
   pullPolicy: IfNotPresent
-  tag: 1.5.1@sha256:4d4733092748f8666579b4ca1da5e3f74cc794f9e82e1b89afb8b37a0768826d
+  tag: 1.5.1@sha256:0c5c0e7f1ba77ce66324a3c20d4c49155a465a91be29dbe5e0483c41b9299137
 collaboraImage:
   repository: docker.io/collabora/code
   pullPolicy: IfNotPresent
-  tag: 25.04.6.2.1@sha256:81173ae698bfc9035a64b970b6fe1ad0c6450dab3b3300e17c42337f537553c8
+  tag: 25.04.8.2.1@sha256:7983fd172c69f4545f93533fee62c06fdcd1aa0806f694db7b9ec6809caa4bd8
 
 nextcloud:
   # Initial Credentials
@@ -458,7 +458,7 @@ persistence:
     targetSelector:
       nginx:
         nginx:
-          mountPath: /etc/nginx/nginx.conf
+          mountPath: /config/nginx.conf
           subPath: nginx.conf
           readOnly: true
   nginx-temp:

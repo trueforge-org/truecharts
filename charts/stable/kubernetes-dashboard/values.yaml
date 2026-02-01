@@ -1,7 +1,7 @@
 image:
   pullPolicy: IfNotPresent
-  repository: oci.trueforge.org/tccr/kube-sa-proxy
-  tag: latest
+  repository: oci.trueforge.org/containerforge/kube-sa-proxy
+  tag: 1.30.2@sha256:c96f11a5ed6f8c5cdd91f3f3a0a5b18866b9b812994b864cf40dbfe1fd3005fa
 
 webImage:
   repository: docker.io/kubernetesui/dashboard-web
@@ -11,12 +11,12 @@ webImage:
 authImage:
   repository: docker.io/kubernetesui/dashboard-auth
   pullPolicy: IfNotPresent
-  tag: 1.3.0@sha256:8641c111b9d7e4d5ae502b2afc56765b624a42071ba5b612a01a108827730673
+  tag: 1.4.0@sha256:53e9917898bf98ff2de91f7f9bdedd3545780eb3ac72158889ae031136e9eeff
 
 apiImage:
   repository: docker.io/kubernetesui/dashboard-api
   pullPolicy: IfNotPresent
-  tag: 1.13.0@sha256:96642ed8d9e27c13afafd045fb79c67fa98887416a13d497bdad9815e313262e
+  tag: 1.14.0@sha256:96a702cfd3399d9eba23b3d37b09f798a4f51fcd8c8dfa8552c7829ade9c4aff
 
 scraperImage:
   repository: docker.io/kubernetesui/dashboard-metrics-scraper

@@ -1,11 +1,11 @@
 image:
-  repository: ghcr.io/jellyfin/jellyfin
+  repository: oci.trueforge.org/containerforge/jellyfin
   pullPolicy: IfNotPresent
-  tag: 10.11.0@sha256:519b02989eafcc4bdb558bdc7014c2395c19608e5c2d7ed99a5f3edd0c75f7ef
+  tag: 10.11.6@sha256:faa694b5a8f321f866d7a8c67c00bdffd4a2493a693f65e573687f1eb679f4f4
 broadcastProxyImage:
   repository: docker.io/alpine/socat
   pullPolicy: IfNotPresent
-  tag: 1.8.0.3@sha256:4c5f173141228e8f823824afa3fb40f2490ee06bcba4950a0cfe2f83e203327c
+  tag: 1.8.0.3@sha256:bd8d6a251eb7d1b8c08f7117e3e583e14ec86f43f25d2bf31a6e16ff5dc15f58
 service:
   main:
     ports:
@@ -24,24 +24,31 @@ persistence:
   config:
     enabled: true
     mountPath: "/config"
+  data:
+    enabled: true
+    mountPath: "/data"
+  logs:
+    enabled: true
+    mountPath: "/logs"
+    type: "emptyDir"
   cache:
     enabled: true
     mountPath: "/cache"
     type: "emptyDir"
   transcode:
     enabled: true
-    mountPath: "/config/transcodes"
+    mountPath: "/cache/transcodes"
     type: "emptyDir"
-
-securityContext:
-  container:
-    readOnlyRootFilesystem: false
 workload:
   main:
     podSpec:
       containers:
         main:
           env:
+            JELLYFIN_DATA_DIR: /data
+            JELLYFIN_CONFIG_DIR: /config
+            JELLYFIN_LOG_DIR: /logs
+            JELLYFIN_CACHE_DIR: /cache
             JELLYFIN_PublishedServerUrl: "{{ $.Values.chartContext.appUrl }}"
   broadcastproxy:
     enabled: false

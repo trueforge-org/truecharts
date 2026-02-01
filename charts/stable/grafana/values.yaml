@@ -1,11 +1,135 @@
 image:
   repository: docker.io/grafana/grafana
   pullPolicy: IfNotPresent
-  tag: 12.2.1@sha256:35c41e0fd0295f5d0ee5db7e780cf33506abfaf47686196f825364889dee878b
+  tag: 12.3.2@sha256:ba93c9d192e58b23e064c7f501d453426ccf4a85065bf25b705ab1e98602bfb1
 
 sidecarImage:
-  repository: quay.io/kiwigrid/k8s-sidecar
-  tag: 1.30.10@sha256:835d79d8fbae62e42d8a86929d4e3c5eec2e869255dd37756b5a3166c2f22309
+  repository: ghcr.io/kiwigrid/k8s-sidecar
+  tag: 2.5.0@sha256:a6b3f707f883108376514489a94d6629109a327b2978e1d826cd104c4ca436df
+
+# Define extra dashboards to be provisioned
+# Supports 2 formats:
+# - Importing directly from `grafana.com` via Grafana dashboard ID & revision
+# - Importing from any URL that returns a JSON file
+#
+# Additionally, each configured dashboard can be set to be:
+# - base64 decoded
+# - have its datasources replaced
+#
+# See values below for more examples
+dashboards:
+  grafana:
+    ceph-cluster:
+      enabled: false
+      failOnError: false
+      b64content: false
+      datasource:
+        - name: "${DS_PROMETHEUS}"
+          value: Prometheus
+      url: https://raw.githubusercontent.com/rook/rook/refs/tags/v1.18.7/deploy/examples/monitoring/grafana/Ceph%20Cluster%20Dashboard.json
+    ceph-osd-single:
+      enabled: false
+      failOnError: false
+      b64content: false
+      datasource:
+        - name: "${DS_PROMETHEUS}"
+          value: Prometheus
+      url: https://github.com/rook/rook/raw/refs/tags/v1.18.7/deploy/examples/monitoring/grafana/Ceph%20OSD%20Single%20Dashboard.json
+    ceph-pools:
+      enabled: false
+      failOnError: false
+      b64content: false
+      datasource:
+        - name: "${DS_PROMETHEUS}"
+          value: Prometheus
+      url: https://github.com/rook/rook/raw/refs/tags/v1.18.7/deploy/examples/monitoring/grafana/Ceph%20Pools%20Dashboard.json
+    cert-manager:
+      enabled: true
+      failOnError: false
+      b64content: false
+      datasource:
+        - name: "${DS_PROMETHEUS}"
+          value: Prometheus
+      marketplace:
+        # renovate: depName="Cert-manager-Kubernetes"
+        id: 20842
+        revision: 3
+    cnpg:
+      enabled: false
+      failOnError: false
+      b64content: false
+      datasource:
+        - name: "${DS_PROMETHEUS}"
+          value: Prometheus
+      marketplace:
+        # renovate: depName="CloudNativePG"
+        id: 20417
+        revision: 4
+    flux-cluster:
+      enabled: false
+      failOnError: false
+      b64content: false
+      datasource:
+        - name: "${DS_PROMETHEUS}"
+          value: Prometheus
+      url: https://github.com/fluxcd/flux2-monitoring-example/raw/82c37257787bba13a40b17bed9bd8191ee7aa049/monitoring/configs/dashboards/cluster.json
+    flux-control-plane:
+      enabled: false
+      failOnError: false
+      b64content: false
+      datasource:
+        - name: "${DS_PROMETHEUS}"
+          value: Prometheus
+      url: https://github.com/fluxcd/flux2-monitoring-example/raw/82c37257787bba13a40b17bed9bd8191ee7aa049/monitoring/configs/dashboards/control-plane.json
+    metallb:
+      enabled: false
+      failOnError: false
+      b64content: false
+      datasource:
+        - name: "${DS_PROMETHEUS}"
+          value: Prometheus
+      marketplace:
+        # renovate: depName="Metallb"
+        id: 20162
+        revision: 6
+    nginx:
+      enabled: false
+      failOnError: false
+      b64content: false
+      datasource:
+        - name: "${DS_PROMETHEUS}"
+          value: Prometheus
+      url: https://github.com/kubernetes/ingress-nginx/raw/refs/tags/ingress-nginx-3.15.2/deploy/grafana/dashboards/nginx.json
+    node-feature-discovery:
+      enabled: false
+      failOnError: false
+      b64content: false
+      datasource:
+        - name: "${DS_PROMETHEUS}"
+          value: Prometheus
+      url: https://github.com/kubernetes-sigs/node-feature-discovery/raw/refs/tags/v0.18.3/examples/grafana-dashboard.json
+    prometheus-smartctl-exporter:
+      enabled: false
+      failOnError: false
+      b64content: false
+      datasource:
+        - name: "${DS_PROMETHEUS}"
+          value: Prometheus
+      marketplace:
+        # renovate: depName="SMARTctl Exporter Dashboard"
+        id: 22604
+        revision: 2
+    traefik:
+      enabled: false
+      failOnError: false
+      b64content: false
+      datasource:
+        - name: "${DS_PROMETHEUS}"
+          value: Prometheus
+      marketplace:
+        # renovate: depName="Traefik Official Standalone Dashboard"
+        id: 17346
+        revision: 9
 
 securityContext:
   container:
@@ -22,6 +146,12 @@ workload:
     replicas: 1
     strategy: Recreate
     podSpec:
+      initContainers:
+        download-dashboards:
+          enabled: true
+          type: init
+          imageSelector: alpineImage
+          command: /download-dashboards.sh
       containers:
         main:
           env:
@@ -237,28 +367,6 @@ configmap:
           domain: "{{ if (and .Values.ingress.main.enabled .Values.ingress.main.hosts) }}{{ .Values.ingress.main.hosts | first }}{{ else }}''{{ end }}"
       ldap.toml: |-
         # nope
-  # Some included dashboards, which can be enabled when prefered
-  dashboard-certmanager:
-    enabled: true
-    labels:
-      grafana_dashboard: "1"
-    data:
-      dashboard_certmanager.json: >-
-        {{ .Files.Get "dashboard_certmanager.json" | indent 8 }}
-  dashboard-traefik:
-    enabled: false
-    labels:
-      grafana_dashboard: "1"
-    data:
-      dashboard_traefik.json: >-
-        {{ .Files.Get "dashboard_traefik.json" | indent 8 }}
-  dashboard-nginx:
-    enabled: false
-    labels:
-      grafana_dashboard: "1"
-    data:
-      dashboard_nginx.json: >-
-        {{ .Files.Get "dashboard_nginx.json" | indent 8 }}
 persistence:
   config:
     enabled: true
@@ -291,6 +399,17 @@ persistence:
     objectName: dashboard-provider
     mountPath: /etc/grafana/provisioning/dashboards/sc-dashboardproviders.yaml
     subPath: provider.yaml
+  download-dashboards-config:
+    enabled: true
+    type: configmap
+    objectName: download-dashboards
+    subPath: download-dashboards.sh
+    mountPath: /download-dashboards.sh
+    defaultMode: "0555"
+    readOnly: true
+    targetSelector:
+      main:
+        download-dashboards: {}
   sc-datasource-volume:
     enabled: true
     type: emptyDir

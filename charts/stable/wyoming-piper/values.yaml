@@ -1,7 +1,7 @@
 image:
   repository: docker.io/rhasspy/wyoming-piper
   pullPolicy: IfNotPresent
-  tag: 1.6.3@sha256:2f5de2c89bfb87e7b625265315a9d9f6deb5db44cec3a3e9aa0087d002eac459
+  tag: 2.2.1@sha256:bcf04f784ade82a19279f7a1e72cc7c6147d8cd40557d633edb6d2885f23039c
 
 service:
   main:
@@ -18,7 +18,6 @@ wyoming_piper:
   length_scale: "1.0"
   noise_scale: "0.667"
   noise_w: "0.333"
-  max_piper_procs: 1
 
 workload:
   main:

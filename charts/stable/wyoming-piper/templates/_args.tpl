@@ -15,6 +15,4 @@ args:
   - {{ $piper.noise_scale | quote }}
   - --noise-w
   - {{ $piper.noise_w | quote }}
-  - --max-piper-procs
-  - {{ $piper.max_piper_procs | quote }}
 {{- end -}}

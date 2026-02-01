@@ -1,0 +1,40 @@
+annotations:
+  artifacthub.io/links: |-
+    - name: support
+    url: https://discord.com/invite/tVsPTHWTtr
+  trueforge.org/category: media
+  trueforge.org/max_helm_version: "3.20"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
+apiVersion: v2
+appVersion: 0.18.1
+dependencies:
+  - name: common
+    version: 28.29.40
+    repository: oci://oci.trueforge.org/truecharts
+    condition: ""
+    alias: ""
+    tags: []
+    import-values: []
+deprecated: false
+description: Your Ultimate IPTV & Stream Management Companion
+home: https://trueforge.org/truetech/truecharts/charts/stable/dispatcharr
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/dispatcharr.webp
+keywords:
+  - dispatcharr
+  - MediaApp-Other
+kubeVersion: '>=1.24.0-0'
+maintainers:
+  - name: TrueCharts
+    email: info@trueforge.org
+    url: https://trueforge.org
+name: dispatcharr
+sources:
+  - https://github.com/Dispatcharr/Dispatcharr
+  - https://github.com/Dispatcharr/Dispatcharr/blob/main/docker/docker-compose.aio.yml
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/dispatcharr
+  - https://hub.docker.com/r/dispatcharr/dispatcharr
+type: application
+version: 1.1.1
+

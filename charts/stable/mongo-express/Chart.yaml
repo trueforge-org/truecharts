@@ -2,26 +2,23 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: database
-  truecharts.org/max_helm_version: "3.17"
-  truecharts.org/max_kubernetes_version: 1.32.0
-  truecharts.org/min_helm_version: "3.14"
-  truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: stable
+  trueforge.org/category: database
+  trueforge.org/max_helm_version: "3.20"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.26.1
+    version: 28.29.40
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mongodb
-    version: 16.12.1
+    version: 16.14.19
     repository: oci://oci.trueforge.org/truecharts
     condition: mongodb.enabled
     alias: ""
@@ -29,8 +26,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: mongo-express is a web-based MongoDB admin interface written in Node.js, Express.js, and Bootstrap3.
-home: https://truecharts.org/charts/stable/mongo-express
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/mongo-express.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/mongo-express
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/mongo-express.webp
 keywords:
   - mongo
   - mongodb
@@ -38,14 +35,13 @@ keywords:
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: mongo-express
 sources:
   - https://gallery.ecr.aws/docker/library/mongo-express
   - https://github.com/mongo-express/mongo-express
-  - https://github.com/truecharts/charts/tree/master/charts/stable/mongo-express
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mongo-express
 type: application
-version: 9.22.2
+version: 9.26.30
 

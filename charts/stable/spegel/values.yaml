@@ -1,7 +1,7 @@
 image:
   repository: ghcr.io/spegel-org/spegel
   pullPolicy: IfNotPresent
-  tag: v0.4.0
+  tag: v0.6.0@sha256:82f5dd969ed74e3a9cfd6284045099a161778a0d85f9e01a234a62f15eb9d696
 
 securityContext:
   container:
@@ -154,8 +154,6 @@ spegel:
   containerdMirrorAdd: true
   # -- When true Spegel will resolve tags to digests.
   resolveTags: true
-  # -- When true latest tags will be resolved to digests.
-  resolveLatestTag: true
   # -- When true existing mirror configuration will be appended to instead of replaced.
   prependExisting: true
 

@@ -2,19 +2,16 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: Cloud
-  truecharts.org/max_helm_version: "3.17"
-  truecharts.org/max_kubernetes_version: 1.32.0
-  truecharts.org/min_helm_version: "3.14"
-  truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: stable
+  trueforge.org/category: Cloud
+  trueforge.org/max_helm_version: "3.20"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.26.1
+    version: 28.29.40
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +19,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Proxy is in quotes because I couldn't think of a better name. There is nothing overly special about this other than using it as a simple and easy to use dashboard for all your self-hosted services.
-home: https://truecharts.org/charts/stable/jmzhomeproxy
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/jmzhomeproxy.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/jmzhomeproxy
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/jmzhomeproxy.webp
 keywords:
   - jmzhomeproxy
   - Cloud
@@ -31,14 +28,13 @@ keywords:
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: jmzhomeproxy
 sources:
   - https://github.com/JmzTaylor/homelab_proxy/
-  - https://github.com/truecharts/charts/tree/master/charts/stable/jmzhomeproxy
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/jmzhomeproxy
   - https://hub.docker.com/r/jmzsoftware/jmzhomelabproxy
 type: application
-version: 8.11.1
+version: 8.13.15
 

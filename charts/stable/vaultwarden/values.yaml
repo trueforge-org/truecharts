@@ -1,12 +1,12 @@
 image:
-  repository: quay.io/vaultwarden/server
+  repository: ghcr.io/dani-garcia/vaultwarden
   pullPolicy: IfNotPresent
-  tag: 1.34.3@sha256:84fd8a47f58d79a1ad824c27be0a9492750c0fa5216b35c749863093bfa3c3d7
+  tag: 1.35.2@sha256:d89a6d21e361254670c24a4272b4b5f245e402c284f2f55de2c379fdbcfa1fa5
 
 betaImage:
   repository: ghcr.io/timshel/vaultwarden
   pullPolicy: IfNotPresent
-  tag: 1.30.5-9
+  tag: 1.30.5-9@sha256:56e279071fa5a173cae206fe64667cd9ee0e0e15bddfd11d38a8b95fe84dc741
 
 service:
   main:

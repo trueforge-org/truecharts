@@ -1,7 +1,7 @@
 image:
   repository: registry.k8s.io/external-dns/external-dns
   pullPolicy: IfNotPresent
-  tag: v0.19.0@sha256:f76114338104264f655b23138444481b20bb9d6125742c7240fac25936fe164e
+  tag: v0.20.0@sha256:ddc7f4212ed09a21024deb1f470a05240837712e74e4b9f6d1f2632ff10672e7
 externaldns:
   ingressClassName: ""
   logLevel: "info"
@@ -20,6 +20,10 @@ externaldns:
   piholePassword: ""
   piholeAPIVersion: ""
   triggerLoopOnEvent: "false"
+  # with externaldns.provider = pdns
+  pdns:
+    pdnsApiKey: ""
+    pdnsServerUrl: ""
   txtOwnerId: ""
   txtPrefix: ""
   txtSuffix: ""

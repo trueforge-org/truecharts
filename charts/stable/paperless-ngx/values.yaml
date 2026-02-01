@@ -1,11 +1,11 @@
 image:
   repository: ghcr.io/paperless-ngx/paperless-ngx
   pullPolicy: IfNotPresent
-  tag: 2.19.1@sha256:cfccb728eeb46e53e6da4b4b860311048d1ebc24d8811e98ccc0cd875f6ccdf6
+  tag: 2.20.6@sha256:a28330462994b937938e02aaa5632a1effcc7f9acfba96c1bef9c50e1167a027
 gotenbergImage:
   repository: docker.io/gotenberg/gotenberg
   pullPolicy: IfNotPresent
-  tag: 8.24@sha256:b116a40a1c24917e2bf3e153692da5acd2e78e7cd67e1b2d243b47c178f31c90
+  tag: 8.26@sha256:328551506b3dec3ff6381dd47e5cd72a44def97506908269e201a8fbfa1c12c0
 tikaImage:
   repository: docker.io/apache/tika
   pullPolicy: IfNotPresent
@@ -165,4 +165,3 @@ workload:
               type: http
               path: /
               port: "{{ .Values.service.tika.ports.tika.port }}"
-

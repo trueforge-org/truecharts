@@ -176,7 +176,11 @@ tests:
               src:
                 enabled: true
                 trigger:
-                  schedule: "1 0 * * *"
+                  # Case where schedule starts with a non-alphanumric character,
+                  # such as when using magic-value schedules or schedule that
+                  # starts with an asterisk (e.g. `* * * * *`). This checks if
+                  # the rendered yaml value is quoted
+                  schedule: "@daily"
                 retain:
                   hourly: 20
                   daily: 5
@@ -198,7 +202,7 @@ tests:
           content:
             sourcePVC: test-release-name-common-test-srcbackup
             trigger:
-              schedule: "1 0 * * *"
+              schedule: "@daily"
       - documentIndex: *replicationDestDoc
         isSubset:
           path: spec.restic
@@ -434,6 +438,92 @@ tests:
                 enabled: true
       credentials:
         mys3:
+          type: s3
+          url: http://some-url
+          bucket: some-bucket
+          encrKey: some-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+          customCA: |-
+            -----BEGIN CERTIFICATE-----
+            ...
+            -----END CERTIFICATE-----
+    asserts:
+      - documentIndex: &secretCaDoc 1
+        isKind:
+          of: Secret
+      - documentIndex: *secretCaDoc
+        isAPIVersion:
+          of: v1
+      - documentIndex: *secretCaDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-volsync-ca-mys3
+      - documentIndex: *secretCaDoc
+        equal:
+          path: stringData
+          value:
+            ca.crt: |-
+              -----BEGIN CERTIFICATE-----
+              ...
+              -----END CERTIFICATE-----
+      - documentIndex: &replicationCaDestDoc 2
+        isKind:
+          of: ReplicationSource
+      - documentIndex: *replicationCaDestDoc
+        isAPIVersion:
+          of: volsync.backube/v1alpha1
+      - documentIndex: *replicationCaDestDoc
+        isSubset:
+          path: spec
+          content:
+            sourcePVC: test-release-name-common-test-srcbackup
+            trigger:
+              schedule: "0 0 * * *"
+      - documentIndex: *replicationCaDestDoc
+        isSubset:
+          path: spec.restic
+          content:
+            repository: test-release-name-common-test-srcbackup-volsync-mybackup1
+            customCA:
+              secretName: test-release-name-common-test-volsync-ca-mys3
+              key: ca.crt
+            copyMethod: Snapshot
+            pruneIntervalDays: 7
+            retain:
+              hourly: 6
+              daily: 5
+              weekly: 4
+              monthly: 3
+              yearly: 1
+            accessModes:
+              - ReadWriteOnce
+            moverSecurityContext:
+              fsGroup: 568
+              runAsUser: 568
+              runAsGroup: 568
+      - documentIndex: *replicationCaDestDoc
+        matchRegex:
+          path: spec.restic.unlock
+          pattern: "^[0-9]{14}$"
+
+  - it: should generate correct spec with customCA and an uppercase credentials name
+    set:
+      persistence:
+        srcbackup:
+          enabled: true
+          type: pvc
+          mountPath: /backedup
+          volsync:
+            - name: mybackup1
+              type: restic
+              credentials: MyS3
+              dest:
+                enabled: false
+              src:
+                enabled: true
+      credentials:
+        MyS3:
           type: s3
           url: http://some-url
           bucket: some-bucket

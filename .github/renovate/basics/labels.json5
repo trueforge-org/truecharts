@@ -3,27 +3,27 @@
   "packageRules": [
     {
       "matchUpdateTypes": ["major"],
-      "labels": ["type/major"]
+      "addLabels": ["type/major"]
     },
     {
       "matchUpdateTypes": ["minor"],
-      "labels": ["type/minor", "automerge"]
+      "addLabels": ["type/minor", "automerge"]
     },
     {
       "matchUpdateTypes": ["patch"],
-      "labels": ["type/patch", "automerge"]
+      "addLabels": ["type/patch", "automerge"]
     },
     {
-      "matchUpdateTypes": ["digest", "pin"],
-      "labels": ["type/digest", "automerge"]
+      "matchUpdateTypes": ["digest"],
+      "addLabels": ["type/digest", "automerge"]
     },
     {
-      "matchUpdateTypes": ["pin"],
-      "labels": ["type/pin", "automerge"]
+      "matchUpdateTypes": ["pin", "pinDigest"],
+      "addLabels": ["type/pin", "automerge"]
     },
     {
       "matchUpdateTypes": ["lockfile"],
-      "labels": ["type/lockfile", "automerge"]
+      "addLabels": ["type/lockfile", "automerge"]
     },
     {
       "matchManager": ["docker", "helm-values"],
