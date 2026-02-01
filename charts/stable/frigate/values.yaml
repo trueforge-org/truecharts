@@ -29,7 +29,7 @@ workload:
         init-config:
           enabled: "{{ not .Values.frigateConfig }}"
           type: init
-          imageSelector: alpineImage
+          imageSelector: ubuntuImage
           command:
             - /bin/sh
             - -c
