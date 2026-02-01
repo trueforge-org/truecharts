@@ -5,7 +5,7 @@
 enabled: true
 data:
   {{/* KOMETA */}}
-  KOMETA_CONFIG: "/config/config.yml"
+  KOMETA_CONFIG: "/app/config/config.yml"
   {{- if not $kometa.run }}
   KOMETA_TIMES: {{ join "," $kometa.times | quote }}
   KOMETA_NO_COUNTDOWN: {{ $kometa.no_countdown | quote }}
