@@ -123,11 +123,10 @@ jobs:
           if [ "$(printf '%s\n' "4.0.0" "$helm_ver" | sort -V | head -n1)" = "4.0.0" ]; then
             VERIFY_FLAG="--verify false"
           fi
-          HELM_PLUGIN_REF="https://github.com/helm-unittest/helm-unittest --version v${helmUnitVersion}"
 
           (helm unittest -h > /dev/null) || \
-            helm plugin install $HELM_PLUGIN_REF $VERIFY_FLAG || \
-            (sleep 10 && helm plugin install $HELM_PLUGIN_REF $VERIFY_FLAG) || \
+            helm plugin install https://github.com/helm-unittest/helm-unittest --version v${helmUnitVersion} $VERIFY_FLAG || \
+            (sleep 10 && helm plugin install https://github.com/helm-unittest/helm-unittest --version v${helmUnitVersion} $VERIFY_FLAG) || \
             echo "finished unittest reinstall tries"
 
           # Run tests
