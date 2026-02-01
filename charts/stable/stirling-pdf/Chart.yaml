@@ -2,13 +2,19 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: media
   trueforge.org/max_helm_version: "3.20"
   trueforge.org/max_kubernetes_version: 1.35.0
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 2.4.2
+appVersion: 2.4.3
 dependencies:
   - name: common
     version: 28.29.40
@@ -19,21 +25,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: A robust, locally hosted web-based PDF manipulation tool.
-home: https://trueforge.org/truetech/truecharts/charts/stable/stirling-pdf
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/stirling-pdf.webp
+home: https://truecharts.org/charts/stable/stirling-pdf
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/stirling-pdf.webp
 keywords:
   - stirling-pdf
   - pdf
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: stirling-pdf
 sources:
   - https://ghcr.io/stirling-tools/s-pdf
   - https://github.com/Stirling-Tools/Stirling-PDF
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/stirling-pdf
 type: application
-version: 8.13.9
+version: 8.13.12
 
