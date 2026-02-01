@@ -93,7 +93,7 @@ workload:
           resources:
             excludeExtra: true
           command:
-            - /bin/ash
+            - /bin/bash
             - -c
             - |
               {{- tpl .Values.waitServerScript $ -}}
@@ -140,7 +140,7 @@ workload:
           resources:
             excludeExtra: true
           command:
-            - /bin/ash
+            - /bin/bash
             - -c
             - |-
               {{ tpl .Values.waitServerScript $ | trim }}
