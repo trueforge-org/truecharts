@@ -39,9 +39,6 @@ workload:
                 curl -fLvo /app/config/config.yml https://raw.githubusercontent.com/kometa-team/kometa/master/config/config.yml.template || (echo "Downloading config file, FAILED..." && exit 1)
               fi
       containers:
-        main:
-          env:
-            KOMETA_CONFIG: /app/config/config.yml
           probes:
             liveness:
               enabled: false
