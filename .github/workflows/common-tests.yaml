@@ -115,7 +115,7 @@ jobs:
       - name: Run Unittests
         shell: bash
         run: |
-          helm_ver=${{ matrix.helm-version#v }}
+          helm_ver=${{ matrix.helm-version}}
           helm_ver="${helm_ver#v}"
 
           VERIFY_FLAG=""
