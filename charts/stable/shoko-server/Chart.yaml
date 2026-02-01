@@ -2,13 +2,19 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: media
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 5.2.5
+appVersion: 5.3.0
 dependencies:
   - name: common
     version: 28.29.40
@@ -19,21 +25,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: Anime cataloging program designed to automate the cataloging of your collection.
-home: https://trueforge.org/truetech/truecharts/charts/stable/shoko-server
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/shoko-server.webp
+home: https://truecharts.org/charts/stable/shoko-server
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/shoko-server.webp
 keywords:
   - shoko-server
   - Tools-Utilities
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: shoko-server
 sources:
   - https://github.com/ShokoAnime/ShokoServer
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/shoko-server
   - https://hub.docker.com/r/shokoanime/server
 type: application
-version: 13.14.11
+version: 13.15.0
 
