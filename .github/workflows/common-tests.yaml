@@ -115,7 +115,19 @@ jobs:
       - name: Run Unittests
         shell: bash
         run: |
-          (helm unittest -h > /dev/null) || helm plugin install https://github.com/helm-unittest/helm-unittest --version v${helmUnitVersion} --verify false || (sleep 10 && helm plugin install https://github.com/helm-unittest/helm-unittest --version v${helmUnitVersion} --verify false) || echo "finished unittest reinstall tries"
+          helm_ver="${{ matrix.helm-version#v }}"
+
+          VERIFY_FLAG=""
+          if [ "$(printf '%s\n' "4.0.0" "$helm_ver" | sort -V | head -n1)" = "4.0.0" ]; then
+            VERIFY_FLAG="--verify false"
+          fi
+
+          (helm unittest -h > /dev/null) || \
+            helm plugin install https://github.com/helm-unittest/helm-unittest \
+              --version "v${helmUnitVersion}" ${VERIFY_FLAG} || \
+            (sleep 10 && helm plugin install https://github.com/helm-unittest/helm-unittest \
+              --version "v${helmUnitVersion}" ${VERIFY_FLAG}) || \
+            echo "finished unittest reinstall tries"
 
           # Run tests
           cd charts/library/common-test/
