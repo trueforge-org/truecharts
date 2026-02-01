@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: Cloud
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -20,18 +26,18 @@ dependencies:
 deprecated: false
 description: |
   Cops(http://blog.slucas.fr/en/oss/calibre-opds-php-server) by Sébastien Lucas, stands for Calibre OPDS (and HTML) Php Server.
-home: https://trueforge.org/truetech/truecharts/charts/stable/cops
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/cops.webp
+home: https://truecharts.org/charts/stable/cops
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/cops.webp
 keywords:
   - cops
   - Cloud
   - MediaApp-Books
   - MediaServer-Books
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: cops
 sources:
   - https://fleet.linuxserver.io/image?name=linuxserver/cops
@@ -39,5 +45,5 @@ sources:
   - https://github.com/orgs/linuxserver/packages/container/package/cops
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/cops
 type: application
-version: 13.0.0
+version: 13.0.1
 
