@@ -123,11 +123,10 @@ jobs:
           if [ "$(printf '%s\n' "4.0.0" "$helm_ver" | sort -V | head -n1)" = "4.0.0" ]; then
             VERIFY_FLAG="--verify false"
             # Helm v4 uses @version
-            HELM_PLUGIN_REF="https://github.com/helm-unittest/helm-unittest@v${helmUnitVersion}"
           else
             # Helm <v4 uses old --version flag
-            HELM_PLUGIN_REF="https://github.com/helm-unittest/helm-unittest --version v${helmUnitVersion}"
           fi
+          HELM_PLUGIN_REF="https://github.com/helm-unittest/helm-unittest --version v${helmUnitVersion}"
 
           (helm unittest -h > /dev/null) || \
             helm plugin install $HELM_PLUGIN_REF $VERIFY_FLAG || \
