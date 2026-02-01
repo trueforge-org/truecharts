@@ -650,26 +650,6 @@ postgresVectorchord16Image:
   tag: "16.15-1.1.1@sha256:f5a17fa05faf25e81304ee95e9f920d8ae077ac4a4ef0a1251e09c7197cbb236"
   pullPolicy: IfNotPresent
 
-# -- OpenVPN specific configuration
-# @default -- See below
-openvpnImage:
-  # -- Specify the openvpn client image
-  repository: oci.trueforge.org/tccr/openvpn-client
-  # -- Specify the openvpn client image tag
-  tag: latest@sha256:9bfdf50791d6e51056e31c03f73c9db329b2b72e7746155cfdc63e0c8b49b55a
-  # -- Specify the openvpn client image pull policy
-  pullPolicy: IfNotPresent
-
-# -- WireGuard specific configuration
-# @default -- See below
-wireguardImage:
-  # -- Specify the WireGuard image
-  repository: oci.trueforge.org/tccr/wireguard
-  # -- Specify the WireGuard image tag
-  tag: v1.0.20210914@sha256:683b8b74d64ebd07f9955147539834c2a4b60fee51d2a36fa76b9aba689601bf
-  # -- Specify the WireGuard image pull policy
-  pullPolicy: IfNotPresent
-
 # -- Configure the ingresses for the chart here.
 # Additional ingresses can be added by adding a dictionary key similar to the 'main' ingress.
 # @default -- See below
