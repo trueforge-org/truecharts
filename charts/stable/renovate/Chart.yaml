@@ -9,7 +9,7 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
   trueforge.org/category: security
-  trueforge.org/max_helm_version: "3.20"
+  trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
@@ -25,15 +25,15 @@ dependencies:
     import-values: []
 deprecated: false
 description: renovate self-hosted
-home: https://truecharts.org/charts/stable/renovate
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/renovate.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/renovate
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/renovate.webp
 keywords:
   - renovate
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: renovate
 sources:
   - https://github.com/trueforge-org/containers/tree/main/apps/renovate
