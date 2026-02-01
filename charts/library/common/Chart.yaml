@@ -4,6 +4,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: library
   trueforge.org/category: unsorted
   trueforge.org/max_helm_version: "3.20"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -14,8 +20,8 @@ appVersion: 1.11.0
 dependencies: []
 deprecated: false
 description: Function library for TrueCharts
-home: https://trueforge.org/truetech/truecharts/charts/library/common
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/common.webp
+home: https://truecharts.org/charts/library/common
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/common.webp
 keywords:
   - truecharts
   - library-chart
@@ -23,8 +29,8 @@ keywords:
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: common
 sources:
   - https://ghcr.io/cloudnative-pg/postgis
@@ -32,6 +38,12 @@ sources:
   - https://ghcr.io/tensorchord/cloudnative-pgvecto.rs
   - https://ghcr.io/tensorchord/cloudnative-vectorchord
   - https://ghcr.io/traefik/whoami
+  - https://github.com/truecharts/containers/tree/master/apps/alpine
+  - https://github.com/truecharts/containers/tree/master/apps/gluetun
+  - https://github.com/truecharts/containers/tree/master/apps/netshoot
+  - https://github.com/truecharts/containers/tree/master/apps/openvpn-client
+  - https://github.com/truecharts/containers/tree/master/apps/tailscale
+  - https://github.com/truecharts/containers/tree/master/apps/wireguard
   - https://github.com/trueforge-org/containers/tree/main/apps/code-server
   - https://github.com/trueforge-org/containers/tree/main/apps/go-yq
   - https://github.com/trueforge-org/containers/tree/main/apps/kubectl
@@ -44,5 +56,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/library/common
   - https://hub.docker.com/_/
 type: library
-version: 28.29.45
+version: 28.29.46
 
