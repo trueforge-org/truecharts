@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: Other
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -19,16 +25,16 @@ dependencies:
     import-values: []
 deprecated: false
 description: pyLoad(https://pyload.net/) is a Free and Open Source download manager written in Python and designed to be extremely lightweight, easily extensible and fully manageable via web.
-home: https://trueforge.org/truetech/truecharts/charts/stable/pyload-ng
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/pyload-ng.webp
+home: https://truecharts.org/charts/stable/pyload-ng
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/pyload-ng.webp
 keywords:
   - pyload-ng
   - Other
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: pyload-ng
 sources:
   - https://fleet.linuxserver.io/image?name=linuxserver/pyload-ng
@@ -37,5 +43,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/pyload-ng
   - https://pyload.net/
 type: application
-version: 8.13.23
+version: 8.13.24
 
