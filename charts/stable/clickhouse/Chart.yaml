@@ -2,13 +2,19 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: database
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 26.1.1.912
+appVersion: 26.1.2.11
 dependencies:
   - name: common
     version: 28.29.40
@@ -19,22 +25,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: ClickHouse is a column-oriented database management system (DBMS) for online analytical processing of queries (OLAP).
-home: https://trueforge.org/truetech/truecharts/charts/stable/clickhouse
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/clickhouse.webp
+home: https://truecharts.org/charts/stable/clickhouse
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/clickhouse.webp
 keywords:
   - database
   - clickhouse
   - sql
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: clickhouse
 sources:
   - https://clickhouse.com/
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/clickhouse
   - https://hub.docker.com/r/clickhouse/clickhouse-server
 type: application
-version: 17.0.0
+version: 17.0.1
 
