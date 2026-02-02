@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: security
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -19,19 +25,19 @@ dependencies:
     import-values: []
 deprecated: false
 description: comet self-hosted
-home: https://trueforge.org/truetech/truecharts/charts/stable/comet
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/comet.webp
+home: https://truecharts.org/charts/stable/comet
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/comet.webp
 keywords:
   - comet
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: comet
 sources:
   - https://ghcr.io/g0ldyy/comet
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/comet
 type: application
-version: 4.11.27
+version: 4.11.28
 
