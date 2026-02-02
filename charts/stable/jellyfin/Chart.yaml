@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: media
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -19,17 +25,17 @@ dependencies:
     import-values: []
 deprecated: false
 description: Jellyfin is a Free Software Media System
-home: https://trueforge.org/truetech/truecharts/charts/stable/jellyfin
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/jellyfin.webp
+home: https://truecharts.org/charts/stable/jellyfin
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/jellyfin.webp
 keywords:
   - jellyfin
   - plex
   - emby
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: jellyfin
 sources:
   - https://github.com/jellyfin/jellyfin
@@ -37,5 +43,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/jellyfin
   - https://hub.docker.com/r/alpine/socat
 type: application
-version: 22.2.28
+version: 22.2.29
 
