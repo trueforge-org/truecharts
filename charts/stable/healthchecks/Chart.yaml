@@ -2,13 +2,19 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: media
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 4.0.20260126
+appVersion: 4.0.20260202
 dependencies:
   - name: common
     version: 28.29.40
@@ -19,22 +25,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: Healthchecks is a cron job monitoring service. It listens for HTTP requests and email messages ("pings") from your cron jobs and scheduled tasks ("checks"). When a ping does not arrive on time, Healthchecks sends out alerts.
-home: https://trueforge.org/truetech/truecharts/charts/stable/healthchecks
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/healthchecks.webp
+home: https://truecharts.org/charts/stable/healthchecks
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/healthchecks.webp
 keywords:
   - cron
   - monitoring
   - alert
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: healthchecks
 sources:
   - https://ghcr.io/linuxserver/healthchecks
   - https://github.com/healthchecks/healthchecks
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/healthchecks
 type: application
-version: 18.0.3
+version: 18.0.4
 
