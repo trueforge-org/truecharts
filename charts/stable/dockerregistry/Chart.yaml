@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: Cloud
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: 3.0.0
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,19 +26,19 @@ dependencies:
 deprecated: false
 description: |
   Docker Registry is used to store and distribute Docker images using HTTP API. This allows you host your own private Registry and store your images. Uses official Chart Registry image @ https://hub.Chart.com/_/registry/
-home: https://trueforge.org/truetech/truecharts/charts/stable/dockerregistry
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/dockerregistry.webp
+home: https://truecharts.org/charts/stable/dockerregistry
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/dockerregistry.webp
 keywords:
   - dockerregistry
   - Cloud
   - Network-Management
   - Productivity
   - Tools-Utilities
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: dockerregistry
 sources:
   - https://github.com/distribution/distribution
@@ -40,5 +46,5 @@ sources:
   - https://hub.docker.com/_/registry
   - https://registry.hub.docker.com/_/registry/
 type: application
-version: 9.13.16
+version: 9.13.17
 

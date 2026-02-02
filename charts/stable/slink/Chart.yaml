@@ -17,7 +17,7 @@ apiVersion: v2
 appVersion: 1.9.2
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -25,23 +25,23 @@ dependencies:
     import-values: []
 deprecated: false
 description: A self-hosted image sharing platform built with Symfony and SvelteKit️.
-home: https://trueforge.org/truetech/truecharts/charts/stable/slink
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/slink.webp
+home: https://truecharts.org/charts/stable/slink
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/slink.webp
 keywords:
   - media
   - photos
   - pictures
   - sharing
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: slink
 sources:
   - https://github.com/andrii-kryvoviaz/slink
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/slink
   - https://hub.docker.com/r/anirdev/slink
 type: application
-version: 5.17.4
+version: 5.17.5
 

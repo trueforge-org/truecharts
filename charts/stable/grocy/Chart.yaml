@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: home-automation
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: 4.5.0
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -19,21 +25,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: ERP beyond your fridge - grocy is a web-based self-hosted groceries & household management solution for your home
-home: https://trueforge.org/truetech/truecharts/charts/stable/grocy
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/grocy.webp
+home: https://truecharts.org/charts/stable/grocy
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/grocy.webp
 keywords:
   - grocy
   - home-automation
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: grocy
 sources:
   - https://ghcr.io/linuxserver/grocy
   - https://github.com/grocy/grocy
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/grocy
 type: application
-version: 21.13.20
+version: 21.13.21
 

@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: media
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: 25.12.20251224
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -26,8 +32,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A simple, self-hosted, easy-to-use platform for organising and storing information.
-home: https://trueforge.org/truetech/truecharts/charts/stable/bookstack
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/bookstack.webp
+home: https://truecharts.org/charts/stable/bookstack
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/bookstack.webp
 keywords:
   - bookstack
   - book
@@ -35,16 +41,16 @@ keywords:
   - organizer
   - server
   - hosted
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: bookstack
 sources:
   - https://ghcr.io/linuxserver/bookstack
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/bookstack
   - https://www.bookstackapp.com/
 type: application
-version: 18.20.21
+version: 18.20.22
 

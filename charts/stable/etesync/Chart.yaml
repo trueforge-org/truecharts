@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: productivity
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: 0.14.2
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -26,8 +32,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Secure, end-to-end encrypted, and privacy respecting sync for your contacts, calendars, tasks and notes.
-home: https://trueforge.org/truetech/truecharts/charts/stable/etesync
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/etesync.webp
+home: https://truecharts.org/charts/stable/etesync
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/etesync.webp
 keywords:
   - etesync
   - sync
@@ -35,11 +41,11 @@ keywords:
   - calendars
   - tasks
   - notes
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: etesync
 sources:
   - https://github.com/etesync
@@ -48,5 +54,5 @@ sources:
   - https://hub.docker.com/r/victorrds/etesync
   - https://www.etesync.com/
 type: application
-version: 13.27.23
+version: 13.27.24
 

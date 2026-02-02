@@ -17,7 +17,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -25,8 +25,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: 'Homepage: http://bpatrik.github.io/pigallery2/'
-home: https://trueforge.org/truetech/truecharts/charts/stable/pigallery2
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/pigallery2.webp
+home: https://truecharts.org/charts/stable/pigallery2
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/pigallery2.webp
 keywords:
   - pigallery2
   - Cloud
@@ -36,16 +36,16 @@ keywords:
   - MediaServer-Video
   - MediaServer-Music
   - MediaServer-Photos
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: pigallery2
 sources:
   - https://github.com/bpatrik/pigallery2
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/pigallery2
   - https://hub.docker.com/r/bpatrik/pigallery2
 type: application
-version: 8.13.18
+version: 8.13.19
 

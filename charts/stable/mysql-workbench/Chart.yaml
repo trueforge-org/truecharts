@@ -17,7 +17,7 @@ apiVersion: v2
 appVersion: 8.0.46
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -25,19 +25,19 @@ dependencies:
     import-values: []
 deprecated: false
 description: MySQL Workbench is a unified visual tool for database architects, developers and DBAs.
-home: https://trueforge.org/truetech/truecharts/charts/stable/mysql-workbench
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/mysql-workbench.webp
+home: https://truecharts.org/charts/stable/mysql-workbench
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/mysql-workbench.webp
 keywords:
   - mysql-workbench
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: mysql-workbench
 sources:
   - https://ghcr.io/linuxserver/mysql-workbench
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mysql-workbench
 type: application
-version: 12.13.24
+version: 12.13.25
 

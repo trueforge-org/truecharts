@@ -17,7 +17,7 @@ apiVersion: v2
 appVersion: 2.0.0
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -32,16 +32,16 @@ dependencies:
     import-values: []
 deprecated: false
 description: Plausible is lightweight and open source web analytics. No cookies and fully compliant with GDPR, CCPA and PECR.
-home: https://trueforge.org/truetech/truecharts/charts/stable/plausible
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/plausible.webp
+home: https://truecharts.org/charts/stable/plausible
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/plausible.webp
 keywords:
   - plausible
   - analytics
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: plausible
 sources:
   - https://github.com/plausible/analytics
@@ -51,5 +51,5 @@ sources:
   - https://plausible.io/
   - https://plausible.io/docs/self-hosting
 type: application
-version: 15.0.0
+version: 15.0.1
 

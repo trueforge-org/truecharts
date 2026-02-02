@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: social
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: 2024.12.0
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -33,21 +39,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: Welcome to the free social web
-home: https://trueforge.org/truetech/truecharts/charts/stable/friendica
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/friendica.webp
+home: https://truecharts.org/charts/stable/friendica
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/friendica.webp
 keywords:
   - friend
   - social
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: friendica
 sources:
   - https://friendi.ca/
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/friendica
   - https://hub.docker.com/_/friendica
 type: application
-version: 19.23.32
+version: 19.23.33
 

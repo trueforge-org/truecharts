@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: metrics
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: 12.3.2
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -19,18 +25,18 @@ dependencies:
     import-values: []
 deprecated: false
 description: Grafana is an open source, feature rich metrics dashboard and graph editor for Graphite, Elasticsearch, OpenTSDB, Prometheus and InfluxDB.
-home: https://trueforge.org/truetech/truecharts/charts/stable/grafana
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/grafana.webp
+home: https://truecharts.org/charts/stable/grafana
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/grafana.webp
 keywords:
   - analytics
   - monitoring
   - metrics
   - logs
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: grafana
 sources:
   - https://ghcr.io/kiwigrid/k8s-sidecar
@@ -39,5 +45,5 @@ sources:
   - https://grafana.com/
   - https://hub.docker.com/r/grafana/grafana
 type: application
-version: 21.6.7
+version: 21.6.8
 

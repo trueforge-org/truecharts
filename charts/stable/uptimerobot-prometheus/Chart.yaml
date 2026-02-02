@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: metrics
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: 0.0.1
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -19,18 +25,18 @@ dependencies:
     import-values: []
 deprecated: false
 description: Prometheus Exporter for the official uptimerobot CLI
-home: https://trueforge.org/truetech/truecharts/charts/stable/uptimerobot-prometheus
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/uptimerobot-prometheus.webp
+home: https://truecharts.org/charts/stable/uptimerobot-prometheus
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/uptimerobot-prometheus.webp
 keywords:
   - uptimerobot
   - prometheus
   - grafana
   - metrics
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: uptimerobot-prometheus
 sources:
   - https://github.com/k8s-at-home/charts/tree/master/charts/uptimerobot-prometheus
@@ -38,5 +44,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/uptimerobot-prometheus
   - https://hub.docker.com/r/billimek/prometheus-uptimerobot-exporter
 type: application
-version: 14.13.15
+version: 14.13.16
 

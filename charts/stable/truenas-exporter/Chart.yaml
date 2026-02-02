@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: system
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: 0.16.0
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -19,21 +25,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: A metrics exporter for TrueNAS
-home: https://trueforge.org/truetech/truecharts/charts/stable/truenas-exporter
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/truenas-exporter.webp
+home: https://truecharts.org/charts/stable/truenas-exporter
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/truenas-exporter.webp
 keywords:
   - truenas-exporter
   - metrics
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: truenas-exporter
 sources:
   - https://github.com/Supporterino/truenas-graphite-to-prometheus/tree/main
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/truenas-exporter
   - https://hub.docker.com/r/prom/graphite-exporter
 type: application
-version: 4.13.15
+version: 4.13.16
 

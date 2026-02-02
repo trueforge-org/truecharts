@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: Productivity
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -19,21 +25,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: 'Another web application bookmark dashboard, with fun features.[br][br][b][u][span style=''color: #ff9900;'']Default user/password[/span][/u][/b][br]User: [B][u]admin[/B][/u][br]Password: [B][u]admin[/B][/u][/b]'
-home: https://trueforge.org/truetech/truecharts/charts/stable/dashmachine
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/dashmachine.webp
+home: https://truecharts.org/charts/stable/dashmachine
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/dashmachine.webp
 keywords:
   - dashmachine
   - Productivity
   - Network-Web
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: dashmachine
 sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/dashmachine
   - https://hub.docker.com/r/rmountjoy/dashmachine
 type: application
-version: 8.13.15
+version: 8.13.16
 

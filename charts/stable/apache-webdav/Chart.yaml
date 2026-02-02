@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: Cloud
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -19,16 +25,16 @@ dependencies:
     import-values: []
 deprecated: false
 description: Very simple WebDAV server based on Apache. You need a WebDAV client to transfer files. It does not include a WebUI to upload files through your browser.
-home: https://trueforge.org/truetech/truecharts/charts/stable/apache-webdav
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/apache-webdav.webp
+home: https://truecharts.org/charts/stable/apache-webdav
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/apache-webdav.webp
 keywords:
   - apache-webdav
   - Cloud
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: apache-webdav
 sources:
   - https://github.com/mgutt/docker-apachewebdav
@@ -36,5 +42,5 @@ sources:
   - https://httpd.apache.org/docs/2.4/mod/mod_dav.html
   - https://hub.docker.com/r/apachewebdav/apachewebdav
 type: application
-version: 8.13.15
+version: 8.13.16
 

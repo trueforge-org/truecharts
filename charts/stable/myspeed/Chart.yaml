@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: system
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: 1.0.9
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -19,16 +25,16 @@ dependencies:
     import-values: []
 deprecated: false
 description: Speedtest automation made simple.
-home: https://trueforge.org/truetech/truecharts/charts/stable/myspeed
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/myspeed.webp
+home: https://truecharts.org/charts/stable/myspeed
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/myspeed.webp
 keywords:
   - myspeed
   - speedtest
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: myspeed
 sources:
   - https://github.com/gnmyt/myspeed
@@ -36,5 +42,5 @@ sources:
   - https://hub.docker.com/r/germannewsmaker/myspeed
   - https://myspeed.dev/
 type: application
-version: 1.13.15
+version: 1.13.16
 

@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: media
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: 2025.7.25
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -19,16 +25,16 @@ dependencies:
     import-values: []
 deprecated: false
 description: A lightweight NodeJS server that emulates the iOS HomeKit API
-home: https://trueforge.org/truetech/truecharts/charts/stable/homebridge
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/homebridge.webp
+home: https://truecharts.org/charts/stable/homebridge
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/homebridge.webp
 keywords:
   - homebridge
   - homekit
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: homebridge
 sources:
   - https://github.com/oznu/docker-homebridge
@@ -36,5 +42,5 @@ sources:
   - https://homebridge.io/
   - https://hub.docker.com/r/homebridge/homebridge
 type: application
-version: 11.14.15
+version: 11.14.16
 

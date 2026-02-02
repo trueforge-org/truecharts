@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: MediaServer-Other
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -19,21 +25,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: Media display for Plex, Sonarr and Radarr.
-home: https://trueforge.org/truetech/truecharts/charts/stable/posterr
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/posterr.webp
+home: https://truecharts.org/charts/stable/posterr
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/posterr.webp
 keywords:
   - posterr
   - MediaServer-Other
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: posterr
 sources:
   - https://github.com/petersem/posterr
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/posterr
   - https://hub.docker.com/r/petersem/posterr
 type: application
-version: 11.13.16
+version: 11.13.17
 

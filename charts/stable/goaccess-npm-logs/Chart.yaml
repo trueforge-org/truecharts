@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: Tools-Utilities
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -19,22 +25,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: GoAccess for Nginx Proxy Manager Logs
-home: https://trueforge.org/truetech/truecharts/charts/stable/goaccess-npm-logs
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/goaccess-npm-logs.webp
+home: https://truecharts.org/charts/stable/goaccess-npm-logs
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/goaccess-npm-logs.webp
 keywords:
   - goaccess-npm-logs
   - Tools-Utilities
   - Network-Proxy
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: goaccess-npm-logs
 sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/goaccess-npm-logs
   - https://github.com/xavier-hernandez/goaccess-for-nginxproxymanager
   - https://hub.docker.com/r/xavierh/goaccess-for-nginxproxymanager
 type: application
-version: 8.13.16
+version: 8.13.17
 

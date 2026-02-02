@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: media
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -19,22 +25,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: Easily broadcast/stream to others with sub-second latency
-home: https://trueforge.org/truetech/truecharts/charts/stable/broadcast-box
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/broadcast-box.webp
+home: https://truecharts.org/charts/stable/broadcast-box
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/broadcast-box.webp
 keywords:
   - broadcast-box
   - broadcast
   - stream
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: broadcast-box
 sources:
   - https://github.com/Glimesh/broadcast-box
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/broadcast-box
   - https://hub.docker.com/r/seaduboi/broadcast-box
 type: application
-version: 2.13.18
+version: 2.13.19
 

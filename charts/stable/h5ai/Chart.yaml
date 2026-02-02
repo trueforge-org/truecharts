@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: Cloud
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -19,22 +25,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: h5ai is a modern file indexer for HTTP web servers with focus on your files. Directories are displayed in a appealing way and browsing them is enhanced by different views, a breadcrumb and a tree overview. Initially h5ai was an acronym for HTML5 Apache Index but now it supports other web servers too.
-home: https://trueforge.org/truetech/truecharts/charts/stable/h5ai
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/h5ai.webp
+home: https://truecharts.org/charts/stable/h5ai
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/h5ai.webp
 keywords:
   - h5ai
   - Cloud
   - Network-FTP
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: h5ai
 sources:
   - https://github.com/awesometic/docker-h5ai
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/h5ai
   - https://hub.docker.com/r/awesometic/h5ai
 type: application
-version: 8.13.15
+version: 8.13.16
 

@@ -17,7 +17,7 @@ apiVersion: v2
 appVersion: 1.5.5
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -25,8 +25,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Bazarr is a companion application to Sonarr and Radarr. It manages and downloads subtitles based on your requirements
-home: https://trueforge.org/truetech/truecharts/charts/stable/bazarr
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/bazarr.webp
+home: https://truecharts.org/charts/stable/bazarr
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/bazarr.webp
 keywords:
   - bazarr
   - radarr
@@ -34,11 +34,11 @@ keywords:
   - subtitles
   - usenet
   - torrent
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: bazarr
 sources:
   - https://ghcr.io/onedr0p/exportarr
@@ -46,5 +46,5 @@ sources:
   - https://github.com/trueforge-org/containers/tree/main/apps/bazarr
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/bazarr
 type: application
-version: 23.2.19
+version: 23.2.20
 

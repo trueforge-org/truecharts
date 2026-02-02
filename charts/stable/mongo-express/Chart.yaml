@@ -17,7 +17,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -32,22 +32,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: mongo-express is a web-based MongoDB admin interface written in Node.js, Express.js, and Bootstrap3.
-home: https://trueforge.org/truetech/truecharts/charts/stable/mongo-express
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/mongo-express.webp
+home: https://truecharts.org/charts/stable/mongo-express
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/mongo-express.webp
 keywords:
   - mongo
   - mongodb
   - database
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: mongo-express
 sources:
   - https://gallery.ecr.aws/docker/library/mongo-express
   - https://github.com/mongo-express/mongo-express
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mongo-express
 type: application
-version: 9.26.31
+version: 9.26.32
 

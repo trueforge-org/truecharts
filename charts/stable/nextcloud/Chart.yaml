@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: cloud
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: 32.0.5
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -26,19 +32,19 @@ dependencies:
     import-values: []
 deprecated: false
 description: A private cloud server that puts the control and security of your own data back into your hands.
-home: https://trueforge.org/truetech/truecharts/charts/stable/nextcloud
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/nextcloud.webp
+home: https://truecharts.org/charts/stable/nextcloud
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/nextcloud.webp
 keywords:
   - nextcloud
   - storage
   - http
   - web
   - php
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: nextcloud
 sources:
   - https://github.com/nextcloud/docker
@@ -52,5 +58,5 @@ sources:
   - https://hub.docker.com/r/clamav/clamav
   - https://hub.docker.com/r/collabora/code
 type: application
-version: 40.6.21
+version: 40.6.22
 

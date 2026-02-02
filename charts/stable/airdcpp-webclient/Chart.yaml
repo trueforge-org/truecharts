@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: media
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: 2.14.0
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -19,17 +25,17 @@ dependencies:
     import-values: []
 deprecated: false
 description: AirDC++ Web Client is a locally installed application, which is designed for flexible sharing of files or directories within groups of people in a local network or over internet.
-home: https://trueforge.org/truetech/truecharts/charts/stable/airdcpp-webclient
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/airdcpp-webclient.webp
+home: https://truecharts.org/charts/stable/airdcpp-webclient
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/airdcpp-webclient.webp
 keywords:
   - DC++
   - dcpp
   - airdcpp
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: airdcpp-webclient
 sources:
   - https://airdcpp-web.github.io/
@@ -37,5 +43,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/airdcpp-webclient
   - https://hub.docker.com/r/gangefors/airdcpp-webclient
 type: application
-version: 13.14.15
+version: 13.14.16
 

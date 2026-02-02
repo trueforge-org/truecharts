@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: Productivity
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: 4.5.2
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -19,21 +25,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: Integrated development environment for R, a programming language for statistical computing and graphics.
-home: https://trueforge.org/truetech/truecharts/charts/stable/rstudio
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/rstudio.webp
+home: https://truecharts.org/charts/stable/rstudio
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/rstudio.webp
 keywords:
   - rstudio
   - Productivity
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: rstudio
 sources:
   - https://ghcr.io/rocker-org/rstudio
   - https://github.com/rocker-org/rocker-versioned2
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/rstudio
 type: application
-version: 9.13.16
+version: 9.13.17
 

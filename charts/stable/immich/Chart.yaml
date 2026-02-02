@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: media
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: 2.5.2
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -26,15 +32,15 @@ dependencies:
     import-values: []
 deprecated: false
 description: High performance self-hosted photo and video backup solution.
-home: https://trueforge.org/truetech/truecharts/charts/stable/immich
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/immich.webp
+home: https://truecharts.org/charts/stable/immich
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/immich.webp
 keywords:
   - photos
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: immich
 sources:
   - https://ghcr.io/immich-app/immich-machine-learning
@@ -42,5 +48,5 @@ sources:
   - https://github.com/immich-app/immich
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/immich
 type: application
-version: 25.23.1
+version: 25.23.2
 

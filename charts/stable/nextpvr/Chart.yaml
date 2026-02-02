@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: media
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: stable
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -19,21 +25,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: NextPVR is a personal video recorder application, with the goal making it easy to watch or record live TV.
-home: https://trueforge.org/truetech/truecharts/charts/stable/nextpvr
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/nextpvr.webp
+home: https://truecharts.org/charts/stable/nextpvr
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/nextpvr.webp
 keywords:
   - pvr
   - recorder
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: nextpvr
 sources:
   - https://github.com/sub3/NextPVR/wiki/Install-Docker
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/nextpvr
   - https://hub.docker.com/r/nextpvr/nextpvr_amd64
 type: application
-version: 12.13.15
+version: 12.13.16
 

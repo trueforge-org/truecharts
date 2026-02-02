@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: TV
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: 0.15.0
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -19,18 +25,18 @@ dependencies:
     import-values: []
 deprecated: false
 description: A comprehensive IPTV management platform for organizing and streaming public broadcast content through Plex DVR, Emby, and Jellyfin Live TV
-home: https://trueforge.org/truetech/truecharts/charts/stable/streammaster
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/streammaster.webp
+home: https://truecharts.org/charts/stable/streammaster
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/streammaster.webp
 keywords:
   - streammaster
   - iptv
   - tv
   - channels
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: streammaster
 sources:
   - https://carlreid.github.io/StreamMaster/
@@ -38,5 +44,5 @@ sources:
   - https://github.com/carlreid/StreamMaster
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/streammaster
 type: application
-version: 2.13.15
+version: 2.13.16
 

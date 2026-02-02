@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: productivity
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -11,7 +17,7 @@ apiVersion: v2
 appVersion: 0.8.2
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -19,21 +25,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: Traggo is a tag-based time tracking tool. In Traggo there are no tasks, only tagged time spans.
-home: https://trueforge.org/truetech/truecharts/charts/stable/traggo
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/traggo.webp
+home: https://truecharts.org/charts/stable/traggo
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/traggo.webp
 keywords:
   - time-tracking
   - tag
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: traggo
 sources:
   - https://github.com/traggo/server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/traggo
   - https://hub.docker.com/r/traggo/server
 type: application
-version: 9.14.11
+version: 9.14.12
 
