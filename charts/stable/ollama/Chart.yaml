@@ -14,7 +14,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 0.15.3
+appVersion: 0.15.4
 dependencies:
   - name: common
     version: 28.29.40
@@ -25,16 +25,16 @@ dependencies:
     import-values: []
 deprecated: false
 description: Get up and running with large language models locally.
-home: https://trueforge.org/truetech/truecharts/charts/stable/ollama
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/ollama.webp
+home: https://truecharts.org/charts/stable/ollama
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/ollama.webp
 keywords:
   - ollama
   - language-models
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: ollama
 sources:
   - https://ghcr.io/open-webui/open-webui
@@ -43,5 +43,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ollama
   - https://hub.docker.com/r/ollama/ollama
 type: application
-version: 8.23.8
+version: 8.23.10
 
