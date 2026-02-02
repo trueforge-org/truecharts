@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: media
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -19,24 +25,24 @@ dependencies:
     import-values: []
 deprecated: false
 description: Lyrion Music Server is a platform for home/office audio streaming.
-home: https://trueforge.org/truetech/truecharts/charts/stable/lyrion-music-server
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/lyrion-music-server.webp
+home: https://truecharts.org/charts/stable/lyrion-music-server
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/lyrion-music-server.webp
 keywords:
   - lyrion-music-server
   - logitech-media-server
   - squeezebox
   - audio
   - streaming
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: lyrion-music-server
 sources:
   - https://github.com/LMS-Community/slimserver
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/lyrion-music-server
   - https://hub.docker.com/r/lmscommunity/lyrionmusicserver
 type: application
-version: 5.13.28
+version: 5.13.29
 
