@@ -2,6 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: media
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -19,15 +25,15 @@ dependencies:
     import-values: []
 deprecated: false
 description: Mylar is a automated Comic Book downloader
-home: https://trueforge.org/truetech/truecharts/charts/stable/mylar
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/mylar.webp
+home: https://truecharts.org/charts/stable/mylar
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/mylar.webp
 keywords:
   - mylar
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: mylar
 sources:
   - https://fleet.linuxserver.io/image?name=linuxserver/mylar3
@@ -35,5 +41,5 @@ sources:
   - https://github.com/mylar3/mylar3
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mylar
 type: application
-version: 16.13.21
+version: 16.13.22
 
