@@ -14,7 +14,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 11.10.1
+appVersion: 11.11.0
 dependencies:
   - name: common
     version: 28.29.49
@@ -25,24 +25,24 @@ dependencies:
     import-values: []
 deprecated: false
 description: Full featured Z-Wave Control Panel and MQTT Gateway, using NodeJS and Vue.
-home: https://trueforge.org/truetech/truecharts/charts/stable/zwavejs2mqtt
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/zwavejs2mqtt.webp
+home: https://truecharts.org/charts/stable/zwavejs2mqtt
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/zwavejs2mqtt.webp
 keywords:
   - zwavejs2mqtt
   - zwave-js-ui
   - zwave-js
   - z-wave
   - zwave
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: zwavejs2mqtt
 sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/zwavejs2mqtt
   - https://github.com/zwave-js/zwave-js-ui
   - https://hub.docker.com/r/zwavejs/zwave-js-ui
 type: application
-version: 24.19.12
+version: 24.20.0
 
