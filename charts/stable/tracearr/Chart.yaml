@@ -24,7 +24,7 @@ dependencies:
     tags: []
     import-values: []
   - name: redis
-    version: 17.15.18
+    version: 17.15.19
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -32,16 +32,16 @@ dependencies:
     import-values: []
 deprecated: false
 description: Streaming access manager for Plex, Jellyfin, and Emby with account sharing detection.
-home: https://trueforge.org/truetech/truecharts/charts/stable/tracearr
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/tracearr.webp
+home: https://truecharts.org/charts/stable/tracearr
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/tracearr.webp
 keywords:
   - tracearr
   - media
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: tracearr
 sources:
   - https://ghcr.io/connorgallopo/tracearr
@@ -49,5 +49,5 @@ sources:
   - https://github.com/connorgallopo/Tracearr/blob/main/docker/docker-compose.yml
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/tracearr
 type: application
-version: 1.0.20
+version: 1.0.21
 

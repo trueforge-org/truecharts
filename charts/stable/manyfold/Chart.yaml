@@ -24,7 +24,7 @@ dependencies:
     tags: []
     import-values: []
   - name: redis
-    version: 17.15.18
+    version: 17.15.19
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -32,20 +32,20 @@ dependencies:
     import-values: []
 deprecated: false
 description: A Digital Asset Manager (DAM), specifically designed for 3D print files.
-home: https://trueforge.org/truetech/truecharts/charts/stable/manyfold
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/manyfold.webp
+home: https://truecharts.org/charts/stable/manyfold
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/manyfold.webp
 keywords:
   - manyfold
   - media
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: manyfold
 sources:
   - https://ghcr.io/manyfold3d/manyfold
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/manyfold
 type: application
-version: 4.41.1
+version: 4.41.2
 

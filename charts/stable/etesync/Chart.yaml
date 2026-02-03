@@ -24,7 +24,7 @@ dependencies:
     tags: []
     import-values: []
   - name: redis
-    version: 17.15.18
+    version: 17.15.19
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -32,8 +32,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Secure, end-to-end encrypted, and privacy respecting sync for your contacts, calendars, tasks and notes.
-home: https://trueforge.org/truetech/truecharts/charts/stable/etesync
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/etesync.webp
+home: https://truecharts.org/charts/stable/etesync
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/etesync.webp
 keywords:
   - etesync
   - sync
@@ -41,11 +41,11 @@ keywords:
   - calendars
   - tasks
   - notes
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: etesync
 sources:
   - https://github.com/etesync
@@ -54,5 +54,5 @@ sources:
   - https://hub.docker.com/r/victorrds/etesync
   - https://www.etesync.com/
 type: application
-version: 13.27.24
+version: 13.27.25
 

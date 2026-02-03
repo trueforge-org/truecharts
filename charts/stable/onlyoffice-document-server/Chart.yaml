@@ -24,7 +24,7 @@ dependencies:
     tags: []
     import-values: []
   - name: redis
-    version: 17.15.18
+    version: 17.15.19
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -32,15 +32,15 @@ dependencies:
     import-values: []
 deprecated: false
 description: 'ONLYOFFICE Document Server is an online office suite comprising viewers and editors for texts, spreadsheets and presentations, fully compatible with Office Open XML formats: .docx, .xlsx, .pptx and enabling collaborative editing in real time.'
-home: https://trueforge.org/truetech/truecharts/charts/stable/onlyoffice-document-server
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/onlyoffice-document-server.webp
+home: https://truecharts.org/charts/stable/onlyoffice-document-server
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/onlyoffice-document-server.webp
 keywords:
   - onlyoffice
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: onlyoffice-document-server
 sources:
   - https://github.com/ONLYOFFICE/Docker-DocumentServer
@@ -48,5 +48,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/onlyoffice-document-server
   - https://hub.docker.com/r/onlyoffice/documentserver
 type: application
-version: 22.29.24
+version: 22.29.25
 

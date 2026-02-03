@@ -24,7 +24,7 @@ dependencies:
     tags: []
     import-values: []
   - name: redis
-    version: 17.15.18
+    version: 17.15.19
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: ""
@@ -32,22 +32,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: Self-hosted file management and sharing system, supports multiple storage providers
-home: https://trueforge.org/truetech/truecharts/charts/stable/cloudreve
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/cloudreve.webp
+home: https://truecharts.org/charts/stable/cloudreve
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/cloudreve.webp
 keywords:
   - cloudreve
   - Cloud
   - Network-Web
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: cloudreve
 sources:
   - https://github.com/cloudreve/Cloudreve
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/cloudreve
   - https://hub.docker.com/r/cloudreve/cloudreve
 type: application
-version: 10.38.1
+version: 10.38.2
 
