@@ -2,19 +2,22 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: Productivity
+  truecharts.org/category: unsorted
   truecharts.org/max_helm_version: "3.17"
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
+  trueforge.org/category: Productivity
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
-appVersion: 1.5.9
+appVersion: 1.5.10
 dependencies:
   - name: common
-    version: 28.29.1
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,23 +25,23 @@ dependencies:
     import-values: []
 deprecated: false
 description: ByteStash is a self-hosted web application designed to store, organise, and manage your code snippets efficiently. With support for creating, editing, and filtering snippets, ByteStash helps you keep track of your code in one secure place.
-home: https://truecharts.org/charts/stable/bytestash
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/bytestash.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/bytestash
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/bytestash.webp
 keywords:
   - bytestash
   - Productivity
   - Tools-Utilities
   - code
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: bytestash
 sources:
   - https://ghcr.io/jordan-dalby/bytestash
   - https://github.com/jordan-dalby/ByteStash
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/bytestash
 type: application
-version: 2.13.0
+version: 2.13.16
 

@@ -1,11 +1,11 @@
 image:
   repository: ghcr.io/blakeblackshear/frigate
   pullPolicy: IfNotPresent
-  tag: 0.16.2@sha256:4041ad318224500cf9513c513b1bb927d9dd252f63bbd3d11c92006c1172c86c
+  tag: 0.16.4@sha256:1f8dbaaa4c7c2855c2aef711842d13b0c20bfdc3f28ad88faf66aa1bc219b108
 tensorrtImage:
   repository: ghcr.io/blakeblackshear/frigate
   pullPolicy: IfNotPresent
-  tag: 0.16.2-tensorrt@sha256:7351ca2ddbce6d712c8a13842eeb4248844e5334565e71b4f6ae438ddaf9d04d
+  tag: 0.16.4-tensorrt@sha256:2dde176109e74921edad06b43429b2c52a1f494d2c64d091dc3ccd38c1961eaf
 
 # When this is defined, the contents will be mounted
 # as configmap into the container at /config/config.yml.
@@ -29,7 +29,7 @@ workload:
         init-config:
           enabled: "{{ not .Values.frigateConfig }}"
           type: init
-          imageSelector: alpineImage
+          imageSelector: ubuntuImage
           command:
             - /bin/sh
             - -c

@@ -2,26 +2,29 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: analytics
+  truecharts.org/category: unsorted
   truecharts.org/max_helm_version: "3.17"
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
+  trueforge.org/category: analytics
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
 appVersion: 2.0.0
 dependencies:
   - name: common
-    version: 28.29.1
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: clickhouse
-    version: 16.17.0
+    version: 17.0.1
     repository: oci://oci.trueforge.org/truecharts
     condition: clickhouse.enabled
     alias: ""
@@ -29,16 +32,16 @@ dependencies:
     import-values: []
 deprecated: false
 description: Plausible is lightweight and open source web analytics. No cookies and fully compliant with GDPR, CCPA and PECR.
-home: https://truecharts.org/charts/stable/plausible
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/plausible.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/plausible
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/plausible.webp
 keywords:
   - plausible
   - analytics
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: plausible
 sources:
   - https://github.com/plausible/analytics
@@ -48,5 +51,5 @@ sources:
   - https://plausible.io/
   - https://plausible.io/docs/self-hosting
 type: application
-version: 14.30.0
+version: 15.0.2
 

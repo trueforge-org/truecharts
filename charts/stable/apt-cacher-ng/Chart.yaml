@@ -2,19 +2,22 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: Network-Proxy
+  truecharts.org/category: unsorted
   truecharts.org/max_helm_version: "3.17"
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
+  trueforge.org/category: Network-Proxy
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.29.1
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,23 +25,23 @@ dependencies:
     import-values: []
 deprecated: false
 description: Apt-Cacher NG is a caching proxy, specialized for package files from Linux distributors, primarily for Debian (and Debian based) distributions but not limited to those.
-home: https://truecharts.org/charts/stable/apt-cacher-ng
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/apt-cacher-ng.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/apt-cacher-ng
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/apt-cacher-ng.webp
 keywords:
   - apt-cacher-ng
   - Network-Proxy
   - Network-Other
   - Tools-Utilities
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: apt-cacher-ng
 sources:
   - https://ghcr.io/sameersbn/apt-cacher-ng
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/apt-cacher-ng
   - https://www.unix-ag.uni-kl.de/~bloch/acng/
 type: application
-version: 11.13.0
+version: 11.13.16
 

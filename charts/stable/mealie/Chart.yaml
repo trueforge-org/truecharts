@@ -2,19 +2,22 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: utilities
+  truecharts.org/category: unsorted
   truecharts.org/max_helm_version: "3.17"
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
+  trueforge.org/category: utilities
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
-appVersion: 3.5.0
+appVersion: 3.10.1
 dependencies:
   - name: common
-    version: 28.29.1
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -37,5 +40,5 @@ sources:
   - https://github.com/mealie-recipes/mealie
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mealie
 type: application
-version: 26.17.0
+version: 26.22.0
 

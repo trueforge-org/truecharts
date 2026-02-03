@@ -1,7 +1,7 @@
 image:
   pullPolicy: IfNotPresent
   repository: ghcr.io/booklore-app/booklore
-  tag: v1.12.0@sha256:76c985ea015c447dee81b20a19780a017e6031a50232f1f8e3064bbfdfd94763
+  tag: v1.18.5@sha256:44a39097fcf69e7373b51df0459da052640d07459fb02b429f2c47cceaa32485
 service:
   main:
     ports:
@@ -31,6 +31,9 @@ persistence:
   data:
     enabled: true
     mountPath: /app/data
+  bookdrop:
+    enabled: true
+    mountPath: /bookdrop
   varrun:
     enabled: false
 mariadb:

@@ -2,19 +2,22 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: cloud
+  truecharts.org/category: unsorted
   truecharts.org/max_helm_version: "3.17"
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
+  trueforge.org/category: cloud
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
-appVersion: 2.1.0
+appVersion: 2.2.2
 dependencies:
   - name: common
-    version: 28.29.1
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,22 +25,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: Gokapi is a lightweight server to share files, which expire after a set amount of downloads or days.
-home: https://truecharts.org/charts/stable/gokapi
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/gokapi.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/gokapi
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/gokapi.webp
 keywords:
   - gokapi
   - cloud
   - utilities
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: gokapi
 sources:
   - https://github.com/Forceu/gokapi
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/gokapi
   - https://hub.docker.com/r/f0rc3/gokapi
 type: application
-version: 9.14.0
+version: 9.15.3
 

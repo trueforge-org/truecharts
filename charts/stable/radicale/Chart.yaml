@@ -2,19 +2,22 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: radicale
+  truecharts.org/category: unsorted
   truecharts.org/max_helm_version: "3.17"
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
+  trueforge.org/category: radicale
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
-appVersion: 3.5.8.2
+appVersion: 3.6.0.0
 dependencies:
   - name: common
-    version: 28.29.1
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,8 +25,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Radicale is a small but powerful CalDAV (calendars, to-do lists) and CardDAV (contacts) server.
-home: https://truecharts.org/charts/stable/radicale
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/radicale.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/radicale
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/radicale.webp
 keywords:
   - radicale
   - CalDAV
@@ -32,11 +35,11 @@ keywords:
   - contacts
   - tasks
   - to-do
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: radicale
 sources:
   - https://github.com/Kozea/Radicale
@@ -45,5 +48,5 @@ sources:
   - https://hub.docker.com/r/tomsquest/docker-radicale
   - https://radicale.org/
 type: application
-version: 8.13.0
+version: 8.14.11
 

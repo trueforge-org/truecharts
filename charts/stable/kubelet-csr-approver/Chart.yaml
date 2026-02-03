@@ -2,19 +2,22 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: operators
+  truecharts.org/category: unsorted
   truecharts.org/max_helm_version: "3.17"
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
+  trueforge.org/category: operators
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
 appVersion: 1.2.12
 dependencies:
   - name: common
-    version: 28.29.1
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,21 +25,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: Automatically approve internal Kubelet Certificate Signing Requests
-home: https://truecharts.org/charts/stable/kubelet-csr-approver
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/kubelet-csr-approver.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/kubelet-csr-approver
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/kubelet-csr-approver.webp
 keywords:
   - kubelet-csr-approver
   - loadbalancer
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: kubelet-csr-approver
 sources:
   - https://ghcr.io/postfinance/kubelet-csr-approver
   - https://github.com/kubelet-csr-approver/kubelet-csr-approver
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/kubelet-csr-approver
 type: application
-version: 2.13.0
+version: 2.13.16
 

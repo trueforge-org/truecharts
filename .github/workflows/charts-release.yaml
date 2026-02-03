@@ -33,7 +33,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
 
       - name: Filter paths
         id: filter
@@ -56,16 +56,16 @@ jobs:
     needs: check_changes
     steps:
       - name: Checkout
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
         with:
           fetch-depth: 0
 
-      - name: Install ./clustertool
+      - name: Install ./forgetool
         shell: bash
         run: |
-          VERSION="2.0.0-BETA-17"
-          FILENAME="clustertool_${VERSION}_linux_amd64.tar.gz"
-          URL="https://github.com/trueforge-org/truecharts/releases/download/v${VERSION}/${FILENAME}"
+          VERSION="3.0.2"
+          FILENAME="forgetool_${VERSION}_linux_amd64.tar.gz"
+          URL="https://github.com/trueforge-org/forgetool/releases/download/v${VERSION}/${FILENAME}"
 
           mkdir -p temp
           cd temp
@@ -90,7 +90,7 @@ jobs:
       - name: Cache Changelog
         id: cache-changelog
         if: github.event_name == 'push'
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5
         with:
           key: ${{ env.CHANGELOG_CACHE_KEY }}-${{ hashFiles('**/Chart.yaml') }}
           path: changelog.json.gz
@@ -113,7 +113,7 @@ jobs:
             gunzip "$JSON_FILE.gz" --force # Force overwrite if file already exists
           fi
 
-          ./temp/clustertool charts genchangelog "$REPO_PATH" "$TEMPLATE_PATH" "$OUTPUT_DIR"
+          ./temp/forgetool charts genchangelog "$REPO_PATH" "$TEMPLATE_PATH" "$OUTPUT_DIR"
 
           # TODO: Test remove later
           echo "temp content:"
@@ -178,7 +178,7 @@ jobs:
 
       - name: Checkout website repo
         if: github.event_name == 'push'
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
         with:
           repository: trueforge-org/website
           path: website   # checkout into ./website
@@ -195,7 +195,7 @@ jobs:
           mkdir -p website/public/img/hotlink-ok/chart-icons-small || echo "chart-icons-small path already exists, continuing..."
           mkdir -p website/src/assets || echo "assets path already exists, continuing..."
 
-          ./temp/clustertool charts genchartlist ./charts
+          ./temp/forgetool charts genchartlist ./charts
           mv -f charts.json website/src/assets/charts.json
           mv -f ./website/src/content/docs/truetech/truecharts/charts/description-list.mdx ./description-list.mdx
           echo "Copying changelogs to docs"

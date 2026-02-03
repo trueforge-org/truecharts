@@ -26,15 +26,6 @@ workload:
               secretKeyRef:
                 name: ctfd-secrets
                 key: SECRET_KEY
-            DATABASE_PORT: 3306
-            DATABASE_NAME: "{{ .Values.mariadb.mariadbDatabase }}"
-            DATABASE_USER: "{{ .Values.mariadb.mariadbUsername }}"
-            DATABASE_HOST:
-              secretKeyRef:
-                expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
-                key: plainhost
-            DATABASE_PASSWORD: "{{ .Values.mariadb.password }}"
             REDIS_URL:
               secretKeyRef:
                 expandObjectName: false
@@ -54,12 +45,11 @@ workload:
             # majorleaguecyber
             OAUTH_CLIENT_ID: ""
             OAUTH_CLIENT_SECRET: ""
-
-mariadb:
-  enabled: true
-  mariadbUsername: ctfd
-  mariadbDatabase: ctfd
-
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
+    runAsGroup: 0
+    runAsUser: 0
 redis:
   enabled: true
   redisUsername: default

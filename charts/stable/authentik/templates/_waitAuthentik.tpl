@@ -3,7 +3,7 @@
 {{- $serverUrl := printf "https://%v:%v/-/health/ready/" $fullname .Values.service.main.ports.main.port }}
 enabled: true
 type: init
-imageSelector: alpineImage
+imageSelector: ubuntuImage
 command: /bin/sh
 args:
   - -c

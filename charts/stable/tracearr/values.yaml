@@ -1,0 +1,51 @@
+image:
+  repository: ghcr.io/connorgallopo/tracearr
+  pullPolicy: IfNotPresent
+  tag: 1.4.12@sha256:3ac79a0cae844ea4642ae8098a12f2bdea191d5f11c03b38b3085d41ccb36b90
+
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
+
+service:
+  main:
+    ports:
+      main:
+        protocol: http
+        targetPort: 3000
+        port: 3000
+
+cnpg:
+  main:
+    enabled: true
+    user: tracearr
+    database: tracearr
+
+redis:
+  enabled: true
+  redisUsername: default
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            PORT: "{{ .Values.service.main.ports.main.port }}"
+            JWT_SECRET: "changeme"
+            COOKIE_SECRET: "changeme"
+            # Optional MaxMind GeoIP license key
+            MAXMIND_LICENSE_KEY: ""
+            CORS_ORIGIN: "*"
+            LOG_LEVEL: info
+            # Enable reverse proxy support
+            TRUST_PROXY: true
+            DATABASE_URL:
+              secretKeyRef:
+                name: cnpg-main-urls
+                key: std
+            REDIS_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                key: url

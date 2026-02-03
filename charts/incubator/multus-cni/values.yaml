@@ -1,0 +1,520 @@
+image:
+  pullPolicy: IfNotPresent
+  repository: ghcr.io/k8snetworkplumbingwg/multus-cni
+  tag: v4.2.3-thick@sha256:e93af9e533cc16ca7847aeec3b516c9b1e8891c2b95c727991e94c9b59c4970e
+
+craneImage:
+  pullPolicy: IfNotPresent
+  repository: docker.io/alpine/crane
+  tag: 0.20.7@sha256:68bc6aee55d435fc76af636f0cc02ffba3f59f8acfbb2c0c0afce0b67202c5c8
+
+talosCniImage:
+  pullPolicy: IfNotPresent
+  repository: ghcr.io/siderolabs/cni
+  tag: v1.12.0@sha256:53c9bafbc4c3d781633fbbc7ee3dc60ed6d0baa39fb1589342a48f6fa868cd96
+
+multus:
+  # Primary CNI value can be:
+  # - "", in which case the aphabetically first file in the CNI JSON
+  #   configuration directory (pointed to by `persistence.cniconf.mountPath`)
+  #   will be used
+  # - The relative path to a CNI config file inside the CNI JSON configuration
+  #   directory (pointed to by `persistence.cniconf.mountPath`). For example
+  #   `05-cilium.conflist`
+  primaryCniConfigFile: ""
+  # Set to true to make Multus wait for the primary CNI to be ready before
+  # it starts attaching extra networks to pods. This can help with pods
+  # crash-looping when primary CNI is not ready
+  readinessIndicatorEnabled: false
+  logLevel: verbose  # "debug", "error", "verbose", or "panic"
+  # Whether to isolate `NetworkAttachmentDefinition`s by namespace.
+  # Setting this to `true` will prevent sharing NAD resources across namespaces
+  namespaceIsolation: false
+  # A list of namespaces for which the `namespaceIsolation` (when set to `true`)
+  # does not apply. `NetworkAttachmentDefinition`s defined in these namespaces
+  # can be used across all namespaces. Note Multus treats the `default` namespace
+  # as global by default (when `globalNamespaces` is empty)
+  globalNamespaces: []
+  # A list of additional networks to attach to every pod
+  # The items of this list can be the names of `NetworkAttachmentDefinition`s,
+  # names of CNI configuration files, paths to CNI configuation files and more.
+  # See Multus documentation for more information
+  defaultNetworks: []
+  # A list namespaces, which are excluded from attaching networks from the
+  # `defaultNetworks` list. By default, this chart's namespace is excluded.
+  systemNamespaces: []
+  # A map of capabilities, that are supported by at least one of the used CNI
+  # plugins. See Multus documentation for more information
+  capabilities: {}
+  # You should not need to change the Multus CNI config version, however,
+  # if you get an error about version incompatibility with the primary CNI it
+  # might help to match the multus CNI version to your primary CNI version
+  cniVersion: 0.3.1
+  integrations:
+    talos:
+      enabled: false  # Must be enabled when installing on a Talos cluster
+      # Select extra reference CNIs to be installed
+      # Note:
+      # - If you are installing any of the reference CNIs, it is strongly
+      #   recommended to override the `talosCniImage.tag` to match your
+      #   Talos version
+      # - To install CNIs that are present in the `talosCniImage` but not listed
+      #   below, simply add them below in the form of `<binary_name>: true`
+      installCni:
+        macvlan: true
+        ipvlan: true
+  # Enable the chart's uninstall mode. This will clean up leftover chart
+  # configuration data and CNI plugins, allowing for a cleaner uninstall.
+  #
+  # Note:
+  # If the Talos integration is enabled, this chart assumes it has full control
+  # over all CNIs listed in `integrations.talos.installCni`(and set to `true`).
+  # During uninstall, it will remove all CNIs that are enabled (`true`). If this
+  # is undesired, set the keys of the relevant CNI names to `false` before
+  # enabling the uninstall mode.
+  uninstall: false
+
+podOptions:
+  hostNetwork: true
+  hostPID: true
+  automountServiceAccountToken: true
+  priorityClassName: system-node-critical
+  # Add a toleration to always allow scheduling
+  # This is used to allow scheduling while there is no working primary CNI (yet),
+  # as in such cases the node is usually tainted with "NoSchedule" since it is
+  # not ready for regular workloads. However, depending on config, it may be
+  # desired (or even enforced) for Multus to start first, to ensure that all
+  # pod interface configuration passes through it after a node reboot.
+  tolerations:
+    - operator: Exists
+
+configmap:
+  config:
+    enabled: true
+    data:
+      daemon-config.json: |
+        {
+            "cniVersion": "{{ .Values.multus.cniVersion }}",
+            "confDir": "{{ tpl .Values.persistence.cniconf.mountPath $ }}/multus.d",
+            "cniDir": "{{ tpl .Values.persistence.cnimultusdata.mountPath $ }}",
+            "binDir": "{{ tpl .Values.persistence.cnibin.mountPath $ }}",
+            "logToStderr": true,
+            "logLevel": "{{ .Values.multus.logLevel }}",
+            "namespaceIsolation": {{ .Values.multus.namespaceIsolation }},
+            "globalNamespaces": "{{ join "," .Values.multus.globalNamespaces }}",
+            {{- if .Values.multus.systemNamespaces }}
+            "systemNamespaces": {{ .Values.multus.systemNamespaces | toJson }},
+            {{- else }}
+            "systemNamespaces": ["{{ .Release.Namespace }}"],
+            {{- end }}
+            "defaultNetworks": {{ .Values.multus.defaultNetworks | toJson }},
+            "capabilities": {{ .Values.multus.capabilities | toJson }},
+            "multusMasterCNI": "{{ .Values.multus.primaryCniConfigFile }}",
+            "multusNamespace": "{{ .Release.Namespace }}",
+            {{- if .Values.multus.readinessIndicatorEnabled }}
+              {{- if not .Values.multus.primaryCniConfigFile -}}
+                {{- fail "Invalid configuration: When [multus.readinessIndicatorEnabled] is set to [true], [multus.primaryCniConfigFile] must be set to a non-empty value." -}}
+              {{- end }}
+            "readinessindicatorfile": "{{ tpl .Values.persistence.cniconf.mountPath $ }}/{{ .Values.multus.primaryCniConfigFile }}",
+            {{- end }}
+            {{- if .Values.metrics.main.enabled }}
+            "metricsPort": {{ .Values.service.main.ports.main.port }},
+            {{- end }}
+            "chrootDir": "{{ tpl .Values.persistence.hostroot.mountPath $ }}",
+            "socketDir": "{{ tpl .Values.persistence.hostrun.mountPath $ }}/multus/",
+            "cniConfigDir": "{{ tpl .Values.persistence.cniconf.mountPath $ }}",
+            "multusAutoconfigDir": "{{ tpl .Values.persistence.cniconf.mountPath $ }}",
+            "multusConfigFile": "auto",
+            "retryDeleteOnError": true
+        }
+
+persistence:
+  cnibin:
+    enabled: true
+    type: hostPath
+    # NOTE:
+    # multus-daemon expects that cnibin path to be identical between pod and host
+    mountPath: "{{ tpl .Values.persistence.cnibin.hostPath $ }}"
+    hostPath: /opt/cni/bin
+    hostPathType: DirectoryOrCreate
+    mountPropagation: Bidirectional
+    targetSelector:
+      main:
+        cleanup: {}
+        multus-plugin-installer: {}
+        talos-plugin-installer: {}
+        main: {}
+        dhcp-daemon: {}
+  cniconf:
+    enabled: true
+    type: hostPath
+    mountPath: /host/etc/cni/net.d
+    hostPath: /etc/cni/net.d
+    hostPathType: DirectoryOrCreate
+    targetSelector:
+      main:
+        cleanup: {}
+        main: {}
+  cnimultusdata:  # Used for multus cache data
+    enabled: true
+    type: hostPath
+    mountPath: /var/lib/cni/multus
+    hostPath: /var/lib/cni/multus
+    hostPathType: DirectoryOrCreate
+  # Used for cleanup on during chart uninstall
+  cnimultusdatacleanup:
+    enabled: true
+    type: hostPath
+    # NOTE:
+    # `mountPath` and `hostPath` MUST exactly match `cnimultusdata`'s mount and
+    # host path parent directories.
+    mountPath: "{{ (tpl .Values.persistence.cnimultusdata.mountPath $) | clean | dir }}"
+    hostPath: "{{ (tpl .Values.persistence.cnimultusdata.hostPath $) | clean | dir }}"
+    hostPathType: DirectoryOrCreate
+    targetSelector:
+      main:
+        cleanup: {}
+  daemonconfig:
+    enabled: true
+    type: configmap
+    mountPath: "{{ tpl .Values.persistence.cniconf.mountPath $ }}/multus.d/daemon-config.json"
+    objectName: config
+    subPath: daemon-config.json
+    readOnly: true
+  hostroot:
+    enabled: true
+    type: hostPath
+    mountPath: /hostroot
+    hostPath: /
+    hostPathType: Directory
+    mountPropagation: HostToContainer
+  hostrun:
+    enabled: true
+    type: hostPath
+    mountPath: /host/run
+    hostPath: /run
+    hostPathType: Directory
+    targetSelector:
+      main:
+        cleanup: {}
+        main: {}
+        dhcp-daemon: {}
+  hostrunnetns:
+    enabled: true
+    type: hostPath
+    # NOTE:
+    # The Talos/Multus docs state that this the host's `(/var)/run/netns` must
+    # be mounted under `/run/netns` in the container.
+    #
+    # However, TC common library forcefully renders an emptyDir mount under
+    # `/var/run` to facilitate common uses cases. This is done AFTER any
+    # chart-specific mounts are rendered and since `/var/run` is usually a
+    # symlink to `/run`, this host path mount gets overridden by the
+    # emptyDir mount
+    #
+    # To workaround this we instead mount to `/var/run/netns` inside the
+    # the container, and since `/var/run` is a symlink to `/run`, the mount
+    # also shows under `/run/netns`.
+    mountPath: /var/run/netns
+    hostPath: "{{- if .Values.multus.integrations.talos.enabled -}}/var{{- end -}}/run/netns"
+    hostPathType: DirectoryOrCreate
+    mountPropagation: HostToContainer
+    targetSelector:
+      main:
+        main: {}
+        dhcp-daemon: {}
+  hostrunk8scnicncfio:
+    enabled: true
+    type: hostPath
+    mountPath: /run/k8s.cni.cncf.io
+    hostPath: /run/k8s.cni.cncf.io
+    hostPathType: DirectoryOrCreate
+  hostvarlibkubelet:
+    enabled: true
+    type: hostPath
+    mountPath: /var/lib/kubelet
+    hostPath: /var/lib/kubelet
+    hostPathType: Directory
+    mountPropagation: HostToContainer
+
+workload:
+  main:
+    type: DaemonSet
+    podSpec:
+      initContainers:
+        talos-plugin-installer:
+          enabled: "{{- $cnisMustBeInstalled := false -}}
+            {{- range $key, $value := .Values.multus.integrations.talos.installCni -}}
+              {{- if $value -}}
+                {{- $cnisMustBeInstalled = true -}}
+              {{- end -}}
+            {{- end -}}
+
+            {{ and (not .Values.multus.uninstall)
+              .Values.multus.integrations.talos.enabled
+              $cnisMustBeInstalled }}"
+          type: init
+          imageSelector: craneImage
+          command:
+            - sh
+            - -c
+            - |
+              set -euo pipefail
+              cd /tmp
+
+              echo "Pulling '{{ .Values.talosCniImage.repository }}:{{ .Values.talosCniImage.tag }}' image..."
+              crane export {{ .Values.talosCniImage.repository }}:{{ .Values.talosCniImage.tag }} cni.tar
+
+              echo "Extracting CNI binaries..."
+              mkdir -p cniBins
+              tar -xvf cni.tar --strip-components=3 -C cniBins opt/cni/bin >/dev/null
+              ls cniBins # print available binaries for ease of debugging
+              echo
+
+              {{- $cniBinMountPath := (tpl .Values.persistence.cnibin.mountPath $) -}}
+              {{- range $key, $value := .Values.multus.integrations.talos.installCni -}}
+                {{- if $value }}
+              echo "Copying {{ $key }} to '{{ $cniBinMountPath }}/{{ $key }}'"
+              cp cniBins/{{ $key }} "{{ $cniBinMountPath }}/{{ $key }}"
+                {{- end }}
+              {{- end -}}
+          securityContext:
+            privileged: true
+            runAsUser: 0
+            runAsGroup: 0
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "15Mi"
+        multus-plugin-installer:
+          enabled: "{{ not .Values.multus.uninstall }}"
+          type: init
+          imageSelector: image
+          command:
+            - "/usr/src/multus-cni/bin/install_multus"
+          args:
+            - "-d"
+            - "{{ tpl .Values.persistence.cnibin.mountPath $ }}"
+            - "-t"
+            - "thick"
+          securityContext:
+            privileged: true
+            runAsUser: 0
+            runAsGroup: 0
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "15Mi"
+          termination:
+            messagePolicy: FallbackToLogsOnError
+      containers:
+        cleanup:
+          enabled: "{{ .Values.multus.uninstall }}"
+          type: init
+          imageSelector: ubuntuImage
+          command:
+            - sh
+            - -c
+            - |
+              echoRun() {
+                echo "$@"
+                eval "$@"
+              }
+
+              set -euo pipefail
+
+              echo "Cleaning up Multus CNI config..."
+              echoRun rm -rf "{{ tpl .Values.persistence.cniconf.mountPath $ }}"/*multus.*
+              echo
+
+              echo "Cleaning up Multus CNI data..."
+              echoRun rm -rf "{{ tpl .Values.persistence.cnimultusdata.mountPath $ }}"
+              echo
+
+              echo "Cleaning up Multus CNI plugins..."
+              echoRun rm -f "{{ tpl .Values.persistence.cnibin.mountPath $ }}"/multus*
+              echoRun rm -f "{{ tpl .Values.persistence.cnibin.mountPath $ }}"/passthru
+
+              {{- if .Values.multus.integrations.talos.enabled }}
+                {{- $cniBinMountPath := (tpl .Values.persistence.cnibin.mountPath $) -}}
+                {{- $hostRunMountPath := (tpl .Values.persistence.hostrun.mountPath $) -}}
+                {{- range $key, $value := .Values.multus.integrations.talos.installCni -}}
+                  {{- if $value }}
+              echoRun rm -f "{{ $cniBinMountPath }}/{{ $key }}"
+                    {{- if eq $key "dhcp" }}
+              echoRun rm -f "{{ $hostRunMountPath }}/cni/dhcp.sock"
+                    {{- end }}
+                  {{- end }}
+                {{- end -}}
+              {{- end }}
+
+              echo "Cleanup completed! You can now safely uninstall this chart."
+              sleep infinity
+          securityContext:
+            privileged: true
+            runAsUser: 0
+            runAsGroup: 0
+            capabilities:
+              drop:
+                - ALL
+          probes:
+            liveness:
+              enabled: false
+            readiness:
+              enabled: false
+            startup:
+              enabled: false
+        main:
+          enabled: "{{ not .Values.multus.uninstall }}"
+          env:
+            MULTUS_NODE_NAME:
+              fieldRef:
+                fieldPath: spec.nodeName
+          args:
+            - --config
+            - "{{ tpl .Values.persistence.daemonconfig.mountPath $ }}"
+          securityContext:
+            privileged: true
+            runAsUser: 0
+            runAsGroup: 0
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "50Mi"
+            limits:
+              cpu: "200m"
+              memory: "500Mi"
+          termination:
+            messagePolicy: FallbackToLogsOnError
+          probes:
+            liveness:
+              enabled: true
+              type: exec
+              command:
+                - sh
+                - -c
+                - cat "{{ tpl .Values.persistence.cniconf.mountPath $ }}"/00-multus.conf*
+            readiness:
+              enabled: true
+              type: exec
+              command:
+                - sh
+                - -c
+                - cat "{{ tpl .Values.persistence.cniconf.mountPath $ }}"/00-multus.conf*
+            startup:
+              enabled: true
+              type: exec
+              command:
+                - sh
+                - -c
+                - cat "{{ tpl .Values.persistence.cniconf.mountPath $ }}"/00-multus.conf*
+        dhcp-daemon:
+          enabled: "{{ and (not .Values.multus.uninstall)
+            .Values.multus.integrations.talos.enabled
+            (.Values.multus.integrations.talos.installCni | dig \"dhcp\" false) }}"
+          imageSelector: ubuntuImage
+          command:
+            - sh
+            - -c
+            - |
+              set -euo pipefail
+
+              SOCKET_PATH="{{ tpl .Values.persistence.hostrun.mountPath $ }}/cni/dhcp.sock"
+              CNI_BIN_DIR="{{ (tpl .Values.persistence.cnibin.mountPath $) }}"
+
+              # Make sure the unix socket has been removed
+              rm -f "$SOCKET_PATH"
+
+              # Start the daemon
+              "$CNI_BIN_DIR/dhcp" daemon -socketpath "$SOCKET_PATH" &
+              DAEMON_PID=$!
+
+              if kill -0 $DAEMON_PID 2>/dev/null; then
+                  echo "DHCP daemon started successfully"
+              else
+                  echo "DHCP daemon failed to start..."
+                  exit 1
+              fi
+
+              wait $DAEMON_PID
+          securityContext:
+            privileged: true
+            runAsUser: 0
+            runAsGroup: 0
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "50Mi"
+            limits:
+              cpu: "100m"
+              memory: "100Mi"
+          termination:
+            messagePolicy: FallbackToLogsOnError
+          probes:
+            liveness:
+              enabled: true
+              type: exec
+              command:
+                - sh
+                - -c
+                - test -S "{{ tpl .Values.persistence.hostrun.mountPath $ }}/cni/dhcp.sock"
+            readiness:
+              enabled: true
+              type: exec
+              command:
+                - sh
+                - -c
+                - test -S "{{ tpl .Values.persistence.hostrun.mountPath $ }}/cni/dhcp.sock"
+            startup:
+              enabled: true
+              type: exec
+              command:
+                - sh
+                - -c
+                - test -S "{{ tpl .Values.persistence.hostrun.mountPath $ }}/cni/dhcp.sock"
+
+metrics:
+  main:
+    enabled: true
+    type: servicemonitor
+    endpoints:
+      - port: main
+        path: /metrics
+    targetSelector: main
+
+service:
+  main:
+    enabled: "{{ .Values.metrics.main.enabled }}"
+    clusterIP: None  # No need for ClusterIP with host networking
+    ports:
+      main:
+        enabled: true
+        port: 8080
+        protocol: http
+
+serviceAccount:
+  main:
+    enabled: true
+    primary: true
+rbac:
+  main:
+    enabled: true
+    primary: true
+    clusterWide: true
+    serviceAccounts: ["main"]
+    rules:
+      - apiGroups: ["k8s.cni.cncf.io"]
+        resources: ['*']
+        verbs: ['*']
+      - apiGroups: [""]
+        resources: ["pods", "pods/status"]
+        verbs: ["get", "list", "update", "watch"]
+      - apiGroups: ["", "events.k8s.io"]
+        resources: ["events"]
+        verbs: ["create", "patch", "update"]

@@ -2,17 +2,22 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  truecharts.org/category: media
+  truecharts.org/category: unsorted
   truecharts.org/max_helm_version: "3.17"
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
+  trueforge.org/category: media
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
-appVersion: 0.95.0
+appVersion: 0.97.0
 dependencies:
   - name: common
-    version: 28.29.1
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,23 +25,23 @@ dependencies:
     import-values: []
 deprecated: false
 description: Dockerized Signal Messenger REST API.
-home: https://truecharts.org/charts/stable/signal-cli-rest-api
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/signal-cli-rest-api.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/signal-cli-rest-api
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/signal-cli-rest-api.webp
 keywords:
   - signal
   - signal-cli
   - api
   - rest-api
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: signal-cli-rest-api
 sources:
   - https://github.com/bbernhard/signal-cli-rest-api
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/signal-cli-rest-api
   - https://hub.docker.com/r/bbernhard/signal-cli-rest-api
 type: application
-version: 1.14.0
+version: 1.16.1
 

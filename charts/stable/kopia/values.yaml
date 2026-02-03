@@ -1,13 +1,13 @@
 image:
   repository: oci.trueforge.org/containerforge/kopia
-  tag: 0.22.0@sha256:18781d0312687731ad9682dccc82170c866612accaced8152d965deb5bf315a7
+  tag: 0.22.3@sha256:95d9cc5eba6845d5323958114035c316bce8c7d0c45324ce80924591e273bff4
   pullPolicy: IfNotPresent
 service:
   main:
     ports:
       main:
         protocol: http
-        port: 10238
+        port: 51515
 
 kopia:
   user: "user"
@@ -37,13 +37,13 @@ workload:
 persistence:
   config:
     enabled: true
-    mountPath: "/app/config"
+    mountPath: "/config"
   cache:
     enabled: true
-    mountPath: "/app/cache"
+    mountPath: "/config/cache"
   logs:
     enabled: true
-    mountPath: "/app/logs"
+    mountPath: "/config/logs"
   rclone:
     enabled: true
-    mountPath: "/app/rclone"
+    mountPath: "/config/rclone"

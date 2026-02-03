@@ -2,19 +2,22 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: media
+  truecharts.org/category: unsorted
   truecharts.org/max_helm_version: "3.17"
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
+  trueforge.org/category: media
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
-appVersion: 12.1.0
+appVersion: 13.4.0
 dependencies:
   - name: common
-    version: 28.29.1
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,21 +25,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: Selfhosted Mend Renovate App with included webhook and Github APP
-home: https://truecharts.org/charts/stable/mend-renovate
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/mend-renovate.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/mend-renovate
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/mend-renovate.webp
 keywords:
   - renovate
   - mend-renovate
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: mend-renovate
 sources:
   - https://ghcr.io/mend/renovate-ce
   - https://github.com/mend/renovate-ce-ee
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mend-renovate
 type: application
-version: 5.3.0
+version: 6.4.3
 

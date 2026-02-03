@@ -2,19 +2,22 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: duplicates
+  truecharts.org/category: unsorted
   truecharts.org/max_helm_version: "3.17"
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
+  trueforge.org/category: duplicates
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
-appVersion: 25.08.1
+appVersion: 26.01.1
 dependencies:
   - name: common
-    version: 28.29.1
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -22,17 +25,17 @@ dependencies:
     import-values: []
 deprecated: false
 description: Czkawka is a simple, fast and free app to remove unnecessary files from your computer.
-home: https://truecharts.org/charts/stable/czkawka
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/czkawka.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/czkawka
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/czkawka.webp
 keywords:
   - duplicates
   - file management
   - czkawka
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: czkawka
 sources:
   - https://github.com/jlesage/docker-czkawka
@@ -40,5 +43,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/czkawka
   - https://hub.docker.com/r/jlesage/czkawka
 type: application
-version: 13.15.0
+version: 14.0.11
 

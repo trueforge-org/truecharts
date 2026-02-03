@@ -1,11 +1,11 @@
 image:
   repository: docker.io/grafana/grafana
   pullPolicy: IfNotPresent
-  tag: 12.3.0@sha256:70d9599b186ce287be0d2c5ba9a78acb2e86c1a68c9c41449454d0fc3eeb84e8
+  tag: 12.3.2@sha256:ba93c9d192e58b23e064c7f501d453426ccf4a85065bf25b705ab1e98602bfb1
 
 sidecarImage:
   repository: ghcr.io/kiwigrid/k8s-sidecar
-  tag: 2.1.3@sha256:305f3a955a448b27ee4be7777e1c3fceb69b1ba2af3db24a392a02e79e1658b3
+  tag: 2.5.0@sha256:a6b3f707f883108376514489a94d6629109a327b2978e1d826cd104c4ca436df
 
 # Define extra dashboards to be provisioned
 # Supports 2 formats:
@@ -150,7 +150,7 @@ workload:
         download-dashboards:
           enabled: true
           type: init
-          imageSelector: alpineImage
+          imageSelector: ubuntuImage
           command: /download-dashboards.sh
       containers:
         main:

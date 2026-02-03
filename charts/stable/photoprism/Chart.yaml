@@ -2,26 +2,29 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: media
+  truecharts.org/category: unsorted
   truecharts.org/max_helm_version: "3.17"
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
+  trueforge.org/category: media
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
 appVersion: 250707.0.0
 dependencies:
   - name: common
-    version: 28.29.1
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.10.1
+    version: 17.11.17
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -29,23 +32,23 @@ dependencies:
     import-values: []
 deprecated: false
 description: PhotoPrism® is a server-based application for browsing, organizing and sharing your personal photo collection
-home: https://truecharts.org/charts/stable/photoprism
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/photoprism.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/photoprism
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/photoprism.webp
 keywords:
   - photos
   - photoprism
   - pictures
   - sharing
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: photoprism
 sources:
   - https://github.com/photoprism/photoprism
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/photoprism
   - https://hub.docker.com/r/photoprism/photoprism
 type: application
-version: 27.17.0
+version: 27.18.26
 

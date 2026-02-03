@@ -2,26 +2,29 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: operators
+  truecharts.org/category: unsorted
   truecharts.org/max_helm_version: "3.17"
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
+  trueforge.org/category: operators
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
 appVersion: 1.30.2
 dependencies:
   - name: common
-    version: 28.29.1
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: kong
-    version: 2.52.0
+    version: 3.0.2
     repository: https://charts.konghq.com
     condition: kong.enabled
     alias: ""
@@ -29,19 +32,20 @@ dependencies:
     import-values: []
 deprecated: false
 description: The default Kubernetes Dashboard
-home: https://truecharts.org/charts/stable/kubernetes-dashboard
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/kubernetes-dashboard.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/kubernetes-dashboard
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/kubernetes-dashboard.webp
 keywords:
   - kubernetes-dashboard
   - loadbalancer
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: kubernetes-dashboard
 sources:
   - https://github.com/kubernetes-dashboard/kubernetes-dashboard
+  - https://github.com/trueforge-org/containers/tree/main/apps/kube-sa-proxy
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/kubernetes-dashboard
   - https://github.com/trueforge/truecharts/tree/master/charts/stable/kubernetes-dashboard
   - https://hub.docker.com/r/kubernetesui/dashboard-api
@@ -50,5 +54,5 @@ sources:
   - https://hub.docker.com/r/kubernetesui/dashboard-web
   - https://kubernetes-dashboard.universe.tf
 type: application
-version: 3.2.0
+version: 3.2.23
 
