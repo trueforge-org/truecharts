@@ -14,7 +14,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 2026.02.01
+appVersion: 2026.02.03
 dependencies:
   - name: common
     version: 28.29.49
@@ -25,21 +25,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: Web GUI for youtube-dl.
-home: https://trueforge.org/truetech/truecharts/charts/stable/metube
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/metube.webp
+home: https://truecharts.org/charts/stable/metube
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/metube.webp
 keywords:
   - metube
   - media
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: metube
 sources:
   - https://ghcr.io/alexta69/metube
   - https://github.com/alexta69/metube
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/metube
 type: application
-version: 17.1.1
+version: 17.1.2
 
