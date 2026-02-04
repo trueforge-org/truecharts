@@ -14,7 +14,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 1.4.0
+appVersion: 1.4.1
 dependencies:
   - name: common
     version: 28.29.49
@@ -25,20 +25,20 @@ dependencies:
     import-values: []
 deprecated: false
 description: Share your game clips, videos, or other media via unique links.
-home: https://trueforge.org/truetech/truecharts/charts/stable/fireshare
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/fireshare.webp
+home: https://truecharts.org/charts/stable/fireshare
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/fireshare.webp
 keywords:
   - fireshare
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: fireshare
 sources:
   - https://github.com/ShaneIsrael/fireshare
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/fireshare
   - https://hub.docker.com/r/shaneisrael/fireshare
 type: application
-version: 9.15.6
+version: 9.15.7
 
