@@ -24,7 +24,7 @@ dependencies:
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.11.17
+    version: 17.11.18
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -32,19 +32,19 @@ dependencies:
     import-values: []
 deprecated: false
 description: Fleet provides an online web interface which displays a set of maintained images from one or more owned repositories.
-home: https://trueforge.org/truetech/truecharts/charts/stable/fleet
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/fleet.webp
+home: https://truecharts.org/charts/stable/fleet
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/fleet.webp
 keywords:
   - fleet
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: fleet
 sources:
   - https://ghcr.io/linuxserver/fleet
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/fleet
 type: application
-version: 16.18.26
+version: 16.18.27
 

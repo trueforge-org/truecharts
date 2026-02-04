@@ -24,7 +24,7 @@ dependencies:
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.11.17
+    version: 17.11.18
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -32,23 +32,23 @@ dependencies:
     import-values: []
 deprecated: false
 description: YOURLS is a set of PHP scripts that will allow you to run Your Own URL Shortener.
-home: https://trueforge.org/truetech/truecharts/charts/stable/yourls
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/yourls.webp
+home: https://truecharts.org/charts/stable/yourls
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/yourls.webp
 keywords:
   - yourls
   - Cloud
   - Tools-Utilities
   - Network-Web
   - Network-Other
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: yourls
 sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/yourls
   - https://hub.docker.com/_/yourls
 type: application
-version: 10.18.35
+version: 10.18.36
 

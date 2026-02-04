@@ -24,7 +24,7 @@ dependencies:
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.11.17
+    version: 17.11.18
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -39,20 +39,20 @@ dependencies:
     import-values: []
 deprecated: false
 description: Protect your email from spam using disposable addresses.
-home: https://trueforge.org/truetech/truecharts/charts/stable/anonaddy
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/anonaddy.webp
+home: https://truecharts.org/charts/stable/anonaddy
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/anonaddy.webp
 keywords:
   - anonaddy
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: anonaddy
 sources:
   - https://github.com/anonaddy/docker
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/anonaddy
   - https://hub.docker.com/r/anonaddy/anonaddy
 type: application
-version: 25.23.32
+version: 25.23.33
 

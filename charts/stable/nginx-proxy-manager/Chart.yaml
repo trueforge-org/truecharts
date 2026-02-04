@@ -24,7 +24,7 @@ dependencies:
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.11.17
+    version: 17.11.18
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -32,17 +32,17 @@ dependencies:
     import-values: []
 deprecated: false
 description: Managing Nginx proxy hosts with a simple, powerful interface.
-home: https://trueforge.org/truetech/truecharts/charts/stable/nginx-proxy-manager
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/nginx-proxy-manager.webp
+home: https://truecharts.org/charts/stable/nginx-proxy-manager
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/nginx-proxy-manager.webp
 keywords:
   - nginx-proxy-manager
   - nginx
   - reverse-proxy
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: nginx-proxy-manager
 sources:
   - https://github.com/NginxProxyManager/nginx-proxy-manager
@@ -50,5 +50,5 @@ sources:
   - https://hub.docker.com/r/jc21/nginx-proxy-manager
   - https://nginxproxymanager.com/
 type: application
-version: 13.19.28
+version: 13.19.29
 

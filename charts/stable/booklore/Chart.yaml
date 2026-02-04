@@ -24,7 +24,7 @@ dependencies:
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.11.17
+    version: 17.11.18
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -32,21 +32,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: A self-hosted, multi-user digital library with smart shelves, auto metadata, Kobo & KOReader sync, BookDrop imports, OPDS support, and a built-in reader for EPUB, PDF, and comics
-home: https://trueforge.org/truetech/truecharts/charts/stable/booklore
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/booklore.webp
+home: https://truecharts.org/charts/stable/booklore
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/booklore.webp
 keywords:
   - booklore
   - MediaApp-Other
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: booklore
 sources:
   - https://ghcr.io/booklore-app/booklore
   - https://github.com/booklore-app/booklore
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/booklore
 type: application
-version: 1.11.11
+version: 1.11.12
 
