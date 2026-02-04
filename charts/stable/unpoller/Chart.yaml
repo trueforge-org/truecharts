@@ -14,7 +14,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 2.32.0
+appVersion: 2.33.0
 dependencies:
   - name: common
     version: 28.29.49
@@ -25,22 +25,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: Collect your UniFi controller data and report it to an InfluxDB instance, or export it for Prometheus collection.
-home: https://trueforge.org/truetech/truecharts/charts/stable/unpoller
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/unpoller.webp
+home: https://truecharts.org/charts/stable/unpoller
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/unpoller.webp
 keywords:
   - unifi
   - unifi-poller
   - metrics
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: unpoller
 sources:
   - https://ghcr.io/unpoller/unpoller
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/unpoller
   - https://github.com/unifi-poller/unifi-poller
 type: application
-version: 13.26.1
+version: 13.27.0
 
