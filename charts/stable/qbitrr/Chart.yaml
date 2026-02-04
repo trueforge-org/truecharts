@@ -14,7 +14,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 5.8.7
+appVersion: 5.8.8
 dependencies:
   - name: common
     version: 28.29.49
@@ -25,22 +25,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: A simple script to monitor qBit and communicate with Radarr and Sonarr.
-home: https://trueforge.org/truetech/truecharts/charts/stable/qbitrr
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/qbitrr.webp
+home: https://truecharts.org/charts/stable/qbitrr
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/qbitrr.webp
 keywords:
   - qbitrr
   - Downloaders
   - MediaApp-Other
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: qbitrr
 sources:
   - https://github.com/Feramance/Qbitrr
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/qbitrr
   - https://hub.docker.com/r/feramance/qbitrr
 type: application
-version: 8.8.5
+version: 8.8.6
 
