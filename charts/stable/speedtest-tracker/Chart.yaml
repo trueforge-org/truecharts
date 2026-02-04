@@ -14,7 +14,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 1.13.6
+appVersion: 1.13.8
 dependencies:
   - name: common
     version: 28.29.49
@@ -32,16 +32,16 @@ dependencies:
     import-values: []
 deprecated: false
 description: Speedtest Tracker is a self-hosted internet performance tracking application that runs speedtest checks against Ookla's Speedtest service.
-home: https://trueforge.org/truetech/truecharts/charts/stable/speedtest-tracker
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/speedtest-tracker.webp
+home: https://truecharts.org/charts/stable/speedtest-tracker
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/speedtest-tracker.webp
 keywords:
   - speedtest
   - speedtest-tracker
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: speedtest-tracker
 sources:
   - https://ghcr.io/linuxserver/speedtest-tracker
@@ -49,5 +49,5 @@ sources:
   - https://github.com/linuxserver/docker-speedtest-tracker
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/speedtest-tracker
 type: application
-version: 8.33.31
+version: 8.33.32
 
