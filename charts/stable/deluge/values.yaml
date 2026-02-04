@@ -6,7 +6,8 @@ service:
   main:
     ports:
       main:
-        port: 8112
+        port: 58846
+        targetPort: 58846
   rpc:
     enabled: true
     ports:
