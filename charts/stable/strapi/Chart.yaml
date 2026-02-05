@@ -14,7 +14,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 5.34.0
+appVersion: 5.35.0
 dependencies:
   - name: common
     version: 28.29.49
@@ -25,16 +25,16 @@ dependencies:
     import-values: []
 deprecated: false
 description: Open-source headless CMS. JavaScript, fully customizable and developer-first.
-home: https://trueforge.org/truetech/truecharts/charts/stable/strapi
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/strapi.webp
+home: https://truecharts.org/charts/stable/strapi
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/strapi.webp
 keywords:
   - strapi
   - cms
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: strapi
 sources:
   - https://github.com/naskio/docker-strapi
@@ -42,5 +42,5 @@ sources:
   - https://hub.docker.com/r/vshadbolt/strapi
   - https://trueforge.org/truecharts/stable/strapi
 type: application
-version: 17.24.1
+version: 17.25.0
 
