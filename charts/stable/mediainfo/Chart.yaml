@@ -14,7 +14,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 26.01.1
+appVersion: 26.02.1
 dependencies:
   - name: common
     version: 28.29.49
@@ -25,21 +25,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: MediaInfo is a convenient unified display of the most relevant technical and tag data for video and audio files.
-home: https://trueforge.org/truetech/truecharts/charts/stable/mediainfo
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/mediainfo.webp
+home: https://truecharts.org/charts/stable/mediainfo
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/mediainfo.webp
 keywords:
   - info
   - media
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: mediainfo
 sources:
   - https://github.com/jlesage/docker-mediainfo
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mediainfo
   - https://hub.docker.com/r/jlesage/mediainfo
 type: application
-version: 14.0.11
+version: 14.1.0
 
