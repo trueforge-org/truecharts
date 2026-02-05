@@ -14,7 +14,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 2.32.4
+appVersion: 2.32.5
 dependencies:
   - name: common
     version: 28.29.49
@@ -25,18 +25,18 @@ dependencies:
     import-values: []
 deprecated: false
 description: deCONZ is an easy to use control software, with which you can set up and control Zigbee networks of any size without further programming effort.
-home: https://trueforge.org/truetech/truecharts/charts/stable/deconz
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/deconz.webp
+home: https://truecharts.org/charts/stable/deconz
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/deconz.webp
 keywords:
   - deconz
   - home-automation
   - zigbee
   - conbee
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: deconz
 sources:
   - https://github.com/dresden-elektronik/deconz-rest-plugin
@@ -44,5 +44,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/deconz
   - https://hub.docker.com/r/deconzcommunity/deconz
 type: application
-version: 18.15.19
+version: 18.15.20
 
