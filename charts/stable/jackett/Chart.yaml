@@ -14,7 +14,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 0.24.1032
+appVersion: 0.24.1044
 dependencies:
   - name: common
     version: 28.29.49
@@ -25,17 +25,17 @@ dependencies:
     import-values: []
 deprecated: false
 description: API Support for your favorite torrent trackers.
-home: https://trueforge.org/truetech/truecharts/charts/stable/jackett
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/jackett.webp
+home: https://truecharts.org/charts/stable/jackett
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/jackett.webp
 keywords:
   - jackett
   - torrent
   - usenet
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: jackett
 sources:
   - https://github.com/Jackett/Jackett
@@ -43,5 +43,5 @@ sources:
   - https://github.com/trueforge-org/containers/tree/main/apps/jackett
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/jackett
 type: application
-version: 26.2.48
+version: 26.2.49
 
