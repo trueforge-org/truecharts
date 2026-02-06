@@ -14,7 +14,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 2026.1.2
+appVersion: 2026.2.0
 dependencies:
   - name: common
     version: 28.29.49
@@ -25,20 +25,20 @@ dependencies:
     import-values: []
 deprecated: false
 description: Client for Cloudflare Tunnel, a daemon that exposes private services through the Cloudflare edge.
-home: https://trueforge.org/truetech/truecharts/charts/stable/cloudflared
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/cloudflared.webp
+home: https://truecharts.org/charts/stable/cloudflared
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/cloudflared.webp
 keywords:
   - cloudflared
   - networking
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: cloudflared
 sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/cloudflared
   - https://hub.docker.com/r/cloudflare/cloudflared
 type: application
-version: 15.0.7
+version: 15.1.0
 
