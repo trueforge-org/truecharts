@@ -14,7 +14,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 25.4.0
+appVersion: 26.0.0
 dependencies:
   - name: common
     version: 28.29.49
@@ -25,16 +25,16 @@ dependencies:
     import-values: []
 deprecated: false
 description: NZBGet is a Usenet downloader client
-home: https://trueforge.org/truetech/truecharts/charts/stable/nzbget
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/nzbget.webp
+home: https://truecharts.org/charts/stable/nzbget
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/nzbget.webp
 keywords:
   - nzbget
   - usenet
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: nzbget
 sources:
   - https://github.com/nzbgetcom/nzbget
@@ -42,5 +42,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/nzbget
   - https://nzbget.net/
 type: application
-version: 28.3.20
+version: 29.0.0
 
