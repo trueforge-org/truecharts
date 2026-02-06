@@ -14,7 +14,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 29.2.0
+appVersion: 29.2.1
 dependencies:
   - name: common
     version: 28.29.49
@@ -25,19 +25,19 @@ dependencies:
     import-values: []
 deprecated: false
 description: Dedicated App for using Docker-in-Docker
-home: https://trueforge.org/truetech/truecharts/charts/stable/docker
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/docker.webp
+home: https://truecharts.org/charts/stable/docker
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/docker.webp
 keywords:
   - docker
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: docker
 sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/docker
   - https://hub.docker.com/_/docker
 type: application
-version: 12.4.2
+version: 12.4.3
 
