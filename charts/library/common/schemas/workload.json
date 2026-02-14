@@ -1,0 +1,1017 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "main": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Define workload objects"
+        },
+        "primary": {
+          "type": "boolean",
+          "description": "Define workload objects"
+        },
+        "type": {
+          "type": "string",
+          "description": "Define workload objects"
+        },
+        "dbWait": {
+          "type": "boolean",
+          "description": "Configuration for `workload.main.dbWait`."
+        },
+        "podSpec": {
+          "type": "object",
+          "properties": {
+            "containers": {
+              "type": "object",
+              "properties": {
+                "main": {
+                  "type": "object",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean",
+                      "description": "Define if the container is enabled or not"
+                    },
+                    "primary": {
+                      "type": "boolean",
+                      "description": "Define if the container is primary or not Does **not** apply to `initContainers`"
+                    },
+                    "imageSelector": {
+                      "type": "string",
+                      "description": "Define the image `map` to use"
+                    },
+                    "probes": {
+                      "type": "object",
+                      "properties": {
+                        "liveness": {
+                          "type": "object",
+                          "properties": {
+                            "enabled": {
+                              "type": "boolean",
+                              "description": "Define probes for the container"
+                            },
+                            "type": {
+                              "type": "string",
+                              "description": "Define probes for the container"
+                            },
+                            "port": {
+                              "type": "string",
+                              "description": "Define probes for the container"
+                            }
+                          },
+                          "additionalProperties": true,
+                          "description": "Define probes for the container"
+                        },
+                        "readiness": {
+                          "type": "object",
+                          "properties": {
+                            "enabled": {
+                              "type": "boolean",
+                              "description": "Define probes for the container"
+                            },
+                            "type": {
+                              "type": "string",
+                              "description": "Define probes for the container"
+                            },
+                            "port": {
+                              "type": "string",
+                              "description": "Define probes for the container"
+                            }
+                          },
+                          "additionalProperties": true,
+                          "description": "Define probes for the container"
+                        },
+                        "startup": {
+                          "type": "object",
+                          "properties": {
+                            "enabled": {
+                              "type": "boolean",
+                              "description": "Define probes for the container"
+                            },
+                            "type": {
+                              "type": "string",
+                              "description": "Define probes for the container"
+                            },
+                            "port": {
+                              "type": "string",
+                              "description": "Define probes for the container"
+                            }
+                          },
+                          "additionalProperties": true,
+                          "description": "Define probes for the container"
+                        }
+                      },
+                      "additionalProperties": true,
+                      "description": "Define probes for the container"
+                    }
+                  },
+                  "additionalProperties": true,
+                  "description": "Configuration for `workload.main.podSpec.containers.main`."
+                }
+              },
+              "additionalProperties": true,
+              "description": "Configuration for `workload.main.podSpec.containers`."
+            }
+          },
+          "additionalProperties": true,
+          "description": "Define workload objects"
+        }
+      },
+      "additionalProperties": true,
+      "description": "Define workload objects"
+    }
+  },
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "podSpec": {
+        "type": "object",
+        "properties": {
+          "containers": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "env": {
+                  "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/env.json",
+                  "description": "Define env(s) for the container"
+                },
+                "resources": {
+                  "type": "object",
+                  "properties": {
+                    "limits": {
+                      "type": "object",
+                      "properties": {
+                        "memory": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": true,
+                          "description": "The resources that the container can use."
+                        },
+                        "cpu": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": true,
+                          "description": "The maximum amount of CPU that the container can use."
+                        }
+                      },
+                      "additionalProperties": true,
+                      "description": "The maximum amount of resources that the container can use. Limits are **optional**, can be set to \"unlimited\" by setting it's values (`cpu` and `memory`) to `0`."
+                    },
+                    "requests": {
+                      "type": "object",
+                      "properties": {
+                        "cpu": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": true,
+                          "description": "The minimum amount of CPU that the container can use."
+                        },
+                        "memory": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": true,
+                          "description": "The minimum amount of memory that the container can use."
+                        }
+                      },
+                      "additionalProperties": true,
+                      "description": "The minimum amount of resources that the container needs. Requests are **required**, because without it, kubernetes uses the `limits` as the `requests`."
+                    }
+                  },
+                  "additionalProperties": true,
+                  "description": "The resources that the container can use."
+                },
+                "securityContext": {
+                  "type": "object",
+                  "properties": {
+                    "seccompProfile": {
+                      "type": "object",
+                      "properties": {
+                        "profile": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": true,
+                          "description": "Define securityContext for the container"
+                        },
+                        "type": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": true,
+                          "description": "Define the seccompProfile.type for the container"
+                        }
+                      },
+                      "additionalProperties": true,
+                      "description": "Define the seccompProfile for the container"
+                    },
+                    "runAsUser": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Define the runAsUser for the container"
+                    },
+                    "runAsGroup": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Define the runAsGroup for the container"
+                    },
+                    "readOnlyRootFilesystem": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Define the readOnlyRootFilesystem for the container"
+                    },
+                    "allowPrivilegeEscalation": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Define the allowPrivilegeEscalation for the container"
+                    },
+                    "privileged": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Define the privileged for the container"
+                    },
+                    "runAsNonRoot": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Define the runAsNonRoot for the container"
+                    },
+                    "capabilities": {
+                      "type": "object",
+                      "properties": {
+                        "add": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": true,
+                          "description": "Define the capabilities.add for the container"
+                        },
+                        "drop": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": true,
+                          "description": "Define the capabilities.drop for the container"
+                        }
+                      },
+                      "additionalProperties": true,
+                      "description": "Define the capabilities for the container If at least one capability is defined in either [`add`](/truecharts-common/container/securitycontext/#securitycontextcapabilitiesadd) or [`drop`](/truecharts-common/container/securitycontext/#securitycontextcapabilitiesdrop)"
+                    }
+                  },
+                  "additionalProperties": true,
+                  "description": "Define securityContext for the container"
+                },
+                "enabled": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": true,
+                  "description": "Define if the container is enabled or not"
+                },
+                "imageSelector": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": true,
+                  "description": "Define the image `map` to use"
+                },
+                "primary": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": true,
+                  "description": "Define if the container is primary or not Does **not** apply to `initContainers`"
+                },
+                "stdin": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": true,
+                  "description": "Define if the container should have stdin enabled or not"
+                },
+                "tty": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": true,
+                  "description": "Define if the container should have tty enabled or not"
+                },
+                "probes": {
+                  "type": "object",
+                  "properties": {
+                    "liveness": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Define the liveness probe"
+                    },
+                    "readiness": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Define the readiness probe"
+                    },
+                    "startup": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Define the startup probe"
+                    }
+                  },
+                  "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                      "spec": {
+                        "type": "object",
+                        "properties": {
+                          "successThreshold": {
+                            "type": "object",
+                            "properties": {},
+                            "additionalProperties": true,
+                            "description": "Define probes for the container"
+                          },
+                          "initialDelaySeconds": {
+                            "type": "object",
+                            "properties": {},
+                            "additionalProperties": true,
+                            "description": "Define the initialDelaySeconds in seconds"
+                          },
+                          "periodSeconds": {
+                            "type": "object",
+                            "properties": {},
+                            "additionalProperties": true,
+                            "description": "Define the periodSeconds in seconds"
+                          },
+                          "timeoutSeconds": {
+                            "type": "object",
+                            "properties": {},
+                            "additionalProperties": true,
+                            "description": "Define the timeoutSeconds in seconds"
+                          },
+                          "failureThreshold": {
+                            "type": "object",
+                            "properties": {},
+                            "additionalProperties": true,
+                            "description": "Define the failureThreshold in seconds"
+                          }
+                        },
+                        "additionalProperties": true,
+                        "description": "Define the probe spec"
+                      },
+                      "enabled": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "Enable or disable the probe"
+                      },
+                      "type": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "Define probe type"
+                      },
+                      "port": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "Define the port - Only applies when `type: grpc/tcp/http/https`"
+                      },
+                      "path": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "Define the path - Only applies when `type: http/https`"
+                      },
+                      "httpHeaders": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "Define the httpHeaders - Only applies when `type: http/https`"
+                      }
+                    },
+                    "additionalProperties": true,
+                    "description": "Configuration for `$name.podSpec.containers.$name.probes.$name`."
+                  },
+                  "description": "Define probes for the container"
+                },
+                "command": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": true,
+                  "description": "Define command(s). If it's single, can be defined as string"
+                },
+                "lifecycle": {
+                  "type": "object",
+                  "properties": {
+                    "preStop": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Define preStop lifecycle"
+                    },
+                    "postStart": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Define preStop lifecycle"
+                    }
+                  },
+                  "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                      "httpHeaders": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "Define lifecycle for the container"
+                      },
+                      "type": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "Define hook type"
+                      },
+                      "port": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "Define the port - Only applies when `type: http` or `type: https`"
+                      },
+                      "host": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "Define the host - Only applies when `type: http` or `type: https`"
+                      },
+                      "path": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "Define the path - Only applies when `type: http` or `type: https`"
+                      }
+                    },
+                    "additionalProperties": true,
+                    "description": "Configuration for `$name.podSpec.containers.$name.lifecycle.$name`."
+                  },
+                  "description": "Define lifecycle for the container"
+                },
+                "envFrom": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                      "configMapRef": {
+                        "type": "object",
+                        "properties": {
+                          "expandObjectName": {
+                            "type": "object",
+                            "properties": {},
+                            "additionalProperties": true,
+                            "description": "Define envFrom for the container"
+                          },
+                          "name": {
+                            "type": "object",
+                            "properties": {},
+                            "additionalProperties": true,
+                            "description": "Define the configmap name This will be automatically expanded to `fullname-configmap-name`."
+                          }
+                        },
+                        "additionalProperties": true,
+                        "description": "Define the configMapRef"
+                      },
+                      "secretRef": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "object",
+                            "properties": {},
+                            "additionalProperties": true,
+                            "description": "Define the secret name This will be automatically expanded to `fullname-secret-name`."
+                          },
+                          "expandObjectName": {
+                            "type": "object",
+                            "properties": {},
+                            "additionalProperties": true,
+                            "description": "Whether to expand (adding the fullname as prefix) the secret name"
+                          }
+                        },
+                        "additionalProperties": true,
+                        "description": "Define the secretRef"
+                      }
+                    },
+                    "additionalProperties": true,
+                    "description": "Configuration for `$name.podSpec.containers.$name.envFrom.$name`."
+                  },
+                  "description": "Define envFrom for the container"
+                },
+                "termination": {
+                  "type": "object",
+                  "properties": {
+                    "messagePolicy": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Define termination for the container"
+                    },
+                    "messagePath": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Define termination message path for the container"
+                    }
+                  },
+                  "additionalProperties": true,
+                  "description": "Define termination for the container"
+                },
+                "fixedEnv": {
+                  "type": "object",
+                  "properties": {
+                    "NVIDIA_CAPS": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Override fixedEnv for the container By default it will set the following environment variables:"
+                    },
+                    "TZ": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Override the timezone for the container"
+                    },
+                    "UMASK": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Override the umask for the container"
+                    },
+                    "PUID": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Override the PUID for the container"
+                    }
+                  },
+                  "additionalProperties": true,
+                  "description": "Override fixedEnv for the container By default it will set the following environment variables:"
+                },
+                "args": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": true,
+                  "description": "Define arg(s). If it's single, can be defined as string"
+                },
+                "extraArgs": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": true,
+                  "description": "Define extraArg(s). Those are appended **after** the `args`."
+                }
+              },
+              "additionalProperties": true,
+              "description": "Configuration for `$name.podSpec.containers.$name`."
+            },
+            "description": "Configuration for `$name.podSpec.containers`."
+          },
+          "initContainers": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": true,
+                  "description": "Define the type of container - Only applies to `initContainers`"
+                }
+              },
+              "additionalProperties": true,
+              "description": "Configuration for `$name.podSpec.initContainers.$name`."
+            },
+            "description": "Configuration for `$name.podSpec.initContainers`."
+          },
+          "labels": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define labels for podSpec"
+          },
+          "annotations": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define annotations for podSpec"
+          },
+          "automountServiceAccountToken": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Pod's automountServiceAccountToken"
+          },
+          "hostNetwork": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Bind pod to host's network"
+          },
+          "hostPID": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Allow pod to access host's PID namespace"
+          },
+          "hostIPC": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Allow pod to access host's IPC namespace"
+          },
+          "hostUsers": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Allow pod to access host's users namespace"
+          },
+          "shareProcessNamespace": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Share Process Namespace with other containers in the pod"
+          },
+          "enableServiceLinks": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Pod's enableServiceLinks"
+          },
+          "restartPolicy": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Pod's restartPolicy"
+          },
+          "schedulerName": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Pod's schedulerName"
+          },
+          "priorityClassName": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Pod's priorityClassName"
+          },
+          "hostname": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Pod's hostname"
+          },
+          "terminationGracePeriodSeconds": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Pod's terminationGracePeriodSeconds"
+          },
+          "nodeSelector": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Pod's nodeSelector"
+          },
+          "topologySpreadConstraints": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Pod's topologySpreadConstraints"
+          },
+          "hostAliases": {
+            "type": "object",
+            "properties": {
+              "ip": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's hostAliases ip"
+              },
+              "hostnames": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's hostAliases hostnames"
+              }
+            },
+            "additionalProperties": true,
+            "description": "Pod's hostAliases"
+          },
+          "dnsPolicy": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Pod's dnsPolicy `dnsPolicy` is set automatically to `ClusterFirstWithHostNet` when `hostNetwork` is `true`"
+          },
+          "dnsConfig": {
+            "type": "object",
+            "properties": {
+              "nameservers": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's dnsConfig nameservers"
+              },
+              "searches": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's dnsConfig searches"
+              },
+              "options": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Pod's dnsConfig options name"
+                  },
+                  "value": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Pod's dnsConfig options value"
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Pod's dnsConfig options"
+              }
+            },
+            "additionalProperties": true,
+            "description": "Pod's dnsConfig"
+          },
+          "tolerations": {
+            "type": "object",
+            "properties": {
+              "operator": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's tolerations operator"
+              },
+              "key": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's tolerations key Required only when `operator` = `Equal`"
+              },
+              "value": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's tolerations value Required only when `operator` = `Equal`"
+              },
+              "effect": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's tolerations effect"
+              },
+              "tolerationSeconds": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's tolerations tolerationSeconds"
+              }
+            },
+            "additionalProperties": true,
+            "description": "Pod's tolerations"
+          },
+          "runtimeClassName": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Pod's runtimeClassName > Note that it will only set the `runtimeClassName` on the pod that this container belongs to."
+          },
+          "securityContext": {
+            "type": "object",
+            "properties": {
+              "fsGroup": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's securityContext fsGroup"
+              },
+              "fsGroupChangePolicy": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's securityContext fsGroupChangePolicy"
+              },
+              "supplementalGroups": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's securityContext supplementalGroups"
+              },
+              "sysctls": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Pod's securityContext sysctls name"
+                  },
+                  "value": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Pod's securityContext sysctls value"
+                  }
+                },
+                "additionalProperties": true,
+                "description": "The **sysctl** `net.ipv4.ip_unprivileged_port_start` option will be automatically set to the lowest `targetPort` (or `port` if targetPort is not defined) number assigned"
+              }
+            },
+            "additionalProperties": true,
+            "description": "Pod's securityContext"
+          }
+        },
+        "additionalProperties": true,
+        "description": "Define the podSpec for the workload"
+      },
+      "replicas": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the number of replicas"
+      },
+      "revisionHistoryLimit": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the number of history revisions"
+      },
+      "strategy": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the strategy of the workload"
+      },
+      "rollingUpdate": {
+        "type": "object",
+        "properties": {
+          "maxUnavailable": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define the maxUnavailable Can only be used when `workload.$name.strategy` is `RollingUpdate`"
+          },
+          "partition": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define the partition Can only be used when `workload.$name.strategy` is `RollingUpdate`"
+          },
+          "maxSurge": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define the maxSurge Can only be used when `workload.$name.strategy` is `RollingUpdate`"
+          }
+        },
+        "additionalProperties": true,
+        "description": "Define the rollingUpdate options Can only be used when `workload.$name.strategy` is `RollingUpdate`"
+      },
+      "initContainers": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define workload objects"
+      },
+      "completionMode": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the completionMode"
+      },
+      "backoffLimit": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the backoffLimit"
+      },
+      "completions": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the completions"
+      },
+      "parallelism": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the parallelism"
+      },
+      "ttlSecondsAfterFinished": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the ttlSecondsAfterFinished"
+      },
+      "activeDeadlineSeconds": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the activeDeadlineSeconds"
+      },
+      "schedule": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the schedule"
+      },
+      "timezone": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the timezone"
+      },
+      "concurrencyPolicy": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the concurrencyPolicy"
+      },
+      "failedJobsHistoryLimit": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the failedJobsHistoryLimit"
+      },
+      "successfulJobsHistoryLimit": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the successfulJobsHistoryLimit"
+      },
+      "startingDeadlineSeconds": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the startingDeadlineSeconds"
+      },
+      "enabled": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Enable or disable workload"
+      },
+      "primary": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Set workload as primary"
+      },
+      "labels": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define labels for workload"
+      },
+      "annotations": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define annotations for workload"
+      },
+      "namespace": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the namespace for this object"
+      },
+      "type": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the kind of the workload"
+      },
+      "serviceAccountName": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Suggested is to use the top-level [serviceAccount](/truecharts-common/serviceaccount/) key to define the service account with `targetSelector`."
+      },
+      "containers": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define container(s) for the workload See [Container](/truecharts-common/container/) for more information"
+      }
+    },
+    "additionalProperties": true,
+    "description": "Define workload"
+  },
+  "description": "Define workload objects"
+}

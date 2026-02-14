@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "preemptionPolicy": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define priority classes"
+      },
+      "enabled": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Enables or Disables the priority class"
+      },
+      "namespace": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the namespace for this object"
+      },
+      "labels": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Additional labels for priority class"
+      },
+      "annotations": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Additional annotations for priority class"
+      },
+      "value": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the value for this priority class"
+      },
+      "globalDefault": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define if this priority class is the global default"
+      },
+      "description": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the description for this priority class"
+      }
+    },
+    "additionalProperties": true,
+    "description": "Define priority class"
+  },
+  "description": "Define priority classes"
+}

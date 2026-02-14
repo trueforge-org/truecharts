@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enableServiceLinks": {
+      "type": "boolean",
+      "description": "See [Enable Service Links](/truecharts-common/workload#enableservicelinks)"
+    },
+    "hostNetwork": {
+      "type": "boolean",
+      "description": "See [Host Network](/truecharts-common/workload#hostnetwork)"
+    },
+    "hostPID": {
+      "type": "boolean",
+      "description": "See [Host PID](/truecharts-common/workload#hostpid)"
+    },
+    "hostIPC": {
+      "type": "boolean",
+      "description": "See [Host IPC](/truecharts-common/workload#hostipc)"
+    },
+    "shareProcessNamespace": {
+      "type": "boolean",
+      "description": "See [Share Process Namespace](/truecharts-common/workload#shareprocessnamespace)"
+    },
+    "affinity": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Configuration for `podOptions.affinity`."
+    },
+    "dnsPolicy": {
+      "type": "string",
+      "description": "See [DNS Policy](/truecharts-common/workload#dnspolicy)"
+    },
+    "dnsConfig": {
+      "type": "object",
+      "properties": {
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Configuration for `podOptions.dnsConfig.options.$item.name`."
+              },
+              "value": {
+                "type": "string",
+                "description": "Configuration for `podOptions.dnsConfig.options.$item.value`."
+              }
+            },
+            "additionalProperties": true,
+            "description": "Configuration for `podOptions.dnsConfig.options.$item`."
+          },
+          "description": "Configuration for `podOptions.dnsConfig.options`."
+        }
+      },
+      "additionalProperties": true,
+      "description": "See [DNS Config](/truecharts-common/workload#dnsconfig)"
+    },
+    "hostAliases": {
+      "type": "array",
+      "description": "See [Host Aliases](/truecharts-common/workload#hostaliases)"
+    },
+    "nodeSelector": {
+      "type": "object",
+      "properties": {
+        "kubernetes.io/arch": {
+          "type": "string",
+          "description": "Configuration for `podOptions.nodeSelector.kubernetes.io/arch`."
+        }
+      },
+      "additionalProperties": true,
+      "description": "See [Node Selector](/truecharts-common/workload#nodeselector)"
+    },
+    "defaultSpread": {
+      "type": "boolean",
+      "description": "Sets some default topology spread constraints for good spread of pods across nodes."
+    },
+    "defaultAffinity": {
+      "type": "boolean",
+      "description": "Configuration for `podOptions.defaultAffinity`."
+    },
+    "topologySpreadConstraints": {
+      "type": "array",
+      "description": "See [Topology Spread Constraints](/truecharts-common/workload#topologyspreadconstraints)"
+    },
+    "tolerations": {
+      "type": "array",
+      "description": "See [Tolerations](/truecharts-common/workload#tolerations)"
+    },
+    "schedulerName": {
+      "type": "string",
+      "description": "See [Scheduler Name](/truecharts-common/workload#schedulername)"
+    },
+    "priorityClassName": {
+      "type": "string",
+      "description": "See [Priority Class Name](/truecharts-common/workload#priorityclassname)"
+    },
+    "runtimeClassName": {
+      "type": "string",
+      "description": "See [Runtime Class Name](/truecharts-common/workload#runtimeclassname)"
+    },
+    "automountServiceAccountToken": {
+      "type": "boolean",
+      "description": "See [Automount Service Account Token](/truecharts-common/workload#automountserviceaccounttoken)"
+    },
+    "terminationGracePeriodSeconds": {
+      "type": "integer",
+      "description": "See [Termination Grace Period Seconds](/truecharts-common/workload#terminationgraceperiodseconds)"
+    }
+  },
+  "additionalProperties": true,
+  "description": "Options that apply to all pods, unless overridden at the pod level See more info about podOptions [here](/truecharts-common/podoptions)"
+}

@@ -1,0 +1,454 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "global": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/global.json",
+      "description": "Global values that apply to all charts See more info about global values [here](/truecharts-common/global)",
+      "type": "object",
+      "x-docs-required": false,
+      "x-docs-helmTpl": false,
+      "x-docs-defaultRaw": "See here"
+    },
+    "namespace": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/namespace.json",
+      "description": "Namespace to apply to all objects, unless overridden at the object level Does not apply to chart deps, use global.namespace for that"
+    },
+    "image": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/image.json",
+      "description": "Defines the image details",
+      "type": "object",
+      "x-docs-required": true,
+      "x-docs-helmTpl": false
+    },
+    "chartContext": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/chartContext.json",
+      "description": "Configuration for `chartContext`."
+    },
+    "securityContext": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/securityContext.json",
+      "description": "Define security context for all containers and pods, unless overridden at the container/pod level See more info about securityContext [here](/truecharts-common/securitycontext)",
+      "type": "object",
+      "x-docs-required": true,
+      "x-docs-helmTpl": false
+    },
+    "resources": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/resources.json",
+      "description": "Define resources for all containers, unless overridden at the container level Resources apply to **EACH** container, not to the pod as a whole.",
+      "type": "object",
+      "x-docs-required": true,
+      "x-docs-helmTpl": false
+    },
+    "containerOptions": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/containerOptions.json",
+      "description": "Options that apply to all containers, unless overridden at the container level See more info about containerOptions [here](/truecharts-common/containeroptions)",
+      "type": "object",
+      "x-docs-required": false,
+      "x-docs-helmTpl": false,
+      "x-docs-defaultRaw": "See here"
+    },
+    "podOptions": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/podOptions.json",
+      "description": "Options that apply to all pods, unless overridden at the pod level See more info about podOptions [here](/truecharts-common/podoptions)",
+      "type": "object",
+      "x-docs-required": false,
+      "x-docs-helmTpl": false,
+      "x-docs-defaultRaw": "See here"
+    },
+    "workload": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/workload.json",
+      "description": "Define workload objects"
+    },
+    "TZ": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/TZ.json",
+      "description": "Timezone that is used everywhere applicable, unless overridden at the container level",
+      "type": "object",
+      "default": "UTC",
+      "x-docs-required": true,
+      "x-docs-helmTpl": false,
+      "x-docs-defaultRaw": "`UTC`"
+    },
+    "diagnosticMode": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/diagnosticMode.json",
+      "description": "Configuration for `diagnosticMode`."
+    },
+    "vpa": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/vpa.json",
+      "description": "Configuration for `vpa`."
+    },
+    "hpa": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/hpa.json",
+      "description": "Configuration for `hpa`."
+    },
+    "service": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/service.json",
+      "description": "Define service objects"
+    },
+    "credentials": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/credentials.json",
+      "description": "Create credentials objects"
+    },
+    "ingressMiddlewares": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/ingressMiddlewares.json",
+      "description": "Create Middleware objects"
+    },
+    "persistence": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/persistence.json",
+      "description": "Define persistence objects"
+    },
+    "volumeSnapshotClass": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/volumeSnapshotClass.json",
+      "description": "Define a volume snapshot class"
+    },
+    "volumeSnapshots": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/volumeSnapshots.json",
+      "description": "Define a volume snapshot"
+    },
+    "imagePullSecret": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/imagePullSecret.json",
+      "description": "Define image pull secrets"
+    },
+    "configmap": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/configmap.json",
+      "description": "Create Configmap objects"
+    },
+    "secret": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/secret.json",
+      "description": "Create Secret objects"
+    },
+    "serviceAccount": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/serviceAccount.json",
+      "description": "Create serviceAccount objects"
+    },
+    "rbac": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/rbac.json",
+      "description": "Create rbac objects"
+    },
+    "notes": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/notes.json",
+      "description": "Define values for `NOTES.txt`"
+    },
+    "gluetunImage": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/gluetunImage.json",
+      "description": "Configuration for `gluetunImage`."
+    },
+    "netshootImage": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/netshootImage.json",
+      "description": "Configuration for `netshootImage`."
+    },
+    "tailscaleImage": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/tailscaleImage.json",
+      "description": "Configuration for `tailscaleImage`."
+    },
+    "codeserverImage": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/codeserverImage.json",
+      "description": "Configuration for `codeserverImage`."
+    },
+    "alpineImage": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/alpineImage.json",
+      "description": "Configuration for `alpineImage`."
+    },
+    "ubuntuImage": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/ubuntuImage.json",
+      "description": "Configuration for `ubuntuImage`."
+    },
+    "scratchImage": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/scratchImage.json",
+      "description": "Configuration for `scratchImage`."
+    },
+    "kubectlImage": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/kubectlImage.json",
+      "description": "Configuration for `kubectlImage`."
+    },
+    "wgetImage": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/wgetImage.json",
+      "description": "Configuration for `wgetImage`."
+    },
+    "yqImage": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/yqImage.json",
+      "description": "Configuration for `yqImage`."
+    },
+    "postgresClientImage": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/postgresClientImage.json",
+      "description": "Configuration for `postgresClientImage`."
+    },
+    "mariadbClientImage": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/mariadbClientImage.json",
+      "description": "Configuration for `mariadbClientImage`."
+    },
+    "redisClientImage": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/redisClientImage.json",
+      "description": "Configuration for `redisClientImage`."
+    },
+    "valkeyClientImage": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/valkeyClientImage.json",
+      "description": "Configuration for `valkeyClientImage`."
+    },
+    "mongodbClientImage": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/mongodbClientImage.json",
+      "description": "Configuration for `mongodbClientImage`."
+    },
+    "postgres15Image": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/postgres15Image.json",
+      "description": "Configuration for `postgres15Image`."
+    },
+    "postgres16Image": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/postgres16Image.json",
+      "description": "Configuration for `postgres16Image`."
+    },
+    "postgresPostgis15Image": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/postgresPostgis15Image.json",
+      "description": "Configuration for `postgresPostgis15Image`."
+    },
+    "postgresPostgis16Image": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/postgresPostgis16Image.json",
+      "description": "Configuration for `postgresPostgis16Image`."
+    },
+    "postgresVectors15Image": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/postgresVectors15Image.json",
+      "description": "Configuration for `postgresVectors15Image`."
+    },
+    "postgresVectors16Image": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/postgresVectors16Image.json",
+      "description": "Configuration for `postgresVectors16Image`."
+    },
+    "postgresVectorchord15Image": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/postgresVectorchord15Image.json",
+      "description": "Configuration for `postgresVectorchord15Image`."
+    },
+    "postgresVectorchord16Image": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/postgresVectorchord16Image.json",
+      "description": "Configuration for `postgresVectorchord16Image`."
+    },
+    "openvpnImage": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/openvpnImage.json",
+      "description": "Configuration for `openvpnImage`."
+    },
+    "wireguardImage": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/images/wireguardImage.json",
+      "description": "Configuration for `wireguardImage`."
+    },
+    "ingress": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/ingress.json",
+      "description": "Create Ingress objects"
+    },
+    "certificate": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/certificate.json",
+      "description": "Define certificates"
+    },
+    "route": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/route.json",
+      "description": "Configuration for `route`."
+    },
+    "podDisruptionBudget": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/podDisruptionBudget.json",
+      "description": "Create Pod Disruption Budget objects"
+    },
+    "webhook": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/webhook.json",
+      "description": "Create webhook objects"
+    },
+    "priorityClass": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/priorityClass.json",
+      "description": "Define priority classes"
+    },
+    "storageClass": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/storageClass.json",
+      "description": "Define storage classes"
+    },
+    "metrics": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/metrics.json",
+      "description": "Configuration for `metrics`."
+    },
+    "addons": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/addons.json",
+      "description": "Addons to the workloads"
+    },
+    "dependencies": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/dependencies.json",
+      "description": "Configuration for `dependencies`."
+    },
+    "cnpg": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/cnpg.json",
+      "description": "Define a CNPG cluster"
+    },
+    "redis": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/redis.json",
+      "description": "Configuration for `redis`."
+    },
+    "mariadb": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/mariadb.json",
+      "description": "Configuration for `mariadb`."
+    },
+    "mongodb": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/mongodb.json",
+      "description": "Configuration for `mongodb`."
+    },
+    "clickhouse": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/clickhouse.json",
+      "description": "Configuration for `clickhouse`."
+    },
+    "solr": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/solr.json",
+      "description": "Configuration for `solr`."
+    },
+    "extraTpl": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/extraTpl.json",
+      "description": "Define kubernetes resources, 1 per list item, tpl will be resolved",
+      "type": "array",
+      "default": [],
+      "x-docs-required": false,
+      "x-docs-helmTpl": true,
+      "x-docs-defaultRaw": "`[]`"
+    },
+    "fallbackDefaults": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/fallbackDefaults.json",
+      "description": "The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [here](/truecharts-common/fallbackdefaults)",
+      "type": "object",
+      "x-docs-required": false,
+      "x-docs-helmTpl": false,
+      "x-docs-defaultRaw": "See here"
+    },
+    "operator": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/operator.json",
+      "description": "Contains specific settings for helm charts containing or using system"
+    },
+    "enableServiceLinks": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/enableServiceLinks.json",
+      "description": "See [Enable Service Links](/truecharts-common/workload#enableservicelinks)"
+    },
+    "hostNetwork": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/hostNetwork.json",
+      "description": "See [Host Network](/truecharts-common/workload#hostnetwork)"
+    },
+    "hostPID": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/hostPID.json",
+      "description": "See [Host PID](/truecharts-common/workload#hostpid)"
+    },
+    "hostIPC": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/hostIPC.json",
+      "description": "See [Host IPC](/truecharts-common/workload#hostipc)"
+    },
+    "hostUsers": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/hostUsers.json",
+      "description": "See [Host Users](/truecharts-common/workload#hostusers)"
+    },
+    "shareProcessNamespace": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/shareProcessNamespace.json",
+      "description": "See [Share Process Namespace](/truecharts-common/workload#shareprocessnamespace)"
+    },
+    "restartPolicy": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/restartPolicy.json",
+      "description": "See [Restart Policy](/truecharts-common/workload#restartpolicy)"
+    },
+    "dnsPolicy": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/dnsPolicy.json",
+      "description": "See [DNS Policy](/truecharts-common/workload#dnspolicy)"
+    },
+    "dnsConfig": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/dnsConfig.json",
+      "description": "See [DNS Config](/truecharts-common/workload#dnsconfig)"
+    },
+    "hostAliases": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/hostAliases.json",
+      "description": "See [Host Aliases](/truecharts-common/workload#hostaliases)"
+    },
+    "nodeSelector": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/nodeSelector.json",
+      "description": "See [Node Selector](/truecharts-common/workload#nodeselector)"
+    },
+    "defaultSpread": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/defaultSpread.json",
+      "description": "Sets some default topology spread constraints for good spread of pods across nodes."
+    },
+    "topologySpreadConstraints": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/topologySpreadConstraints.json",
+      "description": "See [Topology Spread Constraints](/truecharts-common/workload#topologyspreadconstraints)"
+    },
+    "tolerations": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/tolerations.json",
+      "description": "See [Tolerations](/truecharts-common/workload#tolerations)"
+    },
+    "schedulerName": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/schedulerName.json",
+      "description": "See [Scheduler Name](/truecharts-common/workload#schedulername)"
+    },
+    "priorityClassName": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/priorityClassName.json",
+      "description": "See [Priority Class Name](/truecharts-common/workload#priorityclassname)"
+    },
+    "runtimeClassName": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/runtimeClassName.json",
+      "description": "See [Runtime Class Name](/truecharts-common/workload#runtimeclassname)"
+    },
+    "automountServiceAccountToken": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/automountServiceAccountToken.json",
+      "description": "See [Automount Service Account Token](/truecharts-common/workload#automountserviceaccounttoken)"
+    },
+    "terminationGracePeriodSeconds": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/terminationGracePeriodSeconds.json",
+      "description": "See [Termination Grace Period Seconds](/truecharts-common/workload#terminationgraceperiodseconds)"
+    },
+    "command": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/command.json",
+      "description": "See [command](/truecharts-common/container/command)"
+    },
+    "args": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/args.json",
+      "description": "See [args](/truecharts-common/container/args#args)"
+    },
+    "extraArgs": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/extraArgs.json",
+      "description": "See [extraArgs](/truecharts-common/container/args#extraargs)"
+    },
+    "termination": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/termination.json",
+      "description": "See [termination](/truecharts-common/container/termination)"
+    },
+    "lifecycle": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/lifecycle.json",
+      "description": "Does **not** apply to `initContainers` See [lifecycle](/truecharts-common/container/lifecycle)"
+    },
+    "probes": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/probes.json",
+      "description": "Does **not** apply to `initContainers` See [probes](/truecharts-common/container/probes)"
+    },
+    "envFrom": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/envFrom.json",
+      "description": "See [envFrom](/truecharts-common/container/envfrom)"
+    },
+    "fixedEnv": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/fixedEnv.json",
+      "description": "See [fixedEnv](/truecharts-common/container/fixedenv)"
+    },
+    "env": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/env.json",
+      "description": "See [env](/truecharts-common/container/env)"
+    },
+    "primaryUpdateMethod": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/primaryUpdateMethod.json",
+      "description": "TODO ---"
+    },
+    "primaryUpdateStrategy": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/primaryUpdateStrategy.json",
+      "description": "TODO ---"
+    },
+    "certificates": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/certificates.json",
+      "description": "TODO ---"
+    },
+    "postgresql": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/postgresql.json",
+      "description": "TODO ---"
+    },
+    "initdb": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/initdb.json",
+      "description": "TODO ---"
+    },
+    "ingressMiddleware": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/ingressMiddleware.json",
+      "description": "Whether to expand (adding the fullname as prefix) the middleware name."
+    }
+  },
+  "additionalProperties": true
+}

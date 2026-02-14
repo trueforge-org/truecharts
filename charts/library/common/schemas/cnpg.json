@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "main": {
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/cnpg/main.json",
+      "description": "Define a CNPG cluster"
+    }
+  },
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "cluster": {
+        "type": "object",
+        "properties": {
+          "labels": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Additional labels for CNPG cluster"
+          },
+          "annotations": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Additional annotations for CNPG cluster"
+          },
+          "env": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define additional environment variables for the cluster's pods See container env options in the [container env](/truecharts-common/container/env) section."
+          },
+          "envFrom": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define additional environment variables for the cluster's pods See container envFrom options in the [container envFrom](/truecharts-common/container/envFrom) section."
+          },
+          "instances": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Number of instances"
+          },
+          "singleNode": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Whether this is a single-node cluster. Setting this to `true` would allow PVCs to be kept on instance restart."
+          },
+          "logLevel": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "The cluster log level. Available values: - `error`"
+          }
+        },
+        "additionalProperties": true,
+        "description": "Define a CNPG cluster"
+      },
+      "enabled": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Enables or Disables the cluster"
+      },
+      "primary": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Sets the cluster as primary"
+      },
+      "hibernate": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Puts the cluster in hibernation mode"
+      },
+      "labels": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Additional labels for all CNPG objects"
+      },
+      "annotations": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Additional annotations for all CNPG objects"
+      },
+      "type": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Type of the CNPG database. Available types: - `postgres`"
+      },
+      "pgVersion": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Version of Postgresql to use. Available types: - `15`"
+      },
+      "mode": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Cluster mode of operation. Available modes: - `standalone` (default mode, creates new or updates an existing CNPG cluster)"
+      },
+      "database": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the database name"
+      },
+      "user": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the database user"
+      },
+      "password": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the database password Chart users are strongly encouraged to override this setting with their own"
+      }
+    },
+    "additionalProperties": true,
+    "description": "Define the cluster name. There is predefined cluster called `main`, which is configured with sensible"
+  },
+  "description": "Define a CNPG cluster"
+}
