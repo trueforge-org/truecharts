@@ -110,16 +110,17 @@ def normalize_value_to_placeholder(value: Any) -> Any:
     - Strings become ""
     - Numbers become 0 (or keep if likely a config value like port)
     - Booleans stay as-is
-    - Lists become empty or single-element example
-    - Dicts become empty or retain structure
+    - Lists: keep first element as example (shows structure)
+    - Dicts: retain structure with normalized values
+    
+    Note: List normalization only preserves the first element pattern.
     """
     if value is None:
         return None
     elif isinstance(value, bool):
         return value  # Keep booleans as-is
     elif isinstance(value, str):
-        # Keep empty strings, replace non-empty with ""
-        return "" if value else ""
+        return ""  # Always return empty string for string placeholders
     elif isinstance(value, (int, float)):
         # Keep small numbers that might be config values, zero out large ones
         if isinstance(value, int) and 0 <= value <= 100:
@@ -128,7 +129,8 @@ def normalize_value_to_placeholder(value: Any) -> Any:
     elif isinstance(value, list):
         if not value:
             return []
-        # Keep structure but normalize the first element as example
+        # Keep first element as example (preserves structure pattern)
+        # Note: This shows the structure but doesn't preserve all list variations
         return [normalize_value_to_placeholder(value[0])]
     elif isinstance(value, dict):
         # Keep structure but normalize all values
@@ -170,7 +172,7 @@ def normalize_variable_keys(data: Any, parent_key: str = "") -> Any:
         # Collect all the child objects and merge them into a single 'objectname' entry
         if data:
             # Get the first key as a template for the objectname entry
-            first_key = list(data.keys())[0]
+            first_key = next(iter(data.keys()))
             first_value = data[first_key]
             
             # Recursively normalize the template value
