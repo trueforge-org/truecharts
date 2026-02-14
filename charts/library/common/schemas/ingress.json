@@ -5,11 +5,11 @@
     "main": {
       "type": "object",
       "properties": {
-          "enabled": {
-            "type": [
-              "boolean",
-              "string"
-            ],
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
           "description": "Create Ingress objects"
         },
         "primary": {
@@ -38,10 +38,91 @@
         },
         "hosts": {
           "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "host": {
+                "type": "string",
+                "description": "Define the host for this ingress"
+              },
+              "paths": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "description": "Define the path for this ingress"
+                    },
+                    "pathType": {
+                      "type": "string",
+                      "description": "Define the path type for this ingress"
+                    },
+                    "overrideService": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "description": "Define the service name for this path"
+                        },
+                        "expandObjectName": {
+                          "type": [
+                            "boolean",
+                            "string"
+                          ],
+                          "description": "Define if the override service object name should be expanded"
+                        },
+                        "port": {
+                          "type": [
+                            "integer",
+                            "string"
+                          ],
+                          "description": "Define the service port for this path"
+                        }
+                      },
+                      "additionalProperties": true,
+                      "description": "Overrides the selected service for this path"
+                    }
+                  },
+                  "additionalProperties": true,
+                  "description": "Configuration for `ingress.main.hosts.$item.paths.$item`."
+                },
+                "description": "Define the paths for this ingress"
+              }
+            },
+            "additionalProperties": true,
+            "description": "Configuration for `ingress.main.hosts.$item`."
+          },
           "description": "Create Ingress objects"
         },
         "tls": {
           "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "hosts": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Define the hosts for this TLS entry"
+              },
+              "secretName": {
+                "type": "string",
+                "description": "Define the secret name for this TLS"
+              },
+              "certificateIssuer": {
+                "type": "string",
+                "description": "Define the certificate issuer for this TLS"
+              },
+              "clusterCertificate": {
+                "type": "string",
+                "description": "Define the cluster certificate for this TLS"
+              }
+            },
+            "additionalProperties": true,
+            "description": "Configuration for `ingress.main.tls.$item`."
+          },
           "description": "Create Ingress objects"
         },
         "integrations": {
@@ -50,11 +131,11 @@
             "certManager": {
               "type": "object",
               "properties": {
-                  "enabled": {
-                    "type": [
-                      "boolean",
-                      "string"
-                    ],
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
                   "description": "Enables or Disables the cert-manager integration"
                 },
                 "certificateIssuer": {
@@ -68,11 +149,11 @@
             "traefik": {
               "type": "object",
               "properties": {
-                  "enabled": {
-                    "type": [
-                      "boolean",
-                      "string"
-                    ],
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
                   "description": "Enables or Disables the traefik integration"
                 },
                 "entrypoints": {
@@ -98,21 +179,21 @@
             "nginx": {
               "type": "object",
               "properties": {
-                  "enabled": {
-                    "type": [
-                      "boolean",
-                      "string"
-                    ],
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
                   "description": "Configuration for `ingress.main.integrations.nginx.enabled`."
                 },
                 "themepark": {
                   "type": "object",
                   "properties": {
-                      "enabled": {
-                        "type": [
-                          "boolean",
-                          "string"
-                        ],
+                    "enabled": {
+                      "type": [
+                        "boolean",
+                        "string"
+                      ],
                       "description": "Configuration for `ingress.main.integrations.nginx.themepark.enabled`."
                     },
                     "css": {
@@ -157,11 +238,11 @@
             "homepage": {
               "type": "object",
               "properties": {
-                  "enabled": {
-                    "type": [
-                      "boolean",
-                      "string"
-                    ],
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
                   "description": "Enables or Disables the homepage integration"
                 },
                 "name": {
@@ -241,11 +322,11 @@
           "traefik": {
             "type": "object",
             "properties": {
-                "enabled": {
-                  "type": [
-                    "boolean",
-                    "string"
-                  ],
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
                 "properties": {},
                 "additionalProperties": true,
                 "description": "Enables or Disables the traefik integration"
@@ -305,11 +386,11 @@
           "homepage": {
             "type": "object",
             "properties": {
-                "enabled": {
-                  "type": [
-                    "boolean",
-                    "string"
-                  ],
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
                 "properties": {},
                 "additionalProperties": true,
                 "description": "Enables or Disables the homepage integration"
@@ -383,11 +464,11 @@
                     },
                     "description": "Define configuration for the widget"
                   },
-                    "enabled": {
-                      "type": [
-                        "boolean",
-                        "string"
-                      ],
+                  "enabled": {
+                    "type": [
+                      "boolean",
+                      "string"
+                    ],
                     "properties": {},
                     "additionalProperties": true,
                     "description": "Enables or Disables the widget"
@@ -427,11 +508,11 @@
           "certManager": {
             "type": "object",
             "properties": {
-                "enabled": {
-                  "type": [
-                    "boolean",
-                    "string"
-                  ],
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
                 "properties": {},
                 "additionalProperties": true,
                 "description": "Enables or Disables the cert-manager integration"
@@ -450,11 +531,11 @@
         "additionalProperties": true,
         "description": "Define the integrations for this ingress"
       },
-        "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
         "description": "Enables or Disables the Ingress"
@@ -508,105 +589,91 @@
         "description": "Define the `service: port` to assign the ingress"
       },
       "hosts": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": {
+        "type": "array",
+        "items": {
           "type": "object",
           "properties": {
             "host": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "type": "string",
               "description": "Define the host for this ingress"
             },
             "paths": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": {
+              "type": "array",
+              "items": {
                 "type": "object",
                 "properties": {
                   "path": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true,
+                    "type": "string",
                     "description": "Define the path for this ingress"
                   },
                   "pathType": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true,
+                    "type": "string",
                     "description": "Define the path type for this ingress"
                   },
                   "overrideService": {
                     "type": "object",
                     "properties": {
                       "name": {
-                        "type": "object",
-                        "properties": {},
-                        "additionalProperties": true,
+                        "type": "string",
                         "description": "Define the service name for this path"
                       },
                       "expandObjectName": {
-                        "type": "object",
-                        "properties": {},
-                        "additionalProperties": true,
+                        "type": [
+                          "boolean",
+                          "string"
+                        ],
                         "description": "Define if the override service object name should be expanded"
                       },
                       "port": {
-                        "type": "object",
-                        "properties": {},
-                        "additionalProperties": true,
+                        "type": [
+                          "integer",
+                          "string"
+                        ],
                         "description": "Define the service port for this path"
                       }
                     },
                     "additionalProperties": true,
-                    "description": "Overrides the \"selected\" service for this path"
+                    "description": "Overrides the selected service for this path"
                   }
                 },
                 "additionalProperties": true,
-                "description": "Configuration for `$name.hosts.$name.paths.$name`."
+                "description": "Configuration for `$name.hosts.$item.paths.$item`."
               },
               "description": "Define the paths for this ingress"
             }
           },
           "additionalProperties": true,
-          "description": "Configuration for `$name.hosts.$name`."
+          "description": "Configuration for `$name.hosts.$item`."
         },
         "description": "Define the hosts for this ingress"
       },
       "tls": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": {
+        "type": "array",
+        "items": {
           "type": "object",
           "properties": {
-            "host": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
-              "description": "Define the hosts for this TLS"
+            "hosts": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Define the hosts for this TLS entry"
             },
             "secretName": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "type": "string",
               "description": "Define the secret name for this TLS"
             },
             "certificateIssuer": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "type": "string",
               "description": "Define the certificate issuer for this TLS"
             },
-            "clusterIssuer": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
-              "description": "Define the cluster issuer for this TLS"
+            "clusterCertificate": {
+              "type": "string",
+              "description": "Define the cluster certificate for this TLS"
             }
           },
           "additionalProperties": true,
-          "description": "Configuration for `$name.tls.$name`."
+          "description": "Configuration for `$name.tls.$item`."
         },
         "description": "Define the TLS for this ingress"
       }
