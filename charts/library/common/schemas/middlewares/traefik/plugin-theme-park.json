@@ -2,6 +2,19 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "description": "Mirrors docs path middlewares/traefik/plugin-theme-park.md.",
-  "properties": {},
-  "additionalProperties": true
+  "properties": {
+    "app": {
+      "type": "string",
+      "minLength": 1
+    },
+    "theme": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "app",
+    "theme"
+  ]
 }

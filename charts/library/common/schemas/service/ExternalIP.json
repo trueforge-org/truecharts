@@ -2,6 +2,14 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "description": "Mirrors docs path service/ExternalIP.md.",
-  "properties": {},
-  "additionalProperties": true
+  "properties": {
+    "externalIP": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "externalIP"
+  ]
 }

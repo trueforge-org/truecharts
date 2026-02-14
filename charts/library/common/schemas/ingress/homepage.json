@@ -2,6 +2,23 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "description": "Mirrors docs path ingress/homepage.md.",
-  "properties": {},
-  "additionalProperties": true
+  "properties": {
+    "enabled": {
+      "type": "boolean"
+    },
+    "key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "value": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "enabled",
+    "key",
+    "value"
+  ]
 }

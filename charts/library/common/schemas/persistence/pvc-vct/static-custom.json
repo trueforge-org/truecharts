@@ -2,6 +2,19 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "description": "Mirrors docs path persistence/pvc-vct/static-custom.md.",
-  "properties": {},
-  "additionalProperties": true
+  "properties": {
+    "driver": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provisioner": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "driver",
+    "provisioner"
+  ]
 }

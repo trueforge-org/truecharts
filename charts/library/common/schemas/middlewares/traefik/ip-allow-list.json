@@ -2,6 +2,28 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "description": "Mirrors docs path middlewares/traefik/ip-allow-list.md.",
-  "properties": {},
-  "additionalProperties": true
+  "properties": {
+    "sourceRange": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ipStrategy": {
+      "type": "object"
+    },
+    "depth": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "excludedIPs": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "depth",
+    "excludedIPs",
+    "ipStrategy",
+    "sourceRange"
+  ]
 }
