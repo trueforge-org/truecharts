@@ -8,17 +8,20 @@
           "$ref": "../special/labels.json"
         }
       ],
-      "description": "Additional Labels that apply to all objects"
+      "description": "Additional Labels that apply to all objects",
+      "default": {}
     },
     "annotations": {
       "type": "object",
       "properties": {},
       "additionalProperties": true,
-      "description": "Additional Annotations that apply to all objects"
+      "description": "Additional Annotations that apply to all objects",
+      "default": {}
     },
     "namespace": {
       "type": "string",
-      "description": "Namespace to apply to all objects, unless overridden at the object level Does not apply to chart deps, use global.namespace for that"
+      "description": "Namespace to apply to all objects, unless overridden at the object level Does not apply to chart deps, use global.namespace for that",
+      "default": ""
     },
     "diagnosticMode": {
       "type": "object",
@@ -58,32 +61,51 @@
             "additionalProperties": true,
             "description": "Configuration for `global.traefik.commonMiddlewares.$item`."
           },
-          "description": "Settings for traefik integration"
+          "description": "Settings for traefik integration",
+          "default": [
+            {
+              "name": "tc-basic-secure-headers"
+            }
+          ]
         },
         "addServiceAnnotations": {
           "type": "object",
           "properties": {},
           "additionalProperties": true,
-          "description": "Add annotations to services for traefik"
+          "description": "Add annotations to services for traefik",
+          "default": true
         }
       },
       "additionalProperties": true,
-      "description": "Settings for traefik integration"
+      "description": "Settings for traefik integration",
+      "default": {
+        "addServiceAnnotations": true,
+        "commonMiddlewares": [
+          {
+            "name": "tc-basic-secure-headers"
+          }
+        ]
+      }
     },
     "minNodePort": {
       "type": "integer",
       "description": "Minimum Node Port Allowed",
-      "minimum": 1
+      "minimum": 1,
+      "default": 9000
     },
     "stopAll": {
       "type": "boolean",
-      "description": "Applies different techniques to stop all objects in the chart and its dependencies"
+      "description": "Applies different techniques to stop all objects in the chart and its dependencies",
+      "default": false
     },
     "metallb": {
       "type": "object",
       "properties": {},
       "additionalProperties": true,
-      "description": "Settings for metallb integration"
+      "description": "Settings for metallb integration",
+      "default": {
+        "addServiceAnnotations": true
+      }
     }
   },
   "additionalProperties": true,
