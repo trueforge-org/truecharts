@@ -73,9 +73,19 @@
         "description": "Whether to assign all service accounts or not to the (Cluster)RoleBinding"
       },
       "serviceAccounts": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "oneOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true
+          }
+        ],
         "description": "Define the service account(s) to assign the (Cluster)RoleBinding"
       },
       "rules": {

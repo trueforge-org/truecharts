@@ -6,9 +6,7 @@
     "type": "object",
     "properties": {
       "preemptionPolicy": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define priority classes"
       },
         "enabled": {
@@ -39,21 +37,15 @@
         "description": "Additional annotations for priority class"
       },
       "value": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "integer",
         "description": "Define the value for this priority class"
       },
       "globalDefault": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "boolean",
         "description": "Define if this priority class is the global default"
       },
       "description": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the description for this priority class"
       }
     },
