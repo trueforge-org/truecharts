@@ -1,0 +1,20 @@
+{
+  "key": "container",
+  "type": "object",
+  "scalarKeys": {
+    "runAsUser": "integer",
+    "runAsGroup": "integer",
+    "runAsNonRoot": "boolean",
+    "readOnlyRootFilesystem": "boolean",
+    "allowPrivilegeEscalation": "boolean",
+    "privileged": "boolean",
+    "PUID": "integer",
+    "UMASK": "string"
+  },
+  "objectKeys": [
+    "seccompProfile",
+    "capabilities"
+  ],
+  "arrayKeys": [],
+  "hasObjectNameObject": false
+}
