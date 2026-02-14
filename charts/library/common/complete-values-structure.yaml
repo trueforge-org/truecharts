@@ -22,7 +22,7 @@ global:
   diagnosticMode:
     enabled: false
   fallbackDefaults:
-    storageClass: null
+    storageClass:
     probeType: ''
     serviceProtocol: ''
     serviceType: ''
@@ -997,7 +997,7 @@ workload:
             CUSTOM_PORT: ''
             CAVES: ''
             FORCE_X64: ''
-            CLI_ARGS: null
+            CLI_ARGS:
             HEXO_PLUGINS: ''
             FLOOD_OPTION_RUNDIR: ''
             JTS3_LOG: ''
@@ -1934,8 +1934,8 @@ workload:
             ytdl_allow_advanced_download: false
             ytdl_use_cookies: false
             ENABLE_MJPG_STREAMER: ''
-            MJPG_STREAMER_INPUT: null
-            CAMERA_DEV: null
+            MJPG_STREAMER_INPUT:
+            CAMERA_DEV:
             TRAKT_ID: ''
             TRAKT_SECRET: ''
             SUBDOMAINS: ''
@@ -3180,8 +3180,8 @@ ingress:
         widget:
           type: ''
           url: ''
-          custom: null
-          customkv: null
+          custom:
+          customkv:
           version: 2
 certificate: {}
 route:
@@ -3193,18 +3193,18 @@ route:
     parentRefs:
     - group: ''
       kind: ''
-      name: null
-      namespace: null
-      sectionName: null
+      name:
+      namespace:
+      sectionName:
     hostnames:
     - ''
     rules:
     - backendRefs:
       - group: ''
         kind: ''
-        name: null
-        namespace: null
-        port: null
+        name:
+        namespace:
+        port:
         weight: 1
       matches:
       - path:
@@ -3274,7 +3274,7 @@ metrics:
     prometheusRule:
       enabled: false
       groups: {}
-      additionalgroups: null
+      additionalgroups:
       labels: {}
       rules: []
     targetSelector: ''
@@ -3344,7 +3344,7 @@ addons:
     enabled: false
     targetSelector:
     - ''
-    secret: null
+    secret:
     container:
       enabled: true
       imageSelector: ''
@@ -3504,8 +3504,8 @@ cnpg:
       primaryUpdateMethod: ''
       primaryUpdateStrategy: ''
       logLevel: ''
-      certificates: null
-      postgresql: null
+      certificates:
+      postgresql:
       initdb:
         postInitApplicationSQL:
         - ''
@@ -3748,7 +3748,7 @@ logPrivacy: false
 minTlsServeVersion: 0
 defaultUpstreams:
 - ''
-upstreams: null
+upstreams:
 upstreamTimeout: ''
 bootstrapDns:
   upstream: ''
@@ -3764,7 +3764,7 @@ customDNS:
 clientLookup:
   upstream: ''
   singleNameOrder: []
-  clients: null
+  clients:
 caching:
   minTime: ''
   maxTime: ''
@@ -4520,7 +4520,7 @@ tfaAppOptions:
   logLevel: ''
   logFormat: ''
 tfaAuthOptions:
-  authHost: null
+  authHost:
   urlPath: ''
   defaultAction: ''
   defaultProvider: ''
@@ -4783,14 +4783,14 @@ meshcentral:
     _agentCoreDumpUsers: []
     _agentSignLock: false
     _agentTimeStampServer: ''
-    _agentTimeStampProxy: null
+    _agentTimeStampProxy:
     _exactPorts: false
     cert: ''
     keepCerts: false
     WANonly: false
     LANonly: false
     allowLoginToken: false
-    _StrictTransportSecurity: null
+    _StrictTransportSecurity:
     allowFraming: false
     _cookieIpCheck: ''
     webRTC: false
@@ -4801,7 +4801,7 @@ meshcentral:
     _agentPing: 0
     _agentPong: 0
     _amtManager: true
-    _orphanAgentUser: null
+    _orphanAgentUser:
     _agentIdleTimeout: 0
     _webPageLengthRandomization: true
     compression: true
@@ -4814,45 +4814,45 @@ meshcentral:
     _meshScanner: true
     _allowHighQualityDesktop: true
     _webPush:
-      email: null
+      email:
     sessionTime: 60
     sessionSameSite: ''
     dbExpire:
       events: 0
       powerevents: 0
       statsevents: 0
-    _RunOnServerStarted: null
-    _RunOnServerUpdated: null
-    _RunOnServerError: null
+    _RunOnServerStarted:
+    _RunOnServerUpdated:
+    _RunOnServerError:
     _publicPushNotifications: false
     _desktopMultiplex: false
-    _ipBlockedUserRedirect: null
-    _userAllowedIP: null
-    _userBlockedIP: null
-    _agentAllowedIP: null
-    _agentBlockedIP: null
-    _authLog: null
+    _ipBlockedUserRedirect:
+    _userAllowedIP:
+    _userBlockedIP:
+    _agentAllowedIP:
+    _agentBlockedIP:
+    _authLog:
     _InterUserMessaging: []
     _manageAllDeviceGroups: []
     _manageCrossDomain: []
     _localDiscovery:
-      name: null
-      info: null
-      key: null
+      name:
+      info:
+      key:
     _tlsOffload: false
-    _trustedProxy: null
+    _trustedProxy:
     _mpsPort: 0
-    _mpsAliasPort: null
-    _mpsAliasHost: null
+    _mpsAliasPort:
+    _mpsAliasHost:
     _mpsTlsOffload: false
     _mpsHighSecurity: false
-    _syslogtcp: null
+    _syslogtcp:
     _webrtcConfig:
       iceServers:
       - urls: ''
     _crowdsec:
-      url: null
-      apiKey: null
+      url:
+      apiKey:
       failbackRemediation: ''
     autobackup:
       mongoDumpPath: ''
@@ -4883,34 +4883,34 @@ meshcentral:
       coolofftime: 30
     _amtProvisioningServer:
       port: 0
-      deviceGroup: null
-      newMebxPassword: null
-      trustedFqdn: null
-      ip: null
+      deviceGroup:
+      newMebxPassword:
+      trustedFqdn:
+      ip:
     plugins:
       enabled: false
   _sendgrid:
-    from: null
-    apiKey: null
+    from:
+    apiKey:
     verifyemail: true
   _smtp:
-    name: null
-    host: null
-    port: null
-    from: null
+    name:
+    host:
+    port:
+    from:
     tls: true
     _auth:
-      clientId: null
-      clientSecret: null
-      refreshToken: null
+      clientId:
+      clientSecret:
+      refreshToken:
     tlscertcheck: true
     tlsstrict: true
     verifyemail: true
   _sms:
     provider: ''
-    sid: null
-    auth: null
-    from: null
+    sid:
+    auth:
+    from:
   _messaging:
     _telegram:
       apiid: ''
@@ -4927,8 +4927,8 @@ meshcentral:
   _domaindefaults:
     title: ''
   domains:
-    ? ''
-    : certUrl: ''
+    '':
+      certUrl: ''
       title: ''
       title2: ''
       minify: true
@@ -4953,45 +4953,45 @@ meshcentral:
       _rootRedirect: ''
       _unknownUserRootRedirect: ''
       welcomeText: ''
-      _welcomePicture: null
+      _welcomePicture:
       _welcomePictureFullScreen: false
       _meshMessengerTitle: ''
-      _meshMessengerPicture: null
+      _meshMessengerPicture:
       _hide: 0
-      _footer: null
-      _loginfooter: null
+      _footer:
+      _loginfooter:
       _allowSavingDeviceCredentials: true
-      _trustedCert: null
+      _trustedCert:
       _guestDeviceSharing:
-        maxSessionTime: null
+        maxSessionTime:
       _autoRemoveInactiveDevices: 0
       _deviceSearchBarServerAndClientName: false
       _agentSelfGuestSharing:
-        expire: null
+        expire:
       _PreconfiguredScripts:
-      - name: null
-        type: null
-        runas: null
-        _cmd: null
-        file: null
+      - name:
+        type:
+        runas:
+        _cmd:
+        file:
       _preConfiguredRemoteInput:
-      - name: null
-        value: null
+      - name:
+        value:
       _altMessenging:
-      - name: null
-        url: null
-        localurl: null
-        type: null
+      - name:
+        url:
+        localurl:
+        type:
       deviceMeshRouterLinks:
         rdp: true
         ssh: true
         scp: true
         _extralinks:
-        - name: null
-          protocol: null
-          port: null
-          ip: null
-          localport: null
+        - name:
+          protocol:
+          port:
+          ip:
+          localport:
           filter: []
       myServer:
         Backup: true
@@ -5000,13 +5000,13 @@ meshcentral:
         Console: true
         Trace: true
       _passwordRequirements:
-        min: null
-        max: null
-        upper: null
-        lower: null
-        numeric: null
-        nonalpha: null
-        reset: null
+        min:
+        max:
+        upper:
+        lower:
+        numeric:
+        nonalpha:
+        reset:
         email2factor: true
         sms2factor: true
         push2factor: true
@@ -5016,24 +5016,24 @@ meshcentral:
         single2factorWarning: true
         lock2factor: false
         force2factor: false
-        skip2factor: null
-        oldPasswordBan: null
+        skip2factor:
+        oldPasswordBan:
         banCommonPasswords: true
         loginTokens: true
-        twoFactorTimeout: null
+        twoFactorTimeout:
         autofido2fa: false
-        maxfidokeys: null
+        maxfidokeys:
         allowaccountreset: true
       _twoFactorCookieDurationDays: 30
-      _auth: null
-      _ldapUserKey: null
+      _auth:
+      _ldapUserKey:
       _ldapUserBinaryKey: ''
       _ldapUserName: ''
       _ldapUserEmail: ''
       _ldapUserRealName: ''
       _ldapUserPhoneNumber: ''
       _ldapUserImage: ''
-      _ldapSaveUserToFile: null
+      _ldapSaveUserToFile:
       _ldapUserGroups: ''
       _ldapSyncWithUserGroups:
         filter: []
@@ -5054,54 +5054,54 @@ meshcentral:
       novnc: true
       mstsc: true
       ssh: true
-      _webEmailsPath: null
-      _customUI: null
+      _webEmailsPath:
+      _customUI:
       _consentMessages:
-        Title: null
-        Desktop: null
-        Terminal: null
-        Files: null
+        Title:
+        Desktop:
+        Terminal:
+        Files:
         consentTimeout: 30
         autoAcceptOnTimeout: false
       _notificationMessages:
-        Title: null
-        Desktop: null
-        Terminal: null
-        Files: null
+        Title:
+        Desktop:
+        Terminal:
+        Files:
       _agentCustomization:
         displayName: ''
         description: ''
         companyName: ''
         serviceName: ''
-        installText: null
-        image: null
+        installText:
+        image:
         fileName: ''
-        foregroundColor: null
-        backgroundColor: null
+        foregroundColor:
+        backgroundColor:
       _agentFileInfo:
-        icon: null
-        fileDescription: null
-        fileVersion: null
-        internalName: null
-        legalCopyright: null
-        originalFilename: null
-        productName: null
-        productVersion: null
+        icon:
+        fileDescription:
+        fileVersion:
+        internalName:
+        legalCopyright:
+        originalFilename:
+        productName:
+        productVersion:
       _assistantCustomization:
         title: ''
-        image: null
+        image:
         fileName: ''
       _androidCustomization:
         title: ''
-        subtitle: null
-        image: null
-      _ipBlockedUserRedirect: null
-      _userRequiredHttpHeader: null
-      _userAllowedIP: null
-      _userBlockedIP: null
-      _agentAllowedIP: null
-      _agentBlockedIP: null
-      _userSessionIdleTimeout: null
+        subtitle:
+        image:
+      _ipBlockedUserRedirect:
+      _userRequiredHttpHeader:
+      _userAllowedIP:
+      _userBlockedIP:
+      _agentAllowedIP:
+      _agentBlockedIP:
+      _userSessionIdleTimeout:
       _userConsentFlags:
         desktopnotify: false
         terminalnotify: false
@@ -5111,13 +5111,13 @@ meshcentral:
         fileprompt: false
         desktopprivacybar: false
       _urlSwitching: true
-      _desktopPrivacyBarText: null
+      _desktopPrivacyBarText:
       _limits:
-        MaxDevices: null
-        MaxUserAccounts: null
-        MaxUserSessions: null
-        MaxAgentSessions: null
-        MaxSingleUserSessions: null
+        MaxDevices:
+        MaxUserAccounts:
+        MaxUserSessions:
+        MaxAgentSessions:
+        MaxSingleUserSessions:
       _files:
         sftpConnect: true
       _terminal:
@@ -5125,8 +5125,8 @@ meshcentral:
         linuxShell: ''
         launchCommand:
           linux: ''
-          darwin: null
-          freebsd: null
+          darwin:
+          freebsd:
       _desktop:
         viewonly: false
       _amtScanOptions:
@@ -5136,57 +5136,57 @@ meshcentral:
         TlsAcmActivation: false
         AdminAccounts:
         - user: ''
-          pass: null
+          pass:
         EnvironmentDetection: []
         TlsRootCert:
-          certpfx: null
-          certpfxpass: null
-          certfile: null
-          keyfile: null
+          certpfx:
+          certpfxpass:
+          certfile:
+          keyfile:
         WifiProfiles:
-          name: null
-          ssid: null
+          name:
+          ssid:
           authentication: ''
           encryption: ''
-          password: null
+          password:
           _802.1x:
-            authenticationProtocol: null
+            authenticationProtocol:
             serverCertificateNameComparison: ''
-            serverCertificateName: null
+            serverCertificateName:
             availableInS0: true
-            protectedAccessCredentialHex: null
-            pacPassword: null
-            domain: null
-            username: null
-            password: null
-            roamingIdentity: null
+            protectedAccessCredentialHex:
+            pacPassword:
+            domain:
+            username:
+            password:
+            roamingIdentity:
             pxeTimeoutInSeconds: 0
         _802.1x:
-          authenticationProtocol: null
+          authenticationProtocol:
           serverCertificateNameComparison: ''
-          serverCertificateName: null
+          serverCertificateName:
           availableInS0: true
-          protectedAccessCredentialHex: null
-          pacPassword: null
-          domain: null
-          username: null
-          password: null
-          roamingIdentity: null
+          protectedAccessCredentialHex:
+          pacPassword:
+          domain:
+          username:
+          password:
+          roamingIdentity:
           pxeTimeoutInSeconds: 0
       _amtAcmActivation:
-        log: null
+        log:
         strictCommonName: false
         certs:
-          certfiles: null
-          keyfile: null
+          certfiles:
+          keyfile:
       _redirects:
         example: ''
         example1: ''
       _yubikey:
-        id: null
-        secret: null
-        proxy: null
-      _httpHeaders: null
+        id:
+        secret:
+        proxy:
+      _httpHeaders:
       agentConfig:
       - ''
       _assistantConfig: []
@@ -5197,28 +5197,28 @@ meshcentral:
         onlySelectedUsers: false
         onlySelectedUserGroups: false
         onlySelectedDeviceGroups: false
-        filepath: null
+        filepath:
         index: false
-        maxRecordings: null
-        maxRecordingDays: null
-        maxRecordingSizeMegabytes: null
+        maxRecordings:
+        maxRecordingDays:
+        maxRecordingSizeMegabytes:
         _protocols:
         - 1
       _showPasswordLogin: true
       _sendgrid:
-        from: null
-        apiKey: null
+        from:
+        apiKey:
         verifyemail: true
       _smtp:
-        name: null
-        host: null
-        port: null
-        from: null
+        name:
+        host:
+        port:
+        from:
         tls: true
         _auth:
-          clientId: null
-          clientSecret: null
-          refreshToken: null
+          clientId:
+          clientSecret:
+          refreshToken:
         tlscertcheck: true
         tlsstrict: true
         verifyemail: true
@@ -5228,68 +5228,68 @@ meshcentral:
         _args: []
       _authStrategies:
         _twitter:
-          callbackurl: null
+          callbackurl:
           newAccounts: false
           newAccountsUserGroups: []
-          clientid: null
-          clientsecret: null
-          logouturl: null
+          clientid:
+          clientsecret:
+          logouturl:
         _google:
-          callbackurl: null
+          callbackurl:
           newAccounts: false
           newAccountsUserGroups: []
-          clientid: null
-          clientsecret: null
-          logouturl: null
+          clientid:
+          clientsecret:
+          logouturl:
         _github:
-          callbackurl: null
+          callbackurl:
           newAccounts: false
           newAccountsUserGroups: []
-          clientid: null
-          clientsecret: null
-          logouturl: null
+          clientid:
+          clientsecret:
+          logouturl:
         _reddit:
-          callbackurl: null
+          callbackurl:
           newAccounts: false
           newAccountsUserGroups: []
-          clientid: null
-          clientsecret: null
-          logouturl: null
+          clientid:
+          clientsecret:
+          logouturl:
         _azure:
-          callbackurl: null
+          callbackurl:
           newAccounts: false
           newAccountsUserGroups: []
-          clientid: null
-          clientsecret: null
-          tenantid: null
-          logouturl: null
+          clientid:
+          clientsecret:
+          tenantid:
+          logouturl:
         _jumpcloud:
-          callbackurl: null
+          callbackurl:
           newAccounts: false
           newAccountsUserGroups: []
-          entityid: null
-          idpurl: null
-          cert: null
-          logouturl: null
+          entityid:
+          idpurl:
+          cert:
+          logouturl:
         _saml:
-          callbackurl: null
+          callbackurl:
           disableRequestedAuthnContext: false
           newAccounts: false
           newAccountsUserGroups: []
           newAccountsRights: []
-          entityid: null
-          idpurl: null
-          cert: null
-          logouturl: null
+          entityid:
+          idpurl:
+          cert:
+          logouturl:
         _oidc:
-          authorizationURL: null
-          callbackurl: null
-          clientid: null
-          clientsecret: null
-          issuer: null
-          tokenURL: null
-          userInfoURL: null
-          logouturl: null
+          authorizationURL:
+          callbackurl:
+          clientid:
+          clientsecret:
+          issuer:
+          tokenURL:
+          userInfoURL:
+          logouturl:
           newAccounts: true
           groups:
             required: []
@@ -5920,7 +5920,7 @@ portainer:
   logo: ''
   edge_compute: false
   snapshot_interval: ''
-  hide_labels: null
+  hide_labels:
 openbooks:
   user_name: ''
   server: ''
@@ -6024,8 +6024,8 @@ authentik:
   email:
     host: ''
     port: 0
-    username: null
-    password: null
+    username:
+    password:
     useTLS: true
     useSSL: false
     timeout: 10
