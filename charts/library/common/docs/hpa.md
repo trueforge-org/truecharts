@@ -105,7 +105,7 @@ Kubernetes HPA metrics definitions
 
 |            |                    |
 | ---------- | ------------------ |
-| Key        | `hpa.$name.metrics`|
+| Key        | `hpa.$name.metrics` |
 | Type       | `list` of `map`    |
 | Required   | ❌                 |
 | Helm `tpl` | ❌                 |
@@ -119,7 +119,7 @@ Kubernetes HPA behavior configuration
 
 |            |                     |
 | ---------- | ------------------- |
-| Key        | `hpa.$name.behavior`|
+| Key        | `hpa.$name.behavior` |
 | Type       | `map`               |
 | Required   | ❌                  |
 | Helm `tpl` | ❌                  |

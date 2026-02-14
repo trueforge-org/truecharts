@@ -568,7 +568,6 @@ image:
 - [volumeSnapshotClass](/truecharts-common/volumesnapshotclass)
 - [vpa](/truecharts-common/vpa)
 - [webhook](/truecharts-common/webhook)
-- [webhook](/truecharts-common/webhook)
 - [workload](/truecharts-common/workload)
 
 ---
