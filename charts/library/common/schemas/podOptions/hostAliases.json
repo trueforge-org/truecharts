@@ -1,7 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
+  "type": "array",
   "description": "See [Host Aliases](/truecharts-common/workload#hostaliases)",
-  "properties": {},
-  "additionalProperties": true
+  "items": {
+    "type": "object"
+  }
 }

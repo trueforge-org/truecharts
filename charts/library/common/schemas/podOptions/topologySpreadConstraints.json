@@ -1,7 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
+  "type": "array",
   "description": "See [Topology Spread Constraints](/truecharts-common/workload#topologyspreadconstraints)",
-  "properties": {},
-  "additionalProperties": true
+  "items": {
+    "type": "object"
+  }
 }
