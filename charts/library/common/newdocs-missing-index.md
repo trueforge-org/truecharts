@@ -1,1541 +1,1141 @@
-# Index: Schema-backed missing content in newdocs
-
-This index highlights missing headings that should be generatable from `values.schema.json` where possible.
-
-- Source tree: `/Users/kjeld/GIT/trueforge/truecharts/charts/library/common/docs`
-- Target tree: `/Users/kjeld/GIT/trueforge/truecharts/charts/library/common/newdocs`
-- Docs files considered: **95**
-- Newdocs files considered: **155**
-- Docs files without any newdocs match: **0**
-- Matched files with schema-backed missing headings: **11**
-- Matched files with only non-schema missing headings: **92**
-
-## 1) Docs files without a match in newdocs
-
-- None
-
-## 2) Missing headings that map to schema paths (actionable for generator)
-
-### `addons.md`
-- Matched newdocs file: `addons/index.md`
-- Match type: `fuzzy` (score: `0.82`)
-- Matched schema file: `addons/addons.json` (score: `0.98`)
-- Missing schema-backed headings: **4**
-  - ``addons.$addon.targetSelector`` -> `*.targetSelector`
-  - ``addons.$addon.container`` -> `*.container`
-  - ``addons.$addon.service`` -> `*.service`
-  - ``addons.$addon.ingress`` -> `*.ingress`
-
-### `container/fixedEnv.md`
-- Matched newdocs file: `workload/podSpec/containers/fixedEnv.md`
-- Match type: `fuzzy` (score: `1.03`)
-- Matched schema file: `workload/podSpec/containers/fixedEnv.json` (score: `1.07`)
-- Missing schema-backed headings: **4**
-  - ``fixedEnv.TZ`` -> `TZ`
-  - ``fixedEnv.UMASK`` -> `UMASK`
-  - ``fixedEnv.PUID`` -> `PUID`
-  - ``fixedEnv.NVIDIA_CAPS`` -> `NVIDIA_CAPS`
-
-### `container/lifecycle.md`
-- Matched newdocs file: `workload/podSpec/containers/lifecycle.md`
-- Match type: `fuzzy` (score: `1.04`)
-- Matched schema file: `workload/podSpec/containers/lifecycle.json` (score: `1.08`)
-- Missing schema-backed headings: **6**
-  - ``lifecycle.preStop`` -> `preStop`
-  - ``lifecycle.postStart`` -> `postStart`
-  - ``lifecycle.$hook.port`` -> `*.port`
-  - ``lifecycle.$hook.host`` -> `*.host`
-  - ``lifecycle.$hook.path`` -> `*.path`
-  - ``lifecycle.$hook.httpHeaders`` -> `*.httpHeaders`
-
-### `container/probes.md`
-- Matched newdocs file: `workload/podSpec/containers/probes.md`
-- Match type: `fuzzy` (score: `1.00`)
-- Matched schema file: `workload/podSpec/containers/probes.json` (score: `1.04`)
-- Missing schema-backed headings: **12**
-  - ``probes.liveness`` -> `liveness`
-  - ``probes.readiness`` -> `readiness`
-  - ``probes.startup`` -> `startup`
-  - ``probes.$probe.port`` -> `startup.port`
-  - ``probes.$probe.path`` -> `*.path`
-  - ``probes.$probe.httpHeaders`` -> `*.httpHeaders`
-  - ``probes.$probe.spec`` -> `*.spec`
-  - ``probes.$probe.spec.initialDelaySeconds`` -> `*.spec.initialDelaySeconds`
-  - ``probes.$probe.spec.periodSeconds`` -> `*.spec.periodSeconds`
-  - ``probes.$probe.spec.timeoutSeconds`` -> `*.spec.timeoutSeconds`
-  - ``probes.$probe.spec.failureThreshold`` -> `*.spec.failureThreshold`
-  - ``probes.$probe.spec.successThreshold`` -> `*.spec.successThreshold`
-
-### `container/resources.md`
-- Matched newdocs file: `workload/podSpec/containers/resources.md`
-- Match type: `fuzzy` (score: `1.04`)
-- Matched schema file: `workload/podSpec/containers/resources.json` (score: `1.08`)
-- Missing schema-backed headings: **6**
-  - ``resources.requests`` -> `requests`
-  - ``resources.requests.cpu`` -> `requests.cpu`
-  - ``resources.requests.memory`` -> `requests.memory`
-  - ``resources.limits`` -> `limits`
-  - ``resources.limits.cpu`` -> `limits.cpu`
-  - ``resources.limits.memory`` -> `limits.memory`
-
-### `container/securityContext.md`
-- Matched newdocs file: `workload/podSpec/containers/securityContext.md`
-- Match type: `fuzzy` (score: `1.10`)
-- Matched schema file: `workload/podSpec/containers/securityContext.json` (score: `1.14`)
-- Missing schema-backed headings: **11**
-  - ``securityContext.runAsUser`` -> `runAsUser`
-  - ``securityContext.runAsGroup`` -> `runAsGroup`
-  - ``securityContext.readOnlyRootFilesystem`` -> `readOnlyRootFilesystem`
-  - ``securityContext.allowPrivilegeEscalation`` -> `allowPrivilegeEscalation`
-  - ``securityContext.privileged`` -> `privileged`
-  - ``securityContext.runAsNonRoot`` -> `runAsNonRoot`
-  - ``securityContext.capabilities`` -> `capabilities`
-  - ``securityContext.capabilities.add`` -> `capabilities.add`
-  - ``securityContext.capabilities.drop`` -> `capabilities.drop`
-  - ``securityContext.seccompProfile`` -> `seccompProfile`
-  - ``securityContext.seccompProfile.profile`` -> `seccompProfile.profile`
-
-### `container/termination.md`
-- Matched newdocs file: `workload/container/termination.md`
-- Match type: `fuzzy` (score: `1.27`)
-- Matched schema file: `workload/container/termination.json` (score: `1.26`)
-- Missing schema-backed headings: **2**
-  - ``termination.messagePath`` -> `messagePath`
-  - ``termination.messagePolicy`` -> `messagePolicy`
-
-### `fallbackDefaults.md`
-- Matched newdocs file: `global/fallbackDefaults.md`
-- Match type: `fuzzy` (score: `1.22`)
-- Matched schema file: `global/fallbackDefaults.json` (score: `1.12`)
-- Missing schema-backed headings: **18**
-  - ``probeTimeouts.liveness`` -> `probeTimeouts.liveness`
-  - ``probeTimeouts.liveness.initialDelaySeconds`` -> `probeTimeouts.liveness.initialDelaySeconds`
-  - ``probeTimeouts.liveness.periodSeconds`` -> `probeTimeouts.liveness.periodSeconds`
-  - ``probeTimeouts.liveness.timeoutSeconds`` -> `probeTimeouts.liveness.timeoutSeconds`
-  - ``probeTimeouts.liveness.failureThreshold`` -> `probeTimeouts.liveness.failureThreshold`
-  - ``probeTimeouts.liveness.successThreshold`` -> `probeTimeouts.liveness.successThreshold`
-  - ``probeTimeouts.readiness`` -> `probeTimeouts.readiness`
-  - ``probeTimeouts.readiness.initialDelaySeconds`` -> `probeTimeouts.readiness.initialDelaySeconds`
-  - ``probeTimeouts.readiness.periodSeconds`` -> `probeTimeouts.readiness.periodSeconds`
-  - ``probeTimeouts.readiness.timeoutSeconds`` -> `probeTimeouts.readiness.timeoutSeconds`
-  - ``probeTimeouts.readiness.failureThreshold`` -> `probeTimeouts.readiness.failureThreshold`
-  - ``probeTimeouts.readiness.successThreshold`` -> `probeTimeouts.readiness.successThreshold`
-  - ``probeTimeouts.startup`` -> `probeTimeouts.startup`
-  - ``probeTimeouts.startup.initialDelaySeconds`` -> `probeTimeouts.startup.initialDelaySeconds`
-  - ``probeTimeouts.startup.periodSeconds`` -> `probeTimeouts.startup.periodSeconds`
-  - ``probeTimeouts.startup.timeoutSeconds`` -> `probeTimeouts.startup.timeoutSeconds`
-  - ``probeTimeouts.startup.failureThreshold`` -> `probeTimeouts.startup.failureThreshold`
-  - ``probeTimeouts.startup.successThreshold`` -> `probeTimeouts.startup.successThreshold`
-
-### `global.md`
-- Matched newdocs file: `global/index.md`
-- Match type: `fuzzy` (score: `0.82`)
-- Matched schema file: `global/global.json` (score: `0.98`)
-- Missing schema-backed headings: **2**
-  - ``traefik.addServiceAnnotations`` -> `traefik.addServiceAnnotations`
-  - ``traefik.commonMiddlewares`` -> `traefik.commonMiddlewares`
-
-### `ingress/homepage.md`
-- Matched newdocs file: `ingress/integrations/homepage.md`
-- Match type: `fuzzy` (score: `1.16`)
-- Matched schema file: `ingress/integrations/homepage.json` (score: `1.15`)
-- Missing schema-backed headings: **4**
-  - ``widget.version`` -> `widget.version`
-  - ``widget.url`` -> `widget.url`
-  - ``widget.custom`` -> `widget.custom`
-  - ``widget.customkv`` -> `widget.customkv`
-
-### `resources.md`
-- Matched newdocs file: `workload/podSpec/containers/resources.md`
-- Match type: `fuzzy` (score: `0.63`)
-- Matched schema file: `workload/podSpec/containers/resources.json` (score: `0.64`)
-- Missing schema-backed headings: **6**
-  - ``resources.limits`` -> `limits`
-  - ``resources.limits.cpu`` -> `limits.cpu`
-  - ``resources.limits.memory`` -> `limits.memory`
-  - ``resources.requests`` -> `requests`
-  - ``resources.requests.cpu`` -> `requests.cpu`
-  - ``resources.requests.memory`` -> `requests.memory`
-
-## 3) Missing headings likely not schema-derived (manual/docs narrative)
-
-### `addons.md`
-- Matched newdocs file: `addons/index.md`
-- Match type: `fuzzy` (score: `0.82`)
-- Matched schema file: `addons/addons.json` (score: `0.98`)
-- Missing non-schema headings: **2**
-  - ``addons.$addon``
-  - ``addons.$addon.enabled``
-
-### `certificate.md`
-- Matched newdocs file: `certificate.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `certificate.json` (score: `1.35`)
-- Missing non-schema headings: **11**
-  - `Naming scheme`
-  - ``$name``
-  - ``enabled``
-  - ``namespace``
-  - ``labels``
-  - ``annotations``
-  - ``certificateIssuer``
-  - ``hosts``
-  - ``certificateSecretTemplate``
-  - ``labels``
-  - ``annotations``
-
-### `cnpg/cluster.md`
-- Matched newdocs file: `cnpg/cluster/index.md`
-- Match type: `fuzzy` (score: `0.71`)
-- Matched schema file: `cnpg/cluster.json` (score: `1.50`)
-- Missing non-schema headings: **12**
-  - ``labels``
-  - ``annotations``
-  - ``env``
-  - ``envFrom``
-  - ``instances``
-  - ``singleNode``
-  - ``logLevel``
-  - ``primaryUpdateMethod``
-  - ``primaryUpdateStrategy``
-  - ``certificates``
-  - ``postgresql``
-  - ``initdb``
-
-### `cnpg/cnpg.md`
-- Matched newdocs file: `cnpg/index.md`
-- Match type: `fuzzy` (score: `0.78`)
-- Matched schema file: `cnpg/cnpg.json` (score: `1.40`)
-- Missing non-schema headings: **18**
-  - `Naming scheme`
-  - ``$name``
-  - ``enabled``
-  - ``primary``
-  - ``hibernate``
-  - ``labels``
-  - ``annotations``
-  - ``type``
-  - ``pgVersion``
-  - ``mode``
-  - ``database``
-  - ``user``
-  - ``password``
-  - ``cluster``
-  - ``monitoring``
-  - ``recovery``
-  - ``backups``
-  - ``pooler``
-
-### `configmap.md`
-- Matched newdocs file: `configmap.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `configmap.json` (score: `1.35`)
-- Missing non-schema headings: **7**
-  - `Naming scheme`
-  - ``$name``
-  - ``enabled``
-  - ``namespace``
-  - ``labels``
-  - ``annotations``
-  - ``data``
-
-### `container/args.md`
-- Matched newdocs file: `workload/podSpec/containers/args.md`
-- Match type: `fuzzy` (score: `0.97`)
-- Matched schema file: `workload/podSpec/containers/args.json` (score: `1.01`)
-- Missing non-schema headings: **4**
-  - ``args``
-  - `Or`
-  - ``extraArgs``
-  - `Or`
-
-### `container/command.md`
-- Matched newdocs file: `workload/podSpec/containers/command.md`
-- Match type: `fuzzy` (score: `1.01`)
-- Matched schema file: `workload/podSpec/containers/command.json` (score: `1.05`)
-- Missing non-schema headings: **1**
-  - ``command``
-
-### `container/env.md`
-- Matched newdocs file: `addons/gluetun/container/env.md`
-- Match type: `fuzzy` (score: `0.99`)
-- Matched schema file: `addons/gluetun/container/env.json` (score: `1.03`)
-- Missing non-schema headings: **13**
-  - ``env``
-  - ``env.$key``
-  - ``env.$key.configMapKeyRef``
-  - ``env.$key.configMapKeyRef.name``
-  - ``env.$key.configMapKeyRef.key``
-  - ``env.$key.configMapKeyRef.expandObjectName``
-  - ``env.$key.secretKeyRef``
-  - ``env.$key.secretKeyRef.name``
-  - ``env.$key.secretKeyRef.key``
-  - ``env.$key.secretKeyRef.expandObjectName``
-  - ``env.$key.fieldRef``
-  - ``env.$key.fieldRef.fieldPath``
-  - ``env.$key.fieldRef.apiVersion``
-
-### `container/envFrom.md`
-- Matched newdocs file: `workload/podSpec/containers/envFrom.md`
-- Match type: `fuzzy` (score: `1.01`)
-- Matched schema file: `workload/podSpec/containers/envFrom.json` (score: `1.05`)
-- Missing non-schema headings: **7**
-  - ``envFrom``
-  - ``envFrom.secretRef``
-  - ``envFrom.secretRef.name``
-  - ``envFrom.secretRef.expandObjectName``
-  - ``envFrom.configMapRef``
-  - ``envFrom.configMapRef.name``
-  - ``envFrom.configMapRef.expandObjectName``
-
-### `container/fixedEnv.md`
-- Matched newdocs file: `workload/podSpec/containers/fixedEnv.md`
-- Match type: `fuzzy` (score: `1.03`)
-- Matched schema file: `workload/podSpec/containers/fixedEnv.json` (score: `1.07`)
-- Missing non-schema headings: **1**
-  - ``fixedEnv``
-
-### `container/index.md`
-- Matched newdocs file: `workload/container/index.md`
-- Match type: `fuzzy` (score: `1.22`)
-- Matched schema file: `addons/gluetun/container/env.json` (score: `0.74`)
-- Missing non-schema headings: **19**
-  - `Notes`
-  - ``enabled``
-  - ``type``
-  - ``imageSelector``
-  - ``primary``
-  - ``stdin``
-  - ``tty``
-  - ``command``
-  - ``args``
-  - ``extraArgs``
-  - ``termination``
-  - ``lifecycle``
-  - ``probes``
-  - ``resources``
-  - ``securityContext``
-  - ``envFrom``
-  - ``fixedEnv``
-  - ``env``
-  - `Full Examples`
-
-### `container/lifecycle.md`
-- Matched newdocs file: `workload/podSpec/containers/lifecycle.md`
-- Match type: `fuzzy` (score: `1.04`)
-- Matched schema file: `workload/podSpec/containers/lifecycle.json` (score: `1.08`)
-- Missing non-schema headings: **3**
-  - ``lifecycle``
-  - ``lifecycle.$hook.type``
-  - ``lifecycle.$hook.command``
-
-### `container/probes.md`
-- Matched newdocs file: `workload/podSpec/containers/probes.md`
-- Match type: `fuzzy` (score: `1.00`)
-- Matched schema file: `workload/podSpec/containers/probes.json` (score: `1.04`)
-- Missing non-schema headings: **4**
-  - ``probes``
-  - ``probes.$probe.enabled``
-  - ``probes.$probe.type``
-  - ``probes.$probe.command``
-
-### `container/resources.md`
-- Matched newdocs file: `workload/podSpec/containers/resources.md`
-- Match type: `fuzzy` (score: `1.04`)
-- Matched schema file: `workload/podSpec/containers/resources.json` (score: `1.08`)
-- Missing non-schema headings: **5**
-  - `Notes`
-  - ``resources``
-  - ``resources.limits."gpu.intel.com/i915"``
-  - ``resources.limits."nvidia.com/gpu"``
-  - ``resources.limits."amd.com/gpu"``
-
-### `container/securityContext.md`
-- Matched newdocs file: `workload/podSpec/containers/securityContext.md`
-- Match type: `fuzzy` (score: `1.10`)
-- Matched schema file: `workload/podSpec/containers/securityContext.json` (score: `1.14`)
-- Missing non-schema headings: **2**
-  - ``securityContext``
-  - ``securityContext.seccompProfile.type``
-
-### `container/termination.md`
-- Matched newdocs file: `workload/container/termination.md`
-- Match type: `fuzzy` (score: `1.27`)
-- Matched schema file: `workload/container/termination.json` (score: `1.26`)
-- Missing non-schema headings: **1**
-  - ``termination``
-
-### `containerOptions.md`
-- Matched newdocs file: `containerOptions.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `containerOptions.json` (score: `1.35`)
-- Missing non-schema headings: **2**
-  - `Defaults`
-  - ``NVIDIA_CAPS``
-
-### `credentials.md`
-- Matched newdocs file: `credentials.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `credentials.json` (score: `1.35`)
-- Missing non-schema headings: **15**
-  - `Naming scheme`
-  - ``$name``
-  - ``type``
-  - ``url``
-  - ``region``
-  - ``customCASecretRef``
-  - ``customCASecretRef.name``
-  - ``customCASecretRef.key``
-  - ``customCASecretRef.expandObjectName``
-  - ``customCA``
-  - ``path``
-  - ``bucket``
-  - ``accessKey``
-  - ``secretKey``
-  - ``encrKey``
-
-### `fallbackDefaults.md`
-- Matched newdocs file: `global/fallbackDefaults.md`
-- Match type: `fuzzy` (score: `1.22`)
-- Matched schema file: `global/fallbackDefaults.json` (score: `1.12`)
-- Missing non-schema headings: **12**
-  - `Defaults`
-  - ``probeType``
-  - ``serviceProtocol``
-  - ``serviceType``
-  - ``storageClass``
-  - ``persistenceType``
-  - ``pvcRetain``
-  - ``pvcSize``
-  - ``vctSize``
-  - ``accessModes``
-  - ``probeTimeouts``
-  - ``topologyKey``
-
-### `global.md`
-- Matched newdocs file: `global/index.md`
-- Match type: `fuzzy` (score: `0.82`)
-- Matched schema file: `global/global.json` (score: `0.98`)
-- Missing non-schema headings: **8**
-  - `Defaults`
-  - ``labels``
-  - ``annotations``
-  - ``namespace``
-  - ``minNodePort``
-  - ``stopAll``
-  - ``metallb``
-  - ``traefik``
-
-### `hpa.md`
-- Matched newdocs file: `hpa.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `hpa.json` (score: `1.35`)
-- Missing non-schema headings: **7**
-  - ``$name``
-  - ``enabled``
-  - ``targetSelector``
-  - ``minReplicas``
-  - ``maxReplicas``
-  - ``metrics``
-  - ``behavior``
-
-### `imagePullSecret.md`
-- Matched newdocs file: `imagePullSecret.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `imagePullSecret.json` (score: `1.35`)
-- Missing non-schema headings: **15**
-  - `Naming scheme`
-  - `Target Selector`
-  - ``$name``
-  - ``enabled``
-  - ``existingSecret``
-  - ``namespace``
-  - ``labels``
-  - ``annotations``
-  - ``targetSelectAll``
-  - ``targetSelector``
-  - ``data``
-  - ``data.registry``
-  - ``data.username``
-  - ``data.password``
-  - ``data.email``
-
-### `index.md`
-- Matched newdocs file: `cnpg/index.md`
-- Match type: `fuzzy` (score: `1.07`)
-- Matched schema file: `persistence/pvc-vct/index.json` (score: `0.61`)
-- Missing non-schema headings: **22**
-  - `Notes`
-  - `Schema Validation (Dev)`
-  - ``global``
-  - ``fallbackDefaults``
-  - ``extraTpl``
-  - ``operator``
-  - ``operator.register``
-  - ``operator.verify``
-  - ``operator.verify.enabled``
-  - ``operator.verify.additionalsystem``
-  - ``podOptions``
-  - ``containerOptions``
-  - ``TZ``
-  - ``namespace``
-  - ``resources``
-  - ``securityContext``
-  - `Images`
-  - ``image``
-  - ``image.repository``
-  - ``image.tag``
-  - ``image.pullPolicy``
-  - `Additional Documentation`
-
-### `ingress/certManager.md`
-- Matched newdocs file: `ingress/certManager.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `ingress/certManager.json` (score: `1.50`)
-- Missing non-schema headings: **2**
-  - ``enabled``
-  - ``certificateIssuer``
-
-### `ingress/homepage.md`
-- Matched newdocs file: `ingress/integrations/homepage.md`
-- Match type: `fuzzy` (score: `1.16`)
-- Matched schema file: `ingress/integrations/homepage.json` (score: `1.15`)
-- Missing non-schema headings: **13**
-  - ``enabled``
-  - ``name``
-  - ``description``
-  - ``group``
-  - ``icon``
-  - ``href``
-  - ``weight``
-  - ``podSelector``
-  - ``widget``
-  - ``widget.enabled``
-  - ``widget.type``
-  - ``widget.customkv[].key``
-  - ``widget.customkv[].value``
-
-### `ingress/index.md`
-- Matched newdocs file: `ingress/index.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `ingress/ingress.json` (score: `0.99`)
-- Missing non-schema headings: **30**
-  - `Naming scheme`
-  - `Target Selector`
-  - ``$name``
-  - ``enabled``
-  - ``primary``
-  - ``expandObjectName``
-  - ``required``
-  - ``namespace``
-  - ``labels``
-  - ``annotations``
-  - ``ingressClassName``
-  - ``targetSelector``
-  - ``hosts``
-  - ``hosts[].host``
-  - ``hosts[].paths``
-  - ``hosts[].paths[].path``
-  - ``hosts[].paths[].pathType``
-  - ``hosts[].paths[].overrideService``
-  - ``hosts[].paths[].overrideService.name``
-  - ``hosts[].paths[].overrideService.expandObjectName``
-  - ``hosts[].paths[].overrideService.port``
-  - ``tls``
-  - ``tls[].hosts``
-  - ``tls[].secretName``
-  - ``tls[].certificateIssuer``
-  - ``tls[].clusterIssuer``
-  - ``integrations``
-  - ``integrations.certManager``
-  - ``integrations.traefik``
-  - ``integrations.homepage``
-
-### `ingress/traefik.md`
-- Matched newdocs file: `ingress/traefik.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `ingress/traefik.json` (score: `1.50`)
-- Missing non-schema headings: **8**
-  - ``enabled``
-  - ``entrypoints``
-  - ``forceTLS``
-  - ``middlewares``
-  - ``middlewares[].name``
-  - ``middlewares[].namespace``
-  - ``middlewares[].expandObjectName``
-  - ``chartMiddlewares``
-
-### `metrics.md`
-- Matched newdocs file: `metrics.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `metrics.json` (score: `1.35`)
-- Missing non-schema headings: **8**
-  - `Naming scheme`
-  - ``$name``
-  - ``enabled``
-  - ``type``
-  - ``targetSelector``
-  - ``selector``
-  - ``endpoints``
-  - ``prometheusRule``
-
-### `middlewares/index.md`
-- Matched newdocs file: `ingressMiddlewares/index.md`
-- Match type: `fuzzy` (score: `1.13`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/index.json` (score: `0.96`)
-- Missing non-schema headings: **10**
-  - `Naming scheme`
-  - ``$provider``
-  - ``$name``
-  - ``enabled``
-  - ``expandObjectName``
-  - ``namespace``
-  - ``labels``
-  - ``annotations``
-  - ``data``
-  - ``type``
-
-### `middlewares/traefik/add-prefix.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/add-prefix.md`
-- Match type: `fuzzy` (score: `1.23`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/add-prefix.json` (score: `1.25`)
-- Missing non-schema headings: **1**
-  - ``prefix``
-
-### `middlewares/traefik/basic-auth.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/basic-auth.md`
-- Match type: `fuzzy` (score: `1.23`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/basic-auth.json` (score: `1.25`)
-- Missing non-schema headings: **4**
-  - ``users``
-  - ``users[].username``
-  - ``users[].password``
-  - ``secret``
-
-### `middlewares/traefik/buffering.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/buffering.md`
-- Match type: `fuzzy` (score: `1.23`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/buffering.json` (score: `1.25`)
-- Missing non-schema headings: **5**
-  - ``maxRequestBodyBytes``
-  - ``memRequestBodyBytes``
-  - ``maxResponseBodyBytes``
-  - ``memResponseBodyBytes``
-  - ``retryExpression``
-
-### `middlewares/traefik/chain.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/chain.md`
-- Match type: `fuzzy` (score: `1.20`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/chain.json` (score: `1.22`)
-- Missing non-schema headings: **3**
-  - ``middlewares``
-  - ``middlewares[].name``
-  - ``middlewares[].expandObjectName``
-
-### `middlewares/traefik/forward-auth.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/forward-auth.md`
-- Match type: `fuzzy` (score: `1.25`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/forward-auth.json` (score: `1.27`)
-- Missing non-schema headings: **7**
-  - ``address``
-  - ``authResponseHeadersRegex``
-  - ``trustForwardHeader``
-  - ``authResponseHeaders``
-  - ``authRequestHeaders``
-  - ``tls``
-  - ``tls.insecureSkipVerify``
-
-### `middlewares/traefik/headers.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/headers.md`
-- Match type: `fuzzy` (score: `1.22`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/headers.json` (score: `1.24`)
-- Missing non-schema headings: **28**
-  - ``customRequestHeaders``
-  - ``customResponseHeaders``
-  - ``accessControlAllowCredentials``
-  - ``accessControlAllowHeaders``
-  - ``accessControlAllowMethods``
-  - ``accessControlAllowOriginList``
-  - ``accessControlAllowOriginListRegex``
-  - ``accessControlExposeHeaders``
-  - ``accessControlMaxAge``
-  - ``addVaryHeader``
-  - ``allowedHosts``
-  - ``hostsProxyHeaders``
-  - ``sslProxyHeaders``
-  - ``stsSeconds``
-  - ``stsIncludeSubdomains``
-  - ``stsPreload``
-  - ``forceSTSHeader``
-  - ``frameDeny``
-  - ``customFrameOptionsValue``
-  - ``contentTypeNosniff``
-  - ``browserXssFilter``
-  - ``customBrowserXSSValue``
-  - ``contentSecurityPolicy``
-  - ``contentSecurityPolicyReportOnly``
-  - ``publicKey``
-  - ``referrerPolicy``
-  - ``permissionsPolicy``
-  - ``isDevelopment``
-
-### `middlewares/traefik/index.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/index.md`
-- Match type: `fuzzy` (score: `1.20`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/index.json` (score: `1.22`)
-- Missing non-schema headings: **1**
-  - ``type``
-
-### `middlewares/traefik/ip-allow-list.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/ip-allow-list.md`
-- Match type: `fuzzy` (score: `1.25`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/ip-allow-list.json` (score: `1.27`)
-- Missing non-schema headings: **4**
-  - ``sourceRange``
-  - ``ipStrategy``
-  - ``ipStrategy.depth``
-  - ``ipStrategy.excludedIPs``
-
-### `middlewares/traefik/plugin-bouncer.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/plugin-bouncer.md`
-- Match type: `fuzzy` (score: `1.26`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/plugin-bouncer.json` (score: `1.28`)
-- Missing non-schema headings: **36**
-  - ``pluginName``
-  - ``enabled``
-  - ``logLevel``
-  - ``updateIntervalSeconds``
-  - ``updateMaxFailure``
-  - ``defaultDecisionSeconds``
-  - ``httpTimeoutSeconds``
-  - ``crowdsecMode``
-  - ``crowdsecAppsecEnabled``
-  - ``crowdsecAppsecHost``
-  - ``crowdsecAppsecFailureBlock``
-  - ``crowdsecAppsecUnreachableBlock``
-  - ``crowdsecLapiKey``
-  - ``crowdsecLapiHost``
-  - ``crowdsecLapiScheme``
-  - ``crowdsecLapiTLSInsecureVerify``
-  - ``crowdsecCapiMachineId``
-  - ``crowdsecCapiPassword``
-  - ``crowdsecCapiScenarios``
-  - ``forwardedHeadersTrustedIPs``
-  - ``clientTrustedIPs``
-  - ``forwardedHeadersCustomName``
-  - ``remediationHeadersCustomName``
-  - ``redisCacheEnabled``
-  - ``redisCacheHost``
-  - ``redisCachePassword``
-  - ``redisCacheDatabase``
-  - ``crowdsecLapiTLSCertificateAuthority``
-  - ``crowdsecLapiTLSCertificateBouncer``
-  - ``crowdsecLapiTLSCertificateBouncerKey``
-  - ``captchaProvider``
-  - ``captchaSiteKey``
-  - ``captchaSecretKey``
-  - ``captchaGracePeriodSeconds``
-  - ``captchaHTMLFilePath``
-  - ``banHTMLFilePath``
-
-### `middlewares/traefik/plugin-geoblock.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/plugin-geoblock.md`
-- Match type: `fuzzy` (score: `1.26`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/plugin-geoblock.json` (score: `1.28`)
-- Missing non-schema headings: **15**
-  - ``pluginName``
-  - ``api``
-  - ``allowLocalRequests``
-  - ``logLocalRequests``
-  - ``logAllowedRequests``
-  - ``logApiRequests``
-  - ``apiTimeoutMs``
-  - ``cacheSize``
-  - ``forceMonthlyUpdate``
-  - ``allowUnknownCountries``
-  - ``unknownCountryApiResponse``
-  - ``blackListMode``
-  - ``silentStartUp``
-  - ``addCountryHeader``
-  - ``countries``
-
-### `middlewares/traefik/plugin-mod-security.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/plugin-mod-security.md`
-- Match type: `fuzzy` (score: `1.28`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/plugin-mod-security.json` (score: `1.30`)
-- Missing non-schema headings: **4**
-  - ``pluginName``
-  - ``modSecurityUrl``
-  - ``timeoutMillis``
-  - ``maxBodySize``
-
-### `middlewares/traefik/plugin-real-ip.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/plugin-real-ip.md`
-- Match type: `fuzzy` (score: `1.25`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/plugin-real-ip.json` (score: `1.27`)
-- Missing non-schema headings: **2**
-  - ``pluginName``
-  - ``excludednets``
-
-### `middlewares/traefik/plugin-rewrite-response-headers.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/plugin-rewrite-response-headers.md`
-- Match type: `fuzzy` (score: `1.31`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/plugin-rewrite-response-headers.json` (score: `1.33`)
-- Missing non-schema headings: **5**
-  - ``pluginName``
-  - ``rewrites``
-  - ``rewrites[].header``
-  - ``rewrites[].regex``
-  - ``rewrites[].replacement``
-
-### `middlewares/traefik/plugin-theme-park.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/plugin-theme-park.md`
-- Match type: `fuzzy` (score: `1.27`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/plugin-theme-park.json` (score: `1.29`)
-- Missing non-schema headings: **5**
-  - ``pluginName``
-  - ``app``
-  - ``theme``
-  - ``baseUrl``
-  - ``addons``
-
-### `middlewares/traefik/rate-limit.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/rate-limit.md`
-- Match type: `fuzzy` (score: `1.23`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/rate-limit.json` (score: `1.25`)
-- Missing non-schema headings: **2**
-  - ``average``
-  - ``burst``
-
-### `middlewares/traefik/redirect-regex.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/redirect-regex.md`
-- Match type: `fuzzy` (score: `1.26`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/redirect-regex.json` (score: `1.28`)
-- Missing non-schema headings: **3**
-  - ``regex``
-  - ``replacement``
-  - ``permanent``
-
-### `middlewares/traefik/redirect-scheme.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/redirect-scheme.md`
-- Match type: `fuzzy` (score: `1.26`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/redirect-scheme.json` (score: `1.28`)
-- Missing non-schema headings: **2**
-  - ``scheme``
-  - ``permanent``
-
-### `middlewares/traefik/replace-path-regex.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/replace-path-regex.md`
-- Match type: `fuzzy` (score: `1.27`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/replace-path-regex.json` (score: `1.29`)
-- Missing non-schema headings: **2**
-  - ``regex``
-  - ``replacement``
-
-### `middlewares/traefik/replace-path.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/replace-path.md`
-- Match type: `fuzzy` (score: `1.25`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/replace-path.json` (score: `1.27`)
-- Missing non-schema headings: **1**
-  - ``path``
-
-### `middlewares/traefik/retry.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/retry.md`
-- Match type: `fuzzy` (score: `1.20`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/retry.json` (score: `1.22`)
-- Missing non-schema headings: **2**
-  - ``attempts``
-  - ``initialInterval``
-
-### `middlewares/traefik/strip-prefix-regex.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/strip-prefix-regex.md`
-- Match type: `fuzzy` (score: `1.27`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/strip-prefix-regex.json` (score: `1.29`)
-- Missing non-schema headings: **1**
-  - ``regex``
-
-### `middlewares/traefik/strip-prefix.md`
-- Matched newdocs file: `ingressMiddlewares/middlewares/traefik/strip-prefix.md`
-- Match type: `fuzzy` (score: `1.25`)
-- Matched schema file: `ingressMiddlewares/middlewares/traefik/strip-prefix.json` (score: `1.27`)
-- Missing non-schema headings: **2**
-  - ``prefix``
-  - ``forceSlash``
-
-### `networkpolicy.md`
-- Matched newdocs file: `networkpolicy.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `networkpolicy.json` (score: `1.35`)
-- Missing non-schema headings: **34**
-  - `Naming scheme`
-  - ``$name``
-  - ``enabled``
-  - ``primary``
-  - ``expandObjectName``
-  - ``namespace``
-  - ``labels``
-  - ``annotations``
-  - `Pod Selection`
-  - ``podSelector``
-  - `Default Behavior`
-  - ``matchLabels``
-  - ``matchExpressions``
-  - ``targetSelector``
-  - ``targetAllPods``
-  - `Policy Configuration`
-  - ``policyTypes``
-  - `Ingress Rules`
-  - ``ingress``
-  - ``from``
-  - `Pod Selector`
-  - `Namespace Selector`
-  - `Combined Pod and Namespace Selector`
-  - `IP Block`
-  - ``ports``
-  - `Port Ranges (Kubernetes 1.25+)`
-  - `Named Ports`
-  - `Egress Rules`
-  - ``egress``
-  - ``to``
-  - `Pod Selector`
-  - `Namespace Selector`
-  - `IP Block`
-  - ``ports``
-
-### `notes.md`
-- Matched newdocs file: `notes.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `notes.json` (score: `1.35`)
-- Missing non-schema headings: **6**
-  - ``header``
-  - `Welcome to TrueCharts!`
-  - ``custom``
-  - ``footer``
-  - `Documentation`
-  - `Bug reports`
-
-### `persistence/configmap.md`
-- Matched newdocs file: `persistence/configmap.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `persistence/configmap.json` (score: `1.50`)
-- Missing non-schema headings: **7**
-  - ``objectName``
-  - ``expandObjectName``
-  - ``optional``
-  - ``defaultMode``
-  - ``items``
-  - ``items[].key``
-  - ``items[].path``
-
-### `persistence/device.md`
-- Matched newdocs file: `persistence/device.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `persistence/device.json` (score: `1.50`)
-- Missing non-schema headings: **3**
-  - `Notes`
-  - ``hostPath``
-  - ``hostPathType``
-
-### `persistence/emptyDir.md`
-- Matched newdocs file: `persistence/emptyDir.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `persistence/emptyDir.json` (score: `1.50`)
-- Missing non-schema headings: **2**
-  - ``size``
-  - ``medium``
-
-### `persistence/hostPath.md`
-- Matched newdocs file: `persistence/hostPath.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `persistence/hostPath.json` (score: `1.50`)
-- Missing non-schema headings: **2**
-  - ``hostPath``
-  - ``hostPathType``
-
-### `persistence/index.md`
-- Matched newdocs file: `persistence/index.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `persistence/pvc-vct/index.json` (score: `1.27`)
-- Missing non-schema headings: **21**
-  - `Naming scheme`
-  - `Target Selector`
-  - ``$name``
-  - ``enabled``
-  - ``type``
-  - ``mountPath``
-  - ``mountPropagation``
-  - ``subPath``
-  - ``readOnly``
-  - ``targetSelectAll``
-  - ``targetSelector``
-  - ``targetSelector.$podName``
-  - ``targetSelector.$podName.$containerName``
-  - ``targetSelector.$podName.$containerName.mountPath``
-  - ``targetSelector.$podName.$containerName.mountPropagation``
-  - ``targetSelector.$podName.$containerName.subPath``
-  - ``targetSelector.$podName.$containerName.readOnly``
-  - `Basic Examples`
-  - `Example of a shared emptyDir volume`
-  - `Example of a volume mounted to a specific container with a specific mountPath`
-  - `Example of a volume mounted to a specific container using the default mountPath`
-
-### `persistence/iscsi.md`
-- Matched newdocs file: `persistence/iscsi.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `persistence/iscsi.json` (score: `1.50`)
-- Missing non-schema headings: **16**
-  - ``iscsi``
-  - ``fsType``
-  - ``targetPortal``
-  - ``iqn``
-  - ``lun``
-  - ``initiatorName``
-  - ``iscsiInterface``
-  - ``portals``
-  - ``authDiscovery``
-  - ``authDiscovery.username``
-  - ``authDiscovery.password``
-  - ``authDiscovery.usernameInitiator``
-  - ``authDiscovery.passwordInitiator``
-  - ``authSession``
-  - ``authSession.username``
-  - ``authSession.password``
-
-### `persistence/nfs.md`
-- Matched newdocs file: `persistence/nfs.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `persistence/nfs.json` (score: `1.50`)
-- Missing non-schema headings: **2**
-  - ``path``
-  - ``server``
-
-### `persistence/pvc-vct/index.md`
-- Matched newdocs file: `persistence/pvc-vct/index.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `persistence/pvc-vct/index.json` (score: `1.56`)
-- Missing non-schema headings: **23**
-  - ``labels``
-  - ``annotations``
-  - ``namespace``
-  - ``retain``
-  - ``accessModes``
-  - ``volumeName``
-  - ``existingClaim``
-  - ``size``
-  - ``storageClass``
-  - ``dataSource``
-  - ``dataSource.kind``
-  - ``dataSource.name``
-  - ``static``
-  - ``static.mode``
-  - ``mountOptions``
-  - ``mountOptions[].key``
-  - ``mountOptions[].value``
-  - ``volumeSnapshots``
-  - ``volumeSnapshots[].name``
-  - ``volumeSnapshots[].enabled``
-  - ``volumeSnapshots[].labels``
-  - ``volumeSnapshots[].annotations``
-  - ``volumeSnapshots[].volumeSnapshotClassName``
-
-### `persistence/pvc-vct/static-custom.md`
-- Matched newdocs file: `persistence/pvc-vct/static-custom.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `persistence/pvc-vct/static-custom.json` (score: `1.56`)
-- Missing non-schema headings: **2**
-  - ``driver``
-  - ``provisioner``
-
-### `persistence/pvc-vct/static-nfs.md`
-- Matched newdocs file: `persistence/pvc-vct/static-nfs.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `persistence/pvc-vct/static-nfs.json` (score: `1.56`)
-- Missing non-schema headings: **2**
-  - ``server``
-  - ``share``
-
-### `persistence/pvc-vct/static-smb.md`
-- Matched newdocs file: `persistence/pvc-vct/static-smb.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `persistence/pvc-vct/static-smb.json` (score: `1.56`)
-- Missing non-schema headings: **5**
-  - ``server``
-  - ``share``
-  - ``user``
-  - ``password``
-  - ``domain``
-
-### `persistence/secret.md`
-- Matched newdocs file: `persistence/secret.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `persistence/secret.json` (score: `1.50`)
-- Missing non-schema headings: **7**
-  - ``objectName``
-  - ``expandObjectName``
-  - ``optional``
-  - ``defaultMode``
-  - ``items``
-  - ``items.key``
-  - ``items.path``
-
-### `podDisruptionBudget.md`
-- Matched newdocs file: `podDisruptionBudget.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `podDisruptionBudget.json` (score: `1.35`)
-- Missing non-schema headings: **9**
-  - `Naming scheme`
-  - ``$name``
-  - ``enabled``
-  - ``namespace``
-  - ``labels``
-  - ``annotations``
-  - ``minAvailable``
-  - ``maxUnavailable``
-  - ``unhealthyPodEvictionPolicy``
-
-### `podOptions.md`
-- Matched newdocs file: `podOptions/index.md`
-- Match type: `fuzzy` (score: `0.92`)
-- Matched schema file: `podOptions/podOptions.json` (score: `1.00`)
-- Missing non-schema headings: **20**
-  - `Defaults`
-  - ``enableServiceLinks``
-  - ``hostNetwork``
-  - ``hostPID``
-  - ``hostIPC``
-  - ``hostUsers``
-  - ``shareProcessNamespace``
-  - ``restartPolicy``
-  - ``dnsPolicy``
-  - ``dnsConfig``
-  - ``hostAliases``
-  - ``nodeSelector``
-  - ``defaultSpread``
-  - ``topologySpreadConstraints``
-  - ``tolerations``
-  - ``schedulerName``
-  - ``priorityClassName``
-  - ``runtimeClassName``
-  - ``automountServiceAccountToken``
-  - ``terminationGracePeriodSeconds``
-
-### `priorityClass.md`
-- Matched newdocs file: `priorityClass.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `priorityClass.json` (score: `1.35`)
-- Missing non-schema headings: **10**
-  - `Naming scheme`
-  - ``$name``
-  - ``enabled``
-  - ``namespace``
-  - ``labels``
-  - ``annotations``
-  - ``value``
-  - ``globalDefault``
-  - ``description``
-  - ``preemptionPolicy``
-
-### `rbac.md`
-- Matched newdocs file: `rbac.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `rbac.json` (score: `1.35`)
-- Missing non-schema headings: **20**
-  - `Naming scheme`
-  - `Target Selector`
-  - ``$name``
-  - ``enabled``
-  - ``primary``
-  - ``namespace``
-  - ``clusterWide``
-  - ``labels``
-  - ``annotations``
-  - ``allServiceAccounts``
-  - ``serviceAccounts``
-  - ``rules``
-  - ``rules[].apiGroups``
-  - ``rules[].resources``
-  - ``rules[].resourceNames``
-  - ``rules[].verbs``
-  - ``subjects``
-  - ``subjects[].kind``
-  - ``subjects[].name``
-  - ``subjects[].apiGroup``
-
-### `resources.md`
-- Matched newdocs file: `workload/podSpec/containers/resources.md`
-- Match type: `fuzzy` (score: `0.63`)
-- Matched schema file: `workload/podSpec/containers/resources.json` (score: `0.64`)
-- Missing non-schema headings: **4**
-  - `Defaults`
-  - ``resources.requests."gpu.intel.com/i915"``
-  - ``resources.limits."nvidia.com/gpu"``
-  - ``resources.limits."amd.com/gpu"``
-
-### `route.md`
-- Matched newdocs file: `route.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `route.json` (score: `1.35`)
-- Missing non-schema headings: **7**
-  - `Naming scheme`
-  - ``$name``
-  - ``enabled``
-  - ``kind``
-  - ``parentRefs``
-  - ``hostnames``
-  - ``rules``
-
-### `secret.md`
-- Matched newdocs file: `secret.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `secret.json` (score: `1.35`)
-- Missing non-schema headings: **8**
-  - `Naming scheme`
-  - ``$name``
-  - ``enabled``
-  - ``namespace``
-  - ``labels``
-  - ``annotations``
-  - ``type``
-  - ``data``
-
-### `securityContext.md`
-- Matched newdocs file: `workload/podSpec/containers/securityContext.md`
-- Match type: `fuzzy` (score: `0.76`)
-- Matched schema file: `workload/podSpec/containers/securityContext.json` (score: `0.77`)
-- Missing non-schema headings: **21**
-  - `Defaults`
-  - ``securityContext.container``
-  - ``securityContext.container.PUID``
-  - ``securityContext.container.UMASK``
-  - ``securityContext.container.runAsNonRoot``
-  - ``securityContext.container.runAsUser``
-  - ``securityContext.container.runAsGroup``
-  - ``securityContext.container.readOnlyRootFilesystem``
-  - ``securityContext.container.allowPrivilegeEscalation``
-  - ``securityContext.container.privileged``
-  - ``securityContext.container.seccompProfile``
-  - ``securityContext.container.seccompProfile.type``
-  - ``securityContext.container.seccompProfile.profile``
-  - ``securityContext.container.capabilities``
-  - ``securityContext.container.capabilities.add``
-  - ``securityContext.container.capabilities.drop``
-  - ``securityContext.pod``
-  - ``securityContext.pod.fsGroup``
-  - ``securityContext.pod.fsGroupChangePolicy``
-  - ``securityContext.pod.supplementalGroups``
-  - ``securityContext.pod.sysctls``
-
-### `service/ExternalIP.md`
-- Matched newdocs file: `service/ExternalIP.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `service/ExternalIP.json` (score: `1.50`)
-- Missing non-schema headings: **4**
-  - ``externalIP``
-  - ``useSlice``
-  - ``addressType``
-  - ``appProtocol``
-
-### `service/ExternalName.md`
-- Matched newdocs file: `service/ExternalName.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `service/ExternalName.json` (score: `1.50`)
-- Missing non-schema headings: **1**
-  - ``externalName``
-
-### `service/LoadBalancer.md`
-- Matched newdocs file: `service/LoadBalancer.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `service/LoadBalancer.json` (score: `1.50`)
-- Missing non-schema headings: **4**
-  - ``sharedKey``
-  - ``loadBalancerIP``
-  - ``loadBalancerIPs``
-  - ``loadBalancerSourceRanges``
-
-### `service/NodePort.md`
-- Matched newdocs file: `service/NodePort.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `service/NodePort.json` (score: `1.50`)
-- Missing non-schema headings: **1**
-  - ``ports.$port-name.nodePort``
-
-### `service/index.md`
-- Matched newdocs file: `service/index.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `service/NodePort.json` (score: `0.93`)
-- Missing non-schema headings: **21**
-  - `Naming scheme`
-  - `Target Selector`
-  - ``$name``
-  - ``enabled``
-  - ``namespace``
-  - ``labels``
-  - ``annotations``
-  - ``type``
-  - ``expandObjectName``
-  - ``clusterIP``
-  - ``ipFamilyPolicy``
-  - ``ipFamilies``
-  - ``sessionAffinity``
-  - ``sessionAffinityConfig.clientIP.timeoutSeconds``
-  - ``externalIPs``
-  - ``externalTrafficPolicy``
-  - ``publishNotReadyAddresses``
-  - ``targetSelector``
-  - ``ports``
-  - ``integrations``
-  - ``integrations.traefik``
-
-### `service/integrations/traefik.md`
-- Matched newdocs file: `service/integrations/traefik.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `service/integrations/traefik.json` (score: `1.56`)
-- Missing non-schema headings: **11**
-  - ``enabled``
-  - ``forceTLS``
-  - ``insecureSkipVerify``
-  - ``serverName``
-  - ``rootCAs``
-  - ``rootCAs.secretRef``
-  - ``rootCAs.secretRef.name``
-  - ``rootCAs.secretRef.expandObjectName``
-  - ``rootCAs.configMapRef``
-  - ``rootCAs.configMapRef.name``
-  - ``rootCAs.configMapRef.expandObjectName``
-
-### `service/ports.md`
-- Matched newdocs file: `service/ports.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `service/ports.json` (score: `1.50`)
-- Missing non-schema headings: **7**
-  - `Target Selector`
-  - ``$port-name``
-  - ``port``
-  - ``targetPort``
-  - ``protocol``
-  - ``hostPort``
-  - ``targetSelector``
-
-### `serviceAccount.md`
-- Matched newdocs file: `serviceAccount.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `serviceAccount.json` (score: `1.35`)
-- Missing non-schema headings: **10**
-  - `Naming scheme`
-  - `Target Selector`
-  - ``serviceAccount.$name``
-  - ``enabled``
-  - ``primary``
-  - ``namespace``
-  - ``labels``
-  - ``annotations``
-  - ``targetSelectAll``
-  - ``targetSelector``
-
-### `storageClass.md`
-- Matched newdocs file: `storageClass.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `storageClass.json` (score: `1.35`)
-- Missing non-schema headings: **11**
-  - `Naming scheme`
-  - ``$name``
-  - ``enabled``
-  - ``labels``
-  - ``annotations``
-  - ``provisioner``
-  - ``parameters``
-  - ``reclaimPolicy``
-  - ``allowVolumeExpansion``
-  - ``volumeBindingMode``
-  - ``mountOptions``
-
-### `volumeSnapshot.md`
-- Matched newdocs file: `volumeSnapshots.md`
-- Match type: `fuzzy` (score: `1.17`)
-- Matched schema file: `volumeSnapshots.json` (score: `1.17`)
-- Missing non-schema headings: **7**
-  - ``$name``
-  - ``labels``
-  - ``annotations``
-  - ``enabled``
-  - ``source``
-  - ``volumeSnapshotContentName``
-  - ``persistentVolumeClaimName``
-
-### `volumeSnapshotClass.md`
-- Matched newdocs file: `volumeSnapshotClass.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `volumeSnapshotClass.json` (score: `1.35`)
-- Missing non-schema headings: **8**
-  - ``$name``
-  - ``labels``
-  - ``annotations``
-  - ``enabled``
-  - ``isDefault``
-  - ``driver``
-  - ``deletionPolicy``
-  - ``parameters``
-
-### `vpa.md`
-- Matched newdocs file: `vpa.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `vpa.json` (score: `1.35`)
-- Missing non-schema headings: **5**
-  - ``$name``
-  - ``enabled``
-  - ``targetSelector``
-  - ``updatePolicy``
-  - ``resourcePolicy``
-
-### `webhook.md`
-- Matched newdocs file: `webhook.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `webhook.json` (score: `1.35`)
-- Missing non-schema headings: **29**
-  - `Naming scheme`
-  - ``$name``
-  - ``enabled``
-  - ``namespace``
-  - ``labels``
-  - ``annotations``
-  - ``type``
-  - ``webhooks``
-  - ``webhooks[].name``
-  - ``webhooks[].failurePolicy``
-  - ``webhooks[].matchPolicy``
-  - ``webhooks[].sideEffects``
-  - ``webhooks[].reinvocationPolicy``
-  - ``webhooks[].timeoutSeconds``
-  - ``webhooks[].admissionReviewVersions``
-  - ``webhooks[].clientConfig``
-  - ``webhooks[].clientConfig.caBundle``
-  - ``webhooks[].clientConfig.url``
-  - ``webhooks[].clientConfig.service``
-  - ``webhooks[].clientConfig.service.name``
-  - ``webhooks[].clientConfig.service.namespace``
-  - ``webhooks[].clientConfig.service.path``
-  - ``webhooks[].clientConfig.service.port``
-  - ``webhooks[].rules``
-  - ``webhooks[].rules[].scope``
-  - ``webhooks[].rules[].apiGroups``
-  - ``webhooks[].rules[].apiVersions``
-  - ``webhooks[].rules[].operations``
-  - ``webhooks[].rules[].resources``
-
-### `workload/cronjob.md`
-- Matched newdocs file: `workload/cronjob.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `workload/cronjob.json` (score: `1.50`)
-- Missing non-schema headings: **13**
-  - `Notes`
-  - ``schedule``
-  - ``timezone``
-  - ``concurrencyPolicy``
-  - ``failedJobsHistoryLimit``
-  - ``successfulJobsHistoryLimit``
-  - ``startingDeadlineSeconds``
-  - ``completionMode``
-  - ``backoffLimit``
-  - ``completions``
-  - ``parallelism``
-  - ``ttlSecondsAfterFinished``
-  - ``activeDeadlineSeconds``
-
-### `workload/daemonset.md`
-- Matched newdocs file: `workload/daemonset.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `workload/daemonset.json` (score: `1.50`)
-- Missing non-schema headings: **6**
-  - `Notes`
-  - ``revisionHistoryLimit``
-  - ``strategy``
-  - ``rollingUpdate``
-  - ``rollingUpdate.maxUnavailable``
-  - ``rollingUpdate.maxSurge``
-
-### `workload/deployment.md`
-- Matched newdocs file: `workload/deployment.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `workload/deployment.json` (score: `1.50`)
-- Missing non-schema headings: **7**
-  - `Notes`
-  - ``replicas``
-  - ``revisionHistoryLimit``
-  - ``strategy``
-  - ``rollingUpdate``
-  - ``rollingUpdate.maxUnavailable``
-  - ``rollingUpdate.maxSurge``
-
-### `workload/index.md`
-- Matched newdocs file: `workload/index.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `workload/job.json` (score: `0.86`)
-- Missing non-schema headings: **52**
-  - `Naming scheme`
-  - ``$name``
-  - ``enabled``
-  - ``primary``
-  - ``labels``
-  - ``annotations``
-  - ``namespace``
-  - ``type``
-  - ``podSpec``
-  - ``labels``
-  - ``annotations``
-  - ``automountServiceAccountToken``
-  - ``serviceAccountName``
-  - ``hostNetwork``
-  - ``hostPID``
-  - ``hostIPC``
-  - ``hostUsers``
-  - ``shareProcessNamespace``
-  - ``enableServiceLinks``
-  - ``restartPolicy``
-  - ``schedulerName``
-  - ``priorityClassName``
-  - ``hostname``
-  - ``terminationGracePeriodSeconds``
-  - ``nodeSelector``
-  - ``topologySpreadConstraints``
-  - ``hostAliases``
-  - ``ip``
-  - ``hostnames``
-  - ``dnsPolicy``
-  - ``dnsConfig``
-  - ``dnsConfig.nameservers``
-  - ``dnsConfig.searches``
-  - ``dnsConfig.options``
-  - ``dnsConfig.options.name``
-  - ``dnsConfig.options.value``
-  - ``tolerations``
-  - ``tolerations.operator``
-  - ``tolerations.key``
-  - ``tolerations.value``
-  - ... plus 12 more
-
-### `workload/job.md`
-- Matched newdocs file: `workload/job.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `workload/job.json` (score: `1.50`)
-- Missing non-schema headings: **7**
-  - `Notes`
-  - ``completionMode``
-  - ``backoffLimit``
-  - ``completions``
-  - ``parallelism``
-  - ``ttlSecondsAfterFinished``
-  - ``activeDeadlineSeconds``
-
-### `workload/statefulset.md`
-- Matched newdocs file: `workload/statefulset.md`
-- Match type: `exact-path` (score: `1.00`)
-- Matched schema file: `workload/statefulset.json` (score: `1.50`)
-- Missing non-schema headings: **7**
-  - `Notes`
-  - ``replicas``
-  - ``revisionHistoryLimit``
-  - ``strategy``
-  - ``rollingUpdate``
-  - ``rollingUpdate.maxUnavailable``
-  - ``rollingUpdate.partition``
-
+# Newdocs Generator Full To-Do List
+
+- [ ] Confirm generator completion target
+  - Source docs files: **95**
+  - Target newdocs files: **155**
+  - Files with schema-backed gaps: **11**
+  - Files with non-schema heading gaps: **92**
+
+## Phase 1 — File Coverage
+
+- [x] All docs files are matched to a newdocs file
+
+## Phase 2 — Schema-backed Generator Gaps (High Priority)
+
+- [ ] `addons.md` -> `addons/index.md`
+  - [ ] Verify schema link: `addons/addons.json`
+  - [ ] Add heading/content: ``addons.$addon.targetSelector`` -> `*.targetSelector`
+  - [ ] Add heading/content: ``addons.$addon.container`` -> `*.container`
+  - [ ] Add heading/content: ``addons.$addon.service`` -> `*.service`
+  - [ ] Add heading/content: ``addons.$addon.ingress`` -> `*.ingress`
+
+- [ ] `container/fixedEnv.md` -> `workload/podSpec/containers/fixedEnv.md`
+  - [ ] Verify schema link: `workload/podSpec/containers/fixedEnv.json`
+  - [ ] Add heading/content: ``fixedEnv.TZ`` -> `TZ`
+  - [ ] Add heading/content: ``fixedEnv.UMASK`` -> `UMASK`
+  - [ ] Add heading/content: ``fixedEnv.PUID`` -> `PUID`
+  - [ ] Add heading/content: ``fixedEnv.NVIDIA_CAPS`` -> `NVIDIA_CAPS`
+
+- [ ] `container/lifecycle.md` -> `workload/podSpec/containers/lifecycle.md`
+  - [ ] Verify schema link: `workload/podSpec/containers/lifecycle.json`
+  - [ ] Add heading/content: ``lifecycle.preStop`` -> `preStop`
+  - [ ] Add heading/content: ``lifecycle.postStart`` -> `postStart`
+  - [ ] Add heading/content: ``lifecycle.$hook.port`` -> `*.port`
+  - [ ] Add heading/content: ``lifecycle.$hook.host`` -> `*.host`
+  - [ ] Add heading/content: ``lifecycle.$hook.path`` -> `*.path`
+  - [ ] Add heading/content: ``lifecycle.$hook.httpHeaders`` -> `*.httpHeaders`
+
+- [ ] `container/probes.md` -> `workload/podSpec/containers/probes.md`
+  - [ ] Verify schema link: `workload/podSpec/containers/probes.json`
+  - [ ] Add heading/content: ``probes.liveness`` -> `liveness`
+  - [ ] Add heading/content: ``probes.readiness`` -> `readiness`
+  - [ ] Add heading/content: ``probes.startup`` -> `startup`
+  - [ ] Add heading/content: ``probes.$probe.port`` -> `startup.port`
+  - [ ] Add heading/content: ``probes.$probe.path`` -> `*.path`
+  - [ ] Add heading/content: ``probes.$probe.httpHeaders`` -> `*.httpHeaders`
+  - [ ] Add heading/content: ``probes.$probe.spec`` -> `*.spec`
+  - [ ] Add heading/content: ``probes.$probe.spec.initialDelaySeconds`` -> `*.spec.initialDelaySeconds`
+  - [ ] Add heading/content: ``probes.$probe.spec.periodSeconds`` -> `*.spec.periodSeconds`
+  - [ ] Add heading/content: ``probes.$probe.spec.timeoutSeconds`` -> `*.spec.timeoutSeconds`
+  - [ ] Add heading/content: ``probes.$probe.spec.failureThreshold`` -> `*.spec.failureThreshold`
+  - [ ] Add heading/content: ``probes.$probe.spec.successThreshold`` -> `*.spec.successThreshold`
+
+- [ ] `container/resources.md` -> `workload/podSpec/containers/resources.md`
+  - [ ] Verify schema link: `workload/podSpec/containers/resources.json`
+  - [ ] Add heading/content: ``resources.requests`` -> `requests`
+  - [ ] Add heading/content: ``resources.requests.cpu`` -> `requests.cpu`
+  - [ ] Add heading/content: ``resources.requests.memory`` -> `requests.memory`
+  - [ ] Add heading/content: ``resources.limits`` -> `limits`
+  - [ ] Add heading/content: ``resources.limits.cpu`` -> `limits.cpu`
+  - [ ] Add heading/content: ``resources.limits.memory`` -> `limits.memory`
+
+- [ ] `container/securityContext.md` -> `workload/podSpec/containers/securityContext.md`
+  - [ ] Verify schema link: `workload/podSpec/containers/securityContext.json`
+  - [ ] Add heading/content: ``securityContext.runAsUser`` -> `runAsUser`
+  - [ ] Add heading/content: ``securityContext.runAsGroup`` -> `runAsGroup`
+  - [ ] Add heading/content: ``securityContext.readOnlyRootFilesystem`` -> `readOnlyRootFilesystem`
+  - [ ] Add heading/content: ``securityContext.allowPrivilegeEscalation`` -> `allowPrivilegeEscalation`
+  - [ ] Add heading/content: ``securityContext.privileged`` -> `privileged`
+  - [ ] Add heading/content: ``securityContext.runAsNonRoot`` -> `runAsNonRoot`
+  - [ ] Add heading/content: ``securityContext.capabilities`` -> `capabilities`
+  - [ ] Add heading/content: ``securityContext.capabilities.add`` -> `capabilities.add`
+  - [ ] Add heading/content: ``securityContext.capabilities.drop`` -> `capabilities.drop`
+  - [ ] Add heading/content: ``securityContext.seccompProfile`` -> `seccompProfile`
+  - [ ] Add heading/content: ``securityContext.seccompProfile.profile`` -> `seccompProfile.profile`
+
+- [ ] `container/termination.md` -> `workload/container/termination.md`
+  - [ ] Verify schema link: `workload/container/termination.json`
+  - [ ] Add heading/content: ``termination.messagePath`` -> `messagePath`
+  - [ ] Add heading/content: ``termination.messagePolicy`` -> `messagePolicy`
+
+- [ ] `fallbackDefaults.md` -> `global/fallbackDefaults.md`
+  - [ ] Verify schema link: `global/fallbackDefaults.json`
+  - [ ] Add heading/content: ``probeTimeouts.liveness`` -> `probeTimeouts.liveness`
+  - [ ] Add heading/content: ``probeTimeouts.liveness.initialDelaySeconds`` -> `probeTimeouts.liveness.initialDelaySeconds`
+  - [ ] Add heading/content: ``probeTimeouts.liveness.periodSeconds`` -> `probeTimeouts.liveness.periodSeconds`
+  - [ ] Add heading/content: ``probeTimeouts.liveness.timeoutSeconds`` -> `probeTimeouts.liveness.timeoutSeconds`
+  - [ ] Add heading/content: ``probeTimeouts.liveness.failureThreshold`` -> `probeTimeouts.liveness.failureThreshold`
+  - [ ] Add heading/content: ``probeTimeouts.liveness.successThreshold`` -> `probeTimeouts.liveness.successThreshold`
+  - [ ] Add heading/content: ``probeTimeouts.readiness`` -> `probeTimeouts.readiness`
+  - [ ] Add heading/content: ``probeTimeouts.readiness.initialDelaySeconds`` -> `probeTimeouts.readiness.initialDelaySeconds`
+  - [ ] Add heading/content: ``probeTimeouts.readiness.periodSeconds`` -> `probeTimeouts.readiness.periodSeconds`
+  - [ ] Add heading/content: ``probeTimeouts.readiness.timeoutSeconds`` -> `probeTimeouts.readiness.timeoutSeconds`
+  - [ ] Add heading/content: ``probeTimeouts.readiness.failureThreshold`` -> `probeTimeouts.readiness.failureThreshold`
+  - [ ] Add heading/content: ``probeTimeouts.readiness.successThreshold`` -> `probeTimeouts.readiness.successThreshold`
+  - [ ] Add heading/content: ``probeTimeouts.startup`` -> `probeTimeouts.startup`
+  - [ ] Add heading/content: ``probeTimeouts.startup.initialDelaySeconds`` -> `probeTimeouts.startup.initialDelaySeconds`
+  - [ ] Add heading/content: ``probeTimeouts.startup.periodSeconds`` -> `probeTimeouts.startup.periodSeconds`
+  - [ ] Add heading/content: ``probeTimeouts.startup.timeoutSeconds`` -> `probeTimeouts.startup.timeoutSeconds`
+  - [ ] Add heading/content: ``probeTimeouts.startup.failureThreshold`` -> `probeTimeouts.startup.failureThreshold`
+  - [ ] Add heading/content: ``probeTimeouts.startup.successThreshold`` -> `probeTimeouts.startup.successThreshold`
+
+- [ ] `global.md` -> `global/index.md`
+  - [ ] Verify schema link: `global/global.json`
+  - [ ] Add heading/content: ``traefik.addServiceAnnotations`` -> `traefik.addServiceAnnotations`
+  - [ ] Add heading/content: ``traefik.commonMiddlewares`` -> `traefik.commonMiddlewares`
+
+- [ ] `ingress/homepage.md` -> `ingress/integrations/homepage.md`
+  - [ ] Verify schema link: `ingress/integrations/homepage.json`
+  - [ ] Add heading/content: ``widget.version`` -> `widget.version`
+  - [ ] Add heading/content: ``widget.url`` -> `widget.url`
+  - [ ] Add heading/content: ``widget.custom`` -> `widget.custom`
+  - [ ] Add heading/content: ``widget.customkv`` -> `widget.customkv`
+
+- [ ] `resources.md` -> `workload/podSpec/containers/resources.md`
+  - [ ] Verify schema link: `workload/podSpec/containers/resources.json`
+  - [ ] Add heading/content: ``resources.limits`` -> `limits`
+  - [ ] Add heading/content: ``resources.limits.cpu`` -> `limits.cpu`
+  - [ ] Add heading/content: ``resources.limits.memory`` -> `limits.memory`
+  - [ ] Add heading/content: ``resources.requests`` -> `requests`
+  - [ ] Add heading/content: ``resources.requests.cpu`` -> `requests.cpu`
+  - [ ] Add heading/content: ``resources.requests.memory`` -> `requests.memory`
+
+## Phase 3 — Non-schema Heading Gaps (Manual/Template Work)
+
+- [ ] `addons.md` -> `addons/index.md`
+  - [ ] Add/align heading: ``addons.$addon``
+  - [ ] Add/align heading: ``addons.$addon.enabled``
+
+- [ ] `certificate.md` -> `certificate.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``certificateIssuer``
+  - [ ] Add/align heading: ``hosts``
+  - [ ] Add/align heading: ``certificateSecretTemplate``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+
+- [ ] `cnpg/cluster.md` -> `cnpg/cluster/index.md`
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``env``
+  - [ ] Add/align heading: ``envFrom``
+  - [ ] Add/align heading: ``instances``
+  - [ ] Add/align heading: ``singleNode``
+  - [ ] Add/align heading: ``logLevel``
+  - [ ] Add/align heading: ``primaryUpdateMethod``
+  - [ ] Add/align heading: ``primaryUpdateStrategy``
+  - [ ] Add/align heading: ``certificates``
+  - [ ] Add/align heading: ``postgresql``
+  - [ ] Add/align heading: ``initdb``
+
+- [ ] `cnpg/cnpg.md` -> `cnpg/index.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``primary``
+  - [ ] Add/align heading: ``hibernate``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``type``
+  - [ ] Add/align heading: ``pgVersion``
+  - [ ] Add/align heading: ``mode``
+  - [ ] Add/align heading: ``database``
+  - [ ] Add/align heading: ``user``
+  - [ ] Add/align heading: ``password``
+  - [ ] Add/align heading: ``cluster``
+  - [ ] Add/align heading: ``monitoring``
+  - [ ] Add/align heading: ``recovery``
+  - [ ] Add/align heading: ``backups``
+  - [ ] Add/align heading: ``pooler``
+
+- [ ] `configmap.md` -> `configmap.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``data``
+
+- [ ] `container/args.md` -> `workload/podSpec/containers/args.md`
+  - [ ] Add/align heading: ``args``
+  - [ ] Add/align heading: `Or`
+  - [ ] Add/align heading: ``extraArgs``
+  - [ ] Add/align heading: `Or`
+
+- [ ] `container/command.md` -> `workload/podSpec/containers/command.md`
+  - [ ] Add/align heading: ``command``
+
+- [ ] `container/env.md` -> `addons/gluetun/container/env.md`
+  - [ ] Add/align heading: ``env``
+  - [ ] Add/align heading: ``env.$key``
+  - [ ] Add/align heading: ``env.$key.configMapKeyRef``
+  - [ ] Add/align heading: ``env.$key.configMapKeyRef.name``
+  - [ ] Add/align heading: ``env.$key.configMapKeyRef.key``
+  - [ ] Add/align heading: ``env.$key.configMapKeyRef.expandObjectName``
+  - [ ] Add/align heading: ``env.$key.secretKeyRef``
+  - [ ] Add/align heading: ``env.$key.secretKeyRef.name``
+  - [ ] Add/align heading: ``env.$key.secretKeyRef.key``
+  - [ ] Add/align heading: ``env.$key.secretKeyRef.expandObjectName``
+  - [ ] Add/align heading: ``env.$key.fieldRef``
+  - [ ] Add/align heading: ``env.$key.fieldRef.fieldPath``
+  - [ ] Add/align heading: ``env.$key.fieldRef.apiVersion``
+
+- [ ] `container/envFrom.md` -> `workload/podSpec/containers/envFrom.md`
+  - [ ] Add/align heading: ``envFrom``
+  - [ ] Add/align heading: ``envFrom.secretRef``
+  - [ ] Add/align heading: ``envFrom.secretRef.name``
+  - [ ] Add/align heading: ``envFrom.secretRef.expandObjectName``
+  - [ ] Add/align heading: ``envFrom.configMapRef``
+  - [ ] Add/align heading: ``envFrom.configMapRef.name``
+  - [ ] Add/align heading: ``envFrom.configMapRef.expandObjectName``
+
+- [ ] `container/fixedEnv.md` -> `workload/podSpec/containers/fixedEnv.md`
+  - [ ] Add/align heading: ``fixedEnv``
+
+- [ ] `container/index.md` -> `workload/container/index.md`
+  - [ ] Add/align heading: `Notes`
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``type``
+  - [ ] Add/align heading: ``imageSelector``
+  - [ ] Add/align heading: ``primary``
+  - [ ] Add/align heading: ``stdin``
+  - [ ] Add/align heading: ``tty``
+  - [ ] Add/align heading: ``command``
+  - [ ] Add/align heading: ``args``
+  - [ ] Add/align heading: ``extraArgs``
+  - [ ] Add/align heading: ``termination``
+  - [ ] Add/align heading: ``lifecycle``
+  - [ ] Add/align heading: ``probes``
+  - [ ] Add/align heading: ``resources``
+  - [ ] Add/align heading: ``securityContext``
+  - [ ] Add/align heading: ``envFrom``
+  - [ ] Add/align heading: ``fixedEnv``
+  - [ ] Add/align heading: ``env``
+  - [ ] Add/align heading: `Full Examples`
+
+- [ ] `container/lifecycle.md` -> `workload/podSpec/containers/lifecycle.md`
+  - [ ] Add/align heading: ``lifecycle``
+  - [ ] Add/align heading: ``lifecycle.$hook.type``
+  - [ ] Add/align heading: ``lifecycle.$hook.command``
+
+- [ ] `container/probes.md` -> `workload/podSpec/containers/probes.md`
+  - [ ] Add/align heading: ``probes``
+  - [ ] Add/align heading: ``probes.$probe.enabled``
+  - [ ] Add/align heading: ``probes.$probe.type``
+  - [ ] Add/align heading: ``probes.$probe.command``
+
+- [ ] `container/resources.md` -> `workload/podSpec/containers/resources.md`
+  - [ ] Add/align heading: `Notes`
+  - [ ] Add/align heading: ``resources``
+  - [ ] Add/align heading: ``resources.limits."gpu.intel.com/i915"``
+  - [ ] Add/align heading: ``resources.limits."nvidia.com/gpu"``
+  - [ ] Add/align heading: ``resources.limits."amd.com/gpu"``
+
+- [ ] `container/securityContext.md` -> `workload/podSpec/containers/securityContext.md`
+  - [ ] Add/align heading: ``securityContext``
+  - [ ] Add/align heading: ``securityContext.seccompProfile.type``
+
+- [ ] `container/termination.md` -> `workload/container/termination.md`
+  - [ ] Add/align heading: ``termination``
+
+- [ ] `containerOptions.md` -> `containerOptions.md`
+  - [ ] Add/align heading: `Defaults`
+  - [ ] Add/align heading: ``NVIDIA_CAPS``
+
+- [ ] `credentials.md` -> `credentials.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``type``
+  - [ ] Add/align heading: ``url``
+  - [ ] Add/align heading: ``region``
+  - [ ] Add/align heading: ``customCASecretRef``
+  - [ ] Add/align heading: ``customCASecretRef.name``
+  - [ ] Add/align heading: ``customCASecretRef.key``
+  - [ ] Add/align heading: ``customCASecretRef.expandObjectName``
+  - [ ] Add/align heading: ``customCA``
+  - [ ] Add/align heading: ``path``
+  - [ ] Add/align heading: ``bucket``
+  - [ ] Add/align heading: ``accessKey``
+  - [ ] Add/align heading: ``secretKey``
+  - [ ] Add/align heading: ``encrKey``
+
+- [ ] `fallbackDefaults.md` -> `global/fallbackDefaults.md`
+  - [ ] Add/align heading: `Defaults`
+  - [ ] Add/align heading: ``probeType``
+  - [ ] Add/align heading: ``serviceProtocol``
+  - [ ] Add/align heading: ``serviceType``
+  - [ ] Add/align heading: ``storageClass``
+  - [ ] Add/align heading: ``persistenceType``
+  - [ ] Add/align heading: ``pvcRetain``
+  - [ ] Add/align heading: ``pvcSize``
+  - [ ] Add/align heading: ``vctSize``
+  - [ ] Add/align heading: ``accessModes``
+  - [ ] Add/align heading: ``probeTimeouts``
+  - [ ] Add/align heading: ``topologyKey``
+
+- [ ] `global.md` -> `global/index.md`
+  - [ ] Add/align heading: `Defaults`
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``minNodePort``
+  - [ ] Add/align heading: ``stopAll``
+  - [ ] Add/align heading: ``metallb``
+  - [ ] Add/align heading: ``traefik``
+
+- [ ] `hpa.md` -> `hpa.md`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``targetSelector``
+  - [ ] Add/align heading: ``minReplicas``
+  - [ ] Add/align heading: ``maxReplicas``
+  - [ ] Add/align heading: ``metrics``
+  - [ ] Add/align heading: ``behavior``
+
+- [ ] `imagePullSecret.md` -> `imagePullSecret.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: `Target Selector`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``existingSecret``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``targetSelectAll``
+  - [ ] Add/align heading: ``targetSelector``
+  - [ ] Add/align heading: ``data``
+  - [ ] Add/align heading: ``data.registry``
+  - [ ] Add/align heading: ``data.username``
+  - [ ] Add/align heading: ``data.password``
+  - [ ] Add/align heading: ``data.email``
+
+- [ ] `index.md` -> `cnpg/index.md`
+  - [ ] Add/align heading: `Notes`
+  - [ ] Add/align heading: `Schema Validation (Dev)`
+  - [ ] Add/align heading: ``global``
+  - [ ] Add/align heading: ``fallbackDefaults``
+  - [ ] Add/align heading: ``extraTpl``
+  - [ ] Add/align heading: ``operator``
+  - [ ] Add/align heading: ``operator.register``
+  - [ ] Add/align heading: ``operator.verify``
+  - [ ] Add/align heading: ``operator.verify.enabled``
+  - [ ] Add/align heading: ``operator.verify.additionalsystem``
+  - [ ] Add/align heading: ``podOptions``
+  - [ ] Add/align heading: ``containerOptions``
+  - [ ] Add/align heading: ``TZ``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``resources``
+  - [ ] Add/align heading: ``securityContext``
+  - [ ] Add/align heading: `Images`
+  - [ ] Add/align heading: ``image``
+  - [ ] Add/align heading: ``image.repository``
+  - [ ] Add/align heading: ``image.tag``
+  - [ ] Add/align heading: ``image.pullPolicy``
+  - [ ] Add/align heading: `Additional Documentation`
+
+- [ ] `ingress/certManager.md` -> `ingress/certManager.md`
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``certificateIssuer``
+
+- [ ] `ingress/homepage.md` -> `ingress/integrations/homepage.md`
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``name``
+  - [ ] Add/align heading: ``description``
+  - [ ] Add/align heading: ``group``
+  - [ ] Add/align heading: ``icon``
+  - [ ] Add/align heading: ``href``
+  - [ ] Add/align heading: ``weight``
+  - [ ] Add/align heading: ``podSelector``
+  - [ ] Add/align heading: ``widget``
+  - [ ] Add/align heading: ``widget.enabled``
+  - [ ] Add/align heading: ``widget.type``
+  - [ ] Add/align heading: ``widget.customkv[].key``
+  - [ ] Add/align heading: ``widget.customkv[].value``
+
+- [ ] `ingress/index.md` -> `ingress/index.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: `Target Selector`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``primary``
+  - [ ] Add/align heading: ``expandObjectName``
+  - [ ] Add/align heading: ``required``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``ingressClassName``
+  - [ ] Add/align heading: ``targetSelector``
+  - [ ] Add/align heading: ``hosts``
+  - [ ] Add/align heading: ``hosts[].host``
+  - [ ] Add/align heading: ``hosts[].paths``
+  - [ ] Add/align heading: ``hosts[].paths[].path``
+  - [ ] Add/align heading: ``hosts[].paths[].pathType``
+  - [ ] Add/align heading: ``hosts[].paths[].overrideService``
+  - [ ] Add/align heading: ``hosts[].paths[].overrideService.name``
+  - [ ] Add/align heading: ``hosts[].paths[].overrideService.expandObjectName``
+  - [ ] Add/align heading: ``hosts[].paths[].overrideService.port``
+  - [ ] Add/align heading: ``tls``
+  - [ ] Add/align heading: ``tls[].hosts``
+  - [ ] Add/align heading: ``tls[].secretName``
+  - [ ] Add/align heading: ``tls[].certificateIssuer``
+  - [ ] Add/align heading: ``tls[].clusterIssuer``
+  - [ ] Add/align heading: ``integrations``
+  - [ ] Add/align heading: ``integrations.certManager``
+  - [ ] Add/align heading: ``integrations.traefik``
+  - [ ] Add/align heading: ``integrations.homepage``
+
+- [ ] `ingress/traefik.md` -> `ingress/traefik.md`
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``entrypoints``
+  - [ ] Add/align heading: ``forceTLS``
+  - [ ] Add/align heading: ``middlewares``
+  - [ ] Add/align heading: ``middlewares[].name``
+  - [ ] Add/align heading: ``middlewares[].namespace``
+  - [ ] Add/align heading: ``middlewares[].expandObjectName``
+  - [ ] Add/align heading: ``chartMiddlewares``
+
+- [ ] `metrics.md` -> `metrics.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``type``
+  - [ ] Add/align heading: ``targetSelector``
+  - [ ] Add/align heading: ``selector``
+  - [ ] Add/align heading: ``endpoints``
+  - [ ] Add/align heading: ``prometheusRule``
+
+- [ ] `middlewares/index.md` -> `ingressMiddlewares/index.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$provider``
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``expandObjectName``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``data``
+  - [ ] Add/align heading: ``type``
+
+- [ ] `middlewares/traefik/add-prefix.md` -> `ingressMiddlewares/middlewares/traefik/add-prefix.md`
+  - [ ] Add/align heading: ``prefix``
+
+- [ ] `middlewares/traefik/basic-auth.md` -> `ingressMiddlewares/middlewares/traefik/basic-auth.md`
+  - [ ] Add/align heading: ``users``
+  - [ ] Add/align heading: ``users[].username``
+  - [ ] Add/align heading: ``users[].password``
+  - [ ] Add/align heading: ``secret``
+
+- [ ] `middlewares/traefik/buffering.md` -> `ingressMiddlewares/middlewares/traefik/buffering.md`
+  - [ ] Add/align heading: ``maxRequestBodyBytes``
+  - [ ] Add/align heading: ``memRequestBodyBytes``
+  - [ ] Add/align heading: ``maxResponseBodyBytes``
+  - [ ] Add/align heading: ``memResponseBodyBytes``
+  - [ ] Add/align heading: ``retryExpression``
+
+- [ ] `middlewares/traefik/chain.md` -> `ingressMiddlewares/middlewares/traefik/chain.md`
+  - [ ] Add/align heading: ``middlewares``
+  - [ ] Add/align heading: ``middlewares[].name``
+  - [ ] Add/align heading: ``middlewares[].expandObjectName``
+
+- [ ] `middlewares/traefik/forward-auth.md` -> `ingressMiddlewares/middlewares/traefik/forward-auth.md`
+  - [ ] Add/align heading: ``address``
+  - [ ] Add/align heading: ``authResponseHeadersRegex``
+  - [ ] Add/align heading: ``trustForwardHeader``
+  - [ ] Add/align heading: ``authResponseHeaders``
+  - [ ] Add/align heading: ``authRequestHeaders``
+  - [ ] Add/align heading: ``tls``
+  - [ ] Add/align heading: ``tls.insecureSkipVerify``
+
+- [ ] `middlewares/traefik/headers.md` -> `ingressMiddlewares/middlewares/traefik/headers.md`
+  - [ ] Add/align heading: ``customRequestHeaders``
+  - [ ] Add/align heading: ``customResponseHeaders``
+  - [ ] Add/align heading: ``accessControlAllowCredentials``
+  - [ ] Add/align heading: ``accessControlAllowHeaders``
+  - [ ] Add/align heading: ``accessControlAllowMethods``
+  - [ ] Add/align heading: ``accessControlAllowOriginList``
+  - [ ] Add/align heading: ``accessControlAllowOriginListRegex``
+  - [ ] Add/align heading: ``accessControlExposeHeaders``
+  - [ ] Add/align heading: ``accessControlMaxAge``
+  - [ ] Add/align heading: ``addVaryHeader``
+  - [ ] Add/align heading: ``allowedHosts``
+  - [ ] Add/align heading: ``hostsProxyHeaders``
+  - [ ] Add/align heading: ``sslProxyHeaders``
+  - [ ] Add/align heading: ``stsSeconds``
+  - [ ] Add/align heading: ``stsIncludeSubdomains``
+  - [ ] Add/align heading: ``stsPreload``
+  - [ ] Add/align heading: ``forceSTSHeader``
+  - [ ] Add/align heading: ``frameDeny``
+  - [ ] Add/align heading: ``customFrameOptionsValue``
+  - [ ] Add/align heading: ``contentTypeNosniff``
+  - [ ] Add/align heading: ``browserXssFilter``
+  - [ ] Add/align heading: ``customBrowserXSSValue``
+  - [ ] Add/align heading: ``contentSecurityPolicy``
+  - [ ] Add/align heading: ``contentSecurityPolicyReportOnly``
+  - [ ] Add/align heading: ``publicKey``
+  - [ ] Add/align heading: ``referrerPolicy``
+  - [ ] Add/align heading: ``permissionsPolicy``
+  - [ ] Add/align heading: ``isDevelopment``
+
+- [ ] `middlewares/traefik/index.md` -> `ingressMiddlewares/middlewares/traefik/index.md`
+  - [ ] Add/align heading: ``type``
+
+- [ ] `middlewares/traefik/ip-allow-list.md` -> `ingressMiddlewares/middlewares/traefik/ip-allow-list.md`
+  - [ ] Add/align heading: ``sourceRange``
+  - [ ] Add/align heading: ``ipStrategy``
+  - [ ] Add/align heading: ``ipStrategy.depth``
+  - [ ] Add/align heading: ``ipStrategy.excludedIPs``
+
+- [ ] `middlewares/traefik/plugin-bouncer.md` -> `ingressMiddlewares/middlewares/traefik/plugin-bouncer.md`
+  - [ ] Add/align heading: ``pluginName``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``logLevel``
+  - [ ] Add/align heading: ``updateIntervalSeconds``
+  - [ ] Add/align heading: ``updateMaxFailure``
+  - [ ] Add/align heading: ``defaultDecisionSeconds``
+  - [ ] Add/align heading: ``httpTimeoutSeconds``
+  - [ ] Add/align heading: ``crowdsecMode``
+  - [ ] Add/align heading: ``crowdsecAppsecEnabled``
+  - [ ] Add/align heading: ``crowdsecAppsecHost``
+  - [ ] Add/align heading: ``crowdsecAppsecFailureBlock``
+  - [ ] Add/align heading: ``crowdsecAppsecUnreachableBlock``
+  - [ ] Add/align heading: ``crowdsecLapiKey``
+  - [ ] Add/align heading: ``crowdsecLapiHost``
+  - [ ] Add/align heading: ``crowdsecLapiScheme``
+  - [ ] Add/align heading: ``crowdsecLapiTLSInsecureVerify``
+  - [ ] Add/align heading: ``crowdsecCapiMachineId``
+  - [ ] Add/align heading: ``crowdsecCapiPassword``
+  - [ ] Add/align heading: ``crowdsecCapiScenarios``
+  - [ ] Add/align heading: ``forwardedHeadersTrustedIPs``
+  - [ ] Add/align heading: ``clientTrustedIPs``
+  - [ ] Add/align heading: ``forwardedHeadersCustomName``
+  - [ ] Add/align heading: ``remediationHeadersCustomName``
+  - [ ] Add/align heading: ``redisCacheEnabled``
+  - [ ] Add/align heading: ``redisCacheHost``
+  - [ ] Add/align heading: ``redisCachePassword``
+  - [ ] Add/align heading: ``redisCacheDatabase``
+  - [ ] Add/align heading: ``crowdsecLapiTLSCertificateAuthority``
+  - [ ] Add/align heading: ``crowdsecLapiTLSCertificateBouncer``
+  - [ ] Add/align heading: ``crowdsecLapiTLSCertificateBouncerKey``
+  - [ ] Add/align heading: ``captchaProvider``
+  - [ ] Add/align heading: ``captchaSiteKey``
+  - [ ] Add/align heading: ``captchaSecretKey``
+  - [ ] Add/align heading: ``captchaGracePeriodSeconds``
+  - [ ] Add/align heading: ``captchaHTMLFilePath``
+  - [ ] Add/align heading: ``banHTMLFilePath``
+
+- [ ] `middlewares/traefik/plugin-geoblock.md` -> `ingressMiddlewares/middlewares/traefik/plugin-geoblock.md`
+  - [ ] Add/align heading: ``pluginName``
+  - [ ] Add/align heading: ``api``
+  - [ ] Add/align heading: ``allowLocalRequests``
+  - [ ] Add/align heading: ``logLocalRequests``
+  - [ ] Add/align heading: ``logAllowedRequests``
+  - [ ] Add/align heading: ``logApiRequests``
+  - [ ] Add/align heading: ``apiTimeoutMs``
+  - [ ] Add/align heading: ``cacheSize``
+  - [ ] Add/align heading: ``forceMonthlyUpdate``
+  - [ ] Add/align heading: ``allowUnknownCountries``
+  - [ ] Add/align heading: ``unknownCountryApiResponse``
+  - [ ] Add/align heading: ``blackListMode``
+  - [ ] Add/align heading: ``silentStartUp``
+  - [ ] Add/align heading: ``addCountryHeader``
+  - [ ] Add/align heading: ``countries``
+
+- [ ] `middlewares/traefik/plugin-mod-security.md` -> `ingressMiddlewares/middlewares/traefik/plugin-mod-security.md`
+  - [ ] Add/align heading: ``pluginName``
+  - [ ] Add/align heading: ``modSecurityUrl``
+  - [ ] Add/align heading: ``timeoutMillis``
+  - [ ] Add/align heading: ``maxBodySize``
+
+- [ ] `middlewares/traefik/plugin-real-ip.md` -> `ingressMiddlewares/middlewares/traefik/plugin-real-ip.md`
+  - [ ] Add/align heading: ``pluginName``
+  - [ ] Add/align heading: ``excludednets``
+
+- [ ] `middlewares/traefik/plugin-rewrite-response-headers.md` -> `ingressMiddlewares/middlewares/traefik/plugin-rewrite-response-headers.md`
+  - [ ] Add/align heading: ``pluginName``
+  - [ ] Add/align heading: ``rewrites``
+  - [ ] Add/align heading: ``rewrites[].header``
+  - [ ] Add/align heading: ``rewrites[].regex``
+  - [ ] Add/align heading: ``rewrites[].replacement``
+
+- [ ] `middlewares/traefik/plugin-theme-park.md` -> `ingressMiddlewares/middlewares/traefik/plugin-theme-park.md`
+  - [ ] Add/align heading: ``pluginName``
+  - [ ] Add/align heading: ``app``
+  - [ ] Add/align heading: ``theme``
+  - [ ] Add/align heading: ``baseUrl``
+  - [ ] Add/align heading: ``addons``
+
+- [ ] `middlewares/traefik/rate-limit.md` -> `ingressMiddlewares/middlewares/traefik/rate-limit.md`
+  - [ ] Add/align heading: ``average``
+  - [ ] Add/align heading: ``burst``
+
+- [ ] `middlewares/traefik/redirect-regex.md` -> `ingressMiddlewares/middlewares/traefik/redirect-regex.md`
+  - [ ] Add/align heading: ``regex``
+  - [ ] Add/align heading: ``replacement``
+  - [ ] Add/align heading: ``permanent``
+
+- [ ] `middlewares/traefik/redirect-scheme.md` -> `ingressMiddlewares/middlewares/traefik/redirect-scheme.md`
+  - [ ] Add/align heading: ``scheme``
+  - [ ] Add/align heading: ``permanent``
+
+- [ ] `middlewares/traefik/replace-path-regex.md` -> `ingressMiddlewares/middlewares/traefik/replace-path-regex.md`
+  - [ ] Add/align heading: ``regex``
+  - [ ] Add/align heading: ``replacement``
+
+- [ ] `middlewares/traefik/replace-path.md` -> `ingressMiddlewares/middlewares/traefik/replace-path.md`
+  - [ ] Add/align heading: ``path``
+
+- [ ] `middlewares/traefik/retry.md` -> `ingressMiddlewares/middlewares/traefik/retry.md`
+  - [ ] Add/align heading: ``attempts``
+  - [ ] Add/align heading: ``initialInterval``
+
+- [ ] `middlewares/traefik/strip-prefix-regex.md` -> `ingressMiddlewares/middlewares/traefik/strip-prefix-regex.md`
+  - [ ] Add/align heading: ``regex``
+
+- [ ] `middlewares/traefik/strip-prefix.md` -> `ingressMiddlewares/middlewares/traefik/strip-prefix.md`
+  - [ ] Add/align heading: ``prefix``
+  - [ ] Add/align heading: ``forceSlash``
+
+- [ ] `networkpolicy.md` -> `networkpolicy.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``primary``
+  - [ ] Add/align heading: ``expandObjectName``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: `Pod Selection`
+  - [ ] Add/align heading: ``podSelector``
+  - [ ] Add/align heading: `Default Behavior`
+  - [ ] Add/align heading: ``matchLabels``
+  - [ ] Add/align heading: ``matchExpressions``
+  - [ ] Add/align heading: ``targetSelector``
+  - [ ] Add/align heading: ``targetAllPods``
+  - [ ] Add/align heading: `Policy Configuration`
+  - [ ] Add/align heading: ``policyTypes``
+  - [ ] Add/align heading: `Ingress Rules`
+  - [ ] Add/align heading: ``ingress``
+  - [ ] Add/align heading: ``from``
+  - [ ] Add/align heading: `Pod Selector`
+  - [ ] Add/align heading: `Namespace Selector`
+  - [ ] Add/align heading: `Combined Pod and Namespace Selector`
+  - [ ] Add/align heading: `IP Block`
+  - [ ] Add/align heading: ``ports``
+  - [ ] Add/align heading: `Port Ranges (Kubernetes 1.25+)`
+  - [ ] Add/align heading: `Named Ports`
+  - [ ] Add/align heading: `Egress Rules`
+  - [ ] Add/align heading: ``egress``
+  - [ ] Add/align heading: ``to``
+  - [ ] Add/align heading: `Pod Selector`
+  - [ ] Add/align heading: `Namespace Selector`
+  - [ ] Add/align heading: `IP Block`
+  - [ ] Add/align heading: ``ports``
+
+- [ ] `notes.md` -> `notes.md`
+  - [ ] Add/align heading: ``header``
+  - [ ] Add/align heading: `Welcome to TrueCharts!`
+  - [ ] Add/align heading: ``custom``
+  - [ ] Add/align heading: ``footer``
+  - [ ] Add/align heading: `Documentation`
+  - [ ] Add/align heading: `Bug reports`
+
+- [ ] `persistence/configmap.md` -> `persistence/configmap.md`
+  - [ ] Add/align heading: ``objectName``
+  - [ ] Add/align heading: ``expandObjectName``
+  - [ ] Add/align heading: ``optional``
+  - [ ] Add/align heading: ``defaultMode``
+  - [ ] Add/align heading: ``items``
+  - [ ] Add/align heading: ``items[].key``
+  - [ ] Add/align heading: ``items[].path``
+
+- [ ] `persistence/device.md` -> `persistence/device.md`
+  - [ ] Add/align heading: `Notes`
+  - [ ] Add/align heading: ``hostPath``
+  - [ ] Add/align heading: ``hostPathType``
+
+- [ ] `persistence/emptyDir.md` -> `persistence/emptyDir.md`
+  - [ ] Add/align heading: ``size``
+  - [ ] Add/align heading: ``medium``
+
+- [ ] `persistence/hostPath.md` -> `persistence/hostPath.md`
+  - [ ] Add/align heading: ``hostPath``
+  - [ ] Add/align heading: ``hostPathType``
+
+- [ ] `persistence/index.md` -> `persistence/index.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: `Target Selector`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``type``
+  - [ ] Add/align heading: ``mountPath``
+  - [ ] Add/align heading: ``mountPropagation``
+  - [ ] Add/align heading: ``subPath``
+  - [ ] Add/align heading: ``readOnly``
+  - [ ] Add/align heading: ``targetSelectAll``
+  - [ ] Add/align heading: ``targetSelector``
+  - [ ] Add/align heading: ``targetSelector.$podName``
+  - [ ] Add/align heading: ``targetSelector.$podName.$containerName``
+  - [ ] Add/align heading: ``targetSelector.$podName.$containerName.mountPath``
+  - [ ] Add/align heading: ``targetSelector.$podName.$containerName.mountPropagation``
+  - [ ] Add/align heading: ``targetSelector.$podName.$containerName.subPath``
+  - [ ] Add/align heading: ``targetSelector.$podName.$containerName.readOnly``
+  - [ ] Add/align heading: `Basic Examples`
+  - [ ] Add/align heading: `Example of a shared emptyDir volume`
+  - [ ] Add/align heading: `Example of a volume mounted to a specific container with a specific mountPath`
+  - [ ] Add/align heading: `Example of a volume mounted to a specific container using the default mountPath`
+
+- [ ] `persistence/iscsi.md` -> `persistence/iscsi.md`
+  - [ ] Add/align heading: ``iscsi``
+  - [ ] Add/align heading: ``fsType``
+  - [ ] Add/align heading: ``targetPortal``
+  - [ ] Add/align heading: ``iqn``
+  - [ ] Add/align heading: ``lun``
+  - [ ] Add/align heading: ``initiatorName``
+  - [ ] Add/align heading: ``iscsiInterface``
+  - [ ] Add/align heading: ``portals``
+  - [ ] Add/align heading: ``authDiscovery``
+  - [ ] Add/align heading: ``authDiscovery.username``
+  - [ ] Add/align heading: ``authDiscovery.password``
+  - [ ] Add/align heading: ``authDiscovery.usernameInitiator``
+  - [ ] Add/align heading: ``authDiscovery.passwordInitiator``
+  - [ ] Add/align heading: ``authSession``
+  - [ ] Add/align heading: ``authSession.username``
+  - [ ] Add/align heading: ``authSession.password``
+
+- [ ] `persistence/nfs.md` -> `persistence/nfs.md`
+  - [ ] Add/align heading: ``path``
+  - [ ] Add/align heading: ``server``
+
+- [ ] `persistence/pvc-vct/index.md` -> `persistence/pvc-vct/index.md`
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``retain``
+  - [ ] Add/align heading: ``accessModes``
+  - [ ] Add/align heading: ``volumeName``
+  - [ ] Add/align heading: ``existingClaim``
+  - [ ] Add/align heading: ``size``
+  - [ ] Add/align heading: ``storageClass``
+  - [ ] Add/align heading: ``dataSource``
+  - [ ] Add/align heading: ``dataSource.kind``
+  - [ ] Add/align heading: ``dataSource.name``
+  - [ ] Add/align heading: ``static``
+  - [ ] Add/align heading: ``static.mode``
+  - [ ] Add/align heading: ``mountOptions``
+  - [ ] Add/align heading: ``mountOptions[].key``
+  - [ ] Add/align heading: ``mountOptions[].value``
+  - [ ] Add/align heading: ``volumeSnapshots``
+  - [ ] Add/align heading: ``volumeSnapshots[].name``
+  - [ ] Add/align heading: ``volumeSnapshots[].enabled``
+  - [ ] Add/align heading: ``volumeSnapshots[].labels``
+  - [ ] Add/align heading: ``volumeSnapshots[].annotations``
+  - [ ] Add/align heading: ``volumeSnapshots[].volumeSnapshotClassName``
+
+- [ ] `persistence/pvc-vct/static-custom.md` -> `persistence/pvc-vct/static-custom.md`
+  - [ ] Add/align heading: ``driver``
+  - [ ] Add/align heading: ``provisioner``
+
+- [ ] `persistence/pvc-vct/static-nfs.md` -> `persistence/pvc-vct/static-nfs.md`
+  - [ ] Add/align heading: ``server``
+  - [ ] Add/align heading: ``share``
+
+- [ ] `persistence/pvc-vct/static-smb.md` -> `persistence/pvc-vct/static-smb.md`
+  - [ ] Add/align heading: ``server``
+  - [ ] Add/align heading: ``share``
+  - [ ] Add/align heading: ``user``
+  - [ ] Add/align heading: ``password``
+  - [ ] Add/align heading: ``domain``
+
+- [ ] `persistence/secret.md` -> `persistence/secret.md`
+  - [ ] Add/align heading: ``objectName``
+  - [ ] Add/align heading: ``expandObjectName``
+  - [ ] Add/align heading: ``optional``
+  - [ ] Add/align heading: ``defaultMode``
+  - [ ] Add/align heading: ``items``
+  - [ ] Add/align heading: ``items.key``
+  - [ ] Add/align heading: ``items.path``
+
+- [ ] `podDisruptionBudget.md` -> `podDisruptionBudget.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``minAvailable``
+  - [ ] Add/align heading: ``maxUnavailable``
+  - [ ] Add/align heading: ``unhealthyPodEvictionPolicy``
+
+- [ ] `podOptions.md` -> `podOptions/index.md`
+  - [ ] Add/align heading: `Defaults`
+  - [ ] Add/align heading: ``enableServiceLinks``
+  - [ ] Add/align heading: ``hostNetwork``
+  - [ ] Add/align heading: ``hostPID``
+  - [ ] Add/align heading: ``hostIPC``
+  - [ ] Add/align heading: ``hostUsers``
+  - [ ] Add/align heading: ``shareProcessNamespace``
+  - [ ] Add/align heading: ``restartPolicy``
+  - [ ] Add/align heading: ``dnsPolicy``
+  - [ ] Add/align heading: ``dnsConfig``
+  - [ ] Add/align heading: ``hostAliases``
+  - [ ] Add/align heading: ``nodeSelector``
+  - [ ] Add/align heading: ``defaultSpread``
+  - [ ] Add/align heading: ``topologySpreadConstraints``
+  - [ ] Add/align heading: ``tolerations``
+  - [ ] Add/align heading: ``schedulerName``
+  - [ ] Add/align heading: ``priorityClassName``
+  - [ ] Add/align heading: ``runtimeClassName``
+  - [ ] Add/align heading: ``automountServiceAccountToken``
+  - [ ] Add/align heading: ``terminationGracePeriodSeconds``
+
+- [ ] `priorityClass.md` -> `priorityClass.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``value``
+  - [ ] Add/align heading: ``globalDefault``
+  - [ ] Add/align heading: ``description``
+  - [ ] Add/align heading: ``preemptionPolicy``
+
+- [ ] `rbac.md` -> `rbac.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: `Target Selector`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``primary``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``clusterWide``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``allServiceAccounts``
+  - [ ] Add/align heading: ``serviceAccounts``
+  - [ ] Add/align heading: ``rules``
+  - [ ] Add/align heading: ``rules[].apiGroups``
+  - [ ] Add/align heading: ``rules[].resources``
+  - [ ] Add/align heading: ``rules[].resourceNames``
+  - [ ] Add/align heading: ``rules[].verbs``
+  - [ ] Add/align heading: ``subjects``
+  - [ ] Add/align heading: ``subjects[].kind``
+  - [ ] Add/align heading: ``subjects[].name``
+  - [ ] Add/align heading: ``subjects[].apiGroup``
+
+- [ ] `resources.md` -> `workload/podSpec/containers/resources.md`
+  - [ ] Add/align heading: `Defaults`
+  - [ ] Add/align heading: ``resources.requests."gpu.intel.com/i915"``
+  - [ ] Add/align heading: ``resources.limits."nvidia.com/gpu"``
+  - [ ] Add/align heading: ``resources.limits."amd.com/gpu"``
+
+- [ ] `route.md` -> `route.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``kind``
+  - [ ] Add/align heading: ``parentRefs``
+  - [ ] Add/align heading: ``hostnames``
+  - [ ] Add/align heading: ``rules``
+
+- [ ] `secret.md` -> `secret.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``type``
+  - [ ] Add/align heading: ``data``
+
+- [ ] `securityContext.md` -> `workload/podSpec/containers/securityContext.md`
+  - [ ] Add/align heading: `Defaults`
+  - [ ] Add/align heading: ``securityContext.container``
+  - [ ] Add/align heading: ``securityContext.container.PUID``
+  - [ ] Add/align heading: ``securityContext.container.UMASK``
+  - [ ] Add/align heading: ``securityContext.container.runAsNonRoot``
+  - [ ] Add/align heading: ``securityContext.container.runAsUser``
+  - [ ] Add/align heading: ``securityContext.container.runAsGroup``
+  - [ ] Add/align heading: ``securityContext.container.readOnlyRootFilesystem``
+  - [ ] Add/align heading: ``securityContext.container.allowPrivilegeEscalation``
+  - [ ] Add/align heading: ``securityContext.container.privileged``
+  - [ ] Add/align heading: ``securityContext.container.seccompProfile``
+  - [ ] Add/align heading: ``securityContext.container.seccompProfile.type``
+  - [ ] Add/align heading: ``securityContext.container.seccompProfile.profile``
+  - [ ] Add/align heading: ``securityContext.container.capabilities``
+  - [ ] Add/align heading: ``securityContext.container.capabilities.add``
+  - [ ] Add/align heading: ``securityContext.container.capabilities.drop``
+  - [ ] Add/align heading: ``securityContext.pod``
+  - [ ] Add/align heading: ``securityContext.pod.fsGroup``
+  - [ ] Add/align heading: ``securityContext.pod.fsGroupChangePolicy``
+  - [ ] Add/align heading: ``securityContext.pod.supplementalGroups``
+  - [ ] Add/align heading: ``securityContext.pod.sysctls``
+
+- [ ] `service/ExternalIP.md` -> `service/ExternalIP.md`
+  - [ ] Add/align heading: ``externalIP``
+  - [ ] Add/align heading: ``useSlice``
+  - [ ] Add/align heading: ``addressType``
+  - [ ] Add/align heading: ``appProtocol``
+
+- [ ] `service/ExternalName.md` -> `service/ExternalName.md`
+  - [ ] Add/align heading: ``externalName``
+
+- [ ] `service/LoadBalancer.md` -> `service/LoadBalancer.md`
+  - [ ] Add/align heading: ``sharedKey``
+  - [ ] Add/align heading: ``loadBalancerIP``
+  - [ ] Add/align heading: ``loadBalancerIPs``
+  - [ ] Add/align heading: ``loadBalancerSourceRanges``
+
+- [ ] `service/NodePort.md` -> `service/NodePort.md`
+  - [ ] Add/align heading: ``ports.$port-name.nodePort``
+
+- [ ] `service/index.md` -> `service/index.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: `Target Selector`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``type``
+  - [ ] Add/align heading: ``expandObjectName``
+  - [ ] Add/align heading: ``clusterIP``
+  - [ ] Add/align heading: ``ipFamilyPolicy``
+  - [ ] Add/align heading: ``ipFamilies``
+  - [ ] Add/align heading: ``sessionAffinity``
+  - [ ] Add/align heading: ``sessionAffinityConfig.clientIP.timeoutSeconds``
+  - [ ] Add/align heading: ``externalIPs``
+  - [ ] Add/align heading: ``externalTrafficPolicy``
+  - [ ] Add/align heading: ``publishNotReadyAddresses``
+  - [ ] Add/align heading: ``targetSelector``
+  - [ ] Add/align heading: ``ports``
+  - [ ] Add/align heading: ``integrations``
+  - [ ] Add/align heading: ``integrations.traefik``
+
+- [ ] `service/integrations/traefik.md` -> `service/integrations/traefik.md`
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``forceTLS``
+  - [ ] Add/align heading: ``insecureSkipVerify``
+  - [ ] Add/align heading: ``serverName``
+  - [ ] Add/align heading: ``rootCAs``
+  - [ ] Add/align heading: ``rootCAs.secretRef``
+  - [ ] Add/align heading: ``rootCAs.secretRef.name``
+  - [ ] Add/align heading: ``rootCAs.secretRef.expandObjectName``
+  - [ ] Add/align heading: ``rootCAs.configMapRef``
+  - [ ] Add/align heading: ``rootCAs.configMapRef.name``
+  - [ ] Add/align heading: ``rootCAs.configMapRef.expandObjectName``
+
+- [ ] `service/ports.md` -> `service/ports.md`
+  - [ ] Add/align heading: `Target Selector`
+  - [ ] Add/align heading: ``$port-name``
+  - [ ] Add/align heading: ``port``
+  - [ ] Add/align heading: ``targetPort``
+  - [ ] Add/align heading: ``protocol``
+  - [ ] Add/align heading: ``hostPort``
+  - [ ] Add/align heading: ``targetSelector``
+
+- [ ] `serviceAccount.md` -> `serviceAccount.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: `Target Selector`
+  - [ ] Add/align heading: ``serviceAccount.$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``primary``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``targetSelectAll``
+  - [ ] Add/align heading: ``targetSelector``
+
+- [ ] `storageClass.md` -> `storageClass.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``provisioner``
+  - [ ] Add/align heading: ``parameters``
+  - [ ] Add/align heading: ``reclaimPolicy``
+  - [ ] Add/align heading: ``allowVolumeExpansion``
+  - [ ] Add/align heading: ``volumeBindingMode``
+  - [ ] Add/align heading: ``mountOptions``
+
+- [ ] `volumeSnapshot.md` -> `volumeSnapshots.md`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``source``
+  - [ ] Add/align heading: ``volumeSnapshotContentName``
+  - [ ] Add/align heading: ``persistentVolumeClaimName``
+
+- [ ] `volumeSnapshotClass.md` -> `volumeSnapshotClass.md`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``isDefault``
+  - [ ] Add/align heading: ``driver``
+  - [ ] Add/align heading: ``deletionPolicy``
+  - [ ] Add/align heading: ``parameters``
+
+- [ ] `vpa.md` -> `vpa.md`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``targetSelector``
+  - [ ] Add/align heading: ``updatePolicy``
+  - [ ] Add/align heading: ``resourcePolicy``
+
+- [ ] `webhook.md` -> `webhook.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``type``
+  - [ ] Add/align heading: ``webhooks``
+  - [ ] Add/align heading: ``webhooks[].name``
+  - [ ] Add/align heading: ``webhooks[].failurePolicy``
+  - [ ] Add/align heading: ``webhooks[].matchPolicy``
+  - [ ] Add/align heading: ``webhooks[].sideEffects``
+  - [ ] Add/align heading: ``webhooks[].reinvocationPolicy``
+  - [ ] Add/align heading: ``webhooks[].timeoutSeconds``
+  - [ ] Add/align heading: ``webhooks[].admissionReviewVersions``
+  - [ ] Add/align heading: ``webhooks[].clientConfig``
+  - [ ] Add/align heading: ``webhooks[].clientConfig.caBundle``
+  - [ ] Add/align heading: ``webhooks[].clientConfig.url``
+  - [ ] Add/align heading: ``webhooks[].clientConfig.service``
+  - [ ] Add/align heading: ``webhooks[].clientConfig.service.name``
+  - [ ] Add/align heading: ``webhooks[].clientConfig.service.namespace``
+  - [ ] Add/align heading: ``webhooks[].clientConfig.service.path``
+  - [ ] Add/align heading: ``webhooks[].clientConfig.service.port``
+  - [ ] Add/align heading: ``webhooks[].rules``
+  - [ ] Add/align heading: ``webhooks[].rules[].scope``
+  - [ ] Add/align heading: ``webhooks[].rules[].apiGroups``
+  - [ ] Add/align heading: ``webhooks[].rules[].apiVersions``
+  - [ ] Add/align heading: ``webhooks[].rules[].operations``
+  - [ ] Add/align heading: ``webhooks[].rules[].resources``
+
+- [ ] `workload/cronjob.md` -> `workload/cronjob.md`
+  - [ ] Add/align heading: `Notes`
+  - [ ] Add/align heading: ``schedule``
+  - [ ] Add/align heading: ``timezone``
+  - [ ] Add/align heading: ``concurrencyPolicy``
+  - [ ] Add/align heading: ``failedJobsHistoryLimit``
+  - [ ] Add/align heading: ``successfulJobsHistoryLimit``
+  - [ ] Add/align heading: ``startingDeadlineSeconds``
+  - [ ] Add/align heading: ``completionMode``
+  - [ ] Add/align heading: ``backoffLimit``
+  - [ ] Add/align heading: ``completions``
+  - [ ] Add/align heading: ``parallelism``
+  - [ ] Add/align heading: ``ttlSecondsAfterFinished``
+  - [ ] Add/align heading: ``activeDeadlineSeconds``
+
+- [ ] `workload/daemonset.md` -> `workload/daemonset.md`
+  - [ ] Add/align heading: `Notes`
+  - [ ] Add/align heading: ``revisionHistoryLimit``
+  - [ ] Add/align heading: ``strategy``
+  - [ ] Add/align heading: ``rollingUpdate``
+  - [ ] Add/align heading: ``rollingUpdate.maxUnavailable``
+  - [ ] Add/align heading: ``rollingUpdate.maxSurge``
+
+- [ ] `workload/deployment.md` -> `workload/deployment.md`
+  - [ ] Add/align heading: `Notes`
+  - [ ] Add/align heading: ``replicas``
+  - [ ] Add/align heading: ``revisionHistoryLimit``
+  - [ ] Add/align heading: ``strategy``
+  - [ ] Add/align heading: ``rollingUpdate``
+  - [ ] Add/align heading: ``rollingUpdate.maxUnavailable``
+  - [ ] Add/align heading: ``rollingUpdate.maxSurge``
+
+- [ ] `workload/index.md` -> `workload/index.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``primary``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``type``
+  - [ ] Add/align heading: ``podSpec``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``automountServiceAccountToken``
+  - [ ] Add/align heading: ``serviceAccountName``
+  - [ ] Add/align heading: ``hostNetwork``
+  - [ ] Add/align heading: ``hostPID``
+  - [ ] Add/align heading: ``hostIPC``
+  - [ ] Add/align heading: ``hostUsers``
+  - [ ] Add/align heading: ``shareProcessNamespace``
+  - [ ] Add/align heading: ``enableServiceLinks``
+  - [ ] Add/align heading: ``restartPolicy``
+  - [ ] Add/align heading: ``schedulerName``
+  - [ ] Add/align heading: ``priorityClassName``
+  - [ ] Add/align heading: ``hostname``
+  - [ ] Add/align heading: ``terminationGracePeriodSeconds``
+  - [ ] Add/align heading: ``nodeSelector``
+  - [ ] Add/align heading: ``topologySpreadConstraints``
+  - [ ] Add/align heading: ``hostAliases``
+  - [ ] Add/align heading: ``ip``
+  - [ ] Add/align heading: ``hostnames``
+  - [ ] Add/align heading: ``dnsPolicy``
+  - [ ] Add/align heading: ``dnsConfig``
+  - [ ] Add/align heading: ``dnsConfig.nameservers``
+  - [ ] Add/align heading: ``dnsConfig.searches``
+  - [ ] Add/align heading: ``dnsConfig.options``
+  - [ ] Add/align heading: ``dnsConfig.options.name``
+  - [ ] Add/align heading: ``dnsConfig.options.value``
+  - [ ] Add/align heading: ``tolerations``
+  - [ ] Add/align heading: ``tolerations.operator``
+  - [ ] Add/align heading: ``tolerations.key``
+  - [ ] Add/align heading: ``tolerations.value``
+
+- [ ] `workload/job.md` -> `workload/job.md`
+  - [ ] Add/align heading: `Notes`
+  - [ ] Add/align heading: ``completionMode``
+  - [ ] Add/align heading: ``backoffLimit``
+  - [ ] Add/align heading: ``completions``
+  - [ ] Add/align heading: ``parallelism``
+  - [ ] Add/align heading: ``ttlSecondsAfterFinished``
+  - [ ] Add/align heading: ``activeDeadlineSeconds``
+
+- [ ] `workload/statefulset.md` -> `workload/statefulset.md`
+  - [ ] Add/align heading: `Notes`
+  - [ ] Add/align heading: ``replicas``
+  - [ ] Add/align heading: ``revisionHistoryLimit``
+  - [ ] Add/align heading: ``strategy``
+  - [ ] Add/align heading: ``rollingUpdate``
+  - [ ] Add/align heading: ``rollingUpdate.maxUnavailable``
+  - [ ] Add/align heading: ``rollingUpdate.partition``
+
+## Phase 4 — Verification
+
+- [ ] Run `python3 generate_newdocs.py --clean`
+- [ ] Rebuild this todo from gap index
+- [ ] Confirm `schema-backed` section becomes empty
+- [ ] Spot-check top 10 previously failing files
