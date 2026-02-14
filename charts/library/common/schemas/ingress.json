@@ -56,7 +56,12 @@
                     },
                     "pathType": {
                       "type": "string",
-                      "description": "Define the path type for this ingress"
+                      "enum": [
+                        "Prefix",
+                        "Exact",
+                        "ImplementationSpecific"
+                      ],
+                      "description": "Define the path type for this ingress (Prefix, Exact, ImplementationSpecific)"
                     },
                     "overrideService": {
                       "type": "object",
@@ -93,7 +98,7 @@
             "additionalProperties": true,
             "description": "Configuration for `ingress.main.hosts.$item`."
           },
-          "description": "Create Ingress objects"
+          "description": "Define the hosts for this ingress"
         },
         "tls": {
           "type": "array",
@@ -105,7 +110,7 @@
                 "items": {
                   "type": "string"
                 },
-                "description": "Define the hosts for this TLS entry"
+                "description": "Define the hosts for this TLS"
               },
               "secretName": {
                 "type": "string",
@@ -123,7 +128,7 @@
             "additionalProperties": true,
             "description": "Configuration for `ingress.main.tls.$item`."
           },
-          "description": "Create Ingress objects"
+          "description": "Define TLS for this ingress"
         },
         "integrations": {
           "type": "object",
@@ -608,7 +613,12 @@
                   },
                   "pathType": {
                     "type": "string",
-                    "description": "Define the path type for this ingress"
+                    "enum": [
+                      "Prefix",
+                      "Exact",
+                      "ImplementationSpecific"
+                    ],
+                    "description": "Define the path type for this ingress (Prefix, Exact, ImplementationSpecific)"
                   },
                   "overrideService": {
                     "type": "object",
@@ -657,7 +667,7 @@
               "items": {
                 "type": "string"
               },
-              "description": "Define the hosts for this TLS entry"
+              "description": "Define the hosts for this TLS"
             },
             "secretName": {
               "type": "string",
