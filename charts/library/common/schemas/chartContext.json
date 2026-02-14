@@ -3,14 +3,18 @@
   "type": "object",
   "properties": {
     "appUrl": {
-      "type": "string"
+      "type": "string",
+      "description": "Configuration for `chartContext.appUrl`."
     },
     "podCIDR": {
-      "type": "string"
+      "type": "string",
+      "description": "Configuration for `chartContext.podCIDR`."
     },
     "svcCIDR": {
-      "type": "string"
+      "type": "string",
+      "description": "Configuration for `chartContext.svcCIDR`."
     }
   },
-  "additionalProperties": true
+  "additionalProperties": true,
+  "description": "Configuration for `chartContext`."
 }

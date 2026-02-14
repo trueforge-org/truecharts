@@ -11,40 +11,52 @@
         "boolean",
         "object",
         "array"
-      ]
+      ],
+      "description": "Configuration for `global.fallbackDefaults.storageClass`."
     },
     "probeType": {
-      "type": "string"
+      "type": "string",
+      "description": "Configuration for `global.fallbackDefaults.probeType`."
     },
     "serviceProtocol": {
-      "type": "string"
+      "type": "string",
+      "description": "Configuration for `global.fallbackDefaults.serviceProtocol`."
     },
     "serviceType": {
-      "type": "string"
+      "type": "string",
+      "description": "Configuration for `global.fallbackDefaults.serviceType`."
     },
     "persistenceType": {
-      "type": "string"
+      "type": "string",
+      "description": "Configuration for `global.fallbackDefaults.persistenceType`."
     },
     "pvcRetain": {
-      "type": "boolean"
+      "type": "boolean",
+      "description": "Configuration for `global.fallbackDefaults.pvcRetain`."
     },
     "pvcSize": {
-      "type": "string"
+      "type": "string",
+      "description": "Configuration for `global.fallbackDefaults.pvcSize`."
     },
     "vctSize": {
-      "type": "string"
+      "type": "string",
+      "description": "Configuration for `global.fallbackDefaults.vctSize`."
     },
     "accessModes": {
       "type": "array",
       "items": {
-        "type": "string"
-      }
+        "type": "string",
+        "description": "Configuration for `global.fallbackDefaults.accessModes.$item`."
+      },
+      "description": "Configuration for `global.fallbackDefaults.accessModes`."
     },
     "vctAccessModes": {
       "type": "array",
       "items": {
-        "type": "string"
-      }
+        "type": "string",
+        "description": "Configuration for `global.fallbackDefaults.vctAccessModes.$item`."
+      },
+      "description": "Configuration for `global.fallbackDefaults.vctAccessModes`."
     },
     "probeTimeouts": {
       "type": "object",
@@ -53,83 +65,107 @@
           "type": "object",
           "properties": {
             "initialDelaySeconds": {
-              "type": "integer"
+              "type": "integer",
+              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.initialDelaySeconds`."
             },
             "periodSeconds": {
-              "type": "integer"
+              "type": "integer",
+              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.periodSeconds`."
             },
             "timeoutSeconds": {
-              "type": "integer"
+              "type": "integer",
+              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.timeoutSeconds`."
             },
             "failureThreshold": {
-              "type": "integer"
+              "type": "integer",
+              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.failureThreshold`."
             },
             "successThreshold": {
-              "type": "integer"
+              "type": "integer",
+              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.successThreshold`."
             }
           },
-          "additionalProperties": true
+          "additionalProperties": true,
+          "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness`."
         },
         "readiness": {
           "type": "object",
           "properties": {
             "initialDelaySeconds": {
-              "type": "integer"
+              "type": "integer",
+              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.initialDelaySeconds`."
             },
             "periodSeconds": {
-              "type": "integer"
+              "type": "integer",
+              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.periodSeconds`."
             },
             "timeoutSeconds": {
-              "type": "integer"
+              "type": "integer",
+              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.timeoutSeconds`."
             },
             "failureThreshold": {
-              "type": "integer"
+              "type": "integer",
+              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.failureThreshold`."
             },
             "successThreshold": {
-              "type": "integer"
+              "type": "integer",
+              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.successThreshold`."
             }
           },
-          "additionalProperties": true
+          "additionalProperties": true,
+          "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness`."
         },
         "startup": {
           "type": "object",
           "properties": {
             "initialDelaySeconds": {
-              "type": "integer"
+              "type": "integer",
+              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.initialDelaySeconds`."
             },
             "periodSeconds": {
-              "type": "integer"
+              "type": "integer",
+              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.periodSeconds`."
             },
             "timeoutSeconds": {
-              "type": "integer"
+              "type": "integer",
+              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.timeoutSeconds`."
             },
             "failureThreshold": {
-              "type": "integer"
+              "type": "integer",
+              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.failureThreshold`."
             },
             "successThreshold": {
-              "type": "integer"
+              "type": "integer",
+              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.successThreshold`."
             }
           },
-          "additionalProperties": true
+          "additionalProperties": true,
+          "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup`."
         }
       },
-      "additionalProperties": true
+      "additionalProperties": true,
+      "description": "Configuration for `global.fallbackDefaults.probeTimeouts`."
     },
     "topologyKey": {
-      "type": "string"
+      "type": "string",
+      "description": "Configuration for `global.fallbackDefaults.topologyKey`."
     },
     "cnpg": {
       "type": "object",
       "properties": {
         "pgVersion": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Configuration for `global.fallbackDefaults.cnpg.pgVersion`."
         },
         "skipEmptyWalArchiveCheck": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Configuration for `global.fallbackDefaults.cnpg.skipEmptyWalArchiveCheck`."
         }
       },
-      "additionalProperties": true
+      "additionalProperties": true,
+      "description": "Configuration for `global.fallbackDefaults.cnpg`."
     }
   },
-  "additionalProperties": true
+  "additionalProperties": true,
+  "description": "Configuration for `global.fallbackDefaults`."
 }

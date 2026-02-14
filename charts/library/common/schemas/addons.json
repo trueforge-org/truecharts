@@ -6,13 +6,16 @@
       "type": "object",
       "properties": {
         "enabled": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Addons to the workloads"
         },
         "targetSelector": {
           "type": "array",
           "items": {
-            "type": "string"
-          }
+            "type": "string",
+            "description": "Configuration for `addons.gluetun.targetSelector.$item`."
+          },
+          "description": "Addons to the workloads"
         },
         "secret": {
           "type": [
@@ -23,16 +26,19 @@
             "boolean",
             "object",
             "array"
-          ]
+          ],
+          "description": "Configuration for `addons.gluetun.secret`."
         },
         "container": {
           "type": "object",
           "properties": {
             "enabled": {
-              "type": "boolean"
+              "type": "boolean",
+              "description": "Configuration for `addons.gluetun.container.enabled`."
             },
             "imageSelector": {
-              "type": "string"
+              "type": "string",
+              "description": "Configuration for `addons.gluetun.container.imageSelector`."
             },
             "probes": {
               "type": "object",
@@ -41,55 +47,68 @@
                   "type": "object",
                   "properties": {
                     "enabled": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "Configuration for `addons.gluetun.container.probes.liveness.enabled`."
                     }
                   },
-                  "additionalProperties": true
+                  "additionalProperties": true,
+                  "description": "Configuration for `addons.gluetun.container.probes.liveness`."
                 },
                 "readiness": {
                   "type": "object",
                   "properties": {
                     "enabled": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "Configuration for `addons.gluetun.container.probes.readiness.enabled`."
                     }
                   },
-                  "additionalProperties": true
+                  "additionalProperties": true,
+                  "description": "Configuration for `addons.gluetun.container.probes.readiness`."
                 },
                 "startup": {
                   "type": "object",
                   "properties": {
                     "enabled": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "Configuration for `addons.gluetun.container.probes.startup.enabled`."
                     }
                   },
-                  "additionalProperties": true
+                  "additionalProperties": true,
+                  "description": "Configuration for `addons.gluetun.container.probes.startup`."
                 }
               },
-              "additionalProperties": true
+              "additionalProperties": true,
+              "description": "Configuration for `addons.gluetun.container.probes`."
             },
             "resources": {
               "type": "object",
               "properties": {
                 "excludeExtra": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "description": "Configuration for `addons.gluetun.container.resources.excludeExtra`."
                 }
               },
-              "additionalProperties": true
+              "additionalProperties": true,
+              "description": "Configuration for `addons.gluetun.container.resources`."
             },
             "securityContext": {
               "type": "object",
               "properties": {
                 "runAsUser": {
-                  "type": "integer"
+                  "type": "integer",
+                  "description": "Configuration for `addons.gluetun.container.securityContext.runAsUser`."
                 },
                 "runAsNonRoot": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "description": "Configuration for `addons.gluetun.container.securityContext.runAsNonRoot`."
                 },
                 "readOnlyRootFilesystem": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "description": "Configuration for `addons.gluetun.container.securityContext.readOnlyRootFilesystem`."
                 },
                 "runAsGroup": {
-                  "type": "integer"
+                  "type": "integer",
+                  "description": "Configuration for `addons.gluetun.container.securityContext.runAsGroup`."
                 },
                 "capabilities": {
                   "type": "object",
@@ -97,68 +116,52 @@
                     "add": {
                       "type": "array",
                       "items": {
-                        "type": "string"
-                      }
+                        "type": "string",
+                        "description": "Configuration for `addons.gluetun.container.securityContext.capabilities.add.$item`."
+                      },
+                      "description": "Configuration for `addons.gluetun.container.securityContext.capabilities.add`."
                     }
                   },
-                  "additionalProperties": true
+                  "additionalProperties": true,
+                  "description": "Configuration for `addons.gluetun.container.securityContext.capabilities`."
                 }
               },
-              "additionalProperties": true
+              "additionalProperties": true,
+              "description": "Configuration for `addons.gluetun.container.securityContext`."
             },
             "env": {
-              "type": "object",
-              "properties": {
-                "DOT": {
-                  "type": "string"
-                },
-                "DNS_KEEP_NAMESERVER": {
-                  "type": "string"
-                },
-                "FIREWALL": {
-                  "type": "string"
-                },
-                "FIREWALL_OUTBOUND_SUBNETS": {
-                  "type": "string"
-                },
-                "FIREWALL_INPUT_PORTS": {
-                  "type": "string"
-                }
-              },
-              "additionalProperties": true
+              "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/env.json",
+              "description": "Configuration for `addons.gluetun.container.env`."
             }
           },
-          "additionalProperties": true
+          "additionalProperties": true,
+          "description": "Addons to the workloads"
         }
       },
-      "additionalProperties": true
+      "additionalProperties": true,
+      "description": "Addons to the workloads"
     },
     "tailscale": {
-      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/addons/tailscale.json"
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/addons/tailscale.json",
+      "description": "Addons to the workloads"
     },
     "codeserver": {
       "type": "object",
       "properties": {
         "enabled": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Addons to the workloads"
         },
         "container": {
           "type": "object",
           "properties": {
             "enabled": {
-              "type": "boolean"
+              "type": "boolean",
+              "description": "Configuration for `addons.codeserver.container.enabled`."
             },
             "env": {
-              "type": "object",
-              "properties": {
-                "PORT": {
-                  "type": "integer"
-                },
-                "DEFAULT_WORKSPACE": {
-                  "type": "string"
-                }
-              },
-              "additionalProperties": true
+              "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/env.json",
+              "description": "Configuration for `addons.codeserver.container.env`."
             },
             "probes": {
               "type": "object",
@@ -167,97 +170,123 @@
                   "type": "object",
                   "properties": {
                     "enabled": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "Configuration for `addons.codeserver.container.probes.liveness.enabled`."
                     },
                     "port": {
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "Configuration for `addons.codeserver.container.probes.liveness.port`."
                     },
                     "path": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "Configuration for `addons.codeserver.container.probes.liveness.path`."
                     }
                   },
-                  "additionalProperties": true
+                  "additionalProperties": true,
+                  "description": "Configuration for `addons.codeserver.container.probes.liveness`."
                 },
                 "readiness": {
                   "type": "object",
                   "properties": {
                     "enabled": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "Configuration for `addons.codeserver.container.probes.readiness.enabled`."
                     },
                     "port": {
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "Configuration for `addons.codeserver.container.probes.readiness.port`."
                     },
                     "path": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "Configuration for `addons.codeserver.container.probes.readiness.path`."
                     }
                   },
-                  "additionalProperties": true
+                  "additionalProperties": true,
+                  "description": "Configuration for `addons.codeserver.container.probes.readiness`."
                 },
                 "startup": {
                   "type": "object",
                   "properties": {
                     "enabled": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "Configuration for `addons.codeserver.container.probes.startup.enabled`."
                     },
                     "port": {
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "Configuration for `addons.codeserver.container.probes.startup.port`."
                     },
                     "path": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "Configuration for `addons.codeserver.container.probes.startup.path`."
                     }
                   },
-                  "additionalProperties": true
+                  "additionalProperties": true,
+                  "description": "Configuration for `addons.codeserver.container.probes.startup`."
                 }
               },
-              "additionalProperties": true
+              "additionalProperties": true,
+              "description": "Configuration for `addons.codeserver.container.probes`."
             },
             "imageSelector": {
-              "type": "string"
+              "type": "string",
+              "description": "Configuration for `addons.codeserver.container.imageSelector`."
             },
             "resources": {
               "type": "object",
               "properties": {
                 "excludeExtra": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "description": "Configuration for `addons.codeserver.container.resources.excludeExtra`."
                 }
               },
-              "additionalProperties": true
+              "additionalProperties": true,
+              "description": "Configuration for `addons.codeserver.container.resources`."
             },
             "securityContext": {
               "type": "object",
               "properties": {
                 "runAsUser": {
-                  "type": "integer"
+                  "type": "integer",
+                  "description": "Configuration for `addons.codeserver.container.securityContext.runAsUser`."
                 },
                 "runAsGroup": {
-                  "type": "integer"
+                  "type": "integer",
+                  "description": "Configuration for `addons.codeserver.container.securityContext.runAsGroup`."
                 },
                 "runAsNonRoot": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "description": "Configuration for `addons.codeserver.container.securityContext.runAsNonRoot`."
                 },
                 "readOnlyRootFilesystem": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "description": "Configuration for `addons.codeserver.container.securityContext.readOnlyRootFilesystem`."
                 }
               },
-              "additionalProperties": true
+              "additionalProperties": true,
+              "description": "Configuration for `addons.codeserver.container.securityContext`."
             },
             "targetSelector": {
               "type": "array",
               "items": {
-                "type": "string"
-              }
+                "type": "string",
+                "description": "Configuration for `addons.codeserver.container.targetSelector.$item`."
+              },
+              "description": "Configuration for `addons.codeserver.container.targetSelector`."
             }
           },
-          "additionalProperties": true
+          "additionalProperties": true,
+          "description": "Addons to the workloads"
         },
         "service": {
           "type": "object",
           "properties": {
             "enabled": {
-              "type": "boolean"
+              "type": "boolean",
+              "description": "Configuration for `addons.codeserver.service.enabled`."
             },
             "type": {
-              "type": "string"
+              "type": "string",
+              "description": "Configuration for `addons.codeserver.service.type`."
             },
             "ports": {
               "type": "object",
@@ -266,44 +295,55 @@
                   "type": "object",
                   "properties": {
                     "enabled": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "Configuration for `addons.codeserver.service.ports.codeserver.enabled`."
                     },
                     "primary": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "Configuration for `addons.codeserver.service.ports.codeserver.primary`."
                     },
                     "protocol": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "Configuration for `addons.codeserver.service.ports.codeserver.protocol`."
                     },
                     "port": {
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "Configuration for `addons.codeserver.service.ports.codeserver.port`."
                     },
                     "targetPort": {
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "Configuration for `addons.codeserver.service.ports.codeserver.targetPort`."
                     }
                   },
-                  "additionalProperties": true
+                  "additionalProperties": true,
+                  "description": "Configuration for `addons.codeserver.service.ports.codeserver`."
                 }
               },
-              "additionalProperties": true
+              "additionalProperties": true,
+              "description": "Configuration for `addons.codeserver.service.ports`."
             }
           },
-          "additionalProperties": true
+          "additionalProperties": true,
+          "description": "Addons to the workloads"
         },
         "ingress": {
           "type": "object",
           "properties": {
             "enabled": {
-              "type": "boolean"
+              "type": "boolean",
+              "description": "Configuration for `addons.codeserver.ingress.enabled`."
             },
             "annotations": {
               "type": "object",
               "properties": {},
-              "additionalProperties": true
+              "additionalProperties": true,
+              "description": "Configuration for `addons.codeserver.ingress.annotations`."
             },
             "labels": {
               "type": "object",
               "properties": {},
-              "additionalProperties": true
+              "additionalProperties": true,
+              "description": "Configuration for `addons.codeserver.ingress.labels`."
             },
             "hosts": {
               "type": "array",
@@ -311,7 +351,8 @@
                 "type": "object",
                 "properties": {
                   "host": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Configuration for `addons.codeserver.ingress.hosts.$item.host`."
                   },
                   "paths": {
                     "type": "array",
@@ -319,45 +360,58 @@
                       "type": "object",
                       "properties": {
                         "path": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "Configuration for `addons.codeserver.ingress.hosts.$item.paths.$item.path`."
                         },
                         "pathType": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "Configuration for `addons.codeserver.ingress.hosts.$item.paths.$item.pathType`."
                         }
                       },
-                      "additionalProperties": true
-                    }
+                      "additionalProperties": true,
+                      "description": "Configuration for `addons.codeserver.ingress.hosts.$item.paths.$item`."
+                    },
+                    "description": "Configuration for `addons.codeserver.ingress.hosts.$item.paths`."
                   }
                 },
-                "additionalProperties": true
-              }
+                "additionalProperties": true,
+                "description": "Configuration for `addons.codeserver.ingress.hosts.$item`."
+              },
+              "description": "Configuration for `addons.codeserver.ingress.hosts`."
             },
             "tls": {
-              "type": "array"
+              "type": "array",
+              "description": "Configuration for `addons.codeserver.ingress.tls`."
             }
           },
-          "additionalProperties": true
+          "additionalProperties": true,
+          "description": "Addons to the workloads"
         }
       },
-      "additionalProperties": true
+      "additionalProperties": true,
+      "description": "Addons to the workloads"
     },
     "netshoot": {
       "type": "object",
       "properties": {
         "enabled": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Addons to the workloads"
         },
         "container": {
           "type": "object",
           "properties": {
             "enabled": {
-              "type": "boolean"
+              "type": "boolean",
+              "description": "Configuration for `addons.netshoot.container.enabled`."
             },
             "command": {
               "type": "array",
               "items": {
-                "type": "string"
-              }
+                "type": "string",
+                "description": "Configuration for `addons.netshoot.container.command.$item`."
+              },
+              "description": "Configuration for `addons.netshoot.container.command`."
             },
             "probes": {
               "type": "object",
@@ -366,58 +420,72 @@
                   "type": "object",
                   "properties": {
                     "enabled": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "Configuration for `addons.netshoot.container.probes.liveness.enabled`."
                     }
                   },
-                  "additionalProperties": true
+                  "additionalProperties": true,
+                  "description": "Configuration for `addons.netshoot.container.probes.liveness`."
                 },
                 "readiness": {
                   "type": "object",
                   "properties": {
                     "enabled": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "Configuration for `addons.netshoot.container.probes.readiness.enabled`."
                     }
                   },
-                  "additionalProperties": true
+                  "additionalProperties": true,
+                  "description": "Configuration for `addons.netshoot.container.probes.readiness`."
                 },
                 "startup": {
                   "type": "object",
                   "properties": {
                     "enabled": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "Configuration for `addons.netshoot.container.probes.startup.enabled`."
                     }
                   },
-                  "additionalProperties": true
+                  "additionalProperties": true,
+                  "description": "Configuration for `addons.netshoot.container.probes.startup`."
                 }
               },
-              "additionalProperties": true
+              "additionalProperties": true,
+              "description": "Configuration for `addons.netshoot.container.probes`."
             },
             "imageSelector": {
-              "type": "string"
+              "type": "string",
+              "description": "Configuration for `addons.netshoot.container.imageSelector`."
             },
             "resources": {
               "type": "object",
               "properties": {
                 "excludeExtra": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "description": "Configuration for `addons.netshoot.container.resources.excludeExtra`."
                 }
               },
-              "additionalProperties": true
+              "additionalProperties": true,
+              "description": "Configuration for `addons.netshoot.container.resources`."
             },
             "securityContext": {
               "type": "object",
               "properties": {
                 "runAsUser": {
-                  "type": "integer"
+                  "type": "integer",
+                  "description": "Configuration for `addons.netshoot.container.securityContext.runAsUser`."
                 },
                 "runAsGroup": {
-                  "type": "integer"
+                  "type": "integer",
+                  "description": "Configuration for `addons.netshoot.container.securityContext.runAsGroup`."
                 },
                 "runAsNonRoot": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "description": "Configuration for `addons.netshoot.container.securityContext.runAsNonRoot`."
                 },
                 "readOnlyRootFilesystem": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "description": "Configuration for `addons.netshoot.container.securityContext.readOnlyRootFilesystem`."
                 },
                 "capabilities": {
                   "type": "object",
@@ -425,21 +493,64 @@
                     "add": {
                       "type": "array",
                       "items": {
-                        "type": "string"
-                      }
+                        "type": "string",
+                        "description": "Configuration for `addons.netshoot.container.securityContext.capabilities.add.$item`."
+                      },
+                      "description": "Configuration for `addons.netshoot.container.securityContext.capabilities.add`."
                     }
                   },
-                  "additionalProperties": true
+                  "additionalProperties": true,
+                  "description": "Configuration for `addons.netshoot.container.securityContext.capabilities`."
                 }
               },
-              "additionalProperties": true
+              "additionalProperties": true,
+              "description": "Configuration for `addons.netshoot.container.securityContext`."
             }
           },
-          "additionalProperties": true
+          "additionalProperties": true,
+          "description": "Addons to the workloads"
         }
       },
-      "additionalProperties": true
+      "additionalProperties": true,
+      "description": "Addons to the workloads"
     }
   },
-  "additionalProperties": true
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "ingress": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Addons to the workloads"
+      },
+      "enabled": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Enables or Disables the Addon"
+      },
+      "targetSelector": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the workloads to add the addon to"
+      },
+      "container": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define additional options for the container See container options in the [container](/truecharts-common/container) section."
+      },
+      "service": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define additional options for the service See service options in the [service](/truecharts-common/service) section."
+      }
+    },
+    "additionalProperties": true,
+    "description": "COnfigure the addon Available addons:"
+  },
+  "description": "Addons to the workloads"
 }

@@ -6,10 +6,12 @@
       "type": "object",
       "properties": {
         "enabled": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Define service objects"
         },
         "primary": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Configuration for `service.main.primary`."
         },
         "ports": {
           "type": "object",
@@ -18,23 +20,330 @@
               "type": "object",
               "properties": {
                 "enabled": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "description": "Configuration for `service.main.ports.main.enabled`."
                 },
                 "primary": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "description": "Configuration for `service.main.ports.main.primary`."
                 },
                 "protocol": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "Define the port dict"
                 }
               },
-              "additionalProperties": true
+              "additionalProperties": true,
+              "description": "Define the port dict"
             }
           },
-          "additionalProperties": true
+          "additionalProperties": true,
+          "description": "Define service objects"
         }
       },
-      "additionalProperties": true
+      "additionalProperties": true,
+      "description": "Define service objects"
     }
   },
-  "additionalProperties": true
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "integrations": {
+        "type": "object",
+        "properties": {
+          "traefik": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Enables or Disables the traefik integration"
+              },
+              "forceTLS": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Force TLS when talking to the backend service Adds the `traefik.ingress.kubernetes.io/service.serversscheme: \"https\"` annotation."
+              },
+              "insecureSkipVerify": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Skip TLS verification when taling to an HTTPS backend service Allows talking to HTTPS backend services which use self-signed certs."
+              },
+              "serverName": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Set the hostname to use when talking to a backend service"
+              },
+              "rootCAs": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "configMapRef": {
+                      "type": "object",
+                      "properties": {
+                        "expandObjectName": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": true,
+                          "description": "List of kubernetes secrets (in the same namespace) containing certificate authorities to use when performing TLS verification of the backend service."
+                        },
+                        "name": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": true,
+                          "description": "Define the configmap name This will be automatically expanded to `fullname-configmap-name`."
+                        }
+                      },
+                      "additionalProperties": true,
+                      "description": "Define the configMapRef"
+                    },
+                    "secretRef": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": true,
+                          "description": "Define the secret name This will be automatically expanded to `fullname-secret-name`."
+                        },
+                        "expandObjectName": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": true,
+                          "description": "Whether to expand (adding the fullname as prefix) the secret name"
+                        }
+                      },
+                      "additionalProperties": true,
+                      "description": "Define the secretRef"
+                    }
+                  },
+                  "additionalProperties": true,
+                  "description": "Configuration for `$name.integrations.traefik.rootCAs.$name`."
+                },
+                "description": "List of kubernetes secrets (in the same namespace) containing certificate authorities to use when performing TLS verification of the backend service."
+              }
+            },
+            "additionalProperties": true,
+            "description": "Define service objects"
+          }
+        },
+        "additionalProperties": true,
+        "description": "Define the integrations for this service"
+      },
+      "externalName": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Configure ExternalName type"
+      },
+      "ports": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+          "type": "object",
+          "properties": {
+            "nodePort": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define the node port that will be exposed on the node"
+            },
+            "targetSelector": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define the port dict"
+            },
+            "port": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define the port that will be exposed by the service"
+            },
+            "targetPort": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define the target port (No named ports)"
+            },
+            "protocol": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define the port protocol Used by the container ports and probes, http and https are converted to tcp where needed"
+            },
+            "hostPort": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define the hostPort, should be **avoided**, unless **ABSOLUTELY** necessary"
+            }
+          },
+          "additionalProperties": true,
+          "description": "Define the port dict"
+        },
+        "description": "Define the ports of the service See [Ports](/truecharts-common/service/ports)"
+      },
+      "sharedKey": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Sets the shared key in `metallb.io/allow-shared-ip` **MetalLB** Annotation"
+      },
+      "loadBalancerIP": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the load balancer IP, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIPs`"
+      },
+      "loadBalancerIPs": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the load balancer IPs, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIP`"
+      },
+      "loadBalancerSourceRanges": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the load balancer source ranges"
+      },
+      "externalIP": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Configure External IP type"
+      },
+      "useSlice": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define whether to use `EndpointSlice` or `Endpoint`"
+      },
+      "addressType": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the addressType for External IP"
+      },
+      "appProtocol": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the appProtocol for External IP"
+      },
+      "enabled": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Enables or Disables the service"
+      },
+      "namespace": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the namespace for this object"
+      },
+      "labels": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Additional labels for service"
+      },
+      "annotations": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Additional annotations for service"
+      },
+      "type": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the service type"
+      },
+      "expandObjectName": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Whether to expand the object name (based on the [naming scheme](/truecharts-common/service#naming-scheme)) or not"
+      },
+      "clusterIP": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Configure Cluster IP type"
+      },
+      "ipFamilyPolicy": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the ipFamilyPolicy Does **not** apply to `type` of `ExternalName` or `ExternalIP`"
+      },
+      "ipFamilies": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the ipFamilies Does **not** apply to `type` of `ExternalName` or `ExternalIP`"
+      },
+      "sessionAffinity": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the session affinity (ClientIP, None)"
+      },
+      "sessionAffinityConfig": {
+        "type": "object",
+        "properties": {
+          "clientIP": {
+            "type": "object",
+            "properties": {
+              "timeoutSeconds": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the timeout for ClientIP session affinity (0-86400)"
+              }
+            },
+            "additionalProperties": true,
+            "description": "Configuration for `$name.sessionAffinityConfig.clientIP`."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Configuration for `$name.sessionAffinityConfig`."
+      },
+      "externalIPs": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define externalIPs"
+      },
+      "externalTrafficPolicy": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the external traffic policy (Cluster, Local) Does **not** apply to `type` of `ClusterIP`"
+      },
+      "publishNotReadyAddresses": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define whether to publishNotReadyAddresses or not"
+      },
+      "targetSelector": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the pod to link the service, by default will use the primary pod"
+      }
+    },
+    "additionalProperties": true,
+    "description": "Define service"
+  },
+  "description": "Define service objects"
 }

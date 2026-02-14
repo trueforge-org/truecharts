@@ -3,17 +3,22 @@
   "type": "object",
   "properties": {
     "header": {
-      "type": "string"
+      "type": "string",
+      "description": "Define values for `NOTES.txt`"
     },
     "custom": {
-      "type": "string"
+      "type": "string",
+      "description": "Define values for `NOTES.txt`"
     },
     "footer": {
-      "type": "string"
+      "type": "string",
+      "description": "Define values for `NOTES.txt`"
     },
     "warnings": {
-      "type": "array"
+      "type": "array",
+      "description": "Configuration for `notes.warnings`."
     }
   },
-  "additionalProperties": true
+  "additionalProperties": true,
+  "description": "Define values for `NOTES.txt`"
 }

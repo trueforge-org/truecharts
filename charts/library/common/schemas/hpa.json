@@ -6,14 +6,18 @@
       "type": "object",
       "properties": {
         "enabled": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Configuration for `hpa.main.enabled`."
         },
         "targetSelector": {
-          "type": "array"
+          "type": "array",
+          "description": "Configuration for `hpa.main.targetSelector`."
         }
       },
-      "additionalProperties": true
+      "additionalProperties": true,
+      "description": "Configuration for `hpa.main`."
     }
   },
-  "additionalProperties": true
+  "additionalProperties": true,
+  "description": "Configuration for `hpa`."
 }

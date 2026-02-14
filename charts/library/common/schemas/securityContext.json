@@ -6,74 +6,95 @@
       "type": "object",
       "properties": {
         "runAsUser": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Configuration for `securityContext.container.runAsUser`."
         },
         "runAsGroup": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Configuration for `securityContext.container.runAsGroup`."
         },
         "readOnlyRootFilesystem": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Configuration for `securityContext.container.readOnlyRootFilesystem`."
         },
         "allowPrivilegeEscalation": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Configuration for `securityContext.container.allowPrivilegeEscalation`."
         },
         "privileged": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Configuration for `securityContext.container.privileged`."
         },
         "seccompProfile": {
           "type": "object",
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "description": "Configuration for `securityContext.container.seccompProfile.type`."
             }
           },
-          "additionalProperties": true
+          "additionalProperties": true,
+          "description": "Configuration for `securityContext.container.seccompProfile`."
         },
         "capabilities": {
           "type": "object",
           "properties": {
             "add": {
-              "type": "array"
+              "type": "array",
+              "description": "Configuration for `securityContext.container.capabilities.add`."
             },
             "drop": {
               "type": "array",
               "items": {
-                "type": "string"
-              }
+                "type": "string",
+                "description": "Configuration for `securityContext.container.capabilities.drop.$item`."
+              },
+              "description": "Configuration for `securityContext.container.capabilities.drop`."
             },
             "disableS6Caps": {
-              "type": "boolean"
+              "type": "boolean",
+              "description": "Configuration for `securityContext.container.capabilities.disableS6Caps`."
             }
           },
-          "additionalProperties": true
+          "additionalProperties": true,
+          "description": "Configuration for `securityContext.container.capabilities`."
         },
         "PUID": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Configuration for `securityContext.container.PUID`."
         },
         "UMASK": {
-          "type": "string"
+          "type": "string",
+          "description": "Configuration for `securityContext.container.UMASK`."
         }
       },
-      "additionalProperties": true
+      "additionalProperties": true,
+      "description": "Defines the security context for the container. Can be overridden at container level. See [Container Security Context](/truecharts-common/container/securitycontext#securitycontext)"
     },
     "pod": {
       "type": "object",
       "properties": {
         "fsGroup": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Configuration for `securityContext.pod.fsGroup`."
         },
         "fsGroupChangePolicy": {
-          "type": "string"
+          "type": "string",
+          "description": "Configuration for `securityContext.pod.fsGroupChangePolicy`."
         },
         "supplementalGroups": {
-          "type": "array"
+          "type": "array",
+          "description": "Configuration for `securityContext.pod.supplementalGroups`."
         },
         "sysctls": {
-          "type": "array"
+          "type": "array",
+          "description": "Configuration for `securityContext.pod.sysctls`."
         }
       },
-      "additionalProperties": true
+      "additionalProperties": true,
+      "description": "Defines the security context for the pod. Can be overridden at pod level. See [Pod Security Context](/truecharts-common/workload#securitycontext)"
     }
   },
-  "additionalProperties": true
+  "additionalProperties": true,
+  "description": "Define security context for all containers and pods, unless overridden at the container/pod level See more info about securityContext [here](/truecharts-common/securitycontext)"
 }

@@ -3,116 +3,147 @@
   "type": "object",
   "properties": {
     "enabled": {
-      "type": "boolean"
+      "type": "boolean",
+      "description": "Define a CNPG cluster"
     },
     "primary": {
-      "type": "boolean"
+      "type": "boolean",
+      "description": "Define a CNPG cluster"
     },
     "hibernate": {
-      "type": "boolean"
+      "type": "boolean",
+      "description": "Define a CNPG cluster"
     },
     "labels": {
       "type": "object",
       "properties": {},
-      "additionalProperties": true
+      "additionalProperties": true,
+      "description": "Define a CNPG cluster"
     },
     "annotations": {
       "type": "object",
       "properties": {},
-      "additionalProperties": true
+      "additionalProperties": true,
+      "description": "Define a CNPG cluster"
     },
     "type": {
-      "type": "string"
+      "type": "string",
+      "description": "Define a CNPG cluster"
     },
     "pgVersion": {
-      "type": "integer"
+      "type": "integer",
+      "description": "Define a CNPG cluster"
     },
     "mode": {
-      "type": "string"
+      "type": "string",
+      "description": "Define a CNPG cluster"
     },
     "database": {
-      "type": "string"
+      "type": "string",
+      "description": "Define a CNPG cluster"
     },
     "user": {
-      "type": "string"
+      "type": "string",
+      "description": "Define a CNPG cluster"
     },
     "password": {
-      "type": "string"
+      "type": "string",
+      "description": "Define a CNPG cluster"
     },
     "cluster": {
-      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/cnpg/main/cluster.json"
+      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/cnpg/main/cluster.json",
+      "description": "Define a CNPG cluster"
     },
     "monitoring": {
       "type": "object",
       "properties": {
         "enablePodMonitor": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Configuration for `cnpg.main.monitoring.enablePodMonitor`."
         },
         "disableDefaultQueries": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Configuration for `cnpg.main.monitoring.disableDefaultQueries`."
         },
         "customQueries": {
-          "type": "array"
+          "type": "array",
+          "description": "Configuration for `cnpg.main.monitoring.customQueries`."
         }
       },
-      "additionalProperties": true
+      "additionalProperties": true,
+      "description": "Configuration for `cnpg.main.monitoring`."
     },
     "recovery": {
       "type": "object",
       "properties": {
         "method": {
-          "type": "string"
+          "type": "string",
+          "description": "Configuration for `cnpg.main.recovery.method`."
         },
         "servername": {
-          "type": "string"
+          "type": "string",
+          "description": "Configuration for `cnpg.main.recovery.servername`."
         },
         "pitrTarget": {
           "type": "object",
           "properties": {
             "time": {
-              "type": "string"
+              "type": "string",
+              "description": "Configuration for `cnpg.main.recovery.pitrTarget.time`."
             }
           },
-          "additionalProperties": true
+          "additionalProperties": true,
+          "description": "Configuration for `cnpg.main.recovery.pitrTarget`."
         },
         "backupName": {
-          "type": "string"
+          "type": "string",
+          "description": "Configuration for `cnpg.main.recovery.backupName`."
         },
         "clusterName": {
-          "type": "string"
+          "type": "string",
+          "description": "Configuration for `cnpg.main.recovery.clusterName`."
         },
         "destinationPath": {
-          "type": "string"
+          "type": "string",
+          "description": "Configuration for `cnpg.main.recovery.destinationPath`."
         }
       },
-      "additionalProperties": true
+      "additionalProperties": true,
+      "description": "Configuration for `cnpg.main.recovery`."
     },
     "backups": {
       "type": "object",
       "properties": {
         "enabled": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Configuration for `cnpg.main.backups.enabled`."
         },
         "encryption": {
           "type": "object",
           "properties": {
             "enabled": {
-              "type": "boolean"
+              "type": "boolean",
+              "description": "Configuration for `cnpg.main.backups.encryption.enabled`."
             }
           },
-          "additionalProperties": true
+          "additionalProperties": true,
+          "description": "Configuration for `cnpg.main.backups.encryption`."
         },
         "servername": {
-          "type": "string"
+          "type": "string",
+          "description": "Configuration for `cnpg.main.backups.servername`."
         },
         "destinationPath": {
-          "type": "string"
+          "type": "string",
+          "description": "Configuration for `cnpg.main.backups.destinationPath`."
         },
         "target": {
-          "type": "string"
+          "type": "string",
+          "description": "Configuration for `cnpg.main.backups.target`."
         },
         "credentials": {
-          "type": "string"
+          "type": "string",
+          "description": "Configuration for `cnpg.main.backups.credentials`."
         },
         "scheduledBackups": {
           "type": "array",
@@ -120,66 +151,85 @@
             "type": "object",
             "properties": {
               "name": {
-                "type": "string"
+                "type": "string",
+                "description": "Configuration for `cnpg.main.backups.scheduledBackups.$item.name`."
               },
               "schedule": {
-                "type": "string"
+                "type": "string",
+                "description": "Configuration for `cnpg.main.backups.scheduledBackups.$item.schedule`."
               },
               "backupOwnerReference": {
-                "type": "string"
+                "type": "string",
+                "description": "Configuration for `cnpg.main.backups.scheduledBackups.$item.backupOwnerReference`."
               },
               "immediate": {
-                "type": "boolean"
+                "type": "boolean",
+                "description": "Configuration for `cnpg.main.backups.scheduledBackups.$item.immediate`."
               },
               "suspend": {
-                "type": "boolean"
+                "type": "boolean",
+                "description": "Configuration for `cnpg.main.backups.scheduledBackups.$item.suspend`."
               }
             },
-            "additionalProperties": true
-          }
+            "additionalProperties": true,
+            "description": "Configuration for `cnpg.main.backups.scheduledBackups.$item`."
+          },
+          "description": "Configuration for `cnpg.main.backups.scheduledBackups`."
         },
         "retentionPolicy": {
-          "type": "string"
+          "type": "string",
+          "description": "Configuration for `cnpg.main.backups.retentionPolicy`."
         },
         "manualBackups": {
-          "type": "array"
+          "type": "array",
+          "description": "Configuration for `cnpg.main.backups.manualBackups`."
         }
       },
-      "additionalProperties": true
+      "additionalProperties": true,
+      "description": "Configuration for `cnpg.main.backups`."
     },
     "pooler": {
       "type": "object",
       "properties": {
         "enabled": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Configuration for `cnpg.main.pooler.enabled`."
         },
         "createRO": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Configuration for `cnpg.main.pooler.createRO`."
         },
         "poolMode": {
-          "type": "string"
+          "type": "string",
+          "description": "Configuration for `cnpg.main.pooler.poolMode`."
         },
         "instances": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Configuration for `cnpg.main.pooler.instances`."
         },
         "labels": {
           "type": "object",
           "properties": {},
-          "additionalProperties": true
+          "additionalProperties": true,
+          "description": "Configuration for `cnpg.main.pooler.labels`."
         },
         "annotations": {
           "type": "object",
           "properties": {},
-          "additionalProperties": true
+          "additionalProperties": true,
+          "description": "Configuration for `cnpg.main.pooler.annotations`."
         }
       },
-      "additionalProperties": true
+      "additionalProperties": true,
+      "description": "Configuration for `cnpg.main.pooler`."
     },
     "creds": {
       "type": "object",
       "properties": {},
-      "additionalProperties": true
+      "additionalProperties": true,
+      "description": "Configuration for `cnpg.main.creds`."
     }
   },
-  "additionalProperties": true
+  "additionalProperties": true,
+  "description": "Define a CNPG cluster"
 }

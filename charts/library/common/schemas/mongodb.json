@@ -3,22 +3,28 @@
   "type": "object",
   "properties": {
     "enabled": {
-      "type": "boolean"
+      "type": "boolean",
+      "description": "Configuration for `mongodb.enabled`."
     },
     "includeCommon": {
-      "type": "boolean"
+      "type": "boolean",
+      "description": "Configuration for `mongodb.includeCommon`."
     },
     "password": {
-      "type": "string"
+      "type": "string",
+      "description": "Configuration for `mongodb.password`."
     },
     "rootPassword": {
-      "type": "string"
+      "type": "string",
+      "description": "Configuration for `mongodb.rootPassword`."
     },
     "creds": {
       "type": "object",
       "properties": {},
-      "additionalProperties": true
+      "additionalProperties": true,
+      "description": "Configuration for `mongodb.creds`."
     }
   },
-  "additionalProperties": true
+  "additionalProperties": true,
+  "description": "Configuration for `mongodb`."
 }

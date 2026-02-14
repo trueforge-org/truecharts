@@ -2,5 +2,126 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "properties": {},
-  "additionalProperties": true
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "subjects": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+          "type": "object",
+          "properties": {
+            "apiGroup": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Create rbac objects"
+            },
+            "kind": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define the `kind` of `subjects` entry"
+            },
+            "name": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define the `name` of `subjects` entry"
+            }
+          },
+          "additionalProperties": true,
+          "description": "Configuration for `$name.subjects.$name`."
+        },
+        "description": "Define `subjects` for (Cluster)RoleBinding"
+      },
+      "enabled": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Enables or Disables the rbac"
+      },
+      "primary": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Sets the rbac as primary"
+      },
+      "namespace": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the namespace for this object (Only when clusterWide is false)"
+      },
+      "clusterWide": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Sets the rbac as cluster wide (ClusterRole, ClusterRoleBinding)"
+      },
+      "labels": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Additional labels for rbac"
+      },
+      "annotations": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Additional annotations for rbac"
+      },
+      "allServiceAccounts": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Whether to assign all service accounts or not to the (Cluster)RoleBinding"
+      },
+      "serviceAccounts": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the service account(s) to assign the (Cluster)RoleBinding"
+      },
+      "rules": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+          "type": "object",
+          "properties": {
+            "apiGroups": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define the `apiGroups` list for the `rules` for the (Cluster)Role"
+            },
+            "resources": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define the `resources` list for the `rules` for the (Cluster)Role"
+            },
+            "resourceNames": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define the `resourceNames` list for the `rules` for the (Cluster)Role"
+            },
+            "verbs": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define the `verbs` list for the `rules` for the (Cluster)Role"
+            }
+          },
+          "additionalProperties": true,
+          "description": "Configuration for `$name.rules.$name`."
+        },
+        "description": "Define the `rules` for the (Cluster)Role"
+      }
+    },
+    "additionalProperties": true,
+    "description": "Define rbac"
+  },
+  "description": "Create rbac objects"
 }

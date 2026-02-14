@@ -6,26 +6,33 @@
       "type": "object",
       "properties": {
         "cpu": {
-          "type": "string"
+          "type": "string",
+          "description": "Configuration for `resources.limits.cpu`."
         },
         "memory": {
-          "type": "string"
+          "type": "string",
+          "description": "Configuration for `resources.limits.memory`."
         }
       },
-      "additionalProperties": true
+      "additionalProperties": true,
+      "description": "See [Resources Limits](/truecharts-common/container/resources#resourceslimits)"
     },
     "requests": {
       "type": "object",
       "properties": {
         "cpu": {
-          "type": "string"
+          "type": "string",
+          "description": "Configuration for `resources.requests.cpu`."
         },
         "memory": {
-          "type": "string"
+          "type": "string",
+          "description": "Configuration for `resources.requests.memory`."
         }
       },
-      "additionalProperties": true
+      "additionalProperties": true,
+      "description": "See [Resources Requests](/truecharts-common/container/resources#resourcesrequests)"
     }
   },
-  "additionalProperties": true
+  "additionalProperties": true,
+  "description": "Define resources for all containers, unless overridden at the container level Resources apply to **EACH** container, not to the pod as a whole."
 }

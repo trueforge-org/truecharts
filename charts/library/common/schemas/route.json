@@ -6,20 +6,24 @@
       "type": "object",
       "properties": {
         "enabled": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Configuration for `route.main.enabled`."
         },
         "kind": {
-          "type": "string"
+          "type": "string",
+          "description": "Configuration for `route.main.kind`."
         },
         "annotations": {
           "type": "object",
           "properties": {},
-          "additionalProperties": true
+          "additionalProperties": true,
+          "description": "Configuration for `route.main.annotations`."
         },
         "labels": {
           "type": "object",
           "properties": {},
-          "additionalProperties": true
+          "additionalProperties": true,
+          "description": "Configuration for `route.main.labels`."
         },
         "parentRefs": {
           "type": "array",
@@ -27,10 +31,12 @@
             "type": "object",
             "properties": {
               "group": {
-                "type": "string"
+                "type": "string",
+                "description": "Configuration for `route.main.parentRefs.$item.group`."
               },
               "kind": {
-                "type": "string"
+                "type": "string",
+                "description": "Configuration for `route.main.parentRefs.$item.kind`."
               },
               "name": {
                 "type": [
@@ -41,7 +47,8 @@
                   "boolean",
                   "object",
                   "array"
-                ]
+                ],
+                "description": "Configuration for `route.main.parentRefs.$item.name`."
               },
               "namespace": {
                 "type": [
@@ -52,7 +59,8 @@
                   "boolean",
                   "object",
                   "array"
-                ]
+                ],
+                "description": "Configuration for `route.main.parentRefs.$item.namespace`."
               },
               "sectionName": {
                 "type": [
@@ -63,14 +71,18 @@
                   "boolean",
                   "object",
                   "array"
-                ]
+                ],
+                "description": "Configuration for `route.main.parentRefs.$item.sectionName`."
               }
             },
-            "additionalProperties": true
-          }
+            "additionalProperties": true,
+            "description": "Configuration for `route.main.parentRefs.$item`."
+          },
+          "description": "Configuration for `route.main.parentRefs`."
         },
         "hostnames": {
-          "type": "array"
+          "type": "array",
+          "description": "Configuration for `route.main.hostnames`."
         },
         "rules": {
           "type": "array",
@@ -83,10 +95,12 @@
                   "type": "object",
                   "properties": {
                     "group": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "Configuration for `route.main.rules.$item.backendRefs.$item.group`."
                     },
                     "kind": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "Configuration for `route.main.rules.$item.backendRefs.$item.kind`."
                     },
                     "name": {
                       "type": [
@@ -97,7 +111,8 @@
                         "boolean",
                         "object",
                         "array"
-                      ]
+                      ],
+                      "description": "Configuration for `route.main.rules.$item.backendRefs.$item.name`."
                     },
                     "namespace": {
                       "type": [
@@ -108,7 +123,8 @@
                         "boolean",
                         "object",
                         "array"
-                      ]
+                      ],
+                      "description": "Configuration for `route.main.rules.$item.backendRefs.$item.namespace`."
                     },
                     "port": {
                       "type": [
@@ -119,14 +135,18 @@
                         "boolean",
                         "object",
                         "array"
-                      ]
+                      ],
+                      "description": "Configuration for `route.main.rules.$item.backendRefs.$item.port`."
                     },
                     "weight": {
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "Configuration for `route.main.rules.$item.backendRefs.$item.weight`."
                     }
                   },
-                  "additionalProperties": true
-                }
+                  "additionalProperties": true,
+                  "description": "Configuration for `route.main.rules.$item.backendRefs.$item`."
+                },
+                "description": "Configuration for `route.main.rules.$item.backendRefs`."
               },
               "matches": {
                 "type": "array",
@@ -137,25 +157,34 @@
                       "type": "object",
                       "properties": {
                         "type": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "Configuration for `route.main.rules.$item.matches.$item.path.type`."
                         },
                         "value": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "Configuration for `route.main.rules.$item.matches.$item.path.value`."
                         }
                       },
-                      "additionalProperties": true
+                      "additionalProperties": true,
+                      "description": "Configuration for `route.main.rules.$item.matches.$item.path`."
                     }
                   },
-                  "additionalProperties": true
-                }
+                  "additionalProperties": true,
+                  "description": "Configuration for `route.main.rules.$item.matches.$item`."
+                },
+                "description": "Configuration for `route.main.rules.$item.matches`."
               }
             },
-            "additionalProperties": true
-          }
+            "additionalProperties": true,
+            "description": "Configuration for `route.main.rules.$item`."
+          },
+          "description": "Configuration for `route.main.rules`."
         }
       },
-      "additionalProperties": true
+      "additionalProperties": true,
+      "description": "Configuration for `route.main`."
     }
   },
-  "additionalProperties": true
+  "additionalProperties": true,
+  "description": "Configuration for `route`."
 }
