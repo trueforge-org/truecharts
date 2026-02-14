@@ -19,126 +19,11 @@
                   "description": "Define env(s) for the container"
                 },
                 "resources": {
-                  "type": "object",
-                  "properties": {
-                    "limits": {
-                      "type": "object",
-                      "properties": {
-                        "memory": {
-                          "type": [
-                            "string",
-                            "number"
-                          ],
-                          "description": "The resources that the container can use."
-                        },
-                        "cpu": {
-                          "type": [
-                            "string",
-                            "number"
-                          ],
-                          "description": "The maximum amount of CPU that the container can use."
-                        }
-                      },
-                      "additionalProperties": true,
-                      "description": "The maximum amount of resources that the container can use. Limits are **optional**, can be set to \"unlimited\" by setting it's values (`cpu` and `memory`) to `0`."
-                    },
-                    "requests": {
-                      "type": "object",
-                      "properties": {
-                        "cpu": {
-                          "type": [
-                            "string",
-                            "number"
-                          ],
-                          "description": "The minimum amount of CPU that the container can use."
-                        },
-                        "memory": {
-                          "type": [
-                            "string",
-                            "number"
-                          ],
-                          "description": "The minimum amount of memory that the container can use."
-                        }
-                      },
-                      "additionalProperties": true,
-                      "description": "The minimum amount of resources that the container needs. Requests are **required**, because without it, kubernetes uses the `limits` as the `requests`."
-                    }
-                  },
-                  "additionalProperties": true,
+                  "$ref": "podSpec/containers/resources.json",
                   "description": "The resources that the container can use."
                 },
                 "securityContext": {
-                  "type": [
-                    "object",
-                    "null"
-                  ],
-                  "properties": {
-                    "seccompProfile": {
-                      "type": "object",
-                      "properties": {
-                        "profile": {
-                          "type": "object",
-                          "properties": {},
-                          "additionalProperties": true,
-                          "description": "Define securityContext for the container"
-                        },
-                        "type": {
-                          "type": "object",
-                          "properties": {},
-                          "additionalProperties": true,
-                          "description": "Define the seccompProfile.type for the container"
-                        }
-                      },
-                      "additionalProperties": true,
-                      "description": "Define the seccompProfile for the container"
-                    },
-                    "runAsUser": {
-                      "type": "integer",
-                      "description": "Define the runAsUser for the container"
-                    },
-                    "runAsGroup": {
-                      "type": "integer",
-                      "description": "Define the runAsGroup for the container"
-                    },
-                    "readOnlyRootFilesystem": {
-                      "type": "boolean",
-                      "description": "Define the readOnlyRootFilesystem for the container"
-                    },
-                    "allowPrivilegeEscalation": {
-                      "type": "boolean",
-                      "description": "Define the allowPrivilegeEscalation for the container"
-                    },
-                    "privileged": {
-                      "type": "boolean",
-                      "description": "Define the privileged for the container"
-                    },
-                    "runAsNonRoot": {
-                      "type": "boolean",
-                      "description": "Define the runAsNonRoot for the container"
-                    },
-                    "capabilities": {
-                      "type": "object",
-                      "properties": {
-                        "add": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          },
-                          "description": "Define the capabilities.add for the container"
-                        },
-                        "drop": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          },
-                          "description": "Define the capabilities.drop for the container"
-                        }
-                      },
-                      "additionalProperties": true,
-                      "description": "Define the capabilities for the container If at least one capability is defined in either [`add`](/truecharts-common/container/securitycontext/#securitycontextcapabilitiesadd) or [`drop`](/truecharts-common/container/securitycontext/#securitycontextcapabilitiesdrop)"
-                    }
-                  },
-                  "additionalProperties": true,
+                  "$ref": "podSpec/containers/securityContext.json",
                   "description": "Define securityContext for the container"
                 },
                 "enabled": {
@@ -165,320 +50,31 @@
                   "description": "Define if the container should have tty enabled or not"
                 },
                 "probes": {
-                  "type": "object",
-                  "properties": {
-                    "liveness": {
-                      "type": "object",
-                      "properties": {
-                        "enabled": {
-                          "type": [
-                            "boolean",
-                            "string"
-                          ],
-                          "description": "Define probes for the container"
-                        },
-                        "type": {
-                          "type": "string",
-                          "description": "Define probes for the container"
-                        },
-                        "port": {
-                          "type": [
-                            "integer",
-                            "string"
-                          ],
-                          "description": "Define probes for the container"
-                        }
-                      },
-                      "additionalProperties": true,
-                      "description": "Define the liveness probe"
-                    },
-                    "readiness": {
-                      "type": "object",
-                      "properties": {
-                        "enabled": {
-                          "type": [
-                            "boolean",
-                            "string"
-                          ],
-                          "description": "Define probes for the container"
-                        },
-                        "type": {
-                          "type": "string",
-                          "description": "Define probes for the container"
-                        },
-                        "port": {
-                          "type": [
-                            "integer",
-                            "string"
-                          ],
-                          "description": "Define probes for the container"
-                        }
-                      },
-                      "additionalProperties": true,
-                      "description": "Define the readiness probe"
-                    },
-                    "startup": {
-                      "type": "object",
-                      "properties": {
-                        "enabled": {
-                          "type": [
-                            "boolean",
-                            "string"
-                          ],
-                          "description": "Define probes for the container"
-                        },
-                        "type": {
-                          "type": "string",
-                          "description": "Define probes for the container"
-                        },
-                        "port": {
-                          "type": [
-                            "integer",
-                            "string"
-                          ],
-                          "description": "Define probes for the container"
-                        }
-                      },
-                      "additionalProperties": true,
-                      "description": "Define the startup probe"
-                    }
-                  },
-                  "additionalProperties": {
-                    "type": "object",
-                    "properties": {
-                      "spec": {
-                        "type": "object",
-                        "properties": {
-                          "successThreshold": {
-                            "type": "object",
-                            "properties": {},
-                            "additionalProperties": true,
-                            "description": "Define probes for the container"
-                          },
-                          "initialDelaySeconds": {
-                            "type": "object",
-                            "properties": {},
-                            "additionalProperties": true,
-                            "description": "Define the initialDelaySeconds in seconds"
-                          },
-                          "periodSeconds": {
-                            "type": "object",
-                            "properties": {},
-                            "additionalProperties": true,
-                            "description": "Define the periodSeconds in seconds"
-                          },
-                          "timeoutSeconds": {
-                            "type": "object",
-                            "properties": {},
-                            "additionalProperties": true,
-                            "description": "Define the timeoutSeconds in seconds"
-                          },
-                          "failureThreshold": {
-                            "type": "object",
-                            "properties": {},
-                            "additionalProperties": true,
-                            "description": "Define the failureThreshold in seconds"
-                          }
-                        },
-                        "additionalProperties": true,
-                        "description": "Define the probe spec"
-                      },
-                      "enabled": {
-                        "type": [
-                          "boolean",
-                          "string"
-                        ],
-                        "properties": {},
-                        "additionalProperties": true,
-                        "description": "Enable or disable the probe"
-                      },
-                      "type": {
-                        "type": "object",
-                        "properties": {},
-                        "additionalProperties": true,
-                        "description": "Define probe type"
-                      },
-                      "port": {
-                        "type": [
-                          "integer",
-                          "string"
-                        ],
-                        "description": "Define the port - Only applies when `type: grpc/tcp/http/https`"
-                      },
-                      "path": {
-                        "type": "string",
-                        "description": "Define the path - Only applies when `type: http/https`"
-                      },
-                      "httpHeaders": {
-                        "type": "object",
-                        "properties": {},
-                        "additionalProperties": true,
-                        "description": "Define the httpHeaders - Only applies when `type: http/https`"
-                      }
-                    },
-                    "additionalProperties": true,
-                    "description": "Configuration for `$name.podSpec.containers.$name.probes.$name`."
-                  },
+                  "$ref": "podSpec/containers/probes.json",
                   "description": "Define probes for the container"
                 },
                 "command": {
-                  "oneOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "array"
-                    }
-                  ],
+                  "$ref": "podSpec/containers/command.json",
                   "description": "Define command(s). If it's single, can be defined as string"
                 },
                 "lifecycle": {
-                  "type": "object",
-                  "properties": {
-                    "preStop": {
-                      "type": "object",
-                      "properties": {},
-                      "additionalProperties": true,
-                      "description": "Define preStop lifecycle"
-                    },
-                    "postStart": {
-                      "type": "object",
-                      "properties": {},
-                      "additionalProperties": true,
-                      "description": "Define preStop lifecycle"
-                    }
-                  },
-                  "additionalProperties": {
-                    "type": "object",
-                    "properties": {
-                      "httpHeaders": {
-                        "type": "object",
-                        "properties": {},
-                        "additionalProperties": true,
-                        "description": "Define lifecycle for the container"
-                      },
-                      "type": {
-                        "type": "object",
-                        "properties": {},
-                        "additionalProperties": true,
-                        "description": "Define hook type"
-                      },
-                      "port": {
-                        "type": [
-                          "integer",
-                          "string"
-                        ],
-                        "description": "Define the port - Only applies when `type: http` or `type: https`"
-                      },
-                      "host": {
-                        "type": "string",
-                        "description": "Define the host - Only applies when `type: http` or `type: https`"
-                      },
-                      "path": {
-                        "type": "string",
-                        "description": "Define the path - Only applies when `type: http` or `type: https`"
-                      }
-                    },
-                    "additionalProperties": true,
-                    "description": "Configuration for `$name.podSpec.containers.$name.lifecycle.$name`."
-                  },
+                  "$ref": "podSpec/containers/lifecycle.json",
                   "description": "Define lifecycle for the container"
                 },
                 "envFrom": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "configMapRef": {
-                        "type": "object",
-                        "properties": {
-                          "expandObjectName": {
-                            "type": "boolean",
-                            "description": "Define envFrom for the container"
-                          },
-                          "name": {
-                            "type": "string",
-                            "description": "Define the configmap name This will be automatically expanded to `fullname-configmap-name`."
-                          }
-                        },
-                        "additionalProperties": true,
-                        "description": "Define the configMapRef"
-                      },
-                      "secretRef": {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "type": "string",
-                            "description": "Define the secret name This will be automatically expanded to `fullname-secret-name`."
-                          },
-                          "expandObjectName": {
-                            "type": "boolean",
-                            "description": "Whether to expand (adding the fullname as prefix) the secret name"
-                          }
-                        },
-                        "additionalProperties": true,
-                        "description": "Define the secretRef"
-                      }
-                    },
-                    "additionalProperties": true
-                  },
+                  "$ref": "podSpec/containers/envFrom.json",
                   "description": "Define envFrom for the container"
                 },
                 "termination": {
-                  "type": "object",
-                  "properties": {
-                    "messagePolicy": {
-                      "type": "string",
-                      "description": "Define termination for the container"
-                    },
-                    "messagePath": {
-                      "type": "string",
-                      "description": "Define termination message path for the container"
-                    }
-                  },
-                  "additionalProperties": true,
+                  "$ref": "container/termination.json",
                   "description": "Define termination for the container"
                 },
                 "fixedEnv": {
-                  "type": "object",
-                  "properties": {
-                    "NVIDIA_CAPS": {
-                      "type": "object",
-                      "properties": {},
-                      "additionalProperties": true,
-                      "description": "Override fixedEnv for the container By default it will set the following environment variables:"
-                    },
-                    "TZ": {
-                      "type": "object",
-                      "properties": {},
-                      "additionalProperties": true,
-                      "description": "Override the timezone for the container"
-                    },
-                    "UMASK": {
-                      "type": "object",
-                      "properties": {},
-                      "additionalProperties": true,
-                      "description": "Override the umask for the container"
-                    },
-                    "PUID": {
-                      "type": "object",
-                      "properties": {},
-                      "additionalProperties": true,
-                      "description": "Override the PUID for the container"
-                    }
-                  },
-                  "additionalProperties": true,
+                  "$ref": "podSpec/containers/fixedEnv.json",
                   "description": "Override fixedEnv for the container By default it will set the following environment variables:"
                 },
                 "args": {
-                  "oneOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "array"
-                    }
-                  ],
+                  "$ref": "podSpec/containers/args.json",
                   "description": "Define arg(s). If it's single, can be defined as string"
                 },
                 "extraArgs": {
@@ -529,43 +125,43 @@
             "description": "Define annotations for podSpec"
           },
           "automountServiceAccountToken": {
-            "type": "boolean",
+            "$ref": "podSpec/automountServiceAccountToken.json",
             "description": "Pod's automountServiceAccountToken"
           },
           "hostNetwork": {
-            "type": "boolean",
+            "$ref": "podSpec/hostNetwork.json",
             "description": "Bind pod to host's network"
           },
           "hostPID": {
-            "type": "boolean",
+            "$ref": "podSpec/hostPID.json",
             "description": "Allow pod to access host's PID namespace"
           },
           "hostIPC": {
-            "type": "boolean",
+            "$ref": "podSpec/hostIPC.json",
             "description": "Allow pod to access host's IPC namespace"
           },
           "hostUsers": {
-            "type": "boolean",
+            "$ref": "podSpec/hostUsers.json",
             "description": "Allow pod to access host's users namespace"
           },
           "shareProcessNamespace": {
-            "type": "boolean",
+            "$ref": "podSpec/shareProcessNamespace.json",
             "description": "Share Process Namespace with other containers in the pod"
           },
           "enableServiceLinks": {
-            "type": "boolean",
+            "$ref": "podSpec/enableServiceLinks.json",
             "description": "Pod's enableServiceLinks"
           },
           "restartPolicy": {
-            "type": "string",
+            "$ref": "podSpec/restartPolicy.json",
             "description": "Pod's restartPolicy"
           },
           "schedulerName": {
-            "type": "string",
+            "$ref": "podSpec/schedulerName.json",
             "description": "Pod's schedulerName"
           },
           "priorityClassName": {
-            "type": "string",
+            "$ref": "podSpec/priorityClassName.json",
             "description": "Pod's priorityClassName"
           },
           "hostname": {
@@ -573,7 +169,7 @@
             "description": "Pod's hostname"
           },
           "terminationGracePeriodSeconds": {
-            "type": "integer",
+            "$ref": "terminationGracePeriodSeconds.json",
             "description": "Pod's terminationGracePeriodSeconds"
           },
           "nodeSelector": {
@@ -608,7 +204,7 @@
             "description": "Pod's hostAliases"
           },
           "dnsPolicy": {
-            "type": "string",
+            "$ref": "podSpec/dnsPolicy.json",
             "description": "Pod's dnsPolicy `dnsPolicy` is set automatically to `ClusterFirstWithHostNet` when `hostNetwork` is `true`"
           },
           "dnsConfig": {
@@ -687,9 +283,7 @@
             "description": "Pod's tolerations"
           },
           "runtimeClassName": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "$ref": "podSpec/runtimeClassName.json",
             "description": "Pod's runtimeClassName > Note that it will only set the `runtimeClassName` on the pod that this container belongs to."
           },
           "securityContext": {
