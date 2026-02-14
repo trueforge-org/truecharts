@@ -17,10 +17,6 @@
       },
       "description": "Addons to the workloads"
     },
-    "config": {
-      "type": "string",
-      "description": "Configuration for `addons.tailscale.config`."
-    },
     "container": {
       "type": "object",
       "properties": {
@@ -133,45 +129,56 @@
       "additionalProperties": true,
       "description": "Addons to the workloads"
     },
-    "authkey": {
-      "type": "string",
-      "description": "Configuration for `addons.tailscale.authkey`."
-    },
-    "userspace": {
-      "type": "boolean",
-      "description": "Configuration for `addons.tailscale.userspace`."
-    },
-    "auth_once": {
-      "type": "boolean",
-      "description": "Configuration for `addons.tailscale.auth_once`."
-    },
-    "accept_dns": {
-      "type": "boolean",
-      "description": "Configuration for `addons.tailscale.accept_dns`."
-    },
-    "routes": {
-      "type": "string",
-      "description": "Configuration for `addons.tailscale.routes`."
-    },
-    "dest_ip": {
-      "type": "string",
-      "description": "Configuration for `addons.tailscale.dest_ip`."
-    },
-    "sock5_server": {
-      "type": "string",
-      "description": "Configuration for `addons.tailscale.sock5_server`."
-    },
-    "extra_args": {
-      "type": "string",
-      "description": "Configuration for `addons.tailscale.extra_args`."
-    },
-    "daemon_extra_args": {
-      "type": "string",
-      "description": "Configuration for `addons.tailscale.daemon_extra_args`."
-    },
-    "outbound_http_proxy_listen": {
-      "type": "string",
-      "description": "Configuration for `addons.tailscale.outbound_http_proxy_listen`."
+    "settings": {
+      "type": "object",
+      "properties": {
+        "config": {
+          "type": "string",
+          "description": "Configuration for `addons.tailscale.settings.config`."
+        },
+        "authkey": {
+          "type": "string",
+          "description": "Configuration for `addons.tailscale.settings.authkey`."
+        },
+        "userspace": {
+          "type": "boolean",
+          "description": "Configuration for `addons.tailscale.settings.userspace`."
+        },
+        "auth_once": {
+          "type": "boolean",
+          "description": "Configuration for `addons.tailscale.settings.auth_once`."
+        },
+        "accept_dns": {
+          "type": "boolean",
+          "description": "Configuration for `addons.tailscale.settings.accept_dns`."
+        },
+        "routes": {
+          "type": "string",
+          "description": "Configuration for `addons.tailscale.settings.routes`."
+        },
+        "dest_ip": {
+          "type": "string",
+          "description": "Configuration for `addons.tailscale.settings.dest_ip`."
+        },
+        "sock5_server": {
+          "type": "string",
+          "description": "Configuration for `addons.tailscale.settings.sock5_server`."
+        },
+        "extra_args": {
+          "type": "string",
+          "description": "Configuration for `addons.tailscale.settings.extra_args`."
+        },
+        "daemon_extra_args": {
+          "type": "string",
+          "description": "Configuration for `addons.tailscale.settings.daemon_extra_args`."
+        },
+        "outbound_http_proxy_listen": {
+          "type": "string",
+          "description": "Configuration for `addons.tailscale.settings.outbound_http_proxy_listen`."
+        }
+      },
+      "additionalProperties": true,
+      "description": "Tailscale settings"
     },
     "annotations": {
       "type": "object",
