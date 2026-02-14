@@ -4,11 +4,12 @@
   "description": "Configuration for the Traefik ip-allow-list middleware.",
   "properties": {
     "sourceRange": {
-      "type": "string",
+      "type": "array",
       "minLength": 1
     },
     "ipStrategy": {
-      "type": "object"
+      "type": "object",
+      "default": {}
     },
     "depth": {
       "type": "integer",

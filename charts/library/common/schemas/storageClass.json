@@ -6,11 +6,15 @@
     "type": "object",
     "properties": {
       "mountOptions": {
-        "type": "array",
+        "type": [
+          "array",
+          "string"
+        ],
         "items": {
           "type": "string"
         },
-        "description": "Define storage classes"
+        "description": "Define storage classes",
+        "default": []
       },
       "enabled": {
         "type": [
@@ -19,7 +23,8 @@
         ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Enables or Disables the storage class"
+        "description": "Enables or Disables the storage class",
+        "default": false
       },
       "labels": {
         "allOf": [
@@ -27,37 +32,50 @@
             "$ref": "special/labels.json"
           }
         ],
-        "description": "Additional labels for storage class"
+        "description": "Additional labels for storage class",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
       },
       "annotations": {
-        "type": "object",
+        "type": [
+          "object",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Additional annotations for storage class"
+        "description": "Additional annotations for storage class",
+        "default": {}
       },
       "provisioner": {
         "type": "string",
         "description": "Define the provisioner for this storage class"
       },
       "parameters": {
-        "type": "object",
+        "type": [
+          "object",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Define the parameters for this storage class"
+        "description": "Define the parameters for this storage class",
+        "default": {}
       },
       "reclaimPolicy": {
         "type": "string",
         "enum": [
           "Delete",
-          "Retain",
-          "delete",
-          "retain"
+          "Retain"
         ],
-        "description": "Define the reclaim policy for this storage class"
+        "description": "Define the reclaim policy for this storage class",
+        "default": "Retain"
       },
       "allowVolumeExpansion": {
         "type": "boolean",
-        "description": "Define if volume expansion is allowed for this storage class"
+        "description": "Define if volume expansion is allowed for this storage class",
+        "default": false
       },
       "volumeBindingMode": {
         "type": "string",
@@ -65,11 +83,13 @@
           "Immediate",
           "WaitForFirstConsumer"
         ],
-        "description": "Define the volume binding mode for this storage class"
+        "description": "Define the volume binding mode for this storage class",
+        "default": "Immediate"
       }
     },
     "additionalProperties": true,
-    "description": "Define storage class"
+    "description": "Define storage class",
+    "default": {}
   },
   "description": "Define storage classes"
 }

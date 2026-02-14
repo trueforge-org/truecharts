@@ -14,11 +14,14 @@
                 "$ref": "integrations/traefik.json"
               }
             ],
-            "description": "Define service objects"
+            "description": "Define service objects",
+            "type": "object",
+            "default": {}
           }
         },
         "additionalProperties": true,
-        "description": "Define the integrations for this service"
+        "description": "Define the integrations for this service",
+        "default": {}
       },
       "externalName": {
         "allOf": [
@@ -34,7 +37,8 @@
         "additionalProperties": {
           "$ref": "ports.json"
         },
-        "description": "Define the ports of the service See [Ports](/truecharts-common/service/ports)"
+        "description": "Define the ports of the service See [Ports](/truecharts-common/service/ports)",
+        "default": {}
       },
       "sharedKey": {
         "type": "object",
@@ -92,7 +96,8 @@
           "boolean",
           "string"
         ],
-        "description": "Enables or Disables the service"
+        "description": "Enables or Disables the service",
+        "default": false
       },
       "namespace": {
         "allOf": [
@@ -100,7 +105,8 @@
             "$ref": "../special/namespaces.json"
           }
         ],
-        "description": "Define the namespace for this object"
+        "description": "Define the namespace for this object",
+        "default": "\"\""
       },
       "labels": {
         "allOf": [
@@ -108,13 +114,22 @@
             "$ref": "../special/labels.json"
           }
         ],
-        "description": "Additional labels for service"
+        "description": "Additional labels for service",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
       },
       "annotations": {
-        "type": "object",
+        "type": [
+          "object",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Additional annotations for service"
+        "description": "Additional annotations for service",
+        "default": {}
       },
       "type": {
         "oneOf": [
@@ -140,7 +155,8 @@
           "boolean",
           "string"
         ],
-        "description": "Whether to expand the object name (based on the [naming scheme](/truecharts-common/service#naming-scheme)) or not"
+        "description": "Whether to expand the object name (based on the [naming scheme](/truecharts-common/service#naming-scheme)) or not",
+        "default": true
       },
       "clusterIP": {
         "allOf": [
@@ -148,7 +164,8 @@
             "$ref": "ClusterIP.json"
           }
         ],
-        "description": "Configure Cluster IP type"
+        "description": "Configure Cluster IP type",
+        "default": "\"\""
       },
       "ipFamilyPolicy": {
         "oneOf": [
@@ -165,14 +182,19 @@
             "pattern": "^\\{\\{.*\\}\\}$"
           }
         ],
-        "description": "Define the ipFamilyPolicy Does **not** apply to `type` of `ExternalName` or `ExternalIP`"
+        "description": "Define the ipFamilyPolicy Does **not** apply to `type` of `ExternalName` or `ExternalIP`",
+        "default": "\"\""
       },
       "ipFamilies": {
-        "type": "array",
+        "type": [
+          "array",
+          "string"
+        ],
         "items": {
           "type": "string"
         },
-        "description": "Define the ipFamilies Does **not** apply to `type` of `ExternalName` or `ExternalIP`"
+        "description": "Define the ipFamilies Does **not** apply to `type` of `ExternalName` or `ExternalIP`",
+        "default": []
       },
       "sessionAffinity": {
         "oneOf": [
@@ -188,7 +210,8 @@
             "pattern": "^\\{\\{.*\\}\\}$"
           }
         ],
-        "description": "Define the session affinity (ClientIP, None)"
+        "description": "Define the session affinity (ClientIP, None)",
+        "default": "\"\""
       },
       "sessionAffinityConfig": {
         "type": "object",
@@ -197,8 +220,12 @@
             "type": "object",
             "properties": {
               "timeoutSeconds": {
-                "type": "integer",
-                "description": "Define the timeout for ClientIP session affinity (0-86400)"
+                "type": [
+                  "integer",
+                  "string"
+                ],
+                "description": "Define the timeout for ClientIP session affinity (0-86400)",
+                "default": "\"\""
               }
             },
             "additionalProperties": true,
@@ -209,11 +236,15 @@
         "description": "Configuration for `$name.sessionAffinityConfig`."
       },
       "externalIPs": {
-        "type": "array",
+        "type": [
+          "array",
+          "string"
+        ],
         "items": {
           "type": "string"
         },
-        "description": "Define externalIPs"
+        "description": "Define externalIPs",
+        "default": []
       },
       "externalTrafficPolicy": {
         "oneOf": [
@@ -229,15 +260,18 @@
             "pattern": "^\\{\\{.*\\}\\}$"
           }
         ],
-        "description": "Define the external traffic policy (Cluster, Local) Does **not** apply to `type` of `ClusterIP`"
+        "description": "Define the external traffic policy (Cluster, Local) Does **not** apply to `type` of `ClusterIP`",
+        "default": "\"\""
       },
       "publishNotReadyAddresses": {
         "type": "boolean",
-        "description": "Define whether to publishNotReadyAddresses or not"
+        "description": "Define whether to publishNotReadyAddresses or not",
+        "default": false
       },
       "targetSelector": {
         "type": "string",
-        "description": "Define the pod to link the service, by default will use the primary pod"
+        "description": "Define the pod to link the service, by default will use the primary pod",
+        "default": "\"\""
       },
       "primary": {
         "type": "boolean",
@@ -245,7 +279,8 @@
       }
     },
     "additionalProperties": true,
-    "description": "Define service"
+    "description": "Define service",
+    "default": {}
   },
   "description": "Define service objects"
 }
