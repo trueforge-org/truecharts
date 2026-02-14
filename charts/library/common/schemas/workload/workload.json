@@ -1,152 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "properties": {
-    "main": {
-      "type": "object",
-      "properties": {
-        "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
-          "description": "Define workload objects"
-        },
-        "primary": {
-          "type": "boolean",
-          "description": "Define workload objects"
-        },
-        "type": {
-          "type": "string",
-          "description": "Define workload objects"
-        },
-        "dbWait": {
-          "type": "boolean",
-          "description": "Configuration for `workload.main.dbWait`."
-        },
-        "podSpec": {
-          "type": "object",
-          "properties": {
-            "containers": {
-              "type": "object",
-              "properties": {
-                "main": {
-                  "type": "object",
-                  "properties": {
-                    "enabled": {
-                      "type": [
-                        "boolean",
-                        "string"
-                      ],
-                      "description": "Define if the container is enabled or not"
-                    },
-                    "primary": {
-                      "type": "boolean",
-                      "description": "Define if the container is primary or not Does **not** apply to `initContainers`"
-                    },
-                    "imageSelector": {
-                      "type": "string",
-                      "description": "Define the image `map` to use"
-                    },
-                    "probes": {
-                      "type": "object",
-                      "properties": {
-                        "liveness": {
-                          "type": "object",
-                          "properties": {
-                            "enabled": {
-                              "type": [
-                                "boolean",
-                                "string"
-                              ],
-                              "description": "Define probes for the container"
-                            },
-                            "type": {
-                              "type": "string",
-                              "description": "Define probes for the container"
-                            },
-                            "port": {
-                              "type": [
-                                "integer",
-                                "string"
-                              ],
-                              "description": "Define probes for the container"
-                            }
-                          },
-                          "additionalProperties": true,
-                          "description": "Define probes for the container"
-                        },
-                        "readiness": {
-                          "type": "object",
-                          "properties": {
-                            "enabled": {
-                              "type": [
-                                "boolean",
-                                "string"
-                              ],
-                              "description": "Define probes for the container"
-                            },
-                            "type": {
-                              "type": "string",
-                              "description": "Define probes for the container"
-                            },
-                            "port": {
-                              "type": [
-                                "integer",
-                                "string"
-                              ],
-                              "description": "Define probes for the container"
-                            }
-                          },
-                          "additionalProperties": true,
-                          "description": "Define probes for the container"
-                        },
-                        "startup": {
-                          "type": "object",
-                          "properties": {
-                            "enabled": {
-                              "type": [
-                                "boolean",
-                                "string"
-                              ],
-                              "description": "Define probes for the container"
-                            },
-                            "type": {
-                              "type": "string",
-                              "description": "Define probes for the container"
-                            },
-                            "port": {
-                              "type": [
-                                "integer",
-                                "string"
-                              ],
-                              "description": "Define probes for the container"
-                            }
-                          },
-                          "additionalProperties": true,
-                          "description": "Define probes for the container"
-                        }
-                      },
-                      "additionalProperties": true,
-                      "description": "Define probes for the container"
-                    }
-                  },
-                  "additionalProperties": true,
-                  "description": "Configuration for `workload.main.podSpec.containers.main`."
-                }
-              },
-              "additionalProperties": true,
-              "description": "Configuration for `workload.main.podSpec.containers`."
-            }
-          },
-          "additionalProperties": true,
-          "description": "Define workload objects"
-        }
-      },
-      "additionalProperties": true,
-      "description": "Define workload objects"
-    }
-  },
+  "properties": {},
   "additionalProperties": {
     "type": "object",
     "properties": {
@@ -213,7 +68,10 @@
                   "description": "The resources that the container can use."
                 },
                 "securityContext": {
-                  "type": "object",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
                   "properties": {
                     "seccompProfile": {
                       "type": "object",
@@ -311,19 +169,76 @@
                   "properties": {
                     "liveness": {
                       "type": "object",
-                      "properties": {},
+                      "properties": {
+                        "enabled": {
+                          "type": [
+                            "boolean",
+                            "string"
+                          ],
+                          "description": "Define probes for the container"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "Define probes for the container"
+                        },
+                        "port": {
+                          "type": [
+                            "integer",
+                            "string"
+                          ],
+                          "description": "Define probes for the container"
+                        }
+                      },
                       "additionalProperties": true,
                       "description": "Define the liveness probe"
                     },
                     "readiness": {
                       "type": "object",
-                      "properties": {},
+                      "properties": {
+                        "enabled": {
+                          "type": [
+                            "boolean",
+                            "string"
+                          ],
+                          "description": "Define probes for the container"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "Define probes for the container"
+                        },
+                        "port": {
+                          "type": [
+                            "integer",
+                            "string"
+                          ],
+                          "description": "Define probes for the container"
+                        }
+                      },
                       "additionalProperties": true,
                       "description": "Define the readiness probe"
                     },
                     "startup": {
                       "type": "object",
-                      "properties": {},
+                      "properties": {
+                        "enabled": {
+                          "type": [
+                            "boolean",
+                            "string"
+                          ],
+                          "description": "Define probes for the container"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "Define probes for the container"
+                        },
+                        "port": {
+                          "type": [
+                            "integer",
+                            "string"
+                          ],
+                          "description": "Define probes for the container"
+                        }
+                      },
                       "additionalProperties": true,
                       "description": "Define the startup probe"
                     }
@@ -513,15 +428,11 @@
                   "type": "object",
                   "properties": {
                     "messagePolicy": {
-                      "type": "object",
-                      "properties": {},
-                      "additionalProperties": true,
+                      "type": "string",
                       "description": "Define termination for the container"
                     },
                     "messagePath": {
-                      "type": "object",
-                      "properties": {},
-                      "additionalProperties": true,
+                      "type": "string",
                       "description": "Define termination message path for the container"
                     }
                   },
@@ -896,9 +807,7 @@
         "description": "Define the completions"
       },
       "parallelism": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "integer",
         "description": "Define the parallelism"
       },
       "ttlSecondsAfterFinished": {
@@ -908,9 +817,7 @@
         "description": "Define the ttlSecondsAfterFinished"
       },
       "activeDeadlineSeconds": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "integer",
         "description": "Define the activeDeadlineSeconds"
       },
       "schedule": {
@@ -979,6 +886,10 @@
         "properties": {},
         "additionalProperties": true,
         "description": "Define container(s) for the workload See [Container](/truecharts-common/container/) for more information"
+      },
+      "dbWait": {
+        "type": "boolean",
+        "description": "Configuration for `workload.main.dbWait`."
       }
     },
     "additionalProperties": true,

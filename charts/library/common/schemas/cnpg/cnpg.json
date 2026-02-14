@@ -1,12 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "properties": {
-    "main": {
-      "$ref": "main.json",
-      "description": "Define a CNPG cluster"
-    }
-  },
+  "properties": {},
   "additionalProperties": {
     "type": "object",
     "properties": {
@@ -59,7 +54,8 @@
           }
         },
         "additionalProperties": true,
-        "description": "Define a CNPG cluster"
+        "description": "Define a CNPG cluster",
+        "$ref": "cluster.json"
       },
       "enabled": {
         "type": [
@@ -68,19 +64,19 @@
         ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Enables or Disables the cluster"
+        "description": "Define a CNPG cluster"
       },
       "primary": {
-        "type": "object",
+        "type": "boolean",
         "properties": {},
         "additionalProperties": true,
-        "description": "Sets the cluster as primary"
+        "description": "Define a CNPG cluster"
       },
       "hibernate": {
-        "type": "object",
+        "type": "boolean",
         "properties": {},
         "additionalProperties": true,
-        "description": "Puts the cluster in hibernation mode"
+        "description": "Define a CNPG cluster"
       },
       "labels": {
         "allOf": [
@@ -88,47 +84,234 @@
             "$ref": "../special/labels.json"
           }
         ],
-        "description": "Additional labels for all CNPG objects"
+        "description": "Define a CNPG cluster"
       },
       "annotations": {
         "type": "object",
         "properties": {},
         "additionalProperties": true,
-        "description": "Additional annotations for all CNPG objects"
+        "description": "Define a CNPG cluster"
       },
       "type": {
-        "type": "object",
+        "type": "string",
         "properties": {},
         "additionalProperties": true,
-        "description": "Type of the CNPG database. Available types: - `postgres`"
+        "description": "Define a CNPG cluster"
       },
       "pgVersion": {
-        "type": "object",
+        "type": "integer",
         "properties": {},
         "additionalProperties": true,
-        "description": "Version of Postgresql to use. Available types: - `15`"
+        "description": "Define a CNPG cluster"
       },
       "mode": {
-        "type": "object",
+        "type": "string",
         "properties": {},
         "additionalProperties": true,
-        "description": "Cluster mode of operation. Available modes: - `standalone` (default mode, creates new or updates an existing CNPG cluster)"
+        "description": "Define a CNPG cluster"
       },
       "database": {
         "type": "string",
-        "description": "Define the database name"
+        "description": "Define a CNPG cluster"
       },
       "user": {
         "type": "string",
-        "description": "Define the database user"
+        "description": "Define a CNPG cluster"
       },
       "password": {
         "type": "string",
-        "description": "Define the database password Chart users are strongly encouraged to override this setting with their own"
+        "description": "Define a CNPG cluster"
+      },
+      "monitoring": {
+        "type": "object",
+        "properties": {
+          "enablePodMonitor": {
+            "type": "boolean",
+            "description": "Configuration for `cnpg.main.monitoring.enablePodMonitor`."
+          },
+          "disableDefaultQueries": {
+            "type": "boolean",
+            "description": "Configuration for `cnpg.main.monitoring.disableDefaultQueries`."
+          },
+          "customQueries": {
+            "type": "array",
+            "description": "Configuration for `cnpg.main.monitoring.customQueries`."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Configuration for `cnpg.main.monitoring`."
+      },
+      "recovery": {
+        "type": "object",
+        "properties": {
+          "method": {
+            "type": "string",
+            "description": "Configuration for `cnpg.main.recovery.method`."
+          },
+          "servername": {
+            "type": "string",
+            "description": "Configuration for `cnpg.main.recovery.servername`."
+          },
+          "pitrTarget": {
+            "type": "object",
+            "properties": {
+              "time": {
+                "type": "string",
+                "description": "Configuration for `cnpg.main.recovery.pitrTarget.time`."
+              }
+            },
+            "additionalProperties": true,
+            "description": "Configuration for `cnpg.main.recovery.pitrTarget`."
+          },
+          "backupName": {
+            "type": "string",
+            "description": "Configuration for `cnpg.main.recovery.backupName`."
+          },
+          "clusterName": {
+            "type": "string",
+            "description": "Configuration for `cnpg.main.recovery.clusterName`."
+          },
+          "destinationPath": {
+            "type": "string",
+            "description": "Configuration for `cnpg.main.recovery.destinationPath`."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Configuration for `cnpg.main.recovery`."
+      },
+      "backups": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
+            "description": "Configuration for `cnpg.main.backups.enabled`."
+          },
+          "encryption": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "description": "Configuration for `cnpg.main.backups.encryption.enabled`."
+              }
+            },
+            "additionalProperties": true,
+            "description": "Configuration for `cnpg.main.backups.encryption`."
+          },
+          "servername": {
+            "type": "string",
+            "description": "Configuration for `cnpg.main.backups.servername`."
+          },
+          "destinationPath": {
+            "type": "string",
+            "description": "Configuration for `cnpg.main.backups.destinationPath`."
+          },
+          "target": {
+            "type": "string",
+            "description": "Configuration for `cnpg.main.backups.target`."
+          },
+          "credentials": {
+            "type": "string",
+            "description": "Configuration for `cnpg.main.backups.credentials`."
+          },
+          "scheduledBackups": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Configuration for `cnpg.main.backups.scheduledBackups.$item.name`."
+                },
+                "schedule": {
+                  "type": "string",
+                  "description": "Configuration for `cnpg.main.backups.scheduledBackups.$item.schedule`."
+                },
+                "backupOwnerReference": {
+                  "type": "string",
+                  "description": "Configuration for `cnpg.main.backups.scheduledBackups.$item.backupOwnerReference`."
+                },
+                "immediate": {
+                  "type": "boolean",
+                  "description": "Configuration for `cnpg.main.backups.scheduledBackups.$item.immediate`."
+                },
+                "suspend": {
+                  "type": "boolean",
+                  "description": "Configuration for `cnpg.main.backups.scheduledBackups.$item.suspend`."
+                }
+              },
+              "additionalProperties": true,
+              "description": "Configuration for `cnpg.main.backups.scheduledBackups.$item`."
+            },
+            "description": "Configuration for `cnpg.main.backups.scheduledBackups`."
+          },
+          "retentionPolicy": {
+            "type": "string",
+            "description": "Configuration for `cnpg.main.backups.retentionPolicy`."
+          },
+          "manualBackups": {
+            "type": "array",
+            "description": "Configuration for `cnpg.main.backups.manualBackups`."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Configuration for `cnpg.main.backups`."
+      },
+      "pooler": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
+            "description": "Configuration for `cnpg.main.pooler.enabled`."
+          },
+          "createRO": {
+            "type": "boolean",
+            "description": "Configuration for `cnpg.main.pooler.createRO`."
+          },
+          "poolMode": {
+            "type": "string",
+            "description": "Configuration for `cnpg.main.pooler.poolMode`."
+          },
+          "instances": {
+            "type": "integer",
+            "description": "Configuration for `cnpg.main.pooler.instances`."
+          },
+          "labels": {
+            "allOf": [
+              {
+                "$ref": "../special/labels.json"
+              }
+            ],
+            "description": "Configuration for `cnpg.main.pooler.labels`."
+          },
+          "annotations": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Configuration for `cnpg.main.pooler.annotations`."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Configuration for `cnpg.main.pooler`."
+      },
+      "creds": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Configuration for `cnpg.main.creds`."
       }
     },
     "additionalProperties": true,
-    "description": "Define the cluster name. There is predefined cluster called `main`, which is configured with sensible"
+    "description": "Define a CNPG cluster",
+    "$schema": "http://json-schema.org/draft-07/schema#"
   },
   "description": "Define a CNPG cluster"
 }
