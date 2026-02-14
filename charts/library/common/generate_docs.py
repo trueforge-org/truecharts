@@ -15,7 +15,7 @@ def build_parser() -> argparse.ArgumentParser:
     script_dir = Path(__file__).resolve().parent
     parser = argparse.ArgumentParser(
         description=(
-            "Generate markdown pages from a JSON schema into charts/library/common/newdocs."
+            "Generate markdown pages from a JSON schema into charts/library/common/docs."
         )
     )
     parser.add_argument(
@@ -27,7 +27,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--output",
         type=Path,
-        default=script_dir / "newdocs",
+        default=script_dir / "docs",
         help="Path where generated pages should be written",
     )
     parser.add_argument(
