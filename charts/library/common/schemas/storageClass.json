@@ -6,9 +6,10 @@
     "type": "object",
     "properties": {
       "mountOptions": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
         "description": "Define storage classes"
       },
         "enabled": {
@@ -33,9 +34,7 @@
         "description": "Additional annotations for storage class"
       },
       "provisioner": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the provisioner for this storage class"
       },
       "parameters": {
@@ -45,21 +44,15 @@
         "description": "Define the parameters for this storage class"
       },
       "reclaimPolicy": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the reclaim policy for this storage class"
       },
       "allowVolumeExpansion": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "boolean",
         "description": "Define if volume expansion is allowed for this storage class"
       },
       "volumeBindingMode": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the volume binding mode for this storage class"
       }
     },
