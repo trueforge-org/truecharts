@@ -3,36 +3,32 @@
   "type": "object",
   "properties": {
     "storageClass": {
-      "type": [
-        "null",
-        "string",
-        "number",
-        "integer",
-        "boolean",
-        "object",
-        "array"
-      ],
+      "type": "string",
       "description": "Configuration for `global.fallbackDefaults.storageClass`."
     },
     "probeType": {
       "type": "string",
       "description": "Configuration for `global.fallbackDefaults.probeType`.",
-      "default": "http"
+      "default": "http",
+      "minLength": 1
     },
     "serviceProtocol": {
       "type": "string",
       "description": "Configuration for `global.fallbackDefaults.serviceProtocol`.",
-      "default": "tcp"
+      "default": "tcp",
+      "minLength": 1
     },
     "serviceType": {
       "type": "string",
       "description": "Configuration for `global.fallbackDefaults.serviceType`.",
-      "default": "ClusterIP"
+      "default": "ClusterIP",
+      "minLength": 1
     },
     "persistenceType": {
       "type": "string",
       "description": "Configuration for `global.fallbackDefaults.persistenceType`.",
-      "default": "emptyDir"
+      "default": "emptyDir",
+      "minLength": 1
     },
     "pvcRetain": {
       "type": "boolean",
@@ -42,12 +38,14 @@
     "pvcSize": {
       "type": "string",
       "description": "Configuration for `global.fallbackDefaults.pvcSize`.",
-      "default": "100Gi"
+      "default": "100Gi",
+      "minLength": 1
     },
     "vctSize": {
       "type": "string",
       "description": "Configuration for `global.fallbackDefaults.vctSize`.",
-      "default": "100Gi"
+      "default": "100Gi",
+      "minLength": 1
     },
     "accessModes": {
       "type": "array",
@@ -56,9 +54,7 @@
         "description": "Configuration for `global.fallbackDefaults.accessModes.$item`."
       },
       "description": "Configuration for `global.fallbackDefaults.accessModes`.",
-      "default": [
-        "ReadWriteOnce"
-      ]
+      "default": "ReadWriteOnce"
     },
     "vctAccessModes": {
       "type": "array",
@@ -77,27 +73,32 @@
             "initialDelaySeconds": {
               "type": "integer",
               "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.initialDelaySeconds`.",
-              "default": 10
+              "default": 10,
+              "minimum": 1
             },
             "periodSeconds": {
               "type": "integer",
               "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.periodSeconds`.",
-              "default": 10
+              "default": 10,
+              "minimum": 1
             },
             "timeoutSeconds": {
               "type": "integer",
               "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.timeoutSeconds`.",
-              "default": 5
+              "default": 5,
+              "minimum": 1
             },
             "failureThreshold": {
               "type": "integer",
               "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.failureThreshold`.",
-              "default": 5
+              "default": 5,
+              "minimum": 1
             },
             "successThreshold": {
               "type": "integer",
               "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.successThreshold`.",
-              "default": 1
+              "default": 1,
+              "minimum": 1
             }
           },
           "additionalProperties": true,
@@ -116,27 +117,32 @@
             "initialDelaySeconds": {
               "type": "integer",
               "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.initialDelaySeconds`.",
-              "default": 10
+              "default": 10,
+              "minimum": 1
             },
             "periodSeconds": {
               "type": "integer",
               "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.periodSeconds`.",
-              "default": 10
+              "default": 10,
+              "minimum": 1
             },
             "timeoutSeconds": {
               "type": "integer",
               "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.timeoutSeconds`.",
-              "default": 5
+              "default": 5,
+              "minimum": 1
             },
             "failureThreshold": {
               "type": "integer",
               "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.failureThreshold`.",
-              "default": 5
+              "default": 5,
+              "minimum": 1
             },
             "successThreshold": {
               "type": "integer",
               "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.successThreshold`.",
-              "default": 2
+              "default": 2,
+              "minimum": 1
             }
           },
           "additionalProperties": true,
@@ -155,27 +161,32 @@
             "initialDelaySeconds": {
               "type": "integer",
               "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.initialDelaySeconds`.",
-              "default": 10
+              "default": 10,
+              "minimum": 1
             },
             "periodSeconds": {
               "type": "integer",
               "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.periodSeconds`.",
-              "default": 5
+              "default": 5,
+              "minimum": 1
             },
             "timeoutSeconds": {
               "type": "integer",
               "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.timeoutSeconds`.",
-              "default": 2
+              "default": 2,
+              "minimum": 1
             },
             "failureThreshold": {
               "type": "integer",
               "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.failureThreshold`.",
-              "default": 60
+              "default": 60,
+              "minimum": 1
             },
             "successThreshold": {
               "type": "integer",
               "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.successThreshold`.",
-              "default": 1
+              "default": 1,
+              "minimum": 1
             }
           },
           "additionalProperties": true,

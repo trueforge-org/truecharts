@@ -303,7 +303,7 @@
     "type": "object",
     "properties": {
       "webhooks": {
-        "type": "object",
+        "type": "array",
         "properties": {},
         "additionalProperties": {
           "type": "object",
@@ -485,7 +485,8 @@
           "additionalProperties": true,
           "description": "Configuration for `$name.webhooks.$name`."
         },
-        "description": "Define the webhooks."
+        "description": "Define the webhooks.",
+        "default": []
       },
       "enabled": {
         "type": [
@@ -494,7 +495,8 @@
         ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Enables or Disables the webhook"
+        "description": "Enables or Disables the webhook",
+        "default": false
       },
       "namespace": {
         "allOf": [
@@ -502,7 +504,8 @@
             "$ref": "special/namespaces.json"
           }
         ],
-        "description": "Define the namespace for this object"
+        "description": "Define the namespace for this object",
+        "default": "\"\""
       },
       "labels": {
         "allOf": [
@@ -510,13 +513,22 @@
             "$ref": "special/labels.json"
           }
         ],
-        "description": "Additional labels for webhook"
+        "description": "Additional labels for webhook",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
       },
       "annotations": {
-        "type": "object",
+        "type": [
+          "object",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Additional annotations for webhook"
+        "description": "Additional annotations for webhook",
+        "default": {}
       },
       "type": {
         "oneOf": [
@@ -532,11 +544,13 @@
             "pattern": "^\\{\\{.*\\}\\}$"
           }
         ],
-        "description": "Define the type of the webhook."
+        "description": "Define the type of the webhook.",
+        "default": "\"\""
       }
     },
     "additionalProperties": true,
-    "description": "Define a webhook object with the given name"
+    "description": "Define a webhook object with the given name",
+    "default": {}
   },
   "description": "Create webhook objects"
 }

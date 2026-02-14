@@ -6,10 +6,14 @@
     "type": "object",
     "properties": {
       "parameters": {
-        "type": "object",
+        "type": [
+          "object",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Define a volume snapshot class"
+        "description": "Define a volume snapshot class",
+        "default": {}
       },
       "labels": {
         "allOf": [
@@ -17,13 +21,22 @@
             "$ref": "special/labels.json"
           }
         ],
-        "description": "Define the labels of the volume snapshot class"
+        "description": "Define the labels of the volume snapshot class",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
       },
       "annotations": {
-        "type": "object",
+        "type": [
+          "object",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Define the annotations of the volume snapshot class"
+        "description": "Define the annotations of the volume snapshot class",
+        "default": {}
       },
       "enabled": {
         "type": [
@@ -32,15 +45,19 @@
         ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Enable volume snapshot class"
+        "description": "Enable volume snapshot class",
+        "default": false
       },
       "isDefault": {
         "type": "boolean",
-        "description": "Sets the annotation `snapshot.storage.kubernetes.io/is-default-class` to `\"true\"` or `\"false\"`"
+        "description": "Sets the annotation `snapshot.storage.kubernetes.io/is-default-class` to `\"true\"` or `\"false\"`",
+        "default": false
       },
       "driver": {
         "type": "string",
-        "description": "Define the driver of the volume snapshot class"
+        "description": "Define the driver of the volume snapshot class",
+        "default": "\"\"",
+        "minLength": 1
       },
       "deletionPolicy": {
         "type": "string",
@@ -50,11 +67,13 @@
           "delete",
           "retain"
         ],
-        "description": "Define the deletion policy of the volume snapshot class"
+        "description": "Define the deletion policy of the volume snapshot class",
+        "default": "Retain"
       }
     },
     "additionalProperties": true,
-    "description": "Define a volume snapshot class"
+    "description": "Define a volume snapshot class",
+    "default": {}
   },
   "description": "Define a volume snapshot class"
 }

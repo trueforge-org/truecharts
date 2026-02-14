@@ -6,7 +6,10 @@
     "type": "object",
     "properties": {
       "data": {
-        "type": "object",
+        "type": [
+          "object",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
         "description": "Create Configmap objects"
@@ -16,7 +19,8 @@
           "boolean",
           "string"
         ],
-        "description": "Enables or Disables the Configmap"
+        "description": "Enables or Disables the Configmap",
+        "default": false
       },
       "namespace": {
         "allOf": [
@@ -24,7 +28,8 @@
             "$ref": "special/namespaces.json"
           }
         ],
-        "description": "Define the namespace for this object"
+        "description": "Define the namespace for this object",
+        "default": "\"\""
       },
       "labels": {
         "allOf": [
@@ -32,17 +37,27 @@
             "$ref": "special/labels.json"
           }
         ],
-        "description": "Additional labels for configmap"
+        "description": "Additional labels for configmap",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
       },
       "annotations": {
-        "type": "object",
+        "type": [
+          "object",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Additional annotations for configmap"
+        "description": "Additional annotations for configmap",
+        "default": {}
       }
     },
     "additionalProperties": true,
-    "description": "Define Configmap"
+    "description": "Define Configmap",
+    "default": {}
   },
   "description": "Create Configmap objects"
 }

@@ -6,7 +6,7 @@
     "type": "object",
     "properties": {
       "subjects": {
-        "type": "object",
+        "type": "array",
         "properties": {},
         "additionalProperties": {
           "type": "object",
@@ -33,18 +33,21 @@
           "additionalProperties": true,
           "description": "Configuration for `$name.subjects.$name`."
         },
-        "description": "Define `subjects` for (Cluster)RoleBinding"
+        "description": "Define `subjects` for (Cluster)RoleBinding",
+        "default": []
       },
       "enabled": {
         "type": [
           "boolean",
           "string"
         ],
-        "description": "Enables or Disables the rbac"
+        "description": "Enables or Disables the rbac",
+        "default": false
       },
       "primary": {
         "type": "boolean",
-        "description": "Sets the rbac as primary"
+        "description": "Sets the rbac as primary",
+        "default": false
       },
       "namespace": {
         "allOf": [
@@ -52,11 +55,13 @@
             "$ref": "special/namespaces.json"
           }
         ],
-        "description": "Define the namespace for this object (Only when clusterWide is false)"
+        "description": "Define the namespace for this object (Only when clusterWide is false)",
+        "default": "\"\""
       },
       "clusterWide": {
         "type": "boolean",
-        "description": "Sets the rbac as cluster wide (ClusterRole, ClusterRoleBinding)"
+        "description": "Sets the rbac as cluster wide (ClusterRole, ClusterRoleBinding)",
+        "default": false
       },
       "labels": {
         "allOf": [
@@ -64,13 +69,22 @@
             "$ref": "special/labels.json"
           }
         ],
-        "description": "Additional labels for rbac"
+        "description": "Additional labels for rbac",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
       },
       "annotations": {
-        "type": "object",
+        "type": [
+          "object",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Additional annotations for rbac"
+        "description": "Additional annotations for rbac",
+        "default": {}
       },
       "allServiceAccounts": {
         "type": "boolean",
@@ -90,7 +104,9 @@
             "additionalProperties": true
           }
         ],
-        "description": "Define the service account(s) to assign the (Cluster)RoleBinding"
+        "description": "Define the service account(s) to assign the (Cluster)RoleBinding",
+        "type": "array",
+        "default": []
       },
       "rules": {
         "type": "array",
@@ -116,11 +132,13 @@
           },
           "additionalProperties": true
         },
-        "description": "Define the `rules` for the (Cluster)Role"
+        "description": "Define the `rules` for the (Cluster)Role",
+        "default": []
       }
     },
     "additionalProperties": true,
-    "description": "Define rbac"
+    "description": "Define rbac",
+    "default": {}
   },
   "description": "Create rbac objects"
 }
