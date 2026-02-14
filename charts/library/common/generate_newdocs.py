@@ -56,6 +56,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Remove output directory before generation",
     )
+    parser.add_argument(
+        "--no-verify-structure",
+        action="store_true",
+        help="Skip verifying generated page structure against schemas",
+    )
     return parser
 
 
@@ -305,60 +310,18 @@ def yaml_lines(value: Any, indent: int = 0) -> list[str]:
     return [prefix + yaml_scalar(value)]
 
 
-def example_value_for_node(node: dict[str, Any], max_depth: int, current_depth: int = 0) -> Any:
+def explicit_example_value(node: dict[str, Any]) -> Any:
+    examples = node.get("examples")
+    if isinstance(examples, list) and examples:
+        return examples[0]
     if "default" in node:
         return node["default"]
-
-    if current_depth >= max_depth:
-        node_type = node.get("type")
-        if node_type == "array":
-            return []
-        if node_type == "boolean":
-            return False
-        if node_type in ("integer", "number"):
-            return 0
-        if node_type == "string":
-            return ""
-        return {}
-
-    node_type = node.get("type")
-    if node_type == "array":
-        items = node.get("items") if isinstance(node.get("items"), dict) else None
-        if items:
-            return [example_value_for_node(items, max_depth, current_depth + 1)]
-        return []
-
-    if node_type == "boolean":
-        return False
-
-    if node_type in ("integer", "number"):
-        return 0
-
-    if node_type == "string":
-        return ""
-
-    if is_object_schema(node):
-        result: dict[str, Any] = {}
-        properties = node.get("properties") if isinstance(node.get("properties"), dict) else {}
-        for key, child in properties.items():
-            if not isinstance(child, dict):
-                continue
-            child_example = example_value_for_node(child, max_depth, current_depth + 1)
-            if child_example in ({}, [], "") and "default" not in child:
-                continue
-            result[key] = child_example
-        return result
-
-    return ""
+    return None
 
 
-def build_example_block(key_path: str, node: dict[str, Any], default_value: Any = None) -> str:
+def build_example_block(key_path: str, value: Any) -> str:
     segments = [part for part in key_path.split(".") if part]
-    nested: Any
-    if default_value is not None:
-        nested = default_value
-    else:
-        nested = example_value_for_node(node, max_depth=2)
+    nested: Any = value
 
     for segment in reversed(segments):
         nested = {segment: nested}
@@ -380,6 +343,7 @@ def render_property_section(
     key_path: str,
     heading_level: int,
     required: bool,
+    reference_link: tuple[str, str] | None = None,
 ) -> str:
     heading = "#" * max(2, min(6, heading_level))
     description = node.get("description") or "No description provided."
@@ -411,26 +375,24 @@ def render_property_section(
             ]
         )
 
-    example_value = None
-    examples = node.get("examples")
-    if isinstance(examples, list) and examples:
-        example_value = examples[0]
-    elif "default" in node:
-        example_value = node["default"]
+    if reference_link:
+        ref_label, ref_target = reference_link
+        lines.extend(["", f"See [{ref_label}]({ref_target}) for full configuration."])
 
-    lines.extend(
-        [
-            "",
-            "Example",
-            "",
-            "```yaml",
-            build_example_block(key_path, node, example_value),
-            "```",
-            "",
-            "---",
-            "",
-        ]
-    )
+    example_value = explicit_example_value(node)
+    if example_value is not None:
+        lines.extend(
+            [
+                "",
+                "Example",
+                "",
+                "```yaml",
+                build_example_block(key_path, example_value),
+                "```",
+            ]
+        )
+
+    lines.extend(["", "---", ""])
 
     return "\n".join(lines)
 
@@ -499,20 +461,24 @@ def iter_object_children(
     return deduped
 
 
-def iter_scalar_children(
+def iter_page_children(
     node: dict[str, Any],
     current_source: Path | None,
     resolver: SchemaResolver,
-) -> list[tuple[str, dict[str, Any], bool]]:
-    result: list[tuple[str, dict[str, Any], bool]] = []
-    for key, _, resolved_child, required, _, _ in iter_children_with_resolution(node, current_source, resolver):
-        if not is_object_schema(resolved_child):
-            result.append((key, resolved_child, required))
+) -> list[tuple[str, dict[str, Any], bool, Path | None]]:
+    result: list[tuple[str, dict[str, Any], bool, Path | None]] = []
+    for key, _, resolved_child, required, _, child_ref in iter_children_with_resolution(
+        node, current_source, resolver
+    ):
+        result.append((key, resolved_child, required, child_ref))
     return result
 
 
 def render_node_sections(
     node: dict[str, Any],
+    node_source: Path | None,
+    resolver: SchemaResolver,
+    ref_links_by_file: dict[Path, str],
     base_key: str,
     heading_level: int,
     current_depth: int,
@@ -523,11 +489,32 @@ def render_node_sections(
     if current_depth >= max_depth:
         return "".join(parts)
 
-    for key, child, child_required in iter_child_properties(node):
+    for key, _, child, child_required, _, child_ref in iter_children_with_resolution(node, node_source, resolver):
         child_key = f"{base_key}.{key}" if base_key else key
+        if child_ref is not None:
+            ref_link = ref_links_by_file.get(child_ref.resolve())
+            reference = (prettify_segment(key), ref_link) if ref_link else None
+            parts.append(
+                render_property_section(
+                    child,
+                    child_key,
+                    min(6, heading_level + 1),
+                    child_required,
+                    reference_link=reference,
+                )
+            )
+            continue
+
+        if not is_object_schema(child):
+            parts.append(render_property_section(child, child_key, min(6, heading_level + 1), child_required))
+            continue
+
         parts.append(
             render_node_sections(
                 node=child,
+                node_source=node_source,
+                resolver=resolver,
+                ref_links_by_file=ref_links_by_file,
                 base_key=child_key,
                 heading_level=min(6, heading_level + 1),
                 current_depth=current_depth + 1,
@@ -547,6 +534,7 @@ def render_page(
     base_url: str,
     max_depth: int,
     child_links: list[tuple[str, str, str]],
+    ref_links_by_file: dict[Path, str],
     dynamic_segment: str,
 ) -> str:
     title = "Common Chart Documentation" if not key_path_segments else prettify_segment(key_path_segments[-1])
@@ -575,9 +563,23 @@ def render_page(
     if key_path_segments:
         lines.append(render_property_section(schema_node, key_path, 2, required=False).rstrip())
 
-    scalar_children = iter_scalar_children(schema_node, schema_source, resolver)
-    for key, child, required in scalar_children:
+    page_children = iter_page_children(schema_node, schema_source, resolver)
+    for key, child, required, child_ref in page_children:
         full_key = f"{key_path}.{key}" if key_path else key
+        if child_ref is not None:
+            ref_link = ref_links_by_file.get(child_ref.resolve())
+            reference = (prettify_segment(key), ref_link) if ref_link else None
+            lines.append(
+                render_property_section(
+                    child,
+                    full_key,
+                    3 if key_path_segments else 2,
+                    required,
+                    reference_link=reference,
+                ).rstrip()
+            )
+            continue
+
         lines.append(render_property_section(child, full_key, 3 if key_path_segments else 2, required).rstrip())
 
     if child_links:
@@ -590,13 +592,14 @@ def render_page(
                 lines.append(f"- [{label}]({rel_link})")
         lines.extend(["", "---", ""])
 
-    lines.extend(["## Full Examples", "", "```yaml"])
-    if key_path_segments:
-        lines.append(build_example_block(key_path, schema_node))
-    else:
-        root_example = example_value_for_node(schema_node, max_depth=max_depth)
-        lines.extend(yaml_lines(root_example))
-    lines.extend(["```", ""])
+    page_example = explicit_example_value(schema_node)
+    if page_example is not None:
+        lines.extend(["## Full Examples", "", "```yaml"])
+        if key_path_segments:
+            lines.append(build_example_block(key_path, page_example))
+        else:
+            lines.extend(yaml_lines(page_example))
+        lines.extend(["```", ""])
 
     return "\n".join(lines).rstrip() + "\n"
 
@@ -717,6 +720,62 @@ def collect_schema_file_pages(
             "node": resolved_node,
             "key_path": key_path,
             "source": resolved_source,
+            "schema_file": schema_file.resolve(),
+            "children": [],
+        }
+
+    redundant_indexes = [key for key in pages if key and key[-1] == "index" and key[:-1] in pages]
+    for key in redundant_indexes:
+        del pages[key]
+
+    def node_for_dir_index(dir_key: tuple[str, ...]) -> tuple[dict[str, Any], tuple[str, ...], Path | None]:
+        parent_key = dir_key[:-1]
+        segment = dir_key[-1]
+
+        parent_candidates = [(*parent_key, "index"), parent_key]
+        for candidate in parent_candidates:
+            parent_page = pages.get(candidate)
+            if not parent_page:
+                continue
+
+            parent_node = parent_page["node"]
+            parent_source = parent_page["source"]
+            properties = parent_node.get("properties") if isinstance(parent_node.get("properties"), dict) else {}
+            child = properties.get(segment)
+            if isinstance(child, dict):
+                resolved_child, child_source, _ = resolver.resolve_node(child, parent_source)
+                return resolved_child, dir_key, child_source
+
+        return (
+            {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": True,
+                "description": f"Configuration for `{'.'.join(dir_key)}`.",
+            },
+            dir_key,
+            None,
+        )
+
+    schema_dirs = sorted(
+        [
+            tuple(path.relative_to(schemas_root).parts)
+            for path in schemas_root.rglob("*")
+            if path.is_dir() and path != schemas_root
+        ],
+        key=lambda parts: (len(parts), parts),
+    )
+
+    for dir_key in schema_dirs:
+        if dir_key in pages or (*dir_key, "index") in pages:
+            continue
+
+        node, key_path, source = node_for_dir_index(dir_key)
+        pages[(*dir_key, "index")] = {
+            "node": node,
+            "key_path": key_path,
+            "source": source,
+            "schema_file": None,
             "children": [],
         }
 
@@ -761,8 +820,15 @@ def compute_schema_style_markdown_paths(
                 mapping[key] = Path(*sanitized_folder[:-1]) / f"{sanitized_folder[-1]}.md"
             continue
 
+        has_same_name_folder = any(
+            len(other) > len(key) and other[: len(key)] == key for other in keys
+        )
+
         sanitized = [sanitize_segment(part, dynamic_segment) for part in key]
-        mapping[key] = Path(*sanitized[:-1]) / f"{sanitized[-1]}.md"
+        if has_same_name_folder:
+            mapping[key] = Path(*sanitized) / "index.md"
+        else:
+            mapping[key] = Path(*sanitized[:-1]) / f"{sanitized[-1]}.md"
 
     return mapping
 
@@ -796,6 +862,22 @@ def generate_docs(
 
     doc_paths = list(pages.keys())
     markdown_paths = compute_schema_style_markdown_paths(doc_paths, dynamic_segment)
+    page_key_paths = {doc_key: tuple(pages[doc_key]["key_path"]) for doc_key in pages}
+
+    schema_file_to_doc_key: dict[Path, tuple[str, ...]] = {}
+    for doc_key, page in pages.items():
+        schema_file = page.get("schema_file")
+        if isinstance(schema_file, Path):
+            schema_file_to_doc_key[schema_file.resolve()] = doc_key
+
+    schema_file_aliases: dict[Path, tuple[str, ...]] = {}
+    for index_file in schemas_root.rglob("index.json"):
+        sibling_file = index_file.parent.with_suffix(".json")
+        sibling_target = schema_file_to_doc_key.get(sibling_file.resolve())
+        if sibling_target is not None:
+            schema_file_aliases[index_file.resolve()] = sibling_target
+
+    ref_target_map = {**schema_file_to_doc_key, **schema_file_aliases}
 
     for doc_path_tuple, page in sorted(pages.items(), key=lambda item: (len(item[0]), item[0])):
         rel_page = markdown_paths[doc_path_tuple]
@@ -803,6 +885,33 @@ def generate_docs(
         target.parent.mkdir(parents=True, exist_ok=True)
 
         child_links: list[tuple[str, str, str]] = []
+        parent_key_path = page_key_paths[doc_path_tuple]
+
+        for child_doc_path_tuple, child_key_path in page_key_paths.items():
+            if child_doc_path_tuple == doc_path_tuple:
+                continue
+
+            if len(child_key_path) != len(parent_key_path) + 1:
+                continue
+
+            if child_key_path[: len(parent_key_path)] != parent_key_path:
+                continue
+
+            rel_child = markdown_paths[child_doc_path_tuple]
+            rel_link = relative_link(rel_page, rel_child)
+            child_name = child_key_path[-1]
+            child_node = pages[child_doc_path_tuple]["node"]
+            child_desc = child_node.get("description") if isinstance(child_node.get("description"), str) else ""
+            child_links.append((child_name, rel_link, child_desc))
+
+        child_links.sort(key=lambda item: item[0])
+
+        ref_links_by_file: dict[Path, str] = {}
+        for ref_file, ref_doc_key in ref_target_map.items():
+            ref_rel_page = markdown_paths.get(ref_doc_key)
+            if ref_rel_page is None:
+                continue
+            ref_links_by_file[ref_file] = relative_link(rel_page, ref_rel_page)
 
         generated = render_page(
             key_path_segments=list(page["key_path"]),
@@ -812,9 +921,40 @@ def generate_docs(
             base_url=base_url,
             max_depth=max_depth,
             child_links=child_links,
+            ref_links_by_file=ref_links_by_file,
             dynamic_segment=dynamic_segment,
         )
         target.write_text(generated, encoding="utf-8")
+
+
+def verify_generated_structure(
+    schemas_root: Path,
+    output: Path,
+    dynamic_segment: str,
+) -> tuple[bool, str]:
+    resolver = SchemaResolver(schemas_root=schemas_root)
+    pages = collect_schema_file_pages(schemas_root=schemas_root, resolver=resolver)
+    expected_paths = set(compute_schema_style_markdown_paths(pages.keys(), dynamic_segment).values())
+    actual_paths = set(path.relative_to(output) for path in output.rglob("*.md"))
+
+    missing_paths = sorted(expected_paths - actual_paths)
+    extra_paths = sorted(actual_paths - expected_paths)
+
+    if missing_paths or extra_paths:
+        details: list[str] = []
+        if missing_paths:
+            details.append(f"missing={len(missing_paths)}")
+            details.extend([f"  - {path.as_posix()}" for path in missing_paths[:20]])
+        if extra_paths:
+            details.append(f"extra={len(extra_paths)}")
+            details.extend([f"  - {path.as_posix()}" for path in extra_paths[:20]])
+        if len(missing_paths) > 20:
+            details.append(f"  ... and {len(missing_paths) - 20} more missing")
+        if len(extra_paths) > 20:
+            details.append(f"  ... and {len(extra_paths) - 20} more extra")
+        return False, "\n".join(details)
+
+    return True, f"verified {len(actual_paths)} generated pages"
 
 
 def main() -> int:
@@ -834,6 +974,18 @@ def main() -> int:
         dynamic_segment=args.dynamic_segment,
         schemas_root=args.schemas_root.resolve(),
     )
+
+    if not args.no_verify_structure:
+        ok, report = verify_generated_structure(
+            schemas_root=args.schemas_root.resolve(),
+            output=args.output.resolve(),
+            dynamic_segment=args.dynamic_segment,
+        )
+        if not ok:
+            print("Structure verification failed:")
+            print(report)
+            return 1
+        print(f"Structure verification passed: {report}")
 
     print(f"Generated pages in: {args.output}")
     return 0
