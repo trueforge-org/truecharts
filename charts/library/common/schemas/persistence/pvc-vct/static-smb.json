@@ -2,6 +2,29 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "description": "Mirrors docs path persistence/pvc-vct/static-smb.md.",
-  "properties": {},
-  "additionalProperties": true
+  "properties": {
+    "server": {
+      "type": "string",
+      "minLength": 1
+    },
+    "share": {
+      "type": "string",
+      "minLength": 1
+    },
+    "user": {
+      "type": "string",
+      "minLength": 1
+    },
+    "password": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "password",
+    "server",
+    "share",
+    "user"
+  ]
 }
