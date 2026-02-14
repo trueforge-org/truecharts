@@ -161,15 +161,17 @@
                       "type": "object",
                       "properties": {
                         "memory": {
-                          "type": "object",
-                          "properties": {},
-                          "additionalProperties": true,
+                          "type": [
+                            "string",
+                            "number"
+                          ],
                           "description": "The resources that the container can use."
                         },
                         "cpu": {
-                          "type": "object",
-                          "properties": {},
-                          "additionalProperties": true,
+                          "type": [
+                            "string",
+                            "number"
+                          ],
                           "description": "The maximum amount of CPU that the container can use."
                         }
                       },
@@ -180,15 +182,17 @@
                       "type": "object",
                       "properties": {
                         "cpu": {
-                          "type": "object",
-                          "properties": {},
-                          "additionalProperties": true,
+                          "type": [
+                            "string",
+                            "number"
+                          ],
                           "description": "The minimum amount of CPU that the container can use."
                         },
                         "memory": {
-                          "type": "object",
-                          "properties": {},
-                          "additionalProperties": true,
+                          "type": [
+                            "string",
+                            "number"
+                          ],
                           "description": "The minimum amount of memory that the container can use."
                         }
                       },
@@ -249,15 +253,17 @@
                       "type": "object",
                       "properties": {
                         "add": {
-                          "type": "object",
-                          "properties": {},
-                          "additionalProperties": true,
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
                           "description": "Define the capabilities.add for the container"
                         },
                         "drop": {
-                          "type": "object",
-                          "properties": {},
-                          "additionalProperties": true,
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
                           "description": "Define the capabilities.drop for the container"
                         }
                       },
@@ -284,15 +290,11 @@
                   "description": "Define if the container is primary or not Does **not** apply to `initContainers`"
                 },
                 "stdin": {
-                  "type": "object",
-                  "properties": {},
-                  "additionalProperties": true,
+                  "type": "boolean",
                   "description": "Define if the container should have stdin enabled or not"
                 },
                 "tty": {
-                  "type": "object",
-                  "properties": {},
-                  "additionalProperties": true,
+                  "type": "boolean",
                   "description": "Define if the container should have tty enabled or not"
                 },
                 "probes": {
@@ -565,9 +567,7 @@
               "type": "object",
               "properties": {
                 "type": {
-                  "type": "object",
-                  "properties": {},
-                  "additionalProperties": true,
+                  "type": "string",
                   "description": "Define the type of container - Only applies to `initContainers`"
                 }
               },
@@ -801,9 +801,10 @@
         "description": "Define the podSpec for the workload"
       },
       "replicas": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": [
+          "integer",
+          "string"
+        ],
         "description": "Define the number of replicas"
       },
       "revisionHistoryLimit": {
@@ -813,9 +814,7 @@
         "description": "Define the number of history revisions"
       },
       "strategy": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the strategy of the workload"
       },
       "rollingUpdate": {

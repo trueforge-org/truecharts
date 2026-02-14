@@ -111,21 +111,15 @@
         "description": "Cluster mode of operation. Available modes: - `standalone` (default mode, creates new or updates an existing CNPG cluster)"
       },
       "database": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the database name"
       },
       "user": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the database user"
       },
       "password": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the database password Chart users are strongly encouraged to override this setting with their own"
       }
     },

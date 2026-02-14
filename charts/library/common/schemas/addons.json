@@ -588,9 +588,10 @@
         "description": "Enables or Disables the Addon"
       },
       "targetSelector": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
         "description": "Define the workloads to add the addon to"
       },
       "container": {
