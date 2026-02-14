@@ -3,6 +3,25 @@
   "type": "array",
   "description": "See [Tolerations](/truecharts-common/workload#tolerations)",
   "items": {
-    "type": "object"
+    "type": "object",
+    "properties": {
+      "operator": {
+        "type": "string",
+        "description": "Configuration for `tolerations.$item.operator`."
+      },
+      "key": {
+        "type": "string",
+        "description": "Configuration for `tolerations.$item.key`."
+      },
+      "value": {
+        "type": "string",
+        "description": "Configuration for `tolerations.$item.value`."
+      },
+      "effect": {
+        "type": "string",
+        "description": "Configuration for `tolerations.$item.effect`."
+      }
+    },
+    "additionalProperties": true
   }
 }

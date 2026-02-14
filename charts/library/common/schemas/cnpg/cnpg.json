@@ -91,6 +91,73 @@
           },
           "customQueries": {
             "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Configuration for `cnpg.main.monitoring.customQueries.$item.name`."
+                },
+                "key": {
+                  "type": "string",
+                  "description": "Configuration for `cnpg.main.monitoring.customQueries.$item.key`."
+                },
+                "query": {
+                  "type": "string",
+                  "description": "Configuration for `cnpg.main.monitoring.customQueries.$item.query`."
+                },
+                "metrics": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "datname": {
+                        "type": "object",
+                        "properties": {
+                          "description": {
+                            "type": "string",
+                            "description": "Configuration for `cnpg.main.monitoring.customQueries.$item.metrics.$item.datname.description`."
+                          },
+                          "usage": {
+                            "type": "string",
+                            "description": "Configuration for `cnpg.main.monitoring.customQueries.$item.metrics.$item.datname.usage`."
+                          }
+                        },
+                        "additionalProperties": true,
+                        "description": "Configuration for `cnpg.main.monitoring.customQueries.$item.metrics.$item.datname`."
+                      },
+                      "size_bytes": {
+                        "type": "object",
+                        "properties": {
+                          "description": {
+                            "type": "string",
+                            "description": "Configuration for `cnpg.main.monitoring.customQueries.$item.metrics.$item.size_bytes.description`."
+                          },
+                          "usage": {
+                            "type": "string",
+                            "description": "Configuration for `cnpg.main.monitoring.customQueries.$item.metrics.$item.size_bytes.usage`."
+                          }
+                        },
+                        "additionalProperties": true,
+                        "description": "Configuration for `cnpg.main.monitoring.customQueries.$item.metrics.$item.size_bytes`."
+                      }
+                    },
+                    "additionalProperties": true,
+                    "description": "Configuration for `cnpg.main.monitoring.customQueries.$item.metrics.$item`."
+                  },
+                  "description": "Configuration for `cnpg.main.monitoring.customQueries.$item.metrics`."
+                },
+                "expandObjectName": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
+                  "description": "Configuration for `cnpg.main.monitoring.customQueries.$item.expandObjectName`."
+                }
+              },
+              "additionalProperties": true,
+              "description": "Configuration for `cnpg.main.monitoring.customQueries.$item`."
+            },
             "description": "Configuration for `cnpg.main.monitoring.customQueries`."
           }
         },
@@ -212,6 +279,31 @@
           },
           "manualBackups": {
             "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Configuration for `cnpg.main.backups.manualBackups.$item.name`."
+                },
+                "labels": {
+                  "allOf": [
+                    {
+                      "$ref": "../special/labels.json"
+                    }
+                  ],
+                  "description": "Configuration for `cnpg.main.backups.manualBackups.$item.labels`."
+                },
+                "annotations": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": true,
+                  "description": "Configuration for `cnpg.main.backups.manualBackups.$item.annotations`."
+                }
+              },
+              "additionalProperties": true,
+              "description": "Configuration for `cnpg.main.backups.manualBackups.$item`."
+            },
             "description": "Configuration for `cnpg.main.backups.manualBackups`."
           }
         },
