@@ -227,6 +227,46 @@ def schema_type(node: dict[str, Any]) -> str:
     return "unknown"
 
 
+def schema_required_keys(node: dict[str, Any]) -> set[str]:
+    required: set[str] = set()
+
+    direct_required = node.get("required")
+    if isinstance(direct_required, list):
+        required.update(key for key in direct_required if isinstance(key, str))
+
+    all_of = node.get("allOf")
+    if isinstance(all_of, list):
+        for option in all_of:
+            if isinstance(option, dict):
+                required.update(schema_required_keys(option))
+
+    return required
+
+
+def schema_default_value(node: dict[str, Any]) -> Any:
+    if "default" in node:
+        return node["default"]
+
+    all_of = node.get("allOf")
+    if isinstance(all_of, list):
+        for option in all_of:
+            if isinstance(option, dict):
+                value = schema_default_value(option)
+                if value is not None:
+                    return value
+
+    for union_key in ("oneOf", "anyOf"):
+        options = node.get(union_key)
+        if isinstance(options, list):
+            for option in options:
+                if isinstance(option, dict):
+                    value = schema_default_value(option)
+                    if value is not None:
+                        return value
+
+    return None
+
+
 def value_to_inline_json(value: Any) -> str:
     if value is None:
         return "unset"
@@ -314,9 +354,7 @@ def explicit_example_value(node: dict[str, Any]) -> Any:
     examples = node.get("examples")
     if isinstance(examples, list) and examples:
         return examples[0]
-    if "default" in node:
-        return node["default"]
-    return None
+    return schema_default_value(node)
 
 
 def build_example_block(key_path: str, value: Any) -> str:
@@ -348,7 +386,8 @@ def render_property_section(
     heading = "#" * max(2, min(6, heading_level))
     description = node.get("description") or "No description provided."
     type_text = schema_type(node)
-    default_text = value_to_inline_json(node.get("default")) if "default" in node else "unset"
+    default_value = schema_default_value(node)
+    default_text = value_to_inline_json(default_value)
 
     lines = [
         f"{heading} `{key_path}`",
@@ -401,7 +440,7 @@ def iter_child_properties(node: dict[str, Any]) -> Iterable[tuple[str, dict[str,
     properties = node.get("properties")
     if not isinstance(properties, dict):
         return []
-    required_keys = node.get("required") if isinstance(node.get("required"), list) else []
+    required_keys = schema_required_keys(node)
     out: list[tuple[str, dict[str, Any], bool]] = []
     for key in sorted(properties.keys()):
         child = properties[key]
@@ -820,12 +859,13 @@ def compute_schema_style_markdown_paths(
                 mapping[key] = Path(*sanitized_folder[:-1]) / f"{sanitized_folder[-1]}.md"
             continue
 
+        repeated_leaf = len(key) >= 2 and key[-1] == key[-2]
         has_same_name_folder = any(
             len(other) > len(key) and other[: len(key)] == key for other in keys
         )
 
         sanitized = [sanitize_segment(part, dynamic_segment) for part in key]
-        if has_same_name_folder:
+        if repeated_leaf or has_same_name_folder:
             mapping[key] = Path(*sanitized) / "index.md"
         else:
             mapping[key] = Path(*sanitized[:-1]) / f"{sanitized[-1]}.md"
