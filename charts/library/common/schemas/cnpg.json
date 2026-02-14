@@ -26,7 +26,9 @@
             "description": "Additional annotations for CNPG cluster"
           },
           "env": {
-            "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/env.json",
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
             "description": "Define additional environment variables for the cluster's pods See container env options in the [container env](/truecharts-common/container/env) section."
           },
           "envFrom": {
