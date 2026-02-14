@@ -1,55 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "properties": {
-    "main": {
-      "type": "object",
-      "properties": {
-        "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
-          "description": "Define service objects"
-        },
-        "primary": {
-          "type": "boolean",
-          "description": "Configuration for `service.main.primary`."
-        },
-        "ports": {
-          "type": "object",
-          "properties": {
-            "main": {
-              "type": "object",
-              "properties": {
-                "enabled": {
-                  "type": [
-                    "boolean",
-                    "string"
-                  ],
-                  "description": "Configuration for `service.main.ports.main.enabled`."
-                },
-                "primary": {
-                  "type": "boolean",
-                  "description": "Configuration for `service.main.ports.main.primary`."
-                },
-                "protocol": {
-                  "type": "string",
-                  "description": "Define the port dict"
-                }
-              },
-              "additionalProperties": true,
-              "description": "Define the port dict"
-            }
-          },
-          "additionalProperties": true,
-          "description": "Define service objects"
-        }
-      },
-      "additionalProperties": true,
-      "description": "Define service objects"
-    }
-  },
+  "properties": {},
   "additionalProperties": {
     "type": "object",
     "properties": {
@@ -193,6 +145,17 @@
                 "string"
               ],
               "description": "Define the hostPort, should be **avoided**, unless **ABSOLUTELY** necessary"
+            },
+            "enabled": {
+              "type": [
+                "boolean",
+                "string"
+              ],
+              "description": "Configuration for `service.main.ports.main.enabled`."
+            },
+            "primary": {
+              "type": "boolean",
+              "description": "Configuration for `service.main.ports.main.primary`."
             }
           },
           "additionalProperties": true,
@@ -225,15 +188,17 @@
         "description": "Define the load balancer source ranges"
       },
       "externalIP": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": [
+          "string",
+          "object"
+        ],
         "description": "Configure External IP type"
       },
       "useSlice": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": [
+          "boolean",
+          "object"
+        ],
         "description": "Define whether to use `EndpointSlice` or `Endpoint`"
       },
       "addressType": {
@@ -349,6 +314,10 @@
       "targetSelector": {
         "type": "string",
         "description": "Define the pod to link the service, by default will use the primary pod"
+      },
+      "primary": {
+        "type": "boolean",
+        "description": "Configuration for `service.main.primary`."
       }
     },
     "additionalProperties": true,
