@@ -83,6 +83,113 @@ def merge_structures(base: Any, new: Any, path: str = "") -> Any:
     return base
 
 
+# Parent keys that contain variable-named child objects
+# These are configuration sections where users define their own object names
+PARENT_KEYS_WITH_VARIABLE_CHILDREN = {
+    'workload',      # workload.main, workload.backup, etc.
+    'service',       # service.main, service.api, etc.
+    'persistence',   # persistence.config, persistence.data, etc.
+    'configmap',     # configmap.myconfig, configmap.settings, etc.
+    'secret',        # secret.mysecret, secret.credentials, etc.
+    'ingress',       # ingress.main, ingress.api, etc.
+    'route',         # route.main, route.api, etc.
+    'containers',    # containers.main, containers.sidecar, etc.
+    'initContainers',# initContainers.init, initContainers.setup, etc.
+    'ports',         # ports.main, ports.http, ports.metrics, etc.
+    'hosts',         # hosts.main, hosts.api, etc.
+    'middlewares',   # middlewares.auth, middlewares.rate-limit, etc.
+    'rules',         # Various rules with variable names
+    'backups',       # backups.daily, backups.weekly, etc.
+    'pooler',        # pooler.ro, pooler.rw, etc.
+}
+
+
+def normalize_value_to_placeholder(value: Any) -> Any:
+    """
+    Convert actual values to appropriate placeholders.
+    - Strings become ""
+    - Numbers become 0 (or keep if likely a config value like port)
+    - Booleans stay as-is
+    - Lists become empty or single-element example
+    - Dicts become empty or retain structure
+    """
+    if value is None:
+        return None
+    elif isinstance(value, bool):
+        return value  # Keep booleans as-is
+    elif isinstance(value, str):
+        # Keep empty strings, replace non-empty with ""
+        return "" if value else ""
+    elif isinstance(value, (int, float)):
+        # Keep small numbers that might be config values, zero out large ones
+        if isinstance(value, int) and 0 <= value <= 100:
+            return value  # Likely a config value
+        return 0
+    elif isinstance(value, list):
+        if not value:
+            return []
+        # Keep structure but normalize the first element as example
+        return [normalize_value_to_placeholder(value[0])]
+    elif isinstance(value, dict):
+        # Keep structure but normalize all values
+        if HAS_RUAMEL:
+            from ruamel.yaml.comments import CommentedMap
+            result = CommentedMap() if isinstance(value, CommentedMap) else {}
+        else:
+            result = {}
+        for k, v in value.items():
+            result[k] = normalize_value_to_placeholder(v)
+        return result
+    else:
+        return value
+
+
+def normalize_variable_keys(data: Any, parent_key: str = "") -> Any:
+    """
+    Replace variable dictionary keys with 'objectname' placeholder for known
+    parent keys that contain user-defined object names.
+    
+    For example:
+        workload.main -> workload.objectname
+        service.main -> service.objectname
+        persistence.config -> persistence.objectname
+    """
+    if not isinstance(data, dict):
+        return data
+    
+    if HAS_RUAMEL:
+        from ruamel.yaml.comments import CommentedMap
+        is_commented = isinstance(data, CommentedMap)
+        result = CommentedMap() if is_commented else {}
+    else:
+        result = {}
+    
+    # Check if current parent_key is one that contains variable-named children
+    if parent_key in PARENT_KEYS_WITH_VARIABLE_CHILDREN:
+        # This dict contains variable-named objects
+        # Collect all the child objects and merge them into a single 'objectname' entry
+        if data:
+            # Get the first key as a template for the objectname entry
+            first_key = list(data.keys())[0]
+            first_value = data[first_key]
+            
+            # Recursively normalize the template value
+            normalized_template = normalize_variable_keys(first_value, first_key)
+            
+            # Return a dict with just 'objectname' as the key
+            result['objectname'] = normalized_template
+            return result
+        else:
+            return result
+    
+    # Not a parent with variable children, process each key normally
+    for key, value in data.items():
+        # Recursively process, passing the current key as parent_key for next level
+        result[key] = normalize_variable_keys(value, key)
+    
+    return result
+
+
 def collect_all_values_files(repo_root: Path) -> List[Path]:
     """Collect all values.yaml files from charts and common-test."""
     values_files = []
@@ -235,7 +342,13 @@ def generate_complete_structure(repo_root: Path, existing_file: Path = None) -> 
         else:
             complete_structure = merge_structures(complete_structure, values_data)
     
-    print("Merge complete. Structure generated.", file=sys.stderr)
+    print("Merge complete. Normalizing structure...", file=sys.stderr)
+    
+    # Apply normalization: replace variable keys with 'objectname' and values with placeholders
+    complete_structure = normalize_variable_keys(complete_structure)
+    complete_structure = normalize_value_to_placeholder(complete_structure)
+    
+    print("Structure generated and normalized.", file=sys.stderr)
     return complete_structure
 
 
