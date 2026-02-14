@@ -18,6 +18,7 @@ cd "$(dirname "$0")" || exit 1
 
 common_test_path="charts/library/common-test"
 common_schema_test_script="charts/library/common/test_schema.py"
+common_coverage_script="charts/library/common/check_complete_values_schema_coverage.py"
 
 function cleanup {
   if [ -n "$scratch_dir" ] && [ -d "$scratch_dir" ]; then
@@ -112,5 +113,8 @@ if [ -n "${SCHEMA_MAX_FAILURES:-}" ]; then
   schema_args+=(--max-failures "$SCHEMA_MAX_FAILURES")
 fi
 python3 "$common_schema_test_script" "${schema_args[@]}"
+
+echo "📊 Running complete-values schema coverage check..."
+python3 "$common_coverage_script"
 
 cleanup
