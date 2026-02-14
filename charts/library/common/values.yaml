@@ -852,27 +852,83 @@ storageClass: {}
 #     mountOptions: []
 
 # # -- create networkpolicy on demand
+# See docs/networkpolicy.md for full documentation
 networkpolicy:
   main:
     enabled: false
-    ### Defaults to targeting all pods in this chart
-    ## (optional) Custom podselector
+    ### Pod Selection Options (choose one):
+    ## Default: targets all pods in this chart
+    ## (optional) Custom podSelector with matchLabels and matchExpressions
     # podSelector:
     #   matchLabels:
-    ## (optional) select a specific pod from chart
-    # targetSelector: thisPod
-    ## Target all pods in this namespace
-    targetAllPods: false
+    #     app: my-app
+    #   matchExpressions:
+    #     - key: environment
+    #       operator: In
+    #       values:
+    #         - production
+    ## (optional) Target a specific pod from this chart
+    # targetSelector: main-pod
+    ## (optional) Target all pods in the namespace
+    # targetAllPods: false
 
-    ## (optional) explicitly define policyType
-    ## Defaults to egress or ingress depending on which one is set.
-    # policyType: ["egress"]
+    ## (optional) Explicitly define policyTypes
+    ## Auto-detected based on ingress/egress rules if not specified
+    # policyTypes:
+    #   - Ingress
+    #   - Egress
 
-    ## Automatically sets policyType when filled out
-    ingress: {}
+    ## Ingress Rules (incoming traffic)
+    ## Empty list allows no ingress traffic
+    ingress: []
+    # ingress:
+    #   - from:
+    #       # Allow from pods with specific labels
+    #       - podSelector:
+    #           matchLabels:
+    #             role: frontend
+    #       # Allow from specific namespace
+    #       - namespaceSelector:
+    #           matchLabels:
+    #             environment: production
+    #       # Allow from IP range
+    #       - ipBlock:
+    #           cidr: 10.0.0.0/8
+    #           except:
+    #             - 10.1.0.0/16
+    #     ports:
+    #       - protocol: TCP
+    #         port: 8080
+    #       - protocol: TCP
+    #         port: 8443
 
-    ## Automatically sets policyType when filled out
-    egress: {}
+    ## Egress Rules (outgoing traffic)
+    ## Empty list allows no egress traffic
+    egress: []
+    # egress:
+    #   - to:
+    #       # Allow to pods with specific labels
+    #       - podSelector:
+    #           matchLabels:
+    #             role: database
+    #       # Allow to specific namespace
+    #       - namespaceSelector:
+    #           matchLabels:
+    #             name: kube-system
+    #       # Allow to external IPs
+    #       - ipBlock:
+    #           cidr: 0.0.0.0/0
+    #           except:
+    #             - 169.254.169.254/32
+    #     ports:
+    #       - protocol: TCP
+    #         port: 5432
+    #       - protocol: UDP
+    #         port: 53
+    #       # Port ranges (Kubernetes 1.25+)
+    #       - protocol: TCP
+    #         port: 8000
+    #         endPort: 9000
 
 metrics:
   main:

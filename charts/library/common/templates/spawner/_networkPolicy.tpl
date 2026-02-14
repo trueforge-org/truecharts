@@ -50,7 +50,4 @@
     {{/* Call class to create the object */}}
     {{- include "tc.v1.common.class.networkpolicy" (dict "rootCtx" $ "objectData" $objectData) -}}
   {{- end -}}
-
-  {{/* Update internalUrls after the loop */}}
-  {{- $_ := set $.Values.chartContext "internalUrls" $allUrls -}}
 {{- end -}}
