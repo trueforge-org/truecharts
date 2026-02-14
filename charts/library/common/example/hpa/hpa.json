@@ -1,0 +1,20 @@
+{
+  "key": "objectname",
+  "type": "object",
+  "scalarKeys": {
+    "enabled": "boolean",
+    "namespace": "string",
+    "minReplicas": "integer",
+    "maxReplicas": "integer"
+  },
+  "objectKeys": [
+    "labels",
+    "annotations",
+    "behavior"
+  ],
+  "arrayKeys": [
+    "targetSelector",
+    "metrics"
+  ],
+  "hasObjectNameObject": false
+}

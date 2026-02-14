@@ -1,0 +1,26 @@
+{
+  "key": "objectname",
+  "type": "object",
+  "scalarKeys": {
+    "enabled": "boolean",
+    "primary": "boolean",
+    "imageSelector": "string",
+    "terminationGracePeriodSeconds": "integer",
+    "terminationMessagePath": "string",
+    "terminationMessagePolicy": "string"
+  },
+  "objectKeys": [
+    "fixedEnv",
+    "env",
+    "probes",
+    "lifecycle",
+    "resources",
+    "securityContext"
+  ],
+  "arrayKeys": [
+    "command",
+    "args",
+    "envFrom"
+  ],
+  "hasObjectNameObject": false
+}
