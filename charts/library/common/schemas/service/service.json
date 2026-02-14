@@ -117,7 +117,22 @@
         "description": "Additional annotations for service"
       },
       "type": {
-        "type": "string",
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "ClusterIP",
+              "LoadBalancer",
+              "NodePort",
+              "ExternalName",
+              "ExternalIP"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ],
         "description": "Define the service type"
       },
       "expandObjectName": {
@@ -136,21 +151,43 @@
         "description": "Configure Cluster IP type"
       },
       "ipFamilyPolicy": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "SingleStack",
+              "PreferDualStack",
+              "RequireDualStack"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ],
         "description": "Define the ipFamilyPolicy Does **not** apply to `type` of `ExternalName` or `ExternalIP`"
       },
       "ipFamilies": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
         "description": "Define the ipFamilies Does **not** apply to `type` of `ExternalName` or `ExternalIP`"
       },
       "sessionAffinity": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "ClientIP",
+              "None"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ],
         "description": "Define the session affinity (ClientIP, None)"
       },
       "sessionAffinityConfig": {
@@ -160,9 +197,7 @@
             "type": "object",
             "properties": {
               "timeoutSeconds": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "integer",
                 "description": "Define the timeout for ClientIP session affinity (0-86400)"
               }
             },
@@ -174,15 +209,26 @@
         "description": "Configuration for `$name.sessionAffinityConfig`."
       },
       "externalIPs": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
         "description": "Define externalIPs"
       },
       "externalTrafficPolicy": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "Cluster",
+              "Local"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ],
         "description": "Define the external traffic policy (Cluster, Local) Does **not** apply to `type` of `ClusterIP`"
       },
       "publishNotReadyAddresses": {
