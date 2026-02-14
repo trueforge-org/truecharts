@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "mountOptions": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define storage classes"
+      },
+      "enabled": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Enables or Disables the storage class"
+      },
+      "labels": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Additional labels for storage class"
+      },
+      "annotations": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Additional annotations for storage class"
+      },
+      "provisioner": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the provisioner for this storage class"
+      },
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the parameters for this storage class"
+      },
+      "reclaimPolicy": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the reclaim policy for this storage class"
+      },
+      "allowVolumeExpansion": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define if volume expansion is allowed for this storage class"
+      },
+      "volumeBindingMode": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the volume binding mode for this storage class"
+      }
+    },
+    "additionalProperties": true,
+    "description": "Define storage class"
+  },
+  "description": "Define storage classes"
+}
