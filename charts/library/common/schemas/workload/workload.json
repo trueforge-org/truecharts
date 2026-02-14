@@ -5,11 +5,11 @@
     "main": {
       "type": "object",
       "properties": {
-          "enabled": {
-            "type": [
-              "boolean",
-              "string"
-            ],
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
           "description": "Define workload objects"
         },
         "primary": {
@@ -33,11 +33,11 @@
                 "main": {
                   "type": "object",
                   "properties": {
-                      "enabled": {
-                        "type": [
-                          "boolean",
-                          "string"
-                        ],
+                    "enabled": {
+                      "type": [
+                        "boolean",
+                        "string"
+                      ],
                       "description": "Define if the container is enabled or not"
                     },
                     "primary": {
@@ -54,11 +54,11 @@
                         "liveness": {
                           "type": "object",
                           "properties": {
-                              "enabled": {
-                                "type": [
-                                  "boolean",
-                                  "string"
-                                ],
+                            "enabled": {
+                              "type": [
+                                "boolean",
+                                "string"
+                              ],
                               "description": "Define probes for the container"
                             },
                             "type": {
@@ -66,7 +66,10 @@
                               "description": "Define probes for the container"
                             },
                             "port": {
-                              "type": ["integer", "string"],
+                              "type": [
+                                "integer",
+                                "string"
+                              ],
                               "description": "Define probes for the container"
                             }
                           },
@@ -76,11 +79,11 @@
                         "readiness": {
                           "type": "object",
                           "properties": {
-                              "enabled": {
-                                "type": [
-                                  "boolean",
-                                  "string"
-                                ],
+                            "enabled": {
+                              "type": [
+                                "boolean",
+                                "string"
+                              ],
                               "description": "Define probes for the container"
                             },
                             "type": {
@@ -88,7 +91,10 @@
                               "description": "Define probes for the container"
                             },
                             "port": {
-                              "type": ["integer", "string"],
+                              "type": [
+                                "integer",
+                                "string"
+                              ],
                               "description": "Define probes for the container"
                             }
                           },
@@ -98,11 +104,11 @@
                         "startup": {
                           "type": "object",
                           "properties": {
-                              "enabled": {
-                                "type": [
-                                  "boolean",
-                                  "string"
-                                ],
+                            "enabled": {
+                              "type": [
+                                "boolean",
+                                "string"
+                              ],
                               "description": "Define probes for the container"
                             },
                             "type": {
@@ -110,7 +116,10 @@
                               "description": "Define probes for the container"
                             },
                             "port": {
-                              "type": ["integer", "string"],
+                              "type": [
+                                "integer",
+                                "string"
+                              ],
                               "description": "Define probes for the container"
                             }
                           },
@@ -151,7 +160,7 @@
               "type": "object",
               "properties": {
                 "env": {
-                  "$ref": "container/env.json",
+                  "$ref": "../container/env.json",
                   "description": "Define env(s) for the container"
                 },
                 "resources": {
@@ -274,11 +283,11 @@
                   "additionalProperties": true,
                   "description": "Define securityContext for the container"
                 },
-                  "enabled": {
-                    "type": [
-                      "boolean",
-                      "string"
-                    ],
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
                   "description": "Define if the container is enabled or not"
                 },
                 "imageSelector": {
@@ -359,11 +368,11 @@
                         "additionalProperties": true,
                         "description": "Define the probe spec"
                       },
-                        "enabled": {
-                          "type": [
-                            "boolean",
-                            "string"
-                          ],
+                      "enabled": {
+                        "type": [
+                          "boolean",
+                          "string"
+                        ],
                         "properties": {},
                         "additionalProperties": true,
                         "description": "Enable or disable the probe"
@@ -375,7 +384,10 @@
                         "description": "Define probe type"
                       },
                       "port": {
-                        "type": ["integer", "string"],
+                        "type": [
+                          "integer",
+                          "string"
+                        ],
                         "description": "Define the port - Only applies when `type: grpc/tcp/http/https`"
                       },
                       "path": {
@@ -396,8 +408,12 @@
                 },
                 "command": {
                   "oneOf": [
-                    {"type": "string"},
-                    {"type": "array"}
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "array"
+                    }
                   ],
                   "description": "Define command(s). If it's single, can be defined as string"
                 },
@@ -433,7 +449,10 @@
                         "description": "Define hook type"
                       },
                       "port": {
-                        "type": ["integer", "string"],
+                        "type": [
+                          "integer",
+                          "string"
+                        ],
                         "description": "Define the port - Only applies when `type: http` or `type: https`"
                       },
                       "host": {
@@ -542,15 +561,23 @@
                 },
                 "args": {
                   "oneOf": [
-                    {"type": "string"},
-                    {"type": "array"}
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "array"
+                    }
                   ],
                   "description": "Define arg(s). If it's single, can be defined as string"
                 },
                 "extraArgs": {
                   "oneOf": [
-                    {"type": "string"},
-                    {"type": "array"}
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "array"
+                    }
                   ],
                   "description": "Define extraArg(s). Those are appended **after** the `args`."
                 }
@@ -908,11 +935,11 @@
         "type": "integer",
         "description": "Define the startingDeadlineSeconds"
       },
-        "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
         "description": "Enable or disable workload"
       },
       "primary": {
