@@ -50,20 +50,29 @@
       },
       "type": {
         "type": "string",
-        "properties": {},
-        "additionalProperties": true,
+        "enum": [
+          "postgres",
+          "postgis",
+          "timescaledb",
+          "vectors",
+          "vectorchord"
+        ],
         "description": "Define a CNPG cluster"
       },
       "pgVersion": {
         "type": "integer",
-        "properties": {},
-        "additionalProperties": true,
+        "enum": [
+          15,
+          16
+        ],
         "description": "Define a CNPG cluster"
       },
       "mode": {
         "type": "string",
-        "properties": {},
-        "additionalProperties": true,
+        "enum": [
+          "standalone",
+          "recovery"
+        ],
         "description": "Define a CNPG cluster"
       },
       "database": {

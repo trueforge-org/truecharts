@@ -14,7 +14,22 @@
           "description": "Define probes for the container"
         },
         "type": {
-          "type": "string",
+          "oneOf": [
+            {
+              "type": "string",
+              "enum": [
+                "exec",
+                "http",
+                "https",
+                "tcp",
+                "grpc"
+              ]
+            },
+            {
+              "type": "string",
+              "pattern": "^\\{\\{.*\\}\\}$"
+            }
+          ],
           "description": "Define probes for the container"
         },
         "port": {
@@ -39,7 +54,22 @@
           "description": "Define probes for the container"
         },
         "type": {
-          "type": "string",
+          "oneOf": [
+            {
+              "type": "string",
+              "enum": [
+                "exec",
+                "http",
+                "https",
+                "tcp",
+                "grpc"
+              ]
+            },
+            {
+              "type": "string",
+              "pattern": "^\\{\\{.*\\}\\}$"
+            }
+          ],
           "description": "Define probes for the container"
         },
         "port": {
@@ -64,7 +94,22 @@
           "description": "Define probes for the container"
         },
         "type": {
-          "type": "string",
+          "oneOf": [
+            {
+              "type": "string",
+              "enum": [
+                "exec",
+                "http",
+                "https",
+                "tcp",
+                "grpc"
+              ]
+            },
+            {
+              "type": "string",
+              "pattern": "^\\{\\{.*\\}\\}$"
+            }
+          ],
           "description": "Define probes for the container"
         },
         "port": {
@@ -129,9 +174,22 @@
         "description": "Enable or disable the probe"
       },
       "type": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "exec",
+              "http",
+              "https",
+              "tcp",
+              "grpc"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ],
         "description": "Define probe type"
       },
       "port": {
