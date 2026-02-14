@@ -44,21 +44,33 @@ spec:
       {{- include "tc.v1.common.lib.metadata.selectorLabels" (dict "rootCtx" $ "objectType" "" "objectName" "") | indent 8 }}
   {{- end }}
 
-  {{- if $objectData.policyType }}
-   policyTypes: {{ $objectData.policyType }}
-  {{- else if $objectData.ingress }}
-  policyTypes: ["Ingress"]
-  {{- else if $objectData.egress }}
-  policyTypes: ["Egress"]
-  {{- else if and $objectData.ingress $objectData.egress }}
-  policyTypes: ["Ingress", "Egress"]
-  {{- end -}}
-  {{- end -}}
+  {{- if $objectData.policyTypes }}
+  policyTypes:
+    {{- $objectData.policyTypes | toYaml | nindent 4 }}
+  {{- else }}
+    {{- $hasingress := false -}}
+    {{- $hasegress := false -}}
+    {{- if $objectData.ingress -}}
+      {{- $hasingress = true -}}
+    {{- end -}}
+    {{- if $objectData.egress -}}
+      {{- $hasegress = true -}}
+    {{- end -}}
+    {{- if or $hasingress $hasegress }}
+  policyTypes:
+      {{- if $hasingress }}
+    - Ingress
+      {{- end }}
+      {{- if $hasegress }}
+    - Egress
+      {{- end }}
+    {{- end -}}
+  {{- end }}
 
   {{- if $objectData.egress }}
   egress:
   {{- range $objectData.egress }}
-  - to:
+  -{{- if .to }} to:
     {{- range .to -}}
     {{- $nss := false -}}
     {{- $ipb := false -}}
@@ -108,8 +120,8 @@ spec:
         {{- end -}}
       {{- end -}}
       {{- end -}}
+    {{- end }}
     {{- end -}}
-
   {{- with .ports }}
     ports:
     {{- . | toYaml | nindent 6 }}
@@ -120,7 +132,7 @@ spec:
   {{- if $objectData.ingress }}
   ingress:
   {{- range $objectData.ingress }}
-  - from:
+  -{{- if .from }} from:
     {{- range .from -}}
     {{- $nss := false -}}
     {{- $ipb := false -}}
@@ -170,8 +182,8 @@ spec:
         {{- end -}}
       {{- end -}}
       {{- end -}}
+    {{- end }}
     {{- end -}}
-
   {{- with .ports }}
     ports:
     {{- . | toYaml | nindent 6 }}
