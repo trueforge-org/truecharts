@@ -4,7 +4,10 @@
   "description": "Mirrors docs path ingress/homepage.md.",
   "properties": {
     "enabled": {
-      "type": "boolean"
+      "type": [
+        "boolean",
+        "string"
+      ]
     },
     "key": {
       "type": "string",

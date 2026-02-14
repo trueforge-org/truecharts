@@ -36,8 +36,11 @@
         "additionalProperties": true,
         "description": "Define the annotations of the volume snapshot class"
       },
-      "enabled": {
-        "type": "object",
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
         "properties": {},
         "additionalProperties": true,
         "description": "Enable volume snapshot"

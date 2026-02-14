@@ -35,8 +35,11 @@
         },
         "description": "Define `subjects` for (Cluster)RoleBinding"
       },
-      "enabled": {
-        "type": "boolean",
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
         "description": "Enables or Disables the rbac"
       },
       "primary": {

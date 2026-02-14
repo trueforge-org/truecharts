@@ -24,8 +24,11 @@
         "additionalProperties": true,
         "description": "Define the certificate secret template for this certificate At least one of the following keys must be defined"
       },
-      "enabled": {
-        "type": "object",
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
         "properties": {},
         "additionalProperties": true,
         "description": "Enables or Disables the certificate"

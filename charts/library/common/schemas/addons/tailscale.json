@@ -2,8 +2,11 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "properties": {
-    "enabled": {
-      "type": "boolean",
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
       "description": "Addons to the workloads"
     },
     "targetSelector": {
@@ -21,8 +24,11 @@
     "container": {
       "type": "object",
       "properties": {
-        "enabled": {
-          "type": "boolean",
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
           "description": "Configuration for `addons.tailscale.container.enabled`."
         },
         "imageSelector": {
@@ -35,8 +41,11 @@
             "liveness": {
               "type": "object",
               "properties": {
-                "enabled": {
-                  "type": "boolean",
+                  "enabled": {
+                    "type": [
+                      "boolean",
+                      "string"
+                    ],
                   "description": "Configuration for `addons.tailscale.container.probes.liveness.enabled`."
                 }
               },
@@ -46,8 +55,11 @@
             "readiness": {
               "type": "object",
               "properties": {
-                "enabled": {
-                  "type": "boolean",
+                  "enabled": {
+                    "type": [
+                      "boolean",
+                      "string"
+                    ],
                   "description": "Configuration for `addons.tailscale.container.probes.readiness.enabled`."
                 }
               },
@@ -57,8 +69,11 @@
             "startup": {
               "type": "object",
               "properties": {
-                "enabled": {
-                  "type": "boolean",
+                  "enabled": {
+                    "type": [
+                      "boolean",
+                      "string"
+                    ],
                   "description": "Configuration for `addons.tailscale.container.probes.startup.enabled`."
                 }
               },

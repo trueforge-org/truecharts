@@ -11,8 +11,11 @@
         "additionalProperties": true,
         "description": "Define storage classes"
       },
-      "enabled": {
-        "type": "object",
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
         "properties": {},
         "additionalProperties": true,
         "description": "Enables or Disables the storage class"
