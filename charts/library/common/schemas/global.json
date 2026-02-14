@@ -67,7 +67,8 @@
     },
     "minNodePort": {
       "type": "integer",
-      "description": "Minimum Node Port Allowed"
+      "description": "Minimum Node Port Allowed",
+      "minimum": 1
     },
     "stopAll": {
       "type": "boolean",
@@ -81,5 +82,8 @@
     }
   },
   "additionalProperties": true,
-  "description": "Global values that apply to all charts See more info about global values [here](/truecharts-common/global)"
+  "description": "Global values that apply to all charts See more info about global values [here](/truecharts-common/global)",
+  "required": [
+    "minNodePort"
+  ]
 }

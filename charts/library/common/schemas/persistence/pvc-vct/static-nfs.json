@@ -2,6 +2,19 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "description": "Mirrors docs path persistence/pvc-vct/static-nfs.md.",
-  "properties": {},
-  "additionalProperties": true
+  "properties": {
+    "server": {
+      "type": "string",
+      "minLength": 1
+    },
+    "share": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "server",
+    "share"
+  ]
 }

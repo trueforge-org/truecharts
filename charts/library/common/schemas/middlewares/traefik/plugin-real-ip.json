@@ -2,6 +2,14 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "description": "Mirrors docs path middlewares/traefik/plugin-real-ip.md.",
-  "properties": {},
-  "additionalProperties": true
+  "properties": {
+    "excludednets": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "excludednets"
+  ]
 }
