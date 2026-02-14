@@ -10,15 +10,18 @@
           "boolean",
           "string"
         ],
-        "description": "Configuration for `hpa.main.enabled`."
+        "description": "Configuration for `hpa.main.enabled`.",
+        "default": false
       },
       "targetSelector": {
         "type": "array",
-        "description": "Configuration for `hpa.main.targetSelector`."
+        "description": "Configuration for `hpa.main.targetSelector`.",
+        "default": []
       }
     },
     "additionalProperties": true,
-    "description": "Configuration for `hpa.main`."
+    "description": "Configuration for `hpa.main`.",
+    "default": {}
   },
   "description": "Configuration for `hpa`."
 }

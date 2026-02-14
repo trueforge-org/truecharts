@@ -4,19 +4,26 @@
   "description": "Configuration for `persistence` entries with `type: iscsi`.",
   "properties": {
     "iscsi": {
-      "type": "object"
+      "type": "object",
+      "default": {}
     },
     "targetPortal": {
       "type": "string",
-      "minLength": 1
+      "minLength": 1,
+      "default": "\"\""
     },
     "iqn": {
       "type": "string",
-      "minLength": 1
+      "minLength": 1,
+      "default": "\"\""
     },
     "lun": {
-      "type": "integer",
-      "minimum": 0
+      "type": [
+        "integer",
+        "string"
+      ],
+      "minimum": 1,
+      "default": "\"\""
     }
   },
   "additionalProperties": true,

@@ -22,7 +22,8 @@
           }
         },
         "additionalProperties": true,
-        "description": "Define the source of the volume snapshot At least one of the following keys must be defined"
+        "description": "Define the source of the volume snapshot At least one of the following keys must be defined",
+        "default": {}
       },
       "labels": {
         "allOf": [
@@ -30,13 +31,22 @@
             "$ref": "special/labels.json"
           }
         ],
-        "description": "Define the labels of the volume snapshot"
+        "description": "Define the labels of the volume snapshot",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
       },
       "annotations": {
-        "type": "object",
+        "type": [
+          "object",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Define the annotations of the volume snapshot class"
+        "description": "Define the annotations of the volume snapshot class",
+        "default": {}
       },
       "enabled": {
         "type": [
@@ -45,11 +55,13 @@
         ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Enable volume snapshot"
+        "description": "Enable volume snapshot",
+        "default": false
       }
     },
     "additionalProperties": true,
-    "description": "Define a volume snapshot"
+    "description": "Define a volume snapshot",
+    "default": {}
   },
   "description": "Define a volume snapshot"
 }
