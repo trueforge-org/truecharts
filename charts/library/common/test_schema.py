@@ -35,6 +35,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Path to the stable charts directory",
     )
     parser.add_argument(
+        "--common-test-ci-dir",
+        type=Path,
+        default=repo_root / "charts" / "library" / "common-test" / "ci",
+        help="Path to common-test CI values files directory",
+    )
+    parser.add_argument(
         "--fail-fast",
         action="store_true",
         help="Stop after first chart that fails validation",
@@ -122,14 +128,13 @@ def prepare_common_chart_for_local_refs(common_chart_dir: Path, temp_dir: Path) 
     return prepared_chart_dir
 
 
-def validate_chart_values_with_helm(
-    chart_dir: Path,
+def validate_values_file_with_helm(
+    values_path: Path,
     prepared_common_chart_dir: Path,
     helm_bin: str,
 ) -> tuple[bool, list[str]]:
-    values_path = chart_dir / "values.yaml"
     if not values_path.exists():
-        return False, ["values.yaml missing"]
+        return False, [f"values file missing: {values_path}"]
 
     command = [
         helm_bin,
@@ -168,6 +173,7 @@ def main() -> int:
 
     common_chart_dir = args.common_chart.resolve()
     stable_dir = args.stable_dir.resolve()
+    common_test_ci_dir = args.common_test_ci_dir.resolve()
     output_file = args.output_file.resolve()
     output_file.parent.mkdir(parents=True, exist_ok=True)
     output_file.write_text("", encoding="utf-8")
@@ -178,6 +184,10 @@ def main() -> int:
 
     if not stable_dir.exists():
         emit(f"Stable charts directory not found: {stable_dir}", output_file)
+        return 2
+
+    if not common_test_ci_dir.exists():
+        emit(f"Common-test CI directory not found: {common_test_ci_dir}", output_file)
         return 2
 
     if not check_helm_available(args.helm_bin):
@@ -197,32 +207,60 @@ def main() -> int:
             Path(temp_path),
         )
 
-        chart_dirs = sorted(path for path in stable_dir.iterdir() if path.is_dir())
-        if not chart_dirs:
-            emit(f"No chart directories found in: {stable_dir}", output_file)
+        stable_values_files = sorted(
+            chart_dir / "values.yaml"
+            for chart_dir in stable_dir.iterdir()
+            if chart_dir.is_dir() and (chart_dir / "values.yaml").exists()
+        )
+        common_test_values_files = sorted(common_test_ci_dir.glob("*values.yaml"))
+
+        if not stable_values_files and not common_test_values_files:
+            emit(
+                f"No values files found in: {stable_dir} or {common_test_ci_dir}",
+                output_file,
+            )
             return 2
+
+        emit(
+            (
+                "Validation targets: "
+                f"{len(stable_values_files)} stable values files + "
+                f"{len(common_test_values_files)} common-test CI values files"
+            ),
+            output_file,
+        )
+
+        validation_targets: list[tuple[str, Path]] = []
+        validation_targets.extend(
+            (f"stable/{values_file.parent.name}", values_file)
+            for values_file in stable_values_files
+        )
+        validation_targets.extend(
+            (f"common-test/ci/{values_file.name}", values_file)
+            for values_file in common_test_values_files
+        )
 
         total = 0
         failed = 0
-        failed_charts: list[str] = []
+        failed_targets: list[str] = []
 
-        for chart_dir in chart_dirs:
+        for target_name, values_file in validation_targets:
             total += 1
-            valid, output_lines = validate_chart_values_with_helm(
-                chart_dir,
+            valid, output_lines = validate_values_file_with_helm(
+                values_file,
                 prepared_common_chart_dir,
                 args.helm_bin,
             )
             if not valid:
                 failed += 1
-                failed_charts.append(chart_dir.name)
-                emit(f"❌ {chart_dir.name}", output_file)
+                failed_targets.append(target_name)
+                emit(f"❌ {target_name}", output_file)
                 for line in output_lines or ["helm lint failed with no output"]:
                     emit(f"   - {line}", output_file)
                 if args.fail_fast:
                     break
             elif args.show_passing:
-                emit(f"✅ {chart_dir.name}", output_file)
+                emit(f"✅ {target_name}", output_file)
 
         passed = total - failed
         emit("", output_file)
@@ -230,10 +268,10 @@ def main() -> int:
         emit(f"- Total charts checked: {total}", output_file)
         emit(f"- Passed: {passed}", output_file)
         emit(f"- Failed: {failed}", output_file)
-        if failed_charts:
-            emit("- Failed charts:", output_file)
-            for chart_name in failed_charts:
-                emit(f"  - {chart_name}", output_file)
+        if failed_targets:
+            emit("- Failed targets:", output_file)
+            for target_name in failed_targets:
+                emit(f"  - {target_name}", output_file)
 
         return 1 if failed else 0
 
