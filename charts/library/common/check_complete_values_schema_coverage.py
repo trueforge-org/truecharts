@@ -124,15 +124,43 @@ def validate_node(
                 validate_node(item, schema, schema_file, f"{path}[{index}]", missing)
 
 
+def collect_yaml_key_paths(yaml_node: Any, path: str, paths: set[str]) -> None:
+    if isinstance(yaml_node, dict):
+        for key, value in yaml_node.items():
+            if not isinstance(key, str):
+                continue
+            child_path = f"{path}/{key}"
+            paths.add(child_path)
+            collect_yaml_key_paths(value, child_path, paths)
+        return
+
+    if isinstance(yaml_node, list):
+        for index, item in enumerate(yaml_node):
+            collect_yaml_key_paths(item, f"{path}[{index}]", paths)
+
+
 def main() -> int:
     values_data = load_yaml(VALUES_FILE)
     root_schema = load_json(ROOT_SCHEMA_FILE)
     missing: list[str] = []
+    key_paths: set[str] = set()
+
+    collect_yaml_key_paths(values_data, "$", key_paths)
 
     validate_node(values_data, root_schema, ROOT_SCHEMA_FILE, "$", missing)
 
     unique_missing = sorted(set(missing))
+    total_paths = len(key_paths)
+    missing_count = len(unique_missing)
+    covered_count = total_paths - missing_count
+    coverage_percent = (covered_count / total_paths * 100.0) if total_paths else 100.0
+
+    print(f"TOTAL_PATHS {total_paths}")
+    print(f"COVERED_PATHS {covered_count}")
     print(f"MISSING_PATHS {len(unique_missing)}")
+    print(f"COVERAGE_PERCENT {coverage_percent:.2f}")
+
+    print("UNCOVERED_PATHS")
     for item in unique_missing:
         print(item)
 
