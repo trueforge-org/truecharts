@@ -132,6 +132,33 @@
       },
       "additionalProperties": true,
       "description": "Define persistence objects"
+    },
+    "crontab": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Define persistence objects"
+        },
+        "type": {
+          "type": "string",
+          "description": "Define persistence objects"
+        },
+        "mountPath": {
+          "type": "string",
+          "description": "Define persistence objects"
+        },
+        "medium": {
+          "type": "string",
+          "description": "Define the medium of emptyDir (Memory, \"\")"
+        },
+        "targetSelectAll": {
+          "type": "boolean",
+          "description": "Define persistence objects"
+        }
+      },
+      "additionalProperties": true,
+      "description": "Define persistence objects"
     }
   },
   "additionalProperties": {
