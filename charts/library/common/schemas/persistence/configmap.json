@@ -1,24 +1,44 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$ref": "../configmap.json",
-  "description": "Mirrors docs path persistence/configmap.md and reuses shared schema configmap.json.",
-  "properties": {
-    "objectName": {
-      "type": "string",
-      "minLength": 1
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Create Configmap objects"
+      },
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+        "description": "Enables or Disables the Configmap"
+      },
+      "namespace": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the namespace for this object"
+      },
+      "labels": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Additional labels for configmap"
+      },
+      "annotations": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Additional annotations for configmap"
+      }
     },
-    "key": {
-      "type": "string",
-      "minLength": 1
-    },
-    "path": {
-      "type": "string",
-      "minLength": 1
-    }
+    "additionalProperties": true,
+    "description": "Define Configmap"
   },
-  "required": [
-    "key",
-    "objectName",
-    "path"
-  ]
+  "description": "Create Configmap objects"
 }
