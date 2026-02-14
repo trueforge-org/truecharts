@@ -1,0 +1,2047 @@
+# =============================================================================
+# TRUECHARTS COMMON LIBRARY - COMPLETE VALUES STRUCTURE
+# =============================================================================
+# This file showcases ALL possible configuration keys available in the
+# TrueCharts Common Library Chart. Use this as a reference when creating
+# chart values.yaml files.
+#
+# Notes:
+# - "objectname" is used as a placeholder for variable-named objects
+# - Values shown are placeholders (actual values don't matter)
+# - Focus is on showing structure: objects, arrays, and all possible keys
+# - ALL documented features are included, not just defaults
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# GLOBAL CONFIGURATION
+# -----------------------------------------------------------------------------
+global:
+  # Global labels applied to all resources
+  labels: {}
+  # Global annotations applied to all resources
+  annotations: {}
+  # Global namespace (overrides per-chart namespace)
+  namespace: ""
+  
+  # Diagnostic mode settings
+  diagnosticMode:
+    enabled: false
+  
+  # Fallback defaults when values not explicitly defined
+  fallbackDefaults:
+    # Default storage class for all PVCs
+    storageClass: ""
+    # Default probe type: http, https, tcp, exec, grpc
+    probeType: "http"
+    # Default service protocol: http, https, tcp, udp
+    serviceProtocol: "tcp"
+    # Default service type: ClusterIP, LoadBalancer, NodePort, ExternalIP, ExternalName
+    serviceType: "ClusterIP"
+    # Default persistence type: pvc, vct, emptyDir, hostPath, nfs, iscsi, device, configmap, secret
+    persistenceType: "pvc"
+    # Default PVC retain policy
+    pvcRetain: false
+    # Default PVC size
+    pvcSize: "100Gi"
+    # Default VCT size
+    vctSize: "100Gi"
+    # Default PVC access modes
+    accessModes:
+      - ReadWriteOnce
+    # Default VCT access modes
+    vctAccessModes:
+      - ReadWriteOnce
+    # Default probe timeouts
+    probeTimeouts:
+      liveness:
+        initialDelaySeconds: 12
+        periodSeconds: 15
+        timeoutSeconds: 5
+        failureThreshold: 5
+        successThreshold: 1
+      readiness:
+        initialDelaySeconds: 10
+        periodSeconds: 12
+        timeoutSeconds: 5
+        failureThreshold: 4
+        successThreshold: 2
+      startup:
+        initialDelaySeconds: 10
+        periodSeconds: 5
+        timeoutSeconds: 3
+        failureThreshold: 60
+        successThreshold: 1
+    # Default topology key for pod spread
+    topologyKey: "kubernetes.io/hostname"
+    # CNPG defaults
+    cnpg:
+      pgVersion: 16
+      skipEmptyWalArchiveCheck: true
+  
+  # Traefik global settings
+  traefik:
+    addServiceAnnotations: true
+    commonMiddlewares:
+      - name: "tc-basic-secure-headers"
+  
+  # MetalLB global settings
+  metallb:
+    addServiceAnnotations: true
+  
+  # Minimum nodePort value
+  minNodePort: 9000
+  
+  # Stop all pods (for maintenance)
+  stopAll: false
+
+
+# Explicit namespace for this chart only
+namespace: ""
+
+# -----------------------------------------------------------------------------
+# CHART CONTEXT
+# -----------------------------------------------------------------------------
+chartContext:
+  appUrl: ""
+  podCIDR: ""
+  svcCIDR: ""
+  internalUrls: []
+
+# -----------------------------------------------------------------------------
+# TIMEZONE
+# -----------------------------------------------------------------------------
+TZ: "UTC"
+
+# -----------------------------------------------------------------------------
+# DIAGNOSTIC MODE
+# -----------------------------------------------------------------------------
+diagnosticMode:
+  enabled: false
+
+# -----------------------------------------------------------------------------
+# OPERATOR SETTINGS
+# -----------------------------------------------------------------------------
+operator:
+  register: false
+  verify:
+    enabled: true
+    additionalsystem: []
+
+# -----------------------------------------------------------------------------
+# IMAGES
+# -----------------------------------------------------------------------------
+# Main application image
+image:
+  repository: "ghcr.io/example/image"
+  tag: "v1.0.0"
+  pullPolicy: "IfNotPresent"
+
+# TrueCharts-specific images
+gluetunImage:
+  repository: "string"
+  tag: "string"
+  pullPolicy: "IfNotPresent"
+
+netshootImage:
+  repository: "string"
+  tag: "string"
+  pullPolicy: "IfNotPresent"
+
+tailscaleImage:
+  repository: "string"
+  tag: "string"
+  pullPolicy: "IfNotPresent"
+
+codeserverImage:
+  repository: "string"
+  tag: "string"
+  pullPolicy: "IfNotPresent"
+
+ubuntuImage:
+  repository: "string"
+  tag: "string"
+  pullPolicy: "IfNotPresent"
+
+kubectlImage:
+  repository: "string"
+  tag: "string"
+  pullPolicy: "IfNotPresent"
+
+postgresClientImage:
+  repository: "string"
+  tag: "string"
+  pullPolicy: "IfNotPresent"
+
+mariadbClientImage:
+  repository: "string"
+  tag: "string"
+  pullPolicy: "IfNotPresent"
+
+valkeyClientImage:
+  repository: "string"
+  tag: "string"
+  pullPolicy: "IfNotPresent"
+
+mongodbClientImage:
+  repository: "string"
+  tag: "string"
+  pullPolicy: "IfNotPresent"
+
+postgres15Image:
+  repository: "string"
+  tag: "string"
+  pullPolicy: "IfNotPresent"
+
+postgres16Image:
+  repository: "string"
+  tag: "string"
+  pullPolicy: "IfNotPresent"
+
+postgresPostgis15Image:
+  repository: "string"
+  tag: "string"
+  pullPolicy: "IfNotPresent"
+
+postgresPostgis16Image:
+  repository: "string"
+  tag: "string"
+  pullPolicy: "IfNotPresent"
+
+postgresVectors15Image:
+  repository: "string"
+  tag: "string"
+  pullPolicy: "IfNotPresent"
+
+postgresVectors16Image:
+  repository: "string"
+  tag: "string"
+  pullPolicy: "IfNotPresent"
+
+postgresVectorchord15Image:
+  repository: "string"
+  tag: "string"
+  pullPolicy: "IfNotPresent"
+
+postgresVectorchord16Image:
+  repository: "string"
+  tag: "string"
+  pullPolicy: "IfNotPresent"
+
+# -----------------------------------------------------------------------------
+# IMAGE PULL SECRETS
+# -----------------------------------------------------------------------------
+imagePullSecret:
+  objectname:
+    enabled: true
+    data:
+      registry: "string"
+      username: "string"
+      password: "string"
+      email: "string"
+    labels: {}
+    annotations: {}
+
+# -----------------------------------------------------------------------------
+# SECURITY CONTEXT
+# -----------------------------------------------------------------------------
+securityContext:
+  # Container security context (applies to all containers unless overridden)
+  container:
+    runAsUser: 568
+    runAsGroup: 568
+    runAsNonRoot: true
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
+    privileged: false
+    seccompProfile:
+      type: "RuntimeDefault"
+    capabilities:
+      add: []
+      drop:
+        - "ALL"
+      disableS6Caps: false
+    # PUID for all containers
+    PUID: 568
+    # UMASK for all containers
+    UMASK: "0022"
+  
+  # Pod security context (applies to all pods unless overridden)
+  pod:
+    fsGroup: 568
+    fsGroupChangePolicy: "OnRootMismatch"
+    supplementalGroups: []
+    sysctls: []
+
+# -----------------------------------------------------------------------------
+# RESOURCES
+# -----------------------------------------------------------------------------
+resources:
+  limits:
+    cpu: "1500m"
+    memory: "2400Mi"
+    nvidia.com/gpu: 1
+  requests:
+    cpu: "75m"
+    memory: "200Mi"
+  excludeExtra: false
+
+# -----------------------------------------------------------------------------
+# CONTAINER OPTIONS
+# -----------------------------------------------------------------------------
+containerOptions:
+  NVIDIA_CAPS:
+    - "all"
+
+# -----------------------------------------------------------------------------
+# POD OPTIONS
+# -----------------------------------------------------------------------------
+podOptions:
+  enableServiceLinks: false
+  hostNetwork: false
+  hostPID: false
+  hostIPC: false
+  hostUsers: false
+  shareProcessNamespace: false
+  restartPolicy: "Always"
+  affinity: {}
+  dnsPolicy: "ClusterFirst"
+  dnsConfig:
+    nameservers: []
+    searches: []
+    options:
+      - name: "ndots"
+        value: "1"
+  hostAliases:
+    - ip: "192.168.1.1"
+      hostnames:
+        - "example.local"
+  nodeSelector:
+    kubernetes.io/arch: "amd64"
+  defaultSpread: true
+  defaultAffinity: true
+  topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: "kubernetes.io/hostname"
+      whenUnsatisfiable: "DoNotSchedule"
+      labelSelector: {}
+  tolerations:
+    - key: "key"
+      operator: "Equal"
+      value: "value"
+      effect: "NoSchedule"
+  schedulerName: ""
+  priorityClassName: ""
+  runtimeClassName: ""
+  automountServiceAccountToken: false
+  terminationGracePeriodSeconds: 60
+
+# -----------------------------------------------------------------------------
+# WORKLOADS
+# -----------------------------------------------------------------------------
+workload:
+  objectname:
+    enabled: true
+    primary: true
+    # Type: Deployment, StatefulSet, DaemonSet, Job, CronJob
+    type: "Deployment"
+    # Wait for database before starting
+    dbWait: true
+    # Namespace override
+    namespace: ""
+    labels: {}
+    annotations: {}
+    
+    # Deployment-specific
+    replicas: 1
+    strategy:
+      type: "Recreate"
+      # For RollingUpdate
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 0
+    revisionHistoryLimit: 3
+    
+    # StatefulSet-specific
+    serviceName: ""
+    podManagementPolicy: "OrderedReady"
+    updateStrategy:
+      type: "RollingUpdate"
+      rollingUpdate:
+        partition: 0
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: "Retain"
+      whenScaled: "Retain"
+    
+    # Job-specific
+    backoffLimit: 6
+    completions: 1
+    parallelism: 1
+    activeDeadlineSeconds: 0
+    ttlSecondsAfterFinished: 0
+    
+    # CronJob-specific
+    schedule: "*/5 * * * *"
+    suspend: false
+    successfulJobsHistory: 3
+    failedJobsHistory: 1
+    concurrencyPolicy: "Allow"
+    startingDeadlineSeconds: 0
+    
+    # Pod specification
+    podSpec:
+      labels: {}
+      annotations: {}
+      
+      # Init containers
+      initContainers:
+        objectname:
+          enabled: true
+          type: "init"
+          imageSelector: "image"
+          command:
+            - "/bin/sh"
+          args:
+            - "-c"
+            - "echo init"
+          env:
+            KEY:
+              type: "string"
+              value: "value"
+          envFrom:
+            - configMapRef:
+                name: "configmap-name"
+            - secretRef:
+                name: "secret-name"
+          probes:
+            liveness:
+              enabled: false
+            readiness:
+              enabled: false
+            startup:
+              enabled: false
+          resources:
+            limits:
+              cpu: "100m"
+              memory: "128Mi"
+            requests:
+              cpu: "10m"
+              memory: "64Mi"
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+      
+      # Main containers
+      containers:
+        objectname:
+          enabled: true
+          primary: true
+          imageSelector: "image"
+          
+          # Command and args
+          command:
+            - "/app/server"
+          args:
+            - "--port=8080"
+          
+          # Fixed environment variables (not templated)
+          fixedEnv:
+            FIXED_KEY: "fixed-value"
+          
+          # Dynamic environment variables
+          env:
+            # String type
+            STRING_VAR:
+              type: "string"
+              value: "string-value"
+            
+            # Secret reference
+            SECRET_VAR:
+              type: "secret"
+              secretKeyRef:
+                name: "secret-name"
+                key: "secret-key"
+                expandObjectName: true
+            
+            # ConfigMap reference
+            CONFIG_VAR:
+              type: "configmap"
+              configMapKeyRef:
+                name: "configmap-name"
+                key: "config-key"
+                expandObjectName: true
+            
+            # Field reference
+            POD_NAME:
+              type: "field"
+              fieldRef:
+                apiVersion: "v1"
+                fieldPath: "metadata.name"
+            
+            # Resource reference
+            CPU_LIMIT:
+              type: "resource"
+              resourceFieldRef:
+                containerName: "objectname"
+                resource: "limits.cpu"
+                divisor: "1m"
+          
+          # Environment from sources
+          envFrom:
+            - configMapRef:
+                name: "app-config"
+                expandObjectName: true
+            - secretRef:
+                name: "app-secrets"
+                expandObjectName: true
+            - prefix: "DB_"
+              secretRef:
+                name: "database-creds"
+          
+          # Probes
+          probes:
+            liveness:
+              enabled: true
+              # Type: http, https, tcp, exec, grpc
+              type: "http"
+              port: 8080
+              path: "/health"
+              httpHeaders:
+                X-Custom-Header: "value"
+              initialDelaySeconds: 10
+              periodSeconds: 15
+              timeoutSeconds: 5
+              failureThreshold: 5
+              successThreshold: 1
+            
+            readiness:
+              enabled: true
+              type: "http"
+              port: 8080
+              path: "/ready"
+              httpHeaders:
+                X-Custom-Header: "value"
+              initialDelaySeconds: 5
+              periodSeconds: 10
+              timeoutSeconds: 3
+              failureThreshold: 3
+              successThreshold: 1
+            
+            startup:
+              enabled: true
+              type: "tcp"
+              port: 8080
+              initialDelaySeconds: 0
+              periodSeconds: 5
+              timeoutSeconds: 3
+              failureThreshold: 60
+              successThreshold: 1
+          
+          # Lifecycle hooks
+          lifecycle:
+            postStart:
+              # Type: exec or httpGet
+              type: "exec"
+              command:
+                - "/bin/sh"
+                - "-c"
+                - "echo 'Container started'"
+              # For httpGet type
+              # host: "localhost"
+              # port: 8080
+              # path: "/init"
+              # scheme: "HTTP"
+              # httpHeaders:
+              #   - name: "X-Custom"
+              #     value: "value"
+            
+            preStop:
+              type: "exec"
+              command:
+                - "/bin/sh"
+                - "-c"
+                - "sleep 15"
+          
+          # Resources
+          resources:
+            limits:
+              cpu: "1000m"
+              memory: "1Gi"
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            excludeExtra: false
+          
+          # Security context (container-specific override)
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            runAsNonRoot: true
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            privileged: false
+            capabilities:
+              add: []
+              drop:
+                - "ALL"
+          
+          # Termination
+          terminationGracePeriodSeconds: 30
+          terminationMessagePath: "/dev/termination-log"
+          terminationMessagePolicy: "File"
+
+# -----------------------------------------------------------------------------
+# SERVICES
+# -----------------------------------------------------------------------------
+service:
+  objectname:
+    enabled: true
+    primary: true
+    # Type: ClusterIP, LoadBalancer, NodePort, ExternalIP, ExternalName
+    type: "ClusterIP"
+    namespace: ""
+    labels: {}
+    annotations: {}
+    
+    # ClusterIP-specific
+    clusterIP: ""
+    
+    # LoadBalancer-specific
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    allocateLoadBalancerNodePorts: true
+    loadBalancerClass: ""
+    
+    # ExternalIP-specific
+    externalIPs:
+      - "1.2.3.4"
+    
+    # ExternalName-specific
+    externalName: "external.service.com"
+    
+    # General settings
+    externalTrafficPolicy: ""
+    sessionAffinity: "None"
+    sessionAffinityConfig:
+      clientIP:
+        timeoutSeconds: 10800
+    publishNotReadyAddresses: false
+    ipFamilyPolicy: ""
+    ipFamilies: []
+    
+    # Target selector (which workload/pod to target)
+    targetSelector: "objectname"
+    
+    # Ports
+    ports:
+      objectname:
+        enabled: true
+        primary: true
+        # Protocol: http, https, tcp, udp
+        protocol: "http"
+        port: 8080
+        targetPort: 8080
+        nodePort: 0
+        # For ExternalName type
+        appProtocol: ""
+    
+    # Integration with external services
+    integration:
+      metallb:
+        enabled: false
+        sharedKey: ""
+      cilium:
+        enabled: false
+        sharedKey: ""
+      traefik:
+        enabled: false
+        forceTLS: false
+        insecureSkipVerify: false
+        serverName: ""
+        rootCAs:
+          - secretRef:
+              name: "root-ca"
+              expandObjectName: true
+          - configMapRef:
+              name: "root-ca-cm"
+              expandObjectName: true
+
+# -----------------------------------------------------------------------------
+# PERSISTENCE
+# -----------------------------------------------------------------------------
+persistence:
+  objectname:
+    enabled: true
+    # Type: pvc, vct, emptyDir, hostPath, nfs, iscsi, device, configmap, secret
+    type: "pvc"
+    namespace: ""
+    labels: {}
+    annotations: {}
+    
+    # Mount configuration
+    mountPath: "/data"
+    readOnly: false
+    subPath: ""
+    # Target selector (which containers to mount in)
+    targetSelectAll: true
+    targetSelector:
+      workload-name:
+        container-name: "/custom/path"
+    
+    # PVC-specific
+    storageClass: ""
+    accessModes:
+      - "ReadWriteOnce"
+    size: "100Gi"
+    retain: false
+    existingClaim: ""
+    volumeName: ""
+    volumeMode: "Filesystem"
+    dataSource:
+      kind: "PersistentVolumeClaim"
+      name: "source-pvc"
+    
+    # Static provisioning (for PVC)
+    static:
+      # Mode: nfs, smb, custom
+      mode: "nfs"
+      # For NFS
+      server: "nfs.example.com"
+      share: "/export/data"
+      # For SMB
+      domain: "WORKGROUP"
+      user: "username"
+      password: "password"
+      # For custom
+      provisioner: "custom.provisioner.io"
+      driver: "driver.csi.io"
+      csi:
+        volumeAttributes:
+          key: "value"
+    
+    # VCT-specific
+    vctAccessModes:
+      - "ReadWriteOnce"
+    vctSize: "100Gi"
+    
+    # EmptyDir-specific
+    medium: ""
+    sizeLimit: "1Gi"
+    
+    # HostPath-specific
+    hostPath: "/mnt/data"
+    hostPathType: "DirectoryOrCreate"
+    
+    # NFS-specific
+    server: "nfs.example.com"
+    path: "/export/data"
+    
+    # iSCSI-specific
+    iscsi:
+      targetPortal: "10.0.2.15:3260"
+      portals:
+        - "10.0.2.16:3260"
+        - "10.0.2.17:3260"
+      iqn: "iqn.2001-04.com.example:storage"
+      lun: 0
+      fsType: "ext4"
+      iscsiInterface: "default"
+      readOnly: false
+      chapAuthDiscovery: false
+      chapAuthSession: false
+      initiatorName: ""
+      authSession:
+        username: "user"
+        password: "pass"
+        usernameInitiator: "user-init"
+        passwordInitiator: "pass-init"
+      authDiscovery:
+        username: "user"
+        password: "pass"
+        usernameInitiator: "user-init"
+        passwordInitiator: "pass-init"
+    
+    # Device-specific
+    devicePath: "/dev/sda1"
+    
+    # ConfigMap-specific
+    objectName: "config-name"
+    expandObjectName: true
+    defaultMode: "0644"
+    items:
+      - key: "config-key"
+        path: "config-file"
+    
+    # Secret-specific (same as configmap)
+    # objectName, expandObjectName, defaultMode, items
+    
+    # Volume snapshots
+    volumeSnapshots:
+      - name: "backup-snapshot"
+        volumeSnapshotClassName: "csi-snapshot-class"
+    
+    # Volsync backups
+    volsync:
+      - name: "daily-backup"
+        type: "restic"
+        credentials: "s3-credentials"
+        dest:
+          enabled: true
+        src:
+          enabled: true
+
+# -----------------------------------------------------------------------------
+# INGRESS
+# -----------------------------------------------------------------------------
+ingress:
+  objectname:
+    enabled: true
+    primary: true
+    required: false
+    namespace: ""
+    expandObjectName: false
+    labels: {}
+    annotations: {}
+    ingressClassName: ""
+    
+    # Target service and port
+    targetSelector:
+      service-name: "port-name"
+    
+    # Hosts
+    hosts:
+      - host: "app.example.com"
+        paths:
+          - path: "/"
+            pathType: "Prefix"
+            overrideService:
+              name: "custom-service"
+              port: 8080
+    
+    # TLS
+    tls:
+      - secretName: "tls-secret"
+        certificateIssuer: "letsencrypt"
+        hosts:
+          - "app.example.com"
+    
+    # Integrations
+    integrations:
+      certManager:
+        enabled: false
+        certificateIssuer: "letsencrypt-prod"
+      
+      traefik:
+        enabled: false
+        entrypoints:
+          - "websecure"
+        forceTLS: true
+        middlewares:
+          - name: "basic-auth"
+            namespace: "default"
+      
+      nginx:
+        enabled: false
+        themepark:
+          enabled: false
+          css: "organizr"
+        ipWhitelist:
+          - "192.168.1.0/24"
+        auth:
+          type: "authentik"
+          internalHost: "authentik.default.svc.cluster.local:9000"
+          externalHost: "auth.example.com"
+          responseHeaders:
+            - "X-Auth-User"
+      
+      homepage:
+        enabled: false
+        name: "My Application"
+        description: "Application description"
+        group: "Media"
+        icon: "plex.png"
+        widget:
+          type: "plex"
+          url: "https://plex.example.com"
+          custom:
+            key: "value"
+          customkv:
+            - key: "apiKey"
+              value: "secret-key"
+
+# -----------------------------------------------------------------------------
+# INGRESS MIDDLEWARES (Traefik)
+# -----------------------------------------------------------------------------
+ingressMiddlewares:
+  traefik:
+    objectname:
+      enabled: true
+      # Type: addPrefix, basicAuth, buffering, chain, compress, contentType,
+      #       forwardAuth, headers, ipAllowList, rateLimit, redirectRegex,
+      #       redirectScheme, replacePathRegex, replacePath, retry,
+      #       stripPrefixRegex, stripPrefix, plugin-bouncer, plugin-geoblock,
+      #       plugin-modsecurity, plugin-realip, plugin-rewriteresponseheaders,
+      #       plugin-themepark
+      type: "headers"
+      namespace: ""
+      labels: {}
+      annotations: {}
+      
+      # Middleware-specific data
+      data:
+        # For addPrefix
+        prefix: "/api"
+        
+        # For basicAuth
+        users:
+          - username: "user1"
+            password: "pass1"
+        secret: "auth-secret"
+        removeHeader: false
+        
+        # For buffering
+        maxRequestBodyBytes: 2000000
+        memRequestBodyBytes: 1000000
+        maxResponseBodyBytes: 2000000
+        memResponseBodyBytes: 1000000
+        retryExpression: "IsNetworkError() && Attempts() < 2"
+        
+        # For chain
+        middlewares:
+          - name: "middleware1"
+            namespace: "default"
+          - name: "middleware2"
+        
+        # For compress
+        excludedContentTypes:
+          - "text/event-stream"
+        minResponseBodyBytes: 1024
+        
+        # For contentType
+        autoDetect: false
+        
+        # For forwardAuth
+        address: "https://auth.example.com"
+        trustForwardHeader: false
+        authResponseHeaders:
+          - "X-Auth-User"
+        authResponseHeadersRegex: "^X-"
+        authRequestHeaders:
+          - "X-Custom-Header"
+        tls:
+          ca: "ca-cert"
+          caOptional: false
+          cert: "client-cert"
+          key: "client-key"
+          insecureSkipVerify: false
+        
+        # For headers
+        accessControlAllowCredentials: false
+        accessControlAllowHeaders:
+          - "Content-Type"
+        accessControlAllowMethods:
+          - "GET"
+          - "POST"
+        accessControlAllowOriginList:
+          - "https://example.com"
+        accessControlAllowOriginListRegex:
+          - '^https://.*\.example\.com$'
+        accessControlExposeHeaders:
+          - "X-Custom-Header"
+        accessControlMaxAge: 100
+        addVaryHeader: false
+        allowedHosts:
+          - "example.com"
+        hostsProxyHeaders:
+          - "X-Forwarded-Host"
+        sslProxyHeaders:
+          X-Forwarded-Proto: "https"
+        stsSeconds: 63072000
+        stsIncludeSubdomains: true
+        stsPreload: true
+        forceSTSHeader: true
+        frameDeny: false
+        customFrameOptionsValue: "SAMEORIGIN"
+        contentTypeNosniff: true
+        browserXssFilter: true
+        customBrowserXSSValue: ""
+        contentSecurityPolicy: "default-src 'self'"
+        publicKey: ""
+        referrerPolicy: "same-origin"
+        featurePolicy: ""
+        isDevelopment: false
+        customRequestHeaders:
+          X-Forwarded-Proto: "https"
+        customResponseHeaders:
+          X-Custom: "value"
+        
+        # For ipAllowList
+        sourceRange:
+          - "192.168.1.0/24"
+        ipStrategy:
+          depth: 2
+          excludedIPs:
+            - "10.0.0.1"
+        
+        # For rateLimit
+        average: 100
+        period: "1m"
+        burst: 50
+        sourceCriterion:
+          ipStrategy:
+            depth: 1
+            excludedIPs: []
+          requestHeaderName: "X-Real-IP"
+          requestHost: false
+        
+        # For redirectRegex
+        regex: "^https?://([^/]+)/old/(.*)"
+        replacement: "https://$1/new/$2"
+        permanent: false
+        
+        # For redirectScheme
+        scheme: "https"
+        port: "443"
+        
+        # For replacePathRegex
+        # regex, replacement (same as redirectRegex)
+        
+        # For replacePath
+        path: "/new-path"
+        
+        # For retry
+        attempts: 4
+        initialInterval: "100ms"
+        
+        # For stripPrefixRegex
+        regex:
+          - "^/api/v[0-9]+"
+        
+        # For stripPrefix
+        prefixes:
+          - "/api"
+        forceSlash: false
+        
+        # For plugin-bouncer
+        crowdseclapikey: "api-key"
+        crowdseclapihost: "crowdsec.local"
+        crowdseclapiScheme: "http"
+        crowdsecMode: "stream"
+        clientTrustedIPs:
+          - "192.168.1.0/24"
+        
+        # For plugin-geoblock
+        allowedCountries:
+          - "US"
+          - "CA"
+        blockedCountries:
+          - "CN"
+        allowLocalRequests: true
+        logLocalRequests: false
+        logAllowedRequests: false
+        logApiRequests: false
+        api: "https://get.geojs.io/v1/ip/country/{ip}"
+        apiTimeoutMs: 500
+        cacheSize: 15
+        forceMonthlyUpdate: false
+        allowUnknownCountries: false
+        unknownCountryApiResponse: "nil"
+        
+        # For plugin-modsecurity
+        modSecurityUrl: "http://modsecurity:8080"
+        timeoutMillis: 2000
+        maxBodySize: 10485760
+        
+        # For plugin-realip
+        excludedNets:
+          - "10.0.0.0/8"
+        
+        # For plugin-rewriteresponseheaders
+        rewrites:
+          - header: "Location"
+            regex: "^http://(.+)$"
+            replacement: "https://$1"
+        
+        # For plugin-themepark
+        app: "sonarr"
+        theme: "dark"
+        baseUrl: "https://theme-park.example.com"
+        addons:
+          - "4k-logo"
+
+# -----------------------------------------------------------------------------
+# CERTIFICATES
+# -----------------------------------------------------------------------------
+certificate:
+  objectname:
+    enabled: true
+    certificateIssuer: "letsencrypt-prod"
+    hosts:
+      - "app.example.com"
+      - "*.app.example.com"
+    certificateSecretTemplate:
+      labels:
+        app: "myapp"
+      annotations:
+        key: "value"
+
+# -----------------------------------------------------------------------------
+# ROUTES (Gateway API)
+# -----------------------------------------------------------------------------
+route:
+  objectname:
+    enabled: true
+    # Kind: GRPCRoute, HTTPRoute, TCPRoute, TLSRoute, UDPRoute
+    kind: "HTTPRoute"
+    namespace: ""
+    labels: {}
+    annotations: {}
+    
+    # Parent references
+    parentRefs:
+      - group: "gateway.networking.k8s.io"
+        kind: "Gateway"
+        name: "gateway-name"
+        namespace: "default"
+        sectionName: "https"
+    
+    # Hostnames
+    hostnames:
+      - "app.example.com"
+    
+    # Rules
+    rules:
+      - backendRefs:
+          - group: ""
+            kind: "Service"
+            name: "backend-service"
+            namespace: "default"
+            port: 8080
+            weight: 1
+        matches:
+          - path:
+              type: "PathPrefix"
+              value: "/"
+            headers:
+              - name: "X-Custom"
+                value: "value"
+            queryParams:
+              - name: "version"
+                value: "v1"
+            method: "GET"
+
+# -----------------------------------------------------------------------------
+# CONFIGMAPS
+# -----------------------------------------------------------------------------
+configmap:
+  objectname:
+    enabled: true
+    namespace: ""
+    labels: {}
+    annotations: {}
+    data:
+      config.yaml: |
+        key: value
+      script.sh: |
+        #!/bin/bash
+        echo "Hello"
+
+# -----------------------------------------------------------------------------
+# SECRETS
+# -----------------------------------------------------------------------------
+secret:
+  objectname:
+    enabled: true
+    namespace: ""
+    labels: {}
+    annotations: {}
+    # Type: Opaque, kubernetes.io/service-account-token, kubernetes.io/dockercfg,
+    #       kubernetes.io/dockerconfigjson, kubernetes.io/basic-auth,
+    #       kubernetes.io/ssh-auth, kubernetes.io/tls, bootstrap.kubernetes.io/token
+    type: "Opaque"
+    data:
+      password: "base64-encoded-data"
+    stringData:
+      api-key: "plain-text-secret"
+
+# -----------------------------------------------------------------------------
+# CREDENTIALS (for backups/S3/etc)
+# -----------------------------------------------------------------------------
+credentials:
+  objectname:
+    # Type: s3, s3-iam, azure, google
+    type: "s3"
+    url: "https://s3.amazonaws.com"
+    customCA: ""
+    customCASecretRef:
+      name: "ca-cert-secret"
+      key: "ca.crt"
+      expandObjectName: true
+    path: "backups"
+    bucket: "my-bucket"
+    accessKey: "access-key-id"
+    secretKey: "secret-access-key"
+    encrKey: "encryption-key"
+    region: "us-east-1"
+
+# -----------------------------------------------------------------------------
+# SERVICE ACCOUNTS
+# -----------------------------------------------------------------------------
+serviceAccount:
+  objectname:
+    enabled: true
+    primary: true
+    namespace: ""
+    labels: {}
+    annotations: {}
+    targetSelectAll: false
+    targetSelector:
+      - "workload-name"
+
+# -----------------------------------------------------------------------------
+# RBAC
+# -----------------------------------------------------------------------------
+rbac:
+  objectname:
+    enabled: true
+    primary: true
+    namespace: ""
+    labels: {}
+    annotations: {}
+    # ClusterWide: true = ClusterRole, false = Role
+    clusterWide: false
+    rules:
+      - apiGroups:
+          - ""
+        resources:
+          - "pods"
+          - "services"
+        verbs:
+          - "get"
+          - "list"
+          - "watch"
+        resourceNames: []
+    subjects:
+      - kind: "ServiceAccount"
+        name: "my-service-account"
+        namespace: "default"
+
+# -----------------------------------------------------------------------------
+# NETWORK POLICIES
+# -----------------------------------------------------------------------------
+networkpolicy:
+  objectname:
+    enabled: true
+    namespace: ""
+    labels: {}
+    annotations: {}
+    
+    # Pod selection (choose one)
+    podSelector:
+      matchLabels:
+        app: "myapp"
+      matchExpressions:
+        - key: "environment"
+          operator: "In"
+          values:
+            - "production"
+    # targetSelector: "workload-name"
+    # targetAllPods: false
+    
+    # Policy types
+    policyTypes:
+      - "Ingress"
+      - "Egress"
+    
+    # Ingress rules
+    ingress:
+      - from:
+          - podSelector:
+              matchLabels:
+                role: "frontend"
+          - namespaceSelector:
+              matchLabels:
+                name: "production"
+          - ipBlock:
+              cidr: "10.0.0.0/8"
+              except:
+                - "10.1.0.0/16"
+        ports:
+          - protocol: "TCP"
+            port: 8080
+          - protocol: "TCP"
+            port: 8000
+            endPort: 9000
+    
+    # Egress rules
+    egress:
+      - to:
+          - podSelector:
+              matchLabels:
+                role: "database"
+          - namespaceSelector:
+              matchLabels:
+                name: "kube-system"
+          - ipBlock:
+              cidr: "0.0.0.0/0"
+              except:
+                - "169.254.169.254/32"
+        ports:
+          - protocol: "TCP"
+            port: 5432
+          - protocol: "UDP"
+            port: 53
+
+# -----------------------------------------------------------------------------
+# POD DISRUPTION BUDGET
+# -----------------------------------------------------------------------------
+podDisruptionBudget:
+  objectname:
+    enabled: true
+    namespace: ""
+    labels: {}
+    annotations: {}
+    customLabels:
+      app: "myapp"
+    targetSelector: "workload-name"
+    minAvailable: 1
+    maxUnavailable: 1
+
+# -----------------------------------------------------------------------------
+# HORIZONTAL POD AUTOSCALER
+# -----------------------------------------------------------------------------
+hpa:
+  objectname:
+    enabled: true
+    namespace: ""
+    labels: {}
+    annotations: {}
+    targetSelector: []
+    minReplicas: 1
+    maxReplicas: 10
+    
+    # Metrics
+    metrics:
+      - type: "Resource"
+        resource:
+          name: "cpu"
+          target:
+            type: "Utilization"
+            averageUtilization: 80
+      - type: "Resource"
+        resource:
+          name: "memory"
+          target:
+            type: "AverageValue"
+            averageValue: "1Gi"
+      - type: "Pods"
+        pods:
+          metric:
+            name: "custom_metric"
+          target:
+            type: "AverageValue"
+            averageValue: "1000m"
+    
+    # Behavior
+    behavior:
+      scaleUp:
+        stabilizationWindowSeconds: 0
+        policies:
+          - type: "Percent"
+            value: 100
+            periodSeconds: 15
+          - type: "Pods"
+            value: 4
+            periodSeconds: 15
+        selectPolicy: "Max"
+      scaleDown:
+        stabilizationWindowSeconds: 300
+        policies:
+          - type: "Percent"
+            value: 10
+            periodSeconds: 60
+          - type: "Pods"
+            value: 1
+            periodSeconds: 60
+        selectPolicy: "Min"
+
+# -----------------------------------------------------------------------------
+# VERTICAL POD AUTOSCALER
+# -----------------------------------------------------------------------------
+vpa:
+  objectname:
+    enabled: true
+    namespace: ""
+    labels: {}
+    annotations: {}
+    targetSelector: []
+    
+    # Update policy
+    updatePolicy:
+      updateMode: "Auto"
+    
+    # Resource policy
+    resourcePolicy:
+      containerPolicies:
+        - containerName: "*"
+          minAllowed:
+            cpu: "50m"
+            memory: "50Mi"
+          maxAllowed:
+            cpu: "8000m"
+            memory: "20Gi"
+          controlledResources:
+            - "cpu"
+            - "memory"
+          controlledValues: "RequestsAndLimits"
+          mode: "Auto"
+
+# -----------------------------------------------------------------------------
+# PRIORITY CLASS
+# -----------------------------------------------------------------------------
+priorityClass:
+  objectname:
+    enabled: true
+    value: 1000000
+    preemptionPolicy: "PreemptLowerPriority"
+    globalDefault: false
+    description: "High priority class for critical workloads"
+
+# -----------------------------------------------------------------------------
+# STORAGE CLASS
+# -----------------------------------------------------------------------------
+storageClass:
+  objectname:
+    enabled: true
+    isDefaultClass: false
+    provisioner: "kubernetes.io/nfs"
+    parameters:
+      archiveOnDelete: "false"
+    reclaimPolicy: "Retain"
+    allowVolumeExpansion: true
+    volumeBindingMode: "Immediate"
+    mountOptions:
+      - "hard"
+      - "nfsvers=4.1"
+
+# -----------------------------------------------------------------------------
+# VOLUME SNAPSHOT CLASS
+# -----------------------------------------------------------------------------
+volumeSnapshotClass:
+  objectname:
+    enabled: true
+    driver: "csi.driver.io"
+    deletionPolicy: "Delete"
+    parameters:
+      key: "value"
+    labels: {}
+    annotations: {}
+
+# -----------------------------------------------------------------------------
+# VOLUME SNAPSHOTS
+# -----------------------------------------------------------------------------
+volumeSnapshots:
+  objectname:
+    volumeSnapshotClassName: "csi-snapshot-class"
+    source:
+      # Choose one
+      persistentVolumeClaimName: "pvc-name"
+      # volumeSnapshotContentName: "snapshot-content"
+
+# -----------------------------------------------------------------------------
+# WEBHOOKS
+# -----------------------------------------------------------------------------
+webhook:
+  validating:
+    enabled: true
+    type: "validating"
+    webhooks:
+      - name: "validation-webhook.example.com"
+        clientConfig:
+          service:
+            name: "webhook-service"
+            namespace: "default"
+            path: "/validate"
+          caBundle: "base64-ca-bundle"
+        rules:
+          - operations:
+              - "CREATE"
+              - "UPDATE"
+            apiGroups:
+              - "apps"
+            apiVersions:
+              - "v1"
+            resources:
+              - "deployments"
+        admissionReviewVersions:
+          - "v1"
+        sideEffects: "None"
+        timeoutSeconds: 10
+        failurePolicy: "Fail"
+        matchPolicy: "Equivalent"
+        namespaceSelector:
+          matchLabels:
+            webhook: "enabled"
+        objectSelector:
+          matchLabels:
+            app: "validated"
+  
+  mutating:
+    enabled: true
+    type: "mutating"
+    webhooks:
+      - name: "mutation-webhook.example.com"
+        clientConfig:
+          service:
+            name: "webhook-service"
+            namespace: "default"
+            path: "/mutate"
+          caBundle: "base64-ca-bundle"
+        rules:
+          - operations:
+              - "CREATE"
+            apiGroups:
+              - ""
+            apiVersions:
+              - "v1"
+            resources:
+              - "pods"
+        admissionReviewVersions:
+          - "v1"
+        sideEffects: "None"
+        timeoutSeconds: 10
+        failurePolicy: "Ignore"
+        matchPolicy: "Exact"
+        namespaceSelector: {}
+        objectSelector: {}
+        reinvocationPolicy: "Never"
+
+# -----------------------------------------------------------------------------
+# METRICS (ServiceMonitor/PodMonitor)
+# -----------------------------------------------------------------------------
+metrics:
+  objectname:
+    enabled: true
+    primary: true
+    # Type: servicemonitor, podmonitor
+    type: "servicemonitor"
+    namespace: ""
+    labels: {}
+    annotations: {}
+    selector:
+      matchLabels:
+        app: "myapp"
+    
+    # Endpoints
+    endpoints:
+      - port: "metrics"
+        interval: "30s"
+        scrapeTimeout: "10s"
+        path: "/metrics"
+        honorLabels: true
+        scheme: "http"
+        tlsConfig:
+          insecureSkipVerify: false
+        bearerTokenFile: "/var/run/secrets/token"
+        relabelings:
+          - sourceLabels: ["__meta_kubernetes_pod_name"]
+            targetLabel: "pod"
+        metricRelabelings:
+          - sourceLabels: ["__name__"]
+            regex: "expensive_metric.*"
+            action: "drop"
+    
+    # Prometheus rules
+    prometheusRule:
+      enabled: true
+      groups:
+        critical-alerts:
+          rules:
+            - alert: "HighMemoryUsage"
+              expr: "memory_usage > 90"
+              for: "5m"
+              labels:
+                severity: "critical"
+              annotations:
+                summary: "High memory usage detected"
+          additionalrules: []
+      additionalgroups:
+        - name: "warning-alerts"
+          rules:
+            - alert: "ModerateLoad"
+              expr: "cpu_load > 70"
+              for: "10m"
+          additionalrules: []
+
+# -----------------------------------------------------------------------------
+# NOTES (NOTES.txt template)
+# -----------------------------------------------------------------------------
+notes:
+  header: |
+    # Thank you for installing {{ .Chart.Name }}
+  custom: |
+    ## Custom notes here
+  footer: |
+    ## Documentation
+    Visit https://truecharts.org for more information
+  warnings:
+    - "Warning message 1"
+    - "Warning message 2"
+
+# -----------------------------------------------------------------------------
+# ADDONS
+# -----------------------------------------------------------------------------
+addons:
+  # Gluetun VPN addon
+  gluetun:
+    enabled: false
+    targetSelector:
+      - "main"
+    secret:
+      vpn-conf:
+        basePath: "/gluetun/wireguard"
+        defaultMode: "0600"
+        data:
+          wg0.conf: |
+            [Interface]
+            PrivateKey = key
+      scripts:
+        basePath: "/gluetun/scripts"
+        defaultMode: "0777"
+        data:
+          up.sh: |
+            #!/bin/bash
+            echo "VPN is up"
+    container:
+      enabled: true
+      imageSelector: "gluetunImage"
+      probes:
+        liveness:
+          enabled: false
+        readiness:
+          enabled: false
+        startup:
+          enabled: false
+      resources:
+        excludeExtra: true
+      securityContext:
+        runAsUser: 0
+        runAsNonRoot: false
+        readOnlyRootFilesystem: false
+        runAsGroup: 568
+        capabilities:
+          add:
+            - "NET_ADMIN"
+            - "NET_RAW"
+            - "MKNOD"
+      env:
+        VPN_SERVICE_PROVIDER: "custom"
+        VPN_TYPE: "wireguard"
+        DOT: "off"
+        DNS_KEEP_NAMESERVER: "on"
+        FIREWALL: "off"
+        FIREWALL_OUTBOUND_SUBNETS: ""
+        FIREWALL_INPUT_PORTS: ""
+  
+  # Tailscale VPN addon
+  tailscale:
+    enabled: false
+    targetSelector:
+      - "main"
+    config: ""
+    authkey: ""
+    userspace: true
+    auth_once: true
+    accept_dns: false
+    routes: ""
+    dest_ip: ""
+    sock5_server: ""
+    extra_args: ""
+    daemon_extra_args: ""
+    outbound_http_proxy_listen: ""
+    annotations: {}
+    container:
+      enabled: true
+      imageSelector: "tailscaleImage"
+      probes:
+        liveness:
+          enabled: false
+        readiness:
+          enabled: false
+        startup:
+          enabled: false
+      command:
+        - "/usr/local/bin/containerboot"
+      resources:
+        excludeExtra: true
+      env:
+        TS_KUBE_SECRET: ""
+        TS_SOCKET: "/var/run/tailscale/tailscaled.sock"
+        TS_STATE_DIR: "/var/lib/tailscale/state"
+        TS_USERSPACE: true
+        TS_AUTH_ONCE: true
+        TS_ACCEPT_DNS: false
+        TS_AUTH_KEY: ""
+        TS_TAILSCALED_EXTRA_ARGS: ""
+        TS_EXTRA_ARGS: ""
+        TS_SOCKS5_SERVER: ""
+        TS_DEST_IP: ""
+        TS_ROUTES: ""
+        TS_OUTBOUND_HTTP_PROXY_LISTEN: ""
+      securityContext:
+        capabilities:
+          add:
+            - "NET_ADMIN"
+            - "NET_RAW"
+  
+  # Code-server addon
+  codeserver:
+    enabled: false
+    container:
+      enabled: true
+      imageSelector: "codeserverImage"
+      targetSelector:
+        - "main"
+      env:
+        PORT: 12321
+        DEFAULT_WORKSPACE: "/"
+        SUDO_PASSWORD: ""
+        PASSWORD: ""
+      probes:
+        liveness:
+          enabled: true
+          port: 12321
+          path: "/"
+        readiness:
+          enabled: true
+          port: 12321
+          path: "/"
+        startup:
+          enabled: true
+          port: 12321
+          path: "/"
+      resources:
+        excludeExtra: true
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        runAsNonRoot: false
+        readOnlyRootFilesystem: false
+    service:
+      enabled: true
+      type: "ClusterIP"
+      ports:
+        codeserver:
+          enabled: true
+          primary: true
+          protocol: "http"
+          port: 12321
+          targetPort: 12321
+    ingress:
+      enabled: false
+      labels: {}
+      annotations: {}
+      hosts:
+        - host: "code.example.com"
+          paths:
+            - path: "/"
+              pathType: "Prefix"
+      tls:
+        - secretName: "code-tls"
+          hosts:
+            - "code.example.com"
+  
+  # Netshoot debugging addon
+  netshoot:
+    enabled: false
+    container:
+      enabled: true
+      imageSelector: "netshootImage"
+      command:
+        - "/bin/sh"
+        - "-c"
+        - "sleep infinity"
+      probes:
+        liveness:
+          enabled: false
+        readiness:
+          enabled: false
+        startup:
+          enabled: false
+      resources:
+        excludeExtra: true
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        runAsNonRoot: false
+        readOnlyRootFilesystem: false
+        capabilities:
+          add:
+            - "NET_ADMIN"
+            - "NET_RAW"
+
+# -----------------------------------------------------------------------------
+# CNPG (CloudNativePG Database Cluster)
+# -----------------------------------------------------------------------------
+cnpg:
+  objectname:
+    enabled: true
+    primary: true
+    hibernate: false
+    labels: {}
+    annotations: {}
+    
+    # Database type: postgres, postgis, timescaledb, vectors, vectorchord
+    type: "postgres"
+    
+    # PostgreSQL version: 15, 16
+    pgVersion: 16
+    
+    # Mode: standalone, replica, recovery
+    mode: "standalone"
+    
+    # Database details
+    database: "app"
+    user: "app"
+    password: "changeme"
+    
+    # Cluster configuration
+    cluster:
+      labels: {}
+      annotations: {}
+      env:
+        TZ: "UTC"
+      envFrom: []
+      instances: 2
+      singleNode: false
+      skipEmptyWalArchiveCheck: true
+      
+      # Storage
+      storage:
+        size: "256Gi"
+        storageClass: ""
+        accessModes:
+          - "ReadWriteOnce"
+      walStorage:
+        size: "256Gi"
+        storageClass: ""
+        accessModes:
+          - "ReadWriteOnce"
+      
+      # Resources
+      resources:
+        limits:
+          cpu: "4000m"
+          memory: "8Gi"
+        requests:
+          cpu: "500m"
+          memory: "2Gi"
+      
+      # Update strategy
+      primaryUpdateMethod: "switchover"
+      primaryUpdateStrategy: "unsupervised"
+      
+      # Logging
+      logLevel: "info"
+      
+      # Certificates
+      certificates:
+        serverCASecret: ""
+        serverTLSSecret: ""
+        replicationTLSSecret: ""
+        clientCASecret: ""
+      
+      # Superuser access
+      enableSuperuserAccess: true
+      
+      # PostgreSQL configuration
+      postgresql:
+        parameters:
+          max_connections: "200"
+          shared_buffers: "256MB"
+        pg_hba:
+          - "host all all 0.0.0.0/0 md5"
+        pg_ident: []
+        shared_preload_libraries:
+          - "pg_stat_statements"
+      
+      # InitDB bootstrap
+      initdb:
+        database: "app"
+        owner: "app"
+        secret:
+          name: "postgres-superuser"
+        options:
+          - "--encoding=UTF8"
+        postInitSQL:
+          - "CREATE EXTENSION IF NOT EXISTS pg_stat_statements;"
+        postInitApplicationSQL:
+          - "GRANT ALL ON DATABASE app TO app;"
+        postInitTemplateSQL: []
+    
+    # Monitoring
+    monitoring:
+      enablePodMonitor: false
+      disableDefaultQueries: false
+      customQueries:
+        - name: "pg_database_size"
+          expandObjectName: true
+          key: "custom-queries"
+          query: "SELECT datname, pg_database_size(datname) as size_bytes FROM pg_database;"
+          metrics:
+            - datname:
+                usage: "LABEL"
+                description: "Database name"
+            - size_bytes:
+                usage: "GAUGE"
+                description: "Database size in bytes"
+    
+    # Recovery settings (for mode: recovery)
+    recovery:
+      # Method: backup, object_store, pg_basebackup
+      method: "object_store"
+      revision: 1
+      servername: ""
+      pitrTarget:
+        time: "2024-01-01T00:00:00Z"
+      backupName: ""
+      clusterName: "postgres-cluster"
+      destinationPath: "s3://bucket/backups"
+    
+    # Backup configuration
+    backups:
+      enabled: false
+      encryption:
+        enabled: false
+      revision: 1
+      servername: ""
+      destinationPath: ""
+      target: "primary"
+      credentials: "s3-creds"
+      
+      # Scheduled backups
+      scheduledBackups:
+        - name: "daily-backup"
+          schedule: "0 0 * * *"
+          backupOwnerReference: "self"
+          immediate: false
+          suspend: false
+        - name: "weekly-backup"
+          schedule: "0 0 * * 0"
+          backupOwnerReference: "self"
+          immediate: false
+          suspend: false
+      
+      # Retention policy
+      retentionPolicy: "30d"
+      
+      # Manual backups
+      manualBackups:
+        - name: "pre-upgrade"
+          labels:
+            backup-type: "manual"
+          annotations:
+            description: "Backup before upgrade"
+    
+    # PgBouncer pooler
+    pooler:
+      enabled: false
+      createRO: false
+      poolMode: "session"
+      instances: 2
+      parameters:
+        max_client_conn: "1000"
+        default_pool_size: "25"
+        max_db_connections: "100"
+      labels: {}
+      annotations: {}
+      resources:
+        limits:
+          cpu: "1000m"
+          memory: "1Gi"
+        requests:
+          cpu: "100m"
+          memory: "128Mi"
+    
+    # Credentials output (generated)
+    creds: {}
+
+# -----------------------------------------------------------------------------
+# DEPENDENCIES
+# -----------------------------------------------------------------------------
+dependencies: {}
+
+# Redis dependency
+redis:
+  enabled: false
+  includeCommon: false
+  password: "changeme"
+  creds:
+    host: "{{ .Release.Name }}-redis"
+    port: 6379
+    url: "redis://{{ .Release.Name }}-redis:6379"
+  secret:
+    credentials:
+      enabled: false
+
+# MariaDB dependency
+mariadb:
+  enabled: false
+  includeCommon: false
+  password: "changeme"
+  rootPassword: "changeme-root"
+  database: "app"
+  user: "app"
+  creds:
+    host: "{{ .Release.Name }}-mariadb"
+    port: 3306
+    url: "mysql://app:password@{{ .Release.Name }}-mariadb:3306/app"
+
+# MongoDB dependency
+mongodb:
+  enabled: false
+  includeCommon: false
+  password: "changeme"
+  rootPassword: "changeme-root"
+  database: "app"
+  user: "app"
+  creds:
+    host: "{{ .Release.Name }}-mongodb"
+    port: 27017
+    url: "mongodb://app:password@{{ .Release.Name }}-mongodb:27017/app"
+
+# ClickHouse dependency
+clickhouse:
+  enabled: false
+  includeCommon: false
+  password: "changeme"
+  database: "app"
+  user: "app"
+  creds:
+    host: "{{ .Release.Name }}-clickhouse"
+    port: 8123
+    url: "http://{{ .Release.Name }}-clickhouse:8123"
+
+# Solr dependency
+solr:
+  enabled: false
+  includeCommon: false
+  password: "changeme"
+  solrCores: 1
+  solrEnableAuthentication: "no"
+  creds:
+    host: "{{ .Release.Name }}-solr"
+    port: 8983
+    url: "http://{{ .Release.Name }}-solr:8983/solr"
+
+# -----------------------------------------------------------------------------
+# EXTRA TEMPLATES
+# -----------------------------------------------------------------------------
+# List of extra Kubernetes objects to deploy (as template strings)
+extraTpl:
+  - |
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: {{ .Release.Name }}-extra-config
+    data:
+      key: value
