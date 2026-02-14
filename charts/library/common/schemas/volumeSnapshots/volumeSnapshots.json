@@ -25,9 +25,11 @@
         "description": "Define the source of the volume snapshot At least one of the following keys must be defined"
       },
       "labels": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../special/labels.json"
+          }
+        ],
         "description": "Define the labels of the volume snapshot"
       },
       "annotations": {
@@ -36,11 +38,11 @@
         "additionalProperties": true,
         "description": "Define the annotations of the volume snapshot class"
       },
-        "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
         "description": "Enable volume snapshot"

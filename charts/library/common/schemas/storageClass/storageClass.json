@@ -12,19 +12,21 @@
         },
         "description": "Define storage classes"
       },
-        "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
         "description": "Enables or Disables the storage class"
       },
       "labels": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../special/labels.json"
+          }
+        ],
         "description": "Additional labels for storage class"
       },
       "annotations": {
