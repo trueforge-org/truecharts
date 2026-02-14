@@ -50,7 +50,7 @@ service:
 
 ### VPN
 
-Use the [Gluetun VPN Add-on Setup Guide](https://truecharts.org/guides/addons/vpn-setup/)
+Use the [Gluetun VPN Add-on Setup Guide](https://trueforge.org/truecharts/guides/addons/vpn-setup/)
 
 <br />
 

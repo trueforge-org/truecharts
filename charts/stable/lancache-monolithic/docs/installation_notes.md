@@ -18,7 +18,7 @@ Like TrueNAS Scale WebUI.
 
 ## Lancache-dns
 
-- It's highly recommended to also install the [lancache-dns](/charts/stable/lancache-dns/) chart along side the monolithic chart.
+- It's highly recommended to also install the [lancache-dns](/truecharts/charts/stable/lancache-dns/) chart along side the monolithic chart.
 
 ## Lancache-Prefill
 

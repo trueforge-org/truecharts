@@ -22,7 +22,7 @@
     "github>trueforge-org/truecharts//.github/renovate/updates/minor.json5",
     "github>trueforge-org/truecharts//.github/renovate/updates/major.json5",
     "github>trueforge-org/truecharts//.github/renovate/updates/calver.json5",
-    "github>trueforge-org/truecharts//.github/renovate/kinds/astro.json5",
+    "github>trueforge-org/truecharts//.github/renovate/kinds/npm.json5",
     "github>trueforge-org/truecharts//.github/renovate/kinds/docker.json5",
     "github>trueforge-org/truecharts//.github/renovate/kinds/flux.json5",
     "github>trueforge-org/truecharts//.github/renovate/kinds/githubactions.json5",
@@ -37,7 +37,8 @@
     "github>trueforge-org/truecharts//.github/renovate/special/customRules.json5",
     "github>trueforge-org/truecharts//.github/renovate/special/customVersioning.json5",
     "github>trueforge-org/truecharts//.github/renovate/special/customTalosClustertool.json5",
-    "github>trueforge-org/truecharts//.github/renovate/special/devcontainer.json5"
+    "github>trueforge-org/truecharts//.github/renovate/special/devcontainer.json5",
+    "github>trueforge-org/truecharts//.github/renovate/special/grafanadashboards.json5"
   ],
   // Main Renovate configuration that lists package rules for various paths
   "packageRules": [
@@ -54,7 +55,9 @@
     "**/misc/**",
     "**/archive/**",
     "**/resources/**",
+    "‎**/repositories/oci/**",
     "**common/test-chart/tests/**",
+    "**common/test-chart/**",
     "charts/library/common/test-chart/tests/**"
     ]
 }

@@ -1,7 +1,7 @@
 image:
-  repository: ghcr.io/kareadita/kavita
+  repository: oci.trueforge.org/containerforge/kavita
   pullPolicy: IfNotPresent
-  tag: 0.8.7@sha256:b9c671586db2a6a688da3cb4b45f1319cca33b01e6e760c8bf3c19d60101bdf2
+  tag: "0.8.8.3@sha256:8a6c8030f2cd27f09f54bd9c57c9c658c889d45e96d95c4d1fb4f362030f8a8b"
 securityContext:
   container:
     readOnlyRootFilesystem: false
@@ -17,7 +17,7 @@ service:
 persistence:
   config:
     enabled: true
-    mountPath: "/kavita/config"
+    mountPath: "/config"
   manga:
     enabled: true
     mountPath: "/manga"

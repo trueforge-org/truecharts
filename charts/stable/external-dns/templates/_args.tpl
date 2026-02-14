@@ -51,4 +51,12 @@ args:
   {{- with .Values.externaldns.piholeAPIVersion }}
   - --pihole-api-version={{ . }}
   {{- end -}}
+  {{- if eq .Values.externaldns.provider "pdns" }}
+  {{- with .Values.externaldns.pdns.pdnsApiKey }}
+  - --pdns-api-key={{ . }}
+  {{- end -}}
+  {{- with .Values.externaldns.pdns.pdnsServerUrl }}
+  - --pdns-server={{ . }}
+  {{- end -}}
+  {{- end }}
 {{- end -}}

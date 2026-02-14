@@ -1,0 +1,43 @@
+workload:
+  main:
+    # This is a workaround for CI and should be removed once
+    # https://github.com/trueforge-org/truecharts/issues/43512
+    # is fixed
+    type: Deployment
+
+configmap:
+  dummy:
+    enabled: true
+    data:
+      123-dummy.conf: |
+        {
+          "cniVersion": "0.3.1",
+          "name": "my-dummy-network",
+          "type": "dummy",
+          "ipam": {
+            "type": "host-local",
+            "ranges": [
+              [
+                {
+                  "subnet": "10.10.0.0/24",
+                  "gateway": "10.10.0.1"
+                }
+              ]
+            ],
+            "routes": [
+              { "dst": "0.0.0.0/0" }
+            ]
+          }
+        }
+
+persistence:
+  dummy:
+    enabled: true
+    type: configmap
+    # NOTE:
+    # Must match the mount path specified in the `multus-cni` chart
+    # under `persistence.cniconf.mountPath`
+    mountPath: "/host/etc/cni/net.d/123-dummy.conf"
+    objectName: dummy
+    subPath: 123-dummy.conf
+    readOnly: true

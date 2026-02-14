@@ -40,7 +40,7 @@ persistence:
 
 - For general configuration guidance, we recommend to follow the [TRaSH guides for Radarr](https://trash-guides.info/Radarr/).
 - When linking Radarr to a download client, use the internal domain name of the respective download client.
-  - General guidance on linking applications can be found on our website: [Linking Apps](/guides/linking-apps)
+  - General guidance on linking applications can be found on our website: [Linking Apps](/truecharts/guides/linking-apps)
     </br>
     ![!Internal linking: SABnzbd](./img/sab_internal_link.png)
 

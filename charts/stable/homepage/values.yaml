@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/gethomepage/homepage
-  tag: v1.4.6@sha256:a1a578fdcfc72754985c3b3b26e4f398a6a782e354d10cf2b156ecbf06d252e9
+  tag: v1.10.1@sha256:0b596092c0b55fe4c65379a428a3fe90bd192f10d1b07d189a34fe5fabe7eedb
   pullPolicy: IfNotPresent
 
 workload:
@@ -16,7 +16,7 @@ workload:
         init-config:
           enabled: true
           type: init
-          imageSelector: alpineImage
+          imageSelector: ubuntuImage
           command:
             - /bin/sh
             - -c
@@ -277,7 +277,7 @@ configmap:
         - TrueCharts:
             - TrueCharts:
               - abbr: TC
-                icon: https://truecharts.org/svg/favicon.svg
+                icon: https://trueforge.org/svg/favicon.svg
                 href: https://truecharts.org
                 description: "TrueCharts Website"
             - Github:
@@ -293,7 +293,7 @@ configmap:
             - Discord:
               - abbr: DC
                 icon: https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://discord.com&size=32
-                href: https://truecharts.org/s/discord
+                href: https://trueforge.org/s/discord
                 description: "TrueCharts Discord"
 
 forceConfigFromValues: false

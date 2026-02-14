@@ -4,13 +4,13 @@ title: TrueCharts
 
 **Community Helm Chart Catalog**
 
-[![docs](https://img.shields.io/badge/docs-rtfm-yellow?logo=gitbook&logoColor=white&style=for-the-badge)](https://truecharts.org/)
+[![docs](https://img.shields.io/badge/docs-rtfm-yellow?logo=gitbook&logoColor=white&style=for-the-badge)](https://trueforge.org/)
 [![Discord](https://img.shields.io/badge/discord-chat-7289DA.svg?maxAge=60&style=for-the-badge)](https://discord.gg/Js6xv9nGuU)
 [![GitHub last commit](https://img.shields.io/github/last-commit/truecharts/charts?color=brightgreen&logoColor=white&style=for-the-badge)](https://github.com/trueforge-org/truecharts/commits)
 
 ---
 
-TrueCharts is a catalog of highly optimised Helm Charts. Made for the community, By the community!
+TrueCharts is a catalog of highly optimised Helm Charts. Made for the community, by the community!
 
 All our charts are supposed to work together and be easy to setup using any helm-compatible deployment tool, above all, give the average user more than enough options to tune things to their liking.
 
@@ -18,13 +18,13 @@ All our charts are supposed to work together and be easy to setup using any helm
 
 ## Getting started using TrueCharts
 
-[![docs](https://img.shields.io/badge/docs-rtfm-yellow?logo=gitbook&logoColor=white&style=for-the-badge)](https://truecharts.org/)
+[![docs](https://img.shields.io/badge/docs-rtfm-yellow?logo=gitbook&logoColor=white&style=for-the-badge)](https://trueforge.org/)
 
 ---
 
 ### Support
 
-Please check our [FAQ](https://truecharts.org/general/faq/), [manual](https://truecharts.org/general/) and [Issue tracker](https://github.com/trueforge-org/truecharts/issues) There is a significant chance your issue has been reported before!
+Please check our [FAQ](https://trueforge.org/general/faq/), [manual](https://trueforge.org/general/) and [Issue tracker](https://github.com/trueforge-org/truecharts/issues) There is a significant chance your issue has been reported before!
 
 Still something not working as expected? [Contact us!](https://discord.gg/tVsPTHWTtr) and we'll figure it out together!
 
@@ -71,7 +71,7 @@ To contact the TrueCharts project:
 ## Contributors ✨
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-272-orange.svg?style=for-the-badge)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-274-orange.svg?style=for-the-badge)](#contributors)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -274,7 +274,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/apps/dependabot"><img src="https://avatars.githubusercontent.com/in/29110?v=4?s=100" width="100px;" alt="dependabot[bot]"/><br /><sub><b>dependabot[bot]</b></sub></a><br /><a href="#tool-dependabot[bot]" title="Tools">🔧</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://truecharts.org/"><img src="https://avatars.githubusercontent.com/u/80468013?v=4?s=100" width="100px;" alt="TrueCharts Bot"/><br /><sub><b>TrueCharts Bot</b></sub></a><br /><a href="#tool-truecharts-admin" title="Tools">🔧</a> <a href="#infra-truecharts-admin" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/trueforge-org/truecharts/commits?author=truecharts-admin" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://trueforge.org/"><img src="https://avatars.githubusercontent.com/u/80468013?v=4?s=100" width="100px;" alt="TrueCharts Bot"/><br /><sub><b>TrueCharts Bot</b></sub></a><br /><a href="#tool-truecharts-admin" title="Tools">🔧</a> <a href="#infra-truecharts-admin" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/trueforge-org/truecharts/commits?author=truecharts-admin" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://www.mend.io/free-developer-tools/renovate/"><img src="https://avatars.githubusercontent.com/u/25180681?v=4?s=100" width="100px;" alt="Mend Renovate"/><br /><sub><b>Mend Renovate</b></sub></a><br /><a href="#tool-renovate-bot" title="Tools">🔧</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Simoneu01"><img src="https://avatars.githubusercontent.com/u/43807696?v=4?s=100" width="100px;" alt="Simone"/><br /><sub><b>Simone</b></sub></a><br /><a href="https://github.com/trueforge-org/truecharts/commits?author=Simoneu01" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://devklog.net/"><img src="https://avatars.githubusercontent.com/u/49554?v=4?s=100" width="100px;" alt="Jean-François Roy"/><br /><sub><b>Jean-François Roy</b></sub></a><br /><a href="https://github.com/trueforge-org/truecharts/commits?author=jfroy" title="Code">💻</a></td>
@@ -432,6 +432,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="http://stphnsmpsn.github.io"><img src="https://avatars.githubusercontent.com/u/36173115?v=4?s=100" width="100px;" alt="Steve Sampson"/><br /><sub><b>Steve Sampson</b></sub></a><br /><a href="https://github.com/trueforge-org/truecharts/commits?author=stphnsmpsn" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/albertromkes"><img src="https://avatars.githubusercontent.com/u/923673?v=4?s=100" width="100px;" alt="Albert Romkes"/><br /><sub><b>Albert Romkes</b></sub></a><br /><a href="https://github.com/trueforge-org/truecharts/commits?author=albertromkes" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/majabojarska"><img src="https://avatars.githubusercontent.com/u/33836570?v=4?s=100" width="100px;" alt="Maja Bojarska"/><br /><sub><b>Maja Bojarska</b></sub></a><br /><a href="https://github.com/trueforge-org/truecharts/commits?author=majabojarska" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/astro-stan"><img src="https://avatars.githubusercontent.com/u/36302090?v=4?s=100" width="100px;" alt="astro-stan"/><br /><sub><b>astro-stan</b></sub></a><br /><a href="https://github.com/trueforge-org/truecharts/commits?author=astro-stan" title="Code">💻</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/ORippler"><img src="https://avatars.githubusercontent.com/u/24656669?v=4?s=100" width="100px;" alt="Oliver Simons"/><br /><sub><b>Oliver Simons</b></sub></a><br /><a href="https://github.com/trueforge-org/truecharts/commits?author=ORippler" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
@@ -445,12 +449,12 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 ## Licence
 
-[![License](https://img.shields.io/badge/License-BSD%203--Clause-orange.svg?style=for-the-badge)](https://github.com/trueforge-org/truecharts/blob/master/docs/LICENSE.BSD3)
+[![License](https://img.shields.io/badge/license-AGPL--v3-blue.svg?style=for-the-badge)](https://github.com/trueforge-org/truecharts/blob/master/docs/LICENSE.BSD3)
 
 ---
 
-Truecharts, is primarily based on a AGPL-v3 license, this ensures almost everyone can use and modify our charts.
-Licences can vary on a per-Chart basis. This can easily be seen by the presence of a "LICENSE" file in said folder.
+Truecharts, is primarily based on the AGPL-v3 license, this ensures almost everyone can use and modify our charts.
+Licences can vary on a per-Chart basis. This can easily be seen by the presence of a "LICENSE" file in that folder.
 
 An exception to this, has been made for every document inside folders labeled as `docs` or `doc` and their subfolders: those folders are not licensed under AGPL-v3 and are considered "all rights reserved". Said content can be modified and changes submitted per PR, in accordance to the github End User License Agreement.
 

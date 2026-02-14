@@ -1,0 +1,56 @@
+image:
+  repository: docker.io/pdreker/fritz_exporter
+  pullPolicy: IfNotPresent
+  tag: 2.6.1@sha256:a6b182eb3bc94c7dd37eb2ded8bbb6653861615f4c1e4a906fee679f9f605ce3
+service:
+  main:
+    ports:
+      main:
+        port: 9787
+        targetPort: 9787
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          extraArgs:
+            - --config=/exporter/config.yaml
+          probes:
+            liveness:
+              type: tcp
+            readiness:
+              type: tcp
+            startup:
+              type: tcp
+configmap:
+  exporter-configfile:
+    enabled: true
+    data:
+      config.yaml: |
+        {{- $.Values.exporter | toYaml | nindent 2 }}
+persistence:
+  configfile:
+    enabled: true
+    type: configmap
+    readOnly: true
+    objectName: exporter-configfile
+    mountPath: /exporter/config.yaml
+    subPath: config.yaml
+metrics:
+  main:
+    enabled: true
+    type: servicemonitor
+    endpoints:
+      - port: main
+        path: /metrics
+        interval: 1m
+        scrapeTimeout: 15s
+    targetSelector: main
+
+exporter:
+  exporter_port: 9787
+  devices:
+    - name: Fritz!Box 7590
+      hostname: '192.168.1.1'
+      username: 'fritz_box'
+      password: '123456789'

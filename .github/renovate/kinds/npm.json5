@@ -1,0 +1,14 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "npm": {
+    "fileMatch": [
+      "^astro\\.config\\.(mjs|js|ts)$",  // Only matches astro.config.* in the root
+      "^package\\.json$",                // Only matches package.json in the root
+      "^package-lock\\.json$"            // Only matches package-lock.json in the root
+    ],
+    "branchPrefix": "renovate/npm-",
+    "enabled": true,
+    "updateTypes": ["major", "minor", "patch", "digest", "pin", "lockfile"],
+    "semanticCommitScope": "npm"
+  }
+}

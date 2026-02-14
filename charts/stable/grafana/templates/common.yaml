@@ -1,0 +1,12 @@
+{{- include "tc.v1.common.loader.init" . }}
+
+{{/* Render generated configmap */}}
+{{- $configmap := include "grafana.download_dashboards" (dict
+    "dashboards" .Values.dashboards.grafana
+    "outputDir" (index .Values.persistence "sc-dashboard-volume" "mountPath")) | fromYaml -}}
+{{- if $configmap -}}
+  {{ $configmaps := (mustMergeOverwrite .Values.configmap $configmap) }}
+  {{- $_ := set .Values "configmap" $configmaps -}}
+{{- end -}}
+
+{{- include "tc.v1.common.loader.apply" . }}

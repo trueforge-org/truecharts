@@ -2,17 +2,22 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: media
+  truecharts.org/category: unsorted
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
+  trueforge.org/category: media
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
-appVersion: 3.0.8
+appVersion: 3.0.9
 dependencies:
   - name: common
-    version: 28.18.0
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,16 +25,16 @@ dependencies:
     import-values: []
 deprecated: false
 description: A self hosted virtual browser that runs in Chart
-home: https://truecharts.org/charts/stable/neko
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/neko.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/neko
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/neko.webp
 keywords:
   - neko
   - video
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: neko
 sources:
   - https://ghcr.io/m1k1o/neko/brave
@@ -43,8 +48,7 @@ sources:
   - https://ghcr.io/m1k1o/neko/vlc
   - https://ghcr.io/m1k1o/neko/xfce
   - https://github.com/m1k1o/neko
-  - https://github.com/truecharts/charts/tree/master/charts/stable/neko
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/neko
 type: application
-version: 10.5.0
+version: 10.13.25
 

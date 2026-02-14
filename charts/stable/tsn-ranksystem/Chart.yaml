@@ -2,24 +2,29 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: productivity
+  truecharts.org/category: unsorted
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
+  trueforge.org/category: productivity
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.18.0
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.3.0
+    version: 17.11.19
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -27,24 +32,24 @@ dependencies:
     import-values: []
 deprecated: false
 description: TS-N Ranksystem is a TeamSpeak 3 bot that allows you to assign ranks to users based on their activity on the server.
-home: https://truecharts.org/charts/stable/tsn-ranksystem
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/tsn-ranksystem.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/tsn-ranksystem
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/tsn-ranksystem.webp
 keywords:
   - teamspeak
   - tsn-ranksystem
   - ranksystem
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: tsn-ranksystem
 sources:
   - https://github.com/JohannesBauer97/tsn-ranksystem-webserver
   - https://github.com/Newcomer1989/TSN-Ranksystem
-  - https://github.com/truecharts/charts/tree/master/charts/stable/tsn-ranksystem
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/tsn-ranksystem
   - https://hub.docker.com/r/serverlein/tsn-ranksystem-webserver
   - https://ts-ranksystem.com/
 type: application
-version: 5.2.0
+version: 5.18.28
 

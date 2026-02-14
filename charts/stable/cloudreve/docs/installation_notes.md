@@ -30,7 +30,7 @@ On first run, Cloudreve will generate an admin user and print the email and pass
 
 ## Aria2
 
-To use Cloudreve with Aria2, deploy the [TrueCharts Aria2 chart](/charts/stable/aria2/). This chart needs an env. 'RPC_SECRET', which should be a securely generated string that will be copied to Cloudreve later. See below for an example.
+To use Cloudreve with Aria2, deploy the [TrueCharts Aria2 chart](/truecharts/charts/stable/aria2/). This chart needs an env. 'RPC_SECRET', which should be a securely generated string that will be copied to Cloudreve later. See below for an example.
 
 Once Aria2 is deployed, open Cloudreve's webpage and navigate to the Dashboard (Click on profile icon in top right corner -> Dashboard). In the Dashboard, select `Nodes` and then click the edit icon beside `Master (Local Machine)`. In the edit dialog, click `Enable` and then fill out the settings:
 

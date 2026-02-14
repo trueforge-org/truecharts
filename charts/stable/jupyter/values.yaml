@@ -1,35 +1,35 @@
 image:
   repository: quay.io/jupyter/base-notebook
   pullPolicy: IfNotPresent
-  tag: 2025-09-16@sha256:7c043a49ed244f8dd3a408065a203a89870dd912707a2fa2dd72dc28d3a9c45c
+  tag: "notebook-7.4.7@sha256:5d1c5649c20a156742c63135f426562e83dc9a0a76fff19b909b5845b85330a7"
 minimalImage:
   repository: quay.io/jupyter/minimal-notebook
   pullPolicy: IfNotPresent
-  tag: 2025-09-16@sha256:c31c4ab97a1a582910b30886855b0ed89d44feb8bda29743dabe70c3d56ff107
+  tag: "notebook-7.4.7@sha256:c17170eb047202ff6c5cc7adcf0d896f7d2bd663975f31b2ce20659bdfbcf04b"
 rImage:
   repository: quay.io/jupyter/r-notebook
   pullPolicy: IfNotPresent
-  tag: 2025-09-16@sha256:3e04b109d3e5446a8a5a96dc2872ede5ba431ff51fd2be107bd9a79d9f19f00f
+  tag: "notebook-7.4.7@sha256:6fabd176420d460ac08625eba6a144313474ca27629ed3e34e876c06fc14906e"
 scipyImage:
   repository: quay.io/jupyter/scipy-notebook
   pullPolicy: IfNotPresent
-  tag: 2025-09-16@sha256:796247cc9b4c49a6ed5646f26b6be76cd9eb1a0e678c6fa18e5944ddddd2e58e
+  tag: "notebook-7.4.7@sha256:3458d4fbb313f7090d83eb900f8516848a504e29dcf33efde50b1fdbbc2723d1"
 tensorflowImage:
   repository: quay.io/jupyter/tensorflow-notebook
   pullPolicy: IfNotPresent
-  tag: 2025-09-16@sha256:71187e9fab945fc4f16d952f402bee1ae4111b6b59450251757b48bfad943788
+  tag: "notebook-7.4.7@sha256:9280a79c023789508fd3c13eea295b098897d9f73c827bc154d8adb1270ceafc"
 datascienceImage:
   repository: quay.io/jupyter/datascience-notebook
   pullPolicy: IfNotPresent
-  tag: 2025-09-16@sha256:688fc416cb41eb78bb8c79aea1270d7d5efab186b0217c9a72401dc0f859841f
+  tag: "notebook-7.4.7@sha256:b12188b08b13b64e6198eead1e948bc0812d7f5c91575ae37207da0fb750759d"
 pysparkImage:
   repository: quay.io/jupyter/pyspark-notebook
   pullPolicy: IfNotPresent
-  tag: 2025-09-16@sha256:9bf2ebb78e682b5798a7b55de4843f84a6947777e499f9011a356db5b201c1fe
+  tag: "notebook-7.4.7@sha256:6287c0ba787930d8dec08f8c5c81866b1e86be14adbfb3efe2b18d4e5db877ff"
 allsparkImage:
   repository: quay.io/jupyter/all-spark-notebook
   pullPolicy: IfNotPresent
-  tag: 2025-09-16@sha256:77da6edf22929b1b771970c96e0fef58c663554e87a1d9efcb5519e5e8bea41c
+  tag: "notebook-7.4.7@sha256:ad00c652eb2b6afbcb183587770bcbe49372b3e1dae7e62a9fa055260ec81920"
 jupyter:
   jupyter_cmd: lab
   restartable: true

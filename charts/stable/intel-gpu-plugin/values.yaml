@@ -1,0 +1,47 @@
+image:
+  repository: docker.io/intel/intel-gpu-plugin
+  pullPolicy: IfNotPresent
+  tag: 0.34.1@sha256:3fae94bca1022ca558a1f6768c34760f38f80a2e64f8a72216f10e98746c8124
+
+service:
+  main:
+    enabled: false
+    ports:
+      main:
+        enabled: false
+
+workload:
+  main:
+    podSpec:
+      type: DaemonSet
+      containers:
+        main:
+          args:
+            - -shared-dev-num
+            - "5"
+          probes:
+            liveness:
+              enabled: false
+            readiness:
+              enabled: false
+            startup:
+              enabled: false
+
+persistence:
+  devfs:
+    enabled: true
+    type: device
+    mountPath: /dev/dri
+    hostPath: /dev/dri
+    readOnly: true
+  sysfs:
+    enabled: true
+    type: device
+    mountPath: /sys/class/drm
+    hostPath: /sys/class/drm
+    readOnly: true
+  kubeletsockets:
+    enabled: true
+    type: hostPath
+    mountPath: /var/lib/kubelet/device-plugins
+    hostPath: /var/lib/kubelet/device-plugins

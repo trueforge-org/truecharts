@@ -1,7 +1,7 @@
 image:
   repository: docker.io/bitnamisecure/mongodb
   pullPolicy: IfNotPresent
-  tag: latest@sha256:cf81d14cc50b41ab74a0bf8abed5465ec1b1ff572ca2dc31ea0dd7ccc05ceb16
+  tag: latest@sha256:d1afabe9a2183fec201a4248053c71acd81fa381c87443473c16da169e6985d4
 
 workload:
   main:
@@ -71,6 +71,8 @@ service:
       main:
         port: 27017
         targetPort: 27017
+        protocol: tcp
+
 securityContext:
   container:
     runAsGroup: 0

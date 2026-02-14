@@ -1,0 +1,70 @@
+image:
+  repository: ghcr.io/kashalls/kromgo
+  tag: v0.7.5@sha256:25df18d426e19aafa7526cd9138a6f35ca73c6ef6fcfcf9de8971c4334f6efdf
+  pullPolicy: IfNotPresent
+
+# Raw Kromgo configuration
+# Replace it with your configuration
+# https://github.com/kashalls/kromgo/blob/main/config.yaml.example
+kromgo:
+  badge:
+    font: Verdana.ttf  # Relative to /kromgo - Verdana.ttf is available in the container
+    size: 12
+  metrics:
+    - name: talos_version
+      query: node_os_info{ name="Talos"}
+      label: version_id
+      title: Talos Version
+
+    - name: kubernetes_version
+      query: kubernetes_build_info{ service="kubernetes"}
+      label: git_version
+      title: Kubernetes Version
+
+service:
+  main:
+    ports:
+      main:
+        port: 80
+      health:
+        enabled: true
+        port: 8080
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            PROMETHEUS_URL: "http://prometheus-operated.kube-prometheus-stack.svc.cluster.local:9090"
+            SERVER_PORT: "{{ $.Values.service.main.ports.main.port }}"
+            HEALTH_PORT: "{{ $.Values.service.main.ports.health.port }}"
+          probes:
+            liveness:
+              type: http
+              path: "/healthz"
+              port: "{{ $.Values.service.main.ports.health.port }}"
+            readiness:
+              type: http
+              path: "/readyz"
+              port: "{{ $.Values.service.main.ports.health.port }}"
+            startup:
+              type: http
+              path: "/readyz"
+              port: "{{ $.Values.service.main.ports.health.port }}"
+
+configmap:
+  kromgo-configfile:
+    enabled: true
+    data:
+      config.yaml: |
+        {{- $.Values.kromgo | toYaml | nindent 2 }}
+
+persistence:
+  configfile:
+    enabled: true
+    type: configmap
+    readOnly: true
+    objectName: kromgo-configfile
+    mountPath: /kromgo/config.yaml
+    subPath: config.yaml

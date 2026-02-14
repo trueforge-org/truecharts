@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "repository": {
+      "type": "string",
+      "description": "Defines the image repository"
+    },
+    "pullPolicy": {
+      "type": "string",
+      "description": "Defines the image pull policy"
+    },
+    "tag": {
+      "type": "string",
+      "description": "Defines the image tag"
+    }
+  },
+  "additionalProperties": true,
+  "description": "Defines the image details"
+}

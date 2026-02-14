@@ -21,13 +21,14 @@ on:
 
 jobs:
   check_changes:
-    runs-on: ubuntu-latest
+    runs-on:
+      group: default
     outputs:
       changes_detected: ${{ steps.filter.outputs.changed }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Filter paths
         id: filter
@@ -48,10 +49,11 @@ jobs:
       matrix:
         helm-version:
           - v3.14.0
-          - v3.18.6
+          - v3.20.0
+          - v4.1.0
     steps:
       - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
 
@@ -60,12 +62,12 @@ jobs:
         with:
           version: ${{ matrix.helm-version }}
 
-      - uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
         with:
           python-version: "3.10"
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@0d28d3144d3a25ea2cc349d6e59901c4ff469b3b # v2.7.0
+        uses: helm/chart-testing-action@6ec842c01de15ebb84c8627d2744a0c2f2755c9f # v2.8.0
 
       - name: Run chart-testing (lint)
         id: lint
@@ -81,16 +83,17 @@ jobs:
     name: Unit Tests
     runs-on: ubuntu-24.04
     env:
-      helmUnitVersion: 0.8.1
+      helmUnitVersion: 1.0.3
     strategy:
       fail-fast: false
       matrix:
         helm-version:
           - v3.14.0
-          - v3.18.6
+          - v3.20.0
+          - v4.1.0
     steps:
       - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
 
@@ -100,7 +103,7 @@ jobs:
           version: ${{ matrix.helm-version }}
 
       - name: Cache helm plugins
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5
         with:
           path: |
             /home/runner/.local/share/helm/plugins/helm-unittest
@@ -112,7 +115,19 @@ jobs:
       - name: Run Unittests
         shell: bash
         run: |
-          (helm unittest -h > /dev/null) || helm plugin install https://github.com/helm-unittest/helm-unittest --version v${helmUnitVersion} || (sleep 10 && helm plugin install https://github.com/helm-unittest/helm-unittest --version v${helmUnitVersion}) || echo "finished unittest reinstall tries"
+          set -x
+          helm_ver=${{ matrix.helm-version}}
+          helm_ver="${helm_ver#v}"
+
+          VERIFY_FLAG=""
+          if [ "$(printf '%s\n' "4.0.0" "$helm_ver" | sort -V | head -n1)" = "4.0.0" ]; then
+            VERIFY_FLAG="--verify=false"
+          fi
+
+          (helm unittest -h > /dev/null) || \
+            helm plugin install https://github.com/helm-unittest/helm-unittest --version=v${helmUnitVersion} $VERIFY_FLAG || \
+            (sleep 10 && helm plugin install https://github.com/helm-unittest/helm-unittest --version=v${helmUnitVersion} $VERIFY_FLAG) || \
+            echo "finished unittest reinstall tries"
 
           # Run tests
           cd charts/library/common-test/
@@ -127,15 +142,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # We test the latest k3s version and the lowest supported by either the oldest supported SCALE or FluxCD release
+        # We test the latest k3s version and the lowest supported
         k3s-version:
-          - v1.26
-          - v1.32
+          - v1.27
+          - v1.35
           - latest
-        # We test the latest k3s version and the lowest supported by either the oldest supported SCALE or FluxCD release
+        # We test the latest helm version and the lowest supported
         helm-version:
           - v3.14.0
-          - v3.18.6
+          - v3.20.0
+          - v4.1.0
         values:
           - basic-values.yaml
           - configmap-values.yaml
@@ -148,7 +164,8 @@ jobs:
           - persistence-values.yaml
           - extra-containers-values.yaml
           - rbac-values.yaml
-          - ingress-values.yaml
+          # Only run ingress tests without as no valid certissuer -> helm v4 waits for cert to be ready
+          - ingress-wo-tls-values.yaml
           - networkPolicy-values.yaml
           # TODO: broken
           # - codeserver-values.yaml
@@ -165,7 +182,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
 
@@ -174,12 +191,12 @@ jobs:
         with:
           version: ${{ matrix.helm-version }}
 
-      - uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
         with:
           python-version: "3.10"
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@0d28d3144d3a25ea2cc349d6e59901c4ff469b3b # v2.7.0
+        uses: helm/chart-testing-action@6ec842c01de15ebb84c8627d2744a0c2f2755c9f # v2.8.0
 
       - name: Create k3d cluster - Attempt 1/3
         continue-on-error: true
@@ -231,19 +248,18 @@ jobs:
       - name: Add Dependencies
         run: |
           if [[ "${{ matrix.values }}" =~ (ingress|metrics|cnpg|volsync).*-values.yaml ]]; then
-            helm install prometheus-operator oci://oci.trueforge.org/truecharts/prometheus-operator --namespace prometheus-operator --create-namespace --wait
+            helm install kube-prometheus-stack oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack --namespace kube-prometheus-stack --create-namespace --set alertmanager.enabled=false --set grafana.enabled=false --set kubeProxy.enabled=false --wait
           fi
           if [[ "${{ matrix.values }}" =~ cnpg.*-values.yaml ]]; then
-            helm install cloudnative-pg oci://oci.trueforge.org/truecharts/cloudnative-pg --namespace cloudnative-pg --create-namespace --wait
+            helm install cloudnative-pg oci://ghcr.io/cloudnative-pg/charts/cloudnative-pg --namespace cloudnative-pg --create-namespace --wait
           fi
           if [[ "${{ matrix.values }}" =~ ingress.*-values.yaml ]]; then
-            helm install cert-manager oci://oci.trueforge.org/truecharts/cert-manager --namespace cert-manager --create-namespace --wait
-            # helm install traefik-crds oci://oci.trueforge.org/truecharts/traefik-crds --namespace traefik-crds --create-namespace --wait
-            helm install traefik oci://oci.trueforge.org/truecharts/traefik --namespace traefik --create-namespace --wait \
-              --set service.main.type=ClusterIP --set service.tcp.type=ClusterIP
+            helm install cert-manager oci://quay.io/jetstack/charts/cert-manager --namespace cert-manager --create-namespace --set crds.enabled=true --wait
+            helm install ingress-nginx oci://ghcr.io/home-operations/charts-mirror/ingress-nginx --namespace ingress-nginx --create-namespace \
+            --set controller.ingressClassResource.default=true --set controller.publishService.enabled=false --set controller.service.type="ClusterIP" --set controller.config.allow-snippet-annotations=true --set controller.config.annotations-risk-level="Critical" --wait
           fi
           if [[ "${{ matrix.values }}" =~ volsync.*-values.yaml ]]; then
-            helm install volumesnapshots oci://oci.trueforge.org/truecharts/volumesnapshots --namespace volumesnapshots --create-namespace --wait
+            helm install snapshot-controller oci://oci.trueforge.org/truecharts/snapshot-controller --namespace snapshot-controller --create-namespace --wait
             helm install volsync oci://oci.trueforge.org/truecharts/volsync --namespace volsync --create-namespace --wait
           fi
 
@@ -275,7 +291,8 @@ jobs:
     needs: [lint, unittest, install]
     if: ${{ always() }}
     name: Common Tets Completed
-    runs-on: ubuntu-latest
+    runs-on:
+      group: default
     steps:
       - name: Check Results
         run: |

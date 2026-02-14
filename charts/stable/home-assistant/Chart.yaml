@@ -2,17 +2,22 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: home-automation
+  truecharts.org/category: unsorted
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
+  trueforge.org/category: home-automation
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
-appVersion: 2025.9.3
+appVersion: 2026.2.2
 dependencies:
   - name: common
-    version: 28.18.0
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,23 +25,24 @@ dependencies:
     import-values: []
 deprecated: false
 description: Open source home automation that puts local control and privacy first.
-home: https://truecharts.org/charts/stable/home-assistant
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/home-assistant.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/home-assistant
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/home-assistant.webp
 keywords:
   - home-assistant
   - home-automation
   - hass
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: home-assistant
 sources:
   - https://github.com/cdr/code-server
   - https://github.com/home-assistant/home-assistant
-  - https://github.com/truecharts/charts/tree/master/charts/stable/home-assistant
-  - https://hub.docker.com/r/homeassistant/home-assistant
+  - https://github.com/trueforge-org/containers/tree/main/apps/go-yq
+  - https://github.com/trueforge-org/containers/tree/main/apps/home-assistant
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/home-assistant
 type: application
-version: 28.7.0
+version: 29.1.4
 

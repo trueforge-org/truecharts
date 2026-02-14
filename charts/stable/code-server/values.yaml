@@ -1,7 +1,7 @@
 image:
-  repository: docker.io/codercom/code-server
+  repository: oci.trueforge.org/containerforge/code-server
   pullPolicy: IfNotPresent
-  tag: 4.104.0@sha256:238313c385e9191b3da18316e2fb72116ed150ed09efe9be5977f5e07fd88dc4
+  tag: "4.105.1@sha256:8b90df4f269cc05000eb44e51eab82b3c4c44eb699f0b7c31a90c8455957de1f"
 securityContext:
   container:
     readOnlyRootFilesystem: false
@@ -15,7 +15,7 @@ service:
       main:
         port: 10063
         protocol: http
-        targetPort: 8080
+        targetPort: 8443
 workload:
   main:
     podSpec:

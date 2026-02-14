@@ -82,7 +82,7 @@
 {{- define "tc.v1.common.lib.deps.wait.redis" -}}
 enabled: true
 type: system
-imageSelector: redisClientImage
+imageSelector: valkeyClientImage
 securityContext:
   runAsUser: 568
   runAsGroup: 568
@@ -124,7 +124,7 @@ command:
     do
       response=$(
           timeout -s 3 2 \
-          redis-cli \
+          valkey-cli \
             -h "$REDIS_HOST" \
             -p "$REDIS_PORT" \
             ping

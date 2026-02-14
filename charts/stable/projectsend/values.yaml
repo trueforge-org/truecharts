@@ -1,7 +1,7 @@
 image:
   repository: ghcr.io/linuxserver/projectsend
   pullPolicy: IfNotPresent
-  tag: latest@sha256:8817a8f149175435391ddf175b3002f2ea5341708321b2faa511b9773c8e2ddc
+  tag: latest@sha256:db8aa9e4b33db73c68bf88d8336ea49b1a8cd4363b2fbc6a054241550f1d4f80
 securityContext:
   container:
     runAsNonRoot: false
@@ -19,6 +19,13 @@ workload:
     podSpec:
       containers:
         main:
+          probes:
+            liveness:
+              type: tcp
+            readiness:
+              type: tcp
+            startup:
+              type: tcp
           env:
             MAX_UPLOAD: 5000
             PHP_MEMORY_LIMIT: "512M"

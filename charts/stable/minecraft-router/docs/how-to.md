@@ -29,7 +29,7 @@ You can add the following annotations to your minecraft-java instances like so f
 service:
   main:
     enabled: true
-    annotations: 
+    annotations:
       # only 1 service should have this enabled
       mc-router.itzg.me/defaultServer: "true"
       # the domain that users will connect to!

@@ -1,0 +1,50 @@
+annotations:
+  artifacthub.io/links: |-
+    - name: support
+    url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
+  trueforge.org/category: security
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
+apiVersion: v2
+appVersion: 1.35.3
+dependencies:
+  - name: common
+    version: 28.29.49
+    repository: oci://oci.trueforge.org/truecharts
+    condition: ""
+    alias: ""
+    tags: []
+    import-values: []
+deprecated: false
+description: Unofficial Bitwarden compatible server written in Rust
+home: https://trueforge.org/truetech/truecharts/charts/stable/vaultwarden
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/vaultwarden.webp
+keywords:
+  - bitwarden
+  - bitwardenrs
+  - bitwarden_rs
+  - vaultwarden
+  - password
+  - rust
+kubeVersion: '>=1.27.0-0'
+maintainers:
+  - name: TrueCharts
+    email: info@trueforge.org
+    url: https://trueforge.org
+name: vaultwarden
+sources:
+  - https://ghcr.io/dani-garcia/vaultwarden
+  - https://ghcr.io/timshel/vaultwarden
+  - https://github.com/dani-garcia/vaultwarden
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/vaultwarden
+type: application
+version: 29.14.12
+

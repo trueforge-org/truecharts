@@ -1,0 +1,222 @@
+suite: service (traefik integration) test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should pass with traefik integration enabled
+    set:
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          type: ClusterIP
+          integrations:
+            traefik:
+              enabled: true
+          ports: &ports
+            port-name:
+              enabled: true
+              primary: true
+              port: 12345
+              protocol: https
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+    asserts:
+      - documentIndex: &serviceDoc 1
+        isKind:
+          of: Service
+      - documentIndex: *serviceDoc
+        isAPIVersion:
+          of: v1
+      - documentIndex: *serviceDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentIndex: *serviceDoc
+        isSubset:
+          path: metadata.annotations
+          content:
+            traefik.ingress.kubernetes.io/service.serversscheme: "https"
+            traefik.ingress.kubernetes.io/service.serverstransport: "test-release-namespace-test-release-name-common-test@kubernetescrd"
+      - documentIndex: &serversTransportDoc 2
+        isKind:
+          of: ServersTransport
+      - documentIndex: *serversTransportDoc
+        isAPIVersion:
+          of: traefik.io/v1alpha1
+      - documentIndex: *serversTransportDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentIndex: *serversTransportDoc
+        equal:
+          path: spec
+          value:
+            insecureSkipVerify: false
+
+  - it: should pass with traefik integration and forceTLS enabled
+    set:
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          type: ClusterIP
+          integrations:
+            traefik:
+              enabled: true
+              forceTLS: true
+          ports:
+            port-name:
+              enabled: true
+              primary: true
+              port: 12345
+              protocol: http # Not HTTPS, so forceTLS is needed
+      workload: *workload
+    asserts:
+      - documentIndex: *serviceDoc
+        isKind:
+          of: Service
+      - documentIndex: *serviceDoc
+        isAPIVersion:
+          of: v1
+      - documentIndex: *serviceDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentIndex: *serviceDoc
+        isSubset:
+          path: metadata.annotations
+          content:
+            traefik.ingress.kubernetes.io/service.serversscheme: "https"
+            traefik.ingress.kubernetes.io/service.serverstransport: "test-release-namespace-test-release-name-common-test@kubernetescrd"
+      - documentIndex: *serversTransportDoc
+        isKind:
+          of: ServersTransport
+      - documentIndex: *serversTransportDoc
+        isAPIVersion:
+          of: traefik.io/v1alpha1
+      - documentIndex: *serversTransportDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentIndex: *serversTransportDoc
+        equal:
+          path: spec
+          value:
+            insecureSkipVerify: false
+
+  - it: should pass with traefik integration and insecureSkipVerify enabled
+    set:
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          type: ClusterIP
+          integrations:
+            traefik:
+              enabled: true
+              insecureSkipVerify: true
+          ports: *ports
+      workload: *workload
+    asserts:
+      - documentIndex: *serviceDoc
+        isKind:
+          of: Service
+      - documentIndex: *serviceDoc
+        isAPIVersion:
+          of: v1
+      - documentIndex: *serviceDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentIndex: *serviceDoc
+        isSubset:
+          path: metadata.annotations
+          content:
+            traefik.ingress.kubernetes.io/service.serversscheme: "https"
+            traefik.ingress.kubernetes.io/service.serverstransport: "test-release-namespace-test-release-name-common-test@kubernetescrd"
+      - documentIndex: *serversTransportDoc
+        isKind:
+          of: ServersTransport
+      - documentIndex: *serversTransportDoc
+        isAPIVersion:
+          of: traefik.io/v1alpha1
+      - documentIndex: *serversTransportDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentIndex: *serversTransportDoc
+        equal:
+          path: spec
+          value:
+            insecureSkipVerify: true
+
+  - it: should pass with traefik integration enabled, serverName and rootCA secret
+    set:
+      configmap:
+        my-map:
+          enabled: true
+          data:
+            ca.crt: |-
+              -----BEGIN CERTIFICATE-----
+              ...
+              -----END CERTIFICATE-----
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          type: ClusterIP
+          integrations:
+            traefik:
+              enabled: true
+              serverName: "my.domain.com"
+              rootCAs:
+                - secretRef:
+                    name: my-domain-ca-secret
+                    expandObjectName: false
+                - configMapRef:
+                    name: my-map
+          ports: *ports
+      workload: *workload
+    asserts:
+      - documentIndex: &serviceDocWithRootCAs 2
+        isKind:
+          of: Service
+      - documentIndex: *serviceDocWithRootCAs
+        isAPIVersion:
+          of: v1
+      - documentIndex: *serviceDocWithRootCAs
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentIndex: *serviceDocWithRootCAs
+        isSubset:
+          path: metadata.annotations
+          content:
+            traefik.ingress.kubernetes.io/service.serversscheme: "https"
+            traefik.ingress.kubernetes.io/service.serverstransport: "test-release-namespace-test-release-name-common-test@kubernetescrd"
+      - documentIndex: &serversTransportDocWithRootCAs 3
+        isKind:
+          of: ServersTransport
+      - documentIndex: *serversTransportDocWithRootCAs
+        isAPIVersion:
+          of: traefik.io/v1alpha1
+      - documentIndex: *serversTransportDocWithRootCAs
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentIndex: *serversTransportDocWithRootCAs
+        equal:
+          path: spec
+          value:
+            serverName: "my.domain.com"
+            insecureSkipVerify: false
+            rootCAs:
+              - secret: my-domain-ca-secret
+              - configMap: test-release-name-common-test-my-map

@@ -1,0 +1,599 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "shared": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Define persistence objects"
+        },
+        "type": {
+          "type": "string",
+          "description": "Define persistence objects"
+        },
+        "mountPath": {
+          "type": "string",
+          "description": "Define persistence objects"
+        },
+        "targetSelectAll": {
+          "type": "boolean",
+          "description": "Define persistence objects"
+        }
+      },
+      "additionalProperties": true,
+      "description": "Define persistence objects"
+    },
+    "varlogs": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Define persistence objects"
+        },
+        "type": {
+          "type": "string",
+          "description": "Define persistence objects"
+        },
+        "mountPath": {
+          "type": "string",
+          "description": "Define persistence objects"
+        },
+        "medium": {
+          "type": "string",
+          "description": "Define the medium of emptyDir (Memory, \"\")"
+        },
+        "targetSelectAll": {
+          "type": "boolean",
+          "description": "Define persistence objects"
+        }
+      },
+      "additionalProperties": true,
+      "description": "Define persistence objects"
+    },
+    "varrun": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Define persistence objects"
+        },
+        "type": {
+          "type": "string",
+          "description": "Define persistence objects"
+        },
+        "mountPath": {
+          "type": "string",
+          "description": "Define persistence objects"
+        },
+        "medium": {
+          "type": "string",
+          "description": "Define the medium of emptyDir (Memory, \"\")"
+        },
+        "targetSelectAll": {
+          "type": "boolean",
+          "description": "Define persistence objects"
+        }
+      },
+      "additionalProperties": true,
+      "description": "Define persistence objects"
+    },
+    "tmp": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Define persistence objects"
+        },
+        "type": {
+          "type": "string",
+          "description": "Define persistence objects"
+        },
+        "mountPath": {
+          "type": "string",
+          "description": "Define persistence objects"
+        },
+        "medium": {
+          "type": "string",
+          "description": "Define the medium of emptyDir (Memory, \"\")"
+        },
+        "targetSelectAll": {
+          "type": "boolean",
+          "description": "Define persistence objects"
+        }
+      },
+      "additionalProperties": true,
+      "description": "Define persistence objects"
+    },
+    "devshm": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Define persistence objects"
+        },
+        "type": {
+          "type": "string",
+          "description": "Define persistence objects"
+        },
+        "mountPath": {
+          "type": "string",
+          "description": "Define persistence objects"
+        },
+        "medium": {
+          "type": "string",
+          "description": "Define the medium of emptyDir (Memory, \"\")"
+        },
+        "targetSelectAll": {
+          "type": "boolean",
+          "description": "Define persistence objects"
+        }
+      },
+      "additionalProperties": true,
+      "description": "Define persistence objects"
+    }
+  },
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "size": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the sizeLimit of the emptyDir"
+      },
+      "medium": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the medium of emptyDir (Memory, \"\")"
+      },
+      "objectName": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the secret name."
+      },
+      "expandObjectName": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Whether to expand (adding the fullname as prefix) the secret name."
+      },
+      "optional": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Whether the secret should be required or not."
+      },
+      "defaultMode": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the defaultMode (must be a string in format of \"0777\")."
+      },
+      "items": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define a list of items for secret."
+            },
+            "key": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define the key of the secret."
+            }
+          },
+          "additionalProperties": true,
+          "description": "Configuration for `$name.items.$name`."
+        },
+        "description": "Define a list of items for secret."
+      },
+      "iscsi": {
+        "type": "object",
+        "properties": {
+          "authSession": {
+            "type": "object",
+            "properties": {
+              "password": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the iSCSI"
+              },
+              "username": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the username"
+              }
+            },
+            "additionalProperties": true,
+            "description": "Define the authSession"
+          },
+          "authDiscovery": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the username"
+              },
+              "password": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the password"
+              },
+              "usernameInitiator": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the usernameInitiator"
+              },
+              "passwordInitiator": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the passwordInitiator"
+              }
+            },
+            "additionalProperties": true,
+            "description": "Define the authDiscovery"
+          }
+        },
+        "additionalProperties": true,
+        "description": "Define the iSCSI"
+      },
+      "path": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the nfs export share path"
+      },
+      "server": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the nfs server"
+      },
+      "targetSelector": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "readOnly": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define persistence objects"
+              },
+              "mountPath": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the mountPath for the container"
+              },
+              "mountPropagation": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the mountPropagation for the container"
+              },
+              "subPath": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the subPath for the container"
+              }
+            },
+            "additionalProperties": true,
+            "description": "Define a map named after the container to mount the volume"
+          },
+          "description": "Define a map named after the pod to define the volume"
+        },
+        "description": "Define a map with pod and containers to mount"
+      },
+      "hostPath": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the hostPath"
+      },
+      "hostPathType": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the hostPathType"
+      },
+      "labels": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Additional labels for persistence"
+      },
+      "annotations": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Additional annotations for persistence"
+      },
+      "namespace": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the namespace for this object"
+      },
+      "retain": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define wether the to add helm annotation to retain resource on uninstall. This does not **guarantee** that the resource will be retained."
+      },
+      "accessModes": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the accessModes of the PVC, if it's single can be defined as a string, multiple as a list"
+      },
+      "volumeName": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the volumeName of a PV, backing the claim"
+      },
+      "existingClaim": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define an existing claim to use"
+      },
+      "storageClass": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the storageClass to use - If storageClass is defined on the `persistence`"
+      },
+      "dataSource": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define dataSource for the pvc"
+          },
+          "kind": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define the kind of the dataSource"
+          }
+        },
+        "additionalProperties": true,
+        "description": "Define dataSource for the pvc"
+      },
+      "static": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define static provisioning for the pvc"
+          },
+          "server": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define the nfs server"
+          },
+          "share": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define the nfs export share path"
+          },
+          "user": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define the smb user"
+          },
+          "password": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define the smb password"
+          },
+          "domain": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define the smb domain"
+          },
+          "driver": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define the custom driver"
+          },
+          "provisioner": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define the custom provisioner"
+          }
+        },
+        "additionalProperties": true,
+        "description": "Define static provisioning for the pvc"
+      },
+      "mountOptions": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define mountOptions for the pvc. Available only for `static.mode: nfs|smb`"
+            },
+            "key": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define the key of the mountOption"
+            }
+          },
+          "additionalProperties": true,
+          "description": "Configuration for `$name.mountOptions.$name`."
+        },
+        "description": "Define mountOptions for the pvc. Available only for `static.mode: nfs|smb`"
+      },
+      "volumeSnapshots": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+          "type": "object",
+          "properties": {
+            "volumeSnapshotClassName": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define volumeSnapshots for the pvc"
+            },
+            "name": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define the name of the volumeSnapshot"
+            },
+            "enabled": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define if the volumeSnapshot is enabled"
+            },
+            "labels": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define the labels of the volumeSnapshot"
+            },
+            "annotations": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define the annotations of the volumeSnapshot"
+            }
+          },
+          "additionalProperties": true,
+          "description": "Configuration for `$name.volumeSnapshots.$name`."
+        },
+        "description": "Define volumeSnapshots for the pvc"
+      },
+      "fsType": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the fsType"
+      },
+      "targetPortal": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the targetPortal"
+      },
+      "iqn": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the iqn"
+      },
+      "lun": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the lun"
+      },
+      "initiatorName": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the initiatorName"
+      },
+      "iscsiInterface": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the iscsiInterface"
+      },
+      "portals": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the portals"
+      },
+      "enabled": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Enables or Disables the persistence"
+      },
+      "type": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the persistence type"
+      },
+      "mountPath": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the mountPath for the persistence, applies to all containers that are selected"
+      },
+      "mountPropagation": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the mountPropagation for the persistence, applies to all containers that are selected"
+      },
+      "subPath": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the subPath for the persistence, applies to all containers that are selected"
+      },
+      "readOnly": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the readOnly for the persistence, applies to all containers that are selected"
+      },
+      "targetSelectAll": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define wether to define this volume to all workloads and mount it on all containers"
+      }
+    },
+    "additionalProperties": true,
+    "description": "Define persistence"
+  },
+  "description": "Define persistence objects"
+}

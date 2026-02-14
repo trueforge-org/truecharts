@@ -1,7 +1,7 @@
 image:
-  repository: docker.io/vabene1111/recipes
+  repository: ghcr.io/tandoorrecipes/recipes
   pullPolicy: IfNotPresent
-  tag: 2.2.0@sha256:7a44db382e5df961878a93ad10113d84a1d913419a0811439e27b790854eeade
+  tag: 2.5.1@sha256:b3ec4aa3fb9e4d24c73876b79576fca04aa026a6706fe3d5a17d95297bda39b8
 securityContext:
   container:
     readOnlyRootFilesystem: false
@@ -11,6 +11,16 @@ securityContext:
 workload:
   main:
     podSpec:
+      initContainers:
+        init-mkdir:
+          enabled: true
+          type: init
+          imageSelector: "image"
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - mkdir -p /run/nginx
       containers:
         main:
           env:
@@ -32,18 +42,19 @@ workload:
             CSRF_TRUSTED_ORIGINS: ""
             DEBUG: 0
             FRACTION_PREF_DEFAULT: 0
-            GUNICORN_MEDIA: 1
+            GUNICORN_MEDIA: 0
             SECRET_KEY:
               secretKeyRef:
                 key: SECRET_KEY
                 name: recipes-secrets
             SHOPPING_MIN_AUTOSYNC_INTERVAL: 5
-            TIMEZONE: "{{ .Values.TZ }}"
+
 service:
   main:
     ports:
       main:
         port: 10029
+
 ingress:
   main:
     integrations:
