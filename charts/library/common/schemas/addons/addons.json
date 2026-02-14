@@ -5,7 +5,7 @@
   "additionalProperties": {
     "allOf": [
       {
-        "$ref": "workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties"
+        "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties"
       },
       {
         "type": "object",
@@ -25,17 +25,17 @@
             "description": "Define the workloads to add the addon to"
           },
           "container": {
-            "$ref": "workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties",
+            "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties",
             "description": "Define additional options for the container See container options in the [container](/truecharts-common/container) section."
           },
           "service": {
-            "$ref": "service.json#/additionalProperties",
+            "$ref": "../service/service.json#/additionalProperties",
             "description": "Define additional options for the service See service options in the [service](/truecharts-common/service) section."
           },
           "secret": {
             "oneOf": [
               {
-                "$ref": "secret.json#/additionalProperties"
+                "$ref": "../secret.json#/additionalProperties"
               },
               {
                 "type": "null"

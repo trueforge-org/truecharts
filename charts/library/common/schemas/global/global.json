@@ -21,11 +21,11 @@
     "diagnosticMode": {
       "type": "object",
       "properties": {
-          "enabled": {
-            "type": [
-              "boolean",
-              "string"
-            ],
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
           "description": "Configuration for `global.diagnosticMode.enabled`."
         }
       },
@@ -33,7 +33,7 @@
       "description": "Configuration for `global.diagnosticMode`."
     },
     "fallbackDefaults": {
-      "$ref": "global/fallbackDefaults.json",
+      "$ref": "fallbackDefaults.json",
       "description": "The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [here](/truecharts-common/fallbackdefaults)",
       "type": "object",
       "x-docs-required": false,
