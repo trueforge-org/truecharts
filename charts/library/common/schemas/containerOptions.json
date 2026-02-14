@@ -3,18 +3,14 @@
   "type": "object",
   "properties": {
     "NVIDIA_CAPS": {
-      "type": "string",
+      "type": "array",
       "items": {
         "type": "string",
         "description": "Configuration for `containerOptions.NVIDIA_CAPS.$item`."
       },
-      "description": "Defines the NVIDIA_CAPS to be passed as an environment variable to the container.",
-      "minLength": 1
+      "description": "Defines the NVIDIA_CAPS to be passed as an environment variable to the container."
     }
   },
   "additionalProperties": true,
-  "description": "Options that apply to all containers, unless overridden at the container level See more info about containerOptions [here](/truecharts-common/containeroptions)",
-  "required": [
-    "NVIDIA_CAPS"
-  ]
+  "description": "Options that apply to all containers, unless overridden at the container level See more info about containerOptions [here](/truecharts-common/containeroptions)"
 }
