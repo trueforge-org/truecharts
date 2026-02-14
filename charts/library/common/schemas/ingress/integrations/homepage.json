@@ -58,21 +58,16 @@
       "type": "object",
       "properties": {
         "customkv": {
-          "type": "array",
-          "properties": {},
-          "additionalProperties": {
+          "type": ["array", "null"],
+          "items": {
             "type": "object",
             "properties": {
               "key": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the key for the custom annotation Sets the `gethomepage.dev/widget.$key` annotation"
               },
               "value": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the value for the custom annotation"
               }
             },
@@ -80,7 +75,7 @@
             "description": "Configuration for `$name.integrations.homepage.widget.customkv.$name`."
           },
           "description": "Define configuration for the widget",
-          "default": []
+          "default": null
         },
         "enabled": {
           "type": "boolean",
@@ -108,11 +103,11 @@
           "description": "Define configuration for the widget"
         },
         "custom": {
-          "type": "object",
+          "type": ["object", "null"],
           "properties": {},
           "additionalProperties": true,
           "description": "Define configuration for the widget",
-          "default": {}
+          "default": null
         }
       },
       "additionalProperties": true,
