@@ -44,7 +44,7 @@ storageClass:
   example2:
     enabled: true
     provisioner: some.provisioner.io
-    reclaimPolicy: retain
+    reclaimPolicy: Retain
     allowVolumeExpansion: true
     volumeBindingMode: Immediate
   example3:
@@ -56,7 +56,7 @@ storageClass:
     enabled: true
     provisioner: some.provisioner.io
     parameters: {}
-    reclaimPolicy: retain
+    reclaimPolicy: Retain
     allowVolumeExpansion: true
     volumeBindingMode: Immediate
     mountOptions: []
