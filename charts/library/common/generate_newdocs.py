@@ -53,6 +53,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Path to the schemas root folder used for deriving page paths from $ref targets",
     )
     parser.add_argument(
+        "--examples-root",
+        type=Path,
+        default=script_dir / "examples",
+        help="Path to markdown snippets containing Full Examples sections, mirroring generated page paths",
+    )
+    parser.add_argument(
         "--clean",
         action="store_true",
         help="Remove output directory before generation",
@@ -890,6 +896,7 @@ def render_page(
     child_links: list[tuple[str, str, str]],
     ref_links_by_file: dict[Path, str],
     dynamic_segment: str,
+    full_examples_markdown: str | None,
 ) -> str:
     title = "Common Chart Documentation" if not key_path_segments else prettify_segment(key_path_segments[-1])
     appears_in = schema_path(key_path_segments)
@@ -966,8 +973,14 @@ def render_page(
                 lines.append(f"- [{label}]({rel_link})")
         lines.extend(["", "---", ""])
 
-    page_example = explicit_example_value(schema_node, resolver=resolver, current_source=schema_source)
-    if page_example is not None:
+    normalized_examples = normalize_full_examples_markdown(full_examples_markdown)
+    if normalized_examples:
+        lines.extend(normalized_examples.splitlines())
+        lines.append("")
+    else:
+        page_example = explicit_example_value(schema_node, resolver=resolver, current_source=schema_source)
+        if page_example is None:
+            return "\n".join(lines).rstrip() + "\n"
         lines.extend(["## Full Examples", "", "```yaml"])
         if key_path_segments:
             lines.append(build_example_block(key_path, page_example))
@@ -976,6 +989,23 @@ def render_page(
         lines.extend(["```", ""])
 
     return "\n".join(lines).rstrip() + "\n"
+
+
+def normalize_full_examples_markdown(markdown: str | None) -> str | None:
+    if not markdown:
+        return None
+
+    cleaned = markdown.strip()
+    if not cleaned:
+        return None
+
+    header = re.search(r"^##\s+Full Examples\s*$", cleaned, flags=re.MULTILINE)
+    if header:
+        cleaned = cleaned[header.start() :].strip()
+    else:
+        cleaned = f"## Full Examples\n\n{cleaned}"
+
+    return cleaned
 
 
 def collect_object_pages(
@@ -1281,6 +1311,7 @@ def generate_docs(
     clean: bool,
     dynamic_segment: str,
     schemas_root: Path,
+    examples_root: Path,
 ) -> None:
     resolver = SchemaResolver(schemas_root=schemas_root)
     pages = collect_schema_file_pages(schemas_root=schemas_root, resolver=resolver)
@@ -1343,6 +1374,11 @@ def generate_docs(
                 continue
             ref_links_by_file[ref_file] = relative_link(rel_page, ref_rel_page)
 
+        full_examples_markdown: str | None = None
+        example_file = examples_root / rel_page
+        if example_file.exists():
+            full_examples_markdown = example_file.read_text(encoding="utf-8")
+
         generated = render_page(
             key_path_segments=list(page["key_path"]),
             schema_node=page["node"],
@@ -1353,6 +1389,7 @@ def generate_docs(
             child_links=child_links,
             ref_links_by_file=ref_links_by_file,
             dynamic_segment=dynamic_segment,
+            full_examples_markdown=full_examples_markdown,
         )
         target.write_text(generated, encoding="utf-8")
 
@@ -1435,6 +1472,7 @@ def main() -> int:
         clean=args.clean,
         dynamic_segment=args.dynamic_segment,
         schemas_root=args.schemas_root.resolve(),
+        examples_root=args.examples_root.resolve(),
     )
 
     if not args.no_verify_structure:
