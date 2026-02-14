@@ -335,9 +335,11 @@
         "description": "Define the hostPathType"
       },
       "labels": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../special/labels.json"
+          }
+        ],
         "description": "Additional labels for persistence"
       },
       "annotations": {
@@ -347,9 +349,11 @@
         "description": "Additional annotations for persistence"
       },
       "namespace": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../special/namespaces.json"
+          }
+        ],
         "description": "Define the namespace for this object"
       },
       "retain": {

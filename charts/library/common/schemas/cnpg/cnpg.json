@@ -6,56 +6,12 @@
     "type": "object",
     "properties": {
       "cluster": {
-        "type": "object",
-        "properties": {
-          "labels": {
-            "allOf": [
-              {
-                "$ref": "../special/labels.json"
-              }
-            ],
-            "description": "Additional labels for CNPG cluster"
-          },
-          "annotations": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
-            "description": "Additional annotations for CNPG cluster"
-          },
-          "env": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
-            "description": "Define additional environment variables for the cluster's pods See container env options in the [container env](/truecharts-common/container/env) section."
-          },
-          "envFrom": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
-            "description": "Define additional environment variables for the cluster's pods See container envFrom options in the [container envFrom](/truecharts-common/container/envFrom) section."
-          },
-          "instances": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
-            "description": "Number of instances"
-          },
-          "singleNode": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
-            "description": "Whether this is a single-node cluster. Setting this to `true` would allow PVCs to be kept on instance restart."
-          },
-          "logLevel": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
-            "description": "The cluster log level. Available values: - `error`"
+        "allOf": [
+          {
+            "$ref": "cluster.json"
           }
-        },
-        "additionalProperties": true,
-        "description": "Define a CNPG cluster",
-        "$ref": "cluster.json"
+        ],
+        "description": "Define a CNPG cluster"
       },
       "enabled": {
         "type": [
