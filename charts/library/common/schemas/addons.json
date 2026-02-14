@@ -130,7 +130,7 @@
               "description": "Configuration for `addons.gluetun.container.securityContext`."
             },
             "env": {
-              "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/addons/gluetun/env.json",
+              "$ref": "addons/gluetun/env.json",
               "description": "Configuration for `addons.gluetun.container.env`."
             }
           },
@@ -142,7 +142,7 @@
       "description": "Addons to the workloads"
     },
     "tailscale": {
-      "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/addons/tailscale.json",
+      "$ref": "addons/tailscale.json",
       "description": "Addons to the workloads"
     },
     "codeserver": {
@@ -160,7 +160,7 @@
               "description": "Configuration for `addons.codeserver.container.enabled`."
             },
             "env": {
-              "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/addons/codeserver/env.json",
+              "$ref": "addons/codeserver/env.json",
               "description": "Configuration for `addons.codeserver.container.env`."
             },
             "probes": {

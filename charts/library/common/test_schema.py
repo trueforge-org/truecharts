@@ -5,12 +5,8 @@ import json
 import shutil
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
-from urllib.parse import urlparse
-
-
-RUNNER_COMMON_PREFIX = "file:///home/runner/work/truecharts/truecharts/charts/library/common"
+from urllib.parse import urldefrag
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -74,69 +70,57 @@ def check_helm_available(helm_bin: str) -> bool:
     return shutil.which(helm_bin) is not None
 
 
-def normalize_ref(ref: str, common_chart_dir: Path, json_file_path: Path) -> str:
-    if ref.startswith(RUNNER_COMMON_PREFIX):
-        suffix = ref.removeprefix(RUNNER_COMMON_PREFIX).lstrip("/")
-        return (common_chart_dir / suffix).resolve().as_uri()
-
-    if ref.startswith("file://"):
-        parsed = urlparse(ref)
-        ref_path = Path(parsed.path)
-        marker = "/charts/library/common/"
-        as_posix = ref_path.as_posix()
-        if marker in as_posix:
-            suffix = as_posix.split(marker, 1)[1].lstrip("/")
-            return (common_chart_dir / suffix).resolve().as_uri()
-        return ref
-
-    candidate = (json_file_path.parent / ref).resolve()
-    if candidate.exists():
-        return candidate.as_uri()
-
-    return ref
-
-
-def rewrite_refs(node: object, common_chart_dir: Path, json_file_path: Path) -> object:
+def _collect_self_ref_errors(node: object, json_file: Path, errors: list[str]) -> None:
     if isinstance(node, dict):
-        rewritten: dict[str, object] = {}
         for key, value in node.items():
             if key == "$ref" and isinstance(value, str):
-                rewritten[key] = normalize_ref(value, common_chart_dir, json_file_path)
+                if value.startswith(("http://", "https://", "file://", "#")):
+                    continue
+                ref_path, _ = urldefrag(value)
+                if not ref_path:
+                    continue
+                resolved = (json_file.parent / ref_path).resolve()
+                if resolved == json_file.resolve():
+                    errors.append(f"{json_file}: self-referencing $ref '{value}'")
             else:
-                rewritten[key] = rewrite_refs(value, common_chart_dir, json_file_path)
-        return rewritten
+                _collect_self_ref_errors(value, json_file, errors)
+        return
 
     if isinstance(node, list):
-        return [rewrite_refs(item, common_chart_dir, json_file_path) for item in node]
+        for item in node:
+            _collect_self_ref_errors(item, json_file, errors)
 
-    return node
 
-
-def prepare_common_chart_for_local_refs(common_chart_dir: Path, temp_dir: Path) -> Path:
-    prepared_chart_dir = temp_dir / "common"
-    shutil.copytree(common_chart_dir, prepared_chart_dir)
-
+def find_self_referencing_refs(common_chart_dir: Path) -> list[str]:
     json_files = [
-        prepared_chart_dir / "values.schema.json",
-        *prepared_chart_dir.glob("schemas/**/*.json"),
+        common_chart_dir / "values.schema.json",
+        *common_chart_dir.glob("schemas/**/*.json"),
     ]
 
+    errors: list[str] = []
     for json_file in json_files:
         if not json_file.exists():
             continue
-        with json_file.open("r", encoding="utf-8") as file:
-            content = json.load(file)
-        rewritten = rewrite_refs(content, prepared_chart_dir, json_file)
-        with json_file.open("w", encoding="utf-8") as file:
-            json.dump(rewritten, file, indent=2)
-            file.write("\n")
+        try:
+            content = json_file.read_text(encoding="utf-8")
+        except OSError as exc:
+            errors.append(f"{json_file}: unable to read file ({exc})")
+            continue
 
-    return prepared_chart_dir
+        try:
+            parsed = json.loads(content)
+        except ValueError as exc:
+            errors.append(f"{json_file}: invalid JSON ({exc})")
+            continue
+
+        _collect_self_ref_errors(parsed, json_file, errors)
+
+    return errors
 
 
 def validate_values_file_with_helm(
     values_path: Path,
-    prepared_common_chart_dir: Path,
+    common_chart_dir: Path,
     helm_bin: str,
 ) -> tuple[bool, list[str]]:
     if not values_path.exists():
@@ -145,7 +129,7 @@ def validate_values_file_with_helm(
     command = [
         helm_bin,
         "lint",
-        str(prepared_common_chart_dir),
+        str(common_chart_dir),
         "-f",
         str(values_path),
         "--quiet",
@@ -205,92 +189,93 @@ def main() -> int:
         emit(f"values.schema.json not found in common chart directory: {common_chart_dir}", output_file)
         return 2
 
+    self_ref_errors = find_self_referencing_refs(common_chart_dir)
+    if self_ref_errors:
+        emit("Detected self-referencing $ref entries in common schema files:", output_file)
+        for error in self_ref_errors:
+            emit(f"- {error}", output_file)
+        return 2
+
     emit(f"Writing output to: {output_file}", output_file)
 
-    with tempfile.TemporaryDirectory(prefix="common-schema-lint-") as temp_path:
-        prepared_common_chart_dir = prepare_common_chart_for_local_refs(
-            common_chart_dir,
-            Path(temp_path),
-        )
+    stable_values_files = sorted(
+        chart_dir / "values.yaml"
+        for chart_dir in stable_dir.iterdir()
+        if chart_dir.is_dir() and (chart_dir / "values.yaml").exists()
+    )
+    common_test_values_files = sorted(common_test_ci_dir.glob("*values.yaml"))
 
-        stable_values_files = sorted(
-            chart_dir / "values.yaml"
-            for chart_dir in stable_dir.iterdir()
-            if chart_dir.is_dir() and (chart_dir / "values.yaml").exists()
-        )
-        common_test_values_files = sorted(common_test_ci_dir.glob("*values.yaml"))
-
-        if not stable_values_files and not common_test_values_files:
-            emit(
-                f"No values files found in: {stable_dir} or {common_test_ci_dir}",
-                output_file,
-            )
-            return 2
-
+    if not stable_values_files and not common_test_values_files:
         emit(
-            (
-                "Validation targets: "
-                f"{len(stable_values_files)} stable values files + "
-                f"{len(common_test_values_files)} common-test CI values files"
-            ),
+            f"No values files found in: {stable_dir} or {common_test_ci_dir}",
             output_file,
         )
+        return 2
 
-        validation_targets: list[tuple[str, Path]] = []
-        validation_targets.extend(
-            (f"stable/{values_file.parent.name}", values_file)
-            for values_file in stable_values_files
+    emit(
+        (
+            "Validation targets: "
+            f"{len(stable_values_files)} stable values files + "
+            f"{len(common_test_values_files)} common-test CI values files"
+        ),
+        output_file,
+    )
+
+    validation_targets: list[tuple[str, Path]] = []
+    validation_targets.extend(
+        (f"stable/{values_file.parent.name}", values_file)
+        for values_file in stable_values_files
+    )
+    validation_targets.extend(
+        (f"common-test/ci/{values_file.name}", values_file)
+        for values_file in common_test_values_files
+    )
+
+    total = 0
+    failed = 0
+    failed_targets: list[str] = []
+    stopped_early = False
+
+    for target_name, values_file in validation_targets:
+        total += 1
+        valid, output_lines = validate_values_file_with_helm(
+            values_file,
+            common_chart_dir,
+            args.helm_bin,
         )
-        validation_targets.extend(
-            (f"common-test/ci/{values_file.name}", values_file)
-            for values_file in common_test_values_files
-        )
+        if not valid:
+            failed += 1
+            failed_targets.append(target_name)
+            emit(f"❌ {target_name}", output_file)
+            for line in output_lines or ["helm lint failed with no output"]:
+                emit(f"   - {line}", output_file)
+            if args.fail_fast:
+                stopped_early = True
+                break
+            if args.max_failures > 0 and failed >= args.max_failures:
+                emit(
+                    f"Stopping after reaching max failures: {args.max_failures}",
+                    output_file,
+                )
+                stopped_early = True
+                break
+        elif args.show_passing:
+            emit(f"✅ {target_name}", output_file)
 
-        total = 0
-        failed = 0
-        failed_targets: list[str] = []
-        stopped_early = False
+    passed = total - failed
+    emit("", output_file)
+    emit("Summary", output_file)
+    emit(f"- Total charts checked: {total}", output_file)
+    emit(f"- Passed: {passed}", output_file)
+    emit(f"- Failed: {failed}", output_file)
+    if stopped_early:
+        emit("- Stopped early: yes", output_file)
+    if failed_targets:
+        emit("- Failed targets:", output_file)
+        for target_name in failed_targets:
+            emit(f"  - {target_name}", output_file)
 
-        for target_name, values_file in validation_targets:
-            total += 1
-            valid, output_lines = validate_values_file_with_helm(
-                values_file,
-                prepared_common_chart_dir,
-                args.helm_bin,
-            )
-            if not valid:
-                failed += 1
-                failed_targets.append(target_name)
-                emit(f"❌ {target_name}", output_file)
-                for line in output_lines or ["helm lint failed with no output"]:
-                    emit(f"   - {line}", output_file)
-                if args.fail_fast:
-                    stopped_early = True
-                    break
-                if args.max_failures > 0 and failed >= args.max_failures:
-                    emit(
-                        f"Stopping after reaching max failures: {args.max_failures}",
-                        output_file,
-                    )
-                    stopped_early = True
-                    break
-            elif args.show_passing:
-                emit(f"✅ {target_name}", output_file)
-
-        passed = total - failed
-        emit("", output_file)
-        emit("Summary", output_file)
-        emit(f"- Total charts checked: {total}", output_file)
-        emit(f"- Passed: {passed}", output_file)
-        emit(f"- Failed: {failed}", output_file)
-        if stopped_early:
-            emit("- Stopped early: yes", output_file)
-        if failed_targets:
-            emit("- Failed targets:", output_file)
-            for target_name in failed_targets:
-                emit(f"  - {target_name}", output_file)
-
-        return 1 if failed else 0
+    return 1 if failed else 0
 
 
 if __name__ == "__main__":
