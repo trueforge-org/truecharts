@@ -8,7 +8,10 @@
         "type": "string",
         "description": "Configuration for `containerOptions.NVIDIA_CAPS.$item`."
       },
-      "description": "Defines the NVIDIA_CAPS to be passed as an environment variable to the container."
+      "description": "Defines the NVIDIA_CAPS to be passed as an environment variable to the container.",
+      "default": [
+        "all"
+      ]
     }
   },
   "additionalProperties": true,

@@ -4,15 +4,18 @@
   "properties": {
     "header": {
       "type": "string",
-      "description": "Define values for `NOTES.txt`"
+      "description": "Define values for `NOTES.txt`",
+      "default": "# Welcome to TrueCharts!\nThank you for installing <{{ .Chart.Name }}>.\n"
     },
     "custom": {
       "type": "string",
-      "description": "Define values for `NOTES.txt`"
+      "description": "Define values for `NOTES.txt`",
+      "default": ""
     },
     "footer": {
       "type": "string",
-      "description": "Define values for `NOTES.txt`"
+      "description": "Define values for `NOTES.txt`",
+      "default": "# Documentation\nDocumentation for this chart can be found at ...\n# Bug reports\nIf you find a bug in this chart, please file an issue at ...\n"
     },
     "warnings": {
       "type": "array",
@@ -20,5 +23,6 @@
     }
   },
   "additionalProperties": true,
-  "description": "Define values for `NOTES.txt`"
+  "description": "Define values for `NOTES.txt`",
+  "default": {}
 }

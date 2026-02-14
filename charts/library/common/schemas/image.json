@@ -4,15 +4,18 @@
   "properties": {
     "repository": {
       "type": "string",
-      "description": "Defines the image repository"
+      "description": "Defines the image repository",
+      "default": ""
     },
     "pullPolicy": {
       "type": "string",
-      "description": "Defines the image pull policy"
+      "description": "Defines the image pull policy",
+      "default": "IfNotPresent"
     },
     "tag": {
       "type": "string",
-      "description": "Defines the image tag"
+      "description": "Defines the image tag",
+      "default": ""
     }
   },
   "additionalProperties": true,
