@@ -1,26 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "properties": {
-    "main": {
-      "type": "object",
-      "properties": {
-        "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
-          "description": "Create Pod Disruption Budget objects"
-        },
-        "targetSelector": {
-          "type": "string",
-          "description": "Configuration for `podDisruptionBudget.main.targetSelector`."
-        }
-      },
-      "additionalProperties": true,
-      "description": "Create Pod Disruption Budget objects"
-    }
-  },
+  "properties": {},
   "additionalProperties": {
     "type": "object",
     "properties": {
@@ -37,7 +18,7 @@
         ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Enables or Disables the Pod Disruption Budget"
+        "description": "Create Pod Disruption Budget objects"
       },
       "namespace": {
         "allOf": [
@@ -72,10 +53,14 @@
         "properties": {},
         "additionalProperties": true,
         "description": "Define the maxUnavailable."
+      },
+      "targetSelector": {
+        "type": "string",
+        "description": "Configuration for `podDisruptionBudget.main.targetSelector`."
       }
     },
     "additionalProperties": true,
-    "description": "Define Pod Disruption Budget At least one of the following keys must be defined"
+    "description": "Create Pod Disruption Budget objects"
   },
   "description": "Create Pod Disruption Budget objects"
 }

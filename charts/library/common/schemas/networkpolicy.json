@@ -1,61 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "properties": {
-    "main": {
-      "type": "object",
-      "properties": {
-        "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
-          "description": "Create Network Policy objects"
-        },
-        "primary": {
-          "type": "boolean",
-          "description": "Mark as primary Network Policy"
-        },
-        "expandObjectName": {
-          "type": "boolean",
-          "description": "Expand the object name"
-        },
-        "podSelector": {
-          "type": "object",
-          "description": "Select pods to which this network policy applies"
-        },
-        "targetSelector": {
-          "type": "string",
-          "description": "Target a specific pod from this chart"
-        },
-        "targetAllPods": {
-          "type": "boolean",
-          "description": "Target all pods in the namespace"
-        },
-        "policyTypes": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "Ingress",
-              "Egress"
-            ]
-          },
-          "description": "List of policy types (Ingress, Egress)"
-        },
-        "ingress": {
-          "type": "array",
-          "description": "List of ingress rules"
-        },
-        "egress": {
-          "type": "array",
-          "description": "List of egress rules"
-        }
-      },
-      "additionalProperties": true,
-      "description": "Create Network Policy objects"
-    }
-  },
+  "properties": {},
   "additionalProperties": {
     "type": "object",
     "properties": {
@@ -66,16 +12,16 @@
         ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Enables or Disables the Network Policy"
+        "description": "Create Network Policy objects"
       },
       "primary": {
-        "type": "object",
+        "type": "boolean",
         "properties": {},
         "additionalProperties": true,
         "description": "Mark as primary Network Policy"
       },
       "expandObjectName": {
-        "type": "object",
+        "type": "boolean",
         "properties": {},
         "additionalProperties": true,
         "description": "Expand the object name"
@@ -143,28 +89,35 @@
           }
         },
         "additionalProperties": true,
-        "description": "Select pods to which this network policy applies. Empty selector matches all pods in namespace."
+        "description": "Select pods to which this network policy applies"
       },
       "targetSelector": {
-        "type": "object",
+        "type": "string",
         "properties": {},
         "additionalProperties": true,
-        "description": "Target a specific pod from this chart by name"
+        "description": "Target a specific pod from this chart"
       },
       "targetAllPods": {
-        "type": "object",
+        "type": "boolean",
         "properties": {},
         "additionalProperties": true,
-        "description": "Target all pods in the namespace (podSelector: {})"
+        "description": "Target all pods in the namespace"
       },
       "policyTypes": {
-        "type": "object",
+        "type": "array",
         "properties": {},
         "additionalProperties": true,
-        "description": "List of policy types (Ingress, Egress). Auto-detected if not specified."
+        "description": "List of policy types (Ingress, Egress)",
+        "items": {
+          "type": "string",
+          "enum": [
+            "Ingress",
+            "Egress"
+          ]
+        }
       },
       "ingress": {
-        "type": "object",
+        "type": "array",
         "properties": {},
         "additionalProperties": {
           "type": "object",
@@ -275,7 +228,7 @@
         "description": "List of ingress rules"
       },
       "egress": {
-        "type": "object",
+        "type": "array",
         "properties": {},
         "additionalProperties": {
           "type": "object",
@@ -387,7 +340,7 @@
       }
     },
     "additionalProperties": true,
-    "description": "Define Network Policy"
+    "description": "Create Network Policy objects"
   },
   "description": "Create Network Policy objects"
 }

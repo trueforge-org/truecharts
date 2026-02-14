@@ -1,325 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "properties": {
-    "main": {
-      "type": "object",
-      "properties": {
-        "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
-          "description": "Create Ingress objects"
-        },
-        "primary": {
-          "type": "boolean",
-          "description": "Create Ingress objects"
-        },
-        "required": {
-          "type": "boolean",
-          "description": "Create Ingress objects"
-        },
-        "labels": {
-          "allOf": [
-            {
-              "$ref": "../special/labels.json"
-            }
-          ],
-          "description": "Create Ingress objects"
-        },
-        "annotations": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
-          "description": "Create Ingress objects"
-        },
-        "ingressClassName": {
-          "type": "string",
-          "description": "Create Ingress objects"
-        },
-        "hosts": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "host": {
-                "type": "string",
-                "description": "Define the host for this ingress"
-              },
-              "paths": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "path": {
-                      "type": "string",
-                      "description": "Define the path for this ingress"
-                    },
-                    "pathType": {
-                      "type": "string",
-                      "enum": [
-                        "Prefix",
-                        "Exact",
-                        "ImplementationSpecific"
-                      ],
-                      "description": "Define the path type for this ingress (Prefix, Exact, ImplementationSpecific)"
-                    },
-                    "overrideService": {
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string",
-                          "description": "Define the service name for this path"
-                        },
-                        "expandObjectName": {
-                          "type": [
-                            "boolean",
-                            "string"
-                          ],
-                          "description": "Define if the override service object name should be expanded"
-                        },
-                        "port": {
-                          "type": [
-                            "integer",
-                            "string"
-                          ],
-                          "description": "Define the service port for this path"
-                        }
-                      },
-                      "additionalProperties": true,
-                      "description": "Overrides the selected service for this path"
-                    }
-                  },
-                  "additionalProperties": true,
-                  "description": "Configuration for `ingress.main.hosts.$item.paths.$item`."
-                },
-                "description": "Define the paths for this ingress"
-              }
-            },
-            "additionalProperties": true,
-            "description": "Configuration for `ingress.main.hosts.$item`."
-          },
-          "description": "Define the hosts for this ingress"
-        },
-        "tls": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "hosts": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                },
-                "description": "Define the hosts for this TLS"
-              },
-              "secretName": {
-                "type": "string",
-                "description": "Define the secret name for this TLS"
-              },
-              "certificateIssuer": {
-                "type": "string",
-                "description": "Define the certificate issuer for this TLS"
-              },
-              "clusterCertificate": {
-                "type": "string",
-                "description": "Define the cluster certificate for this TLS"
-              }
-            },
-            "additionalProperties": true,
-            "description": "Configuration for `ingress.main.tls.$item`."
-          },
-          "description": "Define TLS for this ingress"
-        },
-        "integrations": {
-          "type": "object",
-          "properties": {
-            "certManager": {
-              "type": "object",
-              "properties": {
-                "enabled": {
-                  "type": [
-                    "boolean",
-                    "string"
-                  ],
-                  "description": "Enables or Disables the cert-manager integration"
-                },
-                "certificateIssuer": {
-                  "type": "string",
-                  "description": "Define the certificate issuer for this cert-manager integration"
-                }
-              },
-              "additionalProperties": true,
-              "description": "Create Ingress objects"
-            },
-            "traefik": {
-              "type": "object",
-              "properties": {
-                "enabled": {
-                  "type": [
-                    "boolean",
-                    "string"
-                  ],
-                  "description": "Enables or Disables the traefik integration"
-                },
-                "entrypoints": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Configuration for `ingress.main.integrations.traefik.entrypoints.$item`."
-                  },
-                  "description": "Define the entrypoints for this traefik integration"
-                },
-                "forceTLS": {
-                  "type": "boolean",
-                  "description": "Force TLS on this ingress Adds the `traefik.ingress.kubernetes.io/router.tls` annotation."
-                },
-                "middlewares": {
-                  "type": "array",
-                  "description": "The middlewares for this traefik integration"
-                }
-              },
-              "additionalProperties": true,
-              "description": "Create Ingress objects"
-            },
-            "nginx": {
-              "type": "object",
-              "properties": {
-                "enabled": {
-                  "type": [
-                    "boolean",
-                    "string"
-                  ],
-                  "description": "Configuration for `ingress.main.integrations.nginx.enabled`."
-                },
-                "themepark": {
-                  "type": "object",
-                  "properties": {
-                    "enabled": {
-                      "type": [
-                        "boolean",
-                        "string"
-                      ],
-                      "description": "Configuration for `ingress.main.integrations.nginx.themepark.enabled`."
-                    },
-                    "css": {
-                      "type": "string",
-                      "description": "Configuration for `ingress.main.integrations.nginx.themepark.css`."
-                    }
-                  },
-                  "additionalProperties": true,
-                  "description": "Configuration for `ingress.main.integrations.nginx.themepark`."
-                },
-                "ipWhitelist": {
-                  "type": "array",
-                  "description": "Configuration for `ingress.main.integrations.nginx.ipWhitelist`."
-                },
-                "auth": {
-                  "type": "object",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "description": "Configuration for `ingress.main.integrations.nginx.auth.type`."
-                    },
-                    "internalHost": {
-                      "type": "string",
-                      "description": "Configuration for `ingress.main.integrations.nginx.auth.internalHost`."
-                    },
-                    "externalHost": {
-                      "type": "string",
-                      "description": "Configuration for `ingress.main.integrations.nginx.auth.externalHost`."
-                    },
-                    "responseHeaders": {
-                      "type": "array",
-                      "description": "Configuration for `ingress.main.integrations.nginx.auth.responseHeaders`."
-                    }
-                  },
-                  "additionalProperties": true,
-                  "description": "Configuration for `ingress.main.integrations.nginx.auth`."
-                }
-              },
-              "additionalProperties": true,
-              "description": "Configuration for `ingress.main.integrations.nginx`."
-            },
-            "homepage": {
-              "type": "object",
-              "properties": {
-                "enabled": {
-                  "type": [
-                    "boolean",
-                    "string"
-                  ],
-                  "description": "Enables or Disables the homepage integration"
-                },
-                "name": {
-                  "type": "string",
-                  "description": "Define the name for the application Sets the `gethomepage.dev/name` annotation"
-                },
-                "description": {
-                  "type": "string",
-                  "description": "Define the description for the application Sets the `gethomepage.dev/description` annotation"
-                },
-                "group": {
-                  "type": "string",
-                  "description": "Define the group for the application Sets the `gethomepage.dev/group` annotation"
-                },
-                "icon": {
-                  "type": "string",
-                  "description": "Define the icon for the application Sets the `gethomepage.dev/icon` annotation"
-                },
-                "widget": {
-                  "type": "object",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "description": "Define configuration for the widget"
-                    },
-                    "url": {
-                      "type": "string",
-                      "description": "Define configuration for the widget"
-                    },
-                    "custom": {
-                      "type": [
-                        "null",
-                        "string",
-                        "number",
-                        "integer",
-                        "boolean",
-                        "object",
-                        "array"
-                      ],
-                      "description": "Define configuration for the widget"
-                    },
-                    "customkv": {
-                      "type": [
-                        "null",
-                        "string",
-                        "number",
-                        "integer",
-                        "boolean",
-                        "object",
-                        "array"
-                      ],
-                      "description": "Define configuration for the widget"
-                    }
-                  },
-                  "additionalProperties": true,
-                  "description": "Define configuration for the widget"
-                }
-              },
-              "additionalProperties": true,
-              "description": "Create Ingress objects"
-            }
-          },
-          "additionalProperties": true,
-          "description": "Create Ingress objects"
-        }
-      },
-      "additionalProperties": true,
-      "description": "Create Ingress objects"
-    }
-  },
+  "properties": {},
   "additionalProperties": {
     "type": "object",
     "properties": {
@@ -339,19 +21,23 @@
                 "description": "Enables or Disables the traefik integration"
               },
               "entrypoints": {
-                "type": "object",
+                "type": "array",
                 "properties": {},
                 "additionalProperties": true,
-                "description": "Define the entrypoints for this traefik integration"
+                "description": "Define the entrypoints for this traefik integration",
+                "items": {
+                  "type": "string",
+                  "description": "Configuration for `ingress.main.integrations.traefik.entrypoints.$item`."
+                }
               },
               "forceTLS": {
-                "type": "object",
+                "type": "boolean",
                 "properties": {},
                 "additionalProperties": true,
                 "description": "Force TLS on this ingress Adds the `traefik.ingress.kubernetes.io/router.tls` annotation."
               },
               "middlewares": {
-                "type": "object",
+                "type": "array",
                 "properties": {},
                 "additionalProperties": {
                   "type": "object",
@@ -383,14 +69,16 @@
                 "description": "The middlewares for this traefik integration"
               },
               "chartMiddlewares": {
-                "type": "object",
-                "properties": {},
+                "type": [
+                  "array",
+                  "object"
+                ],
                 "additionalProperties": true,
                 "description": "Same as [middlewares](#middlewares) but meant to be used by the chart developer to define some custom middleware specific to this ingress."
               }
             },
             "additionalProperties": true,
-            "description": "Define the traefik integration for this ingress See more details in [Traefik Integration](/truecharts-common/ingress/traefik)"
+            "description": "Create Ingress objects"
           },
           "homepage": {
             "type": "object",
@@ -405,25 +93,25 @@
                 "description": "Enables or Disables the homepage integration"
               },
               "name": {
-                "type": "object",
+                "type": "string",
                 "properties": {},
                 "additionalProperties": true,
                 "description": "Define the name for the application Sets the `gethomepage.dev/name` annotation"
               },
               "description": {
-                "type": "object",
+                "type": "string",
                 "properties": {},
                 "additionalProperties": true,
                 "description": "Define the description for the application Sets the `gethomepage.dev/description` annotation"
               },
               "group": {
-                "type": "object",
+                "type": "string",
                 "properties": {},
                 "additionalProperties": true,
                 "description": "Define the group for the application Sets the `gethomepage.dev/group` annotation"
               },
               "icon": {
-                "type": "object",
+                "type": "string",
                 "properties": {},
                 "additionalProperties": true,
                 "description": "Define the icon for the application Sets the `gethomepage.dev/icon` annotation"
@@ -450,7 +138,15 @@
                 "type": "object",
                 "properties": {
                   "customkv": {
-                    "type": "object",
+                    "type": [
+                      "null",
+                      "string",
+                      "number",
+                      "integer",
+                      "boolean",
+                      "object",
+                      "array"
+                    ],
                     "properties": {},
                     "additionalProperties": {
                       "type": "object",
@@ -483,28 +179,40 @@
                     "description": "Enables or Disables the widget"
                   },
                   "type": {
-                    "type": "object",
+                    "type": "string",
                     "properties": {},
                     "additionalProperties": true,
-                    "description": "Define the type of the widget Sets the `gethomepage.dev/widget.type` annotation"
+                    "description": "Define configuration for the widget"
                   },
                   "version": {
-                    "type": "object",
-                    "properties": {},
+                    "type": [
+                      "string",
+                      "number",
+                      "integer",
+                      "object"
+                    ],
                     "additionalProperties": true,
                     "description": "Define the version of the widget Sets the `gethomepage.dev/widget.version` annotation"
                   },
                   "url": {
-                    "type": "object",
+                    "type": "string",
                     "properties": {},
                     "additionalProperties": true,
-                    "description": "Define the url for the widget Sets the `gethomepage.dev/widget.url` annotation"
+                    "description": "Define configuration for the widget"
                   },
                   "custom": {
-                    "type": "object",
+                    "type": [
+                      "null",
+                      "string",
+                      "number",
+                      "integer",
+                      "boolean",
+                      "object",
+                      "array"
+                    ],
                     "properties": {},
                     "additionalProperties": true,
-                    "description": "Define custom annotations for the widget Sets the `gethomepage.dev/widget.$key` annotation"
+                    "description": "Define configuration for the widget"
                   }
                 },
                 "additionalProperties": true,
@@ -527,18 +235,77 @@
                 "description": "Enables or Disables the cert-manager integration"
               },
               "certificateIssuer": {
-                "type": "object",
+                "type": "string",
                 "properties": {},
                 "additionalProperties": true,
                 "description": "Define the certificate issuer for this cert-manager integration"
               }
             },
             "additionalProperties": true,
-            "description": "Define the cert-manager integration for this ingress See more details in [Cert Manager Integration](/truecharts-common/ingress/certmanager)"
+            "description": "Create Ingress objects"
+          },
+          "nginx": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "description": "Configuration for `ingress.main.integrations.nginx.enabled`."
+              },
+              "themepark": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": [
+                      "boolean",
+                      "string"
+                    ],
+                    "description": "Configuration for `ingress.main.integrations.nginx.themepark.enabled`."
+                  },
+                  "css": {
+                    "type": "string",
+                    "description": "Configuration for `ingress.main.integrations.nginx.themepark.css`."
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Configuration for `ingress.main.integrations.nginx.themepark`."
+              },
+              "ipWhitelist": {
+                "type": "array",
+                "description": "Configuration for `ingress.main.integrations.nginx.ipWhitelist`."
+              },
+              "auth": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "Configuration for `ingress.main.integrations.nginx.auth.type`."
+                  },
+                  "internalHost": {
+                    "type": "string",
+                    "description": "Configuration for `ingress.main.integrations.nginx.auth.internalHost`."
+                  },
+                  "externalHost": {
+                    "type": "string",
+                    "description": "Configuration for `ingress.main.integrations.nginx.auth.externalHost`."
+                  },
+                  "responseHeaders": {
+                    "type": "array",
+                    "description": "Configuration for `ingress.main.integrations.nginx.auth.responseHeaders`."
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Configuration for `ingress.main.integrations.nginx.auth`."
+              }
+            },
+            "additionalProperties": true,
+            "description": "Configuration for `ingress.main.integrations.nginx`."
           }
         },
         "additionalProperties": true,
-        "description": "Define the integrations for this ingress"
+        "description": "Create Ingress objects"
       },
       "enabled": {
         "type": [
@@ -547,13 +314,13 @@
         ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Enables or Disables the Ingress"
+        "description": "Create Ingress objects"
       },
       "primary": {
-        "type": "object",
+        "type": "boolean",
         "properties": {},
         "additionalProperties": true,
-        "description": "Define the primary ingress"
+        "description": "Create Ingress objects"
       },
       "expandObjectName": {
         "type": "object",
@@ -562,10 +329,10 @@
         "description": "Define if the object name should be expanded"
       },
       "required": {
-        "type": "object",
+        "type": "boolean",
         "properties": {},
         "additionalProperties": true,
-        "description": "Define if the ingress is required"
+        "description": "Create Ingress objects"
       },
       "namespace": {
         "allOf": [
@@ -581,19 +348,19 @@
             "$ref": "../special/labels.json"
           }
         ],
-        "description": "Additional labels for ingress"
+        "description": "Create Ingress objects"
       },
       "annotations": {
         "type": "object",
         "properties": {},
         "additionalProperties": true,
-        "description": "Additional annotations for ingress"
+        "description": "Create Ingress objects"
       },
       "ingressClassName": {
-        "type": "object",
+        "type": "string",
         "properties": {},
         "additionalProperties": true,
-        "description": "Define the ingress class name for this object"
+        "description": "Create Ingress objects"
       },
       "targetSelector": {
         "type": "object",
@@ -655,13 +422,13 @@
                   }
                 },
                 "additionalProperties": true,
-                "description": "Configuration for `$name.hosts.$item.paths.$item`."
+                "description": "Configuration for `ingress.main.hosts.$item.paths.$item`."
               },
               "description": "Define the paths for this ingress"
             }
           },
           "additionalProperties": true,
-          "description": "Configuration for `$name.hosts.$item`."
+          "description": "Configuration for `ingress.main.hosts.$item`."
         },
         "description": "Define the hosts for this ingress"
       },
@@ -691,13 +458,13 @@
             }
           },
           "additionalProperties": true,
-          "description": "Configuration for `$name.tls.$item`."
+          "description": "Configuration for `ingress.main.tls.$item`."
         },
-        "description": "Define the TLS for this ingress"
+        "description": "Define TLS for this ingress"
       }
     },
     "additionalProperties": true,
-    "description": "Define Ingress"
+    "description": "Create Ingress objects"
   },
   "description": "Create Ingress objects"
 }
