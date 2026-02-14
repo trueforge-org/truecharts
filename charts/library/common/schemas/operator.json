@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Contains specific settings for helm charts containing or using system",
+  "properties": {
+    "verify": {
+      "type": "object",
+      "properties": {
+        "additionalsystem": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true,
+          "description": "Contains specific settings for helm charts containing or using system"
+        },
+        "enabled": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true,
+          "description": "Enables or disables the verification of system"
+        }
+      },
+      "additionalProperties": true,
+      "description": "Contains specific settings for verifying system"
+    },
+    "register": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Adds a configmap in the operator's namespace to register the chart as an operator"
+    }
+  },
+  "additionalProperties": true
+}

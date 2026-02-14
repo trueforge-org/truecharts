@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "header": {
+      "type": "string",
+      "description": "Define values for `NOTES.txt`"
+    },
+    "custom": {
+      "type": "string",
+      "description": "Define values for `NOTES.txt`"
+    },
+    "footer": {
+      "type": "string",
+      "description": "Define values for `NOTES.txt`"
+    },
+    "warnings": {
+      "type": "array",
+      "description": "Configuration for `notes.warnings`."
+    }
+  },
+  "additionalProperties": true,
+  "description": "Define values for `NOTES.txt`"
+}
