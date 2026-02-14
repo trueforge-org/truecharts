@@ -3,6 +3,20 @@
   "type": "array",
   "description": "See [Host Aliases](/truecharts-common/workload#hostaliases)",
   "items": {
-    "type": "object"
+    "type": "object",
+    "properties": {
+      "ip": {
+        "type": "string",
+        "description": "Configuration for `hostAliases.$item.ip`."
+      },
+      "hostnames": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Configuration for `hostAliases.$item.hostnames`."
+      }
+    },
+    "additionalProperties": true
   }
 }
