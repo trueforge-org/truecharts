@@ -46,6 +46,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Stop after first chart that fails validation",
     )
     parser.add_argument(
+        "--max-failures",
+        type=int,
+        default=0,
+        help="Stop after this many failures (0 means no limit)",
+    )
+    parser.add_argument(
         "--helm-bin",
         default="helm",
         help="Helm binary to execute",
@@ -243,6 +249,7 @@ def main() -> int:
         total = 0
         failed = 0
         failed_targets: list[str] = []
+        stopped_early = False
 
         for target_name, values_file in validation_targets:
             total += 1
@@ -258,6 +265,14 @@ def main() -> int:
                 for line in output_lines or ["helm lint failed with no output"]:
                     emit(f"   - {line}", output_file)
                 if args.fail_fast:
+                    stopped_early = True
+                    break
+                if args.max_failures > 0 and failed >= args.max_failures:
+                    emit(
+                        f"Stopping after reaching max failures: {args.max_failures}",
+                        output_file,
+                    )
+                    stopped_early = True
                     break
             elif args.show_passing:
                 emit(f"✅ {target_name}", output_file)
@@ -268,6 +283,8 @@ def main() -> int:
         emit(f"- Total charts checked: {total}", output_file)
         emit(f"- Passed: {passed}", output_file)
         emit(f"- Failed: {failed}", output_file)
+        if stopped_early:
+            emit("- Stopped early: yes", output_file)
         if failed_targets:
             emit("- Failed targets:", output_file)
             for target_name in failed_targets:

@@ -23,6 +23,29 @@ This applies across all the documentation:
     for example instead of a hardcoded value, you can set it to `{{ .Values.some.value }}`.
     and it will be replaced by the value contained in `.Values.some.value` at the installation/upgrade time.
 
+## Schema Validation (Dev)
+
+Validate values files against the common schema with:
+
+`python3 charts/library/common/test_schema.py`
+
+This validates:
+
+- `charts/stable/*/values.yaml`
+- `charts/library/common-test/ci/*values.yaml`
+
+Useful flags:
+
+- `--output-file <path>` to write output to both stdout and a log file
+- `--max-failures <n>` to stop after `n` failures (`0` means no limit)
+- `--fail-fast` to stop after the first failure
+
+Local common-test runs can set a threshold with:
+
+`SCHEMA_MAX_FAILURES=25 ./run_common_tests.sh`
+
+CI runs the full schema check (`--max-failures 0`) and uploads the schema log artifact.
+
 ---
 
 ## `global`

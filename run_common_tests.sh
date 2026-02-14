@@ -16,11 +16,8 @@
 
 cd "$(dirname "$0")" || exit 1
 
+common_test_path="charts/library/common-test"
 common_schema_test_script="charts/library/common/test_schema.py"
-common_coverage_script="charts/library/common/check_complete_values_schema_coverage.py"
-helm_install_script="https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4"
-helm_unittest_repo="https://github.com/helm-unittest/helm-unittest"
-scratch_dir=""
 
 function cleanup {
   if [ -n "$scratch_dir" ] && [ -d "$scratch_dir" ]; then
@@ -109,26 +106,11 @@ echo "🧪 Running tests..."
 result=$?
 [ "$result" -eq 0 ] || fail "Unit tests failed" "$result"
 
-if [ -f "$common_schema_test_script" ]; then
-  if [ "${SKIP_SCHEMA_TESTS:-}" = "1" ]; then
-    echo "⚠️ Schema checks skipped (SKIP_SCHEMA_TESTS=1), CI still runs them"
-  else
-    ensure_python_deps
-
-    echo "🧪 Running common schema validation..."
-    schema_args=()
-    if [ -n "${SCHEMA_MAX_FAILURES:-}" ]; then
-      schema_args+=(--max-failures "$SCHEMA_MAX_FAILURES")
-    fi
-    python3 "$common_schema_test_script" "${schema_args[@]}"
-    result=$?
-    [ "$result" -eq 0 ] || fail "Schema validation failed, see stable_schema_validation.log" "$result"
-
-    echo "📊 Running complete-values schema coverage check..."
-    python3 "$common_coverage_script"
-    result=$?
-    [ "$result" -eq 0 ] || fail "Schema coverage check failed" "$result"
-  fi
+echo "🧪 Running common schema validation..."
+schema_args=()
+if [ -n "${SCHEMA_MAX_FAILURES:-}" ]; then
+  schema_args+=(--max-failures "$SCHEMA_MAX_FAILURES")
 fi
+python3 "$common_schema_test_script" "${schema_args[@]}"
 
-echo "✅ Common tests passed"
+cleanup

@@ -41,7 +41,6 @@ jobs:
             - 'charts/library/common/**'
             - 'charts/library/common-test/**'
             - '.github/workflows/common-tests.yaml'
-            - '.github/scripts/install_dependencies.sh'
 
   lint:
     name: Lint Common
@@ -137,6 +136,37 @@ jobs:
           cd charts/library/common-test/
           helm dependency update
           helm unittest -f "tests/**/*.yaml" . -v ./unit-values.yaml
+
+  schema-validation:
+    needs:
+      - lint
+    name: Schema Validation
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 1
+
+      - name: Install Helm
+        uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4
+        with:
+          version: v3.20.0
+
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
+        with:
+          python-version: "3.10"
+
+      - name: Run schema validation
+        run: |
+          python3 charts/library/common/test_schema.py --max-failures 0 --output-file stable_schema_validation.log
+
+      - name: Upload schema validation log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stable-schema-validation-log
+          path: stable_schema_validation.log
 
   install:
     # Install jobs are the slowest, do not start them if a fast check already failed
@@ -280,7 +310,7 @@ jobs:
 
   # Summarize matrix https://github.community/t/status-check-for-a-matrix-jobs/127354/7
   common-tests-complete:
-    needs: [check_changes, lint, unittest, install]
+    needs: [check_changes, lint, unittest, schema-validation, install]
     if: ${{ always() }}
     name: Common Tests Completed
     runs-on:
@@ -290,6 +320,7 @@ jobs:
         run: |
           if [[ "${{ needs.check_changes.outputs.changes_detected }}" == 'true' && ( "${{ needs.lint.result }}" != "success" || \
                 "${{ needs.unittest.result }}" != "success" || \
+                "${{ needs.schema-validation.result }}" != "success" || \
                 "${{ needs.install.result }}" != "success") ]]; then
             echo "One or more jobs failed!"
             exit 1
