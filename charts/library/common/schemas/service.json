@@ -157,7 +157,10 @@
           "type": "object",
           "properties": {
             "nodePort": {
-              "type": "integer",
+              "type": [
+                "integer",
+                "string"
+              ],
               "description": "Define the node port that will be exposed on the node"
             },
             "targetSelector": {
@@ -165,11 +168,17 @@
               "description": "Define the port dict"
             },
             "port": {
-              "type": "integer",
+              "type": [
+                "integer",
+                "string"
+              ],
               "description": "Define the port that will be exposed by the service"
             },
             "targetPort": {
-              "type": "integer",
+              "type": [
+                "integer",
+                "string"
+              ],
               "description": "Define the target port (No named ports)"
             },
             "protocol": {
@@ -177,7 +186,10 @@
               "description": "Define the port protocol Used by the container ports and probes, http and https are converted to tcp where needed"
             },
             "hostPort": {
-              "type": "integer",
+              "type": [
+                "integer",
+                "string"
+              ],
               "description": "Define the hostPort, should be **avoided**, unless **ABSOLUTELY** necessary"
             }
           },
