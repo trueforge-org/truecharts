@@ -63,6 +63,14 @@ def build_parser() -> argparse.ArgumentParser:
         default=Path("stable_schema_validation.log"),
         help="File path to also write output logs to",
     )
+    parser.add_argument(
+        "--no-local-id-override",
+        action="store_true",
+        help=(
+            "Do not temporarily override values.schema.json $id to a local file:// URI "
+            "during linting"
+        ),
+    )
     return parser
 
 
@@ -116,6 +124,20 @@ def find_self_referencing_refs(common_chart_dir: Path) -> list[str]:
         _collect_self_ref_errors(parsed, json_file, errors)
 
     return errors
+
+
+def override_values_schema_id_for_lint(values_schema_path: Path) -> str:
+    original_content = values_schema_path.read_text(encoding="utf-8")
+    parsed = json.loads(original_content)
+    if not isinstance(parsed, dict):
+        raise ValueError(f"Schema root must be an object: {values_schema_path}")
+
+    parsed["$id"] = values_schema_path.resolve().as_uri()
+    rewritten_content = json.dumps(parsed, indent=2) + "\n"
+    if rewritten_content != original_content:
+        values_schema_path.write_text(rewritten_content, encoding="utf-8")
+
+    return original_content
 
 
 def validate_values_file_with_helm(
@@ -198,84 +220,100 @@ def main() -> int:
 
     emit(f"Writing output to: {output_file}", output_file)
 
-    stable_values_files = sorted(
-        chart_dir / "values.yaml"
-        for chart_dir in stable_dir.iterdir()
-        if chart_dir.is_dir() and (chart_dir / "values.yaml").exists()
-    )
-    common_test_values_files = sorted(common_test_ci_dir.glob("*values.yaml"))
+    values_schema_path = common_chart_dir / "values.schema.json"
+    original_schema_content: str | None = None
+    if not args.no_local_id_override:
+        try:
+            original_schema_content = override_values_schema_id_for_lint(values_schema_path)
+        except (OSError, ValueError, json.JSONDecodeError) as exc:
+            emit(f"Failed to override values.schema.json $id for local linting: {exc}", output_file)
+            return 2
 
-    if not stable_values_files and not common_test_values_files:
+    try:
+        stable_values_files = sorted(
+            chart_dir / "values.yaml"
+            for chart_dir in stable_dir.iterdir()
+            if chart_dir.is_dir() and (chart_dir / "values.yaml").exists()
+        )
+        common_test_values_files = sorted(common_test_ci_dir.glob("*values.yaml"))
+
+        if not stable_values_files and not common_test_values_files:
+            emit(
+                f"No values files found in: {stable_dir} or {common_test_ci_dir}",
+                output_file,
+            )
+            return 2
+
         emit(
-            f"No values files found in: {stable_dir} or {common_test_ci_dir}",
+            (
+                "Validation targets: "
+                f"{len(stable_values_files)} stable values files + "
+                f"{len(common_test_values_files)} common-test CI values files"
+            ),
             output_file,
         )
-        return 2
 
-    emit(
-        (
-            "Validation targets: "
-            f"{len(stable_values_files)} stable values files + "
-            f"{len(common_test_values_files)} common-test CI values files"
-        ),
-        output_file,
-    )
-
-    validation_targets: list[tuple[str, Path]] = []
-    validation_targets.extend(
-        (f"stable/{values_file.parent.name}", values_file)
-        for values_file in stable_values_files
-    )
-    validation_targets.extend(
-        (f"common-test/ci/{values_file.name}", values_file)
-        for values_file in common_test_values_files
-    )
-
-    total = 0
-    failed = 0
-    failed_targets: list[str] = []
-    stopped_early = False
-
-    for target_name, values_file in validation_targets:
-        total += 1
-        valid, output_lines = validate_values_file_with_helm(
-            values_file,
-            common_chart_dir,
-            args.helm_bin,
+        validation_targets: list[tuple[str, Path]] = []
+        validation_targets.extend(
+            (f"stable/{values_file.parent.name}", values_file)
+            for values_file in stable_values_files
         )
-        if not valid:
-            failed += 1
-            failed_targets.append(target_name)
-            emit(f"❌ {target_name}", output_file)
-            for line in output_lines or ["helm lint failed with no output"]:
-                emit(f"   - {line}", output_file)
-            if args.fail_fast:
-                stopped_early = True
-                break
-            if args.max_failures > 0 and failed >= args.max_failures:
-                emit(
-                    f"Stopping after reaching max failures: {args.max_failures}",
-                    output_file,
-                )
-                stopped_early = True
-                break
-        elif args.show_passing:
-            emit(f"✅ {target_name}", output_file)
+        validation_targets.extend(
+            (f"common-test/ci/{values_file.name}", values_file)
+            for values_file in common_test_values_files
+        )
 
-    passed = total - failed
-    emit("", output_file)
-    emit("Summary", output_file)
-    emit(f"- Total charts checked: {total}", output_file)
-    emit(f"- Passed: {passed}", output_file)
-    emit(f"- Failed: {failed}", output_file)
-    if stopped_early:
-        emit("- Stopped early: yes", output_file)
-    if failed_targets:
-        emit("- Failed targets:", output_file)
-        for target_name in failed_targets:
-            emit(f"  - {target_name}", output_file)
+        total = 0
+        failed = 0
+        failed_targets: list[str] = []
+        stopped_early = False
 
-    return 1 if failed else 0
+        for target_name, values_file in validation_targets:
+            total += 1
+            valid, output_lines = validate_values_file_with_helm(
+                values_file,
+                common_chart_dir,
+                args.helm_bin,
+            )
+            if not valid:
+                failed += 1
+                failed_targets.append(target_name)
+                emit(f"❌ {target_name}", output_file)
+                for line in output_lines or ["helm lint failed with no output"]:
+                    emit(f"   - {line}", output_file)
+                if args.fail_fast:
+                    stopped_early = True
+                    break
+                if args.max_failures > 0 and failed >= args.max_failures:
+                    emit(
+                        f"Stopping after reaching max failures: {args.max_failures}",
+                        output_file,
+                    )
+                    stopped_early = True
+                    break
+            elif args.show_passing:
+                emit(f"✅ {target_name}", output_file)
+
+        passed = total - failed
+        emit("", output_file)
+        emit("Summary", output_file)
+        emit(f"- Total charts checked: {total}", output_file)
+        emit(f"- Passed: {passed}", output_file)
+        emit(f"- Failed: {failed}", output_file)
+        if stopped_early:
+            emit("- Stopped early: yes", output_file)
+        if failed_targets:
+            emit("- Failed targets:", output_file)
+            for target_name in failed_targets:
+                emit(f"  - {target_name}", output_file)
+
+        return 1 if failed else 0
+    finally:
+        if original_schema_content is not None:
+            try:
+                values_schema_path.write_text(original_schema_content, encoding="utf-8")
+            except OSError as exc:
+                emit(f"Warning: failed to restore original values.schema.json content: {exc}", output_file)
 
 
 if __name__ == "__main__":
