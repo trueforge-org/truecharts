@@ -11,10 +11,7 @@
             "$ref": "cluster.json"
           }
         ],
-        "description": "Define a CNPG cluster",
-        "type": "string",
-        "default": "{}",
-        "minLength": 1
+        "description": "Define a CNPG cluster"
       },
       "enabled": {
         "type": [
@@ -78,11 +75,11 @@
       "pgVersion": {
         "type": "integer",
         "enum": [
-          "15",
-          "16"
+          15,
+          16
         ],
         "description": "Define a CNPG cluster",
-        "default": "nil"
+        "default": 16
       },
       "mode": {
         "type": "string",
