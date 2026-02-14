@@ -36,15 +36,11 @@
         "description": "Define `subjects` for (Cluster)RoleBinding"
       },
       "enabled": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "boolean",
         "description": "Enables or Disables the rbac"
       },
       "primary": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "boolean",
         "description": "Sets the rbac as primary"
       },
       "namespace": {
@@ -54,9 +50,7 @@
         "description": "Define the namespace for this object (Only when clusterWide is false)"
       },
       "clusterWide": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "boolean",
         "description": "Sets the rbac as cluster wide (ClusterRole, ClusterRoleBinding)"
       },
       "labels": {
@@ -72,9 +66,7 @@
         "description": "Additional annotations for rbac"
       },
       "allServiceAccounts": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "boolean",
         "description": "Whether to assign all service accounts or not to the (Cluster)RoleBinding"
       },
       "serviceAccounts": {
@@ -84,38 +76,28 @@
         "description": "Define the service account(s) to assign the (Cluster)RoleBinding"
       },
       "rules": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": {
+        "type": "array",
+        "items": {
           "type": "object",
           "properties": {
             "apiGroups": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "type": "array",
               "description": "Define the `apiGroups` list for the `rules` for the (Cluster)Role"
             },
             "resources": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "type": "array",
               "description": "Define the `resources` list for the `rules` for the (Cluster)Role"
             },
             "resourceNames": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "type": "array",
               "description": "Define the `resourceNames` list for the `rules` for the (Cluster)Role"
             },
             "verbs": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "type": "array",
               "description": "Define the `verbs` list for the `rules` for the (Cluster)Role"
             }
           },
-          "additionalProperties": true,
-          "description": "Configuration for `$name.rules.$name`."
+          "additionalProperties": true
         },
         "description": "Define the `rules` for the (Cluster)Role"
       }
