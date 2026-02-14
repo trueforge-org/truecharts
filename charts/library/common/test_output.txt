@@ -1,0 +1,19 @@
+Writing output to: /home/runner/work/truecharts/truecharts/charts/library/common/stable_schema_validation.log
+❌ acestream
+   - ==> Linting /tmp/common-schema-lint-5m3vyxel/common
+   - [ERROR] values.yaml: - at '/persistence': validation failed
+   -   - at '/persistence/acestreamcache/enabled': got boolean, want object
+   -   - at '/persistence/acestreamcache/mountPath': got string, want object
+   - [ERROR] templates/: values don't meet the specifications of the schema(s) in the following chart(s):
+   - common:
+   - - at '/persistence': validation failed
+   -   - at '/persistence/acestreamcache/enabled': got boolean, want object
+   -   - at '/persistence/acestreamcache/mountPath': got string, want object
+   - Error: 1 chart(s) linted, 1 chart(s) failed
+
+Summary
+- Total charts checked: 1
+- Passed: 0
+- Failed: 1
+- Failed charts:
+  - acestream
