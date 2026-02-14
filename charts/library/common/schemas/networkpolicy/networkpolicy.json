@@ -5,11 +5,11 @@
     "main": {
       "type": "object",
       "properties": {
-          "enabled": {
-            "type": [
-              "boolean",
-              "string"
-            ],
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
           "description": "Create Network Policy objects"
         },
         "primary": {
@@ -36,7 +36,10 @@
           "type": "array",
           "items": {
             "type": "string",
-            "enum": ["Ingress", "Egress"]
+            "enum": [
+              "Ingress",
+              "Egress"
+            ]
           },
           "description": "List of policy types (Ingress, Egress)"
         },
@@ -56,11 +59,11 @@
   "additionalProperties": {
     "type": "object",
     "properties": {
-        "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
         "description": "Enables or Disables the Network Policy"
@@ -78,15 +81,19 @@
         "description": "Expand the object name"
       },
       "namespace": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../special/namespaces.json"
+          }
+        ],
         "description": "Define the namespace for this object"
       },
       "labels": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../special/labels.json"
+          }
+        ],
         "description": "Additional labels for Network Policy"
       },
       "annotations": {

@@ -5,11 +5,11 @@
     "main": {
       "type": "object",
       "properties": {
-          "enabled": {
-            "type": [
-              "boolean",
-              "string"
-            ],
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
           "description": "Create Pod Disruption Budget objects"
         },
         "targetSelector": {
@@ -30,25 +30,29 @@
         "additionalProperties": true,
         "description": "Create Pod Disruption Budget objects"
       },
-        "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
         "description": "Enables or Disables the Pod Disruption Budget"
       },
       "namespace": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../special/namespaces.json"
+          }
+        ],
         "description": "Define the namespace for this object"
       },
       "labels": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../special/labels.json"
+          }
+        ],
         "description": "Additional labels for Pod Disruption Budget"
       },
       "annotations": {
