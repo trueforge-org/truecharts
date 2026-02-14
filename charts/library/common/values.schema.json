@@ -7,7 +7,8 @@
       "description": "Global values that apply to all charts See more info about global values [here](/truecharts-common/global)",
       "type": "object",
       "x-docs-required": false,
-      "x-docs-helmTpl": false
+      "x-docs-helmTpl": false,
+      "x-docs-defaultRaw": "See here"
     },
     "namespace": {
       "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/namespace.json",
@@ -43,14 +44,16 @@
       "description": "Options that apply to all containers, unless overridden at the container level See more info about containerOptions [here](/truecharts-common/containeroptions)",
       "type": "object",
       "x-docs-required": false,
-      "x-docs-helmTpl": false
+      "x-docs-helmTpl": false,
+      "x-docs-defaultRaw": "See here"
     },
     "podOptions": {
       "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/podOptions.json",
       "description": "Options that apply to all pods, unless overridden at the pod level See more info about podOptions [here](/truecharts-common/podoptions)",
       "type": "object",
       "x-docs-required": false,
-      "x-docs-helmTpl": false
+      "x-docs-helmTpl": false,
+      "x-docs-defaultRaw": "See here"
     },
     "workload": {
       "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/workload.json",
@@ -62,7 +65,8 @@
       "type": "object",
       "default": "UTC",
       "x-docs-required": true,
-      "x-docs-helmTpl": false
+      "x-docs-helmTpl": false,
+      "x-docs-defaultRaw": "`UTC`"
     },
     "diagnosticMode": {
       "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/diagnosticMode.json",
@@ -294,14 +298,16 @@
       "type": "array",
       "default": [],
       "x-docs-required": false,
-      "x-docs-helmTpl": true
+      "x-docs-helmTpl": true,
+      "x-docs-defaultRaw": "`[]`"
     },
     "fallbackDefaults": {
       "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/fallbackDefaults.json",
       "description": "The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [here](/truecharts-common/fallbackdefaults)",
       "type": "object",
       "x-docs-required": false,
-      "x-docs-helmTpl": false
+      "x-docs-helmTpl": false,
+      "x-docs-defaultRaw": "See here"
     },
     "operator": {
       "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/operator.json",
@@ -385,19 +391,19 @@
     },
     "command": {
       "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/command.json",
-      "description": "See [command](/truecharts-common/container/command) ---"
+      "description": "See [command](/truecharts-common/container/command)"
     },
     "args": {
       "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/args.json",
-      "description": "See [args](/truecharts-common/container/args#args) ---"
+      "description": "See [args](/truecharts-common/container/args#args)"
     },
     "extraArgs": {
       "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/extraArgs.json",
-      "description": "See [extraArgs](/truecharts-common/container/args#extraargs) ---"
+      "description": "See [extraArgs](/truecharts-common/container/args#extraargs)"
     },
     "termination": {
       "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/termination.json",
-      "description": "See [termination](/truecharts-common/container/termination) ---"
+      "description": "See [termination](/truecharts-common/container/termination)"
     },
     "lifecycle": {
       "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/lifecycle.json",
@@ -409,15 +415,15 @@
     },
     "envFrom": {
       "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/envFrom.json",
-      "description": "See [envFrom](/truecharts-common/container/envfrom) ---"
+      "description": "See [envFrom](/truecharts-common/container/envfrom)"
     },
     "fixedEnv": {
       "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/fixedEnv.json",
-      "description": "See [fixedEnv](/truecharts-common/container/fixedenv) ---"
+      "description": "See [fixedEnv](/truecharts-common/container/fixedenv)"
     },
     "env": {
       "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/env.json",
-      "description": "See [env](/truecharts-common/container/env) ---"
+      "description": "See [env](/truecharts-common/container/env)"
     },
     "primaryUpdateMethod": {
       "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/primaryUpdateMethod.json",
