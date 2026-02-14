@@ -168,7 +168,6 @@ class SchemaResolver:
             if key == "$ref":
                 continue
             merged[key] = value
-
         return merged, source_path or resolved_ref_path, resolved_ref_path
 
 
@@ -196,75 +195,252 @@ def is_object_schema(node: dict[str, Any]) -> bool:
     return any(k in node for k in ("properties", "patternProperties", "additionalProperties"))
 
 
-def schema_type(node: dict[str, Any]) -> str:
-    raw_type = node.get("type")
-    if isinstance(raw_type, list):
-        return " | ".join(raw_type)
+def iter_schema_variants(
+    node: dict[str, Any],
+    resolver: SchemaResolver | None = None,
+    current_source: Path | None = None,
+    depth: int = 0,
+    max_depth: int = 8,
+    seen_refs: set[str] | None = None,
+) -> Iterable[tuple[dict[str, Any], Path | None]]:
+    yield node, current_source
 
-    if isinstance(raw_type, str):
-        if raw_type == "object":
+    if depth >= max_depth:
+        return
+
+    for union_key in ("allOf", "oneOf", "anyOf"):
+        options = node.get(union_key)
+        if not isinstance(options, list):
+            continue
+
+        for option in options:
+            if not isinstance(option, dict):
+                continue
+
+            option_node = option
+            option_source = current_source
+            ref_marker: str | None = None
+
+            if resolver is not None:
+                option_node, option_source, option_ref = resolver.resolve_node(option, current_source)
+                if option_ref is not None:
+                    ref_marker = str(option_ref.resolve())
+
+            next_seen = set(seen_refs or set())
+            if ref_marker:
+                if ref_marker in next_seen:
+                    continue
+                next_seen.add(ref_marker)
+
+            yield from iter_schema_variants(
+                option_node,
+                resolver=resolver,
+                current_source=option_source,
+                depth=depth + 1,
+                max_depth=max_depth,
+                seen_refs=next_seen,
+            )
+
+
+def schema_type(
+    node: dict[str, Any],
+    resolver: SchemaResolver | None = None,
+    current_source: Path | None = None,
+) -> str:
+    def normalize_type_name(type_name: str) -> str:
+        if type_name == "object":
             return "map"
-        if raw_type == "array":
-            item_type = "unknown"
-            items = node.get("items")
-            if isinstance(items, dict):
-                item_type = schema_type(items)
-            return f"list of {item_type}"
-        return raw_type
+        if type_name == "array":
+            return "list"
+        return type_name
 
-    for union_key in ("oneOf", "anyOf", "allOf"):
-        if union_key in node and isinstance(node[union_key], list):
-            union_types = []
-            for option in node[union_key]:
-                if isinstance(option, dict):
-                    union_types.append(schema_type(option))
-            if union_types:
-                return " | ".join(sorted(set(union_types)))
+    ordered_types: list[str] = []
+    seen_types: set[str] = set()
 
-    if "properties" in node:
-        return "map"
+    def add_type(type_name: str) -> None:
+        normalized = normalize_type_name(type_name)
+        if normalized not in seen_types:
+            seen_types.add(normalized)
+            ordered_types.append(normalized)
+
+    def infer_type_from_value(value: Any) -> str:
+        if value is None:
+            return "null"
+        if isinstance(value, bool):
+            return "boolean"
+        if isinstance(value, int) and not isinstance(value, bool):
+            return "integer"
+        if isinstance(value, float):
+            return "number"
+        if isinstance(value, str):
+            return "string"
+        if isinstance(value, list):
+            return "list"
+        if isinstance(value, dict):
+            return "map"
+        return "unknown"
+
+    for variant, variant_source in iter_schema_variants(
+        node,
+        resolver=resolver,
+        current_source=current_source,
+    ):
+        raw_type = variant.get("type")
+        if isinstance(raw_type, list):
+            for item in raw_type:
+                if isinstance(item, str):
+                    add_type(item)
+            continue
+
+        if isinstance(raw_type, str):
+            if raw_type == "array":
+                items = variant.get("items")
+                item_type = "unknown"
+                if isinstance(items, dict):
+                    item_type = schema_type(items, resolver=resolver, current_source=variant_source)
+                add_type(f"list of {item_type}")
+            else:
+                add_type(raw_type)
+            continue
+
+        if "const" in variant:
+            add_type(infer_type_from_value(variant["const"]))
+
+        enum_values = variant.get("enum")
+        if isinstance(enum_values, list) and enum_values:
+            for enum_value in enum_values:
+                add_type(infer_type_from_value(enum_value))
+
+        if any(k in variant for k in ("properties", "patternProperties", "additionalProperties")):
+            add_type("map")
+
+    if ordered_types:
+        return ", ".join(ordered_types)
 
     return "unknown"
 
 
-def schema_required_keys(node: dict[str, Any]) -> set[str]:
+def schema_required_keys(
+    node: dict[str, Any],
+    resolver: SchemaResolver | None = None,
+    current_source: Path | None = None,
+) -> set[str]:
     required: set[str] = set()
 
-    direct_required = node.get("required")
-    if isinstance(direct_required, list):
-        required.update(key for key in direct_required if isinstance(key, str))
-
-    all_of = node.get("allOf")
-    if isinstance(all_of, list):
-        for option in all_of:
-            if isinstance(option, dict):
-                required.update(schema_required_keys(option))
+    for variant, _ in iter_schema_variants(node, resolver=resolver, current_source=current_source):
+        direct_required = variant.get("required")
+        if isinstance(direct_required, list):
+            required.update(key for key in direct_required if isinstance(key, str))
 
     return required
 
 
-def schema_default_value(node: dict[str, Any]) -> Any:
-    if "default" in node:
-        return node["default"]
-
-    all_of = node.get("allOf")
-    if isinstance(all_of, list):
-        for option in all_of:
-            if isinstance(option, dict):
-                value = schema_default_value(option)
-                if value is not None:
-                    return value
-
-    for union_key in ("oneOf", "anyOf"):
-        options = node.get(union_key)
-        if isinstance(options, list):
-            for option in options:
-                if isinstance(option, dict):
-                    value = schema_default_value(option)
-                    if value is not None:
-                        return value
+def schema_default_value(
+    node: dict[str, Any],
+    resolver: SchemaResolver | None = None,
+    current_source: Path | None = None,
+) -> Any:
+    for variant, _ in iter_schema_variants(node, resolver=resolver, current_source=current_source):
+        if "default" in variant:
+            return variant["default"]
 
     return None
+
+
+def schema_enum_values(
+    node: dict[str, Any],
+    resolver: SchemaResolver | None = None,
+    current_source: Path | None = None,
+) -> list[Any]:
+    values: list[Any] = []
+    seen: set[str] = set()
+
+    def collect_enum_items(items: list[Any]) -> None:
+        for item in items:
+            marker = json.dumps(item, sort_keys=True, ensure_ascii=False)
+            if marker in seen:
+                continue
+            seen.add(marker)
+            values.append(item)
+
+    for variant, _ in iter_schema_variants(node, resolver=resolver, current_source=current_source):
+        enum_values = variant.get("enum")
+        if isinstance(enum_values, list):
+            collect_enum_items(enum_values)
+
+    return values
+
+
+def schema_min_length(
+    node: dict[str, Any],
+    resolver: SchemaResolver | None = None,
+    current_source: Path | None = None,
+) -> int | None:
+    values: list[int] = []
+    for variant, _ in iter_schema_variants(node, resolver=resolver, current_source=current_source):
+        value = variant.get("minLength")
+        if isinstance(value, int):
+            values.append(value)
+
+    if not values:
+        return None
+    return max(values)
+
+
+def schema_minimum(
+    node: dict[str, Any],
+    resolver: SchemaResolver | None = None,
+    current_source: Path | None = None,
+) -> int | float | None:
+    values: list[int | float] = []
+    for variant, _ in iter_schema_variants(node, resolver=resolver, current_source=current_source):
+        value = variant.get("minimum")
+        if isinstance(value, (int, float)) and not isinstance(value, bool):
+            values.append(value)
+
+    if not values:
+        return None
+    return max(values)
+
+
+def schema_max_length(
+    node: dict[str, Any],
+    resolver: SchemaResolver | None = None,
+    current_source: Path | None = None,
+) -> int | None:
+    values: list[int] = []
+    for variant, _ in iter_schema_variants(node, resolver=resolver, current_source=current_source):
+        value = variant.get("maxLength")
+        if isinstance(value, int):
+            values.append(value)
+
+    if not values:
+        return None
+    return min(values)
+
+
+def schema_maximum(
+    node: dict[str, Any],
+    resolver: SchemaResolver | None = None,
+    current_source: Path | None = None,
+) -> int | float | None:
+    values: list[int | float] = []
+    for variant, _ in iter_schema_variants(node, resolver=resolver, current_source=current_source):
+        value = variant.get("maximum")
+        if isinstance(value, (int, float)) and not isinstance(value, bool):
+            values.append(value)
+
+    if not values:
+        return None
+    return min(values)
+
+
+def enum_to_inline_text(values: list[Any]) -> str:
+    rendered = [f"`{json.dumps(item, ensure_ascii=False).strip('"')}`" for item in values]
+    joined = ", ".join(rendered)
+    if len(joined) > 160:
+        return f"{len(values)} values"
+    return joined
 
 
 def value_to_inline_json(value: Any) -> str:
@@ -350,11 +526,15 @@ def yaml_lines(value: Any, indent: int = 0) -> list[str]:
     return [prefix + yaml_scalar(value)]
 
 
-def explicit_example_value(node: dict[str, Any]) -> Any:
+def explicit_example_value(
+    node: dict[str, Any],
+    resolver: SchemaResolver | None = None,
+    current_source: Path | None = None,
+) -> Any:
     examples = node.get("examples")
     if isinstance(examples, list) and examples:
         return examples[0]
-    return schema_default_value(node)
+    return schema_default_value(node, resolver=resolver, current_source=current_source)
 
 
 def build_example_block(key_path: str, value: Any) -> str:
@@ -382,12 +562,19 @@ def render_property_section(
     heading_level: int,
     required: bool,
     reference_link: tuple[str, str] | None = None,
+    resolver: SchemaResolver | None = None,
+    current_source: Path | None = None,
 ) -> str:
     heading = "#" * max(2, min(6, heading_level))
     description = node.get("description") or "No description provided."
-    type_text = schema_type(node)
-    default_value = schema_default_value(node)
+    type_text = schema_type(node, resolver=resolver, current_source=current_source)
+    default_value = schema_default_value(node, resolver=resolver, current_source=current_source)
     default_text = value_to_inline_json(default_value)
+    enum_values = schema_enum_values(node, resolver=resolver, current_source=current_source)
+    min_length = schema_min_length(node, resolver=resolver, current_source=current_source)
+    minimum = schema_minimum(node, resolver=resolver, current_source=current_source)
+    max_length = schema_max_length(node, resolver=resolver, current_source=current_source)
+    maximum = schema_maximum(node, resolver=resolver, current_source=current_source)
 
     lines = [
         f"{heading} `{key_path}`",
@@ -403,22 +590,26 @@ def render_property_section(
         f"| Default    | {default_text} |",
     ]
 
-    enum_values = node.get("enum")
-    if isinstance(enum_values, list) and enum_values:
-        lines.extend(
-            [
-                "",
-                "Valid Values:",
-                "",
-                *[f"- `{json.dumps(item, ensure_ascii=False).strip('"')}`" for item in enum_values],
-            ]
-        )
+    if enum_values:
+        lines.append(f"| Enum       | {enum_to_inline_text(enum_values)} |")
+
+    if min_length is not None:
+        lines.append(f"| Min Length | `{min_length}` |")
+
+    if minimum is not None:
+        lines.append(f"| Minimum    | `{minimum}` |")
+
+    if max_length is not None:
+        lines.append(f"| Max Length | `{max_length}` |")
+
+    if maximum is not None:
+        lines.append(f"| Maximum    | `{maximum}` |")
 
     if reference_link:
         ref_label, ref_target = reference_link
         lines.extend(["", f"See [{ref_label}]({ref_target}) for full configuration."])
 
-    example_value = explicit_example_value(node)
+    example_value = explicit_example_value(node, resolver=resolver, current_source=current_source)
     if example_value is not None:
         lines.extend(
             [
@@ -436,17 +627,75 @@ def render_property_section(
     return "\n".join(lines)
 
 
-def iter_child_properties(node: dict[str, Any]) -> Iterable[tuple[str, dict[str, Any], bool]]:
-    properties = node.get("properties")
-    if not isinstance(properties, dict):
-        return []
-    required_keys = schema_required_keys(node)
-    out: list[tuple[str, dict[str, Any], bool]] = []
-    for key in sorted(properties.keys()):
-        child = properties[key]
-        if not isinstance(child, dict):
-            continue
-        out.append((key, child, key in required_keys))
+def iter_child_properties(
+    node: dict[str, Any],
+    resolver: SchemaResolver | None = None,
+    current_source: Path | None = None,
+) -> Iterable[tuple[str, dict[str, Any], bool, Path | None]]:
+    out: list[tuple[str, dict[str, Any], bool, Path | None]] = []
+    grouped_children: dict[str, list[tuple[dict[str, Any], Path | None]]] = {}
+    grouped_required: dict[str, bool] = {}
+
+    def add_child(name: str, child_schema: dict[str, Any], required: bool, child_source: Path | None) -> None:
+        grouped_children.setdefault(name, []).append((child_schema, child_source))
+        grouped_required[name] = grouped_required.get(name, False) or required
+
+    for variant, variant_source in iter_schema_variants(
+        node,
+        resolver=resolver,
+        current_source=current_source,
+    ):
+        variant_required = set()
+        direct_required = variant.get("required")
+        if isinstance(direct_required, list):
+            variant_required = {key for key in direct_required if isinstance(key, str)}
+
+        properties = variant.get("properties")
+        if isinstance(properties, dict):
+            for key in sorted(properties.keys()):
+                child = properties[key]
+                if isinstance(child, dict):
+                    add_child(key, child, key in variant_required, variant_source)
+
+        additional_properties = variant.get("additionalProperties")
+        if isinstance(additional_properties, dict):
+            entry_required = set()
+            entry_direct_required = additional_properties.get("required")
+            if isinstance(entry_direct_required, list):
+                entry_required = {key for key in entry_direct_required if isinstance(key, str)}
+
+            entry_properties = additional_properties.get("properties")
+            if isinstance(entry_properties, dict):
+                for key in sorted(entry_properties.keys()):
+                    child = entry_properties[key]
+                    if isinstance(child, dict):
+                        add_child(f"$name.{key}", child, key in entry_required, variant_source)
+
+    for key in sorted(grouped_children.keys()):
+        candidates = grouped_children[key]
+        unique: list[tuple[dict[str, Any], Path | None]] = []
+        seen: set[str] = set()
+        for candidate, candidate_source in candidates:
+            source_marker = str(candidate_source.resolve()) if isinstance(candidate_source, Path) else ""
+            marker = source_marker + "::" + json.dumps(candidate, sort_keys=True, ensure_ascii=False)
+            if marker in seen:
+                continue
+            seen.add(marker)
+            unique.append((candidate, candidate_source))
+
+        if len(unique) == 1:
+            merged_child, merged_source = unique[0]
+        else:
+            first_source = unique[0][1]
+            same_source = all(candidate_source == first_source for _, candidate_source in unique)
+            if same_source:
+                merged_child = {"allOf": [candidate for candidate, _ in unique]}
+                merged_source = first_source
+            else:
+                merged_child, merged_source = unique[0]
+
+        out.append((key, merged_child, grouped_required.get(key, False), merged_source))
+
     return out
 
 
@@ -456,8 +705,12 @@ def iter_children_with_resolution(
     resolver: SchemaResolver,
 ) -> list[tuple[str, dict[str, Any], dict[str, Any], bool, Path | None, Path | None]]:
     children: list[tuple[str, dict[str, Any], dict[str, Any], bool, Path | None, Path | None]] = []
-    for key, child, required in iter_child_properties(node):
-        resolved_child, child_source, child_ref = resolver.resolve_node(child, current_source)
+    for key, child, required, child_input_source in iter_child_properties(
+        node,
+        resolver=resolver,
+        current_source=current_source,
+    ):
+        resolved_child, child_source, child_ref = resolver.resolve_node(child, child_input_source or current_source)
         children.append((key, child, resolved_child, required, child_source, child_ref))
     return children
 
@@ -504,12 +757,12 @@ def iter_page_children(
     node: dict[str, Any],
     current_source: Path | None,
     resolver: SchemaResolver,
-) -> list[tuple[str, dict[str, Any], bool, Path | None]]:
-    result: list[tuple[str, dict[str, Any], bool, Path | None]] = []
-    for key, _, resolved_child, required, _, child_ref in iter_children_with_resolution(
+) -> list[tuple[str, dict[str, Any], bool, Path | None, Path | None]]:
+    result: list[tuple[str, dict[str, Any], bool, Path | None, Path | None]] = []
+    for key, _, resolved_child, required, child_source, child_ref in iter_children_with_resolution(
         node, current_source, resolver
     ):
-        result.append((key, resolved_child, required, child_ref))
+        result.append((key, resolved_child, required, child_source, child_ref))
     return result
 
 
@@ -524,7 +777,16 @@ def render_node_sections(
     max_depth: int,
     required: bool,
 ) -> str:
-    parts = [render_property_section(node, base_key, heading_level, required)]
+    parts = [
+        render_property_section(
+            node,
+            base_key,
+            heading_level,
+            required,
+            resolver=resolver,
+            current_source=node_source,
+        )
+    ]
     if current_depth >= max_depth:
         return "".join(parts)
 
@@ -540,12 +802,23 @@ def render_node_sections(
                     min(6, heading_level + 1),
                     child_required,
                     reference_link=reference,
+                    resolver=resolver,
+                    current_source=child_source,
                 )
             )
             continue
 
         if not is_object_schema(child):
-            parts.append(render_property_section(child, child_key, min(6, heading_level + 1), child_required))
+            parts.append(
+                render_property_section(
+                    child,
+                    child_key,
+                    min(6, heading_level + 1),
+                    child_required,
+                    resolver=resolver,
+                    current_source=child_source,
+                )
+            )
             continue
 
         parts.append(
@@ -600,10 +873,19 @@ def render_page(
     lines.extend(["## Appears in", "", f"- `{appears_in}`", "", "---", ""])
 
     if key_path_segments:
-        lines.append(render_property_section(schema_node, key_path, 2, required=False).rstrip())
+        lines.append(
+            render_property_section(
+                schema_node,
+                key_path,
+                2,
+                required=False,
+                resolver=resolver,
+                current_source=schema_source,
+            ).rstrip()
+        )
 
     page_children = iter_page_children(schema_node, schema_source, resolver)
-    for key, child, required, child_ref in page_children:
+    for key, child, required, child_source, child_ref in page_children:
         full_key = f"{key_path}.{key}" if key_path else key
         if child_ref is not None:
             ref_link = ref_links_by_file.get(child_ref.resolve())
@@ -615,11 +897,22 @@ def render_page(
                     3 if key_path_segments else 2,
                     required,
                     reference_link=reference,
+                    resolver=resolver,
+                    current_source=child_source,
                 ).rstrip()
             )
             continue
 
-        lines.append(render_property_section(child, full_key, 3 if key_path_segments else 2, required).rstrip())
+        lines.append(
+            render_property_section(
+                child,
+                full_key,
+                3 if key_path_segments else 2,
+                required,
+                resolver=resolver,
+                current_source=child_source,
+            ).rstrip()
+        )
 
     if child_links:
         lines.extend(["## Child Pages", ""])
@@ -631,7 +924,7 @@ def render_page(
                 lines.append(f"- [{label}]({rel_link})")
         lines.extend(["", "---", ""])
 
-    page_example = explicit_example_value(schema_node)
+    page_example = explicit_example_value(schema_node, resolver=resolver, current_source=schema_source)
     if page_example is not None:
         lines.extend(["## Full Examples", "", "```yaml"])
         if key_path_segments:
@@ -744,6 +1037,37 @@ def collect_schema_file_pages(
 ) -> dict[tuple[str, ...], dict[str, Any]]:
     pages: dict[tuple[str, ...], dict[str, Any]] = {}
 
+    def merge_pages_into_target(source_key: tuple[str, ...], target_key: tuple[str, ...]) -> None:
+        source_page = pages.get(source_key)
+        target_page = pages.get(target_key)
+        if not source_page or not target_page:
+            return
+
+        source_schema_file = source_page.get("schema_file")
+        target_schema_file = target_page.get("schema_file")
+        if not isinstance(source_schema_file, Path) or not isinstance(target_schema_file, Path):
+            return
+
+        source_ref = f"file://{source_schema_file.resolve().as_posix()}"
+        target_ref = f"file://{target_schema_file.resolve().as_posix()}"
+        merged_node = {
+            "allOf": [
+                {"$ref": source_ref},
+                {"$ref": target_ref},
+            ]
+        }
+        resolved_merged, resolved_source, _ = resolver.resolve_node(merged_node, target_schema_file)
+
+        target_page["node"] = resolved_merged
+        target_page["source"] = resolved_source
+        aliases = target_page.get("alias_schema_files")
+        if not isinstance(aliases, list):
+            aliases = []
+            target_page["alias_schema_files"] = aliases
+        aliases.append(source_schema_file.resolve())
+
+        del pages[source_key]
+
     for schema_file in sorted(schemas_root.rglob("*.json")):
         rel = schema_file.relative_to(schemas_root)
         rel_parts = list(rel.parts)
@@ -754,18 +1078,43 @@ def collect_schema_file_pages(
         resolved_node, resolved_source, _ = resolver.resolve_node(node, schema_file)
 
         key_path = tuple(rel_parts[:-1]) if rel_parts and rel_parts[-1] == "index" else tuple(rel_parts)
+        if len(key_path) >= 2 and key_path[-1] == key_path[-2]:
+            key_path = key_path[:-1]
 
         pages[page_key] = {
             "node": resolved_node,
             "key_path": key_path,
             "source": resolved_source,
             "schema_file": schema_file.resolve(),
+            "alias_schema_files": [],
             "children": [],
         }
 
-    redundant_indexes = [key for key in pages if key and key[-1] == "index" and key[:-1] in pages]
-    for key in redundant_indexes:
-        del pages[key]
+    same_name_keys = [
+        key
+        for key in pages
+        if len(key) >= 2 and key[-1] == key[-2]
+    ]
+    for source_key in same_name_keys:
+        target_key = (*source_key[:-1], "index")
+        if target_key in pages:
+            merge_pages_into_target(source_key, target_key)
+            continue
+
+        source_page = pages.get(source_key)
+        if not source_page:
+            continue
+
+        pages[target_key] = source_page
+        del pages[source_key]
+
+    merge_pairs = [
+        (key[:-1], key)
+        for key in pages
+        if key and key[-1] == "index" and key[:-1] in pages
+    ]
+    for sibling_key, index_key in merge_pairs:
+        merge_pages_into_target(sibling_key, index_key)
 
     def node_for_dir_index(dir_key: tuple[str, ...]) -> tuple[dict[str, Any], tuple[str, ...], Path | None]:
         parent_key = dir_key[:-1]
@@ -859,13 +1208,12 @@ def compute_schema_style_markdown_paths(
                 mapping[key] = Path(*sanitized_folder[:-1]) / f"{sanitized_folder[-1]}.md"
             continue
 
-        repeated_leaf = len(key) >= 2 and key[-1] == key[-2]
         has_same_name_folder = any(
             len(other) > len(key) and other[: len(key)] == key for other in keys
         )
 
         sanitized = [sanitize_segment(part, dynamic_segment) for part in key]
-        if repeated_leaf or has_same_name_folder:
+        if has_same_name_folder:
             mapping[key] = Path(*sanitized) / "index.md"
         else:
             mapping[key] = Path(*sanitized[:-1]) / f"{sanitized[-1]}.md"
@@ -909,15 +1257,13 @@ def generate_docs(
         schema_file = page.get("schema_file")
         if isinstance(schema_file, Path):
             schema_file_to_doc_key[schema_file.resolve()] = doc_key
+        aliases = page.get("alias_schema_files")
+        if isinstance(aliases, list):
+            for alias_path in aliases:
+                if isinstance(alias_path, Path):
+                    schema_file_to_doc_key[alias_path.resolve()] = doc_key
 
-    schema_file_aliases: dict[Path, tuple[str, ...]] = {}
-    for index_file in schemas_root.rglob("index.json"):
-        sibling_file = index_file.parent.with_suffix(".json")
-        sibling_target = schema_file_to_doc_key.get(sibling_file.resolve())
-        if sibling_target is not None:
-            schema_file_aliases[index_file.resolve()] = sibling_target
-
-    ref_target_map = {**schema_file_to_doc_key, **schema_file_aliases}
+    ref_target_map = dict(schema_file_to_doc_key)
 
     for doc_path_tuple, page in sorted(pages.items(), key=lambda item: (len(item[0]), item[0])):
         rel_page = markdown_paths[doc_path_tuple]
