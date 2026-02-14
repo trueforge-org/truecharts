@@ -134,9 +134,11 @@ CNPG connection information
   {{- if $cnpg.creds.porthost }}
 - Host:Port: {{ $cnpg.creds.porthost | quote }}
   {{- end -}}
+  {{- if $cnpg.database }}
+- Database: {{ $cnpg.database }}
+  {{- end -}}
   {{- if $cnpg.user }}
-- Database: {{ $cnpg.database | default "app" }}
-- Username: {{ $cnpg.user | default "app" }}
+- Username: {{ $cnpg.user }}
   {{- end -}}
   {{- if $cnpg.creds.std }}
 - Connection URL: {{ $cnpg.creds.std | quote }}
@@ -266,6 +268,7 @@ Clickhouse connection information
 
 {{/*
 Solr connection information
+Note: Solr uses 'portHost' (camelCase) from the injector, unlike other deps that use 'plainporthost'
 */}}
 {{- define "tc.v1.common.lib.chart.connections.solr" -}}
 ## Solr Search
