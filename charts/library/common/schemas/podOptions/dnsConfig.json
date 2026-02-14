@@ -20,7 +20,13 @@
         "additionalProperties": true,
         "description": "Configuration for `podOptions.dnsConfig.options.$item`."
       },
-      "description": "Configuration for `podOptions.dnsConfig.options`."
+      "description": "Configuration for `podOptions.dnsConfig.options`.",
+      "default": [
+        {
+          "name": "ndots",
+          "value": "1"
+        }
+      ]
     }
   },
   "additionalProperties": true
