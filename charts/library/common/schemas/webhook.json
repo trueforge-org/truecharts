@@ -14,6 +14,9 @@
         },
         "type": {
           "type": "string",
+          "enum": [
+            "validating"
+          ],
           "description": "Create webhook objects"
         },
         "webhooks": {
@@ -53,15 +56,51 @@
                 "description": "Create webhook objects"
               },
               "failurePolicy": {
-                "type": "string",
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "Ignore",
+                      "Fail"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
                 "description": "Create webhook objects"
               },
               "matchPolicy": {
-                "type": "string",
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "Exact",
+                      "Equivalent"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
                 "description": "Create webhook objects"
               },
               "sideEffects": {
-                "type": "string",
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "None",
+                      "NoneOnDryRun"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
                 "description": "Create webhook objects"
               },
               "timeoutSeconds": {
@@ -115,6 +154,9 @@
         },
         "type": {
           "type": "string",
+          "enum": [
+            "mutating"
+          ],
           "description": "Create webhook objects"
         },
         "webhooks": {
@@ -154,19 +196,67 @@
                 "description": "Create webhook objects"
               },
               "failurePolicy": {
-                "type": "string",
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "Ignore",
+                      "Fail"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
                 "description": "Create webhook objects"
               },
               "matchPolicy": {
-                "type": "string",
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "Exact",
+                      "Equivalent"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
                 "description": "Create webhook objects"
               },
               "sideEffects": {
-                "type": "string",
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "None",
+                      "NoneOnDryRun"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
                 "description": "Create webhook objects"
               },
               "reinvocationPolicy": {
-                "type": "string",
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "Never",
+                      "IfNeeded"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
                 "description": "Create webhook objects"
               },
               "timeoutSeconds": {
@@ -261,45 +351,82 @@
               "description": "Define the rules for the webhook"
             },
             "name": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "type": "string",
               "description": "Define the webhook name"
             },
             "failurePolicy": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "oneOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "Ignore",
+                    "Fail"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\{\\{.*\\}\\}$"
+                }
+              ],
               "description": "Define the failurePolicy for the webhook"
             },
             "matchPolicy": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "oneOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "Exact",
+                    "Equivalent"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\{\\{.*\\}\\}$"
+                }
+              ],
               "description": "Define the matchPolicy for the webhook"
             },
             "sideEffects": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "oneOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "None",
+                    "NoneOnDryRun"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\{\\{.*\\}\\}$"
+                }
+              ],
               "description": "Define the sideEffects for the webhook"
             },
             "reinvocationPolicy": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "oneOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "Never",
+                    "IfNeeded"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\{\\{.*\\}\\}$"
+                }
+              ],
               "description": "Define the reinvocationPolicy for the webhook"
             },
             "timeoutSeconds": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "type": "integer",
               "description": "Define the timeoutSeconds for the webhook"
             },
             "admissionReviewVersions": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
               "description": "Define the admissionReviewVersions for the webhook"
             },
             "clientConfig": {
@@ -392,9 +519,19 @@
         "description": "Additional annotations for webhook"
       },
       "type": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "mutating",
+              "validating"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ],
         "description": "Define the type of the webhook."
       }
     },

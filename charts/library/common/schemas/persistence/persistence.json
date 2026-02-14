@@ -578,7 +578,18 @@
       },
       "type": {
         "type": "string",
-        "description": "Define the persistence type"
+        "description": "Define the persistence type",
+        "enum": [
+          "pvc",
+          "hostPath",
+          "emptyDir",
+          "nfs",
+          "iscsi",
+          "device",
+          "configmap",
+          "secret",
+          "vct"
+        ]
       },
       "mountPath": {
         "type": "string",
@@ -586,7 +597,12 @@
       },
       "mountPropagation": {
         "type": "string",
-        "description": "Define the mountPropagation for the persistence, applies to all containers that are selected"
+        "description": "Define the mountPropagation for the persistence, applies to all containers that are selected",
+        "enum": [
+          "None",
+          "HostToContainer",
+          "Bidirectional"
+        ]
       },
       "subPath": {
         "type": "string",

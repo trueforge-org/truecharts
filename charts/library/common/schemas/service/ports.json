@@ -29,7 +29,21 @@
       "description": "Define the target port (No named ports)"
     },
     "protocol": {
-      "type": "string",
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "tcp",
+            "udp",
+            "http",
+            "https"
+          ]
+        },
+        {
+          "type": "string",
+          "pattern": "^\\{\\{.*\\}\\}$"
+        }
+      ],
       "description": "Define the port protocol Used by the container ports and probes, http and https are converted to tcp where needed"
     },
     "hostPort": {

@@ -18,6 +18,10 @@
       },
       "type": {
         "type": "string",
+        "enum": [
+          "servicemonitor",
+          "podmonitor"
+        ],
         "description": "Configuration for `metrics.main.type`."
       },
       "selector": {

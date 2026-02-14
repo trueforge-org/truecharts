@@ -102,6 +102,11 @@
               "properties": {
                 "type": {
                   "type": "string",
+                  "enum": [
+                    "init",
+                    "install",
+                    "upgrade"
+                  ],
                   "description": "Define the type of container - Only applies to `initContainers`"
                 }
               },
@@ -350,13 +355,23 @@
       "strategy": {
         "oneOf": [
           {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "Recreate",
+              "RollingUpdate",
+              "OnDelete"
+            ]
           },
           {
             "type": "object",
             "properties": {
               "type": {
                 "type": "string",
+                "enum": [
+                  "Recreate",
+                  "RollingUpdate",
+                  "OnDelete"
+                ],
                 "description": "Define the strategy type of the workload"
               },
               "rollingUpdate": {
@@ -419,9 +434,11 @@
         "description": "Define workload objects"
       },
       "completionMode": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
+        "enum": [
+          "Indexed",
+          "NonIndexed"
+        ],
         "description": "Define the completionMode"
       },
       "backoffLimit": {
@@ -460,6 +477,11 @@
       },
       "concurrencyPolicy": {
         "type": "string",
+        "enum": [
+          "Allow",
+          "Replace",
+          "Forbid"
+        ],
         "description": "Define the concurrencyPolicy"
       },
       "failedJobsHistoryLimit": {
@@ -505,6 +527,13 @@
       },
       "type": {
         "type": "string",
+        "enum": [
+          "Deployment",
+          "DaemonSet",
+          "StatefulSet",
+          "CronJob",
+          "Job"
+        ],
         "description": "Define the kind of the workload"
       },
       "serviceAccountName": {
