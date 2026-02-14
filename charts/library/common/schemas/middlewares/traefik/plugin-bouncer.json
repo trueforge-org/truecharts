@@ -4,7 +4,10 @@
   "description": "Mirrors docs path middlewares/traefik/plugin-bouncer.md.",
   "properties": {
     "enabled": {
-      "type": "boolean"
+      "type": [
+        "boolean",
+        "string"
+      ]
     }
   },
   "additionalProperties": true,

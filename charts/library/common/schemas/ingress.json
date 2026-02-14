@@ -5,8 +5,11 @@
     "main": {
       "type": "object",
       "properties": {
-        "enabled": {
-          "type": "boolean",
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
           "description": "Create Ingress objects"
         },
         "primary": {
@@ -47,8 +50,11 @@
             "certManager": {
               "type": "object",
               "properties": {
-                "enabled": {
-                  "type": "boolean",
+                  "enabled": {
+                    "type": [
+                      "boolean",
+                      "string"
+                    ],
                   "description": "Enables or Disables the cert-manager integration"
                 },
                 "certificateIssuer": {
@@ -62,8 +68,11 @@
             "traefik": {
               "type": "object",
               "properties": {
-                "enabled": {
-                  "type": "boolean",
+                  "enabled": {
+                    "type": [
+                      "boolean",
+                      "string"
+                    ],
                   "description": "Enables or Disables the traefik integration"
                 },
                 "entrypoints": {
@@ -89,15 +98,21 @@
             "nginx": {
               "type": "object",
               "properties": {
-                "enabled": {
-                  "type": "boolean",
+                  "enabled": {
+                    "type": [
+                      "boolean",
+                      "string"
+                    ],
                   "description": "Configuration for `ingress.main.integrations.nginx.enabled`."
                 },
                 "themepark": {
                   "type": "object",
                   "properties": {
-                    "enabled": {
-                      "type": "boolean",
+                      "enabled": {
+                        "type": [
+                          "boolean",
+                          "string"
+                        ],
                       "description": "Configuration for `ingress.main.integrations.nginx.themepark.enabled`."
                     },
                     "css": {
@@ -142,8 +157,11 @@
             "homepage": {
               "type": "object",
               "properties": {
-                "enabled": {
-                  "type": "boolean",
+                  "enabled": {
+                    "type": [
+                      "boolean",
+                      "string"
+                    ],
                   "description": "Enables or Disables the homepage integration"
                 },
                 "name": {
@@ -223,8 +241,11 @@
           "traefik": {
             "type": "object",
             "properties": {
-              "enabled": {
-                "type": "object",
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
                 "properties": {},
                 "additionalProperties": true,
                 "description": "Enables or Disables the traefik integration"
@@ -284,8 +305,11 @@
           "homepage": {
             "type": "object",
             "properties": {
-              "enabled": {
-                "type": "object",
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
                 "properties": {},
                 "additionalProperties": true,
                 "description": "Enables or Disables the homepage integration"
@@ -359,8 +383,11 @@
                     },
                     "description": "Define configuration for the widget"
                   },
-                  "enabled": {
-                    "type": "object",
+                    "enabled": {
+                      "type": [
+                        "boolean",
+                        "string"
+                      ],
                     "properties": {},
                     "additionalProperties": true,
                     "description": "Enables or Disables the widget"
@@ -400,8 +427,11 @@
           "certManager": {
             "type": "object",
             "properties": {
-              "enabled": {
-                "type": "object",
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
                 "properties": {},
                 "additionalProperties": true,
                 "description": "Enables or Disables the cert-manager integration"
@@ -420,8 +450,11 @@
         "additionalProperties": true,
         "description": "Define the integrations for this ingress"
       },
-      "enabled": {
-        "type": "object",
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
         "properties": {},
         "additionalProperties": true,
         "description": "Enables or Disables the Ingress"

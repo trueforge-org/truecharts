@@ -5,8 +5,11 @@
     "gluetun": {
       "type": "object",
       "properties": {
-        "enabled": {
-          "type": "boolean",
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
           "description": "Addons to the workloads"
         },
         "targetSelector": {
@@ -32,8 +35,11 @@
         "container": {
           "type": "object",
           "properties": {
-            "enabled": {
-              "type": "boolean",
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
               "description": "Configuration for `addons.gluetun.container.enabled`."
             },
             "imageSelector": {
@@ -46,8 +52,11 @@
                 "liveness": {
                   "type": "object",
                   "properties": {
-                    "enabled": {
-                      "type": "boolean",
+                      "enabled": {
+                        "type": [
+                          "boolean",
+                          "string"
+                        ],
                       "description": "Configuration for `addons.gluetun.container.probes.liveness.enabled`."
                     }
                   },
@@ -57,8 +66,11 @@
                 "readiness": {
                   "type": "object",
                   "properties": {
-                    "enabled": {
-                      "type": "boolean",
+                      "enabled": {
+                        "type": [
+                          "boolean",
+                          "string"
+                        ],
                       "description": "Configuration for `addons.gluetun.container.probes.readiness.enabled`."
                     }
                   },
@@ -68,8 +80,11 @@
                 "startup": {
                   "type": "object",
                   "properties": {
-                    "enabled": {
-                      "type": "boolean",
+                      "enabled": {
+                        "type": [
+                          "boolean",
+                          "string"
+                        ],
                       "description": "Configuration for `addons.gluetun.container.probes.startup.enabled`."
                     }
                   },
@@ -148,15 +163,21 @@
     "codeserver": {
       "type": "object",
       "properties": {
-        "enabled": {
-          "type": "boolean",
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
           "description": "Addons to the workloads"
         },
         "container": {
           "type": "object",
           "properties": {
-            "enabled": {
-              "type": "boolean",
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
               "description": "Configuration for `addons.codeserver.container.enabled`."
             },
             "env": {
@@ -169,8 +190,11 @@
                 "liveness": {
                   "type": "object",
                   "properties": {
-                    "enabled": {
-                      "type": "boolean",
+                      "enabled": {
+                        "type": [
+                          "boolean",
+                          "string"
+                        ],
                       "description": "Configuration for `addons.codeserver.container.probes.liveness.enabled`."
                     },
                     "port": {
@@ -188,8 +212,11 @@
                 "readiness": {
                   "type": "object",
                   "properties": {
-                    "enabled": {
-                      "type": "boolean",
+                      "enabled": {
+                        "type": [
+                          "boolean",
+                          "string"
+                        ],
                       "description": "Configuration for `addons.codeserver.container.probes.readiness.enabled`."
                     },
                     "port": {
@@ -207,8 +234,11 @@
                 "startup": {
                   "type": "object",
                   "properties": {
-                    "enabled": {
-                      "type": "boolean",
+                      "enabled": {
+                        "type": [
+                          "boolean",
+                          "string"
+                        ],
                       "description": "Configuration for `addons.codeserver.container.probes.startup.enabled`."
                     },
                     "port": {
@@ -280,8 +310,11 @@
         "service": {
           "type": "object",
           "properties": {
-            "enabled": {
-              "type": "boolean",
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
               "description": "Configuration for `addons.codeserver.service.enabled`."
             },
             "type": {
@@ -294,8 +327,11 @@
                 "codeserver": {
                   "type": "object",
                   "properties": {
-                    "enabled": {
-                      "type": "boolean",
+                      "enabled": {
+                        "type": [
+                          "boolean",
+                          "string"
+                        ],
                       "description": "Configuration for `addons.codeserver.service.ports.codeserver.enabled`."
                     },
                     "primary": {
@@ -329,8 +365,11 @@
         "ingress": {
           "type": "object",
           "properties": {
-            "enabled": {
-              "type": "boolean",
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
               "description": "Configuration for `addons.codeserver.ingress.enabled`."
             },
             "annotations": {
@@ -394,15 +433,21 @@
     "netshoot": {
       "type": "object",
       "properties": {
-        "enabled": {
-          "type": "boolean",
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
           "description": "Addons to the workloads"
         },
         "container": {
           "type": "object",
           "properties": {
-            "enabled": {
-              "type": "boolean",
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
               "description": "Configuration for `addons.netshoot.container.enabled`."
             },
             "command": {
@@ -419,8 +464,11 @@
                 "liveness": {
                   "type": "object",
                   "properties": {
-                    "enabled": {
-                      "type": "boolean",
+                      "enabled": {
+                        "type": [
+                          "boolean",
+                          "string"
+                        ],
                       "description": "Configuration for `addons.netshoot.container.probes.liveness.enabled`."
                     }
                   },
@@ -430,8 +478,11 @@
                 "readiness": {
                   "type": "object",
                   "properties": {
-                    "enabled": {
-                      "type": "boolean",
+                      "enabled": {
+                        "type": [
+                          "boolean",
+                          "string"
+                        ],
                       "description": "Configuration for `addons.netshoot.container.probes.readiness.enabled`."
                     }
                   },
@@ -441,8 +492,11 @@
                 "startup": {
                   "type": "object",
                   "properties": {
-                    "enabled": {
-                      "type": "boolean",
+                      "enabled": {
+                        "type": [
+                          "boolean",
+                          "string"
+                        ],
                       "description": "Configuration for `addons.netshoot.container.probes.startup.enabled`."
                     }
                   },
@@ -524,8 +578,11 @@
         "additionalProperties": true,
         "description": "Addons to the workloads"
       },
-      "enabled": {
-        "type": "object",
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
         "properties": {},
         "additionalProperties": true,
         "description": "Enables or Disables the Addon"

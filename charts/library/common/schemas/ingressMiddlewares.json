@@ -8,8 +8,11 @@
         "tc-basic-secure-headers": {
           "type": "object",
           "properties": {
-            "enabled": {
-              "type": "boolean",
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
               "description": "Create Middleware objects"
             },
             "type": {
@@ -399,8 +402,11 @@
                 "additionalProperties": true,
                 "description": "Define the maxBodySize"
               },
-              "enabled": {
-                "type": "object",
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
                 "properties": {},
                 "additionalProperties": true,
                 "description": "Define the enabled"
@@ -819,8 +825,11 @@
           "additionalProperties": true,
           "description": "Create Middleware objects"
         },
-        "enabled": {
-          "type": "object",
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
           "properties": {},
           "additionalProperties": true,
           "description": "Enables or Disables the Middleware"

@@ -5,8 +5,11 @@
     "main": {
       "type": "object",
       "properties": {
-        "enabled": {
-          "type": "boolean",
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
           "description": "Create Network Policy objects"
         },
         "primary": {
@@ -53,8 +56,11 @@
   "additionalProperties": {
     "type": "object",
     "properties": {
-      "enabled": {
-        "type": "object",
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
         "properties": {},
         "additionalProperties": true,
         "description": "Enables or Disables the Network Policy"
