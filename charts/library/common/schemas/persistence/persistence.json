@@ -663,7 +663,7 @@
       "mountPath": {
         "type": "string",
         "description": "Define the mountPath for the persistence, applies to all containers that are selected",
-        "default": "\"\"",
+        "default": "",
         "minLength": 1
       },
       "mountPropagation": {
@@ -687,12 +687,12 @@
             "pattern": "^\\{\\{.*\\}\\}$"
           }
         ],
-        "default": "\"\""
+        "default": ""
       },
       "subPath": {
         "type": "string",
         "description": "Define the subPath for the persistence, applies to all containers that are selected",
-        "default": "\"\""
+        "default": ""
       },
       "readOnly": {
         "type": "boolean",
