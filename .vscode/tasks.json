@@ -1,0 +1,17 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "schema-fail-fast-2",
+			"type": "shell",
+			"command": "cd charts/library/common && python3 test_schema.py --fail-fast",
+			"isBackground": false
+		},
+		{
+			"label": "schema-fail-fast-3",
+			"type": "shell",
+			"command": "cd charts/library/common && python3 test_schema.py --fail-fast",
+			"isBackground": false
+		}
+	]
+}
