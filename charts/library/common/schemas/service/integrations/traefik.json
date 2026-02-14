@@ -1,7 +1,87 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "description": "Mirrors docs path service/integrations/traefik.md.",
-  "properties": {},
+  "properties": {
+    "enabled": {
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Enables or Disables the traefik integration"
+    },
+    "forceTLS": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Force TLS when talking to the backend service Adds the `traefik.ingress.kubernetes.io/service.serversscheme: \"https\"` annotation."
+    },
+    "insecureSkipVerify": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Skip TLS verification when taling to an HTTPS backend service Allows talking to HTTPS backend services which use self-signed certs."
+    },
+    "serverName": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Set the hostname to use when talking to a backend service"
+    },
+    "rootCAs": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "configMapRef": {
+            "type": "object",
+            "properties": {
+              "expandObjectName": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "description": "List of kubernetes secrets (in the same namespace) containing certificate authorities to use when performing TLS verification of the backend service."
+              },
+              "name": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the configmap name This will be automatically expanded to `fullname-configmap-name`."
+              }
+            },
+            "additionalProperties": true,
+            "description": "Define the configMapRef"
+          },
+          "secretRef": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the secret name This will be automatically expanded to `fullname-secret-name`."
+              },
+              "expandObjectName": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "description": "Whether to expand (adding the fullname as prefix) the secret name"
+              }
+            },
+            "additionalProperties": true,
+            "description": "Define the secretRef"
+          }
+        },
+        "additionalProperties": true,
+        "description": "Configuration for `$name.integrations.traefik.rootCAs.$name`."
+      },
+      "description": "List of kubernetes secrets (in the same namespace) containing certificate authorities to use when performing TLS verification of the backend service."
+    }
+  },
+  "description": "Define service objects",
   "additionalProperties": true
 }

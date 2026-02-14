@@ -9,89 +9,11 @@
         "type": "object",
         "properties": {
           "traefik": {
-            "type": "object",
-            "properties": {
-              "enabled": {
-                "type": [
-                  "boolean",
-                  "string"
-                ],
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Enables or Disables the traefik integration"
-              },
-              "forceTLS": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Force TLS when talking to the backend service Adds the `traefik.ingress.kubernetes.io/service.serversscheme: \"https\"` annotation."
-              },
-              "insecureSkipVerify": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Skip TLS verification when taling to an HTTPS backend service Allows talking to HTTPS backend services which use self-signed certs."
-              },
-              "serverName": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Set the hostname to use when talking to a backend service"
-              },
-              "rootCAs": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": {
-                  "type": "object",
-                  "properties": {
-                    "configMapRef": {
-                      "type": "object",
-                      "properties": {
-                        "expandObjectName": {
-                          "type": [
-                            "boolean",
-                            "string"
-                          ],
-                          "description": "List of kubernetes secrets (in the same namespace) containing certificate authorities to use when performing TLS verification of the backend service."
-                        },
-                        "name": {
-                          "type": "object",
-                          "properties": {},
-                          "additionalProperties": true,
-                          "description": "Define the configmap name This will be automatically expanded to `fullname-configmap-name`."
-                        }
-                      },
-                      "additionalProperties": true,
-                      "description": "Define the configMapRef"
-                    },
-                    "secretRef": {
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "object",
-                          "properties": {},
-                          "additionalProperties": true,
-                          "description": "Define the secret name This will be automatically expanded to `fullname-secret-name`."
-                        },
-                        "expandObjectName": {
-                          "type": [
-                            "boolean",
-                            "string"
-                          ],
-                          "description": "Whether to expand (adding the fullname as prefix) the secret name"
-                        }
-                      },
-                      "additionalProperties": true,
-                      "description": "Define the secretRef"
-                    }
-                  },
-                  "additionalProperties": true,
-                  "description": "Configuration for `$name.integrations.traefik.rootCAs.$name`."
-                },
-                "description": "List of kubernetes secrets (in the same namespace) containing certificate authorities to use when performing TLS verification of the backend service."
+            "allOf": [
+              {
+                "$ref": "integrations/traefik.json"
               }
-            },
-            "additionalProperties": true,
+            ],
             "description": "Define service objects"
           }
         },
@@ -108,58 +30,7 @@
         "type": "object",
         "properties": {},
         "additionalProperties": {
-          "type": "object",
-          "properties": {
-            "nodePort": {
-              "type": [
-                "integer",
-                "string"
-              ],
-              "description": "Define the node port that will be exposed on the node"
-            },
-            "targetSelector": {
-              "type": "string",
-              "description": "Define the port dict"
-            },
-            "port": {
-              "type": [
-                "integer",
-                "string"
-              ],
-              "description": "Define the port that will be exposed by the service"
-            },
-            "targetPort": {
-              "type": [
-                "integer",
-                "string"
-              ],
-              "description": "Define the target port (No named ports)"
-            },
-            "protocol": {
-              "type": "string",
-              "description": "Define the port protocol Used by the container ports and probes, http and https are converted to tcp where needed"
-            },
-            "hostPort": {
-              "type": [
-                "integer",
-                "string"
-              ],
-              "description": "Define the hostPort, should be **avoided**, unless **ABSOLUTELY** necessary"
-            },
-            "enabled": {
-              "type": [
-                "boolean",
-                "string"
-              ],
-              "description": "Configuration for `service.main.ports.main.enabled`."
-            },
-            "primary": {
-              "type": "boolean",
-              "description": "Configuration for `service.main.ports.main.primary`."
-            }
-          },
-          "additionalProperties": true,
-          "description": "Define the port dict"
+          "$ref": "ports.json"
         },
         "description": "Define the ports of the service See [Ports](/truecharts-common/service/ports)"
       },

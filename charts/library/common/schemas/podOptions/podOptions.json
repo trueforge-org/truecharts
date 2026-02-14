@@ -33,44 +33,27 @@
       "description": "See [DNS Policy](/truecharts-common/workload#dnspolicy)"
     },
     "dnsConfig": {
-      "type": "object",
-      "properties": {
-        "options": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "Configuration for `podOptions.dnsConfig.options.$item.name`."
-              },
-              "value": {
-                "type": "string",
-                "description": "Configuration for `podOptions.dnsConfig.options.$item.value`."
-              }
-            },
-            "additionalProperties": true,
-            "description": "Configuration for `podOptions.dnsConfig.options.$item`."
-          },
-          "description": "Configuration for `podOptions.dnsConfig.options`."
+      "allOf": [
+        {
+          "$ref": "dnsConfig.json"
         }
-      },
-      "additionalProperties": true,
+      ],
       "description": "See [DNS Config](/truecharts-common/workload#dnsconfig)"
     },
     "hostAliases": {
-      "type": "array",
+      "allOf": [
+        {
+          "$ref": "hostAliases.json"
+        }
+      ],
       "description": "See [Host Aliases](/truecharts-common/workload#hostaliases)"
     },
     "nodeSelector": {
-      "type": "object",
-      "properties": {
-        "kubernetes.io/arch": {
-          "type": "string",
-          "description": "Configuration for `podOptions.nodeSelector.kubernetes.io/arch`."
+      "allOf": [
+        {
+          "$ref": "nodeSelector.json"
         }
-      },
-      "additionalProperties": true,
+      ],
       "description": "See [Node Selector](/truecharts-common/workload#nodeselector)"
     },
     "defaultSpread": {
@@ -82,11 +65,19 @@
       "description": "Configuration for `podOptions.defaultAffinity`."
     },
     "topologySpreadConstraints": {
-      "type": "array",
+      "allOf": [
+        {
+          "$ref": "topologySpreadConstraints.json"
+        }
+      ],
       "description": "See [Topology Spread Constraints](/truecharts-common/workload#topologyspreadconstraints)"
     },
     "tolerations": {
-      "type": "array",
+      "allOf": [
+        {
+          "$ref": "tolerations.json"
+        }
+      ],
       "description": "See [Tolerations](/truecharts-common/workload#tolerations)"
     },
     "schedulerName": {

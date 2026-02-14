@@ -40,9 +40,11 @@
         "description": "Define additional options for the secret See secret options in the [secret](/truecharts-common/secret) section."
       },
       "ingress": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../ingress/ingress.json#/additionalProperties"
+          }
+        ],
         "description": "Define additional options for the ingress See ingress options in the [ingress](/truecharts-common/ingress) section."
       },
       "settings": {
