@@ -32,15 +32,18 @@
         ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Enable volume snapshot class"
+        "description": "Enable volume snapshot class",
+        "default": false
       },
       "isDefault": {
         "type": "boolean",
-        "description": "Sets the annotation `snapshot.storage.kubernetes.io/is-default-class` to `\"true\"` or `\"false\"`"
+        "description": "Sets the annotation `snapshot.storage.kubernetes.io/is-default-class` to `\"true\"` or `\"false\"`",
+        "default": false
       },
       "driver": {
         "type": "string",
-        "description": "Define the driver of the volume snapshot class"
+        "description": "Define the driver of the volume snapshot class",
+        "minLength": 1
       },
       "deletionPolicy": {
         "type": "string",

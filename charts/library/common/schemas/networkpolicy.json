@@ -12,19 +12,22 @@
         ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Create Network Policy objects"
+        "description": "Create Network Policy objects",
+        "default": false
       },
       "primary": {
         "type": "boolean",
         "properties": {},
         "additionalProperties": true,
-        "description": "Mark as primary Network Policy"
+        "description": "Mark as primary Network Policy",
+        "default": false
       },
       "expandObjectName": {
         "type": "boolean",
         "properties": {},
         "additionalProperties": true,
-        "description": "Expand the object name"
+        "description": "Expand the object name",
+        "default": false
       },
       "namespace": {
         "allOf": [
@@ -101,7 +104,8 @@
         "type": "boolean",
         "properties": {},
         "additionalProperties": true,
-        "description": "Target all pods in the namespace"
+        "description": "Target all pods in the namespace",
+        "default": false
       },
       "policyTypes": {
         "type": "array",

@@ -7,7 +7,8 @@
     "properties": {
       "preemptionPolicy": {
         "type": "string",
-        "description": "Define priority classes"
+        "description": "Define priority classes",
+        "default": "Immediate"
       },
       "enabled": {
         "type": [
@@ -16,7 +17,8 @@
         ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Enables or Disables the priority class"
+        "description": "Enables or Disables the priority class",
+        "default": false
       },
       "namespace": {
         "allOf": [
@@ -42,15 +44,18 @@
       },
       "value": {
         "type": "integer",
-        "description": "Define the value for this priority class"
+        "description": "Define the value for this priority class",
+        "default": 1000000
       },
       "globalDefault": {
         "type": "boolean",
-        "description": "Define if this priority class is the global default"
+        "description": "Define if this priority class is the global default",
+        "default": false
       },
       "description": {
         "type": "string",
-        "description": "Define the description for this priority class"
+        "description": "Define the description for this priority class",
+        "default": "No description given"
       }
     },
     "additionalProperties": true,

@@ -11,7 +11,8 @@
             "$ref": "cluster.json"
           }
         ],
-        "description": "Define a CNPG cluster"
+        "description": "Define a CNPG cluster",
+        "minLength": 1
       },
       "enabled": {
         "type": [
@@ -20,19 +21,22 @@
         ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Define a CNPG cluster"
+        "description": "Define a CNPG cluster",
+        "default": false
       },
       "primary": {
         "type": "boolean",
         "properties": {},
         "additionalProperties": true,
-        "description": "Define a CNPG cluster"
+        "description": "Define a CNPG cluster",
+        "default": false
       },
       "hibernate": {
         "type": "boolean",
         "properties": {},
         "additionalProperties": true,
-        "description": "Define a CNPG cluster"
+        "description": "Define a CNPG cluster",
+        "default": false
       },
       "labels": {
         "allOf": [
@@ -77,15 +81,18 @@
       },
       "database": {
         "type": "string",
-        "description": "Define a CNPG cluster"
+        "description": "Define a CNPG cluster",
+        "minLength": 1
       },
       "user": {
         "type": "string",
-        "description": "Define a CNPG cluster"
+        "description": "Define a CNPG cluster",
+        "minLength": 1
       },
       "password": {
         "type": "string",
-        "description": "Define a CNPG cluster"
+        "description": "Define a CNPG cluster",
+        "minLength": 1
       },
       "monitoring": {
         "type": "object",

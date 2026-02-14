@@ -92,7 +92,8 @@
           "boolean",
           "string"
         ],
-        "description": "Enables or Disables the service"
+        "description": "Enables or Disables the service",
+        "default": false
       },
       "namespace": {
         "allOf": [
@@ -140,7 +141,8 @@
           "boolean",
           "string"
         ],
-        "description": "Whether to expand the object name (based on the [naming scheme](/truecharts-common/service#naming-scheme)) or not"
+        "description": "Whether to expand the object name (based on the [naming scheme](/truecharts-common/service#naming-scheme)) or not",
+        "default": true
       },
       "clusterIP": {
         "allOf": [
@@ -233,7 +235,8 @@
       },
       "publishNotReadyAddresses": {
         "type": "boolean",
-        "description": "Define whether to publishNotReadyAddresses or not"
+        "description": "Define whether to publishNotReadyAddresses or not",
+        "default": false
       },
       "targetSelector": {
         "type": "string",

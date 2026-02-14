@@ -5,11 +5,11 @@
     "shared": {
       "type": "object",
       "properties": {
-          "enabled": {
-            "type": [
-              "boolean",
-              "string"
-            ],
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
           "description": "Define persistence objects"
         },
         "type": {
@@ -42,11 +42,11 @@
     "varlogs": {
       "type": "object",
       "properties": {
-          "enabled": {
-            "type": [
-              "boolean",
-              "string"
-            ],
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
           "description": "Define persistence objects"
         },
         "type": {
@@ -83,11 +83,11 @@
     "varrun": {
       "type": "object",
       "properties": {
-          "enabled": {
-            "type": [
-              "boolean",
-              "string"
-            ],
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
           "description": "Define persistence objects"
         },
         "type": {
@@ -124,11 +124,11 @@
     "tmp": {
       "type": "object",
       "properties": {
-          "enabled": {
-            "type": [
-              "boolean",
-              "string"
-            ],
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
           "description": "Define persistence objects"
         },
         "type": {
@@ -165,11 +165,11 @@
     "devshm": {
       "type": "object",
       "properties": {
-          "enabled": {
-            "type": [
-              "boolean",
-              "string"
-            ],
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
           "description": "Define persistence objects"
         },
         "type": {
@@ -206,11 +206,11 @@
     "crontab": {
       "type": "object",
       "properties": {
-          "enabled": {
-            "type": [
-              "boolean",
-              "string"
-            ],
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
           "description": "Define persistence objects"
         },
         "type": {
@@ -566,11 +566,11 @@
               "additionalProperties": true,
               "description": "Define the name of the volumeSnapshot"
             },
-              "enabled": {
-                "type": [
-                  "boolean",
-                  "string"
-                ],
+            "enabled": {
+              "type": [
+                "boolean",
+                "string"
+              ],
               "properties": {},
               "additionalProperties": true,
               "description": "Define if the volumeSnapshot is enabled"
@@ -635,12 +635,13 @@
         "additionalProperties": true,
         "description": "Define the portals"
       },
-        "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
-        "description": "Enables or Disables the persistence"
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Enables or Disables the persistence",
+        "default": false
       },
       "type": {
         "type": "string",
@@ -659,7 +660,8 @@
       },
       "mountPath": {
         "type": "string",
-        "description": "Define the mountPath for the persistence, applies to all containers that are selected"
+        "description": "Define the mountPath for the persistence, applies to all containers that are selected",
+        "minLength": 1
       },
       "mountPropagation": {
         "type": "string",
@@ -676,11 +678,13 @@
       },
       "readOnly": {
         "type": "boolean",
-        "description": "Define the readOnly for the persistence, applies to all containers that are selected"
+        "description": "Define the readOnly for the persistence, applies to all containers that are selected",
+        "default": false
       },
       "targetSelectAll": {
         "type": "boolean",
-        "description": "Define wether to define this volume to all workloads and mount it on all containers"
+        "description": "Define wether to define this volume to all workloads and mount it on all containers",
+        "default": false
       }
     },
     "additionalProperties": true,

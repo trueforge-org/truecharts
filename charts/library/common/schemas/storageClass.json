@@ -19,7 +19,8 @@
         ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Enables or Disables the storage class"
+        "description": "Enables or Disables the storage class",
+        "default": false
       },
       "labels": {
         "allOf": [
@@ -37,7 +38,8 @@
       },
       "provisioner": {
         "type": "string",
-        "description": "Define the provisioner for this storage class"
+        "description": "Define the provisioner for this storage class",
+        "minLength": 1
       },
       "parameters": {
         "type": "object",
@@ -57,7 +59,8 @@
       },
       "allowVolumeExpansion": {
         "type": "boolean",
-        "description": "Define if volume expansion is allowed for this storage class"
+        "description": "Define if volume expansion is allowed for this storage class",
+        "default": false
       },
       "volumeBindingMode": {
         "type": "string",

@@ -6,10 +6,22 @@
     "type": "object",
     "properties": {
       "unhealthyPodEvictionPolicy": {
-        "type": "object",
         "properties": {},
         "additionalProperties": true,
-        "description": "Create Pod Disruption Budget objects"
+        "description": "Create Pod Disruption Budget objects",
+        "oneOf": [
+          {
+            "type": "object",
+            "enum": [
+              "IfHealthyBudget",
+              "AlwaysAllow"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ]
       },
       "enabled": {
         "type": [
@@ -18,7 +30,8 @@
         ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Create Pod Disruption Budget objects"
+        "description": "Create Pod Disruption Budget objects",
+        "default": false
       },
       "namespace": {
         "allOf": [

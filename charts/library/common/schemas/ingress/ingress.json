@@ -102,13 +102,15 @@
         ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Create Ingress objects"
+        "description": "Create Ingress objects",
+        "default": false
       },
       "primary": {
         "type": "boolean",
         "properties": {},
         "additionalProperties": true,
-        "description": "Create Ingress objects"
+        "description": "Create Ingress objects",
+        "default": false
       },
       "expandObjectName": {
         "type": "object",
@@ -120,7 +122,8 @@
         "type": "boolean",
         "properties": {},
         "additionalProperties": true,
-        "description": "Create Ingress objects"
+        "description": "Create Ingress objects",
+        "default": false
       },
       "namespace": {
         "allOf": [
@@ -148,7 +151,8 @@
         "type": "string",
         "properties": {},
         "additionalProperties": true,
-        "description": "Create Ingress objects"
+        "description": "Create Ingress objects",
+        "default": "nil"
       },
       "targetSelector": {
         "type": "object",
