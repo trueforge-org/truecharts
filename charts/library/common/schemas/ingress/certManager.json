@@ -4,7 +4,10 @@
   "description": "Mirrors docs path ingress/certManager.md.",
   "properties": {
     "enabled": {
-      "type": "boolean"
+      "type": [
+        "boolean",
+        "string"
+      ]
     }
   },
   "additionalProperties": true,

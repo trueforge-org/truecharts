@@ -5,8 +5,11 @@
     "main": {
       "type": "object",
       "properties": {
-        "enabled": {
-          "type": "boolean",
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
           "description": "Configuration for `metrics.main.enabled`."
         },
         "primary": {
@@ -57,8 +60,11 @@
         "prometheusRule": {
           "type": "object",
           "properties": {
-            "enabled": {
-              "type": "boolean",
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
               "description": "Configuration for `metrics.main.prometheusRule.enabled`."
             },
             "groups": {

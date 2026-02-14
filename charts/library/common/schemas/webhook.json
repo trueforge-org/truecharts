@@ -5,8 +5,11 @@
     "validating": {
       "type": "object",
       "properties": {
-        "enabled": {
-          "type": "boolean",
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
           "description": "Create webhook objects"
         },
         "type": {
@@ -24,8 +27,11 @@
     "mutating": {
       "type": "object",
       "properties": {
-        "enabled": {
-          "type": "boolean",
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
           "description": "Create webhook objects"
         },
         "type": {
@@ -190,8 +196,11 @@
         },
         "description": "Define the webhooks."
       },
-      "enabled": {
-        "type": "object",
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
         "properties": {},
         "additionalProperties": true,
         "description": "Enables or Disables the webhook"

@@ -5,8 +5,11 @@
     "main": {
       "type": "object",
       "properties": {
-        "enabled": {
-          "type": "boolean",
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
           "description": "Create Pod Disruption Budget objects"
         },
         "targetSelector": {
@@ -27,8 +30,11 @@
         "additionalProperties": true,
         "description": "Create Pod Disruption Budget objects"
       },
-      "enabled": {
-        "type": "object",
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
         "properties": {},
         "additionalProperties": true,
         "description": "Enables or Disables the Pod Disruption Budget"
