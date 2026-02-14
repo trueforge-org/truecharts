@@ -106,7 +106,7 @@
           }
         ],
         "description": "Define the namespace for this object",
-        "default": "\"\""
+        "default": ""
       },
       "labels": {
         "allOf": [
@@ -165,7 +165,7 @@
           }
         ],
         "description": "Configure Cluster IP type",
-        "default": "\"\""
+        "default": ""
       },
       "ipFamilyPolicy": {
         "oneOf": [
@@ -183,7 +183,7 @@
           }
         ],
         "description": "Define the ipFamilyPolicy Does **not** apply to `type` of `ExternalName` or `ExternalIP`",
-        "default": "\"\""
+        "default": ""
       },
       "ipFamilies": {
         "type": [
@@ -211,7 +211,7 @@
           }
         ],
         "description": "Define the session affinity (ClientIP, None)",
-        "default": "\"\""
+        "default": ""
       },
       "sessionAffinityConfig": {
         "type": "object",
@@ -225,7 +225,7 @@
                   "string"
                 ],
                 "description": "Define the timeout for ClientIP session affinity (0-86400)",
-                "default": "\"\""
+                "default": ""
               }
             },
             "additionalProperties": true,
@@ -261,7 +261,7 @@
           }
         ],
         "description": "Define the external traffic policy (Cluster, Local) Does **not** apply to `type` of `ClusterIP`",
-        "default": "\"\""
+        "default": ""
       },
       "publishNotReadyAddresses": {
         "type": "boolean",
@@ -271,7 +271,7 @@
       "targetSelector": {
         "type": "string",
         "description": "Define the pod to link the service, by default will use the primary pod",
-        "default": "\"\""
+        "default": ""
       },
       "primary": {
         "type": "boolean",
