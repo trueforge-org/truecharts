@@ -559,7 +559,7 @@ def helm_tpl_flag(node: dict[str, Any]) -> str:
         if "x-helm-tpl" in node
         else node.get("helmTpl", node.get("x-tpl", False))
     )
-    return "true" if value else "false"
+    return "✅" if value else "❌"
 
 
 def sanitize_description_markdown(text: str) -> str:
@@ -582,8 +582,14 @@ def render_pretty_table(rows: list[tuple[str, str]]) -> list[str]:
         max(len(row[1]) for row in all_rows),
     ]
 
+    def fmt_cell(value: str, width: int) -> str:
+        padded = value.ljust(width)
+        if value in {"✅", "❌"} and padded.endswith(" "):
+            return padded[:-1]
+        return padded
+
     def fmt_row(row: tuple[str, str]) -> str:
-        return f"| {row[0].ljust(col_widths[0])} | {row[1].ljust(col_widths[1])} |"
+        return f"| {fmt_cell(row[0], col_widths[0])} | {fmt_cell(row[1], col_widths[1])} |"
 
     delimiter = f"| {'-' * max(3, col_widths[0])} | {'-' * max(3, col_widths[1])} |"
     return [fmt_row(header), delimiter, *[fmt_row(row) for row in rows]]
@@ -613,7 +619,7 @@ def render_property_section(
     table_rows: list[tuple[str, str]] = [
         ("Key", f"`{key_path}`"),
         ("Type", f"`{type_text}`"),
-        ("Required", "true" if required else "false"),
+        ("Required", "✅" if required else "❌"),
         ("Helm `tpl`", helm_tpl_flag(node)),
         ("Default", default_text),
     ]
