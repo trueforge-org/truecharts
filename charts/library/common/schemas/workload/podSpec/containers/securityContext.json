@@ -1,100 +1,76 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
+  "type": [
+    "object",
+    "null"
+  ],
   "properties": {
-    "container": {
+    "seccompProfile": {
       "type": "object",
       "properties": {
-        "runAsUser": {
-          "type": "integer",
-          "description": "Configuration for `securityContext.container.runAsUser`."
-        },
-        "runAsGroup": {
-          "type": "integer",
-          "description": "Configuration for `securityContext.container.runAsGroup`."
-        },
-        "readOnlyRootFilesystem": {
-          "type": "boolean",
-          "description": "Configuration for `securityContext.container.readOnlyRootFilesystem`."
-        },
-        "allowPrivilegeEscalation": {
-          "type": "boolean",
-          "description": "Configuration for `securityContext.container.allowPrivilegeEscalation`."
-        },
-        "privileged": {
-          "type": "boolean",
-          "description": "Configuration for `securityContext.container.privileged`."
-        },
-        "seccompProfile": {
+        "profile": {
           "type": "object",
           "properties": {
-            "type": {
-              "type": "string",
-              "description": "Configuration for `securityContext.container.seccompProfile.type`."
-            }
           },
           "additionalProperties": true,
-          "description": "Configuration for `securityContext.container.seccompProfile`."
+          "description": "Define securityContext for the container"
         },
-        "capabilities": {
+        "type": {
           "type": "object",
-          "properties": {
-            "add": {
-              "type": "array",
-              "description": "Configuration for `securityContext.container.capabilities.add`."
-            },
-            "drop": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "description": "Configuration for `securityContext.container.capabilities.drop.$item`."
-              },
-              "description": "Configuration for `securityContext.container.capabilities.drop`."
-            },
-            "disableS6Caps": {
-              "type": "boolean",
-              "description": "Configuration for `securityContext.container.capabilities.disableS6Caps`."
-            }
-          },
+          "properties": {},
           "additionalProperties": true,
-          "description": "Configuration for `securityContext.container.capabilities`."
-        },
-        "PUID": {
-          "type": "integer",
-          "description": "Configuration for `securityContext.container.PUID`."
-        },
-        "UMASK": {
-          "type": "string",
-          "description": "Configuration for `securityContext.container.UMASK`."
+          "description": "Define the seccompProfile.type for the container"
         }
       },
       "additionalProperties": true,
-      "description": "Defines the security context for the container. Can be overridden at container level. See [Container Security Context](/truecharts-common/container/securitycontext#securitycontext)"
+      "description": "Define the seccompProfile for the container"
     },
-    "pod": {
+    "runAsUser": {
+      "type": "integer",
+      "description": "Define the runAsUser for the container"
+    },
+    "runAsGroup": {
+      "type": "integer",
+      "description": "Define the runAsGroup for the container"
+    },
+    "readOnlyRootFilesystem": {
+      "type": "boolean",
+      "description": "Define the readOnlyRootFilesystem for the container"
+    },
+    "allowPrivilegeEscalation": {
+      "type": "boolean",
+      "description": "Define the allowPrivilegeEscalation for the container"
+    },
+    "privileged": {
+      "type": "boolean",
+      "description": "Define the privileged for the container"
+    },
+    "runAsNonRoot": {
+      "type": "boolean",
+      "description": "Define the runAsNonRoot for the container"
+    },
+    "capabilities": {
       "type": "object",
       "properties": {
-        "fsGroup": {
-          "type": "integer",
-          "description": "Configuration for `securityContext.pod.fsGroup`."
-        },
-        "fsGroupChangePolicy": {
-          "type": "string",
-          "description": "Configuration for `securityContext.pod.fsGroupChangePolicy`."
-        },
-        "supplementalGroups": {
+        "add": {
           "type": "array",
-          "description": "Configuration for `securityContext.pod.supplementalGroups`."
+          "items": {
+            "type": "string"
+          },
+          "description": "Define the capabilities.add for the container"
         },
-        "sysctls": {
+        "drop": {
           "type": "array",
-          "description": "Configuration for `securityContext.pod.sysctls`."
+          "items": {
+            "type": "string"
+          },
+          "description": "Define the capabilities.drop for the container"
         }
       },
       "additionalProperties": true,
-      "description": "Defines the security context for the pod. Can be overridden at pod level. See [Pod Security Context](/truecharts-common/workload#securitycontext)"
+      "description": "Define the capabilities for the container If at least one capability is defined in either [`add`](/truecharts-common/container/securitycontext/#securitycontextcapabilitiesadd) or [`drop`](/truecharts-common/container/securitycontext/#securitycontextcapabilitiesdrop)"
     }
   },
   "additionalProperties": true,
-  "description": "Define security context for all containers and pods, unless overridden at the container/pod level See more info about securityContext [here](/truecharts-common/securitycontext)"
+  "description": "Define securityContext for the container"
 }
