@@ -5,11 +5,11 @@
     "main": {
       "type": "object",
       "properties": {
-          "enabled": {
-            "type": [
-              "boolean",
-              "string"
-            ],
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
           "description": "Define service objects"
         },
         "primary": {
@@ -22,11 +22,11 @@
             "main": {
               "type": "object",
               "properties": {
-                  "enabled": {
-                    "type": [
-                      "boolean",
-                      "string"
-                    ],
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
                   "description": "Configuration for `service.main.ports.main.enabled`."
                 },
                 "primary": {
@@ -59,11 +59,11 @@
           "traefik": {
             "type": "object",
             "properties": {
-                "enabled": {
-                  "type": [
-                    "boolean",
-                    "string"
-                  ],
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
                 "properties": {},
                 "additionalProperties": true,
                 "description": "Enables or Disables the traefik integration"
@@ -248,23 +248,27 @@
         "additionalProperties": true,
         "description": "Define the appProtocol for External IP"
       },
-        "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
         "description": "Enables or Disables the service"
       },
       "namespace": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../special/namespaces.json"
+          }
+        ],
         "description": "Define the namespace for this object"
       },
       "labels": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../special/labels.json"
+          }
+        ],
         "description": "Additional labels for service"
       },
       "annotations": {

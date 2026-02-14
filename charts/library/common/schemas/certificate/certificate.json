@@ -15,34 +15,40 @@
             "description": "Define certificates"
           },
           "labels": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "allOf": [
+              {
+                "$ref": "../special/labels.json"
+              }
+            ],
             "description": "Define the labels for this certificate secret template"
           }
         },
         "additionalProperties": true,
         "description": "Define the certificate secret template for this certificate At least one of the following keys must be defined"
       },
-        "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
         "description": "Enables or Disables the certificate"
       },
       "namespace": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../special/namespaces.json"
+          }
+        ],
         "description": "Define the namespace for this object"
       },
       "labels": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../special/labels.json"
+          }
+        ],
         "description": "Define the labels for this certificate"
       },
       "annotations": {

@@ -8,11 +8,11 @@
         "tc-basic-secure-headers": {
           "type": "object",
           "properties": {
-              "enabled": {
-                "type": [
-                  "boolean",
-                  "string"
-                ],
+            "enabled": {
+              "type": [
+                "boolean",
+                "string"
+              ],
               "description": "Create Middleware objects"
             },
             "type": {
@@ -398,11 +398,11 @@
                 "additionalProperties": true,
                 "description": "Define the maxBodySize"
               },
-                "enabled": {
-                  "type": [
-                    "boolean",
-                    "string"
-                  ],
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
                 "properties": {},
                 "additionalProperties": true,
                 "description": "Define the enabled"
@@ -821,25 +821,29 @@
           "additionalProperties": true,
           "description": "Create Middleware objects"
         },
-          "enabled": {
-            "type": [
-              "boolean",
-              "string"
-            ],
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
           "properties": {},
           "additionalProperties": true,
           "description": "Enables or Disables the Middleware"
         },
         "namespace": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "allOf": [
+            {
+              "$ref": "../special/namespaces.json"
+            }
+          ],
           "description": "Define the namespace for this object"
         },
         "labels": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "allOf": [
+            {
+              "$ref": "../special/labels.json"
+            }
+          ],
           "description": "Additional labels for middleware"
         },
         "annotations": {

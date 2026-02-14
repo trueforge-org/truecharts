@@ -2,11 +2,11 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "properties": {
-      "enabled": {
-        "type": [
-          "boolean",
-          "string"
-        ],
+    "enabled": {
+      "type": [
+        "boolean",
+        "string"
+      ],
       "description": "Define a CNPG cluster"
     },
     "primary": {
@@ -18,9 +18,11 @@
       "description": "Define a CNPG cluster"
     },
     "labels": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "allOf": [
+        {
+          "$ref": "../special/labels.json"
+        }
+      ],
       "description": "Define a CNPG cluster"
     },
     "annotations": {
@@ -117,21 +119,21 @@
     "backups": {
       "type": "object",
       "properties": {
-          "enabled": {
-            "type": [
-              "boolean",
-              "string"
-            ],
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
           "description": "Configuration for `cnpg.main.backups.enabled`."
         },
         "encryption": {
           "type": "object",
           "properties": {
-              "enabled": {
-                "type": [
-                  "boolean",
-                  "string"
-                ],
+            "enabled": {
+              "type": [
+                "boolean",
+                "string"
+              ],
               "description": "Configuration for `cnpg.main.backups.encryption.enabled`."
             }
           },
@@ -200,11 +202,11 @@
     "pooler": {
       "type": "object",
       "properties": {
-          "enabled": {
-            "type": [
-              "boolean",
-              "string"
-            ],
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
           "description": "Configuration for `cnpg.main.pooler.enabled`."
         },
         "createRO": {
@@ -220,9 +222,11 @@
           "description": "Configuration for `cnpg.main.pooler.instances`."
         },
         "labels": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "allOf": [
+            {
+              "$ref": "../special/labels.json"
+            }
+          ],
           "description": "Configuration for `cnpg.main.pooler.labels`."
         },
         "annotations": {

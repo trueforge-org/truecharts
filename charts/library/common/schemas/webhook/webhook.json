@@ -5,11 +5,11 @@
     "validating": {
       "type": "object",
       "properties": {
-          "enabled": {
-            "type": [
-              "boolean",
-              "string"
-            ],
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
           "description": "Create webhook objects"
         },
         "type": {
@@ -27,11 +27,11 @@
     "mutating": {
       "type": "object",
       "properties": {
-          "enabled": {
-            "type": [
-              "boolean",
-              "string"
-            ],
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
           "description": "Create webhook objects"
         },
         "type": {
@@ -165,9 +165,11 @@
                       "description": "Define the service name in clientConfig for the webhook"
                     },
                     "namespace": {
-                      "type": "object",
-                      "properties": {},
-                      "additionalProperties": true,
+                      "allOf": [
+                        {
+                          "$ref": "../special/namespaces.json"
+                        }
+                      ],
                       "description": "Define the service namespace in clientConfig for the webhook"
                     },
                     "path": {
@@ -196,25 +198,29 @@
         },
         "description": "Define the webhooks."
       },
-        "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
         "description": "Enables or Disables the webhook"
       },
       "namespace": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../special/namespaces.json"
+          }
+        ],
         "description": "Define the namespace for this object"
       },
       "labels": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../special/labels.json"
+          }
+        ],
         "description": "Additional labels for webhook"
       },
       "annotations": {

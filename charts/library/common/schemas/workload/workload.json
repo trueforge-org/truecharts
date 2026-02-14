@@ -160,7 +160,7 @@
               "type": "object",
               "properties": {
                 "env": {
-                  "$ref": "container/env.json",
+                  "$ref": "podSpec/containers/env.json",
                   "description": "Define env(s) for the container"
                 },
                 "resources": {
@@ -604,9 +604,11 @@
             "description": "Configuration for `$name.podSpec.initContainers`."
           },
           "labels": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "allOf": [
+              {
+                "$ref": "../special/labels.json"
+              }
+            ],
             "description": "Define labels for podSpec"
           },
           "annotations": {
@@ -947,9 +949,11 @@
         "description": "Set workload as primary"
       },
       "labels": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../special/labels.json"
+          }
+        ],
         "description": "Define labels for workload"
       },
       "annotations": {

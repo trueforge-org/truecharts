@@ -3,9 +3,11 @@
   "type": "object",
   "properties": {
     "labels": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "allOf": [
+        {
+          "$ref": "../special/labels.json"
+        }
+      ],
       "description": "Additional Labels that apply to all objects"
     },
     "annotations": {

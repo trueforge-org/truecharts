@@ -5,11 +5,11 @@
     "main": {
       "type": "object",
       "properties": {
-          "enabled": {
-            "type": [
-              "boolean",
-              "string"
-            ],
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
           "description": "Configuration for `route.main.enabled`."
         },
         "kind": {
@@ -23,9 +23,11 @@
           "description": "Configuration for `route.main.annotations`."
         },
         "labels": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "allOf": [
+            {
+              "$ref": "../special/labels.json"
+            }
+          ],
           "description": "Configuration for `route.main.labels`."
         },
         "parentRefs": {
