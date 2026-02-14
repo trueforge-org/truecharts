@@ -1,0 +1,21 @@
+{
+  "key": "backups",
+  "type": "object",
+  "scalarKeys": {
+    "enabled": "boolean",
+    "revision": "integer",
+    "servername": "string",
+    "destinationPath": "string",
+    "target": "string",
+    "credentials": "string",
+    "retentionPolicy": "string"
+  },
+  "objectKeys": [
+    "encryption"
+  ],
+  "arrayKeys": [
+    "scheduledBackups",
+    "manualBackups"
+  ],
+  "hasObjectNameObject": false
+}
