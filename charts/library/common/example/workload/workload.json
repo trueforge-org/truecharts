@@ -1,0 +1,36 @@
+{
+  "key": "objectname",
+  "type": "object",
+  "scalarKeys": {
+    "enabled": "boolean",
+    "primary": "boolean",
+    "type": "string",
+    "dbWait": "boolean",
+    "namespace": "string",
+    "replicas": "integer",
+    "revisionHistoryLimit": "integer",
+    "serviceName": "string",
+    "podManagementPolicy": "string",
+    "backoffLimit": "integer",
+    "completions": "integer",
+    "parallelism": "integer",
+    "activeDeadlineSeconds": "integer",
+    "ttlSecondsAfterFinished": "integer",
+    "schedule": "string",
+    "suspend": "boolean",
+    "successfulJobsHistory": "integer",
+    "failedJobsHistory": "integer",
+    "concurrencyPolicy": "string",
+    "startingDeadlineSeconds": "integer"
+  },
+  "objectKeys": [
+    "labels",
+    "annotations",
+    "strategy",
+    "updateStrategy",
+    "persistentVolumeClaimRetentionPolicy",
+    "podSpec"
+  ],
+  "arrayKeys": [],
+  "hasObjectNameObject": false
+}

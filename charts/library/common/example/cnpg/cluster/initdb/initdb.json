@@ -1,0 +1,18 @@
+{
+  "key": "initdb",
+  "type": "object",
+  "scalarKeys": {
+    "database": "string",
+    "owner": "string"
+  },
+  "objectKeys": [
+    "secret"
+  ],
+  "arrayKeys": [
+    "options",
+    "postInitSQL",
+    "postInitApplicationSQL",
+    "postInitTemplateSQL"
+  ],
+  "hasObjectNameObject": false
+}

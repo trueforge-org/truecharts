@@ -1,0 +1,28 @@
+{
+  "key": "cluster",
+  "type": "object",
+  "scalarKeys": {
+    "instances": "integer",
+    "singleNode": "boolean",
+    "skipEmptyWalArchiveCheck": "boolean",
+    "primaryUpdateMethod": "string",
+    "primaryUpdateStrategy": "string",
+    "logLevel": "string",
+    "enableSuperuserAccess": "boolean"
+  },
+  "objectKeys": [
+    "labels",
+    "annotations",
+    "env",
+    "storage",
+    "walStorage",
+    "resources",
+    "certificates",
+    "postgresql",
+    "initdb"
+  ],
+  "arrayKeys": [
+    "envFrom"
+  ],
+  "hasObjectNameObject": false
+}
