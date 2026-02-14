@@ -96,9 +96,10 @@
                       "type": "object",
                       "properties": {
                         "expandObjectName": {
-                          "type": "object",
-                          "properties": {},
-                          "additionalProperties": true,
+                          "type": [
+                            "boolean",
+                            "string"
+                          ],
                           "description": "List of kubernetes secrets (in the same namespace) containing certificate authorities to use when performing TLS verification of the backend service."
                         },
                         "name": {
@@ -121,9 +122,10 @@
                           "description": "Define the secret name This will be automatically expanded to `fullname-secret-name`."
                         },
                         "expandObjectName": {
-                          "type": "object",
-                          "properties": {},
-                          "additionalProperties": true,
+                          "type": [
+                            "boolean",
+                            "string"
+                          ],
                           "description": "Whether to expand (adding the fullname as prefix) the secret name"
                         }
                       },
@@ -276,15 +278,14 @@
         "description": "Define the service type"
       },
       "expandObjectName": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": [
+          "boolean",
+          "string"
+        ],
         "description": "Whether to expand the object name (based on the [naming scheme](/truecharts-common/service#naming-scheme)) or not"
       },
       "clusterIP": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Configure Cluster IP type"
       },
       "ipFamilyPolicy": {
@@ -338,9 +339,7 @@
         "description": "Define the external traffic policy (Cluster, Local) Does **not** apply to `type` of `ClusterIP`"
       },
       "publishNotReadyAddresses": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "boolean",
         "description": "Define whether to publishNotReadyAddresses or not"
       },
       "targetSelector": {
