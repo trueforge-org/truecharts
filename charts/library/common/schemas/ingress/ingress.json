@@ -9,239 +9,27 @@
         "type": "object",
         "properties": {
           "traefik": {
-            "type": "object",
-            "properties": {
-              "enabled": {
-                "type": [
-                  "boolean",
-                  "string"
-                ],
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Enables or Disables the traefik integration"
-              },
-              "entrypoints": {
-                "type": "array",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Define the entrypoints for this traefik integration",
-                "items": {
-                  "type": "string",
-                  "description": "Configuration for `ingress.main.integrations.traefik.entrypoints.$item`."
-                }
-              },
-              "forceTLS": {
-                "type": "boolean",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Force TLS on this ingress Adds the `traefik.ingress.kubernetes.io/router.tls` annotation."
-              },
-              "middlewares": {
-                "type": "array",
-                "properties": {},
-                "additionalProperties": {
-                  "type": "object",
-                  "properties": {
-                    "expandObjectName": {
-                      "type": "object",
-                      "properties": {},
-                      "additionalProperties": true,
-                      "description": "The middlewares for this traefik integration"
-                    },
-                    "name": {
-                      "type": "object",
-                      "properties": {},
-                      "additionalProperties": true,
-                      "description": "The name of the middleware"
-                    },
-                    "namespace": {
-                      "allOf": [
-                        {
-                          "$ref": "../special/namespaces.json"
-                        }
-                      ],
-                      "description": "The namespace of the middleware If not defined, the current namespace will be used."
-                    }
-                  },
-                  "additionalProperties": true,
-                  "description": "Configuration for `$name.integrations.traefik.middlewares.$name`."
-                },
-                "description": "The middlewares for this traefik integration"
-              },
-              "chartMiddlewares": {
-                "type": [
-                  "array",
-                  "object"
-                ],
-                "additionalProperties": true,
-                "description": "Same as [middlewares](#middlewares) but meant to be used by the chart developer to define some custom middleware specific to this ingress."
+            "allOf": [
+              {
+                "$ref": "traefik.json"
               }
-            },
-            "additionalProperties": true,
+            ],
             "description": "Create Ingress objects"
           },
           "homepage": {
-            "type": "object",
-            "properties": {
-              "enabled": {
-                "type": [
-                  "boolean",
-                  "string"
-                ],
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Enables or Disables the homepage integration"
-              },
-              "name": {
-                "type": "string",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Define the name for the application Sets the `gethomepage.dev/name` annotation"
-              },
-              "description": {
-                "type": "string",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Define the description for the application Sets the `gethomepage.dev/description` annotation"
-              },
-              "group": {
-                "type": "string",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Define the group for the application Sets the `gethomepage.dev/group` annotation"
-              },
-              "icon": {
-                "type": "string",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Define the icon for the application Sets the `gethomepage.dev/icon` annotation"
-              },
-              "href": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Define the href for the application Sets the `gethomepage.dev/href` annotation"
-              },
-              "weight": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Define the weight for the application Sets the `gethomepage.dev/weight` annotation"
-              },
-              "podSelector": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Define the pods to select Sets the `gethomepage.dev/pod-selector` annotation"
-              },
-              "widget": {
-                "type": "object",
-                "properties": {
-                  "customkv": {
-                    "type": [
-                      "null",
-                      "string",
-                      "number",
-                      "integer",
-                      "boolean",
-                      "object",
-                      "array"
-                    ],
-                    "properties": {},
-                    "additionalProperties": {
-                      "type": "object",
-                      "properties": {
-                        "key": {
-                          "type": "object",
-                          "properties": {},
-                          "additionalProperties": true,
-                          "description": "Define the key for the custom annotation Sets the `gethomepage.dev/widget.$key` annotation"
-                        },
-                        "value": {
-                          "type": "object",
-                          "properties": {},
-                          "additionalProperties": true,
-                          "description": "Define the value for the custom annotation"
-                        }
-                      },
-                      "additionalProperties": true,
-                      "description": "Configuration for `$name.integrations.homepage.widget.customkv.$name`."
-                    },
-                    "description": "Define configuration for the widget"
-                  },
-                  "enabled": {
-                    "type": [
-                      "boolean",
-                      "string"
-                    ],
-                    "properties": {},
-                    "additionalProperties": true,
-                    "description": "Enables or Disables the widget"
-                  },
-                  "type": {
-                    "type": "string",
-                    "properties": {},
-                    "additionalProperties": true,
-                    "description": "Define configuration for the widget"
-                  },
-                  "version": {
-                    "type": [
-                      "string",
-                      "number",
-                      "integer",
-                      "object"
-                    ],
-                    "additionalProperties": true,
-                    "description": "Define the version of the widget Sets the `gethomepage.dev/widget.version` annotation"
-                  },
-                  "url": {
-                    "type": "string",
-                    "properties": {},
-                    "additionalProperties": true,
-                    "description": "Define configuration for the widget"
-                  },
-                  "custom": {
-                    "type": [
-                      "null",
-                      "string",
-                      "number",
-                      "integer",
-                      "boolean",
-                      "object",
-                      "array"
-                    ],
-                    "properties": {},
-                    "additionalProperties": true,
-                    "description": "Define configuration for the widget"
-                  }
-                },
-                "additionalProperties": true,
-                "description": "Define configuration for the widget"
+            "allOf": [
+              {
+                "$ref": "integrations/homepage.json"
               }
-            },
-            "additionalProperties": true,
+            ],
             "description": "Create Ingress objects"
           },
           "certManager": {
-            "type": "object",
-            "properties": {
-              "enabled": {
-                "type": [
-                  "boolean",
-                  "string"
-                ],
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Enables or Disables the cert-manager integration"
-              },
-              "certificateIssuer": {
-                "type": "string",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Define the certificate issuer for this cert-manager integration"
+            "allOf": [
+              {
+                "$ref": "certManager.json"
               }
-            },
-            "additionalProperties": true,
+            ],
             "description": "Create Ingress objects"
           },
           "nginx": {
