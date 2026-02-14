@@ -6,33 +6,45 @@
       "type": "object",
       "properties": {
         "cpu": {
-          "type": "string",
-          "description": "Configuration for `resources.limits.cpu`."
+          "type": [
+            "string",
+            "number"
+          ],
+          "description": "The maximum amount of CPU that the container can use."
         },
         "memory": {
-          "type": "string",
-          "description": "Configuration for `resources.limits.memory`."
+          "type": [
+            "string",
+            "number"
+          ],
+          "description": "The resources that the container can use."
         }
       },
       "additionalProperties": true,
-      "description": "See [Resources Limits](/truecharts-common/container/resources#resourceslimits)"
+      "description": "The maximum amount of resources that the container can use. Limits are **optional**, can be set to \"unlimited\" by setting it's values (`cpu` and `memory`) to `0`."
     },
     "requests": {
       "type": "object",
       "properties": {
         "cpu": {
-          "type": "string",
-          "description": "Configuration for `resources.requests.cpu`."
+          "type": [
+            "string",
+            "number"
+          ],
+          "description": "The minimum amount of CPU that the container can use."
         },
         "memory": {
-          "type": "string",
-          "description": "Configuration for `resources.requests.memory`."
+          "type": [
+            "string",
+            "number"
+          ],
+          "description": "The minimum amount of memory that the container can use."
         }
       },
       "additionalProperties": true,
-      "description": "See [Resources Requests](/truecharts-common/container/resources#resourcesrequests)"
+      "description": "The minimum amount of resources that the container needs. Requests are **required**, because without it, kubernetes uses the `limits` as the `requests`."
     }
   },
   "additionalProperties": true,
-  "description": "Define resources for all containers, unless overridden at the container level Resources apply to **EACH** container, not to the pod as a whole."
+  "description": "The resources that the container can use."
 }
