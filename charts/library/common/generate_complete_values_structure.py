@@ -100,17 +100,16 @@ def normalize_variable_keys(data: Any, known_static_keys: Set[str]) -> Any:
     if variable_keys:
         # Check if all variable keys have similar structure (indicating they're variable names)
         values_list = list(variable_keys.values())
-        if len(variable_keys) > 0:
-            # If we have multiple similar keys or keys that look like variable names,
-            # use 'objectname' as placeholder
-            # Keep the first one's structure but use 'objectname' as key
-            first_value = values_list[0]
-            if 'objectname' not in result:
-                result['objectname'] = first_value
-            # Add back any that were actually static keys we missed
-            for key, value in variable_keys.items():
-                if key in ['main', 'default', 'admin']:  # Common static keys
-                    result[key] = value
+        # If we have multiple similar keys or keys that look like variable names,
+        # use 'objectname' as placeholder
+        # Keep the first one's structure but use 'objectname' as key
+        first_value = values_list[0]
+        if 'objectname' not in result:
+            result['objectname'] = first_value
+        # Add back any that were actually static keys we missed
+        for key, value in variable_keys.items():
+            if key in ['main', 'default', 'admin']:  # Common static keys
+                result[key] = value
     
     return result
 
@@ -193,31 +192,6 @@ def generate_complete_structure(repo_root: Path) -> Dict[str, Any]:
     
     print("Merge complete. Structure generated.", file=sys.stderr)
     return complete_structure
-
-
-class PreserveStyleDumper(yaml.SafeDumper):
-    """Custom YAML dumper to preserve the original file's style."""
-    
-    def increase_indent(self, flow=False, indentless=False):
-        return super().increase_indent(flow, False)
-
-
-def represent_none(self, data):
-    """Represent None as empty string to match original style."""
-    return self.represent_scalar('tag:yaml.org,2002:str', '""')
-
-
-def represent_str(self, data):
-    """Represent strings with double quotes consistently."""
-    if data == '':
-        return self.represent_scalar('tag:yaml.org,2002:str', '""')
-    # Use double quotes for non-empty strings
-    return self.represent_scalar('tag:yaml.org,2002:str', data, style='"')
-
-
-# Register custom representers
-PreserveStyleDumper.add_representer(type(None), represent_none)
-PreserveStyleDumper.add_representer(str, represent_str)
 
 
 def write_complete_structure(output_path: Path, structure: Dict[str, Any]) -> None:
