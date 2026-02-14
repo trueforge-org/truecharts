@@ -148,39 +148,27 @@
           "type": "object",
           "properties": {
             "nodePort": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "type": "integer",
               "description": "Define the node port that will be exposed on the node"
             },
             "targetSelector": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "type": "string",
               "description": "Define the port dict"
             },
             "port": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "type": "integer",
               "description": "Define the port that will be exposed by the service"
             },
             "targetPort": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "type": "integer",
               "description": "Define the target port (No named ports)"
             },
             "protocol": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "type": "string",
               "description": "Define the port protocol Used by the container ports and probes, http and https are converted to tcp where needed"
             },
             "hostPort": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "type": "integer",
               "description": "Define the hostPort, should be **avoided**, unless **ABSOLUTELY** necessary"
             }
           },
@@ -238,9 +226,7 @@
         "description": "Define the appProtocol for External IP"
       },
       "enabled": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "boolean",
         "description": "Enables or Disables the service"
       },
       "namespace": {
@@ -262,9 +248,7 @@
         "description": "Additional annotations for service"
       },
       "type": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the service type"
       },
       "expandObjectName": {
@@ -336,9 +320,7 @@
         "description": "Define whether to publishNotReadyAddresses or not"
       },
       "targetSelector": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the pod to link the service, by default will use the primary pod"
       }
     },

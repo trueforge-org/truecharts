@@ -13,9 +13,7 @@
           "description": "Contains specific settings for helm charts containing or using system"
         },
         "enabled": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Enables or disables the verification of system"
         }
       },
@@ -23,9 +21,7 @@
       "description": "Contains specific settings for verifying system"
     },
     "register": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "boolean",
       "description": "Adds a configmap in the operator's namespace to register the chart as an operator"
     }
   },
