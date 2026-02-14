@@ -81,6 +81,11 @@ image:
   pullPolicy: IfNotPresent
   tag: v1.11.0@sha256:200689790a0a0ea48ca45992e0450bc26ccab5307375b41c84dfc4f2475937ab
 
+ubuntuImage:
+  repository: oci.trueforge.org/containerforge/ubuntu
+  tag: "24.04@sha256:3b826c0233182d7c31a9323121178b98976765b9ee03f9a96200ab0c70e2e1e2"
+  pullPolicy: IfNotPresent
+
 chartContext:
   appUrl: ""
   podCIDR: ""
