@@ -10,7 +10,8 @@
           "boolean",
           "string"
         ],
-        "description": "Configuration for `route.main.enabled`."
+        "description": "Configuration for `route.main.enabled`.",
+        "default": false
       },
       "kind": {
         "type": "string",
@@ -21,7 +22,8 @@
           "TLSRoute",
           "UDPRoute"
         ],
-        "description": "Configuration for `route.main.kind`."
+        "description": "Configuration for `route.main.kind`.",
+        "default": "HTTPRoute"
       },
       "annotations": {
         "type": "object",
@@ -94,7 +96,8 @@
       },
       "hostnames": {
         "type": "array",
-        "description": "Configuration for `route.main.hostnames`."
+        "description": "Configuration for `route.main.hostnames`.",
+        "default": []
       },
       "rules": {
         "type": "array",
@@ -194,7 +197,8 @@
       }
     },
     "additionalProperties": true,
-    "description": "Configuration for `route.main`."
+    "description": "Configuration for `route.main`.",
+    "default": {}
   },
   "description": "Configuration for `route`."
 }

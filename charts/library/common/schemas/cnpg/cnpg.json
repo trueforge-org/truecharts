@@ -11,7 +11,10 @@
             "$ref": "cluster.json"
           }
         ],
-        "description": "Define a CNPG cluster"
+        "description": "Define a CNPG cluster",
+        "type": "string",
+        "default": "{}",
+        "minLength": 1
       },
       "enabled": {
         "type": [
@@ -20,19 +23,22 @@
         ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Define a CNPG cluster"
+        "description": "Define a CNPG cluster",
+        "default": false
       },
       "primary": {
         "type": "boolean",
         "properties": {},
         "additionalProperties": true,
-        "description": "Define a CNPG cluster"
+        "description": "Define a CNPG cluster",
+        "default": false
       },
       "hibernate": {
         "type": "boolean",
         "properties": {},
         "additionalProperties": true,
-        "description": "Define a CNPG cluster"
+        "description": "Define a CNPG cluster",
+        "default": false
       },
       "labels": {
         "allOf": [
@@ -40,13 +46,22 @@
             "$ref": "../special/labels.json"
           }
         ],
-        "description": "Define a CNPG cluster"
+        "description": "Define a CNPG cluster",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
       },
       "annotations": {
-        "type": "object",
+        "type": [
+          "object",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Define a CNPG cluster"
+        "description": "Define a CNPG cluster",
+        "default": {}
       },
       "type": {
         "type": "string",
@@ -57,15 +72,17 @@
           "vectors",
           "vectorchord"
         ],
-        "description": "Define a CNPG cluster"
+        "description": "Define a CNPG cluster",
+        "default": "postgres"
       },
       "pgVersion": {
         "type": "integer",
         "enum": [
-          15,
-          16
+          "15",
+          "16"
         ],
-        "description": "Define a CNPG cluster"
+        "description": "Define a CNPG cluster",
+        "default": "nil"
       },
       "mode": {
         "type": "string",
@@ -73,19 +90,26 @@
           "standalone",
           "recovery"
         ],
-        "description": "Define a CNPG cluster"
+        "description": "Define a CNPG cluster",
+        "default": "standalone"
       },
       "database": {
         "type": "string",
-        "description": "Define a CNPG cluster"
+        "description": "Define a CNPG cluster",
+        "default": "\"\"",
+        "minLength": 1
       },
       "user": {
         "type": "string",
-        "description": "Define a CNPG cluster"
+        "description": "Define a CNPG cluster",
+        "default": "\"\"",
+        "minLength": 1
       },
       "password": {
         "type": "string",
-        "description": "Define a CNPG cluster"
+        "description": "Define a CNPG cluster",
+        "default": "\"\"",
+        "minLength": 1
       },
       "monitoring": {
         "type": "object",
@@ -368,7 +392,8 @@
     },
     "additionalProperties": true,
     "description": "Define a CNPG cluster",
-    "$schema": "http://json-schema.org/draft-07/schema#"
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "default": {}
   },
   "description": "Define a CNPG cluster"
 }

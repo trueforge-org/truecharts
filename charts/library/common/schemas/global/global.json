@@ -9,10 +9,17 @@
         }
       ],
       "description": "Additional Labels that apply to all objects",
-      "default": {}
+      "default": {},
+      "type": [
+        "object",
+        "string"
+      ]
     },
     "annotations": {
-      "type": "object",
+      "type": [
+        "object",
+        "string"
+      ],
       "properties": {},
       "additionalProperties": true,
       "description": "Additional Annotations that apply to all objects",
@@ -21,7 +28,7 @@
     "namespace": {
       "type": "string",
       "description": "Namespace to apply to all objects, unless overridden at the object level Does not apply to chart deps, use global.namespace for that",
-      "default": ""
+      "default": "\"\""
     },
     "diagnosticMode": {
       "type": "object",
@@ -62,14 +69,10 @@
             "description": "Configuration for `global.traefik.commonMiddlewares.$item`."
           },
           "description": "Settings for traefik integration",
-          "default": [
-            {
-              "name": "tc-basic-secure-headers"
-            }
-          ]
+          "default": "[{name: tc-basic-secure-headers}]"
         },
         "addServiceAnnotations": {
-          "type": "object",
+          "type": "boolean",
           "properties": {},
           "additionalProperties": true,
           "description": "Add annotations to services for traefik",

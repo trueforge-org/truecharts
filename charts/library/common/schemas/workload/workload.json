@@ -337,7 +337,8 @@
           }
         },
         "additionalProperties": true,
-        "description": "Define the podSpec for the workload"
+        "description": "Define the podSpec for the workload",
+        "default": {}
       },
       "replicas": {
         "type": [
@@ -431,7 +432,8 @@
         "type": "object",
         "properties": {},
         "additionalProperties": true,
-        "description": "Define workload objects"
+        "description": "Define workload objects",
+        "default": {}
       },
       "completionMode": {
         "type": "string",
@@ -501,11 +503,13 @@
           "boolean",
           "string"
         ],
-        "description": "Enable or disable workload"
+        "description": "Enable or disable workload",
+        "default": false
       },
       "primary": {
         "type": "boolean",
-        "description": "Set workload as primary"
+        "description": "Set workload as primary",
+        "default": false
       },
       "labels": {
         "allOf": [
@@ -513,17 +517,27 @@
             "$ref": "../special/labels.json"
           }
         ],
-        "description": "Define labels for workload"
+        "description": "Define labels for workload",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
       },
       "annotations": {
-        "type": "object",
+        "type": [
+          "object",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Define annotations for workload"
+        "description": "Define annotations for workload",
+        "default": {}
       },
       "namespace": {
         "type": "string",
-        "description": "Define the namespace for this object"
+        "description": "Define the namespace for this object",
+        "default": "\"\""
       },
       "type": {
         "type": "string",
@@ -534,17 +548,20 @@
           "CronJob",
           "Job"
         ],
-        "description": "Define the kind of the workload"
+        "description": "Define the kind of the workload",
+        "default": "\"\""
       },
       "serviceAccountName": {
         "type": "string",
-        "description": "Suggested is to use the top-level [serviceAccount](/truecharts-common/serviceaccount/) key to define the service account with `targetSelector`."
+        "description": "Suggested is to use the top-level [serviceAccount](/truecharts-common/serviceaccount/) key to define the service account with `targetSelector`.",
+        "default": "\"\""
       },
       "containers": {
         "type": "object",
         "properties": {},
         "additionalProperties": true,
-        "description": "Define container(s) for the workload See [Container](/truecharts-common/container/) for more information"
+        "description": "Define container(s) for the workload See [Container](/truecharts-common/container/) for more information",
+        "default": {}
       },
       "dbWait": {
         "type": "boolean",
@@ -552,7 +569,8 @@
       }
     },
     "additionalProperties": true,
-    "description": "Define workload"
+    "description": "Define workload",
+    "default": {}
   },
   "description": "Define workload objects"
 }

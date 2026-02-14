@@ -10,11 +10,13 @@
           "boolean",
           "string"
         ],
-        "description": "Configuration for `vpa.main.enabled`."
+        "description": "Configuration for `vpa.main.enabled`.",
+        "default": false
       },
       "targetSelector": {
         "type": "array",
-        "description": "Configuration for `vpa.main.targetSelector`."
+        "description": "Configuration for `vpa.main.targetSelector`.",
+        "default": []
       },
       "resourcePolicy": {
         "type": "object",
@@ -74,11 +76,13 @@
           }
         },
         "additionalProperties": true,
-        "description": "Configuration for `vpa.main.resourcePolicy`."
+        "description": "Configuration for `vpa.main.resourcePolicy`.",
+        "default": {}
       }
     },
     "additionalProperties": true,
-    "description": "Configuration for `vpa.main`."
+    "description": "Configuration for `vpa.main`.",
+    "default": {}
   },
   "description": "Configuration for `vpa`."
 }

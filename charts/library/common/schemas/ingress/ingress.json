@@ -14,7 +14,9 @@
                 "$ref": "traefik.json"
               }
             ],
-            "description": "Create Ingress objects"
+            "description": "Create Ingress objects",
+            "type": "object",
+            "default": {}
           },
           "homepage": {
             "allOf": [
@@ -22,7 +24,9 @@
                 "$ref": "integrations/homepage.json"
               }
             ],
-            "description": "Create Ingress objects"
+            "description": "Create Ingress objects",
+            "type": "object",
+            "default": {}
           },
           "certManager": {
             "allOf": [
@@ -30,7 +34,9 @@
                 "$ref": "certManager.json"
               }
             ],
-            "description": "Create Ingress objects"
+            "description": "Create Ingress objects",
+            "type": "object",
+            "default": {}
           },
           "nginx": {
             "type": "object",
@@ -93,7 +99,8 @@
           }
         },
         "additionalProperties": true,
-        "description": "Create Ingress objects"
+        "description": "Create Ingress objects",
+        "default": {}
       },
       "enabled": {
         "type": [
@@ -102,25 +109,29 @@
         ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Create Ingress objects"
+        "description": "Create Ingress objects",
+        "default": false
       },
       "primary": {
         "type": "boolean",
         "properties": {},
         "additionalProperties": true,
-        "description": "Create Ingress objects"
+        "description": "Create Ingress objects",
+        "default": false
       },
       "expandObjectName": {
-        "type": "object",
+        "type": "boolean",
         "properties": {},
         "additionalProperties": true,
-        "description": "Define if the object name should be expanded"
+        "description": "Define if the object name should be expanded",
+        "default": false
       },
       "required": {
         "type": "boolean",
         "properties": {},
         "additionalProperties": true,
-        "description": "Create Ingress objects"
+        "description": "Create Ingress objects",
+        "default": false
       },
       "namespace": {
         "allOf": [
@@ -128,7 +139,8 @@
             "$ref": "../special/namespaces.json"
           }
         ],
-        "description": "Define the namespace for this object"
+        "description": "Define the namespace for this object",
+        "default": "\"\""
       },
       "labels": {
         "allOf": [
@@ -136,25 +148,36 @@
             "$ref": "../special/labels.json"
           }
         ],
-        "description": "Create Ingress objects"
+        "description": "Create Ingress objects",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
       },
       "annotations": {
-        "type": "object",
+        "type": [
+          "object",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Create Ingress objects"
+        "description": "Create Ingress objects",
+        "default": {}
       },
       "ingressClassName": {
         "type": "string",
         "properties": {},
         "additionalProperties": true,
-        "description": "Create Ingress objects"
+        "description": "Create Ingress objects",
+        "default": "nil"
       },
       "targetSelector": {
         "type": "object",
         "properties": {},
         "additionalProperties": true,
-        "description": "Define the `service: port` to assign the ingress"
+        "description": "Define the `service: port` to assign the ingress",
+        "default": "{}"
       },
       "hosts": {
         "type": "array",
@@ -218,7 +241,8 @@
           "additionalProperties": true,
           "description": "Configuration for `ingress.main.hosts.$item`."
         },
-        "description": "Define the hosts for this ingress"
+        "description": "Define the hosts for this ingress",
+        "default": []
       },
       "tls": {
         "type": "array",
@@ -248,11 +272,13 @@
           "additionalProperties": true,
           "description": "Configuration for `ingress.main.tls.$item`."
         },
-        "description": "Define TLS for this ingress"
+        "description": "Define TLS for this ingress",
+        "default": []
       }
     },
     "additionalProperties": true,
-    "description": "Create Ingress objects"
+    "description": "Create Ingress objects",
+    "default": {}
   },
   "description": "Create Ingress objects"
 }

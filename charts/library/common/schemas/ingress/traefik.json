@@ -3,13 +3,11 @@
   "type": "object",
   "properties": {
     "enabled": {
-      "type": [
-        "boolean",
-        "string"
-      ],
+      "type": "boolean",
       "properties": {},
       "additionalProperties": true,
-      "description": "Enables or Disables the traefik integration"
+      "description": "Enables or Disables the traefik integration",
+      "default": false
     },
     "entrypoints": {
       "type": "array",
@@ -19,13 +17,15 @@
       "items": {
         "type": "string",
         "description": "Configuration for `ingress.main.integrations.traefik.entrypoints.$item`."
-      }
+      },
+      "default": "[\"websecure\"]"
     },
     "forceTLS": {
       "type": "boolean",
       "properties": {},
       "additionalProperties": true,
-      "description": "Force TLS on this ingress Adds the `traefik.ingress.kubernetes.io/router.tls` annotation."
+      "description": "Force TLS on this ingress Adds the `traefik.ingress.kubernetes.io/router.tls` annotation.",
+      "default": true
     },
     "middlewares": {
       "type": "array",
@@ -57,15 +57,14 @@
         "additionalProperties": true,
         "description": "Configuration for `$name.integrations.traefik.middlewares.$name`."
       },
-      "description": "The middlewares for this traefik integration"
+      "description": "The middlewares for this traefik integration",
+      "default": []
     },
     "chartMiddlewares": {
-      "type": [
-        "array",
-        "object"
-      ],
+      "type": "array",
       "additionalProperties": true,
-      "description": "Same as [middlewares](#middlewares) but meant to be used by the chart developer to define some custom middleware specific to this ingress."
+      "description": "Same as [middlewares](#middlewares) but meant to be used by the chart developer to define some custom middleware specific to this ingress.",
+      "default": []
     }
   },
   "description": "Create Ingress objects",

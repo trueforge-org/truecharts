@@ -12,18 +12,22 @@
       "minLength": 1
     },
     "trustForwardHeader": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "authResponseHeaders": {
-      "type": "string",
-      "minLength": 1
+      "type": "array",
+      "minLength": 1,
+      "default": []
     },
     "authRequestHeaders": {
-      "type": "string",
-      "minLength": 1
+      "type": "array",
+      "minLength": 1,
+      "default": []
     },
     "tls": {
-      "type": "object"
+      "type": "object",
+      "default": {}
     },
     "insecureSkipVerify": {
       "type": "boolean"

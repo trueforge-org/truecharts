@@ -8,33 +8,46 @@
           "$ref": "../special/labels.json"
         }
       ],
-      "description": "Additional labels for CNPG cluster"
+      "description": "Additional labels for CNPG cluster",
+      "type": [
+        "object",
+        "string"
+      ],
+      "default": {}
     },
     "annotations": {
-      "type": "object",
+      "type": [
+        "object",
+        "string"
+      ],
       "properties": {},
       "additionalProperties": true,
-      "description": "Additional annotations for CNPG cluster"
+      "description": "Additional annotations for CNPG cluster",
+      "default": {}
     },
     "env": {
       "type": "object",
       "properties": {},
       "additionalProperties": true,
-      "description": "See [env](/truecharts-common/container/env)"
+      "description": "See [env](/truecharts-common/container/env)",
+      "default": {}
     },
     "envFrom": {
       "type": "object",
       "properties": {},
       "additionalProperties": true,
-      "description": "See [envFrom](/truecharts-common/container/envfrom)"
+      "description": "See [envFrom](/truecharts-common/container/envfrom)",
+      "default": "[]"
     },
     "instances": {
       "type": "integer",
-      "description": "Number of instances"
+      "description": "Number of instances",
+      "default": 2
     },
     "singleNode": {
       "type": "boolean",
-      "description": "Whether this is a single-node cluster. Setting this to `true` would allow PVCs to be kept on instance restart."
+      "description": "Whether this is a single-node cluster. Setting this to `true` would allow PVCs to be kept on instance restart.",
+      "default": false
     },
     "primaryUpdateMethod": {
       "allOf": [
@@ -54,7 +67,15 @@
     },
     "logLevel": {
       "type": "string",
-      "description": "The cluster log level. Available values: - `error`"
+      "description": "The cluster log level. Available values: - `error`",
+      "enum": [
+        "error",
+        "warning",
+        "info",
+        "debug",
+        "trace"
+      ],
+      "default": "info"
     },
     "certificates": {
       "allOf": [

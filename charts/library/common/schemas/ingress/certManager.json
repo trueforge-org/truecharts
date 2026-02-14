@@ -4,19 +4,18 @@
   "description": "Create Ingress objects",
   "properties": {
     "enabled": {
-      "type": [
-        "boolean",
-        "string"
-      ],
+      "type": "boolean",
       "properties": {},
       "additionalProperties": true,
-      "description": "Enables or Disables the cert-manager integration"
+      "description": "Enables or Disables the cert-manager integration",
+      "default": false
     },
     "certificateIssuer": {
       "type": "string",
       "properties": {},
       "additionalProperties": true,
-      "description": "Define the certificate issuer for this cert-manager integration"
+      "description": "Define the certificate issuer for this cert-manager integration",
+      "default": "\"\""
     }
   },
   "additionalProperties": true

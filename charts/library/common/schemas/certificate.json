@@ -24,7 +24,8 @@
           }
         },
         "additionalProperties": true,
-        "description": "Define the certificate secret template for this certificate At least one of the following keys must be defined"
+        "description": "Define the certificate secret template for this certificate At least one of the following keys must be defined",
+        "default": {}
       },
       "enabled": {
         "type": [
@@ -33,7 +34,8 @@
         ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Enables or Disables the certificate"
+        "description": "Enables or Disables the certificate",
+        "default": false
       },
       "namespace": {
         "allOf": [
@@ -41,7 +43,8 @@
             "$ref": "special/namespaces.json"
           }
         ],
-        "description": "Define the namespace for this object"
+        "description": "Define the namespace for this object",
+        "default": "\"\""
       },
       "labels": {
         "allOf": [
@@ -49,29 +52,45 @@
             "$ref": "special/labels.json"
           }
         ],
-        "description": "Define the labels for this certificate"
+        "description": "Define the labels for this certificate",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
       },
       "annotations": {
-        "type": "object",
+        "type": [
+          "object",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Define the annotations for this certificate"
+        "description": "Define the annotations for this certificate",
+        "default": {}
       },
       "certificateIssuer": {
         "type": "object",
         "properties": {},
         "additionalProperties": true,
-        "description": "Define the certificate issuer for this certificate"
+        "description": "Define the certificate issuer for this certificate",
+        "default": "\"\"",
+        "minLength": 1
       },
       "hosts": {
-        "type": "object",
+        "type": [
+          "array",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Define the hosts for this certificate"
+        "description": "Define the hosts for this certificate",
+        "default": "false"
       }
     },
     "additionalProperties": true,
-    "description": "Define certificate"
+    "description": "Define certificate",
+    "default": {}
   },
   "description": "Define certificates"
 }

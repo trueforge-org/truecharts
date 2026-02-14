@@ -4,13 +4,11 @@
   "description": "Create Ingress objects",
   "properties": {
     "enabled": {
-      "type": [
-        "boolean",
-        "string"
-      ],
+      "type": "boolean",
       "properties": {},
       "additionalProperties": true,
-      "description": "Enables or Disables the homepage integration"
+      "description": "Enables or Disables the homepage integration",
+      "default": false
     },
     "name": {
       "type": "string",
@@ -28,7 +26,8 @@
       "type": "string",
       "properties": {},
       "additionalProperties": true,
-      "description": "Define the group for the application Sets the `gethomepage.dev/group` annotation"
+      "description": "Define the group for the application Sets the `gethomepage.dev/group` annotation",
+      "default": "\"\""
     },
     "icon": {
       "type": "string",
@@ -37,36 +36,29 @@
       "description": "Define the icon for the application Sets the `gethomepage.dev/icon` annotation"
     },
     "href": {
-      "type": "object",
+      "type": "string",
       "properties": {},
       "additionalProperties": true,
       "description": "Define the href for the application Sets the `gethomepage.dev/href` annotation"
     },
     "weight": {
-      "type": "object",
+      "type": "integer",
       "properties": {},
       "additionalProperties": true,
       "description": "Define the weight for the application Sets the `gethomepage.dev/weight` annotation"
     },
     "podSelector": {
-      "type": "object",
+      "type": "array",
       "properties": {},
       "additionalProperties": true,
-      "description": "Define the pods to select Sets the `gethomepage.dev/pod-selector` annotation"
+      "description": "Define the pods to select Sets the `gethomepage.dev/pod-selector` annotation",
+      "default": []
     },
     "widget": {
       "type": "object",
       "properties": {
         "customkv": {
-          "type": [
-            "null",
-            "string",
-            "number",
-            "integer",
-            "boolean",
-            "object",
-            "array"
-          ],
+          "type": "array",
           "properties": {},
           "additionalProperties": {
             "type": "object",
@@ -87,16 +79,15 @@
             "additionalProperties": true,
             "description": "Configuration for `$name.integrations.homepage.widget.customkv.$name`."
           },
-          "description": "Define configuration for the widget"
+          "description": "Define configuration for the widget",
+          "default": []
         },
         "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
+          "type": "boolean",
           "properties": {},
           "additionalProperties": true,
-          "description": "Enables or Disables the widget"
+          "description": "Enables or Disables the widget",
+          "default": true
         },
         "type": {
           "type": "string",
@@ -105,14 +96,10 @@
           "description": "Define configuration for the widget"
         },
         "version": {
-          "type": [
-            "string",
-            "number",
-            "integer",
-            "object"
-          ],
+          "type": "integer",
           "additionalProperties": true,
-          "description": "Define the version of the widget Sets the `gethomepage.dev/widget.version` annotation"
+          "description": "Define the version of the widget Sets the `gethomepage.dev/widget.version` annotation",
+          "default": 1
         },
         "url": {
           "type": "string",
@@ -121,22 +108,16 @@
           "description": "Define configuration for the widget"
         },
         "custom": {
-          "type": [
-            "null",
-            "string",
-            "number",
-            "integer",
-            "boolean",
-            "object",
-            "array"
-          ],
+          "type": "object",
           "properties": {},
           "additionalProperties": true,
-          "description": "Define configuration for the widget"
+          "description": "Define configuration for the widget",
+          "default": {}
         }
       },
       "additionalProperties": true,
-      "description": "Define configuration for the widget"
+      "description": "Define configuration for the widget",
+      "default": {}
     }
   },
   "additionalProperties": true

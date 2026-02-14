@@ -10,7 +10,8 @@
           "boolean",
           "string"
         ],
-        "description": "Configuration for `metrics.main.enabled`."
+        "description": "Configuration for `metrics.main.enabled`.",
+        "default": false
       },
       "primary": {
         "type": "boolean",
@@ -22,16 +23,24 @@
           "servicemonitor",
           "podmonitor"
         ],
-        "description": "Configuration for `metrics.main.type`."
+        "description": "Configuration for `metrics.main.type`.",
+        "default": "servicemonitor"
       },
       "selector": {
-        "type": "object",
+        "type": [
+          "object",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Configuration for `metrics.main.selector`."
+        "description": "Configuration for `metrics.main.selector`.",
+        "default": {}
       },
       "endpoints": {
-        "type": "array",
+        "type": [
+          "array",
+          "string"
+        ],
         "items": {
           "type": "object",
           "properties": {
@@ -143,11 +152,13 @@
           }
         },
         "additionalProperties": true,
-        "description": "Configuration for `metrics.main.prometheusRule`."
+        "description": "Configuration for `metrics.main.prometheusRule`.",
+        "default": "{ enabled: false }"
       }
     },
     "additionalProperties": true,
-    "description": "Configuration for `metrics.main`."
+    "description": "Configuration for `metrics.main`.",
+    "default": {}
   },
   "description": "Configuration for `metrics`."
 }

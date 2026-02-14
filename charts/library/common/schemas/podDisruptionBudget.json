@@ -9,7 +9,20 @@
         "type": "object",
         "properties": {},
         "additionalProperties": true,
-        "description": "Create Pod Disruption Budget objects"
+        "description": "Create Pod Disruption Budget objects",
+        "oneOf": [
+          {
+            "enum": [
+              "IfHealthyBudget",
+              "AlwaysAllow"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ],
+        "default": "\"\""
       },
       "enabled": {
         "type": [
@@ -18,7 +31,8 @@
         ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Create Pod Disruption Budget objects"
+        "description": "Create Pod Disruption Budget objects",
+        "default": false
       },
       "namespace": {
         "allOf": [
@@ -26,7 +40,8 @@
             "$ref": "special/namespaces.json"
           }
         ],
-        "description": "Define the namespace for this object"
+        "description": "Define the namespace for this object",
+        "default": "\"\""
       },
       "labels": {
         "allOf": [
@@ -34,25 +49,42 @@
             "$ref": "special/labels.json"
           }
         ],
-        "description": "Additional labels for Pod Disruption Budget"
+        "description": "Additional labels for Pod Disruption Budget",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
       },
       "annotations": {
-        "type": "object",
+        "type": [
+          "object",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Additional annotations for Pod Disruption Budget"
+        "description": "Additional annotations for Pod Disruption Budget",
+        "default": {}
       },
       "minAvailable": {
-        "type": "object",
+        "type": [
+          "integer",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Define the minAvailable."
+        "description": "Define the minAvailable.",
+        "default": "\"\""
       },
       "maxUnavailable": {
-        "type": "object",
+        "type": [
+          "integer",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
-        "description": "Define the maxUnavailable."
+        "description": "Define the maxUnavailable.",
+        "default": "\"\""
       },
       "targetSelector": {
         "type": "string",
@@ -60,7 +92,8 @@
       }
     },
     "additionalProperties": true,
-    "description": "Create Pod Disruption Budget objects"
+    "description": "Create Pod Disruption Budget objects",
+    "default": {}
   },
   "description": "Create Pod Disruption Budget objects"
 }
