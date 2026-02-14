@@ -47,6 +47,12 @@
       },
       "reclaimPolicy": {
         "type": "string",
+        "enum": [
+          "Delete",
+          "Retain",
+          "delete",
+          "retain"
+        ],
         "description": "Define the reclaim policy for this storage class"
       },
       "allowVolumeExpansion": {
@@ -55,6 +61,10 @@
       },
       "volumeBindingMode": {
         "type": "string",
+        "enum": [
+          "Immediate",
+          "WaitForFirstConsumer"
+        ],
         "description": "Define the volume binding mode for this storage class"
       }
     },
