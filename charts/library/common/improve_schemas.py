@@ -108,13 +108,8 @@ def parse_doc_field(doc_content: str, key_path: str) -> Dict[str, Any]:
             if enum_values:
                 result["enum"] = enum_values
     
-    # Also look for enum in description like (value1, value2)
-    if not result["enum"] and result["description"]:
-        enum_pattern = r'\(([^)]+,\s*[^)]+)\)'
-        enum_match = re.search(enum_pattern, result["description"])
-        if enum_match:
-            values = enum_match.group(1).split(',')
-            result["enum"] = [v.strip().strip('`') for v in values if v.strip()]
+    # Don't extract enum from parenthetical descriptions - those are just explanations
+    # Only extract from explicit "Valid Values:" sections
     
     return result
 
