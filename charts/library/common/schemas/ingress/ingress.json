@@ -21,9 +21,11 @@
           "description": "Create Ingress objects"
         },
         "labels": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "allOf": [
+            {
+              "$ref": "../special/labels.json"
+            }
+          ],
           "description": "Create Ingress objects"
         },
         "annotations": {
@@ -367,9 +369,11 @@
                       "description": "The name of the middleware"
                     },
                     "namespace": {
-                      "type": "object",
-                      "properties": {},
-                      "additionalProperties": true,
+                      "allOf": [
+                        {
+                          "$ref": "../special/namespaces.json"
+                        }
+                      ],
                       "description": "The namespace of the middleware If not defined, the current namespace will be used."
                     }
                   },
@@ -564,15 +568,19 @@
         "description": "Define if the ingress is required"
       },
       "namespace": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../special/namespaces.json"
+          }
+        ],
         "description": "Define the namespace for this object"
       },
       "labels": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../special/labels.json"
+          }
+        ],
         "description": "Additional labels for ingress"
       },
       "annotations": {

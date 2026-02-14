@@ -3,7 +3,7 @@
   "type": "object",
   "properties": {
     "main": {
-      "$ref": "cnpg/main.json",
+      "$ref": "main.json",
       "description": "Define a CNPG cluster"
     }
   },
@@ -14,9 +14,11 @@
         "type": "object",
         "properties": {
           "labels": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "allOf": [
+              {
+                "$ref": "../special/labels.json"
+              }
+            ],
             "description": "Additional labels for CNPG cluster"
           },
           "annotations": {
@@ -59,11 +61,11 @@
         "additionalProperties": true,
         "description": "Define a CNPG cluster"
       },
-        "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
         "properties": {},
         "additionalProperties": true,
         "description": "Enables or Disables the cluster"
@@ -81,9 +83,11 @@
         "description": "Puts the cluster in hibernation mode"
       },
       "labels": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../special/labels.json"
+          }
+        ],
         "description": "Additional labels for all CNPG objects"
       },
       "annotations": {

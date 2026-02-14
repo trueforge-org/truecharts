@@ -35,11 +35,11 @@
         },
         "description": "Define `subjects` for (Cluster)RoleBinding"
       },
-        "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
         "description": "Enables or Disables the rbac"
       },
       "primary": {
@@ -47,9 +47,11 @@
         "description": "Sets the rbac as primary"
       },
       "namespace": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../special/namespaces.json"
+          }
+        ],
         "description": "Define the namespace for this object (Only when clusterWide is false)"
       },
       "clusterWide": {
@@ -57,9 +59,11 @@
         "description": "Sets the rbac as cluster wide (ClusterRole, ClusterRoleBinding)"
       },
       "labels": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "../special/labels.json"
+          }
+        ],
         "description": "Additional labels for rbac"
       },
       "annotations": {
