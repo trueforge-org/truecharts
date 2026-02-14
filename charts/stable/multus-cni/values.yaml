@@ -317,7 +317,7 @@ workload:
         cleanup:
           enabled: "{{ .Values.multus.uninstall }}"
           type: init
-          imageSelector: alpineImage
+          imageSelector: ubuntuImage
           command:
             - sh
             - -c
@@ -418,7 +418,7 @@ workload:
           enabled: "{{ and (not .Values.multus.uninstall)
             .Values.multus.integrations.talos.enabled
             (.Values.multus.integrations.talos.installCni | dig \"dhcp\" false) }}"
-          imageSelector: alpineImage
+          imageSelector: ubuntuImage
           command:
             - sh
             - -c

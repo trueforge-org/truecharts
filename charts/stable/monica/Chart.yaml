@@ -2,8 +2,14 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: crm
-  trueforge.org/max_helm_version: "3.20"
+  trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
@@ -11,14 +17,14 @@ apiVersion: v2
 appVersion: 4.1.2
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.11.16
+    version: 17.11.19
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -30,7 +36,7 @@ home: https://trueforge.org/truetech/truecharts/charts/stable/monica
 icon: https://trueforge.org/img/hotlink-ok/chart-icons/monica.webp
 keywords:
   - crm
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
     email: info@trueforge.org
@@ -41,5 +47,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/monica
   - https://hub.docker.com/_/monica
 type: application
-version: 16.18.33
+version: 16.18.39
 

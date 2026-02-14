@@ -82,7 +82,7 @@
 {{- define "tc.v1.common.lib.deps.wait.redis" -}}
 enabled: true
 type: system
-imageSelector: redisClientImage
+imageSelector: valkeyClientImage
 securityContext:
   runAsUser: 568
   runAsGroup: 568

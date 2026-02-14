@@ -9,15 +9,15 @@ annotations:
   truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
   trueforge.org/category: media
-  trueforge.org/max_helm_version: "3.20"
+  trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 9.1.0
+appVersion: 9.2.1
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.29.49
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -29,7 +29,7 @@ home: https://trueforge.org/truetech/truecharts/charts/stable/calibre
 icon: https://trueforge.org/img/hotlink-ok/chart-icons/calibre.webp
 keywords:
   - calibre
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
     email: info@trueforge.org
@@ -40,5 +40,5 @@ sources:
   - https://github.com/kovidgoyal/calibre/
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/calibre
 type: application
-version: 19.1.0
+version: 19.2.2
 

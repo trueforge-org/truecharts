@@ -48,7 +48,7 @@ podSpec:
     autopermissions:
       enabled: true
       primary: true
-      imageSelector: alpineImage
+      imageSelector: ubuntuImage
       securityContext:
         runAsNonRoot: false
         runAsUser: 0

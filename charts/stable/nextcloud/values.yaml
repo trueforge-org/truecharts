@@ -1,11 +1,11 @@
 image:
   repository: oci.trueforge.org/containerforge/nextcloud-fpm
   pullPolicy: IfNotPresent
-  tag: "32.0.5@sha256:6d799dfb8d01d4ba63582cb82f62dfdc0268b7a3562606f349eeb74ea6fbe5da"
+  tag: "32.0.6@sha256:2317b7ec0d93dad1f990519f4c51c69a667128baf1e1eaef02f807016814feb4"
 nginxImage:
   repository: oci.trueforge.org/containerforge/nginx
   pullPolicy: IfNotPresent
-  tag: "1.24.0@sha256:53096ab5104128d57235fd02f6dc61f1d87d738d6e3807bdc338518b3f620a74"
+  tag: "1.24.0@sha256:48cf43659d6b401c805c2b873d1027e5539fc91bba0dc746eee4e920db5eebb5"
 imaginaryImage:
   repository: oci.trueforge.org/containerforge/nextcloud-imaginary
   pullPolicy: IfNotPresent
@@ -13,15 +13,15 @@ imaginaryImage:
 hpbImage:
   repository: oci.trueforge.org/containerforge/nextcloud-notify-push
   pullPolicy: IfNotPresent
-  tag: "1.3.0@sha256:51927e905ecef6135416e1a2e1e3dac26c1d0fd94091ebde305290ed5ec45983"
+  tag: "1.3.0@sha256:b98106116a39f14097b8435a892851d04d520accc708c3abf8df1d81cb55a91a"
 clamavImage:
   repository: docker.io/clamav/clamav
   pullPolicy: IfNotPresent
-  tag: 1.5.1@sha256:0c5c0e7f1ba77ce66324a3c20d4c49155a465a91be29dbe5e0483c41b9299137
+  tag: 1.5.1@sha256:bb4f25aad81c7a430ed49ee24ee8c69caa56d81d59884901e31a407aaaa19b4d
 collaboraImage:
   repository: docker.io/collabora/code
   pullPolicy: IfNotPresent
-  tag: 25.04.8.2.1@sha256:7983fd172c69f4545f93533fee62c06fdcd1aa0806f694db7b9ec6809caa4bd8
+  tag: 25.04.8.3.1@sha256:fa876e9fc1fdeb9aabac545e9fced19360e3a0492879432d857c17be4e4ea025
 
 nextcloud:
   # Initial Credentials
