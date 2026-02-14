@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import copy
 import json
 import os
 import re
@@ -13,7 +14,7 @@ def build_parser() -> argparse.ArgumentParser:
     script_dir = Path(__file__).resolve().parent
     parser = argparse.ArgumentParser(
         description=(
-            "Generate markdown docs from a JSON schema into a docs tree under charts/library/common/newdocs."
+            "Generate markdown pages from a JSON schema into charts/library/common/newdocs."
         )
     )
     parser.add_argument(
@@ -26,7 +27,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--output",
         type=Path,
         default=script_dir / "newdocs",
-        help="Path where generated docs should be written",
+        help="Path where generated pages should be written",
     )
     parser.add_argument(
         "--base-url",
@@ -45,6 +46,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Folder name to use for dynamic object keys like $name",
     )
     parser.add_argument(
+        "--schemas-root",
+        type=Path,
+        default=script_dir / "schemas",
+        help="Path to the schemas root folder used for deriving page paths from $ref targets",
+    )
+    parser.add_argument(
         "--clean",
         action="store_true",
         help="Remove output directory before generation",
@@ -57,6 +64,107 @@ def load_schema(path: Path) -> dict[str, Any]:
         raise FileNotFoundError(f"Schema not found: {path}")
     with path.open("r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def ref_to_path(ref: str, current_file: Path | None) -> Path | None:
+    if not ref:
+        return None
+
+    ref_base = ref.split("#", 1)[0]
+    if not ref_base:
+        return current_file
+
+    if ref_base.startswith("file://"):
+        return Path(ref_base[7:]).resolve()
+
+    candidate = Path(ref_base)
+    if candidate.is_absolute():
+        return candidate.resolve()
+
+    if current_file is None:
+        return None
+
+    return (current_file.parent / candidate).resolve()
+
+
+def ref_to_doc_segments(ref_path: Path | None, schemas_root: Path) -> tuple[str, ...] | None:
+    if ref_path is None:
+        return None
+
+    try:
+        relative = ref_path.resolve().relative_to(schemas_root.resolve())
+    except ValueError:
+        return None
+
+    parts = list(relative.parts)
+    if not parts:
+        return None
+
+    last = Path(parts[-1]).stem
+    dir_parts = parts[:-1]
+
+    if last == "index":
+        return tuple(dir_parts)
+    return tuple([*dir_parts, last])
+
+
+class SchemaResolver:
+    def __init__(self, schemas_root: Path) -> None:
+        self.schemas_root = schemas_root.resolve()
+        self._cache: dict[Path, dict[str, Any]] = {}
+
+    def _remap_to_local_schema_path(self, path: Path) -> Path:
+        if path.exists():
+            return path
+
+        normalized = path.as_posix()
+        marker = "/charts/library/common/schemas/"
+        if marker in normalized:
+            tail = normalized.split(marker, 1)[1]
+            candidate = self.schemas_root / tail
+            if candidate.exists():
+                return candidate.resolve()
+
+        marker = "/schemas/"
+        if marker in normalized:
+            tail = normalized.split(marker, 1)[1]
+            candidate = self.schemas_root / tail
+            if candidate.exists():
+                return candidate.resolve()
+
+        return path
+
+    def _load(self, path: Path) -> dict[str, Any]:
+        resolved = self._remap_to_local_schema_path(path).resolve()
+        if resolved not in self._cache:
+            self._cache[resolved] = load_schema(resolved)
+        return self._cache[resolved]
+
+    def resolve_node(
+        self,
+        node: dict[str, Any],
+        current_file: Path | None,
+    ) -> tuple[dict[str, Any], Path | None, Path | None]:
+        ref = node.get("$ref")
+        if not isinstance(ref, str):
+            return node, current_file, None
+
+        ref_path = ref_to_path(ref, current_file)
+        if ref_path is None:
+            return node, current_file, None
+
+        resolved_ref_path = self._remap_to_local_schema_path(ref_path).resolve()
+
+        base_schema = self._load(resolved_ref_path)
+        resolved_base, source_path, _ = self.resolve_node(base_schema, resolved_ref_path)
+
+        merged = copy.deepcopy(resolved_base)
+        for key, value in node.items():
+            if key == "$ref":
+                continue
+            merged[key] = value
+
+        return merged, source_path or resolved_ref_path, resolved_ref_path
 
 
 def prettify_segment(segment: str) -> str:
@@ -341,40 +449,65 @@ def iter_child_properties(node: dict[str, Any]) -> Iterable[tuple[str, dict[str,
     return out
 
 
-def iter_object_children(node: dict[str, Any]) -> list[tuple[str, dict[str, Any], bool]]:
-    children: list[tuple[str, dict[str, Any], bool]] = []
-
+def iter_children_with_resolution(
+    node: dict[str, Any],
+    current_source: Path | None,
+    resolver: SchemaResolver,
+) -> list[tuple[str, dict[str, Any], dict[str, Any], bool, Path | None, Path | None]]:
+    children: list[tuple[str, dict[str, Any], dict[str, Any], bool, Path | None, Path | None]] = []
     for key, child, required in iter_child_properties(node):
-        if is_object_schema(child):
-            children.append((key, child, required))
+        resolved_child, child_source, child_ref = resolver.resolve_node(child, current_source)
+        children.append((key, child, resolved_child, required, child_source, child_ref))
+    return children
+
+
+def iter_object_children(
+    node: dict[str, Any],
+    current_source: Path | None,
+    resolver: SchemaResolver,
+) -> list[tuple[str, dict[str, Any], bool, Path | None, Path | None]]:
+    children: list[tuple[str, dict[str, Any], bool, Path | None, Path | None]] = []
+
+    for key, _, resolved_child, required, child_source, child_ref in iter_children_with_resolution(
+        node, current_source, resolver
+    ):
+        if is_object_schema(resolved_child):
+            children.append((key, resolved_child, required, child_source, child_ref))
 
     pattern_props = node.get("patternProperties")
     if isinstance(pattern_props, dict) and pattern_props:
         first_value = next(iter(pattern_props.values()))
-        if isinstance(first_value, dict) and is_object_schema(first_value):
-            children.append(("$name", first_value, False))
+        if isinstance(first_value, dict):
+            resolved_child, child_source, child_ref = resolver.resolve_node(first_value, current_source)
+            if is_object_schema(resolved_child):
+                children.append(("$name", resolved_child, False, child_source, child_ref))
 
     additional_props = node.get("additionalProperties")
-    if isinstance(additional_props, dict) and is_object_schema(additional_props):
-        if not any(name == "$name" for name, _, _ in children):
-            children.append(("$name", additional_props, False))
+    if isinstance(additional_props, dict):
+        resolved_child, child_source, child_ref = resolver.resolve_node(additional_props, current_source)
+        if is_object_schema(resolved_child):
+            if not any(name == "$name" for name, _, _, _, _ in children):
+                children.append(("$name", resolved_child, False, child_source, child_ref))
 
-    # dedupe by key order-preserving
-    deduped: list[tuple[str, dict[str, Any], bool]] = []
+    deduped: list[tuple[str, dict[str, Any], bool, Path | None, Path | None]] = []
     seen: set[str] = set()
-    for key, child, required in children:
+    for key, child, required, child_source, child_ref in children:
         if key in seen:
             continue
         seen.add(key)
-        deduped.append((key, child, required))
+        deduped.append((key, child, required, child_source, child_ref))
     return deduped
 
 
-def iter_scalar_children(node: dict[str, Any]) -> list[tuple[str, dict[str, Any], bool]]:
+def iter_scalar_children(
+    node: dict[str, Any],
+    current_source: Path | None,
+    resolver: SchemaResolver,
+) -> list[tuple[str, dict[str, Any], bool]]:
     result: list[tuple[str, dict[str, Any], bool]] = []
-    for key, child, required in iter_child_properties(node):
-        if not is_object_schema(child):
-            result.append((key, child, required))
+    for key, _, resolved_child, required, _, _ in iter_children_with_resolution(node, current_source, resolver):
+        if not is_object_schema(resolved_child):
+            result.append((key, resolved_child, required))
     return result
 
 
@@ -407,20 +540,22 @@ def render_node_sections(
 
 
 def render_page(
-    path_segments: list[str],
+    key_path_segments: list[str],
     schema_node: dict[str, Any],
+    schema_source: Path | None,
+    resolver: SchemaResolver,
     base_url: str,
     max_depth: int,
     child_links: list[tuple[str, str, str]],
     dynamic_segment: str,
 ) -> str:
-    title = "Common Chart Documentation" if not path_segments else prettify_segment(path_segments[-1])
-    appears_in = schema_path(path_segments)
-    key_path = ".".join(path_segments)
+    title = "Common Chart Documentation" if not key_path_segments else prettify_segment(key_path_segments[-1])
+    appears_in = schema_path(key_path_segments)
+    key_path = ".".join(key_path_segments)
 
     lines = ["---", f"title: {title}", "---", ""]
 
-    short_page = "/".join(sanitize_segment(p, dynamic_segment) for p in path_segments)
+    short_page = "/".join(sanitize_segment(p, dynamic_segment) for p in key_path_segments)
     page_slug = f"{base_url}/{short_page}".rstrip("/") or base_url
 
     lines.extend(
@@ -437,13 +572,13 @@ def render_page(
 
     lines.extend(["## Appears in", "", f"- `{appears_in}`", "", "---", ""])
 
-    if path_segments:
+    if key_path_segments:
         lines.append(render_property_section(schema_node, key_path, 2, required=False).rstrip())
 
-    scalar_children = iter_scalar_children(schema_node)
+    scalar_children = iter_scalar_children(schema_node, schema_source, resolver)
     for key, child, required in scalar_children:
         full_key = f"{key_path}.{key}" if key_path else key
-        lines.append(render_property_section(child, full_key, 3 if path_segments else 2, required).rstrip())
+        lines.append(render_property_section(child, full_key, 3 if key_path_segments else 2, required).rstrip())
 
     if child_links:
         lines.extend(["## Child Pages", ""])
@@ -456,7 +591,7 @@ def render_page(
         lines.extend(["", "---", ""])
 
     lines.extend(["## Full Examples", "", "```yaml"])
-    if path_segments:
+    if key_path_segments:
         lines.append(build_example_block(key_path, schema_node))
     else:
         root_example = example_value_for_node(schema_node, max_depth=max_depth)
@@ -466,21 +601,66 @@ def render_page(
     return "\n".join(lines).rstrip() + "\n"
 
 
-def collect_object_pages(root_schema: dict[str, Any]) -> dict[tuple[str, ...], dict[str, Any]]:
+def collect_object_pages(
+    root_schema: dict[str, Any],
+    root_schema_path: Path,
+    schemas_root: Path,
+    resolver: SchemaResolver,
+) -> dict[tuple[str, ...], dict[str, Any]]:
     pages: dict[tuple[str, ...], dict[str, Any]] = {}
-    visited: set[tuple[str, ...]] = set()
+    visited_key_paths: set[tuple[str, ...]] = set()
 
-    def walk(node: dict[str, Any], path: list[str]) -> None:
-        page_key = tuple(path)
-        if page_key in visited:
-            return
-        visited.add(page_key)
-        pages[page_key] = node
+    def walk(
+        node: dict[str, Any],
+        key_path: list[str],
+        doc_path: list[str],
+        current_source: Path | None,
+    ) -> tuple[str, ...]:
+        key_tuple = tuple(key_path)
+        if key_tuple in visited_key_paths:
+            for existing_doc_path, entry in pages.items():
+                if entry["key_path"] == key_tuple:
+                    return existing_doc_path
+            return tuple(doc_path)
 
-        for key, child, _ in iter_object_children(node):
-            walk(child, [*path, key])
+        visited_key_paths.add(key_tuple)
 
-    walk(root_schema, [])
+        resolved_node, resolved_source, _ = resolver.resolve_node(node, current_source)
+        doc_tuple = tuple(doc_path)
+        existing_page = pages.get(doc_tuple)
+        if existing_page and existing_page["key_path"] != key_tuple:
+            doc_tuple = key_tuple
+
+        pages[doc_tuple] = {
+            "node": resolved_node,
+            "key_path": key_tuple,
+            "source": resolved_source,
+            "children": [],
+        }
+
+        child_links: list[tuple[str, tuple[str, ...], str]] = []
+        for child_name, child_node, _, child_source, child_ref in iter_object_children(
+            resolved_node, resolved_source, resolver
+        ):
+            if child_ref is None:
+                continue
+
+            child_key_path = [*key_path, child_name]
+            ref_doc_path = ref_to_doc_segments(child_ref, schemas_root)
+            desired_doc = list(ref_doc_path) if ref_doc_path else [*doc_tuple, child_name]
+
+            existing = pages.get(tuple(desired_doc))
+            if existing and existing["key_path"] != tuple(child_key_path):
+                desired_doc = child_key_path
+
+            actual_child_doc = walk(child_node, child_key_path, desired_doc, child_source)
+            child_desc = child_node.get("description") if isinstance(child_node.get("description"), str) else ""
+            child_links.append((child_name, actual_child_doc, child_desc))
+
+        pages[doc_tuple]["children"] = child_links
+        return doc_tuple
+
+    walk(root_schema, [], [], root_schema_path)
     return pages
 
 
@@ -488,6 +668,103 @@ def relative_markdown_path(path_segments: tuple[str, ...], dynamic_segment: str)
     if not path_segments:
         return Path("index.md")
     return Path(*[sanitize_segment(p, dynamic_segment) for p in path_segments]) / "index.md"
+
+
+def compute_markdown_paths(
+    page_paths: Iterable[tuple[str, ...]],
+    dynamic_segment: str,
+) -> dict[tuple[str, ...], Path]:
+    tuples = list(page_paths)
+    mapping: dict[tuple[str, ...], Path] = {}
+
+    for doc_path in tuples:
+        if not doc_path:
+            mapping[doc_path] = Path("index.md")
+            continue
+
+        has_descendants = any(
+            other != doc_path and len(other) > len(doc_path) and other[: len(doc_path)] == doc_path
+            for other in tuples
+        )
+
+        sanitized = [sanitize_segment(part, dynamic_segment) for part in doc_path]
+        if has_descendants:
+            mapping[doc_path] = Path(*sanitized) / "index.md"
+        else:
+            mapping[doc_path] = Path(*sanitized[:-1]) / f"{sanitized[-1]}.md"
+
+    return mapping
+
+
+def collect_schema_file_pages(
+    schemas_root: Path,
+    resolver: SchemaResolver,
+) -> dict[tuple[str, ...], dict[str, Any]]:
+    pages: dict[tuple[str, ...], dict[str, Any]] = {}
+
+    for schema_file in sorted(schemas_root.rglob("*.json")):
+        rel = schema_file.relative_to(schemas_root)
+        rel_parts = list(rel.parts)
+        rel_parts[-1] = Path(rel_parts[-1]).stem
+        page_key = tuple(rel_parts)
+
+        node = load_schema(schema_file)
+        resolved_node, resolved_source, _ = resolver.resolve_node(node, schema_file)
+
+        key_path = tuple(rel_parts[:-1]) if rel_parts and rel_parts[-1] == "index" else tuple(rel_parts)
+
+        pages[page_key] = {
+            "node": resolved_node,
+            "key_path": key_path,
+            "source": resolved_source,
+            "children": [],
+        }
+
+    return pages
+
+
+def compute_schema_style_markdown_paths(
+    page_keys: Iterable[tuple[str, ...]],
+    dynamic_segment: str,
+) -> dict[tuple[str, ...], Path]:
+    keys = list(page_keys)
+    mapping: dict[tuple[str, ...], Path] = {}
+
+    def folder_has_other_pages(folder_parts: tuple[str, ...], this_key: tuple[str, ...]) -> bool:
+        for other in keys:
+            if other == this_key:
+                continue
+            if len(other) >= len(folder_parts) and other[: len(folder_parts)] == folder_parts:
+                return True
+        return False
+
+    for key in keys:
+        if not key:
+            mapping[key] = Path("index.md")
+            continue
+
+        if key == ("index",):
+            mapping[key] = Path("index.md")
+            continue
+
+        if key[-1] == "index":
+            folder_parts = key[:-1]
+            sanitized_folder = tuple(sanitize_segment(part, dynamic_segment) for part in folder_parts)
+
+            if not folder_parts:
+                mapping[key] = Path("index.md")
+                continue
+
+            if folder_has_other_pages(folder_parts, key):
+                mapping[key] = Path(*sanitized_folder) / "index.md"
+            else:
+                mapping[key] = Path(*sanitized_folder[:-1]) / f"{sanitized_folder[-1]}.md"
+            continue
+
+        sanitized = [sanitize_segment(part, dynamic_segment) for part in key]
+        mapping[key] = Path(*sanitized[:-1]) / f"{sanitized[-1]}.md"
+
+    return mapping
 
 
 def relative_link(from_page: Path, to_page: Path) -> str:
@@ -501,35 +778,37 @@ def relative_link(from_page: Path, to_page: Path) -> str:
 
 def generate_docs(
     schema: dict[str, Any],
+    schema_path: Path,
     output: Path,
     base_url: str,
     max_depth: int,
     clean: bool,
     dynamic_segment: str,
+    schemas_root: Path,
 ) -> None:
-    pages = collect_object_pages(schema)
+    resolver = SchemaResolver(schemas_root=schemas_root)
+    pages = collect_schema_file_pages(schemas_root=schemas_root, resolver=resolver)
 
     if clean and output.exists():
         shutil.rmtree(output)
 
     output.mkdir(parents=True, exist_ok=True)
 
-    for path_tuple, node in sorted(pages.items(), key=lambda item: (len(item[0]), item[0])):
-        rel_page = relative_markdown_path(path_tuple, dynamic_segment)
+    doc_paths = list(pages.keys())
+    markdown_paths = compute_schema_style_markdown_paths(doc_paths, dynamic_segment)
+
+    for doc_path_tuple, page in sorted(pages.items(), key=lambda item: (len(item[0]), item[0])):
+        rel_page = markdown_paths[doc_path_tuple]
         target = output / rel_page
         target.parent.mkdir(parents=True, exist_ok=True)
 
         child_links: list[tuple[str, str, str]] = []
-        for child_name, child_node, _ in iter_object_children(node):
-            child_path = (*path_tuple, child_name)
-            rel_child = relative_markdown_path(child_path, dynamic_segment)
-            rel_link = relative_link(rel_page, rel_child)
-            child_desc = child_node.get("description") if isinstance(child_node.get("description"), str) else ""
-            child_links.append((child_name, rel_link, child_desc))
 
         generated = render_page(
-            path_segments=list(path_tuple),
-            schema_node=node,
+            key_path_segments=list(page["key_path"]),
+            schema_node=page["node"],
+            schema_source=page["source"],
+            resolver=resolver,
             base_url=base_url,
             max_depth=max_depth,
             child_links=child_links,
@@ -542,18 +821,21 @@ def main() -> int:
     parser = build_parser()
     args = parser.parse_args()
 
-    schema = load_schema(args.schema.resolve())
+    schema_path = args.schema.resolve()
+    schema = load_schema(schema_path)
 
     generate_docs(
         schema=schema,
+        schema_path=schema_path,
         output=args.output.resolve(),
         base_url=args.base_url.rstrip("/"),
         max_depth=max(0, args.max_depth),
         clean=args.clean,
         dynamic_segment=args.dynamic_segment,
+        schemas_root=args.schemas_root.resolve(),
     )
 
-    print(f"Generated docs in: {args.output}")
+    print(f"Generated pages in: {args.output}")
     return 0
 
 
