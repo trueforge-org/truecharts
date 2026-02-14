@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "main": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "primary": {
+          "type": "boolean"
+        },
+        "type": {
+          "type": "string"
+        },
+        "selector": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true
+        },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "port": {
+                "type": "string"
+              },
+              "interval": {
+                "type": "string"
+              },
+              "scrapeTimeout": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "honorLabels": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "prometheusRule": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "groups": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true
+            },
+            "additionalgroups": {
+              "type": [
+                "null",
+                "string",
+                "number",
+                "integer",
+                "boolean",
+                "object",
+                "array"
+              ]
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

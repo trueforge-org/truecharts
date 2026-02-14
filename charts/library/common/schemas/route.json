@@ -1,0 +1,161 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "main": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "annotations": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true
+        },
+        "labels": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true
+        },
+        "parentRefs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "group": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string"
+              },
+              "name": {
+                "type": [
+                  "null",
+                  "string",
+                  "number",
+                  "integer",
+                  "boolean",
+                  "object",
+                  "array"
+                ]
+              },
+              "namespace": {
+                "type": [
+                  "null",
+                  "string",
+                  "number",
+                  "integer",
+                  "boolean",
+                  "object",
+                  "array"
+                ]
+              },
+              "sectionName": {
+                "type": [
+                  "null",
+                  "string",
+                  "number",
+                  "integer",
+                  "boolean",
+                  "object",
+                  "array"
+                ]
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "hostnames": {
+          "type": "array"
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "backendRefs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "group": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": [
+                        "null",
+                        "string",
+                        "number",
+                        "integer",
+                        "boolean",
+                        "object",
+                        "array"
+                      ]
+                    },
+                    "namespace": {
+                      "type": [
+                        "null",
+                        "string",
+                        "number",
+                        "integer",
+                        "boolean",
+                        "object",
+                        "array"
+                      ]
+                    },
+                    "port": {
+                      "type": [
+                        "null",
+                        "string",
+                        "number",
+                        "integer",
+                        "boolean",
+                        "object",
+                        "array"
+                      ]
+                    },
+                    "weight": {
+                      "type": "integer"
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              },
+              "matches": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,177 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "main": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "primary": {
+          "type": "boolean"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "labels": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true
+        },
+        "annotations": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true
+        },
+        "ingressClassName": {
+          "type": "string"
+        },
+        "hosts": {
+          "type": "array"
+        },
+        "tls": {
+          "type": "array"
+        },
+        "integrations": {
+          "type": "object",
+          "properties": {
+            "certManager": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                },
+                "certificateIssuer": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            },
+            "traefik": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                },
+                "entrypoints": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "forceTLS": {
+                  "type": "boolean"
+                },
+                "middlewares": {
+                  "type": "array"
+                }
+              },
+              "additionalProperties": true
+            },
+            "nginx": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                },
+                "themepark": {
+                  "type": "object",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean"
+                    },
+                    "css": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": true
+                },
+                "ipWhitelist": {
+                  "type": "array"
+                },
+                "auth": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "internalHost": {
+                      "type": "string"
+                    },
+                    "externalHost": {
+                      "type": "string"
+                    },
+                    "responseHeaders": {
+                      "type": "array"
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              },
+              "additionalProperties": true
+            },
+            "homepage": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "group": {
+                  "type": "string"
+                },
+                "icon": {
+                  "type": "string"
+                },
+                "widget": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "custom": {
+                      "type": [
+                        "null",
+                        "string",
+                        "number",
+                        "integer",
+                        "boolean",
+                        "object",
+                        "array"
+                      ]
+                    },
+                    "customkv": {
+                      "type": [
+                        "null",
+                        "string",
+                        "number",
+                        "integer",
+                        "boolean",
+                        "object",
+                        "array"
+                      ]
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

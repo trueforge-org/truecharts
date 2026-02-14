@@ -1,0 +1,135 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "storageClass": {
+      "type": [
+        "null",
+        "string",
+        "number",
+        "integer",
+        "boolean",
+        "object",
+        "array"
+      ]
+    },
+    "probeType": {
+      "type": "string"
+    },
+    "serviceProtocol": {
+      "type": "string"
+    },
+    "serviceType": {
+      "type": "string"
+    },
+    "persistenceType": {
+      "type": "string"
+    },
+    "pvcRetain": {
+      "type": "boolean"
+    },
+    "pvcSize": {
+      "type": "string"
+    },
+    "vctSize": {
+      "type": "string"
+    },
+    "accessModes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "vctAccessModes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "probeTimeouts": {
+      "type": "object",
+      "properties": {
+        "liveness": {
+          "type": "object",
+          "properties": {
+            "initialDelaySeconds": {
+              "type": "integer"
+            },
+            "periodSeconds": {
+              "type": "integer"
+            },
+            "timeoutSeconds": {
+              "type": "integer"
+            },
+            "failureThreshold": {
+              "type": "integer"
+            },
+            "successThreshold": {
+              "type": "integer"
+            }
+          },
+          "additionalProperties": true
+        },
+        "readiness": {
+          "type": "object",
+          "properties": {
+            "initialDelaySeconds": {
+              "type": "integer"
+            },
+            "periodSeconds": {
+              "type": "integer"
+            },
+            "timeoutSeconds": {
+              "type": "integer"
+            },
+            "failureThreshold": {
+              "type": "integer"
+            },
+            "successThreshold": {
+              "type": "integer"
+            }
+          },
+          "additionalProperties": true
+        },
+        "startup": {
+          "type": "object",
+          "properties": {
+            "initialDelaySeconds": {
+              "type": "integer"
+            },
+            "periodSeconds": {
+              "type": "integer"
+            },
+            "timeoutSeconds": {
+              "type": "integer"
+            },
+            "failureThreshold": {
+              "type": "integer"
+            },
+            "successThreshold": {
+              "type": "integer"
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "topologyKey": {
+      "type": "string"
+    },
+    "cnpg": {
+      "type": "object",
+      "properties": {
+        "pgVersion": {
+          "type": "integer"
+        },
+        "skipEmptyWalArchiveCheck": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

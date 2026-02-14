@@ -1,0 +1,135 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean"
+    },
+    "targetSelector": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "config": {
+      "type": "string"
+    },
+    "container": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "imageSelector": {
+          "type": "string"
+        },
+        "probes": {
+          "type": "object",
+          "properties": {
+            "liveness": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": true
+            },
+            "readiness": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": true
+            },
+            "startup": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "additionalProperties": true
+        },
+        "command": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "resources": {
+          "type": "object",
+          "properties": {
+            "excludeExtra": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        },
+        "env": {
+          "$ref": "tailscale/env.json"
+        },
+        "securityContext": {
+          "type": "object",
+          "properties": {
+            "capabilities": {
+              "type": "object",
+              "properties": {
+                "add": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "authkey": {
+      "type": "string"
+    },
+    "userspace": {
+      "type": "boolean"
+    },
+    "auth_once": {
+      "type": "boolean"
+    },
+    "accept_dns": {
+      "type": "boolean"
+    },
+    "routes": {
+      "type": "string"
+    },
+    "dest_ip": {
+      "type": "string"
+    },
+    "sock5_server": {
+      "type": "string"
+    },
+    "extra_args": {
+      "type": "string"
+    },
+    "daemon_extra_args": {
+      "type": "string"
+    },
+    "outbound_http_proxy_listen": {
+      "type": "string"
+    },
+    "annotations": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

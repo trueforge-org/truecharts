@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean"
+    },
+    "includeCommon": {
+      "type": "boolean"
+    },
+    "password": {
+      "type": "string"
+    },
+    "rootPassword": {
+      "type": "string"
+    },
+    "creds": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

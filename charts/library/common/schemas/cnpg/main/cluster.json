@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "labels": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true
+    },
+    "annotations": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true
+    },
+    "env": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true
+    },
+    "envFrom": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true
+    },
+    "instances": {
+      "type": "integer"
+    },
+    "singleNode": {
+      "type": "boolean"
+    },
+    "primaryUpdateMethod": {
+      "type": "string"
+    },
+    "primaryUpdateStrategy": {
+      "type": "string"
+    },
+    "logLevel": {
+      "type": "string"
+    },
+    "certificates": {
+      "type": [
+        "null",
+        "string",
+        "number",
+        "integer",
+        "boolean",
+        "object",
+        "array"
+      ]
+    },
+    "postgresql": {
+      "type": [
+        "null",
+        "string",
+        "number",
+        "integer",
+        "boolean",
+        "object",
+        "array"
+      ]
+    },
+    "initdb": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

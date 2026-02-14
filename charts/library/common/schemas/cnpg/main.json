@@ -1,0 +1,185 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean"
+    },
+    "primary": {
+      "type": "boolean"
+    },
+    "hibernate": {
+      "type": "boolean"
+    },
+    "labels": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true
+    },
+    "annotations": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true
+    },
+    "type": {
+      "type": "string"
+    },
+    "pgVersion": {
+      "type": "integer"
+    },
+    "mode": {
+      "type": "string"
+    },
+    "database": {
+      "type": "string"
+    },
+    "user": {
+      "type": "string"
+    },
+    "password": {
+      "type": "string"
+    },
+    "cluster": {
+      "$ref": "main/cluster.json"
+    },
+    "monitoring": {
+      "type": "object",
+      "properties": {
+        "enablePodMonitor": {
+          "type": "boolean"
+        },
+        "disableDefaultQueries": {
+          "type": "boolean"
+        },
+        "customQueries": {
+          "type": "array"
+        }
+      },
+      "additionalProperties": true
+    },
+    "recovery": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "servername": {
+          "type": "string"
+        },
+        "pitrTarget": {
+          "type": "object",
+          "properties": {
+            "time": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "backupName": {
+          "type": "string"
+        },
+        "clusterName": {
+          "type": "string"
+        },
+        "destinationPath": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "backups": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "encryption": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        },
+        "servername": {
+          "type": "string"
+        },
+        "destinationPath": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "credentials": {
+          "type": "string"
+        },
+        "scheduledBackups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "schedule": {
+                "type": "string"
+              },
+              "backupOwnerReference": {
+                "type": "string"
+              },
+              "immediate": {
+                "type": "boolean"
+              },
+              "suspend": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "retentionPolicy": {
+          "type": "string"
+        },
+        "manualBackups": {
+          "type": "array"
+        }
+      },
+      "additionalProperties": true
+    },
+    "pooler": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "createRO": {
+          "type": "boolean"
+        },
+        "poolMode": {
+          "type": "string"
+        },
+        "instances": {
+          "type": "integer"
+        },
+        "labels": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true
+        },
+        "annotations": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "creds": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

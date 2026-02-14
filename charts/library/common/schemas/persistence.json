@@ -1,0 +1,109 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "shared": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "type": {
+          "type": "string"
+        },
+        "mountPath": {
+          "type": "string"
+        },
+        "targetSelectAll": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "varlogs": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "type": {
+          "type": "string"
+        },
+        "mountPath": {
+          "type": "string"
+        },
+        "medium": {
+          "type": "string"
+        },
+        "targetSelectAll": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "varrun": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "type": {
+          "type": "string"
+        },
+        "mountPath": {
+          "type": "string"
+        },
+        "medium": {
+          "type": "string"
+        },
+        "targetSelectAll": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "tmp": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "type": {
+          "type": "string"
+        },
+        "mountPath": {
+          "type": "string"
+        },
+        "medium": {
+          "type": "string"
+        },
+        "targetSelectAll": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "devshm": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "type": {
+          "type": "string"
+        },
+        "mountPath": {
+          "type": "string"
+        },
+        "medium": {
+          "type": "string"
+        },
+        "targetSelectAll": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
