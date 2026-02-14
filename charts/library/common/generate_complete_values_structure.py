@@ -8,7 +8,8 @@ This script collects all values.yaml files from:
 - Common-test ci-values from charts/library/common-test/ci/*values.yaml
 - Common values.yaml from charts/library/common/values.yaml
 
-It merges them into a comprehensive structure showing all possible keys.
+It merges them into a comprehensive structure showing all possible keys,
+while preserving comments from the existing file where they exist.
 """
 
 import argparse
@@ -16,19 +17,31 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List
 
+# Try to import ruamel.yaml first (preserves comments), fall back to PyYAML
 try:
-    import yaml
+    from ruamel.yaml import YAML
+    HAS_RUAMEL = True
 except ImportError:
-    print("Error: PyYAML is required. Install it with: pip install PyYAML", file=sys.stderr)
-    sys.exit(1)
+    import yaml
+    HAS_RUAMEL = False
+    print("Warning: ruamel.yaml not found. Comments will not be preserved.", file=sys.stderr)
+    print("Install with: pip install ruamel.yaml", file=sys.stderr)
 
 
 def load_yaml_file(file_path: Path) -> Dict[str, Any]:
     """Load a YAML file and return its content."""
     try:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            content = yaml.safe_load(f)
-            return content if isinstance(content, dict) else {}
+        if HAS_RUAMEL:
+            yaml_loader = YAML()
+            yaml_loader.preserve_quotes = True
+            yaml_loader.default_flow_style = False
+            with open(file_path, 'r', encoding='utf-8') as f:
+                content = yaml_loader.load(f)
+                return content if isinstance(content, dict) else {}
+        else:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                content = yaml.safe_load(f)
+                return content if isinstance(content, dict) else {}
     except Exception as e:
         print(f"Warning: Failed to load {file_path}: {e}", file=sys.stderr)
         return {}
@@ -115,20 +128,112 @@ def collect_all_values_files(repo_root: Path) -> List[Path]:
     return values_files
 
 
-def generate_complete_structure(repo_root: Path) -> Dict[str, Any]:
+def load_existing_with_comments(file_path: Path) -> Any:
+    """Load existing file with comments preserved using ruamel.yaml."""
+    if not HAS_RUAMEL:
+        return {}
+    
+    if not file_path.exists():
+        return None
+    
+    try:
+        yaml_loader = YAML()
+        yaml_loader.preserve_quotes = True
+        yaml_loader.default_flow_style = False
+        yaml_loader.width = 120
+        yaml_loader.indent(mapping=2, sequence=2, offset=0)
+        
+        # Read file and skip header comments
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # Find where the actual YAML content starts (after the header block)
+        lines = content.split('\n')
+        yaml_start = 0
+        in_header = False
+        for i, line in enumerate(lines):
+            if line.strip().startswith('# ============'):
+                in_header = True
+            elif in_header and line.strip() and not line.strip().startswith('#'):
+                yaml_start = i
+                break
+            elif in_header and i > 0 and not line.strip():
+                # Empty line after header block
+                yaml_start = i + 1
+        
+        # Load only the YAML content part
+        yaml_content = '\n'.join(lines[yaml_start:])
+        return yaml_loader.load(yaml_content)
+    except Exception as e:
+        print(f"Warning: Failed to load existing file with comments: {e}", file=sys.stderr)
+        return None
+
+
+def merge_preserving_comments(base: Any, new: Any) -> Any:
+    """
+    Merge new data into base while preserving comments in base.
+    Only works with ruamel.yaml CommentedMap/CommentedSeq objects.
+    """
+    if not HAS_RUAMEL:
+        return merge_structures(base, new)
+    
+    from ruamel.yaml.comments import CommentedMap, CommentedSeq
+    
+    # If base doesn't exist, return new (no comments to preserve)
+    if base is None:
+        return new
+    
+    # If new doesn't exist, return base (preserve everything)
+    if new is None:
+        return base
+    
+    # Both are dicts - merge keys while preserving comments
+    if isinstance(base, (dict, CommentedMap)) and isinstance(new, dict):
+        # Work with base to preserve its comments
+        for key, new_value in new.items():
+            if key in base:
+                # Recursively merge
+                base[key] = merge_preserving_comments(base[key], new_value)
+            else:
+                # Add new key
+                base[key] = new_value
+        return base
+    
+    # Both are lists - use base to preserve comments
+    if isinstance(base, (list, CommentedSeq)) and isinstance(new, list):
+        # If base has content, keep it; otherwise use new
+        return base if base else new
+    
+    # For primitives, prefer base to keep context, unless it's empty/None
+    if base or base == 0 or base is False:
+        return base
+    return new
+
+
+def generate_complete_structure(repo_root: Path, existing_file: Path = None) -> Dict[str, Any]:
     """Generate the complete values structure from all charts."""
     print("Collecting values files...", file=sys.stderr)
     values_files = collect_all_values_files(repo_root)
     print(f"Found {len(values_files)} values files to process", file=sys.stderr)
     
-    complete_structure = {}
+    # Try to load existing file with comments first
+    if existing_file and existing_file.exists() and HAS_RUAMEL:
+        print(f"Loading existing file to preserve comments: {existing_file}", file=sys.stderr)
+        complete_structure = load_existing_with_comments(existing_file)
+        if complete_structure is None:
+            complete_structure = {}
+    else:
+        complete_structure = {}
     
     for i, values_file in enumerate(values_files, 1):
         if i % 100 == 0:
             print(f"Processing {i}/{len(values_files)}...", file=sys.stderr)
         
         values_data = load_yaml_file(values_file)
-        complete_structure = merge_structures(complete_structure, values_data)
+        if HAS_RUAMEL and complete_structure:
+            complete_structure = merge_preserving_comments(complete_structure, values_data)
+        else:
+            complete_structure = merge_structures(complete_structure, values_data)
     
     print("Merge complete. Structure generated.", file=sys.stderr)
     return complete_structure
@@ -155,10 +260,22 @@ def write_complete_structure(output_path: Path, structure: Dict[str, Any]) -> No
 
 """
     
-    with open(output_path, 'w', encoding='utf-8') as f:
-        f.write(header)
-        yaml.dump(structure, f, default_flow_style=False, 
-                  sort_keys=False, allow_unicode=True, width=120, indent=2)
+    if HAS_RUAMEL:
+        yaml_writer = YAML()
+        yaml_writer.preserve_quotes = True
+        yaml_writer.default_flow_style = False
+        yaml_writer.width = 120
+        yaml_writer.indent(mapping=2, sequence=2, offset=0)
+        
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(header)
+            yaml_writer.dump(structure, f)
+    else:
+        import yaml
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(header)
+            yaml.dump(structure, f, default_flow_style=False, 
+                      sort_keys=False, allow_unicode=True, width=120, indent=2)
     
     print(f"Complete structure written to: {output_path}", file=sys.stderr)
 
@@ -200,9 +317,14 @@ def main() -> int:
     print(f"Repository root: {repo_root}", file=sys.stderr)
     print(f"Output file: {output_path}", file=sys.stderr)
     
+    if HAS_RUAMEL:
+        print("Using ruamel.yaml - comments will be preserved", file=sys.stderr)
+    else:
+        print("Using PyYAML - comments will NOT be preserved", file=sys.stderr)
+    
     # Generate structure
     try:
-        structure = generate_complete_structure(repo_root)
+        structure = generate_complete_structure(repo_root, existing_file=output_path)
         write_complete_structure(output_path, structure)
         print("Success!", file=sys.stderr)
         return 0

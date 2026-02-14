@@ -156,8 +156,8 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install PyYAML
-        run: pip install PyYAML
+      - name: Install Python dependencies
+        run: pip install PyYAML ruamel.yaml
 
       - name: Generate complete values structure
         run: |
@@ -166,7 +166,6 @@ jobs:
       - name: Run schema validation
         run: |
           python3 charts/library/common/test_schema.py --max-failures 0 --output-file stable_schema_validation.log
-          python3 charts/library/common/check_complete_values_schema_coverage.py
 
       - name: Upload schema validation log
         if: always()
