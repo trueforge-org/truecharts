@@ -236,7 +236,7 @@ command:
 {{- define "tc.v1.common.lib.deps.wait.clickhouse" -}}
 enabled: true
 type: system
-imageSelector: wgetImage
+imageSelector: ubuntuImage
 securityContext:
   runAsUser: 568
   runAsGroup: 568
@@ -280,7 +280,7 @@ args:
 {{- define "tc.v1.common.lib.deps.wait.solr" -}}
 enabled: true
 type: system
-imageSelector: wgetImage
+imageSelector: ubuntuImage
 securityContext:
   runAsUser: 568
   runAsGroup: 568
