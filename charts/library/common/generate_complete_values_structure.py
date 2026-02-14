@@ -14,7 +14,7 @@ It merges them into a comprehensive structure showing all possible keys.
 import argparse
 import sys
 from pathlib import Path
-from typing import Any, Dict, List, Set
+from typing import Any, Dict, List
 
 try:
     import yaml
@@ -70,50 +70,6 @@ def merge_structures(base: Any, new: Any, path: str = "") -> Any:
     return base
 
 
-def normalize_variable_keys(data: Any, known_static_keys: Set[str]) -> Any:
-    """
-    Replace variable dictionary keys with 'objectname' placeholder.
-    
-    Known static keys (like 'enabled', 'type', etc.) are preserved.
-    Variable keys (user-defined names) are replaced with 'objectname'.
-    """
-    if not isinstance(data, dict):
-        return data
-    
-    result = {}
-    variable_keys = {}
-    
-    for key, value in data.items():
-        # Recursively process the value
-        processed_value = normalize_variable_keys(value, known_static_keys)
-        
-        # Check if this is a known static key
-        if key in known_static_keys:
-            result[key] = processed_value
-        else:
-            # This might be a variable key
-            # Store it temporarily to check if we should use 'objectname'
-            variable_keys[key] = processed_value
-    
-    # If we have variable keys and they look like user-defined names,
-    # replace them with 'objectname'
-    if variable_keys:
-        # Check if all variable keys have similar structure (indicating they're variable names)
-        values_list = list(variable_keys.values())
-        # If we have multiple similar keys or keys that look like variable names,
-        # use 'objectname' as placeholder
-        # Keep the first one's structure but use 'objectname' as key
-        first_value = values_list[0]
-        if 'objectname' not in result:
-            result['objectname'] = first_value
-        # Add back any that were actually static keys we missed
-        for key, value in variable_keys.items():
-            if key in ['main', 'default', 'admin']:  # Common static keys
-                result[key] = value
-    
-    return result
-
-
 def collect_all_values_files(repo_root: Path) -> List[Path]:
     """Collect all values.yaml files from charts and common-test."""
     values_files = []
@@ -165,22 +121,6 @@ def generate_complete_structure(repo_root: Path) -> Dict[str, Any]:
     values_files = collect_all_values_files(repo_root)
     print(f"Found {len(values_files)} values files to process", file=sys.stderr)
     
-    # Define known static keys that should not be replaced with 'objectname'
-    known_static_keys = {
-        'enabled', 'type', 'mountPath', 'size', 'storageClass', 'accessModes',
-        'name', 'namespace', 'labels', 'annotations', 'image', 'tag', 'pullPolicy',
-        'port', 'targetPort', 'protocol', 'service', 'ingress', 'persistence',
-        'resources', 'replicas', 'strategy', 'global', 'workload', 'podOptions',
-        'configmap', 'secret', 'serviceAccount', 'rbac', 'networkPolicy',
-        'metrics', 'addons', 'codeserver', 'netshoot', 'vpn', 'tailscale',
-        'gluetun', 'autopermissions', 'promtail', 'operator', 'cnpg', 'mariadb',
-        'mongodb', 'redis', 'clickhouse', 'solr', 'route', 'hpa', 'vpa',
-        'fallbackDefaults', 'traefik', 'metallb', 'minNodePort', 'stopAll',
-        'main', 'default', 'admin', 'primary', 'secondary', 'backup',
-        'server', 'client', 'proxy', 'agent', 'worker', 'master', 'replica',
-        'frontend', 'backend', 'api', 'web', 'app', 'db', 'cache',
-    }
-    
     complete_structure = {}
     
     for i, values_file in enumerate(values_files, 1):
@@ -218,8 +158,7 @@ def write_complete_structure(output_path: Path, structure: Dict[str, Any]) -> No
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write(header)
         yaml.dump(structure, f, default_flow_style=False, 
-                  sort_keys=False, allow_unicode=True, width=120, indent=2,
-                  default_style=None)
+                  sort_keys=False, allow_unicode=True, width=120, indent=2)
     
     print(f"Complete structure written to: {output_path}", file=sys.stderr)
 
