@@ -1,7 +1,12 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "properties": {},
+  "properties": {
+    "apiGroup": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
   "additionalProperties": {
     "type": "object",
     "properties": {
@@ -123,5 +128,8 @@
     "additionalProperties": true,
     "description": "Define rbac"
   },
-  "description": "Create rbac objects"
+  "description": "Create rbac objects",
+  "required": [
+    "apiGroup"
+  ]
 }

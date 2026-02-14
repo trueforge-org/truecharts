@@ -1,5 +1,14 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$ref": "file:///home/runner/work/truecharts/truecharts/charts/library/common/schemas/cnpg.json",
-  "description": "Mirrors docs path cnpg/cnpg.md and reuses shared schema cnpg.json."
+  "description": "Mirrors docs path cnpg/cnpg.md and reuses shared schema cnpg.json.",
+  "properties": {
+    "cluster": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "cluster"
+  ]
 }

@@ -2,6 +2,19 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "description": "Mirrors docs path middlewares/traefik/plugin-geoblock.md.",
-  "properties": {},
-  "additionalProperties": true
+  "properties": {
+    "api": {
+      "type": "string",
+      "minLength": 1
+    },
+    "countries": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "api",
+    "countries"
+  ]
 }

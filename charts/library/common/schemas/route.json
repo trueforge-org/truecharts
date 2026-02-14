@@ -183,8 +183,14 @@
       },
       "additionalProperties": true,
       "description": "Configuration for `route.main`."
+    },
+    "rules": {
+      "type": "object"
     }
   },
   "additionalProperties": true,
-  "description": "Configuration for `route`."
+  "description": "Configuration for `route`.",
+  "required": [
+    "rules"
+  ]
 }
