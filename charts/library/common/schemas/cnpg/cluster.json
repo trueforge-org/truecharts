@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "labels": {
+      "allOf": [
+        {
+          "$ref": "../special/labels.json"
+        }
+      ],
+      "description": "Additional labels for CNPG cluster"
+    },
+    "annotations": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Additional annotations for CNPG cluster"
+    },
+    "env": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "See [env](/truecharts-common/container/env)"
+    },
+    "envFrom": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "See [envFrom](/truecharts-common/container/envfrom)"
+    },
+    "instances": {
+      "type": "integer",
+      "description": "Number of instances"
+    },
+    "singleNode": {
+      "type": "boolean",
+      "description": "Whether this is a single-node cluster. Setting this to `true` would allow PVCs to be kept on instance restart."
+    },
+    "primaryUpdateMethod": {
+      "type": "string",
+      "description": "TODO ---"
+    },
+    "primaryUpdateStrategy": {
+      "type": "string",
+      "description": "TODO ---"
+    },
+    "logLevel": {
+      "type": "string",
+      "description": "The cluster log level. Available values: - `error`"
+    },
+    "certificates": {
+      "type": [
+        "null",
+        "string",
+        "number",
+        "integer",
+        "boolean",
+        "object",
+        "array"
+      ],
+      "description": "TODO ---"
+    },
+    "postgresql": {
+      "type": [
+        "null",
+        "string",
+        "number",
+        "integer",
+        "boolean",
+        "object",
+        "array"
+      ],
+      "description": "TODO ---"
+    },
+    "initdb": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "TODO ---"
+    }
+  },
+  "additionalProperties": true,
+  "description": "Define a CNPG cluster"
+}

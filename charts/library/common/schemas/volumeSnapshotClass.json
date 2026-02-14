@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define a volume snapshot class"
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Define the labels of the volume snapshot class"
+      },
+      "annotations": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the annotations of the volume snapshot class"
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Enable volume snapshot class"
+      },
+      "isDefault": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Sets the annotation `snapshot.storage.kubernetes.io/is-default-class` to `\"true\"` or `\"false\"`"
+      },
+      "driver": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the driver of the volume snapshot class"
+      },
+      "deletionPolicy": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the deletion policy of the volume snapshot class"
+      }
+    },
+    "additionalProperties": true,
+    "description": "Define a volume snapshot class"
+  },
+  "description": "Define a volume snapshot class"
+}

@@ -23,11 +23,11 @@
       "x-docs-helmTpl": false
     },
     "chartContext": {
-      "$ref": "schemas/chartContext/chartContext.json",
+      "$ref": "schemas/chartContext.json",
       "description": "Configuration for `chartContext`."
     },
     "securityContext": {
-      "$ref": "schemas/workload/podSpec/containers/securityContext/securityContext.json",
+      "$ref": "schemas/workload/podSpec/containers/securityContext.json",
       "description": "Define security context for all containers and pods, unless overridden at the container/pod level See more info about securityContext [here](/truecharts-common/securitycontext)",
       "type": "object",
       "x-docs-required": true,
@@ -41,7 +41,7 @@
       "x-docs-helmTpl": false
     },
     "containerOptions": {
-      "$ref": "schemas/containerOptions/containerOptions.json",
+      "$ref": "schemas/containerOptions.json",
       "description": "Options that apply to all containers, unless overridden at the container level See more info about containerOptions [here](/truecharts-common/containeroptions)",
       "type": "object",
       "x-docs-required": false,
@@ -74,11 +74,11 @@
       "description": "Configuration for `diagnosticMode`."
     },
     "vpa": {
-      "$ref": "schemas/vpa/vpa.json",
+      "$ref": "schemas/vpa.json",
       "description": "Configuration for `vpa`."
     },
     "hpa": {
-      "$ref": "schemas/hpa/hpa.json",
+      "$ref": "schemas/hpa.json",
       "description": "Configuration for `hpa`."
     },
     "service": {
@@ -86,7 +86,7 @@
       "description": "Define service objects"
     },
     "credentials": {
-      "$ref": "schemas/credentials/credentials.json",
+      "$ref": "schemas/credentials.json",
       "description": "Create credentials objects"
     },
     "ingressMiddlewares": {
@@ -98,107 +98,107 @@
       "description": "Define persistence objects"
     },
     "volumeSnapshotClass": {
-      "$ref": "schemas/volumeSnapshotClass/volumeSnapshotClass.json",
+      "$ref": "schemas/volumeSnapshotClass.json",
       "description": "Define a volume snapshot class"
     },
     "volumeSnapshots": {
-      "$ref": "schemas/volumeSnapshots/volumeSnapshots.json",
+      "$ref": "schemas/volumeSnapshots.json",
       "description": "Define a volume snapshot"
     },
     "imagePullSecret": {
-      "$ref": "schemas/imagePullSecret/imagePullSecret.json",
+      "$ref": "schemas/imagePullSecret.json",
       "description": "Define image pull secrets"
     },
     "configmap": {
-      "$ref": "schemas/configmap/configmap.json",
+      "$ref": "schemas/configmap.json",
       "description": "Create Configmap objects"
     },
     "secret": {
-      "$ref": "schemas/secret/secret.json",
+      "$ref": "schemas/secret.json",
       "description": "Create Secret objects"
     },
     "serviceAccount": {
-      "$ref": "schemas/serviceAccount/serviceAccount.json",
+      "$ref": "schemas/serviceAccount.json",
       "description": "Create serviceAccount objects"
     },
     "rbac": {
-      "$ref": "schemas/rbac/rbac.json",
+      "$ref": "schemas/rbac.json",
       "description": "Create rbac objects"
     },
     "notes": {
-      "$ref": "schemas/notes/notes.json",
+      "$ref": "schemas/notes.json",
       "description": "Define values for `NOTES.txt`"
     },
     "gluetunImage": {
-      "$ref": "schemas/images/gluetunImage.json",
+      "$ref": "schemas/images.json#/properties/gluetunImage",
       "description": "Configuration for `gluetunImage`."
     },
     "netshootImage": {
-      "$ref": "schemas/images/netshootImage.json",
+      "$ref": "schemas/images.json#/properties/netshootImage",
       "description": "Configuration for `netshootImage`."
     },
     "tailscaleImage": {
-      "$ref": "schemas/images/tailscaleImage.json",
+      "$ref": "schemas/images.json#/properties/tailscaleImage",
       "description": "Configuration for `tailscaleImage`."
     },
     "codeserverImage": {
-      "$ref": "schemas/images/codeserverImage.json",
+      "$ref": "schemas/images.json#/properties/codeserverImage",
       "description": "Configuration for `codeserverImage`."
     },
     "ubuntuImage": {
-      "$ref": "schemas/images/ubuntuImage.json",
+      "$ref": "schemas/images.json#/properties/ubuntuImage",
       "description": "Configuration for `ubuntuImage`."
     },
     "kubectlImage": {
-      "$ref": "schemas/images/kubectlImage.json",
+      "$ref": "schemas/images.json#/properties/kubectlImage",
       "description": "Configuration for `kubectlImage`."
     },
     "postgresClientImage": {
-      "$ref": "schemas/images/postgresClientImage.json",
+      "$ref": "schemas/images.json#/properties/postgresClientImage",
       "description": "Configuration for `postgresClientImage`."
     },
     "mariadbClientImage": {
-      "$ref": "schemas/images/mariadbClientImage.json",
+      "$ref": "schemas/images.json#/properties/mariadbClientImage",
       "description": "Configuration for `mariadbClientImage`."
     },
     "valkeyClientImage": {
-      "$ref": "schemas/images/valkeyClientImage.json",
+      "$ref": "schemas/images.json#/properties/valkeyClientImage",
       "description": "Configuration for `valkeyClientImage`."
     },
     "mongodbClientImage": {
-      "$ref": "schemas/images/mongodbClientImage.json",
+      "$ref": "schemas/images.json#/properties/mongodbClientImage",
       "description": "Configuration for `mongodbClientImage`."
     },
     "postgres15Image": {
-      "$ref": "schemas/images/postgres15Image.json",
+      "$ref": "schemas/images.json#/properties/postgres15Image",
       "description": "Configuration for `postgres15Image`."
     },
     "postgres16Image": {
-      "$ref": "schemas/images/postgres16Image.json",
+      "$ref": "schemas/images.json#/properties/postgres16Image",
       "description": "Configuration for `postgres16Image`."
     },
     "postgresPostgis15Image": {
-      "$ref": "schemas/images/postgresPostgis15Image.json",
+      "$ref": "schemas/images.json#/properties/postgresPostgis15Image",
       "description": "Configuration for `postgresPostgis15Image`."
     },
     "postgresPostgis16Image": {
-      "$ref": "schemas/images/postgresPostgis16Image.json",
+      "$ref": "schemas/images.json#/properties/postgresPostgis16Image",
       "description": "Configuration for `postgresPostgis16Image`."
     },
     "postgresVectors15Image": {
-      "$ref": "schemas/images/postgresVectors15Image.json",
+      "$ref": "schemas/images.json#/properties/postgresVectors15Image",
       "description": "Configuration for `postgresVectors15Image`."
     },
     "postgresVectors16Image": {
-      "$ref": "schemas/images/postgresVectors16Image.json",
+      "$ref": "schemas/images.json#/properties/postgresVectors16Image",
       "description": "Configuration for `postgresVectors16Image`."
     },
     "postgresVectorchord15Image": {
-      "$ref": "schemas/images/postgresVectorchord15Image.json",
+      "$ref": "schemas/images.json#/properties/postgresVectorchord15Image",
       "description": "Configuration for `postgresVectorchord15Image`."
     },
     "postgresVectorchord16Image": {
-      "$ref": "schemas/images/postgresVectorchord16Image.json",
+      "$ref": "schemas/images.json#/properties/postgresVectorchord16Image",
       "description": "Configuration for `postgresVectorchord16Image`."
     },
     "ingress": {
@@ -206,31 +206,31 @@
       "description": "Create Ingress objects"
     },
     "certificate": {
-      "$ref": "schemas/certificate/certificate.json",
+      "$ref": "schemas/certificate.json",
       "description": "Define certificates"
     },
     "route": {
-      "$ref": "schemas/route/route.json",
+      "$ref": "schemas/route.json",
       "description": "Configuration for `route`."
     },
     "podDisruptionBudget": {
-      "$ref": "schemas/podDisruptionBudget/podDisruptionBudget.json",
+      "$ref": "schemas/podDisruptionBudget.json",
       "description": "Create Pod Disruption Budget objects"
     },
     "webhook": {
-      "$ref": "schemas/webhook/webhook.json",
+      "$ref": "schemas/webhook.json",
       "description": "Create webhook objects"
     },
     "priorityClass": {
-      "$ref": "schemas/priorityClass/priorityClass.json",
+      "$ref": "schemas/priorityClass.json",
       "description": "Define priority classes"
     },
     "storageClass": {
-      "$ref": "schemas/storageClass/storageClass.json",
+      "$ref": "schemas/storageClass.json",
       "description": "Define storage classes"
     },
     "metrics": {
-      "$ref": "schemas/metrics/metrics.json",
+      "$ref": "schemas/metrics.json",
       "description": "Configuration for `metrics`."
     },
     "addons": {
@@ -246,23 +246,23 @@
       "description": "Define a CNPG cluster"
     },
     "redis": {
-      "$ref": "schemas/redis/redis.json",
+      "$ref": "schemas/redis.json",
       "description": "Configuration for `redis`."
     },
     "mariadb": {
-      "$ref": "schemas/mariadb/mariadb.json",
+      "$ref": "schemas/mariadb.json",
       "description": "Configuration for `mariadb`."
     },
     "mongodb": {
-      "$ref": "schemas/mongodb/mongodb.json",
+      "$ref": "schemas/mongodb.json",
       "description": "Configuration for `mongodb`."
     },
     "clickhouse": {
-      "$ref": "schemas/clickhouse/clickhouse.json",
+      "$ref": "schemas/clickhouse.json",
       "description": "Configuration for `clickhouse`."
     },
     "solr": {
-      "$ref": "schemas/solr/solr.json",
+      "$ref": "schemas/solr.json",
       "description": "Configuration for `solr`."
     },
     "extraTpl": {
@@ -275,7 +275,7 @@
       "x-docs-defaultRaw": "`[]`"
     },
     "fallbackDefaults": {
-      "$ref": "schemas/global/fallbackDefaults/fallbackDefaults.json",
+      "$ref": "schemas/global/fallbackDefaults.json",
       "description": "The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [here](/truecharts-common/fallbackdefaults)",
       "type": "object",
       "x-docs-required": false,
@@ -283,7 +283,7 @@
       "x-docs-defaultRaw": "See here"
     },
     "operator": {
-      "$ref": "schemas/operator/operator.json",
+      "$ref": "schemas/operator.json",
       "description": "Contains specific settings for helm charts containing or using system"
     },
     "enableServiceLinks": {
@@ -319,11 +319,11 @@
       "description": "See [DNS Policy](/truecharts-common/workload#dnspolicy)"
     },
     "dnsConfig": {
-      "$ref": "schemas/podOptions/dnsConfig/dnsConfig.json",
+      "$ref": "schemas/podOptions/dnsConfig.json",
       "description": "See [DNS Config](/truecharts-common/workload#dnsconfig)"
     },
     "hostAliases": {
-      "$ref": "schemas/podOptions/hostAliases/hostAliases.json",
+      "$ref": "schemas/podOptions/hostAliases.json",
       "description": "See [Host Aliases](/truecharts-common/workload#hostaliases)"
     },
     "nodeSelector": {
@@ -335,11 +335,11 @@
       "description": "Sets some default topology spread constraints for good spread of pods across nodes."
     },
     "topologySpreadConstraints": {
-      "$ref": "schemas/podOptions/topologySpreadConstraints/topologySpreadConstraints.json",
+      "$ref": "schemas/podOptions/topologySpreadConstraints.json",
       "description": "See [Topology Spread Constraints](/truecharts-common/workload#topologyspreadconstraints)"
     },
     "tolerations": {
-      "$ref": "schemas/podOptions/tolerations/tolerations.json",
+      "$ref": "schemas/podOptions/tolerations.json",
       "description": "See [Tolerations](/truecharts-common/workload#tolerations)"
     },
     "schedulerName": {
@@ -375,11 +375,11 @@
       "description": "See [termination](/truecharts-common/container/termination)"
     },
     "lifecycle": {
-      "$ref": "schemas/workload/podSpec/containers/lifecycle/lifecycle.json",
+      "$ref": "schemas/workload/podSpec/containers/lifecycle.json",
       "description": "Does **not** apply to `initContainers` See [lifecycle](/truecharts-common/container/lifecycle)"
     },
     "probes": {
-      "$ref": "schemas/workload/podSpec/containers/probes/probes.json",
+      "$ref": "schemas/workload/podSpec/containers/probes.json",
       "description": "Does **not** apply to `initContainers` See [probes](/truecharts-common/container/probes)"
     },
     "envFrom": {
@@ -407,11 +407,11 @@
       "description": "TODO ---"
     },
     "postgresql": {
-      "$ref": "schemas/cnpg/cluster/postgresql/postgresql.json",
+      "$ref": "schemas/cnpg/cluster/postgresql.json",
       "description": "TODO ---"
     },
     "initdb": {
-      "$ref": "schemas/cnpg/cluster/initdb/initdb.json",
+      "$ref": "schemas/cnpg/cluster/initdb.json",
       "description": "TODO ---"
     }
   },

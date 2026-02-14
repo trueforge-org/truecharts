@@ -1,171 +1,186 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
+  "description": "The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [here](/truecharts-common/fallbackdefaults)",
   "properties": {
-    "storageClass": {
-      "type": [
-        "null",
-        "string",
-        "number",
-        "integer",
-        "boolean",
-        "object",
-        "array"
-      ],
-      "description": "Configuration for `global.fallbackDefaults.storageClass`."
-    },
     "probeType": {
-      "type": "string",
-      "description": "Configuration for `global.fallbackDefaults.probeType`."
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Define default probe type when not defined in the container level"
     },
     "serviceProtocol": {
-      "type": "string",
-      "description": "Configuration for `global.fallbackDefaults.serviceProtocol`."
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Define default service protocol when not defined in the service"
     },
     "serviceType": {
-      "type": "string",
-      "description": "Configuration for `global.fallbackDefaults.serviceType`."
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Define default service type when not defined in the service"
+    },
+    "storageClass": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Define default storage class when not defined in the persistence"
     },
     "persistenceType": {
-      "type": "string",
-      "description": "Configuration for `global.fallbackDefaults.persistenceType`."
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Define default persistence type when not defined in the persistence"
     },
     "pvcRetain": {
-      "type": "boolean",
-      "description": "Configuration for `global.fallbackDefaults.pvcRetain`."
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Define default pvc retain when not defined in the persistence"
     },
     "pvcSize": {
-      "type": "string",
-      "description": "Configuration for `global.fallbackDefaults.pvcSize`."
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Define default pvc size when not defined in the persistence"
     },
     "vctSize": {
-      "type": "string",
-      "description": "Configuration for `global.fallbackDefaults.vctSize`."
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Define default vct size when not defined in the persistence"
     },
     "accessModes": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "description": "Configuration for `global.fallbackDefaults.accessModes.$item`."
-      },
-      "description": "Configuration for `global.fallbackDefaults.accessModes`."
-    },
-    "vctAccessModes": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "description": "Configuration for `global.fallbackDefaults.vctAccessModes.$item`."
-      },
-      "description": "Configuration for `global.fallbackDefaults.vctAccessModes`."
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Define default access modes when not defined in the persistence"
     },
     "probeTimeouts": {
       "type": "object",
       "properties": {
+        "startup": {
+          "type": "object",
+          "properties": {
+            "successThreshold": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define default probe timeouts if not defined in the container"
+            },
+            "initialDelaySeconds": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define default startup probe initialDelaySeconds if not defined in the container"
+            },
+            "periodSeconds": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define default startup probe periodSeconds if not defined in the container"
+            },
+            "timeoutSeconds": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define default startup probe timeoutSeconds if not defined in the container"
+            },
+            "failureThreshold": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define default startup probe failureThreshold if not defined in the container"
+            }
+          },
+          "additionalProperties": true,
+          "description": "Define default startup probe timeouts if not defined in the container"
+        },
         "liveness": {
           "type": "object",
           "properties": {
             "initialDelaySeconds": {
-              "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.initialDelaySeconds`."
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define default liveness probe initialDelaySeconds if not defined in the container"
             },
             "periodSeconds": {
-              "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.periodSeconds`."
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define default liveness probe periodSeconds if not defined in the container"
             },
             "timeoutSeconds": {
-              "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.timeoutSeconds`."
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define default liveness probe timeoutSeconds if not defined in the container"
             },
             "failureThreshold": {
-              "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.failureThreshold`."
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define default liveness probe failureThreshold if not defined in the container"
             },
             "successThreshold": {
-              "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.successThreshold`."
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define default liveness probe successThreshold if not defined in the container"
             }
           },
           "additionalProperties": true,
-          "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness`."
+          "description": "Define default liveness probe timeouts if not defined in the container"
         },
         "readiness": {
           "type": "object",
           "properties": {
             "initialDelaySeconds": {
-              "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.initialDelaySeconds`."
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define default readiness probe initialDelaySeconds if not defined in the container"
             },
             "periodSeconds": {
-              "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.periodSeconds`."
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define default readiness probe periodSeconds if not defined in the container"
             },
             "timeoutSeconds": {
-              "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.timeoutSeconds`."
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define default readiness probe timeoutSeconds if not defined in the container"
             },
             "failureThreshold": {
-              "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.failureThreshold`."
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define default readiness probe failureThreshold if not defined in the container"
             },
             "successThreshold": {
-              "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.successThreshold`."
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Define default readiness probe successThreshold if not defined in the container"
             }
           },
           "additionalProperties": true,
-          "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness`."
-        },
-        "startup": {
-          "type": "object",
-          "properties": {
-            "initialDelaySeconds": {
-              "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.initialDelaySeconds`."
-            },
-            "periodSeconds": {
-              "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.periodSeconds`."
-            },
-            "timeoutSeconds": {
-              "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.timeoutSeconds`."
-            },
-            "failureThreshold": {
-              "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.failureThreshold`."
-            },
-            "successThreshold": {
-              "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.successThreshold`."
-            }
-          },
-          "additionalProperties": true,
-          "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup`."
+          "description": "Define default readiness probe timeouts if not defined in the container"
         }
       },
       "additionalProperties": true,
-      "description": "Configuration for `global.fallbackDefaults.probeTimeouts`."
+      "description": "Define default probe timeouts if not defined in the container"
     },
     "topologyKey": {
-      "type": "string",
-      "description": "Configuration for `global.fallbackDefaults.topologyKey`."
-    },
-    "cnpg": {
       "type": "object",
-      "properties": {
-        "pgVersion": {
-          "type": "integer",
-          "description": "Configuration for `global.fallbackDefaults.cnpg.pgVersion`."
-        },
-        "skipEmptyWalArchiveCheck": {
-          "type": "boolean",
-          "description": "Configuration for `global.fallbackDefaults.cnpg.skipEmptyWalArchiveCheck`."
-        }
-      },
+      "properties": {},
       "additionalProperties": true,
-      "description": "Configuration for `global.fallbackDefaults.cnpg`."
+      "description": "Define default topologyKey for topologySpreadConstraints in podOptions"
     }
   },
-  "additionalProperties": true,
-  "description": "Configuration for `global.fallbackDefaults`."
+  "additionalProperties": true
 }
