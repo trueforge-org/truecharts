@@ -5,8 +5,11 @@
     "main": {
       "type": "object",
       "properties": {
-        "enabled": {
-          "type": "boolean",
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
           "description": "Configuration for `hpa.main.enabled`."
         },
         "targetSelector": {

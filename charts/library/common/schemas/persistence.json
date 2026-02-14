@@ -5,8 +5,11 @@
     "shared": {
       "type": "object",
       "properties": {
-        "enabled": {
-          "type": "boolean",
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
           "description": "Define persistence objects"
         },
         "type": {
@@ -28,8 +31,11 @@
     "varlogs": {
       "type": "object",
       "properties": {
-        "enabled": {
-          "type": "boolean",
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
           "description": "Define persistence objects"
         },
         "type": {
@@ -55,8 +61,11 @@
     "varrun": {
       "type": "object",
       "properties": {
-        "enabled": {
-          "type": "boolean",
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
           "description": "Define persistence objects"
         },
         "type": {
@@ -82,8 +91,11 @@
     "tmp": {
       "type": "object",
       "properties": {
-        "enabled": {
-          "type": "boolean",
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
           "description": "Define persistence objects"
         },
         "type": {
@@ -109,8 +121,11 @@
     "devshm": {
       "type": "object",
       "properties": {
-        "enabled": {
-          "type": "boolean",
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
           "description": "Define persistence objects"
         },
         "type": {
@@ -136,8 +151,11 @@
     "crontab": {
       "type": "object",
       "properties": {
-        "enabled": {
-          "type": "boolean",
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
           "description": "Define persistence objects"
         },
         "type": {
@@ -480,8 +498,11 @@
               "additionalProperties": true,
               "description": "Define the name of the volumeSnapshot"
             },
-            "enabled": {
-              "type": "object",
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
               "properties": {},
               "additionalProperties": true,
               "description": "Define if the volumeSnapshot is enabled"
@@ -546,8 +567,11 @@
         "additionalProperties": true,
         "description": "Define the portals"
       },
-      "enabled": {
-        "type": "boolean",
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
         "description": "Enables or Disables the persistence"
       },
       "type": {

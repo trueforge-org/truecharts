@@ -59,8 +59,11 @@
         "additionalProperties": true,
         "description": "Define a CNPG cluster"
       },
-      "enabled": {
-        "type": "object",
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
         "properties": {},
         "additionalProperties": true,
         "description": "Enables or Disables the cluster"
