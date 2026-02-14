@@ -6,6 +6,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -60,6 +61,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--no-verify-structure",
         action="store_true",
         help="Skip verifying generated page structure against schemas",
+    )
+    parser.add_argument(
+        "--no-verify-formatting",
+        action="store_true",
+        help="Skip verifying generated markdown formatting",
     )
     return parser
 
@@ -553,7 +559,34 @@ def helm_tpl_flag(node: dict[str, Any]) -> str:
         if "x-helm-tpl" in node
         else node.get("helmTpl", node.get("x-tpl", False))
     )
-    return "✅" if value else "❌"
+    return "true" if value else "false"
+
+
+def sanitize_description_markdown(text: str) -> str:
+    sanitized = re.sub(
+        r"\[(?:here|this|link)\]\(([^)]+)\)",
+        r"[documentation](\1)",
+        text,
+        flags=re.IGNORECASE,
+    )
+    sanitized = re.sub(r"\[([^\]]+)\]\(#([^)]+)\)", r"\1", sanitized)
+    return sanitized
+
+
+def render_pretty_table(rows: list[tuple[str, str]]) -> list[str]:
+    header = ("Field", "Value")
+    all_rows = [header, *rows]
+
+    col_widths = [
+        max(len(row[0]) for row in all_rows),
+        max(len(row[1]) for row in all_rows),
+    ]
+
+    def fmt_row(row: tuple[str, str]) -> str:
+        return f"| {row[0].ljust(col_widths[0])} | {row[1].ljust(col_widths[1])} |"
+
+    delimiter = f"| {'-' * max(3, col_widths[0])} | {'-' * max(3, col_widths[1])} |"
+    return [fmt_row(header), delimiter, *[fmt_row(row) for row in rows]]
 
 
 def render_property_section(
@@ -566,7 +599,8 @@ def render_property_section(
     current_source: Path | None = None,
 ) -> str:
     heading = "#" * max(2, min(6, heading_level))
-    description = node.get("description") or "No description provided."
+    raw_description = node.get("description") or "No description provided."
+    description = sanitize_description_markdown(raw_description)
     type_text = schema_type(node, resolver=resolver, current_source=current_source)
     default_value = schema_default_value(node, resolver=resolver, current_source=current_source)
     default_text = value_to_inline_json(default_value)
@@ -576,34 +610,36 @@ def render_property_section(
     max_length = schema_max_length(node, resolver=resolver, current_source=current_source)
     maximum = schema_maximum(node, resolver=resolver, current_source=current_source)
 
+    table_rows: list[tuple[str, str]] = [
+        ("Key", f"`{key_path}`"),
+        ("Type", f"`{type_text}`"),
+        ("Required", "true" if required else "false"),
+        ("Helm `tpl`", helm_tpl_flag(node)),
+        ("Default", default_text),
+    ]
+
+    if enum_values:
+        table_rows.append(("Enum", enum_to_inline_text(enum_values)))
+
+    if min_length is not None:
+        table_rows.append(("Min Length", f"`{min_length}`"))
+
+    if minimum is not None:
+        table_rows.append(("Minimum", f"`{minimum}`"))
+
+    if max_length is not None:
+        table_rows.append(("Max Length", f"`{max_length}`"))
+
+    if maximum is not None:
+        table_rows.append(("Maximum", f"`{maximum}`"))
+
     lines = [
         f"{heading} `{key_path}`",
         "",
         description,
         "",
-        "|            |                     |",
-        "| ---------- | ------------------- |",
-        f"| Key        | `{key_path}` |",
-        f"| Type       | `{type_text}` |",
-        f"| Required   | {'✅' if required else '❌'} |",
-        f"| Helm `tpl` | {helm_tpl_flag(node)} |",
-        f"| Default    | {default_text} |",
+        *render_pretty_table(table_rows),
     ]
-
-    if enum_values:
-        lines.append(f"| Enum       | {enum_to_inline_text(enum_values)} |")
-
-    if min_length is not None:
-        lines.append(f"| Min Length | `{min_length}` |")
-
-    if minimum is not None:
-        lines.append(f"| Minimum    | `{minimum}` |")
-
-    if max_length is not None:
-        lines.append(f"| Max Length | `{max_length}` |")
-
-    if maximum is not None:
-        lines.append(f"| Maximum    | `{maximum}` |")
 
     if reference_link:
         ref_label, ref_target = reference_link
@@ -881,7 +917,7 @@ def render_page(
                 required=False,
                 resolver=resolver,
                 current_source=schema_source,
-            ).rstrip()
+            )
         )
 
     page_children = iter_page_children(schema_node, schema_source, resolver)
@@ -899,7 +935,7 @@ def render_page(
                     reference_link=reference,
                     resolver=resolver,
                     current_source=child_source,
-                ).rstrip()
+                )
             )
             continue
 
@@ -911,7 +947,7 @@ def render_page(
                 required,
                 resolver=resolver,
                 current_source=child_source,
-            ).rstrip()
+            )
         )
 
     if child_links:
@@ -1288,6 +1324,8 @@ def generate_docs(
             child_name = child_key_path[-1]
             child_node = pages[child_doc_path_tuple]["node"]
             child_desc = child_node.get("description") if isinstance(child_node.get("description"), str) else ""
+            if child_desc:
+                child_desc = sanitize_description_markdown(child_desc)
             child_links.append((child_name, rel_link, child_desc))
 
         child_links.sort(key=lambda item: item[0])
@@ -1343,6 +1381,38 @@ def verify_generated_structure(
     return True, f"verified {len(actual_paths)} generated pages"
 
 
+def verify_generated_markdown_formatting(output: Path) -> tuple[bool, str]:
+    md_files = sorted(output.rglob("*.md"))
+    if not md_files:
+        return True, "no markdown files found to lint"
+
+    markdownlint_bin = shutil.which("markdownlint")
+    if markdownlint_bin is None:
+        return False, "markdownlint executable not found in PATH"
+
+    config_path: Path | None = None
+    for parent in output.resolve().parents:
+        candidate = parent / ".markdownlint.yaml"
+        if candidate.exists():
+            config_path = candidate
+            break
+
+    cmd = [markdownlint_bin]
+    if config_path is not None:
+        cmd.extend(["--config", str(config_path)])
+    cmd.extend(str(path) for path in md_files)
+
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    if result.returncode != 0:
+        stdout = result.stdout.strip()
+        stderr = result.stderr.strip()
+        parts = [p for p in (stdout, stderr) if p]
+        detail = "\n".join(parts) if parts else "markdownlint reported formatting violations"
+        return False, detail
+
+    return True, f"markdownlint passed for {len(md_files)} generated files"
+
+
 def main() -> int:
     parser = build_parser()
     args = parser.parse_args()
@@ -1372,6 +1442,14 @@ def main() -> int:
             print(report)
             return 1
         print(f"Structure verification passed: {report}")
+
+    if not args.no_verify_formatting:
+        ok, report = verify_generated_markdown_formatting(output=args.output.resolve())
+        if not ok:
+            print("Markdown formatting verification failed:")
+            print(report)
+            return 1
+        print(f"Markdown formatting verification passed: {report}")
 
     print(f"Generated pages in: {args.output}")
     return 0
