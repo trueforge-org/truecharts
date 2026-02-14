@@ -348,7 +348,43 @@
         "description": "Define the number of history revisions"
       },
       "strategy": {
-        "type": "string",
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Define the strategy type of the workload"
+              },
+              "rollingUpdate": {
+                "type": "object",
+                "properties": {
+                  "maxUnavailable": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true
+                  },
+                  "partition": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true
+                  },
+                  "maxSurge": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Define rollingUpdate options under strategy"
+              }
+            },
+            "additionalProperties": true
+          }
+        ],
         "description": "Define the strategy of the workload"
       },
       "rollingUpdate": {
