@@ -1647,17 +1647,18 @@ addons:
     enabled: false
     targetSelector:
       - "main"
-    config: ""
-    authkey: ""
-    userspace: true
-    auth_once: true
-    accept_dns: false
-    routes: ""
-    dest_ip: ""
-    sock5_server: ""
-    extra_args: ""
-    daemon_extra_args: ""
-    outbound_http_proxy_listen: ""
+    settings:
+      config: ""
+      authkey: ""
+      userspace: true
+      auth_once: true
+      accept_dns: false
+      routes: ""
+      dest_ip: ""
+      sock5_server: ""
+      extra_args: ""
+      daemon_extra_args: ""
+      outbound_http_proxy_listen: ""
     annotations: {}
     container:
       enabled: true
@@ -1677,16 +1678,6 @@ addons:
         TS_KUBE_SECRET: ""
         TS_SOCKET: "/var/run/tailscale/tailscaled.sock"
         TS_STATE_DIR: "/var/lib/tailscale/state"
-        TS_USERSPACE: true
-        TS_AUTH_ONCE: true
-        TS_ACCEPT_DNS: false
-        TS_AUTH_KEY: ""
-        TS_TAILSCALED_EXTRA_ARGS: ""
-        TS_EXTRA_ARGS: ""
-        TS_SOCKS5_SERVER: ""
-        TS_DEST_IP: ""
-        TS_ROUTES: ""
-        TS_OUTBOUND_HTTP_PROXY_LISTEN: ""
       securityContext:
         capabilities:
           add:
