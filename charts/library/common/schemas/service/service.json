@@ -21,9 +21,11 @@
         "description": "Define the integrations for this service"
       },
       "externalName": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "ExternalName.json"
+          }
+        ],
         "description": "Configure ExternalName type"
       },
       "ports": {
@@ -59,9 +61,10 @@
         "description": "Define the load balancer source ranges"
       },
       "externalIP": {
-        "type": [
-          "string",
-          "object"
+        "allOf": [
+          {
+            "$ref": "ExternalIP.json"
+          }
         ],
         "description": "Configure External IP type"
       },
@@ -125,7 +128,11 @@
         "description": "Whether to expand the object name (based on the [naming scheme](/truecharts-common/service#naming-scheme)) or not"
       },
       "clusterIP": {
-        "type": "string",
+        "allOf": [
+          {
+            "$ref": "ClusterIP.json"
+          }
+        ],
         "description": "Configure Cluster IP type"
       },
       "ipFamilyPolicy": {

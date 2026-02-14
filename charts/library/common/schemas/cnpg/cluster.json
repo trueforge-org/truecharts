@@ -37,11 +37,19 @@
       "description": "Whether this is a single-node cluster. Setting this to `true` would allow PVCs to be kept on instance restart."
     },
     "primaryUpdateMethod": {
-      "type": "string",
+      "allOf": [
+        {
+          "$ref": "cluster/primaryUpdateMethod.json"
+        }
+      ],
       "description": "TODO ---"
     },
     "primaryUpdateStrategy": {
-      "type": "string",
+      "allOf": [
+        {
+          "$ref": "cluster/primaryUpdateStrategy.json"
+        }
+      ],
       "description": "TODO ---"
     },
     "logLevel": {
@@ -49,33 +57,27 @@
       "description": "The cluster log level. Available values: - `error`"
     },
     "certificates": {
-      "type": [
-        "null",
-        "string",
-        "number",
-        "integer",
-        "boolean",
-        "object",
-        "array"
+      "allOf": [
+        {
+          "$ref": "cluster/certificates.json"
+        }
       ],
       "description": "TODO ---"
     },
     "postgresql": {
-      "type": [
-        "null",
-        "string",
-        "number",
-        "integer",
-        "boolean",
-        "object",
-        "array"
+      "allOf": [
+        {
+          "$ref": "cluster/postgresql.json"
+        }
       ],
       "description": "TODO ---"
     },
     "initdb": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "allOf": [
+        {
+          "$ref": "cluster/initdb.json"
+        }
+      ],
       "description": "TODO ---"
     }
   },
