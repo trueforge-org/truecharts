@@ -18,6 +18,85 @@
         },
         "webhooks": {
           "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Create webhook objects"
+              },
+              "rules": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "apiGroups": {
+                      "type": "array",
+                      "description": "Create webhook objects"
+                    },
+                    "apiVersions": {
+                      "type": "array",
+                      "description": "Create webhook objects"
+                    },
+                    "operations": {
+                      "type": "array",
+                      "description": "Create webhook objects"
+                    },
+                    "resources": {
+                      "type": "array",
+                      "description": "Create webhook objects"
+                    }
+                  },
+                  "additionalProperties": true,
+                  "description": "Create webhook objects"
+                },
+                "description": "Create webhook objects"
+              },
+              "failurePolicy": {
+                "type": "string",
+                "description": "Create webhook objects"
+              },
+              "matchPolicy": {
+                "type": "string",
+                "description": "Create webhook objects"
+              },
+              "sideEffects": {
+                "type": "string",
+                "description": "Create webhook objects"
+              },
+              "timeoutSeconds": {
+                "type": "integer",
+                "description": "Create webhook objects"
+              },
+              "admissionReviewVersions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Create webhook objects"
+              },
+              "clientConfig": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Create webhook objects"
+              },
+              "namespaceSelector": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Create webhook objects"
+              },
+              "objectSelector": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Create webhook objects"
+              }
+            },
+            "additionalProperties": true,
+            "description": "Create webhook objects"
+          },
           "description": "Create webhook objects"
         }
       },
@@ -40,6 +119,89 @@
         },
         "webhooks": {
           "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Create webhook objects"
+              },
+              "rules": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "apiGroups": {
+                      "type": "array",
+                      "description": "Create webhook objects"
+                    },
+                    "apiVersions": {
+                      "type": "array",
+                      "description": "Create webhook objects"
+                    },
+                    "operations": {
+                      "type": "array",
+                      "description": "Create webhook objects"
+                    },
+                    "resources": {
+                      "type": "array",
+                      "description": "Create webhook objects"
+                    }
+                  },
+                  "additionalProperties": true,
+                  "description": "Create webhook objects"
+                },
+                "description": "Create webhook objects"
+              },
+              "failurePolicy": {
+                "type": "string",
+                "description": "Create webhook objects"
+              },
+              "matchPolicy": {
+                "type": "string",
+                "description": "Create webhook objects"
+              },
+              "sideEffects": {
+                "type": "string",
+                "description": "Create webhook objects"
+              },
+              "reinvocationPolicy": {
+                "type": "string",
+                "description": "Create webhook objects"
+              },
+              "timeoutSeconds": {
+                "type": "integer",
+                "description": "Create webhook objects"
+              },
+              "admissionReviewVersions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Create webhook objects"
+              },
+              "clientConfig": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Create webhook objects"
+              },
+              "namespaceSelector": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Create webhook objects"
+              },
+              "objectSelector": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Create webhook objects"
+              }
+            },
+            "additionalProperties": true,
+            "description": "Create webhook objects"
+          },
           "description": "Create webhook objects"
         }
       },

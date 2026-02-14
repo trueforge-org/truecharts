@@ -74,14 +74,66 @@
             "description": "Configuration for `metrics.main.prometheusRule.groups`."
           },
           "additionalgroups": {
-            "type": [
-              "null",
-              "string",
-              "number",
-              "integer",
-              "boolean",
-              "object",
-              "array"
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.name`."
+                    },
+                    "rules": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "alert": {
+                            "type": "string",
+                            "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules.$item.alert`."
+                          },
+                          "expr": {
+                            "type": "string",
+                            "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules.$item.expr`."
+                          },
+                          "for": {
+                            "type": "string",
+                            "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules.$item.for`."
+                          }
+                        },
+                        "additionalProperties": true,
+                        "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules.$item`."
+                      },
+                      "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules`."
+                    },
+                    "additionalrules": {
+                      "type": "array",
+                      "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.additionalrules`."
+                    }
+                  },
+                  "additionalProperties": true,
+                  "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item`."
+                }
+              },
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "object"
+              }
             ],
             "description": "Configuration for `metrics.main.prometheusRule.additionalgroups`."
           }
