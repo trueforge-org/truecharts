@@ -7,6 +7,9 @@ objectData: The object data to be used to render the container.
 {{- define "tc.v1.common.lib.container.fixedEnv" -}}
   {{- $rootCtx := .rootCtx -}}
   {{- $objectData := .objectData -}}
+  {{- $key := .key -}}
+  {{- $name := (.name | toString) -}}
+  {{- $caller := .caller -}}
 
   {{/* Avoid nil pointers */}}
   {{- if not (hasKey $objectData "fixedEnv") -}}
@@ -20,13 +23,13 @@ objectData: The object data to be used to render the container.
   {{- end -}}
 
   {{- if not (deepEqual $nvidiaCaps (mustUniq $nvidiaCaps)) -}}
-    {{- fail (printf "Container - Expected [fixedEnv.NVIDIA_CAPS] to have only unique values, but got [%s]" (join ", " $nvidiaCaps)) -}}
+    {{- fail (printf "%s - Expected [%s.%s.fixedEnv.NVIDIA_CAPS] to have only unique values, but got [%s]" $caller $key $name (join ", " $nvidiaCaps)) -}}
   {{- end -}}
 
   {{- $caps := (list "all" "compute" "utility" "graphics" "video") -}}
   {{- range $cap := $nvidiaCaps -}}
     {{- if not (mustHas $cap $caps) -}}
-      {{- fail (printf "Container - Expected [fixedEnv.NVIDIA_CAPS] entry to be one of [%s], but got [%s]" (join ", " $caps) $cap) -}}
+      {{- fail (printf "%s - Expected [%s.%s.fixedEnv.NVIDIA_CAPS] entry to be one of [%s], but got [%s]" $caller $key $name (join ", " $caps) $cap) -}}
     {{- end -}}
   {{- end -}}
 
@@ -90,7 +93,7 @@ objectData: The object data to be used to render the container.
   {{- end -}}
 
   {{- range $env := $fixed -}}
-    {{- include "tc.v1.common.helper.container.envDupeCheck" (dict "rootCtx" $rootCtx "objectData" $objectData "source" "fixedEnv" "key" $env.k) }}
+    {{- include "tc.v1.common.helper.container.envDupeCheck" (dict "rootCtx" $rootCtx "objectData" $objectData "source" (printf "%s.%s.fixedEnv" $key $name) "key" $env.k "caller" $caller) }}
 - name: {{ $env.k | quote }}
   value: {{ (include "tc.v1.common.helper.makeIntOrNoop" $env.v) | quote }}
   {{- end -}}

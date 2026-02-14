@@ -151,7 +151,7 @@ pagefind: false
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update container image tccr.io/truecharts/webgrabplus to v5.0.1 ([#3940](https://github.com/truecharts/charts/issues/3940))
+- update container image oci.trueforge.org/truecharts/webgrabplus to v5.0.1 ([#3940](https://github.com/truecharts/charts/issues/3940))
 
 ## [webgrabplus-2.0.33](https://github.com/truecharts/charts/compare/webgrabplus-2.0.32...webgrabplus-2.0.33) (2022-09-27)
 
@@ -863,7 +863,7 @@ pagefind: false
 
 #### Chore
 
-- update container image tccr.io/truecharts/webgrabplus to v4.2.2 ([#2277](https://github.com/truecharts/apps/issues/2277))
+- update container image oci.trueforge.org/truecharts/webgrabplus to v4.2.2 ([#2277](https://github.com/truecharts/apps/issues/2277))
 - update docker general non-major
 
 <a name="webgrabplus-1.0.1"></a>

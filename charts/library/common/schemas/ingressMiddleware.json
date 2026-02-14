@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Whether to expand (adding the fullname as prefix) the middleware name.",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": {
+      "type": "object",
+      "properties": {
+        "expandObjectName": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true,
+          "description": "Whether to expand (adding the fullname as prefix) the middleware name."
+        }
+      },
+      "additionalProperties": true,
+      "description": "Configuration for `$name.$name`."
+    },
+    "description": "Configuration for `$name`."
+  }
+}

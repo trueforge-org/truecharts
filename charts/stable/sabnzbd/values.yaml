@@ -1,11 +1,11 @@
 image:
-  repository: ghcr.io/home-operations/sabnzbd
+  repository: oci.trueforge.org/containerforge/sabnzbd
   pullPolicy: IfNotPresent
-  tag: 4.5.1@sha256:4f2e137aea235fc4c42b7da6b9ef86439043b2dad93cc84b80186c60c405ea57
+  tag: 4.5.5@sha256:28a61bdf6a9cfbaa525138d20589783e41adaa0dc509416fc3aa3db395585c3e
 exportarrImage:
   repository: ghcr.io/onedr0p/exportarr
   pullPolicy: IfNotPresent
-  tag: v2.2.0@sha256:320b0ea7399f4b9af4741dcdddd7d40c05c36b0359679305d8a54df4e97065df
+  tag: v2.3.0@sha256:af535d94061cf97a52e1661945ffba78c03f9443eae7c0da1a80a5a4be56b520
 service:
   main:
     ports:
@@ -23,6 +23,16 @@ workload:
     podSpec:
       containers:
         main:
+          probes:
+            liveness:
+              port: "{{ .Values.service.main.ports.main.port }}"
+              path: /api?mode=version
+            readiness:
+              port: "{{ .Values.service.main.ports.main.port }}"
+              path: /api?mode=version
+            startup:
+              port: "{{ .Values.service.main.ports.main.port }}"
+              path: /api?mode=version
           env:
             SABNZBD__HOST_WHITELIST_ENTRIES: ""
             SABNZBD__PORT: "{{ .Values.service.main.ports.main.port }}"
@@ -72,3 +82,9 @@ metrics:
     targetSelector: metrics
     # Required for exportarr
     apiKey: ""
+
+resources:
+  limits:
+    memory: 3600Mi
+  requests:
+    memory: 300Mi

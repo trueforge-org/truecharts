@@ -15,17 +15,12 @@ objectData: The service data, that will be used to render the Service object.
   {{- $_ := set $objectData "annotations" ($objectData.annotations | default dict) -}}
 
   {{/* Init variables */}}
-  {{- $hasHTTPSPort := false -}}
   {{- $hasHostPort := false -}}
   {{- $hostNetwork := false -}}
   {{- $podValues := dict -}}
 
   {{- range $portName, $port := $objectData.ports -}}
     {{- if $port.enabled -}}
-      {{- if eq (tpl ($port.protocol | default "") $rootCtx) "https" -}}
-        {{- $hasHTTPSPort = true -}}
-      {{- end -}}
-
       {{- if and (hasKey $port "hostPort") $port.hostPort -}}
         {{- $hasHostPort = true -}}
       {{- end -}}
@@ -64,9 +59,7 @@ objectData: The service data, that will be used to render the Service object.
     {{- include "tc.v1.common.lib.service.integration.metallb" (dict "rootCtx" $rootCtx "objectData" $objectData) -}}
     {{- include "tc.v1.common.lib.service.integration.cilium" (dict "rootCtx" $rootCtx "objectData" $objectData) -}}
   {{- end -}}
-  {{- if $hasHTTPSPort -}}
-    {{- include "tc.v1.common.lib.service.integration.traefik" (dict "rootCtx" $rootCtx "objectData" $objectData) -}}
-  {{- end }}
+  {{- include "tc.v1.common.lib.service.integration.traefik" (dict "rootCtx" $rootCtx "objectData" $objectData) }}
 ---
 apiVersion: v1
 kind: Service

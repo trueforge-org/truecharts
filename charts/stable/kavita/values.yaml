@@ -1,7 +1,7 @@
 image:
-  repository: docker.io/jvmilazz0/kavita
+  repository: oci.trueforge.org/containerforge/kavita
   pullPolicy: IfNotPresent
-  tag: 0.8.6@sha256:cdd6abc6e5c3d337c5bb68d4a29bc490456af2a550b3a031374e46dbfac291ce
+  tag: "0.8.8.3@sha256:8a6c8030f2cd27f09f54bd9c57c9c658c889d45e96d95c4d1fb4f362030f8a8b"
 securityContext:
   container:
     readOnlyRootFilesystem: false
@@ -17,7 +17,7 @@ service:
 persistence:
   config:
     enabled: true
-    mountPath: "/kavita/config"
+    mountPath: "/config"
   manga:
     enabled: true
     mountPath: "/manga"

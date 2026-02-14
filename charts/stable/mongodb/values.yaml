@@ -1,9 +1,8 @@
 image:
-  repository: public.ecr.aws/bitnami/mongodb
+  repository: docker.io/bitnamisecure/mongodb
   pullPolicy: IfNotPresent
-  tag: 8.0.8@sha256:b3bd5b6be9a0734dfa027c866ba17c42fd4c4325c973669e5e77a354c30e84a3
+  tag: latest@sha256:d1afabe9a2183fec201a4248053c71acd81fa381c87443473c16da169e6985d4
 
-includeCommon: true
 workload:
   main:
     replicas: 1
@@ -72,6 +71,8 @@ service:
       main:
         port: 27017
         targetPort: 27017
+        protocol: tcp
+
 securityContext:
   container:
     runAsGroup: 0

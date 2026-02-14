@@ -3,7 +3,7 @@ title: Changelog
 pagefind: false
 ---
 
-## [strapi-6.0.0](https://github.com/truecharts/charts/compare/strapi-4.0.49...strapi-6.0.0) (2022-11-10)
+## [strapi-6.0.0](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.49...strapi-6.0.0) (2022-11-10)
 
 ### Chore
 
@@ -15,17 +15,17 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Major Change to GUI non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update docker general non-major ([#4343](https://github.com/truecharts/charts/issues/4343))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Major Change to GUI non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update docker general non-major ([#4343](https://github.com/trueforge-org/truecharts/issues/4343))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
 ### Fix
 
 - change container config label
 
-## [strapi-5.0.2](https://github.com/truecharts/charts/compare/strapi-4.0.49...strapi-5.0.2) (2022-11-08)
+## [strapi-5.0.2](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.49...strapi-5.0.2) (2022-11-08)
 
 ### Chore
 
@@ -36,46 +36,46 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]#4343](https://github.com/truecharts/charts/issues/4343))
+- Auto-update chart README [skip ci]#4343](https://github.com/trueforge-org/truecharts/issues/4343))
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]329](https://github.com/truecharts/charts/issues/4329))
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update docker general non-major ([#4343](https://github.com/truecharts/charts/issues/4343))022-11-08)
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]329](https://github.com/trueforge-org/truecharts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update docker general non-major ([#4343](https://github.com/trueforge-org/truecharts/issues/4343))022-11-08)
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update docker general non-major ([#4343](https://github.com/truecharts/charts/issues/4343))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update docker general non-major ([#4343](https://github.com/trueforge-org/truecharts/issues/4343))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
   ##- Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
   ##- Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- - update docker general non-major ([#4343](https://github.com/truecharts/charts/issues/4343))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- - update docker general non-major ([#4343](https://github.com/trueforge-org/truecharts/issues/4343))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update docker general non-major ([#4343](https://github.com/truecharts/charts/issues/4343))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update docker general non-major ([#4343](https://github.com/trueforge-org/truecharts/issues/4343))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [strapi-5.0.1](https://github.com/truecharts/charts/compare/strapi-4.0.49...strapi-5.0.1) (2022-11-08)
+## [strapi-5.0.1](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.49...strapi-5.0.1) (2022-11-08)
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update docker general non-major ([#4343](https://github.com/truecharts/charts/issues/4343))
-- update docker general non-major ([#4343](https://github.com/truecharts/charts/issues/4343))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update docker general non-major ([#4343](https://github.com/trueforge-org/truecharts/issues/4343))
+- update docker general non-major ([#4343](https://github.com/trueforge-org/truecharts/issues/4343))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [strapi-5.0.0](https://github.com/truecharts/charts/compare/strapi-4.0.49...strapi-5.0.0) (2022-11-07)
+## [strapi-5.0.0](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.49...strapi-5.0.0) (2022-11-07)
 
 ### Chore
 
@@ -84,13 +84,13 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
   ##- Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-  ##- update docker general non-major ([#4343](https://github.com/truecharts/charts/issues/4343))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+  ##- update docker general non-major ([#4343](https://github.com/trueforge-org/truecharts/issues/4343))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [strapi-4.0.49](https://github.com/truecharts/charts/compare/strapi-4.0.48...strapi-4.0.49) (2022-11-06)
+## [strapi-4.0.49](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.48...strapi-4.0.49) (2022-11-06)
 
 ### Chore
 
@@ -98,50 +98,50 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 
-## [strapi-4.0.48](https://github.com/truecharts/charts/compare/strapi-4.0.47...strapi-4.0.48) (2022-11-05)
+## [strapi-4.0.48](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.47...strapi-4.0.48) (2022-11-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
 
-## [strapi-4.0.47](https://github.com/truecharts/charts/compare/strapi-4.0.46...strapi-4.0.47) (2022-11-02)
+## [strapi-4.0.47](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.46...strapi-4.0.47) (2022-11-02)
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
 
-## [strapi-4.0.46](https://github.com/truecharts/charts/compare/strapi-4.0.45...strapi-4.0.46) (2022-10-25)
+## [strapi-4.0.46](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.45...strapi-4.0.46) (2022-10-25)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4317](https://github.com/truecharts/charts/issues/4317))
+- update helm general non-major ([#4317](https://github.com/trueforge-org/truecharts/issues/4317))
 
-## [strapi-4.0.45](https://github.com/truecharts/charts/compare/strapi-4.0.44...strapi-4.0.45) (2022-10-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
-
-## [strapi-4.0.44](https://github.com/truecharts/charts/compare/strapi-4.0.43...strapi-4.0.44) (2022-10-19)
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
-
-## [strapi-4.0.43](https://github.com/truecharts/charts/compare/strapi-4.0.42...strapi-4.0.43) (2022-10-12)
+## [strapi-4.0.45](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.44...strapi-4.0.45) (2022-10-25)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
 
-## [strapi-4.0.42](https://github.com/truecharts/charts/compare/strapi-4.0.41...strapi-4.0.42) (2022-10-07)
+## [strapi-4.0.44](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.43...strapi-4.0.44) (2022-10-19)
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
+
+## [strapi-4.0.43](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.42...strapi-4.0.43) (2022-10-12)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
+
+## [strapi-4.0.42](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.41...strapi-4.0.42) (2022-10-07)
 
 ### Chore
 
@@ -156,32 +156,32 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [strapi-4.0.41](https://github.com/truecharts/charts/compare/strapi-4.0.40...strapi-4.0.41) (2022-10-05)
+## [strapi-4.0.41](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.40...strapi-4.0.41) (2022-10-05)
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
 - update helm general non-major
 
-## [strapi-4.0.39](https://github.com/truecharts/charts/compare/strapi-4.0.38...strapi-4.0.39) (2022-09-27)
+## [strapi-4.0.39](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.38...strapi-4.0.39) (2022-09-27)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
 
-## [strapi-4.0.38](https://github.com/truecharts/charts/compare/strapi-4.0.37...strapi-4.0.38) (2022-09-25)
+## [strapi-4.0.38](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.37...strapi-4.0.38) (2022-09-25)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
 
-## [strapi-4.0.37](https://github.com/truecharts/charts/compare/strapi-4.0.36...strapi-4.0.37) (2022-09-22)
+## [strapi-4.0.37](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.36...strapi-4.0.37) (2022-09-22)
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4071](https://github.com/truecharts/charts/issues/4071))
+- update helm general non-major ([#4071](https://github.com/trueforge-org/truecharts/issues/4071))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
@@ -196,10 +196,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [strapi-4.0.37](https://github.com/truecharts/charts/compare/strapi-4.0.36...strapi-4.0.37) (2022-09-21)
+## [strapi-4.0.37](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.36...strapi-4.0.37) (2022-09-21)
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
@@ -210,19 +210,19 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
 - update helm general non-majorp ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [strapi-4.0.37](https://github.com/truecharts/charts/compare/strapi-4.0.36...strapi-4.0.37) (2022-09-21)
+## [strapi-4.0.37](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.36...strapi-4.0.37) (2022-09-21)
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3918](https://github.com/truecharts/charts/issues/3918))
+- update helm general non-major ([#3918](https://github.com/trueforge-org/truecharts/issues/3918))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
@@ -231,14 +231,14 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [strapi-4.0.37](https://github.com/truecharts/charts/compare/strapi-4.0.36...strapi-4.0.37) (2022-09-20)
+## [strapi-4.0.37](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.36...strapi-4.0.37) (2022-09-20)
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
@@ -253,11 +253,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- refactor Services SCALE GUIor ([#3767](https://github.com/truecharts/charts/issues/3767))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- refactor Services SCALE GUIor ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [strapi-4.0.37](https://github.com/truecharts/charts/compare/strapi-4.0.36...strapi-4.0.37) (2022-09-20)
+## [strapi-4.0.37](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.36...strapi-4.0.37) (2022-09-20)
 
 ### Chore
 
@@ -272,13 +272,13 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]ps://github.com/truecharts/charts/issues/3751))
+- Auto-update chart README [skip ci]ps://github.com/trueforge-org/truecharts/issues/3751))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]truecharts/charts/compare/strapi-4.0.36...strapi-4.0.37) (2022-09-19)
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
@@ -287,7 +287,7 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
   ##- Auto-update chart README [skip ci]
@@ -300,12 +300,12 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUIkip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [strapi-4.0.37](https://github.com/truecharts/charts/compare/strapi-4.0.36...strapi-4.0.37) (2022-09-19)
+## [strapi-4.0.37](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.36...strapi-4.0.37) (2022-09-19)
 
 ### Chore
 
@@ -317,19 +317,19 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]ps://github.com/truecharts/charts/issues/3751))
+- Auto-update chart README [skip ci]ps://github.com/trueforge-org/truecharts/issues/3751))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]truecharts/charts/compare/strapi-4.0.36...strapi-4.0.37) (2022-09-17)
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]truecharts/charts/compare/strapi-4.0.36...strapi-4.0.37) (2022-09-18)
 - Auto-update chart README [skip ci]
@@ -339,18 +339,18 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- refactor Services SCALE GUIor ([#3767](https://github.com/truecharts/charts/issues/3767))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- refactor Services SCALE GUIor ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [strapi-4.0.37](https://github.com/truecharts/charts/compare/strapi-4.0.36...strapi-4.0.37) (2022-09-16)
+## [strapi-4.0.37](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.36...strapi-4.0.37) (2022-09-16)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
   ##- Auto-update chart README [skip ci]
@@ -360,32 +360,32 @@ pagefind: false
 - - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [strapi-4.0.37](https://github.com/truecharts/charts/compare/strapi-4.0.36...strapi-4.0.37) (2022-09-15)
+## [strapi-4.0.37](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.36...strapi-4.0.37) (2022-09-15)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
   ##- Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]ps://github.com/truecharts/charts/issues/3751))
+- Auto-update chart README [skip ci]ps://github.com/trueforge-org/truecharts/issues/3751))
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUIub.com/truecharts/charts/compare/strapi-4.0.34...strapi-4.0.36) (2022-09-13)
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
   ##- Auto-update chart README [skip ci]
@@ -393,13 +393,13 @@ pagefind: false
   ##- Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [strapi-4.0.35](https://github.com/truecharts/charts/compare/strapi-4.0.34...strapi-4.0.35) (2022-09-12)
+## [strapi-4.0.35](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.34...strapi-4.0.35) (2022-09-12)
 
 ### Chore
 
@@ -409,76 +409,76 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-  ##- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+  ##- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [strapi-4.0.35](https://github.com/truecharts/charts/compare/strapi-4.0.34...strapi-4.0.35) (2022-09-11)
+## [strapi-4.0.35](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.34...strapi-4.0.35) (2022-09-11)
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))s/3711))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))s/3711))
 
-## [strapi-4.0.35](https://github.com/truecharts/charts/compare/strapi-4.0.34...strapi-4.0.35) (2022-09-11)
+## [strapi-4.0.35](https://github.com/trueforge-org/truecharts/compare/strapi-4.0.34...strapi-4.0.35) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
   ##- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [synclounge-2.0.40](https://github.com/truecharts/charts/compare/synclounge-2.0.38...synclounge-2.0.40) (2022-08-30)
+## [synclounge-2.0.40](https://github.com/trueforge-org/truecharts/compare/synclounge-2.0.38...synclounge-2.0.40) (2022-08-30)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]com/truecharts/charts/compare/synclounge-2.0.38...synclounge-2.0.39) (2022-08-30)
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
 
-## [synclounge-2.0.38](https://github.com/truecharts/charts/compare/synclounge-2.0.37...synclounge-2.0.38) (2022-08-29)
+## [synclounge-2.0.38](https://github.com/trueforge-org/truecharts/compare/synclounge-2.0.37...synclounge-2.0.38) (2022-08-29)
 
 ### Chore
 
-- update helm general non-major ([#3619](https://github.com/truecharts/charts/issues/3619))
+- update helm general non-major ([#3619](https://github.com/trueforge-org/truecharts/issues/3619))
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))ounge-2.0.37) (2022-08-25)
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))ounge-2.0.37) (2022-08-25)
 
 ### Chore
 
-- update docker general non-major ([#3561](https://github.com/truecharts/charts/issues/3561))
+- update docker general non-major ([#3561](https://github.com/trueforge-org/truecharts/issues/3561))
 
-## [synclounge-2.0.36](https://github.com/truecharts/charts/compare/synclounge-2.0.35...synclounge-2.0.36) (2022-08-23)
-
-### Chore
-
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [synclounge-2.0.35](https://github.com/truecharts/charts/compare/synclounge-2.0.34...synclounge-2.0.35) (2022-08-17)
+## [synclounge-2.0.36](https://github.com/trueforge-org/truecharts/compare/synclounge-2.0.35...synclounge-2.0.36) (2022-08-23)
 
 ### Chore
 
-- update docker general non-major ([#3478](https://github.com/truecharts/charts/issues/3478))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [synclounge-2.0.34](https://github.com/truecharts/charts/compare/synclounge-2.0.33...synclounge-2.0.34) (2022-08-14)
+## [synclounge-2.0.35](https://github.com/trueforge-org/truecharts/compare/synclounge-2.0.34...synclounge-2.0.35) (2022-08-17)
+
+### Chore
+
+- update docker general non-major ([#3478](https://github.com/trueforge-org/truecharts/issues/3478))
+
+## [synclounge-2.0.34](https://github.com/trueforge-org/truecharts/compare/synclounge-2.0.33...synclounge-2.0.34) (2022-08-14)
 
 ### Fix
 
@@ -488,27 +488,27 @@ pagefind: false
 - Auto-update chart README [skip ci]
   ##- Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-  ##- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+  ##- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 - add documentation checkbox/section to all SCALE Apps
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
 
 ### Fix
 
-- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/truecharts/charts/issues/3447))
+- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/trueforge-org/truecharts/issues/3447))
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
   ##- Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [synclounge-2.0.31](https://github.com/truecharts/charts/compare/synclounge-2.0.30...synclounge-2.0.31) (2022-08-08)
+## [synclounge-2.0.31](https://github.com/trueforge-org/truecharts/compare/synclounge-2.0.30...synclounge-2.0.31) (2022-08-08)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
 
 ## [synclounge-2.0.30](https://github.com/truecharts/apps/compare/synclounge-2.0.29...synclounge-2.0.30) (2022-07-27)
 
@@ -529,7 +529,7 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 - update docker general non-major ([#3295](https://github.com/truecharts/apps/issues/3295))
 
 ## [synclounge-2.0.28](https://github.com/truecharts/apps/compare/synclounge-2.0.27...synclounge-2.0.28) (2022-07-25)
@@ -551,7 +551,7 @@ pagefind: false
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 - update helm general non-major helm releases ([#3280](https://github.com/truecharts/apps/issues/3280))
 
 ## [synclounge-2.0.27](https://github.com/truecharts/apps/compare/synclounge-2.0.26...synclounge-2.0.27) (2022-07-23)
@@ -571,7 +571,7 @@ pagefind: false
 ## [synclounge-2.0.24](https://github.com/truecharts/apps/compare/synclounge-2.0.23...synclounge-2.0.24) (2022-07-19)
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
 - Update Readme and Description on SCALE
 
 ## [synclounge-2.0.23](https://github.com/truecharts/apps/compare/synclounge-2.0.22...synclounge-2.0.23) (2022-07-16)
@@ -635,7 +635,7 @@ pagefind: false
 
 - update helm general non-major helm releases ([#3113](https://github.com/truecharts/apps/issues/3113))
 - add documentation checkbox/section to all SCALE Apps
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
 
 ### [synclounge-2.0.12](https://github.com/truecharts/apps/compare/synclounge-2.0.11...synclounge-2.0.12) (2022-07-04)
 
@@ -657,8 +657,8 @@ pagefind: false
 
 #### Chore
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
   <a name="synclounge-2.0.9"></a>
 
 ### [synclounge-2.0.9](https://github.com/truecharts/apps/compare/synclounge-2.0.8...synclounge-2.0.9) (2022-06-22)

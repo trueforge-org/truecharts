@@ -1,7 +1,7 @@
 image:
   repository: docker.io/diygod/rsshub
   pullPolicy: IfNotPresent
-  tag: latest@sha256:10e4a4073be3969c6f6854d5d7378b48a20990f58bba564d85a8aab5d6322a3d
+  tag: latest@sha256:2686863988b6253c9e8b107e93889c03a9d005f0b2ca1e224df12eaa00fce10c
 browserlessImage:
   repository: docker.io/browserless/chrome
   tag: 1.61.1-chrome-stable@sha256:efac47cfff3830d9a50b27d29f8bbb61949058ae336c823fbe9bd3c0d1debcc8
@@ -13,7 +13,6 @@ service:
 # Enabled redis
 redis:
   enabled: true
-  includeCommon: true
   redisUsername: default
 additionalContainers:
   browserless:

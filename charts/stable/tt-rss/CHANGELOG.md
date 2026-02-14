@@ -3,7 +3,7 @@ title: Changelog
 pagefind: false
 ---
 
-## [tt-rss-8.0.0](https://github.com/truecharts/charts/compare/tt-rss-7.0.49...tt-rss-8.0.0) (2022-11-10)
+## [tt-rss-8.0.0](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.49...tt-rss-8.0.0) (2022-11-10)
 
 ### Chore
 
@@ -15,15 +15,15 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Major Change to GUI
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
 ### Fix
 
 - change container config label
 
-## [tt-rss-7.0.52](https://github.com/truecharts/charts/compare/tt-rss-7.0.49...tt-rss-7.0.52) (2022-11-08)
+## [tt-rss-7.0.52](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.49...tt-rss-7.0.52) (2022-11-08)
 
 ### Chore
 
@@ -33,23 +33,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [tt-rss-7.0.51](https://github.com/truecharts/charts/compare/tt-rss-7.0.49...tt-rss-7.0.51) (2022-11-08)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [tt-rss-7.0.51](https://github.com/truecharts/charts/compare/tt-rss-7.0.49...tt-rss-7.0.51) (2022-11-08)
+## [tt-rss-7.0.51](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.49...tt-rss-7.0.51) (2022-11-08)
 
 ### Chore
 
@@ -57,120 +45,132 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [tt-rss-7.0.51](https://github.com/truecharts/charts/compare/tt-rss-7.0.49...tt-rss-7.0.51) (2022-11-08)
+## [tt-rss-7.0.51](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.49...tt-rss-7.0.51) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [tt-rss-7.0.50](https://github.com/truecharts/charts/compare/tt-rss-7.0.49...tt-rss-7.0.50) (2022-11-07)
+## [tt-rss-7.0.51](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.49...tt-rss-7.0.51) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [tt-rss-7.0.50](https://github.com/truecharts/charts/compare/tt-rss-7.0.49...tt-rss-7.0.50) (2022-11-06)
-
-### Chore
-
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [tt-rss-7.0.49](https://github.com/truecharts/charts/compare/tt-rss-7.0.48...tt-rss-7.0.49) (2022-11-06)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4317](https://github.com/truecharts/charts/issues/4317))
-
-## [tt-rss-7.0.48](https://github.com/truecharts/charts/compare/tt-rss-7.0.47...tt-rss-7.0.48) (2022-11-05)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
-
-## [tt-rss-7.0.47](https://github.com/truecharts/charts/compare/tt-rss-7.0.46...tt-rss-7.0.47) (2022-11-02)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
-
-## [tt-rss-7.0.46](https://github.com/truecharts/charts/compare/tt-rss-7.0.45...tt-rss-7.0.46) (2022-10-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major
-
-## [tt-rss-7.0.45](https://github.com/truecharts/charts/compare/tt-rss-7.0.44...tt-rss-7.0.45) (2022-10-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
-
-## [tt-rss-7.0.44](https://github.com/truecharts/charts/compare/tt-rss-7.0.43...tt-rss-7.0.44) (2022-10-19)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
-
-## [tt-rss-7.0.43](https://github.com/truecharts/charts/compare/tt-rss-7.0.42...tt-rss-7.0.43) (2022-10-12)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4071](https://github.com/truecharts/charts/issues/4071))
-
-## [tt-rss-7.0.42](https://github.com/truecharts/charts/compare/tt-rss-7.0.41...tt-rss-7.0.42) (2022-10-07)
+## [tt-rss-7.0.50](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.49...tt-rss-7.0.50) (2022-11-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [tt-rss-7.0.42](https://github.com/truecharts/charts/compare/tt-rss-7.0.41...tt-rss-7.0.42) (2022-10-07)
+## [tt-rss-7.0.50](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.49...tt-rss-7.0.50) (2022-11-06)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
+
+## [tt-rss-7.0.49](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.48...tt-rss-7.0.49) (2022-11-06)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4317](https://github.com/trueforge-org/truecharts/issues/4317))
+
+## [tt-rss-7.0.48](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.47...tt-rss-7.0.48) (2022-11-05)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
+
+## [tt-rss-7.0.47](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.46...tt-rss-7.0.47) (2022-11-02)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
+
+## [tt-rss-7.0.46](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.45...tt-rss-7.0.46) (2022-10-25)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [tt-rss-7.0.41](https://github.com/truecharts/charts/compare/tt-rss-7.0.40...tt-rss-7.0.41) (2022-10-05)
+## [tt-rss-7.0.45](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.44...tt-rss-7.0.45) (2022-10-25)
 
 ### Chore
 
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
+
+## [tt-rss-7.0.44](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.43...tt-rss-7.0.44) (2022-10-19)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
+
+## [tt-rss-7.0.43](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.42...tt-rss-7.0.43) (2022-10-12)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4071](https://github.com/trueforge-org/truecharts/issues/4071))
+
+## [tt-rss-7.0.42](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.41...tt-rss-7.0.42) (2022-10-07)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [tt-rss-7.0.39](https://github.com/truecharts/charts/compare/tt-rss-7.0.38...tt-rss-7.0.39) (2022-09-27)
+## [tt-rss-7.0.42](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.41...tt-rss-7.0.42) (2022-10-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3918](https://github.com/truecharts/charts/issues/3918))
+- update helm general non-major
 
-## [tt-rss-7.0.38](https://github.com/truecharts/charts/compare/tt-rss-7.0.37...tt-rss-7.0.38) (2022-09-25)
+## [tt-rss-7.0.41](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.40...tt-rss-7.0.41) (2022-10-05)
+
+### Chore
+
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
+- update helm general non-major
+
+## [tt-rss-7.0.39](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.38...tt-rss-7.0.39) (2022-09-27)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
+- update helm general non-major ([#3918](https://github.com/trueforge-org/truecharts/issues/3918))
 
-## [tt-rss-7.0.37](https://github.com/truecharts/charts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-22)
+## [tt-rss-7.0.38](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.37...tt-rss-7.0.38) (2022-09-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
+
+## [tt-rss-7.0.37](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-22)
 
 ### Chore
 
@@ -188,10 +188,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [tt-rss-7.0.37](https://github.com/truecharts/charts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-21)
+## [tt-rss-7.0.37](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-21)
 
 ### Chore
 
@@ -208,10 +208,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [tt-rss-7.0.37](https://github.com/truecharts/charts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-21)
+## [tt-rss-7.0.37](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-21)
 
 ### Chore
 
@@ -227,10 +227,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [tt-rss-7.0.37](https://github.com/truecharts/charts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-20)
+## [tt-rss-7.0.37](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-20)
 
 ### Chore
 
@@ -245,10 +245,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [tt-rss-7.0.37](https://github.com/truecharts/charts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-20)
+## [tt-rss-7.0.37](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-20)
 
 ### Chore
 
@@ -262,10 +262,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [tt-rss-7.0.37](https://github.com/truecharts/charts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-19)
+## [tt-rss-7.0.37](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-19)
 
 ### Chore
 
@@ -278,10 +278,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [tt-rss-7.0.37](https://github.com/truecharts/charts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-19)
+## [tt-rss-7.0.37](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-19)
 
 ### Chore
 
@@ -293,10 +293,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [tt-rss-7.0.37](https://github.com/truecharts/charts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-19)
+## [tt-rss-7.0.37](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-19)
 
 ### Chore
 
@@ -307,10 +307,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [tt-rss-7.0.37](https://github.com/truecharts/charts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-17)
+## [tt-rss-7.0.37](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-17)
 
 ### Chore
 
@@ -320,55 +320,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [tt-rss-7.0.37](https://github.com/truecharts/charts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-18)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [tt-rss-7.0.37](https://github.com/truecharts/charts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [tt-rss-7.0.37](https://github.com/truecharts/charts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [tt-rss-7.0.37](https://github.com/truecharts/charts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-15)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [tt-rss-7.0.37](https://github.com/truecharts/charts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-15)
-
-### Chore
-
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [tt-rss-7.0.36](https://github.com/truecharts/charts/compare/tt-rss-7.0.34...tt-rss-7.0.36) (2022-09-13)
+## [tt-rss-7.0.37](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-18)
 
 ### Chore
 
@@ -376,12 +331,44 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [tt-rss-7.0.35](https://github.com/truecharts/charts/compare/tt-rss-7.0.34...tt-rss-7.0.35) (2022-09-12)
+## [tt-rss-7.0.37](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [tt-rss-7.0.37](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [tt-rss-7.0.37](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-15)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [tt-rss-7.0.37](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.36...tt-rss-7.0.37) (2022-09-15)
+
+### Chore
+
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [tt-rss-7.0.36](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.34...tt-rss-7.0.36) (2022-09-13)
 
 ### Chore
 
@@ -390,9 +377,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [tt-rss-7.0.35](https://github.com/truecharts/charts/compare/tt-rss-7.0.34...tt-rss-7.0.35) (2022-09-12)
+## [tt-rss-7.0.35](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.34...tt-rss-7.0.35) (2022-09-12)
 
 ### Chore
 
@@ -400,94 +389,105 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [tt-rss-7.0.35](https://github.com/truecharts/charts/compare/tt-rss-7.0.34...tt-rss-7.0.35) (2022-09-11)
+## [tt-rss-7.0.35](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.34...tt-rss-7.0.35) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [tt-rss-7.0.35](https://github.com/truecharts/charts/compare/tt-rss-7.0.34...tt-rss-7.0.35) (2022-09-11)
+## [tt-rss-7.0.35](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.34...tt-rss-7.0.35) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [tt-rss-7.0.35](https://github.com/truecharts/charts/compare/tt-rss-7.0.34...tt-rss-7.0.35) (2022-09-11)
+## [tt-rss-7.0.35](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.34...tt-rss-7.0.35) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [tt-rss-7.0.35](https://github.com/truecharts/charts/compare/tt-rss-7.0.34...tt-rss-7.0.35) (2022-09-11)
-
-### Chore
-
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-
-## [tt-rss-7.0.34](https://github.com/truecharts/charts/compare/tt-rss-7.0.32...tt-rss-7.0.34) (2022-08-30)
+## [tt-rss-7.0.35](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.34...tt-rss-7.0.35) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [tt-rss-7.0.33](https://github.com/truecharts/charts/compare/tt-rss-7.0.32...tt-rss-7.0.33) (2022-08-30)
-
-### Chore
-
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
-
-## [tt-rss-7.0.32](https://github.com/truecharts/charts/compare/tt-rss-7.0.30...tt-rss-7.0.32) (2022-08-29)
+## [tt-rss-7.0.35](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.34...tt-rss-7.0.35) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major ([#3621](https://github.com/truecharts/charts/issues/3621))
-- update helm general non-major ([#3619](https://github.com/truecharts/charts/issues/3619))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [tt-rss-7.0.30](https://github.com/truecharts/charts/compare/tt-rss-7.0.29...tt-rss-7.0.30) (2022-08-23)
-
-### Chore
-
-- update helm general non-major helm releases ([#3545](https://github.com/truecharts/charts/issues/3545))
-
-## [tt-rss-7.0.29](https://github.com/truecharts/charts/compare/tt-rss-7.0.28...tt-rss-7.0.29) (2022-08-17)
+## [tt-rss-7.0.34](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.32...tt-rss-7.0.34) (2022-08-30)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3484](https://github.com/truecharts/charts/issues/3484))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
 
-## [tt-rss-7.0.28](https://github.com/truecharts/charts/compare/tt-rss-7.0.27...tt-rss-7.0.28) (2022-08-12)
+## [tt-rss-7.0.33](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.32...tt-rss-7.0.33) (2022-08-30)
+
+### Chore
+
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
+
+## [tt-rss-7.0.32](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.30...tt-rss-7.0.32) (2022-08-29)
+
+### Chore
+
+- update helm general non-major ([#3621](https://github.com/trueforge-org/truecharts/issues/3621))
+- update helm general non-major ([#3619](https://github.com/trueforge-org/truecharts/issues/3619))
+
+## [tt-rss-7.0.30](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.29...tt-rss-7.0.30) (2022-08-23)
+
+### Chore
+
+- update helm general non-major helm releases ([#3545](https://github.com/trueforge-org/truecharts/issues/3545))
+
+## [tt-rss-7.0.29](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.28...tt-rss-7.0.29) (2022-08-17)
+
+### Chore
+
+- update helm general non-major helm releases ([#3484](https://github.com/trueforge-org/truecharts/issues/3484))
+
+## [tt-rss-7.0.28](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.27...tt-rss-7.0.28) (2022-08-12)
 
 ### Chore
 
 - add documentation checkbox/section to all SCALE Apps
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
 
 ### Fix
 
-- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/truecharts/charts/issues/3447))
+- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/trueforge-org/truecharts/issues/3447))
 
-## [tt-rss-7.0.27](https://github.com/truecharts/charts/compare/tt-rss-7.0.26...tt-rss-7.0.27) (2022-08-09)
-
-### Chore
-
-- update helm general non-major helm releases to v10.4.9 ([#3413](https://github.com/truecharts/charts/issues/3413))
-
-## [tt-rss-7.0.26](https://github.com/truecharts/charts/compare/tt-rss-7.0.25...tt-rss-7.0.26) (2022-08-08)
+## [tt-rss-7.0.27](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.26...tt-rss-7.0.27) (2022-08-09)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update helm general non-major helm releases to v10.4.9 ([#3413](https://github.com/trueforge-org/truecharts/issues/3413))
+
+## [tt-rss-7.0.26](https://github.com/trueforge-org/truecharts/compare/tt-rss-7.0.25...tt-rss-7.0.26) (2022-08-08)
+
+### Chore
+
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
 
 ## [tt-rss-7.0.25](https://github.com/truecharts/apps/compare/tt-rss-7.0.24...tt-rss-7.0.25) (2022-07-26)
 
@@ -833,7 +833,7 @@ pagefind: false
 
 #### Chore
 
-- update container image tccr.io/truecharts/tt-rss to v2.0.9113 ([#2459](https://github.com/truecharts/apps/issues/2459))
+- update container image oci.trueforge.org/truecharts/tt-rss to v2.0.9113 ([#2459](https://github.com/truecharts/apps/issues/2459))
 
 <a name="tt-rss-5.0.18"></a>
 

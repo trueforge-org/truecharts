@@ -3,13 +3,13 @@ title: Changelog
 pagefind: false
 ---
 
-## [adguard-home-3.0.0](https://github.com/truecharts/charts/compare/adguard-home-2.0.23...adguard-home-3.0.0) (2022-11-10)
+## [adguard-home-3.0.0](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.23...adguard-home-3.0.0) (2022-11-10)
 
 ### Chore
 
 - Major Change to GUI
 
-## [adguard-home-2.0.23](https://github.com/truecharts/charts/compare/adguard-home-2.0.18...adguard-home-2.0.23) (2022-11-10)
+## [adguard-home-2.0.23](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.18...adguard-home-2.0.23) (2022-11-10)
 
 ### Chore
 
@@ -21,27 +21,12 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4366](https://github.com/truecharts/charts/issues/4366))
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update docker general non-major ([#4366](https://github.com/trueforge-org/truecharts/issues/4366))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [adguard-home-2.0.22](https://github.com/truecharts/charts/compare/adguard-home-2.0.18...adguard-home-2.0.22) (2022-11-08)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [adguard-home-2.0.21](https://github.com/truecharts/charts/compare/adguard-home-2.0.18...adguard-home-2.0.21) (2022-11-08)
+## [adguard-home-2.0.22](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.18...adguard-home-2.0.22) (2022-11-08)
 
 ### Chore
 
@@ -51,10 +36,12 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [adguard-home-2.0.21](https://github.com/truecharts/charts/compare/adguard-home-2.0.18...adguard-home-2.0.21) (2022-11-08)
+## [adguard-home-2.0.21](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.18...adguard-home-2.0.21) (2022-11-08)
 
 ### Chore
 
@@ -63,10 +50,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [adguard-home-2.0.21](https://github.com/truecharts/charts/compare/adguard-home-2.0.18...adguard-home-2.0.21) (2022-11-08)
+## [adguard-home-2.0.21](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.18...adguard-home-2.0.21) (2022-11-08)
 
 ### Chore
 
@@ -74,83 +62,95 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [adguard-home-2.0.20](https://github.com/truecharts/charts/compare/adguard-home-2.0.18...adguard-home-2.0.20) (2022-11-07)
+## [adguard-home-2.0.21](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.18...adguard-home-2.0.21) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [adguard-home-2.0.20](https://github.com/truecharts/charts/compare/adguard-home-2.0.18...adguard-home-2.0.20) (2022-11-06)
+## [adguard-home-2.0.20](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.18...adguard-home-2.0.20) (2022-11-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [adguard-home-2.0.19](https://github.com/truecharts/charts/compare/adguard-home-2.0.18...adguard-home-2.0.19) (2022-11-06)
+## [adguard-home-2.0.20](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.18...adguard-home-2.0.20) (2022-11-06)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
+
+## [adguard-home-2.0.19](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.18...adguard-home-2.0.19) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 
-## [adguard-home-2.0.18](https://github.com/truecharts/charts/compare/adguard-home-2.0.17...adguard-home-2.0.18) (2022-11-06)
+## [adguard-home-2.0.18](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.17...adguard-home-2.0.18) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4317](https://github.com/truecharts/charts/issues/4317))
+- update helm general non-major ([#4317](https://github.com/trueforge-org/truecharts/issues/4317))
 
-## [adguard-home-2.0.17](https://github.com/truecharts/charts/compare/adguard-home-2.0.16...adguard-home-2.0.17) (2022-11-05)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
-
-## [adguard-home-2.0.16](https://github.com/truecharts/charts/compare/adguard-home-2.0.15...adguard-home-2.0.16) (2022-11-03)
+## [adguard-home-2.0.17](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.16...adguard-home-2.0.17) (2022-11-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4286](https://github.com/truecharts/charts/issues/4286))
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
 
-## [adguard-home-2.0.15](https://github.com/truecharts/charts/compare/adguard-home-2.0.14...adguard-home-2.0.15) (2022-11-02)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
-
-## [adguard-home-2.0.14](https://github.com/truecharts/charts/compare/adguard-home-2.0.13...adguard-home-2.0.14) (2022-10-25)
+## [adguard-home-2.0.16](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.15...adguard-home-2.0.16) (2022-11-03)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
+- update docker general non-major ([#4286](https://github.com/trueforge-org/truecharts/issues/4286))
 
-## [adguard-home-2.0.13](https://github.com/truecharts/charts/compare/adguard-home-2.0.12...adguard-home-2.0.13) (2022-10-19)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
-
-## [adguard-home-2.0.12](https://github.com/truecharts/charts/compare/adguard-home-2.0.11...adguard-home-2.0.12) (2022-10-12)
+## [adguard-home-2.0.15](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.14...adguard-home-2.0.15) (2022-11-02)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4071](https://github.com/truecharts/charts/issues/4071))
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
+
+## [adguard-home-2.0.14](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.13...adguard-home-2.0.14) (2022-10-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
+
+## [adguard-home-2.0.13](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.12...adguard-home-2.0.13) (2022-10-19)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
+
+## [adguard-home-2.0.12](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.11...adguard-home-2.0.12) (2022-10-12)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4071](https://github.com/trueforge-org/truecharts/issues/4071))
 - update docker general non-major
 
-## [adguard-home-2.0.11](https://github.com/truecharts/charts/compare/adguard-home-2.0.10...adguard-home-2.0.11) (2022-10-07)
+## [adguard-home-2.0.11](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.10...adguard-home-2.0.11) (2022-10-07)
 
 ### Chore
 
@@ -158,60 +158,60 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [adguard-home-2.0.11](https://github.com/truecharts/charts/compare/adguard-home-2.0.10...adguard-home-2.0.11) (2022-10-07)
+## [adguard-home-2.0.11](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.10...adguard-home-2.0.11) (2022-10-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [adguard-home-2.0.10](https://github.com/truecharts/charts/compare/adguard-home-2.0.9...adguard-home-2.0.10) (2022-10-05)
+## [adguard-home-2.0.10](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.9...adguard-home-2.0.10) (2022-10-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [adguard-home-2.0.9](https://github.com/truecharts/charts/compare/adguard-home-2.0.8...adguard-home-2.0.9) (2022-10-04)
+## [adguard-home-2.0.9](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.8...adguard-home-2.0.9) (2022-10-04)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4001](https://github.com/truecharts/charts/issues/4001))
+- update docker general non-major ([#4001](https://github.com/trueforge-org/truecharts/issues/4001))
 
-## [adguard-home-2.0.8](https://github.com/truecharts/charts/compare/adguard-home-2.0.6...adguard-home-2.0.8) (2022-10-02)
+## [adguard-home-2.0.8](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.6...adguard-home-2.0.8) (2022-10-02)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
 
 ### Fix
 
-- Change port on main service ([#3987](https://github.com/truecharts/charts/issues/3987))
+- Change port on main service ([#3987](https://github.com/trueforge-org/truecharts/issues/3987))
 
-## [adguard-home-2.0.6](https://github.com/truecharts/charts/compare/adguard-home-2.0.5...adguard-home-2.0.6) (2022-09-30)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3965](https://github.com/truecharts/charts/issues/3965))
-
-## [adguard-home-2.0.5](https://github.com/truecharts/charts/compare/adguard-home-2.0.4...adguard-home-2.0.5) (2022-09-27)
+## [adguard-home-2.0.6](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.5...adguard-home-2.0.6) (2022-09-30)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3918](https://github.com/truecharts/charts/issues/3918))
+- update docker general non-major ([#3965](https://github.com/trueforge-org/truecharts/issues/3965))
 
-## [adguard-home-2.0.4](https://github.com/truecharts/charts/compare/adguard-home-2.0.3...adguard-home-2.0.4) (2022-09-25)
+## [adguard-home-2.0.5](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.4...adguard-home-2.0.5) (2022-09-27)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
+- update helm general non-major ([#3918](https://github.com/trueforge-org/truecharts/issues/3918))
 
-## [adguard-home-2.0.3](https://github.com/truecharts/charts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-22)
+## [adguard-home-2.0.4](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.3...adguard-home-2.0.4) (2022-09-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
+
+## [adguard-home-2.0.3](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-22)
 
 ### Chore
 
@@ -229,11 +229,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [adguard-home-2.0.3](https://github.com/truecharts/charts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-21)
+## [adguard-home-2.0.3](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-21)
 
 ### Chore
 
@@ -250,11 +250,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [adguard-home-2.0.3](https://github.com/truecharts/charts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-21)
+## [adguard-home-2.0.3](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-21)
 
 ### Chore
 
@@ -270,11 +270,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [adguard-home-2.0.3](https://github.com/truecharts/charts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-20)
+## [adguard-home-2.0.3](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-20)
 
 ### Chore
 
@@ -289,11 +289,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [adguard-home-2.0.3](https://github.com/truecharts/charts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-20)
+## [adguard-home-2.0.3](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-20)
 
 ### Chore
 
@@ -307,11 +307,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [adguard-home-2.0.3](https://github.com/truecharts/charts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-19)
+## [adguard-home-2.0.3](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-19)
 
 ### Chore
 
@@ -324,11 +324,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [adguard-home-2.0.3](https://github.com/truecharts/charts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-19)
+## [adguard-home-2.0.3](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-19)
 
 ### Chore
 
@@ -340,11 +340,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [adguard-home-2.0.3](https://github.com/truecharts/charts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-19)
+## [adguard-home-2.0.3](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-19)
 
 ### Chore
 
@@ -355,11 +355,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [adguard-home-2.0.3](https://github.com/truecharts/charts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-17)
+## [adguard-home-2.0.3](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-17)
 
 ### Chore
 
@@ -369,60 +369,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [adguard-home-2.0.3](https://github.com/truecharts/charts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-18)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [adguard-home-2.0.3](https://github.com/truecharts/charts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [adguard-home-2.0.3](https://github.com/truecharts/charts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [adguard-home-2.0.3](https://github.com/truecharts/charts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [adguard-home-2.0.2](https://github.com/truecharts/charts/compare/adguard-home-2.0.1...adguard-home-2.0.2) (2022-09-15)
-
-### Chore
-
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [adguard-home-2.0.1](https://github.com/truecharts/charts/compare/adguard-home-2.0.0...adguard-home-2.0.1) (2022-09-12)
+## [adguard-home-2.0.3](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-18)
 
 ### Chore
 
@@ -430,11 +381,48 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [adguard-home-2.0.1](https://github.com/truecharts/charts/compare/adguard-home-2.0.0...adguard-home-2.0.1) (2022-09-12)
+## [adguard-home-2.0.3](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [adguard-home-2.0.3](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [adguard-home-2.0.3](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.1...adguard-home-2.0.3) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [adguard-home-2.0.2](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.1...adguard-home-2.0.2) (2022-09-15)
+
+### Chore
+
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [adguard-home-2.0.1](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.0...adguard-home-2.0.1) (2022-09-12)
 
 ### Chore
 
@@ -442,114 +430,126 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [adguard-home-2.0.1](https://github.com/truecharts/charts/compare/adguard-home-2.0.0...adguard-home-2.0.1) (2022-09-11)
+## [adguard-home-2.0.1](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.0...adguard-home-2.0.1) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [adguard-home-2.0.1](https://github.com/truecharts/charts/compare/adguard-home-2.0.0...adguard-home-2.0.1) (2022-09-11)
+## [adguard-home-2.0.1](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.0...adguard-home-2.0.1) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [adguard-home-2.0.1](https://github.com/truecharts/charts/compare/adguard-home-2.0.0...adguard-home-2.0.1) (2022-09-11)
+## [adguard-home-2.0.1](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.0...adguard-home-2.0.1) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [adguard-home-2.0.1](https://github.com/truecharts/charts/compare/adguard-home-2.0.0...adguard-home-2.0.1) (2022-09-11)
+## [adguard-home-2.0.1](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.0...adguard-home-2.0.1) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [adguard-home-2.0.0](https://github.com/truecharts/charts/compare/adguard-home-1.0.37...adguard-home-2.0.0) (2022-09-05)
+## [adguard-home-2.0.1](https://github.com/trueforge-org/truecharts/compare/adguard-home-2.0.0...adguard-home-2.0.1) (2022-09-11)
+
+### Chore
+
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
+
+## [adguard-home-2.0.0](https://github.com/trueforge-org/truecharts/compare/adguard-home-1.0.37...adguard-home-2.0.0) (2022-09-05)
 
 ### Feat
 
-- move to stable and cleanup ports a bit ([#3703](https://github.com/truecharts/charts/issues/3703))
+- move to stable and cleanup ports a bit ([#3703](https://github.com/trueforge-org/truecharts/issues/3703))
 
-## [adguard-home-1.0.37](https://github.com/truecharts/charts/compare/adguard-home-1.0.36...adguard-home-1.0.37) (2022-08-30)
-
-### Chore
-
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
-
-## [adguard-home-1.0.36](https://github.com/truecharts/charts/compare/adguard-home-1.0.35...adguard-home-1.0.36) (2022-08-30)
+## [adguard-home-1.0.37](https://github.com/trueforge-org/truecharts/compare/adguard-home-1.0.36...adguard-home-1.0.37) (2022-08-30)
 
 ### Chore
 
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
 
-## [adguard-home-1.0.35](https://github.com/truecharts/charts/compare/adguard-home-1.0.34...adguard-home-1.0.35) (2022-08-29)
+## [adguard-home-1.0.36](https://github.com/trueforge-org/truecharts/compare/adguard-home-1.0.35...adguard-home-1.0.36) (2022-08-30)
 
 ### Chore
 
-- update helm general non-major ([#3619](https://github.com/truecharts/charts/issues/3619))
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
 
-## [adguard-home-1.0.34](https://github.com/truecharts/charts/compare/adguard-home-1.0.32...adguard-home-1.0.34) (2022-08-26)
+## [adguard-home-1.0.35](https://github.com/trueforge-org/truecharts/compare/adguard-home-1.0.34...adguard-home-1.0.35) (2022-08-29)
+
+### Chore
+
+- update helm general non-major ([#3619](https://github.com/trueforge-org/truecharts/issues/3619))
+
+## [adguard-home-1.0.34](https://github.com/trueforge-org/truecharts/compare/adguard-home-1.0.32...adguard-home-1.0.34) (2022-08-26)
 
 ### Fix
 
-- some cleanup ([#3586](https://github.com/truecharts/charts/issues/3586))
+- some cleanup ([#3586](https://github.com/trueforge-org/truecharts/issues/3586))
 
-## [adguard-home-1.0.32](https://github.com/truecharts/charts/compare/adguard-home-1.0.31...adguard-home-1.0.32) (2022-08-23)
-
-### Chore
-
-- update helm general non-major helm releases ([#3545](https://github.com/truecharts/charts/issues/3545))
-
-## [adguard-home-1.0.31](https://github.com/truecharts/charts/compare/adguard-home-1.0.30...adguard-home-1.0.31) (2022-08-21)
+## [adguard-home-1.0.32](https://github.com/trueforge-org/truecharts/compare/adguard-home-1.0.31...adguard-home-1.0.32) (2022-08-23)
 
 ### Chore
 
-- update docker general non-major docker tags ([#3523](https://github.com/truecharts/charts/issues/3523))
+- update helm general non-major helm releases ([#3545](https://github.com/trueforge-org/truecharts/issues/3545))
 
-## [adguard-home-1.0.30](https://github.com/truecharts/charts/compare/adguard-home-1.0.29...adguard-home-1.0.30) (2022-08-19)
+## [adguard-home-1.0.31](https://github.com/trueforge-org/truecharts/compare/adguard-home-1.0.30...adguard-home-1.0.31) (2022-08-21)
 
 ### Chore
 
-- update docker general non-major docker tags ([#3512](https://github.com/truecharts/charts/issues/3512))
+- update docker general non-major docker tags ([#3523](https://github.com/trueforge-org/truecharts/issues/3523))
 
-## [adguard-home-1.0.29](https://github.com/truecharts/charts/compare/adguard-home-1.0.28...adguard-home-1.0.29) (2022-08-12)
+## [adguard-home-1.0.30](https://github.com/trueforge-org/truecharts/compare/adguard-home-1.0.29...adguard-home-1.0.30) (2022-08-19)
+
+### Chore
+
+- update docker general non-major docker tags ([#3512](https://github.com/trueforge-org/truecharts/issues/3512))
+
+## [adguard-home-1.0.29](https://github.com/trueforge-org/truecharts/compare/adguard-home-1.0.28...adguard-home-1.0.29) (2022-08-12)
 
 ### Chore
 
 - add documentation checkbox/section to all SCALE Apps
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
 
 ### Fix
 
-- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/truecharts/charts/issues/3447))
+- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/trueforge-org/truecharts/issues/3447))
 
-## [adguard-home-1.0.28](https://github.com/truecharts/charts/compare/adguard-home-1.0.27...adguard-home-1.0.28) (2022-08-10)
-
-### Chore
-
-- update docker general non-major ([#3421](https://github.com/truecharts/charts/issues/3421))
-
-## [adguard-home-1.0.27](https://github.com/truecharts/charts/compare/adguard-home-1.0.26...adguard-home-1.0.27) (2022-08-08)
+## [adguard-home-1.0.28](https://github.com/trueforge-org/truecharts/compare/adguard-home-1.0.27...adguard-home-1.0.28) (2022-08-10)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update docker general non-major ([#3421](https://github.com/trueforge-org/truecharts/issues/3421))
+
+## [adguard-home-1.0.27](https://github.com/trueforge-org/truecharts/compare/adguard-home-1.0.26...adguard-home-1.0.27) (2022-08-08)
+
+### Chore
+
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
 
 ## [adguard-home-1.0.26](https://github.com/truecharts/apps/compare/adguard-home-1.0.25...adguard-home-1.0.26) (2022-07-26)
 

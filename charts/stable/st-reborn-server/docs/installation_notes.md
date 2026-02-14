@@ -42,4 +42,4 @@ bPremiumMode=true # Setting the tickrate to 60
 uPort=10578 # Setting the port to 10578 (important!)
 ```
 
-for more info checkout the source [guide](https://wiki.tiltedphoques.com/tilted-online/guides/server-guide/server-configuration)
+for more info checkout the source [guide](https://wiki.tiltedphoques.com/tilted-online/truecharts/guides/server-guide/server-configuration)

@@ -1143,7 +1143,7 @@ pagefind: false
 
 #### Chore
 
-- update tccr.io/truecharts/clarkson:v1.1.2 docker digest to 27051a8 ([#1484](https://github.com/truecharts/apps/issues/1484))
+- update oci.trueforge.org/truecharts/clarkson:v1.1.2 docker digest to 27051a8 ([#1484](https://github.com/truecharts/apps/issues/1484))
 
 <a name="clarkson-0.0.8"></a>
 

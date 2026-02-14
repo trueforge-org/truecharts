@@ -1,13 +1,21 @@
 image:
   repository: ghcr.io/ich777/steamcmd
   pullPolicy: IfNotPresent
-  tag: palworld@sha256:aea493da0d8773b1467c1b569dfdc72f70631599bbab169aa038f62975ce2115
+  tag: palworld@sha256:2a2b86c3638a57d56d6c9e137e94e940b239ebf4e99a45ad460889e8c05edf19
 
 securityContext:
   container:
     readOnlyRootFilesystem: false
     runAsUser: 0
     runAsGroup: 0
+
+resources:
+  limits:
+    cpu: 4000m
+    memory: 6000Mi
+  requests:
+    cpu: 400m
+    memory: 1000Mi
 
 service:
   main:

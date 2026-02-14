@@ -3,7 +3,7 @@ title: Changelog
 pagefind: false
 ---
 
-## [qinglong-3.0.0](https://github.com/truecharts/charts/compare/qinglong-2.0.56...qinglong-3.0.0) (2022-11-10)
+## [qinglong-3.0.0](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.56...qinglong-3.0.0) (2022-11-10)
 
 ### Chore
 
@@ -16,30 +16,13 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Major Change to GUI
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update docker general non-major ([#4331](https://github.com/truecharts/charts/issues/4331))
-- update docker general non-major ([#4355](https://github.com/truecharts/charts/issues/4355))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update docker general non-major ([#4331](https://github.com/trueforge-org/truecharts/issues/4331))
+- update docker general non-major ([#4355](https://github.com/trueforge-org/truecharts/issues/4355))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [qinglong-2.0.61](https://github.com/truecharts/charts/compare/qinglong-2.0.56...qinglong-2.0.61) (2022-11-09)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#4355](https://github.com/truecharts/charts/issues/4355))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update docker general non-major ([#4331](https://github.com/truecharts/charts/issues/4331))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [qinglong-2.0.60](https://github.com/truecharts/charts/compare/qinglong-2.0.56...qinglong-2.0.60) (2022-11-08)
+## [qinglong-2.0.61](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.56...qinglong-2.0.61) (2022-11-09)
 
 ### Chore
 
@@ -49,12 +32,14 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update docker general non-major ([#4331](https://github.com/truecharts/charts/issues/4331))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4355](https://github.com/trueforge-org/truecharts/issues/4355))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update docker general non-major ([#4331](https://github.com/trueforge-org/truecharts/issues/4331))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [qinglong-2.0.59](https://github.com/truecharts/charts/compare/qinglong-2.0.56...qinglong-2.0.59) (2022-11-08)
+## [qinglong-2.0.60](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.56...qinglong-2.0.60) (2022-11-08)
 
 ### Chore
 
@@ -63,11 +48,13 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update docker general non-major ([#4331](https://github.com/truecharts/charts/issues/4331))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update docker general non-major ([#4331](https://github.com/trueforge-org/truecharts/issues/4331))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [qinglong-2.0.59](https://github.com/truecharts/charts/compare/qinglong-2.0.56...qinglong-2.0.59) (2022-11-08)
+## [qinglong-2.0.59](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.56...qinglong-2.0.59) (2022-11-08)
 
 ### Chore
 
@@ -75,101 +62,114 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update docker general non-major ([#4331](https://github.com/truecharts/charts/issues/4331))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update docker general non-major ([#4331](https://github.com/trueforge-org/truecharts/issues/4331))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [qinglong-2.0.59](https://github.com/truecharts/charts/compare/qinglong-2.0.56...qinglong-2.0.59) (2022-11-08)
+## [qinglong-2.0.59](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.56...qinglong-2.0.59) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update docker general non-major ([#4331](https://github.com/truecharts/charts/issues/4331))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update docker general non-major ([#4331](https://github.com/trueforge-org/truecharts/issues/4331))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [qinglong-2.0.58](https://github.com/truecharts/charts/compare/qinglong-2.0.56...qinglong-2.0.58) (2022-11-07)
+## [qinglong-2.0.59](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.56...qinglong-2.0.59) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4331](https://github.com/truecharts/charts/issues/4331))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update docker general non-major ([#4331](https://github.com/trueforge-org/truecharts/issues/4331))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [qinglong-2.0.57](https://github.com/truecharts/charts/compare/qinglong-2.0.56...qinglong-2.0.57) (2022-11-06)
+## [qinglong-2.0.58](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.56...qinglong-2.0.58) (2022-11-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4331](https://github.com/trueforge-org/truecharts/issues/4331))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [qinglong-2.0.56](https://github.com/truecharts/charts/compare/qinglong-2.0.55...qinglong-2.0.56) (2022-11-06)
+## [qinglong-2.0.57](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.56...qinglong-2.0.57) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4317](https://github.com/truecharts/charts/issues/4317))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [qinglong-2.0.55](https://github.com/truecharts/charts/compare/qinglong-2.0.54...qinglong-2.0.55) (2022-11-05)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
-
-## [qinglong-2.0.54](https://github.com/truecharts/charts/compare/qinglong-2.0.53...qinglong-2.0.54) (2022-11-05)
+## [qinglong-2.0.56](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.55...qinglong-2.0.56) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4301](https://github.com/truecharts/charts/issues/4301))
+- update helm general non-major ([#4317](https://github.com/trueforge-org/truecharts/issues/4317))
 
-## [qinglong-2.0.53](https://github.com/truecharts/charts/compare/qinglong-2.0.52...qinglong-2.0.53) (2022-11-02)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
-
-## [qinglong-2.0.52](https://github.com/truecharts/charts/compare/qinglong-2.0.51...qinglong-2.0.52) (2022-10-30)
+## [qinglong-2.0.55](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.54...qinglong-2.0.55) (2022-11-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4238](https://github.com/truecharts/charts/issues/4238))
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
 
-## [qinglong-2.0.51](https://github.com/truecharts/charts/compare/qinglong-2.0.50...qinglong-2.0.51) (2022-10-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
-
-## [qinglong-2.0.50](https://github.com/truecharts/charts/compare/qinglong-2.0.49...qinglong-2.0.50) (2022-10-24)
+## [qinglong-2.0.54](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.53...qinglong-2.0.54) (2022-11-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4171](https://github.com/truecharts/charts/issues/4171))
+- update docker general non-major ([#4301](https://github.com/trueforge-org/truecharts/issues/4301))
 
-## [qinglong-2.0.49](https://github.com/truecharts/charts/compare/qinglong-2.0.48...qinglong-2.0.49) (2022-10-19)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
-
-## [qinglong-2.0.48](https://github.com/truecharts/charts/compare/qinglong-2.0.47...qinglong-2.0.48) (2022-10-12)
+## [qinglong-2.0.53](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.52...qinglong-2.0.53) (2022-11-02)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4071](https://github.com/truecharts/charts/issues/4071))
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
 
-## [qinglong-2.0.47](https://github.com/truecharts/charts/compare/qinglong-2.0.46...qinglong-2.0.47) (2022-10-07)
+## [qinglong-2.0.52](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.51...qinglong-2.0.52) (2022-10-30)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4238](https://github.com/trueforge-org/truecharts/issues/4238))
+
+## [qinglong-2.0.51](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.50...qinglong-2.0.51) (2022-10-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
+
+## [qinglong-2.0.50](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.49...qinglong-2.0.50) (2022-10-24)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4171](https://github.com/trueforge-org/truecharts/issues/4171))
+
+## [qinglong-2.0.49](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.48...qinglong-2.0.49) (2022-10-19)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
+
+## [qinglong-2.0.48](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.47...qinglong-2.0.48) (2022-10-12)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4071](https://github.com/trueforge-org/truecharts/issues/4071))
+
+## [qinglong-2.0.47](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.46...qinglong-2.0.47) (2022-10-07)
 
 ### Chore
 
@@ -177,57 +177,57 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [qinglong-2.0.47](https://github.com/truecharts/charts/compare/qinglong-2.0.46...qinglong-2.0.47) (2022-10-07)
+## [qinglong-2.0.47](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.46...qinglong-2.0.47) (2022-10-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [qinglong-2.0.46](https://github.com/truecharts/charts/compare/qinglong-2.0.45...qinglong-2.0.46) (2022-10-05)
+## [qinglong-2.0.46](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.45...qinglong-2.0.46) (2022-10-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [qinglong-2.0.45](https://github.com/truecharts/charts/compare/qinglong-2.0.44...qinglong-2.0.45) (2022-10-04)
+## [qinglong-2.0.45](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.44...qinglong-2.0.45) (2022-10-04)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
-- update docker general non-major ([#4001](https://github.com/truecharts/charts/issues/4001))
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
+- update docker general non-major ([#4001](https://github.com/trueforge-org/truecharts/issues/4001))
 
-## [qinglong-2.0.44](https://github.com/truecharts/charts/compare/qinglong-2.0.43...qinglong-2.0.44) (2022-09-30)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3965](https://github.com/truecharts/charts/issues/3965))
-
-## [qinglong-2.0.43](https://github.com/truecharts/charts/compare/qinglong-2.0.42...qinglong-2.0.43) (2022-09-27)
+## [qinglong-2.0.44](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.43...qinglong-2.0.44) (2022-09-30)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3918](https://github.com/truecharts/charts/issues/3918))
+- update docker general non-major ([#3965](https://github.com/trueforge-org/truecharts/issues/3965))
 
-## [qinglong-2.0.42](https://github.com/truecharts/charts/compare/qinglong-2.0.41...qinglong-2.0.42) (2022-09-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
-
-## [qinglong-2.0.41](https://github.com/truecharts/charts/compare/qinglong-2.0.40...qinglong-2.0.41) (2022-09-25)
+## [qinglong-2.0.43](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.42...qinglong-2.0.43) (2022-09-27)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#3881](https://github.com/truecharts/charts/issues/3881))
+- update helm general non-major ([#3918](https://github.com/trueforge-org/truecharts/issues/3918))
 
-## [qinglong-2.0.40](https://github.com/truecharts/charts/compare/qinglong-2.0.38...qinglong-2.0.40) (2022-09-22)
+## [qinglong-2.0.42](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.41...qinglong-2.0.42) (2022-09-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
+
+## [qinglong-2.0.41](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.40...qinglong-2.0.41) (2022-09-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3881](https://github.com/trueforge-org/truecharts/issues/3881))
+
+## [qinglong-2.0.40](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.38...qinglong-2.0.40) (2022-09-22)
 
 ### Chore
 
@@ -245,11 +245,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3818](https://github.com/truecharts/charts/issues/3818))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3818](https://github.com/trueforge-org/truecharts/issues/3818))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [qinglong-2.0.40](https://github.com/truecharts/charts/compare/qinglong-2.0.38...qinglong-2.0.40) (2022-09-21)
+## [qinglong-2.0.40](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.38...qinglong-2.0.40) (2022-09-21)
 
 ### Chore
 
@@ -266,11 +266,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3818](https://github.com/truecharts/charts/issues/3818))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3818](https://github.com/trueforge-org/truecharts/issues/3818))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [qinglong-2.0.40](https://github.com/truecharts/charts/compare/qinglong-2.0.38...qinglong-2.0.40) (2022-09-21)
+## [qinglong-2.0.40](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.38...qinglong-2.0.40) (2022-09-21)
 
 ### Chore
 
@@ -286,11 +286,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3818](https://github.com/truecharts/charts/issues/3818))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3818](https://github.com/trueforge-org/truecharts/issues/3818))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [qinglong-2.0.40](https://github.com/truecharts/charts/compare/qinglong-2.0.38...qinglong-2.0.40) (2022-09-20)
+## [qinglong-2.0.40](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.38...qinglong-2.0.40) (2022-09-20)
 
 ### Chore
 
@@ -305,11 +305,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3818](https://github.com/truecharts/charts/issues/3818))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3818](https://github.com/trueforge-org/truecharts/issues/3818))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [qinglong-2.0.40](https://github.com/truecharts/charts/compare/qinglong-2.0.38...qinglong-2.0.40) (2022-09-20)
+## [qinglong-2.0.40](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.38...qinglong-2.0.40) (2022-09-20)
 
 ### Chore
 
@@ -323,11 +323,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3818](https://github.com/truecharts/charts/issues/3818))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3818](https://github.com/trueforge-org/truecharts/issues/3818))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [qinglong-2.0.39](https://github.com/truecharts/charts/compare/qinglong-2.0.38...qinglong-2.0.39) (2022-09-19)
+## [qinglong-2.0.39](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.38...qinglong-2.0.39) (2022-09-19)
 
 ### Chore
 
@@ -340,10 +340,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [qinglong-2.0.39](https://github.com/truecharts/charts/compare/qinglong-2.0.38...qinglong-2.0.39) (2022-09-19)
+## [qinglong-2.0.39](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.38...qinglong-2.0.39) (2022-09-19)
 
 ### Chore
 
@@ -355,10 +355,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [qinglong-2.0.39](https://github.com/truecharts/charts/compare/qinglong-2.0.38...qinglong-2.0.39) (2022-09-19)
+## [qinglong-2.0.39](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.38...qinglong-2.0.39) (2022-09-19)
 
 ### Chore
 
@@ -369,10 +369,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [qinglong-2.0.39](https://github.com/truecharts/charts/compare/qinglong-2.0.38...qinglong-2.0.39) (2022-09-17)
+## [qinglong-2.0.39](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.38...qinglong-2.0.39) (2022-09-17)
 
 ### Chore
 
@@ -382,55 +382,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [qinglong-2.0.39](https://github.com/truecharts/charts/compare/qinglong-2.0.38...qinglong-2.0.39) (2022-09-18)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [qinglong-2.0.39](https://github.com/truecharts/charts/compare/qinglong-2.0.38...qinglong-2.0.39) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [qinglong-2.0.39](https://github.com/truecharts/charts/compare/qinglong-2.0.38...qinglong-2.0.39) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [qinglong-2.0.39](https://github.com/truecharts/charts/compare/qinglong-2.0.38...qinglong-2.0.39) (2022-09-15)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [qinglong-2.0.39](https://github.com/truecharts/charts/compare/qinglong-2.0.38...qinglong-2.0.39) (2022-09-15)
-
-### Chore
-
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [qinglong-2.0.38](https://github.com/truecharts/charts/compare/qinglong-2.0.37...qinglong-2.0.38) (2022-09-12)
+## [qinglong-2.0.39](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.38...qinglong-2.0.39) (2022-09-18)
 
 ### Chore
 
@@ -438,123 +393,168 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [qinglong-2.0.38](https://github.com/truecharts/charts/compare/qinglong-2.0.37...qinglong-2.0.38) (2022-09-12)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
-
-## [qinglong-2.0.38](https://github.com/truecharts/charts/compare/qinglong-2.0.37...qinglong-2.0.38) (2022-09-11)
+## [qinglong-2.0.39](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.38...qinglong-2.0.39) (2022-09-16)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [qinglong-2.0.38](https://github.com/truecharts/charts/compare/qinglong-2.0.37...qinglong-2.0.38) (2022-09-11)
+## [qinglong-2.0.39](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.38...qinglong-2.0.39) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [qinglong-2.0.39](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.38...qinglong-2.0.39) (2022-09-15)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [qinglong-2.0.39](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.38...qinglong-2.0.39) (2022-09-15)
+
+### Chore
+
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [qinglong-2.0.38](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.37...qinglong-2.0.38) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [qinglong-2.0.38](https://github.com/truecharts/charts/compare/qinglong-2.0.37...qinglong-2.0.38) (2022-09-11)
+## [qinglong-2.0.38](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.37...qinglong-2.0.38) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [qinglong-2.0.38](https://github.com/truecharts/charts/compare/qinglong-2.0.37...qinglong-2.0.38) (2022-09-11)
-
-### Chore
-
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
-
-## [qinglong-2.0.37](https://github.com/truecharts/charts/compare/qinglong-2.0.36...qinglong-2.0.37) (2022-09-05)
-
-### Chore
-
-- update docker general non-major ([#3700](https://github.com/truecharts/charts/issues/3700))
-
-## [qinglong-2.0.36](https://github.com/truecharts/charts/compare/qinglong-2.0.35...qinglong-2.0.36) (2022-09-04)
-
-### Chore
-
-- update docker general non-major ([#3681](https://github.com/truecharts/charts/issues/3681))
-
-## [qinglong-2.0.35](https://github.com/truecharts/charts/compare/qinglong-2.0.33...qinglong-2.0.35) (2022-08-30)
+## [qinglong-2.0.38](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.37...qinglong-2.0.38) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [qinglong-2.0.34](https://github.com/truecharts/charts/compare/qinglong-2.0.33...qinglong-2.0.34) (2022-08-30)
-
-### Chore
-
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
-
-## [qinglong-2.0.33](https://github.com/truecharts/charts/compare/qinglong-2.0.32...qinglong-2.0.33) (2022-08-29)
+## [qinglong-2.0.38](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.37...qinglong-2.0.38) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major ([#3619](https://github.com/truecharts/charts/issues/3619))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [qinglong-2.0.32](https://github.com/truecharts/charts/compare/qinglong-2.0.31...qinglong-2.0.32) (2022-08-26)
-
-### Chore
-
-- update docker general non-major ([#3573](https://github.com/truecharts/charts/issues/3573))
-
-## [qinglong-2.0.31](https://github.com/truecharts/charts/compare/qinglong-2.0.30...qinglong-2.0.31) (2022-08-23)
+## [qinglong-2.0.38](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.37...qinglong-2.0.38) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3545](https://github.com/truecharts/charts/issues/3545))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [qinglong-2.0.30](https://github.com/truecharts/charts/compare/qinglong-2.0.29...qinglong-2.0.30) (2022-08-14)
+## [qinglong-2.0.38](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.37...qinglong-2.0.38) (2022-09-11)
 
 ### Chore
 
-- update docker general non-major docker tags ([#3465](https://github.com/truecharts/charts/issues/3465))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [qinglong-2.0.29](https://github.com/truecharts/charts/compare/qinglong-2.0.28...qinglong-2.0.29) (2022-08-12)
+## [qinglong-2.0.37](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.36...qinglong-2.0.37) (2022-09-05)
+
+### Chore
+
+- update docker general non-major ([#3700](https://github.com/trueforge-org/truecharts/issues/3700))
+
+## [qinglong-2.0.36](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.35...qinglong-2.0.36) (2022-09-04)
+
+### Chore
+
+- update docker general non-major ([#3681](https://github.com/trueforge-org/truecharts/issues/3681))
+
+## [qinglong-2.0.35](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.33...qinglong-2.0.35) (2022-08-30)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
+
+## [qinglong-2.0.34](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.33...qinglong-2.0.34) (2022-08-30)
+
+### Chore
+
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
+
+## [qinglong-2.0.33](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.32...qinglong-2.0.33) (2022-08-29)
+
+### Chore
+
+- update helm general non-major ([#3619](https://github.com/trueforge-org/truecharts/issues/3619))
+
+## [qinglong-2.0.32](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.31...qinglong-2.0.32) (2022-08-26)
+
+### Chore
+
+- update docker general non-major ([#3573](https://github.com/trueforge-org/truecharts/issues/3573))
+
+## [qinglong-2.0.31](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.30...qinglong-2.0.31) (2022-08-23)
+
+### Chore
+
+- update helm general non-major helm releases ([#3545](https://github.com/trueforge-org/truecharts/issues/3545))
+
+## [qinglong-2.0.30](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.29...qinglong-2.0.30) (2022-08-14)
+
+### Chore
+
+- update docker general non-major docker tags ([#3465](https://github.com/trueforge-org/truecharts/issues/3465))
+
+## [qinglong-2.0.29](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.28...qinglong-2.0.29) (2022-08-12)
 
 ### Chore
 
 - add documentation checkbox/section to all SCALE Apps
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
 
 ### Fix
 
-- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/truecharts/charts/issues/3447))
+- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/trueforge-org/truecharts/issues/3447))
 
-## [qinglong-2.0.28](https://github.com/truecharts/charts/compare/qinglong-2.0.26...qinglong-2.0.28) (2022-08-08)
+## [qinglong-2.0.28](https://github.com/trueforge-org/truecharts/compare/qinglong-2.0.26...qinglong-2.0.28) (2022-08-08)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- update docker general non-major ([#3356](https://github.com/truecharts/charts/issues/3356))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- update docker general non-major ([#3356](https://github.com/trueforge-org/truecharts/issues/3356))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
 
 ## [qinglong-2.0.26](https://github.com/truecharts/apps/compare/qinglong-2.0.25...qinglong-2.0.26) (2022-07-26)
 

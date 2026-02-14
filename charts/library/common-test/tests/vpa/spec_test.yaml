@@ -91,10 +91,10 @@ tests:
                 controlledResources: ["cpu", "memory"]
                 controlledValues: RequestsAndLimits
                 minAllowed:
-                  cpu: 1000m
+                  cpu: 1500m
                   memory: 1000Mi
                 maxAllowed:
-                  cpu: 1000m
+                  cpu: 1500m
                   memory: 1000Mi
     asserts:
       - documentIndex: &vpaDoc 1
@@ -124,10 +124,10 @@ tests:
                 controlledResources: ["cpu", "memory"]
                 controlledValues: RequestsAndLimits
                 minAllowed:
-                  cpu: 1000m
+                  cpu: 1500m
                   memory: 1000Mi
                 maxAllowed:
-                  cpu: 1000m
+                  cpu: 1500m
                   memory: 1000Mi
   - it: should create vpa with containerPolicies options ignored when mode is Off
     set:
@@ -149,10 +149,10 @@ tests:
                 controlledResources: ["cpu", "memory"]
                 controlledValues: RequestsAndLimits
                 minAllowed:
-                  cpu: 1000m
+                  cpu: 1500m
                   memory: 1000Mi
                 maxAllowed:
-                  cpu: 1000m
+                  cpu: 1500m
                   memory: 1000Mi
     asserts:
       - documentIndex: &vpaDoc 1

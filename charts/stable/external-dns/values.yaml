@@ -1,8 +1,9 @@
 image:
   repository: registry.k8s.io/external-dns/external-dns
   pullPolicy: IfNotPresent
-  tag: v0.16.1@sha256:37d3a7a05c4638b8177382b80a627c223bd84a53c1a91be137245bd3cfdf9986
+  tag: v0.20.0@sha256:ddc7f4212ed09a21024deb1f470a05240837712e74e4b9f6d1f2632ff10672e7
 externaldns:
+  ingressClassName: ""
   logLevel: "info"
   logFormat: "text"
   interval: "1m"
@@ -17,7 +18,12 @@ externaldns:
   policy: ""
   piholeServer: ""
   piholePassword: ""
+  piholeAPIVersion: ""
   triggerLoopOnEvent: "false"
+  # with externaldns.provider = pdns
+  pdns:
+    pdnsApiKey: ""
+    pdnsServerUrl: ""
   txtOwnerId: ""
   txtPrefix: ""
   txtSuffix: ""
@@ -130,6 +136,9 @@ rbac:
         verbs: ["patch", "update"]
       - apiGroups: ["cis.f5.com"]
         resources: ["virtualservers"]
+        verbs: ["get", "watch", "list"]
+      - apiGroups: ["discovery.k8s.io"]
+        resources: ["endpointslices"]
         verbs: ["get", "watch", "list"]
 # -- The service account the pods will use to interact with the Kubernetes API
 serviceAccount:

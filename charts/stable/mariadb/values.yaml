@@ -1,9 +1,7 @@
 image:
-  repository: public.ecr.aws/bitnami/mariadb
+  repository: docker.io/bitnamisecure/mariadb
   pullPolicy: IfNotPresent
-  tag: 11.7.2@sha256:9c22d9d32e5bd6dad703e46ac67ecded33bdca2f73fc1ad2fddf845f1d213a2d
-
-includeCommon: true
+  tag: latest@sha256:78d434eace71538f7f8b166d8a3d74b9e498891bfa20801146e61414355cbc48
 workload:
   main:
     podSpec:

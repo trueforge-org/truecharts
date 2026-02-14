@@ -123,11 +123,11 @@ securityContext:
 # Can be overruled per container
 resources:
   limits:
-    cpu: 1000m
-    memory: 1500Mi
+    cpu: 1500m
+    memory: 2400Mi
   requests:
-    cpu: 100m
-    memory: 250Mi
+    cpu: 75m
+    memory: 200Mi
 
 containerOptions:
   NVIDIA_CAPS:
@@ -143,6 +143,7 @@ podOptions:
   # If this key exists, takes precedence over the automated calculation
   # hostUsers: false
   shareProcessNamespace: false
+  affinity: {}
   dnsPolicy: ClusterFirst
   dnsConfig:
     options:
@@ -153,6 +154,7 @@ podOptions:
     kubernetes.io/arch: "amd64"
   # -- Used to enforce a good spread for Deployments and StatefulSets by default
   defaultSpread: true
+  defaultAffinity: true
   topologySpreadConstraints: []
   tolerations: []
   schedulerName: ""
@@ -204,14 +206,51 @@ vpa:
     #   updateMode: auto
     resourcePolicy:
       containerPolicies:
-      - containerName: '*'
-        minAllowed:
-          cpu: 50m
-          memory: 50Mi
-        maxAllowed:
-          cpu: 8000m
-          memory: 20Gi
-        controlledResources: ["cpu", "memory"]
+        - containerName: "*"
+          minAllowed:
+            cpu: 50m
+            memory: 50Mi
+          maxAllowed:
+            cpu: 8000m
+            memory: 20Gi
+          controlledResources: ["cpu", "memory"]
+
+# -- Horizontal pod autoscaler
+hpa:
+  main:
+    enabled: false
+    targetSelector: []
+    # minReplicas: 1
+    # maxReplicas: 3
+
+    # metrics:                 # Optional, list of metric specs
+    #   - type: Resource       # Can be Resource, Pods, Object, External, or ContainerResource
+    #     resource:
+    #       name: cpu
+    #       target:
+    #         type: Utilization        # Or Value / AverageValue
+    #         averageUtilization: 50
+
+    #   - type: Resource
+    #     resource:
+    #       name: memory
+    #       target:
+    #         type: AverageValue
+    #         averageValue: 500Mi
+
+    # behavior:                # Optional: controls scaling behavior
+    #   scaleUp:
+    #     stabilizationWindowSeconds: 0
+    #     policies:
+    #       - type: Percent
+    #         value: 100
+    #         periodSeconds: 15
+    #   scaleDown:
+    #     stabilizationWindowSeconds: 300
+    #     policies:
+    #       - type: Pods
+    #         value: 4
+    #         periodSeconds: 60
 
 # -- (docs/service/README.md)
 service:
@@ -230,6 +269,19 @@ service:
     #
     #   traefik:
     #     enabled: false
+    ## Optional - ensures `serversscheme: https` annotation is set
+    #     forceTLS: false
+    ## Optional to make Traefik skip TLS verification when taling to an HTTPS
+    ## backend service
+    #     insecureSkipVerify: false
+    ## Optional to specify the hostname to use when talking to a backend service
+    #     serverName: ""
+    ## Optional - K8s secrets containing CA certs to use when performing TLS
+    ## verification when taling to a backend service
+    #     rootCAs:
+    #       - secretRef: # OR configMapRef
+    #           name: root-ca-secret
+    #           expandObjectName: true
     enabled: true
     primary: true
     ports:
@@ -243,12 +295,22 @@ credentials:
   # mys3:
   #   type: s3
   #   url: ""
+  #   ## Provide a custom certificate authority in cases where the URL endpoint
+  #   ## uses a self-signed certificate
+  #   customCA: ""
+  #   customCASecretRef:
+  #     name: my-secret
+  #     key: ca.crt
+  #     # expandObjectName: false # default true
   #   path: ""
   #   bucket: ""
   #   accessKey: ""
   #   secretKey: ""
   #   ## Is used in cases where things are encrypted by a backup utility
   #   encrKey: ""
+  #   ## Is used in cases where the region cannot be determined from the URL. If
+  #   ## a backup/restore is failing, try setting the region manually using this field
+  #   region: ""
 
 ingressMiddlewares:
   traefik:
@@ -496,7 +558,7 @@ notes:
     https://truecharts.org
 
     OpenSource can only exist with your help, please consider supporting TrueCharts:
-    https://truecharts.org/sponsor
+    https://trueforge.org/sponsor
   warnings: []
 
 ####
@@ -506,118 +568,93 @@ notes:
 ####
 
 gluetunImage:
-  repository: tccr.io/tccr/gluetun
-  tag: v3.40.0@sha256:f5d434869d03fe3c91f832915ecabf7cb65c330732c5ba39ac03feb5e917f552
+  repository: oci.trueforge.org/tccr/gluetun
+  tag: v3.40.0@sha256:a8189e29155e0f8142be1500ae068a92b189b1b25abbba036321e74d6389bf2b
   pullPolicy: IfNotPresent
 
 netshootImage:
-  repository: tccr.io/tccr/netshoot
-  tag: v0.13.0@sha256:d1e6942d828ce14180e5de6136caa9ba2d89fcd25bfe3d3aaf9851ec73366879
+  repository: oci.trueforge.org/tccr/netshoot
+  tag: v0.14.0@sha256:28ede4317d22391e7d89a15eb78dc2afc3587ece02c76c983dde7239a0e43679
   pullPolicy: IfNotPresent
 
 tailscaleImage:
-  repository: tccr.io/tccr/tailscale
-  tag: v1.82.0@sha256:d1750edcac72b5854177d1747c257d2b404af67ca8cc4815e01555fc3e7b2385
+  repository: oci.trueforge.org/tccr/tailscale
+  tag: v1.88.3@sha256:878612592f133bc0728e978558b10a1c457371ac5949985d0584664c8e92c2f9
   pullPolicy: IfNotPresent
 
 codeserverImage:
-  repository: tccr.io/tccr/code-server
-  tag: v4.99.3@sha256:9f37dfc2c12bf87ae6540e1b2630cb4ea6957d31df23c9d0d546227aa74021a5
+  repository: oci.trueforge.org/containerforge/code-server
+  tag: "4.105.1@sha256:8b90df4f269cc05000eb44e51eab82b3c4c44eb699f0b7c31a90c8455957de1f"
   pullPolicy: IfNotPresent
 
-alpineImage:
-  repository: tccr.io/tccr/alpine
-  tag: v3.21.3
-  pullPolicy: IfNotPresent
-
-scratchImage:
-  repository: tccr.io/tccr/scratch
-  tag: latest@sha256:4aef9dbf99ea2a8857ed4ce9d9bf79d330b79044884c7374e392445d122ec746
+ubuntuImage:
+  repository: oci.trueforge.org/containerforge/ubuntu
+  tag: "24.04@sha256:3b826c0233182d7c31a9323121178b98976765b9ee03f9a96200ab0c70e2e1e2"
   pullPolicy: IfNotPresent
 
 kubectlImage:
-  repository: tccr.io/tccr/kubectl
-  tag: latest@sha256:945f44d44720e6ca42969817c903e8643c6e34b9dafd90b338710dd104530588
+  repository: oci.trueforge.org/containerforge/kubectl
+  tag: "1.31.1@sha256:076f97daacc986b4b491a6efe6e59e5bd83396f7485ba5249343bc5a8caf0b20"
   pullPolicy: IfNotPresent
-
-wgetImage:
-  repository: tccr.io/tccr/wget
-  tag: v1.0.0@sha256:2c26ff54ed4bed9e4f1a97132119ba22f75710655d08c400bcef15dc08f9e0d1
-  pullPolicy: IfNotPresent
-
-yqImage:
-  pullPolicy: IfNotPresent
-  repository: docker.io/mikefarah/yq
-  tag: 4.45.1@sha256:2c100efaca06e95ffe452cfe9bfc0048b493f0f3a072d5fe06f828c638d9462b
 
 postgresClientImage:
-  repository: tccr.io/tccr/db-wait-postgres
-  tag: v1.1.0@sha256:c85c459d3ca854d705b4aa8663a77752e62c8d33aa43d6a5e4455523f7eb53bd
+  repository: oci.trueforge.org/containerforge/postgresql-client
+  tag: "1.1.0@sha256:9096db20fdeb452347a1ea16e5dda8a21d6aba03f63b79c2c694f13e72d213b6"
   pullPolicy: IfNotPresent
 
 mariadbClientImage:
-  repository: tccr.io/tccr/db-wait-mariadb
-  tag: v1.1.0@sha256:513e3d11ea19317f2d6b146329eaa05f76e24322734d81effb98a5fccea6ed0c
+  repository: oci.trueforge.org/containerforge/mariadb-client
+  tag: "1.1.0@sha256:72d7535493f2dc6c9ae5cf07743936627a42bb83be8f47830d9bc00898b2575b"
   pullPolicy: IfNotPresent
 
-redisClientImage:
-  repository: tccr.io/tccr/db-wait-redis
-  tag: v1.1.0@sha256:910ade9977376cef26e6ee3b03939d74e295bb980e3c62ec8174bdd0b12af9af
+valkeyClientImage:
+  repository: oci.trueforge.org/containerforge/valkey-tools
+  tag: "1.1.0@sha256:ff58ea59c54d579152516df543f0e4ae42294f05e24d7f4d54f80000085fa571"
   pullPolicy: IfNotPresent
 
 mongodbClientImage:
-  repository: tccr.io/tccr/db-wait-mongodb
-  tag: v1.2.0@sha256:faee7b78290e6cadab8c27b55884a6bf7805fc32e4ae22cf94452cf87949fb2a
+  repository: oci.trueforge.org/containerforge/mongosh
+  tag: "1.2.0@sha256:8f899e60e9c6690f07a8c81edb9d5e042f0fa910dda5a2e82505e2610d5e7f22"
   pullPolicy: IfNotPresent
 
 postgres15Image:
   repository: ghcr.io/cloudnative-pg/postgresql
-  tag: "15.12"
+  tag: "15.15@sha256:4c1d5afdd4f735ff1328cbe39758f4b107a005937dd04183102e278b17b8b4c4"
   pullPolicy: IfNotPresent
 
 postgres16Image:
   repository: ghcr.io/cloudnative-pg/postgresql
-  tag: "16.8"
+  tag: "16.11@sha256:8766b02aeb745c0d11aa1fff1823cde867a37bbe3c4b7bfb1869ed94f368ff88"
   pullPolicy: IfNotPresent
 
 postgresPostgis15Image:
   repository: ghcr.io/cloudnative-pg/postgis
-  tag: "15-3.4"
+  tag: "15-3.4@sha256:4596b193991cd2463a07d40e3d3d62c59f046a7dece8f163ad1aba15925a38e4"
   pullPolicy: IfNotPresent
 
 postgresPostgis16Image:
   repository: ghcr.io/cloudnative-pg/postgis
-  tag: "16-3.4"
+  tag: "16-3.4@sha256:bb5a8590a8c934767482e34e1d103253f412aec703b77bbc52ad9044bf6e56f9"
   pullPolicy: IfNotPresent
 
 postgresVectors15Image:
   repository: ghcr.io/tensorchord/cloudnative-pgvecto.rs
-  tag: "15.7-v0.2.1"
+  tag: "15.7-v0.2.1@sha256:dbdeddf0d635f76df41f745407816c87c7468df35e3b7b0665ca4e0500ff3048"
   pullPolicy: IfNotPresent
 
 postgresVectors16Image:
   repository: ghcr.io/tensorchord/cloudnative-pgvecto.rs
-  tag: "16.3-v0.2.1"
+  tag: "16.3-v0.2.1@sha256:f1a19d4fc4073b0671a72ad34ef012aa20d21b3ddf5b4b0c9077d54450db679a"
   pullPolicy: IfNotPresent
 
-# -- OpenVPN specific configuration
-# @default -- See below
-openvpnImage:
-  # -- Specify the openvpn client image
-  repository: tccr.io/tccr/openvpn-client
-  # -- Specify the openvpn client image tag
-  tag: latest@sha256:9bfdf50791d6e51056e31c03f73c9db329b2b72e7746155cfdc63e0c8b49b55a
-  # -- Specify the openvpn client image pull policy
+postgresVectorchord15Image:
+  repository: ghcr.io/tensorchord/cloudnative-vectorchord
+  tag: "15.14-0.5.3@sha256:1978732dc1e7e9ef94b9e806a094fcb123afab1e50a7e878e2d29de8b849cf47"
   pullPolicy: IfNotPresent
 
-# -- WireGuard specific configuration
-# @default -- See below
-wireguardImage:
-  # -- Specify the WireGuard image
-  repository: tccr.io/tccr/wireguard
-  # -- Specify the WireGuard image tag
-  tag: v1.0.20210914@sha256:683b8b74d64ebd07f9955147539834c2a4b60fee51d2a36fa76b9aba689601bf
-  # -- Specify the WireGuard image pull policy
+postgresVectorchord16Image:
+  repository: ghcr.io/tensorchord/cloudnative-vectorchord
+  tag: "16.10-0.5.3@sha256:a0776b514bb23858d8aa59b08587223f8b449bba1b278ffbcf85e097d6504eb0"
   pullPolicy: IfNotPresent
 
 # -- Configure the ingresses for the chart here.
@@ -912,12 +949,12 @@ addons:
             - NET_ADMIN
             - NET_RAW
             - MKNOD
-        env:
-          DOT: "off"
-          DNS_KEEP_NAMESERVER: "on"
-          FIREWALL: "off"
-          FIREWALL_OUTBOUND_SUBNETS: ""
-          FIREWALL_INPUT_PORTS: ""
+      env:
+        DOT: "off"
+        DNS_KEEP_NAMESERVER: "on"
+        FIREWALL: "off"
+        FIREWALL_OUTBOUND_SUBNETS: ""
+        FIREWALL_INPUT_PORTS: ""
 
   # -- Tailscale specific configuration
   # @default -- See below
@@ -990,6 +1027,9 @@ addons:
     # -- Enable running a code-server container in the pod
     container:
       enabled: true
+      env:
+        PORT: 12321
+        DEFAULT_WORKSPACE: /
       probes:
         liveness:
           enabled: true
@@ -1011,12 +1051,6 @@ addons:
         runAsGroup: 0
         runAsNonRoot: false
         readOnlyRootFilesystem: false
-      args:
-        - "--port"
-        - "12321"
-        - "/"
-        - --auth
-        - none
       # - --user-data-dir
       # - "/config/.vscode"
       # -- Select a workload to add the addon to
@@ -1100,6 +1134,7 @@ cnpg:
     # * `postgis`
     # * `timescaledb`
     # * `vectors`
+    # * `vectorchord`
     type: postgres
 
     # Version of Postgresql to use, changes cluster naming scheme
@@ -1123,6 +1158,9 @@ cnpg:
       # Additional Labels and annotations for cnpg cluster
       labels: {}
       annotations: {}
+      # Additional environment variables to set on all pods created in the cluster
+      env: {}
+      envFrom: {}
 
       # Number of instances
       instances: 2

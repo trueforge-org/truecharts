@@ -3,7 +3,7 @@ title: Changelog
 pagefind: false
 ---
 
-## [filezilla-5.0.0](https://github.com/truecharts/charts/compare/filezilla-4.0.55...filezilla-5.0.0) (2022-11-10)
+## [filezilla-5.0.0](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.55...filezilla-5.0.0) (2022-11-10)
 
 ### Chore
 
@@ -15,25 +15,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Major Change to GUI
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [filezilla-4.0.58](https://github.com/truecharts/charts/compare/filezilla-4.0.55...filezilla-4.0.58) (2022-11-08)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [filezilla-4.0.57](https://github.com/truecharts/charts/compare/filezilla-4.0.55...filezilla-4.0.57) (2022-11-08)
+## [filezilla-4.0.58](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.55...filezilla-4.0.58) (2022-11-08)
 
 ### Chore
 
@@ -42,10 +28,12 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [filezilla-4.0.57](https://github.com/truecharts/charts/compare/filezilla-4.0.55...filezilla-4.0.57) (2022-11-08)
+## [filezilla-4.0.57](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.55...filezilla-4.0.57) (2022-11-08)
 
 ### Chore
 
@@ -53,105 +41,117 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [filezilla-4.0.57](https://github.com/truecharts/charts/compare/filezilla-4.0.55...filezilla-4.0.57) (2022-11-08)
+## [filezilla-4.0.57](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.55...filezilla-4.0.57) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [filezilla-4.0.56](https://github.com/truecharts/charts/compare/filezilla-4.0.55...filezilla-4.0.56) (2022-11-07)
+## [filezilla-4.0.57](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.55...filezilla-4.0.57) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [filezilla-4.0.56](https://github.com/truecharts/charts/compare/filezilla-4.0.55...filezilla-4.0.56) (2022-11-06)
+## [filezilla-4.0.56](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.55...filezilla-4.0.56) (2022-11-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [filezilla-4.0.55](https://github.com/truecharts/charts/compare/filezilla-4.0.54...filezilla-4.0.55) (2022-11-06)
+## [filezilla-4.0.56](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.55...filezilla-4.0.56) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4317](https://github.com/truecharts/charts/issues/4317))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [filezilla-4.0.54](https://github.com/truecharts/charts/compare/filezilla-4.0.53...filezilla-4.0.54) (2022-11-05)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
-
-## [filezilla-4.0.53](https://github.com/truecharts/charts/compare/filezilla-4.0.52...filezilla-4.0.53) (2022-11-04)
+## [filezilla-4.0.55](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.54...filezilla-4.0.55) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4293](https://github.com/truecharts/charts/issues/4293))
+- update helm general non-major ([#4317](https://github.com/trueforge-org/truecharts/issues/4317))
 
-## [filezilla-4.0.52](https://github.com/truecharts/charts/compare/filezilla-4.0.51...filezilla-4.0.52) (2022-11-02)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
-
-## [filezilla-4.0.51](https://github.com/truecharts/charts/compare/filezilla-4.0.50...filezilla-4.0.51) (2022-10-25)
+## [filezilla-4.0.54](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.53...filezilla-4.0.54) (2022-11-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
 
-## [filezilla-4.0.50](https://github.com/truecharts/charts/compare/filezilla-4.0.49...filezilla-4.0.50) (2022-10-24)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#4171](https://github.com/truecharts/charts/issues/4171))
-
-## [filezilla-4.0.49](https://github.com/truecharts/charts/compare/filezilla-4.0.48...filezilla-4.0.49) (2022-10-21)
+## [filezilla-4.0.53](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.52...filezilla-4.0.53) (2022-11-04)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4139](https://github.com/truecharts/charts/issues/4139))
+- update docker general non-major ([#4293](https://github.com/trueforge-org/truecharts/issues/4293))
 
-## [filezilla-4.0.48](https://github.com/truecharts/charts/compare/filezilla-4.0.47...filezilla-4.0.48) (2022-10-19)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
-
-## [filezilla-4.0.47](https://github.com/truecharts/charts/compare/filezilla-4.0.46...filezilla-4.0.47) (2022-10-14)
+## [filezilla-4.0.52](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.51...filezilla-4.0.52) (2022-11-02)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4084](https://github.com/truecharts/charts/issues/4084))
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
 
-## [filezilla-4.0.46](https://github.com/truecharts/charts/compare/filezilla-4.0.45...filezilla-4.0.46) (2022-10-12)
+## [filezilla-4.0.51](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.50...filezilla-4.0.51) (2022-10-25)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4071](https://github.com/truecharts/charts/issues/4071))
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
 
-## [filezilla-4.0.45](https://github.com/truecharts/charts/compare/filezilla-4.0.44...filezilla-4.0.45) (2022-10-07)
+## [filezilla-4.0.50](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.49...filezilla-4.0.50) (2022-10-24)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4171](https://github.com/trueforge-org/truecharts/issues/4171))
+
+## [filezilla-4.0.49](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.48...filezilla-4.0.49) (2022-10-21)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4139](https://github.com/trueforge-org/truecharts/issues/4139))
+
+## [filezilla-4.0.48](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.47...filezilla-4.0.48) (2022-10-19)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
+
+## [filezilla-4.0.47](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.46...filezilla-4.0.47) (2022-10-14)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4084](https://github.com/trueforge-org/truecharts/issues/4084))
+
+## [filezilla-4.0.46](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.45...filezilla-4.0.46) (2022-10-12)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4071](https://github.com/trueforge-org/truecharts/issues/4071))
+
+## [filezilla-4.0.45](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.44...filezilla-4.0.45) (2022-10-07)
 
 ### Chore
 
@@ -159,50 +159,50 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [filezilla-4.0.45](https://github.com/truecharts/charts/compare/filezilla-4.0.44...filezilla-4.0.45) (2022-10-07)
+## [filezilla-4.0.45](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.44...filezilla-4.0.45) (2022-10-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [filezilla-4.0.44](https://github.com/truecharts/charts/compare/filezilla-4.0.43...filezilla-4.0.44) (2022-10-05)
+## [filezilla-4.0.44](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.43...filezilla-4.0.44) (2022-10-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
 - update helm general non-major
 
-## [filezilla-4.0.43](https://github.com/truecharts/charts/compare/filezilla-4.0.42...filezilla-4.0.43) (2022-09-30)
+## [filezilla-4.0.43](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.42...filezilla-4.0.43) (2022-09-30)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#3965](https://github.com/truecharts/charts/issues/3965))
+- update docker general non-major ([#3965](https://github.com/trueforge-org/truecharts/issues/3965))
 
-## [filezilla-4.0.42](https://github.com/truecharts/charts/compare/filezilla-4.0.41...filezilla-4.0.42) (2022-09-27)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3918](https://github.com/truecharts/charts/issues/3918))
-
-## [filezilla-4.0.41](https://github.com/truecharts/charts/compare/filezilla-4.0.40...filezilla-4.0.41) (2022-09-25)
+## [filezilla-4.0.42](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.41...filezilla-4.0.42) (2022-09-27)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
+- update helm general non-major ([#3918](https://github.com/trueforge-org/truecharts/issues/3918))
 
-## [filezilla-4.0.40](https://github.com/truecharts/charts/compare/filezilla-4.0.39...filezilla-4.0.40) (2022-09-23)
+## [filezilla-4.0.41](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.40...filezilla-4.0.41) (2022-09-25)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#3850](https://github.com/truecharts/charts/issues/3850))
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
 
-## [filezilla-4.0.39](https://github.com/truecharts/charts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-22)
+## [filezilla-4.0.40](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.39...filezilla-4.0.40) (2022-09-23)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3850](https://github.com/trueforge-org/truecharts/issues/3850))
+
+## [filezilla-4.0.39](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-22)
 
 ### Chore
 
@@ -220,11 +220,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [filezilla-4.0.39](https://github.com/truecharts/charts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-21)
+## [filezilla-4.0.39](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-21)
 
 ### Chore
 
@@ -241,11 +241,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [filezilla-4.0.39](https://github.com/truecharts/charts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-21)
+## [filezilla-4.0.39](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-21)
 
 ### Chore
 
@@ -261,11 +261,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [filezilla-4.0.39](https://github.com/truecharts/charts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-20)
+## [filezilla-4.0.39](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-20)
 
 ### Chore
 
@@ -280,11 +280,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [filezilla-4.0.39](https://github.com/truecharts/charts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-20)
+## [filezilla-4.0.39](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-20)
 
 ### Chore
 
@@ -298,11 +298,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [filezilla-4.0.39](https://github.com/truecharts/charts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-19)
+## [filezilla-4.0.39](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-19)
 
 ### Chore
 
@@ -315,11 +315,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [filezilla-4.0.39](https://github.com/truecharts/charts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-19)
+## [filezilla-4.0.39](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-19)
 
 ### Chore
 
@@ -331,11 +331,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [filezilla-4.0.39](https://github.com/truecharts/charts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-19)
+## [filezilla-4.0.39](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-19)
 
 ### Chore
 
@@ -346,11 +346,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [filezilla-4.0.39](https://github.com/truecharts/charts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-17)
+## [filezilla-4.0.39](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-17)
 
 ### Chore
 
@@ -360,60 +360,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [filezilla-4.0.39](https://github.com/truecharts/charts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-18)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [filezilla-4.0.39](https://github.com/truecharts/charts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [filezilla-4.0.39](https://github.com/truecharts/charts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [filezilla-4.0.39](https://github.com/truecharts/charts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3787](https://github.com/truecharts/charts/issues/3787))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [filezilla-4.0.38](https://github.com/truecharts/charts/compare/filezilla-4.0.37...filezilla-4.0.38) (2022-09-15)
-
-### Chore
-
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [filezilla-4.0.37](https://github.com/truecharts/charts/compare/filezilla-4.0.36...filezilla-4.0.37) (2022-09-12)
+## [filezilla-4.0.39](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-18)
 
 ### Chore
 
@@ -421,114 +372,163 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [filezilla-4.0.37](https://github.com/truecharts/charts/compare/filezilla-4.0.36...filezilla-4.0.37) (2022-09-12)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-
-## [filezilla-4.0.37](https://github.com/truecharts/charts/compare/filezilla-4.0.36...filezilla-4.0.37) (2022-09-11)
+## [filezilla-4.0.39](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-16)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [filezilla-4.0.37](https://github.com/truecharts/charts/compare/filezilla-4.0.36...filezilla-4.0.37) (2022-09-11)
+## [filezilla-4.0.39](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [filezilla-4.0.39](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.37...filezilla-4.0.39) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3787](https://github.com/trueforge-org/truecharts/issues/3787))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [filezilla-4.0.38](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.37...filezilla-4.0.38) (2022-09-15)
+
+### Chore
+
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [filezilla-4.0.37](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.36...filezilla-4.0.37) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [filezilla-4.0.37](https://github.com/truecharts/charts/compare/filezilla-4.0.36...filezilla-4.0.37) (2022-09-11)
+## [filezilla-4.0.37](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.36...filezilla-4.0.37) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [filezilla-4.0.37](https://github.com/truecharts/charts/compare/filezilla-4.0.36...filezilla-4.0.37) (2022-09-11)
-
-### Chore
-
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-
-## [filezilla-4.0.36](https://github.com/truecharts/charts/compare/filezilla-4.0.35...filezilla-4.0.36) (2022-09-02)
+## [filezilla-4.0.37](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.36...filezilla-4.0.37) (2022-09-11)
 
 ### Chore
 
-- update docker general non-major ([#3660](https://github.com/truecharts/charts/issues/3660))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [filezilla-4.0.35](https://github.com/truecharts/charts/compare/filezilla-4.0.34...filezilla-4.0.35) (2022-08-30)
-
-### Chore
-
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
-
-## [filezilla-4.0.34](https://github.com/truecharts/charts/compare/filezilla-4.0.33...filezilla-4.0.34) (2022-08-30)
+## [filezilla-4.0.37](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.36...filezilla-4.0.37) (2022-09-11)
 
 ### Chore
 
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [filezilla-4.0.33](https://github.com/truecharts/charts/compare/filezilla-4.0.32...filezilla-4.0.33) (2022-08-29)
-
-### Chore
-
-- update helm general non-major ([#3619](https://github.com/truecharts/charts/issues/3619))
-
-## [filezilla-4.0.32](https://github.com/truecharts/charts/compare/filezilla-4.0.31...filezilla-4.0.32) (2022-08-26)
+## [filezilla-4.0.37](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.36...filezilla-4.0.37) (2022-09-11)
 
 ### Chore
 
-- update docker general non-major ([#3573](https://github.com/truecharts/charts/issues/3573))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [filezilla-4.0.31](https://github.com/truecharts/charts/compare/filezilla-4.0.30...filezilla-4.0.31) (2022-08-23)
-
-### Chore
-
-- update helm general non-major helm releases ([#3545](https://github.com/truecharts/charts/issues/3545))
-
-## [filezilla-4.0.30](https://github.com/truecharts/charts/compare/filezilla-4.0.29...filezilla-4.0.30) (2022-08-19)
+## [filezilla-4.0.37](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.36...filezilla-4.0.37) (2022-09-11)
 
 ### Chore
 
-- update docker general non-major docker tags ([#3512](https://github.com/truecharts/charts/issues/3512))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [filezilla-4.0.29](https://github.com/truecharts/charts/compare/filezilla-4.0.28...filezilla-4.0.29) (2022-08-12)
+## [filezilla-4.0.36](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.35...filezilla-4.0.36) (2022-09-02)
+
+### Chore
+
+- update docker general non-major ([#3660](https://github.com/trueforge-org/truecharts/issues/3660))
+
+## [filezilla-4.0.35](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.34...filezilla-4.0.35) (2022-08-30)
+
+### Chore
+
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
+
+## [filezilla-4.0.34](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.33...filezilla-4.0.34) (2022-08-30)
+
+### Chore
+
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
+
+## [filezilla-4.0.33](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.32...filezilla-4.0.33) (2022-08-29)
+
+### Chore
+
+- update helm general non-major ([#3619](https://github.com/trueforge-org/truecharts/issues/3619))
+
+## [filezilla-4.0.32](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.31...filezilla-4.0.32) (2022-08-26)
+
+### Chore
+
+- update docker general non-major ([#3573](https://github.com/trueforge-org/truecharts/issues/3573))
+
+## [filezilla-4.0.31](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.30...filezilla-4.0.31) (2022-08-23)
+
+### Chore
+
+- update helm general non-major helm releases ([#3545](https://github.com/trueforge-org/truecharts/issues/3545))
+
+## [filezilla-4.0.30](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.29...filezilla-4.0.30) (2022-08-19)
+
+### Chore
+
+- update docker general non-major docker tags ([#3512](https://github.com/trueforge-org/truecharts/issues/3512))
+
+## [filezilla-4.0.29](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.28...filezilla-4.0.29) (2022-08-12)
 
 ### Chore
 
 - add documentation checkbox/section to all SCALE Apps
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
 
 ### Fix
 
-- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/truecharts/charts/issues/3447))
+- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/trueforge-org/truecharts/issues/3447))
 
-## [filezilla-4.0.28](https://github.com/truecharts/charts/compare/filezilla-4.0.27...filezilla-4.0.28) (2022-08-09)
-
-### Chore
-
-- update docker general non-major ([#3377](https://github.com/truecharts/charts/issues/3377))
-
-## [filezilla-4.0.27](https://github.com/truecharts/charts/compare/filezilla-4.0.26...filezilla-4.0.27) (2022-08-08)
+## [filezilla-4.0.28](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.27...filezilla-4.0.28) (2022-08-09)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update docker general non-major ([#3377](https://github.com/trueforge-org/truecharts/issues/3377))
+
+## [filezilla-4.0.27](https://github.com/trueforge-org/truecharts/compare/filezilla-4.0.26...filezilla-4.0.27) (2022-08-08)
+
+### Chore
+
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
 
 ## [filezilla-4.0.26](https://github.com/truecharts/apps/compare/filezilla-4.0.25...filezilla-4.0.26) (2022-07-28)
 

@@ -54,7 +54,7 @@ Our [Discord](https://discord.gg/tVsPTHWTtr) support (the ticketing system insid
 We provide direct support for getting `stable` train charts working on our [discord](https://discord.gg/tVsPTHWTtr) inside the **#support** channel.
 That includes installation and guidance on getting it working with defaults or basic settings (not advanced customizations or remote smb shares, etc).
 Bug reports aren't accepted on [discord](https://discord.gg/tVsPTHWTtr) so if you spot a bug (Charts in the stable train should work with mostly defaults configuration)
-please report them to our [github](https://github.com/truecharts/charts/issues/new/choose). Bug reports that state something doesn't work without supporting items may be closed.
+please report them to our [github](https://github.com/trueforge-org/truecharts/issues/new/choose). Bug reports that state something doesn't work without supporting items may be closed.
 
 ## Incubator Train Charts
 

@@ -1,14 +1,13 @@
 image:
-  repository: docker.io/kopia/kopia
-  tag: 0.19.0@sha256:615b786bdb46d5a9301338983e8077e5be0f1c643b7a3188c8732989104accf4
+  repository: oci.trueforge.org/containerforge/kopia
+  tag: 0.22.3@sha256:f035ac508498f35027bc7310992d9bba1c4f4c37c4d1e883108234e45cdc9602
   pullPolicy: IfNotPresent
-
 service:
   main:
     ports:
       main:
         protocol: http
-        port: 10238
+        port: 51515
 
 kopia:
   user: "user"
@@ -25,10 +24,6 @@ workload:
             - secretRef:
                 name: "kopia-secrets"
           args:
-            - server
-            - start
-            - --address=http://0.0.0.0:{{ .Values.service.main.ports.main.port }}
-            - --insecure
             - --server-username={{ .Values.kopia.server_username }}
             - --server-password={{ .Values.kopia.server_password }}
           probes:
@@ -42,13 +37,13 @@ workload:
 persistence:
   config:
     enabled: true
-    mountPath: "/app/config"
+    mountPath: "/config"
   cache:
     enabled: true
-    mountPath: "/app/cache"
+    mountPath: "/config/cache"
   logs:
     enabled: true
-    mountPath: "/app/logs"
+    mountPath: "/config/logs"
   rclone:
     enabled: true
-    mountPath: "/app/rclone"
+    mountPath: "/config/rclone"

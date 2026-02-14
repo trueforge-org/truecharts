@@ -2,40 +2,45 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: metrics
+  truecharts.org/category: unsorted
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
+  trueforge.org/category: metrics
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
-appVersion: 0.13.0
+appVersion: 0.14.0
 dependencies:
   - name: common
-    version: 25.4.10
-    repository: oci://tccr.io/truecharts
+    version: 28.29.49
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
 deprecated: false
 description: Prometheus exporter for SMART using smartctl binary to gather metrics.
-home: https://truecharts.org/charts/stable/smartctl-exporter
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/smartctl-exporter.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/smartctl-exporter
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/smartctl-exporter.webp
 keywords:
   - prometheus
   - smartctl-exporter
   - monitoring
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: smartctl-exporter
 sources:
   - https://github.com/prometheus-community/smartctl_exporter
-  - https://github.com/truecharts/charts/tree/master/charts/stable/smartctl-exporter
-  - https://quay.io/prometheuscommunity/smartctl-exporter
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/smartctl-exporter
+  - https://hub.docker.com/r/prometheuscommunity/smartctl-exporter
 type: application
-version: 4.6.1
+version: 5.13.16
 

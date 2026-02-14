@@ -28,12 +28,14 @@ api:
   data:
     API_PORT: {{ .Values.service.main.ports.main.port | quote }}
     {{/* Database */}}
+  {{- if .Values.cnpg.main.enabled }}
     DB_ENGINE: "postgres"
     POSTGRES_PORT: "5432"
     POSTGRES_USER: {{ .Values.cnpg.main.user }}
     POSTGRES_PASSWORD: {{ .Values.cnpg.main.creds.password | trimAll "\"" }}
     POSTGRES_DB: {{ .Values.cnpg.main.database }}
     POSTGRES_SERVER: {{ .Values.cnpg.main.creds.host }}
+  {{- end }}
     {{/* User Defined */}}
     {{/* General */}}
     ALLOW_SIGNUP: {{ $api.general.allow_signup | quote }}
@@ -106,6 +108,9 @@ api:
     {{- end -}}
     {{- with $api.oidc.client_id }}
     OIDC_CLIENT_ID: {{ . | quote }}
+    {{- end -}}
+    {{- with $api.oidc.client_secret }}
+    OIDC_CLIENT_SECRET: {{ . | quote }}
     {{- end -}}
     {{- with $api.oidc.user_group }}
     OIDC_USER_GROUP: {{ . | quote }}

@@ -554,7 +554,7 @@ tests:
                     - compute
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected [fixedEnv.NVIDIA_CAPS] entry to be one of [all, compute, utility, graphics, video], but got [invalid]
+          errorMessage: Container - Expected [containers.container-name1.fixedEnv.NVIDIA_CAPS] entry to be one of [all, compute, utility, graphics, video], but got [invalid]
 
   - it: it should fail with NVIDIA_CAPS not having unique values
     set:
@@ -577,4 +577,4 @@ tests:
                     - compute
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected [fixedEnv.NVIDIA_CAPS] to have only unique values, but got [compute, compute]
+          errorMessage: Container - Expected [containers.container-name1.fixedEnv.NVIDIA_CAPS] to have only unique values, but got [compute, compute]

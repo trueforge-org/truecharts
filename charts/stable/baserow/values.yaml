@@ -1,6 +1,6 @@
 image:
   repository: docker.io/baserow/baserow
-  tag: 1.32.5@sha256:e70ec777390c5f71f35f007172d44657372946f5832ab170b390baf7719a7cd5
+  tag: 2.0.6@sha256:e2db4d876b4c794dafc71b81c54ad3fd84b13bf19457179ca205fbf3de423740
   pullPolicy: IfNotPresent
 securityContext:
   container:
@@ -73,5 +73,4 @@ cnpg:
     database: baserow
 redis:
   enabled: true
-  includeCommon: true
   redisUsername: "default"

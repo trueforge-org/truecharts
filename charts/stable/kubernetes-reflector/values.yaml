@@ -1,0 +1,68 @@
+image:
+  repository: ghcr.io/emberstack/kubernetes-reflector
+  pullPolicy: IfNotPresent
+  tag: 10.0.8@sha256:6172142460f8e66c3a510d207366d53c132e50084cfeb3497d5e3c26d6124485
+operator:
+  register: true
+
+rbac:
+  main:
+    enabled: true
+    primary: true
+    clusterWide: true
+    rules:
+      - apiGroups:
+          - ""
+        resources:
+          - "configmaps"
+          - "secrets"
+        verbs:
+          - "get"
+          - "list"
+          - "watch"
+          - "create"
+          - "update"
+          - "patch"
+          - "delete"
+      - apiGroups:
+          - ""
+        resources:
+          - "namespaces"
+        verbs:
+          - "watch"
+          - "list"
+serviceAccount:
+  main:
+    enabled: true
+    primary: true
+kubernetesReflector:
+  logLevel: Information
+workload:
+  main:
+    podSpec:
+      automountServiceAccountToken: true
+      containers:
+        main:
+          securityContext:
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+          env:
+            ES_Serilog__MinimumLevel__Default: "{{ .Values.kubernetesReflector.logLevel }}"
+            ES_Reflector__Watcher__Timeout: ""
+            ES_Reflector__Kubernetes__SkipTlsVerify: "false"
+          probes:
+            liveness:
+              type: http
+              path: /health/ready
+              port: 8080
+            readiness:
+              type: http
+              path: /health/ready
+              port: 8080
+            startup:
+              type: http
+              path: /health/ready
+              port: 8080
+service:
+  main:
+    enabled: false

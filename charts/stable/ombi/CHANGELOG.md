@@ -473,7 +473,7 @@ pagefind: false
 
 ### Chore
 
-- update container image tccr.io/truecharts/ombi to v4.25.1 ([#3720](https://github.com/truecharts/charts/issues/3720))
+- update container image oci.trueforge.org/truecharts/ombi to v4.25.1 ([#3720](https://github.com/truecharts/charts/issues/3720))
 
 ## [ombi-11.0.37](https://github.com/truecharts/charts/compare/ombi-11.0.35...ombi-11.0.37) (2022-08-30)
 

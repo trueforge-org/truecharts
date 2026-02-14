@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/gethomepage/homepage
-  tag: v1.1.1@sha256:be49a60307fcce7909acdaf2f3b2f3d168a0468d62869bf72d380625dde91fb9
+  tag: v1.10.1@sha256:0b596092c0b55fe4c65379a428a3fe90bd192f10d1b07d189a34fe5fabe7eedb
   pullPolicy: IfNotPresent
 
 workload:
@@ -16,7 +16,7 @@ workload:
         init-config:
           enabled: true
           type: init
-          imageSelector: alpineImage
+          imageSelector: ubuntuImage
           command:
             - /bin/sh
             - -c
@@ -189,7 +189,6 @@ persistence:
     type: "configmap"
     objectName: config
 
-
 serviceAccount:
   main:
     enabled: true
@@ -205,14 +204,19 @@ configmap:
   config:
     enabled: true
     data:
+      # https://gethomepage.dev/configs/custom-css-js/
       custom.js: ""
       custom.css: ""
       kubernetes.yaml: |
+        ---
+        # For configuration options and examples, please see:
+        # https://gethomepage.dev/configs/kubernetes/
+
         mode: cluster
       settings.yaml: |
         ---
         # For configuration options and examples, please see:
-        # https://gethomepage.dev/latest/configs/settings
+        # https://gethomepage.dev/configs/
 
         providers:
           openweathermap: openweathermapapikey
@@ -220,7 +224,7 @@ configmap:
       widgets.yaml: |
         ---
         # For configuration options and examples, please see:
-        # https://gethomepage.dev/latest/configs/widgets
+        # https://gethomepage.dev/widgets/
 
         - resources:
             cpu: true
@@ -234,7 +238,7 @@ configmap:
       services.yaml: |
         ---
         # For configuration options and examples, please see:
-        # https://gethomepage.dev/latest/configs/services
+        # https://gethomepage.dev/configs/services/
 
         - Arr:
             - My First Service:
@@ -253,7 +257,7 @@ configmap:
       bookmarks.yaml: |
         ---
         # For configuration options and examples, please see:
-        # https://gethomepage.dev/latest/configs/bookmarks
+        # https://gethomepage.dev/configs/bookmarks/
 
         - Developer:
             - Github:
@@ -273,7 +277,7 @@ configmap:
         - TrueCharts:
             - TrueCharts:
               - abbr: TC
-                icon: https://truecharts.org/svg/favicon.svg
+                icon: https://trueforge.org/svg/favicon.svg
                 href: https://truecharts.org
                 description: "TrueCharts Website"
             - Github:
@@ -289,7 +293,7 @@ configmap:
             - Discord:
               - abbr: DC
                 icon: https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://discord.com&size=32
-                href: https://truecharts.org/s/discord
+                href: https://trueforge.org/s/discord
                 description: "TrueCharts Discord"
 
 forceConfigFromValues: false

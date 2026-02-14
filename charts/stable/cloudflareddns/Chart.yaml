@@ -2,41 +2,46 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  max_scale_version: 24.04.1
-  min_scale_version: 24.04.0
-  truecharts.org/category: networking
+  truecharts.org/category: unsorted
   truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
+  trueforge.org/category: networking
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
 apiVersion: v2
-appVersion: latest
+appVersion: 3.0.0
 dependencies:
   - name: common
-    version: 25.4.10
-    repository: oci://tccr.io/truecharts
+    version: 28.29.49
+    repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
 deprecated: false
 description: Automate Cloudflare DNS records for those with a dynamic IP.
-home: https://truecharts.org/charts/stable/cloudflareddns
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/cloudflareddns.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/cloudflareddns
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/cloudflareddns.webp
 keywords:
   - cloudflareddns
   - ddns
   - cloudflare
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: cloudflareddns
 sources:
-  - https://ghcr.io/hotio/cloudflareddns
   - https://github.com/hotio/cloudflareddns
-  - https://github.com/truecharts/charts/tree/master/charts/stable/cloudflareddns
+  - https://github.com/trueforge-org/containers/tree/main/apps/cloudflareddns
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/cloudflareddns
   - https://hotio.dev/containers/cloudflareddns/
 type: application
-version: 11.5.8
+version: 13.0.15
 

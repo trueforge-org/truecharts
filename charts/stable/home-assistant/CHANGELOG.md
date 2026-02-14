@@ -1293,7 +1293,7 @@ pagefind: false
 #### Chore
 
 - update helm general non-major helm releases ([#1852](https://github.com/truecharts/apps/issues/1852))
-- update container image tccr.io/truecharts/home-assistant to v2022.2.2 ([#1850](https://github.com/truecharts/apps/issues/1850))
+- update container image oci.trueforge.org/truecharts/home-assistant to v2022.2.2 ([#1850](https://github.com/truecharts/apps/issues/1850))
 
 <a name="home-assistant-12.0.38"></a>
 

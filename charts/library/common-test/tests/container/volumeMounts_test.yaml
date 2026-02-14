@@ -670,21 +670,21 @@ tests:
             - name: devshm
               emptyDir:
                 medium: Memory
-                sizeLimit: 1500Mi
+                sizeLimit: 2400Mi
             - name: shared
               emptyDir: {}
             - name: tmp
               emptyDir:
                 medium: Memory
-                sizeLimit: 1500Mi
+                sizeLimit: 2400Mi
             - name: varlogs
               emptyDir:
                 medium: Memory
-                sizeLimit: 1500Mi
+                sizeLimit: 2400Mi
             - name: varrun
               emptyDir:
                 medium: Memory
-                sizeLimit: 1500Mi
+                sizeLimit: 2400Mi
 
       - documentIndex: *deploymentDoc
         equal:

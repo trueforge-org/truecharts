@@ -3,7 +3,7 @@ title: Changelog
 pagefind: false
 ---
 
-## [shlink-web-client-4.0.0](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.43...shlink-web-client-4.0.0) (2022-11-10)
+## [shlink-web-client-4.0.0](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.43...shlink-web-client-4.0.0) (2022-11-10)
 
 ### Chore
 
@@ -15,15 +15,15 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Major Change to GUI
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
 ### Fix
 
 - change container config label
 
-## [shlink-web-client-3.0.46](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.43...shlink-web-client-3.0.46) (2022-11-08)
+## [shlink-web-client-3.0.46](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.43...shlink-web-client-3.0.46) (2022-11-08)
 
 ### Chore
 
@@ -33,23 +33,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [shlink-web-client-3.0.45](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.43...shlink-web-client-3.0.45) (2022-11-08)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [shlink-web-client-3.0.45](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.43...shlink-web-client-3.0.45) (2022-11-08)
+## [shlink-web-client-3.0.45](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.43...shlink-web-client-3.0.45) (2022-11-08)
 
 ### Chore
 
@@ -57,77 +45,89 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [shlink-web-client-3.0.45](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.43...shlink-web-client-3.0.45) (2022-11-08)
+## [shlink-web-client-3.0.45](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.43...shlink-web-client-3.0.45) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [shlink-web-client-3.0.44](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.43...shlink-web-client-3.0.44) (2022-11-07)
+## [shlink-web-client-3.0.45](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.43...shlink-web-client-3.0.45) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [shlink-web-client-3.0.44](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.43...shlink-web-client-3.0.44) (2022-11-06)
+## [shlink-web-client-3.0.44](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.43...shlink-web-client-3.0.44) (2022-11-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [shlink-web-client-3.0.43](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.42...shlink-web-client-3.0.43) (2022-11-06)
+## [shlink-web-client-3.0.44](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.43...shlink-web-client-3.0.44) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4317](https://github.com/truecharts/charts/issues/4317))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [shlink-web-client-3.0.42](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.41...shlink-web-client-3.0.42) (2022-11-05)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
-
-## [shlink-web-client-3.0.41](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.40...shlink-web-client-3.0.41) (2022-11-02)
+## [shlink-web-client-3.0.43](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.42...shlink-web-client-3.0.43) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
+- update helm general non-major ([#4317](https://github.com/trueforge-org/truecharts/issues/4317))
 
-## [shlink-web-client-3.0.40](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.39...shlink-web-client-3.0.40) (2022-10-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
-
-## [shlink-web-client-3.0.39](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.38...shlink-web-client-3.0.39) (2022-10-19)
+## [shlink-web-client-3.0.42](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.41...shlink-web-client-3.0.42) (2022-11-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
 
-## [shlink-web-client-3.0.38](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.37...shlink-web-client-3.0.38) (2022-10-12)
+## [shlink-web-client-3.0.41](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.40...shlink-web-client-3.0.41) (2022-11-02)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4071](https://github.com/truecharts/charts/issues/4071))
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
 
-## [shlink-web-client-3.0.37](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.36...shlink-web-client-3.0.37) (2022-10-07)
+## [shlink-web-client-3.0.40](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.39...shlink-web-client-3.0.40) (2022-10-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
+
+## [shlink-web-client-3.0.39](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.38...shlink-web-client-3.0.39) (2022-10-19)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
+
+## [shlink-web-client-3.0.38](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.37...shlink-web-client-3.0.38) (2022-10-12)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4071](https://github.com/trueforge-org/truecharts/issues/4071))
+
+## [shlink-web-client-3.0.37](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.36...shlink-web-client-3.0.37) (2022-10-07)
 
 ### Chore
 
@@ -135,36 +135,36 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [shlink-web-client-3.0.37](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.36...shlink-web-client-3.0.37) (2022-10-07)
+## [shlink-web-client-3.0.37](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.36...shlink-web-client-3.0.37) (2022-10-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [shlink-web-client-3.0.36](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.35...shlink-web-client-3.0.36) (2022-10-05)
+## [shlink-web-client-3.0.36](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.35...shlink-web-client-3.0.36) (2022-10-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
 - update helm general non-major
 
-## [shlink-web-client-3.0.35](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.34...shlink-web-client-3.0.35) (2022-09-27)
+## [shlink-web-client-3.0.35](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.34...shlink-web-client-3.0.35) (2022-09-27)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3918](https://github.com/truecharts/charts/issues/3918))
+- update helm general non-major ([#3918](https://github.com/trueforge-org/truecharts/issues/3918))
 
-## [shlink-web-client-3.0.34](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.33...shlink-web-client-3.0.34) (2022-09-25)
+## [shlink-web-client-3.0.34](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.33...shlink-web-client-3.0.34) (2022-09-25)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
 
-## [shlink-web-client-3.0.33](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-22)
+## [shlink-web-client-3.0.33](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-22)
 
 ### Chore
 
@@ -182,10 +182,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [shlink-web-client-3.0.33](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-21)
+## [shlink-web-client-3.0.33](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-21)
 
 ### Chore
 
@@ -202,10 +202,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [shlink-web-client-3.0.33](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-21)
+## [shlink-web-client-3.0.33](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-21)
 
 ### Chore
 
@@ -221,10 +221,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [shlink-web-client-3.0.33](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-20)
+## [shlink-web-client-3.0.33](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-20)
 
 ### Chore
 
@@ -239,10 +239,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [shlink-web-client-3.0.33](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-20)
+## [shlink-web-client-3.0.33](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-20)
 
 ### Chore
 
@@ -256,10 +256,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [shlink-web-client-3.0.33](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-19)
+## [shlink-web-client-3.0.33](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-19)
 
 ### Chore
 
@@ -272,10 +272,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [shlink-web-client-3.0.33](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-19)
+## [shlink-web-client-3.0.33](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-19)
 
 ### Chore
 
@@ -287,10 +287,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [shlink-web-client-3.0.33](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-19)
+## [shlink-web-client-3.0.33](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-19)
 
 ### Chore
 
@@ -301,10 +301,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [shlink-web-client-3.0.33](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-17)
+## [shlink-web-client-3.0.33](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-17)
 
 ### Chore
 
@@ -314,54 +314,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [shlink-web-client-3.0.33](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-18)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-
-## [shlink-web-client-3.0.33](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-
-## [shlink-web-client-3.0.33](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-
-## [shlink-web-client-3.0.33](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-15)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-
-## [shlink-web-client-3.0.33](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-15)
-
-### Chore
-
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-
-## [shlink-web-client-3.0.32](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.31...shlink-web-client-3.0.32) (2022-09-12)
+## [shlink-web-client-3.0.33](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-18)
 
 ### Chore
 
@@ -369,10 +325,43 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
 
-## [shlink-web-client-3.0.32](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.31...shlink-web-client-3.0.32) (2022-09-12)
+## [shlink-web-client-3.0.33](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+
+## [shlink-web-client-3.0.33](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+
+## [shlink-web-client-3.0.33](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-15)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+
+## [shlink-web-client-3.0.33](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.32...shlink-web-client-3.0.33) (2022-09-15)
+
+### Chore
+
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+
+## [shlink-web-client-3.0.32](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.31...shlink-web-client-3.0.32) (2022-09-12)
 
 ### Chore
 
@@ -380,87 +369,98 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [shlink-web-client-3.0.32](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.31...shlink-web-client-3.0.32) (2022-09-11)
+## [shlink-web-client-3.0.32](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.31...shlink-web-client-3.0.32) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [shlink-web-client-3.0.32](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.31...shlink-web-client-3.0.32) (2022-09-11)
+## [shlink-web-client-3.0.32](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.31...shlink-web-client-3.0.32) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [shlink-web-client-3.0.32](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.31...shlink-web-client-3.0.32) (2022-09-11)
+## [shlink-web-client-3.0.32](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.31...shlink-web-client-3.0.32) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [shlink-web-client-3.0.32](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.31...shlink-web-client-3.0.32) (2022-09-11)
-
-### Chore
-
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-
-## [shlink-web-client-3.0.31](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.29...shlink-web-client-3.0.31) (2022-08-30)
+## [shlink-web-client-3.0.32](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.31...shlink-web-client-3.0.32) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [shlink-web-client-3.0.30](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.29...shlink-web-client-3.0.30) (2022-08-30)
-
-### Chore
-
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
-
-## [shlink-web-client-3.0.29](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.28...shlink-web-client-3.0.29) (2022-08-29)
+## [shlink-web-client-3.0.32](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.31...shlink-web-client-3.0.32) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major ([#3619](https://github.com/truecharts/charts/issues/3619))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [shlink-web-client-3.0.28](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.27...shlink-web-client-3.0.28) (2022-08-23)
+## [shlink-web-client-3.0.31](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.29...shlink-web-client-3.0.31) (2022-08-30)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3545](https://github.com/truecharts/charts/issues/3545))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
 
-## [shlink-web-client-3.0.27](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.26...shlink-web-client-3.0.27) (2022-08-12)
+## [shlink-web-client-3.0.30](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.29...shlink-web-client-3.0.30) (2022-08-30)
+
+### Chore
+
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
+
+## [shlink-web-client-3.0.29](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.28...shlink-web-client-3.0.29) (2022-08-29)
+
+### Chore
+
+- update helm general non-major ([#3619](https://github.com/trueforge-org/truecharts/issues/3619))
+
+## [shlink-web-client-3.0.28](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.27...shlink-web-client-3.0.28) (2022-08-23)
+
+### Chore
+
+- update helm general non-major helm releases ([#3545](https://github.com/trueforge-org/truecharts/issues/3545))
+
+## [shlink-web-client-3.0.27](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.26...shlink-web-client-3.0.27) (2022-08-12)
 
 ### Chore
 
 - add documentation checkbox/section to all SCALE Apps
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
 
 ### Fix
 
-- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/truecharts/charts/issues/3447))
+- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/trueforge-org/truecharts/issues/3447))
 
-## [shlink-web-client-3.0.26](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.25...shlink-web-client-3.0.26) (2022-08-10)
-
-### Chore
-
-- update docker general non-major ([#3421](https://github.com/truecharts/charts/issues/3421))
-
-## [shlink-web-client-3.0.25](https://github.com/truecharts/charts/compare/shlink-web-client-3.0.24...shlink-web-client-3.0.25) (2022-08-08)
+## [shlink-web-client-3.0.26](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.25...shlink-web-client-3.0.26) (2022-08-10)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update docker general non-major ([#3421](https://github.com/trueforge-org/truecharts/issues/3421))
+
+## [shlink-web-client-3.0.25](https://github.com/trueforge-org/truecharts/compare/shlink-web-client-3.0.24...shlink-web-client-3.0.25) (2022-08-08)
+
+### Chore
+
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
 
 ## [shlink-web-client-3.0.24](https://github.com/truecharts/apps/compare/shlink-web-client-3.0.23...shlink-web-client-3.0.24) (2022-07-26)
 

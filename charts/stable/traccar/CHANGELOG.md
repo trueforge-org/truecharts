@@ -756,7 +756,7 @@ pagefind: false
 
 #### Chore
 
-- update container image tccr.io/truecharts/traccar to v5.0 ([#2749](https://github.com/truecharts/apps/issues/2749))
+- update container image oci.trueforge.org/truecharts/traccar to v5.0 ([#2749](https://github.com/truecharts/apps/issues/2749))
 
 <a name="traccar-5.0.21"></a>
 

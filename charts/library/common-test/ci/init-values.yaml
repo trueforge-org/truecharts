@@ -28,14 +28,14 @@ workload:
         init-cont:
           enabled: true
           type: init
-          imageSelector: alpineImage
+          imageSelector: ubuntuImage
           args:
             - echo
             - "Hello World"
         install-cont:
           enabled: true
           type: install
-          imageSelector: alpineImage
+          imageSelector: ubuntuImage
           args:
             - echo
             - "Hello World"

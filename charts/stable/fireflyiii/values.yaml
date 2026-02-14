@@ -1,7 +1,7 @@
 image:
   repository: docker.io/fireflyiii/core
   pullPolicy: IfNotPresent
-  tag: version-6.2.12@sha256:2fe8f53cb43532c03ed9f26cb98f5cc6a8c63f07e70c897d868f278f591c3ee3
+  tag: version-6.2.21@sha256:3db5043e29495ec61b3b1fe163e42629629df7b7841eac3bad7bff13dbe05fad
 securityContext:
   container:
     readOnlyRootFilesystem: false
@@ -74,7 +74,6 @@ cronjob:
 # Enabled redis
 redis:
   enabled: true
-  includeCommon: true
 # Enabled postgres
 cnpg:
   main:

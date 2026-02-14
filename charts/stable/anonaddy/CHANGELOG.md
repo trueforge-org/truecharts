@@ -3,7 +3,7 @@ title: Changelog
 pagefind: false
 ---
 
-## [anonaddy-10.0.0](https://github.com/truecharts/charts/compare/anonaddy-9.0.59...anonaddy-10.0.0) (2022-11-10)
+## [anonaddy-10.0.0](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.59...anonaddy-10.0.0) (2022-11-10)
 
 ### Chore
 
@@ -15,16 +15,16 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Major Change to GUI
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-- update docker general non-major ([#4347](https://github.com/truecharts/charts/issues/4347))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
+- update docker general non-major ([#4347](https://github.com/trueforge-org/truecharts/issues/4347))
 
 ### Fix
 
 - change container config label
 
-## [anonaddy-9.0.63](https://github.com/truecharts/charts/compare/anonaddy-9.0.59...anonaddy-9.0.63) (2022-11-08)
+## [anonaddy-9.0.63](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.59...anonaddy-9.0.63) (2022-11-08)
 
 ### Chore
 
@@ -34,25 +34,12 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-- update docker general non-major ([#4347](https://github.com/truecharts/charts/issues/4347))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
+- update docker general non-major ([#4347](https://github.com/trueforge-org/truecharts/issues/4347))
 
-## [anonaddy-9.0.62](https://github.com/truecharts/charts/compare/anonaddy-9.0.59...anonaddy-9.0.62) (2022-11-08)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-- update docker general non-major ([#4347](https://github.com/truecharts/charts/issues/4347))
-
-## [anonaddy-9.0.62](https://github.com/truecharts/charts/compare/anonaddy-9.0.59...anonaddy-9.0.62) (2022-11-08)
+## [anonaddy-9.0.62](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.59...anonaddy-9.0.62) (2022-11-08)
 
 ### Chore
 
@@ -60,85 +47,98 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-- update docker general non-major ([#4347](https://github.com/truecharts/charts/issues/4347))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
+- update docker general non-major ([#4347](https://github.com/trueforge-org/truecharts/issues/4347))
 
-## [anonaddy-9.0.61](https://github.com/truecharts/charts/compare/anonaddy-9.0.59...anonaddy-9.0.61) (2022-11-08)
+## [anonaddy-9.0.62](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.59...anonaddy-9.0.62) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
+- update docker general non-major ([#4347](https://github.com/trueforge-org/truecharts/issues/4347))
 
-## [anonaddy-9.0.60](https://github.com/truecharts/charts/compare/anonaddy-9.0.59...anonaddy-9.0.60) (2022-11-07)
+## [anonaddy-9.0.61](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.59...anonaddy-9.0.61) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [anonaddy-9.0.60](https://github.com/truecharts/charts/compare/anonaddy-9.0.59...anonaddy-9.0.60) (2022-11-06)
+## [anonaddy-9.0.60](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.59...anonaddy-9.0.60) (2022-11-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [anonaddy-9.0.59](https://github.com/truecharts/charts/compare/anonaddy-9.0.58...anonaddy-9.0.59) (2022-11-06)
+## [anonaddy-9.0.60](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.59...anonaddy-9.0.60) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4317](https://github.com/truecharts/charts/issues/4317))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [anonaddy-9.0.58](https://github.com/truecharts/charts/compare/anonaddy-9.0.57...anonaddy-9.0.58) (2022-11-05)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
-
-## [anonaddy-9.0.57](https://github.com/truecharts/charts/compare/anonaddy-9.0.56...anonaddy-9.0.57) (2022-11-02)
+## [anonaddy-9.0.59](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.58...anonaddy-9.0.59) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
+- update helm general non-major ([#4317](https://github.com/trueforge-org/truecharts/issues/4317))
 
-## [anonaddy-9.0.56](https://github.com/truecharts/charts/compare/anonaddy-9.0.55...anonaddy-9.0.56) (2022-10-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
-
-## [anonaddy-9.0.55](https://github.com/truecharts/charts/compare/anonaddy-9.0.54...anonaddy-9.0.55) (2022-10-21)
+## [anonaddy-9.0.58](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.57...anonaddy-9.0.58) (2022-11-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#4139](https://github.com/truecharts/charts/issues/4139))
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
 
-## [anonaddy-9.0.54](https://github.com/truecharts/charts/compare/anonaddy-9.0.53...anonaddy-9.0.54) (2022-10-19)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
-
-## [anonaddy-9.0.53](https://github.com/truecharts/charts/compare/anonaddy-9.0.52...anonaddy-9.0.53) (2022-10-12)
+## [anonaddy-9.0.57](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.56...anonaddy-9.0.57) (2022-11-02)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4071](https://github.com/truecharts/charts/issues/4071))
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
 
-## [anonaddy-9.0.52](https://github.com/truecharts/charts/compare/anonaddy-9.0.51...anonaddy-9.0.52) (2022-10-07)
+## [anonaddy-9.0.56](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.55...anonaddy-9.0.56) (2022-10-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
+
+## [anonaddy-9.0.55](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.54...anonaddy-9.0.55) (2022-10-21)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#4139](https://github.com/trueforge-org/truecharts/issues/4139))
+
+## [anonaddy-9.0.54](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.53...anonaddy-9.0.54) (2022-10-19)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
+
+## [anonaddy-9.0.53](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.52...anonaddy-9.0.53) (2022-10-12)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4071](https://github.com/trueforge-org/truecharts/issues/4071))
+
+## [anonaddy-9.0.52](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.51...anonaddy-9.0.52) (2022-10-07)
 
 ### Chore
 
@@ -146,35 +146,35 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [anonaddy-9.0.52](https://github.com/truecharts/charts/compare/anonaddy-9.0.51...anonaddy-9.0.52) (2022-10-07)
+## [anonaddy-9.0.52](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.51...anonaddy-9.0.52) (2022-10-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [anonaddy-9.0.51](https://github.com/truecharts/charts/compare/anonaddy-9.0.50...anonaddy-9.0.51) (2022-10-05)
+## [anonaddy-9.0.51](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.50...anonaddy-9.0.51) (2022-10-05)
 
 ### Chore
 
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
 - update helm general non-major
 
-## [anonaddy-9.0.49](https://github.com/truecharts/charts/compare/anonaddy-9.0.48...anonaddy-9.0.49) (2022-09-27)
+## [anonaddy-9.0.49](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.48...anonaddy-9.0.49) (2022-09-27)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3918](https://github.com/truecharts/charts/issues/3918))
+- update helm general non-major ([#3918](https://github.com/trueforge-org/truecharts/issues/3918))
 
-## [anonaddy-9.0.48](https://github.com/truecharts/charts/compare/anonaddy-9.0.47...anonaddy-9.0.48) (2022-09-25)
+## [anonaddy-9.0.48](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.47...anonaddy-9.0.48) (2022-09-25)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
 
-## [anonaddy-9.0.47](https://github.com/truecharts/charts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-22)
+## [anonaddy-9.0.47](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-22)
 
 ### Chore
 
@@ -192,10 +192,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [anonaddy-9.0.47](https://github.com/truecharts/charts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-21)
+## [anonaddy-9.0.47](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-21)
 
 ### Chore
 
@@ -212,10 +212,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [anonaddy-9.0.47](https://github.com/truecharts/charts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-21)
+## [anonaddy-9.0.47](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-21)
 
 ### Chore
 
@@ -231,10 +231,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [anonaddy-9.0.47](https://github.com/truecharts/charts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-20)
+## [anonaddy-9.0.47](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-20)
 
 ### Chore
 
@@ -249,10 +249,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [anonaddy-9.0.47](https://github.com/truecharts/charts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-20)
+## [anonaddy-9.0.47](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-20)
 
 ### Chore
 
@@ -266,10 +266,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [anonaddy-9.0.47](https://github.com/truecharts/charts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-19)
+## [anonaddy-9.0.47](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-19)
 
 ### Chore
 
@@ -282,10 +282,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [anonaddy-9.0.47](https://github.com/truecharts/charts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-19)
+## [anonaddy-9.0.47](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-19)
 
 ### Chore
 
@@ -297,10 +297,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [anonaddy-9.0.47](https://github.com/truecharts/charts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-19)
+## [anonaddy-9.0.47](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-19)
 
 ### Chore
 
@@ -311,10 +311,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [anonaddy-9.0.47](https://github.com/truecharts/charts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-17)
+## [anonaddy-9.0.47](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-17)
 
 ### Chore
 
@@ -324,61 +324,10 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [anonaddy-9.0.47](https://github.com/truecharts/charts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-18)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [anonaddy-9.0.47](https://github.com/truecharts/charts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [anonaddy-9.0.47](https://github.com/truecharts/charts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [anonaddy-9.0.47](https://github.com/truecharts/charts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-15)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [anonaddy-9.0.47](https://github.com/truecharts/charts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-15)
-
-### Chore
-
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [anonaddy-9.0.46](https://github.com/truecharts/charts/compare/anonaddy-9.0.45...anonaddy-9.0.46) (2022-09-13)
-
-### Chore
-
-- update helm general non-major ([#3756](https://github.com/truecharts/charts/issues/3756))
-
-## [anonaddy-9.0.45](https://github.com/truecharts/charts/compare/anonaddy-9.0.43...anonaddy-9.0.45) (2022-09-12)
+## [anonaddy-9.0.47](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-18)
 
 ### Chore
 
@@ -386,11 +335,50 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3743](https://github.com/truecharts/charts/issues/3743))
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [anonaddy-9.0.45](https://github.com/truecharts/charts/compare/anonaddy-9.0.43...anonaddy-9.0.45) (2022-09-12)
+## [anonaddy-9.0.47](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [anonaddy-9.0.47](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [anonaddy-9.0.47](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-15)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [anonaddy-9.0.47](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.46...anonaddy-9.0.47) (2022-09-15)
+
+### Chore
+
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [anonaddy-9.0.46](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.45...anonaddy-9.0.46) (2022-09-13)
+
+### Chore
+
+- update helm general non-major ([#3756](https://github.com/trueforge-org/truecharts/issues/3756))
+
+## [anonaddy-9.0.45](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.43...anonaddy-9.0.45) (2022-09-12)
 
 ### Chore
 
@@ -398,113 +386,125 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#3743](https://github.com/truecharts/charts/issues/3743))
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3743](https://github.com/trueforge-org/truecharts/issues/3743))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [anonaddy-9.0.45](https://github.com/truecharts/charts/compare/anonaddy-9.0.43...anonaddy-9.0.45) (2022-09-12)
+## [anonaddy-9.0.45](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.43...anonaddy-9.0.45) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#3743](https://github.com/truecharts/charts/issues/3743))
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3743](https://github.com/trueforge-org/truecharts/issues/3743))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [anonaddy-9.0.44](https://github.com/truecharts/charts/compare/anonaddy-9.0.43...anonaddy-9.0.44) (2022-09-11)
+## [anonaddy-9.0.45](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.43...anonaddy-9.0.45) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3743](https://github.com/trueforge-org/truecharts/issues/3743))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [anonaddy-9.0.44](https://github.com/truecharts/charts/compare/anonaddy-9.0.43...anonaddy-9.0.44) (2022-09-11)
+## [anonaddy-9.0.44](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.43...anonaddy-9.0.44) (2022-09-11)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [anonaddy-9.0.44](https://github.com/truecharts/charts/compare/anonaddy-9.0.43...anonaddy-9.0.44) (2022-09-11)
-
-### Chore
-
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-
-## [anonaddy-9.0.43](https://github.com/truecharts/charts/compare/anonaddy-9.0.42...anonaddy-9.0.43) (2022-08-30)
+## [anonaddy-9.0.44](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.43...anonaddy-9.0.44) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [anonaddy-9.0.42](https://github.com/truecharts/charts/compare/anonaddy-9.0.41...anonaddy-9.0.42) (2022-08-30)
-
-### Chore
-
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
-
-## [anonaddy-9.0.41](https://github.com/truecharts/charts/compare/anonaddy-9.0.40...anonaddy-9.0.41) (2022-08-30)
+## [anonaddy-9.0.44](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.43...anonaddy-9.0.44) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major ([#3624](https://github.com/truecharts/charts/issues/3624))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
 
-## [anonaddy-9.0.40](https://github.com/truecharts/charts/compare/anonaddy-9.0.38...anonaddy-9.0.40) (2022-08-29)
-
-### Chore
-
-- update helm general non-major ([#3621](https://github.com/truecharts/charts/issues/3621))
-- update helm general non-major ([#3619](https://github.com/truecharts/charts/issues/3619))
-
-## [anonaddy-9.0.38](https://github.com/truecharts/charts/compare/anonaddy-9.0.37...anonaddy-9.0.38) (2022-08-23)
+## [anonaddy-9.0.43](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.42...anonaddy-9.0.43) (2022-08-30)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3545](https://github.com/truecharts/charts/issues/3545))
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
 
-## [anonaddy-9.0.37](https://github.com/truecharts/charts/compare/anonaddy-9.0.36...anonaddy-9.0.37) (2022-08-17)
+## [anonaddy-9.0.42](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.41...anonaddy-9.0.42) (2022-08-30)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3484](https://github.com/truecharts/charts/issues/3484))
-- update docker general non-major ([#3478](https://github.com/truecharts/charts/issues/3478))
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
 
-## [anonaddy-9.0.36](https://github.com/truecharts/charts/compare/anonaddy-9.0.35...anonaddy-9.0.36) (2022-08-12)
+## [anonaddy-9.0.41](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.40...anonaddy-9.0.41) (2022-08-30)
+
+### Chore
+
+- update helm general non-major ([#3624](https://github.com/trueforge-org/truecharts/issues/3624))
+
+## [anonaddy-9.0.40](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.38...anonaddy-9.0.40) (2022-08-29)
+
+### Chore
+
+- update helm general non-major ([#3621](https://github.com/trueforge-org/truecharts/issues/3621))
+- update helm general non-major ([#3619](https://github.com/trueforge-org/truecharts/issues/3619))
+
+## [anonaddy-9.0.38](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.37...anonaddy-9.0.38) (2022-08-23)
+
+### Chore
+
+- update helm general non-major helm releases ([#3545](https://github.com/trueforge-org/truecharts/issues/3545))
+
+## [anonaddy-9.0.37](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.36...anonaddy-9.0.37) (2022-08-17)
+
+### Chore
+
+- update helm general non-major helm releases ([#3484](https://github.com/trueforge-org/truecharts/issues/3484))
+- update docker general non-major ([#3478](https://github.com/trueforge-org/truecharts/issues/3478))
+
+## [anonaddy-9.0.36](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.35...anonaddy-9.0.36) (2022-08-12)
 
 ### Chore
 
 - add documentation checkbox/section to all SCALE Apps
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
 
 ### Fix
 
-- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/truecharts/charts/issues/3447))
+- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/trueforge-org/truecharts/issues/3447))
 
-## [anonaddy-9.0.35](https://github.com/truecharts/charts/compare/anonaddy-9.0.34...anonaddy-9.0.35) (2022-08-10)
-
-### Chore
-
-- update docker general non-major ([#3421](https://github.com/truecharts/charts/issues/3421))
-
-## [anonaddy-9.0.34](https://github.com/truecharts/charts/compare/anonaddy-9.0.33...anonaddy-9.0.34) (2022-08-09)
+## [anonaddy-9.0.35](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.34...anonaddy-9.0.35) (2022-08-10)
 
 ### Chore
 
-- update helm general non-major helm releases to v10.4.9 ([#3413](https://github.com/truecharts/charts/issues/3413))
+- update docker general non-major ([#3421](https://github.com/trueforge-org/truecharts/issues/3421))
 
-## [anonaddy-9.0.33](https://github.com/truecharts/charts/compare/anonaddy-9.0.32...anonaddy-9.0.33) (2022-08-09)
-
-### Chore
-
-- update docker general non-major ([#3377](https://github.com/truecharts/charts/issues/3377))
-
-## [anonaddy-9.0.32](https://github.com/truecharts/charts/compare/anonaddy-9.0.31...anonaddy-9.0.32) (2022-08-08)
+## [anonaddy-9.0.34](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.33...anonaddy-9.0.34) (2022-08-09)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update helm general non-major helm releases to v10.4.9 ([#3413](https://github.com/trueforge-org/truecharts/issues/3413))
+
+## [anonaddy-9.0.33](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.32...anonaddy-9.0.33) (2022-08-09)
+
+### Chore
+
+- update docker general non-major ([#3377](https://github.com/trueforge-org/truecharts/issues/3377))
+
+## [anonaddy-9.0.32](https://github.com/trueforge-org/truecharts/compare/anonaddy-9.0.31...anonaddy-9.0.32) (2022-08-08)
+
+### Chore
+
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
 
 ## [anonaddy-9.0.31](https://github.com/truecharts/apps/compare/anonaddy-9.0.30...anonaddy-9.0.31) (2022-07-26)
 

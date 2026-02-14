@@ -189,7 +189,7 @@ pagefind: false
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update container image tccr.io/truecharts/alist to v3.0.1 ([#3861](https://github.com/truecharts/charts/issues/3861))
+- update container image oci.trueforge.org/truecharts/alist to v3.0.1 ([#3861](https://github.com/truecharts/charts/issues/3861))
 
 ## [alist-2.0.34](https://github.com/truecharts/charts/compare/alist-2.0.33...alist-2.0.34) (2022-09-22)
 

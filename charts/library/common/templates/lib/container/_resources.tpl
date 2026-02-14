@@ -27,6 +27,14 @@ objectData: The object data to be used to render the container.
 requests:
   cpu: {{ $resources.requests.cpu }}
   memory: {{ $resources.requests.memory }}
+    {{- if not $objectData.resources.excludeExtra -}}
+      {{- range $k, $v := (omit $resources.requests "cpu" "memory") }} {{/* Omit cpu and memory, as they are handled above */}}
+        {{- if or (not $v) (eq (toString $v) "0") -}}
+          {{- continue -}}
+        {{- end }}
+  {{ $k }}: {{ $v }}
+      {{- end -}}
+    {{- end -}}
   {{- if $resources.limits }}
 limits:
     {{- with $resources.limits.cpu }} {{/* Passing 0, will not render it, meaning unlimited */}}

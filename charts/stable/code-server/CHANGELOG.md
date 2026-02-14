@@ -678,7 +678,7 @@ pagefind: false
 
 #### Chore
 
-- update container image tccr.io/truecharts/collabora to v22.05.3.1.1 ([#3017](https://github.com/truecharts/apps/issues/3017))
+- update container image oci.trueforge.org/truecharts/collabora to v22.05.3.1.1 ([#3017](https://github.com/truecharts/apps/issues/3017))
 
 <a name="collabora-online-12.0.9"></a>
 

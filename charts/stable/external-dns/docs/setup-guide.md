@@ -15,7 +15,21 @@ Inspired by Kubernetes DNS, Kubernetes' cluster-internal DNS server, ExternalDNS
 
 ## Installation instructions
 
-This guide will cover 2 scenarios, `Cloudflare` and `Pi-hole`. For more external DNS record providers, see [External-DNS Docs](https://github.com/kubernetes-sigs/external-dns/tree/master/docs/tutorials).
+This guide will cover 3 scenarios, `Cloudflare`, `Pi-hole` and `PowerDNS`. For more external DNS record providers, see [External-DNS Docs](https://github.com/kubernetes-sigs/external-dns/tree/master/docs/tutorials).
+
+### PowerDNS
+
+These instructions taken from [external-dns powerdns tutorial](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/pdns.md)
+
+### Step 1
+
+Set pdns provider with externaldns.provider: pdns
+
+### Step 2
+
+Set externaldns.pdns.pdnsApiKey and externaldns.pdns.pdnsServerUrl. <br>
+The ApiKey must provide Zone Read/Write on all zones covered by domainFilters<br>
+The pdnsServerUrl is the full URL of the powerdns api endpoint, including the port (http://pdns-server-api.tld:9191/)
 
 ### Cloudflare
 
@@ -71,19 +85,20 @@ If this works, you'll see DNS entries inside Cloudflare's DNS page.
 
 ### PiHole
 
-:::danger[Temporally broken]
-
-Because of API changes in Pi-hole v6 this is temporally broken.
-More info: https://github.com/kubernetes-sigs/external-dns/issues/5113
-
-:::
-
 #### Step 1
 
 - Set `pihole` as provider
 - set sources `ingress` and `service` should covers everything
 - Recommend using `noop` for `registry`
 - Set PiHole Server Address `piholeServer` and PiHole Server Password `piholePassword`
+- Set `piholeAPIVersion` depending on which version of PiHole you have installed i.e. 5 or 6
+
+:::caution[Future deprecation]
+
+The option for version 5 of the PiHole api will be deprecated in a future External DNS release.
+More info: https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/pihole.md
+
+:::
 
 ```yaml
     externaldns:
@@ -100,6 +115,7 @@ More info: https://github.com/kubernetes-sigs/external-dns/issues/5113
       policy: "upsert-only"  # would prevent ExternalDNS from deleting any records, omit to enable full synchronization
       piholeServer: "http://pihole.pihole.svc.cluster.local:8089"
       piholePassword: "DitIsSuperGeheim"
+      piholeAPIVersion: "6"
 ```
 
 #### Step 2

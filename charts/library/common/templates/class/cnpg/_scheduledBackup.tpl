@@ -49,7 +49,7 @@ metadata:
     {{- . | nindent 4 }}
   {{- end }}
 spec:
-  schedule: {{ $objectData.schedData.schedule }}
+  schedule: {{ $objectData.schedData.schedule | quote }}
   backupOwnerReference: {{ $objectData.schedData.backupOwnerReference | default "none" }}
   suspend: {{ $suspend }}
   immediate: {{ $immediate }}

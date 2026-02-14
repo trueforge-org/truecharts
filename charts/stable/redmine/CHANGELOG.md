@@ -1012,7 +1012,7 @@ pagefind: false
 
 #### Chore
 
-- update container image tccr.io/truecharts/redmine to v5.0.0 ([#2348](https://github.com/truecharts/apps/issues/2348))
+- update container image oci.trueforge.org/truecharts/redmine to v5.0.0 ([#2348](https://github.com/truecharts/apps/issues/2348))
 
 <a name="redmine-1.0.10"></a>
 

@@ -1,7 +1,7 @@
 image:
   repository: docker.io/rhasspy/wyoming-whisper
   pullPolicy: IfNotPresent
-  tag: 2.4.0@sha256:2687f79715734606f856fc4478351ce91a76bdaf6899086bcb837eb9ac7cddb8
+  tag: 3.1.0@sha256:9501d2659eee83b6eead98d53842193e5fed011eda6c5b1c3ad36f3146b28fed
 
 service:
   main:
@@ -40,4 +40,4 @@ persistence:
     mountPath: /data
   cache:
     enabled: true
-    mountPath: /.cache/huggingface/hub
+    mountPath: /.cache/huggingface

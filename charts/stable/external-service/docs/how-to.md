@@ -22,7 +22,7 @@ service:
         port: 444
 ```
 
-Don't forget to add your Ingress to the external-service. To learn more about Ingress and how to use it click [here](/guides/ingress/).
+Don't forget to add your Ingress to the external-service. To learn more about Ingress and how to use it click [here](/truecharts/guides/ingress/).
 
 ```yaml
 ingress:

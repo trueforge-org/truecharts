@@ -1,0 +1,104 @@
+{{/* Define the dashboard download validation logic */}}
+{{- define "grafana.download_dashboards.validate" -}}
+  {{- $dashboards := .dashboards -}}
+
+  {{- range $name, $objectData := $dashboards }}
+    {{- if $objectData.enabled -}}
+      {{- if not (or $objectData.url $objectData.marketplace) -}}
+        {{- fail (printf "Grafana Dashboards - either [url] or [marketplace] must be defined for dashboard [%v]" $name) -}}
+      {{- end -}}
+      {{- if and $objectData.url $objectData.marketplace -}}
+        {{- fail (printf "Grafana Dashboards - only one of [url] or [marketplace] must be defined for dashboard [%v]" $name) -}}
+      {{- end -}}
+      {{- if and ($objectData.url) (or (not (kindIs "string" $objectData.url)) (eq (len $objectData.url) 0)) -}}
+        {{- fail (printf "Grafana Dashboards - [%v.url] must be a non-zero length string" $name) -}}
+      {{- end -}}
+      {{- if $objectData.marketplace -}}
+        {{- if not (kindIs "map" $objectData.marketplace) -}}
+          {{- fail (printf "Grafana Dashboards - [%v.marketplace] must be a map" $name) -}}
+        {{- end -}}
+        {{- if and (not (mustHas (kindOf $objectData.marketplace.id) (list "int" "int64" "float64"))) (or (not (kindIs "string" $objectData.marketplace.id)) (eq (len $objectData.marketplace.id) 0)) -}}
+          {{- fail (printf "Grafana Dashboards - [%v.marketplace.id] must be an integer or non-zero length string" $name) -}}
+        {{- end -}}
+        {{- if and (not (mustHas (kindOf $objectData.marketplace.revision) (list "int" "int64" "float64"))) (or (not (kindIs "string" $objectData.marketplace.revision)) (eq (len $objectData.marketplace.revision) 0)) -}}
+          {{- fail (printf "Grafana Dashboards - [%v.marketplace.revision] must be an integer or non-zero length string" $name) -}}
+        {{- end -}}
+      {{- end -}}
+      {{- if $objectData.datasource -}}
+        {{- range $index, $source := $objectData.datasource -}}
+          {{- if not (kindIs "string" $source.name) -}}
+            {{- fail (printf "Grafana Dashboards - [%v.marketplace.datasource.%v.name] must be a string" $name $index) -}}
+          {{- end -}}
+          {{- if not (kindIs "string" $source.value) -}}
+            {{- fail (printf "Grafana Dashboards - [%v.marketplace.datasource.%v.value] must be a string" $name $index) -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* Define the dashboard downloading script */}}
+{{- define "grafana.download_dashboards" -}}
+{{- $dashboards := .dashboards -}}
+{{- $outputDir := .outputDir -}}
+{{- $grafanaApiUrl := "https://grafana.com/api/dashboards/%v/revisions/%v/download" -}}
+{{- $requestHeaders := (dict
+    "Accept" "application/json"
+    "Content-Type" "application/json;charset=UTF-8") -}}
+
+{{- include "grafana.download_dashboards.validate" (dict "dashboards" $dashboards) -}}
+
+download-dashboards:
+  enabled: true
+  data:
+    download-dashboards.sh: |
+      #!/usr/bin/env bash
+      set -eo pipefail
+      {{- range $name, $objectData := $dashboards }}
+        {{- if $objectData.enabled -}}
+          {{ $fileName := (printf "%v/%v.json" $outputDir $name) -}}
+          {{- $url := "" -}}
+          {{- if $objectData.url -}}
+            {{- $url = $objectData.url -}}
+          {{- else if kindIs "map" $objectData.marketplace -}}
+            {{- $url = (printf $grafanaApiUrl $objectData.marketplace.id $objectData.marketplace.revision) -}}
+          {{- end -}}
+
+          {{- if $url }}
+
+      echo "Downloading '{{ $url }}' into '{{ $fileName }}'"
+      wget \
+          {{- range $headerKey, $headerValue := $requestHeaders }}
+          --header "{{ $headerKey }}: {{ $headerValue }}" \
+          {{- end }}
+          -Y on \
+          -T 60 \
+          -O  - \
+          {{ $url }} \
+      {{- if $objectData.b64content }}
+      | base64 -d \
+      {{- end }}{{ if $objectData.datasource }}
+      | jq '
+          (.. | strings) |=
+          {{- range $index, $source := $objectData.datasource }}
+            {{- if eq $index 0 }}
+            if . == "{{ $source.name }}" then
+                "{{ $source.value }}"
+            {{- else }}
+            elif . == "{{ $source.name }}" then
+                "{{ $source.value }}"
+            {{- end }}
+            {{- if eq $index (sub (len $objectData.datasource) 1) }}
+            else
+                .
+            end
+            {{- end }}
+          {{- end }}
+        ' \{{ end }}
+      > {{ $fileName }}{{if not $objectData.failOnError }} || true{{ end }}
+      echo
+          {{- end }}
+        {{- end -}}
+      {{- end -}}
+{{- end -}}

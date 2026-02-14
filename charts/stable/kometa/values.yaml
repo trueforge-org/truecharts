@@ -1,14 +1,7 @@
 image:
   repository: docker.io/kometateam/kometa
-  tag: v2.2.0@sha256:e8bf350bcdf7e16fc3ab0f128e2ef43a447bd1c4d3352a2f521fcf2b3b421d39
+  tag: v2.3.0@sha256:340e4176e1d75f04d2b55ce177326710f28770b5f56537fd539a034b143fe66d
   pullPolicy: IfNotPresent
-
-securityContext:
-  container:
-    runAsNonRoot: false
-    readOnlyRootFilesystem: false
-    runAsUser: 0
-    runAsGroup: 0
 
 service:
   main:

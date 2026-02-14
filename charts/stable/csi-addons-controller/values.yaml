@@ -1,0 +1,170 @@
+image:
+  pullPolicy: IfNotPresent
+  repository: quay.io/csiaddons/k8s-controller
+  tag: v0.13.0
+
+csi_addons_controller:
+  reclaim_space_timeout: 3m
+  max_concurrent_reconciles: 100
+  max_group_pvc: 100
+  schedule_precedence: pvc  # pvc or storageclass
+
+service:
+  main:
+    enabled: true
+    ports:
+      main:
+        enabled: true
+        port: 8080
+        protocol: http
+
+podOptions:
+  automountServiceAccountToken: true
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          args:
+            - "--namespace={{ .Release.Namespace }}"
+            - "--leader-elect"
+            - "--automaxprocs"
+            - "--reclaim-space-timeout={{ .Values.csi_addons_controller.reclaim_space_timeout }}"
+            - "--max-concurrent-reconciles={{ .Values.csi_addons_controller.max_concurrent_reconciles }}"
+            - "--max-group-pvc={{ .Values.csi_addons_controller.max_group_pvc }}"
+            - "--schedule-precedence={{ .Values.csi_addons_controller.schedule_precedence }}"
+            - "--health-probe-bind-address=:8081"
+            - "--metrics-bind-address=:{{ .Values.service.main.ports.main.port }}"
+            - "--metrics-secure=false"
+          command:
+            - /csi-addons-manager
+          probes:
+            liveness:
+              path: /healthz
+              port: 8081
+            readiness:
+              path: /readyz
+              port: 8081
+            startup:
+              path: /metrics
+              port: main
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 512Mi
+            requests:
+              cpu: 10m
+              memory: 64Mi
+
+metrics:
+  main:
+    enabled: true
+    type: servicemonitor
+    endpoints:
+      - port: main
+        path: /metrics
+    targetSelector: main
+
+serviceAccount:
+  main:
+    enabled: true
+    primary: true
+    targetSelectAll: true
+rbac:
+  leader-election:
+    enabled: true
+    primary: true
+    clusterWide: false
+    serviceAccounts: ["main"]
+    rules:
+      - apiGroups: [""]
+        resources: ["configmaps"]
+        verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+      - apiGroups: ["coordination.k8s.io"]
+        resources: ["leases"]
+        verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+      - apiGroups: [""]
+        resources: ["events"]
+        verbs: ["create", "patch"]
+  networkfenceclass-editor:
+    enabled: true
+    primary: false
+    clusterWide: true
+    serviceAccounts: ["main"]
+    rules:
+      - apiGroups: ["csiaddons.openshift.io"]
+        resources: ["networkfenceclasses"]
+        verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+      - apiGroups: ["csiaddons.openshift.io"]
+        resources: ["networkfenceclasses/status"]
+        verbs: ["get"]
+  networkfenceclass-viewer:
+    enabled: true
+    primary: false
+    clusterWide: true
+    serviceAccounts: ["main"]
+    rules:
+      - apiGroups: ["csiaddons.openshift.io"]
+        resources: ["networkfenceclasses"]
+        verbs: ["get", "list", "watch"]
+      - apiGroups: ["csiaddons.openshift.io"]
+        resources: ["networkfenceclasses/status"]
+        verbs: ["get"]
+  manager:
+    enabled: true
+    primary: false
+    clusterWide: true
+    serviceAccounts: ["main"]
+    rules:
+      - apiGroups: [""]
+        resources: ["events"]
+        verbs: ["create", "patch"]
+      - apiGroups: [""]
+        resources: ["namespaces", "pods"]
+        verbs: ["get", "list", "watch"]
+      - apiGroups: [""]
+        resources: ["persistentvolumeclaims"]
+        verbs: ["get", "list", "patch", "update", "watch"]
+      - apiGroups: [""]
+        resources: ["persistentvolumeclaims/finalizers"]
+        verbs: ["update"]
+      - apiGroups: [""]
+        resources: ["persistentvolumes"]
+        verbs: ["get", "list", "update", "watch"]
+      - apiGroups: [coordination.k8s.io]
+        resources: ["leases"]
+        verbs: ["get", "list", "watch"]
+      - apiGroups: ["csiaddons.openshift.io"]
+        resources: ["csiaddonsnodes", "encryptionkeyrotationcronjobs", "encryptionkeyrotationjobs", "networkfenceclasses", "networkfences", "reclaimspacecronjobs", "reclaimspacejobs"]
+        verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+      - apiGroups: [csiaddons.openshift.io]
+        resources: ["csiaddonsnodes/finalizers", "encryptionkeyrotationcronjobs/finalizers", "encryptionkeyrotationjobs/finalizers", "networkfenceclasses/finalizers", "networkfences/finalizers", "reclaimspacecronjobs/finalizers", "reclaimspacejobs/finalizers"]
+        verbs: ["update"]
+      - apiGroups: ["csiaddons.openshift.io"]
+        resources: ["csiaddonsnodes/status", "encryptionkeyrotationcronjobs/status", "encryptionkeyrotationjobs/status", "networkfenceclasses/status", "networkfences/status", "reclaimspacecronjobs/status", "reclaimspacejobs/status"]
+        verbs: ["get", "update", "patch"]
+      - apiGroups: ["replication.storage.openshift.io"]
+        resources: ["volumegroupreplicationclasses", "volumereplicationclasses"]
+        verbs: ["get", "list", "watch"]
+      - apiGroups: ["replication.storage.openshift.io"]
+        resources: ["volumegroupreplicationcontents"]
+        verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+      - apiGroups: ["replication.storage.openshift.io"]
+        resources: ["volumegroupreplicationcontents/finalizers", "volumegroupreplications/finalizers", "volumereplications/finalizers"]
+        verbs: ["update"]
+      - apiGroups: ["replication.storage.openshift.io"]
+        resources: ["volumegroupreplicationcontents/status", "volumegroupreplications/status"]
+        verbs: ["get", "patch", "update"]
+      - apiGroups: ["replication.storage.openshift.io"]
+        resources: ["volumegroupreplications"]
+        verbs: ["get", "list", "patch", "update", "watch"]
+      - apiGroups: ["replication.storage.openshift.io"]
+        resources: ["volumereplications"]
+        verbs: ["create", "delete", "get", "list", "update", "watch"]
+      - apiGroups: ["replication.storage.openshift.io"]
+        resources: ["volumereplications/status"]
+        verbs: ["get", "list", "update"]
+      - apiGroups: ["storage.k8s.io"]
+        resources: ["storageclasses", "volumeattachments"]
+        verbs: ["get", "list", "watch"]

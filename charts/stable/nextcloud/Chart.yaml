@@ -1,0 +1,62 @@
+annotations:
+  artifacthub.io/links: |-
+    - name: support
+    url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
+  trueforge.org/category: cloud
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
+apiVersion: v2
+appVersion: 32.0.6
+dependencies:
+  - name: common
+    version: 28.29.49
+    repository: oci://oci.trueforge.org/truecharts
+    condition: ""
+    alias: ""
+    tags: []
+    import-values: []
+  - name: redis
+    version: 17.15.21
+    repository: oci://oci.trueforge.org/truecharts
+    condition: redis.enabled
+    alias: ""
+    tags: []
+    import-values: []
+deprecated: false
+description: A private cloud server that puts the control and security of your own data back into your hands.
+home: https://trueforge.org/truetech/truecharts/charts/stable/nextcloud
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/nextcloud.webp
+keywords:
+  - nextcloud
+  - storage
+  - http
+  - web
+  - php
+kubeVersion: '>=1.27.0-0'
+maintainers:
+  - name: TrueCharts
+    email: info@trueforge.org
+    url: https://trueforge.org
+name: nextcloud
+sources:
+  - https://github.com/nextcloud/docker
+  - https://github.com/nextcloud/helm
+  - https://github.com/trueforge-org/containers/tree/main/apps/nextcloud-fpm
+  - https://github.com/trueforge-org/containers/tree/main/apps/nextcloud-imaginary
+  - https://github.com/trueforge-org/containers/tree/main/apps/nextcloud-notify-push
+  - https://github.com/trueforge-org/containers/tree/main/apps/nginx
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/nextcloud
+  - https://github.com/trueforge/truecharts/tree/master/charts/stable/nextcloud
+  - https://hub.docker.com/r/clamav/clamav
+  - https://hub.docker.com/r/collabora/code
+type: application
+version: 40.6.30
+

@@ -3,7 +3,7 @@ title: Changelog
 pagefind: false
 ---
 
-## [omada-controller-7.0.0](https://github.com/truecharts/charts/compare/omada-controller-6.3.4...omada-controller-7.0.0) (2022-11-10)
+## [omada-controller-7.0.0](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.3.4...omada-controller-7.0.0) (2022-11-10)
 
 ### Chore
 
@@ -15,25 +15,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Major Change to GUI
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [omada-controller-6.3.7](https://github.com/truecharts/charts/compare/omada-controller-6.3.4...omada-controller-6.3.7) (2022-11-08)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4349](https://github.com/truecharts/charts/issues/4349))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
-
-## [omada-controller-6.3.6](https://github.com/truecharts/charts/compare/omada-controller-6.3.4...omada-controller-6.3.6) (2022-11-08)
+## [omada-controller-6.3.7](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.3.4...omada-controller-6.3.7) (2022-11-08)
 
 ### Chore
 
@@ -42,10 +28,12 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4349](https://github.com/trueforge-org/truecharts/issues/4349))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [omada-controller-6.3.6](https://github.com/truecharts/charts/compare/omada-controller-6.3.4...omada-controller-6.3.6) (2022-11-08)
+## [omada-controller-6.3.6](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.3.4...omada-controller-6.3.6) (2022-11-08)
 
 ### Chore
 
@@ -53,66 +41,61 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [omada-controller-6.3.6](https://github.com/truecharts/charts/compare/omada-controller-6.3.4...omada-controller-6.3.6) (2022-11-08)
+## [omada-controller-6.3.6](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.3.4...omada-controller-6.3.6) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4342](https://github.com/truecharts/charts/issues/4342))
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [omada-controller-6.3.5](https://github.com/truecharts/charts/compare/omada-controller-6.3.4...omada-controller-6.3.5) (2022-11-07)
+## [omada-controller-6.3.6](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.3.4...omada-controller-6.3.6) (2022-11-08)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4342](https://github.com/trueforge-org/truecharts/issues/4342))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [omada-controller-6.3.5](https://github.com/truecharts/charts/compare/omada-controller-6.3.4...omada-controller-6.3.5) (2022-11-06)
+## [omada-controller-6.3.5](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.3.4...omada-controller-6.3.5) (2022-11-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4329](https://github.com/truecharts/charts/issues/4329))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [omada-controller-6.3.4](https://github.com/truecharts/charts/compare/omada-controller-6.3.3...omada-controller-6.3.4) (2022-11-06)
+## [omada-controller-6.3.5](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.3.4...omada-controller-6.3.5) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4317](https://github.com/truecharts/charts/issues/4317))
+- update helm general non-major ([#4329](https://github.com/trueforge-org/truecharts/issues/4329))
 
-## [omada-controller-6.3.3](https://github.com/truecharts/charts/compare/omada-controller-6.3.2...omada-controller-6.3.3) (2022-11-05)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4308](https://github.com/truecharts/charts/issues/4308))
-
-## [omada-controller-6.3.2](https://github.com/truecharts/charts/compare/omada-controller-6.3.1...omada-controller-6.3.2) (2022-11-02)
+## [omada-controller-6.3.4](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.3.3...omada-controller-6.3.4) (2022-11-06)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
+- update helm general non-major ([#4317](https://github.com/trueforge-org/truecharts/issues/4317))
 
-### Docs
-
-- Add DHCP Option 138 for APs ([#4285](https://github.com/truecharts/charts/issues/4285))
-
-## [omada-controller-6.3.1](https://github.com/truecharts/charts/compare/omada-controller-6.3.0...omada-controller-6.3.1) (2022-11-02)
+## [omada-controller-6.3.3](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.3.2...omada-controller-6.3.3) (2022-11-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4261](https://github.com/truecharts/charts/issues/4261))
+- update helm general non-major ([#4308](https://github.com/trueforge-org/truecharts/issues/4308))
 
-## [omada-controller-6.3.0](https://github.com/truecharts/charts/compare/omada-controller-6.2.2...omada-controller-6.3.0) (2022-11-02)
+## [omada-controller-6.3.2](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.3.1...omada-controller-6.3.2) (2022-11-02)
 
 ### Chore
 
@@ -120,23 +103,40 @@ pagefind: false
 
 ### Docs
 
-- Add Installation Notes ([#4278](https://github.com/truecharts/charts/issues/4278))
+- Add DHCP Option 138 for APs ([#4285](https://github.com/trueforge-org/truecharts/issues/4285))
 
-## [omada-controller-6.2.2](https://github.com/truecharts/charts/compare/omada-controller-6.2.1...omada-controller-6.2.2) (2022-10-25)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#4182](https://github.com/truecharts/charts/issues/4182))
-
-## [omada-controller-6.2.1](https://github.com/truecharts/charts/compare/omada-controller-6.2.0...omada-controller-6.2.1) (2022-10-19)
+## [omada-controller-6.3.1](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.3.0...omada-controller-6.3.1) (2022-11-02)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4122](https://github.com/truecharts/charts/issues/4122))
+- update helm general non-major ([#4261](https://github.com/trueforge-org/truecharts/issues/4261))
 
-## [omada-controller-6.2.0](https://github.com/truecharts/charts/compare/omada-controller-6.1.1...omada-controller-6.2.0) (2022-10-16)
+## [omada-controller-6.3.0](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.2.2...omada-controller-6.3.0) (2022-11-02)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+
+### Docs
+
+- Add Installation Notes ([#4278](https://github.com/trueforge-org/truecharts/issues/4278))
+
+## [omada-controller-6.2.2](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.2.1...omada-controller-6.2.2) (2022-10-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4182](https://github.com/trueforge-org/truecharts/issues/4182))
+
+## [omada-controller-6.2.1](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.2.0...omada-controller-6.2.1) (2022-10-19)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#4122](https://github.com/trueforge-org/truecharts/issues/4122))
+
+## [omada-controller-6.2.0](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.1.1...omada-controller-6.2.0) (2022-10-16)
 
 ### Chore
 
@@ -144,16 +144,16 @@ pagefind: false
 
 ### Fix
 
-- Switch internal https port to 443, to stop redirection to 8043 on ingress ([#4107](https://github.com/truecharts/charts/issues/4107))
+- Switch internal https port to 443, to stop redirection to 8043 on ingress ([#4107](https://github.com/trueforge-org/truecharts/issues/4107))
 
-## [omada-controller-6.1.1](https://github.com/truecharts/charts/compare/omada-controller-6.1.0...omada-controller-6.1.1) (2022-10-12)
+## [omada-controller-6.1.1](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.1.0...omada-controller-6.1.1) (2022-10-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#4071](https://github.com/truecharts/charts/issues/4071))
+- update helm general non-major ([#4071](https://github.com/trueforge-org/truecharts/issues/4071))
 
-## [omada-controller-6.1.0](https://github.com/truecharts/charts/compare/omada-controller-6.0.70...omada-controller-6.1.0) (2022-10-12)
+## [omada-controller-6.1.0](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.70...omada-controller-6.1.0) (2022-10-12)
 
 ### Chore
 
@@ -161,9 +161,9 @@ pagefind: false
 
 ### Feat
 
-- Add additional ENV VARS ([#4080](https://github.com/truecharts/charts/issues/4080))
+- Add additional ENV VARS ([#4080](https://github.com/trueforge-org/truecharts/issues/4080))
 
-## [omada-controller-6.0.70](https://github.com/truecharts/charts/compare/omada-controller-6.0.69...omada-controller-6.0.70) (2022-10-07)
+## [omada-controller-6.0.70](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.69...omada-controller-6.0.70) (2022-10-07)
 
 ### Chore
 
@@ -171,43 +171,43 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [omada-controller-6.0.70](https://github.com/truecharts/charts/compare/omada-controller-6.0.69...omada-controller-6.0.70) (2022-10-07)
+## [omada-controller-6.0.70](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.69...omada-controller-6.0.70) (2022-10-07)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - update helm general non-major
 
-## [omada-controller-6.0.69](https://github.com/truecharts/charts/compare/omada-controller-6.0.68...omada-controller-6.0.69) (2022-10-05)
+## [omada-controller-6.0.69](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.68...omada-controller-6.0.69) (2022-10-05)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- split addons in smaller templates ([#3979](https://github.com/truecharts/charts/issues/3979))
+- split addons in smaller templates ([#3979](https://github.com/trueforge-org/truecharts/issues/3979))
 - update helm general non-major
 
-## [omada-controller-6.0.68](https://github.com/truecharts/charts/compare/omada-controller-6.0.67...omada-controller-6.0.68) (2022-09-28)
+## [omada-controller-6.0.68](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.67...omada-controller-6.0.68) (2022-09-28)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- add ingress for portal ([#3944](https://github.com/truecharts/charts/issues/3944))
+- add ingress for portal ([#3944](https://github.com/trueforge-org/truecharts/issues/3944))
 
-## [omada-controller-6.0.67](https://github.com/truecharts/charts/compare/omada-controller-6.0.66...omada-controller-6.0.67) (2022-09-27)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update helm general non-major ([#3918](https://github.com/truecharts/charts/issues/3918))
-
-## [omada-controller-6.0.66](https://github.com/truecharts/charts/compare/omada-controller-6.0.65...omada-controller-6.0.66) (2022-09-25)
+## [omada-controller-6.0.67](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.66...omada-controller-6.0.67) (2022-09-27)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3898](https://github.com/truecharts/charts/issues/3898))
+- update helm general non-major ([#3918](https://github.com/trueforge-org/truecharts/issues/3918))
 
-## [omada-controller-6.0.65](https://github.com/truecharts/charts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-22)
+## [omada-controller-6.0.66](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.65...omada-controller-6.0.66) (2022-09-25)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3898](https://github.com/trueforge-org/truecharts/issues/3898))
+
+## [omada-controller-6.0.65](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-22)
 
 ### Chore
 
@@ -225,11 +225,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [omada-controller-6.0.65](https://github.com/truecharts/charts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-21)
+## [omada-controller-6.0.65](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-21)
 
 ### Chore
 
@@ -246,11 +246,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [omada-controller-6.0.65](https://github.com/truecharts/charts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-21)
+## [omada-controller-6.0.65](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-21)
 
 ### Chore
 
@@ -266,11 +266,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [omada-controller-6.0.65](https://github.com/truecharts/charts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-20)
+## [omada-controller-6.0.65](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-20)
 
 ### Chore
 
@@ -285,11 +285,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [omada-controller-6.0.65](https://github.com/truecharts/charts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-20)
+## [omada-controller-6.0.65](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-20)
 
 ### Chore
 
@@ -303,11 +303,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [omada-controller-6.0.65](https://github.com/truecharts/charts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-19)
+## [omada-controller-6.0.65](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-19)
 
 ### Chore
 
@@ -320,11 +320,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [omada-controller-6.0.65](https://github.com/truecharts/charts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-19)
+## [omada-controller-6.0.65](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-19)
 
 ### Chore
 
@@ -336,11 +336,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [omada-controller-6.0.65](https://github.com/truecharts/charts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-19)
+## [omada-controller-6.0.65](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-19)
 
 ### Chore
 
@@ -351,11 +351,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [omada-controller-6.0.65](https://github.com/truecharts/charts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-17)
+## [omada-controller-6.0.65](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-17)
 
 ### Chore
 
@@ -365,60 +365,11 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - refactor Services SCALE GUI
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [omada-controller-6.0.65](https://github.com/truecharts/charts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-18)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [omada-controller-6.0.65](https://github.com/truecharts/charts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [omada-controller-6.0.65](https://github.com/truecharts/charts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-16)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [omada-controller-6.0.65](https://github.com/truecharts/charts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-15)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3772](https://github.com/truecharts/charts/issues/3772))
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [omada-controller-6.0.65](https://github.com/truecharts/charts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-15)
-
-### Chore
-
-- update helm general non-major ([#3767](https://github.com/truecharts/charts/issues/3767))
-- split serviceSelector ([#3751](https://github.com/truecharts/charts/issues/3751))
-
-## [omada-controller-6.0.64](https://github.com/truecharts/charts/compare/omada-controller-6.0.62...omada-controller-6.0.64) (2022-09-12)
+## [omada-controller-6.0.65](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-18)
 
 ### Chore
 
@@ -426,174 +377,223 @@ pagefind: false
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3743](https://github.com/truecharts/charts/issues/3743))
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [omada-controller-6.0.64](https://github.com/truecharts/charts/compare/omada-controller-6.0.62...omada-controller-6.0.64) (2022-09-12)
-
-### Chore
-
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- Auto-update chart README [skip ci]
-- update docker general non-major ([#3743](https://github.com/truecharts/charts/issues/3743))
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
-
-## [omada-controller-6.0.64](https://github.com/truecharts/charts/compare/omada-controller-6.0.62...omada-controller-6.0.64) (2022-09-12)
+## [omada-controller-6.0.65](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-16)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update docker general non-major ([#3743](https://github.com/truecharts/charts/issues/3743))
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
 
-## [omada-controller-6.0.63](https://github.com/truecharts/charts/compare/omada-controller-6.0.62...omada-controller-6.0.63) (2022-09-11)
+## [omada-controller-6.0.65](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-16)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [omada-controller-6.0.65](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-15)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3772](https://github.com/trueforge-org/truecharts/issues/3772))
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [omada-controller-6.0.65](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.64...omada-controller-6.0.65) (2022-09-15)
+
+### Chore
+
+- update helm general non-major ([#3767](https://github.com/trueforge-org/truecharts/issues/3767))
+- split serviceSelector ([#3751](https://github.com/trueforge-org/truecharts/issues/3751))
+
+## [omada-controller-6.0.64](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.62...omada-controller-6.0.64) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3743](https://github.com/trueforge-org/truecharts/issues/3743))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [omada-controller-6.0.63](https://github.com/truecharts/charts/compare/omada-controller-6.0.62...omada-controller-6.0.63) (2022-09-11)
+## [omada-controller-6.0.64](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.62...omada-controller-6.0.64) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3743](https://github.com/trueforge-org/truecharts/issues/3743))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [omada-controller-6.0.63](https://github.com/truecharts/charts/compare/omada-controller-6.0.62...omada-controller-6.0.63) (2022-09-11)
-
-### Chore
-
-- update helm general non-major ([#3711](https://github.com/truecharts/charts/issues/3711))
-- update docker general non-major ([#3736](https://github.com/truecharts/charts/issues/3736))
-
-## [omada-controller-6.0.62](https://github.com/truecharts/charts/compare/omada-controller-6.0.61...omada-controller-6.0.62) (2022-09-05)
-
-### Chore
-
-- update docker general non-major ([#3700](https://github.com/truecharts/charts/issues/3700))
-
-## [omada-controller-6.0.61](https://github.com/truecharts/charts/compare/omada-controller-6.0.60...omada-controller-6.0.61) (2022-09-04)
-
-### Chore
-
-- update docker general non-major ([#3681](https://github.com/truecharts/charts/issues/3681))
-
-## [omada-controller-6.0.60](https://github.com/truecharts/charts/compare/omada-controller-6.0.59...omada-controller-6.0.60) (2022-09-03)
-
-### Chore
-
-- update docker general non-major ([#3668](https://github.com/truecharts/charts/issues/3668))
-
-## [omada-controller-6.0.59](https://github.com/truecharts/charts/compare/omada-controller-6.0.57...omada-controller-6.0.59) (2022-08-30)
+## [omada-controller-6.0.64](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.62...omada-controller-6.0.64) (2022-09-12)
 
 ### Chore
 
 - Auto-update chart README [skip ci]
-- update helm general non-major ([#3639](https://github.com/truecharts/charts/issues/3639))
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update docker general non-major ([#3743](https://github.com/trueforge-org/truecharts/issues/3743))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [omada-controller-6.0.58](https://github.com/truecharts/charts/compare/omada-controller-6.0.57...omada-controller-6.0.58) (2022-08-30)
-
-### Chore
-
-- update helm chart common to v10.5.5 ([#3626](https://github.com/truecharts/charts/issues/3626))
-
-## [omada-controller-6.0.57](https://github.com/truecharts/charts/compare/omada-controller-6.0.56...omada-controller-6.0.57) (2022-08-29)
+## [omada-controller-6.0.63](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.62...omada-controller-6.0.63) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major ([#3619](https://github.com/truecharts/charts/issues/3619))
+- Auto-update chart README [skip ci]
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [omada-controller-6.0.56](https://github.com/truecharts/charts/compare/omada-controller-6.0.55...omada-controller-6.0.56) (2022-08-29)
-
-### Chore
-
-- update docker general non-major ([#3606](https://github.com/truecharts/charts/issues/3606))
-
-## [omada-controller-6.0.55](https://github.com/truecharts/charts/compare/omada-controller-6.0.54...omada-controller-6.0.55) (2022-08-27)
+## [omada-controller-6.0.63](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.62...omada-controller-6.0.63) (2022-09-11)
 
 ### Chore
 
-- update docker general non-major ([#3587](https://github.com/truecharts/charts/issues/3587))
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [omada-controller-6.0.54](https://github.com/truecharts/charts/compare/omada-controller-6.0.53...omada-controller-6.0.54) (2022-08-25)
-
-### Chore
-
-- update docker general non-major ([#3561](https://github.com/truecharts/charts/issues/3561))
-
-## [omada-controller-6.0.53](https://github.com/truecharts/charts/compare/omada-controller-6.0.52...omada-controller-6.0.53) (2022-08-23)
+## [omada-controller-6.0.63](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.62...omada-controller-6.0.63) (2022-09-11)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3545](https://github.com/truecharts/charts/issues/3545))
+- update helm general non-major ([#3711](https://github.com/trueforge-org/truecharts/issues/3711))
+- update docker general non-major ([#3736](https://github.com/trueforge-org/truecharts/issues/3736))
 
-## [omada-controller-6.0.52](https://github.com/truecharts/charts/compare/omada-controller-6.0.51...omada-controller-6.0.52) (2022-08-23)
-
-### Chore
-
-- update docker general non-major docker tags ([#3544](https://github.com/truecharts/charts/issues/3544))
-
-## [omada-controller-6.0.51](https://github.com/truecharts/charts/compare/omada-controller-6.0.50...omada-controller-6.0.51) (2022-08-21)
+## [omada-controller-6.0.62](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.61...omada-controller-6.0.62) (2022-09-05)
 
 ### Chore
 
-- update docker general non-major docker tags ([#3523](https://github.com/truecharts/charts/issues/3523))
+- update docker general non-major ([#3700](https://github.com/trueforge-org/truecharts/issues/3700))
 
-## [omada-controller-6.0.50](https://github.com/truecharts/charts/compare/omada-controller-6.0.49...omada-controller-6.0.50) (2022-08-19)
-
-### Chore
-
-- update docker general non-major docker tags ([#3512](https://github.com/truecharts/charts/issues/3512))
-
-## [omada-controller-6.0.49](https://github.com/truecharts/charts/compare/omada-controller-6.0.48...omada-controller-6.0.49) (2022-08-14)
+## [omada-controller-6.0.61](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.60...omada-controller-6.0.61) (2022-09-04)
 
 ### Chore
 
-- update docker general non-major docker tags ([#3465](https://github.com/truecharts/charts/issues/3465))
+- update docker general non-major ([#3681](https://github.com/trueforge-org/truecharts/issues/3681))
 
-## [omada-controller-6.0.48](https://github.com/truecharts/charts/compare/omada-controller-6.0.47...omada-controller-6.0.48) (2022-08-12)
+## [omada-controller-6.0.60](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.59...omada-controller-6.0.60) (2022-09-03)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3456](https://github.com/truecharts/charts/issues/3456))
+- update docker general non-major ([#3668](https://github.com/trueforge-org/truecharts/issues/3668))
 
-## [omada-controller-6.0.47](https://github.com/truecharts/charts/compare/omada-controller-6.0.46...omada-controller-6.0.47) (2022-08-12)
+## [omada-controller-6.0.59](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.57...omada-controller-6.0.59) (2022-08-30)
+
+### Chore
+
+- Auto-update chart README [skip ci]
+- update helm general non-major ([#3639](https://github.com/trueforge-org/truecharts/issues/3639))
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
+
+## [omada-controller-6.0.58](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.57...omada-controller-6.0.58) (2022-08-30)
+
+### Chore
+
+- update helm chart common to v10.5.5 ([#3626](https://github.com/trueforge-org/truecharts/issues/3626))
+
+## [omada-controller-6.0.57](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.56...omada-controller-6.0.57) (2022-08-29)
+
+### Chore
+
+- update helm general non-major ([#3619](https://github.com/trueforge-org/truecharts/issues/3619))
+
+## [omada-controller-6.0.56](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.55...omada-controller-6.0.56) (2022-08-29)
+
+### Chore
+
+- update docker general non-major ([#3606](https://github.com/trueforge-org/truecharts/issues/3606))
+
+## [omada-controller-6.0.55](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.54...omada-controller-6.0.55) (2022-08-27)
+
+### Chore
+
+- update docker general non-major ([#3587](https://github.com/trueforge-org/truecharts/issues/3587))
+
+## [omada-controller-6.0.54](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.53...omada-controller-6.0.54) (2022-08-25)
+
+### Chore
+
+- update docker general non-major ([#3561](https://github.com/trueforge-org/truecharts/issues/3561))
+
+## [omada-controller-6.0.53](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.52...omada-controller-6.0.53) (2022-08-23)
+
+### Chore
+
+- update helm general non-major helm releases ([#3545](https://github.com/trueforge-org/truecharts/issues/3545))
+
+## [omada-controller-6.0.52](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.51...omada-controller-6.0.52) (2022-08-23)
+
+### Chore
+
+- update docker general non-major docker tags ([#3544](https://github.com/trueforge-org/truecharts/issues/3544))
+
+## [omada-controller-6.0.51](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.50...omada-controller-6.0.51) (2022-08-21)
+
+### Chore
+
+- update docker general non-major docker tags ([#3523](https://github.com/trueforge-org/truecharts/issues/3523))
+
+## [omada-controller-6.0.50](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.49...omada-controller-6.0.50) (2022-08-19)
+
+### Chore
+
+- update docker general non-major docker tags ([#3512](https://github.com/trueforge-org/truecharts/issues/3512))
+
+## [omada-controller-6.0.49](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.48...omada-controller-6.0.49) (2022-08-14)
+
+### Chore
+
+- update docker general non-major docker tags ([#3465](https://github.com/trueforge-org/truecharts/issues/3465))
+
+## [omada-controller-6.0.48](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.47...omada-controller-6.0.48) (2022-08-12)
+
+### Chore
+
+- update helm general non-major helm releases ([#3456](https://github.com/trueforge-org/truecharts/issues/3456))
+
+## [omada-controller-6.0.47](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.46...omada-controller-6.0.47) (2022-08-12)
 
 ### Chore
 
 - add documentation checkbox/section to all SCALE Apps
-- update docker general non-major ([#3453](https://github.com/truecharts/charts/issues/3453))
+- update docker general non-major ([#3453](https://github.com/trueforge-org/truecharts/issues/3453))
 
 ### Fix
 
-- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/truecharts/charts/issues/3447))
+- move extraArgs from .Values.controller to .Values ([#3447](https://github.com/trueforge-org/truecharts/issues/3447))
 
-## [omada-controller-6.0.46](https://github.com/truecharts/charts/compare/omada-controller-6.0.45...omada-controller-6.0.46) (2022-08-10)
-
-### Chore
-
-- update docker general non-major ([#3421](https://github.com/truecharts/charts/issues/3421))
-
-## [omada-controller-6.0.45](https://github.com/truecharts/charts/compare/omada-controller-6.0.43...omada-controller-6.0.45) (2022-08-08)
+## [omada-controller-6.0.46](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.45...omada-controller-6.0.46) (2022-08-10)
 
 ### Chore
 
-- update helm general non-major helm releases ([#3376](https://github.com/truecharts/charts/issues/3376))
-- update docker general non-major ([#3356](https://github.com/truecharts/charts/issues/3356))
-- replace questions parts with templates ([#3402](https://github.com/truecharts/charts/issues/3402))
+- update docker general non-major ([#3421](https://github.com/trueforge-org/truecharts/issues/3421))
+
+## [omada-controller-6.0.45](https://github.com/trueforge-org/truecharts/compare/omada-controller-6.0.43...omada-controller-6.0.45) (2022-08-08)
+
+### Chore
+
+- update helm general non-major helm releases ([#3376](https://github.com/trueforge-org/truecharts/issues/3376))
+- update docker general non-major ([#3356](https://github.com/trueforge-org/truecharts/issues/3356))
+- replace questions parts with templates ([#3402](https://github.com/trueforge-org/truecharts/issues/3402))
 
 ## [omada-controller-6.0.43](https://github.com/truecharts/apps/compare/omada-controller-6.0.42...omada-controller-6.0.43) (2022-07-30)
 

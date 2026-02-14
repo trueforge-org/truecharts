@@ -14,13 +14,12 @@ concurrency:
 
 jobs:
   generate-readme:
-    runs-on: actions-runners
+    runs-on:
+      group: default
     name: "Generate readme files"
-    container:
-      image: ghcr.io/truecharts/devcontainer:3.1.10@sha256:c239addf725eb5cedf79517f8089fdafdc32b5270d1893ee87ae6e511b9bcae3
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           token: ${{ secrets.OR_PAT }}
           fetch-depth: 1
@@ -28,13 +27,7 @@ jobs:
       - name: Setting repo parent dir as safe safe.directory
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
-      - name: Install cwebp
-        shell: bash
-        run: |
-          sudo apt-get -y update
-          sudo apt-get -y install webp
-
-      - uses: actions/setup-go@0aaccfd150d50ccaeb58ebd88d36e91967a5f35b # v5
+      - uses: actions/setup-go@7a3fe6cf4cb3a834922a1244abfce67bcef6a0c5 # v6
         with:
           go-version: stable
           cache: true
@@ -42,12 +35,12 @@ jobs:
             **/go.mod
             **/go.sum
 
-      - name: Install ./clustertool
+      - name: Install ./forgetool
         shell: bash
         run: |
-          VERSION="2.0.0-BETA-17"
-          FILENAME="clustertool_${VERSION}_linux_amd64.tar.gz"
-          URL="https://github.com/truecharts/public/releases/download/v${VERSION}/${FILENAME}"
+          VERSION="3.0.2"
+          FILENAME="forgetool_${VERSION}_linux_amd64.tar.gz"
+          URL="https://github.com/trueforge-org/forgetool/releases/download/v${VERSION}/${FILENAME}"
 
           mkdir -p temp
           cd temp
@@ -72,17 +65,19 @@ jobs:
               # Transcode to icon.webp
               if [[ "$EXT" != "webp" && ! -f "${DIR}/icon.webp" ]]; then
                   echo "converting file to icon.webp: $FILE"
-                  cwebp -resize 150 150  -m 6 -mt -q $QUALITY "$FILE" -o "${FILE/%.$EXT/.webp}" &>/dev/null || echo "transcode failed for icon.webp"
+                  cwebp -resize 150 150  -m 6 -mt -q $QUALITY "$FILE" -o "${DIR}/icon.webp" &>/dev/null || echo "transcode failed for icon.webp"
               fi
 
               # Transcode to icon-small.webp
-              if [[ "$EXT" != "webp" && ! -f "${DIR}/icon-small.webp" ]]; then
+              if [[ ! -f "${DIR}/icon-small.webp" ]]; then
                   echo "converting file to icon-small.webp: $FILE"
                   cwebp -resize 32 32 -m 6 -mt -q $QUALITY "$FILE" -o "${DIR}/icon-small.webp" &>/dev/null || echo "transcode failed for icon-small.webp"
               fi
 
-              # Remove the original file if it's not a .webp file after both transcodes
-              if [[ "$EXT" != "webp" ]]; then
+              # Only remove the original file if:
+              # 1. it's not already a webp
+              # 2. icon.webp exists in the same directory
+              if [[ "$EXT" != "webp" && -f "${DIR}/icon.webp" ]]; then
                   rm "$FILE"
               fi
           done
@@ -100,13 +95,7 @@ jobs:
       - name: Fix Chart.yaml
         shell: bash
         run: |
-           ./temp/clustertool charts genmeta
-
-      - name: Ensure Go Mod Tidy
-        run:  |
-          cd ./clustertool
-          go mod tidy
-          cd ..
+           ./temp/forgetool charts genmeta
 
       - name: Cleanup
         run: |
@@ -123,9 +112,10 @@ jobs:
           git push
 
   lock-threads:
-    runs-on: actions-runners
+    runs-on:
+      group: default
     steps:
-      - uses: dessant/lock-threads@1bf7ec25051fe7c00bdd17e6a7cf3d7bfb7dc771 # v5
+      - uses: dessant/lock-threads@7266a7ce5c1df01b1c6db85bf8cd86c737dadbe7 # v6
         with:
           github-token: ${{ secrets.BOT_TOKEN }}
           issue-inactive-days: "7"
@@ -139,7 +129,8 @@ jobs:
 
  # check-contributors:
  #   name: Check Contributors
- #   runs-on: actions-runners
+ #   runs-on:
+ #     group: default
  #   steps:
  #     - name: Checkout
  #       uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4

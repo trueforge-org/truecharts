@@ -122,14 +122,15 @@ tests:
         equal:
           path: metadata.labels
           value:
-            kubernetes.io/service-name: test-release-name-common-test
-            app.kubernetes.io/name: common-test
+            app: common-test-1.0.0
             app.kubernetes.io/instance: test-release-name
             app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: common-test
             app.kubernetes.io/version: *appVer
-            helm.sh/chart: common-test-1.0.0
+            endpointslice.kubernetes.io/managed-by: Helm
             helm-revision: "0"
-            app: common-test-1.0.0
+            helm.sh/chart: common-test-1.0.0
+            kubernetes.io/service-name: test-release-name-common-test
             release: test-release-name
       - documentIndex: *endpointSliceDoc
         equal:
@@ -152,6 +153,8 @@ tests:
           value:
             - addresses:
                 - 1.1.1.1
+              conditions:
+                ready: true
 
   - it: should pass with type ExternalIP and https and useSlice explicitly set to true
     set:
@@ -201,9 +204,25 @@ tests:
           value:
             - addresses:
                 - 1.1.1.1
+              conditions:
+                ready: true
       - documentIndex: &serviceDoc 0
         isKind:
           of: Service
+      - documentIndex: *endpointSliceDoc
+        equal:
+          path: metadata.labels
+          value:
+            app: common-test-1.0.0
+            app.kubernetes.io/instance: test-release-name
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: common-test
+            app.kubernetes.io/version: *appVer
+            endpointslice.kubernetes.io/managed-by: Helm
+            helm-revision: "0"
+            helm.sh/chart: common-test-1.0.0
+            kubernetes.io/service-name: test-release-name-common-test
+            release: test-release-name
 
   - it: should pass with type ExternalIP and useSlice set to false
     set:
