@@ -7,12 +7,12 @@ annotations:
   truecharts.org/max_kubernetes_version: 1.32.0
   truecharts.org/min_helm_version: "3.14"
   truecharts.org/min_kubernetes_version: 1.24.0
-  truecharts.org/train: incubator
+  truecharts.org/train: stable
   trueforge.org/category: network
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
   trueforge.org/min_helm_version: "3.14"
-  trueforge.org/train: incubator
+  trueforge.org/train: stable
 apiVersion: v2
 appVersion: 4.2.3
 dependencies:
@@ -26,7 +26,7 @@ dependencies:
 deprecated: false
 description: |
   A CNI meta-plugin for multi-homed pods in Kubernetes
-home: https://trueforge.org/truetech/truecharts/charts/incubator/multus-cni
+home: https://trueforge.org/truetech/truecharts/charts/stable/multus-cni
 icon: https://trueforge.org/img/hotlink-ok/chart-icons/multus-cni.webp
 keywords:
   - cni
@@ -41,8 +41,7 @@ sources:
   - https://ghcr.io/k8snetworkplumbingwg/multus-cni
   - https://ghcr.io/siderolabs/cni
   - https://github.com/k8snetworkplumbingwg/multus-cni
-  - https://github.com/trueforge-org/truecharts/tree/master/charts/incubator/multus-cni
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/multus-cni
   - https://hub.docker.com/r/alpine/crane
 type: application
-version: 0.3.0
-
+version: 1.0.0

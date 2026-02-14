@@ -587,35 +587,15 @@ codeserverImage:
   tag: "4.105.1@sha256:8b90df4f269cc05000eb44e51eab82b3c4c44eb699f0b7c31a90c8455957de1f"
   pullPolicy: IfNotPresent
 
-alpineImage:
-  repository: oci.trueforge.org/tccr/alpine
-  tag: v3.22.1@sha256:6dc807ae4f2867cb2d00d061f8f579f1966420ad792c179ac68072ab235109f8
-  pullPolicy: IfNotPresent
-
 ubuntuImage:
   repository: oci.trueforge.org/containerforge/ubuntu
   tag: "24.04@sha256:3b826c0233182d7c31a9323121178b98976765b9ee03f9a96200ab0c70e2e1e2"
-  pullPolicy: IfNotPresent
-
-scratchImage:
-  repository: oci.trueforge.org/containerforge/scratch
-  tag: "1.0.0@sha256:b6f7b7d519f32e7157d64c8df7b36b7dc8808283e6185a6cb6134fd326db9c13"
   pullPolicy: IfNotPresent
 
 kubectlImage:
   repository: oci.trueforge.org/containerforge/kubectl
   tag: "1.31.1@sha256:076f97daacc986b4b491a6efe6e59e5bd83396f7485ba5249343bc5a8caf0b20"
   pullPolicy: IfNotPresent
-
-wgetImage:
-  repository: oci.trueforge.org/containerforge/ubuntu
-  tag: "24.04@sha256:3b826c0233182d7c31a9323121178b98976765b9ee03f9a96200ab0c70e2e1e2"
-  pullPolicy: IfNotPresent
-
-yqImage:
-  pullPolicy: IfNotPresent
-  repository: oci.trueforge.org/containerforge/go-yq
-  tag: "4.48.2@sha256:c9ade91453091eab6088914a23919424f063ae7d25748eb1cfd44e9d3043dcb9"
 
 postgresClientImage:
   repository: oci.trueforge.org/containerforge/postgresql-client
@@ -625,11 +605,6 @@ postgresClientImage:
 mariadbClientImage:
   repository: oci.trueforge.org/containerforge/mariadb-client
   tag: "1.1.0@sha256:72d7535493f2dc6c9ae5cf07743936627a42bb83be8f47830d9bc00898b2575b"
-  pullPolicy: IfNotPresent
-
-redisClientImage:
-  repository: oci.trueforge.org/containerforge/valkey-tools
-  tag: "1.1.0@sha256:ff58ea59c54d579152516df543f0e4ae42294f05e24d7f4d54f80000085fa571"
   pullPolicy: IfNotPresent
 
 valkeyClientImage:
@@ -680,26 +655,6 @@ postgresVectorchord15Image:
 postgresVectorchord16Image:
   repository: ghcr.io/tensorchord/cloudnative-vectorchord
   tag: "16.10-0.5.3@sha256:a0776b514bb23858d8aa59b08587223f8b449bba1b278ffbcf85e097d6504eb0"
-  pullPolicy: IfNotPresent
-
-# -- OpenVPN specific configuration
-# @default -- See below
-openvpnImage:
-  # -- Specify the openvpn client image
-  repository: oci.trueforge.org/tccr/openvpn-client
-  # -- Specify the openvpn client image tag
-  tag: latest@sha256:9bfdf50791d6e51056e31c03f73c9db329b2b72e7746155cfdc63e0c8b49b55a
-  # -- Specify the openvpn client image pull policy
-  pullPolicy: IfNotPresent
-
-# -- WireGuard specific configuration
-# @default -- See below
-wireguardImage:
-  # -- Specify the WireGuard image
-  repository: oci.trueforge.org/tccr/wireguard
-  # -- Specify the WireGuard image tag
-  tag: v1.0.20210914@sha256:683b8b74d64ebd07f9955147539834c2a4b60fee51d2a36fa76b9aba689601bf
-  # -- Specify the WireGuard image pull policy
   pullPolicy: IfNotPresent
 
 # -- Configure the ingresses for the chart here.
