@@ -31,7 +31,7 @@ Returns: "true" or "false"
 
     {{/* Check for null bytes and control characters */}}
     {{- $nul := printf "%c" 0 -}}
-    {{- $hasNull := contains $fileContent $nul -}}
+    {{- $hasNull := contains $nul $fileContent -}}
     {{- $hasCtl := regexMatch "[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]" $fileContent -}}
     {{- $cannotStringify := empty (toYaml $fileContent) -}}
     {{- $looksBinary = or $hasNull $hasCtl $cannotStringify -}}

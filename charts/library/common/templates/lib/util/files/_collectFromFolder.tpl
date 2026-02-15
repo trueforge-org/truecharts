@@ -39,7 +39,10 @@ Returns: A dictionary where keys are folder names and values contain:
     {{- $folderRelativeToBasePath := replace $basePath "" $folder | trimPrefix "/" -}}
     {{- $sanitizedFolderRelativeToBasePath := regexReplaceAll "\\W+" (clean $folderRelativeToBasePath) "-" -}}
     {{- if eq $sanitizedFolderRelativeToBasePath "-" -}}
-     {{- $sanitizedFolderRelativeToBasePath = base $folder -}}
+     {{- $sanitizedFolderRelativeToBasePath = regexReplaceAll "\\W+" (base $folder) "-" -}}
+     {{- if eq $sanitizedFolderRelativeToBasePath "-" -}}
+       {{- $sanitizedFolderRelativeToBasePath = "configmap" -}}
+     {{- end -}}
     {{- end -}}
 
     {{- $textData := dict -}}

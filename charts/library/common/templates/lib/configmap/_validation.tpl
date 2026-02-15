@@ -10,12 +10,20 @@ objectData:
 {{- define "tc.v1.common.lib.configmap.validation" -}}
   {{- $objectData := .objectData -}}
 
-  {{- if not $objectData.data -}}
-    {{- fail "ConfigMap - Expected non-empty [data]" -}}
+  {{- if and (not $objectData.data) (not $objectData.binaryData) -}}
+    {{- fail "ConfigMap - Expected non-empty [data] or [binaryData]" -}}
   {{- end -}}
 
-  {{- if not (kindIs "map" $objectData.data) -}}
-    {{- fail (printf "ConfigMap - Expected [data] to be a dictionary, but got [%v]" (kindOf $objectData.data)) -}}
+  {{- if $objectData.data -}}
+    {{- if not (kindIs "map" $objectData.data) -}}
+      {{- fail (printf "ConfigMap - Expected [data] to be a dictionary, but got [%v]" (kindOf $objectData.data)) -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- if $objectData.binaryData -}}
+    {{- if not (kindIs "map" $objectData.binaryData) -}}
+      {{- fail (printf "ConfigMap - Expected [binaryData] to be a dictionary, but got [%v]" (kindOf $objectData.binaryData)) -}}
+    {{- end -}}
   {{- end -}}
 
 {{- end -}}

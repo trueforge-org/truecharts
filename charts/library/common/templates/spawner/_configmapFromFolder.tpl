@@ -44,14 +44,13 @@
       {{- $_ := set $objectData "labels" $entry.labels -}}
       {{- $_ := set $objectData "annotations" $entry.annotations -}}
       
-      {{/* Combine text and binary data */}}
-      {{- $data := $entry.text | default dict -}}
-      {{- if $entry.binary -}}
-        {{- range $key, $value := $entry.binary -}}
-          {{- $_ := set $data $key $value -}}
-        {{- end -}}
+      {{/* Set text and binary data separately */}}
+      {{- if $entry.text -}}
+        {{- $_ := set $objectData "data" $entry.text -}}
       {{- end -}}
-      {{- $_ := set $objectData "data" $data -}}
+      {{- if $entry.binary -}}
+        {{- $_ := set $objectData "binaryData" $entry.binary -}}
+      {{- end -}}
 
       {{/* Include metadata validation */}}
       {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" "ConfigMap") -}}
