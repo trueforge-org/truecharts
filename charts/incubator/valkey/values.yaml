@@ -13,11 +13,11 @@ workload:
       containers:
         main:
           env:
-            # DEVNOTE: Bitnami Valkey keeps REDIS_* env variable names for compatibility.
-            REDIS_REPLICATION_MODE: master
-            ALLOW_EMPTY_PASSWORD: "yes"
-            REDIS_PORT: "{{ .Values.service.main.ports.main.targetPort }}"
-            REDIS_PASSWORD: "{{ .Values.password }}"
+            # DEVNOTE: Bitnami Valkey keeps VALKEY_* env variable names for compatibility.
+            # VALKEY_REPLICATION_MODE: master
+            ALLOW_EMPTY_PASSWORD: '{{ ternary "yes" "no" (empty .Values.password) }}'
+            VALKEY_PORT: "{{ .Values.service.main.ports.main.targetPort }}"
+            VALKEY_PASSWORD: "{{ .Values.password }}"
           probes:
             liveness:
               enabled: true
@@ -53,26 +53,26 @@ configmap:
     data:
       ping_readiness_local.sh: |-
         #!/bin/bash
-        [[ -n "$REDIS_PASSWORD" ]] && export REDISCLI_AUTH="$REDIS_PASSWORD"
+        [[ -n "$VALKEY_PASSWORD" ]] && export VALKEYCLI_AUTH="$VALKEY_PASSWORD"
         response=$(
           timeout -s 3 $1 \
           valkey-cli \
             -h localhost \
-            -p $REDIS_PORT \
+            -p $VALKEY_PORT \
             ping
         )
         if [ "$response" != "PONG" ]; then
-          echo "failed to connect using password: $REDIS_PASSWORD response: $response"
+          echo "failed to connect using password: $VALKEY_PASSWORD response: $response"
           exit 1
         fi
       ping_liveness_local.sh: |-
         #!/bin/bash
-        [[ -n "$REDIS_PASSWORD" ]] && export REDISCLI_AUTH="$REDIS_PASSWORD"
+        [[ -n "$VALKEY_PASSWORD" ]] && export VALKEYCLI_AUTH="$VALKEY_PASSWORD"
         response=$(
           timeout -s 3 $1 \
           valkey-cli \
             -h localhost \
-            -p $REDIS_PORT \
+            -p $VALKEY_PORT \
             ping
         )
         if [ "$response" != "PONG" ] && [ "$response" != "LOADING Valkey is loading the dataset in memory" ]; then
@@ -81,12 +81,12 @@ configmap:
         fi
       ping_readiness_master.sh: |-
         #!/bin/bash
-        [[ -n "$REDIS_MASTER_PASSWORD" ]] && export REDISCLI_AUTH="$REDIS_MASTER_PASSWORD"
+        [[ -n "$VALKEY_MASTER_PASSWORD" ]] && export VALKEYCLI_AUTH="$VALKEY_MASTER_PASSWORD"
         response=$(
           timeout -s 3 $1 \
           valkey-cli \
-            -h $REDIS_MASTER_HOST \
-            -p $REDIS_MASTER_PORT_NUMBER \
+            -h $VALKEY_MASTER_HOST \
+            -p $VALKEY_MASTER_PORT_NUMBER \
             ping
         )
         if [ "$response" != "PONG" ]; then
@@ -95,12 +95,12 @@ configmap:
         fi
       ping_liveness_master.sh: |-
         #!/bin/bash
-        [[ -n "$REDIS_MASTER_PASSWORD" ]] && export REDISCLI_AUTH="$REDIS_MASTER_PASSWORD"
+        [[ -n "$VALKEY_MASTER_PASSWORD" ]] && export VALKEYCLI_AUTH="$VALKEY_MASTER_PASSWORD"
         response=$(
           timeout -s 3 $1 \
           valkey-cli \
-            -h $REDIS_MASTER_HOST \
-            -p $REDIS_MASTER_PORT_NUMBER \
+            -h $VALKEY_MASTER_HOST \
+            -p $VALKEY_MASTER_PORT_NUMBER \
             ping
         )
         if [ "$response" != "PONG" ] && [ "$response" != "LOADING Valkey is loading the dataset in memory" ]; then
