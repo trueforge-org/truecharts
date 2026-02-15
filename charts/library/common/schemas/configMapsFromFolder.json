@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "description": "Enables or Disables the ConfigMaps from folder feature",
+      "default": false
+    },
+    "basePath": {
+      "type": "string",
+      "description": "The path in your parent chart's filesystem where you can add files to be converted into individual ConfigMaps. Files should be organized two levels deep (basePath/configMapName/file)",
+      "default": ""
+    },
+    "configMapsOverrides": {
+      "type": "object",
+      "description": "Define overrides for the generated ConfigMaps, each key is the name of a folder in basePath",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "forceRename": {
+            "type": ["string", "null"],
+            "description": "Force a specific name for the ConfigMap instead of the auto-generated name"
+          },
+          "annotations": {
+            "type": "object",
+            "description": "Additional annotations for the ConfigMap",
+            "additionalProperties": true,
+            "default": {}
+          },
+          "labels": {
+            "type": "object",
+            "description": "Additional labels for the ConfigMap",
+            "additionalProperties": true,
+            "default": {}
+          },
+          "fileAttributeOverrides": {
+            "type": "object",
+            "description": "Configure how individual files are added to the ConfigMap",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "exclude": {
+                  "type": "boolean",
+                  "description": "If true the file won't be added to the ConfigMap",
+                  "default": false
+                },
+                "binary": {
+                  "type": "boolean",
+                  "description": "If your file is a binary file like an image, set this to true. Takes precedence over escaped",
+                  "default": false
+                },
+                "escaped": {
+                  "type": "boolean",
+                  "description": "If your file contains gotpl syntax that you don't want templated by Helm, set this to true",
+                  "default": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "default": {}
+    }
+  },
+  "description": "Generate ConfigMaps from a folder structure in the Helm chart's filesystem"
+}

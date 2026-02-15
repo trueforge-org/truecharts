@@ -10,6 +10,9 @@
   {{/* Make sure there are not any YAML errors */}}
   {{- include "tc.v1.common.values.validate" .Values -}}
 
+  {{/* Render ConfigMap(s) from folder */}}
+  {{- include "tc.v1.common.spawner.configmapFromFolder" . | nindent 0 -}}
+
   {{/* Render ConfigMap(s) */}}
   {{- include "tc.v1.common.spawner.configmap" . | nindent 0 -}}
 
