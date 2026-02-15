@@ -398,6 +398,26 @@ tests:
   - it: should not add extra resources on "wait" containers and on excluded containers
     set:
       image: *image
+      dependencies:
+        valkey:
+          enabled: true
+          service:
+            main:
+              enabled: true
+              primary: true
+              ports:
+                main:
+                  enabled: true
+                  primary: true
+                  port: 6379
+      mongodb:
+        enabled: true
+      mariadb:
+        enabled: true
+      clickhouse:
+        enabled: true
+      solr:
+        enabled: true
       cnpg:
         my-pg:
           enabled: true
@@ -426,17 +446,17 @@ tests:
                 resources:
                   excludeExtra: true
     asserts:
-      - documentIndex: &clusterDoc 1
+      - documentIndex: 1
         isKind:
           of: Cluster
-      - documentIndex: *clusterDoc
+      - documentIndex: 1
         isAPIVersion:
           of: postgresql.cnpg.io/v1
-      - documentIndex: *clusterDoc
+      - documentIndex: 1
         equal:
           path: metadata.name
           value: test-release-name-common-test-cnpg-my-pg
-      - documentIndex: *clusterDoc
+      - documentIndex: 1
         equal:
           path: spec.resources
           value:
@@ -446,13 +466,13 @@ tests:
             requests:
               cpu: 75m
               memory: 200Mi
-      - documentIndex: &deploymentDoc 2
+      - documentIndex: 3
         isKind:
           of: Deployment
-      - documentIndex: *deploymentDoc
+      - documentIndex: 3
         isAPIVersion:
           of: apps/v1
-      - documentIndex: *deploymentDoc
+      - documentIndex: 3
         isSubset:
           path: spec.template.spec.containers[0]
           content:
@@ -465,7 +485,7 @@ tests:
               requests:
                 cpu: 75m
                 memory: 200Mi
-      - documentIndex: *deploymentDoc
+      - documentIndex: 3
         isSubset:
           path: spec.template.spec.containers[1]
           content:
@@ -477,6 +497,78 @@ tests:
               requests:
                 cpu: 75m
                 memory: 200Mi
+      - documentIndex: 3
+        isSubset:
+          path: spec.template.spec.initContainers[0]
+          content:
+            name: test-release-name-common-test-system-clickhouse-wait
+            resources:
+              limits:
+                cpu: 500m
+                memory: 512Mi
+              requests:
+                cpu: 10m
+                memory: 50Mi
+      - documentIndex: 3
+        isSubset:
+          path: spec.template.spec.initContainers[1]
+          content:
+            name: test-release-name-common-test-system-cnpg-wait
+            resources:
+              limits:
+                cpu: 500m
+                memory: 512Mi
+              requests:
+                cpu: 10m
+                memory: 50Mi
+      - documentIndex: 3
+        isSubset:
+          path: spec.template.spec.initContainers[2]
+          content:
+            name: test-release-name-common-test-system-mariadb-wait
+            resources:
+              limits:
+                cpu: 500m
+                memory: 512Mi
+              requests:
+                cpu: 10m
+                memory: 50Mi
+      - documentIndex: 3
+        isSubset:
+          path: spec.template.spec.initContainers[3]
+          content:
+            name: test-release-name-common-test-system-mongodb-wait
+            resources:
+              limits:
+                cpu: 500m
+                memory: 512Mi
+              requests:
+                cpu: 10m
+                memory: 50Mi
+      - documentIndex: 3
+        isSubset:
+          path: spec.template.spec.initContainers[4]
+          content:
+            name: test-release-name-common-test-system-valkey-wait
+            resources:
+              limits:
+                cpu: 500m
+                memory: 512Mi
+              requests:
+                cpu: 10m
+                memory: 50Mi
+      - documentIndex: 3
+        isSubset:
+          path: spec.template.spec.initContainers[5]
+          content:
+            name: test-release-name-common-test-system-solr-wait
+            resources:
+              limits:
+                cpu: 500m
+                memory: 512Mi
+              requests:
+                cpu: 10m
+                memory: 50Mi
 
   # Failures
   - it: should fail with empty requests
