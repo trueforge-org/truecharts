@@ -7,6 +7,7 @@
   {{- $fullname := include "tc.v1.common.lib.chart.names.fullname" $ -}}
 
   {{- range $name, $secret := .Values.secret -}}
+    {{- if not (kindIs "map" $secret) -}}{{- continue -}}{{- end -}}
     {{- $enabled := (include "tc.v1.common.lib.util.enabled" (dict
                     "rootCtx" $ "objectData" $secret
                     "name" $name "caller" "Secret"

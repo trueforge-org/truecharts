@@ -4,7 +4,7 @@
 
   {{- $enabledMetrics := dict -}}
   {{- range $name, $metrics := $metrics -}}
-    {{- if $metrics.enabled -}}
+    {{- if and (kindIs "map" $metrics) $metrics.enabled -}}
       {{- $_ := set $enabledMetrics $name $metrics -}}
     {{- end -}}
   {{- end -}}

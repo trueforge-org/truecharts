@@ -21,6 +21,7 @@
   {{- include "tc.v1.common.lib.ingress.primaryValidation" $ -}}
 
   {{- range $name, $ingress := .Values.ingress -}}
+    {{- if not (kindIs "map" $ingress) -}}{{- continue -}}{{- end -}}
 
     {{- $enabled := (include "tc.v1.common.lib.util.enabled" (dict
               "rootCtx" $ "objectData" $ingress

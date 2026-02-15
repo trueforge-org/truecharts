@@ -46,6 +46,11 @@ within the common library.
   {{- end -}}
 {{- end -}}
 
+{{/* Validate that parentRefs is not empty */}}
+{{- if not $parentRefs -}}
+  {{- fail (printf "parentRef name is required for %v %v" $routeKind $fullName) -}}
+{{- end -}}
+
 ---
 apiVersion: gateway.networking.k8s.io/v1alpha2
 {{- if and (ne $routeKind "GRPCRoute") (ne $routeKind "HTTPRoute") (ne $routeKind "TCPRoute") (ne $routeKind "TLSRoute") (ne $routeKind "UDPRoute") -}}

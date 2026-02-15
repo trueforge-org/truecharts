@@ -12,6 +12,7 @@
   {{- $allUrls := $.Values.chartContext.internalUrls | default list -}}
 
   {{- range $name, $service := .Values.service -}}
+    {{- if not (kindIs "map" $service) -}}{{- continue -}}{{- end -}}
     {{- $enabled := (include "tc.v1.common.lib.util.enabled" (dict
                     "rootCtx" $ "objectData" $service
                     "name" $name "caller" "Service"
