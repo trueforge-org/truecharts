@@ -87,6 +87,28 @@ gateway:
 
 ---
 
+### `gateway.$name.targetSelector`
+
+Configuration for `gateway.main.targetSelector`. Name-based selector for automatic GatewayClass linking. When set, automatically references the specified `gatewayClass.$name`.
+
+| Field      | Value                           |
+| ---------- | ------------------------------- |
+| Key        | `gateway.$name.targetSelector`  |
+| Type       | `string`                        |
+| Required   | ❌                              |
+| Helm `tpl` | ❌                              |
+| Default    | unset                           |
+
+Example
+
+```yaml
+gateway:
+  $name:
+    targetSelector: main  # Links to gatewayClass.main
+```
+
+---
+
 ### `gateway.$name.labels`
 
 Configuration for `gateway.main.labels`.
