@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+      "description": "Enable the Valkey dependency"
+    },
+    "password": {
+      "type": "string",
+      "description": "Password for Valkey authentication"
+    },
+    "redisUsername": {
+      "type": "string",
+      "description": "Username for Valkey authentication (optional)"
+    },
+    "redisDatabase": {
+      "type": ["string", "integer"],
+      "description": "Database index for Valkey connection (default: 0)"
+    },
+    "creds": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Credentials and connection information (auto-generated)"
+    },
+    "secret": {
+      "type": "object",
+      "properties": {
+        "credentials": {
+          "type": "object",
+          "properties": {
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+              "description": "Enable secret credentials for Valkey"
+            }
+          },
+          "additionalProperties": true,
+          "description": "Secret credentials configuration"
+        }
+      },
+      "additionalProperties": true,
+      "description": "Secret configuration for Valkey"
+    }
+  },
+  "additionalProperties": true,
+  "description": "Valkey dependency configuration under dependencies.valkey"
+}
