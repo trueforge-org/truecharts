@@ -15,10 +15,7 @@
                       "name" $depName "caller" "dependency"
                       "key" "dependencies")) }}
       {{- if eq $enabled "true" -}}
-        {{- $dependencyValues := omit $dependencyValues "global" -}}
-        {{- $dependencyValues := omit $dependencyValues "securityContext" -}}
-        {{- $dependencyValues := omit $dependencyValues "podOptions" -}}
-        {{- $dependencyValues := omit $dependencyValues "enabled" -}}
+        {{- $dependencyValues := omit $dependencyValues "global" "securityContext" "podOptions" "enabled" -}}
         
         {{/* Merge dependency resources with prefixed names */}}
         {{- if $dependencyValues.workload -}}
