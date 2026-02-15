@@ -7,3 +7,4 @@
 - When editing `charts/library/common`, also update the Helm unit tests in `charts/library/common-test` accordingly.
 - For common library changes, run `./run_common_tests.sh` (requires the Helm `unittest` plugin).
 - Dont manually alter chart readme's or changelogs
+- never bump common-test
