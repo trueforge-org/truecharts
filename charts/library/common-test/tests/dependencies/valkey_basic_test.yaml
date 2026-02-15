@@ -1,0 +1,84 @@
+suite: dependencies valkey basic test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should create secret for valkey dependency
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          password: "test-password"
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: Secret
+      - documentIndex: 0
+        equal:
+          path: metadata.name
+          value: test-release-name-valkeycreds
+      - documentIndex: 0
+        equal:
+          path: data.valkey-password
+          value: test-password
+
+  - it: should create init container for valkey wait
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          password: "test-password"
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: Deployment
+      - documentIndex: 1
+        isNotEmpty:
+          path: spec.template.spec.initContainers
+      - documentIndex: 1
+        contains:
+          path: spec.template.spec.initContainers
+          content:
+            name: redis-wait
+
+  - it: should support legacy redis path
+    set:
+      redis:
+        enabled: true
+        password: "legacy-password"
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: Secret
+      - documentIndex: 0
+        equal:
+          path: metadata.name
+          value: test-release-name-rediscreds
+      - documentIndex: 0
+        equal:
+          path: data.redis-password
+          value: legacy-password

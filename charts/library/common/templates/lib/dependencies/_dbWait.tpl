@@ -1,5 +1,10 @@
 {{- define "tc.v1.common.lib.deps.wait" -}}
-  {{- if .Values.redis.enabled -}}
+  {{- $valkeyEnabled := false -}}
+  {{- if and .Values.dependencies .Values.dependencies.valkey .Values.dependencies.valkey.enabled -}}
+    {{- $valkeyEnabled = true -}}
+  {{- end -}}
+  
+  {{- if or .Values.redis.enabled $valkeyEnabled -}}
     {{- $container := include "tc.v1.common.lib.deps.wait.redis" $ | fromYaml -}}
     {{- if $container -}}
       {{- range .Values.workload -}}
@@ -80,6 +85,24 @@
 {{- end -}}
 
 {{- define "tc.v1.common.lib.deps.wait.redis" -}}
+{{- $valkeyConfig := dict -}}
+{{- $secretName := "rediscreds" -}}
+{{- $password := "" -}}
+
+{{/* Check for new dependencies.valkey path */}}
+{{- if and .Values.dependencies .Values.dependencies.valkey .Values.dependencies.valkey.enabled -}}
+  {{- $valkeyConfig = .Values.dependencies.valkey -}}
+  {{- $secretName = "valkeycreds" -}}
+  {{- $password = $valkeyConfig.password -}}
+{{/* Fallback to legacy redis path */}}
+{{- else if .Values.redis.enabled -}}
+  {{- $valkeyConfig = .Values.redis -}}
+  {{- $secretName = "rediscreds" -}}
+  {{- $password = .Values.redis.password -}}
+{{- end -}}
+
+{{- $fullSecretName := printf "%s-%s" .Release.Name $secretName -}}
+
 enabled: true
 type: system
 imageSelector: valkeyClientImage
@@ -108,9 +131,9 @@ env:
   REDIS_HOST:
     secretKeyRef:
       expandObjectName: false
-      name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+      name: {{ $fullSecretName }}
       key: plainhost
-  REDIS_PASSWORD: "{{ .Values.redis.password }}"
+  REDIS_PASSWORD: {{ $password }}
   REDIS_PORT: "6379"
 command:
   - "/bin/sh"

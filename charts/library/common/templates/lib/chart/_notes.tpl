@@ -63,11 +63,9 @@ Display connection information for enabled dependencies and addons
     {{- end -}}
   {{- end -}}
 
-  {{- if .Values.redis -}}
-    {{- if .Values.redis.enabled -}}
-      {{- $hasConnections = true -}}
-      {{- $connections = append $connections (include "tc.v1.common.lib.chart.connections.redis" . | trim) -}}
-    {{- end -}}
+  {{- if or .Values.redis.enabled (and .Values.dependencies .Values.dependencies.valkey .Values.dependencies.valkey.enabled) -}}
+    {{- $hasConnections = true -}}
+    {{- $connections = append $connections (include "tc.v1.common.lib.chart.connections.redis" . | trim) -}}
   {{- end -}}
 
   {{- if .Values.mongodb -}}
@@ -186,22 +184,38 @@ MariaDB connection information
 {{- end -}}
 
 {{/*
-Redis connection information
+Redis/Valkey connection information
 */}}
 {{- define "tc.v1.common.lib.chart.connections.redis" -}}
-## Redis Database
-  {{- if .Values.redis.creds -}}
-  {{- if .Values.redis.creds.plainhost }}
-- Host: {{ .Values.redis.creds.plainhost }}
+{{- $creds := dict -}}
+{{- $dbIndex := "" -}}
+{{- $dbName := "Redis" -}}
+
+{{/* Check for new dependencies.valkey path */}}
+{{- if and .Values.dependencies .Values.dependencies.valkey .Values.dependencies.valkey.enabled -}}
+  {{- $creds = .Values.dependencies.valkey.creds -}}
+  {{- $dbIndex = .Values.dependencies.valkey.redisDatabase -}}
+  {{- $dbName = "Valkey" -}}
+{{/* Fallback to legacy redis path */}}
+{{- else if .Values.redis.enabled -}}
+  {{- $creds = .Values.redis.creds -}}
+  {{- $dbIndex = .Values.redis.redisDatabase -}}
+  {{- $dbName = "Redis" -}}
+{{- end -}}
+
+## {{ $dbName }} Database
+  {{- if $creds -}}
+  {{- if $creds.plainhost }}
+- Host: {{ $creds.plainhost }}
   {{- end -}}
-  {{- if .Values.redis.creds.plainporthost }}
-- Host:Port: {{ .Values.redis.creds.plainporthost }}
+  {{- if $creds.plainporthost }}
+- Host:Port: {{ $creds.plainporthost }}
   {{- end -}}
-  {{- if .Values.redis.redisDatabase }}
-- Database Index: {{ .Values.redis.redisDatabase | default "0" }}
+  {{- if $dbIndex }}
+- Database Index: {{ $dbIndex | default "0" }}
   {{- end -}}
-  {{- if .Values.redis.creds.url }}
-- Connection URL: {{ .Values.redis.creds.url }}
+  {{- if $creds.url }}
+- Connection URL: {{ $creds.url }}
   {{- end -}}
   {{- else }}
 - Configuration pending (credentials will be available after initialization)

@@ -9,10 +9,14 @@
   {{/* Ensure TrueCharts chart context information is available */}}
   {{- include "tc.v1.common.lib.util.chartcontext" . -}}
 
+  {{/* Load dependencies into values */}}
+  {{- include "tc.v1.common.dependencies.loader" . }}
+
   {{/* Autogenerate postgresql passwords if needed */}}
   {{- include "tc.v1.common.spawner.cnpg" . }}
 
-  {{/* Autogenerate redis passwords if needed */}}
+  {{/* Autogenerate valkey/redis passwords if needed */}}
+  {{- include "tc.v1.common.dependencies.valkey.injector" . }}
   {{- include "tc.v1.common.dependencies.redis.injector" . }}
 
   {{/* Autogenerate mariadb passwords if needed */}}
