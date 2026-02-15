@@ -31,11 +31,13 @@ rootCtx: The root context of the chart.
     {{/* If no targetSelector is defined, we assume the service is using the primary service */}}
     {{/* Also no need to check for multiple primaries here, it's already done on the service validation */}}
     {{- range $serviceName, $service := $rootCtx.Values.service -}}
-      {{- if $service.enabled -}}
-        {{- if $service.primary -}}
-          {{- $serviceValues = mustDeepCopy $service -}}
-          {{/* Set the shortName so service can use this on selector */}}
-          {{- $_ := set $serviceValues "shortName" $serviceName -}}
+      {{- if kindIs "map" $service -}}
+        {{- if $service.enabled -}}
+          {{- if $service.primary -}}
+            {{- $serviceValues = mustDeepCopy $service -}}
+            {{/* Set the shortName so service can use this on selector */}}
+            {{- $_ := set $serviceValues "shortName" $serviceName -}}
+          {{- end -}}
         {{- end -}}
       {{- end -}}
     {{- end -}}

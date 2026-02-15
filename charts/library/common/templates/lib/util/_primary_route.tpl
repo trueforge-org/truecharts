@@ -8,7 +8,7 @@
 
   {{- $enabledroutees := dict -}}
   {{- range $name, $route := $routees -}}
-    {{- if $route.enabled -}}
+    {{- if and (kindIs "map" $route) $route.enabled -}}
       {{- $_ := set $enabledroutees $name . -}}
     {{- end -}}
   {{- end -}}

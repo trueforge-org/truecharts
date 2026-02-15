@@ -4,7 +4,7 @@
 
   {{- $enabledWorkloads := dict -}}
   {{- range $name, $Workload := $Workloads -}}
-    {{- if $Workload.enabled -}}
+    {{- if and (kindIs "map" $Workload) $Workload.enabled -}}
       {{- $_ := set $enabledWorkloads $name $Workload -}}
     {{- end -}}
   {{- end -}}

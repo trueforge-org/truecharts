@@ -4,7 +4,7 @@
 
   {{- $enabledcnpges := dict -}}
   {{- range $name, $cnpg := $cnpgs -}}
-    {{- if $cnpg.enabled -}}
+    {{- if and (kindIs "map" $cnpg) $cnpg.enabled -}}
       {{- $_ := set $enabledcnpges $name . -}}
     {{- end -}}
   {{- end -}}
