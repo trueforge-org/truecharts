@@ -63,11 +63,17 @@ Display connection information for enabled dependencies and addons
     {{- end -}}
   {{- end -}}
 
-  {{- if .Values.redis -}}
-    {{- if .Values.redis.enabled -}}
-      {{- $hasConnections = true -}}
-      {{- $connections = append $connections (include "tc.v1.common.lib.chart.connections.redis" . | trim) -}}
+  {{/* Check for valkey service from dependencies */}}
+  {{- $valkeyServiceExists := false -}}
+  {{- range $name, $service := .Values.service -}}
+    {{- if hasPrefix "valkey-" $name -}}
+      {{- $valkeyServiceExists = true -}}
     {{- end -}}
+  {{- end -}}
+  
+  {{- if $valkeyServiceExists -}}
+    {{- $hasConnections = true -}}
+    {{- $connections = append $connections (include "tc.v1.common.lib.chart.connections.valkey" . | trim) -}}
   {{- end -}}
 
   {{- if .Values.mongodb -}}
@@ -186,26 +192,32 @@ MariaDB connection information
 {{- end -}}
 
 {{/*
-Redis connection information
+Valkey connection information
 */}}
-{{- define "tc.v1.common.lib.chart.connections.redis" -}}
-## Redis Database
-  {{- if .Values.redis.creds -}}
-  {{- if .Values.redis.creds.plainhost }}
-- Host: {{ .Values.redis.creds.plainhost }}
+{{- define "tc.v1.common.lib.chart.connections.valkey" -}}
+{{- $valkeyServiceName := "" -}}
+{{- $valkeyPort := "6379" -}}
+{{- range $name, $service := .Values.service -}}
+  {{- if hasPrefix "valkey-" $name -}}
+    {{- $valkeyServiceName = $name -}}
+    {{- range $portName, $portConfig := $service.ports -}}
+      {{- if $portConfig.enabled -}}
+        {{- $valkeyPort = toString $portConfig.port -}}
+      {{- end -}}
+    {{- end -}}
   {{- end -}}
-  {{- if .Values.redis.creds.plainporthost }}
-- Host:Port: {{ .Values.redis.creds.plainporthost }}
-  {{- end -}}
-  {{- if .Values.redis.redisDatabase }}
-- Database Index: {{ .Values.redis.redisDatabase | default "0" }}
-  {{- end -}}
-  {{- if .Values.redis.creds.url }}
-- Connection URL: {{ .Values.redis.creds.url }}
-  {{- end -}}
-  {{- else }}
-- Configuration pending (credentials will be available after initialization)
-  {{- end }}
+{{- end -}}
+
+{{- if $valkeyServiceName -}}
+{{- $hostName := printf "%s-%s" .Release.Name $valkeyServiceName -}}
+## Valkey Database
+- Host: {{ $hostName }}
+- Port: {{ $valkeyPort }}
+- Host:Port: {{ $hostName }}:{{ $valkeyPort }}
+{{- else }}
+## Valkey Database
+- Configuration pending (service will be available after initialization)
+{{- end -}}
 {{- end -}}
 
 {{/*

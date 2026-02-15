@@ -1,0 +1,127 @@
+suite: dependencies targetSelector prefix test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should prefix string targetSelector in service
+    set:
+      common:
+        workload: {}
+        service: {}
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      dependencies:
+        db:
+          enabled: true
+          workload:
+            main:
+              enabled: true
+              type: StatefulSet
+              podSpec:
+                containers:
+                  main:
+                    enabled: true
+                    primary: true
+                    probes:
+                      liveness:
+                        enabled: false
+                      readiness:
+                        enabled: false
+                      startup:
+                        enabled: false
+          service:
+            main:
+              enabled: true
+              targetSelector: main
+              ports:
+                main:
+                  enabled: true
+                  port: 5432
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: Service
+      - documentIndex: 0
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-db-main
+      - documentIndex: 0
+        matchRegex:
+          path: spec.selector["pod.name"]
+          pattern: ^db-main$
+
+  - it: should prefix targetSelector in podDisruptionBudget
+    set:
+      common:
+        workload: {}
+        podDisruptionBudget: {}
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      dependencies:
+        db:
+          enabled: true
+          workload:
+            worker:
+              enabled: true
+              type: StatefulSet
+              podSpec:
+                containers:
+                  worker:
+                    enabled: true
+                    primary: true
+                    probes:
+                      liveness:
+                        enabled: false
+                      readiness:
+                        enabled: false
+                      startup:
+                        enabled: false
+          podDisruptionBudget:
+            main:
+              enabled: true
+              targetSelector: worker
+              minAvailable: 1
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: PodDisruptionBudget
+      - documentIndex: 0
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-db-main
+      - documentIndex: 0
+        equal:
+          path: spec.selector.matchLabels["pod.name"]
+          value: db-worker

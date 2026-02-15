@@ -86,6 +86,11 @@ ubuntuImage:
   tag: "24.04@sha256:3b826c0233182d7c31a9323121178b98976765b9ee03f9a96200ab0c70e2e1e2"
   pullPolicy: IfNotPresent
 
+valkeyClientImage:
+  repository: docker.io/bitnamisecure/valkey
+  tag: latest@sha256:14dc12c4cc5912747b63d41e237512989d958fa6020dbcb1170cc0fe91f48644
+  pullPolicy: IfNotPresent
+
 chartContext:
   appUrl: ""
   podCIDR: ""
@@ -1490,18 +1495,6 @@ cnpg:
     # -- contains credentials and urls output by generator
     creds: {}
 
-# -- Redis dependency configuration
-# @default -- See below
-redis:
-  enabled: false
-  includeCommon: false
-  password: "PLACEHOLDERPASSWORD"
-  # -- can be used to make an easy accessible note which URLS to use to access the DB.
-  creds: {}
-  secret:
-    credentials:
-      enabled: false
-
 # -- mariadb dependency configuration
 # @default -- See below
 mariadb:
@@ -1541,6 +1534,34 @@ solr:
   solrEnableAuthentication: "no"
   # -- can be used to make an easy accessable note which URLS to use to access the DB.
   creds: {}
+
+# -- Dependency configuration - replaces helm-dependencies
+# Each dependency should contain a complete chart values.yaml structure
+# Resources from dependencies are merged into the main chart with prefixed names
+# @default -- See below
+dependencies: {}
+#   valkey:
+#     enabled: true
+#     image:
+#       repository: docker.io/bitnamisecure/valkey
+#       tag: latest
+#     workload:
+#       main:
+#         type: StatefulSet
+#         podSpec:
+#           containers:
+#             main:
+#               env:
+#                 REDIS_PASSWORD: "my-password"
+#     service:
+#       main:
+#         ports:
+#           main:
+#             port: 6379
+#     persistence:
+#       data:
+#         enabled: true
+#         mountPath: /data
 
 # -- List of extra objects to deploy with the release
 extraTpl: []

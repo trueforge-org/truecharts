@@ -48,7 +48,10 @@
   {{- $selectedIngress := (get $rootCtx.Values.ingress $primaryIngressName) -}}
 
   {{- $primaryRouteName := include "tc.v1.common.lib.util.route.primary" (dict "rootCtx" $rootCtx) -}}
-  {{- $selectedRoute := (get $rootCtx.Values.route $primaryRouteName) -}}
+  {{- $selectedRoute := dict -}}
+  {{- if $rootCtx.Values.route -}}
+    {{- $selectedRoute = (get $rootCtx.Values.route $primaryRouteName) -}}
+  {{- end -}}
 
   {{- with $objectData.targetSelector -}}
     {{- if .ingress -}}
