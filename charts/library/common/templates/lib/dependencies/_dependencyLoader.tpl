@@ -6,7 +6,7 @@ This replaces helm-dependencies.
 {{- define "tc.v1.common.dependencies.loader" -}}
   {{- if .Values.dependencies -}}
     {{- range $depName, $depConfig := .Values.dependencies -}}
-      {{- if and $depConfig (not (kindIs "invalid" $depConfig.enabled)) $depConfig.enabled -}}
+      {{- if and $depConfig $depConfig.enabled -}}
         {{/* Merge all top-level keys from dependency into main values with prefixed names */}}
         {{/* This allows the dependency to be a complete chart values.yaml */}}
         

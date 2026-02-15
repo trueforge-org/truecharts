@@ -95,7 +95,7 @@
   {{- if hasPrefix "valkey-" $name -}}
     {{- $valkeyServiceName = $name -}}
     {{- range $portName, $portConfig := $service.ports -}}
-      {{- if $portConfig.enabled -}}
+      {{- if or (not (hasKey $portConfig "enabled")) $portConfig.enabled -}}
         {{- $valkeyPort = toString $portConfig.port -}}
       {{- end -}}
     {{- end -}}
