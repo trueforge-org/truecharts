@@ -1,41 +1,79 @@
-suite: dependencies valkey basic test
+suite: dependencies valkey full structure test
 templates:
   - common.yaml
 release:
   name: test-release-name
   namespace: test-release-namespace
 tests:
-  - it: should create secret for valkey dependency
+  - it: should create service and workload for valkey dependency
     set:
       dependencies:
         valkey:
           enabled: true
-          password: "test-password"
+          workload:
+            main:
+              enabled: true
+              primary: true
+              type: StatefulSet
+              podSpec:
+                containers:
+                  main:
+                    enabled: true
+                    primary: true
+          service:
+            main:
+              enabled: true
+              ports:
+                main:
+                  enabled: true
+                  port: 6379
       workload:
         main:
           enabled: true
           primary: true
           type: Deployment
-          podSpec: {}
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
     asserts:
       - documentIndex: 0
         isKind:
-          of: Secret
+          of: Service
       - documentIndex: 0
         equal:
           path: metadata.name
-          value: test-release-name-valkeycreds
-      - documentIndex: 0
+          value: test-release-name-common-test-valkey-main
+      - documentIndex: 2
+        isKind:
+          of: StatefulSet
+      - documentIndex: 2
         equal:
-          path: data.valkey-password
-          value: test-password
+          path: metadata.name
+          value: test-release-name-common-test-valkey-main
 
   - it: should create init container for valkey wait
     set:
       dependencies:
         valkey:
           enabled: true
-          password: "test-password"
+          workload:
+            main:
+              enabled: true
+              type: StatefulSet
+              podSpec:
+                containers:
+                  main:
+                    enabled: true
+                    primary: true
+          service:
+            main:
+              enabled: true
+              ports:
+                main:
+                  enabled: true
+                  port: 6379
       workload:
         main:
           enabled: true
@@ -57,28 +95,5 @@ tests:
         contains:
           path: spec.template.spec.initContainers
           content:
-            name: redis-wait
+            name: test-release-name-common-test-system-valkey-wait
 
-  - it: should support legacy redis path
-    set:
-      redis:
-        enabled: true
-        password: "legacy-password"
-      workload:
-        main:
-          enabled: true
-          primary: true
-          type: Deployment
-          podSpec: {}
-    asserts:
-      - documentIndex: 0
-        isKind:
-          of: Secret
-      - documentIndex: 0
-        equal:
-          path: metadata.name
-          value: test-release-name-rediscreds
-      - documentIndex: 0
-        equal:
-          path: data.redis-password
-          value: legacy-password
