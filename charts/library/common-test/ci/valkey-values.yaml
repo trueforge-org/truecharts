@@ -27,6 +27,7 @@ workload:
 dependencies:
   valkey:
     enabled: true
+    password: "testpassword"
     image:
       repository: docker.io/bitnamisecure/valkey
       pullPolicy: IfNotPresent
@@ -44,7 +45,7 @@ dependencies:
               primary: true
               env:
                 REDIS_REPLICATION_MODE: master
-                ALLOW_EMPTY_PASSWORD: "yes"
+                ALLOW_EMPTY_PASSWORD: "no"
                 REDIS_PORT: "6379"
                 REDIS_PASSWORD: "testpassword"
               probes:
@@ -88,7 +89,7 @@ dependencies:
                 ping
             )
             if [ "$response" != "PONG" ]; then
-              echo "failed to connect"
+              echo "failed to connect using password: $REDIS_PASSWORD response: $response"
               exit 1
             fi
           ping_liveness_local.sh: |-
@@ -105,6 +106,46 @@ dependencies:
               echo "$response"
               exit 1
             fi
+          ping_readiness_master.sh: |-
+            #!/bin/bash
+            [[ -n "$REDIS_MASTER_PASSWORD" ]] && export REDISCLI_AUTH="$REDIS_MASTER_PASSWORD"
+            response=$(
+              timeout -s 3 $1 \
+              redis-cli \
+                -h $REDIS_MASTER_HOST \
+                -p $REDIS_MASTER_PORT_NUMBER \
+                ping
+            )
+            if [ "$response" != "PONG" ]; then
+              echo "$response"
+              exit 1
+            fi
+          ping_liveness_master.sh: |-
+            #!/bin/bash
+            [[ -n "$REDIS_MASTER_PASSWORD" ]] && export REDISCLI_AUTH="$REDIS_MASTER_PASSWORD"
+            response=$(
+              timeout -s 3 $1 \
+              redis-cli \
+                -h $REDIS_MASTER_HOST \
+                -p $REDIS_MASTER_PORT_NUMBER \
+                ping
+            )
+            if [ "$response" != "PONG" ] && [ "$response" != "LOADING Valkey is loading the dataset in memory" ]; then
+              echo "$response"
+              exit 1
+            fi
+          ping_readiness_local_and_master.sh: |-
+            script_dir="$(dirname "$0")"
+            exit_status=0
+            "$script_dir/ping_readiness_local.sh" $1 || exit_status=$?
+            "$script_dir/ping_readiness_master.sh" $1 || exit_status=$?
+            exit $exit_status
+          ping_liveness_local_and_master.sh: |-
+            script_dir="$(dirname "$0")"
+            exit_status=0
+            "$script_dir/ping_liveness_local.sh" $1 || exit_status=$?
+            "$script_dir/ping_liveness_master.sh" $1 || exit_status=$?
+            exit $exit_status
     service:
       main:
         enabled: true
@@ -131,4 +172,12 @@ dependencies:
             path: ping_readiness_local.sh
           - key: ping_liveness_local.sh
             path: ping_liveness_local.sh
+          - key: ping_readiness_master.sh
+            path: ping_readiness_master.sh
+          - key: ping_liveness_master.sh
+            path: ping_liveness_master.sh
+          - key: ping_liveness_local_and_master.sh
+            path: ping_liveness_local_and_master.sh
+          - key: ping_readiness_local_and_master.sh
+            path: ping_readiness_local_and_master.sh
 
