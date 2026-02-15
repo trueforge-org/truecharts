@@ -9,9 +9,6 @@
   {{/* Ensure TrueCharts chart context information is available */}}
   {{- include "tc.v1.common.lib.util.chartcontext" . -}}
 
-  {{/* Load dependencies into values */}}
-  {{- include "tc.v1.common.dependencies.loader" . }}
-
   {{/* Autogenerate postgresql passwords if needed */}}
   {{- include "tc.v1.common.spawner.cnpg" . }}
 
