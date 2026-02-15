@@ -9,6 +9,7 @@ import yaml
 
 BASE_DIR = Path(__file__).resolve().parent
 VALUES_FILE = BASE_DIR / "complete-values-structure.yaml"
+TEMPLATE_KEYS_FILE = BASE_DIR / "template-keys-structure.yaml"
 ROOT_SCHEMA_FILE = BASE_DIR / "values.schema.json"
 
 
@@ -141,30 +142,73 @@ def collect_yaml_key_paths(yaml_node: Any, path: str, paths: set[str]) -> None:
 
 def main() -> int:
     values_data = load_yaml(VALUES_FILE)
+    template_keys_data = load_yaml(TEMPLATE_KEYS_FILE)
     root_schema = load_json(ROOT_SCHEMA_FILE)
     missing: list[str] = []
+    template_missing: list[str] = []
     key_paths: set[str] = set()
+    template_key_paths: set[str] = set()
 
+    # Collect paths from complete-values-structure.yaml
     collect_yaml_key_paths(values_data, "$", key_paths)
 
+    # Collect paths from template-keys-structure.yaml
+    collect_yaml_key_paths(template_keys_data, "$", template_key_paths)
+
+    # Validate complete-values-structure against schema
     validate_node(values_data, root_schema, ROOT_SCHEMA_FILE, "$", missing)
 
+    # Validate template-keys-structure against schema
+    validate_node(template_keys_data, root_schema, ROOT_SCHEMA_FILE, "$", template_missing)
+
+    # Calculate coverage for complete-values-structure
     unique_missing = sorted(set(missing))
     total_paths = len(key_paths)
     missing_count = len(unique_missing)
     covered_count = total_paths - missing_count
     coverage_percent = (covered_count / total_paths * 100.0) if total_paths else 100.0
 
+    # Calculate coverage for template-keys-structure
+    unique_template_missing = sorted(set(template_missing))
+    total_template_paths = len(template_key_paths)
+    missing_template_count = len(unique_template_missing)
+    covered_template_count = total_template_paths - missing_template_count
+    template_coverage_percent = (
+        (covered_template_count / total_template_paths * 100.0) if total_template_paths else 100.0
+    )
+
+    print("=" * 80)
+    print("COVERAGE: complete-values-structure.yaml")
+    print("=" * 80)
     print(f"TOTAL_PATHS {total_paths}")
     print(f"COVERED_PATHS {covered_count}")
     print(f"MISSING_PATHS {len(unique_missing)}")
     print(f"COVERAGE_PERCENT {coverage_percent:.2f}")
 
-    print("UNCOVERED_PATHS")
-    for item in unique_missing:
-        print(item)
+    if unique_missing:
+        print("\nUNCOVERED_PATHS")
+        for item in unique_missing[:50]:  # Limit to first 50
+            print(item)
+        if len(unique_missing) > 50:
+            print(f"... and {len(unique_missing) - 50} more")
 
-    return 1 if unique_missing else 0
+    print("\n" + "=" * 80)
+    print("COVERAGE: template-keys-structure.yaml (keys used by templates)")
+    print("=" * 80)
+    print(f"TOTAL_PATHS {total_template_paths}")
+    print(f"COVERED_PATHS {covered_template_count}")
+    print(f"MISSING_PATHS {len(unique_template_missing)}")
+    print(f"COVERAGE_PERCENT {template_coverage_percent:.2f}")
+
+    if unique_template_missing:
+        print("\nUNCOVERED_TEMPLATE_PATHS")
+        for item in unique_template_missing[:50]:  # Limit to first 50
+            print(item)
+        if len(unique_template_missing) > 50:
+            print(f"... and {len(unique_template_missing) - 50} more")
+
+    # Return 1 if either validation found missing paths
+    return 1 if (unique_missing or unique_template_missing) else 0
 
 
 if __name__ == "__main__":
