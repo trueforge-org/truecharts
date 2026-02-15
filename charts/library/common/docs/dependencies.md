@@ -123,17 +123,23 @@ dependencies:
 
 2. **Depconfig Exclusion**: The `depconfig` subdict is NOT merged into main values. It contains dependency-specific configuration and generated credentials.
 
-3. **Resource Merging**: When a dependency is enabled, its resources (excluding depconfig) are merged into the main chart:
-   - `workload.main` becomes `workload.$name-main`
-   - `service.main` becomes `service.$name-main`
-   - `configmap.config` becomes `configmap.$name-config`
-   - etc.
+3. **Universal Resource Prefixing**: When a dependency is enabled, ALL its resources (except excluded keys) are merged into the main chart with prefixed names:
+   - **Prefixed**: workload, service, configmap, secret, persistence, volumeClaimTemplates, podDisruptionBudget, hpa, vpa, ingress, route, gateway, certificate, serviceAccount, rbac, networkPolicy, storageClass, and any other resource type
+   - **Excluded from prefixing**: global, securityContext, podOptions, enabled, depconfig, image (handled specially), chartContext, fallbackDefaults, notes, operator
+   - Examples:
+     - `workload.main` → `workload.$name-main`
+     - `service.main` → `service.$name-main`
+     - `configmap.config` → `configmap.$name-config`
+     - `volumeClaimTemplates.data` → `volumeClaimTemplates.$name-data`
+     - Any new resource type automatically gets prefixed
 
-4. **Automatic Init Containers**: The common chart automatically detects dependency services (like valkey) and creates appropriate init containers to wait for them to be ready.
+4. **Image Handling**: The `image` key is handled specially - instead of prefixing resources within it, the key itself is prefixed to `$nameImage` (e.g., `valkeyImage`)
 
-5. **Connection Information**: Connection details for dependencies are automatically included in the chart notes.
+5. **Automatic Init Containers**: The common chart automatically detects dependency services (like valkey) and creates appropriate init containers to wait for them to be ready.
 
-6. **Credential Generation**: For database-like dependencies (valkey, mariadb, mongodb, etc.), credentials are automatically generated and stored in `depconfig.creds`.
+6. **Connection Information**: Connection details for dependencies are automatically included in the chart notes.
+
+7. **Credential Generation**: For database-like dependencies (valkey, mariadb, mongodb, etc.), credentials are automatically generated and stored in `depconfig.creds`.
 
 ---
 
@@ -220,7 +226,8 @@ This dependencies feature differs from traditional helm chart dependencies:
 
 - Dependencies replace the traditional helm-dependencies mechanism
 - Each dependency can contain any valid chart values.yaml structure
-- Resource names are automatically prefixed to prevent naming conflicts
+- ALL resource types are automatically prefixed to prevent naming conflicts (except excluded keys like global, depconfig, etc.)
+- New resource types automatically work without code changes - they just get prefixed
 - The `enabled` flag is automatically added to resources if not present
 - Init containers are automatically created to wait for dependency services to be ready
 - Connection information is automatically included in chart notes
