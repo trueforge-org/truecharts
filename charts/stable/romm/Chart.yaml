@@ -30,11 +30,11 @@ dependencies:
     alias: ""
     tags: []
     import-values: []
-  - name: redis
-    version: 17.15.22
+  - name: valkey
+    version: 0.0.2
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
-    alias: ""
+    alias: redis
     tags: []
     import-values: []
 deprecated: false
@@ -55,5 +55,4 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/romm
   - https://github.com/zurdi15/romm
 type: application
-version: 14.27.10
-
+version: 14.27.12

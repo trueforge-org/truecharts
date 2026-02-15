@@ -23,11 +23,11 @@ dependencies:
     alias: ""
     tags: []
     import-values: []
-  - name: redis
-    version: 17.15.22
+  - name: valkey
+    version: 0.0.2
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
-    alias: ""
+    alias: redis
     tags: []
     import-values: []
 deprecated: false
@@ -53,5 +53,4 @@ sources:
   - https://hub.docker.com/r/gotenberg/gotenberg
   - https://paperless-ngx.readthedocs.io/en/latest/
 type: application
-version: 11.36.9
-
+version: 11.36.11
