@@ -1,0 +1,105 @@
+suite: dependencies valkey full structure test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should create service and workload for valkey dependency
+    set:
+      common:
+        workload: {}
+        service: {}
+      dependencies:
+        valkey:
+          enabled: true
+          workload:
+            main:
+              enabled: true
+              primary: true
+              type: StatefulSet
+              podSpec:
+                containers:
+                  main:
+                    enabled: true
+                    primary: true
+          service:
+            main:
+              enabled: true
+              ports:
+                main:
+                  enabled: true
+                  port: 6379
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: Service
+      - documentIndex: 0
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-valkey-main
+      - documentIndex: 2
+        isKind:
+          of: StatefulSet
+      - documentIndex: 2
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-valkey-main
+
+  - it: should create init container for valkey wait
+    set:
+      common:
+        workload: {}
+        service: {}
+      dependencies:
+        valkey:
+          enabled: true
+          workload:
+            main:
+              enabled: true
+              type: StatefulSet
+              podSpec:
+                containers:
+                  main:
+                    enabled: true
+                    primary: true
+          service:
+            main:
+              enabled: true
+              ports:
+                main:
+                  enabled: true
+                  port: 6379
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: Deployment
+      - documentIndex: 1
+        isNotEmpty:
+          path: spec.template.spec.initContainers
+      - documentIndex: 1
+        contains:
+          path: spec.template.spec.initContainers
+          content:
+            name: test-release-name-common-test-system-valkey-wait
+
