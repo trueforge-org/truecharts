@@ -18,6 +18,18 @@ within the common library.
   {{- $fullName = printf "%v-%v" $fullName $values.nameOverride -}}
 {{- end -}}
 
+{{/* Handle targetSelector for automatic gatewayClass linking */}}
+{{- $gatewayClassName := $values.gatewayClassName -}}
+{{- if and (hasKey $values "targetSelector") $values.targetSelector -}}
+  {{- $targetGatewayClassName := $values.targetSelector -}}
+  {{- if hasKey $.Values.gatewayClass $targetGatewayClassName -}}
+    {{- $targetGatewayClass := get $.Values.gatewayClass $targetGatewayClassName -}}
+    {{- if $targetGatewayClass.enabled -}}
+      {{- $gatewayClassName = include "tc.v1.common.lib.util.gatewayclass.getFullName" (dict "rootCtx" $ "gatewayClass" $targetGatewayClass) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
@@ -35,7 +47,7 @@ metadata:
     {{- . | nindent 4 }}
   {{- end }}
 spec:
-  gatewayClassName: {{ required (printf "gatewayClassName is required for Gateway %v" $fullName) $values.gatewayClassName }}
+  gatewayClassName: {{ required (printf "gatewayClassName is required for Gateway %v" $fullName) $gatewayClassName }}
   listeners:
   {{- range $values.listeners }}
   - name: {{ required (printf "listener name is required for Gateway %v" $fullName) .name }}

@@ -2947,6 +2947,11 @@ configMapsFromFolder:
         test-label: ''
       annotations:
         test-annotation: ''
+      fileAttributeOverrides:
+        template.tpl:
+          escaped: true
+        .gitkeep:
+          exclude: true
     test-scripts:
       labels:
         test-label: ''
@@ -3196,6 +3201,31 @@ ingress:
           customkv: null
           version: 2
 certificate: {}
+gatewayClass:
+  main:
+    enabled: false
+    annotations: {}
+    labels: {}
+    controllerName: ''
+    description: ''
+gateway:
+  main:
+    enabled: false
+    annotations: {}
+    labels: {}
+    gatewayClassName: ''
+    listeners:
+    - name: ''
+      hostname: null
+      port: 80
+      protocol: ''
+      allowedRoutes:
+        namespaces:
+          from: ''
+        kinds:
+        - group: ''
+          kind: ''
+    targetSelector: ''
 route:
   objectname:
     enabled: false
@@ -3222,6 +3252,7 @@ route:
       - path:
           type: ''
           value: ''
+    targetSelector: ''
 podDisruptionBudget:
   main:
     enabled: false
