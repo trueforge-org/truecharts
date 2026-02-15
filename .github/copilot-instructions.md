@@ -41,10 +41,7 @@ This is a condensed summary. The full, canonical instructions are in [`AGENTS.md
 
 - Use the latest Helm 4 release and the latest helm-unittest plugin, never an older version. On Helm 4, install the plugin with `helm plugin install https://github.com/helm-unittest/helm-unittest --verify=false`.
 - Run `pre-commit` on your changes before finalizing.
-- For app charts:
-  - `helm dependency build`, `helm lint --strict` and `helm template` on the chart
-  - `result_file=/tmp/lint_result.txt .github/scripts/tc-lint.sh '["charts/stable/<chart>"]' origin/master`
-- For common library changes, run `./run_common_tests.sh`. It installs Helm and helm-unittest when missing (always the latest), runs the unit tests in a scratch copy, then runs the schema checks. `UNITTEST_FILES='tests/<area>/*.yaml' SKIP_SCHEMA_TESTS=1` runs a single area.
-- Use conventional-commit PR titles with the chart name as the scope, e.g. `fix(plex): ...`, and target `master`.
-- Tell the user that contributions need a signed [Contributor License Agreement](https://cla-assistant.io/trueforge-org/truecharts), which only they can sign. The `license/cla` check on the PR shows the status.
-- Fill in the [organization's PR template](https://github.com/trueforge-org/.github/blob/main/.github/PULL_REQUEST_TEMPLATE.md), and add the notice `🤖 This PR is AI generated.` to its Notes section when an AI agent wrote the PR. Use it instead of a "Generated with ..." line.
+- When editing `charts/library/common`, also update the Helm unit tests in `charts/library/common-test` accordingly.
+- For common library changes, run `./run_common_tests.sh` (requires the Helm `unittest` plugin).
+- Dont manually alter chart readme's or changelogs
+- never bump common-test
