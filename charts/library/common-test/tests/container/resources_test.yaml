@@ -426,7 +426,7 @@ tests:
                 resources:
                   excludeExtra: true
     asserts:
-      - documentIndex: &clusterDoc 0
+      - documentIndex: &clusterDoc 1
         isKind:
           of: Cluster
       - documentIndex: *clusterDoc
@@ -446,7 +446,7 @@ tests:
             requests:
               cpu: 75m
               memory: 200Mi
-      - documentIndex: &deploymentDoc 1
+      - documentIndex: &deploymentDoc 2
         isKind:
           of: Deployment
       - documentIndex: *deploymentDoc
