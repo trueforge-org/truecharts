@@ -446,17 +446,17 @@ tests:
                 resources:
                   excludeExtra: true
     asserts:
-      - documentIndex: 1
+      - documentIndex: 8
         isKind:
           of: Cluster
-      - documentIndex: 1
+      - documentIndex: 8
         isAPIVersion:
           of: postgresql.cnpg.io/v1
-      - documentIndex: 1
+      - documentIndex: 8
         equal:
           path: metadata.name
           value: test-release-name-common-test-cnpg-my-pg
-      - documentIndex: 1
+      - documentIndex: 8
         equal:
           path: spec.resources
           value:
@@ -466,13 +466,13 @@ tests:
             requests:
               cpu: 75m
               memory: 200Mi
-      - documentIndex: 3
+      - documentIndex: 9
         isKind:
           of: Deployment
-      - documentIndex: 3
+      - documentIndex: 9
         isAPIVersion:
           of: apps/v1
-      - documentIndex: 3
+      - documentIndex: 9
         isSubset:
           path: spec.template.spec.containers[0]
           content:
@@ -485,7 +485,7 @@ tests:
               requests:
                 cpu: 75m
                 memory: 200Mi
-      - documentIndex: 3
+      - documentIndex: 9
         isSubset:
           path: spec.template.spec.containers[1]
           content:
@@ -497,7 +497,7 @@ tests:
               requests:
                 cpu: 75m
                 memory: 200Mi
-      - documentIndex: 3
+      - documentIndex: 9
         isSubset:
           path: spec.template.spec.initContainers[0]
           content:
@@ -509,7 +509,7 @@ tests:
               requests:
                 cpu: 10m
                 memory: 50Mi
-      - documentIndex: 3
+      - documentIndex: 9
         isSubset:
           path: spec.template.spec.initContainers[1]
           content:
@@ -521,7 +521,7 @@ tests:
               requests:
                 cpu: 10m
                 memory: 50Mi
-      - documentIndex: 3
+      - documentIndex: 9
         isSubset:
           path: spec.template.spec.initContainers[2]
           content:
@@ -533,7 +533,7 @@ tests:
               requests:
                 cpu: 10m
                 memory: 50Mi
-      - documentIndex: 3
+      - documentIndex: 9
         isSubset:
           path: spec.template.spec.initContainers[3]
           content:
@@ -545,7 +545,7 @@ tests:
               requests:
                 cpu: 10m
                 memory: 50Mi
-      - documentIndex: 3
+      - documentIndex: 9
         isSubset:
           path: spec.template.spec.initContainers[4]
           content:
@@ -557,7 +557,7 @@ tests:
               requests:
                 cpu: 10m
                 memory: 50Mi
-      - documentIndex: 3
+      - documentIndex: 9
         isSubset:
           path: spec.template.spec.initContainers[5]
           content:
