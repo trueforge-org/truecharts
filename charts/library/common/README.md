@@ -59,7 +59,7 @@ CI always performs a full run (`--max-failures 0`) and uploads the schema log ar
 
 ## Support
 
-- See the [Website](https://truecharts.org)
+- See the [Website](https://trueforge.org)
 - Check our [Discord](https://discord.gg/tVsPTHWTtr)
 - Open a [issue](https://github.com/trueforge-org/truecharts/issues/new/choose)
 
