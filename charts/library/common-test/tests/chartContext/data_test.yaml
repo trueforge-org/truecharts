@@ -326,6 +326,11 @@ tests:
           enabled: true
           primary: true
           kind: HTTPRoute
+          parentRefs:
+            - group: gateway.networking.k8s.io
+              kind: Gateway
+              name: test-gateway
+              namespace: test-namespace
           hostnames:
             - example.com
           rules:
@@ -384,6 +389,11 @@ tests:
           enabled: true
           primary: true
           kind: HTTPRoute
+          parentRefs:
+            - group: gateway.networking.k8s.io
+              kind: Gateway
+              name: test-gateway
+              namespace: test-namespace
           hostnames:
             - route.example.com
           rules:
@@ -439,6 +449,11 @@ tests:
           enabled: true
           primary: true
           kind: HTTPRoute
+          parentRefs:
+            - group: gateway.networking.k8s.io
+              kind: Gateway
+              name: test-gateway
+              namespace: test-namespace
           hostnames:
             - route.example.com
           rules:

@@ -66,8 +66,10 @@ Display connection information for enabled dependencies and addons
   {{/* Check for valkey service from dependencies */}}
   {{- $valkeyServiceExists := false -}}
   {{- range $name, $service := .Values.service -}}
-    {{- if hasPrefix "valkey-" $name -}}
-      {{- $valkeyServiceExists = true -}}
+    {{- if kindIs "map" $service -}}
+      {{- if hasPrefix "valkey-" $name -}}
+        {{- $valkeyServiceExists = true -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
   
@@ -198,7 +200,7 @@ Valkey connection information
 {{- $valkeyServiceName := "" -}}
 {{- $valkeyPort := "6379" -}}
 {{- range $name, $service := .Values.service -}}
-  {{- if hasPrefix "valkey-" $name -}}
+  {{- if and (kindIs "map" $service) (hasPrefix "valkey-" $name) -}}
     {{- $valkeyServiceName = $name -}}
     {{- range $portName, $portConfig := $service.ports -}}
       {{- if $portConfig.enabled -}}

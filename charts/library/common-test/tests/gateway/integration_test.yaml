@@ -34,7 +34,7 @@ tests:
                   name: main
                   port: 8080
     asserts:
-      - documentIndex: &gatewayDoc 0
+      - documentIndex: &gatewayDoc 1
         isKind:
           of: Gateway
       - documentIndex: *gatewayDoc

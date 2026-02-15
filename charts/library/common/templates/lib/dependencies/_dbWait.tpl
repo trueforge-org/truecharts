@@ -2,8 +2,10 @@
   {{/* Check if valkey service exists from dependencies */}}
   {{- $valkeyServiceExists := false -}}
   {{- range $name, $service := .Values.service -}}
-    {{- if hasPrefix "valkey-" $name -}}
-      {{- $valkeyServiceExists = true -}}
+    {{- if kindIs "map" $service -}}
+      {{- if hasPrefix "valkey-" $name -}}
+        {{- $valkeyServiceExists = true -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
   
@@ -92,7 +94,7 @@
 {{- $valkeyServiceName := "" -}}
 {{- $valkeyPort := "6379" -}}
 {{- range $name, $service := .Values.service -}}
-  {{- if hasPrefix "valkey-" $name -}}
+  {{- if and (kindIs "map" $service) (hasPrefix "valkey-" $name) -}}
     {{- $valkeyServiceName = $name -}}
     {{- range $portName, $portConfig := $service.ports -}}
       {{- if or (not (hasKey $portConfig "enabled")) $portConfig.enabled -}}

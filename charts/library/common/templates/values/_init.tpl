@@ -101,12 +101,6 @@
       {{- end -}}
     {{- end -}}
     
-    {{- range $mergedValues.addons -}}
-      {{- if .enabled -}}
-        {{- $mergedValues = mustMergeOverwrite $mergedValues . -}}
-      {{- end -}}
-    {{- end -}}
-    
     {{- $_ := set . "Values" (mustDeepCopy $mergedValues) -}}
   {{- end -}}
 {{- end -}}

@@ -8,7 +8,7 @@
 
   {{- $enabledgateways := dict -}}
   {{- range $name, $gateway := $gateways -}}
-    {{- if $gateway.enabled -}}
+    {{- if and (kindIs "map" $gateway) $gateway.enabled -}}
       {{- $_ := set $enabledgateways $name . -}}
     {{- end -}}
   {{- end -}}
