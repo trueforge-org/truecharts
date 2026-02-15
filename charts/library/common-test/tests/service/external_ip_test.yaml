@@ -122,14 +122,14 @@ tests:
         equal:
           path: metadata.labels
           value:
-            app: common-test-1.0.0
+            app: common-test-1.0.1
             app.kubernetes.io/instance: test-release-name
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: common-test
             app.kubernetes.io/version: *appVer
             endpointslice.kubernetes.io/managed-by: Helm
             helm-revision: "0"
-            helm.sh/chart: common-test-1.0.0
+            helm.sh/chart: common-test-1.0.1
             kubernetes.io/service-name: test-release-name-common-test
             release: test-release-name
       - documentIndex: *endpointSliceDoc
@@ -213,14 +213,14 @@ tests:
         equal:
           path: metadata.labels
           value:
-            app: common-test-1.0.0
+            app: common-test-1.0.1
             app.kubernetes.io/instance: test-release-name
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: common-test
             app.kubernetes.io/version: *appVer
             endpointslice.kubernetes.io/managed-by: Helm
             helm-revision: "0"
-            helm.sh/chart: common-test-1.0.0
+            helm.sh/chart: common-test-1.0.1
             kubernetes.io/service-name: test-release-name-common-test
             release: test-release-name
 
@@ -331,9 +331,9 @@ tests:
             app.kubernetes.io/instance: test-release-name
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/version: *appVer
-            helm.sh/chart: common-test-1.0.0
+            helm.sh/chart: common-test-1.0.1
             helm-revision: "0"
-            app: common-test-1.0.0
+            app: common-test-1.0.1
             release: test-release-name
       - documentIndex: *endpointDoc
         equal:
