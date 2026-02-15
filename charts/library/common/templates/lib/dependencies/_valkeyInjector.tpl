@@ -26,7 +26,6 @@ Supports both legacy .Values.redis and new .Values.dependencies.valkey
   {{- if not $valkeyUser -}}{{/* If you try to print a nil value it will print as [nil] */}}
     {{- $valkeyUser = "" -}}
   {{- end -}}
-  
   {{/* Prepare data - use valkey for new path, redis for legacy */}}
   {{- $serviceName := "valkey" -}}
   {{- if .Values.redis.enabled -}}
