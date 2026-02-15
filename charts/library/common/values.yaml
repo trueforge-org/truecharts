@@ -809,6 +809,42 @@ certificate: {}
 #       labels: {}
 #       annotations: {}
 
+# -- BETA: Configure the gateway API gateways for the chart here.
+# Additional gateways can be added by adding a dictionary key similar to the 'main' gateway.
+# Please be aware that this is an early beta of this feature, TrueCharts does not guarantee this actually works.
+# Being BETA this can/will change in the future without notice, please do not use unless you want to take that risk
+# [[ref]](https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1)
+# @default -- See below
+gateway:
+  main:
+    # -- Enables or disables the gateway
+    enabled: false
+    # -- Provide additional annotations which may be required.
+    annotations: {}
+    # -- Provide additional labels which may be required.
+    labels: {}
+    # -- The name of the GatewayClass resource that this Gateway references
+    gatewayClassName: ""
+    # -- Gateway listeners configuration
+    listeners:
+      - name: http
+        hostname:
+        port: 80
+        protocol: HTTP
+        allowedRoutes:
+          namespaces:
+            from: Same
+          kinds:
+            - group: gateway.networking.k8s.io
+              kind: HTTPRoute
+        # tls:
+        #   mode: Terminate
+        #   certificateRefs:
+        #     - kind: Secret
+        #       group: ""
+        #       name: example-cert
+        #       namespace:
+
 # -- BETA: Configure the gateway routes for the chart here.
 # Additional routes can be added by adding a dictionary key similar to the 'main' route.
 # Please be aware that this is an early beta of this feature, TrueCharts does not guarantee this actually works.
@@ -826,7 +862,11 @@ route:
     annotations: {}
     # -- Provide additional labels which may be required.
     labels: {}
+    # -- Optional: Automatically link to a gateway defined in this chart
+    # When set, this will generate parentRefs automatically based on gateway name
+    # targetSelector: main
     # -- Configure the resource the route attaches to.
+    # This is optional if targetSelector is used (targetSelector will override this)
     parentRefs:
       - group: gateway.networking.k8s.io
         kind: Gateway
