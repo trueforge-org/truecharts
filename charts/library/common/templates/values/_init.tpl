@@ -10,8 +10,8 @@
     {{- $chartValues := mustDeepCopy (omit .Values "common") -}}
     {{- $mergedValues := mustMergeOverwrite $commonValues $chartValues -}}
     
-    {{/* Define which top-level keys contain resource collections that need prefixing */}}
-    {{- $resourceKeys := list "workload" "service" "configmap" "secret" "persistence" "volumeClaimTemplates" "podDisruptionBudget" "hpa" "vpa" "ingress" "route" "gateway" "gatewayClass" "certificate" "certificateIssuer" "serviceAccount" "rbac" "prometheusRule" "serviceMonitor" "podMonitor" "networkPolicy" "storageClass" -}}
+    {{/* Define which keys should NOT be prefixed (exclusions) */}}
+    {{- $exclusionKeys := list "global" "securityContext" "podOptions" "enabled" "depconfig" "image" "chartContext" "fallbackDefaults" "notes" "operator" -}}
     
     {{- range $depName, $dependencyValues := .Values.dependencies -}}
       {{ $enabled := (include "tc.v1.common.lib.util.enabled" (dict
@@ -21,9 +21,13 @@
       {{- if eq $enabled "true" -}}
         {{- $dependencyValues := omit $dependencyValues "global" "securityContext" "podOptions" "enabled" "depconfig" -}}
         
-        {{/* Process each resource type in the dependency */}}
+        {{/* Process each key in the dependency */}}
         {{- range $resourceType, $resources := $dependencyValues -}}
-          {{- if and (has $resourceType $resourceKeys) (kindIs "map" $resources) -}}
+          {{- if eq $resourceType "image" -}}
+            {{/* Special handling for image - prefix the key itself */}}
+            {{- $imageName := printf "%sImage" $depName -}}
+            {{- $_ := set $mergedValues $imageName $resources -}}
+          {{- else if and (not (has $resourceType $exclusionKeys)) (kindIs "map" $resources) -}}
             {{/* This is a resource collection that needs prefixing */}}
             {{- range $resourceName, $resourceConfig := $resources -}}
               {{- if kindIs "map" $resourceConfig -}}
@@ -92,10 +96,6 @@
                 {{- $_ := set (get $mergedValues $resourceType) $newName $resourceConfig -}}
               {{- end -}}
             {{- end -}}
-          {{- else if eq $resourceType "image" -}}
-            {{/* Special handling for image - it's not a collection */}}
-            {{- $imageName := printf "%sImage" $depName -}}
-            {{- $_ := set $mergedValues $imageName $resources -}}
           {{- end -}}
         {{- end -}}
       {{- end -}}
