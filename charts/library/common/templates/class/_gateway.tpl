@@ -25,11 +25,7 @@ within the common library.
   {{- if hasKey $.Values.gatewayClass $targetGatewayClassName -}}
     {{- $targetGatewayClass := get $.Values.gatewayClass $targetGatewayClassName -}}
     {{- if $targetGatewayClass.enabled -}}
-      {{- $gatewayClassFullName := include "tc.v1.common.lib.chart.names.fullname" $ -}}
-      {{- if and (hasKey $targetGatewayClass "nameOverride") $targetGatewayClass.nameOverride -}}
-        {{- $gatewayClassFullName = printf "%v-%v" $gatewayClassFullName $targetGatewayClass.nameOverride -}}
-      {{- end -}}
-      {{- $gatewayClassName = $gatewayClassFullName -}}
+      {{- $gatewayClassName = include "tc.v1.common.lib.util.gatewayclass.getFullName" (dict "rootCtx" $ "gatewayClass" $targetGatewayClass) -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}

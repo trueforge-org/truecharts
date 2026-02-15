@@ -13,10 +13,7 @@ within the common library.
   {{- $gatewayClassLabels := $values.labels -}}
   {{- $gatewayClassAnnotations := $values.annotations -}}
 
-{{- $fullName := include "tc.v1.common.lib.chart.names.fullname" . -}}
-{{- if and (hasKey $values "nameOverride") $values.nameOverride -}}
-  {{- $fullName = printf "%v-%v" $fullName $values.nameOverride -}}
-{{- end -}}
+{{- $fullName := include "tc.v1.common.lib.util.gatewayclass.getFullName" (dict "rootCtx" . "gatewayClass" $values) -}}
 
 ---
 apiVersion: gateway.networking.k8s.io/v1
