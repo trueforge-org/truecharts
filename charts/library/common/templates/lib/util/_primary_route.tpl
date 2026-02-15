@@ -1,6 +1,9 @@
 {{/* Return the name of the primary route object */}}
 {{- define "tc.v1.common.lib.util.route.primary" -}}
-  {{- $rootCtx := .rootCtx | default $ -}}
+  {{- $rootCtx := . -}}
+  {{- if hasKey . "rootCtx" -}}
+    {{- $rootCtx = .rootCtx -}}
+  {{- end -}}
   {{- $routees := $rootCtx.Values.route | default dict -}}
 
   {{- $enabledroutees := dict -}}

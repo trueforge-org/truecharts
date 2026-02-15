@@ -58,6 +58,12 @@
   {{/* Render ingress(s) */}}
   {{- include "tc.v1.common.spawner.ingress" . | nindent 0 -}}
 
+  {{/* Render Gateway API GatewayClass(es) */}}
+  {{- include "tc.v1.common.spawner.gatewayclasses" . | nindent 0 -}}
+
+  {{/* Render Gateway API Gateway(s) */}}
+  {{- include "tc.v1.common.spawner.gateways" . | nindent 0 -}}
+
   {{/* Render Gateway API Route(s) */}}
   {{- include "tc.v1.common.spawner.routes" . | nindent 0 -}}
 
