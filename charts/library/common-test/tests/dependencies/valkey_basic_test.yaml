@@ -63,10 +63,10 @@ tests:
         equal:
           path: metadata.name
           value: test-release-name-common-test-valkey-main
-      - documentIndex: 2
+      - documentIndex: 3
         isKind:
           of: StatefulSet
-      - documentIndex: 2
+      - documentIndex: 3
         equal:
           path: metadata.name
           value: test-release-name-common-test-valkey-main
@@ -122,13 +122,13 @@ tests:
                   startup:
                     enabled: false
     asserts:
-      - documentIndex: 3
+      - documentIndex: 2
         isKind:
           of: Deployment
-      - documentIndex: 3
+      - documentIndex: 2
         isNotEmpty:
           path: spec.template.spec.initContainers
-      - documentIndex: 3
+      - documentIndex: 2
         contains:
           path: spec.template.spec.initContainers
           content:
