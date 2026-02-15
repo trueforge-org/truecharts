@@ -17,17 +17,17 @@ apiVersion: v2
 appVersion: 2.8.3
 dependencies:
   - name: common
-    version: 28.29.49
+    version: 28.29.59
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
-  - name: redis
-    version: 17.15.22
+  - name: valkey
+    version: 0.0.2
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
-    alias: ""
+    alias: redis
     tags: []
     import-values: []
 deprecated: false
@@ -49,5 +49,4 @@ sources:
   - https://github.com/n8n-io/n8n
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/n8n
 type: application
-version: 18.8.4
-
+version: 18.8.7

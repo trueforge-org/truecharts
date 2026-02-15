@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=./values.schema.json
 # -- Global values
 global:
   # -- Set additional global labels
@@ -529,8 +530,6 @@ notes:
       Version: {{ .Version }}
     {{- end }}
     {{- end }}
-
-
     {{- if .Values.chartContext.internalUrls }}
     ## Connecting Internally
 
@@ -604,7 +603,7 @@ scratchImage:
 
 kubectlImage:
   repository: oci.trueforge.org/containerforge/kubectl
-  tag: "1.31.1@sha256:076f97daacc986b4b491a6efe6e59e5bd83396f7485ba5249343bc5a8caf0b20"
+  tag: "1.31.1@sha256:87582bc6354c678f0939dcb3dabce2948ceb28e8d238f5f3d67aa8d72bfb8155"
   pullPolicy: IfNotPresent
 
 wgetImage:
@@ -629,12 +628,12 @@ mariadbClientImage:
 
 redisClientImage:
   repository: oci.trueforge.org/containerforge/valkey-tools
-  tag: "1.1.0@sha256:ff58ea59c54d579152516df543f0e4ae42294f05e24d7f4d54f80000085fa571"
+  tag: "1.1.0@sha256:931adcd8b434ab4bab6209c83f85355073e6f94e161e592bcda83f3f7dd472e8"
   pullPolicy: IfNotPresent
 
 valkeyClientImage:
   repository: oci.trueforge.org/containerforge/valkey-tools
-  tag: "1.1.0@sha256:ff58ea59c54d579152516df543f0e4ae42294f05e24d7f4d54f80000085fa571"
+  tag: "1.1.0@sha256:931adcd8b434ab4bab6209c83f85355073e6f94e161e592bcda83f3f7dd472e8"
   pullPolicy: IfNotPresent
 
 mongodbClientImage:
