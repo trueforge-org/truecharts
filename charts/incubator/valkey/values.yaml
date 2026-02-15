@@ -74,7 +74,7 @@ configmap:
             -p $REDIS_PORT \
             ping
         )
-        if [ "$response" != "PONG" ] && [ "$response" != "LOADING Redis is loading the dataset in memory" ]; then
+        if [ "$response" != "PONG" ] && [ "$response" != "LOADING Valkey is loading the dataset in memory" ]; then
           echo "$response"
           exit 1
         fi
@@ -102,7 +102,7 @@ configmap:
             -p $REDIS_MASTER_PORT_NUMBER \
             ping
         )
-        if [ "$response" != "PONG" ] && [ "$response" != "LOADING Redis is loading the dataset in memory" ]; then
+        if [ "$response" != "PONG" ] && [ "$response" != "LOADING Valkey is loading the dataset in memory" ]; then
           echo "$response"
           exit 1
         fi
@@ -134,7 +134,7 @@ volumeClaimTemplates:
       - ReadWriteOnce
     mountPath: "/bitnami/valkey"
 persistence:
-  redis-health:
+  valkey-health:
     enabled: true
     type: configmap
     objectName: health
