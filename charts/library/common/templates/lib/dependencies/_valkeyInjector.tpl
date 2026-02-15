@@ -6,7 +6,12 @@ This template generates valkey credentials and ensures they persist across updat
 {{- range $depName, $depConfig := .Values.dependencies -}}
   {{- if and (eq $depName "valkey") $depConfig $depConfig.enabled -}}
     {{/* Use custom-set password or generate one */}}
-    {{- $dbPass := $depConfig.password | default "PLACEHOLDERPASSWORD" -}}
+    {{- $dbPass := "" -}}
+    {{- if $depConfig.depconfig -}}
+      {{- $dbPass = $depConfig.depconfig.password | default "PLACEHOLDERPASSWORD" -}}
+    {{- else -}}
+      {{- $dbPass = "PLACEHOLDERPASSWORD" -}}
+    {{- end -}}
 
     {{/* Prepare data - service name is prefixed */}}
     {{- $serviceName := printf "%s-main" $depName -}}
@@ -15,19 +20,24 @@ This template generates valkey credentials and ensures they persist across updat
     {{- $url := printf "redis://:%v@%v/0" $dbPass $portHost -}}
     {{- $hostPass := printf "%v:%v" $dbHost $dbPass -}}
 
-    {{/* Initialize creds if not exists */}}
-    {{- if not $depConfig.creds -}}
-      {{- $_ := set $depConfig "creds" dict -}}
+    {{/* Initialize depconfig if not exists */}}
+    {{- if not $depConfig.depconfig -}}
+      {{- $_ := set $depConfig "depconfig" dict -}}
+    {{- end -}}
+    
+    {{/* Initialize creds under depconfig if not exists */}}
+    {{- if not $depConfig.depconfig.creds -}}
+      {{- $_ := set $depConfig.depconfig "creds" dict -}}
     {{- end -}}
 
-    {{/* Append values to dependency creds for apps to use */}}
-    {{- $_ := set $depConfig.creds "valkey-password" ($dbPass | quote) -}}
-    {{- $_ := set $depConfig.creds "redis-password" ($dbPass | quote) -}}
-    {{- $_ := set $depConfig.creds "plain" ($dbHost | quote) -}}
-    {{- $_ := set $depConfig.creds "plainhost" ($dbHost | quote) -}}
-    {{- $_ := set $depConfig.creds "plainporthost" ($portHost | quote) -}}
-    {{- $_ := set $depConfig.creds "url" ($url | quote) -}}
-    {{- $_ := set $depConfig.creds "plainhostpass" ($hostPass | quote) -}}
+    {{/* Append values to dependency depconfig.creds for apps to use */}}
+    {{- $_ := set $depConfig.depconfig.creds "valkey-password" ($dbPass | quote) -}}
+    {{- $_ := set $depConfig.depconfig.creds "redis-password" ($dbPass | quote) -}}
+    {{- $_ := set $depConfig.depconfig.creds "plain" ($dbHost | quote) -}}
+    {{- $_ := set $depConfig.depconfig.creds "plainhost" ($dbHost | quote) -}}
+    {{- $_ := set $depConfig.depconfig.creds "plainporthost" ($portHost | quote) -}}
+    {{- $_ := set $depConfig.depconfig.creds "url" ($url | quote) -}}
+    {{- $_ := set $depConfig.depconfig.creds "plainhostpass" ($hostPass | quote) -}}
 
 {{/* Create the secret */}}
 enabled: true

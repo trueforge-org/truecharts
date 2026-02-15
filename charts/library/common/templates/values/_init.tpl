@@ -19,7 +19,7 @@
                       "name" $depName "caller" "dependency"
                       "key" "dependencies")) }}
       {{- if eq $enabled "true" -}}
-        {{- $dependencyValues := omit $dependencyValues "global" "securityContext" "podOptions" "enabled" -}}
+        {{- $dependencyValues := omit $dependencyValues "global" "securityContext" "podOptions" "enabled" "depconfig" -}}
         
         {{/* Process each resource type in the dependency */}}
         {{- range $resourceType, $resources := $dependencyValues -}}

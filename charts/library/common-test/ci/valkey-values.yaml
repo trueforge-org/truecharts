@@ -27,7 +27,8 @@ workload:
 dependencies:
   valkey:
     enabled: true
-    password: "testpassword"
+    depconfig:
+      password: "testpassword"
     image:
       repository: docker.io/bitnamisecure/valkey
       pullPolicy: IfNotPresent
