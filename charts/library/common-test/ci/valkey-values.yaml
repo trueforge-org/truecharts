@@ -164,7 +164,7 @@ dependencies:
       valkey-health:
         enabled: true
         type: configmap
-        objectName: valkey-health
+        objectName: health
         mountPath: "/health"
         defaultMode: "0755"
         items:

@@ -12,6 +12,9 @@
   {{/* Autogenerate postgresql passwords if needed */}}
   {{- include "tc.v1.common.spawner.cnpg" . }}
 
+  {{/* Autogenerate valkey passwords and credentials if needed */}}
+  {{- include "tc.v1.common.dependencies.valkey.injector" . }}
+
   {{/* Autogenerate mariadb passwords if needed */}}
   {{- include "tc.v1.common.dependencies.mariadb.injector" . }}
 
