@@ -74,7 +74,7 @@ Returns: A dictionary where keys are folder names and values contain:
           {{- $fileContent = $fileContent | b64enc -}}
           {{- $binaryData = merge $binaryData (dict $file $fileContent) -}}
 
-        {{- else if $fileOverride.escaped -}}
+        {{- else if and (ne $fileOverride nil) $fileOverride.escaped -}}
           {{/* Escaped file: escape template delimiters */}}
           {{- $fileContent = $fileContent | replace "{{" "{{ `{{` }}" -}}
           {{- $textData = merge $textData (dict $file $fileContent) -}}
