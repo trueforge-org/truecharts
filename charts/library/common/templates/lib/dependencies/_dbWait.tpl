@@ -160,6 +160,7 @@ command:
     done
     EOF
 {{- end -}}
+{{- end -}}
 
 {{- define "tc.v1.common.lib.deps.wait.mariadb" -}}
 enabled: true

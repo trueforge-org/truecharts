@@ -13,6 +13,10 @@ This replaces helm-dependencies.
         {{- if $depConfig.workload -}}
           {{- range $wlName, $wlConfig := $depConfig.workload -}}
             {{- $newName := printf "%s-%s" $depName $wlName -}}
+            {{/* Ensure enabled is set if not explicitly defined */}}
+            {{- if not (hasKey $wlConfig "enabled") -}}
+              {{- $_ := set $wlConfig "enabled" true -}}
+            {{- end -}}
             {{- $_ := set $.Values.workload $newName $wlConfig -}}
           {{- end -}}
         {{- end -}}
@@ -20,6 +24,10 @@ This replaces helm-dependencies.
         {{- if $depConfig.service -}}
           {{- range $svcName, $svcConfig := $depConfig.service -}}
             {{- $newName := printf "%s-%s" $depName $svcName -}}
+            {{/* Ensure enabled is set if not explicitly defined */}}
+            {{- if not (hasKey $svcConfig "enabled") -}}
+              {{- $_ := set $svcConfig "enabled" true -}}
+            {{- end -}}
             {{- $_ := set $.Values.service $newName $svcConfig -}}
           {{- end -}}
         {{- end -}}
@@ -27,6 +35,10 @@ This replaces helm-dependencies.
         {{- if $depConfig.configmap -}}
           {{- range $cmName, $cmConfig := $depConfig.configmap -}}
             {{- $newName := printf "%s-%s" $depName $cmName -}}
+            {{/* Ensure enabled is set if not explicitly defined */}}
+            {{- if not (hasKey $cmConfig "enabled") -}}
+              {{- $_ := set $cmConfig "enabled" true -}}
+            {{- end -}}
             {{- $_ := set $.Values.configmap $newName $cmConfig -}}
           {{- end -}}
         {{- end -}}
@@ -34,6 +46,10 @@ This replaces helm-dependencies.
         {{- if $depConfig.secret -}}
           {{- range $secName, $secConfig := $depConfig.secret -}}
             {{- $newName := printf "%s-%s" $depName $secName -}}
+            {{/* Ensure enabled is set if not explicitly defined */}}
+            {{- if not (hasKey $secConfig "enabled") -}}
+              {{- $_ := set $secConfig "enabled" true -}}
+            {{- end -}}
             {{- $_ := set $.Values.secret $newName $secConfig -}}
           {{- end -}}
         {{- end -}}
@@ -41,6 +57,10 @@ This replaces helm-dependencies.
         {{- if $depConfig.persistence -}}
           {{- range $pvName, $pvConfig := $depConfig.persistence -}}
             {{- $newName := printf "%s-%s" $depName $pvName -}}
+            {{/* Ensure enabled is set if not explicitly defined */}}
+            {{- if not (hasKey $pvConfig "enabled") -}}
+              {{- $_ := set $pvConfig "enabled" true -}}
+            {{- end -}}
             {{- $_ := set $.Values.persistence $newName $pvConfig -}}
           {{- end -}}
         {{- end -}}
@@ -50,6 +70,10 @@ This replaces helm-dependencies.
             {{- $newName := printf "%s-%s" $depName $vctName -}}
             {{- if not $.Values.volumeClaimTemplates -}}
               {{- $_ := set $.Values "volumeClaimTemplates" dict -}}
+            {{- end -}}
+            {{/* Ensure enabled is set if not explicitly defined */}}
+            {{- if not (hasKey $vctConfig "enabled") -}}
+              {{- $_ := set $vctConfig "enabled" true -}}
             {{- end -}}
             {{- $_ := set $.Values.volumeClaimTemplates $newName $vctConfig -}}
           {{- end -}}

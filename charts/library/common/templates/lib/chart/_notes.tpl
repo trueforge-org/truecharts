@@ -219,10 +219,6 @@ Valkey connection information
 - Configuration pending (service will be available after initialization)
 {{- end -}}
 {{- end -}}
-- Connection URL: {{ $creds.url }}
-  {{- end -}}
-  {{- else }}
-{{- end -}}
 
 {{/*
 MongoDB connection information
