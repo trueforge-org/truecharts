@@ -63,9 +63,17 @@ Display connection information for enabled dependencies and addons
     {{- end -}}
   {{- end -}}
 
-  {{- if or .Values.redis.enabled (and .Values.dependencies .Values.dependencies.valkey .Values.dependencies.valkey.enabled) -}}
+  {{/* Check for valkey service from dependencies */}}
+  {{- $valkeyServiceExists := false -}}
+  {{- range $name, $service := .Values.service -}}
+    {{- if hasPrefix "valkey-" $name -}}
+      {{- $valkeyServiceExists = true -}}
+    {{- end -}}
+  {{- end -}}
+  
+  {{- if $valkeyServiceExists -}}
     {{- $hasConnections = true -}}
-    {{- $connections = append $connections (include "tc.v1.common.lib.chart.connections.redis" . | trim) -}}
+    {{- $connections = append $connections (include "tc.v1.common.lib.chart.connections.valkey" . | trim) -}}
   {{- end -}}
 
   {{- if .Values.mongodb -}}
@@ -184,42 +192,36 @@ MariaDB connection information
 {{- end -}}
 
 {{/*
-Redis/Valkey connection information
+Valkey connection information
 */}}
-{{- define "tc.v1.common.lib.chart.connections.redis" -}}
-{{- $creds := dict -}}
-{{- $dbIndex := "" -}}
-{{- $dbName := "Redis" -}}
-
-{{/* Check for new dependencies.valkey path */}}
-{{- if and .Values.dependencies .Values.dependencies.valkey .Values.dependencies.valkey.enabled -}}
-  {{- $creds = .Values.dependencies.valkey.creds -}}
-  {{- $dbIndex = .Values.dependencies.valkey.redisDatabase -}}
-  {{- $dbName = "Valkey" -}}
-{{/* Fallback to legacy redis path */}}
-{{- else if .Values.redis.enabled -}}
-  {{- $creds = .Values.redis.creds -}}
-  {{- $dbIndex = .Values.redis.redisDatabase -}}
-  {{- $dbName = "Redis" -}}
+{{- define "tc.v1.common.lib.chart.connections.valkey" -}}
+{{- $valkeyServiceName := "" -}}
+{{- $valkeyPort := "6379" -}}
+{{- range $name, $service := .Values.service -}}
+  {{- if hasPrefix "valkey-" $name -}}
+    {{- $valkeyServiceName = $name -}}
+    {{- range $portName, $portConfig := $service.ports -}}
+      {{- if $portConfig.enabled -}}
+        {{- $valkeyPort = toString $portConfig.port -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
 {{- end -}}
 
-## {{ $dbName }} Database
-  {{- if $creds -}}
-  {{- if $creds.plainhost }}
-- Host: {{ $creds.plainhost }}
-  {{- end -}}
-  {{- if $creds.plainporthost }}
-- Host:Port: {{ $creds.plainporthost }}
-  {{- end -}}
-  {{- if $dbIndex }}
-- Database Index: {{ $dbIndex | default "0" }}
-  {{- end -}}
-  {{- if $creds.url }}
+{{- if $valkeyServiceName -}}
+{{- $hostName := printf "%s-%s" .Release.Name $valkeyServiceName -}}
+## Valkey Database
+- Host: {{ $hostName }}
+- Port: {{ $valkeyPort }}
+- Host:Port: {{ $hostName }}:{{ $valkeyPort }}
+{{- else }}
+## Valkey Database
+- Configuration pending (service will be available after initialization)
+{{- end -}}
+{{- end -}}
 - Connection URL: {{ $creds.url }}
   {{- end -}}
   {{- else }}
-- Configuration pending (credentials will be available after initialization)
-  {{- end }}
 {{- end -}}
 
 {{/*

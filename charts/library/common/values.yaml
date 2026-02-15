@@ -1426,18 +1426,6 @@ cnpg:
     # -- contains credentials and urls output by generator
     creds: {}
 
-# -- Redis dependency configuration
-# @default -- See below
-redis:
-  enabled: false
-  includeCommon: false
-  password: "PLACEHOLDERPASSWORD"
-  # -- can be used to make an easy accessible note which URLS to use to access the DB.
-  creds: {}
-  secret:
-    credentials:
-      enabled: false
-
 # -- mariadb dependency configuration
 # @default -- See below
 mariadb:
@@ -1478,19 +1466,33 @@ solr:
   # -- can be used to make an easy accessable note which URLS to use to access the DB.
   creds: {}
 
-# -- Dependency configuration using sub-charts
+# -- Dependency configuration - replaces helm-dependencies
+# Each dependency should contain a complete chart values.yaml structure
+# Resources from dependencies are merged into the main chart with prefixed names
 # @default -- See below
-dependencies:
-  # -- Valkey dependency configuration
-  # @default -- See below
-  valkey:
-    enabled: false
-    password: "PLACEHOLDERPASSWORD"
-    # -- can be used to make an easy accessible note which URLS to use to access the DB.
-    creds: {}
-    secret:
-      credentials:
-        enabled: false
+dependencies: {}
+#   valkey:
+#     enabled: true
+#     image:
+#       repository: docker.io/bitnamisecure/valkey
+#       tag: latest
+#     workload:
+#       main:
+#         type: StatefulSet
+#         podSpec:
+#           containers:
+#             main:
+#               env:
+#                 REDIS_PASSWORD: "my-password"
+#     service:
+#       main:
+#         ports:
+#           main:
+#             port: 6379
+#     persistence:
+#       data:
+#         enabled: true
+#         mountPath: /data
 
 # -- List of extra objects to deploy with the release
 extraTpl: []

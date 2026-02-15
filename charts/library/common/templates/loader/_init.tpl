@@ -15,10 +15,6 @@
   {{/* Autogenerate postgresql passwords if needed */}}
   {{- include "tc.v1.common.spawner.cnpg" . }}
 
-  {{/* Autogenerate valkey/redis passwords if needed */}}
-  {{- include "tc.v1.common.dependencies.valkey.injector" . }}
-  {{- include "tc.v1.common.dependencies.redis.injector" . }}
-
   {{/* Autogenerate mariadb passwords if needed */}}
   {{- include "tc.v1.common.dependencies.mariadb.injector" . }}
 
