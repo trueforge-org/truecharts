@@ -19,3 +19,26 @@ objectData:
   {{- end -}}
 
 {{- end -}}
+
+{{/* Configmap From Folder Validation */}}
+{{/* Call this template:
+{{ include "tc.v1.common.lib.configmap.fromFolder.validation" (dict "rootCtx" $ "basePath" $basePath) -}}
+rootCtx: The root context of the chart.
+basePath: The base path to search for folders.
+*/}}
+
+{{- define "tc.v1.common.lib.configmap.fromFolder.validation" -}}
+  {{- $rootCtx := .rootCtx -}}
+  {{- $basePath := required "If you're using `configMapsFromFolder` you need to specify a `basePath` key" (trimSuffix "/" .basePath) -}}
+  {{- $filteredPaths := $rootCtx.Files.Glob (printf "%s/**" $basePath) -}}
+  {{- $folders := dict -}}
+
+  {{- range $path, $_ := $filteredPaths -}}
+    {{- $_ := set $folders (dir $path) "" -}}
+  {{- end -}}
+  {{- $folders = keys $folders | uniq | sortAlpha -}}
+
+  {{- if empty $folders -}}
+    {{- fail (printf "No usable files found in the folder %s" $basePath) }}
+  {{- end -}}
+{{- end -}}
