@@ -2938,6 +2938,18 @@ configmap:
       memcached.json: ''
       spegel.json: ''
       smartctl.json: ''
+configMapsFromFolder:
+  enabled: false
+  basePath: ''
+  configMapsOverrides:
+    test-config:
+      labels:
+        test-label: ''
+      annotations:
+        test-annotation: ''
+    test-scripts:
+      labels:
+        test-label: ''
 secret:
   objectname:
     enabled: true
