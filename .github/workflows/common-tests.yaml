@@ -288,20 +288,33 @@ jobs:
 
       - name: Add Dependencies
         run: |
+          # renovate: datasource=helm depName=kube-prometheus-stack repository=oci://ghcr.io/prometheus-community/charts
+          KUBE_PROMETHEUS_STACK_CHART_VERSION="82.0.0"
+          # renovate: datasource=helm depName=cloudnative-pg repository=oci://ghcr.io/cloudnative-pg/charts
+          CLOUDNATIVE_PG_CHART_VERSION="0.27.1"
+          # renovate: datasource=helm depName=cert-manager repository=oci://quay.io/jetstack/charts
+          CERT_MANAGER_CHART_VERSION="v1.19.3"
+          # renovate: datasource=helm depName=ingress-nginx repository=oci://ghcr.io/home-operations/charts-mirror
+          INGRESS_NGINX_CHART_VERSION="4.13.0"
+          # renovate: datasource=helm depName=snapshot-controller repository=oci://oci.trueforge.org/truecharts
+          SNAPSHOT_CONTROLLER_CHART_VERSION="4.15.0"
+          # renovate: datasource=helm depName=volsync repository=oci://oci.trueforge.org/truecharts
+          VOLSYNC_CHART_VERSION="3.15.16"
+
           if [[ "${{ matrix.values }}" =~ (ingress|metrics|cnpg|volsync).*-values.yaml ]]; then
-            helm install kube-prometheus-stack oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack --namespace kube-prometheus-stack --create-namespace --set alertmanager.enabled=false --set grafana.enabled=false --set kubeProxy.enabled=false --wait
+            helm install kube-prometheus-stack oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack --namespace kube-prometheus-stack --create-namespace --version "$KUBE_PROMETHEUS_STACK_CHART_VERSION" --set alertmanager.enabled=false --set grafana.enabled=false --set kubeProxy.enabled=false --wait
           fi
           if [[ "${{ matrix.values }}" =~ cnpg.*-values.yaml ]]; then
-            helm install cloudnative-pg oci://ghcr.io/cloudnative-pg/charts/cloudnative-pg --namespace cloudnative-pg --create-namespace --wait
+            helm install cloudnative-pg oci://ghcr.io/cloudnative-pg/charts/cloudnative-pg --namespace cloudnative-pg --create-namespace --version "$CLOUDNATIVE_PG_CHART_VERSION" --wait
           fi
           if [[ "${{ matrix.values }}" =~ ingress.*-values.yaml ]]; then
-            helm install cert-manager oci://quay.io/jetstack/charts/cert-manager --namespace cert-manager --create-namespace --set crds.enabled=true --wait
+            helm install cert-manager oci://quay.io/jetstack/charts/cert-manager --namespace cert-manager --create-namespace --version "$CERT_MANAGER_CHART_VERSION" --set crds.enabled=true --wait
             helm install ingress-nginx oci://ghcr.io/home-operations/charts-mirror/ingress-nginx --namespace ingress-nginx --create-namespace \
-            --set controller.ingressClassResource.default=true --set controller.publishService.enabled=false --set controller.service.type="ClusterIP" --set controller.config.allow-snippet-annotations=true --set controller.config.annotations-risk-level="Critical" --wait
+            --version "$INGRESS_NGINX_CHART_VERSION" --set controller.ingressClassResource.default=true --set controller.publishService.enabled=false --set controller.service.type="ClusterIP" --set controller.config.allow-snippet-annotations=true --set controller.config.annotations-risk-level="Critical" --wait
           fi
           if [[ "${{ matrix.values }}" =~ volsync.*-values.yaml ]]; then
-            helm install snapshot-controller oci://oci.trueforge.org/truecharts/snapshot-controller --namespace snapshot-controller --create-namespace --wait
-            helm install volsync oci://oci.trueforge.org/truecharts/volsync --namespace volsync --create-namespace --wait
+            helm install snapshot-controller oci://oci.trueforge.org/truecharts/snapshot-controller --namespace snapshot-controller --create-namespace --version "$SNAPSHOT_CONTROLLER_CHART_VERSION" --wait
+            helm install volsync oci://oci.trueforge.org/truecharts/volsync --namespace volsync --create-namespace --version "$VOLSYNC_CHART_VERSION" --wait
           fi
 
       - name: Run chart-testing (install)

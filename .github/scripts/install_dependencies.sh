@@ -8,6 +8,22 @@ if [ -z "$curr_chart" ]; then
 fi
 
 echo "Chart name: $curr_chart"
+
+# renovate: datasource=helm depName=kube-prometheus-stack repository=oci://ghcr.io/prometheus-community/charts
+KUBE_PROMETHEUS_STACK_CHART_VERSION="82.0.0"
+# renovate: datasource=helm depName=ingress-nginx repository=oci://ghcr.io/home-operations/charts-mirror
+INGRESS_NGINX_CHART_VERSION="4.13.0"
+# renovate: datasource=helm depName=snapshot-controller repository=oci://oci.trueforge.org/truecharts
+SNAPSHOT_CONTROLLER_CHART_VERSION="4.15.0"
+# renovate: datasource=helm depName=metallb repository=oci://quay.io/metallb/chart
+METALLB_CHART_VERSION="0.15.3"
+# renovate: datasource=helm depName=cert-manager repository=oci://quay.io/jetstack/charts
+CERT_MANAGER_CHART_VERSION="v1.19.3"
+# renovate: datasource=helm depName=cloudnative-pg repository=oci://ghcr.io/cloudnative-pg/charts
+CLOUDNATIVE_PG_CHART_VERSION="0.27.1"
+# renovate: datasource=helm depName=metrics-server repository=oci://ghcr.io/home-operations/charts-mirror
+METRICS_SERVER_CHART_VERSION="3.13.0"
+
 values_yaml=$(cat "$curr_chart/values.yaml")
 cnpg_enabled=$(go-yq '.cnpg | map(.enabled) | any' <<<"$values_yaml")
 ingress_required=$(go-yq '.ingress | map(.required) | any' <<<"$values_yaml")
@@ -28,7 +44,7 @@ fi
 
 echo "Installing kube-prometheus-stack chart"
 helm install kube-prometheus-stack oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack --namespace kube-prometheus-stack --create-namespace \
-    --set alertmanager.enabled=false --set grafana.enabled=false --set kubeProxy.enabled=false --wait
+    --version "$KUBE_PROMETHEUS_STACK_CHART_VERSION" --set alertmanager.enabled=false --set grafana.enabled=false --set kubeProxy.enabled=false --wait
 if [[ "$?" != "0" ]]; then
     echo "Failed to install kube-prometheus-stack chart"
     exit 1
@@ -38,7 +54,7 @@ echo "Done installing kube-prometheus-stack chart"
 if [[ $nginx_needed == "true" ]]; then
     echo "Installing ingress-nginx chart"
     helm install ingress-nginx oci://ghcr.io/home-operations/charts-mirror/ingress-nginx --namespace ingress-nginx --create-namespace \
-        --set controller.ingressClassResource.default=true --set controller.publishService.enabled=false --set controller.service.type="ClusterIP" --set controller.config.allow-snippet-annotations=true --set controller.config.annotations-risk-level="Critical" --wait
+        --version "$INGRESS_NGINX_CHART_VERSION" --set controller.ingressClassResource.default=true --set controller.publishService.enabled=false --set controller.service.type="ClusterIP" --set controller.config.allow-snippet-annotations=true --set controller.config.annotations-risk-level="Critical" --wait
     if [[ "$?" != "0" ]]; then
         echo "Failed to install ingress-nginx chart"
         exit 1
@@ -48,7 +64,7 @@ fi
 
 if [[ "$curr_chart" == "charts/stable/volsync" ]]; then
     echo "Installing snapshot-controller chart"
-    helm install snapshot-controller oci://oci.trueforge.org/truecharts/snapshot-controller --namespace snapshot-controller --create-namespace --wait
+    helm install snapshot-controller oci://oci.trueforge.org/truecharts/snapshot-controller --namespace snapshot-controller --create-namespace --version "$SNAPSHOT_CONTROLLER_CHART_VERSION" --wait
     if [[ "$?" != "0" ]]; then
         echo "Failed to install snapshot-controller chart"
         exit 1
@@ -58,7 +74,7 @@ fi
 
 if [[ "$curr_chart" == "charts/stable/metallb-config" ]]; then
     echo "Installing metallb chart"
-    helm install metallb oci://quay.io/metallb/chart/metallb --namespace metallb --create-namespace --wait
+    helm install metallb oci://quay.io/metallb/chart/metallb --namespace metallb --create-namespace --version "$METALLB_CHART_VERSION" --wait
     if [[ "$?" != "0" ]]; then
         echo "Failed to install metallb chart"
         exit 1
@@ -68,7 +84,7 @@ fi
 
 if [[ "$curr_chart" == "charts/stable/clusterissuer" ]]; then
     echo "Installing cert-manager chart"
-    helm install cert-manager oci://quay.io/jetstack/charts/cert-manager --namespace cert-manager --create-namespace --set crds.enabled=true --wait
+    helm install cert-manager oci://quay.io/jetstack/charts/cert-manager --namespace cert-manager --create-namespace --version "$CERT_MANAGER_CHART_VERSION" --set crds.enabled=true --wait
     if [[ "$?" != "0" ]]; then
         echo "Failed to install cert-manager chart"
         exit 1
@@ -78,7 +94,7 @@ fi
 
 if [[ "$cnpg_enabled" == "true" ]]; then
     echo "Installing cloudnative-pg chart"
-    helm install cloudnative-pg oci://ghcr.io/cloudnative-pg/charts/cloudnative-pg --namespace cloudnative-pg --create-namespace --wait
+    helm install cloudnative-pg oci://ghcr.io/cloudnative-pg/charts/cloudnative-pg --namespace cloudnative-pg --create-namespace --version "$CLOUDNATIVE_PG_CHART_VERSION" --wait
     if [[ "$?" != "0" ]]; then
         echo "Failed to install cloudnative-pg chart"
         exit 1
@@ -88,7 +104,7 @@ fi
 
 if [[ "$curr_chart" == "charts/stable/kubernetes-dashboard" ]]; then
     echo "Installing metrics-server chart"
-    helm install metrics-server oci://ghcr.io/home-operations/charts-mirror/metrics-server --namespace metrics-server --create-namespace --wait
+    helm install metrics-server oci://ghcr.io/home-operations/charts-mirror/metrics-server --namespace metrics-server --create-namespace --version "$METRICS_SERVER_CHART_VERSION" --wait
     if [[ "$?" != "0" ]]; then
         echo "Failed to install metrics-server chart"
         exit 1
