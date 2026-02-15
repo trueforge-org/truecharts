@@ -72,7 +72,13 @@ def extract_variable_assignments(content: str) -> Dict[str, str]:
     var_map = {}
     
     # Pattern 1: range $name, $varName := [.]Values.keyName
-    # This assigns each element to $varName, so $varName represents keyName.objectName
+    # Regex breakdown:
+    #   range\s+ - 'range' keyword followed by whitespace
+    #   \$[a-zA-Z_][a-zA-Z0-9_]*,\s+ - first variable (usually name/key), comma, whitespace
+    #   \$([a-zA-Z_][a-zA-Z0-9_]*) - second variable (captured, the value)
+    #   \s+:=\s+ - assignment operator with whitespace
+    #   (?:[\$\.](?:[a-zA-Z_][a-zA-Z0-9_]*\.)?Values\.) - various .Values contexts ($., ., $rootCtx.)
+    #   ([a-zA-Z_][a-zA-Z0-9_]*(?:\.[a-zA-Z_][a-zA-Z0-9_]*)*) - captured path (key.subkey.etc)
     range_pattern = r'range\s+\$[a-zA-Z_][a-zA-Z0-9_]*,\s+\$([a-zA-Z_][a-zA-Z0-9_]*)\s+:=\s+(?:[\$\.](?:[a-zA-Z_][a-zA-Z0-9_]*\.)?Values\.)([a-zA-Z_][a-zA-Z0-9_]*(?:\.[a-zA-Z_][a-zA-Z0-9_]*)*)'
     
     for match in re.finditer(range_pattern, content):
@@ -88,7 +94,13 @@ def extract_variable_assignments(content: str) -> Dict[str, str]:
     
     # Pattern 2: range $varName := $otherVar.property
     # This iterates over a property of another variable
-    # When ranging over a collection, assume items have variable names (add objectName)
+    # Regex breakdown:
+    #   range\s+ - 'range' keyword
+    #   (?:\$[a-zA-Z_][a-zA-Z0-9_]*,\s+)? - optional first variable (key/name)
+    #   \$([a-zA-Z_][a-zA-Z0-9_]*) - captured variable being assigned
+    #   \s+:=\s+ - assignment operator
+    #   \$([a-zA-Z_][a-zA-Z0-9_]*) - captured source variable
+    #   \.([a-zA-Z_][a-zA-Z0-9_]*(?:\.[a-zA-Z_][a-zA-Z0-9_]*)*) - captured property path
     range_var_pattern = r'range\s+(?:\$[a-zA-Z_][a-zA-Z0-9_]*,\s+)?\$([a-zA-Z_][a-zA-Z0-9_]*)\s+:=\s+\$([a-zA-Z_][a-zA-Z0-9_]*)\.([a-zA-Z_][a-zA-Z0-9_]*(?:\.[a-zA-Z_][a-zA-Z0-9_]*)*)'
     
     for match in re.finditer(range_var_pattern, content):
@@ -98,11 +110,18 @@ def extract_variable_assignments(content: str) -> Dict[str, str]:
         
         if source_var in var_map:
             # When we range over a property, the items typically have variable names
-            # Add .objectName to represent the variable-named items in the collection
+            # For example: range $port := $service.ports means each $port is a variable-named port
+            # So we add .objectName to represent the variable-named items in the collection
+            # This handles multi-layer nesting: service.objectName.ports.objectName
             var_map[var_name] = f"{var_map[source_var]}.{property_path}.objectName"
     
-    # Pattern 3: $varName := (mustDeepCopy|tpl|...) $otherVar
-    # Assignment with function call - look for common helm functions
+    # Pattern 3: $varName := (func) $otherVar
+    # Assignment with function call like mustDeepCopy, tpl, etc.
+    # Regex breakdown:
+    #   \$([a-zA-Z_][a-zA-Z0-9_]*) - captured variable being assigned
+    #   \s+:=\s+ - assignment operator
+    #   \([a-zA-Z]+ - opening paren and function name
+    #   \s+\$([a-zA-Z_][a-zA-Z0-9_]*)\) - whitespace, source variable, closing paren
     func_assign_pattern = r'\$([a-zA-Z_][a-zA-Z0-9_]*)\s+:=\s+\([a-zA-Z]+\s+\$([a-zA-Z_][a-zA-Z0-9_]*)\)'
     
     for match in re.finditer(func_assign_pattern, content):
