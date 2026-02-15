@@ -16,7 +16,6 @@ tests:
           workload:
             main:
               enabled: true
-              primary: true
               type: StatefulSet
               podSpec:
                 containers:
@@ -26,6 +25,7 @@ tests:
           service:
             main:
               enabled: true
+              primary: true
               ports:
                 main:
                   enabled: true
@@ -73,9 +73,17 @@ tests:
                   main:
                     enabled: true
                     primary: true
+                    probes:
+                      liveness:
+                        enabled: false
+                      readiness:
+                        enabled: false
+                      startup:
+                        enabled: false
           service:
             main:
               enabled: true
+              primary: true
               ports:
                 main:
                   enabled: true
@@ -90,6 +98,13 @@ tests:
               main:
                 enabled: true
                 primary: true
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
     asserts:
       - documentIndex: 1
         isKind:
