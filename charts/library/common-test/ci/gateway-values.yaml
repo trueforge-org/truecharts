@@ -1,0 +1,53 @@
+workload:
+  main:
+    enabled: true
+    podSpec:
+      containers:
+        main:
+          enabled: true
+          args:
+            - --port
+            - "8080"
+          probes:
+            liveness:
+              enabled: true
+            readiness:
+              enabled: true
+            startup:
+              enabled: true
+
+service:
+  main:
+    enabled: true
+    ports:
+      main:
+        enabled: true
+        port: 8080
+        protocol: http
+
+gateway:
+  main:
+    enabled: true
+    gatewayClassName: test-gateway-class
+    listeners:
+      - name: http
+        port: 80
+        protocol: HTTP
+        allowedRoutes:
+          namespaces:
+            from: Same
+          kinds:
+            - group: gateway.networking.k8s.io
+              kind: HTTPRoute
+
+route:
+  main:
+    enabled: true
+    targetSelector: main
+    hostnames:
+      - chart-example.local
+    rules:
+      - backendRefs:
+          - kind: Service
+            name: main
+            port: 8080
