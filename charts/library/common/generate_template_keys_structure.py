@@ -58,6 +58,86 @@ def find_template_files(directory: Path) -> list[Path]:
     return sorted(templates)
 
 
+def extract_variable_assignments(content: str) -> Dict[str, str]:
+    """
+    Extract variable assignments from templates to track variable origins.
+    
+    Patterns:
+    - range $name, $service := .Values.service -> $service maps to "service.objectName"
+    - range $name, $persistence := $rootCtx.Values.persistence -> $persistence maps to "persistence.objectName"
+    - $objectData := $service -> inherit from $service
+    
+    Returns dict mapping variable names to their Values path prefixes.
+    """
+    var_map = {}
+    
+    # Pattern 1: range $name, $varName := [.]Values.keyName
+    # This assigns each element to $varName, so $varName represents keyName.objectName
+    range_pattern = r'range\s+\$[a-zA-Z_][a-zA-Z0-9_]*,\s+\$([a-zA-Z_][a-zA-Z0-9_]*)\s+:=\s+(?:[\$\.](?:[a-zA-Z_][a-zA-Z0-9_]*\.)?Values\.)([a-zA-Z_][a-zA-Z0-9_]*(?:\.[a-zA-Z_][a-zA-Z0-9_]*)*)'
+    
+    for match in re.finditer(range_pattern, content):
+        var_name = match.group(1)
+        values_path = match.group(2)
+        
+        # If this is a parent key with variable children, the variable represents objectName
+        root_key = values_path.split(".")[0]
+        if root_key in PARENT_KEYS_WITH_VARIABLE_CHILDREN:
+            var_map[var_name] = f"{values_path}.objectName"
+        else:
+            var_map[var_name] = values_path
+    
+    # Pattern 2: range $varName := $otherVar.property
+    # This iterates over a property of another variable
+    range_var_pattern = r'range\s+(?:\$[a-zA-Z_][a-zA-Z0-9_]*,\s+)?\$([a-zA-Z_][a-zA-Z0-9_]*)\s+:=\s+\$([a-zA-Z_][a-zA-Z0-9_]*)\.([a-zA-Z_][a-zA-Z0-9_]*(?:\.[a-zA-Z_][a-zA-Z0-9_]*)*)'
+    
+    for match in re.finditer(range_var_pattern, content):
+        var_name = match.group(1)
+        source_var = match.group(2)
+        property_path = match.group(3)
+        
+        if source_var in var_map:
+            # The new variable represents elements of source_var.property
+            var_map[var_name] = f"{var_map[source_var]}.{property_path}.objectName"
+    
+    # Pattern 3: $varName := $otherVar (simple assignment/copy)
+    simple_assign_pattern = r'\$([a-zA-Z_][a-zA-Z0-9_]*)\s+:=\s+(?:.*?)\$([a-zA-Z_][a-zA-Z0-9_]*)(?:\s|$|\)|-|})'
+    
+    for match in re.finditer(simple_assign_pattern, content):
+        var_name = match.group(1)
+        source_var = match.group(2)
+        
+        if source_var in var_map and var_name not in var_map:
+            # Inherit the mapping from source variable
+            var_map[var_name] = var_map[source_var]
+    
+    return var_map
+
+
+def extract_variable_property_accesses(content: str, var_map: Dict[str, str]) -> Set[str]:
+    """
+    Extract property accesses on variables that have known origins.
+    
+    If $service maps to "service.objectName", then:
+    - $service.ports -> service.objectName.ports
+    - $service.enabled -> service.objectName.enabled
+    """
+    paths = set()
+    
+    # Pattern: $varName.property.path
+    var_access_pattern = r'\$([a-zA-Z_][a-zA-Z0-9_]*)\.([a-zA-Z_][a-zA-Z0-9_]*(?:\.[a-zA-Z_][a-zA-Z0-9_]*)*)'
+    
+    for match in re.finditer(var_access_pattern, content):
+        var_name = match.group(1)
+        property_path = match.group(2)
+        
+        if var_name in var_map:
+            # Construct full path from variable origin + property access
+            full_path = f"{var_map[var_name]}.{property_path}"
+            paths.add(full_path)
+    
+    return paths
+
+
 def extract_values_paths(content: str) -> Set[str]:
     """
     Extract all .Values.* paths from template content.
@@ -83,6 +163,28 @@ def extract_values_paths(content: str) -> Set[str]:
         paths.add(path)
     
     return paths
+
+
+def extract_all_paths_from_content(content: str) -> Set[str]:
+    """
+    Extract all paths from template content, including:
+    1. Direct .Values.* references
+    2. Variable assignments and their origins
+    3. Property accesses on tracked variables
+    """
+    # First extract direct Values paths
+    direct_paths = extract_values_paths(content)
+    
+    # Track variable assignments to understand what each variable represents
+    var_map = extract_variable_assignments(content)
+    
+    # Extract property accesses on variables
+    variable_paths = extract_variable_property_accesses(content, var_map)
+    
+    # Combine all paths
+    all_paths = direct_paths | variable_paths
+    
+    return all_paths
 
 
 def normalize_path_with_placeholders(path: str) -> str:
@@ -196,7 +298,7 @@ def main() -> int:
     for template_file in template_files:
         try:
             content = template_file.read_text(encoding="utf-8")
-            paths = extract_values_paths(content)
+            paths = extract_all_paths_from_content(content)
             
             if paths:
                 print(f"  {template_file.relative_to(BASE_DIR)}: {len(paths)} paths")

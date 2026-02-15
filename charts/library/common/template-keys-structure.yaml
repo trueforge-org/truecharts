@@ -25,7 +25,9 @@ addons:
       userspace: variableName
   vpn: variableName
 cert: variableName
-certificate: {}
+certificate:
+  objectName:
+    certificateSecretTemplate: variableName
 chartContext:
   internalUrls: variableName
   podCIDR: variableName
@@ -40,7 +42,20 @@ clickhouse:
     plainporthost: variableName
   enabled: variableName
   password: variableName
-cnpg: {}
+cnpg:
+  objectName:
+    creds:
+      host: variableName
+      jdbc: variableName
+      porthost: variableName
+      std: variableName
+      stdRO: variableName
+    database: variableName
+    enabled: variableName
+    pooler:
+      createRO: variableName
+      enabled: variableName
+    user: variableName
 common: variableName
 configmap: {}
 containerOptions:
@@ -74,9 +89,27 @@ global:
   svcCIDR: variableName
   traefik:
     commonMiddlewares: variableName
-hpa: {}
-imagePullSecret: {}
-ingress: {}
+hpa:
+  objectName:
+    targetSelector: variableName
+    workload:
+      objectName: {}
+imagePullSecret:
+  objectName:
+    enabled: variableName
+    existingSecret: variableName
+    targetSelectAll: variableName
+    targetSelector: variableName
+ingress:
+  objectName:
+    enabled: variableName
+    integrations:
+      certManager:
+        enabled: variableName
+    name: variableName
+    primary: variableName
+    required: variableName
+    tls: variableName
 ingressMiddlewares:
   objectName: {}
 mariadb:
@@ -90,7 +123,12 @@ mariadb:
   mariadbUsername: variableName
   password: variableName
   rootPassword: variableName
-metrics: {}
+metrics:
+  objectName:
+    PrometheusRule: variableName
+    enabled: variableName
+    nameOverride: variableName
+    type: variableName
 mongodb:
   creds:
     complete: variableName
@@ -103,14 +141,51 @@ mongodb:
   password: variableName
   rootPassword: variableName
 namespace: variableName
-networkpolicy: {}
+networkpolicy:
+  objectName:
+    enabled: variableName
+    primary: variableName
 notes:
   custom: variableName
   footer: variableName
   header: variableName
   warnings: variableName
 persistence:
-  objectName: {}
+  objectName:
+    accessModes: variableName
+    annotations: variableName
+    autoPermissions:
+      chmod: variableName
+      chown: variableName
+      enabled: variableName
+    domain: variableName
+    enabled: variableName
+    existingClaim: variableName
+    hostPath: variableName
+    iscsi:
+      authDiscovery: variableName
+      authSession: variableName
+    labels: variableName
+    mountPath: variableName
+    mountPropagation: variableName
+    name: variableName
+    readOnly: variableName
+    shortName: variableName
+    size: variableName
+    static:
+      driver: variableName
+      mode: variableName
+      password: variableName
+      provisioner: variableName
+      username: variableName
+    storageClass: {}
+    subPath: variableName
+    targetSelectAll: variableName
+    targetSelector: variableName
+    type: variableName
+    volsync: variableName
+    volumeName: variableName
+    volumeSnapshots: {}
 podDisruptionBudget: {}
 podOptions:
   affinity: variableName
@@ -137,7 +212,10 @@ podOptions:
 podmonitor: variableName
 priorityClass: {}
 prometheusrule: variableName
-rbac: {}
+rbac:
+  objectName:
+    enabled: variableName
+    primary: variableName
 redis:
   creds:
     plainhost: variableName
@@ -150,7 +228,10 @@ redis:
 resources:
   objectName:
     memory: variableName
-route: {}
+route:
+  objectName:
+    enabled: variableName
+    nameOverride: variableName
 secret: {}
 securityContext:
   container:
@@ -162,10 +243,29 @@ securityContext:
     fsGroup: variableName
 service:
   objectName:
+    enabled: variableName
+    integrations:
+      traefik: variableName
     ports:
       main:
         port: variableName
-serviceAccount: {}
+      objectName:
+        containerPort: variableName
+        enabled: variableName
+        hostPort: variableName
+        port: variableName
+        protocol: variableName
+        serviceName: variableName
+        targetPort: variableName
+        targetSelector: variableName
+    primary: variableName
+    targetSelector: variableName
+serviceAccount:
+  objectName:
+    enabled: variableName
+    primary: variableName
+    targetSelectAll: variableName
+    targetSelector: variableName
 servicemonitor: variableName
 solr:
   creds:
@@ -180,6 +280,16 @@ solr:
 storageClass: {}
 volumeSnapshotClass: {}
 volumeSnapshots: {}
-vpa: {}
-webhook: {}
-workload: {}
+vpa:
+  objectName:
+    targetSelector: variableName
+    workload:
+      objectName: {}
+webhook:
+  objectName:
+    type: variableName
+workload:
+  objectName:
+    enabled: variableName
+    primary: variableName
+    type: variableName
