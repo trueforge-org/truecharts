@@ -62,11 +62,15 @@ def extract_values_paths(content: str) -> Set[str]:
     """
     Extract all .Values.* paths from template content.
     
-    Handles:
-    - $.Values.key
-    - .Values.key
-    - $rootCtx.Values.key
-    - Various contexts
+    Handles various context patterns:
+    - $.Values.key (root context)
+    - .Values.key (current context)
+    - $rootCtx.Values.key (explicit root context variable)
+    - Any other variable context like $ctx.Values.key
+    
+    Examples of paths extracted:
+    - .Values.service.main.enabled -> service.main.enabled
+    - $rootCtx.Values.global.namespace -> global.namespace
     """
     paths = set()
     
