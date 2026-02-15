@@ -13,6 +13,7 @@ workload:
       containers:
         main:
           env:
+            # DEVNOTE: Bitnami Valkey keeps REDIS_* env variable names for compatibility.
             REDIS_REPLICATION_MODE: master
             ALLOW_EMPTY_PASSWORD: "yes"
             REDIS_PORT: "{{ .Values.service.main.ports.main.targetPort }}"
