@@ -32,6 +32,10 @@
         "description": "Configuration for `gateway.main.gatewayClassName`.",
         "minLength": 1
       },
+      "targetSelector": {
+        "type": "string",
+        "description": "Configuration for `gateway.main.targetSelector`. Name-based selector for automatic GatewayClass linking."
+      },
       "listeners": {
         "type": "array",
         "items": {
