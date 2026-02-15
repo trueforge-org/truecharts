@@ -125,10 +125,7 @@ mariadb:
   rootPassword: variableName
 metrics:
   objectName:
-    PrometheusRule: variableName
     enabled: variableName
-    nameOverride: variableName
-    type: variableName
 mongodb:
   creds:
     complete: variableName
@@ -231,7 +228,6 @@ resources:
 route:
   objectName:
     enabled: variableName
-    nameOverride: variableName
 secret: {}
 securityContext:
   container:

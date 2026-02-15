@@ -88,6 +88,7 @@ def extract_variable_assignments(content: str) -> Dict[str, str]:
     
     # Pattern 2: range $varName := $otherVar.property
     # This iterates over a property of another variable
+    # When ranging over a collection, assume items have variable names (add objectName)
     range_var_pattern = r'range\s+(?:\$[a-zA-Z_][a-zA-Z0-9_]*,\s+)?\$([a-zA-Z_][a-zA-Z0-9_]*)\s+:=\s+\$([a-zA-Z_][a-zA-Z0-9_]*)\.([a-zA-Z_][a-zA-Z0-9_]*(?:\.[a-zA-Z_][a-zA-Z0-9_]*)*)'
     
     for match in re.finditer(range_var_pattern, content):
@@ -96,18 +97,20 @@ def extract_variable_assignments(content: str) -> Dict[str, str]:
         property_path = match.group(3)
         
         if source_var in var_map:
-            # The new variable represents elements of source_var.property
+            # When we range over a property, the items typically have variable names
+            # Add .objectName to represent the variable-named items in the collection
             var_map[var_name] = f"{var_map[source_var]}.{property_path}.objectName"
     
-    # Pattern 3: $varName := $otherVar (simple assignment/copy)
-    simple_assign_pattern = r'\$([a-zA-Z_][a-zA-Z0-9_]*)\s+:=\s+(?:.*?)\$([a-zA-Z_][a-zA-Z0-9_]*)(?:\s|$|\)|-|})'
+    # Pattern 3: $varName := (mustDeepCopy|tpl|...) $otherVar
+    # Assignment with function call - look for common helm functions
+    func_assign_pattern = r'\$([a-zA-Z_][a-zA-Z0-9_]*)\s+:=\s+\([a-zA-Z]+\s+\$([a-zA-Z_][a-zA-Z0-9_]*)\)'
     
-    for match in re.finditer(simple_assign_pattern, content):
+    for match in re.finditer(func_assign_pattern, content):
         var_name = match.group(1)
         source_var = match.group(2)
         
         if source_var in var_map and var_name not in var_map:
-            # Inherit the mapping from source variable
+            # Inherit the mapping from source variable (e.g., mustDeepCopy preserves structure)
             var_map[var_name] = var_map[source_var]
     
     return var_map
