@@ -512,6 +512,44 @@ imagePullSecret: {}
 # -- (docs/configmap.md)
 configmap: {}
 
+# -- Generate ConfigMaps from a folder in the Helm chart's filesystem
+# Your files will need to be two levels deep from the base path.
+# For example, if you set basePath to `files/configMaps/`, you should have this file tree:
+# files/configMaps/:
+# └── configmap1
+#     ├── file1
+#     └── file2
+# This will generate a ConfigMap named `configmap1` with keys `file1` and `file2`.
+configMapsFromFolder:
+  enabled: false
+  # -- The path in your parent chart's filesystem where you can add files to be converted into individual ConfigMaps.
+  basePath: ""
+  # -- Define overrides for the generated ConfigMaps, each key is the name of a folder in `basePath`
+  configMapsOverrides: {}
+  #   test:
+  #     # All ConfigMaps support a `forceRename` field, which allows you to rename the ConfigMap
+  #     forceRename: null
+  #     annotations:
+  #       test: test
+  #     labels:
+  #       test: test
+  #     # Configure how the individual files are added to the ConfigMap
+  #     fileAttributeOverrides:
+  #       # The key is the name of the file inside the ConfigMap's folder
+  #       test.tpl:
+  #         # If true the file won't be added to the ConfigMap
+  #         exclude: false
+  #         # If your file is a binary file like an image, set this to true. Takes precedence over `escaped`
+  #         binary: false
+  #         # If your file contains `gotpl` syntax that you don't want templated by Helm, set this to true
+  #         escaped: true
+  #       test.txt:
+  #         exclude: true
+  #   test2:
+  #     fileAttributeOverrides:
+  #       image.png:
+  #         binary: true
+
 # -- (docs/secret.md)
 secret: {}
 
