@@ -7,6 +7,9 @@ release:
 tests:
   - it: should create service and workload for valkey dependency
     set:
+      common:
+        workload: {}
+        service: {}
       dependencies:
         valkey:
           enabled: true
@@ -55,6 +58,9 @@ tests:
 
   - it: should create init container for valkey wait
     set:
+      common:
+        workload: {}
+        service: {}
       dependencies:
         valkey:
           enabled: true
