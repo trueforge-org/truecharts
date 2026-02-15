@@ -17,7 +17,7 @@ apiVersion: v2
 appVersion: 3.5.4
 dependencies:
   - name: common
-    version: 28.29.49
+    version: 28.29.59
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -30,15 +30,15 @@ dependencies:
     alias: ""
     tags: []
     import-values: []
-  - name: redis
-    version: 17.15.22
+  - name: valkey
+    version: 0.0.2
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
-    alias: ""
+    alias: redis
     tags: []
     import-values: []
   - name: mongodb
-    version: 16.14.23
+    version: 16.14.24
     repository: oci://oci.trueforge.org/truecharts
     condition: mongodb.enabled
     alias: ""
@@ -60,5 +60,4 @@ sources:
   - https://ghcr.io/miguelndecarvalho/speedtest-exporter
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/app-template
 type: application
-version: 15.29.85
-
+version: 15.29.88

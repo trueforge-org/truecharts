@@ -1,0 +1,45 @@
+annotations:
+  artifacthub.io/links: |-
+    - name: support
+    url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: incubator
+  trueforge.org/category: database
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: incubator
+apiVersion: v2
+appVersion: latest
+dependencies:
+  - name: common
+    version: 28.29.59
+    repository: oci://oci.trueforge.org/truecharts
+    condition: ""
+    alias: ""
+    tags: []
+    import-values: []
+deprecated: false
+description: Open source, advanced key-value store.
+home: https://trueforge.org/truetech/truecharts/charts/incubator/valkey
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/valkey.webp
+keywords:
+  - valkey
+  - keyvalue
+  - database
+kubeVersion: '>=1.27.0-0'
+maintainers:
+  - name: TrueCharts
+    email: info@trueforge.org
+    url: https://trueforge.org
+name: valkey
+sources:
+  - https://github.com/bitnami/containers/tree/main/bitnami/valkey
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/incubator/valkey
+  - https://hub.docker.com/r/bitnamisecure/valkey
+type: application
+version: 0.0.3

@@ -1,7 +1,8 @@
+# yaml-language-server: $schema=./values.schema.json
 image:
   pullPolicy: IfNotPresent
   repository: yourls
-  tag: 1.10.3@sha256:90ad61d4f1492276d825762c7f83db8f9fe6bdfca762d6f178d30c17be8f669d
+  tag: 1.10.3@sha256:16020cbaac99df421f7731237696a37c4652d540a8903ddebfdb1311563e37b1
 securityContext:
   container:
     readOnlyRootFilesystem: false
