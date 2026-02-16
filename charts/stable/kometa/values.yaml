@@ -33,7 +33,7 @@ workload:
           args:
             - |
               echo "Creating config.yml file..."
-              if [ -f /app/config/config.yml ]; then
+              if [ -f /config/config.yml ]; then
                 echo "Config file exists! Skipping..."
               else
                 echo "Config file is missing, getting a new one!"
