@@ -17,36 +17,36 @@ apiVersion: v2
 appVersion: 5.0.0
 dependencies:
   - name: common
-    version: 28.29.49
+    version: 28.30.2
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
-  - name: redis
-    version: 17.15.19
+  - name: valkey
+    version: 0.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
-    alias: ""
+    alias: redis
     tags: []
     import-values: []
 deprecated: false
 description: A PHP-based self-hosted URL shortener that can be used to serve shortened URLs under your own custom domain.
-home: https://truecharts.org/charts/stable/shlink
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/shlink.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/shlink
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/shlink.webp
 keywords:
   - url
   - shortener
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: shlink
 sources:
   - https://github.com/shlinkio/shlink
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/shlink
   - https://hub.docker.com/r/shlinkio/shlink
 type: application
-version: 19.0.19
+version: 19.2.1
 

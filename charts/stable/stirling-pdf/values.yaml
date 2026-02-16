@@ -1,15 +1,16 @@
+# yaml-language-server: $schema=./values.schema.json
 image:
   repository: ghcr.io/stirling-tools/s-pdf
   pullPolicy: IfNotPresent
-  tag: 2.4.3-ultra-lite@sha256:ee96fd3fad7107cc17e3c12723c9175daa5381ba6be797750870f71dd455030f
+  tag: 2.4.6-ultra-lite@sha256:b3a449c8224852ae0307c0fc68b2b3b3f4ea3034ad6dd17d0c5edf80e70a00de
 fatImage:
   repository: ghcr.io/stirling-tools/s-pdf
   pullPolicy: IfNotPresent
-  tag: 2.4.3-fat@sha256:9373243f49fe38e02308172a5f2c98d67c665d27ef7c82002cc7c61670b5c6d1
+  tag: 2.4.6-fat@sha256:ae42bd216f529ea3dc54b31e62c74e5600c8e5daf9d32e1453c6bae298ee0b1a
 fullImage:
   repository: ghcr.io/stirling-tools/s-pdf
   pullPolicy: IfNotPresent
-  tag: 2.4.3@sha256:515364d7c2005fe5dcfdf56b4750b165875bbb6a0a1dced1957c59c8cde61c07
+  tag: 2.4.6@sha256:073023f9829b96a5e64ec3cdbf2f441e65feb8b89bfbebeae217b96564b546e9
 securityContext:
   container:
     runAsNonRoot: false

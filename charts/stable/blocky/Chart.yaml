@@ -17,31 +17,31 @@ apiVersion: v2
 appVersion: 0.28.2
 dependencies:
   - name: common
-    version: 28.29.49
+    version: 28.30.2
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
-  - name: redis
-    version: 17.15.19
+  - name: valkey
+    version: 0.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
-    alias: ""
+    alias: redis
     tags: []
     import-values: []
 deprecated: false
 description: Blocky is a DNS proxy, DNS enhancer and ad-blocker for the local network written in Go
-home: https://truecharts.org/charts/stable/blocky
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/blocky.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/blocky
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/blocky.webp
 keywords:
   - dns
   - blocky
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: blocky
 sources:
   - https://0xerr0r.github.io/blocky/
@@ -51,5 +51,5 @@ sources:
   - https://github.com/Mozart409/blocky-frontend
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/blocky
 type: application
-version: 19.5.26
+version: 19.7.1
 

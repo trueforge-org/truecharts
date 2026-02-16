@@ -17,43 +17,43 @@ apiVersion: v2
 appVersion: 2024.12.0
 dependencies:
   - name: common
-    version: 28.29.49
+    version: 28.30.2
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.11.17
+    version: 17.12.1
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
     tags: []
     import-values: []
-  - name: redis
-    version: 17.15.19
+  - name: valkey
+    version: 0.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
-    alias: ""
+    alias: redis
     tags: []
     import-values: []
 deprecated: false
 description: Welcome to the free social web
-home: https://truecharts.org/charts/stable/friendica
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/friendica.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/friendica
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/friendica.webp
 keywords:
   - friend
   - social
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: friendica
 sources:
   - https://friendi.ca/
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/friendica
   - https://hub.docker.com/_/friendica
 type: application
-version: 19.23.34
+version: 19.25.2
 

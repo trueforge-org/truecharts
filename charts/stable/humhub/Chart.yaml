@@ -17,43 +17,43 @@ apiVersion: v2
 appVersion: 1.17.2
 dependencies:
   - name: common
-    version: 28.29.49
+    version: 28.30.2
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.11.17
+    version: 17.12.1
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
     tags: []
     import-values: []
-  - name: redis
-    version: 17.15.19
+  - name: valkey
+    version: 0.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
-    alias: ""
+    alias: redis
     tags: []
     import-values: []
 deprecated: false
 description: A feature rich and highly flexible OpenSource Social Network Kit written in PHP.
-home: https://truecharts.org/charts/stable/humhub
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/humhub.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/humhub
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/humhub.webp
 keywords:
   - humhub
   - Network-Web
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: humhub
 sources:
   - https://ghcr.io/mriedmann/humhub-nginx
   - https://ghcr.io/mriedmann/humhub-phponly
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/humhub
 type: application
-version: 12.23.29
+version: 12.25.2
 

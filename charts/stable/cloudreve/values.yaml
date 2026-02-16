@@ -1,7 +1,8 @@
+# yaml-language-server: $schema=./values.schema.json
 image:
   pullPolicy: IfNotPresent
   repository: docker.io/cloudreve/cloudreve
-  tag: 4.12.1@sha256:6fc2945b016005d69de1bfd9c327c66a58362d69fc4ee662414f0e3ee1296a41
+  tag: 4.14.1@sha256:bfe2a29707f93c16253d293b59bc28133400b35398de117a8c5473130179e5cc
 workload:
   main:
     podSpec:

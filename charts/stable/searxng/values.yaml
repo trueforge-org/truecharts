@@ -1,7 +1,8 @@
+# yaml-language-server: $schema=./values.schema.json
 image:
   pullPolicy: IfNotPresent
   repository: docker.io/searxng/searxng
-  tag: latest@sha256:771d475fd7a6b9e254ad725220f977303cdb132fb2136401ea806553330214eb
+  tag: latest@sha256:60055af6f2f1ca14b488d9c0f47a019d1dbaf15b4f6547a7194253bf2ab94744
 workload:
   main:
     podSpec:

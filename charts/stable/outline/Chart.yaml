@@ -14,39 +14,39 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 1.4.0
+appVersion: 1.5.0
 dependencies:
   - name: common
-    version: 28.29.49
+    version: 28.30.2
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
-  - name: redis
-    version: 17.15.19
+  - name: valkey
+    version: 0.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
-    alias: ""
+    alias: redis
     tags: []
     import-values: []
 deprecated: false
 description: A fast, collaborative, knowledge base for your team built using React and Node.js.
-home: https://truecharts.org/charts/stable/outline
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/outline.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/outline
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/outline.webp
 keywords:
   - outline
   - knowledge
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: outline
 sources:
   - https://github.com/outline/outline
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/outline
   - https://hub.docker.com/r/outlinewiki/outline
 type: application
-version: 18.2.3
+version: 18.4.1
 

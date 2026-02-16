@@ -14,17 +14,17 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 5.7.0
+appVersion: 5.7.1
 dependencies:
   - name: common
-    version: 28.29.49
+    version: 28.30.2
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.11.17
+    version: 17.12.1
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -48,5 +48,5 @@ sources:
   - https://github.com/matomo-org/matomo
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/matomo
 type: application
-version: 17.21.2
+version: 17.23.3
 

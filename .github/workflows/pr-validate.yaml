@@ -18,7 +18,7 @@ jobs:
       addedOrModifiedCharts: ${{ steps.collect-changes.outputs.addedOrModifiedCharts }}
     steps:
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Collect changes
         id: collect-changes
@@ -59,7 +59,7 @@ jobs:
       pr-title: ${{ github.event.pull_request.title }}
     steps:
       - name: Get repo
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: verbose head git commit message

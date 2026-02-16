@@ -17,21 +17,21 @@ apiVersion: v2
 appVersion: 2.4.0
 dependencies:
   - name: common
-    version: 28.29.49
+    version: 28.30.2
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
-  - name: redis
-    version: 17.15.19
+  - name: valkey
+    version: 0.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
-    alias: ""
+    alias: redis
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.11.17
+    version: 17.12.1
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -39,23 +39,23 @@ dependencies:
     import-values: []
 deprecated: false
 description: Mixpost it's the coolest Self hosted social media management software.
-home: https://truecharts.org/charts/stable/mixpost
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/mixpost.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/mixpost
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/mixpost.webp
 keywords:
   - mixpost
   - twitter
   - facebook
   - socialmedia
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: mixpost
 sources:
   - https://github.com/inovector/mixpost
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mixpost
   - https://hub.docker.com/r/inovector/mixpost
 type: application
-version: 6.24.28
+version: 6.26.2
 

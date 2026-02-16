@@ -1,7 +1,8 @@
+# yaml-language-server: $schema=./values.schema.json
 image:
   pullPolicy: IfNotPresent
   repository: adminer
-  tag: latest@sha256:07a2ed7fde0362826b1df5a589ae07fc5003575b44578a06bc7da717d8547562
+  tag: latest@sha256:2fb88b98da9f0ae0157d8fcb73f447a0747b09ee8d2ff8a8e0695b30afed2116
 securityContext:
   container:
     readOnlyRootFilesystem: false

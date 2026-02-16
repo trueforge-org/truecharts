@@ -14,33 +14,33 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 2.5.2
+appVersion: 2.5.6
 dependencies:
   - name: common
-    version: 28.29.49
+    version: 28.30.2
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
-  - name: redis
-    version: 17.15.19
+  - name: valkey
+    version: 0.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
-    alias: ""
+    alias: redis
     tags: []
     import-values: []
 deprecated: false
 description: High performance self-hosted photo and video backup solution.
-home: https://truecharts.org/charts/stable/immich
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/immich.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/immich
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/immich.webp
 keywords:
   - photos
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: immich
 sources:
   - https://ghcr.io/immich-app/immich-machine-learning
@@ -48,5 +48,5 @@ sources:
   - https://github.com/immich-app/immich
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/immich
 type: application
-version: 25.23.3
+version: 25.25.1
 
