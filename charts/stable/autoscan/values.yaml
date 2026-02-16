@@ -1,7 +1,8 @@
+# yaml-language-server: $schema=./values.schema.json
 image:
   pullPolicy: IfNotPresent
   repository: oci.trueforge.org/containerforge/autoscan
-  tag: 1.4.0@sha256:ee40919cc93dbe1646677d3c75d732c9b82b41df276919f32b7dfae705755ef4
+  tag: 1.4.0@sha256:035cd42b3be905af84ccf8078599dbc6c5ce2e71344649ae47ee797e87077e8f
 securityContext:
   container:
     readOnlyRootFilesystem: false

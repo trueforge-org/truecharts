@@ -51,7 +51,7 @@ jobs:
       detected6: ${{ steps.list-changed.outputs.detected6 }}
     steps:
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
           ref: ${{ inputs.checkoutCommit }}
@@ -69,10 +69,15 @@ jobs:
         if: inputs.chartChangesDetected == 'true'
         shell: bash
         run: |
-          # Get the PR title
-          PR_TITLE="${{ github.event.pull_request.title }}"
-          # Check if the PR title contains "chart common"
-          if [[ "$PR_TITLE" == *"chart common"* ]]; then
+          skip_prefix='fix(helm-deps): update chart common'
+          pr_title='${{ github.event.pull_request.title }}'
+          commit_title="$(git show -s --format=%s)"
+
+          echo "PR title: ${pr_title}"
+          echo "Commit title: ${commit_title}"
+
+          if [[ "$pr_title" == "$skip_prefix"* || "$commit_title" == "$skip_prefix"* ]]; then
+                echo "Skipping install tests for helm-deps common update; linting only"
                 echo "charts1=[]" >> $GITHUB_OUTPUT
                 echo "charts2=[]" >> $GITHUB_OUTPUT
                 echo "charts3=[]" >> $GITHUB_OUTPUT
@@ -135,7 +140,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
           ref: ${{ inputs.checkoutCommit }}
@@ -214,7 +219,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
           ref: ${{ inputs.checkoutCommit }}
@@ -286,7 +291,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
           ref: ${{ inputs.checkoutCommit }}
@@ -358,7 +363,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
           ref: ${{ inputs.checkoutCommit }}
@@ -430,7 +435,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
           ref: ${{ inputs.checkoutCommit }}
@@ -503,7 +508,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
           ref: ${{ inputs.checkoutCommit }}

@@ -75,7 +75,7 @@ function helm_lint() {
 
     # TODO: If there are ci/*values.yaml files, lint those
     # and skip linting the top-level values.yaml.
-    if [[ ! $(ls $chart_path/ci/*values.yaml) ]]; then
+    if ! compgen -G "$chart_path/ci/*values.yaml" >/dev/null; then
         if echo "$helm_lint_output" | grep -q "Fail:"; then
             helm_lint_exit_code=1
         fi

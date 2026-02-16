@@ -1,6 +1,7 @@
+# yaml-language-server: $schema=./values.schema.json
 image:
   repository: ghcr.io/goauthentik/server
-  tag: 2025.12.2@sha256:7cc1bc10aa2b11b998fb087d3ec4d32db31a3da9871d1ff08b95a6e94df991fd
+  tag: 2025.12.4@sha256:33a92b246b798f23931ce62027e045ecf302c3bc198b6389225973db6448a886
   pullPolicy: IfNotPresent
 geoipImage:
   repository: ghcr.io/maxmind/geoipupdate
@@ -8,15 +9,15 @@ geoipImage:
   pullPolicy: IfNotPresent
 ldapImage:
   repository: ghcr.io/goauthentik/ldap
-  tag: 2025.12.2@sha256:029f52371f932d0fc107a1f4cc5f383b96597e5d9512f192ca7c29ecd5ca53be
+  tag: 2025.12.4@sha256:1215d9168512e4c3aa2caf9431fa5064e5e2617ead2804dc8fc516754fc204b9
   pullPolicy: IfNotPresent
 radiusImage:
   repository: ghcr.io/goauthentik/radius
-  tag: 2025.12.2@sha256:70119649b22ef4da09f23f8f30e27e1e6520ea3871b3bb1dc0e1fddf5d4a6b8a
+  tag: 2025.12.4@sha256:01c7bff17aa21f76a64a94d12c36bb044648e39f4ec7bbe843a1f6d0e2ddee13
   pullPolicy: IfNotPresent
 proxyImage:
   repository: ghcr.io/goauthentik/proxy
-  tag: 2025.12.2@sha256:738116807cb219ed2d0ded936377d4169a8b7d6336152b00dc77b70561d02a79
+  tag: 2025.12.4@sha256:585fc29e23c92eb124c1bd67878821850759461899bb0a8aa7b5c3ac91edc0a4
   pullPolicy: IfNotPresent
 authentik:
   credentials:

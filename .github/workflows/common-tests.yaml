@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Filter paths
         id: filter
@@ -49,10 +49,11 @@ jobs:
       matrix:
         helm-version:
           - v3.14.0
-          - v3.18.6
+          - v3.20.0
+          - v4.1.0
     steps:
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
 
@@ -82,16 +83,17 @@ jobs:
     name: Unit Tests
     runs-on: ubuntu-24.04
     env:
-      helmUnitVersion: 0.8.1
+      helmUnitVersion: 1.0.3
     strategy:
       fail-fast: false
       matrix:
         helm-version:
           - v3.14.0
-          - v3.18.6
+          - v3.20.0
+          - v4.1.0
     steps:
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
 
@@ -113,7 +115,19 @@ jobs:
       - name: Run Unittests
         shell: bash
         run: |
-          (helm unittest -h > /dev/null) || helm plugin install https://github.com/helm-unittest/helm-unittest --version v${helmUnitVersion} || (sleep 10 && helm plugin install https://github.com/helm-unittest/helm-unittest --version v${helmUnitVersion}) || echo "finished unittest reinstall tries"
+          set -x
+          helm_ver=${{ matrix.helm-version}}
+          helm_ver="${helm_ver#v}"
+
+          VERIFY_FLAG=""
+          if [ "$(printf '%s\n' "4.0.0" "$helm_ver" | sort -V | head -n1)" = "4.0.0" ]; then
+            VERIFY_FLAG="--verify=false"
+          fi
+
+          (helm unittest -h > /dev/null) || \
+            helm plugin install https://github.com/helm-unittest/helm-unittest --version=v${helmUnitVersion} $VERIFY_FLAG || \
+            (sleep 10 && helm plugin install https://github.com/helm-unittest/helm-unittest --version=v${helmUnitVersion} $VERIFY_FLAG) || \
+            echo "finished unittest reinstall tries"
 
           # Run tests
           cd charts/library/common-test/
@@ -128,15 +142,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # We test the latest k3s version and the lowest supported by either the oldest supported SCALE or FluxCD release
+        # We test the latest k3s version and the lowest supported
         k3s-version:
           - v1.27
-          - v1.32
+          - v1.35
           - latest
-        # We test the latest k3s version and the lowest supported by either the oldest supported SCALE or FluxCD release
+        # We test the latest helm version and the lowest supported
         helm-version:
           - v3.14.0
-          - v3.18.6
+          - v3.20.0
+          - v4.1.0
         values:
           - basic-values.yaml
           - configmap-values.yaml
@@ -149,7 +164,8 @@ jobs:
           - persistence-values.yaml
           - extra-containers-values.yaml
           - rbac-values.yaml
-          - ingress-values.yaml
+          # Only run ingress tests without as no valid certissuer -> helm v4 waits for cert to be ready
+          - ingress-wo-tls-values.yaml
           - networkPolicy-values.yaml
           # TODO: broken
           # - codeserver-values.yaml
@@ -166,7 +182,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
 

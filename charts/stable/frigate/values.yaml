@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=./values.schema.json
 image:
   repository: ghcr.io/blakeblackshear/frigate
   pullPolicy: IfNotPresent
@@ -29,7 +30,7 @@ workload:
         init-config:
           enabled: "{{ not .Values.frigateConfig }}"
           type: init
-          imageSelector: alpineImage
+          imageSelector: ubuntuImage
           command:
             - /bin/sh
             - -c

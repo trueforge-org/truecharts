@@ -2,26 +2,32 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/category: unsorted
+  truecharts.org/max_helm_version: "3.17"
+  truecharts.org/max_kubernetes_version: 1.32.0
+  truecharts.org/min_helm_version: "3.14"
+  truecharts.org/min_kubernetes_version: 1.24.0
+  truecharts.org/train: stable
   trueforge.org/category: metrics
-  trueforge.org/max_helm_version: "3.20"
+  trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 1.13.5
+appVersion: 1.13.9
 dependencies:
   - name: common
-    version: 28.29.40
+    version: 28.30.2
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
-  - name: redis
-    version: 17.15.18
+  - name: valkey
+    version: 0.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
-    alias: ""
+    alias: redis
     tags: []
     import-values: []
 deprecated: false
@@ -31,7 +37,7 @@ icon: https://trueforge.org/img/hotlink-ok/chart-icons/speedtest-tracker.webp
 keywords:
   - speedtest
   - speedtest-tracker
-kubeVersion: '>=1.24.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
     email: info@trueforge.org
@@ -43,5 +49,5 @@ sources:
   - https://github.com/linuxserver/docker-speedtest-tracker
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/speedtest-tracker
 type: application
-version: 8.33.27
+version: 8.35.1
 
