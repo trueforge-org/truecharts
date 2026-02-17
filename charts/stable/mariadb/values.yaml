@@ -1,41 +1,32 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
-  repository: docker.io/bitnamisecure/mariadb
+  repository: oci.trueforge.org/containerforge/mariadb
   pullPolicy: IfNotPresent
-  tag: latest@sha256:78d434eace71538f7f8b166d8a3d74b9e498891bfa20801146e61414355cbc48
+  tag: 11.4.8-r0
 workload:
   main:
     podSpec:
       containers:
         main:
           env:
-            MARIADB_PASSWORD: "{{ .Values.password }}"
-            MARIADB_ROOT_PASSWORD: "{{ .Values.rootPassword }}"
-            MARIADB_USER: "{{ .Values.mariadbUsername }}"
-            MARIADB_DATABASE: "{{ .Values.mariadbDatabase }}"
+            MYSQL_PASSWORD: "{{ .Values.password }}"
+            MYSQL_ROOT_PASSWORD: "{{ .Values.rootPassword }}"
+            MYSQL_USER: "{{ .Values.mariadbUsername }}"
+            MYSQL_DATABASE: "{{ .Values.mariadbDatabase }}"
             MARIADB_EXTRA_FLAGS: "--init-file=/init/passinit.sql"
           probes:
             liveness:
               enabled: true
-              type: exec
-              command:
-                - /bin/bash
-                - -ec
-                - "until /opt/bitnami/scripts/mariadb/healthcheck.sh; do sleep 2; done"
+              type: tcp
+              port: "{{ .Values.service.main.ports.main.port }}"
             readiness:
               enabled: true
-              type: exec
-              command:
-                - /bin/bash
-                - -ec
-                - "until /opt/bitnami/scripts/mariadb/healthcheck.sh; do sleep 2; done"
+              type: tcp
+              port: "{{ .Values.service.main.ports.main.port }}"
             startup:
               enabled: true
-              type: exec
-              command:
-                - /bin/bash
-                - -ec
-                - "until /opt/bitnami/scripts/mariadb/healthcheck.sh; do sleep 2; done"
+              type: tcp
+              port: "{{ .Values.service.main.ports.main.port }}"
 service:
   main:
     ports:
@@ -49,7 +40,7 @@ securityContext:
 persistence:
   data:
     enabled: true
-    mountPath: "/bitnami/mariadb"
+    mountPath: "/config"
   passinit:
     enabled: true
     type: configmap
