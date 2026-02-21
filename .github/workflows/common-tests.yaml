@@ -41,7 +41,8 @@ jobs:
 
   lint:
     name: Lint Common
-    runs-on: ubuntu-24.04
+    runs-on:
+      group: default
     needs: check_changes
     if: needs.check_changes.outputs.changes_detected == 'true'
     strategy:
@@ -81,7 +82,8 @@ jobs:
     needs:
       - lint
     name: Unit Tests
-    runs-on: ubuntu-24.04
+    runs-on:
+      group: default
     env:
       helmUnitVersion: 1.0.3
     strategy:
@@ -138,7 +140,8 @@ jobs:
     needs:
       - lint
     name: Install Charts
-    runs-on: ubuntu-24.04
+    runs-on:
+      group: default
     strategy:
       fail-fast: false
       matrix:
