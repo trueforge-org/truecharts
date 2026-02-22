@@ -19,8 +19,7 @@ on:
 jobs:
   lint-and-verify:
     name: Lint Charts and Verify Dependencies
-    runs-on:
-      group: default
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout [master]
         if: inputs.chartChangesDetected == 'true'
