@@ -17,14 +17,14 @@ apiVersion: v2
 appVersion: 1.10.3
 dependencies:
   - name: common
-    version: 28.30.2
+    version: 28.31.19
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.12.2
+    version: 17.13.0
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -50,5 +50,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/yourls
   - https://hub.docker.com/_/yourls
 type: application
-version: 10.20.3
+version: 10.22.0
 

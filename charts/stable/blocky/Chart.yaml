@@ -17,14 +17,14 @@ apiVersion: v2
 appVersion: 0.28.2
 dependencies:
   - name: common
-    version: 28.30.2
+    version: 28.31.19
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: valkey
-    version: 0.1.1
+    version: 0.2.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: redis
@@ -51,5 +51,5 @@ sources:
   - https://github.com/Mozart409/blocky-frontend
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/blocky
 type: application
-version: 19.7.2
+version: 19.9.0
 
