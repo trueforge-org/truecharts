@@ -3,12 +3,6 @@ image:
   repository: docker.io/baserow/baserow
   tag: 2.1.1@sha256:3f748a6f2812ae2b784278934cabd4aed7ee54fd3436c18e4fdea70696801616
   pullPolicy: IfNotPresent
-securityContext:
-  container:
-    readOnlyRootFilesystem: false
-    runAsNonRoot: false
-    runAsUser: 0
-    runAsGroup: 0
 service:
   main:
     ports:
