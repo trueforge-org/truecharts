@@ -15,3 +15,7 @@ persistence:
     enabled: true
     type: emptyDir
     mountPath: "/var/cache/nginx"
+  config:
+    enabled: true
+    type: emptyDir
+    mountPath: /config
