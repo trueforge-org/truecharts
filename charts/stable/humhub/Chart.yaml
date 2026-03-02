@@ -24,14 +24,14 @@ dependencies:
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.14.2
+    version: 17.15.0
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
     tags: []
     import-values: []
   - name: valkey
-    version: 0.3.1
+    version: 0.4.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: redis
@@ -55,5 +55,5 @@ sources:
   - https://ghcr.io/mriedmann/humhub-phponly
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/humhub
 type: application
-version: 12.31.0
+version: 12.32.0
 
