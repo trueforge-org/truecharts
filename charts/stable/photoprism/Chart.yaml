@@ -17,14 +17,14 @@ apiVersion: v2
 appVersion: 251130.0.0
 dependencies:
   - name: common
-    version: 28.32.5
+    version: 28.33.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.14.0
+    version: 17.15.0
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -50,5 +50,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/photoprism
   - https://hub.docker.com/r/photoprism/photoprism
 type: application
-version: 28.6.1
+version: 28.8.0
 

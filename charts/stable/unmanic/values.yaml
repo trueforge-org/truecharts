@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
   repository: docker.io/josh5/unmanic
-  tag: 0.3.1@sha256:3c7d1013770e6f5a97199b555851b74674d8ee1df9d616c007f060abcf2bd1a8
+  tag: 0.4.0@sha256:368b98c1ec7f188882311c8f5d60ed8724b0a4f65685575341b1abf98b0358bd
   pullPolicy: IfNotPresent
 service:
   main:
@@ -9,15 +9,6 @@ service:
       main:
         port: 10157
         targetPort: 8888
-configmap:
-  patch:
-    enabled: true
-    data:
-      10-patch.sh: |
-        chmod +x /etc/cont-init.d/20-config
-        chmod +x /etc/cont-init.d/30-patch-nvidia
-        chmod +x /etc/cont-init.d/60-custom-setup-script
-        chmod +x /etc/services.d/unmanic/run
 persistence:
   config:
     enabled: true
@@ -32,20 +23,3 @@ persistence:
     enabled: true
     mountPath: "/tmp/unmanic"
     type: emptyDir
-  varrun:
-    enabled: false
-  patch:
-    enabled: true
-    type: configmap
-    objectName: patch
-    mountPath: /etc/cont-init.d/10-patch.sh
-    subPath: 10-patch.sh
-    readOnly: true
-    defaultMode: "0755"
-
-securityContext:
-  container:
-    readOnlyRootFilesystem: false
-    runAsNonRoot: false
-    runAsUser: 0
-    runAsGroup: 0

@@ -17,14 +17,14 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 28.32.5
+    version: 28.33.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: valkey
-    version: 0.3.0
+    version: 0.4.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: redis
@@ -50,5 +50,5 @@ sources:
   - https://hub.docker.com/r/browserless/chrome
   - https://hub.docker.com/r/diygod/rsshub
 type: application
-version: 16.33.1
+version: 16.35.0
 
