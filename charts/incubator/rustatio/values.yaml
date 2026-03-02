@@ -1,0 +1,65 @@
+# yaml-language-server: $schema=./values.schema.json
+image:
+  repository: ghcr.io/takitsu21/rustatio
+  pullPolicy: IfNotPresent
+  tag: 2.1.2
+
+rustatio:
+  logLevel: trace
+  authToken: "CHANGE_ME"
+  watchAutoStart: false
+
+securityContext:
+  container:
+    PUID: 1000
+    readOnlyRootFilesystem: false
+    runAsNonRoot: false
+    runAsUser: 0
+    runAsGroup: 0
+  pod:
+    fsGroup: 1000
+
+service:
+  main:
+    ports:
+      main:
+        protocol: http
+        port: 8080
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          probes:
+            liveness:
+              enabled: true
+              type: http
+              path: /health
+              port: "{{ .Values.service.main.ports.main.port }}"
+            readiness:
+              enabled: true
+              type: http
+              path: /health
+              port: "{{ .Values.service.main.ports.main.port }}"
+            startup:
+              enabled: true
+              type: http
+              path: /health
+              port: "{{ .Values.service.main.ports.main.port }}"
+          env:
+            PORT: "{{ .Values.service.main.ports.main.port }}"
+            RUST_LOG: "{{ .Values.rustatio.logLevel }}"
+            WATCH_AUTO_START: "{{ .Values.rustatio.watchAutoStart }}"
+            AUTH_TOKEN:
+              secretKeyRef:
+                name: rustatio-secrets
+                key: AUTH_TOKEN
+
+persistence:
+  data:
+    enabled: true
+    mountPath: /data
+  torrents:
+    enabled: false
+    mountPath: /torrents
