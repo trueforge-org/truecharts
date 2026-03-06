@@ -38,7 +38,7 @@ For information about the common chart and all defaults included with it, please
 
 - See the [Website](https://trueforge.org)
 - Check our [Discord](https://discord.gg/tVsPTHWTtr)
-- Open a [issue](https://github.com/trueforge-org/truecharts/issues/new/choose)
+- Open an [issue](https://github.com/trueforge-org/truecharts/issues/new/choose)
 
 ---
 
