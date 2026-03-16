@@ -283,7 +283,7 @@ serviceAccount:
     primary: true
 
 # -- Create a ClusterRole and ClusterRoleBinding
-# @default -- See below
+# used by k8sgateway
 rbac:
   main:
     # -- Enables or disables the ClusterRole and ClusterRoleBinding
@@ -292,14 +292,16 @@ rbac:
     clusterWide: true
     # -- Set Rules on the ClusterRole
     rules:
+      # General CRDs
       - apiGroups:
-          - ""
+          - apiextensions.k8s.io
         resources:
-          - services
-          - namespaces
+          - customresourcedefinitions
         verbs:
+          - get
           - list
           - watch
+      # Ingress
       - apiGroups:
           - extensions
           - networking.k8s.io
@@ -308,13 +310,48 @@ rbac:
         verbs:
           - list
           - watch
+      # Service    
+      - apiGroups:
+          - ""
+        resources:
+          - services
+          - namespaces
+        verbs:
+          - list
+          - watch
+      # HTTPRoute, TLSRoute, GRPCRoute
+      - apiGroups:
+          - gateway.networking.k8s.io
+        resources:
+          - "*"
+        verbs:
+          - watch
+          - list
+      # DNSEndpoint
+      - apiGroups:
+          - externaldns.k8s.io
+        resources:
+          - dnsendpoints
+        verbs:
+          - get
+          - watch
+          - list
+      - apiGroups:
+          - externaldns.k8s.io
+        resources:
+          - dnsendpoints/status
+        verbs:
+          - "*"      
 
 k8sgateway:
   enabled: true
   # -- TTL for non-apex responses (in seconds)
   ttl: 300
-  # -- Limit what kind of resources to watch, e.g. watchedResources: ["Ingress"]
-  watchedResources: []
+  # -- Limit what kind of resources to watch, e.g. watchedResources: [ Ingress | Service | HTTPRoute | TLSRoute | GRPCRoute | DNSEndpoint ]
+  watchedResources:
+    - Ingress
+    - Service
+    - HTTPRoute
   # -- Service name of a secondary DNS server (should be `serviceName.namespace`)
   secondary: ""
   # -- Override the default `serviceName.namespace` domain apex
@@ -402,7 +439,7 @@ metrics:
 
 redis:
   enabled: true
-# CANNOT be defined in above yaml section
+
 queryLog:
   # optional one of: mysql, postgresql, csv, csv-client. If empty, log to console
   type: "postgresql"
