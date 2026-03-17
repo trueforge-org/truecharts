@@ -214,16 +214,12 @@ workload:
           probes:
             readiness:
               enabled: true
-              path: /push/test/cookie
+              type: tcp
               port: 7867
-              httpHeaders:
-                Host: kube.internal.healthcheck
             liveness:
               enabled: true
-              path: /push/test/cookie
+              type: tcp
               port: 7867
-              httpHeaders:
-                Host: kube.internal.healthcheck
             startup:
               enabled: true
               type: tcp
