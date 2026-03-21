@@ -211,6 +211,13 @@ workload:
               enabled: false
             startup:
               enabled: false
+          resources:
+            requests:
+              cpu: 10m
+              memory: 256Mi
+            limits:
+              cpu: 50m
+              memory: 512Mi
         datasources:
           enabled: true
           imageSelector: sidecarImage
@@ -241,6 +248,13 @@ workload:
               enabled: false
             startup:
               enabled: false
+          resources:
+            requests:
+              cpu: 10m
+              memory: 256Mi
+            limits:
+              cpu: 50m
+              memory: 512Mi
         alerts:
           enabled: true
           imageSelector: sidecarImage
@@ -271,6 +285,13 @@ workload:
               enabled: false
             startup:
               enabled: false
+          resources:
+            requests:
+              cpu: 10m
+              memory: 256Mi
+            limits:
+              cpu: 50m
+              memory: 512Mi
         plugins:
           enabled: true
           imageSelector: sidecarImage
@@ -301,6 +322,13 @@ workload:
               enabled: false
             startup:
               enabled: false
+          resources:
+            requests:
+              cpu: 10m
+              memory: 256Mi
+            limits:
+              cpu: 50m
+              memory: 512Mi
         notifiers:
           enabled: true
           imageSelector: sidecarImage
@@ -331,6 +359,13 @@ workload:
               enabled: false
             startup:
               enabled: false
+          resources:
+            requests:
+              cpu: 10m
+              memory: 256Mi
+            limits:
+              cpu: 50m
+              memory: 512Mi
 
 configmap:
   dashboard-provider:
