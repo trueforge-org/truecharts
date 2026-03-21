@@ -216,8 +216,8 @@ workload:
               cpu: 10m
               memory: 128Mi
             limits:
-              cpu: 50m
-              memory: 512Mi
+              cpu: 1000m
+              memory: 1536Mi
         datasources:
           enabled: true
           imageSelector: sidecarImage
@@ -253,8 +253,8 @@ workload:
               cpu: 10m
               memory: 128Mi
             limits:
-              cpu: 50m
-              memory: 512Mi
+              cpu: 1000m
+              memory: 1536Mi
         alerts:
           enabled: true
           imageSelector: sidecarImage
@@ -290,8 +290,8 @@ workload:
               cpu: 10m
               memory: 128Mi
             limits:
-              cpu: 50m
-              memory: 512Mi
+              cpu: 1000m
+              memory: 1536Mi
         plugins:
           enabled: true
           imageSelector: sidecarImage
@@ -327,8 +327,8 @@ workload:
               cpu: 10m
               memory: 128Mi
             limits:
-              cpu: 50m
-              memory: 512Mi
+              cpu: 1000m
+              memory: 1536Mi
         notifiers:
           enabled: true
           imageSelector: sidecarImage
@@ -364,8 +364,8 @@ workload:
               cpu: 10m
               memory: 128Mi
             limits:
-              cpu: 50m
-              memory: 512Mi
+              cpu: 1000m
+              memory: 1536Mi
 
 configmap:
   dashboard-provider:
