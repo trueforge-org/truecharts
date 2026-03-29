@@ -103,7 +103,6 @@ vikunja:
       enabled: true
     openid:
       enabled: false
-      redirecturl: ""
       providers: {}
       # Example configuration for multiple OpenID providers:
       # providers:
@@ -114,7 +113,10 @@ vikunja:
       #     clientid: "vikunja-client-id"
       #     clientsecret: "vikunja-client-secret"
       #     scope: "openid profile email"
+      #     usernamefallback: false
+      #     emailfallback: false
       #     forceuserinfo: false  # Optional: Set to true to always use UserInfo endpoint instead of ID token claims
+      #     requireavailability: false
       #   provider-id2:
       #     name: "Provider 2"
       #     authurl: "https://auth2.example.com"
