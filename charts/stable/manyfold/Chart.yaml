@@ -8,7 +8,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 0.135.0
+appVersion: 0.136.0
 dependencies:
   - name: common
     version: 29.0.0
@@ -18,7 +18,7 @@ dependencies:
     tags: []
     import-values: []
   - name: valkey
-    version: 1.0.0
+    version: 1.0.2
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: redis
@@ -41,5 +41,5 @@ sources:
   - https://ghcr.io/manyfold3d/manyfold
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/manyfold
 type: application
-version: 6.0.0
+version: 6.1.0
 
