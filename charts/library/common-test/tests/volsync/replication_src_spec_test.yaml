@@ -73,6 +73,11 @@ tests:
               yearly: 1
             accessModes:
               - ReadWriteOnce
+            moverResources:
+              requests:
+                cpu: 75m
+                memory: 200Mi
+              limits:
             moverSecurityContext:
               fsGroup: 568
               runAsUser: 568
@@ -150,6 +155,11 @@ tests:
               yearly: 1
             accessModes:
               - ReadWriteOnce
+            moverResources:
+              requests:
+                cpu: 75m
+                memory: 200Mi
+              limits:
             moverSecurityContext:
               fsGroup: 568
               runAsUser: 568
@@ -218,6 +228,11 @@ tests:
               yearly: 2
             accessModes:
               - ReadWriteOnce
+            moverResources:
+              requests:
+                cpu: 75m
+                memory: 200Mi
+              limits:
             moverSecurityContext:
               fsGroup: 568
               runAsUser: 568
@@ -282,6 +297,11 @@ tests:
             accessModes:
               - ReadWriteOnce
             storageClassName: somestorageclass
+            moverResources:
+              requests:
+                cpu: 75m
+                memory: 200Mi
+              limits:
             moverSecurityContext:
               fsGroup: 568
               runAsUser: 568
@@ -346,6 +366,11 @@ tests:
             accessModes:
               - ReadWriteOnce
             volumeSnapshotClassName: somevsc
+            moverResources:
+              requests:
+                cpu: 75m
+                memory: 200Mi
+              limits:
             moverSecurityContext:
               fsGroup: 568
               runAsUser: 568
@@ -412,6 +437,11 @@ tests:
               - ReadWriteOnce
             storageClassName: somestorageclass
             volumeSnapshotClassName: somevsc
+            moverResources:
+              requests:
+                cpu: 75m
+                memory: 200Mi
+              limits:
             moverSecurityContext:
               fsGroup: 568
               runAsUser: 568
@@ -498,6 +528,11 @@ tests:
               yearly: 1
             accessModes:
               - ReadWriteOnce
+            moverResources:
+              requests:
+                cpu: 75m
+                memory: 200Mi
+              limits:
             moverSecurityContext:
               fsGroup: 568
               runAsUser: 568
@@ -584,6 +619,11 @@ tests:
               yearly: 1
             accessModes:
               - ReadWriteOnce
+            moverResources:
+              requests:
+                cpu: 75m
+                memory: 200Mi
+              limits:
             moverSecurityContext:
               fsGroup: 568
               runAsUser: 568
@@ -677,6 +717,11 @@ tests:
               yearly: 1
             accessModes:
               - ReadWriteOnce
+            moverResources:
+              requests:
+                cpu: 75m
+                memory: 200Mi
+              limits:
             moverSecurityContext:
               fsGroup: 568
               runAsUser: 568
