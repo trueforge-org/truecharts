@@ -11,14 +11,14 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.0
+    version: 29.0.10
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mongodb
-    version: 17.0.2
+    version: 17.0.4
     repository: oci://oci.trueforge.org/truecharts
     condition: mongodb.enabled
     alias: ""
@@ -43,5 +43,5 @@ sources:
   - https://github.com/mongo-express/mongo-express
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mongo-express
 type: application
-version: 11.0.2
+version: 11.0.5
 

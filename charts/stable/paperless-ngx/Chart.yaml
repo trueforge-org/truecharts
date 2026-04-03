@@ -11,14 +11,14 @@ apiVersion: v2
 appVersion: 2.20.13
 dependencies:
   - name: common
-    version: 29.0.0
+    version: 29.0.10
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: valkey
-    version: 1.0.2
+    version: 1.0.3
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: redis
@@ -47,5 +47,5 @@ sources:
   - https://hub.docker.com/r/gotenberg/gotenberg
   - https://paperless-ngx.readthedocs.io/en/latest/
 type: application
-version: 13.3.1
+version: 13.3.3
 

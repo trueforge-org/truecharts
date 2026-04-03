@@ -146,9 +146,6 @@ secret:
             enabled: {{ .Values.vikunja.auth.local.enabled }}
           openid:
             enabled: {{ .Values.vikunja.auth.openid.enabled }}
-            {{- with .Values.vikunja.auth.openid.redirecturl }}
-            redirecturl: {{ . | quote }}
-            {{- end }}
             {{- with .Values.vikunja.auth.openid.providers }}
             providers:
               {{- range $key, $value := . }}
@@ -163,10 +160,25 @@ secret:
                 {{- if hasKey $value "scope" }}
                 scope: {{ $value.scope | quote }}
                 {{- end }}
+                {{- if hasKey $value "usernamefallback" }}
+                usernamefallback: {{ $value.usernamefallback }}
+                {{- else }}
+                usernamefallback: false
+                {{- end }}
+                {{- if hasKey $value "emailfallback" }}
+                emailfallback: {{ $value.emailfallback }}
+                {{- else }}
+                emailfallback: false
+                {{- end }}
                 {{- if hasKey $value "forceuserinfo" }}
                 forceuserinfo: {{ $value.forceuserinfo }}
                 {{- else }}
                 forceuserinfo: false
+                {{- end }}
+                {{- if hasKey $value "requireavailability" }}
+                requireavailability: {{ $value.requireavailability }}
+                {{- else }}
+                requireavailability: false
                 {{- end }}
               {{- end }}
             {{- end }}

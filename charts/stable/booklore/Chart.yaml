@@ -11,14 +11,14 @@ apiVersion: v2
 appVersion: 2.2.1
 dependencies:
   - name: common
-    version: 29.0.0
+    version: 29.0.10
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 18.0.2
+    version: 18.0.3
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -42,5 +42,5 @@ sources:
   - https://github.com/booklore-app/booklore
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/booklore
 type: application
-version: 4.0.2
+version: 4.0.4
 
