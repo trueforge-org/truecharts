@@ -39,18 +39,7 @@ objectData:
     {{- $_ := set $volsyncData "resources" dict -}}
   {{- end -}}
   {{/* Exclude extra resources */}}
-  {{- $_ := set $volsyncData.resources "excludeExtra" true -}}
-
-  {{/* Do not set limits by default */}}
-  {{- if not (hasKey $volsyncData.resources "limits") -}}
-    {{- $_ := set $volsyncData.resources "limits" dict -}}
-  {{- end -}}
-  {{- if not (hasKey $volsyncData.resources.limits "cpu") -}}
-    {{- $_ := set $volsyncData.resources.limits "cpu" 0 -}}
-  {{- end -}}
-  {{- if not (hasKey $volsyncData.resources.limits "memory") -}}
-    {{- $_ := set $volsyncData.resources.limits "memory" 0 -}}
-  {{- end }}
+  {{- $_ := set $volsyncData.resources "excludeExtra" true }}
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination

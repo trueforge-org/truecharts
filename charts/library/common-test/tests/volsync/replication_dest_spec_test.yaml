@@ -71,10 +71,12 @@ tests:
               accessModes:
                 - ReadWriteOnce
               moverResources:
+                limits:
+                  cpu: 1500m
+                  memory: 2400Mi
                 requests:
                   cpu: 75m
                   memory: 200Mi
-                limits:
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
@@ -146,10 +148,12 @@ tests:
               accessModes:
                 - ReadWriteOnce
               moverResources:
+                limits:
+                  cpu: 1500m
+                  memory: 2400Mi
                 requests:
                   cpu: 75m
                   memory: 200Mi
-                limits:
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
@@ -196,10 +200,12 @@ tests:
               accessModes:
                 - ReadWriteOnce
               moverResources:
+                limits:
+                  cpu: 1500m
+                  memory: 2400Mi
                 requests:
                   cpu: 75m
                   memory: 200Mi
-                limits:
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
@@ -247,10 +253,12 @@ tests:
                 - ReadWriteOnce
               storageClassName: somestorageclass
               moverResources:
+                limits:
+                  cpu: 1500m
+                  memory: 2400Mi
                 requests:
                   cpu: 75m
                   memory: 200Mi
-                limits:
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
@@ -298,10 +306,12 @@ tests:
                 - ReadWriteOnce
               volumeSnapshotClassName: somevsc
               moverResources:
+                limits:
+                  cpu: 1500m
+                  memory: 2400Mi
                 requests:
                   cpu: 75m
                   memory: 200Mi
-                limits:
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
@@ -351,10 +361,12 @@ tests:
               storageClassName: somestorageclass
               volumeSnapshotClassName: somevsc
               moverResources:
+                limits:
+                  cpu: 1500m
+                  memory: 2400Mi
                 requests:
                   cpu: 75m
                   memory: 200Mi
-                limits:
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
@@ -401,10 +413,12 @@ tests:
               accessModes:
                 - ReadWriteOnce
               moverResources:
+                limits:
+                  cpu: 1500m
+                  memory: 2400Mi
                 requests:
                   cpu: 75m
                   memory: 200Mi
-                limits:
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
@@ -452,10 +466,12 @@ tests:
               accessModes:
                 - ReadWriteOnce
               moverResources:
+                limits:
+                  cpu: 1500m
+                  memory: 2400Mi
                 requests:
                   cpu: 75m
                   memory: 200Mi
-                limits:
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
@@ -532,10 +548,12 @@ tests:
               accessModes:
                 - ReadWriteOnce
               moverResources:
+                limits:
+                  cpu: 1500m
+                  memory: 2400Mi
                 requests:
                   cpu: 75m
                   memory: 200Mi
-                limits:
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
@@ -612,10 +630,12 @@ tests:
               accessModes:
                 - ReadWriteOnce
               moverResources:
+                limits:
+                  cpu: 1500m
+                  memory: 2400Mi
                 requests:
                   cpu: 75m
                   memory: 200Mi
-                limits:
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
@@ -699,10 +719,12 @@ tests:
               accessModes:
                 - ReadWriteOnce
               moverResources:
+                limits:
+                  cpu: 1500m
+                  memory: 2400Mi
                 requests:
                   cpu: 75m
                   memory: 200Mi
-                limits:
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
