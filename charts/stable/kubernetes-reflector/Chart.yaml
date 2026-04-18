@@ -2,11 +2,6 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  truecharts.org/category: unsorted
-  truecharts.org/max_helm_version: "3.17"
-  truecharts.org/max_kubernetes_version: 1.32.0
-  truecharts.org/min_helm_version: "3.14"
-  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
   trueforge.org/category: operators
   trueforge.org/max_helm_version: "4.1"
@@ -14,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 10.0.9
+appVersion: 10.0.32
 dependencies:
   - name: common
-    version: 28.30.2
+    version: 29.0.15
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -25,24 +20,24 @@ dependencies:
     import-values: []
 deprecated: false
 description: Kubernetes-Reflector is a Kubernetes addon designed to monitor and reflect changes to secrets and configmaps across namespaces
-home: https://trueforge.org/truetech/truecharts/charts/stable/kubernetes-reflector
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/kubernetes-reflector.webp
+home: https://truecharts.org/truetech/truecharts/charts/stable/kubernetes-reflector
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/kubernetes-reflector.webp
 keywords:
   - reflector
   - secrets
   - configmaps
   - cert-manager
   - certificates
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.33.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: kubernetes-reflector
 sources:
   - https://ghcr.io/emberstack/kubernetes-reflector
   - https://github.com/emberstack/kubernetes-reflector
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/kubernetes-reflector
 type: application
-version: 8.1.2
+version: 9.0.10
 

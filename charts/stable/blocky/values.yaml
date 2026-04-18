@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
   repository: ghcr.io/0xerr0r/blocky
-  tag: v0.28.2@sha256:5f84a54e4ee950c4ab21db905b7497476ece2f4e1a376d23ab8c4855cabddcba
+  tag: v0.29.0@sha256:a6d99f323d3036a99a3767a52ad612f4d8f3f31167492bfc14d4ea57b24cdfd0
   pullPolicy: IfNotPresent
 k8sgatewayImage:
   repository: ghcr.io/k8s-gateway/k8s_gateway
   pullPolicy: IfNotPresent
-  tag: 1.6.3@sha256:d9b797ad64619dfa565fb38c147d790338c053a0a7aee1af3cf9c2ffbff3665a
+  tag: 1.7.1@sha256:d68f87982d943448f14a67fdb3df616351bad7507618f986c7d3fdfeabd8c9a8
 
 workload:
   main:
@@ -283,7 +283,7 @@ serviceAccount:
     primary: true
 
 # -- Create a ClusterRole and ClusterRoleBinding
-# @default -- See below
+# used by k8sgateway
 rbac:
   main:
     # -- Enables or disables the ClusterRole and ClusterRoleBinding
@@ -292,14 +292,16 @@ rbac:
     clusterWide: true
     # -- Set Rules on the ClusterRole
     rules:
+      # General CRDs
       - apiGroups:
-          - ""
+          - apiextensions.k8s.io
         resources:
-          - services
-          - namespaces
+          - customresourcedefinitions
         verbs:
+          - get
           - list
           - watch
+      # Ingress
       - apiGroups:
           - extensions
           - networking.k8s.io
@@ -308,13 +310,48 @@ rbac:
         verbs:
           - list
           - watch
+      # Service
+      - apiGroups:
+          - ""
+        resources:
+          - services
+          - namespaces
+        verbs:
+          - list
+          - watch
+      # HTTPRoute, TLSRoute, GRPCRoute
+      - apiGroups:
+          - gateway.networking.k8s.io
+        resources:
+          - "*"
+        verbs:
+          - watch
+          - list
+      # DNSEndpoint
+      - apiGroups:
+          - externaldns.k8s.io
+        resources:
+          - dnsendpoints
+        verbs:
+          - get
+          - watch
+          - list
+      - apiGroups:
+          - externaldns.k8s.io
+        resources:
+          - dnsendpoints/status
+        verbs:
+          - "*"
 
 k8sgateway:
   enabled: true
   # -- TTL for non-apex responses (in seconds)
   ttl: 300
-  # -- Limit what kind of resources to watch, e.g. watchedResources: ["Ingress"]
-  watchedResources: []
+  # -- Limit what kind of resources to watch, e.g. watchedResources: [ Ingress | Service | HTTPRoute | TLSRoute | GRPCRoute | DNSEndpoint ]
+  watchedResources:
+    - Ingress
+    - Service
+    - HTTPRoute
   # -- Service name of a secondary DNS server (should be `serviceName.namespace`)
   secondary: ""
   # -- Override the default `serviceName.namespace` domain apex
@@ -402,7 +439,7 @@ metrics:
 
 redis:
   enabled: true
-# CANNOT be defined in above yaml section
+
 queryLog:
   # optional one of: mysql, postgresql, csv, csv-client. If empty, log to console
   type: "postgresql"

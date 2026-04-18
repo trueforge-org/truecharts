@@ -2,11 +2,6 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  truecharts.org/category: unsorted
-  truecharts.org/max_helm_version: "3.17"
-  truecharts.org/max_kubernetes_version: 1.32.0
-  truecharts.org/min_helm_version: "3.14"
-  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
   trueforge.org/category: media
   trueforge.org/max_helm_version: "4.1"
@@ -14,17 +9,17 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 16.2.0
+appVersion: 16.3.0
 dependencies:
   - name: common
-    version: 28.30.2
+    version: 29.0.15
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.12.1
+    version: 18.0.5
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -32,23 +27,23 @@ dependencies:
     import-values: []
 deprecated: false
 description: A photo gallery software for the web.
-home: https://trueforge.org/truetech/truecharts/charts/stable/piwigo
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/piwigo.webp
+home: https://truecharts.org/truetech/truecharts/charts/stable/piwigo
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/piwigo.webp
 keywords:
   - piwigo
   - gallery
   - photo
   - image
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.33.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: piwigo
 sources:
   - https://ghcr.io/linuxserver/piwigo
   - https://github.com/linuxserver/docker-piwigo
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/piwigo
 type: application
-version: 18.6.2
+version: 20.0.10
 

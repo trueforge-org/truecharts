@@ -2,11 +2,6 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  truecharts.org/category: unsorted
-  truecharts.org/max_helm_version: "3.17"
-  truecharts.org/max_kubernetes_version: 1.32.0
-  truecharts.org/min_helm_version: "3.14"
-  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
   trueforge.org/category: games
   trueforge.org/max_helm_version: "4.1"
@@ -14,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 2026.2.1
+appVersion: 2026.4.1
 dependencies:
   - name: common
-    version: 28.30.2
+    version: 29.0.15
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -25,22 +20,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: Minecraft Java Dedicated Server
-home: https://trueforge.org/truetech/truecharts/charts/stable/minecraft-java
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/minecraft-java.webp
+home: https://truecharts.org/truetech/truecharts/charts/stable/minecraft-java
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/minecraft-java.webp
 keywords:
   - minecraft-java
   - minecraft
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.33.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: minecraft-java
 sources:
   - https://ghcr.io/itzg/minecraft-server
   - https://github.com/itzg/docker-minecraft-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/minecraft-java
-  - https://hub.docker.com/r/itzg/mc-backup
 type: application
-version: 33.8.1
+version: 35.9.1
 

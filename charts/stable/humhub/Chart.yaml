@@ -2,11 +2,6 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  truecharts.org/category: unsorted
-  truecharts.org/max_helm_version: "3.17"
-  truecharts.org/max_kubernetes_version: 1.32.0
-  truecharts.org/min_helm_version: "3.14"
-  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
   trueforge.org/category: Network-Web
   trueforge.org/max_helm_version: "4.1"
@@ -17,21 +12,21 @@ apiVersion: v2
 appVersion: 1.17.2
 dependencies:
   - name: common
-    version: 28.30.2
+    version: 29.0.15
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.12.1
+    version: 18.0.5
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
     tags: []
     import-values: []
   - name: valkey
-    version: 0.1.0
+    version: 1.0.5
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: redis
@@ -39,21 +34,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: A feature rich and highly flexible OpenSource Social Network Kit written in PHP.
-home: https://trueforge.org/truetech/truecharts/charts/stable/humhub
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/humhub.webp
+home: https://truecharts.org/truetech/truecharts/charts/stable/humhub
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/humhub.webp
 keywords:
   - humhub
   - Network-Web
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.33.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: humhub
 sources:
   - https://ghcr.io/mriedmann/humhub-nginx
   - https://ghcr.io/mriedmann/humhub-phponly
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/humhub
 type: application
-version: 12.25.2
+version: 14.0.8
 
