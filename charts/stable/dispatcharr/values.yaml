@@ -2,7 +2,7 @@
 image:
   pullPolicy: IfNotPresent
   repository: docker.io/dispatcharr/dispatcharr
-  tag: 0.22.1@sha256:ccdfa7e407f48878567fed06dcf895e437e01b9240f7b944a486722ba8aa6c4d
+  tag: 0.23.0@sha256:b731cda8daa302c5bc28f5031158895f9996c4b1995d7f292e96d4a7461c6263
 securityContext:
   container:
     readOnlyRootFilesystem: false
@@ -23,7 +23,7 @@ workload:
           enabled: true
           type: init
           name: setup-postgres-dirs
-          image: alpine:3.23@sha256:25109184c71bdad752c8312a8623239686a9a2071e8825f20acb8f2198c3f659
+          image: alpine:3.23@sha256:5b10f432ef3da1b8d4c7eb6c487f2f5a8f096bc91145e68878dd4a5019afde11
           command:
             - /bin/sh
             - -c

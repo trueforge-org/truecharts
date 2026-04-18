@@ -9,7 +9,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 18.14.1
+appVersion: 18.15.2
 dependencies:
   - name: common
     version: 29.0.15
@@ -20,21 +20,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: Magical shell history.
-home: https://truecharts.org/truetech/truecharts/charts/stable/atuin
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/atuin.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/atuin
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/atuin.webp
 keywords:
   - atuin
   - shell
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: atuin
 sources:
   - https://ghcr.io/atuinsh/atuin
   - https://github.com/atuinsh/atuin
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/atuin
 type: application
-version: 7.2.1
+version: 7.3.0
 

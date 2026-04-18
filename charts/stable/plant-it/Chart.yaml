@@ -19,7 +19,7 @@ dependencies:
     tags: []
     import-values: []
   - name: mariadb
-    version: 18.0.5
+    version: 18.0.6
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -34,21 +34,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: Plant-it is a self-hosted gardening companion app.
-home: https://truecharts.org/truetech/truecharts/charts/stable/plant-it
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/plant-it.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/plant-it
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/plant-it.webp
 keywords:
   - plant
   - plant-it
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: plant-it
 sources:
   - https://github.com/MDeLuise/plant-it
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/plant-it
   - https://hub.docker.com/r/msdeluise/plant-it-server
 type: application
-version: 7.0.8
+version: 7.0.9
 
