@@ -3,6 +3,40 @@ image:
   repository: oci.trueforge.org/containerforge/deluge
   pullPolicy: IfNotPresent
   tag: "2.2.0@sha256:537e5a390e15b91fe2b90caf491432ac2de3aac3218ffcd2b64260493cf92433"
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            DELUGE_BIN: deluge-web
+          probes:
+            liveness:
+              type: http
+              path: /
+              port: main
+            readiness:
+              type: http
+              path: /
+              port: main
+            startup:
+              type: tcp
+              port: main
+        daemon:
+          enabled: true
+          primary: false
+          env:
+            DELUGE_BIN: deluged
+          probes:
+            liveness:
+              type: tcp
+              port: 58846
+            readiness:
+              type: tcp
+              port: 58846
+            startup:
+              type: tcp
+              port: 58846
 service:
   main:
     ports:
