@@ -140,21 +140,21 @@ workload:
             liveness:
               type: exec
               command:
-                - /usr/bin/test
-                - -f
-                - "/var/www/html/tt-rss/lock/update_daemon.lock"
+                - /bin/sh
+                - -c
+                - test -f /var/www/html/tt-rss/lock/update_daemon.lock
             readiness:
               type: exec
               command:
-                - /usr/bin/test
-                - -f
-                - "/var/www/html/tt-rss/lock/update_daemon.lock"
+                - /bin/sh
+                - -c
+                - test -f /var/www/html/tt-rss/lock/update_daemon.lock
             startup:
               type: exec
               command:
-                - /usr/bin/test
-                - -f
-                - "/var/www/html/tt-rss/lock/update_daemon.lock"
+                - /bin/sh
+                - -c
+                - test -f /var/www/html/tt-rss/lock/update_daemon.lock
           env:
             TTRSS_SELF_URL_PATH: ""
             TTRSS_DB_NAME: "{{ .Values.cnpg.main.database }}"
