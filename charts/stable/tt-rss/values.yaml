@@ -50,12 +50,6 @@ persistence:
         nginx:
           mountPath: /etc/nginx/templates/nginx.conf.template
           subPath: nginx.conf.template
-  plugins:
-    enabled: true
-    mountPath: /var/www/html/tt-rss/plugins.local
-  themes:
-    enabled: true
-    mountPath: /var/www/html/tt-rss/themes.local
 cnpg:
   main:
     enabled: true
@@ -65,18 +59,6 @@ cnpg:
 workload:
   main:
     podSpec:
-      initContainers:
-        init-permissions:
-          enabled: true
-          type: init
-          imageSelector: image
-          command:
-            - /bin/sh
-            - -c
-          args:
-            - |
-              mkdir -p /var/www/html/tt-rss/plugins.local /var/www/html/tt-rss/themes.local
-              chmod -R 777 /var/www/html/tt-rss/plugins.local /var/www/html/tt-rss/themes.local
       containers:
         main:
           probes:
