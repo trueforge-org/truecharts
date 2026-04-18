@@ -9,7 +9,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 1.5.7
+appVersion: 1.5.8
 dependencies:
   - name: common
     version: 29.0.15
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: the AI-native open-source embedding database.
-home: https://truecharts.org/truetech/truecharts/charts/stable/chroma
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/chroma.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/chroma
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/chroma.webp
 keywords:
   - chroma
   - embedding
   - database
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: chroma
 sources:
   - https://ghcr.io/chroma-core/chroma
   - https://github.com/chroma-core/chroma
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/chroma
 type: application
-version: 7.0.3
+version: 7.0.4
 
