@@ -9,7 +9,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 2.6.7
+appVersion: 2.6.9
 dependencies:
   - name: common
     version: 29.0.15
@@ -20,17 +20,17 @@ dependencies:
     import-values: []
 deprecated: false
 description: Tandoor Recipes is a Django application to manage, tag and search recipes using either built in models or external storage providers hosting PDF's, Images or other files.
-home: https://truecharts.org/truetech/truecharts/charts/stable/tandoor-recipes
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/tandoor-recipes.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/tandoor-recipes
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/tandoor-recipes.webp
 keywords:
   - tandoor
   - recipes
   - cooking
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: tandoor-recipes
 sources:
   - https://ghcr.io/tandoorrecipes/recipes
@@ -38,5 +38,5 @@ sources:
   - https://github.com/TandoorRecipes/recipes/pkgs/container/recipes
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/tandoor-recipes
 type: application
-version: 21.1.7
+version: 21.1.8
 

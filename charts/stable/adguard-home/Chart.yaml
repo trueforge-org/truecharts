@@ -9,7 +9,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 0.107.73
+appVersion: 0.107.74
 dependencies:
   - name: common
     version: 29.0.15
@@ -20,20 +20,20 @@ dependencies:
     import-values: []
 deprecated: false
 description: Free and open source, powerful network-wide ads & trackers blocking DNS server.
-home: https://truecharts.org/truetech/truecharts/charts/stable/adguard-home
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/adguard-home.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/adguard-home
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/adguard-home.webp
 keywords:
   - adblock
   - adguard
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: adguard-home
 sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/adguard-home
   - https://hub.docker.com/r/adguard/adguardhome
 type: application
-version: 13.0.2
+version: 13.0.3
 
