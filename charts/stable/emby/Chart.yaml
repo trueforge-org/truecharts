@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 4.10.0.10
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,17 +20,17 @@ dependencies:
     import-values: []
 deprecated: false
 description: Emby Server is a home media server
-home: https://truecharts.org/truetech/truecharts/charts/stable/emby
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/emby.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/emby
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/emby.webp
 keywords:
   - jellyfin
   - plex
   - emby
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: emby
 sources:
   - https://github.com/linuxserver/docker-emby.git
@@ -38,5 +38,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/emby
   - https://hub.docker.com/r/alpine/socat
 type: application
-version: 27.0.7
+version: 27.1.0
 

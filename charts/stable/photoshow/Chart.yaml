@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 48aabb98
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,19 +20,19 @@ dependencies:
     import-values: []
 deprecated: false
 description: A gallery software at its easiest, it doesn't even require a database.
-home: https://truecharts.org/truetech/truecharts/charts/stable/photoshow
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/photoshow.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/photoshow
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/photoshow.webp
 keywords:
   - photoshow
   - photo
   - show
   - gallary
   - image
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: photoshow
 sources:
   - https://ghcr.io/linuxserver/photoshow
@@ -40,5 +40,5 @@ sources:
   - https://github.com/thibaud-rohmer/PhotoShow
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/photoshow
 type: application
-version: 14.0.2
+version: 14.1.0
 

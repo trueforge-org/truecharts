@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 1.61.1
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: Browserless is a web-service that allows for remote clients to connect, drive, and execute headless work
-home: https://truecharts.org/truetech/truecharts/charts/stable/browserless-chrome
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/browserless-chrome.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/browserless-chrome
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/browserless-chrome.webp
 keywords:
   - browserless
   - chrome
   - puppeteer
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: browserless-chrome
 sources:
   - https://docs.browserless.io/docs/docker.html
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/browserless-chrome
   - https://hub.docker.com/r/browserless/chrome
 type: application
-version: 13.0.2
+version: 13.1.0
 

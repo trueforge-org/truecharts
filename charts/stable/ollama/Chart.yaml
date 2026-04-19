@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 0.21.0
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,16 +20,16 @@ dependencies:
     import-values: []
 deprecated: false
 description: Get up and running with large language models locally.
-home: https://truecharts.org/truetech/truecharts/charts/stable/ollama
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/ollama.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/ollama
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/ollama.webp
 keywords:
   - ollama
   - language-models
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: ollama
 sources:
   - https://ghcr.io/open-webui/open-webui
@@ -38,5 +38,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ollama
   - https://hub.docker.com/r/ollama/ollama
 type: application
-version: 9.6.0
+version: 9.7.0
 

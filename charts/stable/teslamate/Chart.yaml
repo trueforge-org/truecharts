@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 3.0.0
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,18 +20,18 @@ dependencies:
     import-values: []
 deprecated: false
 description: A self-hosted data logger for your Tesla
-home: https://truecharts.org/truetech/truecharts/charts/stable/teslamate
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/teslamate.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/teslamate
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/teslamate.webp
 keywords:
   - analytics
   - monitoring
   - metrics
   - logs
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: teslamate
 sources:
   - https://docs.teslamate.org/docs/installation/docker
@@ -39,5 +39,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/teslamate
   - https://hub.docker.com/r/teslamate/teslamate
 type: application
-version: 7.0.2
+version: 7.1.0
 

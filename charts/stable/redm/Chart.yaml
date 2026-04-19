@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,21 +20,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: 'With this Chart you can run RedM (Red Dead Redemption 2 MOD SERVER) it will automatically download the latest version or if you want to updated it yourself set the Manual Updates (in the ''Show more settings'' tab down below) to true (without quotes). The Chart will automatically extract it and download all other required files (resources, server.cfg). You can get fx.tar.xz from here: https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/ To run this Chart you must provide a valid Server Key (you can get them from here: https://keymaster.fivem.net/) and your prefered Server Name.'
-home: https://truecharts.org/truetech/truecharts/charts/stable/redm
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/redm.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/redm
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/redm.webp
 keywords:
   - redm
   - GameServers
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: redm
 sources:
   - https://ghcr.io/ich777/redmserver
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/redm
   - https://redm.gg/
 type: application
-version: 10.0.2
+version: 10.1.0
 

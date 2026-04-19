@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 2.21.0
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,20 +20,20 @@ dependencies:
     import-values: []
 deprecated: false
 description: ntfy is a simple HTTP-based pub-sub notification service. It allows you to send notifications to your phone or desktop via scripts from any computer.
-home: https://truecharts.org/truetech/truecharts/charts/stable/ntfy
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/ntfy.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/ntfy
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/ntfy.webp
 keywords:
   - ntfy
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: ntfy
 sources:
   - https://github.com/binwiederhier/ntfy/
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ntfy
   - https://hub.docker.com/r/binwiederhier/ntfy
 type: application
-version: 13.2.2
+version: 13.3.0
 

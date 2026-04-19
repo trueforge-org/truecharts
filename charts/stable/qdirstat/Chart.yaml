@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 26.03.1
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,21 +20,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: QDirStat is a graphical application to show where your disk space has gone and to help you to clean it up.
-home: https://truecharts.org/truetech/truecharts/charts/stable/qdirstat
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/qdirstat.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/qdirstat
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/qdirstat.webp
 keywords:
   - stats
   - qdirstat
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: qdirstat
 sources:
   - https://github.com/jlesage/docker-qdirstat
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/qdirstat
   - https://hub.docker.com/r/jlesage/qdirstat
 type: application
-version: 15.0.2
+version: 15.1.0
 

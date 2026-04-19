@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 2025.04.22
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: Minio is a self-hosted S3 storage server
-home: https://truecharts.org/truetech/truecharts/charts/stable/minio
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/minio.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/minio
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/minio.webp
 keywords:
   - minio
   - s3
   - storage
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: minio
 sources:
   - https://github.com/minio/minio
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/minio
   - https://hub.docker.com/r/minio/minio
 type: application
-version: 17.0.2
+version: 17.1.0
 

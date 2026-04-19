@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 2026.4.1
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,21 +20,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: Minecraft Java Dedicated Server
-home: https://truecharts.org/truetech/truecharts/charts/stable/minecraft-java
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/minecraft-java.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/minecraft-java
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/minecraft-java.webp
 keywords:
   - minecraft-java
   - minecraft
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: minecraft-java
 sources:
   - https://ghcr.io/itzg/minecraft-server
   - https://github.com/itzg/docker-minecraft-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/minecraft-java
 type: application
-version: 35.9.1
+version: 35.10.0
 

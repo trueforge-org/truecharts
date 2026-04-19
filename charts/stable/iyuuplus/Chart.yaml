@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,20 +20,20 @@ dependencies:
     import-values: []
 deprecated: false
 description: The IYUU automatic seeding tool can automatically seed most PT sites in China, support downloader clusters, multiple disks, multiple download directories, connecting to remote downloaders, etc.
-home: https://truecharts.org/truetech/truecharts/charts/stable/iyuuplus
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/iyuuplus.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/iyuuplus
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/iyuuplus.webp
 keywords:
   - iyuuplus
   - pt
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: iyuuplus
 sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/iyuuplus
   - https://hub.docker.com/r/iyuucn/iyuuplus
 type: application
-version: 13.0.5
+version: 13.1.0
 

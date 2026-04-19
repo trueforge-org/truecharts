@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 2026.4.6
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,23 +20,23 @@ dependencies:
     import-values: []
 deprecated: false
 description: PhotoStructure is your new home for all your photos and videos.
-home: https://truecharts.org/truetech/truecharts/charts/stable/photostructure
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/photostructure.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/photostructure
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/photostructure.webp
 keywords:
   - photostructure
   - MediaApp-Photos
   - MediaServer-Video
   - MediaServer-Photos
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: photostructure
 sources:
   - https://github.com/photostructure/photostructure-for-servers
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/photostructure
   - https://hub.docker.com/r/photostructure/server
 type: application
-version: 12.1.1
+version: 12.2.0
 

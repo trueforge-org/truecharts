@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: main
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,21 +20,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: A web-based tool for processing images and converting documents with a simple interface.
-home: https://truecharts.org/truetech/truecharts/charts/stable/reubah
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/reubah.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/reubah
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/reubah.webp
 keywords:
   - reubah
   - image-processor
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: reubah
 sources:
   - https://ghcr.io/dendianugerah/reubah
   - https://github.com/dendianugerah/reubah
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/reubah
 type: application
-version: 3.0.2
+version: 3.1.0
 

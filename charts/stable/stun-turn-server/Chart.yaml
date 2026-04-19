@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,20 +20,20 @@ dependencies:
     import-values: []
 deprecated: false
 description: This is a Basic STUN & TURN server that was mainly created for Nextcloud Talk.
-home: https://truecharts.org/truetech/truecharts/charts/stable/stun-turn-server
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/stun-turn-server.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/stun-turn-server
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/stun-turn-server.webp
 keywords:
   - stun-turn-server
   - Network
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: stun-turn-server
 sources:
   - https://ghcr.io/ich777/stun-turn-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/stun-turn-server
 type: application
-version: 10.0.2
+version: 10.1.0
 

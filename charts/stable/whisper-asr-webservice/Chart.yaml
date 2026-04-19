@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 1.9.1
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,21 +20,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: Whisper is a general-purpose speech recognition model.
-home: https://truecharts.org/truetech/truecharts/charts/stable/whisper-asr-webservice
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/whisper-asr-webservice.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/whisper-asr-webservice
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/whisper-asr-webservice.webp
 keywords:
   - whisper-asr-webservice
   - machine-learning
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: whisper-asr-webservice
 sources:
   - https://github.com/ahmetoner/whisper-asr-webservice
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/whisper-asr-webservice
   - https://hub.docker.com/r/onerahmet/openai-whisper-asr-webservice
 type: application
-version: 8.0.2
+version: 8.1.0
 

@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 10.2.2
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: This is a Chartfile for Splunk designed for OpenShift and TrueNAS based on Alpine Linux - https://www.splunk.com
-home: https://truecharts.org/truetech/truecharts/charts/stable/splunk
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/splunk.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/splunk
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/splunk.webp
 keywords:
   - splunk
   - Tools-Utilities
   - Network-Management
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: splunk
 sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/splunk
   - https://hub.docker.com/r/splunk/splunk
   - https://splunk.github.io/docker-splunk
 type: application
-version: 13.0.3
+version: 13.1.0
 

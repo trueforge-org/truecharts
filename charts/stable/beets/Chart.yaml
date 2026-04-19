@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 1.6.0
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,19 +20,19 @@ dependencies:
     import-values: []
 deprecated: false
 description: A music library manager and not, for the most part, a music player.
-home: https://truecharts.org/truetech/truecharts/charts/stable/beets
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/beets.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/beets
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/beets.webp
 keywords:
   - music
   - library
   - manager
   - player
   - beets
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: beets
 sources:
   - https://beets.io/
@@ -40,5 +40,5 @@ sources:
   - https://github.com/linuxserver/docker-beets
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/beets
 type: application
-version: 15.0.2
+version: 15.1.0
 

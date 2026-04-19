@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: Out of the box, RCON Web Admin can check users for high ping, VAC status, or filter the chat for you around the clock.
-home: https://truecharts.org/truetech/truecharts/charts/stable/rcon-webadmin
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/rcon-webadmin.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/rcon-webadmin
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/rcon-webadmin.webp
 keywords:
   - rcon-webadmin
   - GameServers
   - Tools-Utilities
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: rcon-webadmin
 sources:
   - https://github.com/rcon-web-admin/rcon-web-admin
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/rcon-webadmin
   - https://hub.docker.com/r/itzg/rcon
 type: application
-version: 12.0.2
+version: 12.1.0
 
