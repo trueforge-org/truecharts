@@ -19,7 +19,7 @@ dependencies:
     tags: []
     import-values: []
   - name: valkey
-    version: 2.0.0
+    version: 2.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: redis
@@ -27,15 +27,15 @@ dependencies:
     import-values: []
 deprecated: false
 description: Weblate is a copylefted libre software web-based continuous localization system
-home: https://trueforge.org/truetech/truecharts/charts/stable/weblate
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/weblate.webp
+home: https://truecharts.org/charts/stable/weblate
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/weblate.webp
 keywords:
   - translate
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.33.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: weblate
 sources:
   - https://docs.weblate.org/en/latest/
@@ -45,5 +45,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/weblate
   - https://hub.docker.com/r/weblate/weblate
 type: application
-version: 20.1.0
+version: 20.2.0
 

@@ -19,7 +19,7 @@ dependencies:
     tags: []
     import-values: []
   - name: valkey
-    version: 2.0.0
+    version: 2.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: redis
@@ -27,21 +27,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: CTFd is a Capture The Flag framework focusing on ease of use and customizability.
-home: https://trueforge.org/truetech/truecharts/charts/stable/ctfd
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/ctfd.webp
+home: https://truecharts.org/charts/stable/ctfd
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/ctfd.webp
 keywords:
   - ctfd
   - learning
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.33.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: ctfd
 sources:
   - https://ghcr.io/ctfd/ctfd
   - https://github.com/CTFd/CTFd
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ctfd
 type: application
-version: 13.1.0
+version: 13.2.0
 

@@ -19,7 +19,7 @@ dependencies:
     tags: []
     import-values: []
   - name: valkey
-    version: 2.0.0
+    version: 2.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: redis
@@ -27,8 +27,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Authelia is a Single Sign-On Multi-Factor portal for web apps
-home: https://trueforge.org/truetech/truecharts/charts/stable/authelia
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/authelia.webp
+home: https://truecharts.org/charts/stable/authelia
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/authelia.webp
 keywords:
   - authelia
   - authentication
@@ -41,11 +41,11 @@ keywords:
   - YubiKey
   - Push Notifications
   - LDAP
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.33.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: authelia
 sources:
   - https://ghcr.io/authelia/authelia
@@ -53,5 +53,5 @@ sources:
   - https://github.com/authelia/chartrepo
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/authelia
 type: application
-version: 32.1.0
+version: 32.2.0
 
