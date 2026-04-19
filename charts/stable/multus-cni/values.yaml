@@ -260,7 +260,7 @@ workload:
             - sh
             - -c
             - |
-              set -euo pipefail
+              set -eu
               cd /tmp
 
               echo "Pulling '{{ .Values.talosCniImage.repository }}:{{ .Values.talosCniImage.tag }}' image..."
@@ -328,7 +328,7 @@ workload:
                 eval "$@"
               }
 
-              set -euo pipefail
+              set -eu
 
               echo "Cleaning up Multus CNI config..."
               echoRun rm -rf "{{ tpl .Values.persistence.cniconf.mountPath $ }}"/*multus.*
@@ -424,7 +424,7 @@ workload:
             - sh
             - -c
             - |
-              set -euo pipefail
+              set -eu
 
               SOCKET_PATH="{{ tpl .Values.persistence.hostrun.mountPath $ }}/cni/dhcp.sock"
               CNI_BIN_DIR="{{ (tpl .Values.persistence.cnibin.mountPath $) }}"
