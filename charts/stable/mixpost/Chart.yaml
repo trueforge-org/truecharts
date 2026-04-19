@@ -19,7 +19,7 @@ dependencies:
     tags: []
     import-values: []
   - name: valkey
-    version: 1.0.5
+    version: 2.0.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: redis
@@ -34,23 +34,23 @@ dependencies:
     import-values: []
 deprecated: false
 description: Mixpost it's the coolest Self hosted social media management software.
-home: https://truecharts.org/truetech/truecharts/charts/stable/mixpost
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/mixpost.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/mixpost
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/mixpost.webp
 keywords:
   - mixpost
   - twitter
   - facebook
   - socialmedia
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: mixpost
 sources:
   - https://github.com/inovector/mixpost
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mixpost
   - https://hub.docker.com/r/inovector/mixpost
 type: application
-version: 8.0.9
+version: 9.0.0
 
