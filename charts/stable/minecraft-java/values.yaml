@@ -1,59 +1,59 @@
 # yaml-language-server: $schema=./values.schema.json
+
 image:
   repository: ghcr.io/itzg/minecraft-server
-  tag: 2026.2.1@sha256:44aacf3902c1c2e18dddfe8585dd44badbf56a0a768c773a5e0bcfe4bc1d0443
+  tag: 2026.4.1-java25@sha256:1544b0bd94b2734a5b12cb38e73751cc5dee4d7f6ab5b751afcb6ecc4b8f1460
   pullPolicy: Always
+
+# ---- Java 25 ----
+j25jdkImage:
+  repository: ghcr.io/itzg/minecraft-server
+  tag: 2026.4.1-java25-jdk@sha256:e7219d479e8ecbab3ed5a3485d2fefb97114e6e48eababf6616cb03960ab9adc
+  pullPolicy: Always
+
+# ---- Java 21 (Recommended for modern MC versions) ----
 j21Image:
   repository: ghcr.io/itzg/minecraft-server
-  tag: 2026.2.1-java21@sha256:115f666dac309116d0921549a935f02c2f8e9114282590ad77423ac357319992
+  tag: 2026.4.1-java21@sha256:4e425ce4f3a0cbf8b2c33d798ac1e7b59e8637b7a64272de7c810025aa11913a
   pullPolicy: Always
-j21graalvmImage:
-  repository: ghcr.io/itzg/minecraft-server
-  tag: 2026.1.0-java21-graalvm@sha256:edd7b66781574ebb67c66f96635d7d1aa733f2886f6589fa4c4c1d8fdca96aac
-  pullPolicy: Always
+
 j21alpineImage:
   repository: ghcr.io/itzg/minecraft-server
-  tag: 2026.2.1-java21-alpine@sha256:82adaddfe0156f07c34228f1c1065cdbd298abc174de0a9961abb068b11beebb
+  tag: 2026.4.1-java21-alpine@sha256:6acc035e2965efd267f81ad27cac8509b50052feff113ed2e47c87cf3fb62068
   pullPolicy: Always
+
+j21jdkImage:
+  repository: ghcr.io/itzg/minecraft-server
+  tag: 2026.4.1-java21-jdk@sha256:c57873f3eabc910c72bfd11f0311746bf740111d8425edb4a726e651460704f3
+  pullPolicy: Always
+
+# ---- Java 17 (Safe & Supported) ----
 j17Image:
   repository: ghcr.io/itzg/minecraft-server
-  tag: 2026.2.1-java17@sha256:4bdd8acc8c8bf30592560f4d97fd7c71b06d1fb514d28dd7c3b4a6d2807a715f
+  tag: 2026.4.1-java17@sha256:5cc640a32d042f5e07e2fb381c0351aac3cf82bf512afa408240bde5c2358899
   pullPolicy: Always
+
 j17jdkImage:
   repository: ghcr.io/itzg/minecraft-server
   tag: 2024.6.1-java17-jdk@sha256:2c43fcede436aff9f50b1adf4448d55d221651be471ef41412232c141bfa89f6
   pullPolicy: Always
-j17graalvmImage:
+
+# ---- Java 16 ----
+j16Image:
   repository: ghcr.io/itzg/minecraft-server
-  tag: 2026.1.0-java17-graalvm@sha256:81c049a55a0fb89162d8c0378f530278922786d253cf4259697c6ef9277f2a00
+  tag: 2026.4.1-java16@sha256:7acaf091bbb6d48f2a3dd14e6d4976040ca3f9070acb37c0db60d272ab69aaa2
   pullPolicy: Always
-j17alpineImage:
-  repository: ghcr.io/itzg/minecraft-server
-  tag: 2025.10.5-java17-alpine@sha256:ecc762c91690d3f5fbfd1051aa07f173025dcaccfbf201984ddf395c21a5264f
-  pullPolicy: Always
+
+# ---- Java 11 ----
 j11Image:
   repository: ghcr.io/itzg/minecraft-server
-  tag: 2026.2.1-java11@sha256:8a8402fad8d67fd1c098544b92b5c290dd986e2d0e4b72acd56cad5e12f61880
+  tag: 2026.4.1-java11@sha256:b5e78ae26622b290cfd45446472e6b34c031048faa1361f6a59a857d120718f8
   pullPolicy: Always
+
+# ---- Java 8 (Use plain java8 only) ----
 j8Image:
   repository: ghcr.io/itzg/minecraft-server
-  tag: 2026.2.1-java8@sha256:b98942c4ae0b14fc02b2129ae4da36ebf67b29fdc4230569fd6f80d6b1302baa
-  pullPolicy: Always
-j8graalvmImage:
-  repository: ghcr.io/itzg/minecraft-server
-  tag: 2026.1.3-java8-graalvm-ce@sha256:d758662bcc18a34c3e0c9c24370b95b87fa2a94c0540ca3bb0fd82114c9dfe61
-  pullPolicy: Always
-j8jdkImage:
-  repository: ghcr.io/itzg/minecraft-server
-  tag: 2026.2.1-java8-jdk@sha256:65b4096786d3bb862827d80e9bdbf8134a68d4c9c0a55d14da8573196c22e1d7
-  pullPolicy: Always
-j8alpineImage:
-  repository: ghcr.io/itzg/minecraft-server
-  tag: 2024.9.0-java8-alpine@sha256:ee8505b9670a82b7703ec35b2a87fe9b7f7823b50ae50fad18bf1fe511e577f9
-  pullPolicy: Always
-mcBackupImage:
-  repository: docker.io/itzg/mc-backup
-  tag: latest@sha256:ba5cf40c25973aad937bece38747e05ef99215a15a5aecf55a4ed9e8aa5e2668
+  tag: 2026.4.1-java8@sha256:23b762c388abb7b4bea6529646577ca3126f4db7f93ebc3b34043eda9e235d84
   pullPolicy: Always
 
 service:
@@ -74,17 +74,14 @@ service:
       rcon:
         enabled: true
         port: 25575
-
-mcbackup:
-  zstd_params:
-    - --long=25
-    - --single-thread
-  # comma separated list
-  excludes:
-    - "*.jar"
-    - "cache"
-    - "logs"
-    - "*.tmp"
+  ssh:
+    enabled: true
+    ports:
+      ssh:
+        enabled: true
+        protocol: tcp
+        targetPort: 2222
+        port: 2222
 
 workload:
   main:
@@ -113,6 +110,7 @@ workload:
             QUERY_PORT: "{{ .Values.service.main.ports.query.port }}"
             RCON_PORT: "{{ .Values.service.rcon.ports.rcon.port }}"
             ENABLE_QUERY: "true"
+            ENABLE_SSH: "false"
             EULA: "TRUE"
             GUI: "FALSE"
             OVERRIDE_SERVER_PROPERTIES: true
@@ -195,50 +193,8 @@ workload:
             # CF_OVERRIDES_SKIP_EXISTING
             # CF_PARALLEL_DOWNLOADS
             # CF_SET_LEVEL_FROM
-        mcbackup:
-          enabled: true
-          imageSelector: mcBackupImage
-          probes:
-            liveness:
-              enabled: false
-            readiness:
-              enabled: false
-            startup:
-              enabled: false
-          env:
-            BACKUP_METHOD: "tar"
-            DEST_DIR: "{{.Values.persistence.backups.mountPath }}"
-            SRC_DIR: "{{.Values.persistence.data.mountPath }}"
-            SERVER_PORT: "{{ .Values.service.main.ports.main.port }}"
-            RCON_HOST: '{{ printf "%s-rcon" (include "tc.v1.common.lib.chart.names.fullname" $) }}'
-            RCON_PORT: "{{ .Values.service.rcon.ports.rcon.port }}"
-            RCON_PASSWORD: "{{ .Values.workload.main.podSpec.containers.main.env.RCON_PASSWORD }}"
-            SERVER_HOST: '{{ include "tc.v1.common.lib.chart.names.fullname" $ }}'
-
-            ZSTD_PARAMETERS: '{{ join " " .Values.mcbackup.zstd_params }}'
-            EXCLUDES: '{{ join "," .Values.mcbackup.excludes }}'
-
-            INITIAL_DELAY: "2m"
-            BACKUP_INTERVAL: "24h"
-            PRUNE_BACKUPS_DAYS: "7"
-            PAUSE_IF_NO_PLAYERS: "false"
-            PLAYERS_ONLINE_CHECK_INTERVAL: "5m"
-            LINK_LATEST: "false"
-            TAR_COMPRESS_METHOD: "zstd"
 
 persistence:
   data:
     enabled: true
-    targetSelector:
-      main:
-        main:
-          mountPath: /data
-        mcbackup:
-          mountPath: /data
-          readOnly: true
-  backups:
-    enabled: true
-    targetSelector:
-      main:
-        mcbackup:
-          mountPath: /backups
+    mountPath: /data

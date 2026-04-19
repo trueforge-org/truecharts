@@ -2,7 +2,7 @@
 image:
   repository: oci.trueforge.org/containerforge/flood
   pullPolicy: IfNotPresent
-  tag: "4.11.0@sha256:ede20fba26b8be3f96450f281984206792db624b0c1f6ac6881b13d8e3e1e272"
+  tag: "4.13.9@sha256:97ae71395dd6ff70899306dad50a16635f8f9503bb053fc86dd44bdc65f26d9a"
 workload:
   main:
     podSpec:
@@ -20,3 +20,6 @@ persistence:
   data:
     enabled: true
     mountPath: /data
+  config:
+    enabled: true
+    mountPath: /config

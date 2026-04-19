@@ -52,7 +52,7 @@ within the common library.
 {{- end -}}
 
 ---
-apiVersion: gateway.networking.k8s.io/v1alpha2
+apiVersion: gateway.networking.k8s.io/v1
 {{- if and (ne $routeKind "GRPCRoute") (ne $routeKind "HTTPRoute") (ne $routeKind "TCPRoute") (ne $routeKind "TLSRoute") (ne $routeKind "UDPRoute") -}}
   {{- fail (printf "Not a valid route kind (%s)" $routeKind) -}}
 {{- end }}

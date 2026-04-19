@@ -2,8 +2,8 @@
 [ "$DEBUG" == 'true' ] && set -x
 [ "$STRICT" == 'true' ] && set -e
 
-docs_base="website/src/content/docs/truetech/truecharts/charts"
-tmp_docs_base="tmpwebsite/src/content/docs/truetech/truecharts/charts"
+docs_base="website/truecharts/src/content/docs/charts"
+tmp_docs_base="tmpwebsite/src/content/docs/charts"
 safe_docs=(
   "CHANGELOG.md"
 )
@@ -51,10 +51,10 @@ copy_new_docs() {
   local chart="$2"
 
   echo "copying new docs to website for ${chart}"
-  cp -rf charts/${train}/${chart}/docs/* website/src/content/docs/truetech/truecharts/charts/${train}/${chart}/ 2>/dev/null || :
-  cp -rf charts/${train}/${chart}/icon.webp website/public/img/hotlink-ok/chart-icons/${chart}.webp 2>/dev/null || :
-  cp -rf charts/${train}/${chart}/icon-small.webp website/public/img/hotlink-ok/chart-icons-small/${chart}.webp 2>/dev/null || :
-  cp -rf charts/${train}/${chart}/screenshots/* website/public/img/hotlink-ok/chart-screenshots/${chart}/ 2>/dev/null || :
+  cp -rf charts/${train}/${chart}/docs/* website/truecharts/src/content/docs/charts/${train}/${chart}/ 2>/dev/null || :
+  cp -rf charts/${train}/${chart}/icon.webp website/truecharts/public/img/hotlink-ok/chart-icons/${chart}.webp 2>/dev/null || :
+  cp -rf charts/${train}/${chart}/icon-small.webp website/truecharts/public/img/hotlink-ok/chart-icons-small/${chart}.webp 2>/dev/null || :
+  cp -rf charts/${train}/${chart}/screenshots/* website/truecharts/public/img/hotlink-ok/chart-screenshots/${chart}/ 2>/dev/null || :
 }
 
 check_and_fix_title() {

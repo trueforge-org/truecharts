@@ -637,41 +637,41 @@ tailscaleImage:
 
 codeserverImage:
   repository: oci.trueforge.org/containerforge/code-server
-  tag: "4.105.1@sha256:1b8b46c4b2407b6e6d03b268809a878d5f25d744167d62eb9b5f33e0ab3d3a0a"
+  tag: "4.109.2@sha256:841cf00f26ed44db1d0be33cf2e9afff96ac298fd655d484d28be5d86b945930"
   pullPolicy: IfNotPresent
 
 kubectlImage:
   repository: oci.trueforge.org/containerforge/kubectl
-  tag: "1.31.1@sha256:87582bc6354c678f0939dcb3dabce2948ceb28e8d238f5f3d67aa8d72bfb8155"
+  tag: "1.31.1@sha256:9f2ff7d59e88c906fc0fe0fe93f29c4fce328484373f66cfbf71ee39c45dcc82"
   pullPolicy: IfNotPresent
 
 postgresClientImage:
   repository: oci.trueforge.org/containerforge/postgresql-client
-  tag: "1.1.0@sha256:9096db20fdeb452347a1ea16e5dda8a21d6aba03f63b79c2c694f13e72d213b6"
+  tag: "9.6.24@sha256:03cce42e10ccc080183c2c9eaf833adef43c7fe7e5b60989eb4481b9bb3a4876"
   pullPolicy: IfNotPresent
 
 mariadbClientImage:
   repository: oci.trueforge.org/containerforge/mariadb-client
-  tag: "1.1.0@sha256:72d7535493f2dc6c9ae5cf07743936627a42bb83be8f47830d9bc00898b2575b"
+  tag: "12.2.2@sha256:3e160ce6186475642693fe3bbb41a2057644aa9424f2fcdf012f1681e877035d"
   pullPolicy: IfNotPresent
 
 valkeyClientImage:
   repository: oci.trueforge.org/containerforge/valkey-tools
-  tag: "1.1.0@sha256:931adcd8b434ab4bab6209c83f85355073e6f94e161e592bcda83f3f7dd472e8"
+  tag: "1.1.0@sha256:695711e1fdd5ed83abc3136d99df2bdac6f7cc211ff065a6e56285d4ee7ea722"
   pullPolicy: IfNotPresent
 mongodbClientImage:
   repository: oci.trueforge.org/containerforge/mongosh
-  tag: "1.2.3@sha256:a4b1446eee67070629852f37c4f3ad289801e81a7c7da357fb1a90a3ea708add"
+  tag: "2.8.2@sha256:53b1077a263f0bc1858405d3486ae7cc9356f27e9f69c4e22836ba152c626981"
   pullPolicy: IfNotPresent
 
 postgres15Image:
   repository: ghcr.io/cloudnative-pg/postgresql
-  tag: "15.15@sha256:4c1d5afdd4f735ff1328cbe39758f4b107a005937dd04183102e278b17b8b4c4"
+  tag: "15.17@sha256:bfed15dddfc3a61a7654b6748a5d8c09fec5d13c57e2350169068cb1676a666e"
   pullPolicy: IfNotPresent
 
 postgres16Image:
   repository: ghcr.io/cloudnative-pg/postgresql
-  tag: "16.11@sha256:8766b02aeb745c0d11aa1fff1823cde867a37bbe3c4b7bfb1869ed94f368ff88"
+  tag: "16.13@sha256:2bc26604d2f0650f9b98668a51a95679c02024860d512ace92e7fcf69da7d611"
   pullPolicy: IfNotPresent
 
 postgresPostgis15Image:

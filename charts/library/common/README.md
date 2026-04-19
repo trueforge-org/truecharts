@@ -22,7 +22,7 @@ For more information on how to install TrueCharts Helm charts, checkout the [ins
 
 All our charts have dedicated documentation pages.
 The documentation for this chart can be found here:
-https://trueforge.org/truecharts/library/common
+https://truecharts.org/charts/library/common
 
 ## Configuration Options
 
@@ -59,9 +59,9 @@ CI always performs a full run (`--max-failures 0`) and uploads the schema log ar
 
 ## Support
 
-- See the [Website](https://trueforge.org)
+- See the [Website](https://truecharts.org)
 - Check our [Discord](https://discord.gg/tVsPTHWTtr)
-- Open a [issue](https://github.com/trueforge-org/truecharts/issues/new/choose)
+- Open an [issue](https://github.com/trueforge-org/truecharts/issues/new/choose)
 
 ---
 

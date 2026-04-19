@@ -2,11 +2,6 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  truecharts.org/category: unsorted
-  truecharts.org/max_helm_version: "3.17"
-  truecharts.org/max_kubernetes_version: 1.32.0
-  truecharts.org/min_helm_version: "3.14"
-  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
   trueforge.org/category: operators
   trueforge.org/max_helm_version: "4.1"
@@ -17,14 +12,14 @@ apiVersion: v2
 appVersion: 1.30.2
 dependencies:
   - name: common
-    version: 28.29.59
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: kong
-    version: 3.0.2
+    version: 3.2.0
     repository: https://charts.konghq.com
     condition: kong.enabled
     alias: ""
@@ -54,5 +49,5 @@ sources:
   - https://hub.docker.com/r/kubernetesui/dashboard-web
   - https://kubernetes-dashboard.universe.tf
 type: application
-version: 3.2.26
+version: 4.1.0
 

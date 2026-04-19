@@ -2,7 +2,7 @@
 image:
   pullPolicy: IfNotPresent
   repository: docker.io/shaneisrael/fireshare
-  tag: 1.4.2@sha256:a5cef8ae69ab11590d529b3f3d8d40eab3915002652f71937763033b837a1e00
+  tag: 1.6.3@sha256:a6708322e68a9322ee11d146252d1ca0de5555ef3900da97c6d80a96b03555ba
 
 securityContext:
   container:
@@ -49,3 +49,6 @@ persistence:
   videos:
     enabled: true
     mountPath: /videos
+  images:
+    enabled: true
+    mountPath: /images

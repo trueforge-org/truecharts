@@ -14,7 +14,6 @@ server-worker:
   data:
     {{/* Dependencies */}}
     AUTHENTIK_POSTGRESQL__PASSWORD: {{ .Values.cnpg.main.creds.password | trimAll "\"" }}
-    AUTHENTIK_REDIS__PASSWORD: {{ .Values.redis.creds.redisPassword | trimAll "\"" }}
 
     {{/* Secret Key */}}
     AUTHENTIK_SECRET_KEY: {{ $secretKey }}

@@ -6,6 +6,12 @@ type: init
 imageSelector: image
 resources:
   excludeExtra: true
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 10m
+    memory: 50Mi
 securityContext:
 command: /bin/sh
 args:

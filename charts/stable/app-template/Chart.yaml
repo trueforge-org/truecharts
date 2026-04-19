@@ -2,11 +2,6 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  truecharts.org/category: unsorted
-  truecharts.org/max_helm_version: "3.17"
-  truecharts.org/max_kubernetes_version: 1.32.0
-  truecharts.org/min_helm_version: "3.14"
-  truecharts.org/min_kubernetes_version: 1.24.0
   truecharts.org/train: stable
   trueforge.org/category: custom
   trueforge.org/max_helm_version: "4.1"
@@ -17,28 +12,28 @@ apiVersion: v2
 appVersion: 3.5.4
 dependencies:
   - name: common
-    version: 28.29.59
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 17.11.19
+    version: 18.0.6
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
     tags: []
     import-values: []
   - name: valkey
-    version: 0.0.2
+    version: 2.0.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: redis
     tags: []
     import-values: []
   - name: mongodb
-    version: 16.14.24
+    version: 17.0.8
     repository: oci://oci.trueforge.org/truecharts
     condition: mongodb.enabled
     alias: ""
@@ -60,4 +55,5 @@ sources:
   - https://ghcr.io/miguelndecarvalho/speedtest-exporter
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/app-template
 type: application
-version: 15.29.88
+version: 18.1.0
+
