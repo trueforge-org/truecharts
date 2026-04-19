@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 1.9.2
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,19 +20,19 @@ dependencies:
     import-values: []
 deprecated: false
 description: Emulatorjs - In browser web based emulation portable to nearly any device for many retro consoles.
-home: https://truecharts.org/truetech/truecharts/charts/stable/emulatorjs
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/emulatorjs.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/emulatorjs
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/emulatorjs.webp
 keywords:
   - emulatorjs
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: emulatorjs
 sources:
   - https://ghcr.io/linuxserver/emulatorjs
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/emulatorjs
 type: application
-version: 13.0.2
+version: 13.1.0
 

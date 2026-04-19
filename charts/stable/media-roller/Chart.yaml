@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: Mobile friendly tool for downloading videos from social media.
-home: https://truecharts.org/truetech/truecharts/charts/stable/media-roller
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/media-roller.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/media-roller
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/media-roller.webp
 keywords:
   - media-roller
   - Tools-Utilities
   - MediaApp-Video
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: media-roller
 sources:
   - https://github.com/rroller/media-roller
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/media-roller
   - https://hub.docker.com/r/ronnieroller/media-roller
 type: application
-version: 9.0.2
+version: 9.1.0
 

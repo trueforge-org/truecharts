@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 9.2.0
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,24 +20,24 @@ dependencies:
     import-values: []
 deprecated: false
 description: Lyrion Music Server is a platform for home/office audio streaming.
-home: https://truecharts.org/truetech/truecharts/charts/stable/lyrion-music-server
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/lyrion-music-server.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/lyrion-music-server
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/lyrion-music-server.webp
 keywords:
   - lyrion-music-server
   - logitech-media-server
   - squeezebox
   - audio
   - streaming
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: lyrion-music-server
 sources:
   - https://github.com/LMS-Community/slimserver
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/lyrion-music-server
   - https://hub.docker.com/r/lmscommunity/lyrionmusicserver
 type: application
-version: 6.0.7
+version: 6.1.0
 

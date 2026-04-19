@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,8 +20,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Minimalist Self-hosted Image Service for user submitted images in your app (e.g. avatars).
-home: https://truecharts.org/truetech/truecharts/charts/stable/imgpush
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/imgpush.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/imgpush
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/imgpush.webp
 keywords:
   - imgpush
   - Cloud
@@ -29,16 +29,16 @@ keywords:
   - MediaServer-Photos
   - Network-Web
   - Network-FTP
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: imgpush
 sources:
   - https://github.com/hauxir/imgpush
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/imgpush
   - https://hub.docker.com/r/hauxir/imgpush
 type: application
-version: 9.0.3
+version: 9.1.0
 

@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,20 +20,20 @@ dependencies:
     import-values: []
 deprecated: false
 description: Generate a full web-page screenshot with our service, that provides rich interface to make any kind of web screenshots online for free with no limits. The simplest way to take a full page screenshot.
-home: https://truecharts.org/truetech/truecharts/charts/stable/website-shot
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/website-shot.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/website-shot
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/website-shot.webp
 keywords:
   - website-shot
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: website-shot
 sources:
   - https://github.com/Flowko/website-shot
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/website-shot
   - https://hub.docker.com/r/flowko1/website-shot
 type: application
-version: 14.0.2
+version: 14.1.0
 

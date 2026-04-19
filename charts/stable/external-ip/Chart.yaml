@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: Gets external IP via DIG command ( OpenDNS , Cloudflare, google ) on a scheduled basis that can be customized. Also includes the ability to alert you via pushover if the IP changes.
-home: https://truecharts.org/truetech/truecharts/charts/stable/external-ip
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/external-ip.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/external-ip
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/external-ip.webp
 keywords:
   - external-ip
   - Network-Management
   - Network-Other
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: external-ip
 sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/external-ip
   - https://github.com/xavier-hernandez/docker-external-ip
   - https://hub.docker.com/r/xavierh/external-ip
 type: application
-version: 9.0.2
+version: 9.1.0
 

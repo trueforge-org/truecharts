@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,21 +20,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: A Grafana remote image renderer that handles rendering panels &amp; dashboards to PNGs using headless chrome.
-home: https://truecharts.org/truetech/truecharts/charts/stable/grafana-image-renderer
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/grafana-image-renderer.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/grafana-image-renderer
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/grafana-image-renderer.webp
 keywords:
   - grafana-image-renderer
   - Productivity
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: grafana-image-renderer
 sources:
   - https://github.com/grafana/grafana-image-renderer/blob/master/docs/remote_rendering_using_docker.md
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/grafana-image-renderer
   - https://hub.docker.com/r/grafana/grafana-image-renderer
 type: application
-version: 9.0.5
+version: 9.1.0
 

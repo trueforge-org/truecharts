@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 2.69.01
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,17 +20,17 @@ dependencies:
     import-values: []
 deprecated: false
 description: Audio/Video library transcoding automation
-home: https://truecharts.org/truetech/truecharts/charts/stable/tdarr
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/tdarr.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/tdarr
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/tdarr.webp
 keywords:
   - encode
   - media
   - tdarr
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: tdarr
 sources:
   - https://github.com/HaveAGitGat/Tdarr
@@ -38,5 +38,5 @@ sources:
   - https://github.com/trueforge/truecharts/tree/master/charts/stable/tdarr
   - https://hub.docker.com/r/haveagitgat/tdarr
 type: application
-version: 13.5.0
+version: 13.6.0
 

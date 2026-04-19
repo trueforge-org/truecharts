@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: Snippet Box is a simple self-hosted app for organizing your code snippets.
-home: https://truecharts.org/truetech/truecharts/charts/stable/snippet-box
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/snippet-box.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/snippet-box
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/snippet-box.webp
 keywords:
   - snippet-box
   - Productivity
   - Tools-Utilities
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: snippet-box
 sources:
   - https://github.com/pawelmalak/snippet-box
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/snippet-box
   - https://hub.docker.com/r/pawelmalak/snippet-box
 type: application
-version: 11.0.2
+version: 11.1.0
 

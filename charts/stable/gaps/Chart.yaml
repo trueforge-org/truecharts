@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 0.10.4
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: Gaps searches through your Plex Server or local folders for all movies, then queries for known movies in the same collection.
-home: https://truecharts.org/truetech/truecharts/charts/stable/gaps
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/gaps.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/gaps
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/gaps.webp
 keywords:
   - gaps
   - plex
   - plex-media-server
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: gaps
 sources:
   - https://github.com/JasonHHouse/gaps
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/gaps
   - https://hub.docker.com/r/housewrecker/gaps
 type: application
-version: 22.0.2
+version: 22.1.0
 

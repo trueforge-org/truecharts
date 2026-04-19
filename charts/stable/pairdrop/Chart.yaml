@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 1.11.2
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,15 +20,15 @@ dependencies:
     import-values: []
 deprecated: false
 description: Local file sharing in your web browser.
-home: https://truecharts.org/truetech/truecharts/charts/stable/pairdrop
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/pairdrop.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/pairdrop
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/pairdrop.webp
 keywords:
   - file-sharing
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: pairdrop
 sources:
   - https://ghcr.io/schlagmichdoch/pairdrop
@@ -36,5 +36,5 @@ sources:
   - https://github.com/schlagmichdoch/PairDrop/pkgs/container/pairdrop
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/pairdrop
 type: application
-version: 3.0.2
+version: 3.1.0
 

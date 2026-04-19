@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 0.14.0
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,21 +20,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: 'Rest Server is a high performance HTTP server that implements restic''s REST backend API. It provides secure and efficient way to backup data remotely, using restic backup client via the rest: URL.'
-home: https://truecharts.org/truetech/truecharts/charts/stable/restic-rest-server
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/restic-rest-server.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/restic-rest-server
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/restic-rest-server.webp
 keywords:
   - restic-rest-server
   - Backup
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: restic-rest-server
 sources:
   - https://github.com/restic/rest-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/restic-rest-server
   - https://hub.docker.com/r/restic/rest-server
 type: application
-version: 9.0.2
+version: 9.1.0
 

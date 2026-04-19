@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,21 +20,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: Media display for Plex, Sonarr and Radarr.
-home: https://truecharts.org/truetech/truecharts/charts/stable/posterr
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/posterr.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/posterr
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/posterr.webp
 keywords:
   - posterr
   - MediaServer-Other
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: posterr
 sources:
   - https://github.com/petersem/posterr
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/posterr
   - https://hub.docker.com/r/petersem/posterr
 type: application
-version: 12.0.2
+version: 12.1.0
 

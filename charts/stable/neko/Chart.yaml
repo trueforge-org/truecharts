@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 3.1.4
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,16 +20,16 @@ dependencies:
     import-values: []
 deprecated: false
 description: A self hosted virtual browser that runs in Chart
-home: https://truecharts.org/truetech/truecharts/charts/stable/neko
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/neko.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/neko
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/neko.webp
 keywords:
   - neko
   - video
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: neko
 sources:
   - https://ghcr.io/m1k1o/neko/brave
@@ -45,5 +45,5 @@ sources:
   - https://github.com/m1k1o/neko
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/neko
 type: application
-version: 11.10.11
+version: 11.11.0
 

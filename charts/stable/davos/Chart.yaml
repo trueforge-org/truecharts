@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 2.2.2
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,17 +20,17 @@ dependencies:
     import-values: []
 deprecated: false
 description: An FTP automation tool that periodically scans given host locations for new files.
-home: https://truecharts.org/truetech/truecharts/charts/stable/davos
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/davos.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/davos
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/davos.webp
 keywords:
   - davos
   - ftp
   - automation
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: davos
 sources:
   - https://ghcr.io/linuxserver/davos
@@ -38,5 +38,5 @@ sources:
   - https://github.com/linuxserver/docker-davos
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/davos
 type: application
-version: 16.0.2
+version: 16.1.0
 

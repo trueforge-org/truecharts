@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 14.3.0
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,21 +20,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: Selfhosted Mend Renovate App with included webhook and Github APP
-home: https://truecharts.org/truetech/truecharts/charts/stable/mend-renovate
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/mend-renovate.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/mend-renovate
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/mend-renovate.webp
 keywords:
   - renovate
   - mend-renovate
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: mend-renovate
 sources:
   - https://ghcr.io/mend/renovate-ce
   - https://github.com/mend/renovate-ce-ee
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mend-renovate
 type: application
-version: 8.2.1
+version: 8.3.0
 

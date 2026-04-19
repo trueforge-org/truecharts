@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,17 +20,17 @@ dependencies:
     import-values: []
 deprecated: false
 description: KitchenOwl is a smart self-hosted grocery list and recipe manager.
-home: https://truecharts.org/truetech/truecharts/charts/stable/kitchenowl
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/kitchenowl.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/kitchenowl
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/kitchenowl.webp
 keywords:
   - recipes
   - kitchen
   - grocery
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: kitchenowl
 sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/kitchenowl
@@ -38,5 +38,5 @@ sources:
   - https://hub.docker.com/r/tombursch/kitchenowl-web
   - https://tombursch.github.io/kitchenowl
 type: application
-version: 13.0.4
+version: 13.1.0
 

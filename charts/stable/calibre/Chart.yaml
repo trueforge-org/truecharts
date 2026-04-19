@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 9.7.0
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,20 +20,20 @@ dependencies:
     import-values: []
 deprecated: false
 description: Calibre is a powerful and easy to use e-book manager.
-home: https://truecharts.org/truetech/truecharts/charts/stable/calibre
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/calibre.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/calibre
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/calibre.webp
 keywords:
   - calibre
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: calibre
 sources:
   - https://ghcr.io/linuxserver/calibre
   - https://github.com/kovidgoyal/calibre/
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/calibre
 type: application
-version: 20.2.2
+version: 20.3.0
 

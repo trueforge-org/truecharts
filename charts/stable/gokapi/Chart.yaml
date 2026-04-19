@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 2.2.4
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: Gokapi is a lightweight server to share files, which expire after a set amount of downloads or days.
-home: https://truecharts.org/truetech/truecharts/charts/stable/gokapi
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/gokapi.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/gokapi
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/gokapi.webp
 keywords:
   - gokapi
   - cloud
   - utilities
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: gokapi
 sources:
   - https://github.com/Forceu/gokapi
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/gokapi
   - https://hub.docker.com/r/f0rc3/gokapi
 type: application
-version: 10.0.2
+version: 10.1.0
 

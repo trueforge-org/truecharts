@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 154c581
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,19 +20,19 @@ dependencies:
     import-values: []
 deprecated: false
 description: A web app that allows you to create smart bookmarks, commands and aliases by pointing your web browser's default search engine at a running instance.
-home: https://truecharts.org/truetech/truecharts/charts/stable/golinks
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/golinks.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/golinks
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/golinks.webp
 keywords:
   - search
   - browser
   - bookmarks
   - smart-bookmarks
   - golinks
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: golinks
 sources:
   - https://ghcr.io/nicholaswilde/golinks
@@ -40,5 +40,5 @@ sources:
   - https://github.com/prologic/golinks
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/golinks
 type: application
-version: 15.0.2
+version: 15.1.0
 

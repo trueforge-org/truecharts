@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 1.13.11
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,21 +20,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: Unified UI and API for processing and training images for facial recognition
-home: https://truecharts.org/truetech/truecharts/charts/stable/double-take
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/double-take.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/double-take
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/double-take.webp
 keywords:
   - ai
   - double-take
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: double-take
 sources:
   - https://github.com/jakowenko/double-take
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/double-take
   - https://hub.docker.com/r/skrashevich/double-take
 type: application
-version: 14.0.2
+version: 14.1.0
 

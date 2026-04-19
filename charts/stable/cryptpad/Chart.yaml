@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 5.5.0
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: CryptPad is the Zero Knowledge realtime collaborative editor.
-home: https://truecharts.org/truetech/truecharts/charts/stable/cryptpad
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/cryptpad.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/cryptpad
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/cryptpad.webp
 keywords:
   - cryptpad
   - Productivity
   - Security
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: cryptpad
 sources:
   - https://cryptpad.fr/
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/cryptpad
   - https://hub.docker.com/r/cryptpad/cryptpad
 type: application
-version: 11.0.2
+version: 11.1.0
 

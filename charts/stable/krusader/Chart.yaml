@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: Krusader is an advanced orthodox file manager for KDE and other desktops in the Unix world. It is similar to the console-based GNU Midnight Commander, GNOME Commander for the GNOME desktop environment, or Total Commander for Windows, all of which can trace their paradigmatic features to the original Norton Commander for DOS. It supports extensive archive handling, mounted filesystem support, FTP, advanced search, viewer/editor, directory synchronisation, file content comparisons, batch renaming, etc.
-home: https://truecharts.org/truetech/truecharts/charts/stable/krusader
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/krusader.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/krusader
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/krusader.webp
 keywords:
   - krusader
   - Productivity
   - Tools-Utilities
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: krusader
 sources:
   - https://ghcr.io/ich777/krusader
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/krusader
   - https://krusader.org/
 type: application
-version: 9.0.2
+version: 9.1.0
 

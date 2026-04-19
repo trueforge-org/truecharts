@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,16 +20,16 @@ dependencies:
     import-values: []
 deprecated: false
 description: Kdenlive(https://kdenlive.org/) is a powerful free and open source cross-platform video editing program made by the KDE community. Feature rich and production ready.
-home: https://truecharts.org/truetech/truecharts/charts/stable/kdenlive
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/kdenlive.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/kdenlive
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/kdenlive.webp
 keywords:
   - kdenlive
   - Other
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: kdenlive
 sources:
   - https://fleet.linuxserver.io/image?name=linuxserver/kdenlive
@@ -38,5 +38,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/kdenlive
   - https://kdenlive.org/
 type: application
-version: 9.0.6
+version: 9.1.0
 

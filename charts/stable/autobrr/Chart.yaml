@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 1.76.0
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,21 +20,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: The modern download automation tool for torrents.
-home: https://truecharts.org/truetech/truecharts/charts/stable/autobrr
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/autobrr.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/autobrr
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/autobrr.webp
 keywords:
   - autobrr
   - torrent
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: autobrr
 sources:
   - https://ghcr.io/autobrr/autobrr
   - https://github.com/autobrr/autobrr
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/autobrr
 type: application
-version: 12.2.1
+version: 12.3.0
 

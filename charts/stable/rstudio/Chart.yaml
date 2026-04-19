@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 4.5.3
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,21 +20,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: Integrated development environment for R, a programming language for statistical computing and graphics.
-home: https://truecharts.org/truetech/truecharts/charts/stable/rstudio
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/rstudio.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/rstudio
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/rstudio.webp
 keywords:
   - rstudio
   - Productivity
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: rstudio
 sources:
   - https://ghcr.io/rocker-org/rstudio
   - https://github.com/rocker-org/rocker-versioned2
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/rstudio
 type: application
-version: 10.0.3
+version: 10.1.0
 
