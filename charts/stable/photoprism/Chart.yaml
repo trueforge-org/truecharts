@@ -19,7 +19,7 @@ dependencies:
     tags: []
     import-values: []
   - name: mariadb
-    version: 18.0.6
+    version: 18.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -27,23 +27,23 @@ dependencies:
     import-values: []
 deprecated: false
 description: PhotoPrism® is a server-based application for browsing, organizing and sharing your personal photo collection
-home: https://trueforge.org/truetech/truecharts/charts/stable/photoprism
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/photoprism.webp
+home: https://truecharts.org/charts/stable/photoprism
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/photoprism.webp
 keywords:
   - photos
   - photoprism
   - pictures
   - sharing
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.33.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: photoprism
 sources:
   - https://github.com/photoprism/photoprism
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/photoprism
   - https://hub.docker.com/r/photoprism/photoprism
 type: application
-version: 30.1.0
+version: 30.2.0
 

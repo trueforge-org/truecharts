@@ -19,7 +19,7 @@ dependencies:
     tags: []
     import-values: []
   - name: mariadb
-    version: 18.0.6
+    version: 18.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -27,8 +27,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: A simple, self-hosted, easy-to-use platform for organising and storing information.
-home: https://trueforge.org/truetech/truecharts/charts/stable/bookstack
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/bookstack.webp
+home: https://truecharts.org/charts/stable/bookstack
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/bookstack.webp
 keywords:
   - bookstack
   - book
@@ -36,16 +36,16 @@ keywords:
   - organizer
   - server
   - hosted
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.33.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: bookstack
 sources:
   - https://ghcr.io/linuxserver/bookstack
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/bookstack
   - https://www.bookstackapp.com/
 type: application
-version: 21.1.0
+version: 21.2.0
 

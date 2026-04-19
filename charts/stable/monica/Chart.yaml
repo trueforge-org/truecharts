@@ -19,7 +19,7 @@ dependencies:
     tags: []
     import-values: []
   - name: mariadb
-    version: 18.0.6
+    version: 18.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -27,20 +27,20 @@ dependencies:
     import-values: []
 deprecated: false
 description: Monica is a great open source personal relationship management system.
-home: https://trueforge.org/truetech/truecharts/charts/stable/monica
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/monica.webp
+home: https://truecharts.org/charts/stable/monica
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/monica.webp
 keywords:
   - crm
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.33.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: monica
 sources:
   - https://github.com/monicahq/monica
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/monica
   - https://hub.docker.com/_/monica
 type: application
-version: 18.1.0
+version: 18.2.0
 
