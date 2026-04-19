@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 2.3.1
 dependencies:
   - name: common
-    version: 29.1.0
+    version: 29.1.2
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,19 +20,20 @@ dependencies:
     import-values: []
 deprecated: false
 description: Python script to update metadata and automatically build collections.
-home: https://trueforge.org/truetech/truecharts/charts/stable/kometa
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/kometa.webp
+home: https://truecharts.org/charts/stable/kometa
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/kometa.webp
 keywords:
   - kometa
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.33.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: kometa
 sources:
   - https://github.com/kometa-team/kometa
+  - https://github.com/trueforge-org/containers/tree/main/apps/kometa
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/kometa
-  - https://hub.docker.com/r/kometateam/kometa
 type: application
-version: 6.0.0
+version: 6.0.1
+

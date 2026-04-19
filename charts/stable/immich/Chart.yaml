@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 2.7.5
 dependencies:
   - name: common
-    version: 29.1.0
+    version: 29.1.2
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -27,15 +27,15 @@ dependencies:
     import-values: []
 deprecated: false
 description: High performance self-hosted photo and video backup solution.
-home: https://trueforge.org/truetech/truecharts/charts/stable/immich
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/immich.webp
+home: https://truecharts.org/charts/stable/immich
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/immich.webp
 keywords:
   - photos
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.33.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: immich
 sources:
   - https://ghcr.io/immich-app/immich-machine-learning
@@ -43,5 +43,5 @@ sources:
   - https://github.com/immich-app/immich
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/immich
 type: application
-version: 28.1.0
+version: 28.1.1
 

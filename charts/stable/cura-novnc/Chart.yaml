@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 5.8.1
 dependencies:
   - name: common
-    version: 29.1.0
+    version: 29.1.2
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: Enjoy Cura directly in your browser with this easy to use Chart
-home: https://trueforge.org/truetech/truecharts/charts/stable/cura-novnc
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/cura-novnc.webp
+home: https://truecharts.org/charts/stable/cura-novnc
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/cura-novnc.webp
 keywords:
   - cura-novnc
   - home-automation
   - Productivity
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.33.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: cura-novnc
 sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/cura-novnc
   - https://hub.docker.com/r/mikeah/cura-novnc
   - https://ultimaker.com/software/ultimaker-cura
 type: application
-version: 12.1.0
+version: 12.1.1
 

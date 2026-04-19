@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 1.1.58
 dependencies:
   - name: common
-    version: 29.1.0
+    version: 29.1.2
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: MeshCentral is a full computer management web site
-home: https://trueforge.org/truetech/truecharts/charts/stable/meshcentral
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/meshcentral.webp
+home: https://truecharts.org/charts/stable/meshcentral
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/meshcentral.webp
 keywords:
   - meshcentral
   - teamviewer
   - rdp
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.33.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: meshcentral
 sources:
   - https://ghcr.io/ylianst/meshcentral
   - https://github.com/Ylianst/MeshCentral
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/meshcentral
 type: application
-version: 19.1.0
+version: 19.1.1
 
