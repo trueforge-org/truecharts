@@ -27,7 +27,7 @@ jobs:
       - name: Setting repo parent dir as safe safe.directory
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
-      - uses: actions/setup-go@7a3fe6cf4cb3a834922a1244abfce67bcef6a0c5 # v6
+      - uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6
         with:
           go-version: stable
           cache: true
@@ -35,22 +35,35 @@ jobs:
             **/go.mod
             **/go.sum
 
-      - name: Install ./forgetool
+      - name: Setup Forgetool
         shell: bash
-        run: |
-          VERSION="3.0.2"
-          FILENAME="forgetool_${VERSION}_linux_amd64.tar.gz"
-          URL="https://github.com/trueforge-org/forgetool/releases/download/v${VERSION}/${FILENAME}"
+        env:
+          GITHUB_TOKEN: ${{ inputs.token }}
+        run: |-
+          TAG=""
+          if RELEASES_JSON="$(curl -fsSL \
+            https://api.github.com/repos/trueforge-org/forgetool/releases)"; then
+            TAG="$(jq -r '[.[]
+              | select(.prerelease == true)
+              | .tag_name
+              | select(test("^(forgetool-)?v[0-9]+\\.[0-9]+\\.[0-9]+-ALPHA[0-9]+$"))
+              | {tag: ., alpha: (capture("ALPHA(?<n>[0-9]+)$").n | tonumber)}
+            ] | if length > 0 then max_by(.alpha).tag else empty end' <<< "${RELEASES_JSON}")"
+          fi
+          [ -n "${TAG}" ] && [ "${TAG}" != "null" ] || TAG="v4.0.0-ALPHA24"
+          VERSION="${TAG#v}"
+          VERSION="${VERSION#forgetool-v}"
+          case "$(uname -m)" in
+            x86_64) ARCH="amd64" ;;
+            aarch64) ARCH="arm64" ;;
+            *) echo "Unsupported uname architecture: $(uname -m). Supported uname values: x86_64, aarch64." && exit 1 ;;
+          esac
+          curl -fsSL -o "${RUNNER_TEMP}/forgetool.tar.gz" "https://github.com/trueforge-org/forgetool/releases/download/${TAG}/forgetool_${VERSION}_linux_${ARCH}.tar.gz" || { echo "Failed to download forgetool release ${TAG} for linux_${ARCH}"; exit 1; }
+          mkdir -p "${RUNNER_TEMP}/forgetool-bin"
+          tar -xzf "${RUNNER_TEMP}/forgetool.tar.gz" -C "${RUNNER_TEMP}/forgetool-bin" forgetool || { echo "Failed to extract forgetool binary from archive"; exit 1; }
+          chmod +x "${RUNNER_TEMP}/forgetool-bin/forgetool"
+          echo "${RUNNER_TEMP}/forgetool-bin" >> "${GITHUB_PATH}"
 
-          mkdir -p temp
-          cd temp
-          # Download the archive
-          curl -L -o "$FILENAME" "$URL"
-
-          # Extract the archive
-          tar -xzf "$FILENAME"
-
-          cd ..
 
       - name: Transcode icons to webp
         shell: bash
@@ -95,7 +108,7 @@ jobs:
       - name: Fix Chart.yaml
         shell: bash
         run: |
-           ./temp/forgetool charts genmeta
+           forgetool charts genmeta
 
       - name: Cleanup
         run: |

@@ -17,4 +17,11 @@ args:
 
     echo "Authentik [{{ $serverUrl }}] is ready..."
     echo "Starting Outpost..."
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 10m
+    memory: 50Mi
 {{- end -}}

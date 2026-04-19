@@ -19,8 +19,6 @@ server-worker:
     AUTHENTIK_POSTGRESQL__USER: {{ .Values.cnpg.main.user }}
     AUTHENTIK_POSTGRESQL__HOST: {{ .Values.cnpg.main.creds.host }}
     AUTHENTIK_POSTGRESQL__PORT: "5432"
-    AUTHENTIK_REDIS__HOST: {{ .Values.redis.creds.plain }}
-    AUTHENTIK_REDIS__PORT: "6379"
 
     {{/* Outposts */}}
     AUTHENTIK_OUTPOSTS__DISCOVER: "false"
