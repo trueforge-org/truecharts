@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 1.0.3
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,21 +20,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: A link dashboard that can be managed without any code.
-home: https://truecharts.org/truetech/truecharts/charts/stable/bender
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/bender.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/bender
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/bender.webp
 keywords:
   - bender
   - dashboard
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: bender
 sources:
   - https://github.com/jez500/bender
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/bender
   - https://hub.docker.com/r/jez500/bender
 type: application
-version: 9.0.2
+version: 9.1.0
 

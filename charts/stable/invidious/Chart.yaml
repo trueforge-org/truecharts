@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,17 +20,17 @@ dependencies:
     import-values: []
 deprecated: false
 description: Open source alternative front-end to YouTube.
-home: https://truecharts.org/truetech/truecharts/charts/stable/invidious
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/invidious.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/invidious
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/invidious.webp
 keywords:
   - invidious
   - youtube
   - media
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: invidious
 sources:
   - https://docs.invidious.io/installation/#docker
@@ -38,5 +38,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/invidious
   - https://quay.io/invidious/invidious
 type: application
-version: 13.0.2
+version: 13.1.0
 

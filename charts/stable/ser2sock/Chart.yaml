@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,15 +20,15 @@ dependencies:
     import-values: []
 deprecated: false
 description: Serial to Socket Redirector
-home: https://truecharts.org/truetech/truecharts/charts/stable/ser2sock
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/ser2sock.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/ser2sock
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/ser2sock.webp
 keywords:
   - ser2sock
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: ser2sock
 sources:
   - https://github.com/nutechsoftware/ser2sock
@@ -36,5 +36,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ser2sock
   - https://hub.docker.com/r/tenstartups/ser2sock
 type: application
-version: 17.0.2
+version: 17.1.0
 

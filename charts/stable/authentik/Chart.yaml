@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 2026.2.2
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,15 +20,15 @@ dependencies:
     import-values: []
 deprecated: false
 description: Authentik is an open-source Identity Provider focused on flexibility and versatility.
-home: https://truecharts.org/truetech/truecharts/charts/stable/authentik
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/authentik.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/authentik
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/authentik.webp
 keywords:
   - authentik
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: authentik
 sources:
   - https://ghcr.io/goauthentik/ldap
@@ -40,5 +40,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/authentik
   - https://goauthentik.io/docs/
 type: application
-version: 40.0.8
+version: 40.1.0
 

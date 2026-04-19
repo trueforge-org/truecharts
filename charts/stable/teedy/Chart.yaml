@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 1.11.0
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: Teedy is an open source, lightweight document management system for individuals and businesses.
-home: https://truecharts.org/truetech/truecharts/charts/stable/teedy
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/teedy.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/teedy
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/teedy.webp
 keywords:
   - teedy
   - documents
   - management
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: teedy
 sources:
   - https://github.com/sismics/docs
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/teedy
   - https://hub.docker.com/r/sismics/docs
 type: application
-version: 19.0.2
+version: 19.1.0
 

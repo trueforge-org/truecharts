@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,21 +20,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: GLAuth is a secure, easy-to-use, LDAP server with configurable backends.
-home: https://truecharts.org/truetech/truecharts/charts/stable/glauth
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/glauth.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/glauth
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/glauth.webp
 keywords:
   - glauth
   - Security
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: glauth
 sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/glauth
   - https://glauth.github.io
   - https://hub.docker.com/r/glauth/glauth
 type: application
-version: 9.0.2
+version: 9.1.0
 

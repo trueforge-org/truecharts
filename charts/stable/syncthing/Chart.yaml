@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 2.0.16
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,15 +20,15 @@ dependencies:
     import-values: []
 deprecated: false
 description: P2P file synchronization application
-home: https://truecharts.org/truetech/truecharts/charts/stable/syncthing
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/syncthing.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/syncthing
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/syncthing.webp
 keywords:
   - syncthing
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: syncthing
 sources:
   - https://github.com/syncthing/syncthing
@@ -36,5 +36,5 @@ sources:
   - https://hub.docker.com/r/syncthing/syncthing
   - https://syncthing.net/
 type: application
-version: 23.0.3
+version: 23.1.0
 

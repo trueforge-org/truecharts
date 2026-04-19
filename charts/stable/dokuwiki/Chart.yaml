@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 2025.0.0
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,19 +20,19 @@ dependencies:
     import-values: []
 deprecated: false
 description: Dokuwiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database.
-home: https://truecharts.org/truetech/truecharts/charts/stable/dokuwiki
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/dokuwiki.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/dokuwiki
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/dokuwiki.webp
 keywords:
   - dokuwiki
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: dokuwiki
 sources:
   - https://ghcr.io/dokuwiki/dokuwiki
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/dokuwiki
 type: application
-version: 16.0.2
+version: 16.1.0
 

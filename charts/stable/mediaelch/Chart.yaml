@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: Mediaelch is a Tool to manage your movie and show libary regarding the metadata and artwork.
-home: https://truecharts.org/truetech/truecharts/charts/stable/mediaelch
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/mediaelch.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/mediaelch
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/mediaelch.webp
 keywords:
   - mediaelch
   - Tools
   - MediaApp-Video
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: mediaelch
 sources:
   - https://github.com/Komet/MediaElch
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mediaelch
   - https://hub.docker.com/r/masonxx/mediaelch
 type: application
-version: 9.0.2
+version: 9.1.0
 

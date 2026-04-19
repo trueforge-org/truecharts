@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,21 +20,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: Chart with rTorrent and the Flood UI.
-home: https://truecharts.org/truetech/truecharts/charts/stable/rflood
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/rflood.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/rflood
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/rflood.webp
 keywords:
   - rflood
   - downloaders
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: rflood
 sources:
   - https://ghcr.io/hotio/rflood
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/rflood
   - https://hotio.dev/containers/rflood
 type: application
-version: 9.0.3
+version: 9.1.0
 

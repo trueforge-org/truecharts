@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 5.10.1
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: A simple script to monitor qBit and communicate with Radarr and Sonarr.
-home: https://truecharts.org/truetech/truecharts/charts/stable/qbitrr
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/qbitrr.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/qbitrr
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/qbitrr.webp
 keywords:
   - qbitrr
   - Downloaders
   - MediaApp-Other
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: qbitrr
 sources:
   - https://github.com/Feramance/Qbitrr
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/qbitrr
   - https://hub.docker.com/r/feramance/qbitrr
 type: application
-version: 9.0.2
+version: 9.1.0
 

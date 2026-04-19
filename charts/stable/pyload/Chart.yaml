@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 360b2295
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,21 +20,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: pyLoad is a Free and Open Source download manager written in Python and designed to be extremely lightweight, easily extensible and fully manageable via web.
-home: https://truecharts.org/truetech/truecharts/charts/stable/pyload
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/pyload.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/pyload
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/pyload.webp
 keywords:
   - pyload
   - download
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: pyload
 sources:
   - https://ghcr.io/linuxserver/pyload
   - https://github.com/pyload/pyload
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/pyload
 type: application
-version: 17.0.2
+version: 17.1.0
 

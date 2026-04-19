@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 0.0.1
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,18 +20,18 @@ dependencies:
     import-values: []
 deprecated: false
 description: Prometheus Exporter for the official uptimerobot CLI
-home: https://truecharts.org/truetech/truecharts/charts/stable/uptimerobot-prometheus
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/uptimerobot-prometheus.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/uptimerobot-prometheus
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/uptimerobot-prometheus.webp
 keywords:
   - uptimerobot
   - prometheus
   - grafana
   - metrics
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: uptimerobot-prometheus
 sources:
   - https://github.com/k8s-at-home/charts/tree/master/charts/uptimerobot-prometheus
@@ -39,5 +39,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/uptimerobot-prometheus
   - https://hub.docker.com/r/billimek/prometheus-uptimerobot-exporter
 type: application
-version: 15.0.2
+version: 15.1.0
 

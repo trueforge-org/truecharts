@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,23 +20,23 @@ dependencies:
     import-values: []
 deprecated: false
 description: Kitana exposes your Plex plugin interfaces "to the outside world". It does that by authenticating against Plex.TV, then connecting to the Plex Media Server you tell it to, and essentially proxying the plugin UI. It has full PMS connection awareness and allows you to connect locally, remotely, or even via relay.
-home: https://truecharts.org/truetech/truecharts/charts/stable/kitana
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/kitana.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/kitana
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/kitana.webp
 keywords:
   - kitana
   - home-automation
   - Tools-Utilities
   - MediaApp-Other
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: kitana
 sources:
   - https://github.com/pannal/Kitana
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/kitana
   - https://hub.docker.com/r/pannal/kitana
 type: application
-version: 9.0.2
+version: 9.1.0
 

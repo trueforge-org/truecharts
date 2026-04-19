@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 0.15.2
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,8 +20,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: This application runs as a daemon on your download host. It checks for completed downloads and extracts them so Radarr, Lidarr, Sonarr, and Readarr may import them
-home: https://truecharts.org/truetech/truecharts/charts/stable/unpackerr
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/unpackerr.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/unpackerr
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/unpackerr.webp
 keywords:
   - unpackerr
   - sonarr
@@ -29,16 +29,16 @@ keywords:
   - lidarr
   - readarr
   - whisparr
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: unpackerr
 sources:
   - https://github.com/davidnewhall/unpackerr
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/unpackerr
   - https://hub.docker.com/r/golift/unpackerr
 type: application
-version: 17.0.2
+version: 17.1.0
 

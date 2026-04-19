@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 1.5.11
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,23 +20,23 @@ dependencies:
     import-values: []
 deprecated: false
 description: ByteStash is a self-hosted web application designed to store, organise, and manage your code snippets efficiently. With support for creating, editing, and filtering snippets, ByteStash helps you keep track of your code in one secure place.
-home: https://truecharts.org/truetech/truecharts/charts/stable/bytestash
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/bytestash.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/bytestash
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/bytestash.webp
 keywords:
   - bytestash
   - Productivity
   - Tools-Utilities
   - code
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: bytestash
 sources:
   - https://ghcr.io/jordan-dalby/bytestash
   - https://github.com/jordan-dalby/ByteStash
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/bytestash
 type: application
-version: 3.0.2
+version: 3.1.0
 

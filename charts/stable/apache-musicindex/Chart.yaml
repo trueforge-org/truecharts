@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 1.4.1
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: Index and stream music using apache-musicindex and m3u playlists
-home: https://truecharts.org/truetech/truecharts/charts/stable/apache-musicindex
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/apache-musicindex.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/apache-musicindex
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/apache-musicindex.webp
 keywords:
   - apache-musicindex
   - streaming
   - m3u
   - playlist
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: apache-musicindex
 sources:
   - https://ghcr.io/k8s-at-home/apache-musicindex
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/apache-musicindex
 type: application
-version: 15.0.2
+version: 15.1.0
 

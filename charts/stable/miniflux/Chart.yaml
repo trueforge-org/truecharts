@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 2.2.19
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: Miniflux is a minimalist and opinionated feed reader.
-home: https://truecharts.org/truetech/truecharts/charts/stable/miniflux
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/miniflux.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/miniflux
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/miniflux.webp
 keywords:
   - miniflux
   - rss
   - news
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: miniflux
 sources:
   - https://ghcr.io/miniflux/miniflux
   - https://github.com/miniflux/v2
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/miniflux
 type: application
-version: 18.0.3
+version: 18.1.0
 

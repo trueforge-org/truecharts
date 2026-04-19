@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 7.4.7
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,17 +20,17 @@ dependencies:
     import-values: []
 deprecated: false
 description: Jupyter a web based IDE
-home: https://truecharts.org/truetech/truecharts/charts/stable/jupyter
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/jupyter.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/jupyter
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/jupyter.webp
 keywords:
   - Jupyter
   - Notebook
   - Lab
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: jupyter
 sources:
   - https://github.com/jupyter/docker-stacks
@@ -44,5 +44,5 @@ sources:
   - https://quay.io/jupyter/scipy-notebook
   - https://quay.io/jupyter/tensorflow-notebook
 type: application
-version: 13.0.2
+version: 13.1.0
 

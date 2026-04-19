@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 4.53.4
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,8 +20,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Want a Movie or TV Show on Plex or Emby? Use Ombi!
-home: https://truecharts.org/truetech/truecharts/charts/stable/ombi
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/ombi.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/ombi
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/ombi.webp
 keywords:
   - ombi
   - plex
@@ -29,15 +29,15 @@ keywords:
   - sonarr
   - radarr
   - couchpotato
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: ombi
 sources:
   - https://ghcr.io/linuxserver/ombi
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ombi
 type: application
-version: 23.0.5
+version: 23.1.0
 

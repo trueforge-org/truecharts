@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 1.8.0
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,23 +20,23 @@ dependencies:
     import-values: []
 deprecated: false
 description: This is an all-in-one package for running a self-hosted Firefox Sync server.
-home: https://truecharts.org/truetech/truecharts/charts/stable/firefox-syncserver
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/firefox-syncserver.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/firefox-syncserver
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/firefox-syncserver.webp
 keywords:
   - server
   - sync
   - syncserver
   - firefox
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: firefox-syncserver
 sources:
   - https://ghcr.io/crazy-max/firefox-syncserver
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/firefox-syncserver
   - https://moz-services-docs.readthedocs.io/en/latest/howtos/run-sync-1.5.html
 type: application
-version: 21.0.2
+version: 21.1.0
 

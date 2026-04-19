@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: '**FMD2:** This is an active fork of the Free Manga Downloader which is a free open source application written in Object Pascal for managing and downloading manga from various websites.  '
-home: https://truecharts.org/truetech/truecharts/charts/stable/fmd2-wine
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/fmd2-wine.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/fmd2-wine
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/fmd2-wine.webp
 keywords:
   - fmd2-wine
   - Downloaders
   - MediaApp-Books
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: fmd2-wine
 sources:
   - https://github.com/Banh-Canh/docker-FMD2
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/fmd2-wine
   - https://hub.docker.com/r/banhcanh/docker-fmd2
 type: application
-version: 10.0.2
+version: 10.1.0
 

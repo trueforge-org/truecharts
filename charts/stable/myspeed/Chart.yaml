@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 1.0.9
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,16 +20,16 @@ dependencies:
     import-values: []
 deprecated: false
 description: Speedtest automation made simple.
-home: https://truecharts.org/truetech/truecharts/charts/stable/myspeed
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/myspeed.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/myspeed
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/myspeed.webp
 keywords:
   - myspeed
   - speedtest
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: myspeed
 sources:
   - https://github.com/gnmyt/myspeed
@@ -37,5 +37,5 @@ sources:
   - https://hub.docker.com/r/germannewsmaker/myspeed
   - https://myspeed.dev/
 type: application
-version: 2.0.2
+version: 2.1.0
 

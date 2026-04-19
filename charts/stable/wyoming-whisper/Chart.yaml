@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 3.1.0
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,20 +20,20 @@ dependencies:
     import-values: []
 deprecated: false
 description: The Wyoming integration of whisper
-home: https://truecharts.org/truetech/truecharts/charts/stable/wyoming-whisper
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/wyoming-whisper.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/wyoming-whisper
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/wyoming-whisper.webp
 keywords:
   - wyoming-whisper
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: wyoming-whisper
 sources:
   - https://github.com/home-assistant/addons/tree/master/whisper
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/wyoming-whisper
   - https://hub.docker.com/r/rhasspy/wyoming-whisper
 type: application
-version: 11.0.2
+version: 11.1.0
 

@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 2.2.1
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -27,21 +27,21 @@ dependencies:
     import-values: []
 deprecated: false
 description: A self-hosted, multi-user digital library with smart shelves, auto metadata, Kobo & KOReader sync, BookDrop imports, OPDS support, and a built-in reader for EPUB, PDF, and comics
-home: https://truecharts.org/truetech/truecharts/charts/stable/booklore
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/booklore.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/booklore
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/booklore.webp
 keywords:
   - booklore
   - MediaApp-Other
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: booklore
 sources:
   - https://ghcr.io/booklore-app/booklore
   - https://github.com/booklore-app/booklore
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/booklore
 type: application
-version: 4.0.8
+version: 4.1.0
 

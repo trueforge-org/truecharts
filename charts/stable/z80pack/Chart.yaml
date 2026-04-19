@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 29.0.15
+    version: 29.1.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -21,21 +21,21 @@ dependencies:
 deprecated: false
 description: |
   Z80Pack is an emulator for emulating CP/M 1, CP/M 2, CP/M 3, and MP/M II on Linux.  This is a command line Chart only.  There is a built in Shell in a Box WebGUI that is a command line browser window.  You can also execute bash in the Chart.[br]
-home: https://truecharts.org/truetech/truecharts/charts/stable/z80pack
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/z80pack.webp
+home: https://trueforge.org/truetech/truecharts/charts/stable/z80pack
+icon: https://trueforge.org/img/hotlink-ok/chart-icons/z80pack.webp
 keywords:
   - z80pack
   - Other
-kubeVersion: '>=1.33.0-0'
+kubeVersion: '>=1.27.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@truecharts.org
-    url: https://truecharts.org
+    email: info@trueforge.org
+    url: https://trueforge.org
 name: z80pack
 sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/z80pack
   - https://hub.docker.com/r/dlandon/z80pack
   - https://registry.hub.docker.com/r/dlandon/z80pack/
 type: application
-version: 9.0.3
+version: 9.1.0
 
