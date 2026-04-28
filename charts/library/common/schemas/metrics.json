@@ -1,0 +1,164 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Configuration for `metrics.main.enabled`.",
+        "default": false
+      },
+      "primary": {
+        "type": "boolean",
+        "description": "Configuration for `metrics.main.primary`."
+      },
+      "type": {
+        "type": "string",
+        "enum": [
+          "servicemonitor",
+          "podmonitor"
+        ],
+        "description": "Configuration for `metrics.main.type`.",
+        "default": "servicemonitor"
+      },
+      "selector": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Configuration for `metrics.main.selector`.",
+        "default": {}
+      },
+      "endpoints": {
+        "type": [
+          "array",
+          "string"
+        ],
+        "items": {
+          "type": "object",
+          "properties": {
+            "port": {
+              "type": "string",
+              "description": "Configuration for `metrics.main.endpoints.$item.port`."
+            },
+            "interval": {
+              "type": "string",
+              "description": "Configuration for `metrics.main.endpoints.$item.interval`."
+            },
+            "scrapeTimeout": {
+              "type": "string",
+              "description": "Configuration for `metrics.main.endpoints.$item.scrapeTimeout`."
+            },
+            "path": {
+              "type": "string",
+              "description": "Configuration for `metrics.main.endpoints.$item.path`."
+            },
+            "honorLabels": {
+              "type": "boolean",
+              "description": "Configuration for `metrics.main.endpoints.$item.honorLabels`."
+            }
+          },
+          "additionalProperties": true,
+          "description": "Configuration for `metrics.main.endpoints.$item`."
+        },
+        "description": "Configuration for `metrics.main.endpoints`."
+      },
+      "prometheusRule": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
+            "description": "Configuration for `metrics.main.prometheusRule.enabled`."
+          },
+          "groups": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Configuration for `metrics.main.prometheusRule.groups`."
+          },
+          "additionalgroups": {
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.name`."
+                    },
+                    "rules": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "alert": {
+                            "type": "string",
+                            "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules.$item.alert`."
+                          },
+                          "expr": {
+                            "type": "string",
+                            "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules.$item.expr`."
+                          },
+                          "for": {
+                            "type": "string",
+                            "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules.$item.for`."
+                          }
+                        },
+                        "additionalProperties": true,
+                        "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules.$item`."
+                      },
+                      "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules`."
+                    },
+                    "additionalrules": {
+                      "type": "array",
+                      "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.additionalrules`."
+                    }
+                  },
+                  "additionalProperties": true,
+                  "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item`."
+                }
+              },
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "object"
+              }
+            ],
+            "description": "Configuration for `metrics.main.prometheusRule.additionalgroups`."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Configuration for `metrics.main.prometheusRule`.",
+        "default": "{ enabled: false }"
+      }
+    },
+    "additionalProperties": true,
+    "description": "Configuration for `metrics.main`.",
+    "default": {}
+  },
+  "description": "Configuration for `metrics`."
+}

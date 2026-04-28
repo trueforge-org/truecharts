@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "See [DNS Config](/truecharts-common/workload#dnsconfig)",
+  "properties": {
+    "options": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Configuration for `podOptions.dnsConfig.options.$item.name`."
+          },
+          "value": {
+            "type": "string",
+            "description": "Configuration for `podOptions.dnsConfig.options.$item.value`."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Configuration for `podOptions.dnsConfig.options.$item`."
+      },
+      "description": "Configuration for `podOptions.dnsConfig.options`.",
+      "default": [
+        {
+          "name": "ndots",
+          "value": "1"
+        }
+      ]
+    }
+  },
+  "additionalProperties": true
+}

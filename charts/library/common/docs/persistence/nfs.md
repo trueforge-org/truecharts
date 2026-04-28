@@ -1,67 +1,76 @@
 ---
-title: NFS
+title: Nfs
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
+- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/persistence/nfs#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.persistence.$name`
-
-:::tip
-
-- See available persistence keys [here](/truecharts-common/persistence).
-- This options apply only when `type: nfs`.
-
-:::
+- `.Values.persistence.nfs`
 
 ---
 
-## `path`
+## `persistence.nfs`
 
-Define the nfs export share path
+Configuration for `persistence` entries with `type: nfs`.
 
-|            |                          |
-| ---------- | ------------------------ |
-| Key        | `persistence.$name.path` |
-| Type       | `string`                 |
-| Required   | ✅                       |
-| Helm `tpl` | ✅                       |
-| Default    | `""`                     |
+| Field      | Value             |
+| ---------- | ----------------- |
+| Key        | `persistence.nfs` |
+| Type       | `map`             |
+| Required   | ❌                |
+| Helm `tpl` | ❌                |
+| Default    | unset             |
+
+---
+
+### `persistence.nfs.path`
+
+No description provided.
+
+| Field      | Value                  |
+| ---------- | ---------------------- |
+| Key        | `persistence.nfs.path` |
+| Type       | `string`               |
+| Required   | ✅                     |
+| Helm `tpl` | ❌                     |
+| Default    | `""`                   |
+| Min Length | `1`                    |
 
 Example
 
 ```yaml
 persistence:
-  nfs-vol:
-    path: /path/of/nfs/share
+  nfs:
+    path: ""
 ```
 
 ---
 
-## `server`
+### `persistence.nfs.server`
 
-Define the nfs server
+No description provided.
 
-|            |                            |
-| ---------- | -------------------------- |
-| Key        | `persistence.$name.server` |
-| Type       | `string`                   |
-| Required   | ✅                         |
-| Helm `tpl` | ✅                         |
-| Default    | `""`                       |
+| Field      | Value                    |
+| ---------- | ------------------------ |
+| Key        | `persistence.nfs.server` |
+| Type       | `string`                 |
+| Required   | ✅                       |
+| Helm `tpl` | ❌                       |
+| Default    | `""`                     |
+| Min Length | `1`                      |
 
 Example
 
 ```yaml
 persistence:
-  nfs-vol:
-    server: nfs-server
+  nfs:
+    server: ""
 ```
 
 ---

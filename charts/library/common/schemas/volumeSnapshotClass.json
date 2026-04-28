@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "parameters": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define a volume snapshot class",
+        "default": {}
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Define the labels of the volume snapshot class",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
+      },
+      "annotations": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the annotations of the volume snapshot class",
+        "default": {}
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Enable volume snapshot class",
+        "default": false
+      },
+      "isDefault": {
+        "type": "boolean",
+        "description": "Sets the annotation `snapshot.storage.kubernetes.io/is-default-class` to `\"true\"` or `\"false\"`",
+        "default": false
+      },
+      "driver": {
+        "type": "string",
+        "description": "Define the driver of the volume snapshot class",
+        "default": "",
+        "minLength": 1
+      },
+      "deletionPolicy": {
+        "type": "string",
+        "enum": [
+          "Delete",
+          "Retain",
+          "delete",
+          "retain"
+        ],
+        "description": "Define the deletion policy of the volume snapshot class",
+        "default": "Retain"
+      }
+    },
+    "additionalProperties": true,
+    "description": "Define a volume snapshot class",
+    "default": {}
+  },
+  "description": "Define a volume snapshot class"
+}

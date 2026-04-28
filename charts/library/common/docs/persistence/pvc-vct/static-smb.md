@@ -1,143 +1,126 @@
 ---
-title: Static SMB
+title: Static Smb
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
+- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/persistence/pvc-vct/static-smb#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.persistence.$name.static`
-
-:::tip
-
-- See available persistence keys [here](/truecharts-common/persistence).
-- This options apply only when `type: pvc` or `type: vct` and `mode: smb`.
-
-:::
+- `.Values.persistence.pvc-vct.static-smb`
 
 ---
 
-## `server`
+## `persistence.pvc-vct.static-smb`
 
-Define the nfs server
+Static provisioning settings for PVC/VCT in `smb` mode.
 
-|            |                                   |
-| ---------- | --------------------------------- |
-| Key        | `persistence.$name.static.server` |
-| Type       | `string`                          |
-| Required   | ✅                                |
-| Helm `tpl` | ✅                                |
-| Default    | `""`                              |
-
-Example
-
-```yaml
-persistence:
-  smb-vol:
-    type: pvc
-    static:
-      server: /server
-```
-
----
-
-## `share`
-
-Define the nfs export share path
-
-|            |                                  |
+| Field      | Value                            |
 | ---------- | -------------------------------- |
-| Key        | `persistence.$name.static.share` |
-| Type       | `string`                         |
-| Required   | ✅                               |
-| Helm `tpl` | ✅                               |
-| Default    | `""`                             |
+| Key        | `persistence.pvc-vct.static-smb` |
+| Type       | `map`                            |
+| Required   | ❌                               |
+| Helm `tpl` | ❌                               |
+| Default    | unset                            |
+
+---
+
+### `persistence.pvc-vct.static-smb.password`
+
+No description provided.
+
+| Field      | Value                                     |
+| ---------- | ----------------------------------------- |
+| Key        | `persistence.pvc-vct.static-smb.password` |
+| Type       | `string`                                  |
+| Required   | ✅                                        |
+| Helm `tpl` | ❌                                        |
+| Default    | `""`                                      |
+| Min Length | `1`                                       |
 
 Example
 
 ```yaml
 persistence:
-  smb-vol:
-    type: pvc
-    static:
-      share: share
+  pvc-vct:
+    static-smb:
+      password: ""
 ```
 
 ---
 
-## `user`
+### `persistence.pvc-vct.static-smb.server`
 
-Define the smb user
+No description provided.
 
-|            |                                 |
-| ---------- | ------------------------------- |
-| Key        | `persistence.$name.static.user` |
-| Type       | `string`                        |
-| Required   | ✅                              |
-| Helm `tpl` | ❌                              |
-| Default    | `""`                            |
+| Field      | Value                                   |
+| ---------- | --------------------------------------- |
+| Key        | `persistence.pvc-vct.static-smb.server` |
+| Type       | `string`                                |
+| Required   | ✅                                      |
+| Helm `tpl` | ❌                                      |
+| Default    | `""`                                    |
+| Min Length | `1`                                     |
 
 Example
 
 ```yaml
 persistence:
-  smb-vol:
-    type: pvc
-    static:
-      user: user
+  pvc-vct:
+    static-smb:
+      server: ""
 ```
 
 ---
 
-## `password`
+### `persistence.pvc-vct.static-smb.share`
 
-Define the smb password
+No description provided.
 
-|            |                                     |
-| ---------- | ----------------------------------- |
-| Key        | `persistence.$name.static.password` |
-| Type       | `string`                            |
-| Required   | ✅                                  |
-| Helm `tpl` | ❌                                  |
-| Default    | `""`                                |
+| Field      | Value                                  |
+| ---------- | -------------------------------------- |
+| Key        | `persistence.pvc-vct.static-smb.share` |
+| Type       | `string`                               |
+| Required   | ✅                                     |
+| Helm `tpl` | ❌                                     |
+| Default    | `""`                                   |
+| Min Length | `1`                                    |
 
 Example
 
 ```yaml
 persistence:
-  smb-vol:
-    type: pvc
-    static:
-      password: password
+  pvc-vct:
+    static-smb:
+      share: ""
 ```
 
 ---
 
-## `domain`
+### `persistence.pvc-vct.static-smb.user`
 
-Define the smb domain
+No description provided.
 
-|            |                                   |
-| ---------- | --------------------------------- |
-| Key        | `persistence.$name.static.domain` |
-| Type       | `string`                          |
-| Required   | ❌                                |
-| Helm `tpl` | ❌                                |
-| Default    | `""`                              |
+| Field      | Value                                 |
+| ---------- | ------------------------------------- |
+| Key        | `persistence.pvc-vct.static-smb.user` |
+| Type       | `string`                              |
+| Required   | ✅                                    |
+| Helm `tpl` | ❌                                    |
+| Default    | `""`                                  |
+| Min Length | `1`                                   |
 
 Example
 
 ```yaml
 persistence:
-  smb-vol:
-    type: pvc
-    static:
-      domain: domain
+  pvc-vct:
+    static-smb:
+      user: ""
 ```
 
 ---

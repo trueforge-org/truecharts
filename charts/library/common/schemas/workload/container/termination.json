@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "See [termination](/truecharts-common/container/termination) ---",
+  "properties": {
+    "messagePolicy": {
+      "type": "string",
+      "description": "Define termination for the container"
+    },
+    "messagePath": {
+      "type": "string",
+      "description": "Define termination message path for the container"
+    }
+  },
+  "additionalProperties": true
+}

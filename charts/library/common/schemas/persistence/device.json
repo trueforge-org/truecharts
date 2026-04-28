@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Configuration for `persistence` entries with `type: device`.",
+  "properties": {
+    "hostPath": {
+      "type": "string",
+      "minLength": 1,
+      "default": ""
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "hostPath"
+  ]
+}

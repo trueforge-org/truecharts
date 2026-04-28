@@ -1,0 +1,47 @@
+service:
+  main:
+    enabled: true
+    ports:
+      main:
+        enabled: true
+        port: 8080
+
+workload:
+  main:
+    enabled: true
+    podSpec:
+      containers:
+        main:
+          enabled: true
+          args:
+            - --port
+            - "8080"
+          probes:
+            liveness:
+              enabled: true
+            readiness:
+              enabled: true
+            startup:
+              enabled: true
+
+dependencies:
+  valkey:
+    enabled: true
+    depconfig:
+      password: "testpassword"
+    image:
+      repository: docker.io/bitnamisecure/valkey
+      pullPolicy: IfNotPresent
+      tag: latest@sha256:14dc12c4cc5912747b63d41e237512989d958fa6020dbcb1170cc0fe91f48644
+    workload:
+      main:
+        enabled: true
+        replicas: 1
+        type: StatefulSet
+        strategy: RollingUpdate
+        podSpec:
+          containers:
+            main:
+              env:
+                REDIS_PASSWORD: "testpassword"
+

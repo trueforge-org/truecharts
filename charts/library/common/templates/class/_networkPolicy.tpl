@@ -1,68 +1,76 @@
 {{/*
-Blueprint for the NetworkPolicy object
+This template serves as a blueprint for networkPolicy objects that are created
+using the common library.
 */}}
 {{- define "tc.v1.common.class.networkpolicy" -}}
-  {{- $fullName := include "tc.v1.common.lib.chart.names.fullname" . -}}
-  {{- $networkPolicyName := $fullName -}}
-  {{- $values := .Values.networkPolicy -}}
-
-  {{- if hasKey . "ObjectValues" -}}
-    {{- with .ObjectValues.networkPolicy -}}
-      {{- $values = . -}}
-    {{- end -}}
-  {{- end -}}
-  {{- $networkpolicyLabels := $values.labels -}}
-  {{- $networkpolicyAnnotations := $values.annotations -}}
-
-  {{- if and (hasKey $values "nameOverride") $values.nameOverride -}}
-    {{- $networkPolicyName = printf "%v-%v" $networkPolicyName $values.nameOverride -}}
-  {{- end }}
+  {{- $rootCtx := .rootCtx -}}
+  {{- $objectData := .objectData -}}
 ---
 kind: NetworkPolicy
 apiVersion: {{ include "tc.v1.common.capabilities.networkpolicy.apiVersion" $ }}
 metadata:
-  name: {{ $networkPolicyName }}
-  namespace: {{ $.Values.namespace | default $.Values.global.namespace | default $.Release.Namespace }}
-  {{- $labels := (mustMerge ($networkpolicyLabels | default dict) (include "tc.v1.common.lib.metadata.allLabels" $ | fromYaml)) -}}
-  {{- with (include "tc.v1.common.lib.metadata.render" (dict "rootCtx" $ "labels" $labels) | trim) }}
+  name: {{ $objectData.name }}
+  namespace: {{ include "tc.v1.common.lib.metadata.namespace" (dict "rootCtx" $rootCtx "objectData" $objectData "caller" "networkpolicy") }}
+  {{- $labels := (mustMerge ($objectData.labels | default dict) (include "tc.v1.common.lib.metadata.allLabels" $rootCtx | fromYaml)) -}}
+  {{- with (include "tc.v1.common.lib.metadata.render" (dict "rootCtx" $rootCtx "labels" $labels) | trim) }}
   labels:
     {{- . | nindent 4 }}
   {{- end -}}
-  {{- $annotations := (mustMerge ($networkpolicyAnnotations | default dict) (include "tc.v1.common.lib.metadata.allAnnotations" $ | fromYaml)) -}}
-  {{- with (include "tc.v1.common.lib.metadata.render" (dict "rootCtx" $ "annotations" $annotations) | trim) }}
+  {{- $annotations := (mustMerge ($objectData.annotations | default dict) (include "tc.v1.common.lib.metadata.allAnnotations" $rootCtx | fromYaml)) -}}
+  {{- with (include "tc.v1.common.lib.metadata.render" (dict "rootCtx" $rootCtx "annotations" $annotations) | trim) }}
   annotations:
     {{- . | nindent 4 }}
   {{- end }}
 spec:
+  {{- if $objectData.podSelector }}
   podSelector:
-  {{- if $values.podSelector }}
-  {{- tpl (toYaml $values.podSelector) $ | nindent 4 }}
-  {{- else if $values.targetSelector }}
-    {{- $objectData := dict "targetSelector" $values.targetSelector }}
-    {{- $selectedPod := fromYaml ( include "tc.v1.common.lib.helpers.getSelectedPodValues" (dict "rootCtx" $ "objectData" $objectData)) }}
-    {{- $selectedPodName := $selectedPod.shortName }}
+  {{- tpl (toYaml $objectData.podSelector) $ | nindent 4 }}
+  {{/* Target all pods in namespace */}}
+  {{- else if $objectData.targetAllPods }}
+  podSelector: {}
+  {{/* target a specific pod in this chart */}}
+  {{/*
+    This is not a list, because the match labels are a "AND" criterium, not an "OR"
+    sp adding labels for multiple pods needs them to be deduped etc, whcih would require us to write a custom selector thing to handle that.
+   */}}
+  {{- else if $objectData.targetSelector }}
+  podSelector:
     matchLabels:
-      {{- include "tc.v1.common.lib.metadata.selectorLabels" (dict "rootCtx" $ "objectType" "pod" "objectName" $selectedPodName) | indent 8 }}
+      {{- include "tc.v1.common.lib.metadata.selectorLabels" (dict "rootCtx" $ "objectType" "pod" "objectName" $objectData.targetSelector ) | indent 8 }}
+  {{/* Default: Target everything in this chart */}}
   {{- else }}
+  podSelector:
     matchLabels:
       {{- include "tc.v1.common.lib.metadata.selectorLabels" (dict "rootCtx" $ "objectType" "" "objectName" "") | indent 8 }}
   {{- end }}
 
-  {{- if $values.policyType }}
-  {{- if eq $values.policyType "ingress" }}
-  policyTypes: ["Ingress"]
-  {{- else if eq $values.policyType "egress" }}
-  policyTypes: ["Egress"]
+  {{- if $objectData.policyTypes }}
+  policyTypes:
+    {{- $objectData.policyTypes | toYaml | nindent 4 }}
+  {{- else }}
+    {{- $hasingress := false -}}
+    {{- $hasegress := false -}}
+    {{- if $objectData.ingress -}}
+      {{- $hasingress = true -}}
+    {{- end -}}
+    {{- if $objectData.egress -}}
+      {{- $hasegress = true -}}
+    {{- end -}}
+    {{- if or $hasingress $hasegress }}
+  policyTypes:
+      {{- if $hasingress }}
+    - Ingress
+      {{- end }}
+      {{- if $hasegress }}
+    - Egress
+      {{- end }}
+    {{- end -}}
+  {{- end }}
 
-  {{- else if eq $values.policyType "ingress-egress" }}
-  policyTypes: ["Ingress", "Egress"]
-  {{- end -}}
-  {{- end -}}
-
-  {{- if $values.egress }}
+  {{- if $objectData.egress }}
   egress:
-  {{- range $values.egress }}
-  - to:
+  {{- range $objectData.egress }}
+  -{{- if .to }} to:
     {{- range .to -}}
     {{- $nss := false -}}
     {{- $ipb := false -}}
@@ -112,8 +120,8 @@ spec:
         {{- end -}}
       {{- end -}}
       {{- end -}}
+    {{- end }}
     {{- end -}}
-
   {{- with .ports }}
     ports:
     {{- . | toYaml | nindent 6 }}
@@ -121,10 +129,10 @@ spec:
   {{- end -}}
   {{- end -}}
 
-  {{- if $values.ingress }}
+  {{- if $objectData.ingress }}
   ingress:
-  {{- range $values.ingress }}
-  - from:
+  {{- range $objectData.ingress }}
+  -{{- if .from }} from:
     {{- range .from -}}
     {{- $nss := false -}}
     {{- $ipb := false -}}
@@ -174,8 +182,8 @@ spec:
         {{- end -}}
       {{- end -}}
       {{- end -}}
+    {{- end }}
     {{- end -}}
-
   {{- with .ports }}
     ports:
     {{- . | toYaml | nindent 6 }}

@@ -1,70 +1,74 @@
 ---
-title: Cert Manager Integration
+title: Certmanager
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/ingress/certmanager#full-examples) section for complete examples.
+- This page is generated from JSON schema.
+- See the [Full Examples](/truecharts-common/ingress/certManager#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.ingress.$name.integration.certManager`
-
-:::tip
-
-- Replace references to `$name` with the actual name you want to use.
-
-:::
+- `.Values.ingress.certManager`
 
 ---
 
-## `enabled`
+## `ingress.certManager`
 
-Enables or Disables the cert-manager integration
+Create Ingress objects
 
-|            |                                                  |
-| ---------- | ------------------------------------------------ |
-| Key        | `ingress.$name.integrations.certManager.enabled` |
-| Type       | `bool`                                           |
-| Required   | ✅                                               |
-| Helm `tpl` | ❌                                               |
-| Default    | `false`                                          |
+| Field      | Value                 |
+| ---------- | --------------------- |
+| Key        | `ingress.certManager` |
+| Type       | `map`                 |
+| Required   | ❌                    |
+| Helm `tpl` | ❌                    |
+| Default    | unset                 |
+
+---
+
+### `ingress.certManager.certificateIssuer`
+
+Define the certificate issuer for this cert-manager integration
+
+| Field      | Value                                   |
+| ---------- | --------------------------------------- |
+| Key        | `ingress.certManager.certificateIssuer` |
+| Type       | `string`                                |
+| Required   | ❌                                      |
+| Helm `tpl` | ❌                                      |
+| Default    | `""`                                    |
 
 Example
 
 ```yaml
 ingress:
-  ingress-name:
-    integrations:
-      certManager:
-        enabled: true
+  certManager:
+    certificateIssuer: ""
 ```
 
 ---
 
-## `certificateIssuer`
+### `ingress.certManager.enabled`
 
-Define the certificate issuer for this cert-manager integration
+Enables or Disables the cert-manager integration
 
-|            |                                                            |
-| ---------- | ---------------------------------------------------------- |
-| Key        | `ingress.$name.integrations.certManager.certificateIssuer` |
-| Type       | `string`                                                   |
-| Required   | ❌                                                         |
-| Helm `tpl` | ❌                                                         |
-| Default    | `""`                                                       |
+| Field      | Value                         |
+| ---------- | ----------------------------- |
+| Key        | `ingress.certManager.enabled` |
+| Type       | `boolean`                     |
+| Required   | ❌                            |
+| Helm `tpl` | ❌                            |
+| Default    | `false`                       |
 
 Example
 
 ```yaml
 ingress:
-  ingress-name:
-    integrations:
-      certManager:
-        certificateIssuer: some-issuer
+  certManager:
+    enabled: false
 ```
 
 ---

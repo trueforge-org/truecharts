@@ -1,71 +1,78 @@
 ---
-title: Static NFS
+title: Static Nfs
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
+- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/persistence/pvc-vct/static-nfs#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.persistence.$name.static`
-
-:::tip
-
-- See available persistence keys [here](/truecharts-common/persistence).
-- This options apply only when `type: pvc` or `type: vct` and `mode: nfs`.
-
-:::
+- `.Values.persistence.pvc-vct.static-nfs`
 
 ---
 
-## `server`
+## `persistence.pvc-vct.static-nfs`
 
-Define the nfs server
+Static provisioning settings for PVC/VCT in `nfs` mode.
 
-|            |                                   |
-| ---------- | --------------------------------- |
-| Key        | `persistence.$name.static.server` |
-| Type       | `string`                          |
-| Required   | ✅                                |
-| Helm `tpl` | ✅                                |
-| Default    | `""`                              |
+| Field      | Value                            |
+| ---------- | -------------------------------- |
+| Key        | `persistence.pvc-vct.static-nfs` |
+| Type       | `map`                            |
+| Required   | ❌                               |
+| Helm `tpl` | ❌                               |
+| Default    | unset                            |
+
+---
+
+### `persistence.pvc-vct.static-nfs.server`
+
+No description provided.
+
+| Field      | Value                                   |
+| ---------- | --------------------------------------- |
+| Key        | `persistence.pvc-vct.static-nfs.server` |
+| Type       | `string`                                |
+| Required   | ✅                                      |
+| Helm `tpl` | ❌                                      |
+| Default    | `""`                                    |
+| Min Length | `1`                                     |
 
 Example
 
 ```yaml
 persistence:
-  nfs-vol:
-    type: pvc
-    static:
-      server: /server
+  pvc-vct:
+    static-nfs:
+      server: ""
 ```
 
 ---
 
-## `share`
+### `persistence.pvc-vct.static-nfs.share`
 
-Define the nfs export share path
+No description provided.
 
-|            |                                  |
-| ---------- | -------------------------------- |
-| Key        | `persistence.$name.static.share` |
-| Type       | `string`                         |
-| Required   | ✅                               |
-| Helm `tpl` | ✅                               |
-| Default    | `""`                             |
+| Field      | Value                                  |
+| ---------- | -------------------------------------- |
+| Key        | `persistence.pvc-vct.static-nfs.share` |
+| Type       | `string`                               |
+| Required   | ✅                                     |
+| Helm `tpl` | ❌                                     |
+| Default    | `""`                                   |
+| Min Length | `1`                                    |
 
 Example
 
 ```yaml
 persistence:
-  nfs-vol:
-    type: pvc
-    static:
-      share: share
+  pvc-vct:
+    static-nfs:
+      share: ""
 ```
 
 ---

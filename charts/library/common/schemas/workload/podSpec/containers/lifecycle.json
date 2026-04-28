@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Does **not** apply to `initContainers`. See [lifecycle](/truecharts-common/container/lifecycle).",
+  "properties": {
+    "preStop": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Define preStop lifecycle"
+    },
+    "postStart": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Define preStop lifecycle"
+    }
+  },
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "httpHeaders": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define lifecycle for the container"
+      },
+      "type": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define hook type"
+      },
+      "port": {
+        "type": [
+          "integer",
+          "string"
+        ],
+        "description": "Define the port - Only applies when `type: http` or `type: https`"
+      },
+      "host": {
+        "type": "string",
+        "description": "Define the host - Only applies when `type: http` or `type: https`"
+      },
+      "path": {
+        "type": "string",
+        "description": "Define the path - Only applies when `type: http` or `type: https`"
+      }
+    },
+    "additionalProperties": true,
+    "description": "Configuration for `$name.podSpec.containers.$name.lifecycle.$name`."
+  }
+}

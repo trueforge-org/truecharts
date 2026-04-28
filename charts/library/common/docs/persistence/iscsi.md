@@ -1,34 +1,64 @@
 ---
-title: iSCSI
+title: Iscsi
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
+- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/persistence/iscsi#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.persistence.$name`
-
-:::tip
-
-- See available persistence keys [here](/truecharts-common/persistence).
-- This options apply only when `type: iscsi`.
-
-:::
+- `.Values.persistence.iscsi`
 
 ---
 
-## `iscsi`
+## `persistence.iscsi`
 
-Define the iSCSI
+Configuration for `persistence` entries with `type: iscsi`.
 
-|            |                           |
+| Field      | Value               |
+| ---------- | ------------------- |
+| Key        | `persistence.iscsi` |
+| Type       | `map`               |
+| Required   | ❌                  |
+| Helm `tpl` | ❌                  |
+| Default    | unset               |
+
+---
+
+### `persistence.iscsi.iqn`
+
+No description provided.
+
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `persistence.iscsi.iqn` |
+| Type       | `string`                |
+| Required   | ✅                      |
+| Helm `tpl` | ❌                      |
+| Default    | `""`                    |
+| Min Length | `1`                     |
+
+Example
+
+```yaml
+persistence:
+  iscsi:
+    iqn: ""
+```
+
+---
+
+### `persistence.iscsi.iscsi`
+
+No description provided.
+
+| Field      | Value                     |
 | ---------- | ------------------------- |
-| Key        | `persistence.$name.iscsi` |
+| Key        | `persistence.iscsi.iscsi` |
 | Type       | `map`                     |
 | Required   | ✅                        |
 | Helm `tpl` | ❌                        |
@@ -38,367 +68,55 @@ Example
 
 ```yaml
 persistence:
-  iscsi-vol:
-    iscsi: {}
+  iscsi:
+    iscsi:
+      {}
 ```
 
 ---
 
-### `fsType`
+### `persistence.iscsi.lun`
 
-Define the fsType
+No description provided.
 
-|            |                            |
-| ---------- | -------------------------- |
-| Key        | `persistence.$name.fsType` |
-| Type       | `string`                   |
-| Required   | ❌                         |
-| Helm `tpl` | ✅                         |
-| Default    | `""`                       |
-
-Valid Values
-
-- `ext4`
-- `xfs`
-- `ntfs`
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `persistence.iscsi.lun` |
+| Type       | `integer, string`       |
+| Required   | ✅                      |
+| Helm `tpl` | ❌                      |
+| Default    | `""`                    |
+| Minimum    | `1`                     |
 
 Example
 
 ```yaml
 persistence:
-  iscsi-vol:
-    iscsi:
-      fsType: ext4
+  iscsi:
+    lun: ""
 ```
 
 ---
 
-### `targetPortal`
+### `persistence.iscsi.targetPortal`
 
-Define the targetPortal
+No description provided.
 
-|            |                                  |
+| Field      | Value                            |
 | ---------- | -------------------------------- |
-| Key        | `persistence.$name.targetPortal` |
+| Key        | `persistence.iscsi.targetPortal` |
 | Type       | `string`                         |
 | Required   | ✅                               |
-| Helm `tpl` | ✅                               |
+| Helm `tpl` | ❌                               |
 | Default    | `""`                             |
+| Min Length | `1`                              |
 
 Example
 
 ```yaml
 persistence:
-  iscsi-vol:
-    iscsi:
-      targetPortal: some.target.portal
-```
-
----
-
-### `iqn`
-
-Define the iqn
-
-|            |                         |
-| ---------- | ----------------------- |
-| Key        | `persistence.$name.iqn` |
-| Type       | `string`                |
-| Required   | ✅                      |
-| Helm `tpl` | ✅                      |
-| Default    | `""`                    |
-
-Example
-
-```yaml
-persistence:
-  iscsi-vol:
-    iscsi:
-      iqn: some.iqn
-```
-
----
-
-### `lun`
-
-Define the lun
-
-|            |                         |
-| ---------- | ----------------------- |
-| Key        | `persistence.$name.lun` |
-| Type       | `int`                   |
-| Required   | ✅                      |
-| Helm `tpl` | ✅                      |
-| Default    | `""`                    |
-
-Example
-
-```yaml
-persistence:
-  iscsi-vol:
-    iscsi:
-      lun: 0
-```
-
----
-
-### `initiatorName`
-
-Define the initiatorName
-
-|            |                                   |
-| ---------- | --------------------------------- |
-| Key        | `persistence.$name.initiatorName` |
-| Type       | `string`                          |
-| Required   | ❌                                |
-| Helm `tpl` | ✅                                |
-| Default    | `""`                              |
-
-Example
-
-```yaml
-persistence:
-  iscsi-vol:
-    iscsi:
-      initiatorName: some.initiator.name
-```
-
----
-
-### `iscsiInterface`
-
-Define the iscsiInterface
-
-|            |                                    |
-| ---------- | ---------------------------------- |
-| Key        | `persistence.$name.iscsiInterface` |
-| Type       | `string`                           |
-| Required   | ❌                                 |
-| Helm `tpl` | ✅                                 |
-| Default    | `""`                               |
-
-Example
-
-```yaml
-persistence:
-  iscsi-vol:
-    iscsi:
-      iscsiInterface: some.interface
-```
-
----
-
-### `portals`
-
-Define the portals
-
-|            |                             |
-| ---------- | --------------------------- |
-| Key        | `persistence.$name.portals` |
-| Type       | `list` of `string`          |
-| Required   | ❌                          |
-| Helm `tpl` | ✅ (On entries only)        |
-| Default    | `[]`                        |
-
-Example
-
-```yaml
-persistence:
-  iscsi-vol:
-    iscsi:
-      portals:
-        - some.portal.1
-        - some.portal.2
-```
-
----
-
-### `authDiscovery`
-
-Define the authDiscovery
-
-|            |                                         |
-| ---------- | --------------------------------------- |
-| Key        | `persistence.$name.iscsi.authDiscovery` |
-| Type       | `map`                                   |
-| Required   | ❌                                      |
-| Helm `tpl` | ❌                                      |
-| Default    | `{}`                                    |
-
-Example
-
-```yaml
-persistence:
-  iscsi-vol:
-    iscsi:
-      authDiscovery: {}
-```
-
----
-
-#### `authDiscovery.username`
-
-Define the username
-
-|            |                                                  |
-| ---------- | ------------------------------------------------ |
-| Key        | `persistence.$name.iscsi.authDiscovery.username` |
-| Type       | `string`                                         |
-| Required   | ❌                                               |
-| Helm `tpl` | ✅                                               |
-| Default    | `""`                                             |
-
-Example
-
-```yaml
-persistence:
-  iscsi-vol:
-    iscsi:
-      authDiscovery:
-        username: some.username
-```
-
----
-
-#### `authDiscovery.password`
-
-Define the password
-
-|            |                                                  |
-| ---------- | ------------------------------------------------ |
-| Key        | `persistence.$name.iscsi.authDiscovery.password` |
-| Type       | `string`                                         |
-| Required   | ❌                                               |
-| Helm `tpl` | ✅                                               |
-| Default    | `""`                                             |
-
-Example
-
-```yaml
-persistence:
-  iscsi-vol:
-    iscsi:
-      authDiscovery:
-        password: some.password
-```
-
----
-
-#### `authDiscovery.usernameInitiator`
-
-Define the usernameInitiator
-
-|            |                                                           |
-| ---------- | --------------------------------------------------------- |
-| Key        | `persistence.$name.iscsi.authDiscovery.usernameInitiator` |
-| Type       | `string`                                                  |
-| Required   | ❌                                                        |
-| Helm `tpl` | ✅                                                        |
-| Default    | `""`                                                      |
-
-Example
-
-```yaml
-persistence:
-  iscsi-vol:
-    iscsi:
-      authDiscovery:
-        usernameInitiator: some.usernameInitiator
-```
-
----
-
-#### `authDiscovery.passwordInitiator`
-
-Define the passwordInitiator
-
-|            |                                                           |
-| ---------- | --------------------------------------------------------- |
-| Key        | `persistence.$name.iscsi.authDiscovery.passwordInitiator` |
-| Type       | `string`                                                  |
-| Required   | ❌                                                        |
-| Helm `tpl` | ✅                                                        |
-| Default    | `""`                                                      |
-
-Example
-
-```yaml
-persistence:
-  iscsi-vol:
-    iscsi:
-      authDiscovery:
-        passwordInitiator: some.passwordInitiator
-```
-
----
-
-### `authSession`
-
-Define the authSession
-
-|            |                                       |
-| ---------- | ------------------------------------- |
-| Key        | `persistence.$name.iscsi.authSession` |
-| Type       | `map`                                 |
-| Required   | ❌                                    |
-| Helm `tpl` | ❌                                    |
-| Default    | `{}`                                  |
-
-Example
-
-```yaml
-persistence:
-  iscsi-vol:
-    iscsi:
-      authSession: {}
-```
-
----
-
-#### `authSession.username`
-
-Define the username
-
-|            |                                                |
-| ---------- | ---------------------------------------------- |
-| Key        | `persistence.$name.iscsi.authSession.username` |
-| Type       | `string`                                       |
-| Required   | ❌                                             |
-| Helm `tpl` | ✅                                             |
-| Default    | `""`                                           |
-
-Example
-
-```yaml
-persistence:
-  iscsi-vol:
-    iscsi:
-      authSession:
-        username: some.username
-```
-
----
-
-#### `authSession.password`
-
-Define the password
-
-|            |                                                |
-| ---------- | ---------------------------------------------- |
-| Key        | `persistence.$name.iscsi.authSession.password` |
-| Type       | `string`                                       |
-| Required   | ❌                                             |
-| Helm `tpl` | ✅                                             |
-| Default    | `""`                                           |
-
-Example
-
-```yaml
-persistence:
-  iscsi-vol:
-    iscsi:
-      authSession:
-        password: some.password
+  iscsi:
+    targetPortal: ""
 ```
 
 ---

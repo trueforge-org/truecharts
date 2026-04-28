@@ -34,6 +34,29 @@ For the complete overview of all available options, please checkout the document
 
 For information about the common chart and all defaults included with it, please review its values.yaml file available here: https://github.com/trueforge-org/truecharts/blob/master/charts/library/common/values.yaml
 
+## Schema Validation
+
+You can validate values files against the common schema with:
+
+`python3 charts/library/common/test_schema.py`
+
+This validates:
+
+- `charts/stable/*/values.yaml`
+- `charts/library/common-test/ci/*values.yaml`
+
+Useful options:
+
+- `--output-file <path>`: write output to both stdout and a log file
+- `--max-failures <n>`: stop after `n` schema failures (`0` means no limit)
+- `--fail-fast`: stop after the first schema failure
+
+When running `run_common_tests.sh`, you can set `SCHEMA_MAX_FAILURES` to apply a failure threshold locally, for example:
+
+`SCHEMA_MAX_FAILURES=25 ./run_common_tests.sh`
+
+CI always performs a full run (`--max-failures 0`) and uploads the schema log artifact.
+
 ## Support
 
 - See the [Website](https://truecharts.org)

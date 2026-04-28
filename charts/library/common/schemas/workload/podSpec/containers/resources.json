@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "limits": {
+      "type": "object",
+      "properties": {
+        "cpu": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "description": "The maximum amount of CPU that the container can use.",
+          "default": "4000m"
+        },
+        "memory": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "description": "The resources that the container can use.",
+          "default": "8Gi"
+        }
+      },
+      "additionalProperties": true,
+      "description": "The maximum amount of resources that the container can use. Limits are **optional**, can be set to \"unlimited\" by setting it's values (`cpu` and `memory`) to `0`.",
+      "default": {
+        "cpu": "4000m",
+        "memory": "8Gi"
+      }
+    },
+    "requests": {
+      "type": "object",
+      "properties": {
+        "cpu": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "description": "The minimum amount of CPU that the container can use.",
+          "default": "10m"
+        },
+        "memory": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "description": "The minimum amount of memory that the container can use.",
+          "default": "50Mi"
+        }
+      },
+      "additionalProperties": true,
+      "description": "The minimum amount of resources that the container needs. Requests are **required**, because without it, kubernetes uses the `limits` as the `requests`.",
+      "default": {
+        "cpu": "10m",
+        "memory": "50Mi"
+      }
+    }
+  },
+  "additionalProperties": true,
+  "description": "The resources that the container can use."
+}

@@ -1,73 +1,31 @@
 ---
-title: EmptyDir
+title: Emptydir
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/persistence/emptydir#full-examples) section for complete examples.
+- This page is generated from JSON schema.
+- See the [Full Examples](/truecharts-common/persistence/emptyDir#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.persistence.$name`
-
-:::tip
-
-- See available persistence keys [here](/truecharts-common/persistence).
-- This options apply only when `type: emptyDir`.
-
-:::
+- `.Values.persistence.emptyDir`
 
 ---
 
-## `size`
+## `persistence.emptyDir`
 
-Define the sizeLimit of the emptyDir
+Configuration for `persistence` entries with `type: emptyDir`.
 
-|            |                          |
-| ---------- | ------------------------ |
-| Key        | `persistence.$name.size` |
-| Type       | `string`                 |
-| Required   | ❌                       |
-| Helm `tpl` | ✅                       |
-| Default    | `""`                     |
-
-Example
-
-```yaml
-persistence:
-  emptyDir-vol:
-    size: 2Gi
-```
-
----
-
-## `medium`
-
-Define the medium of emptyDir (Memory, "")
-
-|            |                            |
-| ---------- | -------------------------- |
-| Key        | `persistence.$name.medium` |
-| Type       | `string`                   |
-| Required   | ❌                         |
-| Helm `tpl` | ✅                         |
-| Default    | `""`                       |
-
-Valid Values
-
-- `Memory`
-- `""`
-
-Example
-
-```yaml
-persistence:
-  emptyDir-vol:
-    medium: Memory
-```
+| Field      | Value                  |
+| ---------- | ---------------------- |
+| Key        | `persistence.emptyDir` |
+| Type       | `map`                  |
+| Required   | ❌                     |
+| Helm `tpl` | ❌                     |
+| Default    | unset                  |
 
 ---
 

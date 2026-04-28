@@ -63,8 +63,5 @@ objectData: The object data to be used to render the Pod.
     {{- include "tc.v1.common.lib.container.env" (dict
               "rootCtx" $rootCtx "objectData" $objectData "caller" "Container"
               "name" $objectData.shortName "key" "containers") | trim | nindent 4 -}}
-    {{- include "tc.v1.common.lib.container.envList" (dict
-              "rootCtx" $rootCtx "objectData" $objectData "caller" "Container"
-              "name" $objectData.shortName "key" "containers") | trim | nindent 4 -}}
   {{- $_ := unset $objectData "envDupe" -}}
 {{- end -}}

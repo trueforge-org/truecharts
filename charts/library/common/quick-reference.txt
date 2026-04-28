@@ -1,0 +1,185 @@
+TRUECHARTS COMMON CHART - QUICK REFERENCE INDEX
+================================================
+
+FILES CREATED:
+--------------
+1. docs-structure.txt (26KB, 974 lines) - Complete configuration structure
+2. docs-summary.txt (6.2KB) - Summary of what was extracted
+3. quick-reference.txt (this file) - Quick lookup index
+
+QUICK LOOKUP BY CATEGORY:
+--------------------------
+
+WORKLOADS:
+  workload.$name.type: Deployment | StatefulSet | DaemonSet | Job | CronJob
+
+SERVICES:
+  service.$name.type: ClusterIP | LoadBalancer | NodePort | ExternalIP | ExternalName
+  service.$name.ports.$portname.protocol: http | https | tcp | udp
+
+PERSISTENCE:
+  persistence.$name.type: pvc | vct | hostPath | emptyDir | nfs | iscsi | device | configmap | secret
+
+MIDDLEWARES (Traefik):
+  ingressMiddlewares.traefik.$name.type:
+    - add-prefix, basic-auth, buffering, chain, compress, content-type
+    - forward-auth, headers, ip-allow-list
+    - plugin-bouncer, plugin-geoblock, plugin-mod-security, plugin-real-ip
+    - plugin-rewrite-response-headers, plugin-theme-park
+    - rate-limit, redirect-regex, redirect-scheme
+    - replace-path-regex, replace-path, retry
+    - strip-prefix-regex, strip-prefix
+
+PROBES:
+  probes.$probe.type: http | https | tcp | exec | grpc
+  $probe: liveness | readiness | startup
+
+CONTAINER ENV:
+  env.$key as string: Direct value
+  env.$key.secretKeyRef: Reference secret
+  env.$key.configMapKeyRef: Reference configmap
+  env.$key.fieldRef: Reference pod/container field
+  env.$key.resourceFieldRef: Reference resource limits/requests
+
+AUTOSCALING:
+  hpa.$name - HorizontalPodAutoscaler
+  vpa.$name - VerticalPodAutoscaler (updateMode: Off | Initial | Recreate | Auto)
+
+DATABASE:
+  cnpg.$name - CloudNativePG PostgreSQL cluster
+
+NETWORKING:
+  service.$name - Services
+  ingress.$name - Ingress rules
+  networkPolicy.$name - Network policies
+  route.$name - OpenShift routes
+
+STORAGE:
+  persistence.$name - Persistent volumes
+  storageClass.$name - Storage classes
+  volumeSnapshot.$name - Volume snapshots
+  volumeSnapshotClass.$name - Snapshot classes
+
+SECURITY:
+  rbac.$name - Roles and bindings
+  serviceAccount.$name - Service accounts
+  secret.$name - Secrets
+  certificate.$name - TLS certificates
+  webhook.$name - Admission webhooks
+
+CONFIG:
+  configmap.$name - ConfigMaps
+  credentials.$name - Credentials
+  imagePullSecret.$name - Image pull secrets
+
+POLICIES:
+  podDisruptionBudget.$name - PDB
+  priorityClass.$name - Priority classes
+
+MONITORING:
+  metrics.$name - ServiceMonitor/PodMonitor
+
+ADDONS:
+  addons.codeserver - Code server
+  addons.netshoot - Network debugging
+  addons.vpn - VPN configurations
+
+COMMON PATTERNS:
+----------------
+
+Variable-Named Objects:
+  All resources use $name pattern: workload.$name, service.$name, etc.
+  Example: workload.main, service.api, persistence.data
+
+Target Selectors:
+  - Services: targetSelector: "pod-name"
+  - Persistence: targetSelector.$podName.$containerName
+  - HPA/VPA: targetSelector: "workload-name"
+  - ServiceAccount: targetSelector: ["pod1", "pod2"]
+
+Primary Designation:
+  - One workload must have primary: true
+  - One container per workload must have primary: true
+  - Services/RBAC can have primary: true
+
+Object Naming:
+  - Primary: $FullName (release-chart)
+  - Non-primary: $FullName-$name (release-chart-name)
+  - Override with expandObjectName: false
+
+Helm Templating:
+  Many string values support: {{ .Values.some.key }}
+  Check docs-structure.txt for which keys support tpl
+
+DEFAULTS LOCATION:
+------------------
+fallbackDefaults:
+  - probeType: http
+  - serviceProtocol: tcp
+  - serviceType: ClusterIP
+  - persistenceType: emptyDir
+  - pvcSize: 100Gi
+  - vctSize: 100Gi
+  - accessModes: [ReadWriteOnce]
+  - topologyKey: kubernetes.io/hostname
+  - probeTimeouts: (liveness/readiness/startup with specific values)
+
+USAGE EXAMPLES:
+---------------
+
+1. Define a workload:
+   workload:
+     main:
+       enabled: true
+       primary: true
+       type: Deployment
+       podSpec:
+         containers:
+           app:
+             enabled: true
+             primary: true
+             imageSelector: image
+
+2. Add a service:
+   service:
+     main:
+       enabled: true
+       type: ClusterIP
+       ports:
+         http:
+           enabled: true
+           port: 8080
+           protocol: http
+
+3. Add persistence:
+   persistence:
+     data:
+       enabled: true
+       type: pvc
+       size: 10Gi
+       mountPath: /data
+
+4. Configure probes:
+   probes:
+     liveness:
+       enabled: true
+       type: http
+       port: 8080
+       path: /health
+
+5. Add middleware:
+   ingressMiddlewares:
+     traefik:
+       auth:
+         enabled: true
+         type: basic-auth
+         data:
+           users: "{{ .Values.auth.users }}"
+
+SEARCH TIPS:
+------------
+- For specific keys: grep -n "keyname" docs-structure.txt
+- For resource types: grep "Type:" docs-structure.txt
+- For defaults: grep "default:" docs-structure.txt
+- For a section: grep -A20 "=== SECTION ===" docs-structure.txt
+

@@ -4,183 +4,112 @@ title: Secret
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
+- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/persistence/secret#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.persistence.$name`
-
-:::tip
-
-- See available persistence keys [here](/truecharts-common/persistence).
-- This options apply only when `type: secret`.
-
-:::
+- `.Values.persistence.secret`
 
 ---
 
-## `objectName`
+## `persistence.secret`
 
-Define the secret name.
+Create Secret objects
 
-|            |                                |
-| ---------- | ------------------------------ |
-| Key        | `persistence.$name.objectName` |
-| Type       | `string`                       |
-| Required   | ✅                             |
-| Helm `tpl` | ✅                             |
-| Default    | `""`                           |
-
-Example
-
-```yaml
-persistence:
-  secret-vol:
-    objectName: secret-name
-```
+| Field      | Value                |
+| ---------- | -------------------- |
+| Key        | `persistence.secret` |
+| Type       | `map`                |
+| Required   | ❌                   |
+| Helm `tpl` | ❌                   |
+| Default    | unset                |
 
 ---
 
-## `expandObjectName`
+### `persistence.secret.$name.annotations`
 
-Whether to expand (adding the fullname as prefix) the secret name.
+Additional annotations for secret
 
-|            |                                      |
-| ---------- | ------------------------------------ |
-| Key        | `persistence.$name.expandObjectName` |
-| Type       | `bool`                               |
-| Required   | ❌                                   |
-| Helm `tpl` | ✅                                   |
-| Default    | `true`                               |
-
-Example
-
-```yaml
-persistence:
-  secret-vol:
-    expandObjectName: false
-```
+| Field      | Value                                  |
+| ---------- | -------------------------------------- |
+| Key        | `persistence.secret.$name.annotations` |
+| Type       | `map`                                  |
+| Required   | ❌                                     |
+| Helm `tpl` | ❌                                     |
+| Default    | unset                                  |
 
 ---
 
-## `optional`
+### `persistence.secret.$name.data`
 
-Whether the secret should be required or not.
+Create Secret objects
 
-|            |                              |
-| ---------- | ---------------------------- |
-| Key        | `persistence.$name.optional` |
-| Type       | `bool`                       |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
-| Default    | `false`                      |
-
-Example
-
-```yaml
-persistence:
-  secret-vol:
-    optional: false
-```
-
----
-
-## `defaultMode`
-
-Define the defaultMode (must be a string in format of "0777").
-
-|            |                                 |
+| Field      | Value                           |
 | ---------- | ------------------------------- |
-| Key        | `persistence.$name.defaultMode` |
+| Key        | `persistence.secret.$name.data` |
+| Type       | `map`                           |
+| Required   | ❌                              |
+| Helm `tpl` | ❌                              |
+| Default    | unset                           |
+
+---
+
+### `persistence.secret.$name.enabled`
+
+Enables or Disables the Secret
+
+| Field      | Value                              |
+| ---------- | ---------------------------------- |
+| Key        | `persistence.secret.$name.enabled` |
+| Type       | `boolean, string`                  |
+| Required   | ❌                                 |
+| Helm `tpl` | ❌                                 |
+| Default    | unset                              |
+
+---
+
+### `persistence.secret.$name.labels`
+
+Additional labels for secret
+
+| Field      | Value                             |
+| ---------- | --------------------------------- |
+| Key        | `persistence.secret.$name.labels` |
+| Type       | `map`                             |
+| Required   | ❌                                |
+| Helm `tpl` | ❌                                |
+| Default    | unset                             |
+
+---
+
+### `persistence.secret.$name.namespace`
+
+Define the namespace for this object
+
+| Field      | Value                                |
+| ---------- | ------------------------------------ |
+| Key        | `persistence.secret.$name.namespace` |
+| Type       | `map`                                |
+| Required   | ❌                                   |
+| Helm `tpl` | ❌                                   |
+| Default    | unset                                |
+
+---
+
+### `persistence.secret.$name.type`
+
+Define the type of the secret
+
+| Field      | Value                           |
+| ---------- | ------------------------------- |
+| Key        | `persistence.secret.$name.type` |
 | Type       | `string`                        |
 | Required   | ❌                              |
-| Helm `tpl` | ✅                              |
-| Default    | `""`                            |
-
-Example
-
-```yaml
-persistence:
-  secret-vol:
-    defaultMode: "0777"
-```
-
----
-
-## `items`
-
-Define a list of items for secret.
-
-|            |                           |
-| ---------- | ------------------------- |
-| Key        | `persistence.$name.items` |
-| Type       | `list`                    |
-| Required   | ❌                        |
-| Helm `tpl` | ❌                        |
-| Default    | `[]`                      |
-
-Example
-
-```yaml
-persistence:
-  secret-vol:
-    items:
-      - key: key1
-        path: path1
-      - key: key2
-        path: path2
-```
-
----
-
-### `items.key`
-
-Define the key of the secret.
-
-|            |                                 |
-| ---------- | ------------------------------- |
-| Key        | `persistence.$name.items[].key` |
-| Type       | `string`                        |
-| Required   | ✅                              |
-| Helm `tpl` | ✅                              |
-| Default    | `""`                            |
-
-Example
-
-```yaml
-persistence:
-  secret-vol:
-    items:
-      - key: key1
-        path: path1
-```
-
----
-
-### `items.path`
-
-Define the path.
-
-|            |                                  |
-| ---------- | -------------------------------- |
-| Key        | `persistence.$name.items[].path` |
-| Type       | `string`                         |
-| Required   | ✅                               |
-| Helm `tpl` | ✅                               |
-| Default    | `""`                             |
-
-Example
-
-```yaml
-persistence:
-  secret-vol:
-    items:
-      - key: key1
-        path: path1
-```
+| Helm `tpl` | ❌                              |
+| Default    | unset                           |
 
 ---
 

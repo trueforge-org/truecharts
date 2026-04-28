@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+      "description": "Configuration for `mongodb.enabled`."
+    },
+    "includeCommon": {
+      "type": "boolean",
+      "description": "Configuration for `mongodb.includeCommon`."
+    },
+    "password": {
+      "type": "string",
+      "description": "Configuration for `mongodb.password`."
+    },
+    "rootPassword": {
+      "type": "string",
+      "description": "Configuration for `mongodb.rootPassword`."
+    },
+    "creds": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Configuration for `mongodb.creds`."
+    }
+  },
+  "additionalProperties": true,
+  "description": "Configuration for `mongodb`."
+}

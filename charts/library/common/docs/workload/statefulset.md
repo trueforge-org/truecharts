@@ -1,195 +1,31 @@
 ---
-title: StatefulSet
+title: Statefulset
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
+- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/workload/statefulset#full-examples) section for complete examples.
-- See the [Workload](/truecharts-common/workload) documentation for more information
-
-:::
-
-:::tip
-
-Replace references to `$name` with the actual name you want to use.
 
 :::
 
 ## Appears in
 
-- `.Values.workload.$name`
-
-## Notes
-
-Value of `workload.$name.podSpec.restartPolicy` can only be `Always` for this type of workload
+- `.Values.workload.statefulset`
 
 ---
 
-## `replicas`
+## `workload.statefulset`
 
-Define the number of replicas
+Configuration for workload entries with `type: StatefulSet`.
 
-|            |                           |
-| ---------- | ------------------------- |
-| Key        | `workload.$name.replicas` |
-| Type       | `int`                     |
-| Required   | ❌                        |
-| Helm `tpl` | ❌                        |
-| Default    | `1`                       |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    replicas: 1
-```
-
----
-
-## `revisionHistoryLimit`
-
-Define the number of history revisions
-
-|            |                                       |
-| ---------- | ------------------------------------- |
-| Key        | `workload.$name.revisionHistoryLimit` |
-| Type       | `int`                                 |
-| Required   | ❌                                    |
-| Helm `tpl` | ❌                                    |
-| Default    | `3`                                   |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    revisionHistoryLimit: 3
-```
-
----
-
-## `strategy`
-
-Define the strategy of the workload
-
-|            |                           |
-| ---------- | ------------------------- |
-| Key        | `workload.$name.strategy` |
-| Type       | `string`                  |
-| Required   | ❌                        |
-| Helm `tpl` | ❌                        |
-| Default    | `RollingUpdate`           |
-
-Valid Values:
-
-- `OnDelete`
-- `RollingUpdate`
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    strategy: RollingUpdate
-```
-
----
-
-## `rollingUpdate`
-
-Define the rollingUpdate options
-
-:::note
-
-Can only be used when `workload.$name.strategy` is `RollingUpdate`
-
-:::
-
-|            |                                |
-| ---------- | ------------------------------ |
-| Key        | `workload.$name.rollingUpdate` |
-| Type       | `map`                          |
-| Required   | ❌                             |
-| Helm `tpl` | ❌                             |
-| Default    | `{}`                           |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    rollingUpdate:
-      maxUnavailable: 1
-      maxSurge: 1
-```
-
----
-
-## `rollingUpdate.maxUnavailable`
-
-Define the maxUnavailable
-
-:::note
-
-Can only be used when `workload.$name.strategy` is `RollingUpdate`
-
-:::
-
-|            |                                               |
-| ---------- | --------------------------------------------- |
-| Key        | `workload.$name.rollingUpdate.maxUnavailable` |
-| Type       | `int`                                         |
-| Required   | ❌                                            |
-| Helm `tpl` | ❌                                            |
-| Default    | unset                                         |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    rollingUpdate:
-      maxUnavailable: 1
-```
-
----
-
-## `rollingUpdate.partition`
-
-Define the partition
-
-:::note
-
-Can only be used when `workload.$name.strategy` is `RollingUpdate`
-
-:::
-
-|            |                                          |
-| ---------- | ---------------------------------------- |
-| Key        | `workload.$name.rollingUpdate.partition` |
-| Type       | `int`                                    |
-| Required   | ❌                                       |
-| Helm `tpl` | ❌                                       |
-| Default    | unset                                    |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    rollingUpdate:
-      partition: 1
-```
-
----
-
-Notes:
-
-View common `keys` of `workload` in [workload Documentation](/truecharts-common/workload).
-
-> Value of `workload.[workload-name].podSpec.restartPolicy` can only be `Always` for this type of workload
+| Field      | Value                  |
+| ---------- | ---------------------- |
+| Key        | `workload.statefulset` |
+| Type       | `map`                  |
+| Required   | ❌                     |
+| Helm `tpl` | ❌                     |
+| Default    | unset                  |
 
 ---
 

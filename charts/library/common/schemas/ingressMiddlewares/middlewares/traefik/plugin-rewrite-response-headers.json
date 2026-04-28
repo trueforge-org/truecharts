@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Configuration for the Traefik plugin-rewrite-response-headers middleware.",
+  "properties": {
+    "rewrites": {
+      "type": "array"
+    },
+    "header": {
+      "type": "string",
+      "minLength": 1
+    },
+    "regex": {
+      "type": "string",
+      "minLength": 1
+    },
+    "replacement": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "header",
+    "regex",
+    "replacement",
+    "rewrites"
+  ]
+}

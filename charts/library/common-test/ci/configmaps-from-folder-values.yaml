@@ -1,0 +1,17 @@
+configMapsFromFolder:
+  enabled: true
+  basePath: "files/configMaps"
+  configMapsOverrides:
+    test-config:
+      labels:
+        test-label: "config-label"
+      annotations:
+        test-annotation: "config-annotation"
+      fileAttributeOverrides:
+        template.tpl:
+          escaped: true
+        .gitkeep:
+          exclude: true
+    test-scripts:
+      labels:
+        test-label: "scripts-label"

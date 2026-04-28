@@ -87,6 +87,10 @@ tests:
           path: spec.template.spec
           content:
             volumes:
+              - name: crontab
+                emptyDir:
+                  medium: Memory
+                  sizeLimit: 2400Mi
               - name: devshm
                 emptyDir:
                   medium: Memory

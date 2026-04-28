@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Configuration for workload entries with `type: CronJob`.",
+  "properties": {
+    "schedule": {
+      "type": "string",
+      "minLength": 1,
+      "default": ""
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "schedule"
+  ]
+}

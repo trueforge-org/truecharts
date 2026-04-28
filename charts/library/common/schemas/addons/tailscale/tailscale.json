@@ -1,0 +1,192 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "description": "Addons to the workloads"
+    },
+    "targetSelector": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Configuration for `addons.tailscale.targetSelector.$item`."
+      },
+      "description": "Addons to the workloads"
+    },
+    "container": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Configuration for `addons.tailscale.container.enabled`."
+        },
+        "imageSelector": {
+          "type": "string",
+          "description": "Configuration for `addons.tailscale.container.imageSelector`."
+        },
+        "probes": {
+          "type": "object",
+          "properties": {
+            "liveness": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
+                  "description": "Configuration for `addons.tailscale.container.probes.liveness.enabled`."
+                }
+              },
+              "additionalProperties": true,
+              "description": "Configuration for `addons.tailscale.container.probes.liveness`."
+            },
+            "readiness": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
+                  "description": "Configuration for `addons.tailscale.container.probes.readiness.enabled`."
+                }
+              },
+              "additionalProperties": true,
+              "description": "Configuration for `addons.tailscale.container.probes.readiness`."
+            },
+            "startup": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
+                  "description": "Configuration for `addons.tailscale.container.probes.startup.enabled`."
+                }
+              },
+              "additionalProperties": true,
+              "description": "Configuration for `addons.tailscale.container.probes.startup`."
+            }
+          },
+          "additionalProperties": true,
+          "description": "Configuration for `addons.tailscale.container.probes`."
+        },
+        "command": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Configuration for `addons.tailscale.container.command.$item`."
+          },
+          "description": "Configuration for `addons.tailscale.container.command`."
+        },
+        "resources": {
+          "type": "object",
+          "properties": {
+            "excludeExtra": {
+              "type": "boolean",
+              "description": "Configuration for `addons.tailscale.container.resources.excludeExtra`."
+            }
+          },
+          "additionalProperties": true,
+          "description": "Configuration for `addons.tailscale.container.resources`."
+        },
+        "env": {
+          "$ref": "container/env.json",
+          "description": "Configuration for `addons.tailscale.container.env`."
+        },
+        "securityContext": {
+          "type": "object",
+          "properties": {
+            "capabilities": {
+              "type": "object",
+              "properties": {
+                "add": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Configuration for `addons.tailscale.container.securityContext.capabilities.add.$item`."
+                  },
+                  "description": "Configuration for `addons.tailscale.container.securityContext.capabilities.add`."
+                }
+              },
+              "additionalProperties": true,
+              "description": "Configuration for `addons.tailscale.container.securityContext.capabilities`."
+            }
+          },
+          "additionalProperties": true,
+          "description": "Configuration for `addons.tailscale.container.securityContext`."
+        }
+      },
+      "additionalProperties": true,
+      "description": "Addons to the workloads"
+    },
+    "settings": {
+      "type": "object",
+      "properties": {
+        "config": {
+          "type": "string",
+          "description": "Configuration for `addons.tailscale.settings.config`."
+        },
+        "authkey": {
+          "type": "string",
+          "description": "Configuration for `addons.tailscale.settings.authkey`."
+        },
+        "userspace": {
+          "type": "boolean",
+          "description": "Configuration for `addons.tailscale.settings.userspace`."
+        },
+        "auth_once": {
+          "type": "boolean",
+          "description": "Configuration for `addons.tailscale.settings.auth_once`."
+        },
+        "accept_dns": {
+          "type": "boolean",
+          "description": "Configuration for `addons.tailscale.settings.accept_dns`."
+        },
+        "routes": {
+          "type": "string",
+          "description": "Configuration for `addons.tailscale.settings.routes`."
+        },
+        "dest_ip": {
+          "type": "string",
+          "description": "Configuration for `addons.tailscale.settings.dest_ip`."
+        },
+        "sock5_server": {
+          "type": "string",
+          "description": "Configuration for `addons.tailscale.settings.sock5_server`."
+        },
+        "extra_args": {
+          "type": "string",
+          "description": "Configuration for `addons.tailscale.settings.extra_args`."
+        },
+        "daemon_extra_args": {
+          "type": "string",
+          "description": "Configuration for `addons.tailscale.settings.daemon_extra_args`."
+        },
+        "outbound_http_proxy_listen": {
+          "type": "string",
+          "description": "Configuration for `addons.tailscale.settings.outbound_http_proxy_listen`."
+        }
+      },
+      "additionalProperties": true,
+      "description": "Tailscale settings"
+    },
+    "annotations": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Configuration for `addons.tailscale.annotations`."
+    }
+  },
+  "additionalProperties": true,
+  "description": "Addons to the workloads"
+}

@@ -38,6 +38,8 @@ jobs:
           filters: |
             changed:
             - 'charts/library/common/**'
+            - 'charts/library/common-test/**'
+            - '.github/workflows/common-tests.yaml'
 
   lint:
     name: Lint Common
@@ -133,6 +135,45 @@ jobs:
           cd charts/library/common-test/
           helm dependency update
           helm unittest -f "tests/**/*.yaml" . -v ./unit-values.yaml
+
+  schema-validation:
+    needs:
+      - lint
+    name: Schema Validation
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 1
+
+      - name: Install Helm
+        uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4
+        with:
+          version: v3.20.0
+
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
+        with:
+          python-version: "3.10"
+
+      - name: Install Python dependencies
+        run: pip install PyYAML ruamel.yaml
+
+      - name: Generate complete values structure
+        run: |
+          python3 charts/library/common/generate_complete_values_structure.py
+
+      - name: Run schema validation
+        run: |
+          python3 charts/library/common/test_schema.py --max-failures 0 --output-file stable_schema_validation.log
+          python3 charts/library/common/check_complete_values_schema_coverage.py
+
+      - name: Upload schema validation log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stable-schema-validation-log
+          path: stable_schema_validation.log
 
   install:
     needs:
@@ -246,22 +287,9 @@ jobs:
           chmod +x kail
 
       - name: Add Dependencies
+        shell: bash
         run: |
-          if [[ "${{ matrix.values }}" =~ (ingress|metrics|cnpg|volsync).*-values.yaml ]]; then
-            helm install kube-prometheus-stack oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack --namespace kube-prometheus-stack --create-namespace --set alertmanager.enabled=false --set grafana.enabled=false --set kubeProxy.enabled=false --wait
-          fi
-          if [[ "${{ matrix.values }}" =~ cnpg.*-values.yaml ]]; then
-            helm install cloudnative-pg oci://ghcr.io/cloudnative-pg/charts/cloudnative-pg --namespace cloudnative-pg --create-namespace --wait
-          fi
-          if [[ "${{ matrix.values }}" =~ ingress.*-values.yaml ]]; then
-            helm install cert-manager oci://quay.io/jetstack/charts/cert-manager --namespace cert-manager --create-namespace --set crds.enabled=true --wait
-            helm install ingress-nginx oci://ghcr.io/home-operations/charts-mirror/ingress-nginx --namespace ingress-nginx --create-namespace \
-            --set controller.ingressClassResource.default=true --set controller.publishService.enabled=false --set controller.service.type="ClusterIP" --set controller.config.allow-snippet-annotations=true --set controller.config.annotations-risk-level="Critical" --wait
-          fi
-          if [[ "${{ matrix.values }}" =~ volsync.*-values.yaml ]]; then
-            helm install snapshot-controller oci://oci.trueforge.org/truecharts/snapshot-controller --namespace snapshot-controller --create-namespace --wait
-            helm install volsync oci://oci.trueforge.org/truecharts/volsync --namespace volsync --create-namespace --wait
-          fi
+          ./.github/scripts/install_dependencies.sh charts/library/common-test "${{ matrix.values }}"
 
       - name: Run chart-testing (install)
         run: |
@@ -288,7 +316,7 @@ jobs:
 
   # Summarize matrix https://github.community/t/status-check-for-a-matrix-jobs/127354/7
   common-tests-complete:
-    needs: [lint, unittest, install]
+    needs: [check_changes, lint, unittest, schema-validation, install]
     if: ${{ always() }}
     name: Common Tets Completed
     runs-on:
@@ -298,6 +326,7 @@ jobs:
         run: |
           if [[ "${{ needs.check_changes.outputs.changes_detected }}" == 'true' && ( "${{ needs.lint.result }}" != "success" || \
                 "${{ needs.unittest.result }}" != "success" || \
+                "${{ needs.schema-validation.result }}" != "success" || \
                 "${{ needs.install.result }}" != "success") ]]; then
             echo "One or more jobs failed!"
             exit 1

@@ -4,7 +4,7 @@ title: Service
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
+- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/service#full-examples) section for complete examples.
 
 :::
@@ -13,479 +13,218 @@ title: Service
 
 - `.Values.service`
 
-## Naming scheme
-
-- Primary: `$FullName` (release-name-chart-name)
-- Non-Primary: `$FullName-$ServiceName` (release-name-chart-name-ServiceName)
-
-:::tip
-
-Replace references to `$name` and `$port-name` with the actual name you want to use.
-
-:::
-
----
-
-## Target Selector
-
-- `targetSelector` (string): Define the pod to link the service
-- `targetSelector` (empty): Assign the service to the primary pod
-
 ---
 
 ## `service`
 
 Define service objects
 
-|            |           |
+| Field      | Value     |
 | ---------- | --------- |
 | Key        | `service` |
 | Type       | `map`     |
 | Required   | ❌        |
 | Helm `tpl` | ❌        |
-| Default    | `{}`      |
-
-Example
-
-```yaml
-service: {}
-```
+| Default    | unset     |
 
 ---
 
-### `$name`
+### `service.$name.addressType`
 
-Define service
+Define the addressType for External IP
 
-|            |                 |
-| ---------- | --------------- |
-| Key        | `service.$name` |
-| Type       | `map`           |
-| Required   | ✅              |
-| Helm `tpl` | ❌              |
-| Default    | `{}`            |
-
-Example
-
-```yaml
-service:
-  service-name: {}
-```
+| Field      | Value                       |
+| ---------- | --------------------------- |
+| Key        | `service.$name.addressType` |
+| Type       | `map`                       |
+| Required   | ❌                          |
+| Helm `tpl` | ❌                          |
+| Default    | unset                       |
 
 ---
 
-#### `enabled`
-
-Enables or Disables the service
-
-|            |                         |
-| ---------- | ----------------------- |
-| Key        | `service.$name.enabled` |
-| Type       | `bool`                  |
-| Required   | ✅                      |
-| Helm `tpl` | ✅                      |
-| Default    | `false`                 |
-
-Example
-
-```yaml
-service:
-  service-name:
-    enabled: true
-```
-
----
-
-#### `namespace`
-
-Define the namespace for this object
-
-|            |                           |
-| ---------- | ------------------------- |
-| Key        | `service.$name.namespace` |
-| Type       | `string`                  |
-| Required   | ❌                        |
-| Helm `tpl` | ✅ (On value only)`       |
-| Default    | `""`                      |
-
-Example
-
-```yaml
-service:
-  service-name:
-    namespace: some-namespace
-```
-
----
-
-#### `labels`
-
-Additional labels for service
-
-|            |                        |
-| ---------- | ---------------------- |
-| Key        | `service.$name.labels` |
-| Type       | `map`                  |
-| Required   | ❌                     |
-| Helm `tpl` | ✅ (On value only)`    |
-| Default    | `{}`                   |
-
-Example
-
-```yaml
-service:
-  service-name:
-    labels:
-      some-label: some-value
-```
-
----
-
-#### `annotations`
+### `service.$name.annotations`
 
 Additional annotations for service
 
-|            |                             |
+| Field      | Value                       |
 | ---------- | --------------------------- |
 | Key        | `service.$name.annotations` |
-| Type       | `map`                       |
+| Type       | `map, string`               |
 | Required   | ❌                          |
-| Helm `tpl` | ✅ (On value only)`         |
+| Helm `tpl` | ❌                          |
 | Default    | `{}`                        |
 
 Example
 
 ```yaml
 service:
-  service-name:
+  $name:
     annotations:
-      some-annotation: some-value
+      {}
 ```
 
 ---
 
-#### `type`
+### `service.$name.appProtocol`
 
-Define the service type
+Define the appProtocol for External IP
 
-|            |                                                                  |
-| ---------- | ---------------------------------------------------------------- |
-| Key        | `service.$name.type`                                             |
-| Type       | `string`                                                         |
-| Required   | ❌                                                               |
-| Helm `tpl` | ✅                                                               |
-| Default    | See default [here](/truecharts-common/fallbackdefaults#servicetype) |
-
-Valid Values:
-
-- [`ClusterIP`](/truecharts-common/service/clusterip)
-- [`LoadBalancer`](/truecharts-common/service/loadbalancer)
-- [`NodePort`](/truecharts-common/service/nodeport)
-- [`ExternalName`](/truecharts-common/service/externalname)
-- [`ExternalIP`](/truecharts-common/service/externalip)
-
-Example
-
-```yaml
-service:
-  service-name:
-    type: ClusterIP
-```
+| Field      | Value                       |
+| ---------- | --------------------------- |
+| Key        | `service.$name.appProtocol` |
+| Type       | `map`                       |
+| Required   | ❌                          |
+| Helm `tpl` | ❌                          |
+| Default    | unset                       |
 
 ---
 
-#### `expandObjectName`
-
-Whether to expand the object name (based on the [naming scheme](/truecharts-common/service#naming-scheme)) or not
-
-|            |                                  |
-| ---------- | -------------------------------- |
-| Key        | `service.$name.expandObjectName` |
-| Type       | `bool`                           |
-| Required   | ❌                               |
-| Helm `tpl` | ✅                               |
-| Default    | `true`                           |
-
-Example
-
-```yaml
-service:
-  service-name:
-    expandObjectName: false
-```
-
----
-
-#### `clusterIP`
+### `service.$name.clusterIP`
 
 Configure Cluster IP type
 
-|            |                           |
+| Field      | Value                     |
 | ---------- | ------------------------- |
 | Key        | `service.$name.clusterIP` |
 | Type       | `string`                  |
 | Required   | ❌                        |
-| Helm `tpl` | ✅                        |
+| Helm `tpl` | ❌                        |
 | Default    | `""`                      |
 
 Example
 
 ```yaml
 service:
-  some-service:
-    clusterIP: 172.16.0.123
+  $name:
+    clusterIP: ""
 ```
 
 ---
 
-#### `ipFamilyPolicy`
+### `service.$name.enabled`
 
-Define the ipFamilyPolicy
+Enables or Disables the service
 
-:::warning
-
-Does **not** apply to `type` of `ExternalName` or `ExternalIP`
-
-:::
-
-|            |                                |
-| ---------- | ------------------------------ |
-| Key        | `service.$name.ipFamilyPolicy` |
-| Type       | `string`                       |
-| Required   | ❌                             |
-| Helm `tpl` | ✅                             |
-| Default    | `""`                           |
-
-Valid Values:
-
-- `SingleStack`
-- `PreferDualStack`
-- `RequireDualStack`
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `service.$name.enabled` |
+| Type       | `boolean, string`       |
+| Required   | ❌                      |
+| Helm `tpl` | ❌                      |
+| Default    | `false`                 |
 
 Example
 
 ```yaml
 service:
-  some-service:
-    ipFamilyPolicy: SingleStack
+  $name:
+    enabled: false
 ```
 
 ---
 
-#### `ipFamilies`
+### `service.$name.expandObjectName`
 
-Define the ipFamilies
+Whether to expand the object name (based on the [naming scheme](/truecharts-common/service#naming-scheme)) or not
 
-:::warning
+| Field      | Value                            |
+| ---------- | -------------------------------- |
+| Key        | `service.$name.expandObjectName` |
+| Type       | `boolean, string`                |
+| Required   | ❌                               |
+| Helm `tpl` | ❌                               |
+| Default    | `true`                           |
 
-Does **not** apply to `type` of `ExternalName` or `ExternalIP`
+Example
 
-:::
+```yaml
+service:
+  $name:
+    expandObjectName: true
+```
 
-|            |                            |
+---
+
+### `service.$name.externalIP`
+
+Configure External IP type
+
+| Field      | Value                      |
 | ---------- | -------------------------- |
-| Key        | `service.$name.ipFamilies` |
-| Type       | `list` of `string`         |
+| Key        | `service.$name.externalIP` |
+| Type       | `string, map`              |
 | Required   | ❌                         |
-| Helm `tpl` | ✅ (On entries only)       |
-| Default    | `[]`                       |
-
-Example
-
-```yaml
-service:
-  some-service:
-    ipFamilies:
-      - IPv4
-```
+| Helm `tpl` | ❌                         |
+| Default    | unset                      |
 
 ---
 
-#### `sessionAffinity`
-
-Define the session affinity (ClientIP, None)
-
-|            |                                 |
-| ---------- | ------------------------------- |
-| Key        | `service.$name.sessionAffinity` |
-| Type       | `string`                        |
-| Required   | ❌                              |
-| Helm `tpl` | ✅                              |
-| Default    | `""`                            |
-
-Valid Values:
-
-- `ClientIP`
-- `None`
-
-Example
-
-```yaml
-service:
-  some-service:
-    sessionAffinity: ClientIP
-```
-
----
-
-#### `sessionAffinityConfig.clientIP.timeoutSeconds`
-
-Define the timeout for ClientIP session affinity (0-86400)
-
-|            |                                                               |
-| ---------- | ------------------------------------------------------------- |
-| Key        | `service.$name.sessionAffinityConfig.clientIP.timeoutSeconds` |
-| Type       | `int`                                                         |
-| Required   | ❌                                                            |
-| Helm `tpl` | ✅                                                            |
-| Default    | `""`                                                          |
-
-Valid Values:
-
-- `0` - `86400`
-
-Example
-
-```yaml
-service:
-  some-service:
-    sessionAffinityConfig:
-      clientIP:
-        timeoutSeconds: 86400
-```
-
----
-
-#### `externalIPs`
+### `service.$name.externalIPs`
 
 Define externalIPs
 
-|            |                             |
+| Field      | Value                       |
 | ---------- | --------------------------- |
 | Key        | `service.$name.externalIPs` |
-| Type       | `list` of `string`          |
+| Type       | `list, string`              |
 | Required   | ❌                          |
-| Helm `tpl` | ✅ (On entries only)        |
+| Helm `tpl` | ❌                          |
 | Default    | `[]`                        |
 
 Example
 
 ```yaml
 service:
-  some-service:
+  $name:
     externalIPs:
-      - 1.2.3.4
-      - 5.6.7.8
+      []
 ```
 
 ---
 
-#### `externalTrafficPolicy`
+### `service.$name.externalName`
 
-Define the external traffic policy (Cluster, Local)
+Configure ExternalName type
 
-:::warning
+| Field      | Value                        |
+| ---------- | ---------------------------- |
+| Key        | `service.$name.externalName` |
+| Type       | `map`                        |
+| Required   | ❌                           |
+| Helm `tpl` | ❌                           |
+| Default    | unset                        |
 
-Does **not** apply to `type` of `ClusterIP`
+---
 
-:::
+### `service.$name.externalTrafficPolicy`
 
-|            |                                       |
+Define the external traffic policy (Cluster, Local) Does **not** apply to `type` of `ClusterIP`
+
+| Field      | Value                                 |
 | ---------- | ------------------------------------- |
 | Key        | `service.$name.externalTrafficPolicy` |
 | Type       | `string`                              |
 | Required   | ❌                                    |
-| Helm `tpl` | ✅                                    |
+| Helm `tpl` | ❌                                    |
 | Default    | `""`                                  |
-
-Valid Values:
-
-- `Cluster`
-- `Local`
+| Enum       | `Cluster`, `Local`                    |
 
 Example
 
 ```yaml
 service:
-  some-service:
-    externalTrafficPolicy: Cluster
+  $name:
+    externalTrafficPolicy: ""
 ```
 
 ---
 
-#### `publishNotReadyAddresses`
-
-Define whether to publishNotReadyAddresses or not
-
-|            |                                          |
-| ---------- | ---------------------------------------- |
-| Key        | `service.$name.publishNotReadyAddresses` |
-| Type       | `bool`                                   |
-| Required   | ❌                                       |
-| Helm `tpl` | ❌                                       |
-| Default    | `false`                                  |
-
-Example
-
-```yaml
-service:
-  service-name:
-    publishNotReadyAddresses: true
-```
-
----
-
-#### `targetSelector`
-
-Define the pod to link the service, by default will use the primary pod
-
-|            |                                |
-| ---------- | ------------------------------ |
-| Key        | `service.$name.targetSelector` |
-| Type       | `string`                       |
-| Required   | ❌                             |
-| Helm `tpl` | ❌                             |
-| Default    | `""`                           |
-
-Example
-
-```yaml
-service:
-  service-name:
-    targetSelector: some-pod
-```
-
----
-
-#### `ports`
-
-Define the ports of the service
-
-See [Ports](/truecharts-common/service/ports)
-
-|            |                       |
-| ---------- | --------------------- |
-| Key        | `service.$name.ports` |
-| Type       | `map`                 |
-| Required   | ✅                    |
-| Helm `tpl` | ❌                    |
-| Default    | `{}`                  |
-
-Example
-
-```yaml
-service:
-  service-name:
-    ports: {}
-```
-
----
-
-#### `integrations`
+### `service.$name.integrations`
 
 Define the integrations for this service
 
-|            |                              |
+| Field      | Value                        |
 | ---------- | ---------------------------- |
 | Key        | `service.$name.integrations` |
 | Type       | `map`                        |
@@ -497,34 +236,316 @@ Example
 
 ```yaml
 service:
-  service-name:
-    integrations: {}
+  $name:
+    integrations:
+      {}
 ```
 
 ---
 
-##### `integrations.traefik`
+### `service.$name.ipFamilies`
 
-Define the traefik integration for this service
+Define the ipFamilies Does **not** apply to `type` of `ExternalName` or `ExternalIP`
 
-See more details in [Traefik Integration](/truecharts-common/service/integrations/traefik)
-
-|            |                                      |
-| ---------- | ------------------------------------ |
-| Key        | `service.$name.integrations.traefik` |
-| Type       | `map`                                |
-| Required   | ❌                                   |
-| Helm `tpl` | ❌                                   |
-| Default    | `{}`                                 |
+| Field      | Value                      |
+| ---------- | -------------------------- |
+| Key        | `service.$name.ipFamilies` |
+| Type       | `list, string`             |
+| Required   | ❌                         |
+| Helm `tpl` | ❌                         |
+| Default    | `[]`                       |
 
 Example
 
 ```yaml
 service:
-  service-name:
-    integrations:
-      traefik: {}
+  $name:
+    ipFamilies:
+      []
 ```
+
+---
+
+### `service.$name.ipFamilyPolicy`
+
+Define the ipFamilyPolicy Does **not** apply to `type` of `ExternalName` or `ExternalIP`
+
+| Field      | Value                                                |
+| ---------- | ---------------------------------------------------- |
+| Key        | `service.$name.ipFamilyPolicy`                       |
+| Type       | `string`                                             |
+| Required   | ❌                                                   |
+| Helm `tpl` | ❌                                                   |
+| Default    | `""`                                                 |
+| Enum       | `SingleStack`, `PreferDualStack`, `RequireDualStack` |
+
+Example
+
+```yaml
+service:
+  $name:
+    ipFamilyPolicy: ""
+```
+
+---
+
+### `service.$name.labels`
+
+Additional labels for service
+
+| Field      | Value                  |
+| ---------- | ---------------------- |
+| Key        | `service.$name.labels` |
+| Type       | `map, string`          |
+| Required   | ❌                     |
+| Helm `tpl` | ❌                     |
+| Default    | `{}`                   |
+
+Example
+
+```yaml
+service:
+  $name:
+    labels:
+      {}
+```
+
+---
+
+### `service.$name.loadBalancerIP`
+
+Define the load balancer IP, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIPs`
+
+| Field      | Value                          |
+| ---------- | ------------------------------ |
+| Key        | `service.$name.loadBalancerIP` |
+| Type       | `map`                          |
+| Required   | ❌                             |
+| Helm `tpl` | ❌                             |
+| Default    | unset                          |
+
+---
+
+### `service.$name.loadBalancerIPs`
+
+Define the load balancer IPs, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIP`
+
+| Field      | Value                           |
+| ---------- | ------------------------------- |
+| Key        | `service.$name.loadBalancerIPs` |
+| Type       | `map`                           |
+| Required   | ❌                              |
+| Helm `tpl` | ❌                              |
+| Default    | unset                           |
+
+---
+
+### `service.$name.loadBalancerSourceRanges`
+
+Define the load balancer source ranges
+
+| Field      | Value                                    |
+| ---------- | ---------------------------------------- |
+| Key        | `service.$name.loadBalancerSourceRanges` |
+| Type       | `map`                                    |
+| Required   | ❌                                       |
+| Helm `tpl` | ❌                                       |
+| Default    | unset                                    |
+
+---
+
+### `service.$name.namespace`
+
+Define the namespace for this object
+
+| Field      | Value                     |
+| ---------- | ------------------------- |
+| Key        | `service.$name.namespace` |
+| Type       | `map`                     |
+| Required   | ❌                        |
+| Helm `tpl` | ❌                        |
+| Default    | `""`                      |
+
+Example
+
+```yaml
+service:
+  $name:
+    namespace: ""
+```
+
+---
+
+### `service.$name.ports`
+
+Define the ports of the service See [Ports](/truecharts-common/service/ports)
+
+| Field      | Value                 |
+| ---------- | --------------------- |
+| Key        | `service.$name.ports` |
+| Type       | `map`                 |
+| Required   | ❌                    |
+| Helm `tpl` | ❌                    |
+| Default    | `{}`                  |
+
+Example
+
+```yaml
+service:
+  $name:
+    ports:
+      {}
+```
+
+---
+
+### `service.$name.primary`
+
+Configuration for `service.main.primary`.
+
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `service.$name.primary` |
+| Type       | `boolean`               |
+| Required   | ❌                      |
+| Helm `tpl` | ❌                      |
+| Default    | unset                   |
+
+---
+
+### `service.$name.publishNotReadyAddresses`
+
+Define whether to publishNotReadyAddresses or not
+
+| Field      | Value                                    |
+| ---------- | ---------------------------------------- |
+| Key        | `service.$name.publishNotReadyAddresses` |
+| Type       | `boolean`                                |
+| Required   | ❌                                       |
+| Helm `tpl` | ❌                                       |
+| Default    | `false`                                  |
+
+Example
+
+```yaml
+service:
+  $name:
+    publishNotReadyAddresses: false
+```
+
+---
+
+### `service.$name.sessionAffinity`
+
+Define the session affinity (ClientIP, None)
+
+| Field      | Value                           |
+| ---------- | ------------------------------- |
+| Key        | `service.$name.sessionAffinity` |
+| Type       | `string`                        |
+| Required   | ❌                              |
+| Helm `tpl` | ❌                              |
+| Default    | `""`                            |
+| Enum       | `ClientIP`, `None`              |
+
+Example
+
+```yaml
+service:
+  $name:
+    sessionAffinity: ""
+```
+
+---
+
+### `service.$name.sessionAffinityConfig`
+
+Configuration for `$name.sessionAffinityConfig`.
+
+| Field      | Value                                 |
+| ---------- | ------------------------------------- |
+| Key        | `service.$name.sessionAffinityConfig` |
+| Type       | `map`                                 |
+| Required   | ❌                                    |
+| Helm `tpl` | ❌                                    |
+| Default    | unset                                 |
+
+---
+
+### `service.$name.sharedKey`
+
+Sets the shared key in `metallb.io/allow-shared-ip` **MetalLB** Annotation
+
+| Field      | Value                     |
+| ---------- | ------------------------- |
+| Key        | `service.$name.sharedKey` |
+| Type       | `map`                     |
+| Required   | ❌                        |
+| Helm `tpl` | ❌                        |
+| Default    | unset                     |
+
+---
+
+### `service.$name.targetSelector`
+
+Define the pod to link the service, by default will use the primary pod
+
+| Field      | Value                          |
+| ---------- | ------------------------------ |
+| Key        | `service.$name.targetSelector` |
+| Type       | `string`                       |
+| Required   | ❌                             |
+| Helm `tpl` | ❌                             |
+| Default    | `""`                           |
+
+Example
+
+```yaml
+service:
+  $name:
+    targetSelector: ""
+```
+
+---
+
+### `service.$name.type`
+
+Define the service type
+
+| Field      | Value                                                                 |
+| ---------- | --------------------------------------------------------------------- |
+| Key        | `service.$name.type`                                                  |
+| Type       | `string`                                                              |
+| Required   | ❌                                                                    |
+| Helm `tpl` | ❌                                                                    |
+| Default    | unset                                                                 |
+| Enum       | `ClusterIP`, `LoadBalancer`, `NodePort`, `ExternalName`, `ExternalIP` |
+
+---
+
+### `service.$name.useSlice`
+
+Define whether to use `EndpointSlice` or `Endpoint`
+
+| Field      | Value                    |
+| ---------- | ------------------------ |
+| Key        | `service.$name.useSlice` |
+| Type       | `boolean, map`           |
+| Required   | ❌                       |
+| Helm `tpl` | ❌                       |
+| Default    | unset                    |
+
+---
+
+## Child Pages
+
+- [Clusterip](ClusterIP.md) - Configure Cluster IP type
+- [Externalip](ExternalIP.md) - Configure External IP type
+- [Externalname](ExternalName.md) - Configure ExternalName type
+- [Loadbalancer](LoadBalancer.md) - Configuration for service entries with `type: LoadBalancer`.
+- [Nodeport](NodePort.md) - Configuration for service entries with `type: NodePort`.
+- [Integrations](integrations/) - Configuration for `service.integrations`.
+- [Ports](ports.md) - Define the port dict
 
 ---
 

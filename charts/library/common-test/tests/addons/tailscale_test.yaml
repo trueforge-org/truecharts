@@ -32,9 +32,8 @@ tests:
       addons:
         tailscale:
           enabled: true
-          container:
-            env:
-              TS_AUTH_KEY: something
+          settings:
+            authkey: something
     asserts:
       - hasDocuments:
           count: 2
@@ -143,10 +142,9 @@ tests:
       addons:
         tailscale:
           enabled: true
-          container:
-            env:
-              TS_AUTH_KEY: something
-              TS_USERSPACE: false
+          settings:
+            authkey: something
+            userspace: false
     asserts:
       - hasDocuments:
           count: 2
@@ -238,9 +236,8 @@ tests:
       addons:
         tailscale:
           enabled: true
-          container:
-            env:
-              TS_AUTH_KEY: something
+          settings:
+            authkey: something
     asserts:
       - hasDocuments:
           count: 2

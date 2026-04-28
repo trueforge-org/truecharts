@@ -1,25 +1,31 @@
 ---
-title: ClusterIP
+title: Clusterip
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/service/clusterip#full-examples) section for complete examples.
-- See the [Service](/truecharts-common/service) documentation for more information
+- This page is generated from JSON schema.
+- See the [Full Examples](/truecharts-common/service/ClusterIP#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.service.$name`
+- `.Values.service.ClusterIP`
 
-:::tip
+---
 
-- See available service keys [here](/truecharts-common/service).
-- This options apply only when `type: ClusterIP`.
+## `service.ClusterIP`
 
-:::
+Configure Cluster IP type
+
+| Field      | Value               |
+| ---------- | ------------------- |
+| Key        | `service.ClusterIP` |
+| Type       | `string`            |
+| Required   | ❌                  |
+| Helm `tpl` | ❌                  |
+| Default    | unset               |
 
 ---
 

@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "See [fixedEnv](/truecharts-common/container/fixedenv).",
+  "properties": {
+    "NVIDIA_CAPS": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Override fixedEnv for the container By default it will set the following environment variables:"
+    },
+    "TZ": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Override the timezone for the container"
+    },
+    "UMASK": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Override the umask for the container"
+    },
+    "PUID": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Override the PUID for the container"
+    }
+  },
+  "additionalProperties": true
+}

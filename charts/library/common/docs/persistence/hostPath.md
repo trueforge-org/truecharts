@@ -1,78 +1,53 @@
 ---
-title: Host Path
+title: Hostpath
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/persistence/hostpath#full-examples) section for complete examples.
+- This page is generated from JSON schema.
+- See the [Full Examples](/truecharts-common/persistence/hostPath#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.persistence.$name`
-
-:::tip
-
-- See available persistence keys [here](/truecharts-common/persistence).
-- This options apply only when `type: hostPath`.
-
-:::
+- `.Values.persistence.hostPath`
 
 ---
 
-## `hostPath`
+## `persistence.hostPath`
 
-Define the hostPath
+Configuration for `persistence` entries with `type: hostPath`.
 
-|            |                              |
-| ---------- | ---------------------------- |
-| Key        | `persistence.$name.hostPath` |
-| Type       | `string`                     |
-| Required   | ✅                           |
-| Helm `tpl` | ✅                           |
-| Default    | `""`                         |
+| Field      | Value                  |
+| ---------- | ---------------------- |
+| Key        | `persistence.hostPath` |
+| Type       | `map`                  |
+| Required   | ❌                     |
+| Helm `tpl` | ❌                     |
+| Default    | unset                  |
+
+---
+
+### `persistence.hostPath.hostPath`
+
+No description provided.
+
+| Field      | Value                           |
+| ---------- | ------------------------------- |
+| Key        | `persistence.hostPath.hostPath` |
+| Type       | `string`                        |
+| Required   | ✅                              |
+| Helm `tpl` | ❌                              |
+| Default    | `""`                            |
+| Min Length | `1`                             |
 
 Example
 
 ```yaml
 persistence:
-  hostpath-vol:
-    hostPath: /path/to/host
-```
-
----
-
-## `hostPathType`
-
-Define the hostPathType
-
-|            |                                  |
-| ---------- | -------------------------------- |
-| Key        | `persistence.$name.hostPathType` |
-| Type       | `string`                         |
-| Required   | ❌                               |
-| Helm `tpl` | ✅                               |
-| Default    | `""`                             |
-
-Valid Values
-
-- `""`
-- `DirectoryOrCreate`
-- `Directory`
-- `FileOrCreate`
-- `File`
-- `Socket`
-- `CharDevice`
-- `BlockDevice`
-
-Example
-
-```yaml
-persistence:
-  hostpath-vol:
-    hostPathType: DirectoryOrCreate
+  hostPath:
+    hostPath: ""
 ```
 
 ---

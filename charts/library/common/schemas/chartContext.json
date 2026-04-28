@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "appUrl": {
+      "type": "string",
+      "description": "Configuration for `chartContext.appUrl`."
+    },
+    "podCIDR": {
+      "type": "string",
+      "description": "Configuration for `chartContext.podCIDR`."
+    },
+    "svcCIDR": {
+      "type": "string",
+      "description": "Configuration for `chartContext.svcCIDR`."
+    }
+  },
+  "additionalProperties": true,
+  "description": "Configuration for `chartContext`."
+}

@@ -95,6 +95,9 @@ tests:
               - |
                 echo "Using image bash"
             volumeMounts:
+              - mountPath: /var/spool/cron/crontabs/
+                name: crontab
+                readOnly: false
               - mountPath: /dev/shm
                 name: devshm
                 readOnly: false

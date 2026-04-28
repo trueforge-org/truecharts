@@ -43,15 +43,28 @@
 
   {{/* TODO: Find ways to implement CIDR detection */}}
 
-  {{/* If there is ingress, get data from the primary */}}
+  {{/* If there is ingress/route, get data from the primary */}}
   {{- $primaryIngressName := include "tc.v1.common.lib.util.ingress.primary" (dict "rootCtx" $rootCtx) -}}
   {{- $selectedIngress := (get $rootCtx.Values.ingress $primaryIngressName) -}}
+
+  {{- $primaryRouteName := include "tc.v1.common.lib.util.route.primary" (dict "rootCtx" $rootCtx) -}}
+  {{- $selectedRoute := dict -}}
+  {{- if $rootCtx.Values.route -}}
+    {{- $selectedRoute = (get $rootCtx.Values.route $primaryRouteName) -}}
+  {{- end -}}
 
   {{- with $objectData.targetSelector -}}
     {{- if .ingress -}}
       {{- $ing := (get $rootCtx.Values.ingress .ingress) -}}
       {{- if $ing -}}
         {{- $selectedIngress = $ing -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- if .route -}}
+      {{- $route := (get $rootCtx.Values.route .route) -}}
+      {{- if $route -}}
+        {{- $selectedRoute = $route -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}
@@ -105,8 +118,26 @@
     {{- end -}}
   {{- end -}}
 
-  {{/* If there is no ingress, we have to use service */}}
-  {{- if not $selectedIngress -}}
+  {{- if and (not $selectedIngress) $selectedRoute -}}
+    {{- with $selectedRoute -}}
+      {{- if and (kindIs "slice" .hostnames) (gt (len .hostnames) 0) -}}
+        {{- $host = tpl ((.hostnames | default list) | mustFirst) $rootCtx -}}
+      {{- end -}}
+
+      {{- if and (eq (.kind | default "HTTPRoute") "HTTPRoute") (kindIs "slice" .rules) (gt (len .rules) 0) -}}
+        {{- $firstRule := ((.rules | default list) | mustFirst) -}}
+        {{- if and (kindIs "slice" $firstRule.matches) (gt (len $firstRule.matches) 0) -}}
+          {{- $firstMatch := (($firstRule.matches | default list) | mustFirst) -}}
+          {{- with $firstMatch.path.value -}}
+            {{- $path = tpl . $rootCtx -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{/* If there is no ingress/route, we have to use service */}}
+  {{- if and (not $selectedIngress) (not $selectedRoute) -}}
     {{- $primaryServiceName := include "tc.v1.common.lib.util.service.primary" (dict "rootCtx" $rootCtx) -}}
     {{- $selectedService := (get $rootCtx.Values.service $primaryServiceName) -}}
 

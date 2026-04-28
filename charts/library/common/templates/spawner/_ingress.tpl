@@ -5,19 +5,31 @@
 
 {{- define "tc.v1.common.spawner.ingress" -}}
   {{- $fullname := include "tc.v1.common.lib.chart.names.fullname" $ -}}
+  {{- $hasRouteEnabled := false -}}
+
+  {{- range $routeName, $route := $.Values.route -}}
+    {{- $routeEnabled := (include "tc.v1.common.lib.util.enabled" (dict
+              "rootCtx" $ "objectData" $route
+              "name" $routeName "caller" "Ingress"
+              "key" "route")) -}}
+    {{- if eq $routeEnabled "true" -}}
+      {{- $hasRouteEnabled = true -}}
+    {{- end -}}
+  {{- end -}}
 
   {{/* Validate that only 1 primary exists */}}
   {{- include "tc.v1.common.lib.ingress.primaryValidation" $ -}}
 
   {{- range $name, $ingress := .Values.ingress -}}
+    {{- if not (kindIs "map" $ingress) -}}{{- continue -}}{{- end -}}
 
     {{- $enabled := (include "tc.v1.common.lib.util.enabled" (dict
               "rootCtx" $ "objectData" $ingress
               "name" $name "caller" "Ingress"
               "key" "ingress")) -}}
 
-    {{- if and (eq $enabled "false") ($ingress.required) -}}
-      {{- fail (printf "Ingress - Expected ingress [%s] to be enabled. This chart is designed to work only with ingress enabled." $name) -}}
+    {{- if and (eq $enabled "false") ($ingress.required) (not $hasRouteEnabled) -}}
+      {{- fail (printf "Ingress - Expected ingress [%s] to be enabled or at least one route to be enabled. This chart is designed to work only with ingress or route enabled." $name) -}}
     {{- end -}}
 
     {{- if eq $enabled "true" -}}

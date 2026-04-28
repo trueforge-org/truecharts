@@ -81,31 +81,33 @@ objectData:
   {{- $hasEnabled := false -}}
 
   {{- range $name, $service := $.Values.service -}}
-    {{- $enabled := "false" -}}
+    {{- if kindIs "map" $service -}}
+      {{- $enabled := "false" -}}
 
-    {{- if not (kindIs "invalid" $service.enabled) -}}
-      {{- $enabled = (include "tc.v1.common.lib.util.enabled" (dict
-                "rootCtx" $ "objectData" $service
-                "name" $name "caller" "Service Validation Util"
-                "key" "service")) -}}
-    {{- end -}}
-
-    {{- if eq $enabled "true" -}}
-      {{- $hasEnabled = true -}}
-
-      {{/* And service is primary */}}
-      {{- if and (hasKey $service "primary") ($service.primary) -}}
-        {{/* Fail if there is already a primary service */}}
-        {{- if $hasPrimary -}}
-          {{- fail "Service - Only one service can be primary" -}}
-        {{- end -}}
-
-        {{- $hasPrimary = true -}}
-
-        {{- include "tc.v1.common.lib.servicePort.primaryValidation" (dict "objectData" $service.ports) -}}
-
+      {{- if not (kindIs "invalid" $service.enabled) -}}
+        {{- $enabled = (include "tc.v1.common.lib.util.enabled" (dict
+                  "rootCtx" $ "objectData" $service
+                  "name" $name "caller" "Service Validation Util"
+                  "key" "service")) -}}
       {{- end -}}
 
+      {{- if eq $enabled "true" -}}
+        {{- $hasEnabled = true -}}
+
+        {{/* And service is primary */}}
+        {{- if and (hasKey $service "primary") ($service.primary) -}}
+          {{/* Fail if there is already a primary service */}}
+          {{- if $hasPrimary -}}
+            {{- fail "Service - Only one service can be primary" -}}
+          {{- end -}}
+
+          {{- $hasPrimary = true -}}
+
+          {{- include "tc.v1.common.lib.servicePort.primaryValidation" (dict "objectData" $service.ports) -}}
+
+        {{- end -}}
+
+      {{- end -}}
     {{- end -}}
   {{- end -}}
 

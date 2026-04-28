@@ -1,0 +1,284 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "integrations": {
+        "type": "object",
+        "properties": {
+          "traefik": {
+            "allOf": [
+              {
+                "$ref": "traefik.json"
+              }
+            ],
+            "description": "Create Ingress objects",
+            "type": "object",
+            "default": {}
+          },
+          "homepage": {
+            "allOf": [
+              {
+                "$ref": "integrations/homepage.json"
+              }
+            ],
+            "description": "Create Ingress objects",
+            "type": "object",
+            "default": {}
+          },
+          "certManager": {
+            "allOf": [
+              {
+                "$ref": "certManager.json"
+              }
+            ],
+            "description": "Create Ingress objects",
+            "type": "object",
+            "default": {}
+          },
+          "nginx": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "description": "Configuration for `ingress.main.integrations.nginx.enabled`."
+              },
+              "themepark": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": [
+                      "boolean",
+                      "string"
+                    ],
+                    "description": "Configuration for `ingress.main.integrations.nginx.themepark.enabled`."
+                  },
+                  "css": {
+                    "type": "string",
+                    "description": "Configuration for `ingress.main.integrations.nginx.themepark.css`."
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Configuration for `ingress.main.integrations.nginx.themepark`."
+              },
+              "ipWhitelist": {
+                "type": "array",
+                "description": "Configuration for `ingress.main.integrations.nginx.ipWhitelist`."
+              },
+              "auth": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "Configuration for `ingress.main.integrations.nginx.auth.type`."
+                  },
+                  "internalHost": {
+                    "type": "string",
+                    "description": "Configuration for `ingress.main.integrations.nginx.auth.internalHost`."
+                  },
+                  "externalHost": {
+                    "type": "string",
+                    "description": "Configuration for `ingress.main.integrations.nginx.auth.externalHost`."
+                  },
+                  "responseHeaders": {
+                    "type": "array",
+                    "description": "Configuration for `ingress.main.integrations.nginx.auth.responseHeaders`."
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Configuration for `ingress.main.integrations.nginx.auth`."
+              }
+            },
+            "additionalProperties": true,
+            "description": "Configuration for `ingress.main.integrations.nginx`."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Create Ingress objects",
+        "default": {}
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Create Ingress objects",
+        "default": false
+      },
+      "primary": {
+        "type": "boolean",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Create Ingress objects",
+        "default": false
+      },
+      "expandObjectName": {
+        "type": "boolean",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define if the object name should be expanded",
+        "default": false
+      },
+      "required": {
+        "type": "boolean",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Create Ingress objects",
+        "default": false
+      },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "../special/namespaces.json"
+          }
+        ],
+        "description": "Define the namespace for this object",
+        "default": ""
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "../special/labels.json"
+          }
+        ],
+        "description": "Create Ingress objects",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
+      },
+      "annotations": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Create Ingress objects",
+        "default": {}
+      },
+      "ingressClassName": {
+        "type": "string",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Create Ingress objects",
+        "default": "nil"
+      },
+      "targetSelector": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the `service: port` to assign the ingress",
+        "default": "{}"
+      },
+      "hosts": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "host": {
+              "type": "string",
+              "description": "Define the host for this ingress"
+            },
+            "paths": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "Define the path for this ingress"
+                  },
+                  "pathType": {
+                    "type": "string",
+                    "enum": [
+                      "Prefix",
+                      "Exact",
+                      "ImplementationSpecific"
+                    ],
+                    "description": "Define the path type for this ingress (Prefix, Exact, ImplementationSpecific)"
+                  },
+                  "overrideService": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Define the service name for this path"
+                      },
+                      "expandObjectName": {
+                        "type": [
+                          "boolean",
+                          "string"
+                        ],
+                        "description": "Define if the override service object name should be expanded"
+                      },
+                      "port": {
+                        "type": [
+                          "integer",
+                          "string"
+                        ],
+                        "description": "Define the service port for this path"
+                      }
+                    },
+                    "additionalProperties": true,
+                    "description": "Overrides the selected service for this path"
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Configuration for `ingress.main.hosts.$item.paths.$item`."
+              },
+              "description": "Define the paths for this ingress"
+            }
+          },
+          "additionalProperties": true,
+          "description": "Configuration for `ingress.main.hosts.$item`."
+        },
+        "description": "Define the hosts for this ingress",
+        "default": []
+      },
+      "tls": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "hosts": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Define the hosts for this TLS"
+            },
+            "secretName": {
+              "type": "string",
+              "description": "Define the secret name for this TLS"
+            },
+            "certificateIssuer": {
+              "type": "string",
+              "description": "Define the certificate issuer for this TLS"
+            },
+            "clusterCertificate": {
+              "type": "string",
+              "description": "Define the cluster certificate for this TLS"
+            }
+          },
+          "additionalProperties": true,
+          "description": "Configuration for `ingress.main.tls.$item`."
+        },
+        "description": "Define TLS for this ingress",
+        "default": []
+      }
+    },
+    "additionalProperties": true,
+    "description": "Create Ingress objects",
+    "default": {}
+  },
+  "description": "Create Ingress objects"
+}

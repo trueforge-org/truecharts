@@ -4,72 +4,50 @@ title: Device
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
+- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/persistence/device#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.persistence.$name`
-
-:::tip
-
-- See available persistence keys [here](/truecharts-common/persistence).
-- This options apply only when `type: device`.
-
-:::
+- `.Values.persistence.device`
 
 ---
 
-## Notes
+## `persistence.device`
 
-Type `device` is almost identical to `hostPath`. The only difference is that when a `device` type is defined,
-we take additional actions, like adding `supplementalGroups` or setting `hostPathType` automatically
-to the container assigned, so it can utilize the device.
+Configuration for `persistence` entries with `type: device`.
+
+| Field      | Value                |
+| ---------- | -------------------- |
+| Key        | `persistence.device` |
+| Type       | `map`                |
+| Required   | ❌                   |
+| Helm `tpl` | ❌                   |
+| Default    | unset                |
 
 ---
 
-## `hostPath`
+### `persistence.device.hostPath`
 
-Define the hostPath
+No description provided.
 
-|            |                              |
-| ---------- | ---------------------------- |
-| Key        | `persistence.$name.hostPath` |
-| Type       | `string`                     |
-| Required   | ✅                           |
-| Helm `tpl` | ✅                           |
-| Default    | `""`                         |
+| Field      | Value                         |
+| ---------- | ----------------------------- |
+| Key        | `persistence.device.hostPath` |
+| Type       | `string`                      |
+| Required   | ✅                            |
+| Helm `tpl` | ❌                            |
+| Default    | `""`                          |
+| Min Length | `1`                           |
 
 Example
 
 ```yaml
 persistence:
-  device-vol:
-    hostPath: /path/to/host
-```
-
----
-
-## `hostPathType`
-
-Define the hostPathType
-
-|            |                                  |
-| ---------- | -------------------------------- |
-| Key        | `persistence.$name.hostPathType` |
-| Type       | `string`                         |
-| Required   | ❌                               |
-| Helm `tpl` | ✅                               |
-| Default    | `""`                             |
-
-Example
-
-```yaml
-persistence:
-  device-vol:
-    hostPathType: BlockDevice
+  device:
+    hostPath: ""
 ```
 
 ---

@@ -6,24 +6,26 @@
 
   {{- $result := "" -}}
   {{- range $name, $port := $svcValues.ports -}}
-    {{- $enabled := "false" -}}
+    {{- if kindIs "map" $port -}}
+      {{- $enabled := "false" -}}
 
-    {{- if not (kindIs "invalid" $port.enabled) -}}
-      {{- $enabled = (include "tc.v1.common.lib.util.enabled" (dict
-                "rootCtx" $rootCtx "objectData" $port
-                "name" $name "caller" "Primary Port Util"
-                "key" ".ports.$portname.enabled")) -}}
-    {{- end -}}
+      {{- if not (kindIs "invalid" $port.enabled) -}}
+        {{- $enabled = (include "tc.v1.common.lib.util.enabled" (dict
+                  "rootCtx" $rootCtx "objectData" $port
+                  "name" $name "caller" "Primary Port Util"
+                  "key" ".ports.$portname.enabled")) -}}
+      {{- end -}}
 
-    {{- if eq $enabled "true" -}}
-      {{- if $port.primary -}}
-        {{/*
-          While this will overwrite if there are
-          more than 1 primary port, its not an issue
-          as there is validation down the line that will
-          fail if there are more than 1 primary port
-        */}}
-        {{- $result = $name -}}
+      {{- if eq $enabled "true" -}}
+        {{- if $port.primary -}}
+          {{/*
+            While this will overwrite if there are
+            more than 1 primary port, its not an issue
+            as there is validation down the line that will
+            fail if there are more than 1 primary port
+          */}}
+          {{- $result = $name -}}
+        {{- end -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}

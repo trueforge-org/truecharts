@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Configuration for `gatewayClass.main.enabled`.",
+        "default": false
+      },
+      "annotations": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Configuration for `gatewayClass.main.annotations`."
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Configuration for `gatewayClass.main.labels`."
+      },
+      "controllerName": {
+        "type": "string",
+        "description": "Configuration for `gatewayClass.main.controllerName`. The name of the controller that will manage Gateways of this class.",
+        "minLength": 1
+      },
+      "description": {
+        "type": "string",
+        "description": "Configuration for `gatewayClass.main.description`. Description helps describe a GatewayClass with more details."
+      },
+      "parametersRef": {
+        "type": "object",
+        "properties": {
+          "group": {
+            "type": "string",
+            "description": "Configuration for `gatewayClass.main.parametersRef.group`.",
+            "minLength": 1
+          },
+          "kind": {
+            "type": "string",
+            "description": "Configuration for `gatewayClass.main.parametersRef.kind`.",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "Configuration for `gatewayClass.main.parametersRef.name`.",
+            "minLength": 1
+          },
+          "namespace": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "description": "Configuration for `gatewayClass.main.parametersRef.namespace`."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Configuration for `gatewayClass.main.parametersRef`. ParametersRef is a reference to a resource that contains the configuration parameters corresponding to the GatewayClass."
+      }
+    },
+    "additionalProperties": true,
+    "description": "Configuration for `gatewayClass.main`.",
+    "default": {}
+  },
+  "description": "Configuration for `gatewayClass`."
+}

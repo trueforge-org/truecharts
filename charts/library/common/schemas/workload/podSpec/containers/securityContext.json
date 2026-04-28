@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": [
+    "object",
+    "null"
+  ],
+  "properties": {
+    "seccompProfile": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "type": "object",
+          "properties": {
+          },
+          "additionalProperties": true,
+          "description": "Define securityContext for the container"
+        },
+        "type": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true,
+          "description": "Define the seccompProfile.type for the container"
+        }
+      },
+      "additionalProperties": true,
+      "description": "Define the seccompProfile for the container"
+    },
+    "runAsUser": {
+      "type": "integer",
+      "description": "Define the runAsUser for the container"
+    },
+    "runAsGroup": {
+      "type": "integer",
+      "description": "Define the runAsGroup for the container"
+    },
+    "readOnlyRootFilesystem": {
+      "type": "boolean",
+      "description": "Define the readOnlyRootFilesystem for the container"
+    },
+    "allowPrivilegeEscalation": {
+      "type": "boolean",
+      "description": "Define the allowPrivilegeEscalation for the container"
+    },
+    "privileged": {
+      "type": "boolean",
+      "description": "Define the privileged for the container"
+    },
+    "runAsNonRoot": {
+      "type": "boolean",
+      "description": "Define the runAsNonRoot for the container"
+    },
+    "capabilities": {
+      "type": "object",
+      "properties": {
+        "add": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Define the capabilities.add for the container"
+        },
+        "drop": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Define the capabilities.drop for the container"
+        }
+      },
+      "additionalProperties": true,
+      "description": "Define the capabilities for the container If at least one capability is defined in either [`add`](/truecharts-common/container/securitycontext/#securitycontextcapabilitiesadd) or [`drop`](/truecharts-common/container/securitycontext/#securitycontextcapabilitiesdrop)"
+    }
+  },
+  "additionalProperties": true,
+  "description": "Define securityContext for the container"
+}

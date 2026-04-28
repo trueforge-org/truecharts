@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Configuration for `persistence` entries with `type: iscsi`.",
+  "properties": {
+    "iscsi": {
+      "type": "object",
+      "default": {}
+    },
+    "targetPortal": {
+      "type": "string",
+      "minLength": 1,
+      "default": ""
+    },
+    "iqn": {
+      "type": "string",
+      "minLength": 1,
+      "default": ""
+    },
+    "lun": {
+      "type": [
+        "integer",
+        "string"
+      ],
+      "minimum": 1,
+      "default": ""
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "iqn",
+    "iscsi",
+    "lun",
+    "targetPortal"
+  ]
+}

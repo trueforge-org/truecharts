@@ -1,0 +1,119 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "labels": {
+      "allOf": [
+        {
+          "$ref": "../special/labels.json"
+        }
+      ],
+      "description": "Additional Labels that apply to all objects",
+      "default": {},
+      "type": [
+        "object",
+        "string"
+      ]
+    },
+    "annotations": {
+      "type": [
+        "object",
+        "string"
+      ],
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Additional Annotations that apply to all objects",
+      "default": {}
+    },
+    "namespace": {
+      "type": "string",
+      "description": "Namespace to apply to all objects, unless overridden at the object level Does not apply to chart deps, use global.namespace for that",
+      "default": ""
+    },
+    "diagnosticMode": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Configuration for `global.diagnosticMode.enabled`."
+        }
+      },
+      "additionalProperties": true,
+      "description": "Configuration for `global.diagnosticMode`."
+    },
+    "fallbackDefaults": {
+      "$ref": "fallbackDefaults.json",
+      "description": "The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [here](/truecharts-common/fallbackdefaults)",
+      "type": "object",
+      "x-docs-required": false,
+      "x-docs-helmTpl": false,
+      "x-docs-defaultRaw": "See here"
+    },
+    "traefik": {
+      "type": "object",
+      "properties": {
+        "commonMiddlewares": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Configuration for `global.traefik.commonMiddlewares.$item.name`."
+              }
+            },
+            "additionalProperties": true,
+            "description": "Configuration for `global.traefik.commonMiddlewares.$item`."
+          },
+          "description": "Settings for traefik integration",
+          "default": "[{name: tc-basic-secure-headers}]"
+        },
+        "addServiceAnnotations": {
+          "type": "boolean",
+          "properties": {},
+          "additionalProperties": true,
+          "description": "Add annotations to services for traefik",
+          "default": true
+        }
+      },
+      "additionalProperties": true,
+      "description": "Settings for traefik integration",
+      "default": {
+        "addServiceAnnotations": true,
+        "commonMiddlewares": [
+          {
+            "name": "tc-basic-secure-headers"
+          }
+        ]
+      }
+    },
+    "minNodePort": {
+      "type": "integer",
+      "description": "Minimum Node Port Allowed",
+      "minimum": 1,
+      "default": 9000
+    },
+    "stopAll": {
+      "type": "boolean",
+      "description": "Applies different techniques to stop all objects in the chart and its dependencies",
+      "default": false
+    },
+    "metallb": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Settings for metallb integration",
+      "default": {
+        "addServiceAnnotations": true
+      }
+    }
+  },
+  "additionalProperties": true,
+  "description": "Global values that apply to all charts See more info about global values [here](/truecharts-common/global)",
+  "required": [
+    "minNodePort"
+  ]
+}
