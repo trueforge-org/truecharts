@@ -75,7 +75,7 @@ jobs:
               | {tag: ., alpha: (capture("ALPHA(?<n>[0-9]+)$").n | tonumber)}
             ] | if length > 0 then max_by(.alpha).tag else empty end' <<< "${RELEASES_JSON}")"
           fi
-          [ -n "${TAG}" ] && [ "${TAG}" != "null" ] || TAG="v4.0.0-ALPHA24"
+          [ -n "${TAG}" ] && [ "${TAG}" != "null" ] || TAG="v4.0.0-ALPHA28"
           VERSION="${TAG#v}"
           VERSION="${VERSION#forgetool-v}"
           case "$(uname -m)" in
@@ -201,36 +201,8 @@ jobs:
         shell: bash
         run: |
           #!/bin/bash
-          echo "Maing sure directories exist..."
-          mkdir -p website/truecharts/public/img/hotlink-ok/chart-icons || echo "chart-icons path already exists, continuing..."
-          mkdir -p website/truecharts/public/img/hotlink-ok/chart-icons-small || echo "chart-icons-small path already exists, continuing..."
-          mkdir -p website/truecharts/src/assets || echo "assets path already exists, continuing..."
 
-          forgetool charts genchartlist ./charts
-          mv -f charts.json website/truecharts/src/assets/charts.json
-          mv -f ./website/truecharts/src/content/docs/charts/index.mdx ./index.mdx
-          echo "Copying changelogs to docs"
-          rm -rf ./website/truecharts/src/content/docs/charts/stable ./website/truecharts/src/content/docs/charts/incubator ./website/truecharts/src/content/docs/charts/library
-          mkdir -p ./website/truecharts/src/content/docs/charts/
-          mv -f ./index.mdx ./website/truecharts/src/content/docs/charts/index.mdx
-          mkdir -p ./changelogs
-
-          # Check if there are any directories in changelogs
-          if [ -n "$(find ./changelogs -mindepth 1 -type d)" ]; then
-              cp -r ./changelogs/** ./website/truecharts/src/content/docs/charts/
-          else
-              echo "No directories in ./changelogs. Skipping copy."
-          fi
-
-          export DEBUG=false
-          export STRICT=true
-          go-yq --version
-
-          for item in charts/*/*/Chart.yaml; do
-            # TODO: Move all website docs structure generation to charttool
-            IFS='/' read -r -a chart_parts <<<"$item"
-            ./.github/scripts/chart-docs.sh "${chart_parts[1]}/${chart_parts[2]}"
-          done
+          forgetool charts gendocs --charts-dir ./charts --website-dir ./website
           rm -rf ./website/truecharts/src/content/docs-common
           mv ./website/truecharts/src/content/docs/charts/library/common ./website/truecharts/src/content/docs-common
 

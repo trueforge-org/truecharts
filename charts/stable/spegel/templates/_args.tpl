@@ -38,7 +38,6 @@
   {{- end }}
   - --containerd-sock={{ .Values.spegel.containerdSock }}
   - --containerd-namespace={{ .Values.spegel.containerdNamespace }}
-  - --containerd-registry-config-path={{ .Values.spegel.containerdRegistryConfigPath }}
   - --bootstrap-kind=dns
   - --dns-bootstrap-domain={{ include "tc.v1.common.lib.chart.names.fullname" $ }}-router.{{ include "tc.v1.common.lib.metadata.namespace" (dict "caller" "spegel" "rootCtx" $ "objectData" .Values) }}.svc.cluster.local.
   {{- with .Values.spegel.containerdContentPath }}

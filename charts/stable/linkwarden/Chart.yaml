@@ -9,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 2.14.0
+appVersion: 2.14.1
 dependencies:
   - name: common
-    version: 29.1.0
+    version: 29.1.6
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,22 +20,22 @@ dependencies:
     import-values: []
 deprecated: false
 description: Linkwarden is a self-hosted, open-source collaborative bookmark manager to collect, organize and archive webpages.
-home: https://trueforge.org/truetech/truecharts/charts/stable/linkwarden
-icon: https://trueforge.org/img/hotlink-ok/chart-icons/linkwarden.webp
+home: https://truecharts.org/charts/stable/linkwarden
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/linkwarden.webp
 keywords:
   - linkwarden
   - bookmark
   - manager
-kubeVersion: '>=1.27.0-0'
+kubeVersion: '>=1.33.0-0'
 maintainers:
   - name: TrueCharts
-    email: info@trueforge.org
-    url: https://trueforge.org
+    email: info@truecharts.org
+    url: https://truecharts.org
 name: linkwarden
 sources:
   - https://ghcr.io/linkwarden/linkwarden
   - https://github.com/linkwarden/linkwarden
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/linkwarden
 type: application
-version: 8.2.0
+version: 8.2.2
 
