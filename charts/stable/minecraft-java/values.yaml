@@ -2,35 +2,35 @@
 
 image:
   repository: ghcr.io/itzg/minecraft-server
-  tag: 2026.5.0-java25@sha256:fbbcfc47bc1239b57deb655162e950bd22c87df8034a2251d1f906eb2c8d3da4
+  tag: 2026.5.2-java25@sha256:5476619d049f4c0e2764532b345da1db4c154b4294bcc16d9c3b8d5f4b0d9923
   pullPolicy: Always
 
 # ---- Java 25 ----
 j25jdkImage:
   repository: ghcr.io/itzg/minecraft-server
-  tag: 2026.5.0-java25-jdk@sha256:32a053a5e46e48e3fee6bc5b355f06b9bf6a821af8db80fb7257bc1150aa9bd4
+  tag: 2026.5.2-java25-jdk@sha256:8c951a26301283b9a24e9b355fa9546c2943d9c97d24e3c6ba4cef3a1d2ca7b8
   pullPolicy: Always
 
 # ---- Java 21 (Recommended for modern MC versions) ----
 j21Image:
   repository: ghcr.io/itzg/minecraft-server
-  tag: 2026.5.0-java21@sha256:636e25794e3ca4c1e4bbb3686f7ad0b10c4f1508802b7956803a889912891303
+  tag: 2026.5.2-java21@sha256:3abc3239c3565915aa26a4dc6bd9aa2944dc2ac4e2c485f496b58456620478b8
   pullPolicy: Always
 
 j21alpineImage:
   repository: ghcr.io/itzg/minecraft-server
-  tag: 2026.5.1-java21-alpine@sha256:c70edf102dd4dcef2030cd6043d36eaf8613cd36bc84c5f616b6f886b8d40c86
+  tag: 2026.5.2-java21-alpine@sha256:d5634355e78f511c89021d41316ee6f154c4ff6809aef419be76a56365c9d47f
   pullPolicy: Always
 
 j21jdkImage:
   repository: ghcr.io/itzg/minecraft-server
-  tag: 2026.5.0-java21-jdk@sha256:5a73c897e16c68a7b5060d70b612f2aa6a7b2825e3bbd1c50e5beab1f2b40c10
+  tag: 2026.5.2-java21-jdk@sha256:83b6b3855abbe3eb67932672df0d0abeff5c0a25f9c87a8f0a150c597f623a1f
   pullPolicy: Always
 
 # ---- Java 17 (Safe & Supported) ----
 j17Image:
   repository: ghcr.io/itzg/minecraft-server
-  tag: 2026.5.1-java17@sha256:51e40973a26f1d845842db3f126a073ccef56fa50bcfa04c345914b5c80acd59
+  tag: 2026.5.2-java17@sha256:76c8d92cc93854838543cbbadcb5522f1d325d97882d4e9753005d53c228176e
   pullPolicy: Always
 
 j17jdkImage:
@@ -41,19 +41,19 @@ j17jdkImage:
 # ---- Java 16 ----
 j16Image:
   repository: ghcr.io/itzg/minecraft-server
-  tag: 2026.5.1-java16@sha256:f04db02d93d0c347fd3defedf4232332628207028446198138417700c5fbd75d
+  tag: 2026.5.2-java16@sha256:0adef2589fc3b43890184ce57ac4b80cb97baad52f390143cbb5906305700797
   pullPolicy: Always
 
 # ---- Java 11 ----
 j11Image:
   repository: ghcr.io/itzg/minecraft-server
-  tag: 2026.5.1-java11@sha256:ea28b485b60d43b3b3c275b2eba5c9b205312e40ebeb09804e6204c000481ef6
+  tag: 2026.5.2-java11@sha256:7eb42b8855596a8943eeddeac54c8fff387be67cf95b242fa3ed156f843971c9
   pullPolicy: Always
 
 # ---- Java 8 (Use plain java8 only) ----
 j8Image:
   repository: ghcr.io/itzg/minecraft-server
-  tag: 2026.5.1-java8@sha256:a0ffae46cd9a3f77134a87f2fe94bc937a7b33b77c10062deb8798db7635cbfa
+  tag: 2026.5.2-java8@sha256:0e10897886a27232a96985a08f27d26fb0c6f30dcd262256e5ccbd6a7c5b5607
   pullPolicy: Always
 
 service:
