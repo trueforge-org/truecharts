@@ -13,8 +13,8 @@ service:
   main:
     ports:
       main:
-        targetPort: 8181
-        protocol: http
+        targetPort: 8080
+        protocol: tcp
         port: 10142
 workload:
   main:
