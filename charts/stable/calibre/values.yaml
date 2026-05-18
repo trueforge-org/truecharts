@@ -14,8 +14,8 @@ service:
     ports:
       main:
         port: 8084
-        protocol: https
-        targetPort: 8181
+        protocol: tcp
+        targetPort: 8080
   webserver:
     enabled: true
     ports:
