@@ -1,0 +1,41 @@
+annotations:
+  artifacthub.io/links: |-
+    - name: source
+      url: https://github.com/thekoma/rpodder
+    - name: documentation
+      url: https://thekoma.github.io/rpodder/
+  truecharts.org/train: incubator
+  trueforge.org/category: media
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: incubator
+apiVersion: v2
+appVersion: 2026.05.1
+dependencies:
+  - name: common
+    version: 29.3.4
+    repository: oci://oci.trueforge.org/truecharts
+    condition: ""
+    alias: ""
+    tags: []
+    import-values: []
+deprecated: false
+description: A modern, self-hostable gpodder.net replacement written in Rust
+home: https://truecharts.org/charts/incubator/rpodder
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/rpodder.webp
+keywords:
+  - rpodder
+  - podcast
+  - gpodder
+kubeVersion: '>=1.33.0-0'
+maintainers:
+  - name: TrueCharts
+    email: info@truecharts.org
+    url: https://truecharts.org
+name: rpodder
+sources:
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/incubator/rpodder
+  - https://github.com/thekoma/rpodder
+type: application
+version: 0.0.1
