@@ -10,26 +10,40 @@ image:
 
 kromgo:
   defaults:
+    # Cache-Control max-age in seconds; 0 disables caching
     cacheSeconds: 0
     badge:
+      # go-regular (default), go-bold, go-medium, go-mono
       font: go-regular
+      # badge font size in points
       size: 11
+      # flat (default), flat-square, or plastic
       style: flat
       gallery:
-          hidden: false
+        # list badges in the gallery (default); true hides them
+        hidden: false
     graph:
+      # cap on a graph's requested window ("0" = unlimited)
       maxDuration: 1h
+      # image width in px
       width: 600
+      # image height in px
       height: 200
+      # show the series legend
       legend: true
+      # color theme — see Themes below
       theme: light
+      # text font — see Themes below
       font: roboto
       gallery:
-          hidden: false
+        # list graphs in the gallery (default); true hides them
+        hidden: false
   badges:
     - id: talos_version
       query: node_os_info{ name="Talos"}
       value: labels["version_id"]
+      # mdi:server-outline
+      # si:kubernetes
       icon: si:talos
       title: Talos Version
     - id: kubernetes_version
