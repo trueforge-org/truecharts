@@ -7,24 +7,25 @@ image:
 # Raw Kromgo configuration
 # checkout the readme for the current configuration setup
 # https://github.com/home-operations/kromgo#badges
+
 kromgo:
   defaults:
-      cacheSeconds: 0 # Cache-Control max-age in seconds; 0 disables caching
+      cacheSeconds: 0
       badge:
-          font: go-regular # go-regular (default), go-bold, go-medium, go-mono
-          size: 11 # badge font size in points
-          style: flat # flat (default), flat-square, or plastic
+          font: go-regular
+          size: 11
+          style: flat
           gallery:
-              hidden: false # list badges in the gallery (default); true hides them
+              hidden: false
       graph:
-          maxDuration: 1h # cap on a graph's requested window ("0" = unlimited)
-          width: 600 # image width in px
-          height: 200 # image height in px
-          legend: true # show the series legend
-          theme: light # color theme — see Themes below
-          font: roboto # text font — see Themes below
+          maxDuration: 1h
+          width: 600
+          height: 200
+          legend: true
+          theme: light
+          font: roboto
           gallery:
-              hidden: false # list graphs in the gallery (default); true hides them
+              hidden: false
       badges:
         - id: talos_version
           query: node_os_info{ name="Talos"}
