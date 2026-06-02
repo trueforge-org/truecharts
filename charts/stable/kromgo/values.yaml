@@ -12,20 +12,20 @@ kromgo:
   defaults:
     cacheSeconds: 0
     badge:
-        font: go-regular
-        size: 11
-        style: flat
-        gallery:
-            hidden: false
+      font: go-regular
+      size: 11
+      style: flat
+      gallery:
+          hidden: false
     graph:
-        maxDuration: 1h
-        width: 600
-        height: 200
-        legend: true
-        theme: light
-        font: roboto
-        gallery:
-            hidden: false
+      maxDuration: 1h
+      width: 600
+      height: 200
+      legend: true
+      theme: light
+      font: roboto
+      gallery:
+          hidden: false
   badges:
     - id: talos_version
       query: node_os_info{ name="Talos"}
