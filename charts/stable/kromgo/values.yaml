@@ -10,38 +10,38 @@ image:
 
 kromgo:
   defaults:
-      cacheSeconds: 0
-      badge:
-          font: go-regular
-          size: 11
-          style: flat
-          gallery:
-              hidden: false
-      graph:
-          maxDuration: 1h
-          width: 600
-          height: 200
-          legend: true
-          theme: light
-          font: roboto
-          gallery:
-              hidden: false
-      badges:
-        - id: talos_version
-          query: node_os_info{ name="Talos"}
-          value: labels["version_id"]
-          icon: si:talos
-          title: Talos Version
-        - id: kubernetes_version
-          query: kubernetes_build_info{ service="kubernetes"}
-          value: labels["git_version"]
-          icon: si:kubernetes
-          title: Kubernetes Version
-        - id: flux_version
-          query: label_replace(gotk_resource_info{exported_namespace="flux-system",name="flux",customresource_kind="Kustomization"}, "revision", "$1", "revision", "(.+)@sha256:.+")
-          value: labels["revision"]
-          icon: si:flux
-          title: Flux Version
+    cacheSeconds: 0
+    badge:
+        font: go-regular
+        size: 11
+        style: flat
+        gallery:
+            hidden: false
+    graph:
+        maxDuration: 1h
+        width: 600
+        height: 200
+        legend: true
+        theme: light
+        font: roboto
+        gallery:
+            hidden: false
+  badges:
+    - id: talos_version
+      query: node_os_info{ name="Talos"}
+      value: labels["version_id"]
+      icon: si:talos
+      title: Talos Version
+    - id: kubernetes_version
+      query: kubernetes_build_info{ service="kubernetes"}
+      value: labels["git_version"]
+      icon: si:kubernetes
+      title: Kubernetes Version
+    - id: flux_version
+      query: label_replace(gotk_resource_info{exported_namespace="flux-system",name="flux",customresource_kind="Kustomization"}, "revision", "$1", "revision", "(.+)@sha256:.+")
+      value: labels["revision"]
+      icon: si:flux
+      title: Flux Version
 
 service:
   main:
