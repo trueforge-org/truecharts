@@ -1,0 +1,31 @@
+image:
+  repository: ghcr.io/traefik/whoami
+  pullPolicy: IfNotPresent
+  tag: v1.11.0@sha256:200689790a0a0ea48ca45992e0450bc26ccab5307375b41c84dfc4f2475937ab
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          args:
+            - --port
+            - "8080"
+            - --name
+            - affine
+
+service:
+  main:
+    enabled: true
+    ports:
+      main:
+        port: 3010
+        targetPort: 8080
+
+persistence:
+  storage:
+    enabled: true
+    mountPath: "/tmp/data"
+  config:
+    enabled: true
+    mountPath: "/tmp/config"

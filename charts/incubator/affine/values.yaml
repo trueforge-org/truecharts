@@ -1,0 +1,114 @@
+# yaml-language-server: $schema=./values.schema.json
+image:
+  repository: ghcr.io/toeverything/affine
+  pullPolicy: IfNotPresent
+  tag: stable@sha256:295420d621d0d36e701e07072e467579c17e6fe74095d954eeb6f6df3453213d
+
+securityContext:
+  container:
+    # The upstream image runs as root and needs to write under
+    # /root/.affine. To install this chart, label its namespace
+    # `pod-security.kubernetes.io/enforce: baseline` (or `privileged`).
+    # `restricted` is NOT supported by the upstream image.
+    readOnlyRootFilesystem: false
+    runAsNonRoot: false
+    runAsUser: 0
+    runAsGroup: 0
+
+affine:
+  # Public hostname clients reach the server on (no scheme).
+  # Leave empty to use the request host instead.
+  serverHost: ""
+  # When serverHost is set, build the public URL with this scheme.
+  useHttps: false
+  # indexer is not used for the self-hosted stack, kept for parity with upstream
+  indexerEnabled: false
+
+service:
+  main:
+    ports:
+      main:
+        port: 3010
+        protocol: http
+        targetPort: 3010
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            NODE_ENV: production
+            PORT: "{{ .Values.service.main.ports.main.targetPort }}"
+            REDIS_SERVER_HOST: '{{ .Values.redis.creds.plainhost | trimAll "\"" }}'
+            REDIS_SERVER_PORT: "6379"
+            REDIS_SERVER_PASSWORD: '{{ .Values.redis.creds.redisPassword | trimAll "\"" }}'
+            DATABASE_URL: '{{ printf "postgresql://%s:%s@%s:5432/%s" .Values.cnpg.main.user .Values.cnpg.main.creds.password (.Values.cnpg.main.creds.host | trimAll "\"") .Values.cnpg.main.database }}'
+            AFFINE_INDEXER_ENABLED: "{{ .Values.affine.indexerEnabled }}"
+            AFFINE_SERVER_HTTPS: "{{ .Values.affine.useHttps }}"
+            AFFINE_SERVER_HOST: "{{ .Values.affine.serverHost }}"
+            AFFINE_SERVER_EXTERNAL_URL: '{{ if .Values.affine.serverHost }}{{ printf "%s://%s" (ternary "https" "http" .Values.affine.useHttps) .Values.affine.serverHost }}{{ end }}'
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            readOnlyRootFilesystem: false
+          probes:
+            liveness:
+              type: tcp
+              port: "{{ .Values.service.main.ports.main.targetPort }}"
+            readiness:
+              type: tcp
+              port: "{{ .Values.service.main.ports.main.targetPort }}"
+            startup:
+              type: tcp
+              port: "{{ .Values.service.main.ports.main.targetPort }}"
+      initContainers:
+        affine-migration:
+          enabled: true
+          type: install
+          imageSelector: image
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            readOnlyRootFilesystem: false
+          env:
+            NODE_ENV: production
+            REDIS_SERVER_HOST: '{{ .Values.redis.creds.plainhost | trimAll "\"" }}'
+            REDIS_SERVER_PORT: "6379"
+            REDIS_SERVER_PASSWORD: '{{ .Values.redis.creds.redisPassword | trimAll "\"" }}'
+            DATABASE_URL: '{{ printf "postgresql://%s:%s@%s:5432/%s" .Values.cnpg.main.user .Values.cnpg.main.creds.password (.Values.cnpg.main.creds.host | trimAll "\"") .Values.cnpg.main.database }}'
+            AFFINE_INDEXER_ENABLED: "{{ .Values.affine.indexerEnabled }}"
+          command:
+            - node
+          args:
+            - ./scripts/self-host-predeploy.js
+
+persistence:
+  storage:
+    enabled: true
+    mountPath: /root/.affine/storage
+    targetSelector:
+      main:
+        main: {}
+        affine-migration: {}
+  config:
+    enabled: true
+    mountPath: /root/.affine/config
+    targetSelector:
+      main:
+        main: {}
+        affine-migration: {}
+
+cnpg:
+  main:
+    enabled: true
+    primary: true
+    type: vectors
+    pgVersion: 16
+    user: affine
+    database: affine
+    password: "PLACEHOLDERPASSWORD"
+
+redis:
+  enabled: true
+  redisUsername: default
