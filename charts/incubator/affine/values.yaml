@@ -38,13 +38,6 @@ workload:
             # AFFINE_SERVER_HOST: "affine.example.com"
             # AFFINE_SERVER_HTTPS: "true"
             # AFFINE_INDEXER_ENABLED: "false"
-          probes:
-            liveness:
-              type: http
-            readiness:
-              type: http
-            startup:
-              type: http
       initContainers:
         affine-migration:
           enabled: true
