@@ -71,7 +71,7 @@ To contact the TrueCharts project:
 ## Contributors ✨
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-274-orange.svg?style=for-the-badge)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-275-orange.svg?style=for-the-badge)](#contributors)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -436,6 +436,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ORippler"><img src="https://avatars.githubusercontent.com/u/24656669?v=4?s=100" width="100px;" alt="Oliver Simons"/><br /><sub><b>Oliver Simons</b></sub></a><br /><a href="https://github.com/trueforge-org/truecharts/commits?author=ORippler" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/n0PainNoBrioche"><img src="https://avatars.githubusercontent.com/u/22093195?v=4?s=100" width="100px;" alt="Brioche"/><br /><sub><b>Brioche</b></sub></a><br /><a href="https://github.com/trueforge-org/truecharts/commits?author=n0PainNoBrioche" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>

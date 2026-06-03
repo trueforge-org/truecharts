@@ -1,0 +1,86 @@
+# yaml-language-server: $schema=./values.schema.json
+image:
+  repository: ghcr.io/toeverything/affine
+  pullPolicy: IfNotPresent
+  tag: 0.26.3@sha256:0a082ab0b929139a34a6eb9d422ad107290bdf3fc2fc644036161f0d9f0ce239
+
+securityContext:
+  container:
+    runAsNonRoot: false
+    runAsUser: 0
+    runAsGroup: 0
+    readOnlyRootFilesystem: false
+
+service:
+  main:
+    ports:
+      main:
+        port: 3010
+        protocol: http
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            # The upstream image doesn't set HOME, so os.homedir() returns "/",
+            # which makes self-host-predeploy.js try to mkdir "/.affine/config"
+            # (missing the /root prefix). Hardcoding /root here is required.
+            HOME: /root
+            NODE_ENV: production
+            PORT: "{{ .Values.service.main.ports.main.port }}"
+            REDIS_SERVER_HOST: '{{ .Values.redis.creds.plainhost | trimAll "\"" }}'
+            REDIS_SERVER_PORT: "6379"
+            REDIS_SERVER_PASSWORD: '{{ .Values.redis.creds.redisPassword | trimAll "\"" }}'
+            DATABASE_URL: '{{ printf "postgresql://%s:%s@%s:5432/%s" .Values.cnpg.main.user (urlquery .Values.cnpg.main.creds.password) (.Values.cnpg.main.creds.host | trimAll "\"") .Values.cnpg.main.database }}'
+            # AFFINE_SERVER_EXTERNAL_URL: "https://affine.example.com"
+            # AFFINE_SERVER_HOST: "affine.example.com"
+            # AFFINE_SERVER_HTTPS: "true"
+            # AFFINE_INDEXER_ENABLED: "false"
+      initContainers:
+        affine-migration:
+          enabled: true
+          type: init
+          imageSelector: image
+          env:
+            HOME: /root
+            NODE_ENV: production
+            REDIS_SERVER_HOST: '{{ .Values.redis.creds.plainhost | trimAll "\"" }}'
+            REDIS_SERVER_PORT: "6379"
+            REDIS_SERVER_PASSWORD: '{{ .Values.redis.creds.redisPassword | trimAll "\"" }}'
+            DATABASE_URL: '{{ printf "postgresql://%s:%s@%s:5432/%s" .Values.cnpg.main.user (urlquery .Values.cnpg.main.creds.password) (.Values.cnpg.main.creds.host | trimAll "\"") .Values.cnpg.main.database }}'
+          command:
+            - node
+          args:
+            - ./scripts/self-host-predeploy.js
+
+persistence:
+  config:
+    enabled: true
+    targetSelector:
+      main:
+        main:
+          mountPath: /root/.affine/config
+        affine-migration:
+          mountPath: /root/.affine/config
+  storage:
+    enabled: true
+    targetSelector:
+      main:
+        main:
+          mountPath: /root/.affine/storage
+        affine-migration:
+          mountPath: /root/.affine/storage
+
+# `type: vectors` (pgvector) is required by AFFiNE; the common default is `postgres`.
+cnpg:
+  main:
+    enabled: true
+    type: vectors
+    user: affine
+    database: affine
+
+redis:
+  enabled: true
+  redisUsername: default
