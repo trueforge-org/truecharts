@@ -40,14 +40,11 @@ workload:
             # AFFINE_INDEXER_ENABLED: "false"
           probes:
             liveness:
-              type: tcp
-              port: "{{ .Values.service.main.ports.main.port }}"
+              type: http
             readiness:
-              type: tcp
-              port: "{{ .Values.service.main.ports.main.port }}"
+              type: http
             startup:
-              type: tcp
-              port: "{{ .Values.service.main.ports.main.port }}"
+              type: http
       initContainers:
         affine-migration:
           enabled: true
