@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
   repository: ghcr.io/home-operations/kromgo
-  tag: 0.12.2@sha256:33a15e6087ecfbbf9cf39f24ca418ca30738dddd5af5ec9efee1e99742f49e57
+  tag: 0.14.0@sha256:94ee0e2561048dc4637ca21b9926b76d87c15baf951678c7febb852269b7e10b
   pullPolicy: IfNotPresent
 
 # Raw Kromgo configuration
@@ -13,8 +13,8 @@ kromgo:
     # Cache-Control max-age in seconds; 0 disables caching
     cacheSeconds: 0
     badge:
-      # go-regular (default), go-bold, go-medium, go-mono
-      font: go-regular
+      # dejavu-sans (default, shields.io-style), dejavu-sans-bold, comic-neue, comic-neue-bold
+      font: dejavu-sans
       # badge font size in points
       size: 11
       # flat (default), flat-square, or plastic
@@ -34,28 +34,30 @@ kromgo:
       # color theme — see Themes below
       theme: light
       # text font — see Themes below
-      font: roboto
+      font: dejavu-sans
       gallery:
         # list graphs in the gallery (default); true hides them
         hidden: false
   badges:
     - id: talos_version
       query: node_os_info{ name="Talos"}
-      value: labels["version_id"]
+      valueExpr: labels["version_id"]
       # mdi:server-outline
       # si:kubernetes
       icon: si:talos
       title: Talos Version
     - id: kubernetes_version
       query: kubernetes_build_info{ service="kubernetes"}
-      value: labels["git_version"]
+      valueExpr: labels["git_version"]
       icon: si:kubernetes
       title: Kubernetes Version
     - id: flux_version
       query: label_replace(gotk_resource_info{exported_namespace="flux-system",name="flux",customresource_kind="Kustomization"}, "revision", "$1", "revision", "(.+)@sha256:.+")
-      value: labels["revision"]
+      valueExpr: labels["revision"]
       icon: si:flux
       title: Flux Version
+      # Per-badge gallery
+      # gallery: {hidden: true}
 
 service:
   main:
