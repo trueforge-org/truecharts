@@ -159,6 +159,13 @@ tests:
             accessModes:
               - ReadWriteOncePod
               - ReadWriteOnce
+            moverResources:
+              limits:
+                cpu: 1500m
+                memory: 2400Mi
+              requests:
+                cpu: 75m
+                memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
               runAsUser: 568
@@ -235,6 +242,13 @@ tests:
               yearly: 1
             accessModes:
               - ReadWriteOncePod
+            moverResources:
+              limits:
+                cpu: 1500m
+                memory: 2400Mi
+              requests:
+                cpu: 75m
+                memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
               runAsUser: 568
