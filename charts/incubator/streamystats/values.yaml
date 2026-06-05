@@ -120,7 +120,7 @@ workload:
 # user) because StreamyStats's job-server migrations include
 # `CREATE EXTENSION IF NOT EXISTS vector;` which requires superuser
 # privileges. A regular user can't enable extensions and the
-# migration would silently fail, leaving the schema uncreated —
+# migration would silently fail, leaving the schema uncreated
 # which is what produces the "relation 'servers' does not exist"
 # error on the first request.
 cnpg:
