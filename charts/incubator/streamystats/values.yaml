@@ -17,8 +17,7 @@ securityContext:
     readOnlyRootFilesystem: false
 
 streamystats:
-  # SESSION_SECRET used to sign session cookies. The chart refuses to start without one
-  # openssl rand -base64 48
+  # SESSION_SECRET used to sign session cookies. The chart refuses to start without one. openssl rand -base64 48
   sessionSecret: "change-me"
 
 service:
