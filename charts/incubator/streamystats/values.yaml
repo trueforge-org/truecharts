@@ -26,9 +26,9 @@ service:
       main:
         port: 3000
         protocol: http
-  job-server:
+  jobserver:
     enabled: true
-    targetSelector: job-server
+    targetSelector: jobserver
     ports:
       main:
         enabled: true
@@ -49,7 +49,7 @@ workload:
             HOSTNAME: "0.0.0.0"
             PORT: "{{ .Values.service.main.ports.main.port }}"
             DATABASE_URL: '{{ printf "postgresql://%s:%s@%s:5432/%s" .Values.cnpg.main.user (urlquery .Values.cnpg.main.creds.password) (.Values.cnpg.main.creds.host | trimAll "\"") .Values.cnpg.main.database }}'
-            JOB_SERVER_URL: "http://{{ printf \"%s-%s\" .Release.Name \"job-server\" }}.{{ .Release.Namespace }}.svc.cluster.local:3005"
+            JOB_SERVER_URL: "http://{{ printf \"%s-%s\" .Release.Name \"jobserver\" }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.jobserver.ports.main.port }}"
             SESSION_SECRET: "{{ .Values.streamystats.sessionSecret }}"
           probes:
             liveness:
@@ -58,7 +58,7 @@ workload:
               path: /api/health
             startup:
               path: /api/health
-  job-server:
+  jobserver:
     enabled: true
     type: Deployment
     podSpec:
@@ -69,7 +69,7 @@ workload:
           imageSelector: jobServerImage
           env:
             NODE_ENV: production
-            PORT: "{{ .Values.service.job-server.ports.main.port }}"
+            PORT: "{{ .Values.service.jobserver.ports.main.port }}"
             HOST: "0.0.0.0"
             DATABASE_URL: '{{ printf "postgresql://%s:%s@%s:5432/%s" .Values.cnpg.main.user (urlquery .Values.cnpg.main.creds.password) (.Values.cnpg.main.creds.host | trimAll "\"") .Values.cnpg.main.database }}'
             SESSION_SECRET: "{{ .Values.streamystats.sessionSecret }}"
