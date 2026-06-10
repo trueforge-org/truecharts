@@ -63,7 +63,7 @@ workload:
     type: Deployment
     podSpec:
       containers:
-        job-server:
+        jobserver:
           enabled: true
           primary: true
           imageSelector: jobServerImage
@@ -88,13 +88,13 @@ workload:
             SKIP_STARTUP_FULL_SYNC: "false"
           probes:
             liveness:
-              port: "{{ .Values.service.job-server.ports.main.port }}"
+              port: "{{ .Values.service.jobserver.ports.main.port }}"
               path: /health
             readiness:
-              port: "{{ .Values.service.job-server.ports.main.port }}"
+              port: "{{ .Values.service.jobserver.ports.main.port }}"
               path: /health
             startup:
-              port: "{{ .Values.service.job-server.ports.main.port }}"
+              port: "{{ .Values.service.jobserver.ports.main.port }}"
               path: /health
 
 cnpg:
