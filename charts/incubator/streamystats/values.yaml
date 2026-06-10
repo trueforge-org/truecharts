@@ -9,8 +9,6 @@ jobServerImage:
   pullPolicy: IfNotPresent
   tag: 2.18.0@sha256:669037d3a9726e51bd9a10056badd200becd980b5023f01edb9b3a0007646264
 
-# Upstream runs as root; the nextjs and job-server images both need to
-# write to /tmp and the database migrations create files at runtime.
 securityContext:
   container:
     runAsNonRoot: false
@@ -19,11 +17,7 @@ securityContext:
     readOnlyRootFilesystem: false
 
 streamystats:
-  # SESSION_SECRET used to sign session cookies. The chart refuses to
-  # start without one, so we ship a non-secret placeholder that passes
-  # the upstream's "is this empty?" check. **Always override this in
-  # production** with something like:
-  #   openssl rand -base64 48
+  # openssl rand -base64 48
   sessionSecret: "change-me"
 
 service:
@@ -40,7 +34,6 @@ service:
         enabled: true
         port: 3005
         protocol: http
-        targetPort: 3005
 
 workload:
   main:
@@ -54,26 +47,17 @@ workload:
           env:
             NODE_ENV: production
             HOSTNAME: "0.0.0.0"
-            PORT: "3000"
-            # Built directly from the cnpg secret values. urlquery escapes any special chars
-            # in the password.
+            PORT: "{{ .Values.service.main.ports.main.port }}"
             DATABASE_URL: '{{ printf "postgresql://%s:%s@%s:5432/%s" .Values.cnpg.main.user (urlquery .Values.cnpg.main.creds.password) (.Values.cnpg.main.creds.host | trimAll "\"") .Values.cnpg.main.database }}'
-            # In-cluster DNS name of the job-server Service.
             JOB_SERVER_URL: "http://{{ printf \"%s-%s\" .Release.Name \"job-server\" }}.{{ .Release.Namespace }}.svc.cluster.local:3005"
             SESSION_SECRET: "{{ .Values.streamystats.sessionSecret }}"
           probes:
             liveness:
-              type: http
               path: /api/health
-              port: 3000
             readiness:
-              type: http
               path: /api/health
-              port: 3000
             startup:
-              type: http
               path: /api/health
-              port: 3000
   job-server:
     enabled: true
     type: Deployment
@@ -104,25 +88,12 @@ workload:
             SKIP_STARTUP_FULL_SYNC: "false"
           probes:
             liveness:
-              type: http
               path: /health
-              port: 3005
             readiness:
-              type: http
               path: /health
-              port: 3005
             startup:
-              type: http
               path: /health
-              port: 3005
 
-# Use the CNPG `postgres` superuser (not a dedicated `streamystats`
-# user) because StreamyStats's job-server migrations include
-# `CREATE EXTENSION IF NOT EXISTS vector;` which requires superuser
-# privileges. A regular user can't enable extensions and the
-# migration would silently fail, leaving the schema uncreated
-# which is what produces the "relation 'servers' does not exist"
-# error on the first request.
 cnpg:
   main:
     enabled: true
