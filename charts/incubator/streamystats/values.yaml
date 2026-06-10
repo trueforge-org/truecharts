@@ -69,7 +69,7 @@ workload:
           imageSelector: jobServerImage
           env:
             NODE_ENV: production
-            PORT: "{{ .Values.service.job-server.ports.main.port }}"
+            PORT: "3005"
             HOST: "0.0.0.0"
             DATABASE_URL: '{{ printf "postgresql://%s:%s@%s:5432/%s" .Values.cnpg.main.user (urlquery .Values.cnpg.main.creds.password) (.Values.cnpg.main.creds.host | trimAll "\"") .Values.cnpg.main.database }}'
             SESSION_SECRET: "{{ .Values.streamystats.sessionSecret }}"
@@ -88,10 +88,13 @@ workload:
             SKIP_STARTUP_FULL_SYNC: "false"
           probes:
             liveness:
+              port: 3005
               path: /health
             readiness:
+              port: 3005
               path: /health
             startup:
+              port: 3005
               path: /health
 
 cnpg:
