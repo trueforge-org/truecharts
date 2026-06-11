@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 2.18.0
 dependencies:
   - name: common
-    version: 29.3.4
+    version: 29.5.3
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,7 +20,7 @@ dependencies:
     import-values: []
 deprecated: false
 description: Streamystats aggregates and visualizes watch history from Jellyfin, Emby and Plex.
-home: https://truecharts.org/charts/stable/streamystats
+home: https://truecharts.org/charts/incubator/streamystats
 icon: https://truecharts.org/img/hotlink-ok/chart-icons/streamystats.webp
 keywords:
   - streamystats
@@ -35,8 +35,10 @@ maintainers:
     url: https://truecharts.org
 name: streamystats
 sources:
-  - https://github.com/fredrikburmester/streamystats
-  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/streamystats
+  - https://ghcr.io/fredrikburmester/streamystats-job-server
   - https://ghcr.io/fredrikburmester/streamystats-nextjs
+  - https://github.com/fredrikburmester/streamystats
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/incubator/streamystats
 type: application
-version: 0.1.0
+version: 0.2.0
+

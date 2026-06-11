@@ -32,10 +32,10 @@ workload:
             HBOX_WEB_PORT: "{{ .Values.service.main.ports.main.port }}"
             # Dont change
             HBOX_WEB_HOST: "0.0.0.0"
-            
-            # Required. Server-side secret HMAC-keyed into stored API key hashes; 
-            # the binary refuses to start if this is shorter than 32 bytes. 
-            # Generate with openssl rand -base64 48. 
+
+            # Required. Server-side secret HMAC-keyed into stored API key hashes;
+            # the binary refuses to start if this is shorter than 32 bytes.
+            # Generate with openssl rand -base64 48.
             # Must stay stable across restarts — rotating it invalidates every issued API key.
             HBOX_AUTH_API_KEY_PEPPER: "CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME"
 
