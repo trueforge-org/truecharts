@@ -18,13 +18,6 @@ dependencies:
     alias: ""
     tags: []
     import-values: []
-  - name: mariadb
-    version: 18.4.0
-    repository: oci://oci.trueforge.org/truecharts
-    condition: mariadb.enabled
-    alias: ""
-    tags: []
-    import-values: []
   - name: valkey
     version: 2.4.0
     repository: oci://oci.trueforge.org/truecharts
@@ -50,5 +43,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/romm
   - https://github.com/zurdi15/romm
 type: application
-version: 18.3.0
+version: 18.3.1
 
