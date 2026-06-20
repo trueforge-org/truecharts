@@ -255,7 +255,7 @@ Define a CNPG cluster
 | Required   | ❌                     |
 | Helm `tpl` | ❌                     |
 | Default    | `16`                   |
-| Enum       | `15`, `16`             |
+| Enum       | `15`, `16`, `17`, `18` |
 
 Example
 
