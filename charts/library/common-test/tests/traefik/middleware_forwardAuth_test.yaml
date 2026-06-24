@@ -16,6 +16,7 @@ tests:
               address: some-address
               authResponseHeadersRegex: some-regex
               trustForwardHeader: true
+              maxResponseBodySize: 1048576
               authResponseHeaders:
                 - some-header
               authRequestHeaders:
@@ -34,6 +35,7 @@ tests:
               address: some-address
               authResponseHeadersRegex: some-regex
               trustForwardHeader: true
+              maxResponseBodySize: 1048576
               authResponseHeaders:
                 - some-header
               authRequestHeaders:
@@ -110,3 +112,18 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: Middleware (forward-auth) - Expected [trustForwardHeader] to be a boolean, but got [string]
+
+  - it: should fail with invalid maxResponseBodySize
+    set:
+      ingressMiddlewares:
+        traefik:
+          my-middleware1:
+            enabled: true
+            type: forward-auth
+            data:
+              address: some-address
+              trustForwardHeader: true
+              maxResponseBodySize: a-string
+    asserts:
+      - failedTemplate:
+          errorMessage: Middleware (forward-auth) - Expected [maxResponseBodySize] to be a boolean, but got [string]

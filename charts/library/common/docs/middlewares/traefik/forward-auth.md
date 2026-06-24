@@ -95,6 +95,30 @@ ingressMiddlewares:
 
 ---
 
+## `maxResponseBodySize`
+
+Define the maxResponseBodySize
+
+|            |                                                             |
+| ---------- | ----------------------------------------------------------- |
+| Key        | `ingressMiddlewares.traefik.$name.data.maxResponseBodySize` |
+| Type       | `int`                                                       |
+| Required   | ❌                                                          |
+| Helm `tpl` | ❌                                                          |
+| Default    | `-1` (unlimited)                                            |
+
+Example
+
+```yaml
+ingressMiddlewares:
+  traefik:
+    middleware-name:
+      data:
+        maxResponseBodySize: 1048576 # 1MB
+```
+
+---
+
 ## `authResponseHeaders`
 
 Define the authResponseHeaders
