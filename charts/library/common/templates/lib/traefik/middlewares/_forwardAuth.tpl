@@ -11,8 +11,9 @@
   {{- end -}}
 
   {{- if hasKey $mw "maxResponseBodySize" -}}
-    {{- if not (kindIs "int" $mw.maxResponseBodySize) -}}
-      {{- fail (printf "Middleware (forward-auth) - Expected [maxResponseBodySize] to be an integer, but got [%s]" (kindOf $mw.maxResponseBodySize)) -}}
+    {{- $sizeKind := kindOf $mw.maxResponseBodySize -}}
+    {{- if not (or (eq $sizeKind "int") (eq $sizeKind "float64")) -}}
+      {{- fail (printf "Middleware (forward-auth) - Expected [maxResponseBodySize] to be an integer, but got [%s]" $sizeKind) -}}
     {{- end -}}
   {{- end -}}
 
@@ -41,7 +42,7 @@
     address: {{ $mw.address }}
     trustForwardHeader: {{ $mw.trustForwardHeader }}
     {{- if $mw.maxResponseBodySize }}
-    maxResponseBodySize: {{ $mw.maxResponseBodySize }}
+    maxResponseBodySize: {{ $mw.maxResponseBodySize | int }}
     {{- end }}
 
     {{- include "tc.v1.common.class.traefik.middleware.helper.string" (dict "key" "authResponseHeadersRegex" "value" $mw.authResponseHeadersRegex) | nindent 4 }}
