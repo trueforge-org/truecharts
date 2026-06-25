@@ -145,6 +145,8 @@ workload:
                 name: server-worker
             - configMapRef:
                 name: server-worker
+            - configMapRef:
+                name: worker
           args:
             - worker
           probes:
@@ -372,6 +374,17 @@ service:
         enabled: true
         protocol: http
         port: 10231
+  # Worker Metrics
+  workermetrics:
+    enabled: true
+    type: ClusterIP
+    targetSelector: worker
+    ports:
+      workermetrics:
+        enabled: true
+        protocol: http
+        port: 10235
+        targetSelector: worker
   # Radius Metrics
   radiusmetrics:
     enabled: true
@@ -459,37 +472,49 @@ cnpg:
     database: authentik
 
 metrics:
-  # FIXME: Metrics do not work yet
   servermetrics:
     enabled: true
     type: servicemonitor
     endpoints:
-      - port: "{{ .Values.service.servermetrics.ports.servermetrics.port }}"
+      - port: "servermetrics"
         path: /metrics
+    targetSelector: servermetrics
+    prometheusRule:
+      enabled: false
+  workermetrics:
+    enabled: true
+    type: servicemonitor
+    endpoints:
+      - port: "workermetrics"
+        path: /metrics
+    targetSelector: workermetrics
     prometheusRule:
       enabled: false
   radiusmetrics:
     enabled: true
     type: servicemonitor
     endpoints:
-      - port: "{{ .Values.service.radiusmetrics.ports.radiusmetrics.port }}"
+      - port: "radiusmetrics"
         path: /metrics
+    targetSelector: radiusmetrics
     prometheusRule:
       enabled: false
   ldapmetrics:
     enabled: true
     type: servicemonitor
     endpoints:
-      - port: "{{ .Values.service.ldapmetrics.ports.ldapmetrics.port }}"
+      - port: "ldapmetrics"
         path: /metrics
+    targetSelector: ldapmetrics
     prometheusRule:
       enabled: false
   proxymetrics:
     enabled: true
     type: servicemonitor
     endpoints:
-      - port: "{{ .Values.service.proxymetrics.ports.proxymetrics.port }}"
+      - port: "proxymetrics"
         path: /metrics
+    targetSelector: proxymetrics
     prometheusRule:
       enabled: false
 updated: true
