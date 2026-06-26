@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "labels": {
+      "allOf": [
+        {
+          "$ref": "../special/labels.json"
+        }
+      ],
+      "description": "Additional labels for CNPG cluster",
+      "type": [
+        "object",
+        "string"
+      ],
+      "default": {}
+    },
+    "annotations": {
+      "type": [
+        "object",
+        "string"
+      ],
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Additional annotations for CNPG cluster",
+      "default": {}
+    },
+    "env": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "See [env](/truecharts-common/container/env)",
+      "default": {}
+    },
+    "envFrom": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "See [envFrom](/truecharts-common/container/envfrom)",
+      "default": "[]"
+    },
+    "instances": {
+      "type": "integer",
+      "description": "Number of instances",
+      "default": 2
+    },
+    "singleNode": {
+      "type": "boolean",
+      "description": "Whether this is a single-node cluster. Setting this to `true` would allow PVCs to be kept on instance restart.",
+      "default": false
+    },
+    "primaryUpdateMethod": {
+      "allOf": [
+        {
+          "$ref": "cluster/primaryUpdateMethod.json"
+        }
+      ],
+      "description": "TODO ---"
+    },
+    "primaryUpdateStrategy": {
+      "allOf": [
+        {
+          "$ref": "cluster/primaryUpdateStrategy.json"
+        }
+      ],
+      "description": "TODO ---"
+    },
+    "logLevel": {
+      "type": "string",
+      "description": "The cluster log level. Available values: - `error`",
+      "enum": [
+        "error",
+        "warning",
+        "info",
+        "debug",
+        "trace"
+      ],
+      "default": "info"
+    },
+    "certificates": {
+      "allOf": [
+        {
+          "$ref": "cluster/certificates.json"
+        }
+      ],
+      "description": "TODO ---"
+    },
+    "postgresql": {
+      "allOf": [
+        {
+          "$ref": "cluster/postgresql.json"
+        }
+      ],
+      "description": "TODO ---"
+    },
+    "initdb": {
+      "allOf": [
+        {
+          "$ref": "cluster/initdb.json"
+        }
+      ],
+      "description": "TODO ---"
+    }
+  },
+  "additionalProperties": true,
+  "description": "Define a CNPG cluster"
+}

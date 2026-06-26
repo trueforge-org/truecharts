@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Configuration for `hpa.main.enabled`.",
+        "default": false
+      },
+      "targetSelector": {
+        "type": "array",
+        "description": "Configuration for `hpa.main.targetSelector`.",
+        "default": []
+      }
+    },
+    "additionalProperties": true,
+    "description": "Configuration for `hpa.main`.",
+    "default": {}
+  },
+  "description": "Configuration for `hpa`."
+}

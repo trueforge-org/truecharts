@@ -11,6 +11,7 @@ objectData: The object data to be used to render the container.
   {{- $portsByName := dict -}}
 
   {{- range $serviceName, $serviceValues := $rootCtx.Values.service -}}
+    {{- if not (kindIs "map" $serviceValues) -}}{{- continue -}}{{- end -}}
     {{- $podSelected := false -}}
     {{/* If service is enabled... */}}
     {{- if $serviceValues.enabled -}}

@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "preemptionPolicy": {
+        "type": "string",
+        "description": "Define priority classes",
+        "enum": [
+          "PreemptLowerPriority",
+          "Never"
+        ],
+        "default": "Immediate"
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Enables or Disables the priority class",
+        "default": false
+      },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "special/namespaces.json"
+          }
+        ],
+        "description": "Define the namespace for this object",
+        "default": ""
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Additional labels for priority class",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
+      },
+      "annotations": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Additional annotations for priority class",
+        "default": {}
+      },
+      "value": {
+        "type": "integer",
+        "description": "Define the value for this priority class",
+        "default": 1000000
+      },
+      "globalDefault": {
+        "type": "boolean",
+        "description": "Define if this priority class is the global default",
+        "default": false
+      },
+      "description": {
+        "type": "string",
+        "description": "Define the description for this priority class",
+        "default": "No description given"
+      }
+    },
+    "additionalProperties": true,
+    "description": "Define priority class",
+    "default": {}
+  },
+  "description": "Define priority classes"
+}

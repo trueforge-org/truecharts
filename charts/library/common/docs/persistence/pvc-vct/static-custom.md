@@ -4,68 +4,75 @@ title: Static Custom
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
+- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/persistence/pvc-vct/static-custom#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.persistence.$name.static`
-
-:::tip
-
-- See available persistence keys [here](/truecharts-common/persistence).
-- This options apply only when `type: pvc` or `type: vct` and `mode: custom`.
-
-:::
+- `.Values.persistence.pvc-vct.static-custom`
 
 ---
 
-## `driver`
+## `persistence.pvc-vct.static-custom`
 
-Define the custom driver
+Static provisioning settings for PVC/VCT in `custom` mode.
 
-|            |                                   |
-| ---------- | --------------------------------- |
-| Key        | `persistence.$name.static.driver` |
-| Type       | `string`                          |
-| Required   | ✅                                |
-| Helm `tpl` | ❌                                |
-| Default    | `""`                              |
+| Field      | Value                               |
+| ---------- | ----------------------------------- |
+| Key        | `persistence.pvc-vct.static-custom` |
+| Type       | `map`                               |
+| Required   | ❌                                  |
+| Helm `tpl` | ❌                                  |
+| Default    | unset                               |
+
+---
+
+### `persistence.pvc-vct.static-custom.driver`
+
+No description provided.
+
+| Field      | Value                                      |
+| ---------- | ------------------------------------------ |
+| Key        | `persistence.pvc-vct.static-custom.driver` |
+| Type       | `string`                                   |
+| Required   | ✅                                         |
+| Helm `tpl` | ❌                                         |
+| Default    | `""`                                       |
+| Min Length | `1`                                        |
 
 Example
 
 ```yaml
 persistence:
-  smb-vol:
-    type: pvc
-    static:
-      driver: some-driver
+  pvc-vct:
+    static-custom:
+      driver: ""
 ```
 
 ---
 
-## `provisioner`
+### `persistence.pvc-vct.static-custom.provisioner`
 
-Define the custom provisioner
+No description provided.
 
-|            |                                        |
-| ---------- | -------------------------------------- |
-| Key        | `persistence.$name.static.provisioner` |
-| Type       | `string`                               |
-| Required   | ✅                                     |
-| Helm `tpl` | ❌                                     |
-| Default    | `""`                                   |
+| Field      | Value                                           |
+| ---------- | ----------------------------------------------- |
+| Key        | `persistence.pvc-vct.static-custom.provisioner` |
+| Type       | `string`                                        |
+| Required   | ✅                                              |
+| Helm `tpl` | ❌                                              |
+| Default    | `""`                                            |
+| Min Length | `1`                                             |
 
 Example
 
 ```yaml
 persistence:
-  smb-vol:
-    type: pvc
-    static:
-      provisioner: some-provisioner
+  pvc-vct:
+    static-custom:
+      provisioner: ""
 ```
 
 ---

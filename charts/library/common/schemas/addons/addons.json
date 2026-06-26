@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties",
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Enables or Disables the Addon"
+      },
+      "targetSelector": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Define the workloads to add the addon to"
+      },
+      "container": {
+        "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties",
+        "description": "Define additional options for the container See container options in the [container](/truecharts-common/container) section."
+      },
+      "service": {
+        "$ref": "../service/service.json#/additionalProperties",
+        "description": "Define additional options for the service See service options in the [service](/truecharts-common/service) section."
+      },
+      "secret": {
+        "oneOf": [
+          {
+            "$ref": "../secret.json#/additionalProperties"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Define additional options for the secret See secret options in the [secret](/truecharts-common/secret) section."
+      },
+      "ingress": {
+        "allOf": [
+          {
+            "$ref": "../ingress/ingress.json#/additionalProperties"
+          }
+        ],
+        "description": "Define additional options for the ingress See ingress options in the [ingress](/truecharts-common/ingress) section."
+      },
+      "settings": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Addon-specific settings that vary by addon type"
+      }
+    },
+    "additionalProperties": true,
+    "description": "Configure the addon Available addons:"
+  },
+  "description": "Addons to the workloads"
+}

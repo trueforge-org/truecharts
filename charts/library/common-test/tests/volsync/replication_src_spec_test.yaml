@@ -73,6 +73,13 @@ tests:
               yearly: 1
             accessModes:
               - ReadWriteOnce
+            moverResources:
+              limits:
+                cpu: 1500m
+                memory: 2400Mi
+              requests:
+                cpu: 75m
+                memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
               runAsUser: 568
@@ -150,6 +157,13 @@ tests:
               yearly: 1
             accessModes:
               - ReadWriteOnce
+            moverResources:
+              limits:
+                cpu: 1500m
+                memory: 2400Mi
+              requests:
+                cpu: 75m
+                memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
               runAsUser: 568
@@ -218,6 +232,13 @@ tests:
               yearly: 2
             accessModes:
               - ReadWriteOnce
+            moverResources:
+              limits:
+                cpu: 1500m
+                memory: 2400Mi
+              requests:
+                cpu: 75m
+                memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
               runAsUser: 568
@@ -282,6 +303,13 @@ tests:
             accessModes:
               - ReadWriteOnce
             storageClassName: somestorageclass
+            moverResources:
+              limits:
+                cpu: 1500m
+                memory: 2400Mi
+              requests:
+                cpu: 75m
+                memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
               runAsUser: 568
@@ -346,6 +374,13 @@ tests:
             accessModes:
               - ReadWriteOnce
             volumeSnapshotClassName: somevsc
+            moverResources:
+              limits:
+                cpu: 1500m
+                memory: 2400Mi
+              requests:
+                cpu: 75m
+                memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
               runAsUser: 568
@@ -412,6 +447,13 @@ tests:
               - ReadWriteOnce
             storageClassName: somestorageclass
             volumeSnapshotClassName: somevsc
+            moverResources:
+              limits:
+                cpu: 1500m
+                memory: 2400Mi
+              requests:
+                cpu: 75m
+                memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
               runAsUser: 568
@@ -498,6 +540,13 @@ tests:
               yearly: 1
             accessModes:
               - ReadWriteOnce
+            moverResources:
+              limits:
+                cpu: 1500m
+                memory: 2400Mi
+              requests:
+                cpu: 75m
+                memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
               runAsUser: 568
@@ -584,6 +633,13 @@ tests:
               yearly: 1
             accessModes:
               - ReadWriteOnce
+            moverResources:
+              limits:
+                cpu: 1500m
+                memory: 2400Mi
+              requests:
+                cpu: 75m
+                memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
               runAsUser: 568
@@ -677,6 +733,13 @@ tests:
               yearly: 1
             accessModes:
               - ReadWriteOnce
+            moverResources:
+              limits:
+                cpu: 1500m
+                memory: 2400Mi
+              requests:
+                cpu: 75m
+                memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
               runAsUser: 568

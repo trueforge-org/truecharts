@@ -1,0 +1,286 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "integrations": {
+        "type": "object",
+        "properties": {
+          "traefik": {
+            "allOf": [
+              {
+                "$ref": "integrations/traefik.json"
+              }
+            ],
+            "description": "Define service objects",
+            "type": "object",
+            "default": {}
+          }
+        },
+        "additionalProperties": true,
+        "description": "Define the integrations for this service",
+        "default": {}
+      },
+      "externalName": {
+        "allOf": [
+          {
+            "$ref": "ExternalName.json"
+          }
+        ],
+        "description": "Configure ExternalName type"
+      },
+      "ports": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+          "$ref": "ports.json"
+        },
+        "description": "Define the ports of the service See [Ports](/truecharts-common/service/ports)",
+        "default": {}
+      },
+      "sharedKey": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Sets the shared key in `metallb.io/allow-shared-ip` **MetalLB** Annotation"
+      },
+      "loadBalancerIP": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the load balancer IP, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIPs`"
+      },
+      "loadBalancerIPs": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the load balancer IPs, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIP`"
+      },
+      "loadBalancerSourceRanges": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the load balancer source ranges"
+      },
+      "externalIP": {
+        "allOf": [
+          {
+            "$ref": "ExternalIP.json"
+          }
+        ],
+        "description": "Configure External IP type"
+      },
+      "useSlice": {
+        "type": [
+          "boolean",
+          "object"
+        ],
+        "description": "Define whether to use `EndpointSlice` or `Endpoint`"
+      },
+      "addressType": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the addressType for External IP"
+      },
+      "appProtocol": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the appProtocol for External IP"
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Enables or Disables the service",
+        "default": false
+      },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "../special/namespaces.json"
+          }
+        ],
+        "description": "Define the namespace for this object",
+        "default": ""
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "../special/labels.json"
+          }
+        ],
+        "description": "Additional labels for service",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
+      },
+      "annotations": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Additional annotations for service",
+        "default": {}
+      },
+      "type": {
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "ClusterIP",
+              "LoadBalancer",
+              "NodePort",
+              "ExternalName",
+              "ExternalIP"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ],
+        "description": "Define the service type"
+      },
+      "expandObjectName": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Whether to expand the object name (based on the [naming scheme](/truecharts-common/service#naming-scheme)) or not",
+        "default": true
+      },
+      "clusterIP": {
+        "allOf": [
+          {
+            "$ref": "ClusterIP.json"
+          }
+        ],
+        "description": "Configure Cluster IP type",
+        "default": ""
+      },
+      "ipFamilyPolicy": {
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "SingleStack",
+              "PreferDualStack",
+              "RequireDualStack"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ],
+        "description": "Define the ipFamilyPolicy Does **not** apply to `type` of `ExternalName` or `ExternalIP`",
+        "default": ""
+      },
+      "ipFamilies": {
+        "type": [
+          "array",
+          "string"
+        ],
+        "items": {
+          "type": "string"
+        },
+        "description": "Define the ipFamilies Does **not** apply to `type` of `ExternalName` or `ExternalIP`",
+        "default": []
+      },
+      "sessionAffinity": {
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "ClientIP",
+              "None"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ],
+        "description": "Define the session affinity (ClientIP, None)",
+        "default": ""
+      },
+      "sessionAffinityConfig": {
+        "type": "object",
+        "properties": {
+          "clientIP": {
+            "type": "object",
+            "properties": {
+              "timeoutSeconds": {
+                "type": [
+                  "integer",
+                  "string"
+                ],
+                "description": "Define the timeout for ClientIP session affinity (0-86400)",
+                "default": ""
+              }
+            },
+            "additionalProperties": true,
+            "description": "Configuration for `$name.sessionAffinityConfig.clientIP`."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Configuration for `$name.sessionAffinityConfig`."
+      },
+      "externalIPs": {
+        "type": [
+          "array",
+          "string"
+        ],
+        "items": {
+          "type": "string"
+        },
+        "description": "Define externalIPs",
+        "default": []
+      },
+      "externalTrafficPolicy": {
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "Cluster",
+              "Local"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ],
+        "description": "Define the external traffic policy (Cluster, Local) Does **not** apply to `type` of `ClusterIP`",
+        "default": ""
+      },
+      "publishNotReadyAddresses": {
+        "type": "boolean",
+        "description": "Define whether to publishNotReadyAddresses or not",
+        "default": false
+      },
+      "targetSelector": {
+        "type": "string",
+        "description": "Define the pod to link the service, by default will use the primary pod",
+        "default": ""
+      },
+      "primary": {
+        "type": "boolean",
+        "description": "Configuration for `service.main.primary`."
+      }
+    },
+    "additionalProperties": true,
+    "description": "Define service",
+    "default": {}
+  },
+  "description": "Define service objects"
+}

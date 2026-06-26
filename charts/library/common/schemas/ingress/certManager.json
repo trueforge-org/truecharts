@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Create Ingress objects",
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Enables or Disables the cert-manager integration",
+      "default": false
+    },
+    "certificateIssuer": {
+      "type": "string",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Define the certificate issuer for this cert-manager integration",
+      "default": ""
+    }
+  },
+  "additionalProperties": true
+}

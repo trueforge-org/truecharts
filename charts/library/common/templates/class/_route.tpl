@@ -30,6 +30,27 @@ within the common library.
 {{- end -}}
 {{- $defaultServicePort := get $primaryService.ports (include "tc.v1.common.lib.util.service.ports.primary" (dict "svcValues" $primaryService "rootCtx" $)) }}
 
+{{/* Handle targetSelector for automatic gateway linking */}}
+{{- $parentRefs := $values.parentRefs -}}
+{{- if and (hasKey $values "targetSelector") $values.targetSelector -}}
+  {{- $targetGatewayName := $values.targetSelector -}}
+  {{- if hasKey $.Values.gateway $targetGatewayName -}}
+    {{- $targetGateway := get $.Values.gateway $targetGatewayName -}}
+    {{- if $targetGateway.enabled -}}
+      {{- $gatewayFullName := include "tc.v1.common.lib.chart.names.fullname" $ -}}
+      {{- if and (hasKey $targetGateway "nameOverride") $targetGateway.nameOverride -}}
+        {{- $gatewayFullName = printf "%v-%v" $gatewayFullName $targetGateway.nameOverride -}}
+      {{- end -}}
+      {{- $parentRefs = list (dict "group" "gateway.networking.k8s.io" "kind" "Gateway" "name" $gatewayFullName "namespace" ($.Values.namespace | default $.Values.global.namespace | default $.Release.Namespace)) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* Validate that parentRefs is not empty */}}
+{{- if not $parentRefs -}}
+  {{- fail (printf "parentRef name is required for %v %v" $routeKind $fullName) -}}
+{{- end -}}
+
 ---
 apiVersion: gateway.networking.k8s.io/v1
 {{- if and (ne $routeKind "GRPCRoute") (ne $routeKind "HTTPRoute") (ne $routeKind "TCPRoute") (ne $routeKind "TLSRoute") (ne $routeKind "UDPRoute") -}}
@@ -51,7 +72,7 @@ metadata:
   {{- end }}
 spec:
   parentRefs:
-  {{- range $values.parentRefs }}
+  {{- range $parentRefs }}
     - group: {{ default "gateway.networking.k8s.io" .group }}
       kind: {{ default "Gateway" .kind }}
       name: {{ required (printf "parentRef name is required for %v %v" $routeKind $fullName) .name }}

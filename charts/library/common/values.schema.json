@@ -1,0 +1,419 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "file:///home/runner/work/truecharts/truecharts/charts/library/common/values.schema.json",
+  "type": "object",
+  "properties": {
+    "global": {
+      "$ref": "schemas/global/global.json",
+      "description": "Global values that apply to all charts See more info about global values [here](/truecharts-common/global)",
+      "type": "object",
+      "x-docs-required": false,
+      "x-docs-helmTpl": false,
+      "x-docs-defaultRaw": "See here"
+    },
+    "namespace": {
+      "$ref": "schemas/namespace.json",
+      "description": "Namespace to apply to all objects, unless overridden at the object level Does not apply to chart deps, use global.namespace for that"
+    },
+    "image": {
+      "$ref": "schemas/image.json",
+      "description": "Defines the image details",
+      "type": "object",
+      "x-docs-required": true,
+      "x-docs-helmTpl": false
+    },
+    "chartContext": {
+      "$ref": "schemas/chartContext.json",
+      "description": "Configuration for `chartContext`."
+    },
+    "securityContext": {
+      "$ref": "schemas/workload/podSpec/containers/securityContext.json",
+      "description": "Define security context for all containers and pods, unless overridden at the container/pod level See more info about securityContext [here](/truecharts-common/securitycontext)",
+      "type": "object",
+      "x-docs-required": true,
+      "x-docs-helmTpl": false
+    },
+    "resources": {
+      "$ref": "schemas/workload/podSpec/containers/resources.json",
+      "description": "Define resources for all containers, unless overridden at the container level Resources apply to **EACH** container, not to the pod as a whole.",
+      "type": "object",
+      "x-docs-required": true,
+      "x-docs-helmTpl": false
+    },
+    "containerOptions": {
+      "$ref": "schemas/containerOptions.json",
+      "description": "Options that apply to all containers, unless overridden at the container level See more info about containerOptions [here](/truecharts-common/containeroptions)",
+      "type": "object",
+      "x-docs-required": false,
+      "x-docs-helmTpl": false,
+      "x-docs-defaultRaw": "See here"
+    },
+    "podOptions": {
+      "$ref": "schemas/podOptions/podOptions.json",
+      "description": "Options that apply to all pods, unless overridden at the pod level See more info about podOptions [here](/truecharts-common/podoptions)",
+      "type": "object",
+      "x-docs-required": false,
+      "x-docs-helmTpl": false,
+      "x-docs-defaultRaw": "See here"
+    },
+    "workload": {
+      "$ref": "schemas/workload/workload.json",
+      "description": "Define workload objects"
+    },
+    "TZ": {
+      "$ref": "schemas/TZ.json",
+      "description": "Timezone that is used everywhere applicable, unless overridden at the container level",
+      "type": "object",
+      "default": "UTC",
+      "x-docs-required": true,
+      "x-docs-helmTpl": false,
+      "x-docs-defaultRaw": "`UTC`"
+    },
+    "diagnosticMode": {
+      "$ref": "schemas/diagnosticMode.json",
+      "description": "Configuration for `diagnosticMode`."
+    },
+    "vpa": {
+      "$ref": "schemas/vpa.json",
+      "description": "Configuration for `vpa`."
+    },
+    "hpa": {
+      "$ref": "schemas/hpa.json",
+      "description": "Configuration for `hpa`."
+    },
+    "service": {
+      "$ref": "schemas/service/service.json",
+      "description": "Define service objects"
+    },
+    "credentials": {
+      "$ref": "schemas/credentials.json",
+      "description": "Create credentials objects"
+    },
+    "ingressMiddlewares": {
+      "$ref": "schemas/ingressMiddlewares/ingressMiddlewares.json",
+      "description": "Create Middleware objects"
+    },
+    "persistence": {
+      "$ref": "schemas/persistence/persistence.json",
+      "description": "Define persistence objects"
+    },
+    "volumeSnapshotClass": {
+      "$ref": "schemas/volumeSnapshotClass.json",
+      "description": "Define a volume snapshot class"
+    },
+    "volumeSnapshots": {
+      "$ref": "schemas/volumeSnapshots.json",
+      "description": "Define a volume snapshot"
+    },
+    "imagePullSecret": {
+      "$ref": "schemas/imagePullSecret.json",
+      "description": "Define image pull secrets"
+    },
+    "configmap": {
+      "$ref": "schemas/configmap.json",
+      "description": "Create Configmap objects"
+    },
+    "configMapsFromFolder": {
+      "$ref": "schemas/configMapsFromFolder.json",
+      "description": "Generate ConfigMaps from a folder structure in the Helm chart's filesystem"
+    },
+    "secret": {
+      "$ref": "schemas/secret.json",
+      "description": "Create Secret objects"
+    },
+    "serviceAccount": {
+      "$ref": "schemas/serviceAccount.json",
+      "description": "Create serviceAccount objects"
+    },
+    "rbac": {
+      "$ref": "schemas/rbac.json",
+      "description": "Create rbac objects"
+    },
+    "notes": {
+      "$ref": "schemas/notes.json",
+      "description": "Define values for `NOTES.txt`"
+    },
+    "gluetunImage": {
+      "$ref": "schemas/images.json#/properties/gluetunImage",
+      "description": "Configuration for `gluetunImage`."
+    },
+    "netshootImage": {
+      "$ref": "schemas/images.json#/properties/netshootImage",
+      "description": "Configuration for `netshootImage`."
+    },
+    "tailscaleImage": {
+      "$ref": "schemas/images.json#/properties/tailscaleImage",
+      "description": "Configuration for `tailscaleImage`."
+    },
+    "codeserverImage": {
+      "$ref": "schemas/images.json#/properties/codeserverImage",
+      "description": "Configuration for `codeserverImage`."
+    },
+    "ubuntuImage": {
+      "$ref": "schemas/images.json#/properties/ubuntuImage",
+      "description": "Configuration for `ubuntuImage`."
+    },
+    "kubectlImage": {
+      "$ref": "schemas/images.json#/properties/kubectlImage",
+      "description": "Configuration for `kubectlImage`."
+    },
+    "postgresClientImage": {
+      "$ref": "schemas/images.json#/properties/postgresClientImage",
+      "description": "Configuration for `postgresClientImage`."
+    },
+    "mariadbClientImage": {
+      "$ref": "schemas/images.json#/properties/mariadbClientImage",
+      "description": "Configuration for `mariadbClientImage`."
+    },
+    "valkeyClientImage": {
+      "$ref": "schemas/images.json#/properties/valkeyClientImage",
+      "description": "Configuration for `valkeyClientImage`."
+    },
+    "mongodbClientImage": {
+      "$ref": "schemas/images.json#/properties/mongodbClientImage",
+      "description": "Configuration for `mongodbClientImage`."
+    },
+    "postgres15Image": {
+      "$ref": "schemas/images.json#/properties/postgres15Image",
+      "description": "Configuration for `postgres15Image`."
+    },
+    "postgres16Image": {
+      "$ref": "schemas/images.json#/properties/postgres16Image",
+      "description": "Configuration for `postgres16Image`."
+    },
+    "postgresPostgis15Image": {
+      "$ref": "schemas/images.json#/properties/postgresPostgis15Image",
+      "description": "Configuration for `postgresPostgis15Image`."
+    },
+    "postgresPostgis16Image": {
+      "$ref": "schemas/images.json#/properties/postgresPostgis16Image",
+      "description": "Configuration for `postgresPostgis16Image`."
+    },
+    "postgresVectors15Image": {
+      "$ref": "schemas/images.json#/properties/postgresVectors15Image",
+      "description": "Configuration for `postgresVectors15Image`."
+    },
+    "postgresVectors16Image": {
+      "$ref": "schemas/images.json#/properties/postgresVectors16Image",
+      "description": "Configuration for `postgresVectors16Image`."
+    },
+    "postgresVectorchord15Image": {
+      "$ref": "schemas/images.json#/properties/postgresVectorchord15Image",
+      "description": "Configuration for `postgresVectorchord15Image`."
+    },
+    "postgresVectorchord16Image": {
+      "$ref": "schemas/images.json#/properties/postgresVectorchord16Image",
+      "description": "Configuration for `postgresVectorchord16Image`."
+    },
+    "ingress": {
+      "$ref": "schemas/ingress/ingress.json",
+      "description": "Create Ingress objects"
+    },
+    "certificate": {
+      "$ref": "schemas/certificate.json",
+      "description": "Define certificates"
+    },
+    "route": {
+      "$ref": "schemas/route.json",
+      "description": "Configuration for `route`."
+    },
+    "podDisruptionBudget": {
+      "$ref": "schemas/podDisruptionBudget.json",
+      "description": "Create Pod Disruption Budget objects"
+    },
+    "webhook": {
+      "$ref": "schemas/webhook.json",
+      "description": "Create webhook objects"
+    },
+    "priorityClass": {
+      "$ref": "schemas/priorityClass.json",
+      "description": "Define priority classes"
+    },
+    "storageClass": {
+      "$ref": "schemas/storageClass.json",
+      "description": "Define storage classes"
+    },
+    "metrics": {
+      "$ref": "schemas/metrics.json",
+      "description": "Configuration for `metrics`."
+    },
+    "addons": {
+      "$ref": "schemas/addons/addons.json",
+      "description": "Addons to the workloads"
+    },
+    "dependencies": {
+      "$ref": "schemas/dependencies.json",
+      "description": "Configuration for `dependencies`."
+    },
+    "cnpg": {
+      "$ref": "schemas/cnpg/cnpg.json",
+      "description": "Define a CNPG cluster"
+    },
+    "mariadb": {
+      "$ref": "schemas/mariadb.json",
+      "description": "Configuration for `mariadb`."
+    },
+    "mongodb": {
+      "$ref": "schemas/mongodb.json",
+      "description": "Configuration for `mongodb`."
+    },
+    "clickhouse": {
+      "$ref": "schemas/clickhouse.json",
+      "description": "Configuration for `clickhouse`."
+    },
+    "solr": {
+      "$ref": "schemas/solr.json",
+      "description": "Configuration for `solr`."
+    },
+    "extraTpl": {
+      "$ref": "schemas/extraTpl.json",
+      "description": "Define kubernetes resources, 1 per list item, tpl will be resolved",
+      "type": "array",
+      "default": [],
+      "x-docs-required": false,
+      "x-docs-helmTpl": true,
+      "x-docs-defaultRaw": "`[]`"
+    },
+    "fallbackDefaults": {
+      "$ref": "schemas/global/fallbackDefaults.json",
+      "description": "The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [here](/truecharts-common/fallbackdefaults)",
+      "type": "object",
+      "x-docs-required": false,
+      "x-docs-helmTpl": false,
+      "x-docs-defaultRaw": "See here"
+    },
+    "operator": {
+      "$ref": "schemas/operator.json",
+      "description": "Contains specific settings for helm charts containing or using system"
+    },
+    "enableServiceLinks": {
+      "$ref": "schemas/workload/podSpec/enableServiceLinks.json",
+      "description": "See [Enable Service Links](/truecharts-common/workload#enableservicelinks)"
+    },
+    "hostNetwork": {
+      "$ref": "schemas/workload/podSpec/hostNetwork.json",
+      "description": "See [Host Network](/truecharts-common/workload#hostnetwork)"
+    },
+    "hostPID": {
+      "$ref": "schemas/workload/podSpec/hostPID.json",
+      "description": "See [Host PID](/truecharts-common/workload#hostpid)"
+    },
+    "hostIPC": {
+      "$ref": "schemas/workload/podSpec/hostIPC.json",
+      "description": "See [Host IPC](/truecharts-common/workload#hostipc)"
+    },
+    "hostUsers": {
+      "$ref": "schemas/workload/podSpec/hostUsers.json",
+      "description": "See [Host Users](/truecharts-common/workload#hostusers)"
+    },
+    "shareProcessNamespace": {
+      "$ref": "schemas/workload/podSpec/shareProcessNamespace.json",
+      "description": "See [Share Process Namespace](/truecharts-common/workload#shareprocessnamespace)"
+    },
+    "restartPolicy": {
+      "$ref": "schemas/workload/podSpec/restartPolicy.json",
+      "description": "See [Restart Policy](/truecharts-common/workload#restartpolicy)"
+    },
+    "dnsPolicy": {
+      "$ref": "schemas/workload/podSpec/dnsPolicy.json",
+      "description": "See [DNS Policy](/truecharts-common/workload#dnspolicy)"
+    },
+    "dnsConfig": {
+      "$ref": "schemas/podOptions/dnsConfig.json",
+      "description": "See [DNS Config](/truecharts-common/workload#dnsconfig)"
+    },
+    "hostAliases": {
+      "$ref": "schemas/podOptions/hostAliases.json",
+      "description": "See [Host Aliases](/truecharts-common/workload#hostaliases)"
+    },
+    "nodeSelector": {
+      "$ref": "schemas/podOptions/nodeSelector.json",
+      "description": "See [Node Selector](/truecharts-common/workload#nodeselector)"
+    },
+    "defaultSpread": {
+      "$ref": "schemas/workload/podSpec/defaultSpread.json",
+      "description": "Sets some default topology spread constraints for good spread of pods across nodes."
+    },
+    "topologySpreadConstraints": {
+      "$ref": "schemas/podOptions/topologySpreadConstraints.json",
+      "description": "See [Topology Spread Constraints](/truecharts-common/workload#topologyspreadconstraints)"
+    },
+    "tolerations": {
+      "$ref": "schemas/podOptions/tolerations.json",
+      "description": "See [Tolerations](/truecharts-common/workload#tolerations)"
+    },
+    "schedulerName": {
+      "$ref": "schemas/workload/podSpec/schedulerName.json",
+      "description": "See [Scheduler Name](/truecharts-common/workload#schedulername)"
+    },
+    "priorityClassName": {
+      "$ref": "schemas/workload/podSpec/priorityClassName.json",
+      "description": "See [Priority Class Name](/truecharts-common/workload#priorityclassname)"
+    },
+    "runtimeClassName": {
+      "$ref": "schemas/workload/podSpec/runtimeClassName.json",
+      "description": "See [Runtime Class Name](/truecharts-common/workload#runtimeclassname)"
+    },
+    "automountServiceAccountToken": {
+      "$ref": "schemas/workload/podSpec/automountServiceAccountToken.json",
+      "description": "See [Automount Service Account Token](/truecharts-common/workload#automountserviceaccounttoken)"
+    },
+    "terminationGracePeriodSeconds": {
+      "$ref": "schemas/workload/terminationGracePeriodSeconds.json",
+      "description": "See [Termination Grace Period Seconds](/truecharts-common/workload#terminationgraceperiodseconds)"
+    },
+    "command": {
+      "$ref": "schemas/workload/podSpec/containers/command.json",
+      "description": "See [command](/truecharts-common/container/command)"
+    },
+    "args": {
+      "$ref": "schemas/workload/podSpec/containers/args.json",
+      "description": "See [args](/truecharts-common/container/args#args)"
+    },
+    "termination": {
+      "$ref": "schemas/workload/container/termination.json",
+      "description": "See [termination](/truecharts-common/container/termination)"
+    },
+    "lifecycle": {
+      "$ref": "schemas/workload/podSpec/containers/lifecycle.json",
+      "description": "Does **not** apply to `initContainers` See [lifecycle](/truecharts-common/container/lifecycle)"
+    },
+    "probes": {
+      "$ref": "schemas/workload/podSpec/containers/probes.json",
+      "description": "Does **not** apply to `initContainers` See [probes](/truecharts-common/container/probes)"
+    },
+    "envFrom": {
+      "$ref": "schemas/workload/podSpec/containers/envFrom.json",
+      "description": "See [envFrom](/truecharts-common/container/envfrom)"
+    },
+    "fixedEnv": {
+      "$ref": "schemas/workload/podSpec/containers/fixedEnv.json",
+      "description": "See [fixedEnv](/truecharts-common/container/fixedenv)"
+    },
+    "env": {
+      "$ref": "schemas/workload/podSpec/containers/env.json",
+      "description": "See [env](/truecharts-common/container/env)"
+    },
+    "primaryUpdateMethod": {
+      "$ref": "schemas/cnpg/cluster/primaryUpdateMethod.json",
+      "description": "TODO ---"
+    },
+    "primaryUpdateStrategy": {
+      "$ref": "schemas/cnpg/cluster/primaryUpdateStrategy.json",
+      "description": "TODO ---"
+    },
+    "certificates": {
+      "$ref": "schemas/cnpg/cluster/certificates.json",
+      "description": "TODO ---"
+    },
+    "postgresql": {
+      "$ref": "schemas/cnpg/cluster/postgresql.json",
+      "description": "TODO ---"
+    },
+    "initdb": {
+      "$ref": "schemas/cnpg/cluster/initdb.json",
+      "description": "TODO ---"
+    }
+  },
+  "additionalProperties": true
+}

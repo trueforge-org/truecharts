@@ -4,7 +4,7 @@
 
   {{- $enabledCerts := dict -}}
   {{- range $name, $cert := $Certs -}}
-    {{- if $cert.enabled -}}
+    {{- if and (kindIs "map" $cert) $cert.enabled -}}
       {{- $_ := set $enabledCerts $name . -}}
     {{- end -}}
   {{- end -}}

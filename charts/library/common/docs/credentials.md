@@ -1,10 +1,10 @@
 ---
-title: credentials
+title: Credentials
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
+- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/credentials#full-examples) section for complete examples.
 
 :::
@@ -13,359 +13,165 @@ title: credentials
 
 - `.Values.credentials`
 
-## Naming scheme
-
-- `$FullName-$credentialsName` (release-name-chart-name-credentials-name)
-
-:::tip
-
-- Replace references to `$name` with the actual name you want to use.
-
-:::
-
 ---
 
 ## `credentials`
 
 Create credentials objects
 
-|            |               |
+| Field      | Value         |
 | ---------- | ------------- |
 | Key        | `credentials` |
 | Type       | `map`         |
 | Required   | ❌            |
 | Helm `tpl` | ❌            |
-| Default    | `{}`          |
-
-Example
-
-```yaml
-credentials: {}
-```
+| Default    | unset         |
 
 ---
 
-### `$name`
+### `credentials.$name.accessKey`
 
-Define credentials
+Define the accessKey of the credentials
 
-|            |                     |
-| ---------- | ------------------- |
-| Key        | `credentials.$name` |
-| Type       | `map`               |
-| Required   | ✅                  |
-| Helm `tpl` | ❌                  |
-| Default    | `{}`                |
-
-Example
-
-```yaml
-credentials:
-  credentials-name: {}
-```
+| Field      | Value                         |
+| ---------- | ----------------------------- |
+| Key        | `credentials.$name.accessKey` |
+| Type       | `string`                      |
+| Required   | ❌                            |
+| Helm `tpl` | ❌                            |
+| Default    | unset                         |
+| Min Length | `1`                           |
 
 ---
 
-#### `type`
+### `credentials.$name.bucket`
 
-Define the type of the credentials
+Define the bucket of the credentials
 
-|            |                          |
-| ---------- | ------------------------ |
-| Key        | `credentials.$name.type` |
-| Type       | `string`                 |
-| Required   | ✅                       |
-| Helm `tpl` | ❌                       |
-| Example    | `s3`                     |
-
-```yaml
-credentials:
-  credentials-name:
-    type: s3
-```
-
----
-
-#### `url`
-
-Define the url of the credentials
-
-:::tip
-
-In some cases, such as when using an IP instead of a hostname, it might be
-necessary to manually specify the connection's [region](/truecharts-common/credentials#region).
-
-:::
-
-|            |                          |
-| ---------- | ------------------------ |
-| Key        | `credentials.$name.url`  |
-| Type       | `string`                 |
-| Required   | ✅                       |
-| Helm `tpl` | ❌                       |
-| Example    | `https://mys3server.com` |
-
-```yaml
-credentials:
-  credentials-name:
-    url: "https://mys3server.com"
-```
-
----
-
-#### `region`
-
-Override the region to use when connecting to the endpoint
-
-:::note
-
-Setting this manually is usually not necessary as the region should normally
-be automatically detected from the [URL](/truecharts-common/credentials#url).
-
-:::
-
-|            |                            |
+| Field      | Value                      |
 | ---------- | -------------------------- |
-| Key        | `credentials.$name.region` |
+| Key        | `credentials.$name.bucket` |
 | Type       | `string`                   |
 | Required   | ❌                         |
 | Helm `tpl` | ❌                         |
-| Example    | `""`                       |
-
-```yaml
-credentials:
-  credentials-name:
-    region: "us-east-1"
-```
+| Default    | unset                      |
+| Min Length | `1`                        |
 
 ---
 
-#### `customCASecretRef`
+### `credentials.$name.customCA`
 
-Reference a secret containing a custom CA to be used when connecting to the
-endpoint defined by `url` over HTTPS.
+Define a custom CA certificate to be used when connecting to the endpoint defined by `url` over HTTPS.
 
-:::note
-
-Defining both this and [customCA](/truecharts-common/credentials#customca) is invalid and
-will result in an error.
-
-:::
-
-|            |                                                               |
-| ---------- | ------------------------------------------------------------- |
-| Key        | `credentials.$name.customCASecretRef`                         |
-| Type       | `map`                                                         |
-| Required   | ❌                                                            |
-| Helm `tpl` | ❌                                                            |
-| Example    | `{}`                                                          |
-
-```yaml
-credentials:
-  credentials-name:
-    customCASecretRef: {}
-```
+| Field      | Value                        |
+| ---------- | ---------------------------- |
+| Key        | `credentials.$name.customCA` |
+| Type       | `string`                     |
+| Required   | ❌                           |
+| Helm `tpl` | ❌                           |
+| Default    | unset                        |
 
 ---
 
-##### `customCASecretRef.name`
+### `credentials.$name.customCASecretRef`
 
-Define the secret name
+Reference a secret containing a custom CA to be used when connecting to the endpoint defined by `url` over HTTPS.
 
-:::note
-
-This will be automatically expanded to `fullname-secret-name`.
-You can opt out of this by setting [`expandObjectName`](/truecharts-common/credentials#customcasecretrefexpandobjectname) to `false`
-
-:::
-
-|            |                                            |
-| ---------- | ------------------------------------------ |
-| Key        | `credentials.$name.customCASecretRef.name` |
-| Type       | `string`                                   |
-| Required   | ✅                                         |
-| Helm `tpl` | ✅                                         |
-| Example    | `""`                                       |
-
-```yaml
-credentials:
-  credentials-name:
-    customCASecretRef:
-      name: secret-name
-```
+| Field      | Value                                 |
+| ---------- | ------------------------------------- |
+| Key        | `credentials.$name.customCASecretRef` |
+| Type       | `map`                                 |
+| Required   | ❌                                    |
+| Helm `tpl` | ❌                                    |
+| Default    | unset                                 |
 
 ---
 
-##### `customCASecretRef.key`
+### `credentials.$name.encrKey`
 
-Define the key in the secret data containing the CA
+Create credentials objects
 
-|            |                                            |
-| ---------- | ------------------------------------------ |
-| Key        | `credentials.$name.customCASecretRef.key`  |
-| Type       | `string`                                   |
-| Required   | ✅                                         |
-| Helm `tpl` | ❌                                         |
-| Example    | `""`                                       |
-
-```yaml
-credentials:
-  credentials-name:
-    customCASecretRef:
-      key: ca.crt
-```
+| Field      | Value                       |
+| ---------- | --------------------------- |
+| Key        | `credentials.$name.encrKey` |
+| Type       | `string`                    |
+| Required   | ❌                          |
+| Helm `tpl` | ❌                          |
+| Default    | unset                       |
+| Min Length | `1`                         |
 
 ---
 
-##### `customCASecretRef.expandObjectName`
-
-Whether to expand (adding the fullname as prefix) the secret name
-
-|            |                                                        |
-| ---------- | ------------------------------------------------------ |
-| Key        | `credentials.$name.customCASecretRef.expandObjectName` |
-| Type       | `bool`                                                 |
-| Required   | ❌                                                     |
-| Helm `tpl` | ❌                                                     |
-| Example    | `true`                                                 |
-
-```yaml
-credentials:
-  credentials-name:
-    customCASecretRef:
-      expandObjectName: false
-```
-
----
-
-#### `customCA`
-
-Define a custom CA certificate to be used when connecting to the endpoint
-defined by `url` over HTTPS.
-
-:::note
-
-Defining both this and [customCASecretRef](/truecharts-common/credentials#customcasecretref)
-is invalid and will result in an error.
-
-:::
-
-|            |                                                               |
-| ---------- | ------------------------------------------------------------- |
-| Key        | `credentials.$name.customCA`                                  |
-| Type       | `string`                                                      |
-| Required   | ❌                                                            |
-| Helm `tpl` | ❌                                                            |
-| Example    | `-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----` |
-
-```yaml
-credentials:
-  credentials-name:
-    customCA: |-
-      -----BEGIN CERTIFICATE-----
-      ...
-      -----END CERTIFICATE-----
-```
-
----
-
-#### `path`
+### `credentials.$name.path`
 
 Define the optional path-override of the credentials
 
-|            |                          |
+| Field      | Value                    |
 | ---------- | ------------------------ |
 | Key        | `credentials.$name.path` |
 | Type       | `string`                 |
 | Required   | ❌                       |
 | Helm `tpl` | ❌                       |
-| Example    | `/somecustompath`        |
-
-```yaml
-credentials:
-  credentials-name:
-    path: "/somecustompath"
-```
+| Default    | unset                    |
 
 ---
 
-#### `bucket`
+### `credentials.$name.region`
 
-Define the bucket of the credentials
+Override the region to use when connecting to the endpoint Setting this manually is usually not necessary as the region should normally
 
-|            |                            |
+| Field      | Value                      |
 | ---------- | -------------------------- |
-| Key        | `credentials.$name.bucket` |
+| Key        | `credentials.$name.region` |
 | Type       | `string`                   |
-| Required   | ✅                         |
+| Required   | ❌                         |
 | Helm `tpl` | ❌                         |
-| Example    | `mybucket`                 |
-
-```yaml
-credentials:
-  credentials-name:
-    bucket: mybucket
-```
+| Default    | unset                      |
 
 ---
 
-#### `accessKey`
-
-Define the accessKey of the credentials
-
-|            |                               |
-| ---------- | ----------------------------- |
-| Key        | `credentials.$name.accessKey` |
-| Type       | `string`                      |
-| Required   | ✅                            |
-| Helm `tpl` | ❌                            |
-| Example    | `mysecretaccesskey`           |
-
-```yaml
-credentials:
-  credentials-name:
-    accessKey: myaccesskeyid
-```
-
----
-
-#### `secretKey`
+### `credentials.$name.secretKey`
 
 Define the secretKey of the credentials
 
-|            |                               |
+| Field      | Value                         |
 | ---------- | ----------------------------- |
 | Key        | `credentials.$name.secretKey` |
 | Type       | `string`                      |
-| Required   | ✅                            |
+| Required   | ❌                            |
 | Helm `tpl` | ❌                            |
-| Example    | `mysecretkey`                 |
-
-```yaml
-credentials:
-  credentials-name:
-    secretKey: mysecretkey
-```
+| Default    | unset                         |
+| Min Length | `1`                           |
 
 ---
 
-#### `encrKey`
+### `credentials.$name.type`
 
-Define the encryption key of the credentials
+Define the type of the credentials
 
-|            |                             |
-| ---------- | --------------------------- |
-| Key        | `credentials.$name.encrKey` |
-| Type       | `string`                    |
-| Required   | ✅                          |
-| Helm `tpl` | ❌                          |
-| Example    | `myencryptionkey`           |
+| Field      | Value                    |
+| ---------- | ------------------------ |
+| Key        | `credentials.$name.type` |
+| Type       | `string`                 |
+| Required   | ❌                       |
+| Helm `tpl` | ❌                       |
+| Default    | unset                    |
+| Min Length | `1`                      |
 
-```yaml
-credentials:
-  credentials-name:
-    encrKey: myencryptionkey
-```
+---
+
+### `credentials.$name.url`
+
+Define the url of the credentials In some cases, such as when using an IP instead of a hostname, it might be
+
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `credentials.$name.url` |
+| Type       | `string`                |
+| Required   | ❌                      |
+| Helm `tpl` | ❌                      |
+| Default    | unset                   |
+| Min Length | `1`                     |
 
 ---
 

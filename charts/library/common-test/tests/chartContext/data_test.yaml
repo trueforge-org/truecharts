@@ -317,3 +317,178 @@ tests:
             appPort: "443"
             appPath: /some-path
             appProtocol: https
+
+  - it: should pass with route
+    set:
+      createChartContextConfigmap: true
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          kind: HTTPRoute
+          parentRefs:
+            - group: gateway.networking.k8s.io
+              kind: Gateway
+              name: test-gateway
+              namespace: test-namespace
+          hostnames:
+            - example.com
+          rules:
+            - backendRefs:
+                - port: 12345
+              matches:
+                - path:
+                    type: PathPrefix
+                    value: /some-path
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - documentIndex: &configMapDoc 0
+        isKind:
+          of: ConfigMap
+      - documentIndex: *configMapDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-chart-context
+      - documentIndex: *configMapDoc
+        equal:
+          path: data
+          value:
+            podCIDR: 172.16.0.0/16
+            svcCIDR: 172.17.0.0/16
+            appUrl: https://example.com
+            appUrlWithPortAndPath: https://example.com:443/some-path
+            appHost: "example.com"
+            appPort: "443"
+            appPath: /some-path
+            appProtocol: https
+
+  - it: should prefer ingress over route when both are enabled
+    set:
+      createChartContextConfigmap: true
+      ingress:
+        my-ingress:
+          enabled: true
+          primary: true
+          integrations:
+            traefik:
+              enabled: false
+          hosts:
+            - host: ingress.example.com
+              paths:
+                - path: /from-ingress
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          kind: HTTPRoute
+          parentRefs:
+            - group: gateway.networking.k8s.io
+              kind: Gateway
+              name: test-gateway
+              namespace: test-namespace
+          hostnames:
+            - route.example.com
+          rules:
+            - backendRefs:
+                - port: 12345
+              matches:
+                - path:
+                    type: PathPrefix
+                    value: /from-route
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - documentIndex: &configMapDoc 0
+        isKind:
+          of: ConfigMap
+      - documentIndex: *configMapDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-chart-context
+      - documentIndex: *configMapDoc
+        equal:
+          path: data
+          value:
+            podCIDR: 172.16.0.0/16
+            svcCIDR: 172.17.0.0/16
+            appUrl: https://ingress.example.com
+            appUrlWithPortAndPath: https://ingress.example.com:443/from-ingress
+            appHost: "ingress.example.com"
+            appPort: "443"
+            appPath: /from-ingress
+            appProtocol: https
+
+  - it: should use route when ingress exists but is disabled
+    set:
+      createChartContextConfigmap: true
+      ingress:
+        my-ingress:
+          enabled: false
+          primary: true
+          hosts:
+            - host: ingress.example.com
+              paths:
+                - path: /from-ingress
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          kind: HTTPRoute
+          parentRefs:
+            - group: gateway.networking.k8s.io
+              kind: Gateway
+              name: test-gateway
+              namespace: test-namespace
+          hostnames:
+            - route.example.com
+          rules:
+            - backendRefs:
+                - port: 12345
+              matches:
+                - path:
+                    type: PathPrefix
+                    value: /from-route
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - documentIndex: &configMapDoc 0
+        isKind:
+          of: ConfigMap
+      - documentIndex: *configMapDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-chart-context
+      - documentIndex: *configMapDoc
+        equal:
+          path: data
+          value:
+            podCIDR: 172.16.0.0/16
+            svcCIDR: 172.17.0.0/16
+            appUrl: https://route.example.com
+            appUrlWithPortAndPath: https://route.example.com:443/from-route
+            appHost: "route.example.com"
+            appPort: "443"
+            appPath: /from-route
+            appProtocol: https

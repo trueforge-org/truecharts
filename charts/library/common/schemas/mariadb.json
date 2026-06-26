@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+      "description": "Configuration for `mariadb.enabled`."
+    },
+    "includeCommon": {
+      "type": "boolean",
+      "description": "Configuration for `mariadb.includeCommon`."
+    },
+    "password": {
+      "type": "string",
+      "description": "Configuration for `mariadb.password`."
+    },
+    "rootPassword": {
+      "type": "string",
+      "description": "Configuration for `mariadb.rootPassword`."
+    },
+    "creds": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Configuration for `mariadb.creds`."
+    }
+  },
+  "additionalProperties": true,
+  "description": "Configuration for `mariadb`."
+}

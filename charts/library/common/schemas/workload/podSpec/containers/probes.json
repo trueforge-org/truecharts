@@ -1,0 +1,216 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Does **not** apply to `initContainers` See [probes](/truecharts-common/container/probes)",
+  "properties": {
+    "liveness": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Define probes for the container"
+        },
+        "type": {
+          "oneOf": [
+            {
+              "type": "string",
+              "enum": [
+                "exec",
+                "http",
+                "https",
+                "tcp",
+                "grpc"
+              ]
+            },
+            {
+              "type": "string",
+              "pattern": "^\\{\\{.*\\}\\}$"
+            }
+          ],
+          "description": "Define probes for the container"
+        },
+        "port": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Define probes for the container"
+        }
+      },
+      "additionalProperties": true,
+      "description": "Define the liveness probe"
+    },
+    "readiness": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Define probes for the container"
+        },
+        "type": {
+          "oneOf": [
+            {
+              "type": "string",
+              "enum": [
+                "exec",
+                "http",
+                "https",
+                "tcp",
+                "grpc"
+              ]
+            },
+            {
+              "type": "string",
+              "pattern": "^\\{\\{.*\\}\\}$"
+            }
+          ],
+          "description": "Define probes for the container"
+        },
+        "port": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Define probes for the container"
+        }
+      },
+      "additionalProperties": true,
+      "description": "Define the readiness probe"
+    },
+    "startup": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Define probes for the container"
+        },
+        "type": {
+          "oneOf": [
+            {
+              "type": "string",
+              "enum": [
+                "exec",
+                "http",
+                "https",
+                "tcp",
+                "grpc"
+              ]
+            },
+            {
+              "type": "string",
+              "pattern": "^\\{\\{.*\\}\\}$"
+            }
+          ],
+          "description": "Define probes for the container"
+        },
+        "port": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Define probes for the container"
+        }
+      },
+      "additionalProperties": true,
+      "description": "Define the startup probe"
+    }
+  },
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "spec": {
+        "type": "object",
+        "properties": {
+          "successThreshold": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define probes for the container"
+          },
+          "initialDelaySeconds": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define the initialDelaySeconds in seconds"
+          },
+          "periodSeconds": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define the periodSeconds in seconds"
+          },
+          "timeoutSeconds": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define the timeoutSeconds in seconds"
+          },
+          "failureThreshold": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define the failureThreshold in seconds"
+          }
+        },
+        "additionalProperties": true,
+        "description": "Define the probe spec"
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Enable or disable the probe"
+      },
+      "type": {
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "exec",
+              "http",
+              "https",
+              "tcp",
+              "grpc"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ],
+        "description": "Define probe type"
+      },
+      "port": {
+        "type": [
+          "integer",
+          "string"
+        ],
+        "description": "Define the port - Only applies when `type: grpc/tcp/http/https`"
+      },
+      "path": {
+        "type": "string",
+        "description": "Define the path - Only applies when `type: http/https`"
+      },
+      "httpHeaders": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the httpHeaders - Only applies when `type: http/https`"
+      }
+    },
+    "additionalProperties": true,
+    "description": "Configuration for `$name.podSpec.containers.$name.probes.$name`."
+  }
+}

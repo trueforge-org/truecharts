@@ -1,0 +1,211 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Configuration for `route.main.enabled`.",
+        "default": false
+      },
+      "kind": {
+        "type": "string",
+        "enum": [
+          "GRPCRoute",
+          "HTTPRoute",
+          "TCPRoute",
+          "TLSRoute",
+          "UDPRoute"
+        ],
+        "description": "Configuration for `route.main.kind`.",
+        "default": "HTTPRoute"
+      },
+      "annotations": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Configuration for `route.main.annotations`."
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Configuration for `route.main.labels`."
+      },
+      "targetSelector": {
+        "type": [
+          "null",
+          "string"
+        ],
+        "description": "Configuration for `route.main.targetSelector`. Automatically links to a gateway defined in this chart."
+      },
+      "parentRefs": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "group": {
+              "type": "string",
+              "description": "Configuration for `route.main.parentRefs.$item.group`."
+            },
+            "kind": {
+              "type": "string",
+              "description": "Configuration for `route.main.parentRefs.$item.kind`."
+            },
+            "name": {
+              "type": [
+                "null",
+                "string",
+                "number",
+                "integer",
+                "boolean",
+                "object",
+                "array"
+              ],
+              "description": "Configuration for `route.main.parentRefs.$item.name`."
+            },
+            "namespace": {
+              "type": [
+                "null",
+                "string",
+                "number",
+                "integer",
+                "boolean",
+                "object",
+                "array"
+              ],
+              "description": "Configuration for `route.main.parentRefs.$item.namespace`."
+            },
+            "sectionName": {
+              "type": [
+                "null",
+                "string",
+                "number",
+                "integer",
+                "boolean",
+                "object",
+                "array"
+              ],
+              "description": "Configuration for `route.main.parentRefs.$item.sectionName`."
+            }
+          },
+          "additionalProperties": true,
+          "description": "Configuration for `route.main.parentRefs.$item`."
+        },
+        "description": "Configuration for `route.main.parentRefs`."
+      },
+      "hostnames": {
+        "type": "array",
+        "description": "Configuration for `route.main.hostnames`.",
+        "default": []
+      },
+      "rules": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "backendRefs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "group": {
+                    "type": "string",
+                    "description": "Configuration for `route.main.rules.$item.backendRefs.$item.group`."
+                  },
+                  "kind": {
+                    "type": "string",
+                    "description": "Configuration for `route.main.rules.$item.backendRefs.$item.kind`."
+                  },
+                  "name": {
+                    "type": [
+                      "null",
+                      "string",
+                      "number",
+                      "integer",
+                      "boolean",
+                      "object",
+                      "array"
+                    ],
+                    "description": "Configuration for `route.main.rules.$item.backendRefs.$item.name`."
+                  },
+                  "namespace": {
+                    "type": [
+                      "null",
+                      "string",
+                      "number",
+                      "integer",
+                      "boolean",
+                      "object",
+                      "array"
+                    ],
+                    "description": "Configuration for `route.main.rules.$item.backendRefs.$item.namespace`."
+                  },
+                  "port": {
+                    "type": [
+                      "null",
+                      "string",
+                      "number",
+                      "integer",
+                      "boolean",
+                      "object",
+                      "array"
+                    ],
+                    "description": "Configuration for `route.main.rules.$item.backendRefs.$item.port`."
+                  },
+                  "weight": {
+                    "type": "integer",
+                    "description": "Configuration for `route.main.rules.$item.backendRefs.$item.weight`."
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Configuration for `route.main.rules.$item.backendRefs.$item`."
+              },
+              "description": "Configuration for `route.main.rules.$item.backendRefs`."
+            },
+            "matches": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "description": "Configuration for `route.main.rules.$item.matches.$item.path.type`."
+                      },
+                      "value": {
+                        "type": "string",
+                        "description": "Configuration for `route.main.rules.$item.matches.$item.path.value`."
+                      }
+                    },
+                    "additionalProperties": true,
+                    "description": "Configuration for `route.main.rules.$item.matches.$item.path`."
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Configuration for `route.main.rules.$item.matches.$item`."
+              },
+              "description": "Configuration for `route.main.rules.$item.matches`."
+            }
+          },
+          "additionalProperties": true,
+          "description": "Configuration for `route.main.rules.$item`."
+        },
+        "description": "Configuration for `route.main.rules`."
+      }
+    },
+    "additionalProperties": true,
+    "description": "Configuration for `route.main`.",
+    "default": {}
+  },
+  "description": "Configuration for `route`."
+}

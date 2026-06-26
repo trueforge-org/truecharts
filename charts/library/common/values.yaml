@@ -81,6 +81,16 @@ image:
   pullPolicy: IfNotPresent
   tag: v1.11.0@sha256:200689790a0a0ea48ca45992e0450bc26ccab5307375b41c84dfc4f2475937ab
 
+ubuntuImage:
+  repository: oci.trueforge.org/containerforge/ubuntu
+  tag: "24.04@sha256:3b826c0233182d7c31a9323121178b98976765b9ee03f9a96200ab0c70e2e1e2"
+  pullPolicy: IfNotPresent
+
+valkeyClientImage:
+  repository: docker.io/bitnamisecure/valkey
+  tag: latest@sha256:14dc12c4cc5912747b63d41e237512989d958fa6020dbcb1170cc0fe91f48644
+  pullPolicy: IfNotPresent
+
 chartContext:
   appUrl: ""
   podCIDR: ""
@@ -378,6 +388,12 @@ persistence:
     mountPath: /dev/shm
     medium: Memory
     targetSelectAll: true
+  crontab:
+    enabled: true
+    type: emptyDir
+    mountPath: /var/spool/cron/crontabs/
+    medium: Memory
+    targetSelectAll: true
 #  backupexample:
 #    ## the default backup path, is the credential path suffixed by the releasename, volsync and both the pvc and volsync names
 #    enabled: true
@@ -501,6 +517,44 @@ imagePullSecret: {}
 # -- (docs/configmap.md)
 configmap: {}
 
+# -- Generate ConfigMaps from a folder in the Helm chart's filesystem
+# Your files will need to be two levels deep from the base path.
+# For example, if you set basePath to `files/configMaps/`, you should have this file tree:
+# files/configMaps/:
+# └── configmap1
+#     ├── file1
+#     └── file2
+# This will generate a ConfigMap named `configmap1` with keys `file1` and `file2`.
+configMapsFromFolder:
+  enabled: false
+  # -- The path in your parent chart's filesystem where you can add files to be converted into individual ConfigMaps.
+  basePath: ""
+  # -- Define overrides for the generated ConfigMaps, each key is the name of a folder in `basePath`
+  configMapsOverrides: {}
+  #   test:
+  #     # All ConfigMaps support a `forceRename` field, which allows you to rename the ConfigMap
+  #     forceRename: null
+  #     annotations:
+  #       test: test
+  #     labels:
+  #       test: test
+  #     # Configure how the individual files are added to the ConfigMap
+  #     fileAttributeOverrides:
+  #       # The key is the name of the file inside the ConfigMap's folder
+  #       test.tpl:
+  #         # If true the file won't be added to the ConfigMap
+  #         exclude: false
+  #         # If your file is a binary file like an image, set this to true. Takes precedence over `escaped`
+  #         binary: false
+  #         # If your file contains `gotpl` syntax that you don't want templated by Helm, set this to true
+  #         escaped: true
+  #       test.txt:
+  #         exclude: true
+  #   test2:
+  #     fileAttributeOverrides:
+  #       image.png:
+  #         binary: true
+
 # -- (docs/secret.md)
 secret: {}
 
@@ -567,8 +621,8 @@ notes:
 ####
 
 gluetunImage:
-  repository: oci.trueforge.org/tccr/gluetun
-  tag: v3.40.0@sha256:a8189e29155e0f8142be1500ae068a92b189b1b25abbba036321e74d6389bf2b
+  repository: oci.trueforge.org/containerforge/gluetun
+  tag: v3.41.1
   pullPolicy: IfNotPresent
 
 netshootImage:
@@ -577,8 +631,8 @@ netshootImage:
   pullPolicy: IfNotPresent
 
 tailscaleImage:
-  repository: oci.trueforge.org/tccr/tailscale
-  tag: v1.88.3@sha256:878612592f133bc0728e978558b10a1c457371ac5949985d0584664c8e92c2f9
+  repository: oci.trueforge.org/containerforge/tailscale
+  tag: v1.94.2
   pullPolicy: IfNotPresent
 
 codeserverImage:
@@ -586,35 +640,10 @@ codeserverImage:
   tag: "4.123.0@sha256:567aea8fe2f8ded123ee4a14a39cdfa99b79668c5b3ac85affca9fe538107cd0"
   pullPolicy: IfNotPresent
 
-alpineImage:
-  repository: oci.trueforge.org/tccr/alpine
-  tag: v3.22.1@sha256:6dc807ae4f2867cb2d00d061f8f579f1966420ad792c179ac68072ab235109f8
-  pullPolicy: IfNotPresent
-
-ubuntuImage:
-  repository: oci.trueforge.org/containerforge/ubuntu
-  tag: "26.4@sha256:c21fcd861c5eccd1dec9c7b9a88647fc3a22585c3d7cf77ba48129844e7a584b"
-  pullPolicy: IfNotPresent
-
-scratchImage:
-  repository: oci.trueforge.org/containerforge/scratch
-  tag: "1.0.0@sha256:84182a2371dd7584ad752326b7150b4e928c640b7f70a249a3994b40f1db11fd"
-  pullPolicy: IfNotPresent
-
 kubectlImage:
   repository: oci.trueforge.org/containerforge/kubectl
   tag: "1.31.1@sha256:41e6a0877bc4bd39807e849d2dc626a7e8b645ba6dfe00d70446b164e18695bd"
   pullPolicy: IfNotPresent
-
-wgetImage:
-  repository: oci.trueforge.org/containerforge/ubuntu
-  tag: "26.4@sha256:c21fcd861c5eccd1dec9c7b9a88647fc3a22585c3d7cf77ba48129844e7a584b"
-  pullPolicy: IfNotPresent
-
-yqImage:
-  pullPolicy: IfNotPresent
-  repository: oci.trueforge.org/containerforge/go-yq
-  tag: "4.53.3@sha256:ed7f99a2e9bb8f8aac397b6438c50339dbfab40b7e966b0dbafdff92e3b6f230"
 
 postgresClientImage:
   repository: oci.trueforge.org/containerforge/postgresql-client
@@ -626,16 +655,10 @@ mariadbClientImage:
   tag: "12.3.2@sha256:297c616b4d1372ab765298a1e0d20dff0c54fddd7ca535f65c4ebe2ed036b46c"
   pullPolicy: IfNotPresent
 
-redisClientImage:
-  repository: oci.trueforge.org/containerforge/valkey-tools
-  tag: "1.1.0@sha256:a8ecbd396e8635cbbc02f4181d261ca1766b9ea3d3a955e863b9a4effc95082f"
-  pullPolicy: IfNotPresent
-
 valkeyClientImage:
   repository: oci.trueforge.org/containerforge/valkey-tools
   tag: "1.1.0@sha256:a8ecbd396e8635cbbc02f4181d261ca1766b9ea3d3a955e863b9a4effc95082f"
   pullPolicy: IfNotPresent
-
 mongodbClientImage:
   repository: oci.trueforge.org/containerforge/mongosh
   tag: "2.8.3@sha256:2e0b98437638156526bd55f31f1c905d03e56eccce6aca15e59f665c87db7385"
@@ -679,26 +702,6 @@ postgresVectorchord15Image:
 postgresVectorchord16Image:
   repository: ghcr.io/tensorchord/cloudnative-vectorchord
   tag: "16.10-0.5.3@sha256:a0776b514bb23858d8aa59b08587223f8b449bba1b278ffbcf85e097d6504eb0"
-  pullPolicy: IfNotPresent
-
-# -- OpenVPN specific configuration
-# @default -- See below
-openvpnImage:
-  # -- Specify the openvpn client image
-  repository: oci.trueforge.org/tccr/openvpn-client
-  # -- Specify the openvpn client image tag
-  tag: latest@sha256:9bfdf50791d6e51056e31c03f73c9db329b2b72e7746155cfdc63e0c8b49b55a
-  # -- Specify the openvpn client image pull policy
-  pullPolicy: IfNotPresent
-
-# -- WireGuard specific configuration
-# @default -- See below
-wireguardImage:
-  # -- Specify the WireGuard image
-  repository: oci.trueforge.org/tccr/wireguard
-  # -- Specify the WireGuard image tag
-  tag: v1.0.20210914@sha256:683b8b74d64ebd07f9955147539834c2a4b60fee51d2a36fa76b9aba689601bf
-  # -- Specify the WireGuard image pull policy
   pullPolicy: IfNotPresent
 
 # -- Configure the ingresses for the chart here.
@@ -811,6 +814,71 @@ certificate: {}
 #       labels: {}
 #       annotations: {}
 
+# -- BETA: Configure the gateway API gateway classes for the chart here.
+# Additional gateway classes can be added by adding a dictionary key similar to the 'main' gateway class.
+# Please be aware that this is an early beta of this feature, TrueCharts does not guarantee this actually works.
+# Being BETA this can/will change in the future without notice, please do not use unless you want to take that risk
+# [[ref]](https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1.GatewayClass)
+# @default -- See below
+gatewayClass:
+  main:
+    # -- Enables or disables the gateway class
+    enabled: false
+    # -- Provide additional annotations which may be required.
+    annotations: {}
+    # -- Provide additional labels which may be required.
+    labels: {}
+    # -- The name of the controller that will manage Gateways of this class
+    controllerName: ""
+    # -- Description helps describe a GatewayClass with more details
+    description: ""
+    # -- ParametersRef is a reference to a resource that contains the configuration parameters corresponding to the GatewayClass
+    # parametersRef:
+    #   group: ""
+    #   kind: ""
+    #   name: ""
+    #   namespace: ""
+
+# -- BETA: Configure the gateway API gateways for the chart here.
+# Additional gateways can be added by adding a dictionary key similar to the 'main' gateway.
+# Please be aware that this is an early beta of this feature, TrueCharts does not guarantee this actually works.
+# Being BETA this can/will change in the future without notice, please do not use unless you want to take that risk
+# [[ref]](https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1)
+# @default -- See below
+gateway:
+  main:
+    # -- Enables or disables the gateway
+    enabled: false
+    # -- Provide additional annotations which may be required.
+    annotations: {}
+    # -- Provide additional labels which may be required.
+    labels: {}
+    # -- The name of the GatewayClass resource that this Gateway references
+    # Can be set directly or use targetSelector to automatically reference a gatewayClass
+    gatewayClassName: ""
+    # -- Optional: Name-based selector for automatic GatewayClass linking
+    # When set, automatically references the specified gatewayClass.$name
+    # targetSelector: main
+    # -- Gateway listeners configuration
+    listeners:
+      - name: http
+        hostname:
+        port: 80
+        protocol: HTTP
+        allowedRoutes:
+          namespaces:
+            from: Same
+          kinds:
+            - group: gateway.networking.k8s.io
+              kind: HTTPRoute
+        # tls:
+        #   mode: Terminate
+        #   certificateRefs:
+        #     - kind: Secret
+        #       group: ""
+        #       name: example-cert
+        #       namespace:
+
 # -- BETA: Configure the gateway routes for the chart here.
 # Additional routes can be added by adding a dictionary key similar to the 'main' route.
 # Please be aware that this is an early beta of this feature, TrueCharts does not guarantee this actually works.
@@ -828,7 +896,11 @@ route:
     annotations: {}
     # -- Provide additional labels which may be required.
     labels: {}
+    # -- Optional: Automatically link to a gateway defined in this chart
+    # When set, this will generate parentRefs automatically based on gateway name
+    # targetSelector: main
     # -- Configure the resource the route attaches to.
+    # This is optional if targetSelector is used (targetSelector will override this)
     parentRefs:
       - group: gateway.networking.k8s.io
         kind: Gateway
@@ -894,6 +966,85 @@ storageClass: {}
 #     allowVolumeExpansion: true
 #     volumeBindingMode: Immediate
 #     mountOptions: []
+
+# # -- create networkpolicy on demand
+# See docs/networkpolicy.md for full documentation
+networkpolicy:
+  main:
+    enabled: false
+    ### Pod Selection Options (choose one):
+    ## Default: targets all pods in this chart
+    ## (optional) Custom podSelector with matchLabels and matchExpressions
+    # podSelector:
+    #   matchLabels:
+    #     app: my-app
+    #   matchExpressions:
+    #     - key: environment
+    #       operator: In
+    #       values:
+    #         - production
+    ## (optional) Target a specific pod from this chart
+    # targetSelector: main-pod
+    ## (optional) Target all pods in the namespace
+    # targetAllPods: false
+
+    ## (optional) Explicitly define policyTypes
+    ## Auto-detected based on ingress/egress rules if not specified
+    # policyTypes:
+    #   - Ingress
+    #   - Egress
+
+    ## Ingress Rules (incoming traffic)
+    ## Empty list allows no ingress traffic
+    ingress: []
+    # ingress:
+    #   - from:
+    #       # Allow from pods with specific labels
+    #       - podSelector:
+    #           matchLabels:
+    #             role: frontend
+    #       # Allow from specific namespace
+    #       - namespaceSelector:
+    #           matchLabels:
+    #             environment: production
+    #       # Allow from IP range
+    #       - ipBlock:
+    #           cidr: 10.0.0.0/8
+    #           except:
+    #             - 10.1.0.0/16
+    #     ports:
+    #       - protocol: TCP
+    #         port: 8080
+    #       - protocol: TCP
+    #         port: 8443
+
+    ## Egress Rules (outgoing traffic)
+    ## Empty list allows no egress traffic
+    egress: []
+    # egress:
+    #   - to:
+    #       # Allow to pods with specific labels
+    #       - podSelector:
+    #           matchLabels:
+    #             role: database
+    #       # Allow to specific namespace
+    #       - namespaceSelector:
+    #           matchLabels:
+    #             name: kube-system
+    #       # Allow to external IPs
+    #       - ipBlock:
+    #           cidr: 0.0.0.0/0
+    #           except:
+    #             - 169.254.169.254/32
+    #     ports:
+    #       - protocol: TCP
+    #         port: 5432
+    #       - protocol: UDP
+    #         port: 53
+    #       # Port ranges (Kubernetes 1.25+)
+    #       - protocol: TCP
+    #         port: 8000
+    #         endPort: 9000
 
 metrics:
   main:
@@ -985,8 +1136,6 @@ addons:
     enabled: false
     targetSelector:
       - main
-    # -- you can directly specify the config file here
-    config: ""
     container:
       enabled: true
       imageSelector: "tailscaleImage"
@@ -1010,34 +1159,28 @@ addons:
         TS_KUBE_SECRET: ""
         TS_SOCKET: /var/run/tailscale/tailscaled.sock
         TS_STATE_DIR: /var/lib/tailscale/state
-        TS_USERSPACE: true
-        TS_AUTH_ONCE: true
-        TS_ACCEPT_DNS: false
-        TS_AUTH_KEY: ""
-        TS_TAILSCALED_EXTRA_ARGS: ""
-        TS_EXTRA_ARGS: ""
-        TS_SOCKS5_SERVER: ""
-        TS_DEST_IP: ""
-        TS_ROUTES: ""
-        TS_OUTBOUND_HTTP_PROXY_LISTEN: ""
       securityContext:
         capabilities:
           add:
             - NET_ADMIN
             - NET_RAW
 
-    # -- Auth key to connect to the VPN Service
-    authkey: ""
-    # As a sidecar, it should only need to run in userspace
-    userspace: true
-    auth_once: true
-    accept_dns: false
-    routes: ""
-    dest_ip: ""
-    sock5_server: ""
-    extra_args: ""
-    daemon_extra_args: ""
-    outbound_http_proxy_listen: ""
+    # -- Tailscale settings
+    settings:
+      # -- you can directly specify the config file here
+      config: ""
+      # -- Auth key to connect to the VPN Service
+      authkey: ""
+      # As a sidecar, it should only need to run in userspace
+      userspace: true
+      auth_once: true
+      accept_dns: false
+      routes: ""
+      dest_ip: ""
+      sock5_server: ""
+      extra_args: ""
+      daemon_extra_args: ""
+      outbound_http_proxy_listen: ""
     # -- Annotations for tailscale sidecar
     annotations: {}
 
@@ -1134,7 +1277,7 @@ addons:
             - NET_ADMIN
             - NET_RAW
 
-dependencies:
+dependencies: {}
 
 ##########################################################################
 # This section contains some pre-config for frequently used dependencies #
@@ -1352,18 +1495,6 @@ cnpg:
     # -- contains credentials and urls output by generator
     creds: {}
 
-# -- Redis dependency configuration
-# @default -- See below
-redis:
-  enabled: false
-  includeCommon: false
-  password: "PLACEHOLDERPASSWORD"
-  # -- can be used to make an easy accessible note which URLS to use to access the DB.
-  creds: {}
-  secret:
-    credentials:
-      enabled: false
-
 # -- mariadb dependency configuration
 # @default -- See below
 mariadb:
@@ -1403,6 +1534,34 @@ solr:
   solrEnableAuthentication: "no"
   # -- can be used to make an easy accessable note which URLS to use to access the DB.
   creds: {}
+
+# -- Dependency configuration - replaces helm-dependencies
+# Each dependency should contain a complete chart values.yaml structure
+# Resources from dependencies are merged into the main chart with prefixed names
+# @default -- See below
+dependencies: {}
+#   valkey:
+#     enabled: true
+#     image:
+#       repository: docker.io/bitnamisecure/valkey
+#       tag: latest
+#     workload:
+#       main:
+#         type: StatefulSet
+#         podSpec:
+#           containers:
+#             main:
+#               env:
+#                 REDIS_PASSWORD: "my-password"
+#     service:
+#       main:
+#         ports:
+#           main:
+#             port: 6379
+#     persistence:
+#       data:
+#         enabled: true
+#         mountPath: /data
 
 # -- List of extra objects to deploy with the release
 extraTpl: []

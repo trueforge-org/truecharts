@@ -1,0 +1,576 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "podSpec": {
+        "type": "object",
+        "properties": {
+          "containers": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "env": {
+                  "$ref": "podSpec/containers/env.json",
+                  "description": "Define env(s) for the container"
+                },
+                "resources": {
+                  "$ref": "podSpec/containers/resources.json",
+                  "description": "The resources that the container can use."
+                },
+                "securityContext": {
+                  "$ref": "podSpec/containers/securityContext.json",
+                  "description": "Define securityContext for the container"
+                },
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
+                  "description": "Define if the container is enabled or not"
+                },
+                "imageSelector": {
+                  "type": "string",
+                  "description": "Define the image `map` to use"
+                },
+                "primary": {
+                  "type": "boolean",
+                  "description": "Define if the container is primary or not Does **not** apply to `initContainers`"
+                },
+                "stdin": {
+                  "type": "boolean",
+                  "description": "Define if the container should have stdin enabled or not"
+                },
+                "tty": {
+                  "type": "boolean",
+                  "description": "Define if the container should have tty enabled or not"
+                },
+                "probes": {
+                  "$ref": "podSpec/containers/probes.json",
+                  "description": "Define probes for the container"
+                },
+                "command": {
+                  "$ref": "podSpec/containers/command.json",
+                  "description": "Define command(s). If it's single, can be defined as string"
+                },
+                "lifecycle": {
+                  "$ref": "podSpec/containers/lifecycle.json",
+                  "description": "Define lifecycle for the container"
+                },
+                "envFrom": {
+                  "$ref": "podSpec/containers/envFrom.json",
+                  "description": "Define envFrom for the container"
+                },
+                "termination": {
+                  "$ref": "container/termination.json",
+                  "description": "Define termination for the container"
+                },
+                "fixedEnv": {
+                  "$ref": "podSpec/containers/fixedEnv.json",
+                  "description": "Override fixedEnv for the container By default it will set the following environment variables:"
+                },
+                "args": {
+                  "$ref": "podSpec/containers/args.json",
+                  "description": "Define arg(s). If it's single, can be defined as string"
+                },
+                "extraArgs": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "array"
+                    }
+                  ],
+                  "description": "Define extraArg(s). Those are appended **after** the `args`."
+                }
+              },
+              "additionalProperties": true,
+              "description": "Configuration for `$name.podSpec.containers.$name`."
+            },
+            "description": "Configuration for `$name.podSpec.containers`."
+          },
+          "initContainers": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "init",
+                    "install",
+                    "upgrade"
+                  ],
+                  "description": "Define the type of container - Only applies to `initContainers`"
+                }
+              },
+              "additionalProperties": true,
+              "description": "Configuration for `$name.podSpec.initContainers.$name`."
+            },
+            "description": "Configuration for `$name.podSpec.initContainers`."
+          },
+          "labels": {
+            "allOf": [
+              {
+                "$ref": "../special/labels.json"
+              }
+            ],
+            "description": "Define labels for podSpec"
+          },
+          "annotations": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define annotations for podSpec"
+          },
+          "automountServiceAccountToken": {
+            "$ref": "podSpec/automountServiceAccountToken.json",
+            "description": "Pod's automountServiceAccountToken"
+          },
+          "hostNetwork": {
+            "$ref": "podSpec/hostNetwork.json",
+            "description": "Bind pod to host's network"
+          },
+          "hostPID": {
+            "$ref": "podSpec/hostPID.json",
+            "description": "Allow pod to access host's PID namespace"
+          },
+          "hostIPC": {
+            "$ref": "podSpec/hostIPC.json",
+            "description": "Allow pod to access host's IPC namespace"
+          },
+          "hostUsers": {
+            "$ref": "podSpec/hostUsers.json",
+            "description": "Allow pod to access host's users namespace"
+          },
+          "shareProcessNamespace": {
+            "$ref": "podSpec/shareProcessNamespace.json",
+            "description": "Share Process Namespace with other containers in the pod"
+          },
+          "enableServiceLinks": {
+            "$ref": "podSpec/enableServiceLinks.json",
+            "description": "Pod's enableServiceLinks"
+          },
+          "restartPolicy": {
+            "$ref": "podSpec/restartPolicy.json",
+            "description": "Pod's restartPolicy"
+          },
+          "schedulerName": {
+            "$ref": "podSpec/schedulerName.json",
+            "description": "Pod's schedulerName"
+          },
+          "priorityClassName": {
+            "$ref": "podSpec/priorityClassName.json",
+            "description": "Pod's priorityClassName"
+          },
+          "hostname": {
+            "type": "string",
+            "description": "Pod's hostname"
+          },
+          "terminationGracePeriodSeconds": {
+            "$ref": "terminationGracePeriodSeconds.json",
+            "description": "Pod's terminationGracePeriodSeconds"
+          },
+          "nodeSelector": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Pod's nodeSelector"
+          },
+          "topologySpreadConstraints": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Pod's topologySpreadConstraints"
+          },
+          "hostAliases": {
+            "type": "object",
+            "properties": {
+              "ip": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's hostAliases ip"
+              },
+              "hostnames": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's hostAliases hostnames"
+              }
+            },
+            "additionalProperties": true,
+            "description": "Pod's hostAliases"
+          },
+          "dnsPolicy": {
+            "$ref": "podSpec/dnsPolicy.json",
+            "description": "Pod's dnsPolicy `dnsPolicy` is set automatically to `ClusterFirstWithHostNet` when `hostNetwork` is `true`"
+          },
+          "dnsConfig": {
+            "type": "object",
+            "properties": {
+              "nameservers": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's dnsConfig nameservers"
+              },
+              "searches": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's dnsConfig searches"
+              },
+              "options": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Pod's dnsConfig options name"
+                  },
+                  "value": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Pod's dnsConfig options value"
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Pod's dnsConfig options"
+              }
+            },
+            "additionalProperties": true,
+            "description": "Pod's dnsConfig"
+          },
+          "tolerations": {
+            "type": "object",
+            "properties": {
+              "operator": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's tolerations operator"
+              },
+              "key": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's tolerations key Required only when `operator` = `Equal`"
+              },
+              "value": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's tolerations value Required only when `operator` = `Equal`"
+              },
+              "effect": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's tolerations effect"
+              },
+              "tolerationSeconds": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's tolerations tolerationSeconds"
+              }
+            },
+            "additionalProperties": true,
+            "description": "Pod's tolerations"
+          },
+          "runtimeClassName": {
+            "$ref": "podSpec/runtimeClassName.json",
+            "description": "Pod's runtimeClassName > Note that it will only set the `runtimeClassName` on the pod that this container belongs to."
+          },
+          "securityContext": {
+            "type": "object",
+            "properties": {
+              "fsGroup": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's securityContext fsGroup"
+              },
+              "fsGroupChangePolicy": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's securityContext fsGroupChangePolicy"
+              },
+              "supplementalGroups": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Pod's securityContext supplementalGroups"
+              },
+              "sysctls": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Pod's securityContext sysctls name"
+                  },
+                  "value": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Pod's securityContext sysctls value"
+                  }
+                },
+                "additionalProperties": true,
+                "description": "The **sysctl** `net.ipv4.ip_unprivileged_port_start` option will be automatically set to the lowest `targetPort` (or `port` if targetPort is not defined) number assigned"
+              }
+            },
+            "additionalProperties": true,
+            "description": "Pod's securityContext"
+          }
+        },
+        "additionalProperties": true,
+        "description": "Define the podSpec for the workload",
+        "default": {}
+      },
+      "replicas": {
+        "type": [
+          "integer",
+          "string"
+        ],
+        "description": "Define the number of replicas"
+      },
+      "revisionHistoryLimit": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the number of history revisions"
+      },
+      "strategy": {
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "Recreate",
+              "RollingUpdate",
+              "OnDelete"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "Recreate",
+                  "RollingUpdate",
+                  "OnDelete"
+                ],
+                "description": "Define the strategy type of the workload"
+              },
+              "rollingUpdate": {
+                "type": "object",
+                "properties": {
+                  "maxUnavailable": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true
+                  },
+                  "partition": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true
+                  },
+                  "maxSurge": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Define rollingUpdate options under strategy"
+              }
+            },
+            "additionalProperties": true
+          }
+        ],
+        "description": "Define the strategy of the workload"
+      },
+      "rollingUpdate": {
+        "type": "object",
+        "properties": {
+          "maxUnavailable": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define the maxUnavailable Can only be used when `workload.$name.strategy` is `RollingUpdate`"
+          },
+          "partition": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define the partition Can only be used when `workload.$name.strategy` is `RollingUpdate`"
+          },
+          "maxSurge": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Define the maxSurge Can only be used when `workload.$name.strategy` is `RollingUpdate`"
+          }
+        },
+        "additionalProperties": true,
+        "description": "Define the rollingUpdate options Can only be used when `workload.$name.strategy` is `RollingUpdate`"
+      },
+      "initContainers": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define workload objects",
+        "default": {}
+      },
+      "completionMode": {
+        "type": "string",
+        "enum": [
+          "Indexed",
+          "NonIndexed"
+        ],
+        "description": "Define the completionMode"
+      },
+      "backoffLimit": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the backoffLimit"
+      },
+      "completions": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the completions"
+      },
+      "parallelism": {
+        "type": "integer",
+        "description": "Define the parallelism"
+      },
+      "ttlSecondsAfterFinished": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the ttlSecondsAfterFinished"
+      },
+      "activeDeadlineSeconds": {
+        "type": "integer",
+        "description": "Define the activeDeadlineSeconds"
+      },
+      "schedule": {
+        "type": "string",
+        "description": "Define the schedule"
+      },
+      "timezone": {
+        "type": "string",
+        "description": "Define the timezone"
+      },
+      "concurrencyPolicy": {
+        "type": "string",
+        "enum": [
+          "Allow",
+          "Replace",
+          "Forbid"
+        ],
+        "description": "Define the concurrencyPolicy"
+      },
+      "failedJobsHistoryLimit": {
+        "type": "integer",
+        "description": "Define the failedJobsHistoryLimit"
+      },
+      "successfulJobsHistoryLimit": {
+        "type": "integer",
+        "description": "Define the successfulJobsHistoryLimit"
+      },
+      "startingDeadlineSeconds": {
+        "type": "integer",
+        "description": "Define the startingDeadlineSeconds"
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Enable or disable workload",
+        "default": false
+      },
+      "primary": {
+        "type": "boolean",
+        "description": "Set workload as primary",
+        "default": false
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "../special/labels.json"
+          }
+        ],
+        "description": "Define labels for workload",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
+      },
+      "annotations": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define annotations for workload",
+        "default": {}
+      },
+      "namespace": {
+        "type": "string",
+        "description": "Define the namespace for this object",
+        "default": ""
+      },
+      "type": {
+        "type": "string",
+        "enum": [
+          "Deployment",
+          "DaemonSet",
+          "StatefulSet",
+          "CronJob",
+          "Job"
+        ],
+        "description": "Define the kind of the workload",
+        "default": ""
+      },
+      "serviceAccountName": {
+        "type": "string",
+        "description": "Suggested is to use the top-level [serviceAccount](/truecharts-common/serviceaccount/) key to define the service account with `targetSelector`.",
+        "default": ""
+      },
+      "containers": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define container(s) for the workload See [Container](/truecharts-common/container/) for more information",
+        "default": {}
+      },
+      "dbWait": {
+        "type": "boolean",
+        "description": "Configuration for `workload.main.dbWait`."
+      }
+    },
+    "additionalProperties": true,
+    "description": "Define workload",
+    "default": {}
+  },
+  "description": "Define workload objects"
+}

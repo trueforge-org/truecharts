@@ -667,6 +667,10 @@ tests:
         equal:
           path: spec.template.spec.volumes
           value:
+            - name: crontab
+              emptyDir:
+                medium: Memory
+                sizeLimit: 2400Mi
             - name: devshm
               emptyDir:
                 medium: Memory
@@ -691,6 +695,9 @@ tests:
           # some-vol should not be present
           path: spec.template.spec.containers[0].volumeMounts
           value:
+            - mountPath: /var/spool/cron/crontabs/
+              name: crontab
+              readOnly: false
             - mountPath: /dev/shm
               name: devshm
               readOnly: false

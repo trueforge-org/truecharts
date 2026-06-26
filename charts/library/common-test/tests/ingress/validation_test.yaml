@@ -22,7 +22,22 @@ tests:
           required: true
     asserts:
       - failedTemplate:
-          errorMessage: Ingress - Expected ingress [my-ingress] to be enabled. This chart is designed to work only with ingress enabled.
+          errorMessage: Ingress - Expected ingress [my-ingress] to be enabled or at least one route to be enabled. This chart is designed to work only with ingress or route enabled.
+
+  - it: should not fail required ingress check when route is enabled
+    set:
+      service: *service
+      ingress:
+        my-ingress:
+          enabled: false
+          required: true
+      route:
+        my-route:
+          enabled: true
+          primary: true
+    asserts:
+      - failedTemplate:
+          errorMessage: parentRef name is required for HTTPRoute test-release-name-common-test
 
   - it: should fail with name longer than 253 characters
     set:

@@ -1,12 +1,22 @@
 {{- define "tc.v1.common.lib.deps.wait" -}}
-  {{- if .Values.redis.enabled -}}
-    {{- $container := include "tc.v1.common.lib.deps.wait.redis" $ | fromYaml -}}
+  {{/* Check if valkey service exists from dependencies */}}
+  {{- $valkeyServiceExists := false -}}
+  {{- range $name, $service := .Values.service -}}
+    {{- if kindIs "map" $service -}}
+      {{- if hasPrefix "valkey-" $name -}}
+        {{- $valkeyServiceExists = true -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  
+  {{- if $valkeyServiceExists -}}
+    {{- $container := include "tc.v1.common.lib.deps.wait.valkey" $ | fromYaml -}}
     {{- if $container -}}
       {{- range .Values.workload -}}
         {{- if not (hasKey .podSpec "initContainers") -}}
           {{- $_ := set .podSpec "initContainers" dict -}}
         {{- end -}}
-      {{- $_ := set .podSpec.initContainers "redis-wait" $container -}}
+      {{- $_ := set .podSpec.initContainers "valkey-wait" $container -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}
@@ -79,7 +89,24 @@
   {{- end -}}
 {{- end -}}
 
-{{- define "tc.v1.common.lib.deps.wait.redis" -}}
+{{- define "tc.v1.common.lib.deps.wait.valkey" -}}
+{{/* Find the valkey service name */}}
+{{- $valkeyServiceName := "" -}}
+{{- $valkeyPort := "6379" -}}
+{{- range $name, $service := .Values.service -}}
+  {{- if and (kindIs "map" $service) (hasPrefix "valkey-" $name) -}}
+    {{- $valkeyServiceName = $name -}}
+    {{- range $portName, $portConfig := $service.ports -}}
+      {{- if or (not (hasKey $portConfig "enabled")) $portConfig.enabled -}}
+        {{- $valkeyPort = toString $portConfig.port -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if $valkeyServiceName -}}
+{{- $hostName := printf "%s-%s" .Release.Name $valkeyServiceName -}}
+
 enabled: true
 type: system
 imageSelector: valkeyClientImage
@@ -105,41 +132,36 @@ resources:
     cpu: 500m
     memory: 512Mi
 env:
-  REDIS_HOST:
-    secretKeyRef:
-      expandObjectName: false
-      name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
-      key: plainhost
-  REDIS_PASSWORD: "{{ .Values.redis.password }}"
-  REDIS_PORT: "6379"
+  VALKEY_HOST: {{ $hostName }}
+  VALKEY_PORT: {{ $valkeyPort | quote }}
 command:
   - "/bin/sh"
   - "-c"
   - |
     /bin/bash <<'EOF'
-    echo "Executing DB waits..."
-    [[ -n "$REDIS_PASSWORD" ]] && export REDISCLI_AUTH="$REDIS_PASSWORD";
+    echo "Executing Valkey wait..."
     export LIVE=false;
     until "$LIVE";
     do
       response=$(
           timeout -s 3 2 \
           valkey-cli \
-            -h "$REDIS_HOST" \
-            -p "$REDIS_PORT" \
+            -h "$VALKEY_HOST" \
+            -p "$VALKEY_PORT" \
             ping
         )
-      if [ "$response" == "PONG" ] || [ "$response" == "LOADING Redis is loading the dataset in memory" ]; then
+      if [ "$response" == "PONG" ] || [ "$response" == "LOADING Valkey is loading the dataset in memory" ]; then
         LIVE=true
         echo "$response"
-        echo "Redis Responded, ending initcontainer and starting main container(s)..."
+        echo "Valkey Responded, ending initcontainer and starting main container(s)..."
       else
         echo "$response"
-        echo "Redis not responding... Sleeping for 10 sec..."
+        echo "Valkey not responding... Sleeping for 10 sec..."
         sleep 10
       fi;
     done
     EOF
+{{- end -}}
 {{- end -}}
 
 {{- define "tc.v1.common.lib.deps.wait.mariadb" -}}
@@ -236,7 +258,7 @@ command:
 {{- define "tc.v1.common.lib.deps.wait.clickhouse" -}}
 enabled: true
 type: system
-imageSelector: wgetImage
+imageSelector: ubuntuImage
 securityContext:
   runAsUser: 568
   runAsGroup: 568
@@ -280,7 +302,7 @@ args:
 {{- define "tc.v1.common.lib.deps.wait.solr" -}}
 enabled: true
 type: system
-imageSelector: wgetImage
+imageSelector: ubuntuImage
 securityContext:
   runAsUser: 568
   runAsGroup: 568

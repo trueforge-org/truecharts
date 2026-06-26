@@ -1,163 +1,31 @@
 ---
-title: DaemonSet
+title: Daemonset
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
+- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/workload/daemonset#full-examples) section for complete examples.
-- See the [Workload](/truecharts-common/workload) documentation for more information
-
-:::
-
-:::tip
-
-Replace references to `$name` with the actual name you want to use.
 
 :::
 
 ## Appears in
 
-- `.Values.workload.$name`
-
-## Notes
-
-Value of `workload.$name.podSpec.restartPolicy` can only be `Always` for this type of workload
+- `.Values.workload.daemonset`
 
 ---
 
-## `revisionHistoryLimit`
+## `workload.daemonset`
 
-Define the number of history revisions
+Configuration for workload entries with `type: DaemonSet`.
 
-|            |                                       |
-| ---------- | ------------------------------------- |
-| Key        | `workload.$name.revisionHistoryLimit` |
-| Type       | `int`                                 |
-| Required   | ❌                                    |
-| Helm `tpl` | ❌                                    |
-| Default    | `3`                                   |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    revisionHistoryLimit: 3
-```
-
-## `strategy`
-
-Define the strategy of the workload
-
-|            |                           |
-| ---------- | ------------------------- |
-| Key        | `workload.$name.strategy` |
-| Type       | `string`                  |
-| Required   | ❌                        |
-| Helm `tpl` | ❌                        |
-| Default    | `RollingUpdate`           |
-
-Valid Values:
-
-- `RollingUpdate`
-- `OnDelete`
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    strategy: RollingUpdate
-```
-
----
-
-## `rollingUpdate`
-
-Define the rollingUpdate options
-
-:::note
-
-Can only be used when `workload.$name.strategy` is `RollingUpdate`
-
-:::
-
-|            |                                |
-| ---------- | ------------------------------ |
-| Key        | `workload.$name.rollingUpdate` |
-| Type       | `map`                          |
-| Required   | ❌                             |
-| Helm `tpl` | ❌                             |
-| Default    | `{}`                           |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    rollingUpdate:
-      maxUnavailable: 1
-      maxSurge: 1
-```
-
----
-
-## `rollingUpdate.maxUnavailable`
-
-Define the maxUnavailable
-
-:::note
-
-Can only be used when `workload.$name.strategy` is `RollingUpdate`
-
-:::
-
-|            |                                               |
-| ---------- | --------------------------------------------- |
-| Key        | `workload.$name.rollingUpdate.maxUnavailable` |
-| Type       | `int`                                         |
-| Required   | ❌                                            |
-| Helm `tpl` | ❌                                            |
-| Default    | unset                                         |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    rollingUpdate:
-      maxUnavailable: 1
-```
-
----
-
-## `rollingUpdate.maxSurge`
-
-Define the maxSurge
-
-:::note
-
-Can only be used when `workload.$name.strategy` is `RollingUpdate`
-
-:::
-
-|            |                                         |
-| ---------- | --------------------------------------- |
-| Key        | `workload.$name.rollingUpdate.maxSurge` |
-| Type       | `int`                                   |
-| Required   | ❌                                      |
-| Helm `tpl` | ❌                                      |
-| Default    | unset                                   |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    rollingUpdate:
-      maxSurge: 1
-```
+| Field      | Value                |
+| ---------- | -------------------- |
+| Key        | `workload.daemonset` |
+| Type       | `map`                |
+| Required   | ❌                   |
+| Helm `tpl` | ❌                   |
+| Default    | unset                |
 
 ---
 

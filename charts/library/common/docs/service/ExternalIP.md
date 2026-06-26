@@ -1,119 +1,31 @@
 ---
-title: ExternalIP
+title: Externalip
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/service/externalip#full-examples) section for complete examples.
-- See the [Service](/truecharts-common/service) documentation for more information
+- This page is generated from JSON schema.
+- See the [Full Examples](/truecharts-common/service/ExternalIP#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.service.$name`
-
-:::tip
-
-- See available service keys [here](/truecharts-common/service).
-- This options apply only when `type: ExternalIP`.
-
-:::
+- `.Values.service.ExternalIP`
 
 ---
 
-## `externalIP`
+## `service.ExternalIP`
 
 Configure External IP type
 
-|            |                            |
-| ---------- | -------------------------- |
-| Key        | `service.$name.externalIP` |
-| Type       | `string`                   |
-| Required   | ✅                         |
-| Helm `tpl` | ✅                         |
-| Default    | `""`                       |
-
-Example
-
-```yaml
-service:
-  some-service:
-    externalIP: 1.2.3.4
-```
-
----
-
-## `useSlice`
-
-Define whether to use `EndpointSlice` or `Endpoint`
-
-|            |                          |
-| ---------- | ------------------------ |
-| Key        | `service.$name.useSlice` |
-| Type       | `bool`                   |
-| Required   | ❌                       |
-| Helm `tpl` | ❌                       |
-| Default    | `true`                   |
-
-Example
-
-```yaml
-service:
-  some-service:
-    useSlice: false
-```
-
----
-
-## `addressType`
-
-Define the addressType for External IP
-
-|            |                             |
-| ---------- | --------------------------- |
-| Key        | `service.$name.addressType` |
-| Type       | `string`                    |
-| Required   | ❌                          |
-| Helm `tpl` | ✅                          |
-| Default    | `IPv4`                      |
-
-Valid Values:
-
-- `IPv4`
-- `IPv6`
-- `FQDN`
-
-Example
-
-```yaml
-service:
-  some-service:
-    addressType: IPv6
-```
-
----
-
-## `appProtocol`
-
-Define the appProtocol for External IP
-
-|            |                             |
-| ---------- | --------------------------- |
-| Key        | `service.$name.appProtocol` |
-| Type       | `string`                    |
-| Required   | ❌                          |
-| Helm `tpl` | ✅                          |
-| Default    | `""`                        |
-
-Example
-
-```yaml
-service:
-  some-service:
-    appProtocol: http
-```
+| Field      | Value                |
+| ---------- | -------------------- |
+| Key        | `service.ExternalIP` |
+| Type       | `string, map`        |
+| Required   | ❌                   |
+| Helm `tpl` | ❌                   |
+| Default    | unset                |
 
 ---
 

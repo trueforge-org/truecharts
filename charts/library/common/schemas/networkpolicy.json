@@ -1,0 +1,411 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Create Network Policy objects",
+        "default": false
+      },
+      "primary": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Mark as primary Network Policy",
+        "default": false
+      },
+      "expandObjectName": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Expand the object name",
+        "default": false
+      },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "special/namespaces.json"
+          }
+        ],
+        "description": "Define the namespace for this object",
+        "default": ""
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Additional labels for Network Policy",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
+      },
+      "annotations": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Additional annotations for Network Policy",
+        "default": {}
+      },
+      "podSelector": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "properties": {
+          "matchLabels": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Match pods by labels"
+          },
+          "matchExpressions": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": true,
+                  "description": "Label key to match"
+                },
+                "operator": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": true,
+                  "description": "Operator: In, NotIn, Exists, DoesNotExist"
+                },
+                "values": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": true,
+                  "description": "Values for In/NotIn operators"
+                }
+              },
+              "additionalProperties": true,
+              "description": "Configuration for `$name.podSelector.matchExpressions.$name`."
+            },
+            "description": "Match pods by label expressions"
+          }
+        },
+        "additionalProperties": true,
+        "description": "Select pods to which this network policy applies",
+        "oneOf": [
+          {
+            "enum": [
+              "key",
+              "operator",
+              "values"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ]
+      },
+      "targetSelector": {
+        "type": "string",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Target a specific pod from this chart",
+        "default": ""
+      },
+      "targetAllPods": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Target all pods in the namespace",
+        "default": false
+      },
+      "policyTypes": {
+        "type": [
+          "array",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "List of policy types (Ingress, Egress)",
+        "items": {
+          "type": "string",
+          "enum": [
+            "Ingress",
+            "Egress"
+          ]
+        },
+        "oneOf": [
+          {
+            "enum": [
+              "Ingress",
+              "Egress"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ]
+      },
+      "ingress": {
+        "type": [
+          "array",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": {
+          "type": "object",
+          "properties": {
+            "from": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "podSelector": {
+                    "type": "object",
+                    "properties": {
+                      "matchLabels": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "Match pods by labels"
+                      },
+                      "matchExpressions": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "Match pods by label expressions"
+                      }
+                    },
+                    "additionalProperties": true,
+                    "description": "Select pods that are allowed"
+                  },
+                  "namespaceSelector": {
+                    "type": "object",
+                    "properties": {
+                      "matchLabels": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "Match namespaces by labels"
+                      },
+                      "matchExpressions": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "Match namespaces by label expressions"
+                      }
+                    },
+                    "additionalProperties": true,
+                    "description": "Select namespaces from which pods are allowed"
+                  },
+                  "ipBlock": {
+                    "type": "object",
+                    "properties": {
+                      "cidr": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "CIDR block (e.g., 192.168.0.0/16)"
+                      },
+                      "except": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "List of CIDR blocks to exclude"
+                      }
+                    },
+                    "additionalProperties": true,
+                    "description": "Select IP block that is allowed"
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Configuration for `$name.ingress.$name.from.$name`."
+              },
+              "description": "List of sources which should be able to access the pods"
+            },
+            "ports": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "protocol": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Protocol: TCP, UDP, or SCTP"
+                  },
+                  "port": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Port number or name"
+                  },
+                  "endPort": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "End port for port range (requires Kubernetes 1.25+)"
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Configuration for `$name.ingress.$name.ports.$name`."
+              },
+              "description": "List of ports which should be made accessible"
+            }
+          },
+          "additionalProperties": true,
+          "description": "Configuration for `$name.ingress.$name`."
+        },
+        "description": "List of ingress rules",
+        "default": []
+      },
+      "egress": {
+        "type": [
+          "array",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": {
+          "type": "object",
+          "properties": {
+            "to": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "podSelector": {
+                    "type": "object",
+                    "properties": {
+                      "matchLabels": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "Match pods by labels"
+                      },
+                      "matchExpressions": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "Match pods by label expressions"
+                      }
+                    },
+                    "additionalProperties": true,
+                    "description": "Select pods that are allowed as destinations"
+                  },
+                  "namespaceSelector": {
+                    "type": "object",
+                    "properties": {
+                      "matchLabels": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "Match namespaces by labels"
+                      },
+                      "matchExpressions": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "Match namespaces by label expressions"
+                      }
+                    },
+                    "additionalProperties": true,
+                    "description": "Select namespaces to which traffic is allowed"
+                  },
+                  "ipBlock": {
+                    "type": "object",
+                    "properties": {
+                      "cidr": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "CIDR block (e.g., 10.0.0.0/24)"
+                      },
+                      "except": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true,
+                        "description": "List of CIDR blocks to exclude"
+                      }
+                    },
+                    "additionalProperties": true,
+                    "description": "Select IP block as destination"
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Configuration for `$name.egress.$name.to.$name`."
+              },
+              "description": "List of destinations to which traffic is allowed"
+            },
+            "ports": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "protocol": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Protocol: TCP, UDP, or SCTP"
+                  },
+                  "port": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Port number or name"
+                  },
+                  "endPort": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "End port for port range (requires Kubernetes 1.25+)"
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Configuration for `$name.egress.$name.ports.$name`."
+              },
+              "description": "List of destination ports"
+            }
+          },
+          "additionalProperties": true,
+          "description": "Configuration for `$name.egress.$name`."
+        },
+        "description": "List of egress rules",
+        "default": []
+      }
+    },
+    "additionalProperties": true,
+    "description": "Create Network Policy objects",
+    "default": {}
+  },
+  "description": "Create Network Policy objects",
+  "default": {}
+}
