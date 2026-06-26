@@ -2,7 +2,7 @@
 image:
   repository: docker.io/pdreker/fritz_exporter
   pullPolicy: IfNotPresent
-  tag: 3.2.0@sha256:4a6a403b245398d65fc103ff815140a381b081b132acf4783cfb881b79f11353
+  tag: 2.6.2@sha256:4ef983ee58c07127ada2e3f30821273728ee88cce0c57a33c3ff487b4d7206cf
 service:
   main:
     ports:
@@ -50,7 +50,6 @@ metrics:
 
 exporter:
   exporter_port: 9787
-  listen_address: 0.0.0.0
   devices:
     - name: Fritz!Box 7590
       hostname: '192.168.1.1'

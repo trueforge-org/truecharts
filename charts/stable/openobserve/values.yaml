@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
   repository: public.ecr.aws/zinclabs/openobserve
-  tag: v0.91.0@sha256:e4d9eeb5b0190c80683b5b7d9f75a5bfe5edc76eacba398978a7efcb41c98dd6
+  tag: v0.80.0@sha256:78f564a9d1f3c60b78e91a9834ec188e5baacd813f41e3c7f67f09a8814a7e94
   pullPolicy: IfNotPresent
 
 persistence:
@@ -16,7 +16,7 @@ workload:
         main:
           env:
             ZO_ROOT_USER_EMAIL: admin@example.com
-            ZO_ROOT_USER_PASSWORD: Changemechangemechangemechange1!
+            ZO_ROOT_USER_PASSWORD: changeme
             ZO_DATA_DIR: /data
             ZO_WEB_URL: "https://logs.example.com"
             ZO_TELEMETRY: "false"

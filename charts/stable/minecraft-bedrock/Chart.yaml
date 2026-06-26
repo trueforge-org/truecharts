@@ -9,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 2026.6.1
+appVersion: 2026.4.3
 dependencies:
   - name: common
-    version: 29.5.3
+    version: 29.1.6
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -31,9 +31,9 @@ maintainers:
     url: https://truecharts.org
 name: minecraft-bedrock
 sources:
-  - https://ghcr.io/itzg/minecraft-bedrock-server
   - https://github.com/itzg/docker-minecraft-server
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/minecraft-bedrock
+  - https://hub.docker.com/r/itzg/minecraft-bedrock-server
 type: application
-version: 14.7.1
+version: 14.2.1
 

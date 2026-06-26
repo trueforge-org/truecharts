@@ -1,61 +1,26 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
-  repository: ghcr.io/home-operations/kromgo
-  tag: 0.14.10@sha256:70efc194c057c834b3d4935f4fd6dd65a4ba813f097b5fffc2ace41cfa8b9ec7
+  repository: ghcr.io/kashalls/kromgo
+  tag: v0.9.1@sha256:1624b1a10009978243d7d54e83269cbf9e3a4ec7f14c2548bdd11e63db5c4ad7
   pullPolicy: IfNotPresent
 
 # Raw Kromgo configuration
-# checkout the readme for the current configuration setup
-# https://github.com/home-operations/kromgo#badges
-
+# Replace it with your configuration
+# https://github.com/kashalls/kromgo/blob/main/config.yaml.example
 kromgo:
-  defaults:
-    badge:
-      # dejavu-sans (default, shields.io-style), dejavu-sans-bold, comic-neue, comic-neue-bold
-      font: dejavu-sans
-      # badge font size in points
-      size: 11
-      # flat (default), flat-square, or plastic
-      style: flat
-      gallery:
-        # list badges in the gallery (default); true hides them
-        hidden: false
-    graph:
-      # cap on a graph's requested window ("0" = unlimited)
-      maxDuration: 1h
-      # image width in px
-      width: 600
-      # image height in px
-      height: 200
-      # show the series legend
-      legend: true
-      # color theme — see Themes below
-      theme: light
-      # text font — see Themes below
-      font: dejavu-sans
-      gallery:
-        # list graphs in the gallery (default); true hides them
-        hidden: false
-  badges:
-    - id: talos_version
+  badge:
+    font: Verdana.ttf  # Relative to /kromgo - Verdana.ttf is available in the container
+    size: 12
+  metrics:
+    - name: talos_version
       query: node_os_info{ name="Talos"}
-      valueExpr: labels["version_id"]
-      # mdi:server-outline
-      # si:kubernetes
-      icon: si:talos
+      label: version_id
       title: Talos Version
-    - id: kubernetes_version
+
+    - name: kubernetes_version
       query: kubernetes_build_info{ service="kubernetes"}
-      valueExpr: labels["git_version"]
-      icon: si:kubernetes
+      label: git_version
       title: Kubernetes Version
-    - id: flux_version
-      query: label_replace(gotk_resource_info{exported_namespace="flux-system",name="flux",customresource_kind="Kustomization"}, "revision", "$1", "revision", "(.+)@sha256:.+")
-      valueExpr: labels["revision"]
-      icon: si:flux
-      title: Flux Version
-      # Per-badge gallery
-      # gallery: {hidden: true}
 
 service:
   main:
@@ -75,12 +40,6 @@ workload:
             PROMETHEUS_URL: "http://prometheus-operated.kube-prometheus-stack.svc.cluster.local:9090"
             SERVER_PORT: "{{ $.Values.service.main.ports.main.port }}"
             HEALTH_PORT: "{{ $.Values.service.main.ports.health.port }}"
-            # SERVER_LOGGING    no  false   Enable HTTP request access logging
-            # SERVER_READ_TIMEOUT   no  — HTTP read timeout (e.g. 5s)
-            # SERVER_WRITE_TIMEOUT  no  — HTTP write timeout (e.g. 10s)
-            # QUERY_TIMEOUT no  30s Timeout applied to each Prometheus query
-            # LOG_LEVEL no  info    Log level: debug, info, warn, error
-            # LOG_FORMAT    no  json    Log format: json or text
           probes:
             liveness:
               type: http
@@ -108,5 +67,5 @@ persistence:
     type: configmap
     readOnly: true
     objectName: kromgo-configfile
-    mountPath: /config/config.yaml
+    mountPath: /kromgo/config.yaml
     subPath: config.yaml

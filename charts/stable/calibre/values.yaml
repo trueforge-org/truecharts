@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
   repository: ghcr.io/linuxserver/calibre
-  tag: 9.9.0@sha256:b9a0ea3bc064a127eda5b807b1d887235505eccefb9bcc897fa76066372af0f1
+  tag: 9.7.0@sha256:95e22e9a3c85bc77f276a04c0b8fc3e94faffba634288f70011d4906f70a739a
   pullPolicy: IfNotPresent
 securityContext:
   container:
@@ -14,7 +14,7 @@ service:
     ports:
       main:
         port: 8084
-        protocol: tcp
+        protocol: http
         targetPort: 8080
   webserver:
     enabled: true

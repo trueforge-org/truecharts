@@ -9,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 0.36.0
+appVersion: 0.35.0
 dependencies:
   - name: common
-    version: 29.5.3
+    version: 29.1.6
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,5 +35,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/intel-gpu-plugin
   - https://hub.docker.com/r/intel/intel-gpu-plugin
 type: application
-version: 2.5.0
+version: 2.1.1
 

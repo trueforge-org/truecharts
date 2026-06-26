@@ -9,17 +9,17 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 26.05.20260608
+appVersion: 26.03.20260315
 dependencies:
   - name: common
-    version: 29.5.3
+    version: 29.1.6
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 18.4.1
+    version: 18.1.3
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -47,5 +47,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/bookstack
   - https://www.bookstackapp.com/
 type: application
-version: 21.9.1
+version: 21.2.4
 

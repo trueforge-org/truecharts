@@ -2,77 +2,33 @@
 image:
   repository: ghcr.io/sysadminsmedia/homebox
   pullPolicy: IfNotPresent
-  tag: 0.26.2@sha256:b1ad7e3c63f732a5f6daa466e8116be4f545b3b120383a64dcb62beb00a660cc
-
+  tag: 0.25.0@sha256:6506480a3dfadd2cc885fa97b32d11b0ee28ec58629fa34a76afdb4ac540c7fc
+homebox:
+  allow_registration: true
+  auto_increment_asset_id: true
+  max_upload_size: 10
+  log_level: info
+  log_format: text
+  mailer_host: ""
+  mailer_port: 587
+  mailer_from: ""
+  mailer_username: ""
+  mailer_password: ""
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          envFrom:
+            - secretRef:
+                name: homebox-secret
 service:
   main:
     ports:
       main:
         protocol: http
         port: 10603
-
-workload:
-  main:
-    podSpec:
-      containers:
-        main:
-          probes:
-            liveness:
-              path: /api/v1/status
-            readiness:
-              enabled: true
-              type: http
-              path: /api/v1/status
-            startup:
-              enabled: true
-              type: tcp
-          env:
-            # development application mode used for runtime behavior can be one of: development, production
-            HBOX_MODE: "production"
-            HBOX_WEB_PORT: "{{ .Values.service.main.ports.main.port }}"
-            # Dont change
-            HBOX_WEB_HOST: "0.0.0.0"
-
-            # Required. Server-side secret HMAC-keyed into stored API key hashes;
-            # the binary refuses to start if this is shorter than 32 bytes.
-            # Generate with openssl rand -base64 48.
-            # Must stay stable across restarts — rotating it invalidates every issued API key.
-            HBOX_AUTH_API_KEY_PEPPER: "CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME"
-
-            # log level to use: trace, debug, info, warn, error, fatal, panic
-            HBOX_LOG_LEVEL: "info"
-            # log format to use: text, json
-            HBOX_LOG_FORMAT: "text"
-            # required for ingress
-            HBOX_OPTIONS_TRUST_PROXY: '{{ ( .Values.ingress.main.enabled | default false ) }}'
-            # database type: sqlite3 or postgres
-            HBOX_DATABASE_DRIVER: "postgres"
-            # postgres hostname
-            HBOX_DATABASE_HOST:
-              secretKeyRef:
-                name: cnpg-main-urls
-                key: host
-            # postgres port
-            HBOX_DATABASE_PORT: "5432"
-            # postgres username
-            HBOX_DATABASE_USERNAME: "{{ .Values.cnpg.main.user }}"
-            # postgres password
-            HBOX_DATABASE_PASSWORD:
-              secretKeyRef:
-                name: cnpg-main-user
-                key: password
-            # postgres database name
-            HBOX_DATABASE_DATABASE: "{{ .Values.cnpg.main.database }}"
-            # postgres ssl mode require or disable
-            HBOX_DATABASE_SSL_MODE: "disable"
-
 persistence:
   data:
     enabled: true
     mountPath: /data
-
-cnpg:
-  main:
-    enabled: true
-    user: homebox
-    database: homebox

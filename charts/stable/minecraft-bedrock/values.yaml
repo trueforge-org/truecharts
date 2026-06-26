@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
-  repository: ghcr.io/itzg/minecraft-bedrock-server
-  tag: 2026.6.1@sha256:35e2cc7de2009b247c850d7c88415b2bc7d1559a690232927a447031d3b381c1
+  repository: docker.io/itzg/minecraft-bedrock-server
+  tag: 2026.4.3@sha256:3c2523ea7bd931b8b7a9fc6bb333fdd75984e74808614d581796ff9c3a3e0def
   pullPolicy: Always
 service:
   main:
@@ -55,7 +55,7 @@ workload:
                 periodSeconds: 60
           env:
             EULA: true
-            ENABLE_LAN_VISIBILITY: true
+            ENABLE_LAN_VISIBILITY: false
             VERSION: "LATEST"
             SERVER_NAME: "TrueCharts Dedicated Server!"
             SERVER_PORT: "{{ .Values.service.main.ports.main.port }}"

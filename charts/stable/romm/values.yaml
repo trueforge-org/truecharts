@@ -2,7 +2,7 @@
 image:
   repository: ghcr.io/rommapp/romm
   pullPolicy: IfNotPresent
-  tag: 4.9.2@sha256:c81778afcafe7c865bdf156d1c62349aec3dfca3aca5ec0d6c2c2e8bfa9fb071
+  tag: 4.8@sha256:2b7a1714b287f69b081ad2a63bb8c2fa673666a17b2f21322b580b0cd51cb266
 
 securityContext:
   container:
@@ -16,6 +16,7 @@ service:
     ports:
       main:
         protocol: http
+        targetPort: 8080
         port: 10680
 
 workload:
@@ -31,183 +32,77 @@ workload:
             startup:
               type: http
           env:
-            # application settings
-            # Generate a key with openssl rand -hex 32 ✓
-            # required
-            ROMM_AUTH_SECRET_KEY: "CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME"
+            # dont touch!
+            ROMM_BASE_PATH: /romm
+
+            ROMM_HOST: localhost
+
+            # IGDB client id and secret (not required but recommended to set)
+            IGDB_CLIENT_ID: ""
+            IGDB_CLIENT_SECRET: ""
+
+            # optional api
+            # STEAMGRIDDB_API_KEY: ""
+
+            # paid API only (optional)
+            # MOBYGAMES_API_KEY: ""
+
+            # Disables playing in browser with EmulatorJS (builtin)
+            # DISABLE_EMULATOR_JS: false
+
+            # Disables playing flash games with RuffleRS (builtin)
+            # DISABLE_RUFFLE_RS: false
+
             # Disables CSRF protection (not recommended)
             # DISABLE_CSRF_PROTECTION: false
+
             # Disable auth on download endpoint (WebRcade, Tinfoil)
             # DISABLE_DOWNLOAD_ENDPOINT_AUTH: false
-            # Disables login with username and password (when using OIDC)
-            # DISABLE_USERPASS_LOGIN: false
-            # Maximum age of a session (in seconds) 1209600 (14 days) defaults
-            # SESSION_MAX_AGE_SECONDS: 1209600
-            # Read-only mode for public displays or kiosks
-            # KIOSK_MODE: false
-            # Timeout for the background scan/rescan tasks (in seconds) 14400 (4 hours)
+
+            # Timeout for the background scan/rescan tasks (in seconds)
             # SCAN_TIMEOUT: 14400
-            # Number of worker processes for scanning tasks
-            SCAN_WORKERS: 4
-            # Timeout for the the rest of the background tasks (in seconds) 300 (5 minutes)
-            # TASK_TIMEOUT: 300
-            # How long to keep task results in Valkey (in seconds) 86400 (24 hours)
-            # TASK_RESULT_TTL: 86400
-            # Timeout for 7-Zip operations (in seconds)
-            # SEVEN_ZIP_TIMEOUT: 60
-            # Disables playing in browser with EmulatorJS
-            # DISABLE_EMULATOR_JS: false
-            # Disables playing flash games with RuffleRS
-            # DISABLE_RUFFLE_RS: false
-            # Base URL for alternate frontends (Piped, Invidious, etc.)
-            # YOUTUBE_BASE_URL: https://www.youtube.com
-            # Port on which the application listens
-            ROMM_PORT: "{{ .Values.service.main.ports.main.port }}"
-            # Base folder path for library, resources and assets
-            # ROMM_BASE_PATH: /romm/
-            # Base url for properly display container logs links (like register or recover password)
-            # should populate the correct url whether ingress is enabled or not
-            ROMM_BASE_URL: "{{ .Values.chartContext.appUrl }}"
-            # Logging level for the app
-            # DEBUG | INFO
-            LOGLEVEL: INFO
-            # Forces color output
-            # FORCE_COLOR: false
-            # Disables color output
-            # NO_COLOR: false
-            # Number of processes running the app
-            # WEB_SERVER_CONCURRENCY: 1
-            # Waiting time for requests on a Keep-Alive connection (in seconds)
-            # WEB_SERVER_KEEPALIVE: 2
-            # Maximum number of requests a worker will process before restarting
-            # WEB_SERVER_MAX_REQUESTS: 1000
-            # Random jitter to add to the maximum number of requests a worker will process before restarting
-            # WEB_SERVER_MAX_REQUESTS_JITTER: 100
-            # Timeout for web server requests (in seconds)
-            # WEB_SERVER_TIMEOUT: 300
-            # Maximum number of simultaneous clients a single process can handle
-            # WEB_SERVER_WORKER_CONNECTIONS: 1000
 
-            # Dependencies
-            # Database driver to use (options: mariadb, mysql, postgresql)
-            ROMM_DB_DRIVER: postgresql
-            DB_HOST: "{{ .Values.cnpg.main.creds.host }}"
-            DB_PORT: 5432
-            DB_NAME: "{{ .Values.cnpg.main.database }}"
-            DB_USER: "{{ .Values.cnpg.main.user }}"
-            DB_PASSWD: "{{ .Values.cnpg.main.creds.password }}"
-            # Extra query parameters for the database connection, in JSON format (e.g. {"unix_socket": "/path/to/db"})
-            # DB_QUERY_JSON: ""
-            # Host name of Redis/Valkey instance
-            REDIS_HOST: '{{ .Values.redis.creds.plainhost | trimAll "\"" }}'
-            # Port number of Redis/Valkey instance
-            REDIS_PORT: 6379
-            # Username for Redis/Valkey instance
-            REDIS_USERNAME: "default"
-            # Password for Redis/Valkey instance
-            REDIS_PASSWORD: "{{ .Values.redis.password }}"
-            # Database number for Redis/Valkey instance
-            # REDIS_DB: 0
-            # Enable SSL for Redis/Valkey instance
-            # REDIS_SSL: false
-            # DSN for Sentry error tracking
-            # SENTRY_DSN
-
-            # Metadata providers
-            # Client ID for IGDB API
-            IGDB_CLIENT_ID: ""
-            # Client secret for IGDB API
-            IGDB_CLIENT_SECRET: ""
-            # Screenscraper username
-            # SCREENSCRAPER_USER: ""
-            # Screenscraper password
-            # SCREENSCRAPER_PASSWORD: ""
-            # MobyGames secret API key
-            # MOBYGAMES_API_KEY: ""
-            # SteamGridDB secret API key
-            # STEAMGRIDDB_API_KEY: ""
-            # Retroachievements secret API key
-            # RETROACHIEVEMENTS_API_KEY: ""
-            # Retroachievements metadata cache refresh (in days)
-            # REFRESH_RETROACHIEVEMENTS_CACHE_DAYS: 30
-            # Enable LaunchBox API integration
-            # LAUNCHBOX_API_ENABLED: true
-            # Enable PlayMatch API integration
-            # PLAYMATCH_API_ENABLED: true
-            # Enable Hasheous API integration
-            # HASHEOUS_API_ENABLED: true
-            # Enable Flashpoint API integration
-            # FLASHPOINT_API_ENABLED: true
-            # Enable HowLongToBeat API integration
-            # HLTB_API_ENABLED: true
-
-            # Authentication
-
-            # Enable OpenID Connect (OIDC) authentication
-            # OIDC_ENABLED: false
-            # Name of the OIDC provider in use
-            # OIDC_PROVIDER: authelia
-            # Client ID for OIDC authentication
-            # OIDC_CLIENT_ID: romm
-            # Client secret for OIDC authentication
-            # OIDC_CLIENT_SECRET: ""
-            # Absolute redirect URI for OIDC authentication
-            # OIDC_REDIRECT_URI: https://romm.example.com/api/oauth/openid
-            # Absolute URL of the OIDC server application
-            # OIDC_SERVER_APPLICATION_URL: https://auth.example.com
-            # Path to a file containing trusted CA certificates
-            # OIDC_TLS_CACERTFILE: ""
-            # Access token lifetime (in seconds) 1800 (30 minutes)
-            # OAUTH_ACCESS_TOKEN_EXPIRE_SECONDS: 1800
-            # Refresh token lifetime (in seconds) 604800 (7 days)
-            # OAUTH_REFRESH_TOKEN_EXPIRE_SECONDS: 604800
-            # Invite token lifetime (in seconds) 600 (10 minutes)
-            # INVITE_TOKEN_EXPIRY_SECONDS: 600
-            # URL to the OIDC provider metadata endpoint
-            # OIDC_SERVER_METADATA_URL: ""
-            # Enable RP-initiated logout flow
-            # OIDC_RP_INITIATED_LOGOUT: false
-            # OIDC end-session endpoint override URL
-            # OIDC_END_SESSION_ENDPOINT: ""
-            # Attribute on OIDC user info used as the username preferred_username
-            # OIDC_USERNAME_ATTRIBUTE: preferred_username
-            # Skip click OIDC button on login page
-            # OIDC_AUTOLOGIN: false
-            # OIDC claim containing user roles
-            # OIDC_CLAIM_ROLES: ""
-            # Role value mapping to viewer permissions
-            # OIDC_ROLE_VIEWER: ""
-            # Role value mapping to editor permissions
-            # OIDC_ROLE_EDITOR: ""
-            # Role value mapping to admin permissions
-            # OIDC_ROLE_ADMIN: ""
-
-            # Background tasks
-
-            # Enable re-scanning of library when filesystem changes
+            # Enable rescanning of library when filesystem changes
             # ENABLE_RESCAN_ON_FILESYSTEM_CHANGE: false
-            # Delay before re-scanning library when filesystem changes (in minutes) 5
+
+            # Delay in minutes before rescanning library when filesystem changes
             # RESCAN_ON_FILESYSTEM_CHANGE_DELAY: 5
-            # Enable scheduled re-scanning of library
-            # ENABLE_SCHEDULED_RESCAN: false
-            # Cron expression for scheduled re-scanning
+
+            # Cron expression for scheduled rescanning
             # SCHEDULED_RESCAN_CRON: "0 3 * * *"
+
             # Enable scheduled updating of Switch TitleDB index
             # ENABLE_SCHEDULED_UPDATE_SWITCH_TITLEDB: false
+
             # Cron expression for scheduled updating of Switch TitleDB
             # SCHEDULED_UPDATE_SWITCH_TITLEDB_CRON: "0 4 * * *"
-            # Enable scheduled updating of LaunchBox metadata
-            # ENABLE_SCHEDULED_UPDATE_LAUNCHBOX_METADATA: false
-            # Cron expression for scheduled updating of LaunchBox metadata
-            # SCHEDULED_UPDATE_LAUNCHBOX_METADATA_CRON: "0 4 * * *"
-            # Enable scheduled conversion of images to WebP format
-            # ENABLE_SCHEDULED_CONVERT_IMAGES_TO_WEBP: false
-            # Cron expression for scheduled conversion of images to WebP format
-            # SCHEDULED_CONVERT_IMAGES_TO_WEBP_CRON: "0 4 * * *"
-            # Enable scheduled syncing of Retroachievements progress
-            # ENABLE_SCHEDULED_RETROACHIEVEMENTS_PROGRESS_SYNC: false
-            # Cron expression for scheduled syncing of Retroachievements progress
-            # SCHEDULED_RETROACHIEVEMENTS_PROGRESS_SYNC_CRON: "0 4 * * *"
+
+            # Enable scheduled updating of MAME XML index
+            # ENABLE_SCHEDULED_UPDATE_MAME_XML: false
+
+            # Cron expression for scheduled updating of MAME XML
+            # SCHEDULED_UPDATE_MAME_XML_CRON: "0 5 * * *"
+
+            DB_PORT: 3306
+            DB_NAME: "{{ .Values.mariadb.mariadbDatabase }}"
+            DB_USER: "{{ .Values.mariadb.mariadbUsername }}"
+            DB_HOST:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                key: plainhost
+            DB_PASSWD: "{{ .Values.mariadb.password }}"
+            REDIS_HOST:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                key: plainhost
+            REDIS_PASSWORD: "{{ .Values.redis.password }}"
+            REDIS_PORT: 6379
+            ROMM_AUTH_SECRET_KEY:
+              secretKeyRef:
+                name: romm-secrets
+                key: ROMM_AUTH_SECRET_KEY
 
 persistence:
   library:
@@ -223,11 +118,10 @@ persistence:
     enabled: true
     mountPath: /romm/assets
 
-cnpg:
-  main:
-    enabled: true
-    user: romm
-    database: romm
+mariadb:
+  enabled: true
+  mariadbUsername: romm
+  mariadbDatabase: romm
 
 redis:
   enabled: true

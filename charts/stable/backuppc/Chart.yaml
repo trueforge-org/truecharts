@@ -9,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 4.0.0
+appVersion: 6.0.4
 dependencies:
   - name: common
-    version: 29.5.3
+    version: 29.1.6
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -34,9 +34,9 @@ maintainers:
 name: backuppc
 sources:
   - https://backuppc.github.io/backuppc/index.html
-  - https://ghcr.io/adferrand/backuppc
-  - https://github.com/adferrand/docker-backuppc
+  - https://github.com/tiredofit/docker-backuppc
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/backuppc
+  - https://hub.docker.com/r/tiredofit/backuppc
 type: application
-version: 11.1.0
+version: 10.1.1
 

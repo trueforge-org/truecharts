@@ -33,7 +33,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Filter paths
         id: filter
@@ -56,38 +56,39 @@ jobs:
     needs: check_changes
     steps:
       - name: Checkout
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
 
       - name: Setup Forgetool
         shell: bash
         env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          GITHUB_TOKEN: ${{ inputs.token }}
         run: |-
           TAG=""
           if RELEASES_JSON="$(curl -fsSL \
-            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-            -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/trueforge-org/forgetool/releases/latest)"; then
-            TAG="$(jq -r '.tag_name // empty' <<< "${RELEASES_JSON}")"
+            https://api.github.com/repos/trueforge-org/forgetool/releases)"; then
+            TAG="$(jq -r '[.[]
+              | select(.prerelease == true)
+              | .tag_name
+              | select(test("^(forgetool-)?v[0-9]+\\.[0-9]+\\.[0-9]+-ALPHA[0-9]+$"))
+              | {tag: ., alpha: (capture("ALPHA(?<n>[0-9]+)$").n | tonumber)}
+            ] | if length > 0 then max_by(.alpha).tag else empty end' <<< "${RELEASES_JSON}")"
           fi
-          [ -n "${TAG}" ] && [ "${TAG}" != "null" ] || {
-            echo "Failed to determine latest stable forgetool release tag, falling back to v4.1.1"
-            TAG="v4.1.1"
-          }
+          [ -n "${TAG}" ] && [ "${TAG}" != "null" ] || TAG="v4.0.0-ALPHA28"
           VERSION="${TAG#v}"
           VERSION="${VERSION#forgetool-v}"
           case "$(uname -m)" in
             x86_64) ARCH="amd64" ;;
-            aarch64|arm64) ARCH="arm64" ;;
-            *) echo "Unsupported uname architecture: $(uname -m). Supported uname values: x86_64, aarch64, arm64." && exit 1 ;;
+            aarch64) ARCH="arm64" ;;
+            *) echo "Unsupported uname architecture: $(uname -m). Supported uname values: x86_64, aarch64." && exit 1 ;;
           esac
           curl -fsSL -o "${RUNNER_TEMP}/forgetool.tar.gz" "https://github.com/trueforge-org/forgetool/releases/download/${TAG}/forgetool_${VERSION}_linux_${ARCH}.tar.gz" || { echo "Failed to download forgetool release ${TAG} for linux_${ARCH}"; exit 1; }
           mkdir -p "${RUNNER_TEMP}/forgetool-bin"
           tar -xzf "${RUNNER_TEMP}/forgetool.tar.gz" -C "${RUNNER_TEMP}/forgetool-bin" forgetool || { echo "Failed to extract forgetool binary from archive"; exit 1; }
           chmod +x "${RUNNER_TEMP}/forgetool-bin/forgetool"
           echo "${RUNNER_TEMP}/forgetool-bin" >> "${GITHUB_PATH}"
+
 
       - name: Get Changelog Format Version
         shell: bash
@@ -144,7 +145,7 @@ jobs:
           find . -name '*.sh' | xargs chmod +x
 
       - name: Install Helm
-        uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310 # v5
+        uses: azure/setup-helm@dda3372f752e03dde6b3237bc9431cdc2f7a02a2 # v5
         with:
           version: v3.18.6
 
@@ -188,7 +189,7 @@ jobs:
 
       - name: Checkout website repo
         if: github.event_name == 'push'
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           repository: trueforge-org/websites
           path: website   # checkout into ./website

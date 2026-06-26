@@ -19,7 +19,7 @@ jobs:
     name: "Generate readme files"
     steps:
       - name: Checkout
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           token: ${{ secrets.OR_PAT }}
           fetch-depth: 1
@@ -37,17 +37,26 @@ jobs:
 
       - name: Setup Forgetool
         shell: bash
+        env:
+          GITHUB_TOKEN: ${{ inputs.token }}
         run: |-
-          TAG="$(curl -fsSL \
-            https://api.github.com/repos/trueforge-org/forgetool/releases/latest \
-            | jq -r '.tag_name')"
-          [ -n "${TAG}" ] && [ "${TAG}" != "null" ] || { echo "Failed to determine latest stable forgetool release tag"; exit 1; }
+          TAG=""
+          if RELEASES_JSON="$(curl -fsSL \
+            https://api.github.com/repos/trueforge-org/forgetool/releases)"; then
+            TAG="$(jq -r '[.[]
+              | select(.prerelease == true)
+              | .tag_name
+              | select(test("^(forgetool-)?v[0-9]+\\.[0-9]+\\.[0-9]+-ALPHA[0-9]+$"))
+              | {tag: ., alpha: (capture("ALPHA(?<n>[0-9]+)$").n | tonumber)}
+            ] | if length > 0 then max_by(.alpha).tag else empty end' <<< "${RELEASES_JSON}")"
+          fi
+          [ -n "${TAG}" ] && [ "${TAG}" != "null" ] || TAG="v4.0.0-ALPHA24"
           VERSION="${TAG#v}"
           VERSION="${VERSION#forgetool-v}"
           case "$(uname -m)" in
             x86_64) ARCH="amd64" ;;
-            aarch64|arm64) ARCH="arm64" ;;
-            *) echo "Unsupported uname architecture: $(uname -m). Supported uname values: x86_64, aarch64, arm64." && exit 1 ;;
+            aarch64) ARCH="arm64" ;;
+            *) echo "Unsupported uname architecture: $(uname -m). Supported uname values: x86_64, aarch64." && exit 1 ;;
           esac
           curl -fsSL -o "${RUNNER_TEMP}/forgetool.tar.gz" "https://github.com/trueforge-org/forgetool/releases/download/${TAG}/forgetool_${VERSION}_linux_${ARCH}.tar.gz" || { echo "Failed to download forgetool release ${TAG} for linux_${ARCH}"; exit 1; }
           mkdir -p "${RUNNER_TEMP}/forgetool-bin"
@@ -119,7 +128,7 @@ jobs:
     runs-on:
       group: default
     steps:
-      - uses: dessant/lock-threads@89ae32b08ed1a541efecbab17912962a5e38981c # v6
+      - uses: dessant/lock-threads@7266a7ce5c1df01b1c6db85bf8cd86c737dadbe7 # v6
         with:
           github-token: ${{ secrets.BOT_TOKEN }}
           issue-inactive-days: "7"

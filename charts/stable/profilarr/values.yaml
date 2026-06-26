@@ -1,37 +1,22 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
-  repository: ghcr.io/dictionarry-hub/profilarr
+  repository: docker.io/santiagosayshey/profilarr
   pullPolicy: IfNotPresent
-  tag: 2.0.8@sha256:bcec9c579358163004145105c2747d3513ae75a56cd8b6c3ac759a0166d5b4af
-securityContext:
-  container:
-    readOnlyRootFilesystem: false
-    runAsNonRoot: false
-    runAsUser: 0
-    runAsGroup: 0
+  tag: v1.1.4@sha256:8a514f8429cd33885166facc9eb6504fa9ded056c737609e5e8ef32ae0afb350
 service:
   main:
     ports:
       main:
         protocol: http
+        targetPort: 6868
         port: 6868
-workload:
-  main:
-    podSpec:
-      containers:
-        main:
-          env:
-            PORT: "{{ .Values.service.main.ports.main.port }}"
-            HOST: 0.0.0.0
-            # Auth mode (on, oidc, off)
-            # on is default
-            AUTH: "on"
-            # OIDC_CLIENT_ID: ""
-            # OIDC_CLIENT_SECRET: ""
-            # OIDC_DISCOVERY_URL: ""
-            # auto set url
-            ORIGIN: "{{ .Values.chartContext.appUrl }}"
 persistence:
   config:
     enabled: true
     mountPath: "/config"
+securityContext:
+  container:
+    runAsNonRoot: false
+    readOnlyRootFilesystem: false
+    runAsUser: 0
+    runAsGroup: 0
