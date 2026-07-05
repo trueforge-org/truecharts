@@ -2,7 +2,7 @@
 image:
   repository: docker.io/jlesage/czkawka
   pullPolicy: IfNotPresent
-  tag: v26.03.1@sha256:bb1012c8a162f79918eac88c7fd5e579b52e1464eeadc6fb2509363d2e569a10
+  tag: v26.07.1@sha256:dc2c53512e655de268137207e906189e88686a7545c4e63fe49d2d0580964c79
 securityContext:
   container:
     readOnlyRootFilesystem: false
@@ -74,3 +74,6 @@ persistence:
   trash:
     enabled: true
     mountPath: /trash
+  varrun:
+    enabled: false
+  
