@@ -63,6 +63,7 @@ service:
       main:
         port: 80
       health:
+        enabled: true
         port: 8080
 
 workload:
