@@ -62,9 +62,6 @@ service:
     ports:
       main:
         port: 80
-      health:
-        enabled: true
-        port: 8080
 
 workload:
   main:
@@ -72,28 +69,25 @@ workload:
       containers:
         main:
           env:
-            PROMETHEUS_URL: "http://prometheus-operated.kube-prometheus-stack.svc.cluster.local:9090"
-            SERVER_PORT: "{{ $.Values.service.main.ports.main.port }}"
-            HEALTH_PORT: "{{ $.Values.service.main.ports.health.port }}"
-            # SERVER_LOGGING    no  false   Enable HTTP request access logging
-            # SERVER_READ_TIMEOUT   no  — HTTP read timeout (e.g. 5s)
-            # SERVER_WRITE_TIMEOUT  no  — HTTP write timeout (e.g. 10s)
-            # QUERY_TIMEOUT no  30s Timeout applied to each Prometheus query
-            # LOG_LEVEL no  info    Log level: debug, info, warn, error
-            # LOG_FORMAT    no  json    Log format: json or text
+            KROMGO_PROMETHEUS_URL: "http://prometheus-operated.kube-prometheus-stack.svc.cluster.local:9090"
+            KROMGO_SERVER_PORT: "{{ $.Values.service.main.ports.main.port }}"
+            KROMGO_HEALTH_PORT: "{{ $.Values.service.main.ports.health.port }}"
+            # KROMGO_SERVER_LOGGING    no  false   Enable HTTP request access logging
+            # KROMGO_SERVER_READ_TIMEOUT   no  — HTTP read timeout (e.g. 5s)
+            # KROGMO_SERVER_WRITE_TIMEOUT  no  — HTTP write timeout (e.g. 10s)
+            # KROGMO_QUERY_TIMEOUT no  30s Timeout applied to each Prometheus query
+            # KROGMO_LOG_LEVEL no  info    Log level: debug, info, warn, error
+            # KROGMO_LOG_FORMAT    no  json    Log format: json or text
           probes:
             liveness:
               type: http
               path: "/healthz"
-              port: "{{ $.Values.service.main.ports.health.port }}"
             readiness:
               type: http
               path: "/readyz"
-              port: "{{ $.Values.service.main.ports.health.port }}"
             startup:
               type: http
               path: "/readyz"
-              port: "{{ $.Values.service.main.ports.health.port }}"
 
 configmap:
   kromgo-configfile:
