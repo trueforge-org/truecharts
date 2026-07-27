@@ -12,14 +12,14 @@ apiVersion: v2
 appVersion: 1.27.0
 dependencies:
   - name: common
-    version: 29.7.1
+    version: 29.10.4
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: memcached
-    version: 17.6.7
+    version: 17.7.0
     repository: oci://oci.trueforge.org/truecharts
     condition: memcached.enabled
     alias: ""
@@ -48,5 +48,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/gitea
   - https://hub.docker.com/r/gitea/gitea
 type: application
-version: 24.14.1
+version: 24.16.0
 

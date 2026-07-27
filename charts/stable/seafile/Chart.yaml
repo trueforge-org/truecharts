@@ -12,21 +12,21 @@ apiVersion: v2
 appVersion: 13.0.25
 dependencies:
   - name: common
-    version: 29.7.1
+    version: 29.10.4
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 18.6.2
+    version: 18.7.0
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
     tags: []
     import-values: []
   - name: valkey
-    version: 2.6.2
+    version: 2.7.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: redis
@@ -52,5 +52,5 @@ sources:
   - https://hub.docker.com/r/seafileltd/seafile-mc
   - https://seafile.com
 type: application
-version: 15.13.5
+version: 15.15.0
 

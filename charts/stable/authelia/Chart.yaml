@@ -12,14 +12,14 @@ apiVersion: v2
 appVersion: 4.39.20
 dependencies:
   - name: common
-    version: 29.7.1
+    version: 29.10.4
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: valkey
-    version: 2.6.2
+    version: 2.7.0
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: redis
@@ -53,5 +53,5 @@ sources:
   - https://github.com/authelia/chartrepo
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/authelia
 type: application
-version: 32.12.2
+version: 32.14.0
 
