@@ -61,6 +61,12 @@ service:
       main:
         port: 10082
         targetPort: 8080
+ingress:
+  main:
+    integrations:
+      homepage:
+        widget:
+          type: firefly
 persistence:
   data:
     enabled: true
