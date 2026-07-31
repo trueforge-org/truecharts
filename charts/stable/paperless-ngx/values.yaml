@@ -89,6 +89,7 @@ workload:
             USERMAP_UID: "{{ .Values.securityContext.container.PUID }}"
             USERMAP_GID: "{{ .Values.securityContext.pod.fsGroup }}"
             PAPERLESS_TIME_ZONE: "{{ .Values.TZ }}"
+            PAPERLESS_DBENGINE: "postgresql"
             PAPERLESS_DBNAME: "{{ .Values.cnpg.main.database }}"
             PAPERLESS_DBUSER: "{{ .Values.cnpg.main.user }}"
             PAPERLESS_DBPORT: "5432"
