@@ -1,0 +1,80 @@
+# yaml-language-server: $schema=./values.schema.json
+image:
+  repository: ghcr.io/bookorbit/bookorbit
+  pullPolicy: IfNotPresent
+  tag: "2.3.0"
+
+securityContext:
+  container:
+    runAsUser: 1000
+    runAsGroup: 1000
+    PUID: 1000
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
+  pod:
+    fsGroup: 1000
+
+service:
+  main:
+    ports:
+      main:
+        port: 3000
+        protocol: http
+
+database:
+  # Bookorbit's upstream image expects PostgreSQL-compatible connection settings
+  # via the POSTGRES_* environment variables.
+  # Supported modes in this chart:
+  # - external-postgres: use an existing PostgreSQL server (default)
+  # - cnpg: use a CNPG-managed PostgreSQL cluster
+  type: external-postgres
+  external:
+    host: bookorbit-postgres-rw.cnpg-system.svc.cluster.local
+    port: 5432
+    user: bookorbit
+    password: CHANGE_ME
+    database: bookorbit
+
+# Optional CNPG-backed database configuration.
+# Enable this by switching database.type to "cnpg".
+cnpg:
+  main:
+    enabled: false
+    user: bookorbit
+    database: bookorbit
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          probes:
+            liveness:
+              enabled: true
+              type: http
+              path: /api/v1/health
+            readiness:
+              enabled: true
+              type: http
+              path: /api/v1/health
+            startup:
+              enabled: true
+              type: http
+              path: /api/v1/health
+          env:
+            NODE_ENV: production
+            PORT: "{{ .Values.service.main.ports.main.port }}"
+            PUID: "{{ .Values.securityContext.container.PUID }}"
+            PGID: "{{ .Values.securityContext.pod.fsGroup }}"
+            POSTGRES_HOST: '{{ if eq .Values.database.type "cnpg" }}{{ .Values.cnpg.main.creds.host | trimAll "\"" }}{{ else }}{{ .Values.database.external.host }}{{ end }}'
+            POSTGRES_PORT: '{{ if eq .Values.database.type "cnpg" }}5432{{ else }}{{ .Values.database.external.port }}{{ end }}'
+            POSTGRES_USER: '{{ if eq .Values.database.type "cnpg" }}{{ .Values.cnpg.main.user }}{{ else }}{{ .Values.database.external.user }}{{ end }}'
+            POSTGRES_PASSWORD: '{{ if eq .Values.database.type "cnpg" }}{{ .Values.cnpg.main.creds.password }}{{ else }}{{ .Values.database.external.password }}{{ end }}'
+            POSTGRES_DB: '{{ if eq .Values.database.type "cnpg" }}{{ .Values.cnpg.main.database }}{{ else }}{{ .Values.database.external.database }}{{ end }}'
+            APP_URL: https://bookorbit.example.com
+            CLIENT_URL: https://bookorbit.example.com
+            LIBRARY_BROWSE_ROOT: /books
+            BOOK_DOCK_PATH: /data/book-dock
+            JWT_SECRET: CHANGE_ME
+            SETUP_BOOTSTRAP_TOKEN: CHANGE_ME
+            NODE_MAX_OLD_SPACE_SIZE: "2048"
