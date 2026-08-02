@@ -1,0 +1,84 @@
+# yaml-language-server: $schema=./values.schema.json
+image:
+  repository: ghcr.io/bookorbit/bookorbit
+  pullPolicy: IfNotPresent
+  tag: 2.3.0@sha256:62048532c82ad4cfe9b728707136f140516f0f35766c2dc97969f22ed67794ae
+
+service:
+  main:
+    ports:
+      main:
+        port: 3000
+        protocol: http
+
+bookorbit:
+  # Public URL used by emails and Kobo endpoints
+  appUrl: http://localhost:3000
+  # CORS origin when the frontend is served from a different domain than appUrl
+  clientUrl: http://localhost:3000
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          probes:
+            liveness:
+              path: /api/v1/health
+            readiness:
+              path: /api/v1/health
+            startup:
+              path: /api/v1/health
+          env:
+            NODE_ENV: production
+            PORT: "{{ .Values.service.main.ports.main.port }}"
+            POSTGRES_HOST:
+              secretKeyRef:
+                name: cnpg-main-urls
+                key: host
+            POSTGRES_PORT: "5432"
+            POSTGRES_USER: "{{ .Values.cnpg.main.user }}"
+            POSTGRES_PASSWORD:
+              secretKeyRef:
+                name: cnpg-main-user
+                key: password
+            POSTGRES_DB: "{{ .Values.cnpg.main.database }}"
+            APP_URL: "{{ .Values.bookorbit.appUrl }}"
+            CLIENT_URL: "{{ .Values.bookorbit.clientUrl }}"
+            LIBRARY_BROWSE_ROOT: "{{ .Values.persistence.books.mountPath }}"
+            BOOK_DOCK_PATH: "{{ .Values.persistence.bookdock.mountPath }}"
+            JWT_SECRET:
+              secretKeyRef:
+                name: bookorbit-secrets
+                key: JWT_SECRET
+            SETUP_BOOTSTRAP_TOKEN:
+              secretKeyRef:
+                name: bookorbit-secrets
+                key: SETUP_BOOTSTRAP_TOKEN
+            NODE_MAX_OLD_SPACE_SIZE: "2048"
+
+persistence:
+  data:
+    enabled: true
+    mountPath: /data
+  bookdock:
+    enabled: true
+    mountPath: /data/book-dock
+  books:
+    enabled: true
+    mountPath: /books
+
+# Bookorbit requires uuid-ossp, pg_trgm, unaccent, and vector (pgvector).
+# The default CNPG postgres image ships these extensions.
+cnpg:
+  main:
+    enabled: true
+    user: bookorbit
+    database: bookorbit
+    cluster:
+      initdb:
+        postInitApplicationSQL:
+          - CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+          - CREATE EXTENSION IF NOT EXISTS pg_trgm;
+          - CREATE EXTENSION IF NOT EXISTS unaccent;
+          - CREATE EXTENSION IF NOT EXISTS vector;

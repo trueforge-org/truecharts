@@ -2,12 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
       url: https://discord.com/invite/tVsPTHWTtr
-  truecharts.org/train: stable
+  truecharts.org/train: incubator
   trueforge.org/category: media
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
   trueforge.org/min_helm_version: "3.14"
-  trueforge.org/train: stable
+  trueforge.org/train: incubator
 apiVersion: v2
 appVersion: 2.3.0
 dependencies:
@@ -19,8 +19,8 @@ dependencies:
     tags: []
     import-values: []
 deprecated: false
-description: A self-hosted Bookorbit instance with PostgreSQL-backed settings and configurable persistence for media mounts.
-home: https://truecharts.org/charts/stable/bookorbit
+description: A self-hosted library and reading platform for ebooks, PDFs, audiobooks, and comics.
+home: https://truecharts.org/charts/incubator/bookorbit
 icon: https://truecharts.org/img/hotlink-ok/chart-icons/bookorbit.webp
 keywords:
   - bookorbit
@@ -34,7 +34,6 @@ name: bookorbit
 sources:
   - https://ghcr.io/bookorbit/bookorbit
   - https://github.com/bookorbit/bookorbit
-  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/bookorbit
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/incubator/bookorbit
 type: application
-version: 1.0.0
-
+version: 0.0.1
