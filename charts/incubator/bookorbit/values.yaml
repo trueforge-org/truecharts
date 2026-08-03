@@ -11,12 +11,6 @@ service:
         port: 3000
         protocol: http
 
-bookorbit:
-  # Public URL used by emails and Kobo endpoints
-  appUrl: http://localhost:3000
-  # CORS origin when the frontend is served from a different domain than appUrl
-  clientUrl: http://localhost:3000
-
 workload:
   main:
     podSpec:
@@ -43,18 +37,12 @@ workload:
                 name: cnpg-main-user
                 key: password
             POSTGRES_DB: "{{ .Values.cnpg.main.database }}"
-            APP_URL: "{{ .Values.bookorbit.appUrl }}"
-            CLIENT_URL: "{{ .Values.bookorbit.clientUrl }}"
+            APP_URL: http://localhost:3000
+            CLIENT_URL: http://localhost:3000
             LIBRARY_BROWSE_ROOT: "{{ .Values.persistence.books.mountPath }}"
             BOOK_DOCK_PATH: "{{ .Values.persistence.bookdock.mountPath }}"
-            JWT_SECRET:
-              secretKeyRef:
-                name: bookorbit-secrets
-                key: JWT_SECRET
-            SETUP_BOOTSTRAP_TOKEN:
-              secretKeyRef:
-                name: bookorbit-secrets
-                key: SETUP_BOOTSTRAP_TOKEN
+            JWT_SECRET: changeme
+            SETUP_BOOTSTRAP_TOKEN: changeme
             NODE_MAX_OLD_SPACE_SIZE: "2048"
 
 persistence:
