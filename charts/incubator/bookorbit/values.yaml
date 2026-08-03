@@ -1,0 +1,72 @@
+# yaml-language-server: $schema=./values.schema.json
+image:
+  repository: ghcr.io/bookorbit/bookorbit
+  pullPolicy: IfNotPresent
+  tag: 2.3.0@sha256:62048532c82ad4cfe9b728707136f140516f0f35766c2dc97969f22ed67794ae
+
+service:
+  main:
+    ports:
+      main:
+        port: 3000
+        protocol: http
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          probes:
+            liveness:
+              path: /api/v1/health
+            readiness:
+              path: /api/v1/health
+            startup:
+              path: /api/v1/health
+          env:
+            NODE_ENV: production
+            PORT: "{{ .Values.service.main.ports.main.port }}"
+            POSTGRES_HOST:
+              secretKeyRef:
+                name: cnpg-main-urls
+                key: host
+            POSTGRES_PORT: "5432"
+            POSTGRES_USER: "{{ .Values.cnpg.main.user }}"
+            POSTGRES_PASSWORD:
+              secretKeyRef:
+                name: cnpg-main-user
+                key: password
+            POSTGRES_DB: "{{ .Values.cnpg.main.database }}"
+            APP_URL: http://localhost:3000
+            CLIENT_URL: http://localhost:3000
+            LIBRARY_BROWSE_ROOT: "{{ .Values.persistence.books.mountPath }}"
+            BOOK_DOCK_PATH: "{{ .Values.persistence.bookdock.mountPath }}"
+            JWT_SECRET: changeme_changeme
+            SETUP_BOOTSTRAP_TOKEN: changeme
+            NODE_MAX_OLD_SPACE_SIZE: "2048"
+
+persistence:
+  data:
+    enabled: true
+    mountPath: /data
+  bookdock:
+    enabled: true
+    mountPath: /data/book-dock
+  books:
+    enabled: true
+    mountPath: /books
+
+# Bookorbit requires uuid-ossp, pg_trgm, unaccent, and vector (pgvector).
+# The default CNPG postgres image ships these extensions.
+cnpg:
+  main:
+    enabled: true
+    user: bookorbit
+    database: bookorbit
+    cluster:
+      initdb:
+        postInitApplicationSQL:
+          - CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+          - CREATE EXTENSION IF NOT EXISTS pg_trgm;
+          - CREATE EXTENSION IF NOT EXISTS unaccent;
+          - CREATE EXTENSION IF NOT EXISTS vector;
