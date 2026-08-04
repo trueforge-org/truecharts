@@ -1,0 +1,39 @@
+annotations:
+  artifacthub.io/links: |-
+    - name: support
+      url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/train: stable
+  trueforge.org/category: media
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: stable
+apiVersion: v2
+appVersion: 2.3.0
+dependencies:
+  - name: common
+    version: 29.10.4
+    repository: oci://oci.trueforge.org/truecharts
+    condition: ""
+    alias: ""
+    tags: []
+    import-values: []
+deprecated: false
+description: A self-hosted library and reading platform for ebooks, PDFs, audiobooks, and comics.
+home: https://truecharts.org/charts/stable/bookorbit
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/bookorbit.webp
+keywords:
+  - bookorbit
+  - MediaApp-Other
+kubeVersion: '>=1.33.0-0'
+maintainers:
+  - name: TrueCharts
+    email: info@truecharts.org
+    url: https://truecharts.org
+name: bookorbit
+sources:
+  - https://ghcr.io/bookorbit/bookorbit
+  - https://github.com/bookorbit/bookorbit
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/bookorbit
+type: application
+version: 1.0.0
