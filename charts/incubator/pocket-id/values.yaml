@@ -4,12 +4,6 @@ image:
   pullPolicy: IfNotPresent
   tag: v2.12.0@sha256:76c53d6338187851813df37e0f107aa31a12914655d3c02d2bdcd9b33ed232e9
 
-securityContext:
-  container:
-    readOnlyRootFilesystem: false
-    runAsUser: 1000
-    runAsGroup: 1000
-
 service:
   main:
     ports:
@@ -25,19 +19,9 @@ persistence:
 
 workload:
   main:
-    type: StatefulSet
-    replicas: 1
-    strategy: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 1
-      partition: 0
     podSpec:
       containers:
         main:
-          envFrom:
-            - secretRef:
-                name: pocketid-env
-                expandObjectName: false
           probes:
             liveness:
               path: /healthz
@@ -54,3 +38,5 @@ workload:
             ANALYTICS_DISABLED: "true"
             VERSION_CHECK_DISABLED: "false"
             MAXMIND_LICENSE_KEY: ""
+            ENCRYPTION_KEY: changeme_changeme!!
+            DB_CONNECTION_STRING: file:data/pocket-id.db
