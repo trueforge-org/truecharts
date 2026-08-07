@@ -1,0 +1,56 @@
+# yaml-language-server: $schema=./values.schema.json
+image:
+  repository: ghcr.io/pocket-id/pocket-id
+  pullPolicy: IfNotPresent
+  tag: v2.12.0@sha256:76c53d6338187851813df37e0f107aa31a12914655d3c02d2bdcd9b33ed232e9
+
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
+    runAsUser: 1000
+    runAsGroup: 1000
+
+service:
+  main:
+    ports:
+      main:
+        port: 1411
+        protocol: http
+        targetPort: 1411
+
+persistence:
+  data:
+    enabled: true
+    mountPath: /app/data
+
+workload:
+  main:
+    type: StatefulSet
+    replicas: 1
+    strategy: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      partition: 0
+    podSpec:
+      containers:
+        main:
+          envFrom:
+            - secretRef:
+                name: pocketid-env
+                expandObjectName: false
+          probes:
+            liveness:
+              path: /healthz
+              type: http
+            readiness:
+              path: /healthz
+              type: http
+            startup:
+              path: /healthz
+              type: http
+          env:
+            APP_URL: "{{ .Values.chartContext.appUrl }}"
+            TRUST_PROXY: "true"
+            ANALYTICS_DISABLED: "true"
+            VERSION_CHECK_DISABLED: "false"
+            MAXMIND_LICENSE_KEY: ""
