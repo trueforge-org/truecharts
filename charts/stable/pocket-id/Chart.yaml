@@ -2,12 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  truecharts.org/train: incubator
+  truecharts.org/train: stable
   trueforge.org/category: auth
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
   trueforge.org/min_helm_version: "3.14"
-  trueforge.org/train: incubator
+  trueforge.org/train: stable
 apiVersion: v2
 appVersion: 2.13.0
 dependencies:
@@ -20,7 +20,7 @@ dependencies:
     import-values: []
 deprecated: false
 description: Pocket ID is a simple OIDC provider that supports passkeys and LDAP.
-home: https://truecharts.org/charts/incubator/pocket-id
+home: https://truecharts.org/charts/stable/pocket-id
 icon: https://truecharts.org/img/hotlink-ok/chart-icons/pocket-id.webp
 keywords:
   - pocket-id
@@ -35,7 +35,6 @@ name: pocket-id
 sources:
   - https://ghcr.io/pocket-id/pocket-id
   - https://github.com/pocket-id/pocket-id
-  - https://github.com/trueforge-org/truecharts/tree/master/charts/incubator/pocket-id
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/pocket-id
 type: application
-version: 0.1.0
-
+version: 1.0.0
