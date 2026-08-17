@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
   repository: ghcr.io/gethomepage/homepage
-  tag: v1.13.2@sha256:a0b71c8e757298d02560186bab9fbe3fc2d375c523a62cc1019177b37e48aa28
+  tag: v2.0.0@sha256:638dacf5c844e908dc06c1fd57a2b5694f8efd91f91f152829ea0c2f547458f2
   pullPolicy: IfNotPresent
 
 workload:
@@ -12,7 +12,7 @@ workload:
         main:
           env:
             # Set this to your host (example: home.mydomain.com)
-            HOMEPAGE_ALLOWED_HOSTS: "localhost"
+            HOMEPAGE_ALLOWED_HOSTS: "*"
       initContainers:
         init-config:
           enabled: true
