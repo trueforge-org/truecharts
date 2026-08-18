@@ -15,15 +15,15 @@ workload:
             HOMEPAGE_ALLOWED_HOSTS: "localhost"
           probes:
             liveness:
-              path:  /api/healthcheck
+              path: /api/healthcheck
               httpHeaders:
                 Host: localhost:3000
             readiness:
-              path:  /api/healthcheck
+              path: /api/healthcheck
               httpHeaders:
                 Host: localhost:3000
             startup:
-              path:  /api/healthcheck
+              path: /api/healthcheck
               httpHeaders:
                 Host: localhost:3000
       initContainers:
