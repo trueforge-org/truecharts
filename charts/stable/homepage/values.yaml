@@ -12,7 +12,20 @@ workload:
         main:
           env:
             # Set this to your host (example: home.mydomain.com)
-            HOMEPAGE_ALLOWED_HOSTS: "*"
+            HOMEPAGE_ALLOWED_HOSTS: "localhost"
+          probes:
+            liveness:
+              path:  /api/healthcheck
+              httpHeaders:
+                Host: localhost:3000
+            readiness:
+              path:  /api/healthcheck
+              httpHeaders:
+                Host: localhost:3000
+            startup:
+              path:  /api/healthcheck
+              httpHeaders:
+                Host: localhost:3000
       initContainers:
         init-config:
           enabled: true
