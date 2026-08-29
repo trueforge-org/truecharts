@@ -12,6 +12,14 @@ monero:
   enablednsblocklist: true
   pruneblockchain: true
 
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            HOME: /home/monero
+
 securityContext:
   container:
     readOnlyRootFilesystem: false
