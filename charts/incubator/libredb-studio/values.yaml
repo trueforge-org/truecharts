@@ -3,12 +3,6 @@ image:
   pullPolicy: IfNotPresent
   repository: ghcr.io/libredb/libredb-studio
   tag: 0.15.0@sha256:4b696f960ac147861c789d2008f41e66a1b1e4bf0c30dcce1c187122d8cb5bfe
-securityContext:
-  container:
-    readOnlyRootFilesystem: false
-    runAsNonRoot: true
-    runAsGroup: 1001
-    runAsUser: 1001
 workload:
   main:
     podSpec:
