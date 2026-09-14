@@ -103,8 +103,6 @@ workload:
           enabled: true
           primary: true
           imageSelector: "{{ .Values.immich.mlImageType }}"
-          resources:
-            excludeExtra: true
           securityContext:
             capabilities:
               disableS6Caps: true
