@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=./values.schema.json
+image:
+  repository: ghcr.io/c4illin/convertx
+  tag: v0.18.0@sha256:b515b04bfd25298a5cdc775b2fcd48b9399bab658ce13e2598b65df1b16098c8
+  pullPolicy: IfNotPresent
+service:
+  main:
+    ports:
+      main:
+        port: 3000
+        targetPort: 3000
+persistence:
+  data:
+    enabled: true
+    mountPath: /app/data
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            HTTP_ALLOWED: "true"
