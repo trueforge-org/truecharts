@@ -2,12 +2,12 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  truecharts.org/train: incubator
+  truecharts.org/train: stable
   trueforge.org/category: productivity
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
   trueforge.org/min_helm_version: "3.14"
-  trueforge.org/train: incubator
+  trueforge.org/train: stable
 apiVersion: v2
 appVersion: 6.87.0
 dependencies:
@@ -20,7 +20,7 @@ dependencies:
     import-values: []
 deprecated: false
 description: Poznote is a self-hosted note-taking and knowledge base application with a web editor, attachments, snapshots, backups and optional OIDC authentication.
-home: https://truecharts.org/charts/incubator/poznote
+home: https://truecharts.org/charts/stable/poznote
 icon: https://truecharts.org/img/hotlink-ok/chart-icons/poznote.webp
 keywords:
   - poznote
@@ -37,7 +37,6 @@ name: poznote
 sources:
   - https://ghcr.io/timothepoznanski/poznote
   - https://github.com/timothepoznanski/poznote
-  - https://github.com/trueforge-org/truecharts/tree/master/charts/incubator/poznote
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/poznote
 type: application
-version: 0.3.0
-
+version: 1.0.0
