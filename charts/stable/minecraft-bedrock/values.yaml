@@ -59,7 +59,6 @@ workload:
             VERSION: "LATEST"
             SERVER_NAME: "TrueCharts Dedicated Server!"
             SERVER_PORT: "{{ .Values.service.main.ports.main.port }}"
-            SERVER_PORT_V6: 19133
             GAMEMODE: "survival"
             DIFFICULTY: "easy"
             LEVEL_TYPE: "DEFAULT"
@@ -67,6 +66,7 @@ workload:
             MAX_PLAYERS: 10
             ONLINE_MODE: true
             WHITE_LIST: false
+            TRANSPORT: raknet
             # WHITE_LIST_USERS: "USER:XUID,USER:XUID"
             VIEW_DISTANCE: 32
             TICK_DISTANCE: 4
