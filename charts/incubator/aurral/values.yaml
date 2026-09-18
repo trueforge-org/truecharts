@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=./values.schema.json
+image:
+  pullPolicy: IfNotPresent
+  repository: ghcr.io/lklynet/aurral
+  tag: 2.9.0@sha256:17534a73d5d03e892e2ac9d06ac8e543b61a13f0f28861d0ce1c48deb92ee00e
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          probes:
+            liveness:
+              type: http
+              path: /api/health
+            readiness:
+              type: http
+              path: /api/health
+            startup:
+              type: http
+              path: /api/health
+
+service:
+  main:
+    ports:
+      main:
+        port: 3001
+        protocol: http
+        targetPort: 3001
+
+persistence:
+  config:
+    enabled: true
+    mountPath: /config
+
+  # The image ships fontconfig (fonts-dejavu-core, fonts-noto-color-emoji) and
+  # the container runs with a read-only root filesystem, so fontconfig's cache
+  # directory needs a writable mount.
+  varcache:
+    enabled: true
+    type: emptyDir
+    mountPath: /var/cache
