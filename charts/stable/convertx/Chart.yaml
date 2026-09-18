@@ -9,7 +9,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: v0.18.0
+appVersion: 0.18.0
 dependencies:
   - name: common
     version: 29.20.0
@@ -32,6 +32,7 @@ maintainers:
     url: https://truecharts.org
 name: convertx
 sources:
+  - https://ghcr.io/c4illin/convertx
   - https://github.com/c4illin/ConvertX
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/convertx
 type: application
