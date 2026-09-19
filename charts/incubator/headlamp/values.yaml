@@ -1,0 +1,165 @@
+# yaml-language-server: $schema=./values.schema.json
+image:
+  repository: ghcr.io/headlamp-k8s/headlamp
+  tag: v0.45.0@sha256:db3f0e0fc58d358d41daa3fe7fc852437552c7ee873c3645470f7b86a8e0db49
+  pullPolicy: IfNotPresent
+pluginImage:
+  repository: oci.trueforge.org/containerforge/node
+  tag: rolling@sha256:bf1dd21596188c3e2c7731be37699100bc9db0ae0a5384d24f8bcd1afce81665
+  pullPolicy: IfNotPresent
+
+headlamp:
+  inCluster: true
+  inClusterContextName: "main"
+  sessionTTL: 86400
+  logLevel: info  # debug, info, warn, error
+  auth:
+    # See: https://headlamp.dev/docs/latest/installation/in-cluster/identity-aware-proxy
+    proxy:
+      enabled: false
+      usernameHeader: X-Forwarded-username
+      groupHeader: X-Forwarded-groups
+      emailHeader: X-Forwarded-email
+      tokenHeader: X-Forwarded-Id-Token
+    # UNSAFE: authenticate every Headlamp user as the pod's service account
+    # when running in-cluster. This disables per-user authentication and is
+    # only safe behind an auth proxy
+    unsafeServiceToken:
+      enabled: false
+      allowEditing: false
+  plugins:
+    flux:
+      enabled: true
+      source: https://artifacthub.io/packages/headlamp/headlamp-plugins/headlamp_flux
+      # renovate: datasource=docker depName=ghcr.io/headlamp-k8s/headlamp-plugin-flux
+      version: 0.6.0
+    certManager:
+      enabled: true
+      source: https://artifacthub.io/packages/headlamp/headlamp-plugins/headlamp_cert-manager
+      # renovate: datasource=docker depName=ghcr.io/headlamp-k8s/headlamp-plugin-cert-manager
+      version: 0.1.0
+
+configmap:
+  pluginconfig:
+    enabled: true
+    data:
+      plugins.yaml: |
+        plugins:
+          {{- range $name, $plugin := .Values.headlamp.plugins }}
+          {{- if $plugin.enabled }}
+          - name: {{ $name | kebabcase }}
+            source: {{ $plugin.source | quote }}
+            version: {{ $plugin.version | quote }}
+          {{- end -}}
+          {{- end }}
+
+podOptions:
+  automountServiceAccountToken: true
+  priorityClassName: system-cluster-critical
+
+workload:
+  main:
+    type: Deployment
+    podSpec:
+      initContainers:
+        download-plugins:
+          enabled: true
+          type: init
+          imageSelector: pluginImage
+          command:
+            - sh
+            - -c
+            - |
+              set -eu
+
+              # Use a writable cache directory
+              export NPM_CONFIG_CACHE=/tmp/npm-cache
+              mkdir -p "$NPM_CONFIG_CACHE"
+              # Use a writable config directory
+              export NPM_CONFIG_USERCONFIG=/tmp/npm-userconfig
+              mkdir -p "$NPM_CONFIG_USERCONFIG"
+
+              echo "Installing plugins from config..."
+              cat "{{ tpl .Values.persistence.pluginconfig.mountPath $ }}"
+              echo
+              npx --yes @headlamp-k8s/pluginctl@latest install \
+                --config "{{ tpl .Values.persistence.pluginconfig.mountPath $ }}" \
+                --folderName "{{ tpl .Values.persistence.plugins.mountPath $ }}"
+      containers:
+        main:
+          args:
+            - -port={{ tpl (toString .Values.service.main.ports.main.targetPort) $}}
+            - -plugins-dir={{ tpl .Values.persistence.plugins.mountPath $ }}
+            - -in-cluster={{ .Values.headlamp.inCluster }}
+            - -in-cluster-context-name={{ .Values.headlamp.inClusterContextName }}
+            - -session-ttl={{ .Values.headlamp.sessionTTL }}
+            - -log-level={{ .Values.headlamp.logLevel }}
+            - -unsafe-use-service-account-token={{ tpl (toString .Values.rbac.main.enabled) $ }}
+            # Proxy auth
+            - -proxy-auth-username-header={{ tpl .Values.headlamp.auth.proxy.usernameHeader $ }}
+            - -proxy-auth-group-header={{ tpl .Values.headlamp.auth.proxy.groupHeader $ }}
+            - -proxy-auth-email-header={{ tpl .Values.headlamp.auth.proxy.emailHeader $ }}
+            - -proxy-auth-token-header={{ tpl .Values.headlamp.auth.proxy.tokenHeader $ }}
+            - -proxy-auth={{ .Values.headlamp.auth.proxy.enabled }}
+          probes:
+            liveness:
+              enabled: true
+              type: http
+              port: "{{ tpl .Values.service.main.ports.main.targetPort $ }}"
+            readiness:
+              enabled: true
+              type: http
+              port: "{{ tpl .Values.service.main.ports.main.targetPort $ }}"
+            startup:
+              enabled: true
+              type: http
+              port: "{{ tpl .Values.service.main.ports.main.targetPort $ }}"
+
+service:
+  main:
+    enabled: true
+    ports:
+      main:
+        enabled: true
+        port: "80"
+        targetPort: "4466"
+        protocol: http
+
+persistence:
+  config:
+    enabled: true
+    type: emptyDir
+    medium: Memory
+    mountPath: /.config
+  plugins:
+    enabled: true
+    type: emptyDir
+    medium: Memory
+    mountPath: /headlamp/plugins
+    targetSelectAll: true
+  pluginconfig:
+    enabled: true
+    type: configmap
+    objectName: pluginconfig
+    subPath: plugins.yaml
+    mountPath: '{{ tpl .Values.persistence.plugins.mountPath $ }}/{{ .Values.persistence.pluginconfig.subPath }}'
+    readOnly: true
+    targetSelectAll: true
+
+serviceAccount:
+  main:
+    enabled: true
+    primary: true
+rbac:
+  main:
+    enabled: '{{ and .Values.headlamp.auth.unsafeServiceToken.enabled .Values.headlamp.inCluster }}'
+    primary: true
+    clusterWide: true
+    serviceAccounts: ["main"]
+    rules:
+      - apiGroups: ['*']
+        resources: ['*']
+        verbs:
+          - "get"
+          - "list"
+          - '{{ if .Values.headlamp.auth.unsafeServiceToken.allowEditing }}*{{ else }}watch{{ end }}'
