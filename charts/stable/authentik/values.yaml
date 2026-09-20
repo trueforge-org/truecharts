@@ -201,7 +201,7 @@ workload:
             LABEL: authentik_blueprint
             LABEL_VALUE: "1"
             LOG_LEVEL: info
-            FOLDER:  "{{ tpl .Values.persistence.blueprints.targetSelector.worker.blueprints.mountPath $ }}"
+            FOLDER: "{{ tpl .Values.persistence.blueprints.targetSelector.worker.blueprints.mountPath $ }}"
             FOLDER_ANNOTATION: authentik_blueprint_dir
             RESOURCE: both
             NAMESPACE: "ALL"
