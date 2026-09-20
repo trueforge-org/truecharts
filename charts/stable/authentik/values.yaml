@@ -99,7 +99,7 @@ serviceAccount:
       - worker
 rbac:
   blueprints:
-    enabled: {{ .Values.workload.worker.podSpec.containers.blueprints.enabled }}
+    enabled: '{{ .Values.workload.worker.podSpec.containers.blueprints.enabled }}'
     primary: true
     clusterWide: true
     rules:
