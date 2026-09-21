@@ -19,6 +19,10 @@ proxyImage:
   repository: ghcr.io/goauthentik/proxy
   tag: 2026.8.2@sha256:b76e672ad76cbdb30705f242422bec47df903fe9568fac207ba23e9d8713c59e
   pullPolicy: IfNotPresent
+sidecarImage:
+  repository: ghcr.io/kiwigrid/k8s-sidecar
+  tag: 2.11.2@sha256:2912be006f62f9ea080194cf6d3afcd90daead8d101d0ba686a137a849f6a4f6
+
 authentik:
   credentials:
     # Only works on initial install
@@ -82,7 +86,27 @@ authentik:
     ldap:
       enabled: false
       token: ""
+
 # ===== DO NOT EDIT BELOW THIS LINE =====
+podOptions:
+  automountServiceAccountToken: true
+
+serviceAccount:
+  blueprints:
+    enabled: true
+    primary: true
+    targetSelector:
+      - worker
+rbac:
+  blueprints:
+    enabled: '{{ .Values.workload.worker.podSpec.containers.blueprints.enabled }}'
+    primary: true
+    clusterWide: true
+    rules:
+      - apiGroups: [""]
+        resources: ["configmaps", "secrets"]
+        verbs: ["get", "watch", "list"]
+
 workload:
   # ===== Server =====
   main:
@@ -168,6 +192,34 @@ workload:
               command:
                 - /lifecycle/ak
                 - healthcheck
+        blueprints:
+          enabled: true
+          imageSelector: sidecarImage
+          env:
+            IGNORE_ALREADY_PROCESSED: false
+            METHOD: WATCH
+            LABEL: authentik_blueprint
+            LABEL_VALUE: "1"
+            LOG_LEVEL: info
+            FOLDER: "{{ tpl .Values.persistence.blueprints.targetSelector.worker.blueprints.mountPath $ }}"
+            FOLDER_ANNOTATION: authentik_blueprint_dir
+            RESOURCE: both
+            NAMESPACE: "ALL"
+            UNIQUE_FILENAMES: false
+          probes:
+            liveness:
+              enabled: false
+            readiness:
+              enabled: false
+            startup:
+              enabled: false
+          resources:
+            requests:
+              cpu: 10m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 1536Mi
   # ===== PROXY =====
   proxy:
     enabled: true
@@ -449,6 +501,8 @@ persistence:
           # if `overwriteDefaultBlueprints` is set to `true
           # Otherwise it will respect the value specified here
           mountPath: /blueprints/custom
+        blueprints:
+          mountPath: "{{ tpl .Values.persistence.blueprints.targetSelector.worker.worker.mountPath $ }}"
   certs:
     enabled: true
     mountPath: /certs
