@@ -32,7 +32,7 @@
     {{- fail "Middleware (forward-auth) - Expected [address] to be set" -}}
   {{- end }}
   forwardAuth:
-    address: {{ $mw.address }}
+    address: {{ tpl $mw.address $rootCtx }}
     trustForwardHeader: {{ $mw.trustForwardHeader }}
 
     {{- include "tc.v1.common.class.traefik.middleware.helper.string" (dict "key" "authResponseHeadersRegex" "value" $mw.authResponseHeadersRegex) | nindent 4 }}
