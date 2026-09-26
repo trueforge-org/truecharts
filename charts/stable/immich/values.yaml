@@ -60,10 +60,17 @@ workload:
             DB_USERNAME: "{{ .Values.cnpg.main.user }}"
             DB_DATABASE_NAME: "{{ .Values.cnpg.main.database }}"
             DB_HOSTNAME: "{{ .Values.cnpg.main.creds.host }}"
-            DB_PASSWORD: "{{ .Values.cnpg.main.creds.password }}"
+            DB_PASSWORD:
+              secretKeyRef:
+                name: cnpg-main-user
+                key: password
             DB_PORT: "5432"
             REDIS_HOSTNAME: '{{ .Values.redis.creds.plainhost | trimAll "\"" }}'
-            REDIS_PASSWORD: '{{ .Values.redis.creds.redisPassword | trimAll "\"" }}'
+            REDIS_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                key: redis-password
             REDIS_PORT: "6379"
             REDIS_DBINDEX: "0"
           probes:
@@ -166,10 +173,17 @@ workload:
             DB_USERNAME: "{{ .Values.cnpg.main.user }}"
             DB_DATABASE_NAME: "{{ .Values.cnpg.main.database }}"
             DB_HOSTNAME: "{{ .Values.cnpg.main.creds.host }}"
-            DB_PASSWORD: "{{ .Values.cnpg.main.creds.password }}"
+            DB_PASSWORD:
+              secretKeyRef:
+                name: cnpg-main-user
+                key: password
             DB_PORT: "5432"
             REDIS_HOSTNAME: '{{ .Values.redis.creds.plainhost | trimAll "\"" }}'
-            REDIS_PASSWORD: '{{ .Values.redis.creds.redisPassword | trimAll "\"" }}'
+            REDIS_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                key: redis-password
             REDIS_PORT: "6379"
             REDIS_DBINDEX: "0"
           probes:
