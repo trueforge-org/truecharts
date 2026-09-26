@@ -29,6 +29,12 @@ persistence:
 securityContext:
   container:
     readOnlyRootFilesystem: false
+minio:
+  # Root credentials. They are stored in the <release>-root Secret and read from there by the
+  # container, never as plain env strings.
+  rootUser: "minio"
+  rootPassword: "changeme"
+
 workload:
   main:
     podSpec:
@@ -57,7 +63,13 @@ workload:
             - "--console-address"
             - ":10107"
           env:
-            MINIO_ROOT_USER: "minio"
+            MINIO_ROOT_USER:
+              secretKeyRef:
+                name: root
+                key: user
             MINIO_BROWSER_REDIRECT_URL: ""
             MINIO_SERVER_URL: ""
-            MINIO_ROOT_PASSWORD: "changeme"
+            MINIO_ROOT_PASSWORD:
+              secretKeyRef:
+                name: root
+                key: password
