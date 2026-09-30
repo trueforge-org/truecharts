@@ -42,6 +42,13 @@
   ],
   // Main Renovate configuration that lists package rules for various paths
   "packageRules": [
+    {
+      "description": "Ignore unavailable MinIO Docker Hub image",
+      "matchDatasources": ["docker"],
+      "matchFileNames": ["charts/stable/minio/values.yaml"],
+      "matchPackageNames": ["docker.io/minio/minio", "minio/minio"],
+      "enabled": false
+    }
   ],
   "ignoreDeps": [
     // List any dependencies to ignore globally if needed
