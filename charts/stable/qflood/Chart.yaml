@@ -9,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: latest
+appVersion: 5.2.3
 dependencies:
   - name: common
-    version: 29.20.0
+    version: 29.21.3
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -33,8 +33,8 @@ maintainers:
 name: qflood
 sources:
   - https://ghcr.io/engels74/qflood
-  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/qflood
   - https://github.com/engels74/qflood
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/qflood
 type: application
-version: 10.0.0
+version: 10.1.0
 
