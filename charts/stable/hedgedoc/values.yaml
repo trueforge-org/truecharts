@@ -2,7 +2,7 @@
 image:
   repository: quay.io/hedgedoc/hedgedoc
   pullPolicy: IfNotPresent
-  tag: 1.10.3
+  tag: 1.12.0@sha256:89bd85d7817fb3e3a4aafdd85aefb0fbb20b848f6dbf1d9ee0d72fdcb76710cc
 service:
   main:
     ports:
@@ -71,6 +71,7 @@ workload:
             # CMD_SESSION_LIFE: 1209600000
             # CMD_EMAIL: true
             # CMD_ALLOW_EMAIL_REGISTER: true
+            # CMD_RATE_LIMIT_USING_CLOUDFLARE: true
             # CMD_DROPBOX_CLIENTID: ""
             # CMD_DROPBOX_CLIENTSECRET: ""
             # CMD_FACEBOOK_CLIENTID: ""
