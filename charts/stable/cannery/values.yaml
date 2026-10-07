@@ -21,10 +21,8 @@ workload:
             HOST: "cannery.local"
             # ecto://postgres:postgres@cannery-db/cannery
             DATABASE_URL: '{{ printf "ecto://%s:%s@%s:5432/%s" .Values.cnpg.main.user  .Values.cnpg.main.creds.password (.Values.cnpg.main.creds.host | trimAll "\"") .Values.cnpg.main.database }}'
-            SECRET_KEY_BASE:
-              secretKeyRef:
-                name: cannery-secrets
-                key: SECRET_KEY_BASE
+            CLOAK_KEY: "change-me-32-random-bytes-base64"
+            SECRET_KEY_BASE: "change-me-this-is-really-important-seriously-change-it-please-use-a-64-byte-secret-key"
             # Ecto should use ipv6 to connect to PostgreSQL
             ECTO_IPV6: false
             # Controls the pool size to use with PostgreSQL. Defaults to 10.
