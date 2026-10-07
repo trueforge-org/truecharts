@@ -8,6 +8,13 @@ config:
   admin_username: "admin"
   admin_password: "changeme"
 
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
+    runAsNonRoot: false
+    runAsGroup: 0
+    runAsUser: 0
+
 service:
   main:
     ports:
@@ -28,7 +35,7 @@ workload:
           env:
             ADMIN_USERNAME: "{{ .Values.config.admin_username }}"
             ADMIN_PASSWORD: "{{ .Values.config.admin_password }}"
-            DATA_DIR: "/data/archivebox"
+            DATA_DIR: "/data"
 
 persistence:
   data:
