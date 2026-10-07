@@ -8,6 +8,10 @@ config:
   admin_username: "admin"
   admin_password: "changeme"
 
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
+
 service:
   main:
     ports:
