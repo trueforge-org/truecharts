@@ -28,7 +28,7 @@ workload:
           env:
             ADMIN_USERNAME: "{{ .Values.config.admin_username }}"
             ADMIN_PASSWORD: "{{ .Values.config.admin_password }}"
-            DATA_DIR: "/data"
+            DATA_DIR: "/data/archivebox"
 
 persistence:
   data:
