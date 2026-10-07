@@ -2,7 +2,7 @@
 image:
   repository: docker.io/shibaobun/cannery
   pullPolicy: IfNotPresent
-  tag: 0.10.0@sha256:dbaa9711d2b5f0042b21b833dd2312bca4dc4dd6d5c6baf4c9a796f579792846
+  tag: 1.0.0@sha256:bba7783fefabf0eff560e638084c51b138a1252386ba73ecb48110c7ed04cf73
 service:
   main:
     ports:
@@ -14,6 +14,13 @@ workload:
     podSpec:
       containers:
         main:
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - |
+              mkdir -p "${UPLOADS_PATH}/tmp"
+              exec /app/bin/cannery start        
           env:
             PORT: "{{ .Values.service.main.ports.main.port }}"
             # HOST must be set!
@@ -45,6 +52,11 @@ workload:
             EMAIL_FROM: "no-reply@HOST"
             # Sets the sender name in sent emails. Defaults to "Cannery".
             EMAIL_NAME: Cannery
+
+persistence:
+  uploads:
+    enabled: true
+    mountPath: "/var/cannery/uploads"
 cnpg:
   main:
     enabled: true
