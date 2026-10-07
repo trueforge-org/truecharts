@@ -14,6 +14,13 @@ workload:
     podSpec:
       containers:
         main:
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - |
+              mkdir -p "${UPLOADS_PATH}/tmp"
+              exec /app/bin/cannery start        
           env:
             PORT: "{{ .Values.service.main.ports.main.port }}"
             # HOST must be set!
@@ -45,11 +52,11 @@ workload:
             EMAIL_FROM: "no-reply@HOST"
             # Sets the sender name in sent emails. Defaults to "Cannery".
             EMAIL_NAME: Cannery
-            UPLOADS_PATH: "/cannery/uploads"
+
 persistence:
   uploads:
     enabled: true
-    mountPath: "/cannery/uploads"
+    mountPath: "/var/cannery/uploads"
 cnpg:
   main:
     enabled: true
