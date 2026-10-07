@@ -8,10 +8,6 @@ config:
   admin_username: "admin"
   admin_password: "changeme"
 
-securityContext:
-  container:
-    readOnlyRootFilesystem: false
-
 service:
   main:
     ports:
@@ -33,8 +29,12 @@ workload:
             ADMIN_USERNAME: "{{ .Values.config.admin_username }}"
             ADMIN_PASSWORD: "{{ .Values.config.admin_password }}"
             DATA_DIR: "/data"
+            CONFIG_DIR: "/config"
 
 persistence:
   data:
     enabled: true
     mountPath: "/data"
+  config:
+    enabled: true
+    mountPath: "/config"
