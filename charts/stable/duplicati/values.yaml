@@ -27,6 +27,7 @@ workload:
           env:
             DUPLICATI__WEBSERVICE_PASSWORD: "SuperSecretPassword"
             SETTINGS_ENCRYPTION_KEY: "real_encryption_key"
+            DUPLICATI__ALLOW_INSECURE_DATAFOLDER: true
             # DOTNET_SYSTEM_IO_DISABLEFILELOCKING: true
 
 persistence:
