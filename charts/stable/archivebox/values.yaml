@@ -14,8 +14,6 @@ securityContext:
     runAsNonRoot: false
     runAsGroup: 0
     runAsUser: 0
-  pod:
-    fsGroup: 0
 
 service:
   main:
@@ -30,6 +28,13 @@ workload:
     podSpec:
       containers:
         main:
+          command:
+            - /bin/bash
+            - -c
+          args:
+            - |
+              chown "${PUID}:${PGID}" /data
+              exec dumb-init -- /app/bin/docker_entrypoint.sh archivebox server --init 0.0.0.0:5797
           probes:
             liveness:
               type: http
