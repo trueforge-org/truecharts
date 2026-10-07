@@ -29,8 +29,6 @@ workload:
             ADMIN_USERNAME: "{{ .Values.config.admin_username }}"
             ADMIN_PASSWORD: "{{ .Values.config.admin_password }}"
             DATA_DIR: "/data"
-            CONFIG_DIR: "/config"
-            HOME: "/home/archivebox"
 
 persistence:
   data:
@@ -38,7 +36,7 @@ persistence:
     mountPath: "/data"
   config:
     enabled: true
-    mountPath: "/config"
+    mountPath: "/opt/archivebox"
   home:
     enabled: true
     mountPath: "/home/archivebox"
