@@ -33,7 +33,7 @@ workload:
               path: /healthz
               type: http
           env:
-            APP_URL: "{{ .Values.chartContext.appUrl }}"
+            APP_URL: "localhost"
             TRUST_PROXY: "true"
             ANALYTICS_DISABLED: "true"
             VERSION_CHECK_DISABLED: "false"
