@@ -45,6 +45,11 @@ workload:
             EMAIL_FROM: "no-reply@HOST"
             # Sets the sender name in sent emails. Defaults to "Cannery".
             EMAIL_NAME: Cannery
+            UPLOADS_PATH: "/cannery/uploads"
+persistence:
+  uploads:
+    enabled: true
+    mountPath: "/cannery/uploads"
 cnpg:
   main:
     enabled: true
