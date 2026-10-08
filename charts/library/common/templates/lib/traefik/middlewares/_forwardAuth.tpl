@@ -39,7 +39,7 @@
     {{- fail "Middleware (forward-auth) - Expected [address] to be set" -}}
   {{- end }}
   forwardAuth:
-    address: {{ $mw.address }}
+    address: {{ tpl $mw.address $rootCtx }}
     trustForwardHeader: {{ $mw.trustForwardHeader }}
     {{- if $mw.maxResponseBodySize }}
     maxResponseBodySize: {{ $mw.maxResponseBodySize | int }}
