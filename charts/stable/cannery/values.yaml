@@ -20,7 +20,7 @@ workload:
           args:
             - |
               mkdir -p "${UPLOADS_PATH}/tmp"
-              exec /app/bin/cannery start        
+              exec /app/bin/cannery start
           env:
             PORT: "{{ .Values.service.main.ports.main.port }}"
             # HOST must be set!

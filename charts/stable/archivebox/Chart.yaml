@@ -9,7 +9,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: latest
+appVersion: 0.9.73
 dependencies:
   - name: common
     version: 29.20.0
@@ -34,9 +34,9 @@ maintainers:
     url: https://truecharts.org
 name: archivebox
 sources:
+  - https://ghcr.io/archivebox/archivebox
   - https://github.com/ArchiveBox/ArchiveBox
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/archivebox
-  - https://hub.docker.com/r/archivebox/archivebox
 type: application
 version: 6.10.1
 
