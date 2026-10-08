@@ -19,7 +19,7 @@
         {{/* TODO: Add Fail case */}}
       {{- end -}}
 
-      {{- if $metricsValues.PrometheusRule -}}
+      {{- if $metricsValues.prometheusRule -}}
         {{- include "tc.v1.common.class.prometheusrule" $ -}}
       {{- end -}}
 
