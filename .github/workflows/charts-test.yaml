@@ -97,12 +97,12 @@ jobs:
           EXCLUDED_JSON=$(go-yq eval -o=json '.excluded-charts // []' .github/ct-install.yaml)
           CHARTS_JSON=$(echo ${CHARTS} | jq --raw-input '.' | jq --compact-output --slurp '.' | jq 'map(. |= split(" "))[]' )
           OUTPUT_JSON=$(echo "{\"excluded\": ${EXCLUDED_JSON}, \"all\": ${CHARTS_JSON}}" | jq --compact-output '.all-.excluded')
-          OUTPUT_JSON1=$((echo $OUTPUT_JSON | jq -r -c '.[:50]'; echo $OUTPUT_JSON | jq -r -c '.[301:350]'; echo $OUTPUT_JSON | jq -r -c '.[601:650]'; echo $OUTPUT_JSON | jq -r -c '.[901:950]'; echo $OUTPUT_JSON | jq -r -c '.[1201:1250]') | jq -s add)
-          OUTPUT_JSON2=$((echo $OUTPUT_JSON | jq -r -c '.[51:100]'; echo $OUTPUT_JSON | jq -r -c '.[351:400]'; echo $OUTPUT_JSON | jq -r -c '.[651:700]'; echo $OUTPUT_JSON | jq -r -c '.[951:1000]'; echo $OUTPUT_JSON | jq -r -c '.[1251:1300]') | jq -s add)
-          OUTPUT_JSON3=$((echo $OUTPUT_JSON | jq -r -c '.[101:150]'; echo $OUTPUT_JSON | jq -r -c '.[401:450]'; echo $OUTPUT_JSON | jq -r -c '.[701:750]'; echo $OUTPUT_JSON | jq -r -c '.[1001:1050]'; echo $OUTPUT_JSON | jq -r -c '.[1301:1350]') | jq -s add)
-          OUTPUT_JSON4=$((echo $OUTPUT_JSON | jq -r -c '.[151:200]'; echo $OUTPUT_JSON | jq -r -c '.[451:500]'; echo $OUTPUT_JSON | jq -r -c '.[751:800]'; echo $OUTPUT_JSON | jq -r -c '.[1051:1100]'; echo $OUTPUT_JSON | jq -r -c '.[1351:1400]') | jq -s add)
-          OUTPUT_JSON5=$((echo $OUTPUT_JSON | jq -r -c '.[201:250]'; echo $OUTPUT_JSON | jq -r -c '.[501:550]'; echo $OUTPUT_JSON | jq -r -c '.[801:850]'; echo $OUTPUT_JSON | jq -r -c '.[1101:1150]'; echo $OUTPUT_JSON | jq -r -c '.[1401:1450]') | jq -s add)
-          OUTPUT_JSON6=$((echo $OUTPUT_JSON | jq -r -c '.[251:300]'; echo $OUTPUT_JSON | jq -r -c '.[551:600]'; echo $OUTPUT_JSON | jq -r -c '.[851:900]'; echo $OUTPUT_JSON | jq -r -c '.[1151:1200]'; echo $OUTPUT_JSON | jq -r -c '.[1451:1500]') | jq -s add)
+          OUTPUT_JSON1=$((echo $OUTPUT_JSON | jq -r -c '.[:50]'; echo $OUTPUT_JSON | jq -r -c '.[300:350]'; echo $OUTPUT_JSON | jq -r -c '.[600:650]'; echo $OUTPUT_JSON | jq -r -c '.[900:950]'; echo $OUTPUT_JSON | jq -r -c '.[1200:1250]') | jq -s add)
+          OUTPUT_JSON2=$((echo $OUTPUT_JSON | jq -r -c '.[50:100]'; echo $OUTPUT_JSON | jq -r -c '.[350:400]'; echo $OUTPUT_JSON | jq -r -c '.[650:700]'; echo $OUTPUT_JSON | jq -r -c '.[950:1000]'; echo $OUTPUT_JSON | jq -r -c '.[1250:1300]') | jq -s add)
+          OUTPUT_JSON3=$((echo $OUTPUT_JSON | jq -r -c '.[100:150]'; echo $OUTPUT_JSON | jq -r -c '.[400:450]'; echo $OUTPUT_JSON | jq -r -c '.[700:750]'; echo $OUTPUT_JSON | jq -r -c '.[1000:1050]'; echo $OUTPUT_JSON | jq -r -c '.[1300:1350]') | jq -s add)
+          OUTPUT_JSON4=$((echo $OUTPUT_JSON | jq -r -c '.[150:200]'; echo $OUTPUT_JSON | jq -r -c '.[450:500]'; echo $OUTPUT_JSON | jq -r -c '.[750:800]'; echo $OUTPUT_JSON | jq -r -c '.[1050:1100]'; echo $OUTPUT_JSON | jq -r -c '.[1350:1400]') | jq -s add)
+          OUTPUT_JSON5=$((echo $OUTPUT_JSON | jq -r -c '.[200:250]'; echo $OUTPUT_JSON | jq -r -c '.[500:550]'; echo $OUTPUT_JSON | jq -r -c '.[800:850]'; echo $OUTPUT_JSON | jq -r -c '.[1100:1150]'; echo $OUTPUT_JSON | jq -r -c '.[1400:1450]') | jq -s add)
+          OUTPUT_JSON6=$((echo $OUTPUT_JSON | jq -r -c '.[250:300]'; echo $OUTPUT_JSON | jq -r -c '.[550:600]'; echo $OUTPUT_JSON | jq -r -c '.[850:900]'; echo $OUTPUT_JSON | jq -r -c '.[1150:1200]'; echo $OUTPUT_JSON | jq -r -c '.[1450:1500]') | jq -s add)
           echo charts1=${OUTPUT_JSON1} >> $GITHUB_OUTPUT
           echo charts2=${OUTPUT_JSON2} >> $GITHUB_OUTPUT
           echo charts3=${OUTPUT_JSON3} >> $GITHUB_OUTPUT
@@ -224,6 +224,13 @@ jobs:
           fetch-depth: 1
           ref: ${{ inputs.checkoutCommit }}
 
+      - name: Install go-yq
+        run: |
+          mkdir -p $HOME/.local/bin
+          wget https://github.com/mikefarah/yq/releases/download/v4.26.1/yq_linux_amd64 -O $HOME/.local/bin/go-yq && \
+          chmod +x $HOME/.local/bin/go-yq
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
       - name: Install Helm
         uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310 # v5
         with:
@@ -295,6 +302,13 @@ jobs:
         with:
           fetch-depth: 1
           ref: ${{ inputs.checkoutCommit }}
+
+      - name: Install go-yq
+        run: |
+          mkdir -p $HOME/.local/bin
+          wget https://github.com/mikefarah/yq/releases/download/v4.26.1/yq_linux_amd64 -O $HOME/.local/bin/go-yq && \
+          chmod +x $HOME/.local/bin/go-yq
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Install Helm
         uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310 # v5
@@ -368,6 +382,13 @@ jobs:
           fetch-depth: 1
           ref: ${{ inputs.checkoutCommit }}
 
+      - name: Install go-yq
+        run: |
+          mkdir -p $HOME/.local/bin
+          wget https://github.com/mikefarah/yq/releases/download/v4.26.1/yq_linux_amd64 -O $HOME/.local/bin/go-yq && \
+          chmod +x $HOME/.local/bin/go-yq
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
       - name: Install Helm
         uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310 # v5
         with:
@@ -439,6 +460,13 @@ jobs:
         with:
           fetch-depth: 1
           ref: ${{ inputs.checkoutCommit }}
+
+      - name: Install go-yq
+        run: |
+          mkdir -p $HOME/.local/bin
+          wget https://github.com/mikefarah/yq/releases/download/v4.26.1/yq_linux_amd64 -O $HOME/.local/bin/go-yq && \
+          chmod +x $HOME/.local/bin/go-yq
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Install Helm
         uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310 # v5
@@ -512,6 +540,13 @@ jobs:
         with:
           fetch-depth: 1
           ref: ${{ inputs.checkoutCommit }}
+
+      - name: Install go-yq
+        run: |
+          mkdir -p $HOME/.local/bin
+          wget https://github.com/mikefarah/yq/releases/download/v4.26.1/yq_linux_amd64 -O $HOME/.local/bin/go-yq && \
+          chmod +x $HOME/.local/bin/go-yq
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Install Helm
         uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310 # v5
