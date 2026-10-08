@@ -1,11 +1,11 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
   pullPolicy: IfNotPresent
-  repository: docker.io/jasongdove/ersatztv
+  repository: ghcr.io/ersatztv/ersatztv
   tag: v26.3.0@sha256:7c402e5f348184359e0951b44d55fb6db3df671fa77fc91dcbd609034d28778b
 nvidiaImage:
   pullPolicy: Always
-  repository: docker.io/jasongdove/ersatztv
+  repository: ghcr.io/ersatztv/ersatztv
   tag: v25.2.0-nvidia@sha256:cc6d6c8e51c457a08ed48e08e43f3406c48837473a9d580fea6d3831439b4f98
 persistence:
   config:
@@ -28,7 +28,7 @@ service:
         targetPort: 8409
 vaapiImage:
   pullPolicy: Always
-  repository: docker.io/jasongdove/ersatztv
+  repository: ghcr.io/ersatztv/ersatztv
   tag: v25.2.0-vaapi@sha256:71f925801b798e01833548d467a1d1f67731fae522e6b29a7e861554e205c594
 workload:
   main:
