@@ -674,6 +674,16 @@ postgres16Image:
   tag: "16.13@sha256:2bc26604d2f0650f9b98668a51a95679c02024860d512ace92e7fcf69da7d611"
   pullPolicy: IfNotPresent
 
+postgres17Image:
+  repository: ghcr.io/cloudnative-pg/postgresql
+  tag: "17.10@sha256:e62489a417c64e6d679baffae21a129d196ba44f1362bb109ae84e304396e6ac"
+  pullPolicy: IfNotPresent
+
+postgres18Image:
+  repository: ghcr.io/cloudnative-pg/postgresql
+  tag: "18.4@sha256:c4d03ff9119154edbdae8879313cdf0aa5143a26e7ae400ca3ebe22dfc680a73"
+  pullPolicy: IfNotPresent
+
 postgresPostgis15Image:
   repository: ghcr.io/cloudnative-pg/postgis
   tag: "15-3.4@sha256:4596b193991cd2463a07d40e3d3d62c59f046a7dece8f163ad1aba15925a38e4"
@@ -682,6 +692,18 @@ postgresPostgis15Image:
 postgresPostgis16Image:
   repository: ghcr.io/cloudnative-pg/postgis
   tag: "16-3.4@sha256:bb5a8590a8c934767482e34e1d103253f412aec703b77bbc52ad9044bf6e56f9"
+  pullPolicy: IfNotPresent
+
+postgresPostgis17Image:
+  repository: ghcr.io/cloudnative-pg/postgis
+  tag: "17-3.5@sha256:4db9bca5c2ce024ccf297ce3ce879d1d93a936149badae045c1fd77c7c9adc08"
+  pullPolicy: IfNotPresent
+
+# PostGIS 18 is only published under the new "<pg>-<gis>-<variant>-<distro>" tag scheme;
+# no plain "18-3.x" tag exists upstream (unlike the 15-17 entries above).
+postgresPostgis18Image:
+  repository: ghcr.io/cloudnative-pg/postgis
+  tag: "18-3.6-standard-bookworm@sha256:18dc2130a6f9350fa3bdc9e6d31bfa9b5b4d6aad0fc18c6125ec351ce5a1baee"
   pullPolicy: IfNotPresent
 
 postgresVectors15Image:
@@ -694,6 +716,11 @@ postgresVectors16Image:
   tag: "16.3-v0.2.1@sha256:f1a19d4fc4073b0671a72ad34ef012aa20d21b3ddf5b4b0c9077d54450db679a"
   pullPolicy: IfNotPresent
 
+postgresVectors17Image:
+  repository: ghcr.io/tensorchord/cloudnative-pgvecto.rs
+  tag: "17.5-v0.4.0@sha256:cfa59ddef46bf642e3f6be9ad1878317ae5d4015707d02349bf1569d76b564e0"
+  pullPolicy: IfNotPresent
+
 postgresVectorchord15Image:
   repository: ghcr.io/tensorchord/cloudnative-vectorchord
   tag: "15.14-0.5.3@sha256:1978732dc1e7e9ef94b9e806a094fcb123afab1e50a7e878e2d29de8b849cf47"
@@ -702,6 +729,16 @@ postgresVectorchord15Image:
 postgresVectorchord16Image:
   repository: ghcr.io/tensorchord/cloudnative-vectorchord
   tag: "16.10-0.5.3@sha256:a0776b514bb23858d8aa59b08587223f8b449bba1b278ffbcf85e097d6504eb0"
+  pullPolicy: IfNotPresent
+
+postgresVectorchord17Image:
+  repository: ghcr.io/tensorchord/cloudnative-vectorchord
+  tag: "17.9-1.1.1@sha256:82f9b46c9149681f2897bd221772a3b22a74784256f1154c91eb10c6785800d5"
+  pullPolicy: IfNotPresent
+
+postgresVectorchord18Image:
+  repository: ghcr.io/tensorchord/cloudnative-vectorchord
+  tag: "18.3-1.1.1@sha256:392b53675b403d6a2c72b673cc488a7c272514755dd818c622fb9ce4665193c4"
   pullPolicy: IfNotPresent
 
 # -- Configure the ingresses for the chart here.

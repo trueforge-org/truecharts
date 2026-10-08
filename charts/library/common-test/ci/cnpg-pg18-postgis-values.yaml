@@ -1,0 +1,52 @@
+service:
+  main:
+    enabled: true
+    ports:
+      main:
+        enabled: true
+        port: 8080
+
+workload:
+  main:
+    enabled: true
+    podSpec:
+      containers:
+        main:
+          enabled: true
+          args:
+            - --port
+            - "8080"
+          probes:
+            liveness:
+              enabled: true
+            readiness:
+              enabled: true
+            startup:
+              enabled: true
+
+cnpg:
+  main:
+    enabled: true
+    # -- exercise PostGIS on PostgreSQL 18 (postgresPostgis18Image)
+    type: postgis
+    pgVersion: 18
+    # -- number of instances for both postgres and pgbouncer
+    instances: 2
+    database: "app"
+    user: "app"
+    password: test-password
+    # -- change to supervised to disable unsupervised updates
+    primaryUpdateStrategy: unsupervised
+    # -- storage size for the two pvc's per instance
+    storage:
+      size: "256Gi"
+      walsize: "256Gi"
+    pooler:
+      # -- enable to create extra pgbouncer for readonly access
+      createRO: false
+      instances: 2
+    # -- set to enable prometheus metrics
+    monitoring:
+      enablePodMonitor: false
+    # -- contains credentials and urls output by generator
+    creds: {}
