@@ -13,6 +13,9 @@
   {{- if $target.accessModes }}
     {{- $accessModes = $target.accessModes }}
   {{- end }}
+  {{- if kindIs "string" $accessModes -}}
+    {{- $accessModes = (list $accessModes) -}}
+  {{- end -}}
 
   {{- $storageClassName := $rootCtx.Values.global.fallbackDefaults.storageClass -}}
   {{- if $objectData.storageClass }}
