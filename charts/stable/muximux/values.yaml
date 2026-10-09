@@ -1,24 +1,50 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
-  repository: ghcr.io/linuxserver/muximux
+  repository: ghcr.io/mescon/muximux
   pullPolicy: IfNotPresent
-  tag: version-057352e8@sha256:389f28bab683d346e19a5a279b80479a147d48d0913029adf3066ffaa8cfb693
+  tag: 3.5.0@sha256:8037b207167352d116e94e1d0c8eb59d9b7372cd2918a282c1bf5406f74a9186
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            MUXIMUX_DATA: /app/data
+            MUXIMUX_CONFIG: /app/data/config.yaml
+            MUXIMUX_LISTEN: ":8080"
+          probes:
+            startup:
+              enabled: true
+              type: http
+              port: 8080
+              path: /api/health
+            readiness:
+              enabled: true
+              type: http
+              port: 8080
+              path: /api/health
+            liveness:
+              enabled: true
+              type: http
+              port: 8080
+              path: /api/health
+
 service:
   main:
     ports:
       main:
         port: 10019
-        targetPort: 80
+        targetPort: 8080
+
 persistence:
   config:
     enabled: true
-    mountPath: "/config"
-  varrun:
-    enabled: true
+    mountPath: "/app/data"
 
-securityContext:
-  container:
-    readOnlyRootFilesystem: false
-    runAsNonRoot: false
-    runAsUser: 0
-    runAsGroup: 0
+# securityContext:
+#   container:
+#     readOnlyRootFilesystem: false
+#     runAsNonRoot: false
+#     runAsUser: 0
+#     runAsGroup: 0
