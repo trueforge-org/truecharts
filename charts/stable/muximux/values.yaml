@@ -9,10 +9,6 @@ workload:
     podSpec:
       containers:
         main:
-          env:
-            MUXIMUX_DATA: /app/data
-            MUXIMUX_CONFIG: /app/data/config.yaml
-            MUXIMUX_LISTEN: ":8080"
           probes:
             startup:
               enabled: true
