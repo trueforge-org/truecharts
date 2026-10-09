@@ -59,21 +59,23 @@ workload:
               type: http
               path: /
           env:
-            WEBUI_PWD: ""
-            GUI_PWD: ""
-            MOD_AUTO_RESTART_ENABLED: true
-            MOD_AUTO_RESTART_CRON: "0 6 * * *"
-            # MOD_AUTO_SHARE_ENABLED: false
-            # MOD_AUTO_SHARE_DIRECTORIES=/incoming;/my_movies
-            # MOD_FIX_KAD_GRAPH_ENABLED=true
-            # MOD_FIX_KAD_BOOTSTRAP_ENABLED=true
+            WEBUI_PWD: "CHANGE_ME_VERY_SECURE"
+            GUI_PWD: "CHANGE_ME_VERY_SECURE"
+            # MOD_AUTO_RESTART_ENABLED: true
+            # MOD_AUTO_RESTART_CRON: "0 6 * * *"
+
 persistence:
   config:
     enabled: true
     mountPath: /home/amule/.aMule
-  complete:
+  downloads:
     enabled: true
-    mountPath: /incoming
-  incomplete:
-    enabled: true
-    mountPath: /temp
+    mountPath: /downloads
+
+# aMule stores completed downloads in /downloads/incoming and 
+# incomplete downloads in /downloads/temp inside the container. 
+# These paths can be changed with the INCOMING_DIR and TEMP_DIR environment variables.
+# You can also mount /downloads/incoming and /downloads/temp as separate volumes,
+# but be aware that completed files will be copied instead of moved,
+# since they would reside on different filesystems.
+
