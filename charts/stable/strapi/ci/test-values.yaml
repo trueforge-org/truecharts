@@ -1,0 +1,19 @@
+resources:
+  requests:
+    cpu: 1000m
+  limits:
+    cpu: 4000m
+
+cnpg:
+  main:
+    cluster:
+      instances: 1
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            npm_config_audit: "false"
+            npm_config_fund: "false"
