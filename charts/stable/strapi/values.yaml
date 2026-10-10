@@ -31,6 +31,8 @@ workload:
       containers:
         main:
           env:
+            NPM_CONFIG_AUDIT: "false"
+            NPM_CONFIG_FUND: "false"          
             PORT: "{{ .Values.service.main.ports.main.port }}"
             DATABASE_CLIENT: postgres
             DATABASE_PORT: 5432
@@ -53,3 +55,9 @@ workload:
             JWT_SECRET: my_jwt_secret
             ADMIN_JWT_SECRET: my_admin_jwt_secret
             APP_KEYS: '["keya", "keyb"]'
+
+resources:
+  requests:
+    cpu: 1000m
+  limits:
+    cpu: 4000m
