@@ -9,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 4.0.0
+appVersion: on-demand-2.1.1
 dependencies:
   - name: common
-    version: 29.20.0
+    version: 30.1.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -34,9 +34,10 @@ maintainers:
     url: https://truecharts.org
 name: pretend-youre-xyzzy
 sources:
-  - https://github.com/ajanata/PretendYoureXyzzy
   - https://github.com/Cyb3r-Jak3/DockerYourXyzzy
+  - https://github.com/ajanata/PretendYoureXyzzy
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/pretend-youre-xyzzy
+  - https://hub.docker.com/r/cyb3rjak3/dockeryourxyzzy
 type: application
-version: 18.0.0
+version: 19.0.0
 
