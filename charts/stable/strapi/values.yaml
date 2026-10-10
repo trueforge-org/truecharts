@@ -31,8 +31,8 @@ workload:
       containers:
         main:
           env:
-            npm_config_audit: "false"
-            npm_config_fund: "false"          
+            NPM_CONFIG_AUDIT: "false"
+            NPM_CONFIG_FUND: "false"          
             PORT: "{{ .Values.service.main.ports.main.port }}"
             DATABASE_CLIENT: postgres
             DATABASE_PORT: 5432
