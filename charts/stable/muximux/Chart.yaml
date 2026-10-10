@@ -9,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: "057352e8"
+appVersion: 3.5.0
 dependencies:
   - name: common
-    version: 29.20.0
+    version: 30.1.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -34,8 +34,9 @@ maintainers:
     url: https://truecharts.org
 name: muximux
 sources:
+  - https://ghcr.io/mescon/muximux
   - https://github.com/mescon/Muximux
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/muximux
 type: application
-version: 15.0.0
+version: 16.0.0
 
