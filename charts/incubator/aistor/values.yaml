@@ -14,6 +14,12 @@ minio:
   tls: false
   rootUser: minio
   rootPassword: CHANGE-ME-TO-A-LONG-PASSWORD
+  # Public WebUI URL to redirect browsers visiting the S3 API (port 9000).
+  # Include http:// or https://, for example https://console.example.com.
+  # This URL must route to the WebUI (service main, port 9001), not the S3 API.
+  # Set this when exposing the S3 API through an ingress to avoid redirects to port 9001.
+  # Leave empty when accessing the WebUI directly through its own ingress.
+  browserRedirectUrl: ""
 
 workload:
   main:
@@ -31,6 +37,7 @@ workload:
             MINIO_ROOT_PASSWORD: "{{ .Values.minio.rootPassword }}"
             MINIO_VOLUMES: /data
             MINIO_CONSOLE_ADDRESS: ":9001"
+            MINIO_BROWSER_REDIRECT_URL: "{{ .Values.minio.browserRedirectUrl }}"
             MINIO_LICENSE: /minio.license
           probes:
             startup:
@@ -51,14 +58,14 @@ service:
   main:
     ports:
       main:
-        port: 9000
+        port: 9001
         protocol: '{{ ternary "https" "http" .Values.minio.tls }}'
-  console:
+  api:
     enabled: true
     ports:
-      console:
+      api:
         enabled: true
-        port: 9001
+        port: 9000
         protocol: '{{ ternary "https" "http" .Values.minio.tls }}'
 
 secret:
@@ -72,7 +79,7 @@ persistence:
     enabled: true
     mountPath: /data
   certs:
-    enabled: true
+    enabled: false
     mountPath: /etc/minio/certs
   license:
     enabled: true
