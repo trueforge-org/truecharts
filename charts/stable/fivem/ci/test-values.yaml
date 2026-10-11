@@ -1,0 +1,41 @@
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            MANUAL_UPDATES: "true"
+      initContainers:
+        download-server:
+          enabled: true
+          type: init
+          imageSelector: image
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            runAsNonRoot: false
+            readOnlyRootFilesystem: false
+          command:
+            - /bin/bash
+            - -ec
+          args:
+            - |
+              cd /serverdata/serverfiles
+
+              wget --timeout=30 --tries=3 \
+                -O fx.tar.xz.part \
+                "https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/37175-0105063b0394b1b9d085c917a8dc9c9abf0a620f/fx.tar.xz"
+
+              test -s fx.tar.xz.part
+              mv fx.tar.xz.part fx.tar.xz
+              chmod 644 fx.tar.xz
+
+persistence:
+  serverfiles:
+    enabled: true
+    type: emptyDir
+    mountPath: /serverdata/serverfiles
+    targetSelector:
+      main:
+        main: {}
+        download-server: {}

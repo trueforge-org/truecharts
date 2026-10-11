@@ -66,6 +66,7 @@ secret:
 
       [security]
       INSTALL_LOCK = true
+      ALLOWED_HOST_LIST = {{ .Values.config.ALLOWED_HOST_LIST }}
       {{- range $catindex, $catvalue := .Values.customConfig }}
       {{- if eq $catvalue.name "security" }}
       {{- range $index, $value := $catvalue.keys }}
@@ -73,9 +74,6 @@ secret:
       {{- end }}
       {{- end }}
       {{- end }}
-
-      [webhook]
-      ALLOWED_HOST_LIST = {{ .Values.config.ALLOWED_HOST_LIST }}
 
       [server]
       APP_DATA_PATH = /data

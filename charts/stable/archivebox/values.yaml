@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
-  repository: docker.io/archivebox/archivebox
+  repository: ghcr.io/archivebox/archivebox
   pullPolicy: IfNotPresent
-  tag: latest@sha256:1a5a37331091d9df865ead2b9c231aa5a892fc26fe0422ce6140d9e2d9532327
+  tag: 0.9.73@sha256:d4720d86c0e91577bccaee59fa238d22a9cfc0674aa594c80f739f0738270af9
 
 config:
   admin_username: "admin"
@@ -21,13 +21,20 @@ service:
       main:
         port: 9598
         protocol: http
-        targetPort: 8000
+        targetPort: 5797
 
 workload:
   main:
     podSpec:
       containers:
         main:
+          command:
+            - /bin/bash
+            - -c
+          args:
+            - |
+              chown "${PUID}:${PGID}" /data
+              exec dumb-init -- /app/bin/docker_entrypoint.sh archivebox server --init 0.0.0.0:5797
           probes:
             liveness:
               type: http
@@ -35,8 +42,15 @@ workload:
           env:
             ADMIN_USERNAME: "{{ .Values.config.admin_username }}"
             ADMIN_PASSWORD: "{{ .Values.config.admin_password }}"
+            DATA_DIR: "/data"
 
 persistence:
   data:
     enabled: true
     mountPath: "/data"
+  config:
+    enabled: true
+    mountPath: "/opt/archivebox"
+  home:
+    enabled: true
+    mountPath: "/home/archivebox"

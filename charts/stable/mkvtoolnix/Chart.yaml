@@ -9,7 +9,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 26.09.1
+appVersion: 26.09.2
 dependencies:
   - name: common
     version: 29.20.0
@@ -33,10 +33,10 @@ maintainers:
     url: https://truecharts.org
 name: mkvtoolnix
 sources:
+  - https://ghcr.io/jlesage/mkvtoolnix
   - https://github.com/jlesage/docker-mkvtoolnix
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/mkvtoolnix
-  - https://hub.docker.com/r/jlesage/mkvtoolnix
   - https://mkvtoolnix.download/
 type: application
-version: 16.14.0
+version: 16.14.2
 

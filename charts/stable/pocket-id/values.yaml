@@ -2,7 +2,7 @@
 image:
   repository: ghcr.io/pocket-id/pocket-id
   pullPolicy: IfNotPresent
-  tag: v2.14.0@sha256:01540977dcf4c7b41b1159f34d68e4632f2658d62790e460ca65a42722b13c4a
+  tag: v2.18.0@sha256:323e7ef5bfacf7cf32f22f3d10ccdf48e0c97c94d67e7e40b0b996830deb5165
 
 service:
   main:
@@ -33,7 +33,7 @@ workload:
               path: /healthz
               type: http
           env:
-            APP_URL: "{{ .Values.chartContext.appUrl }}"
+            APP_URL: "https://your-pocket-id-domain.com"
             TRUST_PROXY: "true"
             ANALYTICS_DISABLED: "true"
             VERSION_CHECK_DISABLED: "false"

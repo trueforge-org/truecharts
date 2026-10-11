@@ -1,12 +1,15 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
   pullPolicy: IfNotPresent
-  repository: ghcr.io/hotio/qflood
-  tag: latest@sha256:ff86ae422aa174dd7c90bcefbe21dc4dc72b6edc81e3843446727a57cddf0dfa
+  repository: ghcr.io/engels74/qflood
+  tag: release-v5.2.3@sha256:1ac5fd4bc1c5247f0f51e2a00e4c41686155cfa65af4cf705ed1c2d988e5d5d5
 persistence:
   config:
     enabled: true
     mountPath: /config
+  data:
+    enabled: true
+    mountPath: /data
 
 securityContext:
   container:

@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
-  repository: docker.io/nodered/node-red
+  repository: ghcr.io/node-red/node-red
   pullPolicy: IfNotPresent
-  tag: 5.0.7@sha256:a649dd711d55490151a2c39a8e48ad0c44325488fbc0e66315f2d2e19e5e1ace
+  tag: 5.0.8@sha256:b5adb6c9dd29ab80c852d82bc87daed84e729dcff9b00ca1bf958e6de470f2c1
 service:
   main:
     ports:

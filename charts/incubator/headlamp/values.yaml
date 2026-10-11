@@ -5,7 +5,7 @@ image:
   pullPolicy: IfNotPresent
 pluginImage:
   repository: oci.trueforge.org/containerforge/node
-  tag: rolling@sha256:bf1dd21596188c3e2c7731be37699100bc9db0ae0a5384d24f8bcd1afce81665
+  tag: rolling@sha256:e92e30c6316daafa278d6430a23526a034781cf197a067e42b3345e091c1cef9
   pullPolicy: IfNotPresent
 
 headlamp:
@@ -32,7 +32,7 @@ headlamp:
       enabled: true
       source: https://artifacthub.io/packages/headlamp/headlamp-plugins/headlamp_flux
       # renovate: datasource=docker depName=ghcr.io/headlamp-k8s/headlamp-plugin-flux
-      version: 0.6.0
+      version: 0.7.0
     certManager:
       enabled: true
       source: https://artifacthub.io/packages/headlamp/headlamp-plugins/headlamp_cert-manager
