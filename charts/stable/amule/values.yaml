@@ -72,10 +72,9 @@ persistence:
     enabled: true
     mountPath: /downloads
 
-# aMule stores completed downloads in /downloads/incoming and 
-# incomplete downloads in /downloads/temp inside the container. 
+# aMule stores completed downloads in /downloads/incoming and
+# incomplete downloads in /downloads/temp inside the container.
 # These paths can be changed with the INCOMING_DIR and TEMP_DIR environment variables.
 # You can also mount /downloads/incoming and /downloads/temp as separate volumes,
 # but be aware that completed files will be copied instead of moved,
 # since they would reside on different filesystems.
-
