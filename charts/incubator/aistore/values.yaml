@@ -29,7 +29,7 @@ workload:
           env:
             MINIO_ROOT_USER: "{{ .Values.minio.rootUser }}"
             MINIO_ROOT_PASSWORD: "{{ .Values.minio.rootPassword }}"
-            MINIO_VOLUMES: /mnt/data
+            MINIO_VOLUMES: /data
             MINIO_CONSOLE_ADDRESS: ":9001"
             MINIO_LICENSE: /minio.license
           probes:
@@ -70,7 +70,7 @@ secret:
 persistence:
   data:
     enabled: true
-    mountPath: /mnt/data
+    mountPath: /data
   certs:
     enabled: true
     mountPath: /etc/minio/certs
