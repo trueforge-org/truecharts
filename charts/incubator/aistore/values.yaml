@@ -8,7 +8,7 @@ minio:
   # Without a valid license, AIStor starts in offline mode and blocks S3 operations.
   # Obtain a free license at https://www.min.io/pricing and encrypt it with SOPS.
   licence: ""
-  # Use HTTPS for health probes on the S3 API port (9000).
+  # Use HTTPS for service protocols and health probes.
   # Enable when AIStor serves TLS using public.crt and private.key in /etc/minio/certs.
   # Leave false when TLS terminates at the ingress and AIStor serves HTTP.
   tls: false
@@ -52,12 +52,14 @@ service:
     ports:
       main:
         port: 9000
+        protocol: '{{ ternary "https" "http" .Values.minio.tls }}'
   console:
     enabled: true
     ports:
       console:
         enabled: true
         port: 9001
+        protocol: '{{ ternary "https" "http" .Values.minio.tls }}'
 
 secret:
   license:
