@@ -5,6 +5,8 @@ image:
   pullPolicy: IfNotPresent
 
 minio:
+  rootUser: minio
+  rootPassword: CHANGE-ME-TO-A-LONG-PASSWORD
   # Without a valid license, AIStor starts in offline mode and blocks S3 operations.
   # Obtain a free license at https://www.min.io/pricing and encrypt it with SOPS.
   licence: ""
@@ -12,8 +14,6 @@ minio:
   # Enable when AIStor serves TLS using public.crt and private.key in /etc/minio/certs.
   # Leave false when TLS terminates at the ingress and AIStor serves HTTP.
   tls: false
-  rootUser: minio
-  rootPassword: CHANGE-ME-TO-A-LONG-PASSWORD
   # Public WebUI URL to redirect browsers visiting the S3 API (port 9000).
   # Include http:// or https://, for example https://console.example.com.
   # This URL must route to the WebUI (service main, port 9001), not the S3 API.
