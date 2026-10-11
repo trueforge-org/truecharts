@@ -1,0 +1,42 @@
+annotations:
+  artifacthub.io/links: |-
+    - name: support
+    url: https://discord.com/invite/tVsPTHWTtr
+  truecharts.org/train: incubator
+  trueforge.org/category: monitoring
+  trueforge.org/max_helm_version: "4.1"
+  trueforge.org/max_kubernetes_version: 1.35.0
+  trueforge.org/min_helm_version: "3.14"
+  trueforge.org/train: incubator
+apiVersion: v2
+appVersion: 0.38.3
+dependencies:
+  - name: common
+    version: 30.2.0
+    repository: oci://oci.trueforge.org/truecharts
+    condition: ""
+    alias: ""
+    tags: []
+    import-values: []
+deprecated: false
+description: SolidPing is a self-hosted uptime and synthetic monitoring tool with status pages, incidents and on-call.
+home: https://truecharts.org/charts/incubator/solidping
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/solidping.webp
+keywords:
+  - solidping
+  - monitoring
+  - uptime
+  - status-page
+kubeVersion: '>=1.33.0-0'
+maintainers:
+  - name: TrueCharts
+    email: info@truecharts.org
+    url: https://truecharts.org
+name: solidping
+sources:
+  - https://ghcr.io/fclairamb/solidping
+  - https://github.com/fclairamb/solidping
+  - https://github.com/fclairamb/solidping/pkgs/container/solidping
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/incubator/solidping
+type: application
+version: 0.1.0
