@@ -79,7 +79,7 @@ persistence:
     enabled: true
     mountPath: /data
   certs:
-    enabled: false
+    enabled: "{{ .Values.minio.tls }}"
     mountPath: /etc/minio/certs
   license:
     enabled: true

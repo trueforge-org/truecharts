@@ -22,7 +22,7 @@ Leave `browserRedirectUrl` empty when accessing the WebUI directly through its o
 
 AIStor automatically enables TLS when it finds `public.crt` and `private.key` in `/etc/minio/certs`. This enables HTTPS for both the S3 API and the WebUI.
 
-The chart's `minio.tls` setting changes the service protocols and health probes. It does not generate certificates or enable TLS in AIStor by itself. Set it to `true` when supplying server certificates:
+The chart's `minio.tls` setting enables the certificate PVC and changes the service protocols and health probes. It does not generate certificates or enable TLS in AIStor by itself. Set it to `true` when supplying server certificates:
 
 ```yaml
 minio:
@@ -35,15 +35,11 @@ If an ingress connects to AIStor over HTTPS, configure the ingress controller to
 
 ### Certificates stored on the PVC
 
-Certificate persistence is disabled by default. Enable the PVC when storing certificates as files:
+Certificate persistence follows `minio.tls` and is disabled by default. Set `minio.tls: true` to enable the PVC:
 
 ```yaml
 minio:
   tls: true
-
-persistence:
-  certs:
-    enabled: true
 ```
 
 The volume is mounted at `/etc/minio/certs`. Place the PEM-encoded certificate chain and matching private key at:
@@ -69,7 +65,7 @@ kubectl create secret tls aistor-server-tls -n aistor \
   --key=private.key
 ```
 
-Add the following overrides to your HelmRelease values. Enable the `persistence.certs` PVC and mount the Secret's files individually so the certificate directory remains writable:
+Add the following overrides to your HelmRelease values. Use an `emptyDir` for the writable certificate directory and mount the Secret's files individually. The certificates remain in the Secret, so no certificate PVC is needed:
 
 ```yaml
 minio:
@@ -77,7 +73,7 @@ minio:
 
 persistence:
   certs:
-    enabled: true
+    type: emptyDir
   cert-public:
     enabled: true
     type: secret
