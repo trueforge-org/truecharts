@@ -1,17 +1,17 @@
 {{- define "tc.v1.common.class.prometheusrule" -}}
   {{- $fullName := include "tc.v1.common.lib.chart.names.fullname" . -}}
   {{- $prometheusruleName := $fullName -}}
-  {{- $values := .Values.prometheusrule -}}
+  {{- $values := .Values.prometheusRule -}}
 
   {{- if hasKey . "ObjectValues" -}}
     {{- with .ObjectValues.metrics -}}
-      {{- $values = . -}}
+      {{- $values = .prometheusRule -}}
     {{- end -}}
   {{- end -}}
   {{- $prometheusruleLabels := $values.labels -}}
   {{- $prometheusruleAnnotations := $values.annotations -}}
 
-  {{- if and (hasKey $values "nameOverride") $values.nameOverride -}}
+  {{- if and $values (hasKey $values "nameOverride") $values.nameOverride -}}
     {{- $prometheusruleName = printf "%v-%v" $prometheusruleName $values.nameOverride -}}
   {{- end }}
 
@@ -33,7 +33,7 @@ metadata:
   {{- end }}
 spec:
   groups:
-    {{- range $name, $groupValues := .groups }}
+    {{- range $name, $groupValues := $values.groups }}
     - name: {{ $prometheusruleName }}-{{ $name }}
       rules:
         {{- with $groupValues.rules }}
@@ -43,7 +43,7 @@ spec:
           {{- toYaml . | nindent 8 }}
         {{- end }}
     {{- end }}
-    {{- range $id, $groupValues := .additionalgroups }}
+    {{- range $id, $groupValues := $values.additionalgroups }}
     - name: {{ $prometheusruleName }}-{{ if $groupValues.name }}{{ $groupValues.name }}{{ else }}{{ $id }}{{ end }}
       rules:
         {{- with $groupValues.rules }}

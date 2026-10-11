@@ -1,0 +1,68 @@
+suite: metrics prometheusrule
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render PrometheusRule when enabled
+    set:
+      service:
+        main:
+          enabled: true
+          ports:
+            main:
+              enabled: true
+              port: 8080
+      workload:
+        main:
+          enabled: true
+          podSpec:
+            containers:
+              main:
+                enabled: true
+      metrics:
+        main:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            enabled: true
+            groups:
+              alertgroup:
+                rules:
+                  - alert: TestAlert
+                    expr: vector(1)
+            additionalgroups:
+              - name: extragroup
+                rules:
+                  - alert: ExtraAlert
+                    expr: vector(2)
+    asserts:
+      - documentIndex: &promRuleDoc 3
+        isKind:
+          of: PrometheusRule
+      - documentIndex: *promRuleDoc
+        isAPIVersion:
+          of: monitoring.coreos.com/v1
+      - documentIndex: *promRuleDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentIndex: *promRuleDoc
+        equal:
+          path: spec.groups[0].name
+          value: test-release-name-common-test-alertgroup
+      - documentIndex: *promRuleDoc
+        equal:
+          path: spec.groups[0].rules[0].alert
+          value: TestAlert
+      - documentIndex: *promRuleDoc
+        equal:
+          path: spec.groups[1].name
+          value: test-release-name-common-test-extragroup
+      - documentIndex: *promRuleDoc
+        equal:
+          path: spec.groups[1].rules[0].alert
+          value: ExtraAlert
