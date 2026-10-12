@@ -1,7 +1,7 @@
 annotations:
   artifacthub.io/links: |-
     - name: support
-      url: https://discord.com/invite/tVsPTHWTtr
+    url: https://discord.com/invite/tVsPTHWTtr
   truecharts.org/train: incubator
   trueforge.org/category: storage
   trueforge.org/max_helm_version: "4.1"
@@ -9,7 +9,7 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: incubator
 apiVersion: v2
-appVersion: RELEASE.2026-09-19T17-05-25Z
+appVersion: 2026.09.19
 dependencies:
   - name: common
     version: 30.2.0
@@ -35,7 +35,8 @@ maintainers:
 name: aistor
 sources:
   - https://docs.min.io/aistor/
-  - https://quay.io/repository/minio/aistor/minio
   - https://github.com/trueforge-org/truecharts/tree/master/charts/incubator/aistor
+  - https://quay.io/minio/aistor/minio
 type: application
 version: 1.0.1
+
