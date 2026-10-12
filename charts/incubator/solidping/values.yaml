@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=./values.schema.json
+image:
+  pullPolicy: IfNotPresent
+  repository: ghcr.io/fclairamb/solidping
+  tag: 0.38.3@sha256:4d5282bf8575c8b6de3e7c18f27d8d17f7bad482e098270c12f676c7f97c6449
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          probes:
+            liveness:
+              type: http
+              path: /api/mgmt/health
+            readiness:
+              type: http
+              path: /api/mgmt/health
+            startup:
+              type: http
+              path: /api/mgmt/health
+          env:
+            SP_SERVER_LISTEN: ":{{ .Values.service.main.ports.main.targetPort }}"
+            SP_DB_TYPE: postgres
+            SP_DB_URL:
+              secretKeyRef:
+                name: cnpg-main-urls
+                key: std
+            SP_FILESTORAGE_LOCAL_ROOT: /data/files
+
+service:
+  main:
+    ports:
+      main:
+        port: 10541
+        protocol: http
+        targetPort: 4000
+
+persistence:
+  data:
+    enabled: true
+    mountPath: /data
+
+cnpg:
+  main:
+    enabled: true
+    user: solidping
+    database: solidping
