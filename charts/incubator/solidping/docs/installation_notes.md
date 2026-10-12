@@ -11,11 +11,11 @@ lands on a "set a new password" screen, and nothing else is reachable until it i
 Log in right after the install and set your own password. To use another administrator
 email, set `SP_ADMIN_EMAIL` before the first start. It is only read on an empty database.
 
-## Single replica
+## Database
 
-The chart stores everything on SQLite in the `/data` volume (database and uploaded files).
-SQLite takes a single writer, so keep one replica. For more replicas, use PostgreSQL by
-setting `SP_DB_TYPE=postgres` and `SP_DB_URL`.
+The chart runs SolidPing on PostgreSQL, through a CloudNativePG cluster it creates
+(`cnpg.main`). The CloudNativePG operator must be installed. The `/data` volume only
+keeps uploaded files.
 
 ## JWT secret
 

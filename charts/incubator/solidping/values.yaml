@@ -21,8 +21,11 @@ workload:
               path: /api/mgmt/health
           env:
             SP_SERVER_LISTEN: ":{{ .Values.service.main.ports.main.targetPort }}"
-            SP_DB_TYPE: sqlite
-            SP_DB_DIR: /data
+            SP_DB_TYPE: postgres
+            SP_DB_URL:
+              secretKeyRef:
+                name: cnpg-main-urls
+                key: std
             SP_FILESTORAGE_LOCAL_ROOT: /data/files
 
 service:
@@ -37,3 +40,9 @@ persistence:
   data:
     enabled: true
     mountPath: /data
+
+cnpg:
+  main:
+    enabled: true
+    user: solidping
+    database: solidping
