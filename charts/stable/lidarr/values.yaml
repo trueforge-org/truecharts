@@ -32,14 +32,20 @@ workload:
               enabled: true
               type: http
               path: /ping
+              httpHeaders:
+                Host: localhost
             readiness:
               enabled: true
               type: http
               path: /ping
+              httpHeaders:
+                Host: localhost
             startup:
               enabled: true
               type: http
               path: /ping
+              httpHeaders:
+                Host: localhost
           env:
             LIDARR__SERVER__PORT: "{{ .Values.service.main.ports.main.port }}"
              # External | Basic | Forms
