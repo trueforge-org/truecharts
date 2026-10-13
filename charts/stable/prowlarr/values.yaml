@@ -30,8 +30,12 @@ workload:
           probes:
             liveness:
               path: /ping
+              httpHeaders:
+                Host: localhost
             readiness:
               path: /ping
+              httpHeaders:
+                Host: localhost
             startup:
               type: tcp
           env:
