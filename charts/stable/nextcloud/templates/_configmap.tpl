@@ -225,7 +225,7 @@ nextcloud-config:
     NX_TRUSTED_DOMAINS: |
       127.0.0.1
       localhost
-      {{ $fullname }}
+      {{ printf "%v:%v" $fullname .Values.service.main.ports.main.port }}
       {{ printf "%v-*" $fullname }}
       {{ $healthHost }}
       {{- if not (contains "127.0.0.1" $accessHost) }}
