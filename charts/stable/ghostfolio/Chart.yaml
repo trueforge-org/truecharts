@@ -12,14 +12,14 @@ apiVersion: v2
 appVersion: 3.88.0
 dependencies:
   - name: common
-    version: 30.2.2
+    version: 30.2.4
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: valkey
-    version: 3.0.1
+    version: 3.0.3
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: redis
@@ -44,5 +44,5 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/ghostfolio
   - https://hub.docker.com/r/ghostfolio/ghostfolio
 type: application
-version: 14.4.2
+version: 14.4.4
 
