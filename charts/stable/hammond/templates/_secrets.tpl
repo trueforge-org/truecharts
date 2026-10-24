@@ -2,14 +2,15 @@
 {{- define "hammond.secrets" -}}
 {{- $secretName := printf "%s-secrets" (include "tc.v1.common.lib.chart.names.fullname" .) }}
 {{- $hammondprevious := lookup "v1" "Secret" .Release.Namespace $secretName }}
-{{- $jwt_secret := "" }}
+{{- $jwt_secret := randAlphaNum 32 }}
+{{/* Secret data is base64 encoded, but common renders it as stringData, so decode it first */}}
+{{- $previous := dig "data" "JWT_SECRET" "" $hammondprevious | b64dec }}
+{{/* Older versions re-encoded the value on every upgrade; replace it once it has grown */}}
+{{- if and $previous (le (len $previous) 64) }}
+  {{- $jwt_secret = $previous }}
+{{- end }}
 enabled: true
 data:
-  {{- if $hammondprevious}}
-  JWT_SECRET: {{ index $hammondprevious.data "JWT_SECRET" }}
-  {{- else }}
-  {{- $jwt_secret := randAlphaNum 32 }}
-  JWT_SECRET: {{ $jwt_secret | b64enc }}
-  {{- end }}
+  JWT_SECRET: {{ $jwt_secret | quote }}
 
 {{- end -}}
