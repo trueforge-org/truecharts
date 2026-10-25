@@ -1,0 +1,8 @@
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            # CI runner kernel lacks ip6_tables, which breaks the default PostUp hooks
+            DISABLE_IPV6: true
