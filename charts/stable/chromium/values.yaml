@@ -21,6 +21,13 @@ service:
   main:
     ports:
       main:
-        port: 3000
+        port: 8080
         protocol: tcp
-        targetPort: 3000
+        targetPort: 8080
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            CUSTOM_PORT: "{{ .Values.service.main.ports.main.port }}"
