@@ -37,8 +37,16 @@ echo "Done installing kube-prometheus-stack chart"
 
 if [[ $nginx_needed == "true" ]]; then
     echo "Installing ingress-nginx chart"
-    helm install ingress-nginx oci://ghcr.io/home-operations/charts-mirror/ingress-nginx --namespace ingress-nginx --create-namespace \
-        --set controller.ingressClassResource.default=true --set controller.publishService.enabled=false --set controller.service.type="ClusterIP" --set controller.config.allow-snippet-annotations=true --set controller.config.annotations-risk-level="Critical" --wait
+    helm install ingress-nginx ingress-nginx \
+        --repo https://kubernetes.github.io/ingress-nginx \
+        --version 4.13.0 \
+        --namespace ingress-nginx --create-namespace \
+        --set controller.ingressClassResource.default=true \
+        --set controller.publishService.enabled=false \
+        --set controller.service.type="ClusterIP" \
+        --set controller.config.allow-snippet-annotations=true \
+        --set controller.config.annotations-risk-level="Critical" \
+        --wait
     if [[ "$?" != "0" ]]; then
         echo "Failed to install ingress-nginx chart"
         exit 1
