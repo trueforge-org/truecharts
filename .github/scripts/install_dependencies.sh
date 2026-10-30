@@ -37,7 +37,7 @@ echo "Done installing kube-prometheus-stack chart"
 
 if [[ $nginx_needed == "true" ]]; then
     echo "Installing ingress-nginx chart"
-    helm install ingress-nginx ingress-nginx \
+    helm install ingress-nginx \
         oci://registry.k8s.io/ingress-nginx/charts/ingress-nginx \
         --version v4.13.2 \
         --namespace ingress-nginx --create-namespace \
