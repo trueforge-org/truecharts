@@ -39,7 +39,7 @@ if [[ $nginx_needed == "true" ]]; then
     echo "Installing ingress-nginx chart"
     helm install ingress-nginx \
         oci://registry.k8s.io/ingress-nginx/charts/ingress-nginx \
-        --version v4.13.2 \
+        --version v4.15.1 \
         --namespace ingress-nginx --create-namespace \
         --set controller.ingressClassResource.default=true \
         --set controller.publishService.enabled=false \
