@@ -41,6 +41,43 @@ tests:
               tls:
                 insecureSkipVerify: true
 
+  - it: should pass with templated address from values
+    set:
+      authHost: auth.example.com
+      ingressMiddlewares:
+        traefik:
+          my-middleware1:
+            enabled: true
+            type: forward-auth
+            data:
+              address: "https://{{ .Values.authHost }}/outpost.goauthentik.io/auth/traefik"
+    asserts:
+      - documentIndex: &middlewareDoc 0
+        isKind:
+          of: Middleware
+      - documentIndex: *middlewareDoc
+        equal:
+          path: spec.forwardAuth.address
+          value: https://auth.example.com/outpost.goauthentik.io/auth/traefik
+
+  - it: should pass with templated address from release context
+    set:
+      ingressMiddlewares:
+        traefik:
+          my-middleware1:
+            enabled: true
+            type: forward-auth
+            data:
+              address: "http://{{ .Release.Name }}-server.{{ .Release.Namespace }}.svc.cluster.local:9000/outpost.goauthentik.io/auth/traefik"
+    asserts:
+      - documentIndex: &middlewareDoc 0
+        isKind:
+          of: Middleware
+      - documentIndex: *middlewareDoc
+        equal:
+          path: spec.forwardAuth.address
+          value: http://test-release-name-server.test-release-namespace.svc.cluster.local:9000/outpost.goauthentik.io/auth/traefik
+
   - it: should fail with missing address
     set:
       ingressMiddlewares:
