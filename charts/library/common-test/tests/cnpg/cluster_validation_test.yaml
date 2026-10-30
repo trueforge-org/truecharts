@@ -49,7 +49,21 @@ tests:
           pgVersion: invalid
     asserts:
       - failedTemplate:
-          errorMessage: CNPG - Expected [pgVersion] to be one of [15, 16], but got [invalid]
+          errorMessage: CNPG - Expected [pgVersion] to be one of [15, 16, 17, 18], but got [invalid]
+
+  - it: should fail with vectors on pgVersion 18
+    set:
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          type: vectors
+          pgVersion: 18
+    asserts:
+      - failedTemplate:
+          errorMessage: CNPG Cluster - type [vectors] is not available for pgVersion [18]; pgvecto.rs has been superseded by VectorChord, use type [vectorchord] instead
 
   - it: should fail with hibernate not a bool
     set:

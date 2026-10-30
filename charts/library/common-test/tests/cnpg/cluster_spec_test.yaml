@@ -248,6 +248,137 @@ tests:
           path: spec.imageName
           value: ghcr.io/cloudnative-pg/postgresql:15.6
 
+  - it: should generate correct imageName for postgres pgVersion 17
+    set:
+      postgres17Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "17.10"
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          pgVersion: 17
+    asserts:
+      - documentIndex: *clusterDoc
+        equal:
+          path: spec.imageName
+          value: ghcr.io/cloudnative-pg/postgresql:17.10
+
+  - it: should generate correct imageName for postgres pgVersion 18
+    set:
+      postgres18Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "18.4"
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          pgVersion: 18
+    asserts:
+      - documentIndex: *clusterDoc
+        equal:
+          path: spec.imageName
+          value: ghcr.io/cloudnative-pg/postgresql:18.4
+
+  - it: should generate correct imageName for postgis pgVersion 17
+    set:
+      postgresPostgis17Image:
+        repository: ghcr.io/cloudnative-pg/postgis
+        tag: "17-3.5"
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          type: postgis
+          pgVersion: 17
+    asserts:
+      - documentIndex: *clusterDoc
+        equal:
+          path: spec.imageName
+          value: ghcr.io/cloudnative-pg/postgis:17-3.5
+
+  - it: should generate correct imageName for postgis pgVersion 18
+    set:
+      postgresPostgis18Image:
+        repository: ghcr.io/cloudnative-pg/postgis
+        tag: "18-3.6-standard-bookworm"
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          type: postgis
+          pgVersion: 18
+    asserts:
+      - documentIndex: *clusterDoc
+        equal:
+          path: spec.imageName
+          value: ghcr.io/cloudnative-pg/postgis:18-3.6-standard-bookworm
+
+  - it: should generate correct imageName for vectors pgVersion 17
+    set:
+      postgresVectors17Image:
+        repository: ghcr.io/tensorchord/cloudnative-pgvecto.rs
+        tag: "17.5-v0.4.0"
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          type: vectors
+          pgVersion: 17
+    asserts:
+      - documentIndex: *clusterDoc
+        equal:
+          path: spec.imageName
+          value: ghcr.io/tensorchord/cloudnative-pgvecto.rs:17.5-v0.4.0
+
+  - it: should generate correct imageName for vectorchord pgVersion 17
+    set:
+      postgresVectorchord17Image:
+        repository: ghcr.io/tensorchord/cloudnative-vectorchord
+        tag: "17.9-1.1.1"
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          type: vectorchord
+          pgVersion: 17
+    asserts:
+      - documentIndex: *clusterDoc
+        equal:
+          path: spec.imageName
+          value: ghcr.io/tensorchord/cloudnative-vectorchord:17.9-1.1.1
+
+  - it: should generate correct imageName for vectorchord pgVersion 18
+    set:
+      postgresVectorchord18Image:
+        repository: ghcr.io/tensorchord/cloudnative-vectorchord
+        tag: "18.3-1.1.1"
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          type: vectorchord
+          pgVersion: 18
+    asserts:
+      - documentIndex: *clusterDoc
+        equal:
+          path: spec.imageName
+          value: ghcr.io/tensorchord/cloudnative-vectorchord:18.3-1.1.1
+
   - it: should override options
     set:
       ext1: some-extension

@@ -14,7 +14,7 @@
     {{- fail (printf "CNPG - Expected [pgVersion] to be a string, but got [%s]" (kindOf $objectData.pgVersion)) -}}
   {{- end -}}
 
-  {{- $validVersions := (list "15" "16") -}}
+  {{- $validVersions := (list "15" "16" "17" "18") -}}
   {{- if not (mustHas $objectData.pgVersion $validVersions) -}}
     {{- fail (printf "CNPG - Expected [pgVersion] to be one of [%s], but got [%s]" (join ", " $validVersions) $objectData.pgVersion) -}}
   {{- end -}}
@@ -43,6 +43,11 @@
     {{- if not (mustHas $objectData.type $validTypes) -}}
       {{- fail (printf "CNPG Cluster - Expected [type] to be one of [%s], but got [%s]" (join ", " $validTypes) $objectData.type) -}}
     {{- end -}}
+  {{- end -}}
+
+  {{/* pgvecto.rs (type vectors) publishes no PostgreSQL 18 image; it is superseded by VectorChord */}}
+  {{- if and (eq ($objectData.type | default "postgres") "vectors") (eq ($objectData.pgVersion | toString) "18") -}}
+    {{- fail "CNPG Cluster - type [vectors] is not available for pgVersion [18]; pgvecto.rs has been superseded by VectorChord, use type [vectorchord] instead" -}}
   {{- end -}}
 
   {{- if (hasKey $objectData "cluster") -}}
