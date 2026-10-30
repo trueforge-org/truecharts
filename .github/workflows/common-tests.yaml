@@ -255,7 +255,7 @@ jobs:
           fi
           if [[ "${{ matrix.values }}" =~ ingress.*-values.yaml ]]; then
             helm install cert-manager oci://quay.io/jetstack/charts/cert-manager --namespace cert-manager --create-namespace --set crds.enabled=true --wait
-            helm install ingress-nginx oci://ghcr.io/home-operations/charts-mirror/ingress-nginx --namespace ingress-nginx --create-namespace \
+            helm install ingress-nginx oci://registry.k8s.io/ingress-nginx/charts/ingress-nginx --namespace ingress-nginx --create-namespace \
             --set controller.ingressClassResource.default=true --set controller.publishService.enabled=false --set controller.service.type="ClusterIP" --set controller.config.allow-snippet-annotations=true --set controller.config.annotations-risk-level="Critical" --wait
           fi
           if [[ "${{ matrix.values }}" =~ volsync.*-values.yaml ]]; then
