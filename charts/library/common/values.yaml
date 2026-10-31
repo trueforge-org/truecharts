@@ -83,9 +83,9 @@ global:
 namespace: ""
 
 image:
-  repository: ghcr.io/traefik/whoami
+  repository: oci.trueforge.org/containerforge/whoami
   pullPolicy: IfNotPresent
-  tag: v1.12.0@sha256:c4717a8d1f0134a7444e24f881160e033991f23027c6c5a9a3f8fd22e70d1d44
+  tag: "1.12.0@sha256:ab5d621fc3ecf2ddcc52a728551bab0b942c1e777126b9595df1cfa4e7b9adfa"
 
 ubuntuImage:
   repository: oci.trueforge.org/containerforge/ubuntu
@@ -625,8 +625,8 @@ gluetunImage:
   pullPolicy: IfNotPresent
 
 netshootImage:
-  repository: oci.trueforge.org/tccr/netshoot
-  tag: v0.14.0@sha256:28ede4317d22391e7d89a15eb78dc2afc3587ece02c76c983dde7239a0e43679
+  repository: oci.trueforge.org/containerforge/netshoot
+  tag: "1.0.0@sha256:ecb3a85aed66ac72c76f9cb608656f7dbc810bb349eb301d1ea4d7a7f7ab9027"
   pullPolicy: IfNotPresent
 
 tailscaleImage:
@@ -646,7 +646,7 @@ kubectlImage:
 
 postgresClientImage:
   repository: oci.trueforge.org/containerforge/postgresql-client
-  tag: "9.6.24@sha256:65e2aaef5c5decd8ed06f5c41cb77de6406e44006d6f3db12d0faac3f88fa1c8"
+  tag: "18.6.0@sha256:7c1565c07970e1cf3a5090b78204e282fa5a8857bec00d472c4b3ec72666d7b4"
   pullPolicy: IfNotPresent
 
 mariadbClientImage:
