@@ -47,7 +47,19 @@ The "Connecting externally" section lists the URLs of all enabled ingresses and 
 
 These are listed under "Other routes" instead, as they can't be opened as a link: `GRPCRoute`, `TLSRoute`, `TCPRoute` and `UDPRoute`, and any `HTTPRoute` without a hostname or with only wildcard hostnames.
 
-If there is no ingress or route, the section shows `chartContext.appUrl`.
+"Exposed services" lists the services that can be reached from outside the cluster:
+
+| Service                                  | Address                                                   |
+| ---------------------------------------- | --------------------------------------------------------- |
+| `LoadBalancer` with `loadBalancerIP(s)`  | That IP and `port`                                        |
+| `LoadBalancer` without an IP             | `<load-balancer-ip>` and `port`, as the provider assigns it |
+| `NodePort`                               | `<node-ip>` and `nodePort`                                |
+| A port with `hostPort`                   | `<node-ip>` and `hostPort`                                |
+| `externalIPs`                            | That IP and `port`                                        |
+
+`http` and `https` ports are shown as links, others as `address:port/PROTOCOL`. A service on a pod with `hostNetwork` is not listed, and nothing is listed with `stopAll`, because these force `ClusterIP`.
+
+If there is no ingress, route or exposed service, the section shows `chartContext.appUrl`.
 
 The URL scheme and port of a route come from:
 

@@ -572,7 +572,7 @@ notes:
     # Thank you for installing {{ .Chart.Name }} by TrueCharts.
   # custom: "{{ toYaml $.Values }}"
   custom: |
-    {{- include "tc.v1.common.lib.chart.external" $ }}
+    {{- include "tc.v1.common.lib.chart.externalUrls" $ }}
 
     {{ if .Chart.Dependencies }}
     ## Dependencies for {{ .Chart.Name }}

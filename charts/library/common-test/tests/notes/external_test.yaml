@@ -148,3 +148,151 @@ tests:
           pattern: "Connecting externally"
       - matchRegexRaw:
           pattern: "of their gateway:\n- TCPRoute `my-tcp`\n- TLSRoute `my-tls`: tls.example.com\n- HTTPRoute `my-wildcard`: \\*.example.com\n"
+
+  - it: should list load balancer services instead of the app url
+    template: NOTES.txt
+    set:
+      someIP: 1.2.3.4
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          type: LoadBalancer
+          loadBalancerIP: "{{ .Values.someIP }}"
+          ports:
+            web:
+              enabled: true
+              primary: true
+              protocol: http
+              port: 8080
+            game:
+              enabled: true
+              protocol: udp
+              port: 27015
+        my-pool:
+          enabled: true
+          type: LoadBalancer
+          ports:
+            secure:
+              enabled: true
+              primary: true
+              protocol: https
+              port: 443
+        my-ipv6:
+          enabled: true
+          type: LoadBalancer
+          loadBalancerIPs:
+            - 2001:db8::1
+          ports:
+            tcp:
+              enabled: true
+              primary: true
+              port: 9000
+    asserts:
+      - notMatchRegexRaw:
+          pattern: "Connecting externally"
+      - matchRegexRaw:
+          pattern: "from outside the cluster:\n- `my-ipv6` port `tcp` \\(LoadBalancer\\): \\[2001:db8::1\\]:9000/TCP\n- `my-pool` port `secure` \\(LoadBalancer\\): https://<load-balancer-ip>\n- `my-service` port `game` \\(LoadBalancer\\): 1.2.3.4:27015/UDP\n- `my-service` port `web` \\(LoadBalancer\\): http://1.2.3.4:8080\n"
+
+  - it: should list node ports, host ports and external ips next to routes
+    template: NOTES.txt
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          gateway: external
+          hostnames:
+            - route.example.com
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 8080
+        my-external:
+          enabled: true
+          externalIPs:
+            - 5.6.7.8
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 8081
+        my-host:
+          enabled: true
+          type: LoadBalancer
+          loadBalancerIP: 1.2.3.4
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 8082
+              hostPort: 20082
+        my-node:
+          enabled: true
+          type: NodePort
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              protocol: http
+              port: 8083
+              nodePort: 30083
+    asserts:
+      - matchRegexRaw:
+          pattern: "in your browser:\n- https://route.example.com\n"
+      - matchRegexRaw:
+          pattern: "from outside the cluster:\n- `my-external` port `my-port` \\(ClusterIP\\): 5.6.7.8:8081/TCP\n- `my-host` port `my-port` \\(hostPort\\): <node-ip>:20082/TCP\n- `my-node` port `my-port` \\(NodePort\\): http://<node-ip>:30083\n"
+
+  - it: should not list services forced to ClusterIP by hostNetwork
+    template: NOTES.txt
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            hostNetwork: true
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          type: LoadBalancer
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 8080
+    asserts:
+      - notMatchRegexRaw:
+          pattern: "Exposed services"
+
+  - it: should not list exposed services with stopAll
+    template: NOTES.txt
+    set:
+      global:
+        stopAll: true
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          type: LoadBalancer
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 8080
+    asserts:
+      - notMatchRegexRaw:
+          pattern: "Exposed services"
