@@ -63,10 +63,12 @@ dependencies:
     service:
       main:
         enabled: true
+        targetSelector: main
         ports:
           main:
             enabled: true
             port: 6379
+            targetSelector: main
     persistence:
       data:
         enabled: true
