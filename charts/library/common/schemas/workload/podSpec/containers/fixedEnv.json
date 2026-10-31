@@ -10,21 +10,15 @@
       "description": "Override fixedEnv for the container By default it will set the following environment variables:"
     },
     "TZ": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "string",
       "description": "Override the timezone for the container"
     },
     "UMASK": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": ["string", "integer"],
       "description": "Override the umask for the container"
     },
     "PUID": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": ["string", "integer"],
       "description": "Override the PUID for the container"
     }
   },
