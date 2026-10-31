@@ -190,7 +190,7 @@ jobs:
       fail-fast: false
       matrix:
         # Pull requests test the lowest supported and the latest versions. Everything else tests all combinations
-        versions: ${{ '[{"k3s":"v1.33","helm":"v3.14.0"},{"k3s":"v1.35","helm":"v4.1.0"}]'  }}
+        versions: '[{"k3s":"v1.33","helm":"v3.14.0"},{"k3s":"v1.35","helm":"v4.1.0"}]'
         values:
           - basic-values.yaml
           - configmap-values.yaml
