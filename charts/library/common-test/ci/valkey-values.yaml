@@ -42,6 +42,29 @@ dependencies:
         podSpec:
           containers:
             main:
+              enabled: true
+              primary: true
+              imageSelector: valkeyImage
               env:
                 REDIS_PASSWORD: "testpassword"
+              probes:
+                liveness:
+                  enabled: true
+                  type: tcp
+                  port: 6379
+                readiness:
+                  enabled: true
+                  type: tcp
+                  port: 6379
+                startup:
+                  enabled: true
+                  type: tcp
+                  port: 6379
+    service:
+      main:
+        enabled: true
+        ports:
+          main:
+            enabled: true
+            port: 6379
 
