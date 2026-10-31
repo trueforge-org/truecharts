@@ -59,7 +59,6 @@ global:
     cnpg:
       pgVersion: 16
       skipEmptyWalArchiveCheck: true
-      barmanMode: ''
   traefik:
     commonMiddlewares:
     - name: ''
@@ -3559,13 +3558,11 @@ cnpg:
       enablePodMonitor: false
       disableDefaultQueries: false
       customQueries: []
-    barmanMode: ''
     recovery:
       method: ''
       serverName: ''
       pitrTarget:
         time: ''
-      backupName: ''
       destinationPath: ''
       instanceSidecarConfiguration: {}
     backups:

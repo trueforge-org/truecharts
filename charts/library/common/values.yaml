@@ -70,8 +70,6 @@ global:
     cnpg:
       pgVersion: 16
       skipEmptyWalArchiveCheck: true
-      # -- Default for cnpg.$name.barmanMode
-      barmanMode: inTree
   traefik:
     commonMiddlewares:
       - name: tc-basic-secure-headers
@@ -623,7 +621,7 @@ notes:
 
 gluetunImage:
   repository: oci.trueforge.org/containerforge/gluetun
-  tag: 3.41.3@sha256:9f64b09c9ac35a5b3c66b0044efe5ad57f574140db91c408b5a32c7834151e91
+  tag: "3.41.3@sha256:9f64b09c9ac35a5b3c66b0044efe5ad57f574140db91c408b5a32c7834151e91"
   pullPolicy: IfNotPresent
 
 netshootImage:
@@ -633,7 +631,7 @@ netshootImage:
 
 tailscaleImage:
   repository: oci.trueforge.org/containerforge/tailscale
-  tag: 1.104.4@sha256:c991b2cb4baa7d891f213687a70aaa1ec32254c560ef85fac0db14002438c442
+  tag: "1.104.4@sha256:c991b2cb4baa7d891f213687a70aaa1ec32254c560ef85fac0db14002438c442"
   pullPolicy: IfNotPresent
 
 codeserverImage:
@@ -687,34 +685,32 @@ postgres18Image:
 
 postgresPostgis15Image:
   repository: ghcr.io/cloudnative-pg/postgis
-  tag: "15-3.5@sha256:1ba423156a7ddbbe354dead4e78e17797c3ce48fd3709851a64d751080b5b517"
+  tag: "15-3.6-standard-trixie@sha256:8e7f7463b0f99592378c97b8388eab2ddc424f902b401d98475c580b9eaff114"
   pullPolicy: IfNotPresent
 
 postgresPostgis16Image:
   repository: ghcr.io/cloudnative-pg/postgis
-  tag: "16-3.5@sha256:dba71e1ae5aa91c2cfa4cd4531f2ce2ebeb839293b650414e3bc832c01290bca"
+  tag: "16-3.6-standard-trixie@sha256:b7eb0a782570f5d04e6f7c6af6927002c532f9175c5879ed2aead61c51daae6f"
   pullPolicy: IfNotPresent
 
 postgresPostgis17Image:
   repository: ghcr.io/cloudnative-pg/postgis
-  tag: "17-3.5@sha256:4db9bca5c2ce024ccf297ce3ce879d1d93a936149badae045c1fd77c7c9adc08"
+  tag: "17-3.6-standard-trixie@sha256:73593f14ce3ef6f5401a9867e6bbbcd9b8814029435d8d9dd32104458e06f769"
   pullPolicy: IfNotPresent
 
-# PostGIS 18 is only published under the new "<pg>-<gis>-<variant>-<distro>" tag scheme;
-# no plain "18-3.x" tag exists upstream (unlike the 15-17 entries above).
 postgresPostgis18Image:
   repository: ghcr.io/cloudnative-pg/postgis
-  tag: "18-3.6-standard-bookworm@sha256:f82ef0c5c838794709f5dda2df41acbef1b76006cfc967645b615762251d164f"
+  tag: "18-3.6-standard-trixie@sha256:17f7fe666f6048120ed1a04f21e34791ed1ea5d7ddec83bab0931d4adf0748f0"
   pullPolicy: IfNotPresent
 
 postgresVectors15Image:
   repository: ghcr.io/tensorchord/cloudnative-pgvecto.rs
-  tag: "15.7-v0.2.1@sha256:dbdeddf0d635f76df41f745407816c87c7468df35e3b7b0665ca4e0500ff3048"
+  tag: "15.13-v0.4.0@sha256:dfdb863025674baf23ff245e18c3a6d3db54838fb26ebfa9b81c171c61dc4c90"
   pullPolicy: IfNotPresent
 
 postgresVectors16Image:
   repository: ghcr.io/tensorchord/cloudnative-pgvecto.rs
-  tag: "16.3-v0.2.1@sha256:f1a19d4fc4073b0671a72ad34ef012aa20d21b3ddf5b4b0c9077d54450db679a"
+  tag: "16.9-v0.4.0@sha256:d92dedeeb2c1c70110b72270e3f5ba90f222dcc6fb93988d9adb4d0da15a6a9d"
   pullPolicy: IfNotPresent
 
 postgresVectors17Image:
@@ -1583,21 +1579,15 @@ cnpg:
       #       - ratio:
       #           usage: GAUGE
       #           description: "Cache hit ratio"
-    # -- What runs backups and object store recovery. Defaults to global.fallbackDefaults.cnpg.barmanMode
-    # * `inTree` - The Barman integration built in to CloudNativePG. Removed in CloudNativePG 1.32.
-    # * `plugin` - The Barman Cloud plugin. Must be installed in the namespace of the CloudNativePG operator.
-    # Switching keeps existing backups usable, as long as destinationPath and serverName stay the same.
-    barmanMode: ""
     # Recovery settings if the chosen mode is `recovery`.
     recovery:
       ##
       # Backup Recovery Method
       # Available recovery methods:
-      # * `backup` - Recovers a CNPG cluster from a CNPG backup (PITR supported) Needs to be on the same cluster in the same namespace.
       # * `object_store` - Recovers a CNPG cluster from a barman object store (PITR supported).
-      # Note: `backup` is not available when barmanMode is `plugin`.
       method: object_store
-      ## set a revision to append to the serverName to ensure restore and backup dont target the same thing. Must be a string.
+      ## set a revision to append to the serverName, so restore and backup use a different archive. Must be a string.
+      ## Required when cluster.skipEmptyWalArchiveCheck is false and both use the same archive.
       # revision: "1"
 
       # override serverName in recovery object
@@ -1608,16 +1598,13 @@ cnpg:
         # Time in RFC3339 format
         time: ""
 
-      # Name of the backup to recover from. Required if method is `backup`.
-      backupName: ""
-
       # Overrides the provider specific default path. Defaults to:
       # S3: s3://<bucket><path>
       # Azure: https://<storageAccount>.<serviceName>.core.windows.net/<clusterName><path>
       # Google: gs://<bucket><path>
       destinationPath: ""
 
-      # Only used when barmanMode is `plugin`. Configures the sidecar of the recovery job.
+      # Configures the sidecar of the recovery job.
       # See: https://cloudnative-pg.io/plugin-barman-cloud/docs/plugin-barman-cloud.v1/#instancesidecarconfiguration
       # instanceSidecarConfiguration: {}
 
@@ -1628,7 +1615,8 @@ cnpg:
 
       encryption:
         enabled: false
-      ## set a revision to append to the serverName to ensure restore and backup dont target the same thing. Must be a string.
+      ## set a revision to append to the serverName, so restore and backup use a different archive. Must be a string.
+      ## Required when cluster.skipEmptyWalArchiveCheck is false and both use the same archive.
       # revision: "1"
 
       # override serverName in the object store
@@ -1655,7 +1643,7 @@ cnpg:
 
       retentionPolicy: "30d"
 
-      # Only used when barmanMode is `plugin`. Configures the sidecar of the instance pods.
+      # Configures the sidecar of the instance pods.
       # See: https://cloudnative-pg.io/plugin-barman-cloud/docs/plugin-barman-cloud.v1/#instancesidecarconfiguration
       # instanceSidecarConfiguration:
       #   resources:

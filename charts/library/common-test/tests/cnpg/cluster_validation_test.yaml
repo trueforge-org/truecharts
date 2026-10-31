@@ -4,6 +4,9 @@ templates:
 release:
   name: test-release-name
   namespace: test-release-namespace
+capabilities:
+  apiVersions:
+    - barmancloud.cnpg.io/v1/ObjectStore
 tests:
   - it: should fail without user
     set:
@@ -199,8 +202,7 @@ tests:
           password: test-password
           mode: recovery
           recovery:
-            method: backup
-            backupName: some-backup-name
+            method: object_store
             revision: 5
     asserts:
       - failedTemplate:
@@ -219,22 +221,7 @@ tests:
             method: invalid
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Recovery - Expected [recovery.method] to be one of [backup, object_store], but got [invalid]
-
-  - it: should fail without backupName on recovery method backup
-    set:
-      cnpg:
-        my-pg:
-          enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          mode: recovery
-          recovery:
-            method: backup
-    asserts:
-      - failedTemplate:
-          errorMessage: CNPG Recovery - Expected a non-empty [recovery.backupName] key
+          errorMessage: CNPG Recovery - Expected [recovery.method] to be one of [object_store], but got [invalid]
 
   - it: should fail with revision in backups not a string
     set:
@@ -355,6 +342,8 @@ tests:
           user: test-user
           database: test-db
           password: test-password
+          cluster:
+            skipEmptyWalArchiveCheck: false
           mode: recovery
           recovery:
             method: object_store
@@ -376,6 +365,8 @@ tests:
           user: test-user
           database: test-db
           password: test-password
+          cluster:
+            skipEmptyWalArchiveCheck: false
           mode: recovery
           recovery:
             method: object_store
@@ -459,26 +450,6 @@ tests:
     asserts:
       - notFailedTemplate: {}
 
-  - it: should not fail with backup enabled when recovering from a backup object
-    set:
-      credentials:
-        test: *test
-      cnpg:
-        my-pg:
-          enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          mode: recovery
-          recovery:
-            method: backup
-            backupName: some-backup-name
-          backups:
-            enabled: true
-            credentials: test
-    asserts:
-      - notFailedTemplate: {}
-
   - it: should fail with servername in recovery
     set:
       cnpg:
@@ -489,8 +460,7 @@ tests:
           password: test-password
           mode: recovery
           recovery:
-            method: backup
-            backupName: some-backup-name
+            method: object_store
             servername: some-server-name
     asserts:
       - failedTemplate:
@@ -514,78 +484,7 @@ tests:
       - failedTemplate:
           errorMessage: CNPG Backup - [backups.servername] is not supported, use [backups.serverName] instead. Note that the previous value was never applied
 
-  - it: should fail with invalid barmanMode
-    set:
-      cnpg:
-        my-pg:
-          enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          barmanMode: invalid
-    asserts:
-      - failedTemplate:
-          errorMessage: CNPG - Expected [barmanMode] to be one of [inTree, plugin], but got [invalid]
-
-  - it: should fail with backups in plugin mode when the plugin is not installed
-    set:
-      credentials:
-        test: *test
-      cnpg:
-        my-pg:
-          enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          barmanMode: plugin
-          backups:
-            enabled: true
-            credentials: test
-    asserts:
-      - failedTemplate:
-          errorMessage: CNPG - [barmanMode] is set to [plugin], but API [barmancloud.cnpg.io/v1/ObjectStore] was not found. Install the Barman Cloud plugin in the namespace of the CloudNativePG operator, or set [barmanMode] to [inTree], for CNPG cluster [test-release-name-common-test-cnpg-my-pg]. When rendering without access to a cluster, pass it with [--api-versions]
-
-  - it: should fail with object store recovery in plugin mode when the plugin is not installed
-    set:
-      credentials:
-        test: *test
-      cnpg:
-        my-pg:
-          enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          barmanMode: plugin
-          mode: recovery
-          recovery:
-            method: object_store
-            credentials: test
-    asserts:
-      - failedTemplate:
-          errorMessage: CNPG - [barmanMode] is set to [plugin], but API [barmancloud.cnpg.io/v1/ObjectStore] was not found. Install the Barman Cloud plugin in the namespace of the CloudNativePG operator, or set [barmanMode] to [inTree], for CNPG cluster [test-release-name-common-test-cnpg-my-pg]. When rendering without access to a cluster, pass it with [--api-versions]
-
-  - it: should fail when fallbackDefaults selects plugin mode and the plugin is not installed
-    set:
-      global:
-        fallbackDefaults:
-          cnpg:
-            barmanMode: plugin
-      credentials:
-        test: *test
-      cnpg:
-        my-pg:
-          enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
-    asserts:
-      - failedTemplate:
-          errorMessage: CNPG - [barmanMode] is set to [plugin], but API [barmancloud.cnpg.io/v1/ObjectStore] was not found. Install the Barman Cloud plugin in the namespace of the CloudNativePG operator, or set [barmanMode] to [inTree], for CNPG cluster [test-release-name-common-test-cnpg-my-pg]. When rendering without access to a cluster, pass it with [--api-versions]
-
-  - it: should not fail in plugin mode when the plugin is installed
+  - it: should not fail when the plugin is installed
     capabilities:
       apiVersions:
         - barmancloud.cnpg.io/v1/ObjectStore
@@ -598,14 +497,13 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           backups:
             enabled: true
             credentials: test
     asserts:
       - notFailedTemplate: {}
 
-  - it: should not need the plugin in plugin mode without backups or recovery
+  - it: should not need the plugin without backups or recovery
     set:
       cnpg:
         my-pg:
@@ -613,48 +511,10 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
     asserts:
       - notFailedTemplate: {}
 
-  - it: should not need the plugin in inTree mode with backups
-    set:
-      credentials:
-        test: *test
-      cnpg:
-        my-pg:
-          enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          barmanMode: inTree
-          backups:
-            enabled: true
-            credentials: test
-    asserts:
-      - notFailedTemplate: {}
-
-  - it: should fail with recovery from a backup object in plugin mode
-    capabilities:
-      apiVersions:
-        - barmancloud.cnpg.io/v1/ObjectStore
-    set:
-      cnpg:
-        my-pg:
-          enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          barmanMode: plugin
-          mode: recovery
-          recovery:
-            method: backup
-            backupName: some-backup-name
-    asserts:
-      - failedTemplate:
-          errorMessage: CNPG Recovery - [recovery.method] cannot be [backup] when [barmanMode] is [plugin], use [object_store] instead, for CNPG cluster [test-release-name-common-test-cnpg-my-pg]
-
-  - it: should fail in plugin mode with recovery and backup on the same archive
+  - it: should fail with recovery and backup on the same archive
     capabilities:
       apiVersions:
         - barmancloud.cnpg.io/v1/ObjectStore
@@ -667,7 +527,8 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
+          cluster:
+            skipEmptyWalArchiveCheck: false
           mode: recovery
           recovery:
             method: object_store
@@ -678,3 +539,49 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: CNPG Backup/Recovery - [backups.revision] cannot match [recovery.revision] when in recovery mode and backup is enabled, for CNPG cluster [test-release-name-common-test-cnpg-my-pg]
+
+  - it: should fail with the removed recovery method backup
+    set:
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          mode: recovery
+          recovery:
+            method: backup
+    asserts:
+      - failedTemplate:
+          errorMessage: CNPG Recovery - Expected [recovery.method] to be one of [object_store], but got [backup]
+
+  - it: should not fail with recovery and backup on the same archive when the empty archive check is skipped
+    set:
+      credentials:
+        test:
+          type: s3
+          encrKey: some-encr-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+          bucket: some-bucket
+          url: http://some-url
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          mode: recovery
+          recovery:
+            method: object_store
+            credentials: test
+          backups:
+            enabled: true
+            credentials: test
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: metadata.annotations["cnpg.io/skipEmptyWalArchiveCheck"]
+          value: enabled
