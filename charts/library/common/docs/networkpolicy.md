@@ -270,12 +270,12 @@ networkpolicy:
 
 ### `networkpolicy.$name.targetSelector`
 
-Target a specific pod from this chart
+Target one or more workloads from this chart by name
 
 | Field      | Value                                |
 | ---------- | ------------------------------------ |
 | Key        | `networkpolicy.$name.targetSelector` |
-| Type       | `string`                             |
+| Type       | `string, list`                       |
 | Required   | ❌                                   |
 | Helm `tpl` | ❌                                   |
 | Default    | `""`                                 |
@@ -286,6 +286,26 @@ Example
 networkpolicy:
   $name:
     targetSelector: ""
+```
+
+### `networkpolicy.$name.targetSelectorRegex`
+
+Target workloads from this chart whose names match one or more regular expressions.
+
+| Field      | Value                                     |
+| ---------- | ----------------------------------------- |
+| Key        | `networkpolicy.$name.targetSelectorRegex` |
+| Type       | `string, list`                            |
+| Required   | ❌                                        |
+| Helm `tpl` | ❌                                        |
+| Default    | `""`                                      |
+
+Example
+
+```yaml
+networkpolicy:
+  $name:
+    targetSelectorRegex: "^worker-"
 ```
 
 ---

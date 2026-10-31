@@ -220,6 +220,29 @@ workload:
 
 ---
 
+### `workload.$name.extraSelectorLabels`
+
+Additional labels included in the workload selector and pod labels.
+
+| Field      | Value                                  |
+| ---------- | -------------------------------------- |
+| Key        | `workload.$name.extraSelectorLabels`   |
+| Type       | `map`                                  |
+| Required   | ❌                                     |
+| Helm `tpl` | ✅                                     |
+| Default    | `{}`                                   |
+
+Example
+
+```yaml
+workload:
+  $name:
+    extraSelectorLabels:
+      app.example.com/component: worker
+```
+
+---
+
 ### `workload.$name.labels`
 
 Define labels for workload
