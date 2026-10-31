@@ -237,6 +237,13 @@
       "description": "Configuration for `global.fallbackDefaults.topologyKey`.",
       "default": "kubernetes.io/hostname"
     },
+    "routeListenerPort": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 65535,
+      "description": "Port of the listeners created for route TLS. Can be overruled per route with `route.$name.listenerPort`. Traefik needs the port of its entrypoint here, which is not always the port it is exposed on.",
+      "default": 443
+    },
     "cnpg": {
       "type": "object",
       "properties": {
