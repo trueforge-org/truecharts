@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "description": "Create this NetworkPolicy.",
+      "default": false
+    },
+    "primary": {
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "description": "Mark this as the primary NetworkPolicy.",
+      "default": false
+    },
+    "expandObjectName": {
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "description": "Expand the object name.",
+      "default": false
+    },
+    "namespace": {
+      "$ref": "../special/namespaces.json",
+      "description": "Namespace for this NetworkPolicy.",
+      "default": ""
+    },
+    "labels": {
+      "allOf": [
+        {
+          "$ref": "../special/labels.json"
+        }
+      ],
+      "description": "Additional labels for this NetworkPolicy.",
+      "default": {}
+    },
+    "annotations": {
+      "type": [
+        "object",
+        "string"
+      ],
+      "additionalProperties": true,
+      "description": "Additional annotations for this NetworkPolicy.",
+      "default": {}
+    },
+    "podSelector": {
+      "$ref": "podSelector.json",
+      "description": "Custom Kubernetes label selector for pods to which this policy applies."
+    },
+    "targetSelector": {
+      "type": "string",
+      "description": "Target a specific pod from this chart.",
+      "default": ""
+    },
+    "targetAllPods": {
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "description": "Target all pods in the namespace.",
+      "default": false
+    },
+    "policyTypes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "Ingress",
+          "Egress"
+        ]
+      },
+      "description": "Policy types. When omitted, types are inferred from the configured rules."
+    },
+    "ingress": {
+      "type": "array",
+      "items": {
+        "$ref": "ingressRule.json"
+      },
+      "description": "Ingress rules.",
+      "default": []
+    },
+    "egress": {
+      "type": "array",
+      "items": {
+        "$ref": "egressRule.json"
+      },
+      "description": "Egress rules.",
+      "default": []
+    }
+  },
+  "additionalProperties": true,
+  "description": "Configuration for a NetworkPolicy."
+}
