@@ -1,0 +1,409 @@
+suite: route ingress parity test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should select an external gateway with gateway and gatewayNamespace
+    set:
+      service: &service
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            first:
+              enabled: true
+              primary: true
+              port: 9090
+            second:
+              enabled: true
+              port: 9091
+      route:
+        main:
+          enabled: true
+          gateway: "{{ .Release.Name }}-gateway"
+          gatewayNamespace: networking
+    asserts:
+      - documentSelector: &route
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.parentRefs
+          value:
+            - group: gateway.networking.k8s.io
+              kind: Gateway
+              name: test-release-name-gateway
+              namespace: networking
+
+  - it: should default the selected gateway to the namespace of the route
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+    asserts:
+      - documentSelector: *route
+        equal:
+          path: spec.parentRefs[0].namespace
+          value: test-release-namespace
+
+  - it: should use a targetSelector map for the default backend, same as an ingress
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          targetSelector:
+            other: second
+    asserts:
+      - documentSelector: *route
+        equal:
+          path: spec.rules[0].backendRefs[0].name
+          value: test-release-name-common-test-other
+      - documentSelector: *route
+        equal:
+          path: spec.rules[0].backendRefs[0].port
+          value: 9091
+      - documentSelector: *route
+        equal:
+          path: spec.parentRefs[0].name
+          value: external
+
+  - it: should use a targetSelector map on a backend to select a port by name
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          rules:
+            - backendRefs:
+                - targetSelector:
+                    other: second
+    asserts:
+      - documentSelector: *route
+        equal:
+          path: spec.rules[0].backendRefs[0].port
+          value: 9091
+
+  - it: should template paths, same as an ingress
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          rules:
+            - matches:
+                - path:
+                    type: PathPrefix
+                    value: "/{{ .Release.Name }}"
+    asserts:
+      - documentSelector: *route
+        equal:
+          path: spec.rules[0].matches[0].path.value
+          value: /test-release-name
+
+  - it: should name the primary route after the chart and the others with a suffix
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+        admin:
+          enabled: true
+          gateway: external
+    asserts:
+      - hasDocuments:
+          count: 4
+      - containsDocument:
+          kind: HTTPRoute
+          apiVersion: gateway.networking.k8s.io/v1
+          name: test-release-name-common-test
+          any: true
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-admin
+        isKind:
+          of: HTTPRoute
+
+  - it: should not expand the name with expandObjectName false
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          expandObjectName: false
+          gateway: external
+    asserts:
+      - documentSelector: *route
+        equal:
+          path: metadata.name
+          value: main
+
+  - it: should fail with a required route that is disabled
+    set:
+      service: *service
+      route:
+        main:
+          enabled: false
+          required: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected route [main] to be enabled or at least one ingress to be enabled. This chart is designed to work only with ingress or route enabled.
+
+  - it: should fail with both gateway and a targetSelector string
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          targetSelector: main
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected only one of [gateway, targetSelector] to select the gateway of [route.main]. Use the map form of [targetSelector] to select a service
+
+  - it: should fail with a targetSelector map with more than one key
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          targetSelector:
+            main: main
+            other: first
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected [route.main.targetSelector] to have exactly one key, but got [2]
+
+  - it: should fail with a port that does not exist
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          targetSelector:
+            other: missing
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected targeted service [other] of route [test-release-name-common-test] to have port [missing]
+
+  - it: should fail with a hostname with a scheme
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          hostnames:
+            - https://a.example.com
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected [route.main.hostnames] to only contain hostnames, without a scheme or port, but got [https://a.example.com]
+
+  - it: should fail with a hostname with a port
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          hostnames:
+            - a.example.com:443
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected [route.main.hostnames] to only contain hostnames, without a scheme or port, but got [a.example.com:443]
+
+  - it: should fail with the nginx integration, as dropping it could expose what it protects
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            nginx:
+              enabled: true
+              ipWhitelist:
+                - 10.0.0.0/8
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.main.integrations.nginx] is not supported, only [certManager, homepage] are
+
+  - it: should fail with the traefik integration
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            traefik:
+              enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.main.integrations.traefik] is not supported, only [certManager, homepage] are
+
+  - it: should fail with certManager without a certificateIssuer
+    capabilities:
+      apiVersions:
+        - gateway.networking.k8s.io/v1/ListenerSet
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          hostnames:
+            - a.example.com
+          integrations:
+            certManager:
+              enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected a non-empty [integrations.certManager.certificateIssuer]
+
+  - it: should fail with certManager without hostnames
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            certManager:
+              enabled: true
+              certificateIssuer: some-issuer
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected non-empty [route.main.hostnames] with [integrations.certManager]
+
+  - it: should fail with TLS without a selected gateway
+    capabilities:
+      apiVersions:
+        - gateway.networking.k8s.io/v1/ListenerSet
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          parentRefs:
+            - name: external
+          hostnames:
+            - a.example.com
+          integrations:
+            certManager:
+              enabled: true
+              certificateIssuer: some-issuer
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected [gateway] or a [targetSelector] string on [route.main], as TLS needs a gateway to attach a ListenerSet to
+
+  - it: should fail with TLS on a kind that cannot use a ListenerSet
+    capabilities:
+      apiVersions:
+        - gateway.networking.k8s.io/v1/ListenerSet
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          kind: TLSRoute
+          gateway: external
+          hostnames:
+            - a.example.com
+          integrations:
+            certManager:
+              enabled: true
+              certificateIssuer: some-issuer
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.main] uses TLS through a ListenerSet, which is only supported by kinds [HTTPRoute, GRPCRoute], but got [TLSRoute]
+
+  - it: should fail with TLS when the ListenerSet API is not available
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          hostnames:
+            - a.example.com
+          integrations:
+            certManager:
+              enabled: true
+              certificateIssuer: some-issuer
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.main] uses TLS, but API [gateway.networking.k8s.io/v1/ListenerSet] was not found. Install Gateway API v1.5 or newer. When rendering without access to a cluster, pass it with [--api-versions]
+
+  - it: should fail with TLS on a gateway in this chart that does not allow ListenerSets
+    capabilities:
+      apiVersions:
+        - gateway.networking.k8s.io/v1/ListenerSet
+    set:
+      service: *service
+      gateway:
+        web:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+      route:
+        main:
+          enabled: true
+          targetSelector: web
+          hostnames:
+            - a.example.com
+          integrations:
+            certManager:
+              enabled: true
+              certificateIssuer: some-issuer
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected [gateway.web.allowedListeners.namespaces.from] to allow ListenerSets, as [route.main] uses TLS
+
+  - it: should fail with a tls entry without hosts
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          tls:
+            - secretName: some-secret
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected non-empty [tls.hosts]
+
+  - it: should fail with more than one tls option
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          tls:
+            - hosts:
+                - a.example.com
+              secretName: some-secret
+              certificateIssuer: some-issuer
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected exactly one of [secretName, certificateIssuer, clusterCertificate] to be set in [tls], but got [secretName, certificateIssuer]

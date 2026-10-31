@@ -92,6 +92,50 @@ Fields a kind does not support fail rendering, because dropping them would chang
 
 `HTTPRoute` and `GRPCRoute` use `gateway.networking.k8s.io/v1`. `TCPRoute`, `TLSRoute` and `UDPRoute` use `v1` if the cluster serves it, otherwise `v1alpha3` or `v1alpha2`. When rendering without a cluster they use `v1`, unless you pass `--api-versions`.
 
+## TLS
+
+A route has no certificate of its own, so a route with TLS creates a `ListenerSet` on the selected gateway and attaches to it. The certificate stays with the app, without editing the shared gateway.
+
+```yaml
+route:
+  main:
+    enabled: true
+    gateway: external
+    gatewayNamespace: networking
+    hostnames:
+      - app.example.com
+    integrations:
+      certManager:
+        enabled: true
+        certificateIssuer: my-issuer
+```
+
+This needs:
+
+- Gateway API v1.5 or newer. Rendering fails if the `ListenerSet` API is not found. When rendering without access to a cluster, pass `--api-versions gateway.networking.k8s.io/v1/ListenerSet`.
+- A gateway provider with `ListenerSet` support.
+- The gateway must accept `ListenerSets`, which it does not by default. Set `allowedListeners.namespaces.from` on it. Rendering checks this for a gateway in this chart, but cannot for one outside of it.
+- For `integrations.certManager`, cert-manager 1.20 or newer, where this is an alpha feature. Set `config.gatewayAPI.enabled`, `config.gatewayAPI.enableListenerSet` and `config.featureGates.ListenerSets` to `true`.
+
+`tls` works without that cert-manager feature, as `certificateIssuer` creates the `Certificate` directly.
+
+## Migrating from an ingress
+
+| Ingress                                  | Route                                                       |
+| ---------------------------------------- | ----------------------------------------------------------- |
+| `ingressClassName`                       | `gateway` and `gatewayNamespace`                            |
+| `targetSelector` (`service: port`)       | `targetSelector`, in the same form                          |
+| `hosts[].host`                           | `hostnames`                                                 |
+| `hosts[].paths[]`                        | `rules[].matches[].path`                                    |
+| `hosts[].paths[].overrideService`        | `rules[].backendRefs[]`                                     |
+| `tls`                                    | `tls`, in the same form                                     |
+| `integrations.certManager`               | `integrations.certManager`, in the same form                |
+| `integrations.homepage`                  | `integrations.homepage`, in the same form. Only `HTTPRoute` |
+| `integrations.traefik`, `nginx`          | Not supported yet, and fail rendering                       |
+| `primary`, `required`, `expandObjectName`, `labels`, `annotations` | Same                              |
+
+An ingress also gets an HTTP to HTTPS redirect from some controllers. A route does not, add it on the gateway.
+
 ## Not rendered by common
 
-`BackendTLSPolicy`, `ReferenceGrant` and `ListenerSet` have no dedicated key yet. Use `extraTpl` for these. Without a `BackendTLSPolicy`, a route sends plain HTTP to its backend, even if the service port is `https`.
+`BackendTLSPolicy` and `ReferenceGrant` have no dedicated key yet. Use `extraTpl` for these. Without a `BackendTLSPolicy`, a route sends plain HTTP to its backend, even if the service port is `https`.

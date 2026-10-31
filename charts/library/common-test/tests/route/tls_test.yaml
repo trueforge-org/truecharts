@@ -1,0 +1,261 @@
+suite: route tls test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+capabilities:
+  apiVersions:
+    - gateway.networking.k8s.io/v1/ListenerSet
+    - cert-manager.io/v1/Certificate
+tests:
+  - it: should create a listenerset per hostname with certManager, same as an ingress
+    set:
+      service: &service
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        main:
+          enabled: true
+          gateway: external
+          gatewayNamespace: networking
+          hostnames:
+            - a.example.com
+            - "{{ .Release.Name }}.example.com"
+          integrations:
+            certManager:
+              enabled: true
+              certificateIssuer: some-issuer
+    asserts:
+      - documentSelector: &ls
+          path: kind
+          value: ListenerSet
+        isAPIVersion:
+          of: gateway.networking.k8s.io/v1
+      - documentSelector: *ls
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentSelector: *ls
+        equal:
+          path: metadata.namespace
+          value: test-release-namespace
+      - documentSelector: *ls
+        equal:
+          path: metadata.annotations["cert-manager.io/cluster-issuer"]
+          value: some-issuer
+      - documentSelector: *ls
+        equal:
+          path: metadata.annotations["cert-manager.io/private-key-rotation-policy"]
+          value: Always
+      - documentSelector: *ls
+        equal:
+          path: spec.parentRef
+          value:
+            group: gateway.networking.k8s.io
+            kind: Gateway
+            name: external
+            namespace: networking
+      - documentSelector: *ls
+        equal:
+          path: spec.listeners
+          value:
+            - name: https-0
+              hostname: a.example.com
+              port: 443
+              protocol: HTTPS
+              tls:
+                mode: Terminate
+                certificateRefs:
+                  - group: ""
+                    kind: Secret
+                    name: test-release-name-common-test-tls-0
+              allowedRoutes:
+                namespaces:
+                  from: Same
+            - name: https-1
+              hostname: test-release-name.example.com
+              port: 443
+              protocol: HTTPS
+              tls:
+                mode: Terminate
+                certificateRefs:
+                  - group: ""
+                    kind: Secret
+                    name: test-release-name-common-test-tls-1
+              allowedRoutes:
+                namespaces:
+                  from: Same
+      - documentSelector: &route
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.parentRefs
+          value:
+            - group: gateway.networking.k8s.io
+              kind: ListenerSet
+              name: test-release-name-common-test
+              namespace: test-release-namespace
+      - documentSelector: *route
+        notExists:
+          path: metadata.annotations["cert-manager.io/cluster-issuer"]
+
+  - it: should not create a certificate with certManager, cert-manager does that from the annotation
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          hostnames:
+            - a.example.com
+          integrations:
+            certManager:
+              enabled: true
+              certificateIssuer: some-issuer
+          tls:
+            - hosts:
+                - ignored.example.com
+              certificateIssuer: ignored-issuer
+    asserts:
+      - containsDocument:
+          kind: Certificate
+          apiVersion: cert-manager.io/v1
+          any: true
+        not: true
+      - documentSelector: *ls
+        equal:
+          path: spec.listeners[0].hostname
+          value: a.example.com
+      - documentSelector: *ls
+        equal:
+          path: spec.parentRef.namespace
+          value: test-release-namespace
+
+  - it: should use the three tls options, same as an ingress
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          listenerPort: 8443
+          hostnames:
+            - a.example.com
+            - b.example.com
+            - c.example.com
+          tls:
+            - hosts:
+                - a.example.com
+              secretName: "{{ .Release.Name }}-secret"
+            - hosts:
+                - b.example.com
+              certificateIssuer: some-issuer
+            - hosts:
+                - c.example.com
+              clusterCertificate: some-cert
+    asserts:
+      - documentSelector: *ls
+        equal:
+          path: spec.listeners[0].tls.certificateRefs[0].name
+          value: test-release-name-secret
+      - documentSelector: *ls
+        equal:
+          path: spec.listeners[1].tls.certificateRefs[0].name
+          value: test-release-name-common-test-tls-1
+      - documentSelector: *ls
+        equal:
+          path: spec.listeners[2].tls.certificateRefs[0].name
+          value: certificate-issuer-some-cert
+      - documentSelector: *ls
+        equal:
+          path: spec.listeners[0].port
+          value: 8443
+      - documentSelector: *ls
+        notExists:
+          path: metadata.annotations["cert-manager.io/cluster-issuer"]
+      - documentSelector: &cert
+          path: kind
+          value: Certificate
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-tls-1
+      - documentSelector: *cert
+        equal:
+          path: spec.dnsNames
+          value:
+            - b.example.com
+      - documentSelector: *cert
+        equal:
+          path: spec.issuerRef.name
+          value: some-issuer
+
+  - it: should attach a listenerset to a gateway in this chart
+    set:
+      service: *service
+      gateway:
+        web:
+          enabled: true
+          gatewayClassName: some-class
+          namespace: gateway-namespace
+          allowedListeners:
+            namespaces:
+              from: All
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+      route:
+        main:
+          enabled: true
+          targetSelector: web
+          hostnames:
+            - a.example.com
+          integrations:
+            certManager:
+              enabled: true
+              certificateIssuer: some-issuer
+    asserts:
+      - documentSelector: *ls
+        equal:
+          path: spec.parentRef.name
+          value: test-release-name-common-test
+      - documentSelector: *ls
+        equal:
+          path: spec.parentRef.namespace
+          value: gateway-namespace
+
+  - it: should remove the route and listenerset but keep the certificate on stopAll
+    set:
+      global:
+        stopAll: true
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          tls:
+            - hosts:
+                - a.example.com
+              certificateIssuer: some-issuer
+    asserts:
+      - containsDocument:
+          kind: HTTPRoute
+          apiVersion: gateway.networking.k8s.io/v1
+          any: true
+        not: true
+      - containsDocument:
+          kind: ListenerSet
+          apiVersion: gateway.networking.k8s.io/v1
+          any: true
+        not: true
+      - containsDocument:
+          kind: Certificate
+          apiVersion: cert-manager.io/v1
+          any: true

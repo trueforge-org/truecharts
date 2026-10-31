@@ -764,7 +764,7 @@ tests:
             - "*.example.com"
             - test-release-name.example.com
 
-  - it: should not render empty annotations
+  - it: should render checksum annotations, same as an ingress
     set:
       service:
         main:
@@ -791,8 +791,13 @@ tests:
       - documentSelector:
           path: kind
           value: HTTPRoute
-        notExists:
-          path: metadata.annotations
+        exists:
+          path: metadata.annotations["checksum/secrets"]
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        exists:
+          path: metadata.annotations["checksum/services"]
 
   - it: should render parentRefs port and sectionName, and default the namespace
     set:

@@ -1,0 +1,296 @@
+suite: route homepage test
+templates:
+  - common.yaml
+chart:
+  appVersion: v9.9.9
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should add the homepage annotations with defaults, same as an ingress
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              protocol: https
+              port: 9443
+        my-service2:
+          enabled: true
+          ports:
+            port-2:
+              enabled: true
+              primary: true
+              port: 80
+      someHost: test-host
+      somePath: /test-path
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          gateway: external
+          hostnames:
+            - "{{ .Values.someHost }}"
+          rules:
+            - matches:
+                - path:
+                    type: PathPrefix
+                    value: "{{ .Values.somePath }}"
+          integrations:
+            homepage:
+              enabled: true
+    asserts:
+      - documentSelector: &route
+          path: kind
+          value: HTTPRoute
+        isSubset:
+          path: metadata.annotations
+          content:
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/name: TestReleaseName
+            gethomepage.dev/description: Helper chart to test different use cases of the common library
+            gethomepage.dev/href: https://test-host/test-path
+            gethomepage.dev/icon: https://truecharts.org/img/hotlink-ok/chart-icons/common-test.webp
+            gethomepage.dev/pod-selector: app.kubernetes.io/instance=test-release-name,pod.lifecycle in (permanent)
+            gethomepage.dev/widget.type: commontest
+            gethomepage.dev/widget.version: "1"
+            gethomepage.dev/widget.url: https://test-release-name-common-test.test-release-namespace.svc:9443
+
+  - it: should add the homepage annotations with all options, same as an ingress
+    set:
+      service: *service
+      k1: some-name
+      k2: some-desc
+      k3: some-icon
+      k4: some-url
+      k5: some-type
+      k6: some-group
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          gateway: external
+          hostnames:
+            - a.example.com
+          integrations:
+            homepage:
+              enabled: true
+              name: "{{ .Values.k1 }}"
+              description: "{{ .Values.k2 }}"
+              icon: "{{ .Values.k3 }}"
+              group: "{{ .Values.k6 }}"
+              weight: 1
+              href: https://other.example.com
+              podSelector:
+                - main
+                - other
+              widget:
+                url: "{{ .Values.k4 }}"
+                type: "{{ .Values.k5 }}"
+                custom:
+                  some-key: some-value
+                  some-empty-key: ""
+                customkv:
+                  - key: some-key-slice
+                    value: some-value-slice
+    asserts:
+      - documentSelector: *route
+        isSubset:
+          path: metadata.annotations
+          content:
+            gethomepage.dev/name: some-name
+            gethomepage.dev/description: some-desc
+            gethomepage.dev/icon: some-icon
+            gethomepage.dev/group: some-group
+            gethomepage.dev/weight: "1"
+            gethomepage.dev/href: https://other.example.com
+            gethomepage.dev/pod-selector: pod.name in (main,other),pod.lifecycle in (permanent)
+            gethomepage.dev/widget.type: some-type
+            gethomepage.dev/widget.url: some-url
+            gethomepage.dev/widget.some-key: some-value
+            gethomepage.dev/widget.some-key-slice: some-value-slice
+      - documentSelector: *route
+        notExists:
+          path: metadata.annotations["gethomepage.dev/widget.some-empty-key"]
+
+  - it: should use the first backend of the route for the widget url
+    set:
+      service: *service
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          gateway: external
+          hostnames:
+            - a.example.com
+          integrations:
+            homepage:
+              enabled: true
+          rules:
+            - filters:
+                - type: RequestRedirect
+                  requestRedirect:
+                    scheme: https
+            - backendRefs:
+                - targetSelector:
+                    my-service2: port-2
+    asserts:
+      - documentSelector: *route
+        equal:
+          path: metadata.annotations["gethomepage.dev/widget.url"]
+          value: http://test-release-name-common-test-my-service2.test-release-namespace.svc:80
+      - documentSelector: *route
+        equal:
+          path: metadata.annotations["gethomepage.dev/href"]
+          value: https://a.example.com/
+
+  - it: should not add the widget annotations with the widget disabled
+    set:
+      service: *service
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          gateway: external
+          hostnames:
+            - a.example.com
+          integrations:
+            homepage:
+              enabled: true
+              widget:
+                enabled: false
+    asserts:
+      - documentSelector: *route
+        equal:
+          path: metadata.annotations["gethomepage.dev/enabled"]
+          value: "true"
+      - documentSelector: *route
+        notExists:
+          path: metadata.annotations["gethomepage.dev/widget.type"]
+
+  - it: should keep the annotations of the route, and not add homepage to its listenerset
+    capabilities:
+      apiVersions:
+        - gateway.networking.k8s.io/v1/ListenerSet
+    set:
+      service: *service
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          gateway: external
+          hostnames:
+            - a.example.com
+          annotations:
+            some-key: some-value
+          integrations:
+            certManager:
+              enabled: true
+              certificateIssuer: some-issuer
+            homepage:
+              enabled: true
+    asserts:
+      - documentSelector: *route
+        equal:
+          path: metadata.annotations["some-key"]
+          value: some-value
+      - documentSelector: *route
+        exists:
+          path: metadata.annotations["gethomepage.dev/enabled"]
+      - documentSelector: &ls
+          path: kind
+          value: ListenerSet
+        notExists:
+          path: metadata.annotations["gethomepage.dev/enabled"]
+      - documentSelector: *ls
+        exists:
+          path: metadata.annotations["cert-manager.io/cluster-issuer"]
+
+  - it: should not add annotations without the integration
+    set:
+      service: *service
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          gateway: external
+          hostnames:
+            - a.example.com
+    asserts:
+      - documentSelector: *route
+        notExists:
+          path: metadata.annotations["gethomepage.dev/enabled"]
+
+  - it: should fail on a kind homepage does not discover
+    set:
+      service: *service
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          kind: GRPCRoute
+          gateway: external
+          hostnames:
+            - a.example.com
+          integrations:
+            homepage:
+              enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.my-route.integrations.homepage] is only supported by kind [HTTPRoute], but got [GRPCRoute]
+
+  - it: should fail without hostnames or a href
+    set:
+      service: *service
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          gateway: external
+          integrations:
+            homepage:
+              enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected non-empty [route.my-route.hostnames] or [integrations.homepage.href] with [integrations.homepage]
+
+  - it: should fail with podSelector not a slice
+    set:
+      service: *service
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          gateway: external
+          hostnames:
+            - a.example.com
+          integrations:
+            homepage:
+              enabled: true
+              podSelector: not-a-slice
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected [integrations.homepage.podSelector] to be a [slice], but got [string]
+
+  - it: should fail with custom widget not a map
+    set:
+      service: *service
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          gateway: external
+          hostnames:
+            - a.example.com
+          integrations:
+            homepage:
+              enabled: true
+              widget:
+                custom: not-a-map
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected [integrations.homepage.widget.custom] to be a [map], but got [string]

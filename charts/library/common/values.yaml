@@ -930,6 +930,12 @@ route:
   main:
     # -- Enables or disables the route
     enabled: false
+    # -- Make this the primary route (used in notes, chart context, etc...).
+    # If there is more than 1 route, make sure that only 1 route is marked as primary.
+    primary: true
+    # -- Ensure this route is always enabled. An enabled ingress also satisfies this.
+    required: false
+    # expandObjectName: false
     # -- Set the route kind
     # Valid options are GRPCRoute, HTTPRoute, TCPRoute, TLSRoute, UDPRoute
     kind: HTTPRoute
@@ -937,9 +943,16 @@ route:
     annotations: {}
     # -- Provide additional labels which may be required.
     labels: {}
-    # -- Optional: Automatically link to a gateway defined in this chart
-    # When set, this will generate parentRefs automatically based on gateway name
+    # -- Select a gateway outside of this chart. Replaces parentRefs.
+    gateway: ""
+    # -- Namespace of the selected gateway. Defaults to the namespace of the route.
+    gatewayNamespace: ""
+    # -- A string selects a gateway defined in this chart, and replaces parentRefs:
     # targetSelector: main
+    # -- A map selects the default service and port of the rules, same as an ingress:
+    # targetSelector:
+    #   # service: port
+    #   main: main
     # -- Configure the resource the route attaches to.
     # This is optional if targetSelector is used (targetSelector will override this)
     parentRefs:
@@ -955,6 +968,46 @@ route:
         # port: 443
     # -- Host addresses. Required for TLSRoute, not supported by TCPRoute and UDPRoute
     hostnames: []
+    # -- Configure TLS for this route. It creates a ListenerSet on the selected gateway, and attaches
+    # the route to it. Needs [gateway] or a [targetSelector] string, and the gateway must allow
+    # ListenerSets with [allowedListeners]. Only for HTTPRoute and GRPCRoute.
+    # Both secretName and hosts can process a Helm template.
+    # Gets ignored when integrations.certManager is enabled
+    tls: []
+    #  - hosts:
+    #      - chart-example.local
+    #    # Exactly one of these
+    #    secretName: chart-example-tls
+    #    certificateIssuer: ""
+    #    clusterCertificate: ""
+    # -- Port of the created listeners
+    listenerPort: 443
+    integrations:
+      # Same as an ingress. Needs cert-manager 1.20 or newer, with ListenerSet support enabled.
+      certManager:
+        enabled: false
+        certificateIssuer: ""
+      # Same as an ingress. Only for HTTPRoute, and homepage needs [gateway: true] in its kubernetes.yaml
+      homepage:
+        enabled: false
+        # Default: chart name
+        name: ""
+        # Default: chart description
+        description: ""
+        # Default: no group
+        group: ""
+        # Default: chart icon
+        icon: ""
+        widget:
+          # Default: chartname
+          type: ""
+          # Default to the first backend of the route
+          url: ""
+          custom:
+            # somesetting: some value
+          customkv:
+            # - key: some key
+            #   value: some value
     # -- Configure rules for routing. Without rules everything goes to the primary service.
     # Fields a route kind does not support fail rendering, see the Route docs.
     rules: []
