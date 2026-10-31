@@ -17,8 +17,6 @@
   {{- $customCA := $calcData.creds.customCA -}}
   {{- $customCASecretRef := $calcData.creds.customCASecretRef -}}
   {{- $region := $calcData.creds.region -}}
-  {{- $bucket := $calcData.creds.bucket -}}
-  {{- $path := $calcData.creds.path -}}
   {{- $key := $calcData.key -}}
 
   {{- $endpointCA := dict -}}
@@ -36,20 +34,12 @@
     {{- $expandName := (include "tc.v1.common.lib.util.expandName" (dict
                     "rootCtx" $rootCtx "objectData" $customCASecretRef
                     "name" $CAsecretName "caller" "CNPG BarmanObjectStore"
-                    "key" (printf "credentials.%s.customCA.name" $credName))) -}}
+                    "key" (printf "credentials.%s.customCASecretRef.name" $credName))) -}}
     {{- if eq $expandName "true" -}}
       {{- $CAsecretName = (printf "%s-%s" $fullname $CAsecretName) -}}
     {{- end -}}
 
     {{- $endpointCA = (dict "name" $CAsecretName "key" $customCASecretRef.key) -}}
-  {{- end -}}
-
-  {{- if not $destinationPath -}}
-    {{- if $path -}}
-      {{- $destinationPath = (printf "s3://%s/%s/%s/cnpg" $bucket ($path | trimSuffix "/") $rootCtx.Release.Name) -}}
-    {{- else -}}
-      {{- $destinationPath = (printf "s3://%s/%s/cnpg" $bucket $rootCtx.Release.Name) -}}
-    {{- end -}}
   {{- end }}
 endpointURL: {{ $endpointURL }}
 {{- if $endpointCA }}
@@ -58,7 +48,10 @@ endpointCA:
   key: {{ $endpointCA.key }}
 {{- end }}
 destinationPath: {{ $destinationPath }}
+{{- /* The ObjectStore CRD rejects serverName. With the plugin it is a parameter on the Cluster */}}
+{{- if ne $objectData.barmanMode "plugin" }}
 serverName: {{ $serverName }}
+{{- end }}
 s3Credentials:
   {{- if $region }}
   region:
