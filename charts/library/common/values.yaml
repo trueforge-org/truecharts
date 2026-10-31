@@ -31,6 +31,9 @@ global:
     # -- Default PVC Access Modes
     accessModes:
       - ReadWriteOnce
+    # -- Keep [strategy: RollingUpdate] on a single replica Deployment with ReadWriteOnce volumes
+    # Can be overruled per workload. Updates can get stuck, and two pods use the same data during an update
+    allowRollingUpdateWithRWO: false
     # -- Default VCT Access Modes
     vctAccessModes:
       - ReadWriteOnce

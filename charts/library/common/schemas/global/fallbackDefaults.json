@@ -237,6 +237,11 @@
       "description": "Configuration for `global.fallbackDefaults.topologyKey`.",
       "default": "kubernetes.io/hostname"
     },
+    "allowRollingUpdateWithRWO": {
+      "type": "boolean",
+      "description": "Keep `strategy: RollingUpdate` on a single replica Deployment with `ReadWriteOnce` volumes, instead of changing it to `Recreate`. Can be overruled with `workload.$name.allowRollingUpdateWithRWO`. Updates can get stuck if the storage stays locked to the old pod, which can happen on the same node with storage like iSCSI, and two pods use the same data during an update.",
+      "default": false
+    },
     "routeListenerPort": {
       "type": "integer",
       "minimum": 1,
