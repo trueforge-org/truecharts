@@ -275,7 +275,7 @@
               },
               "redirectRegex": {
                 "type": "array",
-                "description": "List of `regex`, `replacement` and `permanent`. Only for `HTTPRoute`. The regex matches the whole URL."
+                "description": "List of `regex`, `replacement` and `permanent`. Only for `HTTPRoute`. The regex must match the whole path, and each one is its own rule. The replacement can use capture groups."
               },
               "middlewares": {
                 "type": "array",
@@ -335,7 +335,7 @@
               },
               "redirectRegex": {
                 "type": "array",
-                "description": "List of `regex`, `replacement` and `permanent`. Only for `HTTPRoute`. The regex matches the path, and the replacement must be a fixed target without capture groups."
+                "description": "List of `regex`, `replacement` and `permanent`. Only for `HTTPRoute`. The regex must match the whole path, and each one is its own rule. The replacement must be a fixed target without capture groups."
               },
               "securityPolicy": {
                 "type": "object",

@@ -48,16 +48,28 @@
     {{- $middlewares = mustAppend $middlewares (dict "name" (printf "%s-themepark" $fullName) "type" "plugin-theme-park" "data" (omit $traefik.themePark "enabled")) -}}
   {{- end -}}
 
+  {{/* A redirect gets its own rule, as a filter on the other rules only sees what those match */}}
+  {{- $redirects := list -}}
   {{- range $idx, $redirect := $traefik.redirectRegex -}}
     {{- if ne $routeKind "HTTPRoute" -}}
       {{- fail (printf "Route - [route.%s.integrations.traefik.redirectRegex] is only supported by kind [HTTPRoute]" $name) -}}
     {{- end -}}
-    {{- $middlewares = mustAppend $middlewares (dict "name" (printf "%s-redirect-%d" $fullName ($idx | int)) "type" "redirect-regex" "data" $redirect) -}}
+    {{/* The rule matches the path, but the middleware sees the whole URL. No new groups, so ${1} stays the same */}}
+    {{- $path := $redirect.regex | trimPrefix "^" | trimSuffix "$" -}}
+    {{- $redirectName := printf "%s-redirect-%d" $fullName ($idx | int) -}}
+    {{- $data := dict "regex" (printf "^https?://[^/]+%s(?:\\?.*)?$" $path) "replacement" $redirect.replacement -}}
+    {{- if hasKey $redirect "permanent" -}}
+      {{- $_ := set $data "permanent" $redirect.permanent -}}
+    {{- end -}}
+    {{- $middlewares = mustAppend $middlewares (dict "name" $redirectName "type" "redirect-regex" "data" $data) -}}
+    {{- $redirects = mustAppend $redirects (dict "name" $redirectName "path" (printf "^%s$" $path)) -}}
   {{- end -}}
 
   {{- $names := list -}}
   {{- range $middlewares -}}
-    {{- $names = mustAppend $names .name -}}
+    {{- if not (eq .type "redirect-regex") -}}
+      {{- $names = mustAppend $names .name -}}
+    {{- end -}}
   {{- end -}}
 
   {{/* Add the common, chart and user middlewares, same as an ingress */}}
@@ -96,5 +108,13 @@
     {{- $filters = mustAppend $filters (dict "type" "ExtensionRef" "extensionRef" (dict "group" "traefik.io" "kind" "Middleware" "name" .)) -}}
   {{- end -}}
 
-  {{- dict "middlewares" $middlewares "filters" $filters | toYaml -}}
+  {{/* The other filters also run on these, same as a policy of Envoy Gateway applies to all rules */}}
+  {{- $extraRules := list -}}
+  {{- range $redirects -}}
+    {{- $extraRules = mustAppend $extraRules (dict
+          "matches" (list (dict "path" (dict "type" "RegularExpression" "value" .path)))
+          "filters" (mustAppend $filters (dict "type" "ExtensionRef" "extensionRef" (dict "group" "traefik.io" "kind" "Middleware" "name" .name)))) -}}
+  {{- end -}}
+
+  {{- dict "middlewares" $middlewares "filters" $filters "extraRules" $extraRules | toYaml -}}
 {{- end -}}

@@ -38,7 +38,7 @@ tests:
                 app: sonarr
                 theme: nord
               redirectRegex:
-                - regex: ^https://a.example.com/old/(.*)
+                - regex: ^/old/(.*)
                   replacement: https://a.example.com/new/${1}
                   permanent: true
           rules:
@@ -57,35 +57,52 @@ tests:
                       - name: X-Test
                         value: test
     asserts:
+      # The redirect is its own rule, in front of the others, and the other filters also run on it
       - documentSelector: &route
           path: kind
           value: HTTPRoute
         equal:
-          path: spec.rules[0].filters
+          path: spec.rules[0]
           value:
-            - type: ExtensionRef
-              extensionRef: &ip
-                group: traefik.io
-                kind: Middleware
-                name: test-release-name-common-test-ip-whitelist
-            - type: ExtensionRef
-              extensionRef: &auth
-                group: traefik.io
-                kind: Middleware
-                name: test-release-name-common-test-auth
-            - type: ExtensionRef
-              extensionRef: &theme
-                group: traefik.io
-                kind: Middleware
-                name: test-release-name-common-test-themepark
-            - type: ExtensionRef
-              extensionRef: &redirect
-                group: traefik.io
-                kind: Middleware
-                name: test-release-name-common-test-redirect-0
+            matches:
+              - path:
+                  type: RegularExpression
+                  value: ^/old/(.*)$
+            filters:
+              - type: ExtensionRef
+                extensionRef: &ip
+                  group: traefik.io
+                  kind: Middleware
+                  name: test-release-name-common-test-ip-whitelist
+              - type: ExtensionRef
+                extensionRef: &auth
+                  group: traefik.io
+                  kind: Middleware
+                  name: test-release-name-common-test-auth
+              - type: ExtensionRef
+                extensionRef: &theme
+                  group: traefik.io
+                  kind: Middleware
+                  name: test-release-name-common-test-themepark
+              - type: ExtensionRef
+                extensionRef:
+                  group: traefik.io
+                  kind: Middleware
+                  name: test-release-name-common-test-redirect-0
+      # The other rules do not get the redirect
       - documentSelector: *route
         equal:
-          path: spec.rules[1].filters[4].type
+          path: spec.rules[1].filters
+          value:
+            - type: ExtensionRef
+              extensionRef: *ip
+            - type: ExtensionRef
+              extensionRef: *auth
+            - type: ExtensionRef
+              extensionRef: *theme
+      - documentSelector: *route
+        equal:
+          path: spec.rules[2].filters[3].type
           value: RequestHeaderModifier
       - documentSelector: &ipDoc
           path: metadata.name
@@ -125,7 +142,7 @@ tests:
         equal:
           path: spec.redirectRegex
           value:
-            regex: ^https://a.example.com/old/(.*)
+            regex: ^https?://[^/]+/old/(.*)(?:\?.*)?$
             replacement: https://a.example.com/new/${1}
             permanent: true
 
@@ -368,3 +385,52 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: Route - [integrations.envoy] needs API [gateway.envoyproxy.io/v1alpha1/SecurityPolicy], which was not found. Install Envoy Gateway. When rendering without access to a cluster, pass it with [--api-versions]
+
+  - it: should fail with a redirect regex for a whole url
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            traefik:
+              enabled: true
+              redirectRegex:
+                - regex: ^https://a.example.com/old
+                  replacement: /new
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected [regex] in [integrations.traefik.redirectRegex] to match the path and start with [/] or [^/], but got [^https://a.example.com/old]
+
+  - it: should keep the regex anchored when it has no anchors
+    set:
+      service: *service
+      global:
+        traefik:
+          commonMiddlewares: []
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            traefik:
+              enabled: true
+              redirectRegex:
+                - regex: /old
+                  replacement: /new
+    asserts:
+      - documentSelector: *route
+        equal:
+          path: spec.rules[0].matches[0].path.value
+          value: ^/old$
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-redirect-0
+        equal:
+          path: spec.redirectRegex.regex
+          value: ^https?://[^/]+/old(?:\?.*)?$
+      - documentSelector: *route
+        equal:
+          path: spec.rules[1].backendRefs[0].name
+          value: test-release-name-common-test

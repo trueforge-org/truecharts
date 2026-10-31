@@ -30,6 +30,10 @@
       {{- if or (not .regex) (not .replacement) -}}
         {{- fail (printf "Route - Expected [regex] and [replacement] in [integrations.%s.redirectRegex]" $key) -}}
       {{- end -}}
+      {{/* Both providers match the whole path, so a regex for a whole URL would never match */}}
+      {{- if not (hasPrefix "/" (.regex | trimPrefix "^")) -}}
+        {{- fail (printf "Route - Expected [regex] in [integrations.%s.redirectRegex] to match the path and start with [/] or [^/], but got [%s]" $key .regex) -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}

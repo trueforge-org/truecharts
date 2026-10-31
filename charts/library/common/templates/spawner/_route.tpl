@@ -55,6 +55,7 @@
       {{- $data := include "tc.v1.common.lib.route.integration.traefik" (dict "rootCtx" $ "objectData" $routeValues "fullName" $fullName "routeKind" $routeKind "name" $name) | fromYaml -}}
       {{- $routeFilters = $data.filters | default list -}}
       {{- $middlewares = $data.middlewares | default list -}}
+      {{- $extraRules = $data.extraRules | default list -}}
     {{- else if $envoy.enabled -}}
       {{- $data := include "tc.v1.common.lib.route.integration.envoy" (dict "rootCtx" $ "objectData" $routeValues "routeKind" $routeKind "name" $name) | fromYaml -}}
       {{- $extraRules = $data.extraRules | default list -}}

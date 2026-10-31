@@ -1009,9 +1009,9 @@ route:
           enabled: false
           app: ""
           theme: ""
-        # Only for HTTPRoute. The regex matches the whole URL.
+        # Only for HTTPRoute. The regex must match the whole path. Each one is its own rule.
         redirectRegex: []
-        #   - regex: ^https://example.com/old/(.*)
+        #   - regex: ^/old/(.*)
         #     replacement: https://example.com/new/${1}
         #     permanent: true
         # -- Anything else: any Middleware from ingressMiddlewares.traefik, same as an ingress
@@ -1034,8 +1034,8 @@ route:
         themePark:
           enabled: false
           css: ""
-        # Only for HTTPRoute. The regex matches the path. The replacement must be a fixed target,
-        # capture groups are not available on Envoy Gateway.
+        # Only for HTTPRoute. The regex must match the whole path. Each one is its own rule.
+        # The replacement must be a fixed target, capture groups are not available on Envoy Gateway.
         redirectRegex: []
         #   - regex: ^/old/.*
         #     replacement: https://example.com/new

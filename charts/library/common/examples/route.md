@@ -180,9 +180,18 @@ An ingress configures its controller with annotations. Gateway API has no equiva
 | `auth` Authentik | `Middleware`, `/outpost.goauthentik.io/auth/traefik` | `SecurityPolicy`, `/outpost.goauthentik.io/auth/envoy` |
 | `ipWhitelist`    | `Middleware`                             | `SecurityPolicy`                             |
 | `themePark`      | `Middleware`, with `app` and `theme`     | `EnvoyExtensionPolicy`, with `css`           |
-| `redirectRegex`  | `Middleware`, with capture groups        | A route rule, **without capture groups**     |
+| `redirectRegex`  | A route rule and `Middleware`, with capture groups | A route rule, **without capture groups** |
 
 These apply to the whole route. To protect one path, give it its own route, as shown under [TLS](#tls).
+
+`redirectRegex` works the same on both. Each entry is its own rule in front of the other rules of the route, so a request is redirected even if no other rule matches its path. The regex must match the whole path, and `ipWhitelist` and `auth` also apply to it:
+
+```yaml
+redirectRegex:
+  - regex: ^/old/(.*)
+    replacement: https://example.com/new/${1} # Traefik only, Envoy Gateway needs a fixed target
+    permanent: true
+```
 
 ### Anything else
 
