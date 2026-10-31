@@ -11,7 +11,6 @@ podDisruptionBudget:
       key: value
       keytpl: "{{ .Values.some.value }}"
     minAvailable: 1
-    maxUnavailable: 1
     unhealthyPodEvictionPolicy: IfHealthyBudget
 
   other-pdb-name:
