@@ -1,0 +1,71 @@
+suite: valkey dependency wait test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should only add the wait to workloads outside the dependency
+    set:
+      image: &image
+        repository: nginx
+        tag: 1.19.0
+        pullPolicy: IfNotPresent
+      workload:
+        my-app:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              my-container: &container
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 8080
+      dependencies:
+        valkey:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              enabled: true
+              type: StatefulSet
+              strategy: RollingUpdate
+              podSpec:
+                containers:
+                  main: *container
+          service:
+            main:
+              enabled: true
+              ports:
+                main:
+                  enabled: true
+                  port: 6379
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.spec.initContainers[0].name
+          value: test-release-name-common-test-system-valkey-wait
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        isNull:
+          path: spec.template.spec.initContainers
