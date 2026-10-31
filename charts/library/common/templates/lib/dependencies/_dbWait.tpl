@@ -12,11 +12,13 @@
   {{- if $valkeyServiceExists -}}
     {{- $container := include "tc.v1.common.lib.deps.wait.valkey" $ | fromYaml -}}
     {{- if $container -}}
-      {{- range .Values.workload -}}
-        {{- if not (hasKey .podSpec "initContainers") -}}
-          {{- $_ := set .podSpec "initContainers" dict -}}
+      {{- range $name, $workload := .Values.workload -}}
+        {{/* The workloads of the dependency itself can't wait for it, they would never start */}}
+        {{- if hasPrefix "valkey-" $name -}}{{- continue -}}{{- end -}}
+        {{- if not (hasKey $workload.podSpec "initContainers") -}}
+          {{- $_ := set $workload.podSpec "initContainers" dict -}}
         {{- end -}}
-      {{- $_ := set .podSpec.initContainers "valkey-wait" $container -}}
+      {{- $_ := set $workload.podSpec.initContainers "valkey-wait" $container -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}
@@ -150,7 +152,8 @@ command:
             -p "$VALKEY_PORT" \
             ping
         )
-      if [ "$response" == "PONG" ] || [ "$response" == "LOADING Valkey is loading the dataset in memory" ]; then
+      # NOAUTH is a response too, this only waits for the server and has no password
+      if [ "$response" == "PONG" ] || [ "$response" == "LOADING Valkey is loading the dataset in memory" ] || [[ "$response" == NOAUTH* ]]; then
         LIVE=true
         echo "$response"
         echo "Valkey Responded, ending initcontainer and starting main container(s)..."

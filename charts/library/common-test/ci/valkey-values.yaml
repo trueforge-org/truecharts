@@ -67,4 +67,10 @@ dependencies:
           main:
             enabled: true
             port: 6379
-
+    persistence:
+      data:
+        enabled: true
+        mountPath: /config
+        targetSelector:
+          main:
+            main: {}
