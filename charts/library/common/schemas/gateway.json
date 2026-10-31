@@ -36,6 +36,25 @@
         "type": "string",
         "description": "Configuration for `gateway.main.targetSelector`. Name-based selector for automatic GatewayClass linking."
       },
+      "addresses": {
+        "type": "array",
+        "description": "Requested addresses for the gateway. Passed as is."
+      },
+      "infrastructure": {
+        "type": "object",
+        "additionalProperties": true,
+        "description": "Infrastructure settings of the gateway. Passed as is."
+      },
+      "allowedListeners": {
+        "type": "object",
+        "additionalProperties": true,
+        "description": "Which ListenerSets may attach to the gateway. Passed as is."
+      },
+      "tls": {
+        "type": "object",
+        "additionalProperties": true,
+        "description": "Gateway wide TLS settings. Passed as is."
+      },
       "listeners": {
         "type": "array",
         "items": {
@@ -51,7 +70,7 @@
                 "null",
                 "string"
               ],
-              "description": "Configuration for `gateway.main.listeners.$item.hostname`."
+              "description": "Hostname of the listener, supports Helm `tpl`."
             },
             "port": {
               "type": "integer",
@@ -110,6 +129,11 @@
                     "description": "Configuration for `gateway.main.listeners.$item.tls.certificateRefs.$item`."
                   },
                   "description": "Configuration for `gateway.main.listeners.$item.tls.certificateRefs`."
+                },
+                "options": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "description": "Implementation specific TLS options. Passed as is."
                 }
               },
               "additionalProperties": true,

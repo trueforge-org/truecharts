@@ -492,3 +492,40 @@ tests:
             appPort: "443"
             appPath: /from-route
             appProtocol: https
+
+  - it: should not fail with a route rule that matches without a path
+    set:
+      createChartContextConfigmap: true
+      route:
+        my-route:
+          enabled: true
+          kind: HTTPRoute
+          parentRefs:
+            - name: some-gateway
+              namespace: some-namespace
+          hostnames:
+            - route.example.com
+          rules:
+            - matches:
+                - headers:
+                    - name: X-Test
+                      value: test
+              backendRefs:
+                - name: some-service
+                  port: 80
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ConfigMap
+        equal:
+          path: data.appHost
+          value: route.example.com

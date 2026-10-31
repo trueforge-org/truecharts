@@ -1,0 +1,839 @@
+suite: route validation test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should fail with invalid kind
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: Invalid
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+    asserts:
+      - failedTemplate:
+          errorMessage: Not a valid route kind (Invalid)
+
+  - it: should fail with matches on TCPRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: TCPRoute
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+              matches: []
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.my-route.rules.0.matches] is not supported by kind [TCPRoute]
+
+  - it: should fail with filters on TCPRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: TCPRoute
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+              filters: []
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.my-route.rules.0.filters] is not supported by kind [TCPRoute]
+
+  - it: should fail with timeouts on TCPRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: TCPRoute
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+              timeouts: {}
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.my-route.rules.0.timeouts] is not supported by kind [TCPRoute]
+
+  - it: should fail with backend filters on TCPRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: TCPRoute
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+                  filters: []
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.my-route.rules.0.backendRefs.0.filters] is not supported by kind [TCPRoute]
+
+  - it: should fail with empty backendRefs on TCPRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: TCPRoute
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs: []
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected non-empty [route.my-route.rules.0.backendRefs] on kind [TCPRoute]
+
+  - it: should fail with matches on TLSRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: TLSRoute
+          hostnames:
+            - a.example.com
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+              matches: []
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.my-route.rules.0.matches] is not supported by kind [TLSRoute]
+
+  - it: should fail with filters on TLSRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: TLSRoute
+          hostnames:
+            - a.example.com
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+              filters: []
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.my-route.rules.0.filters] is not supported by kind [TLSRoute]
+
+  - it: should fail with timeouts on TLSRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: TLSRoute
+          hostnames:
+            - a.example.com
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+              timeouts: {}
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.my-route.rules.0.timeouts] is not supported by kind [TLSRoute]
+
+  - it: should fail with backend filters on TLSRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: TLSRoute
+          hostnames:
+            - a.example.com
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+                  filters: []
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.my-route.rules.0.backendRefs.0.filters] is not supported by kind [TLSRoute]
+
+  - it: should fail with empty backendRefs on TLSRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: TLSRoute
+          hostnames:
+            - a.example.com
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs: []
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected non-empty [route.my-route.rules.0.backendRefs] on kind [TLSRoute]
+
+  - it: should fail with matches on UDPRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: UDPRoute
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+              matches: []
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.my-route.rules.0.matches] is not supported by kind [UDPRoute]
+
+  - it: should fail with filters on UDPRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: UDPRoute
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+              filters: []
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.my-route.rules.0.filters] is not supported by kind [UDPRoute]
+
+  - it: should fail with timeouts on UDPRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: UDPRoute
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+              timeouts: {}
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.my-route.rules.0.timeouts] is not supported by kind [UDPRoute]
+
+  - it: should fail with backend filters on UDPRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: UDPRoute
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+                  filters: []
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.my-route.rules.0.backendRefs.0.filters] is not supported by kind [UDPRoute]
+
+  - it: should fail with empty backendRefs on UDPRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: UDPRoute
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs: []
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected non-empty [route.my-route.rules.0.backendRefs] on kind [UDPRoute]
+
+  - it: should fail with timeouts on GRPCRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: GRPCRoute
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+              timeouts: {}
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.my-route.rules.0.timeouts] is not supported by kind [GRPCRoute]
+
+  - it: should fail with an unknown rule field
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+              matchs: []
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.my-route.rules.0.matchs] is not supported by kind [HTTPRoute]
+
+  - it: should fail with hostnames on TCPRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: TCPRoute
+          hostnames:
+            - a.example.com
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.my-route.hostnames] is not supported by kind [TCPRoute]
+
+  - it: should fail without hostnames on TLSRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: TLSRoute
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected non-empty [route.my-route.hostnames] on kind [TLSRoute]
+
+  - it: should fail with both targetSelector and name in a backend
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+                  name: other
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected only one of [targetSelector, name] in [route.my-route.rules.0.backendRefs.0]
+
+  - it: should fail with backend targetSelector on an unknown service
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: missing
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected [targetSelector] in a backendRef of route [test-release-name-common-test] to reference an enabled service, got [missing]
+
+  - it: should fail with route targetSelector on an unknown gateway
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          targetSelector: missing
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected [targetSelector] of route [test-release-name-common-test] to reference an enabled gateway, got [missing]
+
+  - it: should fail with sectionName not on the selected gateway
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      gateway:
+        first:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+        second:
+          enabled: true
+          namespace: gateway-namespace
+          gatewayClassName: some-class
+          listeners:
+            - name: https
+              port: 443
+              protocol: HTTPS
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - targetSelector: first
+              sectionName: missing
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected [sectionName] of route [test-release-name-common-test] to reference a listener of gateway [first], got [missing]
+
+  - it: should fail with a parentRef without a name
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - kind: Gateway
+    asserts:
+      - failedTemplate:
+          errorMessage: parentRef name is required for HTTPRoute test-release-name-common-test
+
+  - it: should fail with more than one primary route
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        a:
+          enabled: true
+          primary: true
+          parentRefs:
+            - name: some-gateway
+        b:
+          enabled: true
+          primary: true
+          parentRefs:
+            - name: some-gateway
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Only one [route] can be primary, got [a, b]
