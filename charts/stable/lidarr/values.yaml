@@ -2,7 +2,7 @@
 image:
   repository: oci.trueforge.org/containerforge/lidarr
   pullPolicy: IfNotPresent
-  tag: 3.1.2.4938@sha256:9a47589c50ab4366505f997d90fc3ae6105a80062727ba828987b587c7c4362c
+  tag: 3.2.0.5144@sha256:16408890b266fe7979fc823df9a8a1c67ec33bfce4a1929a382edf13cbef2631
 exportarrImage:
   repository: ghcr.io/onedr0p/exportarr
   pullPolicy: IfNotPresent
@@ -32,14 +32,20 @@ workload:
               enabled: true
               type: http
               path: /ping
+              httpHeaders:
+                Host: localhost
             readiness:
               enabled: true
               type: http
               path: /ping
+              httpHeaders:
+                Host: localhost
             startup:
               enabled: true
               type: http
               path: /ping
+              httpHeaders:
+                Host: localhost
           env:
             LIDARR__SERVER__PORT: "{{ .Values.service.main.ports.main.port }}"
              # External | Basic | Forms

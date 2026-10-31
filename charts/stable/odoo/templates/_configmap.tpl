@@ -31,6 +31,7 @@ odoo-config:
      addons_path = {{ $addonsPath }}
      ; Network Details
      http_enable = True
+     http_interface = 0.0.0.0
      http_port = {{ $mainPort }}
      ; Database Details
      db_port = 5432

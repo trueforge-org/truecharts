@@ -9,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 0.9.1
+appVersion: 0.16.3
 dependencies:
   - name: common
-    version: 29.1.6
+    version: 30.2.9
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,9 +35,9 @@ maintainers:
     url: https://truecharts.org
 name: kromgo
 sources:
-  - https://ghcr.io/kashalls/kromgo
+  - https://ghcr.io/home-operations/kromgo
+  - https://github.com/home-operations/kromgo
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/kromgo
-  - https://https://github.com/kashalls/kromgo
 type: application
-version: 2.2.1
+version: 4.0.6
 

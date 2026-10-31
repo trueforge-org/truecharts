@@ -9,17 +9,17 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 1.26.1
+appVersion: 28.2.0
 dependencies:
   - name: common
-    version: 29.1.6
+    version: 30.2.9
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: memcached
-    version: 17.1.2
+    version: 18.0.7
     repository: oci://oci.trueforge.org/truecharts
     condition: memcached.enabled
     alias: ""
@@ -43,10 +43,10 @@ maintainers:
     url: https://truecharts.org
 name: gitea
 sources:
+  - https://ghcr.io/go-gitea/gitea
   - https://gitea.com/gitea/helm-chart
   - https://github.com/go-gitea/gitea
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/gitea
-  - https://hub.docker.com/r/gitea/gitea
 type: application
-version: 24.3.4
+version: 27.1.8
 

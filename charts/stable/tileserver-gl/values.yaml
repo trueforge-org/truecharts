@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=./values.schema.json
+image:
+  repository: maptiler/tileserver-gl
+  pullPolicy: IfNotPresent
+  tag: v5.7.0@sha256:24d0364e1d40da0ae3fb3269f617c26e36a883ad4b7454e5c4064a8795bfc807
+
+service:
+  main:
+    ports:
+      main:
+        port: 8080
+        protocol: http
+        targetPort: 8080
+
+persistence:
+  data:
+    enabled: true
+    mountPath: /data

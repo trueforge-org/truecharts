@@ -9,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 2025.7.25
+appVersion: 2026.10.30
 dependencies:
   - name: common
-    version: 29.1.6
+    version: 30.2.9
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -32,10 +32,10 @@ maintainers:
     url: https://truecharts.org
 name: homebridge
 sources:
+  - https://ghcr.io/homebridge/homebridge
   - https://github.com/oznu/docker-homebridge
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/homebridge
   - https://homebridge.io/
-  - https://hub.docker.com/r/homebridge/homebridge
 type: application
-version: 12.1.1
+version: 14.1.6
 

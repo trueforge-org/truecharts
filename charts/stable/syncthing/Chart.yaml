@@ -9,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 2.0.16
+appVersion: 2.1.7
 dependencies:
   - name: common
-    version: 29.1.6
+    version: 30.2.9
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -31,10 +31,10 @@ maintainers:
     url: https://truecharts.org
 name: syncthing
 sources:
+  - https://ghcr.io/syncthing/syncthing
   - https://github.com/syncthing/syncthing
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/syncthing
-  - https://hub.docker.com/r/syncthing/syncthing
   - https://syncthing.net/
 type: application
-version: 23.1.1
+version: 24.0.5
 

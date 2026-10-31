@@ -2,7 +2,7 @@
 image:
   repository: docker.io/shibaobun/cannery
   pullPolicy: IfNotPresent
-  tag: 0.9.20@sha256:35a0a2669b9026c93c6b3b788e5d0f33f83fce9c649d1320dd2e3578efae376e
+  tag: 1.5.2@sha256:046bff9dfd242b0f0b345724743520917fa10064b05e7d484889dbc8f9e7a204
 service:
   main:
     ports:
@@ -14,6 +14,13 @@ workload:
     podSpec:
       containers:
         main:
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - |
+              mkdir -p "${UPLOADS_PATH}/tmp"
+              exec /app/bin/cannery start
           env:
             PORT: "{{ .Values.service.main.ports.main.port }}"
             # HOST must be set!
@@ -21,10 +28,8 @@ workload:
             HOST: "cannery.local"
             # ecto://postgres:postgres@cannery-db/cannery
             DATABASE_URL: '{{ printf "ecto://%s:%s@%s:5432/%s" .Values.cnpg.main.user  .Values.cnpg.main.creds.password (.Values.cnpg.main.creds.host | trimAll "\"") .Values.cnpg.main.database }}'
-            SECRET_KEY_BASE:
-              secretKeyRef:
-                name: cannery-secrets
-                key: SECRET_KEY_BASE
+            CLOAK_KEY: "change-me-32-random-bytes-base64"
+            SECRET_KEY_BASE: "change-me-this-is-really-important-seriously-change-it-please-use-a-64-byte-secret-key"
             # Ecto should use ipv6 to connect to PostgreSQL
             ECTO_IPV6: false
             # Controls the pool size to use with PostgreSQL. Defaults to 10.
@@ -47,6 +52,11 @@ workload:
             EMAIL_FROM: "no-reply@HOST"
             # Sets the sender name in sent emails. Defaults to "Cannery".
             EMAIL_NAME: Cannery
+
+persistence:
+  uploads:
+    enabled: true
+    mountPath: "/var/cannery/uploads"
 cnpg:
   main:
     enabled: true

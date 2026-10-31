@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
   repository: ghcr.io/gethomepage/homepage
-  tag: v1.12.3@sha256:cc84f2f5eb3c7734353701ccbaa24ed02dacb0d119114e50e4251e2005f3990a
+  tag: v2.7.0@sha256:19c5c09184458a41b7b5915e71463a39f36cd33540f41bdbed008791b8182d5f
   pullPolicy: IfNotPresent
 
 workload:
@@ -13,6 +13,19 @@ workload:
           env:
             # Set this to your host (example: home.mydomain.com)
             HOMEPAGE_ALLOWED_HOSTS: "localhost"
+          probes:
+            liveness:
+              path: /api/healthcheck
+              httpHeaders:
+                Host: localhost:3000
+            readiness:
+              path: /api/healthcheck
+              httpHeaders:
+                Host: localhost:3000
+            startup:
+              path: /api/healthcheck
+              httpHeaders:
+                Host: localhost:3000
       initContainers:
         init-config:
           enabled: true

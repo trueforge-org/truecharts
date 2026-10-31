@@ -253,7 +253,8 @@ blocking:
       # - https://v.firebog.net/hosts/RPiList-Phishing.txt (see: https://github.com/0xERR0R/blocky/issues/1718 )
       - https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt
       - https://raw.githubusercontent.com/AssoEchap/stalkerware-indicators/master/generated/hosts
-      - https://urlhaus.abuse.ch/downloads/hostfile/
+      - https://netapi.com/api2/?method=compromised&dataset_type=url&format=hosts
+      # - https://urlhaus.abuse.ch/downloads/hostfile/ (abuse.ch retired the keyless downloads, answers 410 since 2026-10-21)
       # - https://lists.cyberhost.uk/malware.txt (see: https://github.com/0xERR0R/blocky/issues/950)
     default-suspicious:
       - https://raw.githubusercontent.com/PolishFiltersTeam/KADhosts/master/KADhosts.txt

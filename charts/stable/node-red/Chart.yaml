@@ -9,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 4.1.8
+appVersion: 5.0.9
 dependencies:
   - name: common
-    version: 29.1.6
+    version: 30.2.9
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -32,9 +32,9 @@ maintainers:
     url: https://truecharts.org
 name: node-red
 sources:
+  - https://ghcr.io/node-red/node-red
   - https://github.com/node-red/node-red-docker
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/node-red
-  - https://hub.docker.com/r/nodered/node-red
 type: application
-version: 23.1.1
+version: 25.0.6
 

@@ -81,11 +81,11 @@ namespace: ""
 image:
   repository: ghcr.io/traefik/whoami
   pullPolicy: IfNotPresent
-  tag: v1.11.0@sha256:200689790a0a0ea48ca45992e0450bc26ccab5307375b41c84dfc4f2475937ab
+  tag: v1.12.0@sha256:c4717a8d1f0134a7444e24f881160e033991f23027c6c5a9a3f8fd22e70d1d44
 
 ubuntuImage:
   repository: oci.trueforge.org/containerforge/ubuntu
-  tag: "24.04@sha256:3b826c0233182d7c31a9323121178b98976765b9ee03f9a96200ab0c70e2e1e2"
+  tag: "26.4@sha256:205c6561352214872c61edea4909f29afe9be1eee6c61430ce627ca757c137ed"
   pullPolicy: IfNotPresent
 
 valkeyClientImage:
@@ -639,41 +639,41 @@ tailscaleImage:
 
 codeserverImage:
   repository: oci.trueforge.org/containerforge/code-server
-  tag: "4.117.0@sha256:6ec7557924a184e68773ee642fba387d0b70c66209f7128ecf7e974870ba4d19"
+  tag: "4.141.0@sha256:7539bf1f492206f49dfc22b483adfcefd010e6a2be6be4e42a04376fa7f9338f"
   pullPolicy: IfNotPresent
 
 kubectlImage:
   repository: oci.trueforge.org/containerforge/kubectl
-  tag: "1.31.1@sha256:cc6ca4460dd3bd7c2d108f4c341f3f9184cb7f006888a564d5e37a209d9c5d98"
+  tag: "1.31.1@sha256:4a51a8930e778b7f996ab476e5fcef4385453d1b78362c878bcc2b2501f99a24"
   pullPolicy: IfNotPresent
 
 postgresClientImage:
   repository: oci.trueforge.org/containerforge/postgresql-client
-  tag: "9.6.24@sha256:03cce42e10ccc080183c2c9eaf833adef43c7fe7e5b60989eb4481b9bb3a4876"
+  tag: "9.6.24@sha256:d40ff61568601b7032a7e6892ca08e55f772d24b32a053d1c0c6b45a2c01ae93"
   pullPolicy: IfNotPresent
 
 mariadbClientImage:
   repository: oci.trueforge.org/containerforge/mariadb-client
-  tag: "12.2.2@sha256:20027bf04f595ce297a363ae8555e3fd33353c727a316c9325937f0e1492d45d"
+  tag: "13.0.2@sha256:1343d11c7efc5345ab5cadf75457912efbd5069e7a49323c1527fd55c39d75fb"
   pullPolicy: IfNotPresent
 
 valkeyClientImage:
   repository: oci.trueforge.org/containerforge/valkey-tools
-  tag: "1.1.0@sha256:881ce759f527618b8fbfe66ac2db7e9085d0417cb411ec3f468af1f04e979c88"
+  tag: "1.1.0@sha256:39c25256ddcc04381e0be7eab150b5ddce54a4287782a29ddf37e781c68d1dad"
   pullPolicy: IfNotPresent
 mongodbClientImage:
   repository: oci.trueforge.org/containerforge/mongosh
-  tag: "2.8.2@sha256:c9d352f0ed4ef81229b282ee5690dc1d725240a9da9d130b1e2ba3104166d2b0"
+  tag: "2.14.1@sha256:3dca8f9bde2eec214ae0718ac2a9de2f27809761f150b634a1533d98b53a6d08"
   pullPolicy: IfNotPresent
 
 postgres15Image:
   repository: ghcr.io/cloudnative-pg/postgresql
-  tag: "15.17@sha256:bfed15dddfc3a61a7654b6748a5d8c09fec5d13c57e2350169068cb1676a666e"
+  tag: "15.19@sha256:11274300143f02d369ea2ff6082b028b6b662915f06bf59f26b808b53823475a"
   pullPolicy: IfNotPresent
 
 postgres16Image:
   repository: ghcr.io/cloudnative-pg/postgresql
-  tag: "16.13@sha256:2bc26604d2f0650f9b98668a51a95679c02024860d512ace92e7fcf69da7d611"
+  tag: "16.15@sha256:34cd4159d07b3410a1b29da35072e2e927a0905e717a61afa3814624a2e8859a"
   pullPolicy: IfNotPresent
 
 postgres17Image:
@@ -725,12 +725,12 @@ postgresVectors17Image:
 
 postgresVectorchord15Image:
   repository: ghcr.io/tensorchord/cloudnative-vectorchord
-  tag: "15.14-0.5.3@sha256:1978732dc1e7e9ef94b9e806a094fcb123afab1e50a7e878e2d29de8b849cf47"
+  tag: "15.19-1.1.1@sha256:69194e365f89b2cb3e85facec3e905605407b97bf6dfbe4b538d8aea924e5df7"
   pullPolicy: IfNotPresent
 
 postgresVectorchord16Image:
   repository: ghcr.io/tensorchord/cloudnative-vectorchord
-  tag: "16.10-0.5.3@sha256:a0776b514bb23858d8aa59b08587223f8b449bba1b278ffbcf85e097d6504eb0"
+  tag: "16.15-1.1.1@sha256:f5a17fa05faf25e81304ee95e9f920d8ae077ac4a4ef0a1251e09c7197cbb236"
   pullPolicy: IfNotPresent
 
 postgresVectorchord17Image:

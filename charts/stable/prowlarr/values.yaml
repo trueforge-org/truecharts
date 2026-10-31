@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
   repository: oci.trueforge.org/containerforge/prowlarr
-  tag: 2.3.6.5351@sha256:517b115eef623042265a716877ced8a4f130309ee69f939ce5ee8d880fc227a1
+  tag: 2.7.0.5723@sha256:c23125dbdbeec1f0945eb1a5bf07ad07c214edf6cf52d2f5866e6a9637502c76
   pullPolicy: IfNotPresent
 exportarrImage:
   repository: ghcr.io/onedr0p/exportarr
@@ -30,8 +30,12 @@ workload:
           probes:
             liveness:
               path: /ping
+              httpHeaders:
+                Host: localhost
             readiness:
               path: /ping
+              httpHeaders:
+                Host: localhost
             startup:
               type: tcp
           env:

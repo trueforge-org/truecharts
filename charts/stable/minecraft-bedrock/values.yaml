@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
-  repository: docker.io/itzg/minecraft-bedrock-server
-  tag: 2026.4.3@sha256:3c2523ea7bd931b8b7a9fc6bb333fdd75984e74808614d581796ff9c3a3e0def
+  repository: ghcr.io/itzg/minecraft-bedrock-server
+  tag: 2026.10.3@sha256:ad8243d09604051085702536d1e9fef4b0a97fb308f2f2fa73c3fb56b5f4c580
   pullPolicy: Always
 service:
   main:
@@ -55,11 +55,10 @@ workload:
                 periodSeconds: 60
           env:
             EULA: true
-            ENABLE_LAN_VISIBILITY: false
+            ENABLE_LAN_VISIBILITY: true
             VERSION: "LATEST"
             SERVER_NAME: "TrueCharts Dedicated Server!"
             SERVER_PORT: "{{ .Values.service.main.ports.main.port }}"
-            SERVER_PORT_V6: 19133
             GAMEMODE: "survival"
             DIFFICULTY: "easy"
             LEVEL_TYPE: "DEFAULT"
@@ -67,6 +66,7 @@ workload:
             MAX_PLAYERS: 10
             ONLINE_MODE: true
             WHITE_LIST: false
+            TRANSPORT: raknet
             # WHITE_LIST_USERS: "USER:XUID,USER:XUID"
             VIEW_DISTANCE: 32
             TICK_DISTANCE: 4

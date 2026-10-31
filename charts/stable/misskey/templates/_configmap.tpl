@@ -135,12 +135,12 @@ data:
     # Sign to ActivityPub GET request (default: false)
     signToActivityPubGet: {{ .Values.misskey.other.signToActivityPubGet }}
 
-    allowedPrivateNetworks: [
-      '127.0.0.1/32',
+    allowedPrivateNetworks:
     {{- range .Values.misskey.other.allowedPrivateNetworks }}
-      {{ . | squote }},
+      - {{ . | squote }}
+    {{- else }}
+      - '127.0.0.1/32'
     {{- end }}
-    ]
 
     # Upload or download file size limits (bytes)
     maxFileSize: {{ .Values.misskey.other.maxFileSize }}

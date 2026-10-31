@@ -11,6 +11,13 @@ server:
     AUTHENTIK_LISTEN__HTTP: {{ printf "0.0.0.0:%v" .Values.service.http.ports.http.port | quote }}
     AUTHENTIK_LISTEN__METRICS: {{ printf "0.0.0.0:%v" .Values.service.servermetrics.ports.servermetrics.port | quote }}
 
+{{/* Worker-only config */}}
+worker:
+  enabled: true
+  data:
+    AUTHENTIK_LISTEN__METRICS: {{ printf "0.0.0.0:%v" .Values.service.workermetrics.ports.workermetrics.port | quote }}
+
+{{/* Shared config for server and worker */}}
 server-worker:
   enabled: true
   data:

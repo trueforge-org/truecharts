@@ -2,11 +2,7 @@
 image:
   repository: quay.io/backube/volsync
   pullPolicy: IfNotPresent
-  tag: 0.13.1
-proxyImage:
-  repository: quay.io/brancz/kube-rbac-proxy
-  pullPolicy: IfNotPresent
-  tag: v0.20.0
+  tag: 0.16.0@sha256:0d03a6aad57569eba2c0eaa0848cf4a908d9744b372ff2224bb291a320f36d76
 
 manageCRDs: true
 manageVSCCRD: true
@@ -20,7 +16,9 @@ workload:
         main:
           args:
             - --health-probe-bind-address=:8081
-            - --metrics-bind-address=127.0.0.1:8080
+            - --metrics-bind-address=:8443
+            - --metrics-secure=true
+            - --metrics-require-rbac=false
             - --leader-elect
             - --rclone-container-image={{ printf "%s:%s" .Values.image.repository .Values.image.tag }}
             - --restic-container-image={{ printf "%s:%s" .Values.image.repository .Values.image.tag }}
@@ -37,36 +35,6 @@ workload:
               path: "/readyz"
             startup:
               path: "/readyz"
-        kube-rbac-proxy:
-          enabled: true
-          imageSelector: proxyImage
-          args:
-            - --secure-listen-address=0.0.0.0:8443
-            - --upstream=http://127.0.0.1:8080/
-            - --proxy-endpoints-port=8888
-            - "--tls-min-version=VersionTLS12"
-            - --v=0
-            - --ignore-paths=/metrics
-          resources:
-            limits:
-              cpu: 500m
-              memory: 128Mi
-            requests:
-              cpu: 5m
-              memory: 64Mi
-          probes:
-            liveness:
-              type: https
-              port: 8888
-              path: /healthz
-            readiness:
-              type: https
-              port: 8888
-              path: /healthz
-            startup:
-              type: https
-              port: 8888
-              path: /healthz
 
 # -- Options for all pods
 # Can be overruled per pod

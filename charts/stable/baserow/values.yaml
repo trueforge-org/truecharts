@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
   repository: docker.io/baserow/baserow
-  tag: 2.0.6@sha256:e2db4d876b4c794dafc71b81c54ad3fd84b13bf19457179ca205fbf3de423740
+  tag: 2.4.1@sha256:2229bc0ad9c8e1c3c44cef3324ff0501639d44a7b6f64026ebaa44f61cfb038e
   pullPolicy: IfNotPresent
 securityContext:
   container:
@@ -20,6 +20,13 @@ workload:
     podSpec:
       containers:
         main:
+          securityContext:
+            capabilities:
+              add:
+                # bundled caddy binary has file capability cap_net_bind_service
+                - NET_BIND_SERVICE
+                # supervisord stops its child processes running as another user
+                - KILL
           probes:
             liveness:
               type: tcp

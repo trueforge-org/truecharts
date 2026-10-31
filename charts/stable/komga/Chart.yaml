@@ -9,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 1.24.4
+appVersion: 1.29.2
 dependencies:
   - name: common
-    version: 29.1.6
+    version: 30.2.9
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -34,10 +34,10 @@ maintainers:
     url: https://truecharts.org
 name: komga
 sources:
+  - https://ghcr.io/gotson/komga
   - https://github.com/gotson/komga
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/komga
-  - https://hub.docker.com/r/gotson/komga
   - https://komga.org/
 type: application
-version: 17.1.2
+version: 18.1.6
 

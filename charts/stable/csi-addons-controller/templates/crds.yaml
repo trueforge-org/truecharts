@@ -2,7 +2,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.3
+    controller-gen.kubebuilder.io/version: v0.20.1
   name: csiaddonsnodes.csiaddons.openshift.io
 spec:
   group: csiaddons.openshift.io
@@ -161,7 +161,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.3
+    controller-gen.kubebuilder.io/version: v0.20.1
   name: encryptionkeyrotationcronjobs.csiaddons.openshift.io
 spec:
   group: csiaddons.openshift.io
@@ -304,7 +304,11 @@ spec:
                 - spec
                 type: object
               schedule:
-                description: The schedule in Cron format, see https://en.wikipedia.org/wiki/Cron.
+                description: |-
+                  The schedule in Cron format, see https://en.wikipedia.org/wiki/Cron.
+                  A deterministic, UID-based stagger offset is applied to spread
+                  execution across the "cronjob-stagger-window" (default: 2 hours,
+                  set to 0 to disable) configured in the csi-addons-config ConfigMap.
                 pattern: .+
                 type: string
               startingDeadlineSeconds:
@@ -401,7 +405,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.3
+    controller-gen.kubebuilder.io/version: v0.20.1
   name: encryptionkeyrotationjobs.csiaddons.openshift.io
 spec:
   group: csiaddons.openshift.io
@@ -588,7 +592,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.3
+    controller-gen.kubebuilder.io/version: v0.20.1
   name: networkfenceclasses.csiaddons.openshift.io
 spec:
   group: csiaddons.openshift.io
@@ -662,7 +666,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.3
+    controller-gen.kubebuilder.io/version: v0.20.1
   name: networkfences.csiaddons.openshift.io
 spec:
   group: csiaddons.openshift.io
@@ -771,8 +775,6 @@ spec:
                       rule: self == oldSelf
                 type: object
                 x-kubernetes-validations:
-                - message: secrets are immutable
-                  rule: self == oldSelf
                 - message: secret is immutable
                   rule: self == oldSelf
             required:
@@ -864,7 +866,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.3
+    controller-gen.kubebuilder.io/version: v0.20.1
   name: reclaimspacecronjobs.csiaddons.openshift.io
 spec:
   group: csiaddons.openshift.io
@@ -1006,7 +1008,11 @@ spec:
                 - spec
                 type: object
               schedule:
-                description: The schedule in Cron format, see https://en.wikipedia.org/wiki/Cron.
+                description: |-
+                  The schedule in Cron format, see https://en.wikipedia.org/wiki/Cron.
+                  A deterministic, UID-based stagger offset is applied to spread
+                  execution across the "cronjob-stagger-window" (default: 2 hours,
+                  set to 0 to disable) configured in the csi-addons-config ConfigMap.
                 pattern: .+
                 type: string
               startingDeadlineSeconds:
@@ -1102,7 +1108,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.3
+    controller-gen.kubebuilder.io/version: v0.20.1
   name: reclaimspacejobs.csiaddons.openshift.io
 spec:
   group: csiaddons.openshift.io
@@ -1297,7 +1303,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.3
+    controller-gen.kubebuilder.io/version: v0.20.1
   name: volumegroupreplicationclasses.replication.storage.openshift.io
 spec:
   group: replication.storage.openshift.io
@@ -1382,7 +1388,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.3
+    controller-gen.kubebuilder.io/version: v0.20.1
   name: volumegroupreplicationcontents.replication.storage.openshift.io
 spec:
   group: replication.storage.openshift.io
@@ -1542,10 +1548,50 @@ spec:
             description: VolumeGroupReplicationContentStatus defines the status of
               VolumeGroupReplicationContent
             properties:
+              destinationVolumeGroupID:
+                description: |-
+                  DestinationVolumeGroupID is the volume group ID on the
+                  destination/target side, as reported by the SP.
+                type: string
+              persistentVolumeMappingList:
+                description: |-
+                  PersistentVolumeMappingList is the list of PVs for the group
+                  replication, enriched with source and destination volume handles.
+                  This replaces PersistentVolumeRefList. When both fields are
+                  present, consumers SHOULD prefer this field.
+                  The maximum number of allowed PVs in the group is 100.
+                items:
+                  description: |-
+                    PersistentVolumeMapping contains the PV reference along with its
+                    source and destination volume handles. The destination handle is
+                    populated only when the SP supports GET_REPLICATION_DESTINATION_INFO
+                    and destination info is available.
+                  properties:
+                    destinationVolumeHandle:
+                      description: |-
+                        DestinationVolumeHandle is the CSI volume handle on the
+                        destination/target cluster, as reported by the SP.
+                        This field is empty when destination info is not available.
+                      type: string
+                    name:
+                      description: Name is the name of the PersistentVolume.
+                      type: string
+                    volumeHandle:
+                      description: |-
+                        VolumeHandle is the CSI volume handle of this PV on the
+                        source cluster (i.e. PV.Spec.CSI.VolumeHandle).
+                      type: string
+                  required:
+                  - name
+                  - volumeHandle
+                  type: object
+                type: array
               persistentVolumeRefList:
                 description: |-
                   PersistentVolumeRefList is the list of PV for the group replication
                   The maximum number of allowed PV in the group is 100.
+                  Deprecated: Use PersistentVolumeMappingList instead, which includes
+                  source and destination volume handle information per PV.
                 items:
                   description: |-
                     LocalObjectReference contains enough information to let you locate the
@@ -1574,7 +1620,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.3
+    controller-gen.kubebuilder.io/version: v0.20.1
   name: volumegroupreplications.replication.storage.openshift.io
 spec:
   group: replication.storage.openshift.io
@@ -1812,6 +1858,12 @@ spec:
                   - type
                   type: object
                 type: array
+              destinationVolumeID:
+                description: |-
+                  DestinationVolumeID is the volume ID on the destination/target side.
+                  This field is set when the SP reports different source and destination
+                  volume IDs.
+                type: string
               lastCompletionTime:
                 format: date-time
                 type: string
@@ -1868,7 +1920,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.3
+    controller-gen.kubebuilder.io/version: v0.20.1
   name: volumereplicationclasses.replication.storage.openshift.io
 spec:
   group: replication.storage.openshift.io
@@ -1955,7 +2007,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.3
+    controller-gen.kubebuilder.io/version: v0.20.1
   name: volumereplications.replication.storage.openshift.io
 spec:
   group: replication.storage.openshift.io
@@ -2128,6 +2180,12 @@ spec:
                   - type
                   type: object
                 type: array
+              destinationVolumeID:
+                description: |-
+                  DestinationVolumeID is the volume ID on the destination/target side.
+                  This field is set when the SP reports different source and destination
+                  volume IDs.
+                type: string
               lastCompletionTime:
                 format: date-time
                 type: string

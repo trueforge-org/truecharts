@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=./values.schema.json
+image:
+  repository: ghcr.io/pocket-id/pocket-id
+  pullPolicy: IfNotPresent
+  tag: v2.19.1@sha256:f085157f0b6ea4b2e8aa5ecfd99eada0d83a4960f3a3dcfd46014097d0ef7ab5
+
+service:
+  main:
+    ports:
+      main:
+        port: 1411
+        protocol: http
+        targetPort: 1411
+
+persistence:
+  data:
+    enabled: true
+    mountPath: /app/data
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          probes:
+            liveness:
+              path: /healthz
+              type: http
+            readiness:
+              path: /healthz
+              type: http
+            startup:
+              path: /healthz
+              type: http
+          env:
+            APP_URL: "https://your-pocket-id-domain.com"
+            TRUST_PROXY: "true"
+            ANALYTICS_DISABLED: "true"
+            VERSION_CHECK_DISABLED: "false"
+            MAXMIND_LICENSE_KEY: ""
+            ENCRYPTION_KEY: changeme_changeme!!
+            DB_CONNECTION_STRING: file:data/pocket-id.db

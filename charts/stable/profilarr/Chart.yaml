@@ -9,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 1.1.4
+appVersion: 2.3.1
 dependencies:
   - name: common
-    version: 29.1.6
+    version: 30.2.9
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -32,9 +32,9 @@ maintainers:
     url: https://truecharts.org
 name: profilarr
 sources:
+  - https://ghcr.io/dictionarry-hub/profilarr
   - https://github.com/Dictionarry-Hub/profilarr
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/profilarr
-  - https://hub.docker.com/r/santiagosayshey/profilarr
 type: application
-version: 3.1.1
+version: 5.1.2
 

@@ -9,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 26.4.2
+appVersion: 26.08.3
 dependencies:
   - name: common
-    version: 29.1.6
+    version: 30.2.9
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -33,9 +33,9 @@ maintainers:
     url: https://truecharts.org
 name: homer
 sources:
+  - https://ghcr.io/bastienwirtz/homer
   - https://github.com/bastienwirtz/homer
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/homer
-  - https://hub.docker.com/r/b4bz/homer
 type: application
-version: 15.1.1
+version: 16.0.4
 

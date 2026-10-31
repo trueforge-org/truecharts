@@ -2,7 +2,7 @@
 image:
   pullPolicy: IfNotPresent
   repository: ghcr.io/sethforprivacy/simple-monerod
-  tag: v0.18.4.6@sha256:3c96f72d9b903623f13cc2a8460ec58ff440b2b58cfc797e11a02983e0cf155e
+  tag: v0.18.5.4@sha256:465a9458f148d31748731cfb6bc1ab38289313dcb858a699838ab8d1b828578d
 
 monero:
   rpcbindip: "0.0.0.0"
@@ -11,6 +11,14 @@ monero:
   noigd: true
   enablednsblocklist: true
   pruneblockchain: true
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            HOME: /home/monero
 
 securityContext:
   container:

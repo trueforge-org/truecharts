@@ -2,15 +2,15 @@
 image:
   repository: ghcr.io/paperless-ngx/paperless-ngx
   pullPolicy: IfNotPresent
-  tag: 2.20.15@sha256:6c86cad803970ea782683a8e80e7403444c5bf3cf70de63b4d3c8e87500db92f
+  tag: 3.4.1@sha256:1a08d8dfc2b51a08de09652dd86ad4d0c611c362382f944533ad38b73125fbc4
 gotenbergImage:
   repository: docker.io/gotenberg/gotenberg
   pullPolicy: IfNotPresent
-  tag: 8.31@sha256:f0d86e8a1dbc7b33a5a65cb251d02bb271a48ffa989da3feb5ed7d954fe4d4b3
+  tag: 8.39@sha256:13672f317b443c793e972b1bd2155ec62a3e7b6891b411e8196442cc053ee5f5
 tikaImage:
   repository: docker.io/apache/tika
   pullPolicy: IfNotPresent
-  tag: 3.3.0.0@sha256:2a565f1ea1290bdcb74a7d35957d16a989ed44ef98790dcdcc28121d728fa583
+  tag: 3.3.3.0@sha256:326b238b37904c94ff61fed87afe0af72e6a29fa715933b10af97b7d56f1d4cb
 service:
   main:
     ports:
@@ -89,6 +89,7 @@ workload:
             USERMAP_UID: "{{ .Values.securityContext.container.PUID }}"
             USERMAP_GID: "{{ .Values.securityContext.pod.fsGroup }}"
             PAPERLESS_TIME_ZONE: "{{ .Values.TZ }}"
+            PAPERLESS_DBENGINE: "postgresql"
             PAPERLESS_DBNAME: "{{ .Values.cnpg.main.database }}"
             PAPERLESS_DBUSER: "{{ .Values.cnpg.main.user }}"
             PAPERLESS_DBPORT: "5432"

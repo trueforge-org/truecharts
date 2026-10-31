@@ -1,0 +1,89 @@
+# yaml-language-server: $schema=./values.schema.json
+image:
+  repository: quay.io/minio/aistor/minio
+  tag: RELEASE.2026-09-19T17-05-25Z@sha256:107cf2014a9583c74c11e3cdbd6903d89c2244355886b89ce532f4ecae9c23f3
+  pullPolicy: IfNotPresent
+
+minio:
+  rootUser: minio
+  rootPassword: CHANGE-ME-TO-A-LONG-PASSWORD
+  # Without a valid license, AIStor starts in offline mode and blocks S3 operations.
+  # Obtain a free license at https://www.min.io/pricing and encrypt it with SOPS.
+  licence: ""
+  # Use HTTPS for service protocols and health probes.
+  # Enable when AIStor serves TLS using public.crt and private.key in /etc/minio/certs.
+  # Leave false when TLS terminates at the ingress and AIStor serves HTTP.
+  tls: false
+  # Public WebUI URL to redirect browsers visiting the S3 API (port 9000).
+  # Include http:// or https://, for example https://console.example.com.
+  # This URL must route to the WebUI (service main, port 9001), not the S3 API.
+  # Set this when exposing the S3 API through an ingress to avoid redirects to port 9001.
+  # Leave empty when accessing the WebUI directly through its own ingress.
+  browserRedirectUrl: ""
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          command:
+            - minio
+          args:
+            - server
+            - --certs-dir
+            - /etc/minio/certs
+          env:
+            MINIO_ROOT_USER: "{{ .Values.minio.rootUser }}"
+            MINIO_ROOT_PASSWORD: "{{ .Values.minio.rootPassword }}"
+            MINIO_VOLUMES: /data
+            MINIO_CONSOLE_ADDRESS: ":9001"
+            MINIO_BROWSER_REDIRECT_URL: "{{ .Values.minio.browserRedirectUrl }}"
+            MINIO_LICENSE: /minio.license
+          probes:
+            startup:
+              type: '{{ ternary "https" "http" .Values.minio.tls }}'
+              path: /minio/health/live
+              port: 9000
+            liveness:
+              type: '{{ ternary "https" "http" .Values.minio.tls }}'
+              path: /minio/health/live
+              port: 9000
+            readiness:
+              type: '{{ ternary "https" "http" .Values.minio.tls }}'
+              # Offline mode can start without a license; licensed S3 must be ready.
+              path: '{{ ternary "/minio/health/ready" "/minio/health/live" (ne (trim .Values.minio.licence) "") }}'
+              port: 9000
+
+service:
+  main:
+    ports:
+      main:
+        port: 9001
+        protocol: '{{ ternary "https" "http" .Values.minio.tls }}'
+  api:
+    enabled: true
+    ports:
+      api:
+        enabled: true
+        port: 9000
+        protocol: '{{ ternary "https" "http" .Values.minio.tls }}'
+
+secret:
+  license:
+    enabled: true
+    data:
+      minio.license: "{{ .Values.minio.licence }}"
+
+persistence:
+  data:
+    enabled: true
+    mountPath: /data
+  certs:
+    enabled: "{{ .Values.minio.tls }}"
+    mountPath: /etc/minio/certs
+  license:
+    enabled: true
+    type: secret
+    objectName: license
+    mountPath: /minio.license
+    subPath: minio.license

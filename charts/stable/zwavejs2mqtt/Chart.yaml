@@ -9,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 11.16.2
+appVersion: 11.25.2
 dependencies:
   - name: common
-    version: 29.1.6
+    version: 30.2.9
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -35,9 +35,9 @@ maintainers:
     url: https://truecharts.org
 name: zwavejs2mqtt
 sources:
+  - https://ghcr.io/zwave-js/zwave-js-ui
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/zwavejs2mqtt
   - https://github.com/zwave-js/zwave-js-ui
-  - https://hub.docker.com/r/zwavejs/zwave-js-ui
 type: application
-version: 25.3.2
+version: 26.1.3
 

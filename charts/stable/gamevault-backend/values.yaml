@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
-  repository: docker.io/phalcode/gamevault-backend
+  repository: ghcr.io/phalcode/gamevault-backend
   pullPolicy: IfNotPresent
-  tag: 16.3.0@sha256:6eb5fbb04e533d3a5d3786b2b0aaf8aa279a37a25fde7d9a0bb84ec9b00cf65a
+  tag: 17.1.0@sha256:87999b98d686b3297ddd7abde51f42dd2fa30b987f0cf050a42403a398711199
 securityContext:
   container:
     runAsNonRoot: false

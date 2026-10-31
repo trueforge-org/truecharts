@@ -2,7 +2,7 @@
 image:
   repository: oci.trueforge.org/containerforge/sonarr
   pullPolicy: IfNotPresent
-  tag: "4.0.17.2953@sha256:91d40994aaee630fe2d3a183e40e7d255f3dfc31f473ea089ccfd184d3dc3f15"
+  tag: "5.0.0.2870@sha256:3750ead1e866f3471a0f2146d09e556f7f48ae5f6129cba52f3561c0d2a86f4b"
 exportarrImage:
   repository: ghcr.io/onedr0p/exportarr
   pullPolicy: IfNotPresent
@@ -29,14 +29,20 @@ workload:
               enabled: true
               type: http
               path: /ping
+              httpHeaders:
+                Host: localhost
             readiness:
               enabled: true
               type: http
               path: /ping
+              httpHeaders:
+                Host: localhost
             startup:
               enabled: true
               type: http
               path: /ping
+              httpHeaders:
+                Host: localhost
           env:
             SONARR__SERVER__PORT: "{{ .Values.service.main.ports.main.port }}"
              # External | Basic | Forms

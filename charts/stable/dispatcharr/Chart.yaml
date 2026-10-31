@@ -9,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 0.23.0
+appVersion: 0.33.0
 dependencies:
   - name: common
-    version: 29.1.6
+    version: 30.2.9
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -32,10 +32,10 @@ maintainers:
     url: https://truecharts.org
 name: dispatcharr
 sources:
+  - https://ghcr.io/dispatcharr/dispatcharr
   - https://github.com/Dispatcharr/Dispatcharr
   - https://github.com/Dispatcharr/Dispatcharr/blob/main/docker/docker-compose.aio.yml
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/dispatcharr
-  - https://hub.docker.com/r/dispatcharr/dispatcharr
 type: application
-version: 2.3.1
+version: 3.1.1
 

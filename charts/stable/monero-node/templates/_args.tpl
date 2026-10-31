@@ -1,5 +1,6 @@
 {{- define "monero.args" -}}
 args:
+  - --data-dir=/home/monero/.bitmonero
   - --rpc-restricted-bind-ip={{ .Values.monero.rpcbindip }}
   - --rpc-restricted-bind-port={{ .Values.service.rpc.ports.rpc.port }}
   {{- if .Values.monero.publicnode }}

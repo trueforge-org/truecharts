@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
   repository: docker.io/vshadbolt/strapi
-  tag: 5.43.0-alpine@sha256:b033f55d9fe4b0c933b9d6e78e0ae33c3c46d8784c474a97b4d0c02245f30bf1
+  tag: 5.57.0-alpine@sha256:f9f0b0485d60c330382fb773d262fb0ef94d75db519c30ba8c7705c63efdfe0f
   pullPolicy: Always
 service:
   main:
@@ -31,6 +31,8 @@ workload:
       containers:
         main:
           env:
+            NPM_CONFIG_AUDIT: "false"
+            NPM_CONFIG_FUND: "false"
             PORT: "{{ .Values.service.main.ports.main.port }}"
             DATABASE_CLIENT: postgres
             DATABASE_PORT: 5432
@@ -53,3 +55,9 @@ workload:
             JWT_SECRET: my_jwt_secret
             ADMIN_JWT_SECRET: my_admin_jwt_secret
             APP_KEYS: '["keya", "keyb"]'
+
+resources:
+  requests:
+    cpu: 1000m
+  limits:
+    cpu: 4000m

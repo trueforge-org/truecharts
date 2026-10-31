@@ -9,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 0.9.5
+appVersion: 0.9.7
 dependencies:
   - name: common
-    version: 29.1.6
+    version: 30.2.9
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -34,9 +34,9 @@ maintainers:
     url: https://truecharts.org
 name: notifiarr
 sources:
+  - https://ghcr.io/notifiarr/notifiarr
   - https://github.com/Notifiarr/notifiarr
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/notifiarr
-  - https://hub.docker.com/r/golift/notifiarr
 type: application
-version: 8.1.1
+version: 9.0.4
 

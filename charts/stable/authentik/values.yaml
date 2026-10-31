@@ -1,24 +1,28 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
   repository: ghcr.io/goauthentik/server
-  tag: 2026.2.2@sha256:40f0df709957c11324420fa387f1135c427f16086f12ca266b2d883d39c71fe3
+  tag: 2026.8.5@sha256:602227a86455d6772e3d16b7d852713c4f864f40df5df894abd1285bb53979a5
   pullPolicy: IfNotPresent
 geoipImage:
   repository: ghcr.io/maxmind/geoipupdate
-  tag: v7.1.1@sha256:faecdca22579730ab0b7dea5aa9af350bb3c93cb9d39845c173639ead30346d2
+  tag: v8.0.0@sha256:51e70dd6f16cd3e4d845ac02d09940b10772a75b9d741427d235a78570923c1d
   pullPolicy: IfNotPresent
 ldapImage:
   repository: ghcr.io/goauthentik/ldap
-  tag: 2026.2.2@sha256:37e74a19580da896fa48b9f3a51cdf51bd2f47d0bfa34bb5f1d57f9e7ac02fad
+  tag: 2026.8.5@sha256:4c75bd27918418d2d6fbbfe4581bbd5a199fe38942d24559c4483edd64a1ea87
   pullPolicy: IfNotPresent
 radiusImage:
   repository: ghcr.io/goauthentik/radius
-  tag: 2026.2.2@sha256:242fa3958c6f4cda7b44b18027a0223ff0483979b3223a9f228e06948f5df12e
+  tag: 2026.8.5@sha256:1d96012281d43a137b792765308d3aced51c1f6268d01cd108891e1706336f79
   pullPolicy: IfNotPresent
 proxyImage:
   repository: ghcr.io/goauthentik/proxy
-  tag: 2026.2.2@sha256:c5d94719cf629d1b4a06475450f71a5aacdf49f7c1003caad42da32e3aa28234
+  tag: 2026.8.5@sha256:34640cf41e009ab052d4b9119cea816713adcd1eaac95de6caefebfe86d3fcd9
   pullPolicy: IfNotPresent
+sidecarImage:
+  repository: ghcr.io/kiwigrid/k8s-sidecar
+  tag: 2.14.1@sha256:092dbe0c335fba9af414a27630ca68f34df6185784fa847d9954187e69dbfdd7
+
 authentik:
   credentials:
     # Only works on initial install
@@ -82,7 +86,27 @@ authentik:
     ldap:
       enabled: false
       token: ""
+
 # ===== DO NOT EDIT BELOW THIS LINE =====
+podOptions:
+  automountServiceAccountToken: true
+
+serviceAccount:
+  blueprints:
+    enabled: true
+    primary: true
+    targetSelector:
+      - worker
+rbac:
+  blueprints:
+    enabled: '{{ .Values.workload.worker.podSpec.containers.blueprints.enabled }}'
+    primary: true
+    clusterWide: true
+    rules:
+      - apiGroups: [""]
+        resources: ["configmaps", "secrets"]
+        verbs: ["get", "watch", "list"]
+
 workload:
   # ===== Server =====
   main:
@@ -145,6 +169,8 @@ workload:
                 name: server-worker
             - configMapRef:
                 name: server-worker
+            - configMapRef:
+                name: worker
           args:
             - worker
           probes:
@@ -166,6 +192,34 @@ workload:
               command:
                 - /lifecycle/ak
                 - healthcheck
+        blueprints:
+          enabled: true
+          imageSelector: sidecarImage
+          env:
+            IGNORE_ALREADY_PROCESSED: false
+            METHOD: WATCH
+            LABEL: authentik_blueprint
+            LABEL_VALUE: "1"
+            LOG_LEVEL: info
+            FOLDER: "{{ tpl .Values.persistence.blueprints.targetSelector.worker.blueprints.mountPath $ }}"
+            FOLDER_ANNOTATION: authentik_blueprint_dir
+            RESOURCE: both
+            NAMESPACE: "ALL"
+            UNIQUE_FILENAMES: false
+          probes:
+            liveness:
+              enabled: false
+            readiness:
+              enabled: false
+            startup:
+              enabled: false
+          resources:
+            requests:
+              cpu: 10m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 1536Mi
   # ===== PROXY =====
   proxy:
     enabled: true
@@ -189,20 +243,23 @@ workload:
               enabled: true
               type: exec
               command:
-                - /proxy
+                - /authentik
                 - healthcheck
+                - proxy
             readiness:
               enabled: true
               type: exec
               command:
-                - /proxy
+                - /authentik
                 - healthcheck
+                - proxy
             startup:
               enabled: true
               type: exec
               command:
-                - /proxy
+                - /authentik
                 - healthcheck
+                - proxy
   # ===== RADIUS =====
   radius:
     enabled: true
@@ -372,6 +429,17 @@ service:
         enabled: true
         protocol: http
         port: 10231
+  # Worker Metrics
+  workermetrics:
+    enabled: true
+    type: ClusterIP
+    targetSelector: worker
+    ports:
+      workermetrics:
+        enabled: true
+        protocol: http
+        port: 10235
+        targetSelector: worker
   # Radius Metrics
   radiusmetrics:
     enabled: true
@@ -433,6 +501,8 @@ persistence:
           # if `overwriteDefaultBlueprints` is set to `true
           # Otherwise it will respect the value specified here
           mountPath: /blueprints/custom
+        blueprints:
+          mountPath: "{{ tpl .Values.persistence.blueprints.targetSelector.worker.worker.mountPath $ }}"
   certs:
     enabled: true
     mountPath: /certs
@@ -459,37 +529,49 @@ cnpg:
     database: authentik
 
 metrics:
-  # FIXME: Metrics do not work yet
   servermetrics:
     enabled: true
     type: servicemonitor
     endpoints:
-      - port: "{{ .Values.service.servermetrics.ports.servermetrics.port }}"
+      - port: "servermetrics"
         path: /metrics
+    targetSelector: servermetrics
+    prometheusRule:
+      enabled: false
+  workermetrics:
+    enabled: true
+    type: servicemonitor
+    endpoints:
+      - port: "workermetrics"
+        path: /metrics
+    targetSelector: workermetrics
     prometheusRule:
       enabled: false
   radiusmetrics:
     enabled: true
     type: servicemonitor
     endpoints:
-      - port: "{{ .Values.service.radiusmetrics.ports.radiusmetrics.port }}"
+      - port: "radiusmetrics"
         path: /metrics
+    targetSelector: radiusmetrics
     prometheusRule:
       enabled: false
   ldapmetrics:
     enabled: true
     type: servicemonitor
     endpoints:
-      - port: "{{ .Values.service.ldapmetrics.ports.ldapmetrics.port }}"
+      - port: "ldapmetrics"
         path: /metrics
+    targetSelector: ldapmetrics
     prometheusRule:
       enabled: false
   proxymetrics:
     enabled: true
     type: servicemonitor
     endpoints:
-      - port: "{{ .Values.service.proxymetrics.ports.proxymetrics.port }}"
+      - port: "proxymetrics"
         path: /metrics
+    targetSelector: proxymetrics
     prometheusRule:
       enabled: false
 updated: true

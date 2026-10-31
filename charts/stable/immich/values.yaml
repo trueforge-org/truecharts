@@ -1,27 +1,27 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
   repository: ghcr.io/immich-app/immich-server
-  tag: v2.7.5@sha256:c15bff75068effb03f4355997d03dc7e0fc58720c2b54ad6f7f10d1bc57efaa5
+  tag: v3.3.5@sha256:485d546a2e31d6a8b4db8423fcba5c109de8c218d93410af115fd1ccfc4352a6
   pullPolicy: IfNotPresent
 
 mlImage:
   repository: ghcr.io/immich-app/immich-machine-learning
-  tag: v2.7.5@sha256:a2501141440f10516d329fdfba2c68082e19eb9ba6016c061ac80d23beadf7f3
+  tag: v3.3.5@sha256:5b28c9352c8374b8a1ed96fbdd8d6755fea6e43510ec43fdf6538aa02ea40f56
   pullPolicy: IfNotPresent
 
 mlCudaImage:
   repository: ghcr.io/immich-app/immich-machine-learning
-  tag: v2.7.5-cuda@sha256:304142175e345f0155d7642f637cfdceae60e89075ff03938cb2886d52c65a62
+  tag: v3.3.5-cuda@sha256:ba820b5b2ce199ef085bd5a42f092218f16994149019c5ab252bf387c22a99b4
   pullPolicy: IfNotPresent
 
 mlOpenvinoImage:
   repository: ghcr.io/immich-app/immich-machine-learning
-  tag: v2.7.5-openvino@sha256:71cd5a681823c4b818f4b24b3f05816eccc3d085559e7615f695bde77e64f1f2
+  tag: v3.3.5-openvino@sha256:1dbac7f811b51b80c55ee0cf678e0089d3532c798f14a65747d5d7b473a4f9d6
   pullPolicy: IfNotPresent
 
 mlRocmImage:
   repository: ghcr.io/immich-app/immich-machine-learning
-  tag: v2.7.5-rocm@sha256:baa195b5cab655eba28ba771816ff443853c0dd41892d6767257157211114993
+  tag: v3.3.5-rocm@sha256:3cc72b962dbfe38525645bd0ef45248e18e86942080516c5c7ecb0f03e72bd02
   pullPolicy: IfNotPresent
 
 securityContext:
@@ -60,10 +60,17 @@ workload:
             DB_USERNAME: "{{ .Values.cnpg.main.user }}"
             DB_DATABASE_NAME: "{{ .Values.cnpg.main.database }}"
             DB_HOSTNAME: "{{ .Values.cnpg.main.creds.host }}"
-            DB_PASSWORD: "{{ .Values.cnpg.main.creds.password }}"
+            DB_PASSWORD:
+              secretKeyRef:
+                name: cnpg-main-user
+                key: password
             DB_PORT: "5432"
             REDIS_HOSTNAME: '{{ .Values.redis.creds.plainhost | trimAll "\"" }}'
-            REDIS_PASSWORD: '{{ .Values.redis.creds.redisPassword | trimAll "\"" }}'
+            REDIS_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                key: redis-password
             REDIS_PORT: "6379"
             REDIS_DBINDEX: "0"
           probes:
@@ -103,8 +110,6 @@ workload:
           enabled: true
           primary: true
           imageSelector: "{{ .Values.immich.mlImageType }}"
-          resources:
-            excludeExtra: true
           securityContext:
             capabilities:
               disableS6Caps: true
@@ -168,10 +173,17 @@ workload:
             DB_USERNAME: "{{ .Values.cnpg.main.user }}"
             DB_DATABASE_NAME: "{{ .Values.cnpg.main.database }}"
             DB_HOSTNAME: "{{ .Values.cnpg.main.creds.host }}"
-            DB_PASSWORD: "{{ .Values.cnpg.main.creds.password }}"
+            DB_PASSWORD:
+              secretKeyRef:
+                name: cnpg-main-user
+                key: password
             DB_PORT: "5432"
             REDIS_HOSTNAME: '{{ .Values.redis.creds.plainhost | trimAll "\"" }}'
-            REDIS_PASSWORD: '{{ .Values.redis.creds.redisPassword | trimAll "\"" }}'
+            REDIS_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                key: redis-password
             REDIS_PORT: "6379"
             REDIS_DBINDEX: "0"
           probes:

@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
-  repository: docker.io/wiserain/flexget
+  repository: ghcr.io/wiserain/flexget
   pullPolicy: IfNotPresent
-  tag: 3.19.14@sha256:7d78d1f4a337d99cbcc84ee61eaea6afd9d9719c8c36f5dc29e65446d946a9c1
+  tag: 3.22.9@sha256:8c81bcd16b10e25ca4a58cdaaa33dd7ee9d0e340d27a2a633462a10aa1f85ad9
 securityContext:
   container:
     runAsNonRoot: false

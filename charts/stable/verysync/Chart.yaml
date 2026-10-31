@@ -9,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 2.21.3
+appVersion: 2.33.2
 dependencies:
   - name: common
-    version: 29.1.6
+    version: 30.2.9
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -34,8 +34,8 @@ maintainers:
     url: https://truecharts.org
 name: verysync
 sources:
+  - https://ghcr.io/jonnyan404/verysync
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/verysync
-  - https://hub.docker.com/r/jonnyan404/verysync
 type: application
-version: 13.1.1
+version: 14.0.4
 

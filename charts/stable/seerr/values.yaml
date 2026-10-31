@@ -1,25 +1,53 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
   repository: oci.trueforge.org/containerforge/seerr
-  tag: "3.2.0@sha256:7197fe2c1397efac7e6d8d5ddd5fec2e3715425303d90eb4cdb2e5374f458213"
+  tag: "3.5.1@sha256:63cdc2228df1bf6f8c5784a95339488e4ac1c9df3df65c53652ef26856eb1f02"
   pullPolicy: IfNotPresent
 service:
   main:
     ports:
       main:
         port: 10241
-persistence:
-  config:
-    enabled: true
-    mountPath: "/app/config"
-
 workload:
   main:
     podSpec:
       containers:
         main:
+          probes:
+            liveness:
+              enabled: true
+              path: /api/v1/status
+            readiness:
+              enabled: true
+              path: /api/v1/status
+            startup:
+              enabled: true
+              type: tcp
           env:
             PORT: "{{ .Values.service.main.ports.main.port }}"
             # User Defined
-            JELLYFIN_TYPE: ""
+            # is this really needed?
+            # JELLYFIN_TYPE: ""
             LOG_LEVEL: "info"
+            DB_TYPE: postgres
+            DB_HOST:
+              secretKeyRef:
+                name: cnpg-main-urls
+                key: host
+            DB_PORT: "5432"
+            DB_USER: "{{ .Values.cnpg.main.user }}"
+            DB_PASS:
+              secretKeyRef:
+                name: cnpg-main-user
+                key: password
+            DB_NAME: "{{ .Values.cnpg.main.database }}"
+            DB_LOG_QUERIES: "false"
+persistence:
+  config:
+    enabled: true
+    mountPath: "/app/config"
+cnpg:
+  main:
+    enabled: true
+    user: seerr
+    database: seerr

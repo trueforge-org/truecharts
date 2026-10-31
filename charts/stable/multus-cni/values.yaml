@@ -2,17 +2,17 @@
 image:
   pullPolicy: IfNotPresent
   repository: ghcr.io/k8snetworkplumbingwg/multus-cni
-  tag: v4.2.4-thick@sha256:3c20900b5381fac7f9cbbdfac8370ea10a2f6ed7fbecc678384a9db57047abb1
+  tag: v4.3.1-thick@sha256:a357a79359b80ddd5f4699117946cacf3b54f5baecf7944535594863e875fc25
 
 craneImage:
   pullPolicy: IfNotPresent
   repository: docker.io/alpine/crane
-  tag: 0.21.5@sha256:e6b0b5343c2bcdf9b4e02f4cad9d01a9535f0f768e4a6a80739378192f819621
+  tag: 0.22.1@sha256:ab2ff377bd2706824fadd97eb8b12ce4d0c9ea2985b9fe6d47ed66704384a4d6
 
 talosCniImage:
   pullPolicy: IfNotPresent
   repository: ghcr.io/siderolabs/cni
-  tag: v1.13.0@sha256:0dc7609b62c2ab8f01d1adc7ea4b20a1b409d5cf895a94e9234e0eb91364da0c
+  tag: v1.14.0@sha256:717328255ca6969bc225d7788ebc05c95ed3d4179dd38a804e438bbd38f14d2e
 
 multus:
   # Primary CNI value can be:

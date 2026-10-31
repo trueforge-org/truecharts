@@ -9,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 4.7.0
+appVersion: 4.14.0
 dependencies:
   - name: common
-    version: 29.1.6
+    version: 30.2.9
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -33,9 +33,9 @@ maintainers:
     url: https://truecharts.org
 name: qbitmanage
 sources:
+  - https://ghcr.io/stuffanthings/qbit_manage
   - https://github.com/StuffAnThings/qbit_manage/wiki/Docker-Installation
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/qbitmanage
-  - https://hub.docker.com/r/bobokun/qbit_manage
 type: application
-version: 12.2.1
+version: 13.1.4
 

@@ -1,26 +1,61 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
-  repository: ghcr.io/kashalls/kromgo
-  tag: v0.9.1@sha256:1624b1a10009978243d7d54e83269cbf9e3a4ec7f14c2548bdd11e63db5c4ad7
+  repository: ghcr.io/home-operations/kromgo
+  tag: 0.16.3@sha256:98775a53019250a517a09a0fb716404146d1aaa6fb1f67091c58345663e5b7b5
   pullPolicy: IfNotPresent
 
 # Raw Kromgo configuration
-# Replace it with your configuration
-# https://github.com/kashalls/kromgo/blob/main/config.yaml.example
-kromgo:
-  badge:
-    font: Verdana.ttf  # Relative to /kromgo - Verdana.ttf is available in the container
-    size: 12
-  metrics:
-    - name: talos_version
-      query: node_os_info{ name="Talos"}
-      label: version_id
-      title: Talos Version
+# checkout the readme for the current configuration setup
+# https://github.com/home-operations/kromgo#badges
 
-    - name: kubernetes_version
+kromgo:
+  defaults:
+    badge:
+      # dejavu-sans (default, shields.io-style), dejavu-sans-bold, comic-neue, comic-neue-bold
+      font: dejavu-sans
+      # badge font size in points
+      size: 11
+      # flat (default), flat-square, or plastic
+      style: flat
+      gallery:
+        # list badges in the gallery (default); true hides them
+        hidden: false
+    graph:
+      # cap on a graph's requested window ("0" = unlimited)
+      maxDuration: 1h
+      # image width in px
+      width: 600
+      # image height in px
+      height: 200
+      # show the series legend
+      legend: true
+      # color theme — see Themes below
+      theme: light
+      # text font — see Themes below
+      font: dejavu-sans
+      gallery:
+        # list graphs in the gallery (default); true hides them
+        hidden: false
+  badges:
+    - id: talos_version
+      query: node_os_info{ name="Talos"}
+      valueExpr: labels["version_id"]
+      # mdi:server-outline
+      # si:kubernetes
+      icon: si:talos
+      title: Talos Version
+    - id: kubernetes_version
       query: kubernetes_build_info{ service="kubernetes"}
-      label: git_version
+      valueExpr: labels["git_version"]
+      icon: si:kubernetes
       title: Kubernetes Version
+    - id: flux_version
+      query: label_replace(gotk_resource_info{exported_namespace="flux-system",name="flux",customresource_kind="Kustomization"}, "revision", "$1", "revision", "(.+)@sha256:.+")
+      valueExpr: labels["revision"]
+      icon: si:flux
+      title: Flux Version
+      # Per-badge gallery
+      # gallery: {hidden: true}
 
 service:
   main:
@@ -37,22 +72,25 @@ workload:
       containers:
         main:
           env:
-            PROMETHEUS_URL: "http://prometheus-operated.kube-prometheus-stack.svc.cluster.local:9090"
-            SERVER_PORT: "{{ $.Values.service.main.ports.main.port }}"
-            HEALTH_PORT: "{{ $.Values.service.main.ports.health.port }}"
+            KROMGO_PROMETHEUS_URL: "http://prometheus-operated.kube-prometheus-stack.svc.cluster.local:9090"
+            KROMGO_SERVER_PORT: "{{ $.Values.service.main.ports.main.port }}"
+            KROMGO_HEALTH_PORT: "{{ $.Values.service.main.ports.health.port }}"
+            # KROMGO_SERVER_LOGGING    no  false   Enable HTTP request access logging
+            # KROMGO_SERVER_READ_TIMEOUT   no  — HTTP read timeout (e.g. 5s)
+            # KROGMO_SERVER_WRITE_TIMEOUT  no  — HTTP write timeout (e.g. 10s)
+            # KROGMO_QUERY_TIMEOUT no  30s Timeout applied to each Prometheus query
+            # KROGMO_LOG_LEVEL no  info    Log level: debug, info, warn, error
+            # KROGMO_LOG_FORMAT    no  json    Log format: json or text
           probes:
             liveness:
               type: http
               path: "/healthz"
-              port: "{{ $.Values.service.main.ports.health.port }}"
             readiness:
               type: http
               path: "/readyz"
-              port: "{{ $.Values.service.main.ports.health.port }}"
             startup:
               type: http
               path: "/readyz"
-              port: "{{ $.Values.service.main.ports.health.port }}"
 
 configmap:
   kromgo-configfile:
@@ -67,5 +105,5 @@ persistence:
     type: configmap
     readOnly: true
     objectName: kromgo-configfile
-    mountPath: /kromgo/config.yaml
+    mountPath: /config/config.yaml
     subPath: config.yaml

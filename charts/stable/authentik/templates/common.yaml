@@ -82,16 +82,5 @@
   {{- $_ := set .Values.metrics.ldapmetrics "enabled" false -}}
 {{- end -}}
 
-{{/* FIXME: See values.yaml */}}
-{{- $_ := set .Values.service.servermetrics "enabled" false -}}
-{{- $_ := set .Values.service.proxymetrics "enabled" false -}}
-{{- $_ := set .Values.service.radiusmetrics "enabled" false -}}
-{{- $_ := set .Values.service.ldapmetrics "enabled" false -}}
-
-{{- $_ := set .Values.metrics.servermetrics "enabled" false -}}
-{{- $_ := set .Values.metrics.proxymetrics "enabled" false -}}
-{{- $_ := set .Values.metrics.radiusmetrics "enabled" false -}}
-{{- $_ := set .Values.metrics.ldapmetrics "enabled" false -}}
-
 {{/* Render the templates */}}
 {{ include "tc.v1.common.loader.apply" . }}

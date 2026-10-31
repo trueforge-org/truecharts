@@ -2,7 +2,7 @@
 image:
   repository: oci.trueforge.org/containerforge/radarr
   pullPolicy: IfNotPresent
-  tag: "6.2.0.10390@sha256:87317c55851bd27147d57c804c53cef139ac1e6877cfef95683a45b930dad0e4"
+  tag: "7.0.0.10815@sha256:97b1a89fa21a9839716645a42f093c8364812cda56d3a5ebe3b7852f487f54a1"
 exportarrImage:
   repository: ghcr.io/onedr0p/exportarr
   pullPolicy: IfNotPresent
@@ -32,14 +32,20 @@ workload:
               enabled: true
               type: http
               path: /ping
+              httpHeaders:
+                Host: localhost
             liveness:
               enabled: true
               type: http
               path: /ping
+              httpHeaders:
+                Host: localhost
             startup:
               enabled: true
               type: http
               path: /ping
+              httpHeaders:
+                Host: localhost
           env:
             RADARR__SERVER__PORT: "{{ .Values.service.main.ports.main.port }}"
              # External | Basic | Forms

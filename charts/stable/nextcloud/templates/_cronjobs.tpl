@@ -16,6 +16,9 @@
         imageSelector: image
         resources:
           excludeExtra: true
+        env:
+          PHP_MEMORY_LIMIT: {{ $.Values.nextcloud.php.memory_limit | quote }}
+          PHP_UPLOAD_LIMIT: {{ $.Values.nextcloud.php.upload_limit | quote }}
         command:
           - /bin/bash
           - -c

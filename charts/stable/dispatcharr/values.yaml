@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
   pullPolicy: IfNotPresent
-  repository: docker.io/dispatcharr/dispatcharr
-  tag: 0.23.0@sha256:b731cda8daa302c5bc28f5031158895f9996c4b1995d7f292e96d4a7461c6263
+  repository: ghcr.io/dispatcharr/dispatcharr
+  tag: 0.33.0@sha256:96bc548978c68e684677da7895692eeeefb7f0b2edfa38311dac2b702c61d236
 securityContext:
   container:
     readOnlyRootFilesystem: false
@@ -23,7 +23,7 @@ workload:
           enabled: true
           type: init
           name: setup-postgres-dirs
-          image: alpine:3.23@sha256:5b10f432ef3da1b8d4c7eb6c487f2f5a8f096bc91145e68878dd4a5019afde11
+          image: alpine:3.24@sha256:be2656061b536c1883c4034790e21d0a09c5aaaf51968b89368a3c0371ea2c9a
           command:
             - /bin/sh
             - -c

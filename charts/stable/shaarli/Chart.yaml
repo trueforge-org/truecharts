@@ -9,10 +9,10 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 0.16.1
+appVersion: 0.16.10
 dependencies:
   - name: common
-    version: 29.1.6
+    version: 30.2.9
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -32,9 +32,9 @@ maintainers:
     url: https://truecharts.org
 name: shaarli
 sources:
+  - https://ghcr.io/shaarli/shaarli
   - https://github.com/shaarli/Shaarli
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/shaarli
-  - https://hub.docker.com/r/shaarli/shaarli
 type: application
-version: 9.1.1
+version: 10.0.5
 

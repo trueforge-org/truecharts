@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
-  repository: docker.io/tailscale/tailscale
+  repository: ghcr.io/tailscale/tailscale
   pullPolicy: IfNotPresent
-  tag: v1.96.5@sha256:dbeff02d2337344b351afac203427218c4d0a06c43fc10a865184063498472a6
+  tag: v1.104.4@sha256:ed6480b33c6eb67c9cbd203ed42b9fb57e361986725b6856def71b7a3d9e276c
 serviceAccount:
   main:
     enabled: true

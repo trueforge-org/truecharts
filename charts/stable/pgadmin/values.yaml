@@ -2,13 +2,13 @@
 image:
   repository: docker.io/dpage/pgadmin4
   pullPolicy: IfNotPresent
-  tag: 9.14@sha256:ff557f69d9808085dc3554f56c1b06a36ac8cddabe4485212920b9604261abdb
+  tag: 9.19@sha256:3591b3d02910dcd817dec6fcaa681c278ba6966945283dd0ea0042731c330c83
 service:
   main:
     ports:
       main:
         port: 10024
-        targetPort: 80
+        targetPort: 8080
 persistence:
   config:
     enabled: true

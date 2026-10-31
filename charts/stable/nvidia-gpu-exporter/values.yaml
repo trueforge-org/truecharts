@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
-  repository: docker.io/utkuozdemir/nvidia_gpu_exporter
+  repository: ghcr.io/utkuozdemir/nvidia_gpu_exporter
   pullPolicy: IfNotPresent
-  tag: 1.4.1@sha256:b921d70484ea3dcb7bd6baee52befbe80f818f71067f4ba04013e96aaf563562
+  tag: 1.16.0@sha256:cec17e3ddfce7baefbdf116d1a259e208bb1519e4e0b18b7b0879bde0fcad5a2
 securityContext:
   container:
     privileged: true
