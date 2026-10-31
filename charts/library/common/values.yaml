@@ -623,7 +623,7 @@ notes:
 
 gluetunImage:
   repository: oci.trueforge.org/containerforge/gluetun
-  tag: v3.41.1
+  tag: 3.41.3@sha256:9f64b09c9ac35a5b3c66b0044efe5ad57f574140db91c408b5a32c7834151e91
   pullPolicy: IfNotPresent
 
 netshootImage:
@@ -633,7 +633,7 @@ netshootImage:
 
 tailscaleImage:
   repository: oci.trueforge.org/containerforge/tailscale
-  tag: v1.94.2
+  tag: 1.104.4@sha256:c991b2cb4baa7d891f213687a70aaa1ec32254c560ef85fac0db14002438c442
   pullPolicy: IfNotPresent
 
 codeserverImage:
@@ -648,7 +648,7 @@ kubectlImage:
 
 postgresClientImage:
   repository: oci.trueforge.org/containerforge/postgresql-client
-  tag: "9.6.24@sha256:d40ff61568601b7032a7e6892ca08e55f772d24b32a053d1c0c6b45a2c01ae93"
+  tag: "9.6.24@sha256:65e2aaef5c5decd8ed06f5c41cb77de6406e44006d6f3db12d0faac3f88fa1c8"
   pullPolicy: IfNotPresent
 
 mariadbClientImage:
@@ -677,22 +677,22 @@ postgres16Image:
 
 postgres17Image:
   repository: ghcr.io/cloudnative-pg/postgresql
-  tag: "17.10@sha256:e62489a417c64e6d679baffae21a129d196ba44f1362bb109ae84e304396e6ac"
+  tag: "17.11@sha256:70664ebcfa1100361b5bdc28bbf06fdbe08db2dc4ad7bd14de33c5e05fe8ea8e"
   pullPolicy: IfNotPresent
 
 postgres18Image:
   repository: ghcr.io/cloudnative-pg/postgresql
-  tag: "18.4@sha256:c4d03ff9119154edbdae8879313cdf0aa5143a26e7ae400ca3ebe22dfc680a73"
+  tag: "18.6@sha256:899d3ed526b659d77935dde0e6bf2d69dbbf17d3d8c6486ca8cfd04bd3c18533"
   pullPolicy: IfNotPresent
 
 postgresPostgis15Image:
   repository: ghcr.io/cloudnative-pg/postgis
-  tag: "15-3.4@sha256:4596b193991cd2463a07d40e3d3d62c59f046a7dece8f163ad1aba15925a38e4"
+  tag: "15-3.5@sha256:1ba423156a7ddbbe354dead4e78e17797c3ce48fd3709851a64d751080b5b517"
   pullPolicy: IfNotPresent
 
 postgresPostgis16Image:
   repository: ghcr.io/cloudnative-pg/postgis
-  tag: "16-3.4@sha256:bb5a8590a8c934767482e34e1d103253f412aec703b77bbc52ad9044bf6e56f9"
+  tag: "16-3.5@sha256:dba71e1ae5aa91c2cfa4cd4531f2ce2ebeb839293b650414e3bc832c01290bca"
   pullPolicy: IfNotPresent
 
 postgresPostgis17Image:
@@ -704,7 +704,7 @@ postgresPostgis17Image:
 # no plain "18-3.x" tag exists upstream (unlike the 15-17 entries above).
 postgresPostgis18Image:
   repository: ghcr.io/cloudnative-pg/postgis
-  tag: "18-3.6-standard-bookworm@sha256:18dc2130a6f9350fa3bdc9e6d31bfa9b5b4d6aad0fc18c6125ec351ce5a1baee"
+  tag: "18-3.6-standard-bookworm@sha256:f82ef0c5c838794709f5dda2df41acbef1b76006cfc967645b615762251d164f"
   pullPolicy: IfNotPresent
 
 postgresVectors15Image:
@@ -734,12 +734,12 @@ postgresVectorchord16Image:
 
 postgresVectorchord17Image:
   repository: ghcr.io/tensorchord/cloudnative-vectorchord
-  tag: "17.9-1.1.1@sha256:82f9b46c9149681f2897bd221772a3b22a74784256f1154c91eb10c6785800d5"
+  tag: "17.11-1.1.1@sha256:bb7eb8442f76b1e74911f28585019a77022911f8cfa2ddcfb166ea6af85abd09"
   pullPolicy: IfNotPresent
 
 postgresVectorchord18Image:
   repository: ghcr.io/tensorchord/cloudnative-vectorchord
-  tag: "18.3-1.1.1@sha256:392b53675b403d6a2c72b673cc488a7c272514755dd818c622fb9ce4665193c4"
+  tag: "18.6-1.1.1@sha256:c7672bc011351a587cc292a94aac7eeebb593ed2e120077bd9c9944c9467db93"
   pullPolicy: IfNotPresent
 
 # -- Configure the ingresses for the chart here.
@@ -1459,8 +1459,6 @@ addons:
           add:
             - NET_ADMIN
             - NET_RAW
-
-dependencies: {}
 
 ##########################################################################
 # This section contains some pre-config for frequently used dependencies #
