@@ -45,7 +45,6 @@ persistence:
   docker-certs-ca:
     enabled: true
     mountPath: /config
-volumeClaimTemplates:
   docker-certs-client:
     enabled: true
     mountPath: /certs/client
