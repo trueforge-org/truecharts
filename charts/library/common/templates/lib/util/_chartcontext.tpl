@@ -128,8 +128,10 @@
         {{- $firstRule := ((.rules | default list) | mustFirst) -}}
         {{- if and (kindIs "slice" $firstRule.matches) (gt (len $firstRule.matches) 0) -}}
           {{- $firstMatch := (($firstRule.matches | default list) | mustFirst) -}}
-          {{- with $firstMatch.path.value -}}
-            {{- $path = tpl . $rootCtx -}}
+          {{- if $firstMatch.path -}}
+            {{- with $firstMatch.path.value -}}
+              {{- $path = tpl . $rootCtx -}}
+            {{- end -}}
           {{- end -}}
         {{- end -}}
       {{- end -}}

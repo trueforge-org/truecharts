@@ -19,31 +19,12 @@ within the common library.
 {{- end -}}
 {{- $routeKind := $values.kind | default "HTTPRoute" -}}
 
-{{/* Get the name of the primary service, if any */}}
-{{- $primaryServiceName := (include "tc.v1.common.lib.util.service.primary" (dict "rootCtx" $)) -}}
-{{/* Get service values of the primary service, if any */}}
-{{- $primaryService := get $.Values.service $primaryServiceName -}}
-{{- $defaultServiceName := $fullName -}}
+{{- $namespace := include "tc.v1.common.lib.metadata.namespace" (dict "rootCtx" $ "objectData" $values "caller" "Route") -}}
 
-{{- if and (hasKey $primaryService "nameOverride") $primaryService.nameOverride -}}
-  {{- $defaultServiceName = printf "%v-%v" $defaultServiceName $primaryService.nameOverride -}}
-{{- end -}}
-{{- $defaultServicePort := get $primaryService.ports (include "tc.v1.common.lib.util.service.ports.primary" (dict "svcValues" $primaryService "rootCtx" $)) }}
-
-{{/* Handle targetSelector for automatic gateway linking */}}
+{{/* A route level targetSelector replaces parentRefs */}}
 {{- $parentRefs := $values.parentRefs -}}
-{{- if and (hasKey $values "targetSelector") $values.targetSelector -}}
-  {{- $targetGatewayName := $values.targetSelector -}}
-  {{- if hasKey $.Values.gateway $targetGatewayName -}}
-    {{- $targetGateway := get $.Values.gateway $targetGatewayName -}}
-    {{- if $targetGateway.enabled -}}
-      {{- $gatewayFullName := include "tc.v1.common.lib.chart.names.fullname" $ -}}
-      {{- if and (hasKey $targetGateway "nameOverride") $targetGateway.nameOverride -}}
-        {{- $gatewayFullName = printf "%v-%v" $gatewayFullName $targetGateway.nameOverride -}}
-      {{- end -}}
-      {{- $parentRefs = list (dict "group" "gateway.networking.k8s.io" "kind" "Gateway" "name" $gatewayFullName "namespace" ($.Values.namespace | default $.Values.global.namespace | default $.Release.Namespace)) -}}
-    {{- end -}}
-  {{- end -}}
+{{- if $values.targetSelector -}}
+  {{- $parentRefs = list (dict "targetSelector" $values.targetSelector) -}}
 {{- end -}}
 
 {{/* Validate that parentRefs is not empty */}}
@@ -51,58 +32,101 @@ within the common library.
   {{- fail (printf "parentRef name is required for %v %v" $routeKind $fullName) -}}
 {{- end -}}
 
+{{/* Without rules, send everything to the primary service */}}
+{{- $rules := $values.rules | default (list dict) -}}
+
 ---
-apiVersion: gateway.networking.k8s.io/v1
-{{- if and (ne $routeKind "GRPCRoute") (ne $routeKind "HTTPRoute") (ne $routeKind "TCPRoute") (ne $routeKind "TLSRoute") (ne $routeKind "UDPRoute") -}}
-  {{- fail (printf "Not a valid route kind (%s)" $routeKind) -}}
-{{- end }}
+apiVersion: {{ include "tc.v1.common.capabilities.route.apiVersion" (dict "rootCtx" $ "kind" $routeKind) }}
 kind: {{ $routeKind }}
 metadata:
   name: {{ $fullName }}
-  namespace: {{ $.Values.namespace | default $.Values.global.namespace | default $.Release.Namespace }}
+  namespace: {{ $namespace }}
   {{- $labels := (mustMerge ($routeLabels | default dict) (include "tc.v1.common.lib.metadata.allLabels" $ | fromYaml)) -}}
   {{- with (include "tc.v1.common.lib.metadata.render" (dict "rootCtx" $ "labels" $labels) | trim) }}
   labels:
     {{- . | nindent 4 }}
   {{- end -}}
   {{- $annotations := (mustMerge ($routeAnnotations | default dict) (include "tc.v1.common.lib.metadata.allAnnotations" $ | fromYaml)) }}
-  annotations:
   {{- with (include "tc.v1.common.lib.metadata.render" (dict "rootCtx" $ "annotations" $annotations) | trim) }}
+  annotations:
     {{- . | nindent 4 }}
   {{- end }}
 spec:
   parentRefs:
   {{- range $parentRefs }}
+    {{- $parentName := .name -}}
+    {{- $parentNamespace := .namespace | default $namespace -}}
+    {{- if .targetSelector -}}
+      {{- $target := get $.Values.gateway .targetSelector -}}
+      {{- if ne (include "tc.v1.common.lib.gateway.enabled" (dict "rootCtx" $ "objectData" $target "name" .targetSelector "key" "gateway" "caller" "Route")) "true" -}}
+        {{- fail (printf "Route - Expected [targetSelector] of route [%s] to reference an enabled gateway, got [%s]" $fullName .targetSelector) -}}
+      {{- end -}}
+      {{- $parentName = include "tc.v1.common.lib.util.gateway.getFullName" (dict "rootCtx" $ "name" .targetSelector) -}}
+      {{- $parentNamespace = include "tc.v1.common.lib.metadata.namespace" (dict "rootCtx" $ "objectData" $target "caller" "Route") -}}
+      {{- if .sectionName -}}
+        {{- $sectionName := .sectionName -}}
+        {{- $found := false -}}
+        {{- range $target.listeners -}}
+          {{- if eq .name $sectionName -}}
+            {{- $found = true -}}
+          {{- end -}}
+        {{- end -}}
+        {{- if not $found -}}
+          {{- fail (printf "Route - Expected [sectionName] of route [%s] to reference a listener of gateway [%s], got [%s]" $fullName .targetSelector $sectionName) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end }}
     - group: {{ default "gateway.networking.k8s.io" .group }}
       kind: {{ default "Gateway" .kind }}
-      name: {{ required (printf "parentRef name is required for %v %v" $routeKind $fullName) .name }}
-      namespace: {{ required (printf "parentRef namespace is required for %v %v" $routeKind $fullName) .namespace }}
+      name: {{ required (printf "parentRef name is required for %v %v" $routeKind $fullName) $parentName }}
+      namespace: {{ $parentNamespace }}
       {{- if .sectionName }}
       sectionName: {{ .sectionName | quote }}
       {{- end }}
+      {{- if .port }}
+      port: {{ .port }}
+      {{- end }}
   {{- end }}
-  {{- if and (ne $routeKind "TCPRoute") (ne $routeKind "UDPRoute") $values.hostnames }}
-  hostnames:
   {{- with $values.hostnames }}
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+  hostnames:
+    {{- range . }}
+    - {{ tpl . $ | quote }}
+    {{- end }}
   {{- end }}
   rules:
-  {{- range $values.rules }}
-  - backendRefs:
-    {{- range .backendRefs }}
-    - group: {{ default "" .group | quote}}
-      kind: {{ default "Service" .kind }}
-      name: {{ default $defaultServiceName .name }}
-      namespace: {{ default $.Release.Namespace .namespace }}
-      port: {{ default $defaultServicePort.port .port }}
-      weight: {{ default 1 .weight }}
-    {{- end }}
-    {{- if (eq $routeKind "HTTPRoute") }}
-      {{- with .matches }}
-    matches:
-        {{- toYaml . | nindent 6 }}
-      {{- end }}
-    {{- end }}
+  {{- range $rules }}
+    {{- $rule := omit . "backendRefs" -}}
+    {{- $backendRefs := .backendRefs -}}
+    {{/* A rule with only filters is valid, eg a redirect. Otherwise default to the primary service */}}
+    {{- if and (not $backendRefs) (not .filters) -}}
+      {{- $backendRefs = list dict -}}
+    {{- end -}}
+
+    {{- $renderedBackends := list -}}
+    {{- range $backendRefs -}}
+      {{- $resolved := include "tc.v1.common.lib.route.backend" (dict "rootCtx" $ "backend" . "routeName" $fullName) | fromYaml -}}
+      {{/* Zero is a valid weight, it stops traffic to the backend */}}
+      {{- $weight := 1 -}}
+      {{- if not (kindIs "invalid" .weight) -}}
+        {{- $weight = .weight -}}
+      {{- end -}}
+      {{- $backend := dict
+            "group" (.group | default "")
+            "kind" (.kind | default "Service")
+            "name" $resolved.name
+            "namespace" (.namespace | default $namespace)
+            "weight" $weight -}}
+      {{- if $resolved.port -}}
+        {{- $_ := set $backend "port" $resolved.port -}}
+      {{- end -}}
+      {{- with .filters -}}
+        {{- $_ := set $backend "filters" . -}}
+      {{- end -}}
+      {{- $renderedBackends = mustAppend $renderedBackends $backend -}}
+    {{- end -}}
+    {{- if $renderedBackends -}}
+      {{- $_ := set $rule "backendRefs" $renderedBackends -}}
+    {{- end -}}
+    {{- toYaml (list $rule) | nindent 2 }}
   {{- end }}
 {{- end }}

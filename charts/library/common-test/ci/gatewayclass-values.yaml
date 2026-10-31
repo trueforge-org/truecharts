@@ -54,6 +54,4 @@ route:
       - chart-example.local
     rules:
       - backendRefs:
-          - kind: Service
-            name: main
-            port: 8080
+          - targetSelector: main

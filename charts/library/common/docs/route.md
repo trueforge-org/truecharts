@@ -67,7 +67,7 @@ route:
 
 ### `route.$name.hostnames`
 
-Configuration for `route.main.hostnames`.
+Host addresses, supports Helm `tpl`. Required for `TLSRoute`, not supported by `TCPRoute` and `UDPRoute`.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
@@ -125,31 +125,9 @@ Configuration for `route.main.labels`.
 
 ---
 
-### `route.$name.targetSelector`
-
-Configuration for `route.main.targetSelector`. Automatically links to a gateway defined in this chart. When set, this will generate parentRefs automatically based on the gateway name, overriding any manually defined parentRefs.
-
-| Field      | Value                        |
-| ---------- | ---------------------------- |
-| Key        | `route.$name.targetSelector` |
-| Type       | `string`                     |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
-| Default    | unset                        |
-
-Example
-
-```yaml
-route:
-  $name:
-    targetSelector: main  # Links to gateway.main
-```
-
----
-
 ### `route.$name.parentRefs`
 
-Configuration for `route.main.parentRefs`. Define the Gateway resources this route attaches to. This is optional if targetSelector is used (targetSelector will override this).
+Configuration for `route.main.parentRefs`.
 
 | Field      | Value                    |
 | ---------- | ------------------------ |
@@ -163,7 +141,7 @@ Configuration for `route.main.parentRefs`. Define the Gateway resources this rou
 
 ### `route.$name.rules`
 
-Configuration for `route.main.rules`.
+Routing rules. Without rules everything goes to the primary service. Fields the route kind does not support fail rendering.
 
 | Field      | Value               |
 | ---------- | ------------------- |
@@ -175,10 +153,22 @@ Configuration for `route.main.rules`.
 
 ---
 
+### `route.$name.targetSelector`
+
+Configuration for `route.main.targetSelector`. Automatically links to a gateway defined in this chart.
+
+| Field      | Value                        |
+| ---------- | ---------------------------- |
+| Key        | `route.$name.targetSelector` |
+| Type       | `null, string`               |
+| Required   | ❌                           |
+| Helm `tpl` | ❌                           |
+| Default    | unset                        |
+
+---
+
 ## Full Examples
 
-### Route with Manual parentRefs
-
 ```yaml
 route:
   main:
@@ -200,52 +190,77 @@ route:
           - path:
               type: PathPrefix
               value: /
-```
 
-### Route with targetSelector (Automatic Gateway Linking)
-
-```yaml
-gateway:
-  main:
+  # Attaches to a listener of a gateway in this chart, with filters and a canary backend
+  web:
     enabled: true
-    gatewayClassName: traefik
-    listeners:
-      - name: http
-        port: 80
-        protocol: HTTP
-
-route:
-  main:
-    enabled: true
-    kind: HTTPRoute
-    targetSelector: main  # Automatically links to gateway.main
-    hostnames:
-      - app.example.com
-    rules:
-      - backendRefs:
-          - kind: Service
-            name: main
-            port: 80
-        matches:
-          - path:
-              type: PathPrefix
-              value: /
-```
-    kind: HTTPRoute
     parentRefs:
-      - group: gateway.networking.k8s.io
-        kind: Gateway
-        name: main
-        namespace: default
+      - targetSelector: main
+        sectionName: https
     hostnames:
-      - app.example.com
+      - "{{ .Release.Name }}.example.com"
     rules:
-      - backendRefs:
-          - kind: Service
-            name: main
-            port: 80
+      - name: api
         matches:
           - path:
               type: PathPrefix
-              value: /
+              value: /api
+        timeouts:
+          request: 30s
+        filters:
+          - type: RequestHeaderModifier
+            requestHeaderModifier:
+              add:
+                - name: X-Example
+                  value: example
+        backendRefs:
+          - targetSelector: main
+            weight: 90
+          - targetSelector: canary
+            weight: 10
+
+  # Redirect without a backend
+  redirect:
+    enabled: true
+    parentRefs:
+      - targetSelector: main
+        sectionName: http
+    rules:
+      - filters:
+          - type: RequestRedirect
+            requestRedirect:
+              scheme: https
+              statusCode: 301
+
+  # Other route kinds only have backendRefs in their rules
+  mqtt:
+    enabled: true
+    kind: TCPRoute
+    parentRefs:
+      - targetSelector: main
+        sectionName: mqtt
+    rules:
+      - backendRefs:
+          - targetSelector: mqtt
 ```
+
+## Supported fields per kind
+
+Fields a kind does not support fail rendering, because dropping them would change what the route matches.
+
+| Field                                       | HTTPRoute | GRPCRoute | TLSRoute | TCPRoute | UDPRoute |
+| ------------------------------------------- | --------- | --------- | -------- | -------- | -------- |
+| `hostnames`                                 | ✅        | ✅        | Required | ❌       | ❌       |
+| `rules[].backendRefs`, `rules[].name`       | ✅        | ✅        | ✅       | ✅       | ✅       |
+| `rules[].matches`, `rules[].filters`        | ✅        | ✅        | ❌       | ❌       | ❌       |
+| `rules[].backendRefs[].filters`             | ✅        | ✅        | ❌       | ❌       | ❌       |
+| `rules[].sessionPersistence` (experimental) | ✅        | ✅        | ❌       | ❌       | ❌       |
+| `rules[].timeouts`, `rules[].retry`         | ✅        | ❌        | ❌       | ❌       | ❌       |
+
+## API version
+
+`HTTPRoute` and `GRPCRoute` use `gateway.networking.k8s.io/v1`. `TCPRoute`, `TLSRoute` and `UDPRoute` use `v1` if the cluster serves it, otherwise `v1alpha3` or `v1alpha2`. When rendering without a cluster they use `v1`, unless you pass `--api-versions`.
+
+## Not rendered by common
+
+`BackendTLSPolicy`, `ReferenceGrant` and `ListenerSet` have no dedicated key yet. Use `extraTpl` for these. Without a `BackendTLSPolicy`, a route sends plain HTTP to its backend, even if the service port is `https`.

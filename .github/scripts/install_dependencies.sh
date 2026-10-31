@@ -26,6 +26,8 @@ CLOUDNATIVE_PG_CHART_VERSION="0.27.1"
 METRICS_SERVER_CHART_VERSION="3.13.0"
 # renovate: datasource=helm depName=volsync repository=oci://oci.trueforge.org/truecharts
 VOLSYNC_CHART_VERSION="3.15.16"
+# renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
+GATEWAY_API_VERSION="v1.7.0"
 HELM_WAIT_TIMEOUT="15m"
 
 helm_install_with_retry() {
@@ -55,6 +57,13 @@ if [[ "$curr_chart" == "charts/library/common-test" ]] && [[ -n "$dependency_sel
     if [[ "$dependency_selector" =~ (ingress|metrics|cnpg|volsync).*-values.yaml ]]; then
         if ! helm_install_with_retry kube-prometheus-stack oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack --namespace kube-prometheus-stack --create-namespace --version "$KUBE_PROMETHEUS_STACK_CHART_VERSION" --set alertmanager.enabled=false --set grafana.enabled=false --set kubeProxy.enabled=false; then
             echo "Failed to install kube-prometheus-stack chart"
+            exit 1
+        fi
+    fi
+
+    if [[ "$dependency_selector" =~ (route|gateway|gatewayclass).*-values.yaml ]]; then
+        if ! kubectl apply --server-side -f "https://github.com/kubernetes-sigs/gateway-api/releases/download/$GATEWAY_API_VERSION/standard-install.yaml"; then
+            echo "Failed to install Gateway API CRDs"
             exit 1
         fi
     fi

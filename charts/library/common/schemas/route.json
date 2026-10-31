@@ -81,7 +81,7 @@
                 "object",
                 "array"
               ],
-              "description": "Configuration for `route.main.parentRefs.$item.namespace`."
+              "description": "Namespace of the parent. Defaults to the namespace of the route."
             },
             "sectionName": {
               "type": [
@@ -93,7 +93,21 @@
                 "object",
                 "array"
               ],
-              "description": "Configuration for `route.main.parentRefs.$item.sectionName`."
+              "description": "Attach to a single listener of the gateway. With `targetSelector` it must be a listener of that gateway."
+            },
+            "targetSelector": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "Name of a gateway in this chart. Takes the place of `name` and `namespace`."
+            },
+            "port": {
+              "type": [
+                "null",
+                "integer"
+              ],
+              "description": "Attach to the listeners of the gateway on this port."
             }
           },
           "additionalProperties": true,
@@ -103,7 +117,7 @@
       },
       "hostnames": {
         "type": "array",
-        "description": "Configuration for `route.main.hostnames`.",
+        "description": "Host addresses, supports Helm `tpl`. Required for `TLSRoute`, not supported by `TCPRoute` and `UDPRoute`.",
         "default": []
       },
       "rules": {
@@ -134,7 +148,7 @@
                       "object",
                       "array"
                     ],
-                    "description": "Configuration for `route.main.rules.$item.backendRefs.$item.name`."
+                    "description": "Name of the object, without any expanding. Cannot be used with `targetSelector`."
                   },
                   "namespace": {
                     "type": [
@@ -146,7 +160,7 @@
                       "object",
                       "array"
                     ],
-                    "description": "Configuration for `route.main.rules.$item.backendRefs.$item.namespace`."
+                    "description": "Namespace of the backend. Defaults to the namespace of the route."
                   },
                   "port": {
                     "type": [
@@ -158,49 +172,61 @@
                       "object",
                       "array"
                     ],
-                    "description": "Configuration for `route.main.rules.$item.backendRefs.$item.port`."
+                    "description": "Port of the backend. Defaults to the primary port of the selected service."
                   },
                   "weight": {
                     "type": "integer",
-                    "description": "Configuration for `route.main.rules.$item.backendRefs.$item.weight`."
+                    "description": "Share of the requests for this backend. Set to `0` to stop sending traffic to it. Defaults to `1`."
+                  },
+                  "targetSelector": {
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "description": "Name of a service in this chart. Cannot be used with `name`."
+                  },
+                  "filters": {
+                    "type": "array",
+                    "description": "Filters applied only to this backend. Only for `HTTPRoute` and `GRPCRoute`."
                   }
                 },
                 "additionalProperties": true,
                 "description": "Configuration for `route.main.rules.$item.backendRefs.$item`."
               },
-              "description": "Configuration for `route.main.rules.$item.backendRefs`."
+              "description": "Where to send requests. Without this and without `filters`, the rule uses the primary service."
             },
             "matches": {
               "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "path": {
-                    "type": "object",
-                    "properties": {
-                      "type": {
-                        "type": "string",
-                        "description": "Configuration for `route.main.rules.$item.matches.$item.path.type`."
-                      },
-                      "value": {
-                        "type": "string",
-                        "description": "Configuration for `route.main.rules.$item.matches.$item.path.value`."
-                      }
-                    },
-                    "additionalProperties": true,
-                    "description": "Configuration for `route.main.rules.$item.matches.$item.path`."
-                  }
-                },
-                "additionalProperties": true,
-                "description": "Configuration for `route.main.rules.$item.matches.$item`."
-              },
-              "description": "Configuration for `route.main.rules.$item.matches`."
+              "description": "Conditions for matching requests. Only for `HTTPRoute` and `GRPCRoute`."
+            },
+            "name": {
+              "type": "string",
+              "description": "Name of the rule."
+            },
+            "filters": {
+              "type": "array",
+              "description": "Filters applied to requests matching this rule. Only for `HTTPRoute` and `GRPCRoute`. A rule with only filters needs no `backendRefs`, eg a redirect."
+            },
+            "timeouts": {
+              "type": "object",
+              "additionalProperties": true,
+              "description": "`request` and `backendRequest` timeouts. Only for `HTTPRoute`."
+            },
+            "retry": {
+              "type": "object",
+              "additionalProperties": true,
+              "description": "Retry configuration. Only for `HTTPRoute`."
+            },
+            "sessionPersistence": {
+              "type": "object",
+              "additionalProperties": true,
+              "description": "Session persistence, needs the experimental Gateway API channel. Only for `HTTPRoute` and `GRPCRoute`."
             }
           },
           "additionalProperties": true,
           "description": "Configuration for `route.main.rules.$item`."
         },
-        "description": "Configuration for `route.main.rules`."
+        "description": "Routing rules. Without rules everything goes to the primary service. Fields the route kind does not support fail rendering."
       }
     },
     "additionalProperties": true,
