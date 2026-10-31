@@ -292,48 +292,8 @@
             "description": "Pod's runtimeClassName > Note that it will only set the `runtimeClassName` on the pod that this container belongs to."
           },
           "securityContext": {
-            "type": "object",
-            "properties": {
-              "fsGroup": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Pod's securityContext fsGroup"
-              },
-              "fsGroupChangePolicy": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Pod's securityContext fsGroupChangePolicy"
-              },
-              "supplementalGroups": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Pod's securityContext supplementalGroups"
-              },
-              "sysctls": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true,
-                    "description": "Pod's securityContext sysctls name"
-                  },
-                  "value": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true,
-                    "description": "Pod's securityContext sysctls value"
-                  }
-                },
-                "additionalProperties": true,
-                "description": "The **sysctl** `net.ipv4.ip_unprivileged_port_start` option will be automatically set to the lowest `targetPort` (or `port` if targetPort is not defined) number assigned"
-              }
-            },
-            "additionalProperties": true,
-            "description": "Pod's securityContext"
+            "$ref": "podSpec/securityContext.json",
+            "description": "Pod-level security context."
           }
         },
         "additionalProperties": true,
@@ -510,6 +470,15 @@
         "type": "boolean",
         "description": "Set workload as primary",
         "default": false
+      },
+      "extraSelectorLabels": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+          "type": "string"
+        },
+        "description": "Additional labels included in the workload selector and pod labels",
+        "default": {}
       },
       "labels": {
         "allOf": [
