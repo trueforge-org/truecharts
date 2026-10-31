@@ -572,11 +572,7 @@ notes:
     # Thank you for installing {{ .Chart.Name }} by TrueCharts.
   # custom: "{{ toYaml $.Values }}"
   custom: |
-    {{- if .Values.chartContext.appUrl }}
-    ## Connecting externally
-    You can use this Chart by opening the following links in your browser:
-    - {{ toYaml .Values.chartContext.appUrl }}
-    {{- end }}
+    {{- include "tc.v1.common.lib.chart.external" $ }}
 
     {{ if .Chart.Dependencies }}
     ## Dependencies for {{ .Chart.Name }}
@@ -590,7 +586,7 @@ notes:
     ## Connecting Internally
 
     You can reach this chart inside your cluster, using the following service URLS:
-    {{- range $url := .Values.chartContext.internalUrls -}}
+    {{- range $url := .Values.chartContext.internalUrls }}
     - {{ $url }}
     {{- end }}
     {{- end }}

@@ -1,0 +1,150 @@
+suite: notes external urls test
+templates:
+  - common.yaml
+  - NOTES.txt
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should show the app url without ingress or route
+    template: NOTES.txt
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - matchRegexRaw:
+          pattern: "in your browser:\n- http://127.0.0.1:12345\n"
+      - matchRegexRaw:
+          pattern: "service URLS:\n- test-release-name-common-test.test-release-namespace.svc.cluster.local:12345\n"
+      - notMatchRegexRaw:
+          pattern: "Other routes"
+
+  - it: should list every path and hostname of all routes
+    template: NOTES.txt
+    set:
+      service: *service
+      someHost: app.example.com
+      somePath: /ui
+      route:
+        api:
+          enabled: true
+          gateway: external
+          hostnames:
+            - "{{ .Values.someHost }}"
+          rules:
+            - matches:
+                - path:
+                    type: PathPrefix
+                    value: /api
+        ui:
+          enabled: true
+          primary: true
+          gateway: external
+          hostnames:
+            - "{{ .Values.someHost }}"
+            - other.example.com
+          rules:
+            - matches:
+                - path:
+                    type: PathPrefix
+                    value: "{{ .Values.somePath }}"
+    asserts:
+      - matchRegexRaw:
+          pattern: "in your browser:\n- https://app.example.com/api\n- https://app.example.com/ui\n- https://other.example.com/ui\n"
+
+  - it: should list ingresses and routes together
+    template: NOTES.txt
+    set:
+      service: *service
+      ingress:
+        my-ingress:
+          enabled: true
+          primary: true
+          hosts:
+            - host: ingress.example.com
+              paths:
+                - path: /
+                  pathType: Prefix
+                - path: /admin
+                  pathType: Prefix
+          integrations:
+            traefik:
+              enabled: false
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          gateway: external
+          hostnames:
+            - route.example.com
+    asserts:
+      - matchRegexRaw:
+          pattern: "in your browser:\n- https://ingress.example.com\n- https://ingress.example.com/admin\n- https://route.example.com\n"
+
+  - it: should skip redirect rules and regular expressions, and use http for an http listener
+    template: NOTES.txt
+    set:
+      service: *service
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          parentRefs:
+            - group: gateway.networking.k8s.io
+              kind: Gateway
+              name: my-gateway
+              namespace: my-namespace
+              sectionName: http
+          hostnames:
+            - app.example.com
+          rules:
+            - filters:
+                - type: RequestRedirect
+                  requestRedirect:
+                    scheme: https
+                    statusCode: 301
+            - matches:
+                - path:
+                    type: RegularExpression
+                    value: /regex.*
+            - matches:
+                - path:
+                    type: PathPrefix
+                    value: /kept
+    asserts:
+      - matchRegexRaw:
+          pattern: "in your browser:\n- http://app.example.com/kept\n"
+
+  - it: should not create links for routes that can't be opened
+    template: NOTES.txt
+    set:
+      service: *service
+      route:
+        my-tcp:
+          enabled: true
+          primary: true
+          kind: TCPRoute
+          gateway: external
+        my-tls:
+          enabled: true
+          kind: TLSRoute
+          gateway: external
+          hostnames:
+            - tls.example.com
+        my-wildcard:
+          enabled: true
+          gateway: external
+          hostnames:
+            - "*.example.com"
+    asserts:
+      - notMatchRegexRaw:
+          pattern: "Connecting externally"
+      - matchRegexRaw:
+          pattern: "of their gateway:\n- TCPRoute `my-tcp`\n- TLSRoute `my-tls`: tls.example.com\n- HTTPRoute `my-wildcard`: \\*.example.com\n"

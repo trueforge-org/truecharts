@@ -40,6 +40,114 @@
 {{- end -}}
 
 {{/*
+Display the external URLs of all enabled ingresses and routes
+*/}}
+{{- define "tc.v1.common.lib.chart.external" -}}
+  {{- $rootCtx := . -}}
+  {{- $urls := list -}}
+  {{- $others := list -}}
+
+  {{- range $name, $ingress := ($rootCtx.Values.ingress | default dict) -}}
+    {{- if not (kindIs "map" $ingress) -}}{{- continue -}}{{- end -}}
+    {{- $enabled := include "tc.v1.common.lib.util.enabled" (dict "rootCtx" $rootCtx "objectData" $ingress "name" $name "caller" "Ingress" "key" "ingress") -}}
+    {{- if ne $enabled "true" -}}{{- continue -}}{{- end -}}
+
+    {{- $context := include "tc.v1.common.lib.util.chartcontext.data" (dict "rootCtx" $rootCtx "objectData" (dict "override" dict "targetSelector" (dict "ingress" $name) "path" "")) | fromYaml -}}
+    {{- range $host := $ingress.hosts -}}
+      {{- if not $host.host -}}{{- continue -}}{{- end -}}
+      {{- range $path := ($host.paths | default (list (dict "path" "/"))) -}}
+        {{- $urls = mustAppend $urls (include "tc.v1.common.lib.chart.external.url" (dict "protocol" $context.appProtocol "host" (tpl $host.host $rootCtx) "port" $context.appPort "path" (tpl ($path.path | default "/") $rootCtx))) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- range $name, $route := ($rootCtx.Values.route | default dict) -}}
+    {{- if ne (include "tc.v1.common.lib.gateway.enabled" (dict "rootCtx" $rootCtx "objectData" $route "name" $name "key" "route" "caller" "Route")) "true" -}}
+      {{- continue -}}
+    {{- end -}}
+
+    {{- $kind := $route.kind | default "HTTPRoute" -}}
+    {{- $hosts := list -}}
+    {{- range $host := $route.hostnames -}}
+      {{- $hosts = mustAppend $hosts (tpl $host $rootCtx) -}}
+    {{- end -}}
+    {{- $openable := list -}}
+    {{- range $host := $hosts -}}
+      {{- if not (hasPrefix "*" $host) -}}
+        {{- $openable = mustAppend $openable $host -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{/* Only a HTTPRoute with a full hostname can be opened in a browser */}}
+    {{- if or (ne $kind "HTTPRoute") (not $openable) -}}
+      {{- $other := printf "%s `%s`" $kind $name -}}
+      {{- with $hosts -}}
+        {{- $other = printf "%s: %s" $other (join ", " .) -}}
+      {{- end -}}
+      {{- $others = mustAppend $others $other -}}
+      {{- continue -}}
+    {{- end -}}
+
+    {{- $endpoint := include "tc.v1.common.lib.route.endpoint" (dict "rootCtx" $rootCtx "objectData" $route) | fromYaml -}}
+    {{- range $path := (include "tc.v1.common.lib.chart.external.routePaths" (dict "rootCtx" $rootCtx "objectData" $route) | fromYaml).paths -}}
+      {{- range $host := $openable -}}
+        {{- $urls = mustAppend $urls (include "tc.v1.common.lib.chart.external.url" (dict "protocol" $endpoint.protocol "host" $host "port" $endpoint.port "path" $path)) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- if and (not $urls) (not $others) -}}
+    {{- $urls = list $rootCtx.Values.chartContext.appUrl -}}
+  {{- end -}}
+
+  {{- with $urls }}
+## Connecting externally
+You can use this Chart by opening the following links in your browser:
+    {{- range $url := (. | uniq) }}
+- {{ $url }}
+    {{- end }}
+  {{- end -}}
+  {{- with $others }}
+
+## Other routes
+These routes are reached through the address of their gateway:
+    {{- range $other := . }}
+- {{ $other }}
+    {{- end }}
+  {{- end -}}
+{{- end -}}
+
+{{/* Standard ports are left out, as is the path if it is the root */}}
+{{- define "tc.v1.common.lib.chart.external.url" -}}
+  {{- $url := printf "%s://%s" .protocol .host -}}
+  {{- if not (mustHas (.port | toString) (list "80" "443")) -}}
+    {{- $url = printf "%s:%s" $url (.port | toString) -}}
+  {{- end -}}
+  {{- if ne .path "/" -}}
+    {{- $url = printf "%s%s" $url .path -}}
+  {{- end -}}
+  {{- $url -}}
+{{- end -}}
+
+{{/* The first path of each rule that forwards traffic. Rules that only redirect, and regular expressions, can't be opened */}}
+{{- define "tc.v1.common.lib.chart.external.routePaths" -}}
+  {{- $rootCtx := .rootCtx -}}
+  {{- $paths := list -}}
+  {{- $rules := .objectData.rules | default (list dict) -}}
+  {{- range $rule := $rules -}}
+    {{- if and $rule.filters (not $rule.backendRefs) -}}{{- continue -}}{{- end -}}
+    {{- $path := dict "type" "PathPrefix" "value" "/" -}}
+    {{- if and $rule.matches (first $rule.matches).path -}}
+      {{- $path = mustMerge (dict) (first $rule.matches).path $path -}}
+    {{- end -}}
+    {{- if ne $path.type "RegularExpression" -}}
+      {{- $paths = mustAppend $paths (tpl $path.value $rootCtx) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- dict "paths" $paths | toYaml -}}
+{{- end -}}
+
+{{/*
 Display connection information for enabled dependencies and addons
 */}}
 {{- define "tc.v1.common.lib.chart.connections" -}}
