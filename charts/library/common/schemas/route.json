@@ -62,36 +62,21 @@
             "name": {
               "type": [
                 "null",
-                "string",
-                "number",
-                "integer",
-                "boolean",
-                "object",
-                "array"
+                "string"
               ],
               "description": "Configuration for `route.main.parentRefs.$item.name`."
             },
             "namespace": {
               "type": [
                 "null",
-                "string",
-                "number",
-                "integer",
-                "boolean",
-                "object",
-                "array"
+                "string"
               ],
               "description": "Namespace of the parent. Defaults to the namespace of the route."
             },
             "sectionName": {
               "type": [
                 "null",
-                "string",
-                "number",
-                "integer",
-                "boolean",
-                "object",
-                "array"
+                "string"
               ],
               "description": "Attach to a single listener of the gateway. With `targetSelector` it must be a listener of that gateway."
             },
@@ -117,6 +102,9 @@
       },
       "hostnames": {
         "type": "array",
+        "items": {
+          "type": "string"
+        },
         "description": "Host addresses, supports Helm `tpl`. Required for `TLSRoute`, not supported by `TCPRoute` and `UDPRoute`.",
         "default": []
       },
@@ -141,36 +129,21 @@
                   "name": {
                     "type": [
                       "null",
-                      "string",
-                      "number",
-                      "integer",
-                      "boolean",
-                      "object",
-                      "array"
+                      "string"
                     ],
                     "description": "Name of the object, without any expanding. Cannot be used with `targetSelector`."
                   },
                   "namespace": {
                     "type": [
                       "null",
-                      "string",
-                      "number",
-                      "integer",
-                      "boolean",
-                      "object",
-                      "array"
+                      "string"
                     ],
                     "description": "Namespace of the backend. Defaults to the namespace of the route."
                   },
                   "port": {
                     "type": [
                       "null",
-                      "string",
-                      "number",
-                      "integer",
-                      "boolean",
-                      "object",
-                      "array"
+                      "integer"
                     ],
                     "description": "Port of the backend. Defaults to the primary port of the selected service."
                   },
@@ -187,6 +160,10 @@
                   },
                   "filters": {
                     "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": true
+                    },
                     "description": "Filters applied only to this backend. Only for `HTTPRoute` and `GRPCRoute`."
                   }
                 },
@@ -197,6 +174,9 @@
             },
             "matches": {
               "type": "array",
+              "items": {
+                "$ref": "route/match.json"
+              },
               "description": "Conditions for matching requests. Only for `HTTPRoute` and `GRPCRoute`."
             },
             "name": {
@@ -205,11 +185,14 @@
             },
             "filters": {
               "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": true
+              },
               "description": "Filters applied to requests matching this rule. Only for `HTTPRoute` and `GRPCRoute`. A rule with only filters needs no `backendRefs`, eg a redirect."
             },
             "timeouts": {
-              "type": "object",
-              "additionalProperties": true,
+              "$ref": "route/timeouts.json",
               "description": "`request` and `backendRequest` timeouts. Only for `HTTPRoute`."
             },
             "retry": {
