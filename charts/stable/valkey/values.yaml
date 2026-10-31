@@ -128,10 +128,13 @@ service:
       main:
         port: 6379
         targetPort: 6379
-persistence:
+volumeClaimTemplates:
   data:
     enabled: true
+    accessModes:
+      - ReadWriteOnce
     mountPath: "/bitnami/valkey"
+persistence:
   valkey-health:
     enabled: true
     type: configmap

@@ -127,10 +127,13 @@ service:
       main:
         port: 6379
         targetPort: 6379
-persistence:
+volumeClaimTemplates:
   data:
     enabled: true
+    accessModes:
+      - ReadWriteOnce
     mountPath: "/bitnami/redis"
+persistence:
   redis-health:
     enabled: true
     type: configmap
