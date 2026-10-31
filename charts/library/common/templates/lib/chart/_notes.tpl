@@ -40,6 +40,207 @@
 {{- end -}}
 
 {{/*
+Display the external URLs of all enabled ingresses, routes and exposed services
+*/}}
+{{- define "tc.v1.common.lib.chart.externalUrls" -}}
+  {{- $rootCtx := . -}}
+  {{- $urls := list -}}
+  {{- $others := list -}}
+
+  {{- range $name, $ingress := ($rootCtx.Values.ingress | default dict) -}}
+    {{- if not (kindIs "map" $ingress) -}}{{- continue -}}{{- end -}}
+    {{- $enabled := include "tc.v1.common.lib.util.enabled" (dict "rootCtx" $rootCtx "objectData" $ingress "name" $name "caller" "Ingress" "key" "ingress") -}}
+    {{- if ne $enabled "true" -}}{{- continue -}}{{- end -}}
+
+    {{- $context := include "tc.v1.common.lib.util.chartcontext.data" (dict "rootCtx" $rootCtx "objectData" (dict "override" dict "targetSelector" (dict "ingress" $name) "path" "")) | fromYaml -}}
+    {{- range $host := $ingress.hosts -}}
+      {{- if not $host.host -}}{{- continue -}}{{- end -}}
+      {{- range $path := ($host.paths | default (list (dict "path" "/"))) -}}
+        {{- $urls = mustAppend $urls (include "tc.v1.common.lib.chart.externalUrls.url" (dict "protocol" $context.appProtocol "host" (tpl $host.host $rootCtx) "port" $context.appPort "path" (tpl ($path.path | default "/") $rootCtx))) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- range $name, $route := ($rootCtx.Values.route | default dict) -}}
+    {{- if ne (include "tc.v1.common.lib.gateway.enabled" (dict "rootCtx" $rootCtx "objectData" $route "name" $name "key" "route" "caller" "Route")) "true" -}}
+      {{- continue -}}
+    {{- end -}}
+
+    {{- $kind := $route.kind | default "HTTPRoute" -}}
+    {{- $hosts := list -}}
+    {{- range $host := $route.hostnames -}}
+      {{- $hosts = mustAppend $hosts (tpl $host $rootCtx) -}}
+    {{- end -}}
+    {{- $openable := list -}}
+    {{- range $host := $hosts -}}
+      {{- if not (hasPrefix "*" $host) -}}
+        {{- $openable = mustAppend $openable $host -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{/* Only a HTTPRoute with a full hostname can be opened in a browser */}}
+    {{- if or (ne $kind "HTTPRoute") (not $openable) -}}
+      {{- $other := printf "%s `%s`" $kind $name -}}
+      {{- with $hosts -}}
+        {{- $other = printf "%s: %s" $other (join ", " .) -}}
+      {{- end -}}
+      {{- $others = mustAppend $others $other -}}
+      {{- continue -}}
+    {{- end -}}
+
+    {{- $endpoint := include "tc.v1.common.lib.route.endpoint" (dict "rootCtx" $rootCtx "objectData" $route) | fromYaml -}}
+    {{- range $path := (include "tc.v1.common.lib.chart.externalUrls.routePaths" (dict "rootCtx" $rootCtx "objectData" $route) | fromYaml).paths -}}
+      {{- range $host := $openable -}}
+        {{- $urls = mustAppend $urls (include "tc.v1.common.lib.chart.externalUrls.url" (dict "protocol" $endpoint.protocol "host" $host "port" $endpoint.port "path" $path)) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $exposed := (include "tc.v1.common.lib.chart.externalUrls.services" $rootCtx | fromYaml).exposed -}}
+
+  {{- if and (not $urls) (not $others) (not $exposed) -}}
+    {{- $urls = list $rootCtx.Values.chartContext.appUrl -}}
+  {{- end -}}
+
+  {{- with $urls }}
+## Connecting externally
+You can use this Chart by opening the following links in your browser:
+    {{- range $url := (. | uniq) }}
+- {{ $url }}
+    {{- end }}
+  {{- end -}}
+  {{- with $others }}
+
+## Other routes
+These routes are reached through the address of their gateway:
+    {{- range $other := . }}
+- {{ $other }}
+    {{- end }}
+  {{- end -}}
+  {{- with $exposed }}
+
+## Exposed services
+These services can be reached from outside the cluster:
+    {{- range $service := . }}
+- {{ $service }}
+    {{- end }}
+  {{- end -}}
+{{- end -}}
+
+{{/* LoadBalancer, NodePort, hostPort and externalIPs. Follows the service class, which forces ClusterIP with hostNetwork, hostPort or stopAll */}}
+{{- define "tc.v1.common.lib.chart.externalUrls.services" -}}
+  {{- $rootCtx := . -}}
+  {{- $exposed := list -}}
+
+  {{- if not (include "tc.v1.common.lib.util.stopAll" $rootCtx) -}}
+    {{- range $name, $service := ($rootCtx.Values.service | default dict) -}}
+      {{- if not (kindIs "map" $service) -}}{{- continue -}}{{- end -}}
+      {{- $enabled := include "tc.v1.common.lib.util.enabled" (dict "rootCtx" $rootCtx "objectData" $service "name" $name "caller" "Service" "key" "service") -}}
+      {{- if ne $enabled "true" -}}{{- continue -}}{{- end -}}
+
+      {{- $type := $service.type | default $rootCtx.Values.global.fallbackDefaults.serviceType -}}
+      {{- if mustHas $type (list "ExternalName" "ExternalIP") -}}{{- continue -}}{{- end -}}
+
+      {{- $objectData := mustDeepCopy $service -}}
+      {{- $_ := set $objectData "shortName" $name -}}
+      {{- $podValues := fromJson (include "tc.v1.common.lib.helpers.getSelectedPodValues" (dict "rootCtx" $rootCtx "objectData" $objectData "caller" "Service")) -}}
+      {{- if $podValues -}}
+        {{- if eq (include "tc.v1.common.lib.pod.hostNetwork" (dict "rootCtx" $rootCtx "objectData" $podValues) | toString) "true" -}}
+          {{- continue -}}
+        {{- end -}}
+      {{- end -}}
+
+      {{- $hasHostPort := false -}}
+      {{- range $port := $service.ports -}}
+        {{- if and $port.enabled $port.hostPort -}}
+          {{- $hasHostPort = true -}}
+        {{- end -}}
+      {{- end -}}
+
+      {{- $addresses := list -}}
+      {{- if and (eq $type "LoadBalancer") (not $hasHostPort) -}}
+        {{- range $ip := (ternary (list $service.loadBalancerIP) ($service.loadBalancerIPs | default list) (not (empty $service.loadBalancerIP))) -}}
+          {{- $addresses = mustAppend $addresses (tpl $ip $rootCtx) -}}
+        {{- end -}}
+        {{- if not $addresses -}}
+          {{- $addresses = list "<load-balancer-ip>" -}}
+        {{- end -}}
+      {{- end -}}
+
+      {{- range $ip := $service.externalIPs -}}
+        {{- $addresses = mustAppend $addresses (tpl $ip $rootCtx) -}}
+      {{- end -}}
+
+      {{- range $portName, $port := $service.ports -}}
+        {{- $portEnabled := include "tc.v1.common.lib.util.enabled" (dict "rootCtx" $rootCtx "objectData" $port "name" $portName "caller" "Service" "key" "port") -}}
+        {{- if ne $portEnabled "true" -}}{{- continue -}}{{- end -}}
+
+        {{- $protocol := tpl ($port.protocol | default $rootCtx.Values.global.fallbackDefaults.serviceProtocol) $rootCtx -}}
+        {{- $endpoints := list -}}
+        {{- $portNumber := tpl ($port.port | toString) $rootCtx -}}
+        {{- range $address := $addresses -}}
+          {{- $endpoints = mustAppend $endpoints (dict "host" $address "port" $portNumber) -}}
+        {{- end -}}
+
+        {{- $label := $type -}}
+        {{- if $hasHostPort -}}
+          {{- $label = "hostPort" -}}
+          {{- if $port.hostPort -}}
+            {{- $endpoints = mustAppend $endpoints (dict "host" "<node-ip>" "port" (tpl ($port.hostPort | toString) $rootCtx)) -}}
+          {{- end -}}
+        {{- else if and (eq $type "NodePort") $port.nodePort -}}
+          {{- $endpoints = mustAppend $endpoints (dict "host" "<node-ip>" "port" (tpl ($port.nodePort | toString) $rootCtx)) -}}
+        {{- end -}}
+
+        {{- range $endpoint := $endpoints -}}
+          {{- $host := $endpoint.host -}}
+          {{- if contains ":" $host -}}
+            {{- $host = printf "[%s]" $host -}}
+          {{- end -}}
+          {{- $address := printf "%s:%s/%s" $host $endpoint.port ($protocol | upper) -}}
+          {{- if mustHas $protocol (list "http" "https") -}}
+            {{- $address = include "tc.v1.common.lib.chart.externalUrls.url" (dict "protocol" $protocol "host" $host "port" $endpoint.port "path" "/") -}}
+          {{- end -}}
+          {{- $exposed = mustAppend $exposed (printf "`%s` port `%s` (%s): %s" $name $portName $label $address) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- dict "exposed" $exposed | toYaml -}}
+{{- end -}}
+
+{{/* Standard ports are left out, as is the path if it is the root */}}
+{{- define "tc.v1.common.lib.chart.externalUrls.url" -}}
+  {{- $url := printf "%s://%s" .protocol .host -}}
+  {{- if not (mustHas (.port | toString) (list "80" "443")) -}}
+    {{- $url = printf "%s:%s" $url (.port | toString) -}}
+  {{- end -}}
+  {{- if ne .path "/" -}}
+    {{- $url = printf "%s%s" $url .path -}}
+  {{- end -}}
+  {{- $url -}}
+{{- end -}}
+
+{{/* The first path of each rule that forwards traffic. Rules that only redirect, and regular expressions, can't be opened */}}
+{{- define "tc.v1.common.lib.chart.externalUrls.routePaths" -}}
+  {{- $rootCtx := .rootCtx -}}
+  {{- $paths := list -}}
+  {{- $rules := .objectData.rules | default (list dict) -}}
+  {{- range $rule := $rules -}}
+    {{- if and $rule.filters (not $rule.backendRefs) -}}{{- continue -}}{{- end -}}
+    {{- $path := dict "type" "PathPrefix" "value" "/" -}}
+    {{- if and $rule.matches (first $rule.matches).path -}}
+      {{- $path = mustMerge (dict) (first $rule.matches).path $path -}}
+    {{- end -}}
+    {{- if ne $path.type "RegularExpression" -}}
+      {{- $paths = mustAppend $paths (tpl $path.value $rootCtx) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- dict "paths" $paths | toYaml -}}
+{{- end -}}
+
+{{/*
 Display connection information for enabled dependencies and addons
 */}}
 {{- define "tc.v1.common.lib.chart.connections" -}}
