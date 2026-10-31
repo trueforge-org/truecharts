@@ -24,7 +24,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           backups:
             enabled: true
             retentionPolicy: 10d
@@ -56,7 +55,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           backups:
             enabled: true
             target: primary
@@ -82,7 +80,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           backups:
             enabled: true
             credentials: test
@@ -103,7 +100,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           backups:
             enabled: true
             credentials: test
@@ -123,7 +119,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
     asserts:
       - documentSelector: *cluster
         notExists:
@@ -142,7 +137,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           mode: recovery
           recovery:
             method: object_store
@@ -182,7 +176,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           mode: recovery
           recovery:
             method: object_store
@@ -215,7 +208,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           mode: recovery
           recovery:
             method: object_store
@@ -247,40 +239,6 @@ tests:
         notExists:
           path: spec.backup
 
-  - it: should keep using in-tree barman by default
-    set:
-      credentials:
-        test: *test
-      cnpg:
-        my-pg:
-          enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          mode: recovery
-          recovery:
-            method: object_store
-            credentials: test
-          backups:
-            enabled: true
-            credentials: test
-            revision: "1"
-    asserts:
-      - documentSelector: *cluster
-        equal:
-          path: spec.backup.barmanObjectStore.serverName
-          value: test-release-name-common-test-cnpg-my-pg-r1
-      - documentSelector: *cluster
-        equal:
-          path: spec.externalClusters[0].barmanObjectStore.serverName
-          value: test-release-name-common-test-cnpg-my-pg
-      - documentSelector: *cluster
-        notExists:
-          path: spec.plugins
-      - documentSelector: *cluster
-        notExists:
-          path: spec.externalClusters[0].plugin
-
   - it: should allow a false skipEmptyWalArchiveCheck to override the default
     set:
       cnpg:
@@ -295,3 +253,34 @@ tests:
       - documentSelector: *cluster
         notExists:
           path: metadata.annotations["cnpg.io/skipEmptyWalArchiveCheck"]
+
+  - it: should set the recovery target for point in time recovery
+    set:
+      credentials:
+        test:
+          type: s3
+          encrKey: some-encr-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+          bucket: some-bucket
+          url: http://some-url
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          mode: recovery
+          recovery:
+            method: object_store
+            credentials: test
+            pitrTarget:
+              time: "2026-10-31T12:00:00Z"
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: spec.bootstrap.recovery.recoveryTarget.targetTime
+          value: "2026-10-31T12:00:00Z"
+

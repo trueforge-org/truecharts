@@ -90,14 +90,9 @@
       {{- fail "CNPG Recovery - Expected a non-empty [recovery] key" -}}
     {{- end -}}
 
-    {{- $validMethods := (list "backup" "object_store") -}}
+    {{- $validMethods := (list "object_store") -}}
     {{- if not (mustHas $objectData.recovery.method $validMethods) -}}
       {{- fail (printf "CNPG Recovery - Expected [recovery.method] to be one of [%s], but got [%s]" (join ", " $validMethods) $objectData.recovery.method) -}}
-    {{- end -}}
-    {{- if eq $objectData.recovery.method "backup" -}}
-      {{- if not $objectData.recovery.backupName -}}
-        {{- fail "CNPG Recovery - Expected a non-empty [recovery.backupName] key" -}}
-      {{- end -}}
     {{- end -}}
   {{- end -}}
 
@@ -137,8 +132,14 @@
         {{- end -}}
       {{- end -}}
 
-      {{/* Only recovering from an object store reads an archive, and missing credentials are reported by the secret spawner */}}
-      {{- if and (eq $objectData.mode "recovery") (eq $objectData.recovery.method "object_store") $objectData.backups.credentials $objectData.recovery.credentials -}}
+      {{- $skipEmptyWalArchiveCheck := $rootCtx.Values.global.fallbackDefaults.cnpg.skipEmptyWalArchiveCheck -}}
+      {{- if and $objectData.cluster (kindIs "bool" $objectData.cluster.skipEmptyWalArchiveCheck) -}}
+        {{- $skipEmptyWalArchiveCheck = $objectData.cluster.skipEmptyWalArchiveCheck -}}
+      {{- end -}}
+
+      {{/* With the check on, CloudNativePG would never start archiving to the archive it recovered from, so fail early.
+      Only recovering from an object store reads an archive, and missing credentials are reported by the secret spawner */}}
+      {{- if and (not $skipEmptyWalArchiveCheck) (eq $objectData.mode "recovery") (eq $objectData.recovery.method "object_store") $objectData.backups.credentials $objectData.recovery.credentials -}}
         {{- $backupStore := include "tc.v1.common.lib.cnpg.cluster.barmanObjectStoreConfig.getData" (dict "rootCtx" $rootCtx "objectData" $objectData "type" "backup") | fromYaml -}}
         {{- $recoveryStore := include "tc.v1.common.lib.cnpg.cluster.barmanObjectStoreConfig.getData" (dict "rootCtx" $rootCtx "objectData" $objectData "type" "recovery") | fromYaml -}}
 
@@ -154,29 +155,12 @@
     {{- end -}}
   {{- end -}}
 
-  {{- $validBarmanModes := (list "inTree" "plugin") -}}
-  {{- if not (mustHas $objectData.barmanMode $validBarmanModes) -}}
-    {{- fail (printf "CNPG - Expected [barmanMode] to be one of [%s], but got [%s]" (join ", " $validBarmanModes) $objectData.barmanMode) -}}
-  {{- end -}}
-
-  {{- if eq $objectData.barmanMode "plugin" -}}
-    {{- $recoveryMethod := "" -}}
-    {{- if eq $objectData.mode "recovery" -}}
-      {{- $recoveryMethod = $objectData.recovery.method -}}
-    {{- end -}}
-
-    {{/* The plugin can only restore through an external cluster, it does not act on a reference to a Backup object */}}
-    {{- if eq $recoveryMethod "backup" -}}
-      {{- fail (printf "CNPG Recovery - [recovery.method] cannot be [backup] when [barmanMode] is [plugin], use [object_store] instead, for CNPG cluster [%s]" $objectData.clusterName) -}}
-    {{- end -}}
-
-    {{/* Clusters without backups or object store recovery do not need the plugin */}}
-    {{- $backups := $objectData.backups | default dict -}}
-    {{- if or $backups.enabled (eq $recoveryMethod "object_store") -}}
-      {{- $pluginAPI := include "tc.v1.common.lib.cnpg.barman.pluginAPI" . -}}
-      {{- if not ($rootCtx.Capabilities.APIVersions.Has $pluginAPI) -}}
-        {{- fail (printf "CNPG - [barmanMode] is set to [plugin], but API [%s] was not found. Install the Barman Cloud plugin in the namespace of the CloudNativePG operator, or set [barmanMode] to [inTree], for CNPG cluster [%s]. When rendering without access to a cluster, pass it with [--api-versions]" $pluginAPI $objectData.clusterName) -}}
-      {{- end -}}
+  {{/* Clusters without backups or object store recovery do not need the plugin */}}
+  {{- $backups := $objectData.backups | default dict -}}
+  {{- if or $backups.enabled (eq $objectData.mode "recovery") -}}
+    {{- $pluginAPI := include "tc.v1.common.lib.cnpg.barman.pluginAPI" . -}}
+    {{- if not ($rootCtx.Capabilities.APIVersions.Has $pluginAPI) -}}
+      {{- fail (printf "CNPG - Backups and recovery need the Barman Cloud plugin, but API [%s] was not found, for CNPG cluster [%s]. Install the plugin in the namespace of the CloudNativePG operator. When rendering without access to a cluster, pass [--api-versions %s]" $pluginAPI $objectData.clusterName $pluginAPI) -}}
     {{- end -}}
   {{- end -}}
 

@@ -273,10 +273,6 @@ spec:
     {{- include "tc.v1.common.lib.cnpg.cluster.bootstrap.recovery.externalCluster" (dict "rootCtx" $rootCtx "objectData" $objectData) | nindent 2 -}}
   {{- end -}}
   {{- if $objectData.backups.enabled }}
-    {{- if eq $objectData.barmanMode "plugin" }}
-      {{- include "tc.v1.common.lib.cnpg.cluster.backup.plugin" (dict "rootCtx" $rootCtx "objectData" $objectData) | trim | nindent 2 -}}
-    {{- else }}
-      {{- include "tc.v1.common.lib.cnpg.cluster.backup" (dict "rootCtx" $rootCtx "objectData" $objectData) | nindent 2 -}}
-    {{- end -}}
+    {{- include "tc.v1.common.lib.cnpg.cluster.backup" (dict "rootCtx" $rootCtx "objectData" $objectData) | trim | nindent 2 -}}
   {{- end -}}
 {{- end -}}

@@ -4,6 +4,9 @@ templates:
 release:
   name: test-release-name
   namespace: test-release-namespace
+capabilities:
+  apiVersions:
+    - barmancloud.cnpg.io/v1/ObjectStore
 tests:
   - it: should generate correct name
     set:
@@ -43,23 +46,35 @@ tests:
             manualBackups:
               - name: other
     asserts:
-      - documentIndex: &backupDoc 0
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-my-pg-backup-today
         isKind:
           of: Backup
-      - documentIndex: *backupDoc
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-my-pg-backup-today
         isAPIVersion:
           of: postgresql.cnpg.io/v1
-      - documentIndex: *backupDoc
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-my-pg-backup-today
         equal:
           path: metadata.name
           value: test-release-name-common-test-cnpg-my-pg-backup-today
-      - documentIndex: &otherbackupDoc 2
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-my-pg2-backup-other
         isKind:
           of: Backup
-      - documentIndex: *otherbackupDoc
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-my-pg2-backup-other
         isAPIVersion:
           of: postgresql.cnpg.io/v1
-      - documentIndex: *otherbackupDoc
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-my-pg2-backup-other
         equal:
           path: metadata.name
           value: test-release-name-common-test-cnpg-my-pg2-backup-other

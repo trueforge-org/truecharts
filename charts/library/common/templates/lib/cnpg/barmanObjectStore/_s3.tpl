@@ -11,7 +11,6 @@
       "rootCtx" $rootCtx "objectData" $objectData "type" $type) | fromYaml
   -}}
 
-  {{- $serverName := $calcData.serverName -}}
   {{- $destinationPath := $calcData.destinationPath -}}
   {{- $endpointURL := $calcData.creds.url -}}
   {{- $customCA := $calcData.creds.customCA -}}
@@ -48,10 +47,6 @@ endpointCA:
   key: {{ $endpointCA.key }}
 {{- end }}
 destinationPath: {{ $destinationPath }}
-{{- /* The ObjectStore CRD rejects serverName. With the plugin it is a parameter on the Cluster */}}
-{{- if ne $objectData.barmanMode "plugin" }}
-serverName: {{ $serverName }}
-{{- end }}
 s3Credentials:
   {{- if $region }}
   region:

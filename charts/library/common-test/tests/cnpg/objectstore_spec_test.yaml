@@ -24,7 +24,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           backups:
             enabled: true
             target: primary
@@ -74,7 +73,7 @@ tests:
             ACCESS_KEY_ID: some-access-key
             ACCESS_SECRET_KEY: some-secret-key
 
-  - it: should use the same default destination path as in-tree (s3)
+  - it: should use the default destination path (s3)
     set:
       credentials:
         test:
@@ -86,7 +85,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           backups:
             enabled: true
             credentials: test
@@ -106,7 +104,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           backups:
             enabled: true
             credentials: test
@@ -127,7 +124,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           backups:
             enabled: true
             credentials: test
@@ -148,7 +144,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           backups:
             enabled: true
             credentials: test
@@ -175,7 +170,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           backups:
             enabled: true
             credentials: test
@@ -206,7 +200,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           backups:
             enabled: true
             credentials: test
@@ -228,7 +221,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           backups:
             enabled: true
             credentials: test
@@ -259,7 +251,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           backups:
             enabled: true
             credentials: test
@@ -285,7 +276,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           backups:
             enabled: true
             credentials: test
@@ -316,7 +306,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           labels:
             cnpg-label: cnpg-value
           annotations:
@@ -357,7 +346,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           mode: recovery
           recovery:
             method: object_store
@@ -403,7 +391,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
           mode: recovery
           recovery:
             method: object_store
@@ -424,78 +411,6 @@ tests:
           path: spec.configuration.destinationPath
           value: s3://to-bucket/test-release-name/cnpg
 
-  - it: should use the mode from fallbackDefaults
-    set:
-      global:
-        fallbackDefaults:
-          cnpg:
-            barmanMode: plugin
-      credentials:
-        test: *test
-      cnpg:
-        my-pg:
-          enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
-    asserts:
-      - containsDocument:
-          kind: ObjectStore
-          apiVersion: barmancloud.cnpg.io/v1
-          name: test-release-name-common-test-cnpg-my-pg-backup
-          any: true
-
-  - it: should prefer the mode of the cluster over fallbackDefaults
-    set:
-      global:
-        fallbackDefaults:
-          cnpg:
-            barmanMode: plugin
-      credentials:
-        test: *test
-      cnpg:
-        my-pg:
-          enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          barmanMode: inTree
-          backups:
-            enabled: true
-            credentials: test
-    asserts:
-      - documentSelector: &cluster
-          path: kind
-          value: Cluster
-        exists:
-          path: spec.backup.barmanObjectStore
-      - documentSelector: *cluster
-        notExists:
-          path: spec.plugins
-
-  - it: should not generate object stores by default
-    set:
-      credentials:
-        test: *test
-      cnpg:
-        my-pg:
-          enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
-    asserts:
-      - containsDocument:
-          kind: ObjectStore
-          apiVersion: barmancloud.cnpg.io/v1
-          any: true
-        not: true
-
   - it: should not generate object stores when backups are disabled
     set:
       cnpg:
@@ -504,7 +419,6 @@ tests:
           user: test-user
           database: test-db
           password: test-password
-          barmanMode: plugin
     asserts:
       - containsDocument:
           kind: ObjectStore

@@ -4,6 +4,9 @@ templates:
 release:
   name: test-release-name
   namespace: test-release-namespace
+capabilities:
+  apiVersions:
+    - barmancloud.cnpg.io/v1/ObjectStore
 tests:
   - it: should pass with hibernate
     set:

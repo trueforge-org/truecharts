@@ -1,4 +1,4 @@
-{{/* Base backup and WAL settings, shared by in-tree barmanObjectStore and the plugin's ObjectStore */}}
+{{/* Base backup and WAL settings of the ObjectStore */}}
 {{- define "tc.v1.common.lib.cnpg.cluster.barmanObjectStoreConfig.dataWal" -}}
   {{- $objectData := .objectData -}}
 
