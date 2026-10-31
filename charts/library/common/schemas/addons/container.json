@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties"
+    }
+  ],
+  "properties": {
+    "targetSelector": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Workloads to which this container is attached."
+    }
+  },
+  "additionalProperties": true,
+  "description": "Container configuration for an addon."
+}

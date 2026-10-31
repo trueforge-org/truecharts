@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "container": {
+      "$ref": "workload/podSpec/containers/securityContext.json",
+      "description": "Default security context for all containers."
+    },
+    "pod": {
+      "$ref": "workload/podSpec/securityContext.json",
+      "description": "Default security context for all pods."
+    }
+  },
+  "additionalProperties": true,
+  "description": "Default security contexts for containers and pods."
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "protocol": {
+      "type": "string",
+      "enum": [
+        "TCP",
+        "UDP",
+        "SCTP"
+      ]
+    },
+    "port": {
+      "type": [
+        "integer",
+        "string",
+        "null"
+      ],
+      "description": "Port number or named port. Omit to match all ports."
+    },
+    "endPort": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "End of an inclusive port range."
+    }
+  },
+  "additionalProperties": true,
+  "description": "Port or port range for a NetworkPolicy rule."
+}

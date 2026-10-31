@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": [
+        "boolean",
+        "string"
+      ]
+    },
+    "targetSelector": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "container": {
+      "allOf": [
+        {
+          "$ref": "container.json"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "env": {
+              "$ref": "gluetun/container/env.json"
+            }
+          }
+        }
+      ]
+    },
+    "secret": {
+      "oneOf": [
+        {
+          "$ref": "../secret.json#/additionalProperties"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "addon.json"
+    }
+  ],
+  "additionalProperties": true,
+  "description": "Configuration for the Gluetun addon."
+}

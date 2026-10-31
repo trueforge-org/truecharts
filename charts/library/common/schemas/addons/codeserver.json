@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": [
+        "boolean",
+        "string"
+      ]
+    },
+    "container": {
+      "allOf": [
+        {
+          "$ref": "container.json"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "env": {
+              "$ref": "codeserver/container/env.json"
+            }
+          }
+        }
+      ]
+    },
+    "service": {
+      "$ref": "../service/service.json#/additionalProperties"
+    },
+    "ingress": {
+      "allOf": [
+        {
+          "$ref": "../ingress/ingress.json#/additionalProperties"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "addon.json"
+    }
+  ],
+  "additionalProperties": true,
+  "description": "Configuration for the code-server addon."
+}

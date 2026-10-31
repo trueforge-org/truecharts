@@ -69,20 +69,16 @@
             "description": "Configuration for `global.traefik.commonMiddlewares.$item`."
           },
           "description": "Settings for traefik integration",
-          "default": "[{name: tc-basic-secure-headers}]"
-        },
-        "addServiceAnnotations": {
-          "type": "boolean",
-          "properties": {},
-          "additionalProperties": true,
-          "description": "Add annotations to services for traefik",
-          "default": true
+          "default": [
+            {
+              "name": "tc-basic-secure-headers"
+            }
+          ]
         }
       },
       "additionalProperties": true,
       "description": "Settings for traefik integration",
       "default": {
-        "addServiceAnnotations": true,
         "commonMiddlewares": [
           {
             "name": "tc-basic-secure-headers"
@@ -100,15 +96,6 @@
       "type": "boolean",
       "description": "Applies different techniques to stop all objects in the chart and its dependencies",
       "default": false
-    },
-    "metallb": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
-      "description": "Settings for metallb integration",
-      "default": {
-        "addServiceAnnotations": true
-      }
     }
   },
   "additionalProperties": true,

@@ -162,6 +162,14 @@
       "additionalProperties": true,
       "description": "Configuration for `postgres16Image`."
     },
+    "postgres17Image": {
+      "$ref": "image.json",
+      "description": "Configuration for `postgres17Image`."
+    },
+    "postgres18Image": {
+      "$ref": "image.json",
+      "description": "Configuration for `postgres18Image`."
+    },
     "postgresClientImage": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
@@ -222,6 +230,14 @@
       "additionalProperties": true,
       "description": "Configuration for `postgresPostgis16Image`."
     },
+    "postgresPostgis17Image": {
+      "$ref": "image.json",
+      "description": "Configuration for `postgresPostgis17Image`."
+    },
+    "postgresPostgis18Image": {
+      "$ref": "image.json",
+      "description": "Configuration for `postgresPostgis18Image`."
+    },
     "postgresVectorchord15Image": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
@@ -262,6 +278,14 @@
       "additionalProperties": true,
       "description": "Configuration for `postgresVectorchord16Image`."
     },
+    "postgresVectorchord17Image": {
+      "$ref": "image.json",
+      "description": "Configuration for `postgresVectorchord17Image`."
+    },
+    "postgresVectorchord18Image": {
+      "$ref": "image.json",
+      "description": "Configuration for `postgresVectorchord18Image`."
+    },
     "postgresVectors15Image": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
@@ -301,6 +325,10 @@
       },
       "additionalProperties": true,
       "description": "Configuration for `postgresVectors16Image`."
+    },
+    "postgresVectors17Image": {
+      "$ref": "image.json",
+      "description": "Configuration for `postgresVectors17Image`."
     },
     "tailscaleImage": {
       "$schema": "http://json-schema.org/draft-07/schema#",

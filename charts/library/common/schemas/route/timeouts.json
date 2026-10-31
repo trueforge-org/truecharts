@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "request": {
+      "type": "string",
+      "description": "Timeout for the complete request, expressed as a duration such as `10s`."
+    },
+    "backendRequest": {
+      "type": "string",
+      "description": "Timeout for a backend request, expressed as a duration such as `5s`."
+    }
+  },
+  "additionalProperties": true,
+  "description": "Timeout configuration for an HTTP route."
+}

@@ -6,24 +6,31 @@
   ],
   "properties": {
     "seccompProfile": {
-      "type": "object",
+      "type": [
+        "object",
+        "null"
+      ],
       "properties": {
         "profile": {
-          "type": "object",
-          "properties": {
-          },
-          "additionalProperties": true,
-          "description": "Define securityContext for the container"
+          "type": "string",
+          "description": "Localhost seccomp profile path. Required when the profile type is `Localhost`."
         },
         "type": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
-          "description": "Define the seccompProfile.type for the container"
+          "type": "string",
+          "enum": [
+            "RuntimeDefault",
+            "Localhost",
+            "Unconfined"
+          ],
+          "description": "Seccomp profile type used by the container.",
+          "default": "RuntimeDefault"
         }
       },
       "additionalProperties": true,
-      "description": "Define the seccompProfile for the container"
+      "description": "Define the seccompProfile for the container.",
+      "default": {
+        "type": "RuntimeDefault"
+      }
     },
     "runAsUser": {
       "type": "integer",
@@ -65,10 +72,25 @@
             "type": "string"
           },
           "description": "Define the capabilities.drop for the container"
+        },
+        "disableS6Caps": {
+          "type": "boolean",
+          "description": "Disable automatic S6 capabilities when the container runs as root.",
+          "default": false
         }
       },
       "additionalProperties": true,
       "description": "Define the capabilities for the container If at least one capability is defined in either [`add`](/truecharts-common/container/securitycontext/#securitycontextcapabilitiesadd) or [`drop`](/truecharts-common/container/securitycontext/#securitycontextcapabilitiesdrop)"
+    },
+    "PUID": {
+      "type": "integer",
+      "description": "Default user ID used for container environment variables.",
+      "default": 568
+    },
+    "UMASK": {
+      "type": "string",
+      "description": "Default file creation mask used for container environment variables.",
+      "default": "0022"
     }
   },
   "additionalProperties": true,

@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "description": "Enable or disable the probe."
+    },
+    "type": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "exec",
+            "http",
+            "https",
+            "tcp",
+            "grpc"
+          ]
+        },
+        {
+          "type": "string",
+          "pattern": "^\\{\\{.*\\}\\}$"
+        }
+      ],
+      "description": "Probe handler type."
+    },
+    "port": {
+      "type": [
+        "integer",
+        "string"
+      ],
+      "description": "Probe port. Used by HTTP, HTTPS, TCP, and gRPC probes."
+    },
+    "path": {
+      "type": "string",
+      "description": "Request path used by HTTP and HTTPS probes."
+    },
+    "httpHeaders": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "boolean"
+        ]
+      },
+      "description": "HTTP headers sent with HTTP and HTTPS probes.",
+      "default": {}
+    },
+    "spec": {
+      "type": "object",
+      "properties": {
+        "successThreshold": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "initialDelaySeconds": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "periodSeconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "timeoutSeconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "failureThreshold": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": true,
+      "description": "Probe timing and threshold settings."
+    }
+  },
+  "additionalProperties": true,
+  "description": "Configuration for a workload probe."
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "fsGroup": {
+      "type": "integer",
+      "description": "Group ID applied to mounted volumes.",
+      "default": 568
+    },
+    "fsGroupChangePolicy": {
+      "type": "string",
+      "enum": [
+        "Always",
+        "OnRootMismatch"
+      ],
+      "description": "Policy controlling when ownership and permissions of volume contents are changed.",
+      "default": "OnRootMismatch"
+    },
+    "supplementalGroups": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "Additional group IDs applied to containers in the pod.",
+      "default": []
+    },
+    "sysctls": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "value"
+        ],
+        "additionalProperties": true
+      },
+      "description": "Kernel parameters to set in the pod's network namespace.",
+      "default": []
+    }
+  },
+  "additionalProperties": true,
+  "description": "Pod-level security context."
+}
