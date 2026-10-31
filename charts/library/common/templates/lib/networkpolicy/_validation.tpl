@@ -7,14 +7,14 @@
   {{- if $objectData.podSelector -}}
     {{- $selectionCount = add1 $selectionCount -}}
   {{- end -}}
-  {{- if $objectData.targetSelector -}}
+  {{- if or $objectData.targetSelector $objectData.targetSelectorRegex -}}
     {{- $selectionCount = add1 $selectionCount -}}
   {{- end -}}
   {{- if $objectData.targetAllPods -}}
     {{- $selectionCount = add1 $selectionCount -}}
   {{- end -}}
   {{- if gt $selectionCount 1 -}}
-    {{- fail "NetworkPolicy - Only one of [podSelector, targetSelector, targetAllPods] can be specified" -}}
+    {{- fail "NetworkPolicy - Only one of [podSelector, targetSelector/targetSelectorRegex, targetAllPods] can be specified" -}}
   {{- end -}}
 
   {{/* Validate policyTypes if specified */}}
@@ -27,9 +27,28 @@
     {{- end -}}
   {{- end -}}
 
-  {{/* Validate targetSelector is a string */}}
-  {{- if and $objectData.targetSelector (not (kindIs "string" $objectData.targetSelector)) -}}
-    {{- fail (printf "NetworkPolicy - Expected [targetSelector] to be [string], but got [%s]" (kindOf $objectData.targetSelector)) -}}
+  {{/* Validate controller target selectors */}}
+  {{- range $key := (list "targetSelector" "targetSelectorRegex") -}}
+    {{- if hasKey $objectData $key -}}
+      {{- $selectors := get $objectData $key -}}
+      {{- if kindIs "string" $selectors -}}
+        {{- if ne $selectors "" -}}
+          {{- $selectors = list $selectors -}}
+        {{- else -}}
+          {{- $selectors = list -}}
+        {{- end -}}
+      {{- else if not (kindIs "slice" $selectors) -}}
+        {{- fail (printf "NetworkPolicy - Expected [%s] to be a [string] or [list], but got [%s]" $key (kindOf $selectors)) -}}
+      {{- end -}}
+      {{- range $selectors -}}
+        {{- if not (kindIs "string" .) -}}
+          {{- fail (printf "NetworkPolicy - Expected [%s] entries to be [string], but got [%s]" $key (kindOf .)) -}}
+        {{- end -}}
+        {{- if eq . "" -}}
+          {{- fail (printf "NetworkPolicy - Expected [%s] entries to be non-empty" $key) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
   {{- end -}}
 
 {{- end -}}
