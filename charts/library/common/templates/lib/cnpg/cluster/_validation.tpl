@@ -1,4 +1,5 @@
 {{- define "tc.v1.common.lib.cnpg.cluster.validation" -}}
+  {{- $rootCtx := .rootCtx -}}
   {{- $objectData := .objectData -}}
 
   {{- $requiredKeys := (list "database" "user" "password") -}}
@@ -89,7 +90,7 @@
       {{- fail "CNPG Recovery - Expected a non-empty [recovery] key" -}}
     {{- end -}}
 
-    {{- $validMethods := (list "backup" "object_store" "pg_basebackup") -}}
+    {{- $validMethods := (list "backup" "object_store") -}}
     {{- if not (mustHas $objectData.recovery.method $validMethods) -}}
       {{- fail (printf "CNPG Recovery - Expected [recovery.method] to be one of [%s], but got [%s]" (join ", " $validMethods) $objectData.recovery.method) -}}
     {{- end -}}
@@ -112,31 +113,37 @@
     {{- end -}}
   {{- end -}}
 
+  {{/* [servername] used to be documented but never read. Do not start honoring it, as that would silently change the archive path */}}
+  {{- if and $objectData.recovery $objectData.recovery.servername -}}
+    {{- fail "CNPG Recovery - [recovery.servername] is not supported, use [recovery.serverName] instead. Note that the previous value was never applied" -}}
+  {{- end -}}
+  {{- if and $objectData.backups $objectData.backups.servername -}}
+    {{- fail "CNPG Backup - [backups.servername] is not supported, use [backups.serverName] instead. Note that the previous value was never applied" -}}
+  {{- end -}}
+
   {{- if (hasKey $objectData "backups") -}}
-    {{- if and $objectData.backups.enabled $objectData.backups.target -}}
-      {{- $validTargets := (list "primary" "prefer-standby") -}}
-      {{- if not (mustHas $objectData.backups.target $validTargets) -}}
-        {{- fail (printf "CNPG Backup - Expected [backups.target] to be one of [%s], but got [%s]" (join ", " $validTargets) $objectData.backups.target) -}}
+    {{- if $objectData.backups.enabled -}}
+      {{- with $objectData.backups.target -}}
+        {{- $validTargets := (list "primary" "prefer-standby") -}}
+        {{- if not (mustHas . $validTargets) -}}
+          {{- fail (printf "CNPG Backup - Expected [backups.target] to be one of [%s], but got [%s]" (join ", " $validTargets) .) -}}
+        {{- end -}}
       {{- end -}}
 
-      {{- $regexPolicy := "^[1-9][0-9]*[dwm]$" -}} {{/* Copied from upstream */}}
-      {{- if not (mustRegexMatch $regexPolicy $objectData.backups.retentionPolicy) -}}
-        {{- fail (printf "CNPG Backup - Expected [backups.retentionPolicy] to match regex [%s], got [%s]" $regexPolicy $objectData.backups.retentionPolicy) -}}
+      {{- with $objectData.backups.retentionPolicy -}}
+        {{- $regexPolicy := "^[1-9][0-9]*[dwm]$" -}} {{/* Copied from upstream */}}
+        {{- if not (mustRegexMatch $regexPolicy .) -}}
+          {{- fail (printf "CNPG Backup - Expected [backups.retentionPolicy] to match regex [%s], got [%s]" $regexPolicy .) -}}
+        {{- end -}}
       {{- end -}}
 
-      {{- if eq $objectData.mode "recovery" -}}
-        {{- $serverNameBackup := $objectData.backups.serverName | default $objectData.clusterName -}}
-        {{- $serverNameRecovery := $objectData.recovery.serverName | default $objectData.clusterName -}}
+      {{/* Only recovering from an object store reads an archive, and missing credentials are reported by the secret spawner */}}
+      {{- if and (eq $objectData.mode "recovery") (eq $objectData.recovery.method "object_store") $objectData.backups.credentials $objectData.recovery.credentials -}}
+        {{- $backupStore := include "tc.v1.common.lib.cnpg.cluster.barmanObjectStoreConfig.getData" (dict "rootCtx" $rootCtx "objectData" $objectData "type" "backup") | fromYaml -}}
+        {{- $recoveryStore := include "tc.v1.common.lib.cnpg.cluster.barmanObjectStoreConfig.getData" (dict "rootCtx" $rootCtx "objectData" $objectData "type" "recovery") | fromYaml -}}
 
-        {{- if $objectData.backups.revision -}}
-          {{- $serverNameBackup = printf "%s-r%s" $serverNameBackup $objectData.backups.revision -}}
-        {{- end -}}
-
-        {{- if $objectData.recovery.revision -}}
-          {{- $serverNameRecovery = printf "%s-r%s" $serverNameRecovery $objectData.recovery.revision -}}
-        {{- end -}}
-
-        {{- if eq $serverNameBackup $serverNameRecovery -}}
+        {{/* The same server name is fine, as long as it is on a different location */}}
+        {{- if and (eq $backupStore.serverName $recoveryStore.serverName) (eq $backupStore.destinationPath $recoveryStore.destinationPath) (eq $backupStore.creds.url $recoveryStore.creds.url) -}}
           {{- if $objectData.backups.serverName -}}
             {{- fail (printf "CNPG Backup/Recovery - [backups.serverName] and [backups.revision] cannot match [recovery.serverName] and [recovery.revision] when in recovery mode and backup is enabled, for CNPG cluster [%s]" $objectData.clusterName) -}}
           {{- else -}}
@@ -147,5 +154,30 @@
     {{- end -}}
   {{- end -}}
 
+  {{- $validBarmanModes := (list "inTree" "plugin") -}}
+  {{- if not (mustHas $objectData.barmanMode $validBarmanModes) -}}
+    {{- fail (printf "CNPG - Expected [barmanMode] to be one of [%s], but got [%s]" (join ", " $validBarmanModes) $objectData.barmanMode) -}}
+  {{- end -}}
+
+  {{- if eq $objectData.barmanMode "plugin" -}}
+    {{- $recoveryMethod := "" -}}
+    {{- if eq $objectData.mode "recovery" -}}
+      {{- $recoveryMethod = $objectData.recovery.method -}}
+    {{- end -}}
+
+    {{/* The plugin can only restore through an external cluster, it does not act on a reference to a Backup object */}}
+    {{- if eq $recoveryMethod "backup" -}}
+      {{- fail (printf "CNPG Recovery - [recovery.method] cannot be [backup] when [barmanMode] is [plugin], use [object_store] instead, for CNPG cluster [%s]" $objectData.clusterName) -}}
+    {{- end -}}
+
+    {{/* Clusters without backups or object store recovery do not need the plugin */}}
+    {{- $backups := $objectData.backups | default dict -}}
+    {{- if or $backups.enabled (eq $recoveryMethod "object_store") -}}
+      {{- $pluginAPI := include "tc.v1.common.lib.cnpg.barman.pluginAPI" . -}}
+      {{- if not ($rootCtx.Capabilities.APIVersions.Has $pluginAPI) -}}
+        {{- fail (printf "CNPG - [barmanMode] is set to [plugin], but API [%s] was not found. Install the Barman Cloud plugin in the namespace of the CloudNativePG operator, or set [barmanMode] to [inTree], for CNPG cluster [%s]. When rendering without access to a cluster, pass it with [--api-versions]" $pluginAPI $objectData.clusterName) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
 
 {{- end -}}

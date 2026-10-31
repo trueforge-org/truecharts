@@ -241,6 +241,14 @@
         "skipEmptyWalArchiveCheck": {
           "type": "boolean",
           "description": "Configuration for `global.fallbackDefaults.cnpg.skipEmptyWalArchiveCheck`."
+        },
+        "barmanMode": {
+          "type": "string",
+          "enum": [
+            "inTree",
+            "plugin"
+          ],
+          "description": "Default for `cnpg.$name.barmanMode`."
         }
       },
       "additionalProperties": true,

@@ -55,4 +55,9 @@ spec:
   immediate: {{ $immediate }}
   cluster:
     name: {{ $objectData.clusterName }}
+  {{- if eq $objectData.barmanMode "plugin" }}
+  method: plugin
+  pluginConfiguration:
+    name: {{ include "tc.v1.common.lib.cnpg.barman.pluginName" . }}
+  {{- end }}
 {{- end -}}

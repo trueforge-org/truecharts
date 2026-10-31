@@ -144,8 +144,8 @@
     {{- $walAccessModes = . -}}
   {{- end -}}
 
-  {{- with $objectData.cluster.skipEmptyWalArchiveCheck -}}
-    {{- $skipEmptyWalArchiveCheck = . -}}
+  {{- if (kindIs "bool" $objectData.cluster.skipEmptyWalArchiveCheck) -}}
+    {{- $skipEmptyWalArchiveCheck = $objectData.cluster.skipEmptyWalArchiveCheck -}}
   {{- end -}}
 
   {{- $imageName := $objectData.cluster.imageName -}}
@@ -273,6 +273,10 @@ spec:
     {{- include "tc.v1.common.lib.cnpg.cluster.bootstrap.recovery.externalCluster" (dict "rootCtx" $rootCtx "objectData" $objectData) | nindent 2 -}}
   {{- end -}}
   {{- if $objectData.backups.enabled }}
-    {{- include "tc.v1.common.lib.cnpg.cluster.backup" (dict "rootCtx" $rootCtx "objectData" $objectData) | nindent 2 -}}
+    {{- if eq $objectData.barmanMode "plugin" }}
+      {{- include "tc.v1.common.lib.cnpg.cluster.backup.plugin" (dict "rootCtx" $rootCtx "objectData" $objectData) | trim | nindent 2 -}}
+    {{- else }}
+      {{- include "tc.v1.common.lib.cnpg.cluster.backup" (dict "rootCtx" $rootCtx "objectData" $objectData) | nindent 2 -}}
+    {{- end -}}
   {{- end -}}
 {{- end -}}

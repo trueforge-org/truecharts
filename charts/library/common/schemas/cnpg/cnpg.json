@@ -196,6 +196,16 @@
         "additionalProperties": true,
         "description": "Configuration for `cnpg.main.monitoring`."
       },
+      "barmanMode": {
+        "type": "string",
+        "enum": [
+          "",
+          "inTree",
+          "plugin"
+        ],
+        "description": "What runs backups and object store recovery. `inTree` uses the Barman integration built in to CloudNativePG, which is removed in CloudNativePG 1.32. `plugin` uses the Barman Cloud plugin, which must be installed in the namespace of the CloudNativePG operator. Rendering fails if the plugin is not available and the cluster has backups or object store recovery enabled. Defaults to `global.fallbackDefaults.cnpg.barmanMode`.",
+        "default": ""
+      },
       "recovery": {
         "type": "object",
         "properties": {
@@ -203,9 +213,9 @@
             "type": "string",
             "description": "Configuration for `cnpg.main.recovery.method`."
           },
-          "servername": {
+          "serverName": {
             "type": "string",
-            "description": "Configuration for `cnpg.main.recovery.servername`."
+            "description": "Configuration for `cnpg.main.recovery.serverName`."
           },
           "pitrTarget": {
             "type": "object",
@@ -222,13 +232,14 @@
             "type": "string",
             "description": "Configuration for `cnpg.main.recovery.backupName`."
           },
-          "clusterName": {
-            "type": "string",
-            "description": "Configuration for `cnpg.main.recovery.clusterName`."
-          },
           "destinationPath": {
             "type": "string",
             "description": "Configuration for `cnpg.main.recovery.destinationPath`."
+          },
+          "instanceSidecarConfiguration": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Configuration for `cnpg.main.recovery.instanceSidecarConfiguration`. Only used when `barmanMode` is `plugin`."
           }
         },
         "additionalProperties": true,
@@ -258,9 +269,9 @@
             "additionalProperties": true,
             "description": "Configuration for `cnpg.main.backups.encryption`."
           },
-          "servername": {
+          "serverName": {
             "type": "string",
-            "description": "Configuration for `cnpg.main.backups.servername`."
+            "description": "Configuration for `cnpg.main.backups.serverName`."
           },
           "destinationPath": {
             "type": "string",
@@ -337,6 +348,11 @@
               "description": "Configuration for `cnpg.main.backups.manualBackups.$item`."
             },
             "description": "Configuration for `cnpg.main.backups.manualBackups`."
+          },
+          "instanceSidecarConfiguration": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Configuration for `cnpg.main.backups.instanceSidecarConfiguration`. Only used when `barmanMode` is `plugin`."
           }
         },
         "additionalProperties": true,
