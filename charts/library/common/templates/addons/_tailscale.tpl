@@ -47,13 +47,13 @@ It will include / inject the required templates based on the given values.
     {{- $secContext := dict -}}
     {{- $_ := set $secContext "runAsUser" 0 -}}
     {{- $_ := set $secContext "runAsGroup" 0 -}}
-    {{- $_ := set $secContext "runAsNonRoot" true -}}
+    {{- $_ := set $secContext "runAsNonRoot" false -}}
     {{- $_ := set $secContext "readOnlyRootFilesystem" false -}}
 
     {{- if and $env ($env.TS_USERSPACE) -}}
       {{- $_ := set $secContext "runAsUser" 1000 -}}
       {{- $_ := set $secContext "runAsGroup" 1000 -}}
-      {{- $_ := set $secContext "runAsNonRoot" false -}}
+      {{- $_ := set $secContext "runAsNonRoot" true -}}
       {{- $_ := set $secContext "readOnlyRootFilesystem" true -}}
     {{- end -}}
 

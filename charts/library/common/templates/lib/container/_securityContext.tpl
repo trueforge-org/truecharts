@@ -86,10 +86,12 @@ objectData: The object data to be used to render the container.
     {{- end -}}
   {{- end -}}
 
-  {{- if or (eq (int $secContext.runAsUser) 0) (eq (int $secContext.runAsGroup) 0) -}}
-    {{- $_ := set $secContext "runAsNonRoot" false -}}
-  {{- else -}}
-    {{- $_ := set $secContext "runAsNonRoot" true -}}
+  {{- if or (not (hasKey $secContext "runAsNonRoot")) (kindIs "invalid" (get $secContext "runAsNonRoot")) -}}
+    {{- if eq (int $secContext.runAsUser) 0 -}}
+      {{- $_ := set $secContext "runAsNonRoot" false -}}
+    {{- else -}}
+      {{- $_ := set $secContext "runAsNonRoot" true -}}
+    {{- end -}}
   {{- end -}}
 
   {{- if $secContext.privileged -}} {{/* When privileged is true, allowPrivilegeEscalation is required */}}
