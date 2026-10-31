@@ -60,7 +60,7 @@
                     "name" $name "caller" "service"
                     "key" "port")) -}}
       {{- if ne $enabledP "true" -}}{{- continue -}}{{- end -}}
-      {{- $internalUrl := (printf "%s.%s.svc.cluster.local:%s" $objectName $namespace $port.port) -}}
+      {{- $internalUrl := (printf "%s.%s.svc.cluster.local:%s" $objectName $namespace (tpl ($port.port | toString) $)) -}}
       {{/* Append URLS */}}
       {{- $allUrls = mustAppend $allUrls $internalUrl -}}
     {{- end -}}

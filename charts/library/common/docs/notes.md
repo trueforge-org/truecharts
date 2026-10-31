@@ -38,6 +38,42 @@ notes:
 
 ---
 
+## External URLs
+
+The "Connecting externally" section lists the URLs of all enabled ingresses and routes, not only the primary one:
+
+- **Ingress**: every path of every host.
+- **HTTPRoute**: the first path of each rule, for every hostname. Rules that only redirect and regular expression paths are left out.
+
+These are listed under "Other routes" instead, as they can't be opened as a link: `GRPCRoute`, `TLSRoute`, `TCPRoute` and `UDPRoute`, and any `HTTPRoute` without a hostname or with only wildcard hostnames.
+
+"Exposed services" lists the services that can be reached from outside the cluster:
+
+| Service                                  | Address                                                   |
+| ---------------------------------------- | --------------------------------------------------------- |
+| `LoadBalancer` with `loadBalancerIP(s)`  | That IP and `port`                                        |
+| `LoadBalancer` without an IP             | `<load-balancer-ip>` and `port`, as the provider assigns it |
+| `NodePort`                               | `<node-ip>` and `nodePort`                                |
+| A port with `hostPort`                   | `<node-ip>` and `hostPort`                                |
+| `externalIPs`                            | That IP and `port`                                        |
+
+`http` and `https` ports are shown as links, others as `address:port/PROTOCOL`. A service on a pod with `hostNetwork` is not listed, and nothing is listed with `stopAll`, because these force `ClusterIP`.
+
+If there is no ingress, route or exposed service, the section shows `chartContext.appUrl`.
+
+The URL scheme and port of a route come from:
+
+| Route configuration                                     | URL                    |
+| ------------------------------------------------------- | ---------------------- |
+| `tls` or `integrations.certManager`                     | `https`, port `443`    |
+| First `parentRefs` entry has `port`                     | That port. `80` is `http`, `443` is `https` |
+| First `parentRefs` entry has `sectionName` `http` or `web` | `http`, port `80`   |
+| Anything else, including `gateway`                      | `https`, port `443`    |
+
+`listenerPort` is not used, because it can differ from the port the gateway is exposed on. `chartContext.appUrl` follows the same rules for the primary route, and does not use `TCPRoute` or `UDPRoute`.
+
+---
+
 ## Automatic Connection Information
 
 When dependencies or addons are enabled, the notes output will automatically include a "Connection Information" section with:
@@ -55,7 +91,7 @@ When dependencies or addons are enabled, the notes output will automatically inc
 - **Code-Server**: Status, port
 - **Netshoot**: Status
 
-The connection information is rendered in the order: header → custom → **connections** → footer → warnings
+The notes are rendered in the order: header → custom → **connections** → footer → warnings
 
 ---
 

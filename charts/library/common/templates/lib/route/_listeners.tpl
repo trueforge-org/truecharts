@@ -63,6 +63,40 @@
   {{- end -}}
 {{- end -}}
 
+{{/* Returns the protocol and port clients use to reach a route.
+Common creates the listener of a route with TLS, but its port can differ from the exposed one, so it is not used here.
+Without TLS the listener is not known, so this relies on the first parentRef, unless a gateway selection replaces them.
+*/}}
+{{- define "tc.v1.common.lib.route.endpoint" -}}
+  {{- $rootCtx := .rootCtx -}}
+  {{- $objectData := .objectData -}}
+  {{- $protocol := "https" -}}
+  {{- $port := "443" -}}
+
+  {{- if and (not $objectData.tls) (not (include "tc.v1.common.lib.route.hasCertManager" (dict "objectData" $objectData))) (not $objectData.gateway) (not (kindIs "string" $objectData.targetSelector)) -}}
+    {{- with $objectData.parentRefs -}}
+      {{- $parentRef := first . -}}
+      {{- if $parentRef.sectionName -}}
+        {{- $section := tpl $parentRef.sectionName $rootCtx -}}
+        {{- if mustHas $section (list "http" "web") -}}
+          {{- $protocol = "http" -}}
+          {{- $port = "80" -}}
+        {{- end -}}
+      {{- end -}}
+      {{- if $parentRef.port -}}
+        {{- $port = tpl ($parentRef.port | toString) $rootCtx -}}
+        {{- if eq $port "80" -}}
+          {{- $protocol = "http" -}}
+        {{- else if eq $port "443" -}}
+          {{- $protocol = "https" -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- dict "protocol" $protocol "port" $port | toYaml -}}
+{{- end -}}
+
 {{/* Returns the gateway a route selected with [gateway] or a [targetSelector] string, if any */}}
 {{- define "tc.v1.common.lib.route.gatewayRef" -}}
   {{- $rootCtx := .rootCtx -}}

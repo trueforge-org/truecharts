@@ -118,7 +118,16 @@
     {{- end -}}
   {{- end -}}
 
+  {{/* TCP and UDP routes have no URL, the service is used instead */}}
+  {{- if and $selectedRoute (mustHas ($selectedRoute.kind | default "HTTPRoute") (list "TCPRoute" "UDPRoute")) -}}
+    {{- $selectedRoute = dict -}}
+  {{- end -}}
+
   {{- if and (not $selectedIngress) $selectedRoute -}}
+    {{- $endpoint := include "tc.v1.common.lib.route.endpoint" (dict "rootCtx" $rootCtx "objectData" $selectedRoute) | fromYaml -}}
+    {{- $protocol = $endpoint.protocol -}}
+    {{- $port = $endpoint.port -}}
+
     {{- with $selectedRoute -}}
       {{- if and (kindIs "slice" .hostnames) (gt (len .hostnames) 0) -}}
         {{- $host = tpl ((.hostnames | default list) | mustFirst) $rootCtx -}}
