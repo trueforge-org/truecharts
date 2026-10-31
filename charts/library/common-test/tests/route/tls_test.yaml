@@ -41,7 +41,7 @@ tests:
       - documentSelector: *ls
         equal:
           path: metadata.name
-          value: test-release-name-common-test
+          value: test-release-name-common-test-external-443-some-issuer
       - documentSelector: *ls
         equal:
           path: metadata.namespace
@@ -75,7 +75,7 @@ tests:
                 certificateRefs:
                   - group: ""
                     kind: Secret
-                    name: test-release-name-common-test-tls-0
+                    name: test-release-name-common-test-tls-a-example-com
               allowedRoutes:
                 namespaces:
                   from: Same
@@ -88,7 +88,7 @@ tests:
                 certificateRefs:
                   - group: ""
                     kind: Secret
-                    name: test-release-name-common-test-tls-1
+                    name: test-release-name-common-test-tls-test-release-name-example-com
               allowedRoutes:
                 namespaces:
                   from: Same
@@ -100,7 +100,7 @@ tests:
           value:
             - group: gateway.networking.k8s.io
               kind: ListenerSet
-              name: test-release-name-common-test
+              name: test-release-name-common-test-external-443-some-issuer
               namespace: test-release-namespace
       - documentSelector: *route
         notExists:
@@ -168,7 +168,7 @@ tests:
       - documentSelector: *ls
         equal:
           path: spec.listeners[1].tls.certificateRefs[0].name
-          value: test-release-name-common-test-tls-1
+          value: test-release-name-common-test-tls-b-example-com
       - documentSelector: *ls
         equal:
           path: spec.listeners[2].tls.certificateRefs[0].name
@@ -185,7 +185,7 @@ tests:
           value: Certificate
         equal:
           path: metadata.name
-          value: test-release-name-common-test-tls-1
+          value: test-release-name-common-test-tls-b-example-com
       - documentSelector: *cert
         equal:
           path: spec.dnsNames
@@ -304,3 +304,188 @@ tests:
         equal:
           path: spec.listeners[0].port
           value: 9443
+
+  - it: should share one listener and certificate between routes with different paths on a hostname
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          hostnames:
+            - nextcloud.example.com
+          integrations: &sharedCertManager
+            certManager:
+              enabled: true
+              certificateIssuer: some-issuer
+          rules:
+            - matches:
+                - path:
+                    type: PathPrefix
+                    value: /
+        admin:
+          enabled: true
+          primary: false
+          gateway: external
+          hostnames:
+            - nextcloud.example.com
+          integrations: *sharedCertManager
+          rules:
+            - matches:
+                - path:
+                    type: PathPrefix
+                    value: /admin
+    asserts:
+      # 2 routes, the service and a single ListenerSet
+      - hasDocuments:
+          count: 4
+      - documentSelector: *ls
+        equal:
+          path: spec.listeners
+          value:
+            - name: https-0
+              hostname: nextcloud.example.com
+              port: 443
+              protocol: HTTPS
+              tls:
+                mode: Terminate
+                certificateRefs:
+                  - group: ""
+                    kind: Secret
+                    name: test-release-name-common-test-tls-nextcloud-example-com
+              allowedRoutes:
+                namespaces:
+                  from: Same
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-admin
+        equal:
+          path: spec.parentRefs[0].name
+          value: test-release-name-common-test-external-443-some-issuer
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-admin
+        equal:
+          path: spec.rules[0].matches[0].path.value
+          value: /admin
+
+  - it: should create a shared certificate once with certificateIssuer
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          hostnames:
+            - a.example.com
+          tls: &sharedTls
+            - hosts:
+                - a.example.com
+              certificateIssuer: some-issuer
+        admin:
+          enabled: true
+          primary: false
+          gateway: external
+          hostnames:
+            - a.example.com
+          tls: *sharedTls
+    asserts:
+      - documentSelector: *cert
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-tls-a-example-com
+      - documentSelector: *ls
+        equal:
+          path: spec.listeners[0].tls.certificateRefs[0].name
+          value: test-release-name-common-test-tls-a-example-com
+
+  - it: should keep separate listeners for different hostnames on one listenerset
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          hostnames:
+            - a.example.com
+          tls:
+            - hosts:
+                - a.example.com
+              secretName: secret-a
+        admin:
+          enabled: true
+          primary: false
+          gateway: external
+          hostnames:
+            - b.example.com
+          tls:
+            - hosts:
+                - b.example.com
+              secretName: secret-b
+    asserts:
+      - documentSelector: *ls
+        equal:
+          path: spec.listeners[0].hostname
+          value: b.example.com
+      - documentSelector: *ls
+        equal:
+          path: spec.listeners[1].hostname
+          value: a.example.com
+      - documentSelector: *ls
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-external-443
+
+  - it: should fail when routes on a hostname disagree on the certificate
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          hostnames:
+            - a.example.com
+          tls:
+            - hosts:
+                - a.example.com
+              secretName: secret-a
+        admin:
+          enabled: true
+          primary: false
+          gateway: external
+          hostnames:
+            - a.example.com
+          tls:
+            - hosts:
+                - a.example.com
+              secretName: secret-b
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Routes [admin] and [main] use hostname [a.example.com] on the same gateway and port, so they share a listener, but with different TLS settings. Set the same TLS on both
+
+  - it: should allow the same hostname with different certificates on different ports
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          hostnames:
+            - a.example.com
+          tls:
+            - hosts:
+                - a.example.com
+              secretName: secret-a
+        admin:
+          enabled: true
+          primary: false
+          gateway: external
+          listenerPort: 8443
+          hostnames:
+            - a.example.com
+          tls:
+            - hosts:
+                - a.example.com
+              secretName: secret-b
+    asserts:
+      - notFailedTemplate: {}

@@ -242,21 +242,7 @@ tests:
                 - 10.0.0.0/8
     asserts:
       - failedTemplate:
-          errorMessage: Route - [route.main.integrations.nginx] is not supported, only [certManager, homepage] are
-
-  - it: should fail with the traefik integration
-    set:
-      service: *service
-      route:
-        main:
-          enabled: true
-          gateway: external
-          integrations:
-            traefik:
-              enabled: true
-    asserts:
-      - failedTemplate:
-          errorMessage: Route - [route.main.integrations.traefik] is not supported, only [certManager, homepage] are
+          errorMessage: Route - [route.main.integrations.nginx] is not supported, only [certManager, envoy, homepage, traefik] are
 
   - it: should fail with certManager without a certificateIssuer
     capabilities:

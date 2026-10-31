@@ -990,6 +990,64 @@ route:
       certManager:
         enabled: false
         certificateIssuer: ""
+      # For Traefik. Only for HTTPRoute and GRPCRoute. Needs the kubernetesCRD provider of Traefik enabled.
+      traefik:
+        enabled: false
+        # -- Allowed source IPs. Everything else is rejected.
+        ipWhitelist: []
+        # ipStrategy:
+        #   depth: 1
+        auth:
+          # empty to disable, options: "authentik" or "authelia"
+          type: ""
+          # Internal Domain name + port to reach the auth provider, excluding http(s)
+          internalHost: ""
+          # Optional: override default response headers
+          responseHeaders: []
+        # Only for HTTPRoute. Needs the theme park plugin installed in Traefik.
+        themePark:
+          enabled: false
+          app: ""
+          theme: ""
+        # Only for HTTPRoute. The regex matches the whole URL.
+        redirectRegex: []
+        #   - regex: ^https://example.com/old/(.*)
+        #     replacement: https://example.com/new/${1}
+        #     permanent: true
+        # -- Anything else: any Middleware from ingressMiddlewares.traefik, same as an ingress
+        middlewares: []
+        #   - name: my-middleware
+      # For Envoy Gateway. Only for HTTPRoute and GRPCRoute.
+      envoy:
+        enabled: false
+        # -- Allowed source IPs. Everything else is rejected.
+        ipWhitelist: []
+        auth:
+          # empty to disable, options: "authentik" or "authelia"
+          type: ""
+          # service:port or service.namespace.svc.cluster.local:port
+          # A service in another namespace needs a ReferenceGrant in that namespace
+          internalHost: ""
+          # Optional: override default response headers
+          responseHeaders: []
+        # Only for HTTPRoute. Buffers HTML responses, see the Route docs.
+        themePark:
+          enabled: false
+          css: ""
+        # Only for HTTPRoute. The regex matches the path. The replacement must be a fixed target,
+        # capture groups are not available on Envoy Gateway.
+        redirectRegex: []
+        #   - regex: ^/old/.*
+        #     replacement: https://example.com/new
+        #     permanent: true
+        # -- Anything else: the spec of the policy of that kind on this route, without a target.
+        # Envoy Gateway only applies one policy of a kind per route, so these are merged with the above.
+        securityPolicy: {}
+        #   cors:
+        #     allowOrigins:
+        #       - https://example.com
+        backendTrafficPolicy: {}
+        extensionPolicy: {}
       # Same as an ingress. Only for HTTPRoute, and homepage needs [gateway: true] in its kubernetes.yaml
       homepage:
         enabled: false

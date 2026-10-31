@@ -186,7 +186,7 @@
       },
       "integrations": {
         "type": "object",
-        "description": "Integrations of this route. `certManager` and `homepage` are supported, any other fails rendering.",
+        "description": "Integrations of this route. `certManager`, `envoy`, `homepage` and `traefik` are supported, any other fails rendering.",
         "properties": {
           "certManager": {
             "type": "object",
@@ -219,6 +219,138 @@
                 ],
                 "description": "Enable the integration.",
                 "default": false
+              }
+            },
+            "additionalProperties": true
+          },
+          "traefik": {
+            "type": "object",
+            "description": "Traefik `Middleware` objects attached to the route as `ExtensionRef` filters. Only for `HTTPRoute` and `GRPCRoute`. Needs the kubernetesCRD provider of Traefik enabled.",
+            "properties": {
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "description": "Enable the integration.",
+                "default": false
+              },
+              "ipWhitelist": {
+                "type": "array",
+                "description": "Allowed source IPs, everything else is rejected."
+              },
+              "ipStrategy": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "How Traefik determines the source IP."
+              },
+              "auth": {
+                "type": "object",
+                "description": "Authentication through Authelia or Authentik.",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "",
+                      "authentik",
+                      "authelia"
+                    ],
+                    "description": "Auth provider, empty to disable."
+                  },
+                  "internalHost": {
+                    "type": "string",
+                    "description": "Internal domain name and port of the auth provider, excluding http(s)."
+                  },
+                  "responseHeaders": {
+                    "type": "array",
+                    "description": "Override the default response headers passed on to the app."
+                  }
+                },
+                "additionalProperties": true
+              },
+              "themePark": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Theme park plugin, needs the plugin installed in Traefik. Only for `HTTPRoute`."
+              },
+              "redirectRegex": {
+                "type": "array",
+                "description": "List of `regex`, `replacement` and `permanent`. Only for `HTTPRoute`. The regex matches the whole URL."
+              },
+              "middlewares": {
+                "type": "array",
+                "description": "Other middlewares from `ingressMiddlewares.traefik`, same as an ingress."
+              },
+              "chartMiddlewares": {
+                "type": "array",
+                "description": "Middlewares set by the chart, same as an ingress."
+              }
+            },
+            "additionalProperties": true
+          },
+          "envoy": {
+            "type": "object",
+            "description": "Envoy Gateway policies that target the route. Only for `HTTPRoute` and `GRPCRoute`.",
+            "properties": {
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "description": "Enable the integration.",
+                "default": false
+              },
+              "ipWhitelist": {
+                "type": "array",
+                "description": "Allowed source IPs, everything else is rejected."
+              },
+              "auth": {
+                "type": "object",
+                "description": "Authentication through Authelia or Authentik.",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "",
+                      "authentik",
+                      "authelia"
+                    ],
+                    "description": "Auth provider, empty to disable."
+                  },
+                  "internalHost": {
+                    "type": "string",
+                    "description": "`service:port` or `service.namespace.svc.cluster.local:port`. A service in another namespace needs a `ReferenceGrant` in that namespace."
+                  },
+                  "responseHeaders": {
+                    "type": "array",
+                    "description": "Override the default response headers passed on to the app."
+                  }
+                },
+                "additionalProperties": true
+              },
+              "themePark": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "`css` URL added to HTML responses with Lua. Only for `HTTPRoute`."
+              },
+              "redirectRegex": {
+                "type": "array",
+                "description": "List of `regex`, `replacement` and `permanent`. Only for `HTTPRoute`. The regex matches the path, and the replacement must be a fixed target without capture groups."
+              },
+              "securityPolicy": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Other `SecurityPolicy` settings, without a target. Merged with `ipWhitelist` and `auth`."
+              },
+              "backendTrafficPolicy": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "`BackendTrafficPolicy` settings, without a target."
+              },
+              "extensionPolicy": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "`EnvoyExtensionPolicy` settings, without a target. Merged with `themePark`."
               }
             },
             "additionalProperties": true

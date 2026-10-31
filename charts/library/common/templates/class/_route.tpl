@@ -14,7 +14,9 @@ within the common library.
   {{- $routeAnnotations := $values.annotations -}}
 
 {{- $fullName := .ObjectValues.routeFullName -}}
-{{- $hasListeners := .ObjectValues.hasListeners -}}
+{{- $listenerSetNames := .ObjectValues.listenerSetNames -}}
+{{- $routeFilters := .ObjectValues.routeFilters -}}
+{{- $extraRules := .ObjectValues.extraRules -}}
 {{- $routeKind := $values.kind | default "HTTPRoute" -}}
 
 {{- $namespace := include "tc.v1.common.lib.metadata.namespace" (dict "rootCtx" $ "objectData" $values "caller" "Route") -}}
@@ -28,8 +30,11 @@ within the common library.
 {{- end -}}
 
 {{/* TLS is on a ListenerSet of the selected gateway, so the route attaches to that */}}
-{{- if $hasListeners -}}
-  {{- $parentRefs = list (dict "kind" "ListenerSet" "name" $fullName "namespace" $namespace) -}}
+{{- if $listenerSetNames -}}
+  {{- $parentRefs = list -}}
+  {{- range $listenerSetNames -}}
+    {{- $parentRefs = mustAppend $parentRefs (dict "kind" "ListenerSet" "name" . "namespace" $namespace) -}}
+  {{- end -}}
 {{- end -}}
 
 {{/* A [targetSelector] map selects the default service and port, same as an ingress */}}
@@ -142,6 +147,9 @@ spec:
     {{- end }}
   {{- end }}
   rules:
+  {{- with $extraRules }}
+    {{- toYaml . | nindent 2 }}
+  {{- end }}
   {{- range $rules }}
     {{- $rule := omit (mustDeepCopy .) "backendRefs" -}}
     {{- range $rule.matches -}}
@@ -153,6 +161,11 @@ spec:
     {{/* A rule with only filters is valid, eg a redirect. Otherwise default to the primary service */}}
     {{- if and (not $backendRefs) (not .filters) -}}
       {{- $backendRefs = list dict -}}
+    {{- end -}}
+
+    {{/* Filters of the integrations go first, so auth runs before the filters of the rule */}}
+    {{- if $routeFilters -}}
+      {{- $_ := set $rule "filters" (concat $routeFilters ($rule.filters | default list)) -}}
     {{- end -}}
 
     {{- $renderedBackends := list -}}

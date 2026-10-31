@@ -30,7 +30,7 @@
   {{- end -}}
 
   {{/* The others depend on the gateway provider. Dropping them could expose what they protect */}}
-  {{- $validIntegrations := (list "certManager" "homepage") -}}
+  {{- $validIntegrations := (list "certManager" "envoy" "homepage" "traefik") -}}
   {{- range $key := (keys ($objectData.integrations | default dict) | sortAlpha) -}}
     {{- if not (mustHas $key $validIntegrations) -}}
       {{- fail (printf "Route - [route.%s.integrations.%s] is not supported, only [%s] are" $name $key (join ", " $validIntegrations)) -}}

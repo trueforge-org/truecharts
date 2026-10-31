@@ -156,7 +156,7 @@ route:
 
 ### `route.$name.integrations`
 
-Integrations of this route. `certManager` and `homepage` are supported, any other fails rendering.
+Integrations of this route. `certManager`, `envoy`, `homepage` and `traefik` are supported, any other fails rendering.
 
 | Field      | Value                      |
 | ---------- | -------------------------- |
@@ -417,7 +417,36 @@ Fields a kind does not support fail rendering, because dropping them would chang
 
 ## TLS
 
-A route has no certificate of its own, so a route with TLS creates a `ListenerSet` on the selected gateway and attaches to it. The certificate stays with the app, without editing the shared gateway.
+A route has no certificate of its own, so a route with TLS attaches to a `ListenerSet` on the selected gateway. The certificate stays with the app, without editing the shared gateway.
+
+Routes that share a hostname share one listener and one certificate, so you can split a hostname by path, same as several ingresses. Set the same TLS on all of them, and the longest matching path wins:
+
+```yaml
+route:
+  main:
+    enabled: true
+    gateway: external
+    hostnames:
+      - app.example.com
+    integrations: &tls
+      certManager:
+        enabled: true
+        certificateIssuer: my-issuer
+  admin:
+    enabled: true
+    primary: false
+    gateway: external
+    hostnames:
+      - app.example.com
+    integrations: *tls
+    rules:
+      - matches:
+          - path:
+              type: PathPrefix
+              value: /admin
+```
+
+Rendering fails if routes on a hostname disagree on the TLS. This only works within a chart: a listener for the same hostname and port from another release conflicts on the gateway, where the oldest one wins.
 
 ```yaml
 route:
@@ -458,10 +487,39 @@ Traefik keeps all certificates in one store and selects them by hostname across 
 | `tls`                                    | `tls`, in the same form                                     |
 | `integrations.certManager`               | `integrations.certManager`, in the same form                |
 | `integrations.homepage`                  | `integrations.homepage`, in the same form. Only `HTTPRoute` |
-| `integrations.traefik`, `nginx`          | Not supported yet, and fail rendering                       |
+| `integrations.traefik`                   | `integrations.traefik`, see [Integrations](#integrations)   |
+| `integrations.nginx`                     | `integrations.traefik` or `integrations.envoy`. `nginx` fails rendering. |
 | `primary`, `required`, `expandObjectName`, `labels`, `annotations` | Same                              |
 
 An ingress also gets an HTTP to HTTPS redirect from some controllers. A route does not, add it on the gateway.
+
+## Integrations
+
+An ingress configures its controller with annotations. Gateway API has no equivalent for those: a route uses filters, and policies that target it. So each provider has its own integration, and a route can only use one.
+
+| Feature          | `integrations.traefik`                   | `integrations.envoy`                         |
+| ---------------- | ---------------------------------------- | -------------------------------------------- |
+| `auth` Authelia  | `Middleware`, `/api/authz/forward-auth`  | `SecurityPolicy`, `/api/authz/ext-authz/`    |
+| `auth` Authentik | `Middleware`, `/outpost.goauthentik.io/auth/traefik` | `SecurityPolicy`, `/outpost.goauthentik.io/auth/envoy` |
+| `ipWhitelist`    | `Middleware`                             | `SecurityPolicy`                             |
+| `themePark`      | `Middleware`, with `app` and `theme`     | `EnvoyExtensionPolicy`, with `css`           |
+| `redirectRegex`  | `Middleware`, with capture groups        | A route rule, **without capture groups**     |
+
+These apply to the whole route. To protect one path, give it its own route, as shown under [TLS](#tls).
+
+### Anything else
+
+- **Traefik:** define any middleware under `ingressMiddlewares.traefik`, and list it in `integrations.traefik.middlewares`, same as an ingress.
+- **Envoy Gateway:** set `securityPolicy`, `backendTrafficPolicy` or `extensionPolicy` to the spec of that policy, without a target. Envoy Gateway only applies the oldest policy of a kind on a route, so do not add your own policy of a kind this route already has. A separate policy could silently replace the auth of this integration.
+- **Both:** `rules[].filters` accepts an `ExtensionRef` filter, and `extraTpl` can create what it references.
+
+### Things to check
+
+- **Client IPs:** `ipWhitelist` checks the address the provider sees. Behind a load balancer or proxy, configure `ipStrategy` on Traefik, or a `ClientTrafficPolicy` with `clientIPDetection` on Envoy Gateway, or the allow-list checks the wrong address.
+- **Envoy Gateway auth in another namespace** needs a `ReferenceGrant` in that namespace. Until it exists, requests are denied.
+- **Envoy Gateway routes on a ListenerSet:** use v1.9 or newer, as [v1.8 ignored policies on them](https://github.com/envoyproxy/gateway/issues/9242). Check that an unauthenticated request is actually blocked.
+- **Envoy Gateway `themePark`** disables compression on the route, and buffers HTML responses to edit them. Envoy will not buffer more than its connection limit allows, so very large pages can fail.
+- **Traefik `themePark`** needs the plugin installed in Traefik.
 
 ## Not rendered by common
 

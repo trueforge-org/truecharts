@@ -20,26 +20,30 @@
   {{- $fullName -}}
 {{- end -}}
 
-{{/* Returns the hostname and secret of each TLS listener a route needs, same secret names as an ingress */}}
+{{/* Returns the hostname and secret of each TLS listener a route needs */}}
 {{- define "tc.v1.common.lib.route.listeners" -}}
   {{- $rootCtx := .rootCtx -}}
   {{- $objectData := .objectData -}}
-  {{- $fullName := .fullName -}}
+  {{- $chartName := .fullName -}}
 
   {{- $listeners := list -}}
   {{/* If a certificateIssuer is defined in the whole route, use that */}}
   {{- if include "tc.v1.common.lib.route.hasCertManager" (dict "objectData" $objectData) -}}
-    {{- range $idx, $host := $objectData.hostnames -}}
-      {{- $listeners = mustAppend $listeners (dict "host" (tpl $host $rootCtx) "secretName" (printf "%s-tls-%d" $fullName ($idx | int))) -}}
+    {{- range $host := $objectData.hostnames -}}
+      {{- $tplHost := tpl $host $rootCtx -}}
+      {{- $listeners = mustAppend $listeners (dict
+            "host" $tplHost
+            "secretName" (include "tc.v1.common.lib.route.secretName" (dict "chartName" $chartName "host" $tplHost))
+            "issuer" $objectData.integrations.certManager.certificateIssuer) -}}
     {{- end -}}
   {{/* else if a tls section is defined use the configuration from there */}}
   {{- else -}}
-    {{- range $idx, $t := $objectData.tls -}}
+    {{- range $t := $objectData.tls -}}
       {{- $secretName := "" -}}
       {{- if $t.secretName -}}
         {{- $secretName = tpl $t.secretName $rootCtx -}}
       {{- else if $t.certificateIssuer -}}
-        {{- $secretName = printf "%s-tls-%d" $fullName ($idx | int) -}}
+        {{- $secretName = include "tc.v1.common.lib.route.secretName" (dict "chartName" $chartName "host" (tpl (first $t.hosts) $rootCtx)) -}}
       {{- else if $t.clusterCertificate -}}
         {{- $secretName = printf "certificate-issuer-%s" (tpl $t.clusterCertificate $rootCtx) -}}
       {{- end -}}

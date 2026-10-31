@@ -1,0 +1,370 @@
+suite: route traefik integration test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should create middlewares and attach them as filters on every rule
+    set:
+      service: &service
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      global:
+        traefik:
+          commonMiddlewares: []
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            traefik:
+              enabled: true
+              ipWhitelist:
+                - 10.0.0.0/8
+              ipStrategy:
+                depth: 1
+              auth:
+                type: authelia
+                internalHost: authelia.authelia.svc.cluster.local:9091
+              themePark:
+                enabled: true
+                app: sonarr
+                theme: nord
+              redirectRegex:
+                - regex: ^https://a.example.com/old/(.*)
+                  replacement: https://a.example.com/new/${1}
+                  permanent: true
+          rules:
+            - matches:
+                - path:
+                    type: PathPrefix
+                    value: /a
+            - matches:
+                - path:
+                    type: PathPrefix
+                    value: /b
+              filters:
+                - type: RequestHeaderModifier
+                  requestHeaderModifier:
+                    add:
+                      - name: X-Test
+                        value: test
+    asserts:
+      - documentSelector: &route
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].filters
+          value:
+            - type: ExtensionRef
+              extensionRef: &ip
+                group: traefik.io
+                kind: Middleware
+                name: test-release-name-common-test-ip-whitelist
+            - type: ExtensionRef
+              extensionRef: &auth
+                group: traefik.io
+                kind: Middleware
+                name: test-release-name-common-test-auth
+            - type: ExtensionRef
+              extensionRef: &theme
+                group: traefik.io
+                kind: Middleware
+                name: test-release-name-common-test-themepark
+            - type: ExtensionRef
+              extensionRef: &redirect
+                group: traefik.io
+                kind: Middleware
+                name: test-release-name-common-test-redirect-0
+      - documentSelector: *route
+        equal:
+          path: spec.rules[1].filters[4].type
+          value: RequestHeaderModifier
+      - documentSelector: &ipDoc
+          path: metadata.name
+          value: test-release-name-common-test-ip-whitelist
+        equal:
+          path: spec
+          value:
+            ipAllowList:
+              sourceRange:
+                - 10.0.0.0/8
+              ipStrategy:
+                depth: 1
+      - documentSelector: &authDoc
+          path: metadata.name
+          value: test-release-name-common-test-auth
+        isSubset:
+          path: spec.forwardAuth
+          content:
+            address: http://authelia.authelia.svc.cluster.local:9091/api/authz/forward-auth
+            trustForwardHeader: true
+            authResponseHeaders:
+              - Remote-User
+              - Remote-Groups
+              - Remote-Email
+              - Remote-Name
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-themepark
+        equal:
+          path: spec.plugin.traefik-themepark
+          value:
+            app: sonarr
+            theme: nord
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-redirect-0
+        equal:
+          path: spec.redirectRegex
+          value:
+            regex: ^https://a.example.com/old/(.*)
+            replacement: https://a.example.com/new/${1}
+            permanent: true
+
+  - it: should use the authentik endpoint and headers
+    set:
+      service: *service
+      global:
+        traefik:
+          commonMiddlewares: []
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            traefik:
+              enabled: true
+              auth:
+                type: authentik
+                internalHost: outpost.authentik.svc.cluster.local:9000
+    asserts:
+      - documentSelector: *authDoc
+        equal:
+          path: spec.forwardAuth.address
+          value: http://outpost.authentik.svc.cluster.local:9000/outpost.goauthentik.io/auth/traefik
+      - documentSelector: *authDoc
+        contains:
+          path: spec.forwardAuth.authResponseHeaders
+          content: X-authentik-username
+
+  - it: should add common and user middlewares, and render them, same as an ingress
+    set:
+      service: *service
+      global:
+        traefik:
+          commonMiddlewares:
+            - name: common-mw
+      ingressMiddlewares:
+        traefik:
+          common-mw:
+            enabled: false
+            type: strip-prefix
+            data:
+              prefix:
+                - /common
+          my-mw:
+            enabled: false
+            type: strip-prefix
+            data:
+              prefix:
+                - /mine
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            traefik:
+              enabled: true
+              middlewares:
+                - name: my-mw
+    asserts:
+      - documentSelector: *route
+        equal:
+          path: spec.rules[0].filters
+          value:
+            - type: ExtensionRef
+              extensionRef:
+                group: traefik.io
+                kind: Middleware
+                name: test-release-name-common-test-common-mw
+            - type: ExtensionRef
+              extensionRef:
+                group: traefik.io
+                kind: Middleware
+                name: test-release-name-common-test-my-mw
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-my-mw
+        isKind:
+          of: Middleware
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-common-mw
+        isKind:
+          of: Middleware
+
+  - it: should not render anything without the integration enabled
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            traefik:
+              enabled: false
+              ipWhitelist:
+                - 10.0.0.0/8
+    asserts:
+      - documentSelector: *route
+        notExists:
+          path: spec.rules[0].filters
+      - containsDocument:
+          kind: Middleware
+          apiVersion: traefik.io/v1alpha1
+          any: true
+        not: true
+
+  - it: should not render middlewares on stopAll
+    set:
+      global:
+        stopAll: true
+        traefik:
+          commonMiddlewares: []
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            traefik:
+              enabled: true
+              ipWhitelist:
+                - 10.0.0.0/8
+    asserts:
+      - containsDocument:
+          kind: Middleware
+          apiVersion: traefik.io/v1alpha1
+          any: true
+        not: true
+
+  - it: should fail with entrypoints
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            traefik:
+              enabled: true
+              entrypoints:
+                - websecure
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.main.integrations.traefik.entrypoints] is not supported, a route uses the entrypoint of its listener
+
+  - it: should fail with a middleware that is not defined
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            traefik:
+              enabled: true
+              middlewares:
+                - name: missing
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Traefik Middleware [missing] is not defined under [ingressMiddlewares.traefik]
+
+  - it: should fail with a middleware in another namespace
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            traefik:
+              enabled: true
+              middlewares:
+                - name: other
+                  namespace: other-namespace
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Traefik Middleware [other] is in namespace [other-namespace], but a route can only use one in its own namespace [test-release-namespace]
+
+  - it: should fail with an unknown auth type
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            traefik:
+              enabled: true
+              auth:
+                type: other
+                internalHost: a:1
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected [integrations.traefik.auth.type] to be one of [authentik, authelia], but got [other]
+
+  - it: should fail with both providers on a route
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            traefik:
+              enabled: true
+            envoy:
+              enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected only one of [integrations.traefik, integrations.envoy] on [route.main], a route has one gateway provider
+
+  - it: should fail on a kind without filters
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          kind: TCPRoute
+          gateway: external
+          integrations:
+            traefik:
+              enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.main.integrations.traefik] and [route.main.integrations.envoy] are only supported by kinds [HTTPRoute, GRPCRoute], but got [TCPRoute]
+
+  - it: should fail with envoy when its api is not available
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            envoy:
+              enabled: true
+              ipWhitelist:
+                - 10.0.0.0/8
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [integrations.envoy] needs API [gateway.envoyproxy.io/v1alpha1/SecurityPolicy], which was not found. Install Envoy Gateway. When rendering without access to a cluster, pass it with [--api-versions]
