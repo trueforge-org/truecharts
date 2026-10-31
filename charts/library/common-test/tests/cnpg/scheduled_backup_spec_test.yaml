@@ -120,3 +120,81 @@ tests:
             immediate: false
             cluster:
               name: test-release-name-common-test-cnpg-my-pg
+
+  - it: should use the plugin method when barmanMode is plugin
+    capabilities:
+      apiVersions:
+        - barmancloud.cnpg.io/v1/ObjectStore
+    set:
+      credentials:
+        test:
+          type: s3
+          url: http://some-url
+          bucket: some-bucket
+          encrKey: some-encr-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          barmanMode: plugin
+          backups:
+            enabled: true
+            credentials: test
+            scheduledBackups:
+              - name: daily
+                schedule: "0 0 * * *"
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ScheduledBackup
+        equal:
+          path: spec
+          value:
+            schedule: "0 0 * * *"
+            backupOwnerReference: none
+            suspend: false
+            immediate: false
+            cluster:
+              name: test-release-name-common-test-cnpg-my-pg
+            method: plugin
+            pluginConfiguration:
+              name: barman-cloud.cloudnative-pg.io
+
+  - it: should not set the method when barmanMode is inTree
+    set:
+      credentials:
+        test:
+          type: s3
+          url: http://some-url
+          bucket: some-bucket
+          encrKey: some-encr-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          barmanMode: inTree
+          backups:
+            enabled: true
+            credentials: test
+            scheduledBackups:
+              - name: daily
+                schedule: "0 0 * * *"
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ScheduledBackup
+        notExists:
+          path: spec.method
+      - documentSelector:
+          path: kind
+          value: ScheduledBackup
+        notExists:
+          path: spec.pluginConfiguration

@@ -64,6 +64,8 @@ global:
     cnpg:
       pgVersion: 16
       skipEmptyWalArchiveCheck: true
+      # -- Default for cnpg.$name.barmanMode
+      barmanMode: inTree
   traefik:
     commonMiddlewares:
       - name: tc-basic-secure-headers
@@ -1346,7 +1348,7 @@ cnpg:
     # Cluster mode of operation. Available modes:
     # * `standalone` - default mode. Creates new or updates an existing CNPG cluster.
     # * `replica` - Creates a replica cluster from an existing CNPG cluster. # TODO
-    # * `recovery` - Same as standalone but creates a cluster from a backup, object store or via pg_basebackup.
+    # * `recovery` - Same as standalone but creates a cluster from a backup or object store.
     mode: standalone
 
     # Database details
@@ -1439,6 +1441,11 @@ cnpg:
       #       - ratio:
       #           usage: GAUGE
       #           description: "Cache hit ratio"
+    # -- What runs backups and object store recovery. Defaults to global.fallbackDefaults.cnpg.barmanMode
+    # * `inTree` - The Barman integration built in to CloudNativePG. Removed in CloudNativePG 1.32.
+    # * `plugin` - The Barman Cloud plugin. Must be installed in the namespace of the CloudNativePG operator.
+    # Switching keeps existing backups usable, as long as destinationPath and serverName stay the same.
+    barmanMode: ""
     # Recovery settings if the chosen mode is `recovery`.
     recovery:
       ##
@@ -1446,14 +1453,13 @@ cnpg:
       # Available recovery methods:
       # * `backup` - Recovers a CNPG cluster from a CNPG backup (PITR supported) Needs to be on the same cluster in the same namespace.
       # * `object_store` - Recovers a CNPG cluster from a barman object store (PITR supported).
-      # * `pg_basebackup` - Recovers a CNPG cluster viaa streaming replication protocol. Useful if you want to
-      #        migrate databases to CloudNativePG, even from outside Kubernetes. # TODO
+      # Note: `backup` is not available when barmanMode is `plugin`.
       method: object_store
-      ## set a revision to append to the serverName to ensure restore and backup dont target the same thing
-      # revision: 1
+      ## set a revision to append to the serverName to ensure restore and backup dont target the same thing. Must be a string.
+      # revision: "1"
 
-      # override serverName in recovery obkect
-      servername: ""
+      # override serverName in recovery object
+      serverName: ""
 
       ## Point in time recovery target. Specify one of the following:
       pitrTarget:
@@ -1463,14 +1469,15 @@ cnpg:
       # Name of the backup to recover from. Required if method is `backup`.
       backupName: ""
 
-      # Object Store Recovery Method
-      clusterName: ""
-
       # Overrides the provider specific default path. Defaults to:
       # S3: s3://<bucket><path>
       # Azure: https://<storageAccount>.<serviceName>.core.windows.net/<clusterName><path>
       # Google: gs://<bucket><path>
       destinationPath: ""
+
+      # Only used when barmanMode is `plugin`. Configures the sidecar of the recovery job.
+      # See: https://cloudnative-pg.io/plugin-barman-cloud/docs/plugin-barman-cloud.v1/#instancesidecarconfiguration
+      # instanceSidecarConfiguration: {}
 
     # Database cluster backup configuration
     backups:
@@ -1479,11 +1486,11 @@ cnpg:
 
       encryption:
         enabled: false
-      ## set a revision to append to the serverName to ensure restore and backup dont target the same thing
-      # revision: 1
+      ## set a revision to append to the serverName to ensure restore and backup dont target the same thing. Must be a string.
+      # revision: "1"
 
-      # override serverName in recovery obkect
-      servername: ""
+      # override serverName in the object store
+      serverName: ""
 
       # Overrides the provider specific default path. Defaults to:
       # S3: s3://<bucket><path>
@@ -1491,7 +1498,7 @@ cnpg:
       # Google: gs://<bucket><path>
       destinationPath: ""
 
-      # default: primary, other option prefer-standby
+      # default: prefer-standby, other option primary
       target: ""
 
       # name of credentials in .Values.Credentials
@@ -1505,6 +1512,14 @@ cnpg:
           suspend: false
 
       retentionPolicy: "30d"
+
+      # Only used when barmanMode is `plugin`. Configures the sidecar of the instance pods.
+      # See: https://cloudnative-pg.io/plugin-barman-cloud/docs/plugin-barman-cloud.v1/#instancesidecarconfiguration
+      # instanceSidecarConfiguration:
+      #   resources:
+      #     requests:
+      #       cpu: 50m
+      #       memory: 128Mi
 
       # - Manual list of backups
       manualBackups: []
