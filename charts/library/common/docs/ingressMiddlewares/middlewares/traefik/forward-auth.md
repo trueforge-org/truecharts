@@ -38,7 +38,7 @@ No description provided.
 | Key        | `ingressMiddlewares.middlewares.traefik.forward-auth.address` |
 | Type       | `string`                                                      |
 | Required   | ✅                                                            |
-| Helm `tpl` | ❌                                                            |
+| Helm `tpl` | ✅                                                            |
 | Default    | unset                                                         |
 | Min Length | `1`                                                           |
 
