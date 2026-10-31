@@ -259,3 +259,48 @@ tests:
           kind: Certificate
           apiVersion: cert-manager.io/v1
           any: true
+
+  - it: should use the port from fallbackDefaults on every route
+    set:
+      global:
+        fallbackDefaults:
+          routeListenerPort: 8443
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          hostnames:
+            - a.example.com
+          tls:
+            - hosts:
+                - a.example.com
+              secretName: some-secret
+    asserts:
+      - documentSelector: *ls
+        equal:
+          path: spec.listeners[0].port
+          value: 8443
+
+  - it: should prefer listenerPort over the port from fallbackDefaults
+    set:
+      global:
+        fallbackDefaults:
+          routeListenerPort: 8443
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          listenerPort: 9443
+          hostnames:
+            - a.example.com
+          tls:
+            - hosts:
+                - a.example.com
+              secretName: some-secret
+    asserts:
+      - documentSelector: *ls
+        equal:
+          path: spec.listeners[0].port
+          value: 9443

@@ -40,7 +40,7 @@
           {{- include "tc.v1.common.class.listenerset" (dict "rootCtx" $ "objectData" (dict
                 "name" $fullName "namespace" $routeValues.namespace "shortName" $name
                 "labels" (mustDeepCopy ($routeValues.labels | default dict)) "annotations" $annotations
-                "gatewayRef" $gatewayRef "port" ($routeValues.listenerPort | default 443) "listeners" $listeners)) | nindent 0 -}}
+                "gatewayRef" $gatewayRef "port" ($routeValues.listenerPort | default $.Values.global.fallbackDefaults.routeListenerPort) "listeners" $listeners)) | nindent 0 -}}
         {{- end -}}
       {{- end -}}
 

@@ -180,8 +180,9 @@
       },
       "listenerPort": {
         "type": "integer",
-        "description": "Port of the listeners created for `tls` and `integrations.certManager`.",
-        "default": 443
+        "minimum": 1,
+        "maximum": 65535,
+        "description": "Port of the listeners created for `tls` and `integrations.certManager`. Defaults to `global.fallbackDefaults.routeListenerPort`."
       },
       "integrations": {
         "type": "object",

@@ -61,6 +61,9 @@ global:
     # -- Define a topologyKey for default topologySpreadConstraints
     # Will be used when defaultSpread: true
     topologyKey: kubernetes.io/hostname
+    # -- Port of the listeners created for route TLS. Can be overruled per route with listenerPort
+    # Traefik needs the port of its entrypoint here, which is not always the port it is exposed on
+    routeListenerPort: 443
     cnpg:
       pgVersion: 16
       skipEmptyWalArchiveCheck: true
@@ -980,8 +983,8 @@ route:
     #    secretName: chart-example-tls
     #    certificateIssuer: ""
     #    clusterCertificate: ""
-    # -- Port of the created listeners
-    listenerPort: 443
+    # -- Port of the created listeners. Defaults to global.fallbackDefaults.routeListenerPort
+    # listenerPort: 443
     integrations:
       # Same as an ingress. Needs cert-manager 1.20 or newer, with ListenerSet support enabled.
       certManager:
