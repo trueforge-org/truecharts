@@ -13,18 +13,34 @@ within the common library.
   {{- $routeLabels := $values.labels -}}
   {{- $routeAnnotations := $values.annotations -}}
 
-{{- $fullName := include "tc.v1.common.lib.chart.names.fullname" . -}}
-{{- if and (hasKey $values "nameOverride") $values.nameOverride -}}
-  {{- $fullName = printf "%v-%v" $fullName $values.nameOverride -}}
-{{- end -}}
+{{- $fullName := .ObjectValues.routeFullName -}}
+{{- $listenerSetNames := .ObjectValues.listenerSetNames -}}
+{{- $routeFilters := .ObjectValues.routeFilters -}}
+{{- $extraRules := .ObjectValues.extraRules -}}
 {{- $routeKind := $values.kind | default "HTTPRoute" -}}
 
 {{- $namespace := include "tc.v1.common.lib.metadata.namespace" (dict "rootCtx" $ "objectData" $values "caller" "Route") -}}
 
-{{/* A route level targetSelector replaces parentRefs */}}
+{{/* A gateway selection replaces parentRefs */}}
 {{- $parentRefs := $values.parentRefs -}}
-{{- if $values.targetSelector -}}
+{{- if $values.gateway -}}
+  {{- $parentRefs = list (dict "name" (tpl $values.gateway $) "namespace" (tpl ($values.gatewayNamespace | default $namespace) $)) -}}
+{{- else if and $values.targetSelector (kindIs "string" $values.targetSelector) -}}
   {{- $parentRefs = list (dict "targetSelector" $values.targetSelector) -}}
+{{- end -}}
+
+{{/* TLS is on a ListenerSet of the selected gateway, so the route attaches to that */}}
+{{- if $listenerSetNames -}}
+  {{- $parentRefs = list -}}
+  {{- range $listenerSetNames -}}
+    {{- $parentRefs = mustAppend $parentRefs (dict "kind" "ListenerSet" "name" . "namespace" $namespace) -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* A [targetSelector] map selects the default service and port, same as an ingress */}}
+{{- $defaultSelector := "" -}}
+{{- if kindIs "map" $values.targetSelector -}}
+  {{- $defaultSelector = $values.targetSelector -}}
 {{- end -}}
 
 {{/* Validate that parentRefs is not empty */}}
@@ -34,6 +50,41 @@ within the common library.
 
 {{/* Without rules, send everything to the primary service */}}
 {{- $rules := $values.rules | default (list dict) -}}
+
+{{/* Annotations are copied, so the integration only adds them to this object */}}
+{{- $routeAnnotations = mustDeepCopy ($routeAnnotations | default dict) -}}
+{{- $routeIntegrations := $values.integrations | default dict -}}
+{{- if and $routeIntegrations.homepage $routeIntegrations.homepage.enabled -}}
+  {{/* First backend and path of the route, an ingress uses its first host and path */}}
+  {{- $firstBackend := dict -}}
+  {{- $firstPath := "/" -}}
+  {{- $foundBackend := false -}}
+  {{- range $idx, $rule := $rules -}}
+    {{- if and (not $foundBackend) (or $rule.backendRefs (not $rule.filters)) -}}
+      {{- $foundBackend = true -}}
+      {{- if $rule.backendRefs -}}
+        {{- $firstBackend = first $rule.backendRefs -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if and (eq $idx 0) $rule.matches -}}
+      {{- $firstMatch := first $rule.matches -}}
+      {{- if and $firstMatch.path $firstMatch.path.value -}}
+        {{- $firstPath = $firstMatch.path.value -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $selectedService := include "tc.v1.common.lib.route.backend" (dict "rootCtx" $ "backend" $firstBackend "routeName" $fullName "defaultSelector" $defaultSelector) | fromYaml -}}
+  {{/* The integration formats the port as a string */}}
+  {{- $_ := set $selectedService "port" ($selectedService.port | int | toString) -}}
+
+  {{- $hosts := list -}}
+  {{- with $values.hostnames -}}
+    {{- $hosts = list (dict "host" (first .) "paths" (list (dict "path" $firstPath))) -}}
+  {{- end -}}
+  {{- include "tc.v1.common.lib.ingress.integration.homepage" (dict "rootCtx" $ "caller" "Route" "objectData" (dict
+        "namespace" $values.namespace "hosts" $hosts "selectedService" $selectedService
+        "annotations" $routeAnnotations "integrations" (mustDeepCopy $routeIntegrations))) -}}
+{{- end }}
 
 ---
 apiVersion: {{ include "tc.v1.common.capabilities.route.apiVersion" (dict "rootCtx" $ "kind" $routeKind) }}
@@ -47,8 +98,10 @@ metadata:
     {{- . | nindent 4 }}
   {{- end -}}
   {{- $annotations := (mustMerge ($routeAnnotations | default dict) (include "tc.v1.common.lib.metadata.allAnnotations" $ | fromYaml)) }}
-  {{- with (include "tc.v1.common.lib.metadata.render" (dict "rootCtx" $ "annotations" $annotations) | trim) }}
   annotations:
+    checksum/secrets: {{ toJson $.Values.secret | sha256sum }}
+    checksum/services: {{ toJson $.Values.service | sha256sum }}
+  {{- with (include "tc.v1.common.lib.metadata.render" (dict "rootCtx" $ "annotations" $annotations) | trim) }}
     {{- . | nindent 4 }}
   {{- end }}
 spec:
@@ -94,17 +147,30 @@ spec:
     {{- end }}
   {{- end }}
   rules:
+  {{- with $extraRules }}
+    {{- toYaml . | nindent 2 }}
+  {{- end }}
   {{- range $rules }}
-    {{- $rule := omit . "backendRefs" -}}
+    {{- $rule := omit (mustDeepCopy .) "backendRefs" -}}
+    {{- range $rule.matches -}}
+      {{- if and .path .path.value -}}
+        {{- $_ := set .path "value" (tpl .path.value $) -}}
+      {{- end -}}
+    {{- end -}}
     {{- $backendRefs := .backendRefs -}}
     {{/* A rule with only filters is valid, eg a redirect. Otherwise default to the primary service */}}
     {{- if and (not $backendRefs) (not .filters) -}}
       {{- $backendRefs = list dict -}}
     {{- end -}}
 
+    {{/* Filters of the integrations go first, so auth runs before the filters of the rule */}}
+    {{- if $routeFilters -}}
+      {{- $_ := set $rule "filters" (concat $routeFilters ($rule.filters | default list)) -}}
+    {{- end -}}
+
     {{- $renderedBackends := list -}}
     {{- range $backendRefs -}}
-      {{- $resolved := include "tc.v1.common.lib.route.backend" (dict "rootCtx" $ "backend" . "routeName" $fullName) | fromYaml -}}
+      {{- $resolved := include "tc.v1.common.lib.route.backend" (dict "rootCtx" $ "backend" . "routeName" $fullName "defaultSelector" $defaultSelector) | fromYaml -}}
       {{/* Zero is a valid weight, it stops traffic to the backend */}}
       {{- $weight := 1 -}}
       {{- if not (kindIs "invalid" .weight) -}}

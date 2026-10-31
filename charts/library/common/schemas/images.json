@@ -163,11 +163,43 @@
       "description": "Configuration for `postgres16Image`."
     },
     "postgres17Image": {
-      "$ref": "image.json",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "description": "Configuration for `postgres17Image.repository`."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Configuration for `postgres17Image.tag`."
+        },
+        "pullPolicy": {
+          "type": "string",
+          "description": "Configuration for `postgres17Image.pullPolicy`."
+        }
+      },
+      "additionalProperties": true,
       "description": "Configuration for `postgres17Image`."
     },
     "postgres18Image": {
-      "$ref": "image.json",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "description": "Configuration for `postgres18Image.repository`."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Configuration for `postgres18Image.tag`."
+        },
+        "pullPolicy": {
+          "type": "string",
+          "description": "Configuration for `postgres18Image.pullPolicy`."
+        }
+      },
+      "additionalProperties": true,
       "description": "Configuration for `postgres18Image`."
     },
     "postgresClientImage": {
@@ -231,11 +263,43 @@
       "description": "Configuration for `postgresPostgis16Image`."
     },
     "postgresPostgis17Image": {
-      "$ref": "image.json",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "description": "Configuration for `postgresPostgis17Image.repository`."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Configuration for `postgresPostgis17Image.tag`."
+        },
+        "pullPolicy": {
+          "type": "string",
+          "description": "Configuration for `postgresPostgis17Image.pullPolicy`."
+        }
+      },
+      "additionalProperties": true,
       "description": "Configuration for `postgresPostgis17Image`."
     },
     "postgresPostgis18Image": {
-      "$ref": "image.json",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "description": "Configuration for `postgresPostgis18Image.repository`."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Configuration for `postgresPostgis18Image.tag`."
+        },
+        "pullPolicy": {
+          "type": "string",
+          "description": "Configuration for `postgresPostgis18Image.pullPolicy`."
+        }
+      },
+      "additionalProperties": true,
       "description": "Configuration for `postgresPostgis18Image`."
     },
     "postgresVectorchord15Image": {
@@ -279,11 +343,43 @@
       "description": "Configuration for `postgresVectorchord16Image`."
     },
     "postgresVectorchord17Image": {
-      "$ref": "image.json",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "description": "Configuration for `postgresVectorchord17Image.repository`."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Configuration for `postgresVectorchord17Image.tag`."
+        },
+        "pullPolicy": {
+          "type": "string",
+          "description": "Configuration for `postgresVectorchord17Image.pullPolicy`."
+        }
+      },
+      "additionalProperties": true,
       "description": "Configuration for `postgresVectorchord17Image`."
     },
     "postgresVectorchord18Image": {
-      "$ref": "image.json",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "description": "Configuration for `postgresVectorchord18Image.repository`."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Configuration for `postgresVectorchord18Image.tag`."
+        },
+        "pullPolicy": {
+          "type": "string",
+          "description": "Configuration for `postgresVectorchord18Image.pullPolicy`."
+        }
+      },
+      "additionalProperties": true,
       "description": "Configuration for `postgresVectorchord18Image`."
     },
     "postgresVectors15Image": {
@@ -327,7 +423,23 @@
       "description": "Configuration for `postgresVectors16Image`."
     },
     "postgresVectors17Image": {
-      "$ref": "image.json",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "description": "Configuration for `postgresVectors17Image.repository`."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Configuration for `postgresVectors17Image.tag`."
+        },
+        "pullPolicy": {
+          "type": "string",
+          "description": "Configuration for `postgresVectors17Image.pullPolicy`."
+        }
+      },
+      "additionalProperties": true,
       "description": "Configuration for `postgresVectors17Image`."
     },
     "tailscaleImage": {

@@ -196,6 +196,30 @@ global:
 
 ---
 
+### `global.fallbackDefaults.routeListenerPort`
+
+Port of the listeners created for route TLS. Can be overruled per route with `route.$name.listenerPort`. Traefik needs the port of its entrypoint here, which is not always the port it is exposed on.
+
+| Field      | Value                                       |
+| ---------- | ------------------------------------------- |
+| Key        | `global.fallbackDefaults.routeListenerPort` |
+| Type       | `integer`                                   |
+| Required   | ❌                                          |
+| Helm `tpl` | ❌                                          |
+| Default    | `443`                                       |
+| Minimum    | `1`                                         |
+| Maximum    | `65535`                                     |
+
+Example
+
+```yaml
+global:
+  fallbackDefaults:
+    routeListenerPort: 443
+```
+
+---
+
 ### `global.fallbackDefaults.serviceProtocol`
 
 Configuration for `global.fallbackDefaults.serviceProtocol`.

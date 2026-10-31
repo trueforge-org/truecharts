@@ -13,7 +13,7 @@
       {{- $widEnabled = $homepage.widget.enabled -}}
     {{- end -}}
 
-    {{- include "tc.v1.common.lib.ingress.integration.homepage.validation" (dict "objectData" $objectData) -}}
+    {{- include "tc.v1.common.lib.ingress.integration.homepage.validation" (dict "objectData" $objectData "caller" (.caller | default "Ingress")) -}}
 
     {{- $name := $homepage.name | default ($rootCtx.Release.Name | camelcase | title) -}}
     {{- $desc := $homepage.description | default $rootCtx.Chart.Description -}}
@@ -39,7 +39,7 @@
       {{- $svc := $objectData.selectedService.name -}}
       {{- $port := $objectData.selectedService.port -}}
       {{- $prot := $objectData.selectedService.protocol -}}
-      {{- $ns := include "tc.v1.common.lib.metadata.namespace" (dict "rootCtx" $rootCtx "objectData" $objectData "caller" "Ingress") -}}
+      {{- $ns := include "tc.v1.common.lib.metadata.namespace" (dict "rootCtx" $rootCtx "objectData" $objectData "caller" (.caller | default "Ingress")) -}}
 
       {{- $url = printf "%s://%s.%s.svc:%s" $prot $svc $ns $port -}}
     {{- end -}}
@@ -91,28 +91,29 @@
 
 {{- define "tc.v1.common.lib.ingress.integration.homepage.validation" -}}
   {{- $objectData := .objectData -}}
+  {{- $caller := .caller -}}
 
   {{- $homepage := $objectData.integrations.homepage -}}
 
   {{- with $homepage.podSelector -}}
     {{- if not (kindIs "slice" .) -}}
-      {{- fail (printf "Ingress - Expected [integrations.homepage.podSelector] to be a [slice], but got [%s]" (kindOf .)) -}}
+      {{- fail (printf "%s - Expected [integrations.homepage.podSelector] to be a [slice], but got [%s]" $caller (kindOf .)) -}}
     {{- end -}}
   {{- end -}}
 
   {{- if $homepage.widget.custom -}}
     {{- if not (kindIs "map" $homepage.widget.custom) -}}
-      {{- fail (printf "Ingress - Expected [integrations.homepage.widget.custom] to be a [map], but got [%s]" (kindOf $homepage.widget.custom)) -}}
+      {{- fail (printf "%s - Expected [integrations.homepage.widget.custom] to be a [map], but got [%s]" $caller (kindOf $homepage.widget.custom)) -}}
     {{- end -}}
   {{- end -}}
 
   {{- if $homepage.widget.customkv -}}
     {{- if not (kindIs "slice" $homepage.widget.customkv) -}}
-      {{- fail (printf "Ingress - Expected [integrations.homepage.widget.customkv] to be a [slice], but got [%s]" (kindOf $homepage.widget.customkv)) -}}
+      {{- fail (printf "%s - Expected [integrations.homepage.widget.customkv] to be a [slice], but got [%s]" $caller (kindOf $homepage.widget.customkv)) -}}
     {{- end -}}
     {{- range $item := $homepage.widget.customkv -}}
       {{- if not $item.key -}}
-        {{- fail "Ingress - Expected non-empty [key] in [integrations.homepage.widget.customkv]" -}}
+        {{- fail (printf "%s - Expected non-empty [key] in [integrations.homepage.widget.customkv]" $caller) -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}
