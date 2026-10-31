@@ -440,6 +440,7 @@ Backups and object store recovery use the [Barman Cloud plugin](https://cloudnat
 Moving from a version with the built-in Barman integration:
 
 - Keep `destinationPath`, `serverName` and `revision` unchanged, so existing backups stay usable.
+- A cluster can recover from and archive to the same archive with `cluster.skipEmptyWalArchiveCheck`, which is on by default. CloudNativePG's safety check for this is then off, so make sure no other cluster still writes to that archive. With the check on, set a different `revision` for `backups` and `recovery`.
 - Delete existing `Backup` objects from `manualBackups` first, or give those entries a new name. Their spec is immutable, so the upgrade fails otherwise.
 - The switch triggers a rolling update of the cluster. Clusters with a single instance have a brief outage.
 - Remove `barmanMode` and `recovery.backupName` from your values. `recovery.method: backup` is no longer available, use `object_store` instead.

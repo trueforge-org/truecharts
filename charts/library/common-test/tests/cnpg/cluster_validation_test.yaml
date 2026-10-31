@@ -342,6 +342,8 @@ tests:
           user: test-user
           database: test-db
           password: test-password
+          cluster:
+            skipEmptyWalArchiveCheck: false
           mode: recovery
           recovery:
             method: object_store
@@ -363,6 +365,8 @@ tests:
           user: test-user
           database: test-db
           password: test-password
+          cluster:
+            skipEmptyWalArchiveCheck: false
           mode: recovery
           recovery:
             method: object_store
@@ -523,6 +527,8 @@ tests:
           user: test-user
           database: test-db
           password: test-password
+          cluster:
+            skipEmptyWalArchiveCheck: false
           mode: recovery
           recovery:
             method: object_store
@@ -548,3 +554,34 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: CNPG Recovery - Expected [recovery.method] to be one of [object_store], but got [backup]
+
+  - it: should not fail with recovery and backup on the same archive when the empty archive check is skipped
+    set:
+      credentials:
+        test:
+          type: s3
+          encrKey: some-encr-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+          bucket: some-bucket
+          url: http://some-url
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          mode: recovery
+          recovery:
+            method: object_store
+            credentials: test
+          backups:
+            enabled: true
+            credentials: test
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: metadata.annotations["cnpg.io/skipEmptyWalArchiveCheck"]
+          value: enabled

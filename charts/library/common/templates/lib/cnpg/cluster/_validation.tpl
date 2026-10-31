@@ -132,8 +132,14 @@
         {{- end -}}
       {{- end -}}
 
-      {{/* Only recovering from an object store reads an archive, and missing credentials are reported by the secret spawner */}}
-      {{- if and (eq $objectData.mode "recovery") (eq $objectData.recovery.method "object_store") $objectData.backups.credentials $objectData.recovery.credentials -}}
+      {{- $skipEmptyWalArchiveCheck := $rootCtx.Values.global.fallbackDefaults.cnpg.skipEmptyWalArchiveCheck -}}
+      {{- if and $objectData.cluster (kindIs "bool" $objectData.cluster.skipEmptyWalArchiveCheck) -}}
+        {{- $skipEmptyWalArchiveCheck = $objectData.cluster.skipEmptyWalArchiveCheck -}}
+      {{- end -}}
+
+      {{/* With the check on, CloudNativePG would never start archiving to the archive it recovered from, so fail early.
+      Only recovering from an object store reads an archive, and missing credentials are reported by the secret spawner */}}
+      {{- if and (not $skipEmptyWalArchiveCheck) (eq $objectData.mode "recovery") (eq $objectData.recovery.method "object_store") $objectData.backups.credentials $objectData.recovery.credentials -}}
         {{- $backupStore := include "tc.v1.common.lib.cnpg.cluster.barmanObjectStoreConfig.getData" (dict "rootCtx" $rootCtx "objectData" $objectData "type" "backup") | fromYaml -}}
         {{- $recoveryStore := include "tc.v1.common.lib.cnpg.cluster.barmanObjectStoreConfig.getData" (dict "rootCtx" $rootCtx "objectData" $objectData "type" "recovery") | fromYaml -}}
 

@@ -1586,7 +1586,8 @@ cnpg:
       # Available recovery methods:
       # * `object_store` - Recovers a CNPG cluster from a barman object store (PITR supported).
       method: object_store
-      ## set a revision to append to the serverName to ensure restore and backup dont target the same thing. Must be a string.
+      ## set a revision to append to the serverName, so restore and backup use a different archive. Must be a string.
+      ## Required when cluster.skipEmptyWalArchiveCheck is false and both use the same archive.
       # revision: "1"
 
       # override serverName in recovery object
@@ -1614,7 +1615,8 @@ cnpg:
 
       encryption:
         enabled: false
-      ## set a revision to append to the serverName to ensure restore and backup dont target the same thing. Must be a string.
+      ## set a revision to append to the serverName, so restore and backup use a different archive. Must be a string.
+      ## Required when cluster.skipEmptyWalArchiveCheck is false and both use the same archive.
       # revision: "1"
 
       # override serverName in the object store
