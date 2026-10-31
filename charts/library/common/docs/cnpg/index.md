@@ -66,29 +66,6 @@ Configuration for `cnpg.main.backups`.
 
 ---
 
-### `cnpg.$name.barmanMode`
-
-What runs backups and object store recovery. `inTree` uses the Barman integration built in to CloudNativePG, which is removed in CloudNativePG 1.32. `plugin` uses the Barman Cloud plugin, which must be installed in the namespace of the CloudNativePG operator. Rendering fails if the plugin is not available and the cluster has backups or object store recovery enabled. Defaults to `global.fallbackDefaults.cnpg.barmanMode`.
-
-| Field      | Value                   |
-| ---------- | ----------------------- |
-| Key        | `cnpg.$name.barmanMode` |
-| Type       | `string`                |
-| Required   | ❌                      |
-| Helm `tpl` | ❌                      |
-| Default    | `""`                    |
-| Enum       | ``, `inTree`, `plugin`  |
-
-Example
-
-```yaml
-cnpg:
-  $name:
-    barmanMode: ""
-```
-
----
-
 ### `cnpg.$name.cluster`
 
 Define a CNPG cluster
@@ -437,7 +414,6 @@ cnpg:
   # Backups through the Barman Cloud plugin, recovering from a previous archive
   my-cluster-2:
     enabled: true
-    barmanMode: plugin
     mode: recovery
     database: "my-app"
     user: "my-user"
@@ -457,17 +433,15 @@ cnpg:
           backupOwnerReference: self
 ```
 
-## Migrating to the Barman Cloud plugin
+## Barman Cloud plugin
 
-CloudNativePG removes its built-in Barman integration in version 1.32. To move a cluster to the plugin:
+Backups and object store recovery use the [Barman Cloud plugin](https://cloudnative-pg.io/plugin-barman-cloud/docs/installation/), which must be installed in the namespace of the CloudNativePG operator. It requires cert-manager and CloudNativePG 1.26 or newer. Rendering fails without it, when backups or recovery are enabled.
 
-1. [Install the plugin](https://cloudnative-pg.io/plugin-barman-cloud/docs/installation/) in the namespace of the CloudNativePG operator. It requires cert-manager.
-2. Set `barmanMode: plugin` on the cluster, or `global.fallbackDefaults.cnpg.barmanMode` for all of them.
-3. Keep `destinationPath`, `serverName` and `revision` unchanged, so existing backups stay usable.
+Moving from a version with the built-in Barman integration:
 
-Keep in mind that:
-
+- Keep `destinationPath`, `serverName` and `revision` unchanged, so existing backups stay usable.
+- Delete existing `Backup` objects from `manualBackups` first, or give those entries a new name. Their spec is immutable, so the upgrade fails otherwise.
 - The switch triggers a rolling update of the cluster. Clusters with a single instance have a brief outage.
-- `recovery.method: backup` is not available, use `object_store` instead.
+- Remove `barmanMode` and `recovery.backupName` from your values. `recovery.method: backup` is no longer available, use `object_store` instead.
 - The metrics are renamed, from `cnpg_collector_*` to `barman_cloud_cloudnative_pg_io_*`. Update your alerts and dashboards.
 - The check for the plugin looks for its API on the cluster. It cannot tell if the plugin is running. When rendering without access to a cluster, pass `--api-versions barmancloud.cnpg.io/v1/ObjectStore`.

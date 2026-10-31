@@ -34,9 +34,6 @@
         {{/* TODO: actually handle postgres version updates here */}}
       {{- end -}}
 
-      {{/* Select between in-tree Barman and the Barman Cloud plugin. One setting for backup and recovery, so a cluster cannot mix them */}}
-      {{- $_ := set $objectData "barmanMode" ($objectData.barmanMode | default $.Values.global.fallbackDefaults.cnpg.barmanMode | default "inTree") -}}
-
       {{- include "tc.v1.common.lib.util.metaListToDict" (dict "objectData" $objectData) -}}
 
       {{/* Handle Backups/ScheduledBackups */}}
@@ -52,9 +49,7 @@
         {{- include "tc.v1.common.lib.cnpg.provider.secret.spawner" (dict "rootCtx" $ "objectData" $objectData "type" "backup") -}}
 
         {{/* Create ObjectStore for backups */}}
-        {{- if eq $objectData.barmanMode "plugin" -}}
-          {{- include "tc.v1.common.class.cnpg.objectStore" (dict "rootCtx" $ "objectData" $objectData "type" "backup") -}}
-        {{- end -}}
+        {{- include "tc.v1.common.class.cnpg.objectStore" (dict "rootCtx" $ "objectData" $objectData "type" "backup") -}}
       {{- end -}}
 
       {{/* Handle Pooler(s) */}}
@@ -71,9 +66,7 @@
         {{- include "tc.v1.common.lib.cnpg.provider.secret.spawner" (dict "rootCtx" $ "objectData" $objectData "type" "recovery") -}}
 
         {{/* Create ObjectStore for recovery */}}
-        {{- if eq $objectData.barmanMode "plugin" -}}
-          {{- include "tc.v1.common.class.cnpg.objectStore" (dict "rootCtx" $ "objectData" $objectData "type" "recovery") -}}
-        {{- end -}}
+        {{- include "tc.v1.common.class.cnpg.objectStore" (dict "rootCtx" $ "objectData" $objectData "type" "recovery") -}}
       {{- end -}}
 
       {{/* Create the Cluster object */}}
