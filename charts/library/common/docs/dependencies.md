@@ -65,7 +65,7 @@ dependencies:
     persistence:
       data:
         enabled: true
-        mountPath: /data
+        mountPath: /bitnami/valkey
 ```
 
 ---
@@ -124,20 +124,22 @@ dependencies:
 2. **Depconfig Exclusion**: The `depconfig` subdict is NOT merged into main values. It contains dependency-specific configuration and generated credentials.
 
 3. **Universal Resource Prefixing**: When a dependency is enabled, ALL its resources (except excluded keys) are merged into the main chart with prefixed names:
-   - **Prefixed**: workload, service, configmap, secret, persistence, volumeClaimTemplates, podDisruptionBudget, hpa, vpa, ingress, route, gateway, certificate, serviceAccount, rbac, networkPolicy, storageClass, and any other resource type
+   - **Prefixed**: workload, service, configmap, secret, persistence, podDisruptionBudget, hpa, vpa, ingress, route, gateway, certificate, serviceAccount, rbac, networkPolicy, storageClass, and any other resource type
    - **Excluded from prefixing**: global, securityContext, podOptions, enabled, depconfig, image (handled specially), chartContext, fallbackDefaults, notes, operator
    - Examples:
      - `workload.main` → `workload.$name-main`
      - `service.main` → `service.$name-main`
      - `configmap.config` → `configmap.$name-config`
-     - `volumeClaimTemplates.data` → `volumeClaimTemplates.$name-data`
+     - `persistence.data` → `persistence.$name-data`
      - Any new resource type automatically gets prefixed
 
 4. **Image Handling**: The `image` key is handled specially - instead of prefixing resources within it, the key itself is prefixed to `$nameImage` (e.g., `valkeyImage`)
 
 5. **Automatic Init Containers**: The common chart automatically detects dependency services (like valkey) and creates appropriate init containers to wait for them to be ready.
 
-6. **Connection Information**: Connection details for dependencies are automatically included in the chart notes.
+6. **Persistent Data**: Add a `persistence` entry for any data that has to survive a restart. Without one, the data is on the container filesystem and is lost with the pod. The `mountPath` has to be where the image stores its data, which is `/bitnami/valkey` for the Bitnami Valkey image. A top-level `volumeClaimTemplates` key is not used, and fails rendering.
+
+7. **Connection Information**: Connection details for dependencies are automatically included in the chart notes.
 
 7. **Credential Generation**: For database-like dependencies (valkey, mariadb, mongodb, etc.), credentials are automatically generated and stored in `depconfig.creds`.
 
@@ -188,11 +190,9 @@ dependencies:
             enabled: true
             port: 6379
             targetPort: 6379
-    volumeClaimTemplates:
+    persistence:
       data:
         enabled: true
-        accessModes:
-          - ReadWriteOnce
         mountPath: "/bitnami/valkey"
 
 # In your main workload, access credentials:

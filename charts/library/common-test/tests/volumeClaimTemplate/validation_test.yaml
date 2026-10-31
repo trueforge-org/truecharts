@@ -5,6 +5,29 @@ release:
   name: test-release-name
   namespace: test-release-namespace
 tests:
+  - it: should fail with the unused top level key
+    set:
+      volumeClaimTemplates:
+        data:
+          enabled: true
+          mountPath: /data
+    asserts:
+      - failedTemplate:
+          errorMessage: "Expected no [volumeClaimTemplates], as this key is not used, so [data] would not be persisted. Use [persistence] instead, a new volume on an existing StatefulSet can't use [type: vct]"
+
+  - it: should fail with the unused key on a dependency
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          volumeClaimTemplates:
+            data:
+              enabled: true
+              mountPath: /data
+    asserts:
+      - failedTemplate:
+          errorMessage: "Expected no [volumeClaimTemplates], as this key is not used, so [valkey-data] would not be persisted. Use [persistence] instead, a new volume on an existing StatefulSet can't use [type: vct]"
+
   - it: should fail with annotations not a dict
     set:
       persistence:
