@@ -313,6 +313,10 @@
         "additionalProperties": true,
         "description": "Define the number of history revisions"
       },
+      "allowRollingUpdateWithRWO": {
+        "type": "boolean",
+        "description": "Keep `strategy: RollingUpdate` on a single replica Deployment with `ReadWriteOnce` volumes, instead of changing it to `Recreate`. Overrules `global.fallbackDefaults.allowRollingUpdateWithRWO`. `ReadWriteOncePod` volumes always use `Recreate`."
+      },
       "strategy": {
         "oneOf": [
           {
