@@ -17,6 +17,9 @@ on:
   #  paths:
   #    - "charts/charts/library/common/**"
   #    - ".github/workflows/common-tests.yaml"
+  # The full matrix, as pull requests only test the oldest and newest versions
+  schedule:
+    - cron: "0 3 * * *"
   workflow_dispatch:
 
 jobs:
@@ -24,7 +27,7 @@ jobs:
     runs-on:
       group: default
     outputs:
-      changes_detected: ${{ steps.filter.outputs.changed }}
+      changes_detected: ${{ steps.filter.outputs.changed == 'true' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
 
     steps:
       - name: Checkout code
@@ -176,23 +179,18 @@ jobs:
           path: stable_schema_validation.log
 
   install:
+    # Install jobs are the slowest, do not start them if a fast check already failed
     needs:
       - lint
-    name: Install Charts
+      - unittest
+      - schema-validation
+    name: Install Charts (${{ matrix.versions.k3s }}, ${{ matrix.versions.helm }}, ${{ matrix.values }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        # We test the latest k3s version and the lowest supported
-        k3s-version:
-          - v1.33
-          - v1.34
-          - v1.35
-        # We test the latest helm version and the lowest supported
-        helm-version:
-          - v3.14.0
-          - v3.20.0
-          - v4.1.0
+        # Pull requests test the lowest supported and the latest versions. Everything else tests all combinations
+        versions: ${{ fromJSON('[{"k3s":"v1.33","helm":"v3.14.0"},{"k3s":"v1.35","helm":"v4.1.0"}]') }}
         values:
           - basic-values.yaml
           - configmap-values.yaml
@@ -236,7 +234,7 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310 # v5
         with:
-          version: ${{ matrix.helm-version }}
+          version: ${{ matrix.versions.helm }}
 
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
@@ -251,7 +249,7 @@ jobs:
         uses: nolar/setup-k3d-k3s@62c9d1bd2bc843275c85d2e7dcd696edc1160eee # v1.1.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          version: ${{ matrix.k3s-version }}
+          version: ${{ matrix.versions.k3s }}
           # Flags found here https://github.com/k3d-io/k3d
           k3d-args: --k3s-arg --disable=metrics-server@server:*
 
@@ -266,7 +264,7 @@ jobs:
         uses: nolar/setup-k3d-k3s@62c9d1bd2bc843275c85d2e7dcd696edc1160eee # v1.1.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          version: ${{ matrix.k3s-version }}
+          version: ${{ matrix.versions.k3s }}
           # Flags found here https://github.com/k3d-io/k3d
           k3d-args: --k3s-arg --disable=metrics-server@server:*
 
@@ -280,7 +278,7 @@ jobs:
         uses: nolar/setup-k3d-k3s@62c9d1bd2bc843275c85d2e7dcd696edc1160eee # v1.1.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          version: ${{ matrix.k3s-version }}
+          version: ${{ matrix.versions.k3s }}
           # Flags found here https://github.com/k3d-io/k3d
           k3d-args: --k3s-arg --disable=metrics-server@server:*
 
