@@ -13,7 +13,11 @@ within the common library.
   {{- $gatewayClassLabels := $values.labels -}}
   {{- $gatewayClassAnnotations := $values.annotations -}}
 
-{{- $fullName := include "tc.v1.common.lib.util.gatewayclass.getFullName" (dict "rootCtx" . "gatewayClass" $values) -}}
+{{- $gatewayClassName := "" -}}
+{{- with .ObjectValues -}}
+  {{- $gatewayClassName = .gatewayClassName -}}
+{{- end -}}
+{{- $fullName := include "tc.v1.common.lib.util.gatewayclass.getFullName" (dict "rootCtx" $ "name" $gatewayClassName) -}}
 
 ---
 apiVersion: gateway.networking.k8s.io/v1
@@ -33,7 +37,7 @@ metadata:
 spec:
   controllerName: {{ required (printf "controllerName is required for GatewayClass %v" $fullName) $values.controllerName }}
   {{- if $values.description }}
-  description: {{ $values.description }}
+  description: {{ $values.description | quote }}
   {{- end }}
   {{- if $values.parametersRef }}
   parametersRef:

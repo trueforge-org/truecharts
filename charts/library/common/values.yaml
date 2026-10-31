@@ -852,7 +852,7 @@ certificate: {}
 # Additional gateway classes can be added by adding a dictionary key similar to the 'main' gateway class.
 # Please be aware that this is an early beta of this feature, TrueCharts does not guarantee this actually works.
 # Being BETA this can/will change in the future without notice, please do not use unless you want to take that risk
-# [[ref]](https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1.GatewayClass)
+# [[ref]](https://gateway-api.sigs.k8s.io/reference/spec/#gatewayclass)
 # @default -- See below
 gatewayClass:
   main:
@@ -877,7 +877,7 @@ gatewayClass:
 # Additional gateways can be added by adding a dictionary key similar to the 'main' gateway.
 # Please be aware that this is an early beta of this feature, TrueCharts does not guarantee this actually works.
 # Being BETA this can/will change in the future without notice, please do not use unless you want to take that risk
-# [[ref]](https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1)
+# [[ref]](https://gateway-api.sigs.k8s.io/reference/spec/#gateway)
 # @default -- See below
 gateway:
   main:
@@ -893,6 +893,13 @@ gateway:
     # -- Optional: Name-based selector for automatic GatewayClass linking
     # When set, automatically references the specified gatewayClass.$name
     # targetSelector: main
+    # -- Optional: addresses, infrastructure, allowedListeners and tls are passed to the Gateway as is
+    # addresses:
+    #   - type: IPAddress
+    #     value: 192.168.1.10
+    # infrastructure:
+    #   annotations:
+    #     example: example
     # -- Gateway listeners configuration
     listeners:
       - name: http
@@ -917,7 +924,7 @@ gateway:
 # Additional routes can be added by adding a dictionary key similar to the 'main' route.
 # Please be aware that this is an early beta of this feature, TrueCharts does not guarantee this actually works.
 # Being BETA this can/will change in the future without notice, please do not use unless you want to take that risk
-# [[ref]](https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io%2fv1alpha2)
+# [[ref]](https://gateway-api.sigs.k8s.io/reference/spec/#httproute)
 # @default -- See below
 route:
   main:
@@ -938,25 +945,47 @@ route:
     parentRefs:
       - group: gateway.networking.k8s.io
         kind: Gateway
+        # Name of a gateway in this chart. Takes the place of `name` and `namespace`
+        # targetSelector: main
         name:
+        # Defaults to the namespace of the route
         namespace:
+        # Attach to a single listener of the gateway
         sectionName:
-    # -- Host addresses
+        # port: 443
+    # -- Host addresses. Required for TLSRoute, not supported by TCPRoute and UDPRoute
     hostnames: []
-    # -- Configure rules for routing. Defaults to the primary service.
-    rules:
-      - backendRefs:
-          - group: ""
-            kind: Service
-            name:
-            namespace:
-            port:
-            weight: 1
-        ## Configure conditions used for matching incoming requests. Only for HTTPRoutes
-        matches:
-          - path:
-              type: PathPrefix
-              value: /
+    # -- Configure rules for routing. Without rules everything goes to the primary service.
+    # Fields a route kind does not support fail rendering, see the Route docs.
+    rules: []
+    #   - name: main
+    #     # Only for HTTPRoute and GRPCRoute. HTTPRoute defaults to all paths.
+    #     matches:
+    #       - path:
+    #           type: PathPrefix
+    #           value: /
+    #     # Only for HTTPRoute and GRPCRoute. A rule with only filters needs no backendRefs, eg a redirect.
+    #     filters:
+    #       - type: RequestHeaderModifier
+    #         requestHeaderModifier:
+    #           add:
+    #             - name: X-Example
+    #               value: example
+    #     # Only for HTTPRoute
+    #     timeouts:
+    #       request: 10s
+    #       backendRequest: 5s
+    #     backendRefs:
+    #       # Name of a service in this chart. Without this or `name`, the primary service is used.
+    #       - targetSelector: main
+    #         # Name of the object, without any expanding. Cannot be used with targetSelector.
+    #         # name: external-service
+    #         # Defaults to the primary port of the selected service
+    #         port: 8080
+    #         # Set to 0 to stop sending traffic to this backend
+    #         weight: 1
+    #         # Only for HTTPRoute and GRPCRoute
+    #         filters: []
 
 podDisruptionBudget:
   main:

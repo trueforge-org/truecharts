@@ -145,6 +145,62 @@ Each listener must specify:
 
 ---
 
+### `gateway.$name.addresses`
+
+Requested addresses for the gateway. Passed as is.
+
+| Field      | Value                     |
+| ---------- | ------------------------- |
+| Key        | `gateway.$name.addresses` |
+| Type       | `list of unknown`         |
+| Required   | ❌                        |
+| Helm `tpl` | ❌                        |
+| Default    | unset                     |
+
+---
+
+### `gateway.$name.allowedListeners`
+
+Which ListenerSets may attach to the gateway. Passed as is.
+
+| Field      | Value                            |
+| ---------- | -------------------------------- |
+| Key        | `gateway.$name.allowedListeners` |
+| Type       | `map`                            |
+| Required   | ❌                               |
+| Helm `tpl` | ❌                               |
+| Default    | unset                            |
+
+---
+
+### `gateway.$name.infrastructure`
+
+Infrastructure settings of the gateway. Passed as is.
+
+| Field      | Value                          |
+| ---------- | ------------------------------ |
+| Key        | `gateway.$name.infrastructure` |
+| Type       | `map`                          |
+| Required   | ❌                             |
+| Helm `tpl` | ❌                             |
+| Default    | unset                          |
+
+---
+
+### `gateway.$name.tls`
+
+Gateway wide TLS settings. Passed as is.
+
+| Field      | Value               |
+| ---------- | ------------------- |
+| Key        | `gateway.$name.tls` |
+| Type       | `map`               |
+| Required   | ❌                  |
+| Helm `tpl` | ❌                  |
+| Default    | unset               |
+
+---
+
 ## Full Examples
 
 ### Basic HTTP Gateway
@@ -258,4 +314,25 @@ route:
           - kind: Service
             name: main
             port: 80
+```
+
+### Gateway with a Wildcard Hostname and Fixed Address
+
+```yaml
+gateway:
+  main:
+    enabled: true
+    gatewayClassName: traefik
+    addresses:
+      - type: IPAddress
+        value: 192.168.1.10
+    listeners:
+      - name: https
+        hostname: "*.example.com"
+        port: 443
+        protocol: HTTPS
+        tls:
+          mode: Terminate
+          certificateRefs:
+            - name: example-cert
 ```

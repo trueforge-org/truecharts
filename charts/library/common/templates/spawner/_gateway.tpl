@@ -1,16 +1,13 @@
 {{/* Renders the Gateway objects required by the chart */}}
 {{- define "tc.v1.common.spawner.gateways" -}}
+  {{- include "tc.v1.common.lib.gateway.primaryValidation" (dict "rootCtx" $ "key" "gateway" "caller" "Gateway") -}}
+
   {{- /* Generate named gateways as required */ -}}
   {{- range $name, $gateway := .Values.gateway }}
-    {{- if $gateway.enabled -}}
-      {{- $gatewayValues := $gateway -}}
+    {{- if eq (include "tc.v1.common.lib.gateway.enabled" (dict "rootCtx" $ "objectData" $gateway "name" $name "key" "gateway" "caller" "Gateway")) "true" -}}
+      {{- include "tc.v1.common.lib.gateway.validation" (dict "objectData" $gateway "name" $name) -}}
 
-      {{/* set defaults */}}
-      {{- if and (not $gatewayValues.nameOverride) (ne $name (include "tc.v1.common.lib.util.gateway.primary" $)) -}}
-        {{- $_ := set $gatewayValues "nameOverride" $name -}}
-      {{- end -}}
-
-      {{- $_ := set $ "ObjectValues" (dict "gateway" $gatewayValues) -}}
+      {{- $_ := set $ "ObjectValues" (dict "gateway" $gateway "gatewayName" $name) -}}
       {{- include "tc.v1.common.class.gateway" $ | nindent 0 -}}
       {{- $_ := unset $.ObjectValues "gateway" -}}
     {{- end }}

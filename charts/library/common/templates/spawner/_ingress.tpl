@@ -8,7 +8,7 @@
   {{- $hasRouteEnabled := false -}}
 
   {{- range $routeName, $route := $.Values.route -}}
-    {{- $routeEnabled := (include "tc.v1.common.lib.util.enabled" (dict
+    {{- $routeEnabled := (include "tc.v1.common.lib.gateway.enabled" (dict
               "rootCtx" $ "objectData" $route
               "name" $routeName "caller" "Ingress"
               "key" "route")) -}}

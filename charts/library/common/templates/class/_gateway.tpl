@@ -13,21 +13,20 @@ within the common library.
   {{- $gatewayLabels := $values.labels -}}
   {{- $gatewayAnnotations := $values.annotations -}}
 
-{{- $fullName := include "tc.v1.common.lib.chart.names.fullname" . -}}
-{{- if and (hasKey $values "nameOverride") $values.nameOverride -}}
-  {{- $fullName = printf "%v-%v" $fullName $values.nameOverride -}}
+{{- $gatewayName := "" -}}
+{{- with .ObjectValues -}}
+  {{- $gatewayName = .gatewayName -}}
 {{- end -}}
+{{- $fullName := include "tc.v1.common.lib.util.gateway.getFullName" (dict "rootCtx" $ "name" $gatewayName) -}}
 
 {{/* Handle targetSelector for automatic gatewayClass linking */}}
 {{- $gatewayClassName := $values.gatewayClassName -}}
-{{- if and (hasKey $values "targetSelector") $values.targetSelector -}}
-  {{- $targetGatewayClassName := $values.targetSelector -}}
-  {{- if hasKey $.Values.gatewayClass $targetGatewayClassName -}}
-    {{- $targetGatewayClass := get $.Values.gatewayClass $targetGatewayClassName -}}
-    {{- if $targetGatewayClass.enabled -}}
-      {{- $gatewayClassName = include "tc.v1.common.lib.util.gatewayclass.getFullName" (dict "rootCtx" $ "gatewayClass" $targetGatewayClass) -}}
-    {{- end -}}
+{{- if $values.targetSelector -}}
+  {{- $targetGatewayClass := get ($.Values.gatewayClass | default dict) $values.targetSelector -}}
+  {{- if ne (include "tc.v1.common.lib.gateway.enabled" (dict "rootCtx" $ "objectData" $targetGatewayClass "name" $values.targetSelector "key" "gatewayClass" "caller" "Gateway")) "true" -}}
+    {{- fail (printf "Gateway - Expected [targetSelector] of gateway [%s] to reference an enabled gatewayClass, got [%s]" $fullName $values.targetSelector) -}}
   {{- end -}}
+  {{- $gatewayClassName = include "tc.v1.common.lib.util.gatewayclass.getFullName" (dict "rootCtx" $ "name" $values.targetSelector) -}}
 {{- end -}}
 
 ---
@@ -35,7 +34,7 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: {{ $fullName }}
-  namespace: {{ $.Values.namespace | default $.Values.global.namespace | default $.Release.Namespace }}
+  namespace: {{ include "tc.v1.common.lib.metadata.namespace" (dict "rootCtx" $ "objectData" $values "caller" "Gateway") }}
   {{- $labels := (mustMerge ($gatewayLabels | default dict) (include "tc.v1.common.lib.metadata.allLabels" $ | fromYaml)) -}}
   {{- with (include "tc.v1.common.lib.metadata.render" (dict "rootCtx" $ "labels" $labels) | trim) }}
   labels:
@@ -48,11 +47,28 @@ metadata:
   {{- end }}
 spec:
   gatewayClassName: {{ required (printf "gatewayClassName is required for Gateway %v" $fullName) $gatewayClassName }}
+  {{- with $values.addresses }}
+  addresses:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with $values.infrastructure }}
+  infrastructure:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with $values.allowedListeners }}
+  allowedListeners:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with $values.tls }}
+  tls:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   listeners:
   {{- range $values.listeners }}
+  {{- $listenerName := .name }}
   - name: {{ required (printf "listener name is required for Gateway %v" $fullName) .name }}
     {{- if .hostname }}
-    hostname: {{ .hostname }}
+    hostname: {{ tpl .hostname $ | quote }}
     {{- end }}
     port: {{ required (printf "listener port is required for Gateway %v listener %v" $fullName .name) .port }}
     protocol: {{ required (printf "listener protocol is required for Gateway %v listener %v" $fullName .name) .protocol }}
@@ -66,11 +82,15 @@ spec:
       {{- range .tls.certificateRefs }}
       - group: {{ default "" .group | quote }}
         kind: {{ default "Secret" .kind }}
-        name: {{ required (printf "certificateRef name is required for Gateway %v listener %v" $fullName $.name) .name }}
+        name: {{ required (printf "certificateRef name is required for Gateway %v listener %v" $fullName $listenerName) .name }}
         {{- if .namespace }}
         namespace: {{ .namespace }}
         {{- end }}
       {{- end }}
+      {{- end }}
+      {{- with .tls.options }}
+      options:
+        {{- toYaml . | nindent 8 }}
       {{- end }}
     {{- end }}
     {{- if .allowedRoutes }}
@@ -87,7 +107,7 @@ spec:
       kinds:
       {{- range .allowedRoutes.kinds }}
       - group: {{ default "gateway.networking.k8s.io" .group }}
-        kind: {{ required (printf "allowedRoute kind is required for Gateway %v listener %v" $fullName $.name) .kind }}
+        kind: {{ required (printf "allowedRoute kind is required for Gateway %v listener %v" $fullName $listenerName) .kind }}
       {{- end }}
       {{- end }}
     {{- end }}
