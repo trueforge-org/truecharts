@@ -38,4 +38,7 @@ metadata:
 spec:
   cluster:
     name: {{ $objectData.clusterName }}
+  method: plugin
+  pluginConfiguration:
+    name: {{ include "tc.v1.common.lib.cnpg.barman.pluginName" . }}
 {{- end -}}

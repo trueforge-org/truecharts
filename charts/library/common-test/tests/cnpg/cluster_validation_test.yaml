@@ -4,6 +4,9 @@ templates:
 release:
   name: test-release-name
   namespace: test-release-namespace
+capabilities:
+  apiVersions:
+    - barmancloud.cnpg.io/v1/ObjectStore
 tests:
   - it: should fail without user
     set:
@@ -49,7 +52,21 @@ tests:
           pgVersion: invalid
     asserts:
       - failedTemplate:
-          errorMessage: CNPG - Expected [pgVersion] to be one of [15, 16], but got [invalid]
+          errorMessage: CNPG - Expected [pgVersion] to be one of [15, 16, 17, 18], but got [invalid]
+
+  - it: should fail with vectors on pgVersion 18
+    set:
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          type: vectors
+          pgVersion: 18
+    asserts:
+      - failedTemplate:
+          errorMessage: CNPG Cluster - type [vectors] is not available for pgVersion [18]; pgvecto.rs has been superseded by VectorChord, use type [vectorchord] instead
 
   - it: should fail with hibernate not a bool
     set:
@@ -185,8 +202,7 @@ tests:
           password: test-password
           mode: recovery
           recovery:
-            method: backup
-            backupName: some-backup-name
+            method: object_store
             revision: 5
     asserts:
       - failedTemplate:
@@ -205,22 +221,7 @@ tests:
             method: invalid
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Recovery - Expected [recovery.method] to be one of [backup, object_store, pg_basebackup], but got [invalid]
-
-  - it: should fail without backupName on recovery method backup
-    set:
-      cnpg:
-        my-pg:
-          enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          mode: recovery
-          recovery:
-            method: backup
-    asserts:
-      - failedTemplate:
-          errorMessage: CNPG Recovery - Expected a non-empty [recovery.backupName] key
+          errorMessage: CNPG Recovery - Expected [recovery.method] to be one of [object_store], but got [invalid]
 
   - it: should fail with revision in backups not a string
     set:
@@ -296,3 +297,291 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: CNPG - Expected [instances] to be greater than 0, but got [0]
+
+  - it: should fail with invalid retentionPolicy without a target
+    set:
+      credentials:
+        test: *test
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          backups:
+            enabled: true
+            credentials: test
+            retentionPolicy: invalid
+    asserts:
+      - failedTemplate:
+          errorMessage: CNPG Backup - Expected [backups.retentionPolicy] to match regex [^[1-9][0-9]*[dwm]$], got [invalid]
+
+  - it: should not fail without a retentionPolicy
+    set:
+      credentials:
+        test: *test
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          backups:
+            enabled: true
+            credentials: test
+    asserts:
+      - notFailedTemplate: {}
+
+  - it: should fail with recovery and backup on the same archive without a target
+    set:
+      credentials:
+        test: *test
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          cluster:
+            skipEmptyWalArchiveCheck: false
+          mode: recovery
+          recovery:
+            method: object_store
+            credentials: test
+          backups:
+            enabled: true
+            credentials: test
+    asserts:
+      - failedTemplate:
+          errorMessage: CNPG Backup/Recovery - [backups.revision] cannot match [recovery.revision] when in recovery mode and backup is enabled, for CNPG cluster [test-release-name-common-test-cnpg-my-pg]
+
+  - it: should fail with recovery and backup on the same archive with the same serverName and revision
+    set:
+      credentials:
+        test: *test
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          cluster:
+            skipEmptyWalArchiveCheck: false
+          mode: recovery
+          recovery:
+            method: object_store
+            credentials: test
+            serverName: some-server-name
+            revision: "1"
+          backups:
+            enabled: true
+            credentials: test
+            target: primary
+            serverName: some-server-name
+            revision: "1"
+    asserts:
+      - failedTemplate:
+          errorMessage: CNPG Backup/Recovery - [backups.serverName] and [backups.revision] cannot match [recovery.serverName] and [recovery.revision] when in recovery mode and backup is enabled, for CNPG cluster [test-release-name-common-test-cnpg-my-pg]
+
+  - it: should not fail with recovery and backup using a different revision
+    set:
+      credentials:
+        test: *test
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          mode: recovery
+          recovery:
+            method: object_store
+            credentials: test
+          backups:
+            enabled: true
+            credentials: test
+            revision: "1"
+    asserts:
+      - notFailedTemplate: {}
+
+  - it: should not fail with recovery and backup using the same serverName on a different bucket
+    set:
+      credentials:
+        test: *test
+        other:
+          <<: *test
+          bucket: other-bucket
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          mode: recovery
+          recovery:
+            method: object_store
+            credentials: test
+          backups:
+            enabled: true
+            credentials: other
+    asserts:
+      - notFailedTemplate: {}
+
+  - it: should not fail with recovery and backup using the same serverName and bucket on a different endpoint
+    set:
+      credentials:
+        test: *test
+        other:
+          <<: *test
+          url: http://some-other-url
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          mode: recovery
+          recovery:
+            method: object_store
+            credentials: test
+          backups:
+            enabled: true
+            credentials: other
+    asserts:
+      - notFailedTemplate: {}
+
+  - it: should fail with servername in recovery
+    set:
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          mode: recovery
+          recovery:
+            method: object_store
+            servername: some-server-name
+    asserts:
+      - failedTemplate:
+          errorMessage: CNPG Recovery - [recovery.servername] is not supported, use [recovery.serverName] instead. Note that the previous value was never applied
+
+  - it: should fail with servername in backups
+    set:
+      credentials:
+        test: *test
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          backups:
+            enabled: true
+            credentials: test
+            servername: some-server-name
+    asserts:
+      - failedTemplate:
+          errorMessage: CNPG Backup - [backups.servername] is not supported, use [backups.serverName] instead. Note that the previous value was never applied
+
+  - it: should not fail when the plugin is installed
+    capabilities:
+      apiVersions:
+        - barmancloud.cnpg.io/v1/ObjectStore
+    set:
+      credentials:
+        test: *test
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          backups:
+            enabled: true
+            credentials: test
+    asserts:
+      - notFailedTemplate: {}
+
+  - it: should not need the plugin without backups or recovery
+    set:
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+    asserts:
+      - notFailedTemplate: {}
+
+  - it: should fail with recovery and backup on the same archive
+    capabilities:
+      apiVersions:
+        - barmancloud.cnpg.io/v1/ObjectStore
+    set:
+      credentials:
+        test: *test
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          cluster:
+            skipEmptyWalArchiveCheck: false
+          mode: recovery
+          recovery:
+            method: object_store
+            credentials: test
+          backups:
+            enabled: true
+            credentials: test
+    asserts:
+      - failedTemplate:
+          errorMessage: CNPG Backup/Recovery - [backups.revision] cannot match [recovery.revision] when in recovery mode and backup is enabled, for CNPG cluster [test-release-name-common-test-cnpg-my-pg]
+
+  - it: should fail with the removed recovery method backup
+    set:
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          mode: recovery
+          recovery:
+            method: backup
+    asserts:
+      - failedTemplate:
+          errorMessage: CNPG Recovery - Expected [recovery.method] to be one of [object_store], but got [backup]
+
+  - it: should not fail with recovery and backup on the same archive when the empty archive check is skipped
+    set:
+      credentials:
+        test:
+          type: s3
+          encrKey: some-encr-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+          bucket: some-bucket
+          url: http://some-url
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          mode: recovery
+          recovery:
+            method: object_store
+            credentials: test
+          backups:
+            enabled: true
+            credentials: test
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: metadata.annotations["cnpg.io/skipEmptyWalArchiveCheck"]
+          value: enabled

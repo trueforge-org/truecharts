@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "mountOptions": {
+        "type": [
+          "array",
+          "string"
+        ],
+        "items": {
+          "type": "string"
+        },
+        "description": "Define storage classes",
+        "default": []
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Enables or Disables the storage class",
+        "default": false
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Additional labels for storage class",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
+      },
+      "annotations": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Additional annotations for storage class",
+        "default": {}
+      },
+      "provisioner": {
+        "type": "string",
+        "description": "Define the provisioner for this storage class"
+      },
+      "parameters": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the parameters for this storage class",
+        "default": {}
+      },
+      "reclaimPolicy": {
+        "type": "string",
+        "enum": [
+          "Delete",
+          "Retain"
+        ],
+        "description": "Define the reclaim policy for this storage class",
+        "default": "Retain"
+      },
+      "allowVolumeExpansion": {
+        "type": "boolean",
+        "description": "Define if volume expansion is allowed for this storage class",
+        "default": false
+      },
+      "volumeBindingMode": {
+        "type": "string",
+        "enum": [
+          "Immediate",
+          "WaitForFirstConsumer"
+        ],
+        "description": "Define the volume binding mode for this storage class",
+        "default": "Immediate"
+      }
+    },
+    "additionalProperties": true,
+    "description": "Define storage class",
+    "default": {}
+  },
+  "description": "Define storage classes"
+}

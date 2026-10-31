@@ -12,6 +12,7 @@
   {{- $allUrls := $.Values.chartContext.internalUrls | default list -}}
 
   {{- range $name, $service := .Values.service -}}
+    {{- if not (kindIs "map" $service) -}}{{- continue -}}{{- end -}}
     {{- $enabled := (include "tc.v1.common.lib.util.enabled" (dict
                     "rootCtx" $ "objectData" $service
                     "name" $name "caller" "Service"
@@ -59,7 +60,7 @@
                     "name" $name "caller" "service"
                     "key" "port")) -}}
       {{- if ne $enabledP "true" -}}{{- continue -}}{{- end -}}
-      {{- $internalUrl := (printf "%s.%s.svc.cluster.local:%s" $objectName $namespace $port.port) -}}
+      {{- $internalUrl := (printf "%s.%s.svc.cluster.local:%s" $objectName $namespace (tpl ($port.port | toString) $)) -}}
       {{/* Append URLS */}}
       {{- $allUrls = mustAppend $allUrls $internalUrl -}}
     {{- end -}}

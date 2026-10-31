@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Enables or Disables the traefik integration",
+      "default": false
+    },
+    "entrypoints": {
+      "type": "array",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Define the entrypoints for this traefik integration",
+      "items": {
+        "type": "string",
+        "description": "Configuration for `ingress.main.integrations.traefik.entrypoints.$item`."
+      },
+      "default": "[\"websecure\"]"
+    },
+    "forceTLS": {
+      "type": "boolean",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Force TLS on this ingress Adds the `traefik.ingress.kubernetes.io/router.tls` annotation.",
+      "default": true
+    },
+    "middlewares": {
+      "type": "array",
+      "properties": {},
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "expandObjectName": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "The middlewares for this traefik integration"
+          },
+          "name": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "The name of the middleware"
+          },
+          "namespace": {
+            "allOf": [
+              {
+                "$ref": "../special/namespaces.json"
+              }
+            ],
+            "description": "The namespace of the middleware If not defined, the current namespace will be used."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Configuration for `$name.integrations.traefik.middlewares.$name`."
+      },
+      "description": "The middlewares for this traefik integration",
+      "default": []
+    },
+    "chartMiddlewares": {
+      "type": "array",
+      "additionalProperties": true,
+      "description": "Same as [middlewares](#middlewares) but meant to be used by the chart developer to define some custom middleware specific to this ingress.",
+      "default": []
+    }
+  },
+  "description": "Create Ingress objects",
+  "additionalProperties": true
+}

@@ -1,0 +1,63 @@
+suite: valkey dependency persistence test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should create and mount a pvc for the data of the dependency
+    set:
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+      dependencies:
+        valkey:
+          enabled: true
+          image:
+            repository: docker.io/bitnamisecure/valkey
+            pullPolicy: IfNotPresent
+            tag: latest
+          workload:
+            main:
+              enabled: true
+              type: StatefulSet
+              strategy: RollingUpdate
+              podSpec:
+                containers:
+                  main:
+                    enabled: true
+                    primary: true
+                    imageSelector: valkeyImage
+                    probes:
+                      liveness:
+                        enabled: false
+                      readiness:
+                        enabled: false
+                      startup:
+                        enabled: false
+          persistence:
+            data:
+              enabled: true
+              mountPath: /bitnami/valkey
+              targetSelector:
+                main:
+                  main: {}
+    asserts:
+      - documentSelector:
+          path: kind
+          value: PersistentVolumeClaim
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-valkey-data
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /bitnami/valkey
+            name: valkey-data
+            readOnly: false

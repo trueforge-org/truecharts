@@ -4,6 +4,9 @@ templates:
 release:
   name: test-release-name
   namespace: test-release-namespace
+capabilities:
+  apiVersions:
+    - barmancloud.cnpg.io/v1/ObjectStore
 tests:
   - it: should generate correct spec
     set:
@@ -60,6 +63,9 @@ tests:
             immediate: false
             cluster:
               name: test-release-name-common-test-cnpg-my-pg
+            method: plugin
+            pluginConfiguration:
+              name: barman-cloud.cloudnative-pg.io
       - documentIndex: &cnpgDoc1 1
         isKind:
           of: ScheduledBackup
@@ -80,6 +86,9 @@ tests:
             immediate: true
             cluster:
               name: test-release-name-common-test-cnpg-my-pg
+            method: plugin
+            pluginConfiguration:
+              name: barman-cloud.cloudnative-pg.io
       - documentIndex: &cnpgDoc2 2
         isKind:
           of: ScheduledBackup
@@ -100,6 +109,9 @@ tests:
             immediate: false
             cluster:
               name: test-release-name-common-test-cnpg-my-pg
+            method: plugin
+            pluginConfiguration:
+              name: barman-cloud.cloudnative-pg.io
       - documentIndex: &cnpgDoc3 3
         isKind:
           of: ScheduledBackup
@@ -120,3 +132,49 @@ tests:
             immediate: false
             cluster:
               name: test-release-name-common-test-cnpg-my-pg
+            method: plugin
+            pluginConfiguration:
+              name: barman-cloud.cloudnative-pg.io
+
+  - it: should use the plugin method
+    capabilities:
+      apiVersions:
+        - barmancloud.cnpg.io/v1/ObjectStore
+    set:
+      credentials:
+        test:
+          type: s3
+          url: http://some-url
+          bucket: some-bucket
+          encrKey: some-encr-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          backups:
+            enabled: true
+            credentials: test
+            scheduledBackups:
+              - name: daily
+                schedule: "0 0 * * *"
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ScheduledBackup
+        equal:
+          path: spec
+          value:
+            schedule: "0 0 * * *"
+            backupOwnerReference: none
+            suspend: false
+            immediate: false
+            cluster:
+              name: test-release-name-common-test-cnpg-my-pg
+            method: plugin
+            pluginConfiguration:
+              name: barman-cloud.cloudnative-pg.io
+

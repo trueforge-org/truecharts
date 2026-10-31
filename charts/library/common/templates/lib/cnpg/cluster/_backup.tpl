@@ -1,43 +1,19 @@
+{{/* Everything except the target and the serverName lives in the ObjectStore */}}
 {{- define "tc.v1.common.lib.cnpg.cluster.backup" -}}
   {{- $rootCtx := .rootCtx -}}
   {{- $objectData := .objectData -}}
 
-  {{- $compression := "bzip2" -}}
-  {{- if and $objectData.backups.compression (not $objectData.backups.compression.enabled) -}}
-    {{- $compression = "" -}}
-  {{- end -}}
-
-  {{- $encryption := "" -}}
-  {{- if and $objectData.backups.encryption $objectData.backups.encryption.enabled -}}
-    {{- $encryption = "AES256" -}}
-  {{- end }}
-backup:
+  {{- $calcData := include "tc.v1.common.lib.cnpg.cluster.barmanObjectStoreConfig.getData" (dict
+      "rootCtx" $rootCtx "objectData" $objectData "type" "backup") | fromYaml
+  -}}
   {{- with $objectData.backups.target }}
+backup:
   target: {{ . }}
   {{- end }}
-  retentionPolicy: {{ $objectData.backups.retentionPolicy }}
-  barmanObjectStore:
-    data:
-      jobs: {{ $objectData.backups.jobs | default 2 }}
-      {{- with $compression }}
-      compression: {{ . }}
-      {{- end -}}
-      {{- with $encryption }}
-      encryption: {{ . }}
-      {{- end -}}
-    {{- if or $compression $encryption }}
-    wal:
-      {{- with $compression }}
-      compression: {{ . }}
-      {{- end -}}
-      {{- with $encryption }}
-      encryption: {{ . }}
-      {{- end -}}
-    {{- end -}}
-  {{/* Fetch provider data */}}
-  {{/* Get the creds defined in backup.$provider */}}
-  {{- $creds := (get $rootCtx.Values.credentials $objectData.backups.credentials) -}}
-  {{- include "tc.v1.common.lib.credentials.validation" (dict "rootCtx" $rootCtx "caller" "CNPG Backup" "credName" $objectData.backups.credentials) -}}
-
-  {{- include (printf "tc.v1.common.lib.cnpg.cluster.barmanObjectStoreConfig.%s" $creds.type) (dict "rootCtx" $rootCtx "objectData" $objectData "data" $creds "type" "backup") | nindent 4 -}}
+plugins:
+  - name: {{ include "tc.v1.common.lib.cnpg.barman.pluginName" . }}
+    isWALArchiver: true
+    parameters:
+      barmanObjectName: {{ include "tc.v1.common.lib.cnpg.barman.objectStoreName" (dict "objectData" $objectData "type" "backup") }}
+      serverName: {{ $calcData.serverName }}
 {{- end -}}

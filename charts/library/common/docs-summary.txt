@@ -1,0 +1,177 @@
+TRUECHARTS COMMON CHART - DOCUMENTATION EXTRACTION SUMMARY
+===========================================================
+
+This extraction includes comprehensive information from all 95+ documentation
+files in /home/runner/work/truecharts/truecharts/charts/library/common/docs/
+
+WHAT WAS EXTRACTED:
+===================
+
+1. ALL TOP-LEVEL CONFIGURATION KEYS:
+   ✓ global
+   ✓ fallbackDefaults
+   ✓ operator
+   ✓ extraTpl
+   ✓ podOptions
+   ✓ containerOptions
+   ✓ TZ
+   ✓ namespace
+   ✓ resources
+   ✓ securityContext
+   ✓ image (and additional images like nameImage)
+
+2. ALL WORKLOAD TYPES (with specific configurations):
+   ✓ Deployment (replicas, strategy: Recreate/RollingUpdate, rollingUpdate)
+   ✓ StatefulSet (replicas, strategy: OnDelete/RollingUpdate, partition)
+   ✓ DaemonSet (strategy: RollingUpdate/OnDelete)
+   ✓ Job (completionMode, backoffLimit, completions, parallelism, ttl, activeDeadline)
+   ✓ CronJob (schedule, timezone, concurrencyPolicy, history limits, all Job fields)
+
+3. ALL SERVICE TYPES (with specific configurations):
+   ✓ ClusterIP
+   ✓ LoadBalancer (loadBalancerIP, loadBalancerSourceRanges)
+   ✓ NodePort (nodePort per port)
+   ✓ ExternalIP (externalIPs)
+   ✓ ExternalName (externalName)
+   
+   Service configurations include:
+   - Port definitions with protocols (http/https/tcp/udp)
+   - Target selectors
+   - IP family policies
+   - Session affinity
+   - Traffic policies
+   - Traefik integrations
+
+4. ALL PERSISTENCE TYPES (with specific configurations):
+   ✓ pvc (storageClass, size, retain, accessModes, volumeMode, dataSource, static)
+   ✓ vct (VolumeClaimTemplate - same as pvc)
+   ✓ hostPath (hostPath, hostPathType)
+   ✓ emptyDir (medium, sizeLimit)
+   ✓ nfs (server, path, readOnly)
+   ✓ iscsi (targetPortal, iqn, lun, fsType, portals, chap auth)
+   ✓ device (devicePath)
+   ✓ configmap (objectName, expandObjectName, defaultMode, items)
+   ✓ secret (objectName, expandObjectName, defaultMode, items)
+
+   Persistence features:
+   - Target selectors (pod + container mapping)
+   - targetSelectAll for shared volumes
+   - Mount options (mountPath, subPath, readOnly, mountPropagation)
+
+5. ALL MIDDLEWARE TYPES (Traefik):
+   ✓ add-prefix
+   ✓ basic-auth
+   ✓ buffering
+   ✓ chain
+   ✓ compress
+   ✓ content-type
+   ✓ forward-auth
+   ✓ headers
+   ✓ ip-allow-list
+   ✓ plugin-bouncer
+   ✓ plugin-geoblock
+   ✓ plugin-mod-security
+   ✓ plugin-real-ip
+   ✓ plugin-rewrite-response-headers
+   ✓ plugin-theme-park
+   ✓ rate-limit
+   ✓ redirect-regex
+   ✓ redirect-scheme
+   ✓ replace-path-regex
+   ✓ replace-path
+   ✓ retry
+   ✓ strip-prefix-regex
+   ✓ strip-prefix
+
+6. CONTAINER CONFIGURATION OPTIONS:
+   ✓ enabled, primary, type (init/install/upgrade for initContainers)
+   ✓ imageSelector
+   ✓ stdin, tty
+   ✓ command, args, extraArgs
+   ✓ resources (limits/requests for cpu/memory)
+   ✓ securityContext (PUID, UMASK, runAsUser, capabilities, etc.)
+   ✓ env (with secretKeyRef, configMapKeyRef, fieldRef, resourceFieldRef)
+   ✓ envFrom (configMapRef, secretRef)
+   ✓ fixedEnv
+   ✓ lifecycle (postStart, preStop)
+   ✓ probes (liveness, readiness, startup) - types: http/https/tcp/exec/grpc
+   ✓ termination (messagePath, messagePolicy)
+
+7. CNPG CLUSTER CONFIGURATION:
+   ✓ instances, singleNode
+   ✓ logLevel (error/warning/info/debug/trace)
+   ✓ primaryUpdateStrategy, primaryUpdateMethod
+   ✓ storage (size, storageClass, walSize)
+   ✓ walStorage
+   ✓ monitoring (podMonitor)
+   ✓ postgresql (parameters, pg_hba, shared_preload_libraries)
+   ✓ bootstrap (initdb, recovery)
+   ✓ backup (destinationPath, endpointURL, credentials, retentionPolicy, schedule)
+   ✓ pooler (instances, type: rw/ro, poolMode, parameters)
+
+8. OTHER TOP-LEVEL RESOURCES:
+   ✓ hpa (HorizontalPodAutoscaler) - minReplicas, maxReplicas, metrics, behavior
+   ✓ vpa (VerticalPodAutoscaler) - updateMode, resourcePolicy
+   ✓ podDisruptionBudget - minAvailable, maxUnavailable, unhealthyPodEvictionPolicy
+   ✓ rbac (Role/ClusterRole) - clusterWide, rules, serviceAccounts
+   ✓ serviceAccount - primary, targetSelectAll, targetSelector
+   ✓ networkPolicy - policyTypes, egress, ingress
+   ✓ secret - type, data, stringData
+   ✓ configmap - data
+   ✓ credentials - type, data
+   ✓ certificate - certificateIssuer, hosts, dnsNames, tls options
+   ✓ route (OpenShift) - host, path, tls
+   ✓ webhook (MutatingWebhook/ValidatingWebhook) - type, webhooks, rules
+   ✓ storageClass - provisioner, reclaimPolicy, volumeBindingMode, allowVolumeExpansion
+   ✓ volumeSnapshot - volumeSnapshotClassName, source
+   ✓ volumeSnapshotClass - driver, deletionPolicy, parameters
+   ✓ ingress - hosts, tls, integrations (traefik, certManager, homepage)
+   ✓ metrics - servicemonitor/podmonitor, endpoints
+   ✓ imagePullSecret - registry, username, password, email
+   ✓ priorityClass - value, preemptionPolicy, globalDefault
+   ✓ notes - Additional installation notes
+   ✓ addons (codeserver, netshoot, vpn)
+
+9. SPECIAL FEATURES DOCUMENTED:
+   ✓ Variable-named objects (workload.$name, service.$name, persistence.$name, etc.)
+   ✓ Target selectors (services, persistence, HPA, VPA, RBAC, etc.)
+   ✓ Primary objects designation
+   ✓ Helm templating (tpl) support for specific keys
+   ✓ Naming schemes ($FullName, $FullName-$ResourceName)
+   ✓ expandObjectName control
+   ✓ Fallback defaults mechanism
+   ✓ Global values cascade
+
+10. PROBE TYPES:
+    ✓ http
+    ✓ https
+    ✓ tcp
+    ✓ exec
+    ✓ grpc
+
+11. SERVICE PROTOCOLS:
+    ✓ http
+    ✓ https
+    ✓ tcp
+    ✓ udp
+
+12. DEFAULTS CAPTURED:
+    ✓ All fallbackDefaults values
+    ✓ All probe timeout defaults (liveness, readiness, startup)
+    ✓ Default storage sizes, access modes
+    ✓ Default service types, protocols
+    ✓ Default persistence types
+    ✓ Default security contexts
+
+TOTAL DOCUMENTATION FILES PROCESSED: 95
+OUTPUT FILE: /home/runner/.copilot/session-state/docs-structure.txt
+FILE SIZE: 26KB
+TOTAL LINES: 974
+
+This comprehensive structure can now be used for:
+- Understanding all available configuration options
+- Building values.yaml files
+- Creating schema validation
+- Generating documentation
+- IDE autocomplete/IntelliSense
+- Code generation tools

@@ -16,7 +16,7 @@
     {{- end -}}
   {{- end }}
   redirectRegex:
-    regex: {{ $mw.regex }}
-    replacement: {{ $mw.replacement }}
+    regex: {{ $mw.regex | quote }}
+    replacement: {{ $mw.replacement | quote }}
     {{- include "tc.v1.common.class.traefik.middleware.helper.bool" (dict "key" "permanent" "value" $mw.permanent) | nindent 4 }}
 {{- end -}}

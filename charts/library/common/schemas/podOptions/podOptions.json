@@ -1,0 +1,132 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enableServiceLinks": {
+      "type": "boolean",
+      "description": "See [Enable Service Links](/truecharts-common/workload#enableservicelinks)",
+      "default": false
+    },
+    "hostNetwork": {
+      "type": "boolean",
+      "description": "See [Host Network](/truecharts-common/workload#hostnetwork)",
+      "default": false
+    },
+    "hostPID": {
+      "type": "boolean",
+      "description": "See [Host PID](/truecharts-common/workload#hostpid)",
+      "default": false
+    },
+    "hostIPC": {
+      "type": "boolean",
+      "description": "See [Host IPC](/truecharts-common/workload#hostipc)",
+      "default": false
+    },
+    "shareProcessNamespace": {
+      "type": "boolean",
+      "description": "See [Share Process Namespace](/truecharts-common/workload#shareprocessnamespace)",
+      "default": false
+    },
+    "affinity": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Configuration for `podOptions.affinity`."
+    },
+    "dnsPolicy": {
+      "type": "string",
+      "description": "See [DNS Policy](/truecharts-common/workload#dnspolicy)",
+      "default": "ClusterFirst"
+    },
+    "dnsConfig": {
+      "allOf": [
+        {
+          "$ref": "dnsConfig.json"
+        }
+      ],
+      "description": "See [DNS Config](/truecharts-common/workload#dnsconfig)",
+      "default": {
+        "options": [
+          {
+            "name": "ndots",
+            "value": "1"
+          }
+        ]
+      }
+    },
+    "hostAliases": {
+      "allOf": [
+        {
+          "$ref": "hostAliases.json"
+        }
+      ],
+      "description": "See [Host Aliases](/truecharts-common/workload#hostaliases)",
+      "default": []
+    },
+    "nodeSelector": {
+      "allOf": [
+        {
+          "$ref": "nodeSelector.json"
+        }
+      ],
+      "description": "See [Node Selector](/truecharts-common/workload#nodeselector)",
+      "default": {
+        "kubernetes.io/arch": "amd64"
+      }
+    },
+    "defaultSpread": {
+      "type": "boolean",
+      "description": "Sets some default topology spread constraints for good spread of pods across nodes.",
+      "default": true
+    },
+    "defaultAffinity": {
+      "type": "boolean",
+      "description": "Configuration for `podOptions.defaultAffinity`."
+    },
+    "topologySpreadConstraints": {
+      "allOf": [
+        {
+          "$ref": "topologySpreadConstraints.json"
+        }
+      ],
+      "description": "See [Topology Spread Constraints](/truecharts-common/workload#topologyspreadconstraints)",
+      "default": []
+    },
+    "tolerations": {
+      "allOf": [
+        {
+          "$ref": "tolerations.json"
+        }
+      ],
+      "description": "See [Tolerations](/truecharts-common/workload#tolerations)",
+      "default": []
+    },
+    "schedulerName": {
+      "type": "string",
+      "description": "See [Scheduler Name](/truecharts-common/workload#schedulername)",
+      "default": ""
+    },
+    "priorityClassName": {
+      "type": "string",
+      "description": "See [Priority Class Name](/truecharts-common/workload#priorityclassname)",
+      "default": ""
+    },
+    "runtimeClassName": {
+      "type": "string",
+      "description": "See [Runtime Class Name](/truecharts-common/workload#runtimeclassname)",
+      "default": ""
+    },
+    "automountServiceAccountToken": {
+      "type": "boolean",
+      "description": "See [Automount Service Account Token](/truecharts-common/workload#automountserviceaccounttoken)",
+      "default": false
+    },
+    "terminationGracePeriodSeconds": {
+      "type": "integer",
+      "description": "See [Termination Grace Period Seconds](/truecharts-common/workload#terminationgraceperiodseconds)",
+      "default": 60
+    }
+  },
+  "additionalProperties": true,
+  "description": "Options that apply to all pods, unless overridden at the pod level See more info about podOptions [here](/truecharts-common/podoptions)"
+}

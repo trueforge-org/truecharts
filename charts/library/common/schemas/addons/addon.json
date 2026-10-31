@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "description": "Enable or disable the addon."
+    },
+    "targetSelector": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Workloads to which the addon is attached."
+    },
+    "container": {
+      "$ref": "container.json",
+      "description": "Container configuration for the addon."
+    },
+    "service": {
+      "$ref": "../service/service.json#/additionalProperties",
+      "description": "Service configuration for the addon."
+    },
+    "secret": {
+      "oneOf": [
+        {
+          "$ref": "../secret.json#/additionalProperties"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Secret configuration for the addon."
+    },
+    "ingress": {
+      "allOf": [
+        {
+          "$ref": "../ingress/ingress.json#/additionalProperties"
+        }
+      ],
+      "description": "Ingress configuration for the addon."
+    },
+    "settings": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Addon-specific settings."
+    }
+  },
+  "additionalProperties": true,
+  "description": "Configuration for a workload addon."
+}

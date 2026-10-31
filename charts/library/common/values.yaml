@@ -31,6 +31,9 @@ global:
     # -- Default PVC Access Modes
     accessModes:
       - ReadWriteOnce
+    # -- Keep [strategy: RollingUpdate] on a single replica Deployment with ReadWriteOnce volumes
+    # Can be overruled per workload. Updates can get stuck, and two pods use the same data during an update
+    allowRollingUpdateWithRWO: false
     # -- Default VCT Access Modes
     vctAccessModes:
       - ReadWriteOnce
@@ -61,6 +64,9 @@ global:
     # -- Define a topologyKey for default topologySpreadConstraints
     # Will be used when defaultSpread: true
     topologyKey: kubernetes.io/hostname
+    # -- Port of the listeners created for route TLS. Can be overruled per route with listenerPort
+    # Traefik needs the port of its entrypoint here, which is not always the port it is exposed on
+    routeListenerPort: 443
     cnpg:
       pgVersion: 16
       skipEmptyWalArchiveCheck: true
@@ -80,6 +86,11 @@ image:
   repository: ghcr.io/traefik/whoami
   pullPolicy: IfNotPresent
   tag: v1.12.0@sha256:c4717a8d1f0134a7444e24f881160e033991f23027c6c5a9a3f8fd22e70d1d44
+
+ubuntuImage:
+  repository: oci.trueforge.org/containerforge/ubuntu
+  tag: "26.4@sha256:205c6561352214872c61edea4909f29afe9be1eee6c61430ce627ca757c137ed"
+  pullPolicy: IfNotPresent
 
 chartContext:
   appUrl: ""
@@ -170,6 +181,8 @@ workload:
     enabled: true
     primary: true
     type: Deployment
+    # -- Additional labels used by this workload's pod selector
+    extraSelectorLabels: {}
     dbWait: true
     podSpec:
       containers:
@@ -378,6 +391,12 @@ persistence:
     mountPath: /dev/shm
     medium: Memory
     targetSelectAll: true
+  crontab:
+    enabled: true
+    type: emptyDir
+    mountPath: /var/spool/cron/crontabs/
+    medium: Memory
+    targetSelectAll: true
 #  backupexample:
 #    ## the default backup path, is the credential path suffixed by the releasename, volsync and both the pvc and volsync names
 #    enabled: true
@@ -501,6 +520,44 @@ imagePullSecret: {}
 # -- (docs/configmap.md)
 configmap: {}
 
+# -- Generate ConfigMaps from a folder in the Helm chart's filesystem
+# Your files will need to be two levels deep from the base path.
+# For example, if you set basePath to `files/configMaps/`, you should have this file tree:
+# files/configMaps/:
+# └── configmap1
+#     ├── file1
+#     └── file2
+# This will generate a ConfigMap named `configmap1` with keys `file1` and `file2`.
+configMapsFromFolder:
+  enabled: false
+  # -- The path in your parent chart's filesystem where you can add files to be converted into individual ConfigMaps.
+  basePath: ""
+  # -- Define overrides for the generated ConfigMaps, each key is the name of a folder in `basePath`
+  configMapsOverrides: {}
+  #   test:
+  #     # All ConfigMaps support a `forceRename` field, which allows you to rename the ConfigMap
+  #     forceRename: null
+  #     annotations:
+  #       test: test
+  #     labels:
+  #       test: test
+  #     # Configure how the individual files are added to the ConfigMap
+  #     fileAttributeOverrides:
+  #       # The key is the name of the file inside the ConfigMap's folder
+  #       test.tpl:
+  #         # If true the file won't be added to the ConfigMap
+  #         exclude: false
+  #         # If your file is a binary file like an image, set this to true. Takes precedence over `escaped`
+  #         binary: false
+  #         # If your file contains `gotpl` syntax that you don't want templated by Helm, set this to true
+  #         escaped: true
+  #       test.txt:
+  #         exclude: true
+  #   test2:
+  #     fileAttributeOverrides:
+  #       image.png:
+  #         binary: true
+
 # -- (docs/secret.md)
 secret: {}
 
@@ -516,11 +573,7 @@ notes:
     # Thank you for installing {{ .Chart.Name }} by TrueCharts.
   # custom: "{{ toYaml $.Values }}"
   custom: |
-    {{- if .Values.chartContext.appUrl }}
-    ## Connecting externally
-    You can use this Chart by opening the following links in your browser:
-    - {{ toYaml .Values.chartContext.appUrl }}
-    {{- end }}
+    {{- include "tc.v1.common.lib.chart.externalUrls" $ }}
 
     {{ if .Chart.Dependencies }}
     ## Dependencies for {{ .Chart.Name }}
@@ -534,7 +587,7 @@ notes:
     ## Connecting Internally
 
     You can reach this chart inside your cluster, using the following service URLS:
-    {{- range $url := .Values.chartContext.internalUrls -}}
+    {{- range $url := .Values.chartContext.internalUrls }}
     - {{ $url }}
     {{- end }}
     {{- end }}
@@ -567,8 +620,8 @@ notes:
 ####
 
 gluetunImage:
-  repository: oci.trueforge.org/tccr/gluetun
-  tag: v3.40.0@sha256:a8189e29155e0f8142be1500ae068a92b189b1b25abbba036321e74d6389bf2b
+  repository: oci.trueforge.org/containerforge/gluetun
+  tag: "3.41.3@sha256:9f64b09c9ac35a5b3c66b0044efe5ad57f574140db91c408b5a32c7834151e91"
   pullPolicy: IfNotPresent
 
 netshootImage:
@@ -577,8 +630,8 @@ netshootImage:
   pullPolicy: IfNotPresent
 
 tailscaleImage:
-  repository: oci.trueforge.org/tccr/tailscale
-  tag: v1.88.3@sha256:878612592f133bc0728e978558b10a1c457371ac5949985d0584664c8e92c2f9
+  repository: oci.trueforge.org/containerforge/tailscale
+  tag: "1.104.4@sha256:c991b2cb4baa7d891f213687a70aaa1ec32254c560ef85fac0db14002438c442"
   pullPolicy: IfNotPresent
 
 codeserverImage:
@@ -586,39 +639,14 @@ codeserverImage:
   tag: "4.141.0@sha256:7539bf1f492206f49dfc22b483adfcefd010e6a2be6be4e42a04376fa7f9338f"
   pullPolicy: IfNotPresent
 
-alpineImage:
-  repository: oci.trueforge.org/tccr/alpine
-  tag: v3.22.1@sha256:6dc807ae4f2867cb2d00d061f8f579f1966420ad792c179ac68072ab235109f8
-  pullPolicy: IfNotPresent
-
-ubuntuImage:
-  repository: oci.trueforge.org/containerforge/ubuntu
-  tag: "26.4@sha256:205c6561352214872c61edea4909f29afe9be1eee6c61430ce627ca757c137ed"
-  pullPolicy: IfNotPresent
-
-scratchImage:
-  repository: oci.trueforge.org/containerforge/scratch
-  tag: "1.0.0@sha256:84182a2371dd7584ad752326b7150b4e928c640b7f70a249a3994b40f1db11fd"
-  pullPolicy: IfNotPresent
-
 kubectlImage:
   repository: oci.trueforge.org/containerforge/kubectl
   tag: "1.31.1@sha256:4a51a8930e778b7f996ab476e5fcef4385453d1b78362c878bcc2b2501f99a24"
   pullPolicy: IfNotPresent
 
-wgetImage:
-  repository: oci.trueforge.org/containerforge/ubuntu
-  tag: "26.4@sha256:205c6561352214872c61edea4909f29afe9be1eee6c61430ce627ca757c137ed"
-  pullPolicy: IfNotPresent
-
-yqImage:
-  pullPolicy: IfNotPresent
-  repository: oci.trueforge.org/containerforge/go-yq
-  tag: "4.54.1@sha256:c72dd476916ea3c51292adf9914780a2c4a978def8479053bb1ea37993cdbd53"
-
 postgresClientImage:
   repository: oci.trueforge.org/containerforge/postgresql-client
-  tag: "9.6.24@sha256:d40ff61568601b7032a7e6892ca08e55f772d24b32a053d1c0c6b45a2c01ae93"
+  tag: "9.6.24@sha256:65e2aaef5c5decd8ed06f5c41cb77de6406e44006d6f3db12d0faac3f88fa1c8"
   pullPolicy: IfNotPresent
 
 mariadbClientImage:
@@ -626,16 +654,10 @@ mariadbClientImage:
   tag: "13.0.2@sha256:1343d11c7efc5345ab5cadf75457912efbd5069e7a49323c1527fd55c39d75fb"
   pullPolicy: IfNotPresent
 
-redisClientImage:
-  repository: oci.trueforge.org/containerforge/valkey-tools
-  tag: "1.1.0@sha256:39c25256ddcc04381e0be7eab150b5ddce54a4287782a29ddf37e781c68d1dad"
-  pullPolicy: IfNotPresent
-
 valkeyClientImage:
   repository: oci.trueforge.org/containerforge/valkey-tools
   tag: "1.1.0@sha256:39c25256ddcc04381e0be7eab150b5ddce54a4287782a29ddf37e781c68d1dad"
   pullPolicy: IfNotPresent
-
 mongodbClientImage:
   repository: oci.trueforge.org/containerforge/mongosh
   tag: "2.14.1@sha256:3dca8f9bde2eec214ae0718ac2a9de2f27809761f150b634a1533d98b53a6d08"
@@ -651,24 +673,49 @@ postgres16Image:
   tag: "16.15@sha256:34cd4159d07b3410a1b29da35072e2e927a0905e717a61afa3814624a2e8859a"
   pullPolicy: IfNotPresent
 
+postgres17Image:
+  repository: ghcr.io/cloudnative-pg/postgresql
+  tag: "17.11@sha256:70664ebcfa1100361b5bdc28bbf06fdbe08db2dc4ad7bd14de33c5e05fe8ea8e"
+  pullPolicy: IfNotPresent
+
+postgres18Image:
+  repository: ghcr.io/cloudnative-pg/postgresql
+  tag: "18.6@sha256:899d3ed526b659d77935dde0e6bf2d69dbbf17d3d8c6486ca8cfd04bd3c18533"
+  pullPolicy: IfNotPresent
+
 postgresPostgis15Image:
   repository: ghcr.io/cloudnative-pg/postgis
-  tag: "15-3.4@sha256:4596b193991cd2463a07d40e3d3d62c59f046a7dece8f163ad1aba15925a38e4"
+  tag: "15-3.6-standard-trixie@sha256:8e7f7463b0f99592378c97b8388eab2ddc424f902b401d98475c580b9eaff114"
   pullPolicy: IfNotPresent
 
 postgresPostgis16Image:
   repository: ghcr.io/cloudnative-pg/postgis
-  tag: "16-3.4@sha256:bb5a8590a8c934767482e34e1d103253f412aec703b77bbc52ad9044bf6e56f9"
+  tag: "16-3.6-standard-trixie@sha256:b7eb0a782570f5d04e6f7c6af6927002c532f9175c5879ed2aead61c51daae6f"
+  pullPolicy: IfNotPresent
+
+postgresPostgis17Image:
+  repository: ghcr.io/cloudnative-pg/postgis
+  tag: "17-3.6-standard-trixie@sha256:73593f14ce3ef6f5401a9867e6bbbcd9b8814029435d8d9dd32104458e06f769"
+  pullPolicy: IfNotPresent
+
+postgresPostgis18Image:
+  repository: ghcr.io/cloudnative-pg/postgis
+  tag: "18-3.6-standard-trixie@sha256:17f7fe666f6048120ed1a04f21e34791ed1ea5d7ddec83bab0931d4adf0748f0"
   pullPolicy: IfNotPresent
 
 postgresVectors15Image:
   repository: ghcr.io/tensorchord/cloudnative-pgvecto.rs
-  tag: "15.7-v0.2.1@sha256:dbdeddf0d635f76df41f745407816c87c7468df35e3b7b0665ca4e0500ff3048"
+  tag: "15.13-v0.4.0@sha256:dfdb863025674baf23ff245e18c3a6d3db54838fb26ebfa9b81c171c61dc4c90"
   pullPolicy: IfNotPresent
 
 postgresVectors16Image:
   repository: ghcr.io/tensorchord/cloudnative-pgvecto.rs
-  tag: "16.3-v0.2.1@sha256:f1a19d4fc4073b0671a72ad34ef012aa20d21b3ddf5b4b0c9077d54450db679a"
+  tag: "16.9-v0.4.0@sha256:d92dedeeb2c1c70110b72270e3f5ba90f222dcc6fb93988d9adb4d0da15a6a9d"
+  pullPolicy: IfNotPresent
+
+postgresVectors17Image:
+  repository: ghcr.io/tensorchord/cloudnative-pgvecto.rs
+  tag: "17.5-v0.4.0@sha256:cfa59ddef46bf642e3f6be9ad1878317ae5d4015707d02349bf1569d76b564e0"
   pullPolicy: IfNotPresent
 
 postgresVectorchord15Image:
@@ -681,24 +728,14 @@ postgresVectorchord16Image:
   tag: "16.15-1.1.1@sha256:f5a17fa05faf25e81304ee95e9f920d8ae077ac4a4ef0a1251e09c7197cbb236"
   pullPolicy: IfNotPresent
 
-# -- OpenVPN specific configuration
-# @default -- See below
-openvpnImage:
-  # -- Specify the openvpn client image
-  repository: oci.trueforge.org/tccr/openvpn-client
-  # -- Specify the openvpn client image tag
-  tag: latest@sha256:9bfdf50791d6e51056e31c03f73c9db329b2b72e7746155cfdc63e0c8b49b55a
-  # -- Specify the openvpn client image pull policy
+postgresVectorchord17Image:
+  repository: ghcr.io/tensorchord/cloudnative-vectorchord
+  tag: "17.11-1.1.1@sha256:bb7eb8442f76b1e74911f28585019a77022911f8cfa2ddcfb166ea6af85abd09"
   pullPolicy: IfNotPresent
 
-# -- WireGuard specific configuration
-# @default -- See below
-wireguardImage:
-  # -- Specify the WireGuard image
-  repository: oci.trueforge.org/tccr/wireguard
-  # -- Specify the WireGuard image tag
-  tag: v1.0.20210914@sha256:683b8b74d64ebd07f9955147539834c2a4b60fee51d2a36fa76b9aba689601bf
-  # -- Specify the WireGuard image pull policy
+postgresVectorchord18Image:
+  repository: ghcr.io/tensorchord/cloudnative-vectorchord
+  tag: "18.6-1.1.1@sha256:c7672bc011351a587cc292a94aac7eeebb593ed2e120077bd9c9944c9467db93"
   pullPolicy: IfNotPresent
 
 # -- Configure the ingresses for the chart here.
@@ -811,16 +848,94 @@ certificate: {}
 #       labels: {}
 #       annotations: {}
 
+# -- BETA: Configure the gateway API gateway classes for the chart here.
+# Additional gateway classes can be added by adding a dictionary key similar to the 'main' gateway class.
+# Please be aware that this is an early beta of this feature, TrueCharts does not guarantee this actually works.
+# Being BETA this can/will change in the future without notice, please do not use unless you want to take that risk
+# [[ref]](https://gateway-api.sigs.k8s.io/reference/spec/#gatewayclass)
+# @default -- See below
+gatewayClass:
+  main:
+    # -- Enables or disables the gateway class
+    enabled: false
+    # -- Provide additional annotations which may be required.
+    annotations: {}
+    # -- Provide additional labels which may be required.
+    labels: {}
+    # -- The name of the controller that will manage Gateways of this class
+    controllerName: ""
+    # -- Description helps describe a GatewayClass with more details
+    description: ""
+    # -- ParametersRef is a reference to a resource that contains the configuration parameters corresponding to the GatewayClass
+    # parametersRef:
+    #   group: ""
+    #   kind: ""
+    #   name: ""
+    #   namespace: ""
+
+# -- BETA: Configure the gateway API gateways for the chart here.
+# Additional gateways can be added by adding a dictionary key similar to the 'main' gateway.
+# Please be aware that this is an early beta of this feature, TrueCharts does not guarantee this actually works.
+# Being BETA this can/will change in the future without notice, please do not use unless you want to take that risk
+# [[ref]](https://gateway-api.sigs.k8s.io/reference/spec/#gateway)
+# @default -- See below
+gateway:
+  main:
+    # -- Enables or disables the gateway
+    enabled: false
+    # -- Provide additional annotations which may be required.
+    annotations: {}
+    # -- Provide additional labels which may be required.
+    labels: {}
+    # -- The name of the GatewayClass resource that this Gateway references
+    # Can be set directly or use targetSelector to automatically reference a gatewayClass
+    gatewayClassName: ""
+    # -- Optional: Name-based selector for automatic GatewayClass linking
+    # When set, automatically references the specified gatewayClass.$name
+    # targetSelector: main
+    # -- Optional: addresses, infrastructure, allowedListeners and tls are passed to the Gateway as is
+    # addresses:
+    #   - type: IPAddress
+    #     value: 192.168.1.10
+    # infrastructure:
+    #   annotations:
+    #     example: example
+    # -- Gateway listeners configuration
+    listeners:
+      - name: http
+        hostname:
+        port: 80
+        protocol: HTTP
+        allowedRoutes:
+          namespaces:
+            from: Same
+          kinds:
+            - group: gateway.networking.k8s.io
+              kind: HTTPRoute
+        # tls:
+        #   mode: Terminate
+        #   certificateRefs:
+        #     - kind: Secret
+        #       group: ""
+        #       name: example-cert
+        #       namespace:
+
 # -- BETA: Configure the gateway routes for the chart here.
 # Additional routes can be added by adding a dictionary key similar to the 'main' route.
 # Please be aware that this is an early beta of this feature, TrueCharts does not guarantee this actually works.
 # Being BETA this can/will change in the future without notice, please do not use unless you want to take that risk
-# [[ref]](https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io%2fv1alpha2)
+# [[ref]](https://gateway-api.sigs.k8s.io/reference/spec/#httproute)
 # @default -- See below
 route:
   main:
     # -- Enables or disables the route
     enabled: false
+    # -- Make this the primary route (used in notes, chart context, etc...).
+    # If there is more than 1 route, make sure that only 1 route is marked as primary.
+    primary: true
+    # -- Ensure this route is always enabled. An enabled ingress also satisfies this.
+    required: false
+    # expandObjectName: false
     # -- Set the route kind
     # Valid options are GRPCRoute, HTTPRoute, TCPRoute, TLSRoute, UDPRoute
     kind: HTTPRoute
@@ -828,29 +943,160 @@ route:
     annotations: {}
     # -- Provide additional labels which may be required.
     labels: {}
+    # -- Select a gateway outside of this chart. Replaces parentRefs.
+    gateway: ""
+    # -- Namespace of the selected gateway. Defaults to the namespace of the route.
+    gatewayNamespace: ""
+    # -- A string selects a gateway defined in this chart, and replaces parentRefs:
+    # targetSelector: main
+    # -- A map selects the default service and port of the rules, same as an ingress:
+    # targetSelector:
+    #   # service: port
+    #   main: main
     # -- Configure the resource the route attaches to.
+    # This is optional if targetSelector is used (targetSelector will override this)
     parentRefs:
       - group: gateway.networking.k8s.io
         kind: Gateway
+        # Name of a gateway in this chart. Takes the place of `name` and `namespace`
+        # targetSelector: main
         name:
+        # Defaults to the namespace of the route
         namespace:
+        # Attach to a single listener of the gateway
         sectionName:
-    # -- Host addresses
+        # port: 443
+    # -- Host addresses. Required for TLSRoute, not supported by TCPRoute and UDPRoute
     hostnames: []
-    # -- Configure rules for routing. Defaults to the primary service.
-    rules:
-      - backendRefs:
-          - group: ""
-            kind: Service
-            name:
-            namespace:
-            port:
-            weight: 1
-        ## Configure conditions used for matching incoming requests. Only for HTTPRoutes
-        matches:
-          - path:
-              type: PathPrefix
-              value: /
+    # -- Configure TLS for this route. It creates a ListenerSet on the selected gateway, and attaches
+    # the route to it. Needs [gateway] or a [targetSelector] string, and the gateway must allow
+    # ListenerSets with [allowedListeners]. Only for HTTPRoute and GRPCRoute.
+    # Both secretName and hosts can process a Helm template.
+    # Gets ignored when integrations.certManager is enabled
+    tls: []
+    #  - hosts:
+    #      - chart-example.local
+    #    # Exactly one of these
+    #    secretName: chart-example-tls
+    #    certificateIssuer: ""
+    #    clusterCertificate: ""
+    # -- Port of the created listeners. Defaults to global.fallbackDefaults.routeListenerPort
+    # listenerPort: 443
+    integrations:
+      # Same as an ingress. Needs cert-manager 1.20 or newer, with ListenerSet support enabled.
+      certManager:
+        enabled: false
+        certificateIssuer: ""
+      # For Traefik. Only for HTTPRoute and GRPCRoute. Needs the kubernetesCRD provider of Traefik enabled.
+      traefik:
+        enabled: false
+        # -- Allowed source IPs. Everything else is rejected.
+        ipWhitelist: []
+        # ipStrategy:
+        #   depth: 1
+        auth:
+          # empty to disable, options: "authentik" or "authelia"
+          type: ""
+          # Internal Domain name + port to reach the auth provider, excluding http(s)
+          internalHost: ""
+          # Optional: override default response headers
+          responseHeaders: []
+        # Only for HTTPRoute. Needs the theme park plugin installed in Traefik.
+        themePark:
+          enabled: false
+          app: ""
+          theme: ""
+        # Only for HTTPRoute. The regex must match the whole path. Each one is its own rule.
+        redirectRegex: []
+        #   - regex: ^/old/(.*)
+        #     replacement: https://example.com/new/${1}
+        #     permanent: true
+        # -- Anything else: any Middleware from ingressMiddlewares.traefik, same as an ingress
+        middlewares: []
+        #   - name: my-middleware
+      # For Envoy Gateway. Only for HTTPRoute and GRPCRoute.
+      envoy:
+        enabled: false
+        # -- Allowed source IPs. Everything else is rejected.
+        ipWhitelist: []
+        auth:
+          # empty to disable, options: "authentik" or "authelia"
+          type: ""
+          # service:port or service.namespace.svc.cluster.local:port
+          # A service in another namespace needs a ReferenceGrant in that namespace
+          internalHost: ""
+          # Optional: override default response headers
+          responseHeaders: []
+        # Only for HTTPRoute. Buffers HTML responses, see the Route docs.
+        themePark:
+          enabled: false
+          css: ""
+        # Only for HTTPRoute. The regex must match the whole path. Each one is its own rule.
+        # The replacement must be a fixed target, capture groups are not available on Envoy Gateway.
+        redirectRegex: []
+        #   - regex: ^/old/.*
+        #     replacement: https://example.com/new
+        #     permanent: true
+        # -- Anything else: the spec of the policy of that kind on this route, without a target.
+        # Envoy Gateway only applies one policy of a kind per route, so these are merged with the above.
+        securityPolicy: {}
+        #   cors:
+        #     allowOrigins:
+        #       - https://example.com
+        backendTrafficPolicy: {}
+        extensionPolicy: {}
+      # Same as an ingress. Only for HTTPRoute, and homepage needs [gateway: true] in its kubernetes.yaml
+      homepage:
+        enabled: false
+        # Default: chart name
+        name: ""
+        # Default: chart description
+        description: ""
+        # Default: no group
+        group: ""
+        # Default: chart icon
+        icon: ""
+        widget:
+          # Default: chartname
+          type: ""
+          # Default to the first backend of the route
+          url: ""
+          custom:
+            # somesetting: some value
+          customkv:
+            # - key: some key
+            #   value: some value
+    # -- Configure rules for routing. Without rules everything goes to the primary service.
+    # Fields a route kind does not support fail rendering, see the Route docs.
+    rules: []
+    #   - name: main
+    #     # Only for HTTPRoute and GRPCRoute. HTTPRoute defaults to all paths.
+    #     matches:
+    #       - path:
+    #           type: PathPrefix
+    #           value: /
+    #     # Only for HTTPRoute and GRPCRoute. A rule with only filters needs no backendRefs, eg a redirect.
+    #     filters:
+    #       - type: RequestHeaderModifier
+    #         requestHeaderModifier:
+    #           add:
+    #             - name: X-Example
+    #               value: example
+    #     # Only for HTTPRoute
+    #     timeouts:
+    #       request: 10s
+    #       backendRequest: 5s
+    #     backendRefs:
+    #       # Name of a service in this chart. Without this or `name`, the primary service is used.
+    #       - targetSelector: main
+    #         # Name of the object, without any expanding. Cannot be used with targetSelector.
+    #         # name: external-service
+    #         # Defaults to the primary port of the selected service
+    #         port: 8080
+    #         # Set to 0 to stop sending traffic to this backend
+    #         weight: 1
+    #         # Only for HTTPRoute and GRPCRoute
+    #         filters: []
 
 podDisruptionBudget:
   main:
@@ -894,6 +1140,90 @@ storageClass: {}
 #     allowVolumeExpansion: true
 #     volumeBindingMode: Immediate
 #     mountOptions: []
+
+# # -- create networkpolicy on demand
+# See docs/networkpolicy.md for full documentation
+networkpolicy:
+  main:
+    enabled: false
+    ### Pod Selection Options (choose one):
+    ## Default: targets all pods in this chart
+    ## (optional) Custom podSelector with matchLabels and matchExpressions
+    # podSelector:
+    #   matchLabels:
+    #     app: my-app
+    #   matchExpressions:
+    #     - key: environment
+    #       operator: In
+    #       values:
+    #         - production
+    ## (optional) Target a specific pod from this chart
+    # targetSelector: main-pod
+    ## (optional) Target multiple workloads by name or regular expression
+    # targetSelector:
+    #   - main
+    #   - worker
+    # targetSelectorRegex: "^worker-"
+    ## (optional) Target all pods in the namespace
+    # targetAllPods: false
+
+    ## (optional) Explicitly define policyTypes
+    ## Auto-detected based on ingress/egress rules if not specified
+    # policyTypes:
+    #   - Ingress
+    #   - Egress
+
+    ## Ingress Rules (incoming traffic)
+    ## Empty list allows no ingress traffic
+    ingress: []
+    # ingress:
+    #   - from:
+    #       # Allow from pods with specific labels
+    #       - podSelector:
+    #           matchLabels:
+    #             role: frontend
+    #       # Allow from specific namespace
+    #       - namespaceSelector:
+    #           matchLabels:
+    #             environment: production
+    #       # Allow from IP range
+    #       - ipBlock:
+    #           cidr: 10.0.0.0/8
+    #           except:
+    #             - 10.1.0.0/16
+    #     ports:
+    #       - protocol: TCP
+    #         port: 8080
+    #       - protocol: TCP
+    #         port: 8443
+
+    ## Egress Rules (outgoing traffic)
+    ## Empty list allows no egress traffic
+    egress: []
+    # egress:
+    #   - to:
+    #       # Allow to pods with specific labels
+    #       - podSelector:
+    #           matchLabels:
+    #             role: database
+    #       # Allow to specific namespace
+    #       - namespaceSelector:
+    #           matchLabels:
+    #             name: kube-system
+    #       # Allow to external IPs
+    #       - ipBlock:
+    #           cidr: 0.0.0.0/0
+    #           except:
+    #             - 169.254.169.254/32
+    #     ports:
+    #       - protocol: TCP
+    #         port: 5432
+    #       - protocol: UDP
+    #         port: 53
+    #       # Port ranges (Kubernetes 1.25+)
+    #       - protocol: TCP
+    #         port: 8000
+    #         endPort: 9000
 
 metrics:
   main:
@@ -985,8 +1315,6 @@ addons:
     enabled: false
     targetSelector:
       - main
-    # -- you can directly specify the config file here
-    config: ""
     container:
       enabled: true
       imageSelector: "tailscaleImage"
@@ -1010,34 +1338,28 @@ addons:
         TS_KUBE_SECRET: ""
         TS_SOCKET: /var/run/tailscale/tailscaled.sock
         TS_STATE_DIR: /var/lib/tailscale/state
-        TS_USERSPACE: true
-        TS_AUTH_ONCE: true
-        TS_ACCEPT_DNS: false
-        TS_AUTH_KEY: ""
-        TS_TAILSCALED_EXTRA_ARGS: ""
-        TS_EXTRA_ARGS: ""
-        TS_SOCKS5_SERVER: ""
-        TS_DEST_IP: ""
-        TS_ROUTES: ""
-        TS_OUTBOUND_HTTP_PROXY_LISTEN: ""
       securityContext:
         capabilities:
           add:
             - NET_ADMIN
             - NET_RAW
 
-    # -- Auth key to connect to the VPN Service
-    authkey: ""
-    # As a sidecar, it should only need to run in userspace
-    userspace: true
-    auth_once: true
-    accept_dns: false
-    routes: ""
-    dest_ip: ""
-    sock5_server: ""
-    extra_args: ""
-    daemon_extra_args: ""
-    outbound_http_proxy_listen: ""
+    # -- Tailscale settings
+    settings:
+      # -- you can directly specify the config file here
+      config: ""
+      # -- Auth key to connect to the VPN Service
+      authkey: ""
+      # As a sidecar, it should only need to run in userspace
+      userspace: true
+      auth_once: true
+      accept_dns: false
+      routes: ""
+      dest_ip: ""
+      sock5_server: ""
+      extra_args: ""
+      daemon_extra_args: ""
+      outbound_http_proxy_listen: ""
     # -- Annotations for tailscale sidecar
     annotations: {}
 
@@ -1134,8 +1456,6 @@ addons:
             - NET_ADMIN
             - NET_RAW
 
-dependencies:
-
 ##########################################################################
 # This section contains some pre-config for frequently used dependencies #
 ##########################################################################
@@ -1166,7 +1486,7 @@ cnpg:
     # Cluster mode of operation. Available modes:
     # * `standalone` - default mode. Creates new or updates an existing CNPG cluster.
     # * `replica` - Creates a replica cluster from an existing CNPG cluster. # TODO
-    # * `recovery` - Same as standalone but creates a cluster from a backup, object store or via pg_basebackup.
+    # * `recovery` - Same as standalone but creates a cluster from a backup or object store.
     mode: standalone
 
     # Database details
@@ -1264,33 +1584,29 @@ cnpg:
       ##
       # Backup Recovery Method
       # Available recovery methods:
-      # * `backup` - Recovers a CNPG cluster from a CNPG backup (PITR supported) Needs to be on the same cluster in the same namespace.
       # * `object_store` - Recovers a CNPG cluster from a barman object store (PITR supported).
-      # * `pg_basebackup` - Recovers a CNPG cluster viaa streaming replication protocol. Useful if you want to
-      #        migrate databases to CloudNativePG, even from outside Kubernetes. # TODO
       method: object_store
-      ## set a revision to append to the serverName to ensure restore and backup dont target the same thing
-      # revision: 1
+      ## set a revision to append to the serverName, so restore and backup use a different archive. Must be a string.
+      ## Required when cluster.skipEmptyWalArchiveCheck is false and both use the same archive.
+      # revision: "1"
 
-      # override serverName in recovery obkect
-      servername: ""
+      # override serverName in recovery object
+      serverName: ""
 
       ## Point in time recovery target. Specify one of the following:
       pitrTarget:
         # Time in RFC3339 format
         time: ""
 
-      # Name of the backup to recover from. Required if method is `backup`.
-      backupName: ""
-
-      # Object Store Recovery Method
-      clusterName: ""
-
       # Overrides the provider specific default path. Defaults to:
       # S3: s3://<bucket><path>
       # Azure: https://<storageAccount>.<serviceName>.core.windows.net/<clusterName><path>
       # Google: gs://<bucket><path>
       destinationPath: ""
+
+      # Configures the sidecar of the recovery job.
+      # See: https://cloudnative-pg.io/plugin-barman-cloud/docs/plugin-barman-cloud.v1/#instancesidecarconfiguration
+      # instanceSidecarConfiguration: {}
 
     # Database cluster backup configuration
     backups:
@@ -1299,11 +1615,12 @@ cnpg:
 
       encryption:
         enabled: false
-      ## set a revision to append to the serverName to ensure restore and backup dont target the same thing
-      # revision: 1
+      ## set a revision to append to the serverName, so restore and backup use a different archive. Must be a string.
+      ## Required when cluster.skipEmptyWalArchiveCheck is false and both use the same archive.
+      # revision: "1"
 
-      # override serverName in recovery obkect
-      servername: ""
+      # override serverName in the object store
+      serverName: ""
 
       # Overrides the provider specific default path. Defaults to:
       # S3: s3://<bucket><path>
@@ -1311,7 +1628,7 @@ cnpg:
       # Google: gs://<bucket><path>
       destinationPath: ""
 
-      # default: primary, other option prefer-standby
+      # default: prefer-standby, other option primary
       target: ""
 
       # name of credentials in .Values.Credentials
@@ -1325,6 +1642,14 @@ cnpg:
           suspend: false
 
       retentionPolicy: "30d"
+
+      # Configures the sidecar of the instance pods.
+      # See: https://cloudnative-pg.io/plugin-barman-cloud/docs/plugin-barman-cloud.v1/#instancesidecarconfiguration
+      # instanceSidecarConfiguration:
+      #   resources:
+      #     requests:
+      #       cpu: 50m
+      #       memory: 128Mi
 
       # - Manual list of backups
       manualBackups: []
@@ -1351,18 +1676,6 @@ cnpg:
 
     # -- contains credentials and urls output by generator
     creds: {}
-
-# -- Redis dependency configuration
-# @default -- See below
-redis:
-  enabled: false
-  includeCommon: false
-  password: "PLACEHOLDERPASSWORD"
-  # -- can be used to make an easy accessible note which URLS to use to access the DB.
-  creds: {}
-  secret:
-    credentials:
-      enabled: false
 
 # -- mariadb dependency configuration
 # @default -- See below
@@ -1403,6 +1716,34 @@ solr:
   solrEnableAuthentication: "no"
   # -- can be used to make an easy accessable note which URLS to use to access the DB.
   creds: {}
+
+# -- Dependency configuration - replaces helm-dependencies
+# Each dependency should contain a complete chart values.yaml structure
+# Resources from dependencies are merged into the main chart with prefixed names
+# @default -- See below
+dependencies: {}
+#   valkey:
+#     enabled: true
+#     image:
+#       repository: docker.io/bitnamisecure/valkey
+#       tag: latest
+#     workload:
+#       main:
+#         type: StatefulSet
+#         podSpec:
+#           containers:
+#             main:
+#               env:
+#                 REDIS_PASSWORD: "my-password"
+#     service:
+#       main:
+#         ports:
+#           main:
+#             port: 6379
+#     persistence:
+#       data:
+#         enabled: true
+#         mountPath: /bitnami/valkey
 
 # -- List of extra objects to deploy with the release
 extraTpl: []

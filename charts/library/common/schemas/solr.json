@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+      "description": "Configuration for `solr.enabled`."
+    },
+    "includeCommon": {
+      "type": "boolean",
+      "description": "Configuration for `solr.includeCommon`."
+    },
+    "password": {
+      "type": "string",
+      "description": "Configuration for `solr.password`."
+    },
+    "solrCores": {
+      "type": "integer",
+      "description": "Configuration for `solr.solrCores`."
+    },
+    "solrEnableAuthentication": {
+      "type": "string",
+      "description": "Configuration for `solr.solrEnableAuthentication`."
+    },
+    "creds": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Configuration for `solr.creds`."
+    }
+  },
+  "additionalProperties": true,
+  "description": "Configuration for `solr`."
+}

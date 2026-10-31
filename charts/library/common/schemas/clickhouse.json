@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+      "description": "Configuration for `clickhouse.enabled`."
+    },
+    "includeCommon": {
+      "type": "boolean",
+      "description": "Configuration for `clickhouse.includeCommon`."
+    },
+    "password": {
+      "type": "string",
+      "description": "Configuration for `clickhouse.password`."
+    },
+    "creds": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true,
+      "description": "Configuration for `clickhouse.creds`."
+    }
+  },
+  "additionalProperties": true,
+  "description": "Configuration for `clickhouse`."
+}

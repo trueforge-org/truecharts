@@ -4,6 +4,9 @@ templates:
 release:
   name: test-release-name
   namespace: test-release-namespace
+capabilities:
+  apiVersions:
+    - barmancloud.cnpg.io/v1/ObjectStore
 tests:
   - it: should generate correct spec
     set:
@@ -47,6 +50,9 @@ tests:
           value:
             cluster:
               name: test-release-name-common-test-cnpg-my-pg
+            method: plugin
+            pluginConfiguration:
+              name: barman-cloud.cloudnative-pg.io
       - documentIndex: &otherCnpgDoc 1
         isKind:
           of: Backup
@@ -63,3 +69,44 @@ tests:
           value:
             cluster:
               name: test-release-name-common-test-cnpg-my-pg
+            method: plugin
+            pluginConfiguration:
+              name: barman-cloud.cloudnative-pg.io
+
+  - it: should use the plugin method
+    capabilities:
+      apiVersions:
+        - barmancloud.cnpg.io/v1/ObjectStore
+    set:
+      credentials:
+        test:
+          type: s3
+          url: http://some-url
+          bucket: some-bucket
+          encrKey: some-encr-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          backups:
+            enabled: true
+            credentials: test
+            manualBackups:
+              - name: today
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Backup
+        equal:
+          path: spec
+          value:
+            cluster:
+              name: test-release-name-common-test-cnpg-my-pg
+            method: plugin
+            pluginConfiguration:
+              name: barman-cloud.cloudnative-pg.io
+

@@ -1,47 +1,46 @@
 ---
-title: NodePort
+title: Nodeport
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/service/nodeport#full-examples) section for complete examples.
-- See the [Service](/truecharts-common/service) documentation for more information
+- This page is generated from JSON schema.
+- See the [Full Examples](/truecharts-common/service/NodePort#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.service.$name`
-
-:::tip
-
-- See available service keys [here](/truecharts-common/service).
-- This options apply only when `type: NodePort`.
-
-:::
+- `.Values.service.NodePort`
 
 ---
 
-## `ports.$port-name.nodePort`
+## `service.NodePort`
 
-Define the node port that will be exposed on the node
+Configuration for service entries with `type: NodePort`.
 
-|            |                                           |
-| ---------- | ----------------------------------------- |
-| Key        | `service.$name.ports.$port-name.nodePort` |
-| Type       | `int`                                     |
-| Required   | ✅                                        |
-| Helm `tpl` | ✅                                        |
-| Default    | unset                                     |
+| Field      | Value              |
+| ---------- | ------------------ |
+| Key        | `service.NodePort` |
+| Type       | `map`              |
+| Required   | ❌                 |
+| Helm `tpl` | ❌                 |
+| Default    | unset              |
 
-Example
+---
 
-```yaml
-service:
-  some-service:
-    nodePort: 30080
-```
+### `service.NodePort.nodePort`
+
+No description provided.
+
+| Field      | Value                       |
+| ---------- | --------------------------- |
+| Key        | `service.NodePort.nodePort` |
+| Type       | `integer`                   |
+| Required   | ✅                          |
+| Helm `tpl` | ❌                          |
+| Default    | unset                       |
+| Minimum    | `1`                         |
 
 ---
 

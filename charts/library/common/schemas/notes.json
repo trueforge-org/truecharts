@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "header": {
+      "type": "string",
+      "description": "Header text for NOTES.txt. Rendered first in the output.",
+      "default": "# Welcome to TrueCharts!\nThank you for installing <{{ .Chart.Name }}>.\n"
+    },
+    "custom": {
+      "type": "string",
+      "description": "Custom text for NOTES.txt. Rendered after header, before connection information.",
+      "default": ""
+    },
+    "footer": {
+      "type": "string",
+      "description": "Footer text for NOTES.txt. Rendered after connection information, before warnings.",
+      "default": "# Documentation\nDocumentation for this chart can be found at ...\n# Bug reports\nIf you find a bug in this chart, please file an issue at ...\n"
+    },
+    "warnings": {
+      "type": "array",
+      "description": "List of warning messages to display. Rendered last in the output.",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true,
+  "description": "Configuration for NOTES.txt output. Automatically includes connection information for enabled dependencies (cnpg, mariadb, redis, mongodb, clickhouse, solr) and addons (tailscale, codeserver, netshoot). Rendering order: header → custom → connections (auto) → footer → warnings.",
+  "default": {}
+}

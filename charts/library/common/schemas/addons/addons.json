@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "codeserver": {
+      "$ref": "codeserver.json"
+    },
+    "gluetun": {
+      "$ref": "gluetun.json"
+    },
+    "tailscale": {
+      "$ref": "tailscale/tailscale.json"
+    }
+  },
+  "additionalProperties": {
+    "$ref": "addon.json"
+  },
+  "description": "Addons to the workloads."
+}

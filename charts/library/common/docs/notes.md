@@ -4,7 +4,7 @@ title: Notes
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
+- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/notes#full-examples) section for complete examples.
 
 :::
@@ -19,7 +19,9 @@ title: Notes
 
 Define values for `NOTES.txt`
 
-|            |         |
+The notes system automatically includes connection information for enabled dependencies (databases) and addons when the chart is installed or upgraded. This provides users with immediate access to connection strings and configuration details.
+
+| Field      | Value   |
 | ---------- | ------- |
 | Key        | `notes` |
 | Type       | `map`   |
@@ -30,49 +32,79 @@ Define values for `NOTES.txt`
 Example
 
 ```yaml
-notes: {}
-```
-
----
-
-### `header`
-
-Define header
-
-|            |                |
-| ---------- | -------------- |
-| Key        | `notes.header` |
-| Type       | `string`       |
-| Required   | ❌             |
-| Helm `tpl` | ✅             |
-
-Default
-
-```yaml
-header: |
-  # Welcome to TrueCharts!
-  Thank you for installing <{{ .Chart.Name }}>.
-```
-
-Example
-
-```yaml
 notes:
-  header: ""
+  {}
 ```
 
 ---
 
-### `custom`
+## External URLs
 
-Define custom message, this go between header and footer
+The "Connecting externally" section lists the URLs of all enabled ingresses and routes, not only the primary one:
 
-|            |                |
+- **Ingress**: every path of every host.
+- **HTTPRoute**: the first path of each rule, for every hostname. Rules that only redirect and regular expression paths are left out.
+
+These are listed under "Other routes" instead, as they can't be opened as a link: `GRPCRoute`, `TLSRoute`, `TCPRoute` and `UDPRoute`, and any `HTTPRoute` without a hostname or with only wildcard hostnames.
+
+"Exposed services" lists the services that can be reached from outside the cluster:
+
+| Service                                  | Address                                                   |
+| ---------------------------------------- | --------------------------------------------------------- |
+| `LoadBalancer` with `loadBalancerIP(s)`  | That IP and `port`                                        |
+| `LoadBalancer` without an IP             | `<load-balancer-ip>` and `port`, as the provider assigns it |
+| `NodePort`                               | `<node-ip>` and `nodePort`                                |
+| A port with `hostPort`                   | `<node-ip>` and `hostPort`                                |
+| `externalIPs`                            | That IP and `port`                                        |
+
+`http` and `https` ports are shown as links, others as `address:port/PROTOCOL`. A service on a pod with `hostNetwork` is not listed, and nothing is listed with `stopAll`, because these force `ClusterIP`.
+
+If there is no ingress, route or exposed service, the section shows `chartContext.appUrl`.
+
+The URL scheme and port of a route come from:
+
+| Route configuration                                     | URL                    |
+| ------------------------------------------------------- | ---------------------- |
+| `tls` or `integrations.certManager`                     | `https`, port `443`    |
+| First `parentRefs` entry has `port`                     | That port. `80` is `http`, `443` is `https` |
+| First `parentRefs` entry has `sectionName` `http` or `web` | `http`, port `80`   |
+| Anything else, including `gateway`                      | `https`, port `443`    |
+
+`listenerPort` is not used, because it can differ from the port the gateway is exposed on. `chartContext.appUrl` follows the same rules for the primary route, and does not use `TCPRoute` or `UDPRoute`.
+
+---
+
+## Automatic Connection Information
+
+When dependencies or addons are enabled, the notes output will automatically include a "Connection Information" section with:
+
+**Supported Dependencies:**
+- **CNPG (PostgreSQL)**: Host, port, database, username, connection URLs, JDBC URLs
+- **MariaDB**: Host, port, database, username, connection URLs, JDBC URLs
+- **Redis**: Host, port, database index, connection URLs
+- **MongoDB**: Host, port, database, username, connection URLs, JDBC URLs
+- **Clickhouse**: Host, port, database, username, connection URLs, JDBC URLs
+- **Solr**: Host, port, cores, authentication status, connection URLs
+
+**Supported Addons:**
+- **Tailscale**: Status, routes, userspace mode
+- **Code-Server**: Status, port
+- **Netshoot**: Status
+
+The notes are rendered in the order: header → custom → **connections** → footer → warnings
+
+---
+
+### `notes.custom`
+
+Define values for `NOTES.txt`
+
+| Field      | Value          |
 | ---------- | -------------- |
 | Key        | `notes.custom` |
 | Type       | `string`       |
 | Required   | ❌             |
-| Helm `tpl` | ✅             |
+| Helm `tpl` | ❌             |
 | Default    | `""`           |
 
 Example
@@ -84,40 +116,110 @@ notes:
 
 ---
 
-### `footer`
+### `notes.footer`
 
-Define footer
+Define values for `NOTES.txt`
 
-|            |                |
+| Field      | Value          |
 | ---------- | -------------- |
 | Key        | `notes.footer` |
 | Type       | `string`       |
 | Required   | ❌             |
-| Helm `tpl` | ✅             |
-
-Default
-
-```yaml
-footer: |
-  # Documentation
-  Documentation for this chart can be found at ...
-  # Bug reports
-  If you find a bug in this chart, please file an issue at ...
-```
+| Helm `tpl` | ❌             |
+| Default    | See schema     |
 
 Example
 
 ```yaml
 notes:
-  footer: ""
+  footer: "# Documentation\nDocumentation for this chart can be found at ...\n# Bug reports\nIf you find a bug in this chart, please file an issue at ...\n"
 ```
+
+---
+
+### `notes.header`
+
+Define values for `NOTES.txt`
+
+| Field      | Value                                                                         |
+| ---------- | ----------------------------------------------------------------------------- |
+| Key        | `notes.header`                                                                |
+| Type       | `string`                                                                      |
+| Required   | ❌                                                                            |
+| Helm `tpl` | ❌                                                                            |
+| Default    | `"# Welcome to TrueCharts!\nThank you for installing <{{ .Chart.Name }}>.\n"` |
+
+Example
+
+```yaml
+notes:
+  header: "# Welcome to TrueCharts!\nThank you for installing <{{ .Chart.Name }}>.\n"
+```
+
+---
+
+### `notes.warnings`
+
+Configuration for `notes.warnings`.
+
+| Field      | Value             |
+| ---------- | ----------------- |
+| Key        | `notes.warnings`  |
+| Type       | `list of unknown` |
+| Required   | ❌                |
+| Helm `tpl` | ❌                |
+| Default    | unset             |
 
 ---
 
 ## Full Examples
 
+### Basic Custom Message
+
 ```yaml
 notes:
   custom: |
     This is a custom message
+```
+
+### Example Output with CNPG and Redis
+
+When a chart has CNPG and Redis enabled, the notes output will include:
+
+```
+# Thank you for installing myapp by TrueCharts.
+
+# Connection Information
+
+## CNPG Database: main
+- Host: "myapp-main-rw"
+- Host:Port: "myapp-main-rw:5432"
+- Database: app
+- Username: app
+- Connection URL: "postgresql://app:***@myapp-main-rw:5432/app"
+- JDBC URL: "jdbc:postgresql://myapp-main-rw:5432/app"
+
+## Redis Database
+- Host: "myapp-redis"
+- Host:Port: "myapp-redis:6379"
+- Database Index: 0
+- Connection URL: "redis://:***@myapp-redis:6379/0"
+
+## Documentation
+Please check out the TrueCharts documentation on:
+https://truecharts.org
+```
+
+### Example Output with Addons
+
+When addons like Tailscale are enabled:
+
+```
+# Connection Information
+
+## Tailscale VPN Addon
+- Status: Enabled
+- Routes: 10.0.0.0/8
+- Userspace Mode: true
+- Note: Tailscale provides secure VPN connectivity as a sidecar container
 ```

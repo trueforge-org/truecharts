@@ -6,6 +6,9 @@ chart:
 release:
   name: test-release-name
   namespace: test-release-namespace
+capabilities:
+  apiVersions:
+    - barmancloud.cnpg.io/v1/ObjectStore
 tests:
   - it: should pass with cnpg scheduledBackup backup created with labels and annotations
     set:
@@ -88,10 +91,10 @@ tests:
         equal:
           path: metadata.labels
           value:
-            app: common-test-1.0.0
+            app: common-test-1.0.1
             release: test-release-name
             helm-revision: "0"
-            helm.sh/chart: common-test-1.0.0
+            helm.sh/chart: common-test-1.0.1
             app.kubernetes.io/name: common-test
             app.kubernetes.io/instance: test-release-name
             app.kubernetes.io/managed-by: Helm

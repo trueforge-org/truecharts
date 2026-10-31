@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "See [Node Selector](/truecharts-common/workload#nodeselector)",
+  "properties": {
+    "kubernetes.io/arch": {
+      "type": "string",
+      "description": "Configuration for `podOptions.nodeSelector.kubernetes.io/arch`."
+    }
+  },
+  "additionalProperties": true
+}

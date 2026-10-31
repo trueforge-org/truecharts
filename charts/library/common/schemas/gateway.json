@@ -1,0 +1,203 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Configuration for `gateway.main.enabled`.",
+        "default": false
+      },
+      "annotations": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Configuration for `gateway.main.annotations`."
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Configuration for `gateway.main.labels`."
+      },
+      "gatewayClassName": {
+        "type": "string",
+        "description": "Name of the GatewayClass resource that this Gateway references."
+      },
+      "targetSelector": {
+        "type": "string",
+        "description": "Configuration for `gateway.main.targetSelector`. Name-based selector for automatic GatewayClass linking."
+      },
+      "addresses": {
+        "type": "array",
+        "description": "Requested addresses for the gateway. Passed as is."
+      },
+      "infrastructure": {
+        "type": "object",
+        "additionalProperties": true,
+        "description": "Infrastructure settings of the gateway. Passed as is."
+      },
+      "allowedListeners": {
+        "type": "object",
+        "additionalProperties": true,
+        "description": "Which ListenerSets may attach to the gateway. Passed as is."
+      },
+      "tls": {
+        "type": "object",
+        "additionalProperties": true,
+        "description": "Gateway wide TLS settings. Passed as is."
+      },
+      "listeners": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Configuration for `gateway.main.listeners.$item.name`.",
+              "minLength": 1
+            },
+            "hostname": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "Hostname of the listener, supports Helm `tpl`."
+            },
+            "port": {
+              "type": "integer",
+              "description": "Configuration for `gateway.main.listeners.$item.port`.",
+              "minimum": 1
+            },
+            "protocol": {
+              "type": "string",
+              "enum": [
+                "HTTP",
+                "HTTPS",
+                "TCP",
+                "TLS",
+                "UDP"
+              ],
+              "description": "Configuration for `gateway.main.listeners.$item.protocol`."
+            },
+            "tls": {
+              "type": "object",
+              "properties": {
+                "mode": {
+                  "type": "string",
+                  "enum": [
+                    "Terminate",
+                    "Passthrough"
+                  ],
+                  "description": "Configuration for `gateway.main.listeners.$item.tls.mode`."
+                },
+                "certificateRefs": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "group": {
+                        "type": "string",
+                        "description": "Configuration for `gateway.main.listeners.$item.tls.certificateRefs.$item.group`."
+                      },
+                      "kind": {
+                        "type": "string",
+                        "description": "Configuration for `gateway.main.listeners.$item.tls.certificateRefs.$item.kind`."
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Configuration for `gateway.main.listeners.$item.tls.certificateRefs.$item.name`.",
+                        "minLength": 1
+                      },
+                      "namespace": {
+                        "type": [
+                          "null",
+                          "string"
+                        ],
+                        "description": "Configuration for `gateway.main.listeners.$item.tls.certificateRefs.$item.namespace`."
+                      }
+                    },
+                    "additionalProperties": true,
+                    "description": "Configuration for `gateway.main.listeners.$item.tls.certificateRefs.$item`."
+                  },
+                  "description": "Configuration for `gateway.main.listeners.$item.tls.certificateRefs`."
+                },
+                "options": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "description": "Implementation specific TLS options. Passed as is."
+                }
+              },
+              "additionalProperties": true,
+              "description": "Configuration for `gateway.main.listeners.$item.tls`."
+            },
+            "allowedRoutes": {
+              "type": "object",
+              "properties": {
+                "namespaces": {
+                  "type": "object",
+                  "properties": {
+                    "from": {
+                      "type": "string",
+                      "enum": [
+                        "All",
+                        "Same",
+                        "Selector"
+                      ],
+                      "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes.namespaces.from`.",
+                      "default": "Same"
+                    },
+                    "selector": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes.namespaces.selector`."
+                    }
+                  },
+                  "additionalProperties": true,
+                  "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes.namespaces`."
+                },
+                "kinds": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "group": {
+                        "type": "string",
+                        "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes.kinds.$item.group`."
+                      },
+                      "kind": {
+                        "type": "string",
+                        "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes.kinds.$item.kind`.",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true,
+                    "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes.kinds.$item`."
+                  },
+                  "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes.kinds`."
+                }
+              },
+              "additionalProperties": true,
+              "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes`."
+            }
+          },
+          "additionalProperties": true,
+          "description": "Configuration for `gateway.main.listeners.$item`."
+        },
+        "description": "Configuration for `gateway.main.listeners`."
+      }
+    },
+    "additionalProperties": true,
+    "description": "Configuration for `gateway.main`.",
+    "default": {}
+  },
+  "description": "Configuration for `gateway`."
+}

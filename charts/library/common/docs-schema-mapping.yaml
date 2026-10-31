@@ -1,0 +1,361 @@
+# Mapping of documentation files to their related schema files
+# Format: 
+#   docs/<path>.md -> schemas/<path>.json (or related schema paths)
+
+# Top-level documentation and schemas
+docs/addons.md:
+  - schemas/addons/addons.json
+  - schemas/addons/codeserver/container/env.json
+  - schemas/addons/gluetun/container/env.json
+  - schemas/addons/tailscale/container/env.json
+  - schemas/addons/tailscale/tailscale.json
+
+docs/certificate.md:
+  - schemas/certificate.json
+
+docs/configmap.md:
+  - schemas/configmap.json
+
+docs/configMapsFromFolder.md:
+  - schemas/configMapsFromFolder.json
+
+docs/containerOptions.md:
+  - schemas/containerOptions.json
+
+docs/credentials.md:
+  - schemas/credentials.json
+
+docs/fallbackDefaults.md:
+  - schemas/global/fallbackDefaults.json
+
+docs/global.md:
+  - schemas/global/global.json
+  - schemas/global/fallbackDefaults.json
+
+docs/hpa.md:
+  - schemas/hpa.json
+
+docs/imagePullSecret.md:
+  - schemas/imagePullSecret.json
+  - schemas/images.json
+
+docs/metrics.md:
+  - schemas/metrics.json
+
+docs/networkpolicy.md:
+  - schemas/networkpolicy.json
+
+docs/notes.md:
+  - schemas/notes.json
+
+docs/podDisruptionBudget.md:
+  - schemas/podDisruptionBudget.json
+
+docs/podOptions.md:
+  - schemas/podOptions/podOptions.json
+  - schemas/podOptions/dnsConfig.json
+  - schemas/podOptions/hostAliases.json
+  - schemas/podOptions/nodeSelector.json
+  - schemas/podOptions/tolerations.json
+  - schemas/podOptions/topologySpreadConstraints.json
+
+docs/priorityClass.md:
+  - schemas/priorityClass.json
+
+docs/rbac.md:
+  - schemas/rbac.json
+
+docs/resources.md:
+  - schemas/workload/podSpec/containers/resources.json
+  - schemas/workload/podSpec/initContainers/resources.json
+
+docs/route.md:
+  - schemas/route.json
+
+docs/secret.md:
+  - schemas/secret.json
+
+docs/securityContext.md:
+  - schemas/workload/podSpec/containers/securityContext.json
+  - schemas/workload/podSpec/initContainers/securityContext.json
+
+docs/serviceAccount.md:
+  - schemas/serviceAccount.json
+
+docs/storageClass.md:
+  - schemas/storageClass.json
+
+docs/volumeSnapshot.md:
+  - schemas/volumeSnapshots.json
+
+docs/volumeSnapshotClass.md:
+  - schemas/volumeSnapshotClass.json
+
+docs/vpa.md:
+  - schemas/vpa.json
+
+docs/webhook.md:
+  - schemas/webhook.json
+
+# CNPG (CloudNativePG) documentation and schemas
+docs/cnpg/cnpg.md:
+  - schemas/cnpg/cnpg.json
+
+docs/cnpg/cluster.md:
+  - schemas/cnpg/cluster.json
+  - schemas/cnpg/cluster/cluster.json
+  - schemas/cnpg/cluster/certificates.json
+  - schemas/cnpg/cluster/initdb.json
+  - schemas/cnpg/cluster/postgresql.json
+  - schemas/cnpg/cluster/primaryUpdateMethod.json
+  - schemas/cnpg/cluster/primaryUpdateStrategy.json
+
+# Container documentation and schemas
+docs/container/index.md:
+  - schemas/containerOptions.json
+
+docs/container/args.md:
+  - schemas/workload/podSpec/containers/args.json
+  - schemas/workload/podSpec/initContainers/args.json
+
+docs/container/command.md:
+  - schemas/workload/podSpec/containers/command.json
+  - schemas/workload/podSpec/initContainers/command.json
+
+docs/container/env.md:
+  - schemas/workload/podSpec/containers/env.json
+  - schemas/workload/podSpec/initContainers/env.json
+
+docs/container/envFrom.md:
+  - schemas/workload/podSpec/containers/envFrom.json
+  - schemas/workload/podSpec/initContainers/envFrom.json
+
+docs/container/fixedEnv.md:
+  - schemas/workload/podSpec/containers/fixedEnv.json
+
+docs/container/lifecycle.md:
+  - schemas/workload/podSpec/containers/lifecycle.json
+
+docs/container/probes.md:
+  - schemas/workload/podSpec/containers/probes.json
+  - schemas/workload/podSpec/initContainers/probes.json
+
+docs/container/resources.md:
+  - schemas/workload/podSpec/containers/resources.json
+  - schemas/workload/podSpec/initContainers/resources.json
+
+docs/container/securityContext.md:
+  - schemas/workload/podSpec/containers/securityContext.json
+  - schemas/workload/podSpec/initContainers/securityContext.json
+
+docs/container/termination.md:
+  - schemas/workload/container/termination.json
+
+# Ingress documentation and schemas
+docs/ingress/index.md:
+  - schemas/ingress/ingress.json
+
+docs/ingress/certManager.md:
+  - schemas/ingress/certManager.json
+
+docs/ingress/homepage.md:
+  - schemas/ingress/integrations/homepage.json
+
+docs/ingress/traefik.md:
+  - schemas/ingress/traefik.json
+
+# Middleware documentation and schemas
+docs/middlewares/index.md:
+  - schemas/ingressMiddlewares/ingressMiddlewares.json
+  - schemas/ingressMiddlewares/middlewares/traefik/index.json
+
+docs/middlewares/traefik/index.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/index.json
+
+docs/middlewares/traefik/add-prefix.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/add-prefix.json
+
+docs/middlewares/traefik/basic-auth.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/basic-auth.json
+
+docs/middlewares/traefik/buffering.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/buffering.json
+
+docs/middlewares/traefik/chain.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/chain.json
+
+docs/middlewares/traefik/compress.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/compress.json
+
+docs/middlewares/traefik/content-type.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/content-type.json
+
+docs/middlewares/traefik/forward-auth.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/forward-auth.json
+
+docs/middlewares/traefik/headers.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/headers.json
+
+docs/middlewares/traefik/ip-allow-list.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/ip-allow-list.json
+
+docs/middlewares/traefik/plugin-bouncer.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/plugin-bouncer.json
+
+docs/middlewares/traefik/plugin-geoblock.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/plugin-geoblock.json
+
+docs/middlewares/traefik/plugin-mod-security.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/plugin-mod-security.json
+
+docs/middlewares/traefik/plugin-real-ip.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/plugin-real-ip.json
+
+docs/middlewares/traefik/plugin-rewrite-response-headers.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/plugin-rewrite-response-headers.json
+
+docs/middlewares/traefik/plugin-theme-park.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/plugin-theme-park.json
+
+docs/middlewares/traefik/rate-limit.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/rate-limit.json
+
+docs/middlewares/traefik/redirect-regex.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/redirect-regex.json
+
+docs/middlewares/traefik/redirect-scheme.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/redirect-scheme.json
+
+docs/middlewares/traefik/replace-path-regex.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/replace-path-regex.json
+
+docs/middlewares/traefik/replace-path.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/replace-path.json
+
+docs/middlewares/traefik/retry.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/retry.json
+
+docs/middlewares/traefik/strip-prefix-regex.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/strip-prefix-regex.json
+
+docs/middlewares/traefik/strip-prefix.md:
+  - schemas/ingressMiddlewares/middlewares/traefik/strip-prefix.json
+
+# Persistence documentation and schemas
+docs/persistence/index.md:
+  - schemas/persistence/persistence.json
+
+docs/persistence/configmap.md:
+  - schemas/persistence/configmap.json
+
+docs/persistence/device.md:
+  - schemas/persistence/device.json
+
+docs/persistence/emptyDir.md:
+  - schemas/persistence/emptyDir.json
+
+docs/persistence/hostPath.md:
+  - schemas/persistence/hostPath.json
+
+docs/persistence/iscsi.md:
+  - schemas/persistence/iscsi.json
+
+docs/persistence/nfs.md:
+  - schemas/persistence/nfs.json
+
+docs/persistence/secret.md:
+  - schemas/persistence/secret.json
+
+docs/persistence/pvc-vct/index.md:
+  - schemas/persistence/pvc-vct/index.json
+
+docs/persistence/pvc-vct/static-custom.md:
+  - schemas/persistence/pvc-vct/static-custom.json
+
+docs/persistence/pvc-vct/static-nfs.md:
+  - schemas/persistence/pvc-vct/static-nfs.json
+
+docs/persistence/pvc-vct/static-smb.md:
+  - schemas/persistence/pvc-vct/static-smb.json
+
+# Service documentation and schemas
+docs/service/index.md:
+  - schemas/service/service.json
+
+docs/service/ClusterIP.md:
+  - schemas/service/ClusterIP.json
+
+docs/service/ExternalIP.md:
+  - schemas/service/ExternalIP.json
+
+docs/service/ExternalName.md:
+  - schemas/service/ExternalName.json
+
+docs/service/LoadBalancer.md:
+  - schemas/service/LoadBalancer.json
+
+docs/service/NodePort.md:
+  - schemas/service/NodePort.json
+
+docs/service/ports.md:
+  - schemas/service/ports.json
+
+docs/service/integrations/traefik.md:
+  - schemas/service/integrations/traefik.json
+
+# Workload documentation and schemas
+docs/workload/index.md:
+  - schemas/workload/workload.json
+
+docs/workload/cronjob.md:
+  - schemas/workload/cronjob.json
+
+docs/workload/daemonset.md:
+  - schemas/workload/daemonset.json
+
+docs/workload/deployment.md:
+  - schemas/workload/deployment.json
+
+docs/workload/job.md:
+  - schemas/workload/job.json
+
+docs/workload/statefulset.md:
+  - schemas/workload/statefulset.json
+
+# Schema-only files (no corresponding docs)
+# These schemas exist but don't have dedicated documentation files
+schemas_without_docs:
+  - schemas/TZ.json
+  - schemas/chartContext.json
+  - schemas/clickhouse.json
+  - schemas/dependencies.json
+  - schemas/diagnosticMode.json
+  - schemas/extraTpl.json
+  - schemas/image.json
+  - schemas/mariadb.json
+  - schemas/mongodb.json
+  - schemas/namespace.json
+  - schemas/operator.json
+  - schemas/redis.json
+  - schemas/solr.json
+  - schemas/special/labels.json
+  - schemas/special/namespaces.json
+  - schemas/workload/podSpec/automountServiceAccountToken.json
+  - schemas/workload/podSpec/defaultSpread.json
+  - schemas/workload/podSpec/dnsPolicy.json
+  - schemas/workload/podSpec/enableServiceLinks.json
+  - schemas/workload/podSpec/hostIPC.json
+  - schemas/workload/podSpec/hostNetwork.json
+  - schemas/workload/podSpec/hostPID.json
+  - schemas/workload/podSpec/hostUsers.json
+  - schemas/workload/podSpec/priorityClassName.json
+  - schemas/workload/podSpec/restartPolicy.json
+  - schemas/workload/podSpec/runtimeClassName.json
+  - schemas/workload/podSpec/schedulerName.json
+  - schemas/workload/podSpec/shareProcessNamespace.json
+  - schemas/workload/terminationGracePeriodSeconds.json
+
+# Docs-only files (no corresponding schemas)
+# These docs exist but don't have dedicated schema files
+docs_without_schemas:
+  - docs/index.md  # Main index/readme

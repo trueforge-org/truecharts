@@ -1,0 +1,247 @@
+suite: gateway spec test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render wildcard hostnames as valid yaml
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              hostname: "*.example.com"
+              port: 80
+              protocol: HTTP
+            - name: templated
+              hostname: "{{ .Release.Name }}.example.com"
+              port: 8080
+              protocol: HTTP
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Gateway
+        equal:
+          path: spec.listeners[0].hostname
+          value: "*.example.com"
+      - documentSelector:
+          path: kind
+          value: Gateway
+        equal:
+          path: spec.listeners[1].hostname
+          value: test-release-name.example.com
+
+  - it: should render addresses, infrastructure, tls and allowedListeners
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+          addresses:
+            - type: IPAddress
+              value: 192.168.1.10
+          infrastructure:
+            annotations:
+              some-key: some-value
+          allowedListeners:
+            namespaces:
+              from: Same
+          tls:
+            frontend:
+              default:
+                validation:
+                  mode: AllowValidOnly
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Gateway
+        equal:
+          path: spec.addresses[0].value
+          value: 192.168.1.10
+      - documentSelector:
+          path: kind
+          value: Gateway
+        equal:
+          path: spec.infrastructure.annotations.some-key
+          value: some-value
+      - documentSelector:
+          path: kind
+          value: Gateway
+        equal:
+          path: spec.allowedListeners.namespaces.from
+          value: Same
+      - documentSelector:
+          path: kind
+          value: Gateway
+        equal:
+          path: spec.tls.frontend.default.validation.mode
+          value: AllowValidOnly
+
+  - it: should render listener tls options
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: https
+              port: 443
+              protocol: HTTPS
+              tls:
+                mode: Terminate
+                certificateRefs:
+                  - name: some-cert
+                options:
+                  some.example/option: value
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Gateway
+        equal:
+          path: spec.listeners[0].tls.options
+          value: 
+            some.example/option: value
+      - documentSelector:
+          path: kind
+          value: Gateway
+        equal:
+          path: spec.listeners[0].tls.certificateRefs[0].name
+          value: some-cert
+
+  - it: should name gateways the same on every render when none is primary
+    set:
+      gateway:
+        b:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+        a:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+        c:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+    asserts:
+      - hasDocuments:
+          count: 3
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test
+        isKind:
+          of: Gateway
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-b
+        isKind:
+          of: Gateway
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-c
+        isKind:
+          of: Gateway
+
+  - it: should link to a gateway class in this chart
+    set:
+      gatewayClass:
+        my-class:
+          enabled: true
+          controllerName: example.com/controller
+          description: "Has: a colon"
+          parametersRef:
+            group: example.com
+            kind: Config
+            name: some-config
+      gateway:
+        my-gateway:
+          enabled: true
+          targetSelector: my-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Gateway
+        equal:
+          path: spec.gatewayClassName
+          value: test-release-name-common-test
+      - documentSelector:
+          path: kind
+          value: GatewayClass
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentSelector:
+          path: kind
+          value: GatewayClass
+        equal:
+          path: spec.controllerName
+          value: example.com/controller
+      - documentSelector:
+          path: kind
+          value: GatewayClass
+        equal:
+          path: spec.description
+          value: "Has: a colon"
+      - documentSelector:
+          path: kind
+          value: GatewayClass
+        equal:
+          path: spec.parametersRef
+          value: 
+            group: example.com
+            kind: Config
+            name: some-config
+
+  - it: should keep gateway names when referenced before rendering
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          primary: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+        other:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+      route:
+        my-route:
+          enabled: true
+          targetSelector: other
+          rules:
+            - backendRefs:
+                - name: external
+                  port: 80
+    asserts:
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.parentRefs[0].name
+          value: test-release-name-common-test-other

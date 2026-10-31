@@ -47,6 +47,9 @@
 
         {{/* Create secret for backup store */}}
         {{- include "tc.v1.common.lib.cnpg.provider.secret.spawner" (dict "rootCtx" $ "objectData" $objectData "type" "backup") -}}
+
+        {{/* Create ObjectStore for backups */}}
+        {{- include "tc.v1.common.class.cnpg.objectStore" (dict "rootCtx" $ "objectData" $objectData "type" "backup") -}}
       {{- end -}}
 
       {{/* Handle Pooler(s) */}}
@@ -56,11 +59,14 @@
 
       {{/* Handle Cluster */}}
       {{/* Validate Cluster */}}
-      {{- include "tc.v1.common.lib.cnpg.cluster.validation" (dict "objectData" $objectData) -}}
+      {{- include "tc.v1.common.lib.cnpg.cluster.validation" (dict "rootCtx" $ "objectData" $objectData) -}}
 
       {{- if and (eq $objectData.mode "recovery") (eq $objectData.recovery.method "object_store") -}}
         {{/* Create secret for recovery store */}}
         {{- include "tc.v1.common.lib.cnpg.provider.secret.spawner" (dict "rootCtx" $ "objectData" $objectData "type" "recovery") -}}
+
+        {{/* Create ObjectStore for recovery */}}
+        {{- include "tc.v1.common.class.cnpg.objectStore" (dict "rootCtx" $ "objectData" $objectData "type" "recovery") -}}
       {{- end -}}
 
       {{/* Create the Cluster object */}}
