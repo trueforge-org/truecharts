@@ -1,0 +1,119 @@
+suite: network policy controller selectors
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should include extra selector labels on the controller and pod
+    set:
+      workload:
+        frontend:
+          enabled: true
+          primary: true
+          type: Deployment
+          extraSelectorLabels:
+            app.example.com/component: "{{ .Values.component }}"
+          podSpec: {}
+      networkpolicy:
+        selected:
+          enabled: true
+          targetSelector: frontend
+      component: frontend
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: spec.selector.matchLabels
+          value:
+            app.kubernetes.io/instance: test-release-name
+            app.kubernetes.io/name: common-test
+            pod.name: frontend
+            app.example.com/component: frontend
+      - documentIndex: 1
+        equal:
+          path: spec.podSelector.matchLabels
+          value:
+            app.kubernetes.io/instance: test-release-name
+            app.kubernetes.io/name: common-test
+            pod.name: frontend
+            app.example.com/component: frontend
+      - documentIndex: 0
+        isSubset:
+          path: spec.template.metadata.labels
+          content:
+            app.kubernetes.io/instance: test-release-name
+            app.kubernetes.io/name: common-test
+            pod.name: frontend
+            app.example.com/component: frontend
+
+  - it: should target multiple workloads by name
+    set:
+      workload:
+        frontend:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+        worker:
+          enabled: true
+          type: Deployment
+          podSpec: {}
+      networkpolicy:
+        selected:
+          enabled: true
+          targetSelector:
+            - frontend
+            - worker
+    asserts:
+      - documentIndex: 2
+        isKind:
+          of: NetworkPolicy
+      - documentIndex: 2
+        equal:
+          path: spec.podSelector.matchLabels
+          value:
+            app.kubernetes.io/instance: test-release-name
+            app.kubernetes.io/name: common-test
+      - documentIndex: 2
+        equal:
+          path: spec.podSelector.matchExpressions
+          value:
+            - key: pod.name
+              operator: In
+              values:
+                - frontend
+                - worker
+
+  - it: should target workloads by regular expression
+    set:
+      workload:
+        api:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+        worker-one:
+          enabled: true
+          type: Deployment
+          podSpec: {}
+        worker-two:
+          enabled: true
+          type: Deployment
+          podSpec: {}
+      networkpolicy:
+        selected:
+          enabled: true
+          targetSelectorRegex: "^worker-"
+    asserts:
+      - documentIndex: 3
+        isKind:
+          of: NetworkPolicy
+      - documentIndex: 3
+        equal:
+          path: spec.podSelector.matchExpressions
+          value:
+            - key: pod.name
+              operator: In
+              values:
+                - worker-one
+                - worker-two

@@ -177,6 +177,8 @@ workload:
     enabled: true
     primary: true
     type: Deployment
+    # -- Additional labels used by this workload's pod selector
+    extraSelectorLabels: {}
     dbWait: true
     podSpec:
       containers:
@@ -1019,6 +1021,11 @@ networkpolicy:
     #         - production
     ## (optional) Target a specific pod from this chart
     # targetSelector: main-pod
+    ## (optional) Target multiple workloads by name or regular expression
+    # targetSelector:
+    #   - main
+    #   - worker
+    # targetSelectorRegex: "^worker-"
     ## (optional) Target all pods in the namespace
     # targetAllPods: false
 

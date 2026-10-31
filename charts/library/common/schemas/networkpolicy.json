@@ -127,10 +127,29 @@
         ]
       },
       "targetSelector": {
-        "type": "string",
+        "type": [
+          "string",
+          "array"
+        ],
+        "items": {
+          "type": "string"
+        },
         "properties": {},
         "additionalProperties": true,
-        "description": "Target a specific pod from this chart",
+        "description": "Target one or more workloads from this chart by name",
+        "default": ""
+      },
+      "targetSelectorRegex": {
+        "type": [
+          "string",
+          "array"
+        ],
+        "items": {
+          "type": "string"
+        },
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Target workloads from this chart whose names match one or more regular expressions",
         "default": ""
       },
       "targetAllPods": {
