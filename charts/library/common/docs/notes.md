@@ -45,7 +45,7 @@ When dependencies or addons are enabled, the notes output will automatically inc
 **Supported Dependencies:**
 - **CNPG (PostgreSQL)**: Host, port, database, username, connection URLs, JDBC URLs
 - **MariaDB**: Host, port, database, username, connection URLs, JDBC URLs
-- **Redis**: Host, port, database index, connection URLs
+- **Valkey**: Host, port (from the `valkey` dependency)
 - **MongoDB**: Host, port, database, username, connection URLs, JDBC URLs
 - **Clickhouse**: Host, port, database, username, connection URLs, JDBC URLs
 - **Solr**: Host, port, cores, authentication status, connection URLs
@@ -146,9 +146,9 @@ notes:
     This is a custom message
 ```
 
-### Example Output with CNPG and Redis
+### Example Output with CNPG and Valkey
 
-When a chart has CNPG and Redis enabled, the notes output will include:
+When a chart has CNPG and the Valkey dependency enabled, the notes output will include:
 
 ```
 # Thank you for installing myapp by TrueCharts.
@@ -163,11 +163,10 @@ When a chart has CNPG and Redis enabled, the notes output will include:
 - Connection URL: "postgresql://app:***@myapp-main-rw:5432/app"
 - JDBC URL: "jdbc:postgresql://myapp-main-rw:5432/app"
 
-## Redis Database
-- Host: "myapp-redis"
-- Host:Port: "myapp-redis:6379"
-- Database Index: 0
-- Connection URL: "redis://:***@myapp-redis:6379/0"
+## Valkey Database
+- Host: myapp-valkey-main
+- Port: 6379
+- Host:Port: myapp-valkey-main:6379
 
 ## Documentation
 Please check out the TrueCharts documentation on:

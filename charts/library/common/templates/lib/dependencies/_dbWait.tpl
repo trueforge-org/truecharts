@@ -1,72 +1,36 @@
 {{- define "tc.v1.common.lib.deps.wait" -}}
-  {{/* Check if valkey service exists from dependencies */}}
-  {{- $valkeyServiceExists := false -}}
-  {{- range $name, $service := .Values.service -}}
-    {{- if kindIs "map" $service -}}
-      {{- if hasPrefix "valkey-" $name -}}
-        {{- $valkeyServiceExists = true -}}
-      {{- end -}}
-    {{- end -}}
+  {{- $valkeyEnabled := false -}}
+  {{- $valkey := get (.Values.dependencies | default dict) "valkey" -}}
+  {{- if kindIs "map" $valkey -}}
+    {{- $valkeyEnabled = eq (include "tc.v1.common.lib.util.enabled" (dict
+                    "rootCtx" $ "objectData" $valkey
+                    "name" "valkey" "caller" "Dependencies"
+                    "key" "dependencies")) "true" -}}
   {{- end -}}
-  
-  {{- if $valkeyServiceExists -}}
+
+  {{- if $valkeyEnabled -}}
     {{- $container := include "tc.v1.common.lib.deps.wait.valkey" $ | fromYaml -}}
-    {{- if $container -}}
-      {{- range .Values.workload -}}
-        {{- if not (hasKey .podSpec "initContainers") -}}
-          {{- $_ := set .podSpec "initContainers" dict -}}
-        {{- end -}}
-      {{- $_ := set .podSpec.initContainers "valkey-wait" $container -}}
-      {{- end -}}
-    {{- end -}}
+    {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "valkey-wait" "container" $container) -}}
   {{- end -}}
 
   {{- if .Values.mariadb.enabled -}}
     {{- $container := include "tc.v1.common.lib.deps.wait.mariadb" $ | fromYaml -}}
-    {{- if $container -}}
-      {{- range .Values.workload -}}
-        {{- if not (hasKey .podSpec "initContainers") -}}
-          {{- $_ := set .podSpec "initContainers" dict -}}
-        {{- end -}}
-      {{- $_ := set .podSpec.initContainers "mariadb-wait" $container -}}
-      {{- end -}}
-    {{- end -}}
+    {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "mariadb-wait" "container" $container) -}}
   {{- end -}}
 
   {{- if .Values.mongodb.enabled -}}
     {{- $container := include "tc.v1.common.lib.deps.wait.mongodb" $ | fromYaml -}}
-    {{- if $container -}}
-      {{- range .Values.workload -}}
-        {{- if not (hasKey .podSpec "initContainers") -}}
-          {{- $_ := set .podSpec "initContainers" dict -}}
-        {{- end -}}
-      {{- $_ := set .podSpec.initContainers "mongodb-wait" $container -}}
-      {{- end -}}
-    {{- end -}}
+    {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "mongodb-wait" "container" $container) -}}
   {{- end -}}
 
   {{- if .Values.clickhouse.enabled -}}
     {{- $container := include "tc.v1.common.lib.deps.wait.clickhouse" $ | fromYaml -}}
-    {{- if $container -}}
-      {{- range .Values.workload -}}
-        {{- if not (hasKey .podSpec "initContainers") -}}
-          {{- $_ := set .podSpec "initContainers" dict -}}
-        {{- end -}}
-        {{- $_ := set .podSpec.initContainers "clickhouse-wait" $container -}}
-      {{- end -}}
-    {{- end -}}
+    {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "clickhouse-wait" "container" $container) -}}
   {{- end -}}
 
   {{- if .Values.solr.enabled -}}
     {{- $container := include "tc.v1.common.lib.deps.wait.solr" $ | fromYaml -}}
-    {{- if $container -}}
-      {{- range .Values.workload -}}
-        {{- if not (hasKey .podSpec "initContainers") -}}
-          {{- $_ := set .podSpec "initContainers" dict -}}
-        {{- end -}}
-      {{- $_ := set .podSpec.initContainers "solr-wait" $container -}}
-      {{- end -}}
-    {{- end -}}
+    {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "solr-wait" "container" $container) -}}
   {{- end -}}
 
   {{- $result := false -}}
@@ -78,35 +42,48 @@
 
   {{- if $result -}}
     {{- $container := include "tc.v1.common.lib.deps.wait.cnpg" $ | fromYaml -}}
-    {{- if $container -}}
-      {{- range $.Values.workload -}}
-        {{- if not (hasKey .podSpec "initContainers") -}}
-          {{- $_ := set .podSpec "initContainers" dict -}}
+    {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "cnpg-wait" "container" $container) -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* Adds a wait init container to all workloads that wait for the dependencies */}}
+{{/* Workloads with [dbWait: false] (eg the workloads of a dependency) are skipped */}}
+{{- define "tc.v1.common.lib.deps.wait.add" -}}
+  {{- $rootCtx := .rootCtx -}}
+  {{- $name := .name -}}
+  {{- $container := .container -}}
+
+  {{- if $container -}}
+    {{- range $wlName, $workload := $rootCtx.Values.workload -}}
+      {{- if not (kindIs "map" $workload) -}}{{- continue -}}{{- end -}}
+
+      {{- $dbWait := true -}}
+      {{- if hasKey $workload "dbWait" -}}
+        {{- $dbWait = $workload.dbWait -}}
+        {{- if kindIs "string" $dbWait -}}
+          {{- $dbWait = (tpl $dbWait $rootCtx) -}}
         {{- end -}}
-        {{- $_ := set .podSpec.initContainers "cnpg-wait" $container -}}
+        {{- $dbWait = (ne (toString $dbWait) "false") -}}
       {{- end -}}
+      {{- if not $dbWait -}}{{- continue -}}{{- end -}}
+
+      {{- if not (kindIs "map" $workload.podSpec) -}}
+        {{- $_ := set $workload "podSpec" dict -}}
+      {{- end -}}
+      {{- if not (kindIs "map" $workload.podSpec.initContainers) -}}
+        {{- $_ := set $workload.podSpec "initContainers" dict -}}
+      {{- end -}}
+      {{- $_ := set $workload.podSpec.initContainers $name (mustDeepCopy $container) -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
 
 {{- define "tc.v1.common.lib.deps.wait.valkey" -}}
-{{/* Find the valkey service name */}}
-{{- $valkeyServiceName := "" -}}
-{{- $valkeyPort := "6379" -}}
-{{- range $name, $service := .Values.service -}}
-  {{- if and (kindIs "map" $service) (hasPrefix "valkey-" $name) -}}
-    {{- $valkeyServiceName = $name -}}
-    {{- range $portName, $portConfig := $service.ports -}}
-      {{- if or (not (hasKey $portConfig "enabled")) $portConfig.enabled -}}
-        {{- $valkeyPort = toString $portConfig.port -}}
-      {{- end -}}
-    {{- end -}}
-  {{- end -}}
+{{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "valkey")) -}}
+{{- if not $service -}}
+  {{- fail "Dependencies - Expected dependency [valkey] to have an enabled primary service" -}}
 {{- end -}}
-
-{{- if $valkeyServiceName -}}
-{{- $hostName := printf "%s-%s" .Release.Name $valkeyServiceName -}}
-
+{{- $service = $service | fromJson -}}
 enabled: true
 type: system
 imageSelector: valkeyClientImage
@@ -132,14 +109,20 @@ resources:
     cpu: 500m
     memory: 512Mi
 env:
-  VALKEY_HOST: {{ $hostName }}
-  VALKEY_PORT: {{ $valkeyPort | quote }}
+  VALKEY_HOST: {{ $service.name | quote }}
+  VALKEY_PORT: {{ $service.port | default 6379 | quote }}
+  VALKEY_PASSWORD:
+    secretKeyRef:
+      expandObjectName: false
+      name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+      key: valkey-password
 command:
   - "/bin/sh"
   - "-c"
   - |
     /bin/bash <<'EOF'
     echo "Executing Valkey wait..."
+    [[ -n "$VALKEY_PASSWORD" ]] && export REDISCLI_AUTH="$VALKEY_PASSWORD";
     export LIVE=false;
     until "$LIVE";
     do
@@ -150,18 +133,20 @@ command:
             -p "$VALKEY_PORT" \
             ping
         )
-      if [ "$response" == "PONG" ] || [ "$response" == "LOADING Valkey is loading the dataset in memory" ]; then
-        LIVE=true
-        echo "$response"
-        echo "Valkey Responded, ending initcontainer and starting main container(s)..."
-      else
-        echo "$response"
-        echo "Valkey not responding... Sleeping for 10 sec..."
-        sleep 10
-      fi;
+      case "$response" in
+        PONG|LOADING*)
+          LIVE=true
+          echo "$response"
+          echo "Valkey Responded, ending initcontainer and starting main container(s)..."
+          ;;
+        *)
+          echo "$response"
+          echo "Valkey not responding... Sleeping for 10 sec..."
+          sleep 10
+          ;;
+      esac
     done
     EOF
-{{- end -}}
 {{- end -}}
 
 {{- define "tc.v1.common.lib.deps.wait.mariadb" -}}

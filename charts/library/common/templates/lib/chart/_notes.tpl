@@ -63,19 +63,17 @@ Display connection information for enabled dependencies and addons
     {{- end -}}
   {{- end -}}
 
-  {{/* Check for valkey service from dependencies */}}
-  {{- $valkeyServiceExists := false -}}
-  {{- range $name, $service := .Values.service -}}
-    {{- if kindIs "map" $service -}}
-      {{- if hasPrefix "valkey-" $name -}}
-        {{- $valkeyServiceExists = true -}}
-      {{- end -}}
+  {{/* Valkey from the dependencies */}}
+  {{- $valkey := get (.Values.dependencies | default dict) "valkey" -}}
+  {{- if kindIs "map" $valkey -}}
+    {{- $valkeyEnabled := (include "tc.v1.common.lib.util.enabled" (dict
+                    "rootCtx" $ "objectData" $valkey
+                    "name" "valkey" "caller" "Dependencies"
+                    "key" "dependencies")) -}}
+    {{- if eq $valkeyEnabled "true" -}}
+      {{- $hasConnections = true -}}
+      {{- $connections = append $connections (include "tc.v1.common.lib.chart.connections.valkey" . | trim) -}}
     {{- end -}}
-  {{- end -}}
-  
-  {{- if $valkeyServiceExists -}}
-    {{- $hasConnections = true -}}
-    {{- $connections = append $connections (include "tc.v1.common.lib.chart.connections.valkey" . | trim) -}}
   {{- end -}}
 
   {{- if .Values.mongodb -}}
@@ -197,27 +195,14 @@ MariaDB connection information
 Valkey connection information
 */}}
 {{- define "tc.v1.common.lib.chart.connections.valkey" -}}
-{{- $valkeyServiceName := "" -}}
-{{- $valkeyPort := "6379" -}}
-{{- range $name, $service := .Values.service -}}
-  {{- if and (kindIs "map" $service) (hasPrefix "valkey-" $name) -}}
-    {{- $valkeyServiceName = $name -}}
-    {{- range $portName, $portConfig := $service.ports -}}
-      {{- if $portConfig.enabled -}}
-        {{- $valkeyPort = toString $portConfig.port -}}
-      {{- end -}}
-    {{- end -}}
-  {{- end -}}
-{{- end -}}
-
-{{- if $valkeyServiceName -}}
-{{- $hostName := printf "%s-%s" .Release.Name $valkeyServiceName -}}
+{{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "valkey")) -}}
 ## Valkey Database
-- Host: {{ $hostName }}
-- Port: {{ $valkeyPort }}
-- Host:Port: {{ $hostName }}:{{ $valkeyPort }}
+{{- if $service -}}
+{{- $service = $service | fromJson }}
+- Host: {{ $service.name }}
+- Port: {{ $service.port }}
+- Host:Port: {{ $service.name }}:{{ $service.port }}
 {{- else }}
-## Valkey Database
 - Configuration pending (service will be available after initialization)
 {{- end -}}
 {{- end -}}

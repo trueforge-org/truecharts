@@ -149,7 +149,8 @@ workload:
 
 ### `workload.$name.dbWait`
 
-Configuration for `workload.main.dbWait`.
+Whether init containers waiting for the enabled dependencies (cnpg, mariadb, mongodb, clickhouse, solr, valkey) are added to the workload.
+The workloads of [dependencies](/truecharts-common/dependencies) default to `false`, so they do not wait for themselves.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
@@ -157,7 +158,7 @@ Configuration for `workload.main.dbWait`.
 | Type       | `boolean`               |
 | Required   | ❌                      |
 | Helm `tpl` | ❌                      |
-| Default    | unset                   |
+| Default    | `true`                  |
 
 ---
 

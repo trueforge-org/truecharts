@@ -2,19 +2,44 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "additionalProperties": {
-    "$ref": "../values.schema.json",
-    "type": "object",
-    "required": [
-      "enabled"
-    ],
-    "properties": {
-      "enabled": {
-        "type": [
-          "boolean",
-          "string"
-        ]
+    "allOf": [
+      {
+        "$ref": "../values.schema.json"
+      },
+      {
+        "type": "object",
+        "required": [
+          "enabled"
+        ],
+        "properties": {
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
+            "description": "Whether the dependency is enabled. Objects of disabled dependencies are not merged into the chart."
+          },
+          "depconfig": {
+            "type": "object",
+            "properties": {
+              "password": {
+                "type": "string",
+                "description": "Password used by the dependency. Defaults to `PLACEHOLDERPASSWORD`."
+              },
+              "creds": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Connection details populated by the dependency (eg `plainhost`, `url`). Read-only."
+              }
+            },
+            "additionalProperties": true,
+            "description": "Configuration of the dependency itself. Never merged into the chart values."
+          }
+        }
       }
-    }
+    ]
   },
-  "description": "Configuration for `dependencies`."
+  "description": "Configuration for `dependencies`. Each dependency contains a complete chart values structure. Its objects are merged into the chart under the name `<dependency>-<object>`."
 }

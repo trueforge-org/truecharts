@@ -1347,8 +1347,6 @@ addons:
             - NET_ADMIN
             - NET_RAW
 
-dependencies: {}
-
 ##########################################################################
 # This section contains some pre-config for frequently used dependencies #
 ##########################################################################
@@ -1619,12 +1617,18 @@ solr:
   creds: {}
 
 # -- Dependency configuration - replaces helm-dependencies
-# Each dependency should contain a complete chart values.yaml structure
-# Resources from dependencies are merged into the main chart with prefixed names
+# Each dependency contains a complete chart values structure (workload, service, persistence, ...)
+# Its objects are merged into the chart under the name [<dependency>-<object>] (eg [workload.valkey-main])
+# and references between them (targetSelector, objectName, ...) are rewritten accordingly.
+# Objects inherit the defaults of the matching common object (eg [workload.main]) and default to [enabled: true].
+# Currently [valkey] is the only dependency with additional handling (credentials secret, wait init container).
 # @default -- See below
 dependencies: {}
 #   valkey:
 #     enabled: true
+#     # -- Settings of the dependency itself, never merged into the chart
+#     depconfig:
+#       password: "PLACEHOLDERPASSWORD"
 #     image:
 #       repository: docker.io/bitnamisecure/valkey
 #       tag: latest
@@ -1635,15 +1639,16 @@ dependencies: {}
 #           containers:
 #             main:
 #               env:
-#                 REDIS_PASSWORD: "my-password"
+#                 VALKEY_PASSWORD: "{{ .Values.dependencies.valkey.depconfig.password }}"
 #     service:
 #       main:
 #         ports:
 #           main:
+#             protocol: tcp
 #             port: 6379
 #     persistence:
 #       data:
-#         enabled: true
+#         type: vct
 #         mountPath: /data
 
 # -- List of extra objects to deploy with the release

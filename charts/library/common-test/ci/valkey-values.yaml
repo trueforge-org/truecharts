@@ -16,6 +16,10 @@ workload:
           args:
             - --port
             - "8080"
+          env:
+            REDIS_URL: '{{ .Values.dependencies.valkey.depconfig.creds.url | trimAll "\"" }}'
+            REDIS_HOST: '{{ .Values.dependencies.valkey.depconfig.creds.plainhost | trimAll "\"" }}'
+            REDIS_PASSWORD: "{{ .Values.dependencies.valkey.depconfig.password }}"
           probes:
             liveness:
               enabled: true
@@ -32,10 +36,13 @@ dependencies:
     image:
       repository: docker.io/bitnamisecure/valkey
       pullPolicy: IfNotPresent
-      tag: latest@sha256:14dc12c4cc5912747b63d41e237512989d958fa6020dbcb1170cc0fe91f48644
+      tag: latest@sha256:4dc6511a8a9d4d4cbf3ccf1270ddcc6929819a1e0f4005462cf782cc96d1c3b6
+    securityContext:
+      container:
+        readOnlyRootFilesystem: false
+        runAsGroup: 0
     workload:
       main:
-        enabled: true
         replicas: 1
         type: StatefulSet
         strategy: RollingUpdate
@@ -43,5 +50,71 @@ dependencies:
           containers:
             main:
               env:
-                REDIS_PASSWORD: "testpassword"
-
+                ALLOW_EMPTY_PASSWORD: "no"
+                VALKEY_PORT: "{{ .Values.dependencies.valkey.service.main.ports.main.port }}"
+                VALKEY_PASSWORD: "{{ .Values.dependencies.valkey.depconfig.password }}"
+              probes:
+                liveness:
+                  type: exec
+                  command:
+                    - sh
+                    - -c
+                    - /health/ping_liveness_local.sh 2
+                readiness:
+                  type: exec
+                  command:
+                    - sh
+                    - -c
+                    - /health/ping_readiness_local.sh 2
+                startup:
+                  type: exec
+                  command:
+                    - sh
+                    - -c
+                    - /health/ping_readiness_local.sh 2
+    service:
+      main:
+        ports:
+          main:
+            protocol: tcp
+            port: 6379
+    configmap:
+      health:
+        data:
+          ping_readiness_local.sh: |-
+            #!/bin/bash
+            [[ -n "$VALKEY_PASSWORD" ]] && export REDISCLI_AUTH="$VALKEY_PASSWORD"
+            response=$(
+              timeout -s 3 $1 \
+              valkey-cli \
+                -h localhost \
+                -p $VALKEY_PORT \
+                ping
+            )
+            if [ "$response" != "PONG" ]; then
+              echo "$response"
+              exit 1
+            fi
+          ping_liveness_local.sh: |-
+            #!/bin/bash
+            [[ -n "$VALKEY_PASSWORD" ]] && export REDISCLI_AUTH="$VALKEY_PASSWORD"
+            response=$(
+              timeout -s 3 $1 \
+              valkey-cli \
+                -h localhost \
+                -p $VALKEY_PORT \
+                ping
+            )
+            if [ "$response" != "PONG" ] && [[ ! "$response" =~ ^LOADING ]]; then
+              echo "$response"
+              exit 1
+            fi
+    persistence:
+      data:
+        type: vct
+        mountPath: /bitnami/valkey
+      health:
+        type: configmap
+        objectName: health
+        defaultMode: "0755"
+        mountPath: /health

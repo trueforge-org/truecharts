@@ -1,0 +1,523 @@
+suite: dependencies merge test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render nothing for a disabled dependency
+    set:
+      dependencies:
+        mydep:
+          enabled: false
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should render nothing for a dependency disabled with tpl
+    set:
+      someValue: false
+      dependencies:
+        mydep:
+          enabled: "{{ .Values.someValue }}"
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should render the objects of a dependency with a prefixed name
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main:
+              type: StatefulSet
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+          configmap:
+            config:
+              data:
+                foo: bar
+    asserts:
+      - hasDocuments:
+          count: 3
+      - documentSelector: &workloadDoc
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].image
+          value: docker.io/some/image:1.0.0
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.selector.matchLabels
+          value:
+            pod.name: mydep-main
+            app.kubernetes.io/name: common-test
+            app.kubernetes.io/instance: test-release-name
+      - documentSelector: *workloadDoc
+        matchRegex:
+          path: spec.template.metadata.annotations.checksum/dependencies
+          pattern: ^[0-9a-f]{64}$
+      - documentSelector: &serviceDoc
+          path: kind
+          value: Service
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector: *serviceDoc
+        equal:
+          path: spec.ports[0].port
+          value: 6379
+      - documentSelector: *serviceDoc
+        equal:
+          path: spec.selector
+          value:
+            pod.name: mydep-main
+            app.kubernetes.io/name: common-test
+            app.kubernetes.io/instance: test-release-name
+      - documentSelector:
+          path: kind
+          value: ConfigMap
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-config
+
+  - it: should render the objects of the chart next to the objects of a dependency
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              protocol: http
+              port: 8080
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main:
+              type: StatefulSet
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+    asserts:
+      - hasDocuments:
+          count: 4
+      - documentSelector: &rootWorkloadDoc
+          path: kind
+          value: Deployment
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentSelector: *rootWorkloadDoc
+        equal:
+          path: spec.template.spec.containers[0].image
+          value: ghcr.io/traefik/whoami:v1.0.0
+      - documentSelector: &depWorkloadDoc
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector: *depWorkloadDoc
+        equal:
+          path: spec.template.spec.containers[0].image
+          value: docker.io/some/image:1.0.0
+      - documentSelector: &rootServiceDoc
+          path: metadata.labels['service.name']
+          value: main
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentSelector: *rootServiceDoc
+        equal:
+          path: spec.ports[0].port
+          value: 8080
+      - documentSelector: *rootServiceDoc
+        equal:
+          path: spec.selector
+          value:
+            pod.name: main
+            app.kubernetes.io/name: common-test
+            app.kubernetes.io/instance: test-release-name
+      - documentSelector:
+          path: metadata.labels['service.name']
+          value: mydep-main
+        equal:
+          path: spec.selector
+          value:
+            pod.name: mydep-main
+            app.kubernetes.io/name: common-test
+            app.kubernetes.io/instance: test-release-name
+
+  - it: should fail with an object conflicting with an existing object
+    set:
+      workload:
+        mydep-main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: mydepImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Object [workload.main] of dependency [mydep] conflicts with the existing object [workload.mydep-main]
+
+  - it: should fail with dependencies that are not a map
+    set:
+      dependencies: some-string
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [dependencies] to be a [map], but got [string]
+
+  - it: should fail with a dependency that is not a map
+    set:
+      dependencies:
+        mydep: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [dependencies.mydep] to be a [map], but got [bool]
+
+  - it: should fail with an invalid dependency name
+    set:
+      dependencies:
+        My_Dep:
+          enabled: true
+    asserts:
+      - failedTemplate:
+          errorPattern: Dependencies - Expected the name of dependency \[My_Dep\] to be lowercase alphanumeric characters or \[-\]
+
+  - it: should fail without enabled on a dependency
+    set:
+      dependencies:
+        mydep:
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected the key [enabled] in [dependencies.mydep] to exist
+
+  - it: should fail with an unsupported key
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          addons:
+            codeserver:
+              enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Key [addons] is not supported in dependency [mydep]
+
+  - it: should fail with a nested dependency
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          dependencies:
+            other:
+              enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Key [dependencies] is not supported in dependency [mydep]
+
+  - it: should fail with a collection that is not a map
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload: some-string
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [workload] in dependency [mydep] to be a [map], but got [string]
+
+  - it: should fail with an object that is not a map
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: some-string
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [workload.main] in dependency [mydep] to be a [map], but got [string]
+
+  - it: should make the images of a dependency available on the root
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          metricsImage:
+            repository: docker.io/some/exporter
+            tag: 2.0.0
+          workload:
+            main:
+              podSpec:
+                containers:
+                  metrics:
+                    imageSelector: metricsImage
+                    probes:
+                      liveness:
+                        enabled: false
+                      readiness:
+                        enabled: false
+                      startup:
+                        enabled: false
+    asserts:
+      - documentSelector: &workloadDoc
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.spec.containers[0].image
+          value: docker.io/some/image:1.0.0
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[1].name
+          value: test-release-name-common-test-metrics
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[1].image
+          value: docker.io/some/exporter:2.0.0
+
+  - it: should keep the images of the chart when selected explicitly
+    set:
+      someImage:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      dependencies:
+        mydep:
+          enabled: true
+          workload:
+            main:
+              podSpec:
+                containers:
+                  main:
+                    imageSelector: someImage
+                    probes:
+                      liveness:
+                        enabled: false
+                      readiness:
+                        enabled: false
+                      startup:
+                        enabled: false
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.spec.containers[0].image
+          value: ghcr.io/traefik/whoami:v1.0.0
+
+  - it: should fail with an image conflicting with an existing image
+    set:
+      mydepImage:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Image [image] of dependency [mydep] conflicts with the existing key [mydepImage]
+
+  - it: should fail without an image for a container without imageSelector
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          workload:
+            main: {}
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [image] to be defined in dependency [mydep], as [workload.main.podSpec.containers.main] uses it as [imageSelector]
+
+  - it: should keep the specific keys of a dependency under its own values
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          someConfig:
+            maxmemory: 100mb
+          workload:
+            main:
+              podSpec:
+                containers:
+                  main:
+                    env:
+                      MAXMEMORY: "{{ .Values.dependencies.mydep.someConfig.maxmemory }}"
+                    probes:
+                      liveness:
+                        enabled: false
+                      readiness:
+                        enabled: false
+                      startup:
+                        enabled: false
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MAXMEMORY
+            value: 100mb
+
+  - it: should render multiple dependencies
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main:
+              type: StatefulSet
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+        other:
+          enabled: true
+          image:
+            repository: docker.io/some/other-image
+            tag: 2.0.0
+          workload:
+            main:
+              type: Deployment
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6380
+    asserts:
+      - hasDocuments:
+          count: 4
+      - documentSelector: &mydepWorkloadDoc
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector: *mydepWorkloadDoc
+        equal:
+          path: spec.template.spec.containers[0].image
+          value: docker.io/some/image:1.0.0
+      - documentSelector: &otherWorkloadDoc
+          path: kind
+          value: Deployment
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-other-main
+      - documentSelector: *otherWorkloadDoc
+        equal:
+          path: spec.template.spec.containers[0].image
+          value: docker.io/some/other-image:2.0.0
+      - documentSelector:
+          path: metadata.labels['service.name']
+          value: other-main
+        equal:
+          path: spec.ports[0].port
+          value: 6380
