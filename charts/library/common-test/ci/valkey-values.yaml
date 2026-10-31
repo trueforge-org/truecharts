@@ -30,9 +30,9 @@ dependencies:
     depconfig:
       password: "testpassword"
     image:
-      repository: docker.io/bitnamisecure/valkey
+      repository: oci.trueforge.org/containerforge/valkey
       pullPolicy: IfNotPresent
-      tag: latest@sha256:4dc6511a8a9d4d4cbf3ccf1270ddcc6929819a1e0f4005462cf782cc96d1c3b6
+      tag: 9.0.4@sha256:754db2901b782f36076b5e7d3c1990342670973be6316f2ecf3ad145da0c852d
     workload:
       main:
         enabled: true
