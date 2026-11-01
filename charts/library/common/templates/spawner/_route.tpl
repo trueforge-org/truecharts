@@ -93,10 +93,17 @@
         {{- $_ := set $annotations "cert-manager.io/private-key-rotation-policy" "Always" -}}
       {{- end -}}
       {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $set.name "length" 253) -}}
-      {{- include "tc.v1.common.class.listenerset" (dict "rootCtx" $ "objectData" (dict
+      {{- $listeners := list -}}
+      {{- range $idx, $listener := $set.listeners -}}
+        {{- $listeners = mustAppend $listeners (dict
+              "name" (printf "https-%d" ($idx | int)) "hostname" $listener.host "port" $set.port "protocol" "HTTPS"
+              "tls" (dict "mode" "Terminate" "certificateRefs" (list (dict "group" "" "kind" "Secret" "name" $listener.secretName)))
+              "allowedRoutes" (dict "namespaces" (dict "from" "Same"))) -}}
+      {{- end -}}
+      {{- include "tc.v1.common.class.listenerSet" (dict "rootCtx" $ "objectData" (dict
             "name" $set.name "namespace" $set.namespace "shortName" $set.name
             "labels" $set.labels "annotations" $annotations
-            "gatewayRef" $set.gatewayRef "port" $set.port "listeners" $set.listeners)) | nindent 0 -}}
+            "parentRef" (dict "name" $set.gatewayRef.name "namespace" $set.gatewayRef.namespace) "listeners" $listeners)) | nindent 0 -}}
     {{- end -}}
   {{- end -}}
 

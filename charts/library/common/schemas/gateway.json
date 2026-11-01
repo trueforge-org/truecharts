@@ -46,8 +46,50 @@
       },
       "allowedListeners": {
         "type": "object",
+        "properties": {
+          "namespaces": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "type": "string",
+                "enum": [
+                  "All",
+                  "Selector",
+                  "Same",
+                  "None"
+                ],
+                "description": "Namespaces from which ListenerSets may attach. Valid options are All, Selector, Same, and None.",
+                "default": "None"
+              },
+              "selector": {
+                "type": "object",
+                "properties": {
+                  "matchLabels": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Match namespaces by labels."
+                  },
+                  "matchExpressions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true
+                    },
+                    "description": "Match namespaces by label expressions."
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Namespace selector used when `from` is `Selector`."
+              }
+            },
+            "additionalProperties": true,
+            "description": "Namespaces from which ListenerSets may attach."
+          }
+        },
         "additionalProperties": true,
-        "description": "Which ListenerSets may attach to the gateway. Passed as is."
+        "description": "Configure namespaces.from as Same, All, Selector, or None to control which ListenerSets may attach. Set namespaces.selector when from is Selector."
       },
       "tls": {
         "type": "object",

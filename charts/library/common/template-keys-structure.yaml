@@ -64,6 +64,7 @@ containerOptions:
 createChartContextConfigmap: variableName
 credentials: variableName
 dependencies: {}
+externalSecret: variableName
 extraTpl: variableName
 gateway:
   enabled: variableName
@@ -118,6 +119,7 @@ ingress:
     tls: variableName
 ingressMiddlewares:
   objectName: {}
+listenerSet: variableName
 mariadb:
   creds:
     complete: variableName

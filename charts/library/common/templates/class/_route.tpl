@@ -27,6 +27,12 @@ within the common library.
   {{- $parentRefs = list (dict "name" (tpl $values.gateway $) "namespace" (tpl ($values.gatewayNamespace | default $namespace) $)) -}}
 {{- else if and $values.targetSelector (kindIs "string" $values.targetSelector) -}}
   {{- $parentRefs = list (dict "targetSelector" $values.targetSelector) -}}
+{{- else if $values.listenerSet -}}
+  {{- $target := get $.Values.listenerSet $values.listenerSet -}}
+  {{- $parentRefs = list (dict "kind" (include "tc.v1.common.capabilities.listenerset.kind" $)
+        "group" ((include "tc.v1.common.capabilities.listenerset.apiVersion" $) | splitList "/" | first)
+        "name" (include "tc.v1.common.lib.listenerSet.getFullName" (dict "rootCtx" $ "objectData" $target "name" $values.listenerSet))
+        "namespace" (include "tc.v1.common.lib.metadata.namespace" (dict "rootCtx" $ "objectData" $target "caller" "Route"))) -}}
 {{- end -}}
 
 {{/* TLS is on a ListenerSet of the selected gateway, so the route attaches to that */}}

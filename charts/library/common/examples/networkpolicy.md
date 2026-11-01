@@ -294,3 +294,77 @@ networkpolicy:
           - protocol: TCP
             port: 443
 ```
+
+### Cilium Network Policy
+
+Set `type: cilium` to create a `CiliumNetworkPolicy` instead of a `NetworkPolicy`. Requires the Cilium CRDs to be installed in the cluster.
+Controller targeting with `targetSelector`, `targetSelectorRegex` and `targetAllPods` works the same as for Kubernetes policies.
+Rules use the Cilium rule format:
+
+```yaml
+networkpolicy:
+  allow-dns:
+    enabled: true
+    type: cilium
+    description: Allow DNS lookups from the worker
+    targetSelector: worker
+    enableDefaultDeny:
+      egress: false
+    egress:
+      - toEndpoints:
+          - matchLabels:
+              k8s:io.kubernetes.pod.namespace: kube-system
+              k8s-app: kube-dns
+        toPorts:
+          - ports:
+              - port: "53"
+                protocol: UDP
+            rules:
+              dns:
+                - matchPattern: "*"
+```
+
+### Cilium Deny Rules
+
+`ingressDeny` and `egressDeny` take precedence over allow rules:
+
+```yaml
+networkpolicy:
+  deny-metadata:
+    enabled: true
+    type: cilium
+    targetSelectorRegex: "^worker"
+    egressDeny:
+      - toCIDR:
+          - 169.254.169.254/32
+    egress:
+      - toEntities:
+          - world
+```
+
+### Cilium Clusterwide Network Policy
+
+Set `clusterwide: true` to create a `CiliumClusterwideNetworkPolicy`. Selectors that are derived from this chart are pinned to the namespace of the chart.
+Use `nodeSelector` for host policies:
+
+```yaml
+networkpolicy:
+  allow-ingress-from-gateway:
+    enabled: true
+    type: cilium
+    clusterwide: true
+    ingress:
+      - fromEndpoints:
+          - matchLabels:
+              k8s:io.kubernetes.pod.namespace: gateway-system
+  host-policy:
+    enabled: true
+    type: cilium
+    clusterwide: true
+    nodeSelector:
+      matchLabels:
+        node-role.kubernetes.io/control-plane: ""
+    ingress:
+      - fromEntities:
+          - cluster
+```

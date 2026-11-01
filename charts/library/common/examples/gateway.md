@@ -133,3 +133,34 @@ gateway:
           certificateRefs:
             - name: example-cert
 ```
+
+### Gateway that Accepts ListenerSets
+
+`allowedListeners` must be set before a [listenerSet](/truecharts-common/listenerSet) can attach to the gateway:
+
+```yaml
+gateway:
+  main:
+    enabled: true
+    gatewayClassName: traefik
+    allowedListeners:
+      namespaces:
+        from: Same
+    listeners:
+      - name: http
+        port: 80
+        protocol: HTTP
+
+listenerSet:
+  https:
+    enabled: true
+    targetSelector: main
+    listeners:
+      - name: https
+        port: 443
+        protocol: HTTPS
+        tls:
+          mode: Terminate
+          certificateRefs:
+            - name: example-cert
+```

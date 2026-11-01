@@ -1,4 +1,5 @@
 {{- define "tc.v1.common.lib.route.validation" -}}
+  {{- include "tc.v1.common.lib.route.listenerSetValidation" . -}}
   {{- $rootCtx := .rootCtx -}}
   {{- $objectData := .objectData -}}
   {{- $routeKind := .routeKind -}}
@@ -251,4 +252,27 @@
   {{- end -}}
 
   {{- dict "name" $name "port" (tpl (toString $port) $rootCtx | int) "protocol" $protocol | toYaml -}}
+{{- end -}}
+
+{{/* A route selects a listener set of this chart, or gets one from its TLS settings, not both */}}
+{{- define "tc.v1.common.lib.route.listenerSetValidation" -}}
+  {{- $rootCtx := .rootCtx -}}
+  {{- $objectData := .objectData -}}
+  {{- $name := .name -}}
+
+  {{- with $objectData.listenerSet -}}
+    {{- if not (kindIs "string" .) -}}
+      {{- fail (printf "Route - Expected [route.%s.listenerSet] to be a [string], but got [%s]" $name (kindOf .)) -}}
+    {{- end -}}
+    {{- if or $objectData.gateway (and $objectData.targetSelector (kindIs "string" $objectData.targetSelector)) -}}
+      {{- fail (printf "Route - Only one of [gateway, targetSelector, listenerSet] can be set on [route.%s]" $name) -}}
+    {{- end -}}
+    {{- if or $objectData.tls (include "tc.v1.common.lib.route.hasCertManager" (dict "objectData" $objectData)) -}}
+      {{- fail (printf "Route - [route.%s.listenerSet] cannot be used with [tls] or [integrations.certManager], those create their own ListenerSet. Set the certificate on the listeners of the ListenerSet instead" $name) -}}
+    {{- end -}}
+    {{- $target := get ($rootCtx.Values.listenerSet | default dict) . -}}
+    {{- if ne (include "tc.v1.common.lib.gateway.enabled" (dict "rootCtx" $rootCtx "objectData" $target "name" . "key" "listenerSet" "caller" "Route")) "true" -}}
+      {{- fail (printf "Route - Expected [listenerSet] of route [%s] to reference an enabled listener set, got [%s]" $name .) -}}
+    {{- end -}}
+  {{- end -}}
 {{- end -}}

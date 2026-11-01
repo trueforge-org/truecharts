@@ -5,36 +5,7 @@ using the common library.
 {{- define "tc.v1.common.class.networkpolicy" -}}
   {{- $rootCtx := .rootCtx -}}
   {{- $objectData := .objectData -}}
-  {{- $targetWorkloads := list -}}
-
-  {{- $targetSelectors := $objectData.targetSelector | default list -}}
-  {{- if kindIs "string" $targetSelectors -}}
-    {{- $targetSelectors = list $targetSelectors -}}
-  {{- end -}}
-  {{- range $targetSelectors -}}
-    {{- if not (hasKey $rootCtx.Values.workload .) -}}
-      {{- fail (printf "NetworkPolicy - targetSelector [%s] does not match a workload" .) -}}
-    {{- end -}}
-    {{- if not (mustHas . $targetWorkloads) -}}
-      {{- $targetWorkloads = mustAppend $targetWorkloads . -}}
-    {{- end -}}
-  {{- end -}}
-
-  {{- $targetSelectorRegexes := $objectData.targetSelectorRegex | default list -}}
-  {{- if kindIs "string" $targetSelectorRegexes -}}
-    {{- $targetSelectorRegexes = list $targetSelectorRegexes -}}
-  {{- end -}}
-  {{- range $regex := $targetSelectorRegexes -}}
-    {{- range $workloadName, $_ := $rootCtx.Values.workload -}}
-      {{- if and (regexMatch $regex $workloadName) (not (mustHas $workloadName $targetWorkloads)) -}}
-        {{- $targetWorkloads = mustAppend $targetWorkloads $workloadName -}}
-      {{- end -}}
-    {{- end -}}
-  {{- end -}}
-
-  {{- if and (or $objectData.targetSelector $objectData.targetSelectorRegex) (not $targetWorkloads) -}}
-    {{- fail "NetworkPolicy - target selectors did not match any workloads" -}}
-  {{- end -}}
+  {{- $targetWorkloads := include "tc.v1.common.lib.networkpolicy.targetWorkloads" (dict "rootCtx" $rootCtx "objectData" $objectData) | fromJsonArray -}}
 ---
 kind: NetworkPolicy
 apiVersion: {{ include "tc.v1.common.capabilities.networkpolicy.apiVersion" $rootCtx }}
@@ -58,27 +29,10 @@ spec:
   {{/* Target all pods in namespace */}}
   {{- else if $objectData.targetAllPods }}
   podSelector: {}
-  {{/* Target one or more workloads in this chart */}}
-  {{- else if $targetWorkloads }}
-    {{- if eq (len $targetWorkloads) 1 }}
-  podSelector:
-    matchLabels:
-      {{- include "tc.v1.common.lib.metadata.selectorLabels" (dict "rootCtx" $rootCtx "objectType" "pod" "objectName" (first $targetWorkloads)) | nindent 6 }}
-    {{- else }}
-  podSelector:
-    matchLabels:
-      {{- include "tc.v1.common.lib.metadata.selectorLabels" (dict "rootCtx" $rootCtx "objectType" "" "objectName" "") | nindent 6 }}
-    matchExpressions:
-      - key: pod.name
-        operator: In
-        values:
-          {{- $targetWorkloads | toYaml | nindent 10 }}
-    {{- end }}
-  {{/* Default: Target everything in this chart */}}
+  {{/* Target one or more workloads in this chart, or everything in this chart by default */}}
   {{- else }}
   podSelector:
-    matchLabels:
-      {{- include "tc.v1.common.lib.metadata.selectorLabels" (dict "rootCtx" $rootCtx "objectType" "" "objectName" "") | indent 8 }}
+    {{- include "tc.v1.common.lib.networkpolicy.workloadSelector" (dict "rootCtx" $rootCtx "targetWorkloads" $targetWorkloads) | nindent 4 }}
   {{- end }}
 
   {{- if $objectData.policyTypes }}
