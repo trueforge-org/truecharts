@@ -1,5 +1,5 @@
 # Mapping of documentation files to their related schema files
-# Format: 
+# Format:
 #   docs/<path>.md -> schemas/<path>.json (or related schema paths)
 
 # Top-level documentation and schemas
@@ -24,6 +24,9 @@ docs/containerOptions.md:
 
 docs/credentials.md:
   - schemas/credentials.json
+
+docs/dependencies.md:
+  - schemas/dependencies.json
 
 docs/fallbackDefaults.md:
   - schemas/global/fallbackDefaults.json
@@ -328,7 +331,6 @@ schemas_without_docs:
   - schemas/TZ.json
   - schemas/chartContext.json
   - schemas/clickhouse.json
-  - schemas/dependencies.json
   - schemas/diagnosticMode.json
   - schemas/extraTpl.json
   - schemas/image.json
@@ -336,7 +338,6 @@ schemas_without_docs:
   - schemas/mongodb.json
   - schemas/namespace.json
   - schemas/operator.json
-  - schemas/redis.json
   - schemas/solr.json
   - schemas/special/labels.json
   - schemas/special/namespaces.json

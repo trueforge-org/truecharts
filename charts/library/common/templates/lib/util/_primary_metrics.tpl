@@ -5,7 +5,10 @@
   {{- $enabledMetrics := dict -}}
   {{- range $name, $metrics := $metrics -}}
     {{- if and (kindIs "map" $metrics) $metrics.enabled -}}
-      {{- $_ := set $enabledMetrics $name $metrics -}}
+      {{/* Metrics of dependencies are never the primary of the release */}}
+      {{- if not $metrics.dependency -}}
+        {{- $_ := set $enabledMetrics $name $metrics -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
 

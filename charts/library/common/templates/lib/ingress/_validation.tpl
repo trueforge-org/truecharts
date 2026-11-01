@@ -170,7 +170,10 @@ objectData:
 
     {{/* If ingress is enabled */}}
     {{- if eq $enabled "true" -}}
-      {{- $hasEnabled = true -}}
+      {{/* Ingresses of dependencies do not require a primary */}}
+      {{- if not $ingress.dependency -}}
+        {{- $hasEnabled = true -}}
+      {{- end -}}
 
       {{/* And ingress is primary */}}
       {{- if and (hasKey $ingress "primary") ($ingress.primary) -}}

@@ -19,7 +19,10 @@
         {{- fail (printf "Workload - Expected [type] to be one of [%s], but got [%s]" (join ", " $types) $workload.type) -}}
       {{- end -}}
 
-      {{- $hasEnabled = true -}}
+      {{/* Workloads of dependencies do not require a primary */}}
+      {{- if not $workload.dependency -}}
+        {{- $hasEnabled = true -}}
+      {{- end -}}
 
       {{/* And workload is primary */}}
       {{- if $workload.primary -}}

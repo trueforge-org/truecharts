@@ -5,7 +5,10 @@
   {{- $enabledWorkloads := dict -}}
   {{- range $name, $Workload := $Workloads -}}
     {{- if and (kindIs "map" $Workload) $Workload.enabled -}}
-      {{- $_ := set $enabledWorkloads $name $Workload -}}
+      {{/* Workloads of dependencies are never the primary of the release */}}
+      {{- if not $Workload.dependency -}}
+        {{- $_ := set $enabledWorkloads $name $Workload -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
 

@@ -37,7 +37,7 @@ using the common library.
   {{- end -}}
 ---
 kind: NetworkPolicy
-apiVersion: {{ include "tc.v1.common.capabilities.networkpolicy.apiVersion" $ }}
+apiVersion: {{ include "tc.v1.common.capabilities.networkpolicy.apiVersion" $rootCtx }}
 metadata:
   name: {{ $objectData.name }}
   namespace: {{ include "tc.v1.common.lib.metadata.namespace" (dict "rootCtx" $rootCtx "objectData" $objectData "caller" "networkpolicy") }}
@@ -54,7 +54,7 @@ metadata:
 spec:
   {{- if $objectData.podSelector }}
   podSelector:
-  {{- tpl (toYaml $objectData.podSelector) $ | nindent 4 }}
+  {{- tpl (toYaml $objectData.podSelector) $rootCtx | nindent 4 }}
   {{/* Target all pods in namespace */}}
   {{- else if $objectData.targetAllPods }}
   podSelector: {}
@@ -78,7 +78,7 @@ spec:
   {{- else }}
   podSelector:
     matchLabels:
-      {{- include "tc.v1.common.lib.metadata.selectorLabels" (dict "rootCtx" $ "objectType" "" "objectName" "") | indent 8 }}
+      {{- include "tc.v1.common.lib.metadata.selectorLabels" (dict "rootCtx" $rootCtx "objectType" "" "objectName" "") | indent 8 }}
   {{- end }}
 
   {{- if $objectData.policyTypes }}
