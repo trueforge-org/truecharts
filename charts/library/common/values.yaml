@@ -1802,13 +1802,9 @@ dependencies:
     depconfig:
       password: "PLACEHOLDERPASSWORD"
     image:
-      repository: docker.io/bitnamisecure/valkey
+      repository: oci.trueforge.org/containerforge/valkey
       pullPolicy: IfNotPresent
-      tag: latest@sha256:4dc6511a8a9d4d4cbf3ccf1270ddcc6929819a1e0f4005462cf782cc96d1c3b6
-    securityContext:
-      container:
-        readOnlyRootFilesystem: false
-        runAsGroup: 0
+      tag: 9.0.4@sha256:387b5f54777a6451f73f1a49a45b5bb6d29e1e5838b7b5a9c84d80370995531e
     workload:
       main:
         replicas: 1
@@ -1818,7 +1814,6 @@ dependencies:
           containers:
             main:
               env:
-                ALLOW_EMPTY_PASSWORD: "no"
                 VALKEY_PORT: "{{ .Values.dependencies.valkey.service.main.ports.main.port }}"
                 VALKEY_PASSWORD: "{{ .Values.dependencies.valkey.depconfig.password }}"
               probes:
@@ -1846,45 +1841,9 @@ dependencies:
           main:
             protocol: tcp
             port: 6379
-    configmap:
-      health:
-        data:
-          ping_readiness_local.sh: |-
-            #!/bin/bash
-            [[ -n "$VALKEY_PASSWORD" ]] && export REDISCLI_AUTH="$VALKEY_PASSWORD"
-            response=$(
-              timeout -s 3 $1 \
-              valkey-cli \
-                -h localhost \
-                -p $VALKEY_PORT \
-                ping
-            )
-            if [ "$response" != "PONG" ]; then
-              echo "$response"
-              exit 1
-            fi
-          ping_liveness_local.sh: |-
-            #!/bin/bash
-            [[ -n "$VALKEY_PASSWORD" ]] && export REDISCLI_AUTH="$VALKEY_PASSWORD"
-            response=$(
-              timeout -s 3 $1 \
-              valkey-cli \
-                -h localhost \
-                -p $VALKEY_PORT \
-                ping
-            )
-            if [ "$response" != "PONG" ] && [[ ! "$response" =~ ^LOADING ]]; then
-              echo "$response"
-              exit 1
-            fi
     persistence:
       data:
         mountPath: /config
-      health:
-        type: configmap
-        objectName: health
-        defaultMode: "0755"
-        mountPath: /health
 
 
 # -- List of extra objects to deploy with the release

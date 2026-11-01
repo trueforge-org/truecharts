@@ -26,7 +26,7 @@ tests:
               mountPath: /data
     asserts:
       - failedTemplate:
-          errorMessage: "Expected no [volumeClaimTemplates], as this key is not used, so [valkey-data] would not be persisted. Use [persistence] instead, a new volume on an existing StatefulSet can't use [type: vct]"
+          errorMessage: Dependencies - Key [volumeClaimTemplates] is not supported in dependency [valkey]
 
   - it: should fail with annotations not a dict
     set:
