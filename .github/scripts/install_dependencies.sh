@@ -62,8 +62,14 @@ if [[ "$curr_chart" == "charts/library/common-test" ]] && [[ -n "$dependency_sel
     fi
 
     if [[ "$dependency_selector" =~ (route|gateway|gatewayclass).*-values.yaml ]]; then
-        if ! kubectl apply --server-side -f "https://github.com/kubernetes-sigs/gateway-api/releases/download/$GATEWAY_API_VERSION/standard-install.yaml"; then
+        # k3s ships an older version of these CRDs, so take over their fields
+        if ! kubectl apply --server-side --force-conflicts -f "https://github.com/kubernetes-sigs/gateway-api/releases/download/$GATEWAY_API_VERSION/standard-install.yaml"; then
             echo "Failed to install Gateway API CRDs"
+            exit 1
+        fi
+        # Rendering checks if the API is available, so it must be served before the install
+        if ! kubectl wait --for=condition=Established --timeout=120s crd/listenersets.gateway.networking.k8s.io; then
+            echo "Gateway API CRDs did not become available"
             exit 1
         fi
     fi

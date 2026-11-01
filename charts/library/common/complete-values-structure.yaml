@@ -54,10 +54,11 @@ global:
         failureThreshold: 60
         successThreshold: 1
     topologyKey: ''
+    allowRollingUpdateWithRWO: false
+    routeListenerPort: 443
     cnpg:
       pgVersion: 16
       skipEmptyWalArchiveCheck: true
-      barmanMode: ''
   traefik:
     commonMiddlewares:
     - name: ''
@@ -3609,13 +3610,11 @@ cnpg:
       enablePodMonitor: false
       disableDefaultQueries: false
       customQueries: []
-    barmanMode: ''
     recovery:
       method: ''
       serverName: ''
       pitrTarget:
         time: ''
-      backupName: ''
       destinationPath: ''
       instanceSidecarConfiguration: {}
     backups:
@@ -4118,18 +4117,6 @@ traggo:
   pass_strength: 10
   log_level: ''
 password: ''
-volumeClaimTemplates:
-  data:
-    enabled: true
-    accessModes:
-    - ''
-    mountPath: ''
-  docker-certs-client:
-    enabled: true
-    mountPath: ''
-  docker:
-    enabled: true
-    mountPath: ''
 kasm:
   mountUdev: false
   mountInput: false

@@ -227,6 +227,7 @@ configmap:
         # https://gethomepage.dev/configs/kubernetes/
 
         mode: cluster
+        gateway: true
       settings.yaml: |
         ---
         # For configuration options and examples, please see:
@@ -340,6 +341,14 @@ rbac:
           - traefik.io
         resources:
           - ingressroutes
+        verbs:
+          - get
+          - list
+      - apiGroups:
+          - gateway.networking.k8s.io
+        resources:
+          - httproutes
+          - gateways
         verbs:
           - get
           - list

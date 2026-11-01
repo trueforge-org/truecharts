@@ -196,6 +196,58 @@ global:
 
 ---
 
+### `global.fallbackDefaults.allowRollingUpdateWithRWO`
+
+Keep `strategy: RollingUpdate` on a single replica Deployment with `ReadWriteOnce` volumes, instead of changing it to `Recreate`. Can be overruled with `workload.$name.allowRollingUpdateWithRWO`. Updates can get stuck if the storage stays locked to the old pod, which can happen on the same node with storage like iSCSI, and two pods use the same data during an update.
+
+:::caution
+
+Enabling this applies to all workloads of the chart that set `strategy: RollingUpdate`. Common shows a warning in the notes for each of them.
+
+:::
+
+| Field      | Value                                               |
+| ---------- | --------------------------------------------------- |
+| Key        | `global.fallbackDefaults.allowRollingUpdateWithRWO` |
+| Type       | `boolean`                                           |
+| Required   | ❌                                                  |
+| Helm `tpl` | ❌                                                  |
+| Default    | `false`                                             |
+
+Example
+
+```yaml
+global:
+  fallbackDefaults:
+    allowRollingUpdateWithRWO: false
+```
+
+---
+
+### `global.fallbackDefaults.routeListenerPort`
+
+Port of the listeners created for route TLS. Can be overruled per route with `route.$name.listenerPort`. Traefik needs the port of its entrypoint here, which is not always the port it is exposed on.
+
+| Field      | Value                                       |
+| ---------- | ------------------------------------------- |
+| Key        | `global.fallbackDefaults.routeListenerPort` |
+| Type       | `integer`                                   |
+| Required   | ❌                                          |
+| Helm `tpl` | ❌                                          |
+| Default    | `443`                                       |
+| Minimum    | `1`                                         |
+| Maximum    | `65535`                                     |
+
+Example
+
+```yaml
+global:
+  fallbackDefaults:
+    routeListenerPort: 443
+```
+
+---
+
 ### `global.fallbackDefaults.serviceProtocol`
 
 Configuration for `global.fallbackDefaults.serviceProtocol`.

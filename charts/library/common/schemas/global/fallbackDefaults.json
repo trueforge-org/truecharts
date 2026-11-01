@@ -237,6 +237,18 @@
       "description": "Configuration for `global.fallbackDefaults.topologyKey`.",
       "default": "kubernetes.io/hostname"
     },
+    "allowRollingUpdateWithRWO": {
+      "type": "boolean",
+      "description": "Keep `strategy: RollingUpdate` on a single replica Deployment with `ReadWriteOnce` volumes, instead of changing it to `Recreate`. Can be overruled with `workload.$name.allowRollingUpdateWithRWO`. Updates can get stuck if the storage stays locked to the old pod, which can happen on the same node with storage like iSCSI, and two pods use the same data during an update.",
+      "default": false
+    },
+    "routeListenerPort": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 65535,
+      "description": "Port of the listeners created for route TLS. Can be overruled per route with `route.$name.listenerPort`. Traefik needs the port of its entrypoint here, which is not always the port it is exposed on.",
+      "default": 443
+    },
     "cnpg": {
       "type": "object",
       "properties": {
@@ -249,15 +261,6 @@
           "type": "boolean",
           "description": "Configuration for `global.fallbackDefaults.cnpg.skipEmptyWalArchiveCheck`.",
           "default": true
-        },
-        "barmanMode": {
-          "type": "string",
-          "enum": [
-            "inTree",
-            "plugin"
-          ],
-          "description": "Default for `cnpg.$name.barmanMode`.",
-          "default": "inTree"
         }
       },
       "additionalProperties": true,

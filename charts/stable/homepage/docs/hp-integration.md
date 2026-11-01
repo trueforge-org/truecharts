@@ -11,8 +11,8 @@ This guide will not cover every aspect of options available to Homepage. For mor
 GitHub: <https://github.com/gethomepage/homepage> <br>
 Website: <https://gethomepage.dev/>
 
-:::caution[INGRESS REQUIRED]
-For Homepage to "discover" your apps, Ingress is required using our ingress configuration guidelines and the integration options for the chart configuration. Otherwise, all Kubernetes features can be used with manual configuration of Homepage via its configuration YAML files.
+:::caution[INGRESS OR GATEWAY API ROUTE REQUIRED]
+For Homepage to "discover" your apps, an Ingress or a Gateway API `HTTPRoute` is required, using the integration options for the chart configuration or the Homepage annotations. Otherwise, all Kubernetes features can be used with manual configuration of Homepage via its configuration YAML files.
 :::
 
 ## Cluster/Node/Charts resources
@@ -54,7 +54,7 @@ Metrics are standard enabled per widget and can be shown in the widgets by click
 
 ## Enabling Integration in Charts
 
-To enable the integration for a chart you need to add the homepage addon to the ingress section.
+To enable the integration for a chart you need to add the homepage addon to the `integrations` of its ingress or its route. Both use the same options.
 Detailed configuration details: https://trueforge.org/common/ingress/homepage/
 
 - **name** can be left blank to use the charts deployment name or use the name of your choice.
@@ -66,7 +66,7 @@ Detailed configuration details: https://trueforge.org/common/ingress/homepage/
 - **widget.custom.key**: This is where you will enter an API key for your application if needed. If this is a new install and you do not have an API key yet, you can come back and add this later.
 - **Custom-Options** Adding custom options will allow you to add fields to the widget, or define username/password when there is no API key to apply. You can see the various fields available in the widgets section of the Homepage documentation at their site above.
 
-Example:
+### Ingress
 
 ```yaml
 ingress:
@@ -86,6 +86,65 @@ Which results in the following in Homepage:
 ![example one](./img/example.png)
 
 As you can see, the application is running and the fields have populated.
+
+### Gateway API route
+
+```yaml
+route:
+  main:
+    enabled: true
+    hostnames:
+      - sonarr.example.com
+    parentRefs:
+      - group: gateway.networking.k8s.io
+        kind: Gateway
+        name: my-gateway
+        namespace: gateway-system
+        sectionName: https
+    integrations:
+      homepage:
+        enabled: true
+        group: "Arr"
+        weight: 1
+        widget:
+          custom:
+            key: "${HP_API_SONARR}"
+```
+
+The route must be an `HTTPRoute`, and needs either an entry in `hostnames` or `integrations.homepage.href`.
+
+:::caution[COMMON VERSION]
+`route.$name.integrations.homepage` is not available in every version of the common library. Charts built on common `30.2.9` ignore it without an error, so the route gets no annotations and Homepage does not discover it. If your app does not appear, [set the annotations yourself](#gateway-api-route-annotations).
+:::
+
+## Gateway API route annotations
+
+Instead of using the integration, you can set the `gethomepage.dev` annotations that Homepage reads directly on the `HTTPRoute`:
+
+```yaml
+route:
+  main:
+    enabled: true
+    hostnames:
+      - sonarr.example.com
+    parentRefs:
+      - group: gateway.networking.k8s.io
+        kind: Gateway
+        name: my-gateway
+        namespace: gateway-system
+        sectionName: https
+    annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Sonarr"
+      gethomepage.dev/group: "Arr"
+      gethomepage.dev/href: "https://sonarr.example.com/"
+      gethomepage.dev/pod-selector: "app.kubernetes.io/instance=sonarr,pod.lifecycle in (permanent)"
+```
+
+- **gethomepage.dev/href** is recommended. Without it, Homepage builds the URL from the first hostname and the first rule, and takes the scheme from the first `parentRefs` entry. That lookup only works for a `Gateway`, so a route attached to a `ListenerSet` is linked as `http://`.
+- **gethomepage.dev/pod-selector** selects the pods Homepage uses for status and stats. Set `app.kubernetes.io/instance` to the release name of the chart.
+
+Clusters without the Gateway API CRDs keep working. Ingress discovery is unaffected, but Homepage logs an error each time the route lookup fails.
 
 ## Other settings
 You can modify `/app/config/settings.yaml` to change the group layout from a single column to rows (with up to 5 columns per row), weather details and much more other settings.

@@ -11,6 +11,7 @@
   {{- if $valkeyEnabled -}}
     {{- $container := include "tc.v1.common.lib.deps.wait.valkey" $ | fromYaml -}}
     {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "valkey-wait" "container" $container) -}}
+
   {{- end -}}
 
   {{- if .Values.mariadb.enabled -}}
@@ -133,18 +134,16 @@ command:
             -p "$VALKEY_PORT" \
             ping
         )
-      case "$response" in
-        PONG|LOADING*)
-          LIVE=true
-          echo "$response"
-          echo "Valkey Responded, ending initcontainer and starting main container(s)..."
-          ;;
-        *)
-          echo "$response"
-          echo "Valkey not responding... Sleeping for 10 sec..."
-          sleep 10
-          ;;
-      esac
+      # NOAUTH is a response too, this only waits for the server and has no password
+      if [ "$response" == "PONG" ] || [ "$response" == "LOADING Valkey is loading the dataset in memory" ] || [[ "$response" == NOAUTH* ]]; then
+        LIVE=true
+        echo "$response"
+        echo "Valkey Responded, ending initcontainer and starting main container(s)..."
+      else
+        echo "$response"
+        echo "Valkey not responding... Sleeping for 10 sec..."
+        sleep 10
+      fi;
     done
     EOF
 {{- end -}}

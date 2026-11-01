@@ -58,7 +58,8 @@ dependencies:
     persistence:
       data:
         type: vct
-        mountPath: /data
+        mountPath: /config
+
 ```
 
 ---
@@ -157,17 +158,34 @@ The workloads of a dependency default to `dbWait: false`, so they do not wait fo
 Within a dependency, the primary objects are resolved as follows: the object with `primary: true`, otherwise the only object of the collection, otherwise the object named `main`.
 This applies to workloads, their containers, services, their ports and serviceAccounts.
 
+
 In the chart, the objects of a dependency are **never** primary (`primary: false`) and they are marked with the name of their dependency (`dependency: valkey`).
 Marked objects do not take part in the primary validation of the chart, so a chart does not need a primary object of its own in a collection that only has objects of dependencies.
 The primary workload, service, ingress, etc. of the release stay the ones of the chart, and their names are not affected by the dependency
 (eg the Service of the chart is still named `$fullname`, the one of the dependency `$fullname-valkey-main`).
+
+3. **Universal Resource Prefixing**: When a dependency is enabled, ALL its resources (except excluded keys) are merged into the main chart with prefixed names:
+   - **Prefixed**: workload, service, configmap, secret, persistence, podDisruptionBudget, hpa, vpa, ingress, route, gateway, certificate, serviceAccount, rbac, networkPolicy, storageClass, and any other resource type
+   - **Excluded from prefixing**: global, securityContext, podOptions, enabled, depconfig, image (handled specially), chartContext, fallbackDefaults, notes, operator
+   - Examples:
+     - `workload.main` → `workload.$name-main`
+     - `service.main` → `service.$name-main`
+     - `configmap.config` → `configmap.$name-config`
+     - `persistence.data` → `persistence.$name-data`
+     - Any new resource type automatically gets prefixed
+
 
 ### References
 
 All references to other objects are rewritten to the prefixed names, when the referenced object is defined within the dependency.
 A reference to an object that is not defined in the dependency is kept as is, which means it points to the object of the chart.
 
-Omitted references default to the primary objects of the dependency, instead of the primary objects of the chart:
+
+
+6. **Persistent Data**: Add a `persistence` entry for any data that has to survive a restart. Without one, the data is on the container filesystem and is lost with the pod. The `mountPath` has to be where the image stores its data, which is `/bitnami/valkey` for the Bitnami Valkey image. A top-level `volumeClaimTemplates` key is not used, and fails rendering.
+
+7. **Connection Information**: Connection details for dependencies are automatically included in the chart notes.
+
 
 | Object                                   | Reference                                                    | Default                                                         |
 | ---------------------------------------- | ------------------------------------------------------------ | --------------------------------------------------------------- |
@@ -227,6 +245,50 @@ A chart only enables it and sets the values it needs to override:
 image:
   repository: ghcr.io/example/app
   tag: latest
+dependencies:
+  valkey:
+    enabled: true
+    depconfig:
+      password: "secure-password"
+    image:
+      repository: docker.io/bitnamisecure/valkey
+      pullPolicy: IfNotPresent
+      tag: latest
+    workload:
+      main:
+        enabled: true
+        replicas: 1
+        type: StatefulSet
+        podSpec:
+          containers:
+            main:
+              enabled: true
+              primary: true
+              env:
+                REDIS_REPLICATION_MODE: master
+                ALLOW_EMPTY_PASSWORD: "no"
+                REDIS_PORT: "6379"
+                REDIS_PASSWORD: "{{ .Values.dependencies.valkey.depconfig.password }}"
+              probes:
+                liveness:
+                  enabled: true
+                  type: exec
+                  command:
+                    - sh
+                    - -c
+                    - /health/ping_liveness_local.sh 2
+    service:
+      main:
+        enabled: true
+        ports:
+          main:
+            enabled: true
+            port: 6379
+            targetPort: 6379
+    persistence:
+      data:
+        enabled: true
+        mountPath: "/bitnami/valkey"
 
 workload:
   main:

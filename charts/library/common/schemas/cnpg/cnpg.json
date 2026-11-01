@@ -196,16 +196,6 @@
         "additionalProperties": true,
         "description": "Configuration for `cnpg.main.monitoring`."
       },
-      "barmanMode": {
-        "type": "string",
-        "enum": [
-          "",
-          "inTree",
-          "plugin"
-        ],
-        "description": "What runs backups and object store recovery. `inTree` uses the Barman integration built in to CloudNativePG, which is removed in CloudNativePG 1.32. `plugin` uses the Barman Cloud plugin, which must be installed in the namespace of the CloudNativePG operator. Rendering fails if the plugin is not available and the cluster has backups or object store recovery enabled. Defaults to `global.fallbackDefaults.cnpg.barmanMode`.",
-        "default": ""
-      },
       "recovery": {
         "type": "object",
         "properties": {
@@ -228,10 +218,6 @@
             "additionalProperties": true,
             "description": "Configuration for `cnpg.main.recovery.pitrTarget`."
           },
-          "backupName": {
-            "type": "string",
-            "description": "Configuration for `cnpg.main.recovery.backupName`."
-          },
           "destinationPath": {
             "type": "string",
             "description": "Configuration for `cnpg.main.recovery.destinationPath`."
@@ -239,7 +225,7 @@
           "instanceSidecarConfiguration": {
             "type": "object",
             "additionalProperties": true,
-            "description": "Configuration for `cnpg.main.recovery.instanceSidecarConfiguration`. Only used when `barmanMode` is `plugin`."
+            "description": "Configuration for `cnpg.main.recovery.instanceSidecarConfiguration`."
           }
         },
         "additionalProperties": true,
@@ -352,7 +338,7 @@
           "instanceSidecarConfiguration": {
             "type": "object",
             "additionalProperties": true,
-            "description": "Configuration for `cnpg.main.backups.instanceSidecarConfiguration`. Only used when `barmanMode` is `plugin`."
+            "description": "Configuration for `cnpg.main.backups.instanceSidecarConfiguration`."
           }
         },
         "additionalProperties": true,

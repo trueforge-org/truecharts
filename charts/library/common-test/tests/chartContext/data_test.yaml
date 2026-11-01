@@ -529,3 +529,162 @@ tests:
         equal:
           path: data.appHost
           value: route.example.com
+
+  - it: should use http for a route on an http listener
+    set:
+      createChartContextConfigmap: true
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          parentRefs:
+            - group: gateway.networking.k8s.io
+              kind: Gateway
+              name: test-gateway
+              namespace: test-namespace
+              sectionName: http
+          hostnames:
+            - route.example.com
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - documentIndex: &configMapDoc 0
+        isKind:
+          of: ConfigMap
+      - documentIndex: *configMapDoc
+        equal:
+          path: data
+          value:
+            podCIDR: 172.16.0.0/16
+            svcCIDR: 172.17.0.0/16
+            appUrl: http://route.example.com
+            appUrlWithPortAndPath: http://route.example.com:80/
+            appHost: "route.example.com"
+            appPort: "80"
+            appPath: /
+            appProtocol: http
+
+  - it: should use the port of the first parentRef of a route
+    set:
+      createChartContextConfigmap: true
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          parentRefs:
+            - group: gateway.networking.k8s.io
+              kind: Gateway
+              name: test-gateway
+              namespace: test-namespace
+              port: 8080
+          hostnames:
+            - route.example.com
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - documentIndex: &configMapDoc 0
+        isKind:
+          of: ConfigMap
+      - documentIndex: *configMapDoc
+        equal:
+          path: data
+          value:
+            podCIDR: 172.16.0.0/16
+            svcCIDR: 172.17.0.0/16
+            appUrl: https://route.example.com:8080
+            appUrlWithPortAndPath: https://route.example.com:8080/
+            appHost: "route.example.com"
+            appPort: "8080"
+            appPath: /
+            appProtocol: https
+
+  - it: should ignore parentRefs of a route when a gateway is selected
+    set:
+      createChartContextConfigmap: true
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          parentRefs:
+            - group: gateway.networking.k8s.io
+              kind: Gateway
+              name: test-gateway
+              namespace: test-namespace
+              sectionName: http
+          hostnames:
+            - route.example.com
+          gateway: external
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - documentIndex: &configMapDoc 0
+        isKind:
+          of: ConfigMap
+      - documentIndex: *configMapDoc
+        equal:
+          path: data
+          value:
+            podCIDR: 172.16.0.0/16
+            svcCIDR: 172.17.0.0/16
+            appUrl: https://route.example.com
+            appUrlWithPortAndPath: https://route.example.com:443/
+            appHost: "route.example.com"
+            appPort: "443"
+            appPath: /
+            appProtocol: https
+
+  - it: should use the service for a primary TCPRoute
+    set:
+      createChartContextConfigmap: true
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          kind: TCPRoute
+          gateway: external
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - documentIndex: &configMapDoc 0
+        isKind:
+          of: ConfigMap
+      - documentIndex: *configMapDoc
+        equal:
+          path: data
+          value:
+            podCIDR: 172.16.0.0/16
+            svcCIDR: 172.17.0.0/16
+            appUrl: http://127.0.0.1:12345
+            appUrlWithPortAndPath: http://127.0.0.1:12345/
+            appHost: "127.0.0.1"
+            appPort: "12345"
+            appPath: /
+            appProtocol: http
