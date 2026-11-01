@@ -424,7 +424,7 @@ tests:
   #   --set dependencies.valkey.enabled=true \
   #   --set dependencies.mongodb.enabled=true \
   #   --set dependencies.mariadb.enabled=true \
-  #   --set clickhouse.enabled=true \
+  #   --set dependencies.clickhouse.enabled=true \
   #   --set cnpg.my-pg.enabled=true \
   #   --set 'resources.limits.nvidia\.com/gpu=1'
   # # Check that initContainers have standard limits (500m CPU, 512Mi memory)
@@ -452,10 +452,10 @@ tests:
   #                 port: 6379
   #       mariadb:
   #         enabled: true
+  #       clickhouse:
+  #         enabled: true
   #       mongodb:
   #         enabled: true
-  #     clickhouse:
-  #       enabled: true
   #     cnpg:
   #       my-pg:
   #         enabled: true

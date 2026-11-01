@@ -20,7 +20,7 @@ title: Dependencies
 ## `dependencies`
 
 Configuration for chart dependencies. Each key is the name of a dependency and contains a chart values structure, which is merged on top of the defaults of the same name in the common library.
-The `valkey`, `mariadb`, `memcached` and `mongodb` dependencies are predefined in common with `enabled: false` and their full specification, so a chart only needs to enable them and set its overrides.
+The `valkey`, `mariadb`, `memcached`, `mongodb` and `clickhouse` dependencies are predefined in common with `enabled: false` and their full specification, so a chart only needs to enable them and set its overrides.
 
 | Field      | Value          |
 | ---------- | -------------- |
@@ -28,7 +28,7 @@ The `valkey`, `mariadb`, `memcached` and `mongodb` dependencies are predefined i
 | Type       | `map`          |
 | Required   | ❌             |
 | Helm `tpl` | ❌             |
-| Default    | `{mariadb: {enabled: false, ...}, memcached: {enabled: false, ...}, mongodb: {enabled: false, ...}, valkey: {enabled: false, ...}}` (see `dependencies.mariadb`, `dependencies.memcached`, `dependencies.mongodb` and `dependencies.valkey` in `values.yaml`) |
+| Default    | `{clickhouse: {enabled: false, ...}, mariadb: {enabled: false, ...}, memcached: {enabled: false, ...}, mongodb: {enabled: false, ...}, valkey: {enabled: false, ...}}` (see `dependencies.clickhouse`, `dependencies.mariadb`, `dependencies.memcached`, `dependencies.mongodb` and `dependencies.valkey` in `values.yaml`) |
 
 Example:
 
@@ -175,7 +175,7 @@ Configuration of the dependency itself. It is never merged into the chart values
 
 ### `dependencies.$name.depconfig.password`
 
-Password of the dependency, used by the dependencies with additional handling (see [MariaDB](#mariadb), [MongoDB](#mongodb) and [Valkey](#valkey)).
+Password of the dependency, used by the dependencies with additional handling (see [ClickHouse](#clickhouse), [MariaDB](#mariadb), [MongoDB](#mongodb) and [Valkey](#valkey)).
 
 | Field      | Value                                   |
 | ---------- | --------------------------------------- |
@@ -189,7 +189,7 @@ Password of the dependency, used by the dependencies with additional handling (s
 
 ### `dependencies.$name.depconfig.creds`
 
-Connection details, populated by the dependencies with additional handling (see [MariaDB](#mariadb), [MongoDB](#mongodb) and [Valkey](#valkey)). Read-only.
+Connection details, populated by the dependencies with additional handling (see [ClickHouse](#clickhouse), [MariaDB](#mariadb), [MongoDB](#mongodb) and [Valkey](#valkey)). Read-only.
 
 | Field      | Value                                |
 | ---------- | ------------------------------------ |
@@ -350,6 +350,102 @@ dependencies:
   This includes the `codeserver` service and ingress, which are not primary either.
 - The addon images (`netshootImage`, `gluetunImage`, `tailscaleImage`, `codeserverImage`) default to the ones of the chart. A dependency can use another image by defining the image itself (eg `dependencies.valkey.netshootImage`).
 - The notes only list the connection details of the addons of the chart, not the ones of its dependencies.
+
+---
+
+## ClickHouse
+
+The `clickhouse` dependency has additional handling:
+
+- A secret named `$releaseName-clickhousecreds` is created with the connection details, and the same details are available under `.Values.dependencies.clickhouse.depconfig.creds`:
+
+  | Key                   | `creds` key          | Example                                           |
+  | --------------------- | -------------------- | ------------------------------------------------- |
+  | `clickhouse-password` | `clickhousePassword` | `my-password`                                     |
+  | `plainhost`           | `plain`, `plainhost` | `myapp-clickhouse-main`                           |
+  | -                     | `plainport`          | `8123`                                            |
+  | `plainporthost`       | `plainporthost`      | `myapp-clickhouse-main:8123`                      |
+  | `ping`                | `ping`               | `http://myapp-clickhouse-main:8123/ping`          |
+  | `url`                 | `complete`           | `http://test:my-password@myapp-clickhouse-main:8123/test` |
+  | `jdbc`                | `jdbc`               | `jdbc:ch://myapp-clickhouse-main:8123/test`       |
+
+  The host and port are the ones of the primary service and port of the dependency, and the URLs use the HTTP interface.
+  Like the `creds` of the other dependencies, the values are quoted strings, use `| trimAll "\""` when templating them.
+- An init container `clickhouse-wait` is added to the workloads of the chart (the ones with `dbWait` not set to `false`), waiting for the `/ping` endpoint of ClickHouse to respond.
+- The connection details are included in the notes.
+
+The `depconfig` of the dependency accepts:
+
+| Key                                 | Default               | Description                                                       |
+| ----------------------------------- | --------------------- | ----------------------------------------------------------------- |
+| `password`                          | `PLACEHOLDERPASSWORD` | Password of the database user                                     |
+| `clickhouseUsername`                | `test`                | Name of the database user                                         |
+| `clickhouseDatabase`                | `test`                | Name of the database                                              |
+| `clickhouseDefaultAccessManagement` | `0`                   | Set to `1` to allow the user to manage users and grants with SQL  |
+
+The password is applied again on every start, so it can be changed later.
+The database is created on every start if it does not exist, so changing `clickhouseDatabase` later creates a new, empty database.
+The `url` value does not escape the password, so avoid characters like `@`, `:` and `/` when an app uses it.
+
+The dependency runs `oci.trueforge.org/containerforge/clickhouse` as a `StatefulSet` with one replica, as UID and GID `568` with a read-only root filesystem.
+Its data is stored in the `data` volume, mounted at `/config` (databases in `/config/data`).
+`clickhouseUsername` and `clickhouseDatabase` can only contain letters, numbers and underscores, otherwise the container does not start.
+The configured user replaces the `default` user of ClickHouse.
+
+### Moving from the `clickhouse` chart dependency
+
+Enabling the top-level `clickhouse` key fails with a message pointing to `dependencies.clickhouse`.
+Move `enabled` to `dependencies.clickhouse`, and `clickhouseUsername`, `clickhouseDatabase` and `password` to `dependencies.clickhouse.depconfig`.
+In values and templates of the chart, replace `.Values.clickhouse.creds` with `.Values.dependencies.clickhouse.depconfig.creds`.
+The name of the secret stays `$releaseName-clickhousecreds`.
+
+The data is **not** moved. The dependency uses a new volume, and the old chart used another workload with its own volume.
+Back up the data before upgrading, and restore it after the upgrade.
+
+### Example
+
+The full specification of the `clickhouse` dependency (image, workload, service, persistence and probes) is part of the defaults of common.
+A chart only enables it and sets the values it needs to override:
+
+```yaml
+image:
+  repository: ghcr.io/example/app
+  tag: latest
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            CLICKHOUSE_HOST: '{{ .Values.dependencies.clickhouse.depconfig.creds.plainhost | trimAll "\"" }}'
+            CLICKHOUSE_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "clickhousecreds" }}'
+                key: url
+            CLICKHOUSE_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "clickhousecreds" }}'
+                key: clickhouse-password
+
+dependencies:
+  clickhouse:
+    enabled: true
+    depconfig:
+      password: "secure-password"
+      clickhouseUsername: myapp
+      clickhouseDatabase: myapp
+```
+
+This renders, among others:
+
+- `Deployment` `myapp` with the `clickhouse-wait` init container
+- `StatefulSet` `myapp-clickhouse-main` with the `data` volume mounted at `/config`
+- `Service` `myapp-clickhouse-main` on port 8123
+- `PersistentVolumeClaim` `myapp-clickhouse-data`
+- `Secret` `myapp-clickhousecreds`
 
 ---
 
@@ -704,7 +800,7 @@ This renders, among others:
 
 ## Removed Top-Level Keys
 
-The `mariadb` key on the root level of the values is replaced by `dependencies.mariadb` (see [MariaDB](#mariadb)), the `memcached` key by `dependencies.memcached` (see [Memcached](#memcached)), the `mongodb` key by `dependencies.mongodb` (see [MongoDB](#mongodb)), and the `redis` and `valkey` keys by `dependencies.valkey`.
+The `clickhouse` key on the root level of the values is replaced by `dependencies.clickhouse` (see [ClickHouse](#clickhouse)), the `mariadb` key by `dependencies.mariadb` (see [MariaDB](#mariadb)), the `memcached` key by `dependencies.memcached` (see [Memcached](#memcached)), the `mongodb` key by `dependencies.mongodb` (see [MongoDB](#mongodb)), and the `redis` and `valkey` keys by `dependencies.valkey`.
 Rendering fails when one of them has `enabled: true` (also when set using a template), as it would otherwise be silently ignored.
 A disabled key, or one without `enabled`, never rendered anything and does not fail.
 
@@ -714,5 +810,12 @@ A disabled key, or one without `enabled`, never rendered anything and does not f
 | `redis.password`, `valkey.password` | `dependencies.valkey.depconfig.password` |
 | `redis.creds`, `valkey.creds`       | `dependencies.valkey.depconfig.creds`    |
 
-The `solr` and `clickhouse` keys on the root level of the values are no longer supported and have no replacement.
-Rendering fails when one of them has `enabled: true` (also when set using a template). A disabled key, or one without `enabled`, does not fail.
+| Old key                                                            | New key                                                          |
+| ------------------------------------------------------------------ | ---------------------------------------------------------------- |
+| `clickhouse.enabled`                                               | `dependencies.clickhouse.enabled`                                |
+| `clickhouse.password`                                              | `dependencies.clickhouse.depconfig.password`                     |
+| `clickhouse.clickhouseUsername`, `clickhouse.clickhouseDatabase`   | `dependencies.clickhouse.depconfig.clickhouseUsername`, `dependencies.clickhouse.depconfig.clickhouseDatabase` |
+| `clickhouse.creds`                                                 | `dependencies.clickhouse.depconfig.creds`                        |
+
+The `solr` key on the root level of the values is no longer supported and has no replacement.
+Rendering fails when it has `enabled: true` (also when set using a template). A disabled key, or one without `enabled`, does not fail.

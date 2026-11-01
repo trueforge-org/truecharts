@@ -310,8 +310,14 @@ Display connection information for enabled dependencies and addons
     {{- end -}}
   {{- end -}}
 
-  {{- if .Values.clickhouse -}}
-    {{- if .Values.clickhouse.enabled -}}
+  {{/* ClickHouse from the dependencies */}}
+  {{- $clickhouse := get (.Values.dependencies | default dict) "clickhouse" -}}
+  {{- if kindIs "map" $clickhouse -}}
+    {{- $clickhouseEnabled := (include "tc.v1.common.lib.util.enabled" (dict
+                    "rootCtx" $ "objectData" $clickhouse
+                    "name" "clickhouse" "caller" "Dependencies"
+                    "key" "dependencies")) -}}
+    {{- if eq $clickhouseEnabled "true" -}}
       {{- $hasConnections = true -}}
       {{- $connections = append $connections (include "tc.v1.common.lib.chart.connections.clickhouse" . | trim) -}}
     {{- end -}}
@@ -464,29 +470,31 @@ MongoDB connection information
 Clickhouse connection information
 */}}
 {{- define "tc.v1.common.lib.chart.connections.clickhouse" -}}
-## Clickhouse Database
-  {{- if .Values.clickhouse.creds -}}
-  {{- if .Values.clickhouse.creds.plainhost }}
-- Host: {{ .Values.clickhouse.creds.plainhost }}
+{{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "clickhouse")) -}}
+{{- $dep := get (.Values.dependencies | default dict) "clickhouse" -}}
+{{- $depconfig := $dep.depconfig | default dict -}}
+{{- $creds := $depconfig.creds | default dict -}}
+## ClickHouse Database
+{{- if $service -}}
+{{- $service = $service | fromJson }}
+- Host: {{ $service.name }}
+- Port: {{ $service.port }}
+- Host:Port: {{ $service.name }}:{{ $service.port }}
+  {{- if $depconfig.clickhouseDatabase }}
+- Database: {{ $depconfig.clickhouseDatabase }}
   {{- end -}}
-  {{- if .Values.clickhouse.creds.plainporthost }}
-- Host:Port: {{ .Values.clickhouse.creds.plainporthost }}
+  {{- if $depconfig.clickhouseUsername }}
+- Username: {{ $depconfig.clickhouseUsername }}
   {{- end -}}
-  {{- if .Values.clickhouse.clickhouseDatabase }}
-- Database: {{ .Values.clickhouse.clickhouseDatabase }}
+  {{- if $creds.complete }}
+- Connection URL: {{ include "tc.v1.common.lib.chart.notes.credential" (dict "rootCtx" $ "value" $creds.complete) }}
   {{- end -}}
-  {{- if .Values.clickhouse.clickhouseUsername }}
-- Username: {{ .Values.clickhouse.clickhouseUsername }}
+  {{- if $creds.jdbc }}
+- JDBC URL: {{ $creds.jdbc }}
   {{- end -}}
-  {{- if .Values.clickhouse.creds.complete }}
-- Connection URL: {{ include "tc.v1.common.lib.chart.notes.credential" (dict "rootCtx" $ "value" .Values.clickhouse.creds.complete) }}
-  {{- end -}}
-  {{- if .Values.clickhouse.creds.jdbc }}
-- JDBC URL: {{ .Values.clickhouse.creds.jdbc }}
-  {{- end -}}
-  {{- else }}
-- Configuration pending (credentials will be available after initialization)
-  {{- end }}
+{{- else }}
+- Configuration pending (service will be available after initialization)
+{{- end -}}
 {{- end -}}
 
 {{/*

@@ -1824,27 +1824,67 @@ cnpg:
     # -- contains credentials and urls output by generator
     creds: {}
 
-# -- clickhouse dependency configuration
-# @default -- See below
-clickhouse:
-  enabled: false
-  includeCommon: false
-  password: "PLACEHOLDERPASSWORD"
-  # -- can be used to make an easy accessable note which URLS to use to access the DB.
-  creds: {}
-
 # -- Dependency configuration - replaces helm-dependencies
 # Each dependency contains a complete chart values structure (workload, service, persistence, ...)
 # Its objects are merged into the chart under the name [<dependency>-<object>] (eg [workload.valkey-main])
 # and references between them (targetSelector, objectName, ...) are rewritten accordingly.
 # Objects inherit the defaults of the matching common object (eg [workload.main]) and default to [enabled: true].
-# Currently [valkey], [mariadb] and [mongodb] are the only dependencies with additional handling (credentials secret, wait init container).
+# Currently [valkey], [mariadb], [mongodb] and [clickhouse] are the only dependencies with additional handling (credentials secret, wait init container).
 # Disabled dependencies are not merged into the chart, so their defaults only apply once a chart sets [enabled: true].
 # Dependencies with [mode: operator] are not merged into the chart either, as an operator provides them. Their credentials secret, wait init container and notes still apply.
 # Settings for the operator go under [dependencies.<name>.operator], like [depconfig] it is never merged into the chart.
 # @default -- See below
 
 dependencies:
+  clickhouse:
+    enabled: false
+    # -- Settings of the dependency itself, never merged into the chart
+    depconfig:
+      password: "PLACEHOLDERPASSWORD"
+      clickhouseUsername: "test"
+      clickhouseDatabase: "test"
+      clickhouseDefaultAccessManagement: 0
+    image:
+      repository: oci.trueforge.org/containerforge/clickhouse
+      pullPolicy: IfNotPresent
+      tag: 26.10.2.103@sha256:5ea8293b50edf862efaa9362629ccfabcf93e2ffed5da552bde9fcb82d844b68
+    workload:
+      main:
+        replicas: 1
+        type: StatefulSet
+        strategy: RollingUpdate
+        podSpec:
+          containers:
+            main:
+              env:
+                CLICKHOUSE_DB: "{{ .Values.dependencies.clickhouse.depconfig.clickhouseDatabase }}"
+                CLICKHOUSE_USER: "{{ .Values.dependencies.clickhouse.depconfig.clickhouseUsername }}"
+                CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "{{ .Values.dependencies.clickhouse.depconfig.clickhouseDefaultAccessManagement }}"
+                CLICKHOUSE_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "clickhousecreds" }}'
+                    key: clickhouse-password
+              probes:
+                liveness:
+                  type: http
+                  path: /ping
+                readiness:
+                  type: http
+                  path: /ping
+                startup:
+                  type: http
+                  path: /ping
+    service:
+      main:
+        ports:
+          main:
+            protocol: http
+            port: 8123
+            targetPort: 8123
+    persistence:
+      data:
+        mountPath: /config
   mariadb:
     enabled: false
     # -- How the dependency is provided: [standalone] merges it into the chart, [operator] leaves it to an operator (its objects are not merged)

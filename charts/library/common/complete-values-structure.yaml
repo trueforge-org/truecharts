@@ -3661,6 +3661,55 @@ dependencies:
       objectname:
         type: ''
         mountPath: ''
+  clickhouse:
+    enabled: false
+    depconfig:
+      password: ''
+      clickhouseUsername: ''
+      clickhouseDatabase: ''
+      clickhouseDefaultAccessManagement: 0
+    image:
+      repository: ''
+      pullPolicy: ''
+      tag: ''
+    workload:
+      objectname:
+        podSpec:
+          containers:
+            objectname:
+              env:
+                CLICKHOUSE_DB: ''
+                CLICKHOUSE_USER: ''
+                CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: ''
+                CLICKHOUSE_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: ''
+                    key: ''
+              probes:
+                liveness:
+                  enabled: true
+                  type: ''
+                  path: ''
+                readiness:
+                  enabled: true
+                  type: ''
+                  path: ''
+                startup:
+                  enabled: true
+                  type: ''
+                  path: ''
+    service:
+      objectname:
+        ports:
+          objectname:
+            protocol: ''
+            port: 0
+            targetPort: 0
+    persistence:
+      objectname:
+        enabled: true
+        mountPath: ''
   mariadb:
     enabled: false
     mode: ''
@@ -3871,13 +3920,6 @@ redis:
       enabled: false
   redisUsername: ''
   username: ''
-clickhouse:
-  enabled: false
-  includeCommon: false
-  password: ''
-  creds: {}
-  clickhouseUsername: ''
-  clickhouseDatabase: ''
 extraTpl: []
 redmine:
   plugins_migrate: true
