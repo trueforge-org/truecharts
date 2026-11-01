@@ -17,7 +17,7 @@ title: Networkpolicy
 
 ## `networkpolicy`
 
-Create Network Policy objects
+Create NetworkPolicy or CiliumNetworkPolicy objects
 
 | Field      | Value           |
 | ---------- | --------------- |
@@ -59,6 +59,50 @@ networkpolicy:
 
 ---
 
+### `networkpolicy.$name.clusterwide`
+
+Cilium only. Create a CiliumClusterwideNetworkPolicy instead of a CiliumNetworkPolicy, chart based selectors are pinned to the namespace of the chart
+
+| Field      | Value                             |
+| ---------- | --------------------------------- |
+| Key        | `networkpolicy.$name.clusterwide` |
+| Type       | `boolean, string`                 |
+| Required   | ❌                                |
+| Helm `tpl` | ❌                                |
+| Default    | `false`                           |
+
+Example
+
+```yaml
+networkpolicy:
+  $name:
+    clusterwide: false
+```
+
+---
+
+### `networkpolicy.$name.description`
+
+Cilium only. Free form description of the policy, supports Helm `tpl`
+
+| Field      | Value                             |
+| ---------- | --------------------------------- |
+| Key        | `networkpolicy.$name.description` |
+| Type       | `string`                          |
+| Required   | ❌                                |
+| Helm `tpl` | ❌                                |
+| Default    | `""`                              |
+
+Example
+
+```yaml
+networkpolicy:
+  $name:
+    description: ""
+```
+
+---
+
 ### `networkpolicy.$name.egress`
 
 List of egress rules
@@ -82,6 +126,43 @@ networkpolicy:
 
 ---
 
+### `networkpolicy.$name.egressDeny`
+
+Cilium only. List of egress deny rules, these take precedence over allow rules, supports Helm `tpl`
+
+| Field      | Value                            |
+| ---------- | -------------------------------- |
+| Key        | `networkpolicy.$name.egressDeny` |
+| Type       | `list, string`                   |
+| Required   | ❌                               |
+| Helm `tpl` | ❌                               |
+| Default    | `[]`                             |
+
+Example
+
+```yaml
+networkpolicy:
+  $name:
+    egressDeny:
+      []
+```
+
+---
+
+### `networkpolicy.$name.enableDefaultDeny`
+
+Cilium only. Control whether the policy puts the selected endpoints in default deny mode
+
+| Field      | Value                                   |
+| ---------- | --------------------------------------- |
+| Key        | `networkpolicy.$name.enableDefaultDeny` |
+| Type       | `map`                                   |
+| Required   | ❌                                      |
+| Helm `tpl` | ❌                                      |
+| Default    | unset                                   |
+
+---
+
 ### `networkpolicy.$name.enabled`
 
 Create Network Policy objects
@@ -101,6 +182,20 @@ networkpolicy:
   $name:
     enabled: false
 ```
+
+---
+
+### `networkpolicy.$name.endpointSelector`
+
+Cilium only. Select the endpoints to which this policy applies, supports Helm `tpl`
+
+| Field      | Value                                  |
+| ---------- | -------------------------------------- |
+| Key        | `networkpolicy.$name.endpointSelector` |
+| Type       | `map, string`                          |
+| Required   | ❌                                     |
+| Helm `tpl` | ❌                                     |
+| Default    | unset                                  |
 
 ---
 
@@ -149,6 +244,29 @@ networkpolicy:
 
 ---
 
+### `networkpolicy.$name.ingressDeny`
+
+Cilium only. List of ingress deny rules, these take precedence over allow rules, supports Helm `tpl`
+
+| Field      | Value                             |
+| ---------- | --------------------------------- |
+| Key        | `networkpolicy.$name.ingressDeny` |
+| Type       | `list, string`                    |
+| Required   | ❌                                |
+| Helm `tpl` | ❌                                |
+| Default    | `[]`                              |
+
+Example
+
+```yaml
+networkpolicy:
+  $name:
+    ingressDeny:
+      []
+```
+
+---
+
 ### `networkpolicy.$name.labels`
 
 Additional labels for Network Policy
@@ -179,7 +297,7 @@ Define the namespace for this object
 | Field      | Value                           |
 | ---------- | ------------------------------- |
 | Key        | `networkpolicy.$name.namespace` |
-| Type       | `map`                           |
+| Type       | `string`                        |
 | Required   | ❌                              |
 | Helm `tpl` | ❌                              |
 | Default    | `""`                            |
@@ -191,6 +309,20 @@ networkpolicy:
   $name:
     namespace: ""
 ```
+
+---
+
+### `networkpolicy.$name.nodeSelector`
+
+Cilium only. Host policy, select the nodes to which this policy applies instead of pods, supports Helm `tpl`
+
+| Field      | Value                              |
+| ---------- | ---------------------------------- |
+| Key        | `networkpolicy.$name.nodeSelector` |
+| Type       | `map, string`                      |
+| Required   | ❌                                 |
+| Helm `tpl` | ❌                                 |
+| Default    | unset                              |
 
 ---
 
@@ -288,9 +420,11 @@ networkpolicy:
     targetSelector: ""
 ```
 
+---
+
 ### `networkpolicy.$name.targetSelectorRegex`
 
-Target workloads from this chart whose names match one or more regular expressions.
+Target workloads from this chart whose names match one or more regular expressions
 
 | Field      | Value                                     |
 | ---------- | ----------------------------------------- |
@@ -305,7 +439,30 @@ Example
 ```yaml
 networkpolicy:
   $name:
-    targetSelectorRegex: "^worker-"
+    targetSelectorRegex: ""
+```
+
+---
+
+### `networkpolicy.$name.type`
+
+Type of policy to create. `kubernetes` creates a NetworkPolicy, `cilium` creates a CiliumNetworkPolicy and requires the Cilium CRDs
+
+| Field      | Value                      |
+| ---------- | -------------------------- |
+| Key        | `networkpolicy.$name.type` |
+| Type       | `string`                   |
+| Required   | ❌                         |
+| Helm `tpl` | ❌                         |
+| Default    | `"kubernetes"`             |
+| Enum       | `kubernetes`, `cilium`     |
+
+Example
+
+```yaml
+networkpolicy:
+  $name:
+    type: kubernetes
 ```
 
 ---
@@ -605,4 +762,78 @@ networkpolicy:
         ports:
           - protocol: TCP
             port: 443
+```
+
+### Cilium Network Policy
+
+Set `type: cilium` to create a `CiliumNetworkPolicy` instead of a `NetworkPolicy`. Requires the Cilium CRDs to be installed in the cluster.
+Controller targeting with `targetSelector`, `targetSelectorRegex` and `targetAllPods` works the same as for Kubernetes policies.
+Rules use the Cilium rule format:
+
+```yaml
+networkpolicy:
+  allow-dns:
+    enabled: true
+    type: cilium
+    description: Allow DNS lookups from the worker
+    targetSelector: worker
+    enableDefaultDeny:
+      egress: false
+    egress:
+      - toEndpoints:
+          - matchLabels:
+              k8s:io.kubernetes.pod.namespace: kube-system
+              k8s-app: kube-dns
+        toPorts:
+          - ports:
+              - port: "53"
+                protocol: UDP
+            rules:
+              dns:
+                - matchPattern: "*"
+```
+
+### Cilium Deny Rules
+
+`ingressDeny` and `egressDeny` take precedence over allow rules:
+
+```yaml
+networkpolicy:
+  deny-metadata:
+    enabled: true
+    type: cilium
+    targetSelectorRegex: "^worker"
+    egressDeny:
+      - toCIDR:
+          - 169.254.169.254/32
+    egress:
+      - toEntities:
+          - world
+```
+
+### Cilium Clusterwide Network Policy
+
+Set `clusterwide: true` to create a `CiliumClusterwideNetworkPolicy`. Selectors that are derived from this chart are pinned to the namespace of the chart.
+Use `nodeSelector` for host policies:
+
+```yaml
+networkpolicy:
+  allow-ingress-from-gateway:
+    enabled: true
+    type: cilium
+    clusterwide: true
+    ingress:
+      - fromEndpoints:
+          - matchLabels:
+              k8s:io.kubernetes.pod.namespace: gateway-system
+  host-policy:
+    enabled: true
+    type: cilium
+    clusterwide: true
+    nodeSelector:
+      matchLabels:
+        node-role.kubernetes.io/control-plane: ""
+    ingress:
+      - fromEntities:
+          - cluster
 ```

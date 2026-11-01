@@ -179,7 +179,11 @@ env:
       expandObjectName: false
       name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
       key: plainhost
-  MARIADB_ROOT_PASSWORD: "{{ .Values.mariadb.rootPassword }}"
+  MARIADB_ROOT_PASSWORD:
+    secretKeyRef:
+      expandObjectName: false
+      name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+      key: mariadb-root-password
 command:
   - "/bin/sh"
   - "-c"

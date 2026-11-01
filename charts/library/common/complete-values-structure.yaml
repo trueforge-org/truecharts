@@ -2962,6 +2962,35 @@ secret:
     enabled: true
     data:
       configuration.yaml: ''
+externalSecret:
+  objectname:
+    enabled: true
+    expandObjectName: true
+    annotations: {}
+    labels: {}
+    refreshInterval: ''
+    refreshPolicy: ''
+    secretStoreRef:
+      name: ''
+      kind: ''
+    target:
+      name: ''
+      creationPolicy: ''
+      deletionPolicy: ''
+      immutable: false
+      template: {}
+    data:
+    - secretKey: ''
+      remoteRef:
+        key: ''
+        property: ''
+        version: ''
+    dataFrom:
+    - extract:
+        key: ''
+    - find:
+        name:
+          regexp: ''
 serviceAccount:
   main:
     enabled: true
@@ -3083,6 +3112,7 @@ notes:
   custom: ''
   footer: ''
   warnings: []
+  showCredentials: false
 gluetunImage:
   repository: ''
   tag: ''
@@ -3228,12 +3258,49 @@ gateway:
         - group: ''
           kind: ''
     targetSelector: ''
+    allowedListeners:
+      namespaces:
+        from: ''
+        selector:
+          matchLabels:
+            gateway-access: ''
+listenerSet:
+  main:
+    enabled: false
+    expandObjectName: true
+    annotations: {}
+    labels: {}
+    targetSelector: ''
+    parentRef:
+      group: ''
+      kind: ''
+      name: ''
+      namespace: null
+    listeners:
+    - name: ''
+      hostname: null
+      port: 443
+      protocol: ''
+      tls:
+        mode: ''
+        certificateRefs:
+        - kind: ''
+          group: ''
+          name: ''
+          namespace: null
+      allowedRoutes:
+        namespaces:
+          from: ''
+        kinds:
+        - group: ''
+          kind: ''
 route:
   objectname:
     enabled: false
     kind: ''
     annotations: {}
     labels: {}
+    listenerSet: ''
     parentRefs:
     - group: ''
       kind: ''
@@ -3302,8 +3369,23 @@ storageClass:
 networkpolicy:
   main:
     enabled: false
+    type: ''
+    clusterwide: false
+    description: ''
+    targetSelector: []
+    targetSelectorRegex: ''
+    targetAllPods: false
+    endpointSelector:
+      matchLabels: {}
+    nodeSelector:
+      matchLabels: {}
+    enableDefaultDeny:
+      ingress: true
+      egress: false
     ingress: []
+    ingressDeny: []
     egress: []
+    egressDeny: []
 metrics:
   main:
     enabled: false
