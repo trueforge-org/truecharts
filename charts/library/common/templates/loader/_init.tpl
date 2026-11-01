@@ -27,9 +27,6 @@
   {{/* Autogenerate clickhouse passwords if needed */}}
   {{- include "tc.v1.common.dependencies.clickhouse.injector" . }}
 
-  {{/* Autogenerate solr passwords if needed */}}
-  {{- include "tc.v1.common.dependencies.solr.injector" . }}
-
   {{/* Enable code-server add-on if required */}}
   {{- if .Values.addons.codeserver.enabled }}
     {{- include "tc.v1.common.addon.codeserver" . }}

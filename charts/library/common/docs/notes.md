@@ -84,7 +84,6 @@ When dependencies or addons are enabled, the notes output will automatically inc
 - **Valkey**: Host, port (from the `valkey` dependency)
 - **MongoDB**: Host, port, database, username, connection URLs, JDBC URLs
 - **Clickhouse**: Host, port, database, username, connection URLs, JDBC URLs
-- **Solr**: Host, port, cores, authentication status, connection URLs
 
 Connection URLs contain the password of the database, so they are replaced by `HIDDEN` unless `notes.showCredentials` is `true`.
 The JDBC URLs, hosts and usernames do not contain credentials and are always shown.
