@@ -20,7 +20,7 @@ title: Dependencies
 ## `dependencies`
 
 Configuration for chart dependencies. Each key is the name of a dependency and contains a chart values structure, which is merged on top of the defaults of the same name in the common library.
-The `valkey`, `mariadb` and `mongodb` dependencies are predefined in common with `enabled: false` and their full specification, so a chart only needs to enable them and set its overrides.
+The `valkey`, `mariadb`, `memcached` and `mongodb` dependencies are predefined in common with `enabled: false` and their full specification, so a chart only needs to enable them and set its overrides.
 
 | Field      | Value          |
 | ---------- | -------------- |
@@ -28,7 +28,7 @@ The `valkey`, `mariadb` and `mongodb` dependencies are predefined in common with
 | Type       | `map`          |
 | Required   | ❌             |
 | Helm `tpl` | ❌             |
-| Default    | `{mariadb: {enabled: false, ...}, mongodb: {enabled: false, ...}, valkey: {enabled: false, ...}}` (see `dependencies.mariadb`, `dependencies.mongodb` and `dependencies.valkey` in `values.yaml`) |
+| Default    | `{mariadb: {enabled: false, ...}, memcached: {enabled: false, ...}, mongodb: {enabled: false, ...}, valkey: {enabled: false, ...}}` (see `dependencies.mariadb`, `dependencies.memcached`, `dependencies.mongodb` and `dependencies.valkey` in `values.yaml`) |
 
 Example:
 
@@ -450,6 +450,45 @@ This renders, among others:
 
 ---
 
+## Memcached
+
+The `memcached` dependency is a plain cache without credentials, so it has no additional handling: no secret, no `depconfig`, no wait init container and no notes.
+It is the `memcached` chart of the `stable` train, as a dependency:
+
+- A `Deployment` with one replica, running `oci.trueforge.org/containerforge/memcache` with the default security context of common (UID and GID `568`, read-only root filesystem) and the default `tcp` probes.
+- A `Service` on port `11211`.
+- No persistence, memcached only keeps its data in memory.
+
+The Grafana dashboard of the `memcached` chart is not part of the dependency.
+
+The `Service` is named after the full name of the release with `-memcached-main` appended (eg `myapp-memcached-main`), reachable on port `11211`.
+
+### Moving from the `memcached` chart dependency
+
+Enabling the top-level `memcached` key fails with a message pointing to `dependencies.memcached`.
+Move `enabled` to `dependencies.memcached`. There is nothing else to move, as memcached has no settings and keeps no data.
+
+### Example
+
+The full specification of the `memcached` dependency (image, workload and service) is part of the defaults of common.
+A chart only enables it, and sets the values it needs to override:
+
+```yaml
+dependencies:
+  memcached:
+    enabled: true
+    workload:
+      main:
+        replicas: 2
+```
+
+This renders, among others:
+
+- `Deployment` `myapp-memcached-main`
+- `Service` `myapp-memcached-main` on port 11211
+
+---
+
 ## MongoDB
 
 The `mongodb` dependency has additional handling:
@@ -665,7 +704,7 @@ This renders, among others:
 
 ## Removed Top-Level Keys
 
-The `mariadb` key on the root level of the values is replaced by `dependencies.mariadb` (see [MariaDB](#mariadb)), the `mongodb` key by `dependencies.mongodb` (see [MongoDB](#mongodb)), and the `redis` and `valkey` keys by `dependencies.valkey`.
+The `mariadb` key on the root level of the values is replaced by `dependencies.mariadb` (see [MariaDB](#mariadb)), the `memcached` key by `dependencies.memcached` (see [Memcached](#memcached)), the `mongodb` key by `dependencies.mongodb` (see [MongoDB](#mongodb)), and the `redis` and `valkey` keys by `dependencies.valkey`.
 Rendering fails when one of them has `enabled: true` (also when set using a template), as it would otherwise be silently ignored.
 A disabled key, or one without `enabled`, never rendered anything and does not fail.
 
@@ -675,5 +714,5 @@ A disabled key, or one without `enabled`, never rendered anything and does not f
 | `redis.password`, `valkey.password` | `dependencies.valkey.depconfig.password` |
 | `redis.creds`, `valkey.creds`       | `dependencies.valkey.depconfig.creds`    |
 
-The `solr`, `clickhouse` and `memcached` keys on the root level of the values are no longer supported and have no replacement.
+The `solr` and `clickhouse` keys on the root level of the values are no longer supported and have no replacement.
 Rendering fails when one of them has `enabled: true` (also when set using a template). A disabled key, or one without `enabled`, does not fail.

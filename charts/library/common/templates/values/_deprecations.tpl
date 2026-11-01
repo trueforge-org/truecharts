@@ -9,9 +9,10 @@
 
   {{/* Top-level keys of dependencies that moved to [dependencies.<name>], and top-level keys that were removed without a replacement. */}}
   {{/* Their [enabled] is taken into account, a disabled one never rendered anything, so it can safely stay in the values. */}}
-  {{- $movedDependencies := dict "mariadb" "mariadb" "mongodb" "mongodb" "redis" "valkey" "valkey" "valkey" -}}
+  {{- $movedDependencies := dict "mariadb" "mariadb" "memcached" "memcached" "mongodb" "mongodb" "redis" "valkey" "valkey" "valkey" -}}
+  {{/* Dependencies without settings, like memcached, are not listed here */}}
   {{- $movedSettings := dict "mariadb" "[password], [rootPassword], [mariadbUsername] and [mariadbDatabase]" "mongodb" "[password], [rootPassword], [mongodbUsername] and [mongodbDatabase]" "valkey" "[password]" -}}
-  {{- $removedKeys := list "solr" "clickhouse" "memcached" -}}
+  {{- $removedKeys := list "solr" "clickhouse" -}}
   {{- range $key := (concat (keys $movedDependencies | sortAlpha) $removedKeys) -}}
     {{- $value := get $values $key -}}
     {{- if and (kindIs "map" $value) (hasKey $value "enabled") (not (kindIs "invalid" $value.enabled)) -}}
@@ -22,7 +23,11 @@
       {{- if eq $enabled "true" -}}
         {{- if hasKey $movedDependencies $key -}}
           {{- $dep := get $movedDependencies $key -}}
-          {{- fail (printf "Expected no [%s] key, it is replaced by [dependencies.%s]. Move [enabled] to [dependencies.%s], and %s to [dependencies.%s.depconfig]. The connection details are available under [dependencies.%s.depconfig.creds]" $key $dep $dep (get $movedSettings $dep) $dep $dep) -}}
+          {{- if hasKey $movedSettings $dep -}}
+            {{- fail (printf "Expected no [%s] key, it is replaced by [dependencies.%s]. Move [enabled] to [dependencies.%s], and %s to [dependencies.%s.depconfig]. The connection details are available under [dependencies.%s.depconfig.creds]" $key $dep $dep (get $movedSettings $dep) $dep $dep) -}}
+          {{- else -}}
+            {{- fail (printf "Expected no [%s] key, it is replaced by [dependencies.%s]. Move [enabled] to [dependencies.%s]" $key $dep $dep) -}}
+          {{- end -}}
         {{- else -}}
           {{- fail (printf "Expected no [%s] key, it is no longer supported and has no replacement. Remove [%s], or set [%s.enabled] to false" $key $key $key) -}}
         {{- end -}}
