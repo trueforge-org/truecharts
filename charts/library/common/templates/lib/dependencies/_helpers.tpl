@@ -9,6 +9,9 @@ key: The name of the service within the dependency (eg main)
 mergedKey: The name of the service in the chart values (eg valkey-main)
 name: The name of the Service object, as rendered (eg release-chart-valkey-main)
 port: The port number of the primary port of the service
+
+In operator mode the service is not merged into the chart, as the operator provides it.
+The name is then the one it would have in standalone mode (never the primary name), so the operator has to create the Service with that name.
 */}}
 {{- define "tc.v1.common.lib.dependencies.primaryService" -}}
   {{- $rootCtx := .rootCtx -}}
@@ -16,6 +19,7 @@ port: The port number of the primary port of the service
 
   {{- $result := dict -}}
   {{- $dep := get ($rootCtx.Values.dependencies | default dict) $depName -}}
+  {{- $operator := eq (include "tc.v1.common.lib.dependencies.mode" (dict "objectData" $dep "depName" $depName)) "operator" -}}
 
   {{- if and (kindIs "map" $dep) (kindIs "map" $dep.service) -}}
     {{- range $svcName, $svc := $dep.service -}}
@@ -24,6 +28,10 @@ port: The port number of the primary port of the service
 
       {{- $mergedKey := printf "%s-%s" $depName $svcName -}}
       {{- $mergedSvc := get $rootCtx.Values.service $mergedKey -}}
+      {{/* In operator mode the service is not merged, so the (normalized) service of the dependency is used */}}
+      {{- if $operator -}}
+        {{- $mergedSvc = $svc -}}
+      {{- end -}}
       {{- if not (kindIs "map" $mergedSvc) -}}{{- continue -}}{{- end -}}
 
       {{- $enabled := (include "tc.v1.common.lib.util.enabled" (dict
@@ -41,7 +49,7 @@ port: The port number of the primary port of the service
       {{- $name := $mergedKey -}}
       {{- if eq $expandName "true" -}}
         {{- $name = include "tc.v1.common.lib.chart.names.fullname" $rootCtx -}}
-        {{- if not $mergedSvc.primary -}}
+        {{- if or $operator (not $mergedSvc.primary) -}}
           {{- $name = printf "%s-%s" $name $mergedKey -}}
         {{- end -}}
       {{- end -}}
@@ -60,4 +68,30 @@ port: The port number of the primary port of the service
   {{- if $result -}}
     {{- $result | toJson -}}
   {{- end -}}
+{{- end -}}
+
+{{/* Returns the mode of a dependency: standalone (default) or operator */}}
+{{/* Call this template:
+{{ include "tc.v1.common.lib.dependencies.mode" (dict "objectData" $dep "depName" "valkey") }}
+objectData: The values of the dependency.
+depName: The name of the dependency.
+
+standalone: The objects of the dependency are merged into the chart, and deployed with the chart.
+operator: The dependency is provided by an operator. Its objects are not merged into the chart, but the credentials, wait init container and notes still apply.
+*/}}
+{{- define "tc.v1.common.lib.dependencies.mode" -}}
+  {{- $objectData := .objectData -}}
+  {{- $depName := .depName -}}
+
+  {{- $validModes := (list "standalone" "operator") -}}
+  {{- $mode := "standalone" -}}
+  {{- if and (kindIs "map" $objectData) (hasKey $objectData "mode") -}}
+    {{- $mode = $objectData.mode -}}
+  {{- end -}}
+
+  {{- if or (not (kindIs "string" $mode)) (not (has $mode $validModes)) -}}
+    {{- fail (printf "Dependencies - Expected [dependencies.%s.mode] to be one of [%s], but got [%v]" $depName (join ", " $validModes) $mode) -}}
+  {{- end -}}
+
+  {{- $mode -}}
 {{- end -}}
