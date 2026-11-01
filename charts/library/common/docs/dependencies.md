@@ -20,7 +20,7 @@ title: Dependencies
 ## `dependencies`
 
 Configuration for chart dependencies. Each key is the name of a dependency and contains a chart values structure, which is merged on top of the defaults of the same name in the common library.
-The `valkey`, `mariadb`, `memcached`, `mongodb` and `clickhouse` dependencies are predefined in common with `enabled: false` and their full specification, so a chart only needs to enable them and set its overrides.
+The `valkey`, `mariadb`, `postgresql`, `memcached`, `mongodb` and `clickhouse` dependencies are predefined in common with `enabled: false` and their full specification, so a chart only needs to enable them and set its overrides.
 
 | Field      | Value          |
 | ---------- | -------------- |
@@ -28,7 +28,7 @@ The `valkey`, `mariadb`, `memcached`, `mongodb` and `clickhouse` dependencies ar
 | Type       | `map`          |
 | Required   | ❌             |
 | Helm `tpl` | ❌             |
-| Default    | `{clickhouse: {enabled: false, ...}, mariadb: {enabled: false, ...}, memcached: {enabled: false, ...}, mongodb: {enabled: false, ...}, valkey: {enabled: false, ...}}` (see `dependencies.clickhouse`, `dependencies.mariadb`, `dependencies.memcached`, `dependencies.mongodb` and `dependencies.valkey` in `values.yaml`) |
+| Default    | `{clickhouse: {enabled: false, ...}, mariadb: {enabled: false, ...}, memcached: {enabled: false, ...}, mongodb: {enabled: false, ...}, postgresql: {enabled: false, ...}, valkey: {enabled: false, ...}}` (see `dependencies.clickhouse`, `dependencies.mariadb`, `dependencies.memcached`, `dependencies.mongodb`, `dependencies.postgresql` and `dependencies.valkey` in `values.yaml`) |
 
 Example:
 
@@ -175,7 +175,7 @@ Configuration of the dependency itself. It is never merged into the chart values
 
 ### `dependencies.$name.depconfig.password`
 
-Password of the dependency, used by the dependencies with additional handling (see [ClickHouse](#clickhouse), [MariaDB](#mariadb), [MongoDB](#mongodb) and [Valkey](#valkey)).
+Password of the dependency, used by the dependencies with additional handling (see [ClickHouse](#clickhouse), [MariaDB](#mariadb), [PostgreSQL](#postgresql), [MongoDB](#mongodb) and [Valkey](#valkey)).
 
 | Field      | Value                                   |
 | ---------- | --------------------------------------- |
@@ -189,7 +189,7 @@ Password of the dependency, used by the dependencies with additional handling (s
 
 ### `dependencies.$name.depconfig.creds`
 
-Connection details, populated by the dependencies with additional handling (see [ClickHouse](#clickhouse), [MariaDB](#mariadb), [MongoDB](#mongodb) and [Valkey](#valkey)). Read-only.
+Connection details, populated by the dependencies with additional handling (see [ClickHouse](#clickhouse), [MariaDB](#mariadb), [PostgreSQL](#postgresql), [MongoDB](#mongodb) and [Valkey](#valkey)). Read-only.
 
 | Field      | Value                                |
 | ---------- | ------------------------------------ |
@@ -543,6 +543,97 @@ This renders, among others:
 - `Service` `myapp-mariadb-main` on port 3306
 - `PersistentVolumeClaim` `myapp-mariadb-data`
 - `Secret` `myapp-mariadbcreds`
+
+---
+
+## PostgreSQL
+
+The `postgresql` dependency runs a single PostgreSQL server for apps that need their own database, instead of a [CNPG](cnpg/index.md) cluster. It has additional handling:
+
+- A secret named `$releaseName-postgresqlcreds` is created with the connection details, and the same details are available under `.Values.dependencies.postgresql.depconfig.creds`:
+
+  | Key                   | `creds` key          | Example                                                                      |
+  | --------------------- | -------------------- | ---------------------------------------------------------------------------- |
+  | `postgresql-password` | `postgresqlPassword` | `my-password`                                                                |
+  | `plainhost`           | `plain`, `plainhost` | `myapp-postgresql-main`                                                      |
+  | -                     | `plainport`          | `5432`                                                                       |
+  | `plainporthost`       | `plainporthost`      | `myapp-postgresql-main:5432`                                                 |
+  | `url`                 | `complete`           | `postgresql://test:my-password@myapp-postgresql-main:5432/test`              |
+  | `urlnossl`            | `urlnossl`           | `postgresql://test:my-password@myapp-postgresql-main:5432/test?sslmode=disable` |
+  | `jdbc`                | `jdbc`               | `jdbc:postgresql://myapp-postgresql-main:5432/test`                          |
+
+  The host and port are the ones of the primary service and port of the dependency.
+  Like the `creds` of the other dependencies, the values are quoted strings, use `| trimAll "\""` when templating them.
+- An init container `postgresql-wait` is added to the workloads of the chart (the ones with `dbWait` not set to `false`), waiting for PostgreSQL to respond.
+  It is the same container as the one waiting for CNPG, based on `postgresClientImage` and `pg_isready`.
+- The connection details are included in the notes.
+
+The `depconfig` of the dependency accepts:
+
+| Key                  | Default               | Description                                               |
+| -------------------- | --------------------- | --------------------------------------------------------- |
+| `password`           | `PLACEHOLDERPASSWORD` | Password of the database user                             |
+| `postgresqlUsername` | `test`                | Name of the database user, the superuser of the server    |
+| `postgresqlDatabase` | `test`                | Name of the database, created on the first start          |
+
+The `url` and `urlnossl` values do not escape the password, so avoid characters like `@`, `:` and `/` when an app uses those.
+The image does not offer TLS, which is why `urlnossl` is the same connection with `sslmode=disable`.
+
+The dependency runs `oci.trueforge.org/containerforge/postgresql` as a `StatefulSet` with one replica, as UID and GID `568` with a read-only root filesystem.
+The image is defined at the root of the chart as `postgresql18Image`, and selected by the container with `imageSelector: postgresql18Image`, so it can be overridden like any other image of the chart.
+Its data is stored in the `data` volume, mounted at `/config` (the data directory is `/config/<major version>`).
+
+> [!WARNING]
+> The user, password and database are only applied when the data directory is created on the first start, they are **not** applied again on later starts.
+> Changing `password`, `postgresqlUsername` or `postgresqlDatabase` afterwards does not change the server, so change the password in the database (`ALTER USER`) as well.
+
+The image upgrades its data automatically when the major version of the image increases.
+Back up the database with `pg_dump` before upgrading the image to a new major version.
+
+### Example
+
+The full specification of the `postgresql` dependency (workload, service, persistence and probes) is part of the defaults of common.
+A chart only enables it and sets the values it needs to override:
+
+```yaml
+image:
+  repository: ghcr.io/example/app
+  tag: latest
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            DATABASE_HOST: '{{ .Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"" }}'
+            DATABASE_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: url
+            DATABASE_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
+
+dependencies:
+  postgresql:
+    enabled: true
+    depconfig:
+      password: "secure-password"
+      postgresqlUsername: myapp
+      postgresqlDatabase: myapp
+```
+
+This renders, among others:
+
+- `Deployment` `myapp` with the `postgresql-wait` init container
+- `StatefulSet` `myapp-postgresql-main` with the `data` volume mounted at `/config`
+- `Service` `myapp-postgresql-main` on port 5432
+- `PersistentVolumeClaim` `myapp-postgresql-data`
+- `Secret` `myapp-postgresqlcreds`
 
 ---
 

@@ -284,6 +284,19 @@ Display connection information for enabled dependencies and addons
     {{- end -}}
   {{- end -}}
 
+  {{/* PostgreSQL from the dependencies */}}
+  {{- $postgresql := get (.Values.dependencies | default dict) "postgresql" -}}
+  {{- if kindIs "map" $postgresql -}}
+    {{- $postgresqlEnabled := (include "tc.v1.common.lib.util.enabled" (dict
+                    "rootCtx" $ "objectData" $postgresql
+                    "name" "postgresql" "caller" "Dependencies"
+                    "key" "dependencies")) -}}
+    {{- if eq $postgresqlEnabled "true" -}}
+      {{- $hasConnections = true -}}
+      {{- $connections = append $connections (include "tc.v1.common.lib.chart.connections.postgresql" . | trim) -}}
+    {{- end -}}
+  {{- end -}}
+
   {{/* Valkey from the dependencies */}}
   {{- $valkey := get (.Values.dependencies | default dict) "valkey" -}}
   {{- if kindIs "map" $valkey -}}
@@ -413,6 +426,37 @@ MariaDB connection information
   {{- end -}}
   {{- if $creds.jdbcmariadb }}
 - JDBC URL: {{ $creds.jdbcmariadb }}
+  {{- end -}}
+{{- else }}
+- Configuration pending (service will be available after initialization)
+{{- end -}}
+{{- end -}}
+
+{{/*
+PostgreSQL connection information
+*/}}
+{{- define "tc.v1.common.lib.chart.connections.postgresql" -}}
+{{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "postgresql")) -}}
+{{- $dep := get (.Values.dependencies | default dict) "postgresql" -}}
+{{- $depconfig := $dep.depconfig | default dict -}}
+{{- $creds := $depconfig.creds | default dict -}}
+## PostgreSQL Database
+{{- if $service -}}
+{{- $service = $service | fromJson }}
+- Host: {{ $service.name }}
+- Port: {{ $service.port }}
+- Host:Port: {{ $service.name }}:{{ $service.port }}
+  {{- if $depconfig.postgresqlDatabase }}
+- Database: {{ $depconfig.postgresqlDatabase }}
+  {{- end -}}
+  {{- if $depconfig.postgresqlUsername }}
+- Username: {{ $depconfig.postgresqlUsername }}
+  {{- end -}}
+  {{- if $creds.complete }}
+- Connection URL: {{ include "tc.v1.common.lib.chart.notes.credential" (dict "rootCtx" $ "value" $creds.complete) }}
+  {{- end -}}
+  {{- if $creds.jdbc }}
+- JDBC URL: {{ $creds.jdbc }}
   {{- end -}}
 {{- else }}
 - Configuration pending (service will be available after initialization)

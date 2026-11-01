@@ -705,6 +705,12 @@ postgresClientImage:
   tag: "18.6.0@sha256:7c1565c07970e1cf3a5090b78204e282fa5a8857bec00d472c4b3ec72666d7b4"
   pullPolicy: IfNotPresent
 
+# -- Image of the postgresql dependency (see [dependencies.postgresql])
+postgresql18Image:
+  repository: oci.trueforge.org/containerforge/postgresql
+  tag: "18.6.0@sha256:afbcd31f4e0d4d6174dced7c68819e0493b2194c5a0f6b783e16ed137944555b"
+  pullPolicy: IfNotPresent
+
 mariadbClientImage:
   repository: oci.trueforge.org/containerforge/mariadb-client
   tag: "13.0.2@sha256:1343d11c7efc5345ab5cadf75457912efbd5069e7a49323c1527fd55c39d75fb"
@@ -1829,7 +1835,7 @@ cnpg:
 # Its objects are merged into the chart under the name [<dependency>-<object>] (eg [workload.valkey-main])
 # and references between them (targetSelector, objectName, ...) are rewritten accordingly.
 # Objects inherit the defaults of the matching common object (eg [workload.main]) and default to [enabled: true].
-# Currently [valkey], [mariadb], [mongodb] and [clickhouse] are the only dependencies with additional handling (credentials secret, wait init container).
+# Currently [valkey], [mariadb], [postgresql], [mongodb] and [clickhouse] are the only dependencies with additional handling (credentials secret, wait init container).
 # Disabled dependencies are not merged into the chart, so their defaults only apply once a chart sets [enabled: true].
 # Dependencies with [mode: operator] are not merged into the chart either, as an operator provides them. Their credentials secret, wait init container and notes still apply.
 # Settings for the operator go under [dependencies.<name>.operator], like [depconfig] it is never merged into the chart.
@@ -1945,6 +1951,60 @@ dependencies:
             protocol: tcp
             port: 3306
             targetPort: 3306
+    persistence:
+      data:
+        mountPath: /config
+  postgresql:
+    enabled: false
+    # -- Settings of the dependency itself, never merged into the chart
+    depconfig:
+      password: "PLACEHOLDERPASSWORD"
+      postgresqlUsername: "test"
+      postgresqlDatabase: "test"
+    workload:
+      main:
+        # The dependency itself never waits for a database
+        dbWait: false
+        replicas: 1
+        type: StatefulSet
+        strategy: RollingUpdate
+        podSpec:
+          containers:
+            main:
+              # The image is defined on the root of the values
+              imageSelector: postgresql18Image
+              env:
+                POSTGRES_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
+                POSTGRES_DB: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+                POSTGRES_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                    key: postgresql-password
+              probes:
+                liveness:
+                  enabled: true
+                  type: exec
+                  # The user and database are passed, without them the server logs a failed login for every probe
+                  command: &postgresqlProbeCommand
+                    - /bin/sh
+                    - -c
+                    - pg_isready -h 127.0.0.1 -p 5432 -U "${POSTGRES_USER}" -d "${POSTGRES_DB}"
+                readiness:
+                  enabled: true
+                  type: exec
+                  command: *postgresqlProbeCommand
+                startup:
+                  enabled: true
+                  type: exec
+                  command: *postgresqlProbeCommand
+    service:
+      main:
+        ports:
+          main:
+            protocol: tcp
+            port: 5432
+            targetPort: 5432
     persistence:
       data:
         mountPath: /config
