@@ -61,7 +61,7 @@ so templates like [.Values.dependencies.$name.service.main.ports.main.port] keep
   {{/* Release wide settings, the ones of the chart apply to the whole release */}}
   {{- $ignoredKeys := (list "global" "chartContext" "notes" "operator" "fallbackDefaults" "TZ" "namespace" "diagnosticMode" "containerOptions" "common") -}}
   {{/* Features that can not be scoped to a dependency */}}
-  {{- $unsupportedKeys := (list "addons" "dependencies" "configMapsFromFolder" "extraTpl" "mariadb" "mongodb" "clickhouse" "solr" "ingressMiddlewares") -}}
+  {{- $unsupportedKeys := (list "addons" "dependencies" "configMapsFromFolder" "extraTpl" "mariadb" "mongodb" "clickhouse" "solr" "ingressMiddlewares" "volumeClaimTemplates") -}}
   {{/* Defaults that are applied to the workloads of the dependency, instead of the whole release */}}
   {{- $scopedKeys := (list "securityContext" "podOptions" "resources") -}}
   {{/* Collections whose objects do not have an [enabled] key */}}
