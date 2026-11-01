@@ -330,7 +330,7 @@ tests:
           value: Secret
         equal:
           path: stringData.plainporthost
-          value: test-release-name-common-test-valkey-db:16379
+          value: test-release-name-common-test:16379
 
   - it: should fail without a port for valkey
     set:

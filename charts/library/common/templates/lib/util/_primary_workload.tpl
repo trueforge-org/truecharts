@@ -5,8 +5,8 @@
   {{- $enabledWorkloads := dict -}}
   {{- range $name, $Workload := $Workloads -}}
     {{- if and (kindIs "map" $Workload) $Workload.enabled -}}
-      {{/* Workloads of dependencies are never the primary of the release */}}
-      {{- if not $Workload.dependency -}}
+      {{/* Workloads of dependencies are only the primary of the release when they are explicitly set to primary */}}
+      {{- if or (not $Workload.dependency) $Workload.primary -}}
         {{- $_ := set $enabledWorkloads $name $Workload -}}
       {{- end -}}
     {{- end -}}
