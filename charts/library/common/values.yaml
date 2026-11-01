@@ -665,6 +665,9 @@ notes:
     OpenSource can only exist with your help, please consider supporting TrueCharts:
     https://trueforge.org/sponsor
   warnings: []
+  # -- Show credentials (eg, passwords in connection URLs) in the notes.
+  # When disabled, they are replaced by `HIDDEN`.
+  showCredentials: false
 
 ####
 ##
@@ -1890,7 +1893,11 @@ dependencies:
             main:
               env:
                 VALKEY_PORT: "{{ .Values.dependencies.valkey.service.main.ports.main.port }}"
-                VALKEY_PASSWORD: "{{ .Values.dependencies.valkey.depconfig.password }}"
+                VALKEY_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                    key: valkey-password
               probes:
                 liveness:
                   type: exec

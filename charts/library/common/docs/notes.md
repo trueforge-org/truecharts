@@ -86,6 +86,14 @@ When dependencies or addons are enabled, the notes output will automatically inc
 - **Clickhouse**: Host, port, database, username, connection URLs, JDBC URLs
 - **Solr**: Host, port, cores, authentication status, connection URLs
 
+Connection URLs contain the password of the database, so they are replaced by `HIDDEN` unless `notes.showCredentials` is `true`.
+The JDBC URLs, hosts and usernames do not contain credentials and are always shown.
+
+```yaml
+notes:
+  showCredentials: true
+```
+
 **Supported Addons:**
 - **Tailscale**: Status, routes, userspace mode
 - **Code-Server**: Status, port
@@ -158,6 +166,27 @@ notes:
 
 ---
 
+### `notes.showCredentials`
+
+Show credentials (eg, passwords in connection URLs) in NOTES.txt. When disabled, they are replaced by `HIDDEN`.
+
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `notes.showCredentials` |
+| Type       | `boolean`               |
+| Required   | ❌                      |
+| Helm `tpl` | ❌                      |
+| Default    | `false`                 |
+
+Example
+
+```yaml
+notes:
+  showCredentials: false
+```
+
+---
+
 ### `notes.warnings`
 
 Configuration for `notes.warnings`.
@@ -184,7 +213,7 @@ notes:
 
 ### Example Output with CNPG and Valkey
 
-When a chart has CNPG and the Valkey dependency enabled, the notes output will include:
+When a chart has CNPG and the Valkey dependency enabled, the notes output will include (the connection URL contains the password, so it is hidden unless `notes.showCredentials` is `true`):
 
 ```
 # Thank you for installing myapp by TrueCharts.
@@ -196,7 +225,7 @@ When a chart has CNPG and the Valkey dependency enabled, the notes output will i
 - Host:Port: "myapp-main-rw:5432"
 - Database: app
 - Username: app
-- Connection URL: "postgresql://app:***@myapp-main-rw:5432/app"
+- Connection URL: "HIDDEN"
 - JDBC URL: "jdbc:postgresql://myapp-main-rw:5432/app"
 
 ## Valkey Database

@@ -138,7 +138,7 @@
         },
         "authkey": {
           "type": "string",
-          "description": "Configuration for `addons.tailscale.settings.authkey`."
+          "description": "The Tailscale auth key. It is stored in a secret and loaded from there into the `TS_AUTH_KEY` environment variable of the container."
         },
         "userspace": {
           "type": "boolean",
