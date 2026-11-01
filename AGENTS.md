@@ -114,7 +114,7 @@ Afterwards, remove generated dependency artifacts: `rm -rf charts/*/<chart>/char
 - Use conventional-commit style for commits and PR titles, e.g. `feat(jellyfin): add hardware transcoding option`, `fix(common): correct service port validation`. PRs are squash-merged, so the PR title becomes the commit message.
 - Target `master`. The exception is the `common` rework, see [`common2026`](.github/instructions/common-library.instructions.md#the-common2026-rework). Make one logical change per PR; separate unrelated chart changes into separate PRs.
 - Use the organization's PR template, [`.github/PULL_REQUEST_TEMPLATE.md` in `trueforge-org/.github`](https://github.com/trueforge-org/.github/blob/main/.github/PULL_REQUEST_TEMPLATE.md). It is not in this repository, so tools that create PRs from a body do not pick it up: fetch it and fill it in, keeping its sections and checkboxes. Only check the boxes that apply.
-- Do not add a "Generated with ..." line or similar tool attribution to PR descriptions.
+- When an AI agent wrote the PR, say so with this notice in the Notes section of the template: `🤖 This PR is AI generated.` Use it instead of a "Generated with ..." line or similar tool attribution, which should not be added.
 - In the PR description:
   - explain *what* changed and *why*
   - reference issues with `Fixes #<number>`

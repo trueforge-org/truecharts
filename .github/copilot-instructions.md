@@ -36,4 +36,4 @@ This is a condensed summary. The full, canonical instructions are in [`AGENTS.md
   - `result_file=/tmp/lint_result.txt .github/scripts/tc-lint.sh '["charts/stable/<chart>"]' origin/master`
 - For common library changes, run `./run_common_tests.sh` (requires the Helm `unittest` plugin).
 - Use conventional-commit PR titles with the chart name as the scope, e.g. `fix(plex): ...`, and target `master`. Work on the `common` rework targets `common2026` instead, until [#41017](https://github.com/trueforge-org/truecharts/pull/41017) merges.
-- Fill in the [organization's PR template](https://github.com/trueforge-org/.github/blob/main/.github/PULL_REQUEST_TEMPLATE.md), and don't add a "Generated with ..." line to PR descriptions.
+- Fill in the [organization's PR template](https://github.com/trueforge-org/.github/blob/main/.github/PULL_REQUEST_TEMPLATE.md), and add the notice `🤖 This PR is AI generated.` to its Notes section when an AI agent wrote the PR. Use it instead of a "Generated with ..." line.
