@@ -12,7 +12,7 @@ tests:
           enabled: true
     asserts:
       - hasDocuments:
-          count: 5
+          count: 4
       - documentSelector: &secretDoc
           path: kind
           value: Secret
@@ -34,26 +34,44 @@ tests:
             jdbc-mysql: jdbc:mysql://test-release-name-common-test-mariadb-main:3306/test
       - documentSelector: &workloadDoc
           path: kind
-          value: Deployment
+          value: StatefulSet
         equal:
           path: metadata.name
           value: test-release-name-common-test-mariadb-main
       - documentSelector: *workloadDoc
         equal:
+          path: spec.updateStrategy.type
+          value: RollingUpdate
+      - documentSelector: *workloadDoc
+        matchRegex:
           path: spec.template.spec.containers[0].image
-          value: docker.io/bitnamisecure/mariadb:latest@sha256:2413a63287321a4f7b8edc769464b79d63c09b168e4e233322706ed19755f4a0
+          pattern: ^oci\.trueforge\.org/containerforge/mariadb:[^@]+@sha256:[0-9a-f]{64}$
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsUser
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: true
       - documentSelector: *workloadDoc
         contains:
           path: spec.template.spec.containers[0].env
           content:
             name: MARIADB_PASSWORD
-            value: PLACEHOLDERPASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: test-release-name-mariadbcreds
+                key: mariadb-password
       - documentSelector: *workloadDoc
         contains:
           path: spec.template.spec.containers[0].env
           content:
             name: MARIADB_ROOT_PASSWORD
-            value: PLACEHOLDERROOTPASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: test-release-name-mariadbcreds
+                key: mariadb-root-password
       - documentSelector: *workloadDoc
         contains:
           path: spec.template.spec.containers[0].env
@@ -67,23 +85,35 @@ tests:
             name: MARIADB_DATABASE
             value: test
       - documentSelector: *workloadDoc
-        contains:
-          path: spec.template.spec.containers[0].env
-          content:
-            name: MARIADB_EXTRA_FLAGS
-            value: --init-file=/init/passinit.sql
+        equal:
+          path: spec.template.spec.containers[0].livenessProbe.exec.command
+          value:
+            - mariadb-admin
+            - --no-defaults
+            - -uroot
+            - -h127.0.0.1
+            - -P3306
+            - ping
       - documentSelector: *workloadDoc
-        matchRegex:
-          path: spec.template.spec.containers[0].livenessProbe.exec.command[2]
-          pattern: /opt/bitnami/scripts/mariadb/healthcheck.sh
+        equal:
+          path: spec.template.spec.containers[0].readinessProbe.exec.command
+          value:
+            - mariadb-admin
+            - --no-defaults
+            - -uroot
+            - -h127.0.0.1
+            - -P3306
+            - ping
       - documentSelector: *workloadDoc
-        matchRegex:
-          path: spec.template.spec.containers[0].readinessProbe.exec.command[2]
-          pattern: /opt/bitnami/scripts/mariadb/healthcheck.sh
-      - documentSelector: *workloadDoc
-        matchRegex:
-          path: spec.template.spec.containers[0].startupProbe.exec.command[2]
-          pattern: /opt/bitnami/scripts/mariadb/healthcheck.sh
+        equal:
+          path: spec.template.spec.containers[0].startupProbe.exec.command
+          value:
+            - mariadb-admin
+            - --no-defaults
+            - -uroot
+            - -h127.0.0.1
+            - -P3306
+            - ping
       - documentSelector: *workloadDoc
         notExists:
           path: spec.template.spec.initContainers
@@ -92,15 +122,7 @@ tests:
           path: spec.template.spec.containers[0].volumeMounts
           content:
             name: mariadb-data
-            mountPath: /bitnami/mariadb
-            readOnly: false
-      - documentSelector: *workloadDoc
-        contains:
-          path: spec.template.spec.containers[0].volumeMounts
-          content:
-            name: mariadb-passinit
-            mountPath: /init/passinit.sql
-            subPath: passinit.sql
+            mountPath: /config
             readOnly: false
       - documentSelector:
           path: kind
@@ -108,20 +130,6 @@ tests:
         equal:
           path: metadata.name
           value: test-release-name-common-test-mariadb-data
-      - documentSelector: &configmapDoc
-          path: kind
-          value: ConfigMap
-        equal:
-          path: metadata.name
-          value: test-release-name-common-test-mariadb-passinit
-      - documentSelector: *configmapDoc
-        matchRegex:
-          path: data["passinit.sql"]
-          pattern: ALTER USER root@'%' IDENTIFIED VIA mysql_native_password USING PASSWORD\("PLACEHOLDERROOTPASSWORD"\);
-      - documentSelector: *configmapDoc
-        matchRegex:
-          path: data["passinit.sql"]
-          pattern: ALTER USER test@'%' IDENTIFIED VIA mysql_native_password USING PASSWORD\("PLACEHOLDERPASSWORD"\);
       - documentSelector: &serviceDoc
           path: kind
           value: Service
@@ -169,7 +177,7 @@ tests:
             jdbc-mysql: jdbc:mysql://test-release-name-common-test-mariadb-main:3306/mydb
       - documentSelector: &workloadDoc
           path: kind
-          value: Deployment
+          value: StatefulSet
         contains:
           path: spec.template.spec.containers[0].env
           content:
@@ -186,13 +194,19 @@ tests:
           path: spec.template.spec.containers[0].env
           content:
             name: MARIADB_PASSWORD
-            value: testpassword
+            valueFrom:
+              secretKeyRef:
+                name: test-release-name-mariadbcreds
+                key: mariadb-password
       - documentSelector: *workloadDoc
         contains:
           path: spec.template.spec.containers[0].env
           content:
             name: MARIADB_ROOT_PASSWORD
-            value: testrootpassword
+            valueFrom:
+              secretKeyRef:
+                name: test-release-name-mariadbcreds
+                key: mariadb-root-password
 
   - it: should render nothing with the mariadb dependency disabled
     set:
@@ -296,13 +310,12 @@ tests:
       - failedTemplate:
           errorMessage: Expected no [mariadb] key, it is replaced by [dependencies.mariadb]. Move [enabled] to [dependencies.mariadb], and [password], [rootPassword], [mariadbUsername] and [mariadbDatabase] to [dependencies.mariadb.depconfig]. The connection details are available under [dependencies.mariadb.depconfig.creds]
 
-  - it: should fail with the removed top-level mariadb key, even when disabled
+  - it: should not fail with a disabled top-level mariadb key
     set:
       mariadb:
         enabled: false
     asserts:
-      - failedTemplate:
-          errorMessage: Expected no [mariadb] key, it is replaced by [dependencies.mariadb]. Move [enabled] to [dependencies.mariadb], and [password], [rootPassword], [mariadbUsername] and [mariadbDatabase] to [dependencies.mariadb.depconfig]. The connection details are available under [dependencies.mariadb.depconfig.creds]
+      - notFailedTemplate: {}
 
   - it: should fail without a port for mariadb
     set:
@@ -317,3 +330,25 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: Service - Expected enabled service to have at least one port
+
+  - it: should fail with a too short password for mariadb
+    set:
+      dependencies:
+        mariadb:
+          enabled: true
+          depconfig:
+            password: abc
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [dependencies.mariadb.depconfig.password] to have at least 4 characters
+
+  - it: should fail with a too short root password for mariadb
+    set:
+      dependencies:
+        mariadb:
+          enabled: true
+          depconfig:
+            rootPassword: abc
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [dependencies.mariadb.depconfig.rootPassword] to have at least 4 characters

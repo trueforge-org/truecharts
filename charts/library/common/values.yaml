@@ -1873,46 +1873,46 @@ dependencies:
       mariadbUsername: "test"
       mariadbDatabase: "test"
     image:
-      repository: docker.io/bitnamisecure/mariadb
+      repository: oci.trueforge.org/containerforge/mariadb
       pullPolicy: IfNotPresent
-      tag: latest@sha256:2413a63287321a4f7b8edc769464b79d63c09b168e4e233322706ed19755f4a0
-    securityContext:
-      container:
-        readOnlyRootFilesystem: false
-        runAsGroup: 0
+      tag: 11.8.6@sha256:24e779c583b4355d5b0972072de1240b685b78b0b8465acff5bea782b304e439
     workload:
       main:
+        replicas: 1
+        type: StatefulSet
+        strategy: RollingUpdate
         podSpec:
           containers:
             main:
               env:
-                MARIADB_PASSWORD: "{{ .Values.dependencies.mariadb.depconfig.password }}"
-                MARIADB_ROOT_PASSWORD: "{{ .Values.dependencies.mariadb.depconfig.rootPassword }}"
+                MARIADB_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                    key: mariadb-password
+                MARIADB_ROOT_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                    key: mariadb-root-password
                 MARIADB_USER: "{{ .Values.dependencies.mariadb.depconfig.mariadbUsername }}"
                 MARIADB_DATABASE: "{{ .Values.dependencies.mariadb.depconfig.mariadbDatabase }}"
-                MARIADB_EXTRA_FLAGS: "--init-file=/init/passinit.sql"
               probes:
                 liveness:
-                  enabled: true
                   type: exec
-                  command:
-                    - /bin/bash
-                    - -ec
-                    - "until /opt/bitnami/scripts/mariadb/healthcheck.sh; do sleep 2; done"
+                  command: &mariadbProbeCommand
+                    - mariadb-admin
+                    - --no-defaults
+                    - -uroot
+                    - -h127.0.0.1
+                    - -P3306
+                    - ping
                 readiness:
-                  enabled: true
                   type: exec
-                  command:
-                    - /bin/bash
-                    - -ec
-                    - "until /opt/bitnami/scripts/mariadb/healthcheck.sh; do sleep 2; done"
+                  command: *mariadbProbeCommand
                 startup:
-                  enabled: true
                   type: exec
-                  command:
-                    - /bin/bash
-                    - -ec
-                    - "until /opt/bitnami/scripts/mariadb/healthcheck.sh; do sleep 2; done"
+                  command: *mariadbProbeCommand
     service:
       main:
         ports:
@@ -1920,29 +1920,9 @@ dependencies:
             protocol: tcp
             port: 3306
             targetPort: 3306
-    configmap:
-      passinit:
-        data:
-          passinit.sql: |-
-            ALTER USER root@'%' IDENTIFIED VIA mysql_native_password USING PASSWORD("{{ .Values.dependencies.mariadb.depconfig.rootPassword }}");
-            ALTER USER {{ .Values.dependencies.mariadb.depconfig.mariadbUsername }}@'%' IDENTIFIED VIA mysql_native_password USING PASSWORD("{{ .Values.dependencies.mariadb.depconfig.password }}");
-            FLUSH PRIVILEGES;
     persistence:
       data:
-        enabled: true
-        mountPath: /bitnami/mariadb
-      passinit:
-        enabled: true
-        type: configmap
-        objectName: passinit
-        items:
-          - key: passinit.sql
-            path: passinit.sql
-        targetSelector:
-          main:
-            main:
-              subPath: passinit.sql
-              mountPath: /init/passinit.sql
+        mountPath: /config
   valkey:
     enabled: false
     # -- Settings of the dependency itself, never merged into the chart

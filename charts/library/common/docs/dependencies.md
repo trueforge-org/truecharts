@@ -252,9 +252,25 @@ The `depconfig` of the dependency accepts:
 | `mariadbUsername` | `test`                    | Name of the database user           |
 | `mariadbDatabase` | `test`                    | Name of the database                |
 
+Both passwords need at least 4 characters, and are applied again on every start, so they can be changed later.
+The `url` and `urlnossl` values do not escape the password, so avoid characters like `@`, `:` and `/` when an app uses those.
+
+The dependency runs `oci.trueforge.org/containerforge/mariadb` as a `StatefulSet` with one replica, as UID and GID `568` with a read-only root filesystem.
+Its data is stored in the `data` volume, mounted at `/config` (databases in `/config/databases`, settings in `/config/custom.cnf`).
+
+### Moving from the `mariadb` chart dependency
+
+Enabling the top-level `mariadb` key fails with a message pointing to `dependencies.mariadb`.
+Move `enabled` to `dependencies.mariadb`, and `mariadbUsername`, `mariadbDatabase`, `password` and `rootPassword` to `dependencies.mariadb.depconfig`.
+In values and templates of the chart, replace `.Values.mariadb.creds` with `.Values.dependencies.mariadb.depconfig.creds`.
+The name of the secret stays `$releaseName-mariadbcreds`.
+
+The data is **not** moved. The dependency uses a new volume, and the old chart used another image with another data layout.
+Back up the database with `mariadb-dump` before upgrading, and restore it after the upgrade.
+
 ### Example
 
-The full specification of the `mariadb` dependency (image, workload, service, persistence, probes and the password init configmap) is part of the defaults of `dependencies.mariadb` in the common library `values.yaml`.
+The full specification of the `mariadb` dependency (image, workload, service, persistence and probes) is part of the defaults of common.
 A chart only enables it and sets the values it needs to override:
 
 ```yaml
@@ -268,9 +284,17 @@ workload:
       containers:
         main:
           env:
-            DATABASE_URL: '{{ .Values.dependencies.mariadb.depconfig.creds.complete | trimAll "\"" }}'
             DATABASE_HOST: '{{ .Values.dependencies.mariadb.depconfig.creds.plainhost | trimAll "\"" }}'
-            DATABASE_PASSWORD: "{{ .Values.dependencies.mariadb.depconfig.password }}"
+            DATABASE_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                key: url
+            DATABASE_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                key: mariadb-password
 
 dependencies:
   mariadb:
@@ -285,9 +309,8 @@ dependencies:
 This renders, among others:
 
 - `Deployment` `myapp` with the `mariadb-wait` init container
-- `Deployment` `myapp-mariadb-main` with the `data` volume and the `passinit` configmap mounted
+- `StatefulSet` `myapp-mariadb-main` with the `data` volume mounted at `/config`
 - `Service` `myapp-mariadb-main` on port 3306
-- `ConfigMap` `myapp-mariadb-passinit`
 - `PersistentVolumeClaim` `myapp-mariadb-data`
 - `Secret` `myapp-mariadbcreds`
 
@@ -409,7 +432,7 @@ This renders, among others:
 
 ## Removed Top-Level Keys
 
-The `redis` and `valkey` keys on the root level of the values are replaced by `dependencies.valkey`.
+The `mariadb` key on the root level of the values is replaced by `dependencies.mariadb` (see [MariaDB](#mariadb)), and the `redis` and `valkey` keys by `dependencies.valkey`.
 Rendering fails when one of them has `enabled: true` (also when set using a template), as it would otherwise be silently ignored.
 A disabled key, or one without `enabled`, never rendered anything and does not fail.
 

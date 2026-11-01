@@ -14,7 +14,7 @@ tests:
         my-app: &appWorkload
           enabled: true
           primary: true
-          type: StatefulSet
+          type: Deployment
           podSpec:
             containers:
               my-container:
@@ -33,7 +33,7 @@ tests:
     asserts:
       - documentSelector: &appDoc
           path: kind
-          value: StatefulSet
+          value: Deployment
         equal:
           path: metadata.name
           value: test-release-name-common-test
@@ -72,13 +72,13 @@ tests:
           pattern: mysqladmin -uroot -h"\$\{MARIADB_HOST\}" -P"\$\{MARIADB_PORT\}"
       - documentSelector:
           path: kind
-          value: Deployment
+          value: StatefulSet
         equal:
           path: metadata.name
           value: test-release-name-common-test-mariadb-main
       - documentSelector:
           path: kind
-          value: Deployment
+          value: StatefulSet
         notExists:
           path: spec.template.spec.initContainers
 
@@ -91,7 +91,7 @@ tests:
         my-app:
           enabled: true
           primary: true
-          type: StatefulSet
+          type: Deployment
           dbWait: false
           podSpec:
             containers:
@@ -110,7 +110,7 @@ tests:
     asserts:
       - documentSelector:
           path: kind
-          value: StatefulSet
+          value: Deployment
         notExists:
           path: spec.template.spec.initContainers
 
@@ -127,6 +127,6 @@ tests:
     asserts:
       - documentSelector:
           path: kind
-          value: StatefulSet
+          value: Deployment
         notExists:
           path: spec.template.spec.initContainers

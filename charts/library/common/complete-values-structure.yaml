@@ -2562,7 +2562,6 @@ workload:
             MARIADB_ROOT_PASSWORD: ''
             MARIADB_USER: ''
             MARIADB_DATABASE: ''
-            MARIADB_EXTRA_FLAGS: ''
             BORG_UID: ''
             BORG_GID: ''
             DBNAME: ''
@@ -3685,7 +3684,6 @@ dependencies:
                 MARIADB_ROOT_PASSWORD: ''
                 MARIADB_USER: ''
                 MARIADB_DATABASE: ''
-                MARIADB_EXTRA_FLAGS: ''
               probes:
                 liveness:
                   enabled: true
@@ -3709,10 +3707,6 @@ dependencies:
             protocol: ''
             port: 0
             targetPort: 0
-    configmap:
-      objectname:
-        data:
-          passinit.sql: ''
     persistence:
       objectname:
         enabled: true

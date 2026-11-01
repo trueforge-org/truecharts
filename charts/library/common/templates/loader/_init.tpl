@@ -9,11 +9,6 @@
   {{/* Fail on removed and deprecated keys, instead of silently ignoring them */}}
   {{- include "tc.v1.common.values.deprecations" . -}}
 
-  {{/* Nothing reads this key anymore, so the database and its credentials would silently not exist */}}
-  {{- if hasKey .Values "mariadb" -}}
-    {{- fail "Expected no [mariadb] key, it is replaced by [dependencies.mariadb]. Move [enabled] to [dependencies.mariadb], and [password], [rootPassword], [mariadbUsername] and [mariadbDatabase] to [dependencies.mariadb.depconfig]. The connection details are available under [dependencies.mariadb.depconfig.creds]" -}}
-  {{- end -}}
-
   {{/* Ensure TrueCharts chart context information is available */}}
   {{- include "tc.v1.common.lib.util.chartcontext" . -}}
 

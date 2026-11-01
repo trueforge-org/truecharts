@@ -25,6 +25,13 @@ This template generates the mariadb credentials and the secret holding them
       {{- $rootPass := $dep.depconfig.rootPassword | default "PLACEHOLDERROOTPASSWORD" -}}
       {{- $_ := set $dep.depconfig "rootPassword" $rootPass -}}
 
+      {{/* The image skips shorter passwords, which would leave the database without any */}}
+      {{- range $key, $pass := (dict "password" $dbPass "rootPassword" $rootPass) -}}
+        {{- if lt (len (toString $pass)) 4 -}}
+          {{- fail (printf "Dependencies - Expected [dependencies.mariadb.depconfig.%s] to have at least 4 characters" $key) -}}
+        {{- end -}}
+      {{- end -}}
+
       {{/* The host is the primary service of the dependency */}}
       {{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "mariadb")) -}}
       {{- if not $service -}}

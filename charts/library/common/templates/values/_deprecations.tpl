@@ -9,7 +9,8 @@
 
   {{/* Top-level keys of dependencies that moved to [dependencies.<name>]. */}}
   {{/* Their [enabled] is taken into account, a disabled one never rendered anything, so it can safely stay in the values. */}}
-  {{- $movedDependencies := dict "redis" "valkey" "valkey" "valkey" -}}
+  {{- $movedDependencies := dict "mariadb" "mariadb" "redis" "valkey" "valkey" "valkey" -}}
+  {{- $movedSettings := dict "mariadb" "[password], [rootPassword], [mariadbUsername] and [mariadbDatabase]" "valkey" "[password]" -}}
   {{- range $key := (keys $movedDependencies | sortAlpha) -}}
     {{- $value := get $values $key -}}
     {{- if and (kindIs "map" $value) (hasKey $value "enabled") (not (kindIs "invalid" $value.enabled)) -}}
@@ -19,7 +20,7 @@
                       "key" "values")) -}}
       {{- if eq $enabled "true" -}}
         {{- $dep := get $movedDependencies $key -}}
-        {{- fail (printf "Expected no [%s] key, it is replaced by [dependencies.%s]. Move [enabled] to [dependencies.%s], and [password] to [dependencies.%s.depconfig]. The connection details are available under [dependencies.%s.depconfig.creds]" $key $dep $dep $dep $dep) -}}
+        {{- fail (printf "Expected no [%s] key, it is replaced by [dependencies.%s]. Move [enabled] to [dependencies.%s], and %s to [dependencies.%s.depconfig]. The connection details are available under [dependencies.%s.depconfig.creds]" $key $dep $dep (get $movedSettings $dep) $dep $dep) -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}

@@ -17,9 +17,17 @@ workload:
             - --port
             - "8080"
           env:
-            MARIADB_URL: '{{ .Values.dependencies.mariadb.depconfig.creds.complete | trimAll "\"" }}'
             MARIADB_HOST: '{{ .Values.dependencies.mariadb.depconfig.creds.plainhost | trimAll "\"" }}'
-            MARIADB_PASSWORD: "{{ .Values.dependencies.mariadb.depconfig.password }}"
+            MARIADB_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                key: url
+            MARIADB_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                key: mariadb-password
           probes:
             liveness:
               enabled: true
