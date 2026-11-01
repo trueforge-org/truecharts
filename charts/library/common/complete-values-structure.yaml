@@ -3614,7 +3614,46 @@ dependencies:
   valkey:
     enabled: false
     mode: ''
-    operator: {}
+    operator:
+      shards: 0
+      replicas: 0
+      image: ''
+      workloadType: ''
+      config: {}
+      resources: {}
+      persistence:
+        enabled: false
+        size: ''
+        storageClass: ''
+        retain: false
+      exporter:
+        enabled: false
+        image: ''
+        args:
+        - ''
+        resources: {}
+        securityContext: {}
+      scheduling: {}
+      podDisruptionBudget:
+        mode: ''
+      podMetadata:
+        labels: {}
+        annotations: {}
+      imagePullSecrets:
+      - ''
+      podSecurityContext: {}
+      serviceAccountName: ''
+      terminationGracePeriodSeconds: 0
+      containers:
+      - {}
+      networking:
+        clusterDomain: ''
+        discovery:
+          preferredEndpointType: ''
+      users:
+      - name: ''
+      labels: {}
+      annotations: {}
     depconfig:
       password: ''
     image:

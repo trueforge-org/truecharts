@@ -146,7 +146,7 @@ def normalize_value_to_placeholder(value: Any) -> Any:
         return value
 
 
-def normalize_variable_keys(data: Any, parent_key: str = "") -> Any:
+def normalize_variable_keys(data: Any, parent_key: str = "", in_operator: bool = False) -> Any:
     """
     Replace variable dictionary keys with 'objectname' placeholder for known
     parent keys that contain user-defined object names.
@@ -155,6 +155,9 @@ def normalize_variable_keys(data: Any, parent_key: str = "") -> Any:
         workload.main -> workload.objectname
         service.main -> service.objectname
         persistence.config -> persistence.objectname
+
+    The settings under an `operator` key (eg dependencies.valkey.operator) have a
+    fixed structure, so their keys are never replaced.
     """
     if not isinstance(data, dict):
         return data
@@ -167,7 +170,7 @@ def normalize_variable_keys(data: Any, parent_key: str = "") -> Any:
         result = {}
     
     # Check if current parent_key is one that contains variable-named children
-    if parent_key in PARENT_KEYS_WITH_VARIABLE_CHILDREN:
+    if parent_key in PARENT_KEYS_WITH_VARIABLE_CHILDREN and not in_operator:
         # This dict contains variable-named objects
         # Collect all the child objects and merge them into a single 'objectname' entry
         if data:
@@ -176,7 +179,7 @@ def normalize_variable_keys(data: Any, parent_key: str = "") -> Any:
             first_value = data[first_key]
             
             # Recursively normalize the template value
-            normalized_template = normalize_variable_keys(first_value, first_key)
+            normalized_template = normalize_variable_keys(first_value, first_key, in_operator)
             
             # Return a dict with just 'objectname' as the key
             result['objectname'] = normalized_template
@@ -187,7 +190,7 @@ def normalize_variable_keys(data: Any, parent_key: str = "") -> Any:
     # Not a parent with variable children, process each key normally
     for key, value in data.items():
         # Recursively process, passing the current key as parent_key for next level
-        result[key] = normalize_variable_keys(value, key)
+        result[key] = normalize_variable_keys(value, key, in_operator or key == "operator")
     
     return result
 

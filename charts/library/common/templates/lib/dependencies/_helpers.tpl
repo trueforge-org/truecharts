@@ -11,7 +11,8 @@ name: The name of the Service object, as rendered (eg release-chart-valkey-main)
 port: The port number of the primary port of the service
 
 In operator mode the service is not merged into the chart, as the operator provides it.
-The name is then the one it would have in standalone mode (never the primary name), so the operator has to create the Service with that name.
+For valkey the name and port are the ones of the Service that the valkey-operator creates (key and mergedKey are not returned).
+For the other dependencies the name is the one it would have in standalone mode (never the primary name), so the operator has to create the Service with that name.
 */}}
 {{- define "tc.v1.common.lib.dependencies.primaryService" -}}
   {{- $rootCtx := .rootCtx -}}
@@ -21,7 +22,9 @@ The name is then the one it would have in standalone mode (never the primary nam
   {{- $dep := get ($rootCtx.Values.dependencies | default dict) $depName -}}
   {{- $operator := eq (include "tc.v1.common.lib.dependencies.mode" (dict "objectData" $dep "depName" $depName)) "operator" -}}
 
-  {{- if and (kindIs "map" $dep) (kindIs "map" $dep.service) -}}
+  {{- if and $operator (eq $depName "valkey") -}}
+    {{- $result = include "tc.v1.common.lib.dependencies.valkey.operator.service" (dict "rootCtx" $rootCtx) | fromJson -}}
+  {{- else if and (kindIs "map" $dep) (kindIs "map" $dep.service) -}}
     {{- range $svcName, $svc := $dep.service -}}
       {{- if not (kindIs "map" $svc) -}}{{- continue -}}{{- end -}}
       {{- if not $svc.primary -}}{{- continue -}}{{- end -}}

@@ -1,0 +1,819 @@
+suite: valkey operator test
+templates:
+  - common.yaml
+  - NOTES.txt
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should not spawn a ValkeyCluster by default
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 4
+
+  - it: should not spawn a ValkeyCluster in standalone mode
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: standalone
+          operator:
+            shards: 3
+    asserts:
+      - hasDocuments:
+          count: 4
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        isKind:
+          of: StatefulSet
+
+  - it: should not spawn a ValkeyCluster when the dependency is disabled
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: false
+          mode: operator
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should not spawn a ValkeyCluster for other dependencies in operator mode
+    template: common.yaml
+    set:
+      dependencies:
+        mariadb:
+          enabled: true
+          mode: operator
+    asserts:
+      - hasDocuments:
+          count: 1
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-mariadbcreds
+        isKind:
+          of: Secret
+
+  - it: should spawn a ValkeyCluster in operator mode
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+    asserts:
+      - hasDocuments:
+          count: 2
+      - documentSelector: &clusterDoc
+          path: kind
+          value: ValkeyCluster
+        isAPIVersion:
+          of: valkey.io/v1alpha1
+      - documentSelector: *clusterDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-valkey
+      - documentSelector: *clusterDoc
+        equal:
+          path: metadata.namespace
+          value: test-release-namespace
+      - documentSelector: *clusterDoc
+        equal:
+          path: metadata.labels.release
+          value: test-release-name
+      - documentSelector: *clusterDoc
+        matchRegex:
+          path: spec.image
+          pattern: ^oci\.trueforge\.org/containerforge/valkey:\d+\.\d+\.\d+@sha256:[0-9a-f]{64}$
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.shards
+          value: 1
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.replicas
+          value: 0
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.workloadType
+          value: StatefulSet
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.podDisruptionBudget.mode
+          value: Cluster
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.exporter.enabled
+          value: true
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.persistence
+          value:
+            size: 100Gi
+            reclaimPolicy: Delete
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.podSecurityContext
+          value:
+            runAsNonRoot: true
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.resources
+          value:
+            requests:
+              cpu: 75m
+              memory: 200Mi
+            limits:
+              cpu: 1500m
+              memory: 2400Mi
+
+  - it: should use the image of the dependency, unless it is overridden
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          image:
+            repository: example.com/valkey
+            tag: 9.1.0
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: spec.image
+          value: example.com/valkey:9.1.0
+
+  - it: should use the image of the operator settings
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            image: example.com/other/valkey:9.0.1
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: spec.image
+          value: example.com/other/valkey:9.0.1
+
+  - it: should reference the credentials secret for the default user, and never contain the password
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          depconfig:
+            password: not-in-the-cluster
+    asserts:
+      - documentSelector: &clusterDoc
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: spec.users
+          value:
+            - name: default
+              passwordSecret:
+                name: test-release-name-valkeycreds
+                keys:
+                  - valkey-password
+              permissions: +@all ~* &*
+      - documentSelector: *clusterDoc
+        notMatchRegex:
+          path: spec.users[0].permissions
+          pattern: not-in-the-cluster
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-valkeycreds
+        equal:
+          path: stringData.valkey-password
+          value: not-in-the-cluster
+
+  - it: should only create the credentials secret and the ValkeyCluster
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+    asserts:
+      - hasDocuments:
+          count: 2
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: metadata.name
+          value: test-release-name-valkeycreds
+
+  - it: should use the same host and port for the credentials, wait init container and notes
+    template: common.yaml
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          depconfig:
+            password: testpassword
+    asserts:
+      - hasDocuments:
+          count: 3
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-valkeycreds
+        equal:
+          path: stringData.plainhost
+          value: valkey-test-release-name-common-test-valkey
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-valkeycreds
+        equal:
+          path: stringData.plainport
+          value: "6379"
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-valkeycreds
+        equal:
+          path: stringData.plainporthost
+          value: valkey-test-release-name-common-test-valkey:6379
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.initContainers[0].env
+          content:
+            name: VALKEY_HOST
+            value: valkey-test-release-name-common-test-valkey
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.initContainers[0].env
+          content:
+            name: VALKEY_PORT
+            value: "6379"
+
+  - it: should show the host and port of the operator in the notes
+    template: NOTES.txt
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+    asserts:
+      - matchRegexRaw:
+          pattern: "## Valkey Database\n- Host: valkey-test-release-name-common-test-valkey\n- Port: 6379\n- Host:Port: valkey-test-release-name-common-test-valkey:6379\n"
+
+  - it: should ignore the service of the dependency for the host and port
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          service:
+            main:
+              primary: true
+              ports:
+                main:
+                  port: 1234
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-valkeycreds
+        equal:
+          path: stringData.plainporthost
+          value: valkey-test-release-name-common-test-valkey:6379
+
+  - it: should render the settings of the operator
+    template: common.yaml
+    set:
+      global:
+        fallbackDefaults:
+          storageClass: default-class
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            shards: 3
+            replicas: 2
+            config:
+              maxmemory-policy: allkeys-lru
+              appendonly: true
+              maxmemory: "{{ .Release.Name }}"
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 500m
+                memory: 512Mi
+            persistence:
+              size: 5Gi
+              storageClass: fast
+              retain: true
+            exporter:
+              enabled: false
+            scheduling:
+              nodeSelector:
+                disk: ssd
+              node:
+                spread:
+                  shard:
+                    mode: Preferred
+            podDisruptionBudget:
+              mode: Disabled
+            podMetadata:
+              labels:
+                foo: bar
+              annotations:
+                bar: baz
+            imagePullSecrets:
+              - registry-a
+              - name: registry-b
+            serviceAccountName: valkey-sa
+            terminationGracePeriodSeconds: 60
+            networking:
+              clusterDomain: example.local
+              discovery:
+                preferredEndpointType: Hostname
+            labels:
+              cluster-label: label
+            annotations:
+              cluster-annotation: "yes"
+    asserts:
+      - documentSelector: &clusterDoc
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: spec.shards
+          value: 3
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.replicas
+          value: 2
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.config
+          value:
+            maxmemory-policy: allkeys-lru
+            appendonly: "yes"
+            maxmemory: test-release-name
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.resources
+          value:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.persistence
+          value:
+            size: 5Gi
+            storageClassName: fast
+            reclaimPolicy: Retain
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.exporter
+          value:
+            enabled: false
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.scheduling
+          value:
+            nodeSelector:
+              disk: ssd
+            node:
+              spread:
+                shard:
+                  mode: Preferred
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.podDisruptionBudget.mode
+          value: Disabled
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.podMetadata
+          value:
+            labels:
+              foo: bar
+            annotations:
+              bar: baz
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.imagePullSecrets
+          value:
+            - name: registry-a
+            - name: registry-b
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.serviceAccountName
+          value: valkey-sa
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.terminationGracePeriodSeconds
+          value: 60
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.networking
+          value:
+            clusterDomain: example.local
+            discovery:
+              preferredEndpointType: Hostname
+      - documentSelector: *clusterDoc
+        equal:
+          path: metadata.labels.cluster-label
+          value: label
+      - documentSelector: *clusterDoc
+        equal:
+          path: metadata.annotations.cluster-annotation
+          value: "yes"
+
+  - it: should use the storage class of the chart when not set
+    template: common.yaml
+    set:
+      global:
+        fallbackDefaults:
+          storageClass: default-class
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: spec.persistence.storageClassName
+          value: default-class
+
+  - it: should not render persistence when it is disabled
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            persistence:
+              enabled: false
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ValkeyCluster
+        isNull:
+          path: spec.persistence
+
+  - it: should support the Deployment workload type without persistence
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            workloadType: Deployment
+            persistence:
+              enabled: false
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: spec.workloadType
+          value: Deployment
+
+  - it: should add users and keep the default user
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            users:
+              - name: alice
+                passwordSecret:
+                  name: alice-secret
+                  keys:
+                    - alicepw
+                commands:
+                  allow:
+                    - "@read"
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: spec.users
+          value:
+            - name: default
+              passwordSecret:
+                name: test-release-name-valkeycreds
+                keys:
+                  - valkey-password
+              permissions: +@all ~* &*
+            - name: alice
+              passwordSecret:
+                name: alice-secret
+                keys:
+                  - alicepw
+              commands:
+                allow:
+                  - "@read"
+
+  - it: should allow to override the permissions of the default user
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            users:
+              - name: default
+                permissions: "+@all -@dangerous ~* &*"
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: spec.users
+          value:
+            - name: default
+              passwordSecret:
+                name: test-release-name-valkeycreds
+                keys:
+                  - valkey-password
+              permissions: +@all -@dangerous ~* &*
+
+  - it: should allow a StatefulSet name that just fits
+    template: common.yaml
+    release:
+      name: test-release-name-abc
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            shards: 10
+            replicas: 10
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: metadata.name
+          value: test-release-name-abc-common-test-valkey
+
+  - it: should fail with an invalid workloadType
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            workloadType: DaemonSet
+    asserts:
+      - failedTemplate:
+          errorMessage: "Valkey Operator - Expected [workloadType] to be one of [StatefulSet, Deployment], but got [DaemonSet]"
+
+  - it: should fail with 0 shards
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            shards: 0
+    asserts:
+      - failedTemplate:
+          errorMessage: "Valkey Operator - Expected [shards] to be an integer greater than 0, but got [0]"
+
+  - it: should fail with negative replicas
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            replicas: -1
+    asserts:
+      - failedTemplate:
+          errorMessage: "Valkey Operator - Expected [replicas] to be an integer greater than or equal to 0, but got [-1]"
+
+  - it: should fail with persistence on a Deployment workload type
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            workloadType: Deployment
+    asserts:
+      - failedTemplate:
+          errorMessage: "Valkey Operator - Expected [persistence.enabled] to be false when [workloadType] is [Deployment], persistence requires [StatefulSet]"
+
+  - it: should fail with an invalid podDisruptionBudget mode
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            podDisruptionBudget:
+              mode: Always
+    asserts:
+      - failedTemplate:
+          errorMessage: "Valkey Operator - Expected [podDisruptionBudget.mode] to be one of [Cluster, Disabled], but got [Always]"
+
+  - it: should fail with TLS
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            networking:
+              tls:
+                mode: Required
+    asserts:
+      - failedTemplate:
+          errorMessage: "Valkey Operator - [networking.tls] is not supported, the credentials and the wait init container connect without TLS"
+
+  - it: should fail with Hostname discovery on a Deployment workload type
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            workloadType: Deployment
+            persistence:
+              enabled: false
+            networking:
+              discovery:
+                preferredEndpointType: Hostname
+    asserts:
+      - failedTemplate:
+          errorMessage: "Valkey Operator - Expected [workloadType] to be [StatefulSet] when [networking.discovery.preferredEndpointType] is [Hostname], but got [Deployment]"
+
+  - it: should fail with a user that has no name
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            users:
+              - nopass: true
+    asserts:
+      - failedTemplate:
+          errorMessage: "Valkey Operator - Expected a non-empty [name] in every item of [users]"
+
+  - it: should fail with a reserved user name
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            users:
+              - name: _operator
+    asserts:
+      - failedTemplate:
+          errorMessage: "Valkey Operator - Expected the name of a user to not start with [_], as it is reserved for the operator, but got [_operator]"
+
+  - it: should fail with duplicate user names
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            users:
+              - name: alice
+              - name: alice
+    asserts:
+      - failedTemplate:
+          errorMessage: "Valkey Operator - Expected the names of [users] to be unique, but [alice] is defined more than once"
+
+  - it: should fail when the name of the StatefulSets is too long
+    template: common.yaml
+    release:
+      name: test-release-name-too-long
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+    asserts:
+      - failedTemplate:
+          errorMessage: "Valkey Operator - Expected the name [test-release-name-too-long-common-test-valkey] of the ValkeyCluster, plus the digits of the highest shard and node index, to be at most 43 characters, but got [47]. Use a shorter release name"
+
+  - it: should count the digits of the highest shard and node index in the name
+    template: common.yaml
+    release:
+      name: test-release-name-ab
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            shards: 11
+            replicas: 100
+    asserts:
+      - failedTemplate:
+          errorPattern: "to be at most 43 characters, but got \\[44\\]"
+
+  - it: should allow a longer name with the Deployment workload type
+    template: common.yaml
+    release:
+      name: test-release-name-too-long
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            workloadType: Deployment
+            persistence:
+              enabled: false
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: metadata.name
+          value: test-release-name-too-long-common-test-valkey
+
+  - it: should fail when the name of the headless Service is too long
+    template: common.yaml
+    release:
+      name: test-release-name-that-is-way-too-long-for-this
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            workloadType: Deployment
+            persistence:
+              enabled: false
+    asserts:
+      - failedTemplate:
+          errorPattern: "of the ValkeyCluster to be at most 56 characters"
