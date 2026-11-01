@@ -1,113 +1,31 @@
 ---
-title: LoadBalancer
+title: Loadbalancer
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/service/loadbalancer#full-examples) section for complete examples.
-- See the [Service](/truecharts-common/service) documentation for more information
+- This page is generated from JSON schema.
+- See the [Full Examples](/truecharts-common/service/LoadBalancer#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.service.$name`
-
-:::tip
-
-- See available service keys [here](/truecharts-common/service).
-- This options apply only when `type: LoadBalancer`.
-
-:::
+- `.Values.service.LoadBalancer`
 
 ---
 
-## `sharedKey`
+## `service.LoadBalancer`
 
-Sets the shared key in `metallb.io/allow-shared-ip` **MetalLB** Annotation
+Configuration for service entries with `type: LoadBalancer`.
 
-|            |                           |
-| ---------- | ------------------------- |
-| Key        | `service.$name.sharedKey` |
-| Type       | `string`                  |
-| Required   | ❌                        |
-| Helm `tpl` | ✅                        |
-| Default    | `$FullName`               |
-
-Example
-
-```yaml
-service:
-  some-service:
-    sharedKey: custom-shared-key
-```
-
-## `loadBalancerIP`
-
-Define the load balancer IP, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIPs`
-
-|            |                                |
-| ---------- | ------------------------------ |
-| Key        | `service.$name.loadBalancerIP` |
-| Type       | `string`                       |
-| Required   | ❌                             |
-| Helm `tpl` | ✅                             |
-| Default    | `""`                           |
-
-Example
-
-```yaml
-service:
-  some-service:
-    loadBalancerIP: 1.2.3.4
-```
-
-## `loadBalancerIPs`
-
-Define the load balancer IPs, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIP`
-
-|            |                                 |
-| ---------- | ------------------------------- |
-| Key        | `service.$name.loadBalancerIPs` |
-| Type       | `list` of `string`              |
-| Required   | ❌                              |
-| Helm `tpl` | ✅ (On entries only)            |
-| Default    | `[]`                            |
-
-Example
-
-```yaml
-service:
-  some-service:
-    loadBalancerIPs:
-      - 1.2.3.4
-      - 5.6.7.8
-```
-
----
-
-## `loadBalancerSourceRanges`
-
-Define the load balancer source ranges
-
-|            |                                          |
-| ---------- | ---------------------------------------- |
-| Key        | `service.$name.loadBalancerSourceRanges` |
-| Type       | `list` of `string`                       |
-| Required   | ❌                                       |
-| Helm `tpl` | ✅ (On entries only)                     |
-| Default    | `[]`                                     |
-
-Example
-
-```yaml
-service:
-  some-service:
-    loadBalancerSourceRanges:
-      - 10.100.100.0/24
-      - 10.100.200.0/24
-```
+| Field      | Value                  |
+| ---------- | ---------------------- |
+| Key        | `service.LoadBalancer` |
+| Type       | `map`                  |
+| Required   | ❌                     |
+| Helm `tpl` | ❌                     |
+| Default    | unset                  |
 
 ---
 

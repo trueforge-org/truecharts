@@ -22,10 +22,14 @@ METALLB_CHART_VERSION="0.15.3"
 CERT_MANAGER_CHART_VERSION="v1.19.3"
 # renovate: datasource=helm depName=cloudnative-pg repository=oci://ghcr.io/cloudnative-pg/charts
 CLOUDNATIVE_PG_CHART_VERSION="0.27.1"
+# renovate: datasource=helm depName=valkey-operator repository=https://valkey.io/valkey-helm
+VALKEY_OPERATOR_CHART_VERSION="0.8.0"
 # renovate: datasource=helm depName=metrics-server repository=oci://ghcr.io/home-operations/charts-mirror
 METRICS_SERVER_CHART_VERSION="3.13.0"
 # renovate: datasource=helm depName=volsync repository=oci://oci.trueforge.org/truecharts
 VOLSYNC_CHART_VERSION="3.15.16"
+# renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
+GATEWAY_API_VERSION="v1.7.0"
 HELM_WAIT_TIMEOUT="15m"
 
 helm_install_with_retry() {
@@ -59,9 +63,29 @@ if [[ "$curr_chart" == "charts/library/common-test" ]] && [[ -n "$dependency_sel
         fi
     fi
 
+    if [[ "$dependency_selector" =~ (route|gateway|gatewayclass).*-values.yaml ]]; then
+        # k3s ships an older version of these CRDs, so take over their fields
+        if ! kubectl apply --server-side --force-conflicts -f "https://github.com/kubernetes-sigs/gateway-api/releases/download/$GATEWAY_API_VERSION/standard-install.yaml"; then
+            echo "Failed to install Gateway API CRDs"
+            exit 1
+        fi
+        # Rendering checks if the API is available, so it must be served before the install
+        if ! kubectl wait --for=condition=Established --timeout=120s crd/listenersets.gateway.networking.k8s.io; then
+            echo "Gateway API CRDs did not become available"
+            exit 1
+        fi
+    fi
+
     if [[ "$dependency_selector" =~ cnpg.*-values.yaml ]]; then
         if ! helm_install_with_retry cloudnative-pg oci://ghcr.io/cloudnative-pg/charts/cloudnative-pg --namespace cloudnative-pg --create-namespace --version "$CLOUDNATIVE_PG_CHART_VERSION"; then
             echo "Failed to install cloudnative-pg chart"
+            exit 1
+        fi
+    fi
+
+    if [[ "$dependency_selector" =~ valkey.*operator.*-values.yaml ]]; then
+        if ! helm_install_with_retry valkey-operator valkey-operator --repo https://valkey.io/valkey-helm --namespace valkey-operator-system --create-namespace --version "$VALKEY_OPERATOR_CHART_VERSION"; then
+            echo "Failed to install valkey-operator chart"
             exit 1
         fi
     fi
@@ -95,6 +119,8 @@ fi
 
 values_yaml=$(cat "$curr_chart/values.yaml")
 cnpg_enabled=$(go-yq '.cnpg | map(.enabled) | any' <<<"$values_yaml")
+# PostgreSQL is provided by the cloudnative-pg operator, unless set to standalone
+postgresql_operator_enabled=$(go-yq '(.dependencies.postgresql.enabled == true) and ((.dependencies.postgresql.mode // "operator") == "operator")' <<<"$values_yaml")
 ingress_required=$(go-yq '.ingress | map(.required) | any' <<<"$values_yaml")
 ingress_enabled=$(go-yq '.ingress | map(.enabled) | any' <<<"$values_yaml")
 nginx_needed="false"
@@ -156,7 +182,7 @@ if [[ "$curr_chart" == "charts/stable/clusterissuer" ]]; then
     echo "Done installing cert-manager chart"
 fi
 
-if [[ "$cnpg_enabled" == "true" ]]; then
+if [[ "$cnpg_enabled" == "true" ]] || [[ "$postgresql_operator_enabled" == "true" ]]; then
     echo "Installing cloudnative-pg chart"
     if ! helm_install_with_retry cloudnative-pg oci://ghcr.io/cloudnative-pg/charts/cloudnative-pg --namespace cloudnative-pg --create-namespace --version "$CLOUDNATIVE_PG_CHART_VERSION"; then
         echo "Failed to install cloudnative-pg chart"

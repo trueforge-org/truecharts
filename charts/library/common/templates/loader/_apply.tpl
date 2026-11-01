@@ -10,6 +10,9 @@
   {{/* Make sure there are not any YAML errors */}}
   {{- include "tc.v1.common.values.validate" .Values -}}
 
+  {{/* Render ConfigMap(s) from folder */}}
+  {{- include "tc.v1.common.spawner.configmapFromFolder" . | nindent 0 -}}
+
   {{/* Render ConfigMap(s) */}}
   {{- include "tc.v1.common.spawner.configmap" . | nindent 0 -}}
 
@@ -18,6 +21,9 @@
 
   {{/* Render Secret(s) */}}
   {{- include "tc.v1.common.spawner.secret" . | nindent 0 -}}
+
+  {{/* Render ExternalSecret(s) */}}
+  {{- include "tc.v1.common.spawner.externalSecret" . | trim | nindent 0 -}}
 
   {{/* Render Image Pull Secrets(s) */}}
   {{- include "tc.v1.common.spawner.imagePullSecret" . | nindent 0 -}}
@@ -54,6 +60,15 @@
 
   {{/* Render ingress(s) */}}
   {{- include "tc.v1.common.spawner.ingress" . | nindent 0 -}}
+
+  {{/* Render Gateway API GatewayClass(es) */}}
+  {{- include "tc.v1.common.spawner.gatewayclasses" . | nindent 0 -}}
+
+  {{/* Render Gateway API Gateway(s) */}}
+  {{- include "tc.v1.common.spawner.gateways" . | nindent 0 -}}
+
+  {{/* Render Gateway API ListenerSet(s) */}}
+  {{- include "tc.v1.common.spawner.listenerSet" . | nindent 0 -}}
 
   {{/* Render Gateway API Route(s) */}}
   {{- include "tc.v1.common.spawner.routes" . | nindent 0 -}}

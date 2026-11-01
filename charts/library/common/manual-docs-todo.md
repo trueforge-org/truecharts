@@ -1,0 +1,1023 @@
+# Newdocs Manual Docs To-Do
+
+- Derived from `newdocs-missing-index.md`
+- Scope: non-schema heading and narrative alignment
+
+## Phase 3 — Non-schema Heading Gaps (Manual/Template Work)
+
+- [ ] `addons.md` -> `addons/index.md`
+  - [ ] Add/align heading: ``addons.$addon``
+  - [ ] Add/align heading: ``addons.$addon.enabled``
+
+- [ ] `certificate.md` -> `certificate.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``certificateIssuer``
+  - [ ] Add/align heading: ``hosts``
+  - [ ] Add/align heading: ``certificateSecretTemplate``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+
+- [ ] `cnpg/cluster.md` -> `cnpg/cluster/index.md`
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``env``
+  - [ ] Add/align heading: ``envFrom``
+  - [ ] Add/align heading: ``instances``
+  - [ ] Add/align heading: ``singleNode``
+  - [ ] Add/align heading: ``logLevel``
+  - [ ] Add/align heading: ``primaryUpdateMethod``
+  - [ ] Add/align heading: ``primaryUpdateStrategy``
+  - [ ] Add/align heading: ``certificates``
+  - [ ] Add/align heading: ``postgresql``
+  - [ ] Add/align heading: ``initdb``
+
+- [ ] `cnpg/cnpg.md` -> `cnpg/index.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``primary``
+  - [ ] Add/align heading: ``hibernate``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``type``
+  - [ ] Add/align heading: ``pgVersion``
+  - [ ] Add/align heading: ``mode``
+  - [ ] Add/align heading: ``database``
+  - [ ] Add/align heading: ``user``
+  - [ ] Add/align heading: ``password``
+  - [ ] Add/align heading: ``cluster``
+  - [ ] Add/align heading: ``monitoring``
+  - [ ] Add/align heading: ``recovery``
+  - [ ] Add/align heading: ``backups``
+  - [ ] Add/align heading: ``pooler``
+
+- [ ] `configmap.md` -> `configmap.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``data``
+
+- [ ] `container/args.md` -> `workload/podSpec/containers/args.md`
+  - [ ] Add/align heading: ``args``
+  - [ ] Add/align heading: `Or`
+  - [ ] Add/align heading: ``extraArgs``
+  - [ ] Add/align heading: `Or`
+
+- [ ] `container/command.md` -> `workload/podSpec/containers/command.md`
+  - [ ] Add/align heading: ``command``
+
+- [ ] `container/env.md` -> `addons/gluetun/container/env.md`
+  - [ ] Add/align heading: ``env``
+  - [ ] Add/align heading: ``env.$key``
+  - [ ] Add/align heading: ``env.$key.configMapKeyRef``
+  - [ ] Add/align heading: ``env.$key.configMapKeyRef.name``
+  - [ ] Add/align heading: ``env.$key.configMapKeyRef.key``
+  - [ ] Add/align heading: ``env.$key.configMapKeyRef.expandObjectName``
+  - [ ] Add/align heading: ``env.$key.secretKeyRef``
+  - [ ] Add/align heading: ``env.$key.secretKeyRef.name``
+  - [ ] Add/align heading: ``env.$key.secretKeyRef.key``
+  - [ ] Add/align heading: ``env.$key.secretKeyRef.expandObjectName``
+  - [ ] Add/align heading: ``env.$key.fieldRef``
+  - [ ] Add/align heading: ``env.$key.fieldRef.fieldPath``
+  - [ ] Add/align heading: ``env.$key.fieldRef.apiVersion``
+
+- [ ] `container/envFrom.md` -> `workload/podSpec/containers/envFrom.md`
+  - [ ] Add/align heading: ``envFrom``
+  - [ ] Add/align heading: ``envFrom.secretRef``
+  - [ ] Add/align heading: ``envFrom.secretRef.name``
+  - [ ] Add/align heading: ``envFrom.secretRef.expandObjectName``
+  - [ ] Add/align heading: ``envFrom.configMapRef``
+  - [ ] Add/align heading: ``envFrom.configMapRef.name``
+  - [ ] Add/align heading: ``envFrom.configMapRef.expandObjectName``
+
+- [ ] `container/fixedEnv.md` -> `workload/podSpec/containers/fixedEnv.md`
+  - [ ] Add/align heading: ``fixedEnv``
+
+- [ ] `container/index.md` -> `workload/container/index.md`
+  - [ ] Add/align heading: `Notes`
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``type``
+  - [ ] Add/align heading: ``imageSelector``
+  - [ ] Add/align heading: ``primary``
+  - [ ] Add/align heading: ``stdin``
+  - [ ] Add/align heading: ``tty``
+  - [ ] Add/align heading: ``command``
+  - [ ] Add/align heading: ``args``
+  - [ ] Add/align heading: ``extraArgs``
+  - [ ] Add/align heading: ``termination``
+  - [ ] Add/align heading: ``lifecycle``
+  - [ ] Add/align heading: ``probes``
+  - [ ] Add/align heading: ``resources``
+  - [ ] Add/align heading: ``securityContext``
+  - [ ] Add/align heading: ``envFrom``
+  - [ ] Add/align heading: ``fixedEnv``
+  - [ ] Add/align heading: ``env``
+  - [ ] Add/align heading: `Full Examples`
+
+- [ ] `container/lifecycle.md` -> `workload/podSpec/containers/lifecycle.md`
+  - [ ] Add/align heading: ``lifecycle``
+  - [ ] Add/align heading: ``lifecycle.$hook.type``
+  - [ ] Add/align heading: ``lifecycle.$hook.command``
+
+- [ ] `container/probes.md` -> `workload/podSpec/containers/probes.md`
+  - [ ] Add/align heading: ``probes``
+  - [ ] Add/align heading: ``probes.$probe.enabled``
+  - [ ] Add/align heading: ``probes.$probe.type``
+  - [ ] Add/align heading: ``probes.$probe.command``
+
+- [ ] `container/resources.md` -> `workload/podSpec/containers/resources.md`
+  - [ ] Add/align heading: `Notes`
+  - [ ] Add/align heading: ``resources``
+  - [ ] Add/align heading: ``resources.limits."gpu.intel.com/i915"``
+  - [ ] Add/align heading: ``resources.limits."nvidia.com/gpu"``
+  - [ ] Add/align heading: ``resources.limits."amd.com/gpu"``
+
+- [ ] `container/securityContext.md` -> `workload/podSpec/containers/securityContext.md`
+  - [ ] Add/align heading: ``securityContext``
+  - [ ] Add/align heading: ``securityContext.seccompProfile.type``
+
+- [ ] `container/termination.md` -> `workload/container/termination.md`
+  - [ ] Add/align heading: ``termination``
+
+- [ ] `containerOptions.md` -> `containerOptions.md`
+  - [ ] Add/align heading: `Defaults`
+  - [ ] Add/align heading: ``NVIDIA_CAPS``
+
+- [ ] `credentials.md` -> `credentials.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``type``
+  - [ ] Add/align heading: ``url``
+  - [ ] Add/align heading: ``region``
+  - [ ] Add/align heading: ``customCASecretRef``
+  - [ ] Add/align heading: ``customCASecretRef.name``
+  - [ ] Add/align heading: ``customCASecretRef.key``
+  - [ ] Add/align heading: ``customCASecretRef.expandObjectName``
+  - [ ] Add/align heading: ``customCA``
+  - [ ] Add/align heading: ``path``
+  - [ ] Add/align heading: ``bucket``
+  - [ ] Add/align heading: ``accessKey``
+  - [ ] Add/align heading: ``secretKey``
+  - [ ] Add/align heading: ``encrKey``
+
+- [ ] `fallbackDefaults.md` -> `global/fallbackDefaults.md`
+  - [ ] Add/align heading: `Defaults`
+  - [ ] Add/align heading: ``probeType``
+  - [ ] Add/align heading: ``serviceProtocol``
+  - [ ] Add/align heading: ``serviceType``
+  - [ ] Add/align heading: ``storageClass``
+  - [ ] Add/align heading: ``persistenceType``
+  - [ ] Add/align heading: ``pvcRetain``
+  - [ ] Add/align heading: ``pvcSize``
+  - [ ] Add/align heading: ``vctSize``
+  - [ ] Add/align heading: ``accessModes``
+  - [ ] Add/align heading: ``probeTimeouts``
+  - [ ] Add/align heading: ``topologyKey``
+
+- [ ] `global.md` -> `global/index.md`
+  - [ ] Add/align heading: `Defaults`
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``minNodePort``
+  - [ ] Add/align heading: ``stopAll``
+  - [ ] Add/align heading: ``metallb``
+  - [ ] Add/align heading: ``traefik``
+
+- [ ] `hpa.md` -> `hpa.md`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``targetSelector``
+  - [ ] Add/align heading: ``minReplicas``
+  - [ ] Add/align heading: ``maxReplicas``
+  - [ ] Add/align heading: ``metrics``
+  - [ ] Add/align heading: ``behavior``
+
+- [ ] `imagePullSecret.md` -> `imagePullSecret.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: `Target Selector`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``existingSecret``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``targetSelectAll``
+  - [ ] Add/align heading: ``targetSelector``
+  - [ ] Add/align heading: ``data``
+  - [ ] Add/align heading: ``data.registry``
+  - [ ] Add/align heading: ``data.username``
+  - [ ] Add/align heading: ``data.password``
+  - [ ] Add/align heading: ``data.email``
+
+- [ ] `index.md` -> `cnpg/index.md`
+  - [ ] Add/align heading: `Notes`
+  - [ ] Add/align heading: `Schema Validation (Dev)`
+  - [ ] Add/align heading: ``global``
+  - [ ] Add/align heading: ``fallbackDefaults``
+  - [ ] Add/align heading: ``extraTpl``
+  - [ ] Add/align heading: ``operator``
+  - [ ] Add/align heading: ``operator.register``
+  - [ ] Add/align heading: ``operator.verify``
+  - [ ] Add/align heading: ``operator.verify.enabled``
+  - [ ] Add/align heading: ``operator.verify.additionalsystem``
+  - [ ] Add/align heading: ``podOptions``
+  - [ ] Add/align heading: ``containerOptions``
+  - [ ] Add/align heading: ``TZ``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``resources``
+  - [ ] Add/align heading: ``securityContext``
+  - [ ] Add/align heading: `Images`
+  - [ ] Add/align heading: ``image``
+  - [ ] Add/align heading: ``image.repository``
+  - [ ] Add/align heading: ``image.tag``
+  - [ ] Add/align heading: ``image.pullPolicy``
+  - [ ] Add/align heading: `Additional Documentation`
+
+- [ ] `ingress/certManager.md` -> `ingress/certManager.md`
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``certificateIssuer``
+
+- [ ] `ingress/homepage.md` -> `ingress/integrations/homepage.md`
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``name``
+  - [ ] Add/align heading: ``description``
+  - [ ] Add/align heading: ``group``
+  - [ ] Add/align heading: ``icon``
+  - [ ] Add/align heading: ``href``
+  - [ ] Add/align heading: ``weight``
+  - [ ] Add/align heading: ``podSelector``
+  - [ ] Add/align heading: ``widget``
+  - [ ] Add/align heading: ``widget.enabled``
+  - [ ] Add/align heading: ``widget.type``
+  - [ ] Add/align heading: ``widget.customkv[].key``
+  - [ ] Add/align heading: ``widget.customkv[].value``
+
+- [ ] `ingress/index.md` -> `ingress/index.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: `Target Selector`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``primary``
+  - [ ] Add/align heading: ``expandObjectName``
+  - [ ] Add/align heading: ``required``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``ingressClassName``
+  - [ ] Add/align heading: ``targetSelector``
+  - [ ] Add/align heading: ``hosts``
+  - [ ] Add/align heading: ``hosts[].host``
+  - [ ] Add/align heading: ``hosts[].paths``
+  - [ ] Add/align heading: ``hosts[].paths[].path``
+  - [ ] Add/align heading: ``hosts[].paths[].pathType``
+  - [ ] Add/align heading: ``hosts[].paths[].overrideService``
+  - [ ] Add/align heading: ``hosts[].paths[].overrideService.name``
+  - [ ] Add/align heading: ``hosts[].paths[].overrideService.expandObjectName``
+  - [ ] Add/align heading: ``hosts[].paths[].overrideService.port``
+  - [ ] Add/align heading: ``tls``
+  - [ ] Add/align heading: ``tls[].hosts``
+  - [ ] Add/align heading: ``tls[].secretName``
+  - [ ] Add/align heading: ``tls[].certificateIssuer``
+  - [ ] Add/align heading: ``tls[].clusterIssuer``
+  - [ ] Add/align heading: ``integrations``
+  - [ ] Add/align heading: ``integrations.certManager``
+  - [ ] Add/align heading: ``integrations.traefik``
+  - [ ] Add/align heading: ``integrations.homepage``
+
+- [ ] `ingress/traefik.md` -> `ingress/traefik.md`
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``entrypoints``
+  - [ ] Add/align heading: ``forceTLS``
+  - [ ] Add/align heading: ``middlewares``
+  - [ ] Add/align heading: ``middlewares[].name``
+  - [ ] Add/align heading: ``middlewares[].namespace``
+  - [ ] Add/align heading: ``middlewares[].expandObjectName``
+  - [ ] Add/align heading: ``chartMiddlewares``
+
+- [ ] `metrics.md` -> `metrics.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``type``
+  - [ ] Add/align heading: ``targetSelector``
+  - [ ] Add/align heading: ``selector``
+  - [ ] Add/align heading: ``endpoints``
+  - [ ] Add/align heading: ``prometheusRule``
+
+- [ ] `middlewares/index.md` -> `ingressMiddlewares/index.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$provider``
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``expandObjectName``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``data``
+  - [ ] Add/align heading: ``type``
+
+- [ ] `middlewares/traefik/add-prefix.md` -> `ingressMiddlewares/middlewares/traefik/add-prefix.md`
+  - [ ] Add/align heading: ``prefix``
+
+- [ ] `middlewares/traefik/basic-auth.md` -> `ingressMiddlewares/middlewares/traefik/basic-auth.md`
+  - [ ] Add/align heading: ``users``
+  - [ ] Add/align heading: ``users[].username``
+  - [ ] Add/align heading: ``users[].password``
+  - [ ] Add/align heading: ``secret``
+
+- [ ] `middlewares/traefik/buffering.md` -> `ingressMiddlewares/middlewares/traefik/buffering.md`
+  - [ ] Add/align heading: ``maxRequestBodyBytes``
+  - [ ] Add/align heading: ``memRequestBodyBytes``
+  - [ ] Add/align heading: ``maxResponseBodyBytes``
+  - [ ] Add/align heading: ``memResponseBodyBytes``
+  - [ ] Add/align heading: ``retryExpression``
+
+- [ ] `middlewares/traefik/chain.md` -> `ingressMiddlewares/middlewares/traefik/chain.md`
+  - [ ] Add/align heading: ``middlewares``
+  - [ ] Add/align heading: ``middlewares[].name``
+  - [ ] Add/align heading: ``middlewares[].expandObjectName``
+
+- [ ] `middlewares/traefik/forward-auth.md` -> `ingressMiddlewares/middlewares/traefik/forward-auth.md`
+  - [ ] Add/align heading: ``address``
+  - [ ] Add/align heading: ``authResponseHeadersRegex``
+  - [ ] Add/align heading: ``trustForwardHeader``
+  - [ ] Add/align heading: ``authResponseHeaders``
+  - [ ] Add/align heading: ``authRequestHeaders``
+  - [ ] Add/align heading: ``tls``
+  - [ ] Add/align heading: ``tls.insecureSkipVerify``
+
+- [ ] `middlewares/traefik/headers.md` -> `ingressMiddlewares/middlewares/traefik/headers.md`
+  - [ ] Add/align heading: ``customRequestHeaders``
+  - [ ] Add/align heading: ``customResponseHeaders``
+  - [ ] Add/align heading: ``accessControlAllowCredentials``
+  - [ ] Add/align heading: ``accessControlAllowHeaders``
+  - [ ] Add/align heading: ``accessControlAllowMethods``
+  - [ ] Add/align heading: ``accessControlAllowOriginList``
+  - [ ] Add/align heading: ``accessControlAllowOriginListRegex``
+  - [ ] Add/align heading: ``accessControlExposeHeaders``
+  - [ ] Add/align heading: ``accessControlMaxAge``
+  - [ ] Add/align heading: ``addVaryHeader``
+  - [ ] Add/align heading: ``allowedHosts``
+  - [ ] Add/align heading: ``hostsProxyHeaders``
+  - [ ] Add/align heading: ``sslProxyHeaders``
+  - [ ] Add/align heading: ``stsSeconds``
+  - [ ] Add/align heading: ``stsIncludeSubdomains``
+  - [ ] Add/align heading: ``stsPreload``
+  - [ ] Add/align heading: ``forceSTSHeader``
+  - [ ] Add/align heading: ``frameDeny``
+  - [ ] Add/align heading: ``customFrameOptionsValue``
+  - [ ] Add/align heading: ``contentTypeNosniff``
+  - [ ] Add/align heading: ``browserXssFilter``
+  - [ ] Add/align heading: ``customBrowserXSSValue``
+  - [ ] Add/align heading: ``contentSecurityPolicy``
+  - [ ] Add/align heading: ``contentSecurityPolicyReportOnly``
+  - [ ] Add/align heading: ``publicKey``
+  - [ ] Add/align heading: ``referrerPolicy``
+  - [ ] Add/align heading: ``permissionsPolicy``
+  - [ ] Add/align heading: ``isDevelopment``
+
+- [ ] `middlewares/traefik/index.md` -> `ingressMiddlewares/middlewares/traefik/index.md`
+  - [ ] Add/align heading: ``type``
+
+- [ ] `middlewares/traefik/ip-allow-list.md` -> `ingressMiddlewares/middlewares/traefik/ip-allow-list.md`
+  - [ ] Add/align heading: ``sourceRange``
+  - [ ] Add/align heading: ``ipStrategy``
+  - [ ] Add/align heading: ``ipStrategy.depth``
+  - [ ] Add/align heading: ``ipStrategy.excludedIPs``
+
+- [ ] `middlewares/traefik/plugin-bouncer.md` -> `ingressMiddlewares/middlewares/traefik/plugin-bouncer.md`
+  - [ ] Add/align heading: ``pluginName``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``logLevel``
+  - [ ] Add/align heading: ``updateIntervalSeconds``
+  - [ ] Add/align heading: ``updateMaxFailure``
+  - [ ] Add/align heading: ``defaultDecisionSeconds``
+  - [ ] Add/align heading: ``httpTimeoutSeconds``
+  - [ ] Add/align heading: ``crowdsecMode``
+  - [ ] Add/align heading: ``crowdsecAppsecEnabled``
+  - [ ] Add/align heading: ``crowdsecAppsecHost``
+  - [ ] Add/align heading: ``crowdsecAppsecFailureBlock``
+  - [ ] Add/align heading: ``crowdsecAppsecUnreachableBlock``
+  - [ ] Add/align heading: ``crowdsecLapiKey``
+  - [ ] Add/align heading: ``crowdsecLapiHost``
+  - [ ] Add/align heading: ``crowdsecLapiScheme``
+  - [ ] Add/align heading: ``crowdsecLapiTLSInsecureVerify``
+  - [ ] Add/align heading: ``crowdsecCapiMachineId``
+  - [ ] Add/align heading: ``crowdsecCapiPassword``
+  - [ ] Add/align heading: ``crowdsecCapiScenarios``
+  - [ ] Add/align heading: ``forwardedHeadersTrustedIPs``
+  - [ ] Add/align heading: ``clientTrustedIPs``
+  - [ ] Add/align heading: ``forwardedHeadersCustomName``
+  - [ ] Add/align heading: ``remediationHeadersCustomName``
+  - [ ] Add/align heading: ``redisCacheEnabled``
+  - [ ] Add/align heading: ``redisCacheHost``
+  - [ ] Add/align heading: ``redisCachePassword``
+  - [ ] Add/align heading: ``redisCacheDatabase``
+  - [ ] Add/align heading: ``crowdsecLapiTLSCertificateAuthority``
+  - [ ] Add/align heading: ``crowdsecLapiTLSCertificateBouncer``
+  - [ ] Add/align heading: ``crowdsecLapiTLSCertificateBouncerKey``
+  - [ ] Add/align heading: ``captchaProvider``
+  - [ ] Add/align heading: ``captchaSiteKey``
+  - [ ] Add/align heading: ``captchaSecretKey``
+  - [ ] Add/align heading: ``captchaGracePeriodSeconds``
+  - [ ] Add/align heading: ``captchaHTMLFilePath``
+  - [ ] Add/align heading: ``banHTMLFilePath``
+
+- [ ] `middlewares/traefik/plugin-geoblock.md` -> `ingressMiddlewares/middlewares/traefik/plugin-geoblock.md`
+  - [ ] Add/align heading: ``pluginName``
+  - [ ] Add/align heading: ``api``
+  - [ ] Add/align heading: ``allowLocalRequests``
+  - [ ] Add/align heading: ``logLocalRequests``
+  - [ ] Add/align heading: ``logAllowedRequests``
+  - [ ] Add/align heading: ``logApiRequests``
+  - [ ] Add/align heading: ``apiTimeoutMs``
+  - [ ] Add/align heading: ``cacheSize``
+  - [ ] Add/align heading: ``forceMonthlyUpdate``
+  - [ ] Add/align heading: ``allowUnknownCountries``
+  - [ ] Add/align heading: ``unknownCountryApiResponse``
+  - [ ] Add/align heading: ``blackListMode``
+  - [ ] Add/align heading: ``silentStartUp``
+  - [ ] Add/align heading: ``addCountryHeader``
+  - [ ] Add/align heading: ``countries``
+
+- [ ] `middlewares/traefik/plugin-mod-security.md` -> `ingressMiddlewares/middlewares/traefik/plugin-mod-security.md`
+  - [ ] Add/align heading: ``pluginName``
+  - [ ] Add/align heading: ``modSecurityUrl``
+  - [ ] Add/align heading: ``timeoutMillis``
+  - [ ] Add/align heading: ``maxBodySize``
+
+- [ ] `middlewares/traefik/plugin-real-ip.md` -> `ingressMiddlewares/middlewares/traefik/plugin-real-ip.md`
+  - [ ] Add/align heading: ``pluginName``
+  - [ ] Add/align heading: ``excludednets``
+
+- [ ] `middlewares/traefik/plugin-rewrite-response-headers.md` -> `ingressMiddlewares/middlewares/traefik/plugin-rewrite-response-headers.md`
+  - [ ] Add/align heading: ``pluginName``
+  - [ ] Add/align heading: ``rewrites``
+  - [ ] Add/align heading: ``rewrites[].header``
+  - [ ] Add/align heading: ``rewrites[].regex``
+  - [ ] Add/align heading: ``rewrites[].replacement``
+
+- [ ] `middlewares/traefik/plugin-theme-park.md` -> `ingressMiddlewares/middlewares/traefik/plugin-theme-park.md`
+  - [ ] Add/align heading: ``pluginName``
+  - [ ] Add/align heading: ``app``
+  - [ ] Add/align heading: ``theme``
+  - [ ] Add/align heading: ``baseUrl``
+  - [ ] Add/align heading: ``addons``
+
+- [ ] `middlewares/traefik/rate-limit.md` -> `ingressMiddlewares/middlewares/traefik/rate-limit.md`
+  - [ ] Add/align heading: ``average``
+  - [ ] Add/align heading: ``burst``
+
+- [ ] `middlewares/traefik/redirect-regex.md` -> `ingressMiddlewares/middlewares/traefik/redirect-regex.md`
+  - [ ] Add/align heading: ``regex``
+  - [ ] Add/align heading: ``replacement``
+  - [ ] Add/align heading: ``permanent``
+
+- [ ] `middlewares/traefik/redirect-scheme.md` -> `ingressMiddlewares/middlewares/traefik/redirect-scheme.md`
+  - [ ] Add/align heading: ``scheme``
+  - [ ] Add/align heading: ``permanent``
+
+- [ ] `middlewares/traefik/replace-path-regex.md` -> `ingressMiddlewares/middlewares/traefik/replace-path-regex.md`
+  - [ ] Add/align heading: ``regex``
+  - [ ] Add/align heading: ``replacement``
+
+- [ ] `middlewares/traefik/replace-path.md` -> `ingressMiddlewares/middlewares/traefik/replace-path.md`
+  - [ ] Add/align heading: ``path``
+
+- [ ] `middlewares/traefik/retry.md` -> `ingressMiddlewares/middlewares/traefik/retry.md`
+  - [ ] Add/align heading: ``attempts``
+  - [ ] Add/align heading: ``initialInterval``
+
+- [ ] `middlewares/traefik/strip-prefix-regex.md` -> `ingressMiddlewares/middlewares/traefik/strip-prefix-regex.md`
+  - [ ] Add/align heading: ``regex``
+
+- [ ] `middlewares/traefik/strip-prefix.md` -> `ingressMiddlewares/middlewares/traefik/strip-prefix.md`
+  - [ ] Add/align heading: ``prefix``
+  - [ ] Add/align heading: ``forceSlash``
+
+- [ ] `networkpolicy.md` -> `networkpolicy.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``primary``
+  - [ ] Add/align heading: ``expandObjectName``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: `Pod Selection`
+  - [ ] Add/align heading: ``podSelector``
+  - [ ] Add/align heading: `Default Behavior`
+  - [ ] Add/align heading: ``matchLabels``
+  - [ ] Add/align heading: ``matchExpressions``
+  - [ ] Add/align heading: ``targetSelector``
+  - [ ] Add/align heading: ``targetAllPods``
+  - [ ] Add/align heading: `Policy Configuration`
+  - [ ] Add/align heading: ``policyTypes``
+  - [ ] Add/align heading: `Ingress Rules`
+  - [ ] Add/align heading: ``ingress``
+  - [ ] Add/align heading: ``from``
+  - [ ] Add/align heading: `Pod Selector`
+  - [ ] Add/align heading: `Namespace Selector`
+  - [ ] Add/align heading: `Combined Pod and Namespace Selector`
+  - [ ] Add/align heading: `IP Block`
+  - [ ] Add/align heading: ``ports``
+  - [ ] Add/align heading: `Port Ranges (Kubernetes 1.25+)`
+  - [ ] Add/align heading: `Named Ports`
+  - [ ] Add/align heading: `Egress Rules`
+  - [ ] Add/align heading: ``egress``
+  - [ ] Add/align heading: ``to``
+  - [ ] Add/align heading: `Pod Selector`
+  - [ ] Add/align heading: `Namespace Selector`
+  - [ ] Add/align heading: `IP Block`
+  - [ ] Add/align heading: ``ports``
+
+- [ ] `notes.md` -> `notes.md`
+  - [ ] Add/align heading: ``header``
+  - [ ] Add/align heading: `Welcome to TrueCharts!`
+  - [ ] Add/align heading: ``custom``
+  - [ ] Add/align heading: ``footer``
+  - [ ] Add/align heading: `Documentation`
+  - [ ] Add/align heading: `Bug reports`
+
+- [ ] `persistence/configmap.md` -> `persistence/configmap.md`
+  - [ ] Add/align heading: ``objectName``
+  - [ ] Add/align heading: ``expandObjectName``
+  - [ ] Add/align heading: ``optional``
+  - [ ] Add/align heading: ``defaultMode``
+  - [ ] Add/align heading: ``items``
+  - [ ] Add/align heading: ``items[].key``
+  - [ ] Add/align heading: ``items[].path``
+
+- [ ] `persistence/device.md` -> `persistence/device.md`
+  - [ ] Add/align heading: `Notes`
+  - [ ] Add/align heading: ``hostPath``
+  - [ ] Add/align heading: ``hostPathType``
+
+- [ ] `persistence/emptyDir.md` -> `persistence/emptyDir.md`
+  - [ ] Add/align heading: ``size``
+  - [ ] Add/align heading: ``medium``
+
+- [ ] `persistence/hostPath.md` -> `persistence/hostPath.md`
+  - [ ] Add/align heading: ``hostPath``
+  - [ ] Add/align heading: ``hostPathType``
+
+- [ ] `persistence/index.md` -> `persistence/index.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: `Target Selector`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``type``
+  - [ ] Add/align heading: ``mountPath``
+  - [ ] Add/align heading: ``mountPropagation``
+  - [ ] Add/align heading: ``subPath``
+  - [ ] Add/align heading: ``readOnly``
+  - [ ] Add/align heading: ``targetSelectAll``
+  - [ ] Add/align heading: ``targetSelector``
+  - [ ] Add/align heading: ``targetSelector.$podName``
+  - [ ] Add/align heading: ``targetSelector.$podName.$containerName``
+  - [ ] Add/align heading: ``targetSelector.$podName.$containerName.mountPath``
+  - [ ] Add/align heading: ``targetSelector.$podName.$containerName.mountPropagation``
+  - [ ] Add/align heading: ``targetSelector.$podName.$containerName.subPath``
+  - [ ] Add/align heading: ``targetSelector.$podName.$containerName.readOnly``
+  - [ ] Add/align heading: `Basic Examples`
+  - [ ] Add/align heading: `Example of a shared emptyDir volume`
+  - [ ] Add/align heading: `Example of a volume mounted to a specific container with a specific mountPath`
+  - [ ] Add/align heading: `Example of a volume mounted to a specific container using the default mountPath`
+
+- [ ] `persistence/iscsi.md` -> `persistence/iscsi.md`
+  - [ ] Add/align heading: ``iscsi``
+  - [ ] Add/align heading: ``fsType``
+  - [ ] Add/align heading: ``targetPortal``
+  - [ ] Add/align heading: ``iqn``
+  - [ ] Add/align heading: ``lun``
+  - [ ] Add/align heading: ``initiatorName``
+  - [ ] Add/align heading: ``iscsiInterface``
+  - [ ] Add/align heading: ``portals``
+  - [ ] Add/align heading: ``authDiscovery``
+  - [ ] Add/align heading: ``authDiscovery.username``
+  - [ ] Add/align heading: ``authDiscovery.password``
+  - [ ] Add/align heading: ``authDiscovery.usernameInitiator``
+  - [ ] Add/align heading: ``authDiscovery.passwordInitiator``
+  - [ ] Add/align heading: ``authSession``
+  - [ ] Add/align heading: ``authSession.username``
+  - [ ] Add/align heading: ``authSession.password``
+
+- [ ] `persistence/nfs.md` -> `persistence/nfs.md`
+  - [ ] Add/align heading: ``path``
+  - [ ] Add/align heading: ``server``
+
+- [ ] `persistence/pvc-vct/index.md` -> `persistence/pvc-vct/index.md`
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``retain``
+  - [ ] Add/align heading: ``accessModes``
+  - [ ] Add/align heading: ``volumeName``
+  - [ ] Add/align heading: ``existingClaim``
+  - [ ] Add/align heading: ``size``
+  - [ ] Add/align heading: ``storageClass``
+  - [ ] Add/align heading: ``dataSource``
+  - [ ] Add/align heading: ``dataSource.kind``
+  - [ ] Add/align heading: ``dataSource.name``
+  - [ ] Add/align heading: ``static``
+  - [ ] Add/align heading: ``static.mode``
+  - [ ] Add/align heading: ``mountOptions``
+  - [ ] Add/align heading: ``mountOptions[].key``
+  - [ ] Add/align heading: ``mountOptions[].value``
+  - [ ] Add/align heading: ``volumeSnapshots``
+  - [ ] Add/align heading: ``volumeSnapshots[].name``
+  - [ ] Add/align heading: ``volumeSnapshots[].enabled``
+  - [ ] Add/align heading: ``volumeSnapshots[].labels``
+  - [ ] Add/align heading: ``volumeSnapshots[].annotations``
+  - [ ] Add/align heading: ``volumeSnapshots[].volumeSnapshotClassName``
+
+- [ ] `persistence/pvc-vct/static-custom.md` -> `persistence/pvc-vct/static-custom.md`
+  - [ ] Add/align heading: ``driver``
+  - [ ] Add/align heading: ``provisioner``
+
+- [ ] `persistence/pvc-vct/static-nfs.md` -> `persistence/pvc-vct/static-nfs.md`
+  - [ ] Add/align heading: ``server``
+  - [ ] Add/align heading: ``share``
+
+- [ ] `persistence/pvc-vct/static-smb.md` -> `persistence/pvc-vct/static-smb.md`
+  - [ ] Add/align heading: ``server``
+  - [ ] Add/align heading: ``share``
+  - [ ] Add/align heading: ``user``
+  - [ ] Add/align heading: ``password``
+  - [ ] Add/align heading: ``domain``
+
+- [ ] `persistence/secret.md` -> `persistence/secret.md`
+  - [ ] Add/align heading: ``objectName``
+  - [ ] Add/align heading: ``expandObjectName``
+  - [ ] Add/align heading: ``optional``
+  - [ ] Add/align heading: ``defaultMode``
+  - [ ] Add/align heading: ``items``
+  - [ ] Add/align heading: ``items.key``
+  - [ ] Add/align heading: ``items.path``
+
+- [ ] `podDisruptionBudget.md` -> `podDisruptionBudget.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``minAvailable``
+  - [ ] Add/align heading: ``maxUnavailable``
+  - [ ] Add/align heading: ``unhealthyPodEvictionPolicy``
+
+- [ ] `podOptions.md` -> `podOptions/index.md`
+  - [ ] Add/align heading: `Defaults`
+  - [ ] Add/align heading: ``enableServiceLinks``
+  - [ ] Add/align heading: ``hostNetwork``
+  - [ ] Add/align heading: ``hostPID``
+  - [ ] Add/align heading: ``hostIPC``
+  - [ ] Add/align heading: ``hostUsers``
+  - [ ] Add/align heading: ``shareProcessNamespace``
+  - [ ] Add/align heading: ``restartPolicy``
+  - [ ] Add/align heading: ``dnsPolicy``
+  - [ ] Add/align heading: ``dnsConfig``
+  - [ ] Add/align heading: ``hostAliases``
+  - [ ] Add/align heading: ``nodeSelector``
+  - [ ] Add/align heading: ``defaultSpread``
+  - [ ] Add/align heading: ``topologySpreadConstraints``
+  - [ ] Add/align heading: ``tolerations``
+  - [ ] Add/align heading: ``schedulerName``
+  - [ ] Add/align heading: ``priorityClassName``
+  - [ ] Add/align heading: ``runtimeClassName``
+  - [ ] Add/align heading: ``automountServiceAccountToken``
+  - [ ] Add/align heading: ``terminationGracePeriodSeconds``
+
+- [ ] `priorityClass.md` -> `priorityClass.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``value``
+  - [ ] Add/align heading: ``globalDefault``
+  - [ ] Add/align heading: ``description``
+  - [ ] Add/align heading: ``preemptionPolicy``
+
+- [ ] `rbac.md` -> `rbac.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: `Target Selector`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``primary``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``clusterWide``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``allServiceAccounts``
+  - [ ] Add/align heading: ``serviceAccounts``
+  - [ ] Add/align heading: ``rules``
+  - [ ] Add/align heading: ``rules[].apiGroups``
+  - [ ] Add/align heading: ``rules[].resources``
+  - [ ] Add/align heading: ``rules[].resourceNames``
+  - [ ] Add/align heading: ``rules[].verbs``
+  - [ ] Add/align heading: ``subjects``
+  - [ ] Add/align heading: ``subjects[].kind``
+  - [ ] Add/align heading: ``subjects[].name``
+  - [ ] Add/align heading: ``subjects[].apiGroup``
+
+- [ ] `resources.md` -> `workload/podSpec/containers/resources.md`
+  - [ ] Add/align heading: `Defaults`
+  - [ ] Add/align heading: ``resources.requests."gpu.intel.com/i915"``
+  - [ ] Add/align heading: ``resources.limits."nvidia.com/gpu"``
+  - [ ] Add/align heading: ``resources.limits."amd.com/gpu"``
+
+- [ ] `route.md` -> `route.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``kind``
+  - [ ] Add/align heading: ``parentRefs``
+  - [ ] Add/align heading: ``hostnames``
+  - [ ] Add/align heading: ``rules``
+
+- [ ] `secret.md` -> `secret.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``type``
+  - [ ] Add/align heading: ``data``
+
+- [ ] `securityContext.md` -> `workload/podSpec/containers/securityContext.md`
+  - [ ] Add/align heading: `Defaults`
+  - [ ] Add/align heading: ``securityContext.container``
+  - [ ] Add/align heading: ``securityContext.container.PUID``
+  - [ ] Add/align heading: ``securityContext.container.UMASK``
+  - [ ] Add/align heading: ``securityContext.container.runAsNonRoot``
+  - [ ] Add/align heading: ``securityContext.container.runAsUser``
+  - [ ] Add/align heading: ``securityContext.container.runAsGroup``
+  - [ ] Add/align heading: ``securityContext.container.readOnlyRootFilesystem``
+  - [ ] Add/align heading: ``securityContext.container.allowPrivilegeEscalation``
+  - [ ] Add/align heading: ``securityContext.container.privileged``
+  - [ ] Add/align heading: ``securityContext.container.seccompProfile``
+  - [ ] Add/align heading: ``securityContext.container.seccompProfile.type``
+  - [ ] Add/align heading: ``securityContext.container.seccompProfile.profile``
+  - [ ] Add/align heading: ``securityContext.container.capabilities``
+  - [ ] Add/align heading: ``securityContext.container.capabilities.add``
+  - [ ] Add/align heading: ``securityContext.container.capabilities.drop``
+  - [ ] Add/align heading: ``securityContext.pod``
+  - [ ] Add/align heading: ``securityContext.pod.fsGroup``
+  - [ ] Add/align heading: ``securityContext.pod.fsGroupChangePolicy``
+  - [ ] Add/align heading: ``securityContext.pod.supplementalGroups``
+  - [ ] Add/align heading: ``securityContext.pod.sysctls``
+
+- [ ] `service/ExternalIP.md` -> `service/ExternalIP.md`
+  - [ ] Add/align heading: ``externalIP``
+  - [ ] Add/align heading: ``useSlice``
+  - [ ] Add/align heading: ``addressType``
+  - [ ] Add/align heading: ``appProtocol``
+
+- [ ] `service/ExternalName.md` -> `service/ExternalName.md`
+  - [ ] Add/align heading: ``externalName``
+
+- [ ] `service/LoadBalancer.md` -> `service/LoadBalancer.md`
+  - [ ] Add/align heading: ``sharedKey``
+  - [ ] Add/align heading: ``loadBalancerIP``
+  - [ ] Add/align heading: ``loadBalancerIPs``
+  - [ ] Add/align heading: ``loadBalancerSourceRanges``
+
+- [ ] `service/NodePort.md` -> `service/NodePort.md`
+  - [ ] Add/align heading: ``ports.$port-name.nodePort``
+
+- [ ] `service/index.md` -> `service/index.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: `Target Selector`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``type``
+  - [ ] Add/align heading: ``expandObjectName``
+  - [ ] Add/align heading: ``clusterIP``
+  - [ ] Add/align heading: ``ipFamilyPolicy``
+  - [ ] Add/align heading: ``ipFamilies``
+  - [ ] Add/align heading: ``sessionAffinity``
+  - [ ] Add/align heading: ``sessionAffinityConfig.clientIP.timeoutSeconds``
+  - [ ] Add/align heading: ``externalIPs``
+  - [ ] Add/align heading: ``externalTrafficPolicy``
+  - [ ] Add/align heading: ``publishNotReadyAddresses``
+  - [ ] Add/align heading: ``targetSelector``
+  - [ ] Add/align heading: ``ports``
+  - [ ] Add/align heading: ``integrations``
+  - [ ] Add/align heading: ``integrations.traefik``
+
+- [ ] `service/integrations/traefik.md` -> `service/integrations/traefik.md`
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``forceTLS``
+  - [ ] Add/align heading: ``insecureSkipVerify``
+  - [ ] Add/align heading: ``serverName``
+  - [ ] Add/align heading: ``rootCAs``
+  - [ ] Add/align heading: ``rootCAs.secretRef``
+  - [ ] Add/align heading: ``rootCAs.secretRef.name``
+  - [ ] Add/align heading: ``rootCAs.secretRef.expandObjectName``
+  - [ ] Add/align heading: ``rootCAs.configMapRef``
+  - [ ] Add/align heading: ``rootCAs.configMapRef.name``
+  - [ ] Add/align heading: ``rootCAs.configMapRef.expandObjectName``
+
+- [ ] `service/ports.md` -> `service/ports.md`
+  - [ ] Add/align heading: `Target Selector`
+  - [ ] Add/align heading: ``$port-name``
+  - [ ] Add/align heading: ``port``
+  - [ ] Add/align heading: ``targetPort``
+  - [ ] Add/align heading: ``protocol``
+  - [ ] Add/align heading: ``hostPort``
+  - [ ] Add/align heading: ``targetSelector``
+
+- [ ] `serviceAccount.md` -> `serviceAccount.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: `Target Selector`
+  - [ ] Add/align heading: ``serviceAccount.$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``primary``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``targetSelectAll``
+  - [ ] Add/align heading: ``targetSelector``
+
+- [ ] `storageClass.md` -> `storageClass.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``provisioner``
+  - [ ] Add/align heading: ``parameters``
+  - [ ] Add/align heading: ``reclaimPolicy``
+  - [ ] Add/align heading: ``allowVolumeExpansion``
+  - [ ] Add/align heading: ``volumeBindingMode``
+  - [ ] Add/align heading: ``mountOptions``
+
+- [ ] `volumeSnapshot.md` -> `volumeSnapshots.md`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``source``
+  - [ ] Add/align heading: ``volumeSnapshotContentName``
+  - [ ] Add/align heading: ``persistentVolumeClaimName``
+
+- [ ] `volumeSnapshotClass.md` -> `volumeSnapshotClass.md`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``isDefault``
+  - [ ] Add/align heading: ``driver``
+  - [ ] Add/align heading: ``deletionPolicy``
+  - [ ] Add/align heading: ``parameters``
+
+- [ ] `vpa.md` -> `vpa.md`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``targetSelector``
+  - [ ] Add/align heading: ``updatePolicy``
+  - [ ] Add/align heading: ``resourcePolicy``
+
+- [ ] `webhook.md` -> `webhook.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``type``
+  - [ ] Add/align heading: ``webhooks``
+  - [ ] Add/align heading: ``webhooks[].name``
+  - [ ] Add/align heading: ``webhooks[].failurePolicy``
+  - [ ] Add/align heading: ``webhooks[].matchPolicy``
+  - [ ] Add/align heading: ``webhooks[].sideEffects``
+  - [ ] Add/align heading: ``webhooks[].reinvocationPolicy``
+  - [ ] Add/align heading: ``webhooks[].timeoutSeconds``
+  - [ ] Add/align heading: ``webhooks[].admissionReviewVersions``
+  - [ ] Add/align heading: ``webhooks[].clientConfig``
+  - [ ] Add/align heading: ``webhooks[].clientConfig.caBundle``
+  - [ ] Add/align heading: ``webhooks[].clientConfig.url``
+  - [ ] Add/align heading: ``webhooks[].clientConfig.service``
+  - [ ] Add/align heading: ``webhooks[].clientConfig.service.name``
+  - [ ] Add/align heading: ``webhooks[].clientConfig.service.namespace``
+  - [ ] Add/align heading: ``webhooks[].clientConfig.service.path``
+  - [ ] Add/align heading: ``webhooks[].clientConfig.service.port``
+  - [ ] Add/align heading: ``webhooks[].rules``
+  - [ ] Add/align heading: ``webhooks[].rules[].scope``
+  - [ ] Add/align heading: ``webhooks[].rules[].apiGroups``
+  - [ ] Add/align heading: ``webhooks[].rules[].apiVersions``
+  - [ ] Add/align heading: ``webhooks[].rules[].operations``
+  - [ ] Add/align heading: ``webhooks[].rules[].resources``
+
+- [ ] `workload/cronjob.md` -> `workload/cronjob.md`
+  - [ ] Add/align heading: `Notes`
+  - [ ] Add/align heading: ``schedule``
+  - [ ] Add/align heading: ``timezone``
+  - [ ] Add/align heading: ``concurrencyPolicy``
+  - [ ] Add/align heading: ``failedJobsHistoryLimit``
+  - [ ] Add/align heading: ``successfulJobsHistoryLimit``
+  - [ ] Add/align heading: ``startingDeadlineSeconds``
+  - [ ] Add/align heading: ``completionMode``
+  - [ ] Add/align heading: ``backoffLimit``
+  - [ ] Add/align heading: ``completions``
+  - [ ] Add/align heading: ``parallelism``
+  - [ ] Add/align heading: ``ttlSecondsAfterFinished``
+  - [ ] Add/align heading: ``activeDeadlineSeconds``
+
+- [ ] `workload/daemonset.md` -> `workload/daemonset.md`
+  - [ ] Add/align heading: `Notes`
+  - [ ] Add/align heading: ``revisionHistoryLimit``
+  - [ ] Add/align heading: ``strategy``
+  - [ ] Add/align heading: ``rollingUpdate``
+  - [ ] Add/align heading: ``rollingUpdate.maxUnavailable``
+  - [ ] Add/align heading: ``rollingUpdate.maxSurge``
+
+- [ ] `workload/deployment.md` -> `workload/deployment.md`
+  - [ ] Add/align heading: `Notes`
+  - [ ] Add/align heading: ``replicas``
+  - [ ] Add/align heading: ``revisionHistoryLimit``
+  - [ ] Add/align heading: ``strategy``
+  - [ ] Add/align heading: ``rollingUpdate``
+  - [ ] Add/align heading: ``rollingUpdate.maxUnavailable``
+  - [ ] Add/align heading: ``rollingUpdate.maxSurge``
+
+- [ ] `workload/index.md` -> `workload/index.md`
+  - [ ] Add/align heading: `Naming scheme`
+  - [ ] Add/align heading: ``$name``
+  - [ ] Add/align heading: ``enabled``
+  - [ ] Add/align heading: ``primary``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``namespace``
+  - [ ] Add/align heading: ``type``
+  - [ ] Add/align heading: ``podSpec``
+  - [ ] Add/align heading: ``labels``
+  - [ ] Add/align heading: ``annotations``
+  - [ ] Add/align heading: ``automountServiceAccountToken``
+  - [ ] Add/align heading: ``serviceAccountName``
+  - [ ] Add/align heading: ``hostNetwork``
+  - [ ] Add/align heading: ``hostPID``
+  - [ ] Add/align heading: ``hostIPC``
+  - [ ] Add/align heading: ``hostUsers``
+  - [ ] Add/align heading: ``shareProcessNamespace``
+  - [ ] Add/align heading: ``enableServiceLinks``
+  - [ ] Add/align heading: ``restartPolicy``
+  - [ ] Add/align heading: ``schedulerName``
+  - [ ] Add/align heading: ``priorityClassName``
+  - [ ] Add/align heading: ``hostname``
+  - [ ] Add/align heading: ``terminationGracePeriodSeconds``
+  - [ ] Add/align heading: ``nodeSelector``
+  - [ ] Add/align heading: ``topologySpreadConstraints``
+  - [ ] Add/align heading: ``hostAliases``
+  - [ ] Add/align heading: ``ip``
+  - [ ] Add/align heading: ``hostnames``
+  - [ ] Add/align heading: ``dnsPolicy``
+  - [ ] Add/align heading: ``dnsConfig``
+  - [ ] Add/align heading: ``dnsConfig.nameservers``
+  - [ ] Add/align heading: ``dnsConfig.searches``
+  - [ ] Add/align heading: ``dnsConfig.options``
+  - [ ] Add/align heading: ``dnsConfig.options.name``
+  - [ ] Add/align heading: ``dnsConfig.options.value``
+  - [ ] Add/align heading: ``tolerations``
+  - [ ] Add/align heading: ``tolerations.operator``
+  - [ ] Add/align heading: ``tolerations.key``
+  - [ ] Add/align heading: ``tolerations.value``
+
+- [ ] `workload/job.md` -> `workload/job.md`
+  - [ ] Add/align heading: `Notes`
+  - [ ] Add/align heading: ``completionMode``
+  - [ ] Add/align heading: ``backoffLimit``
+  - [ ] Add/align heading: ``completions``
+  - [ ] Add/align heading: ``parallelism``
+  - [ ] Add/align heading: ``ttlSecondsAfterFinished``
+  - [ ] Add/align heading: ``activeDeadlineSeconds``
+
+- [ ] `workload/statefulset.md` -> `workload/statefulset.md`
+  - [ ] Add/align heading: `Notes`
+  - [ ] Add/align heading: ``replicas``
+  - [ ] Add/align heading: ``revisionHistoryLimit``
+  - [ ] Add/align heading: ``strategy``
+  - [ ] Add/align heading: ``rollingUpdate``
+  - [ ] Add/align heading: ``rollingUpdate.maxUnavailable``
+  - [ ] Add/align heading: ``rollingUpdate.partition``
+
+
+## Verification
+
+- [ ] After manual updates, run `python3 generate_newdocs.py --clean`
+- [ ] Re-check `newdocs-missing-index.md` for remaining non-schema gaps

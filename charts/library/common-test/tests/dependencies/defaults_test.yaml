@@ -1,0 +1,682 @@
+suite: dependencies defaults test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should apply the defaults of common to the objects of a dependency
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: &image
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+    asserts:
+      - documentSelector: &workloadDoc
+          path: kind
+          value: Deployment
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].image
+          value: docker.io/some/image:1.0.0
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].livenessProbe.tcpSocket.port
+          value: 6379
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].readinessProbe.tcpSocket.port
+          value: 6379
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].startupProbe.tcpSocket.port
+          value: 6379
+      - documentSelector:
+          path: kind
+          value: Service
+        equal:
+          path: spec.ports[0]
+          value:
+            name: main
+            port: 6379
+            protocol: TCP
+            targetPort: 6379
+
+  - it: should disable the default probes without a main port
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main: {}
+          service:
+            db:
+              ports:
+                db:
+                  protocol: tcp
+                  port: 6379
+    asserts:
+      - documentSelector: &workloadDoc
+          path: kind
+          value: Deployment
+        notExists:
+          path: spec.template.spec.containers[0].livenessProbe
+      - documentSelector: *workloadDoc
+        notExists:
+          path: spec.template.spec.containers[0].readinessProbe
+      - documentSelector: *workloadDoc
+        notExists:
+          path: spec.template.spec.containers[0].startupProbe
+
+  - it: should enable the objects of a dependency that are disabled by default in common
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main: {}
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+          ingress:
+            main:
+              hosts:
+                - host: mydep.example.com
+                  paths:
+                    - path: /
+              integrations:
+                traefik:
+                  enabled: false
+          podDisruptionBudget:
+            main:
+              minAvailable: 1
+    asserts:
+      - hasDocuments:
+          count: 4
+      - documentSelector:
+          path: kind
+          value: Ingress
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector:
+          path: kind
+          value: PodDisruptionBudget
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+
+  - it: should keep the explicitly disabled objects of a dependency disabled
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main: {}
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+          configmap:
+            config:
+              enabled: false
+              data:
+                foo: bar
+            other:
+              enabled: "{{ .Values.dependencies.mydep.someConfig.enabled }}"
+              data:
+                foo: bar
+          someConfig:
+            enabled: false
+    asserts:
+      - hasDocuments:
+          count: 2
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector:
+          path: kind
+          value: Service
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+
+  - it: should apply the scoped defaults of a dependency to its pods and containers only
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        app: &rootWorkload
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                probes: &disabledProbes
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          securityContext:
+            pod:
+              fsGroup: 1000
+            container:
+              readOnlyRootFilesystem: false
+              runAsGroup: 0
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+          podOptions:
+            terminationGracePeriodSeconds: 120
+            hostNetwork: true
+          workload:
+            main:
+              type: StatefulSet
+              podSpec:
+                containers:
+                  main:
+                    probes: *disabledProbes
+                    resources:
+                      requests:
+                        cpu: 100m
+                  sidecar:
+                    probes: *disabledProbes
+                    securityContext:
+                      runAsGroup: 1001
+    asserts:
+      - documentSelector: &depWorkloadDoc
+          path: kind
+          value: StatefulSet
+        equal:
+          path: spec.template.spec.securityContext.fsGroup
+          value: 1000
+      - documentSelector: *depWorkloadDoc
+        equal:
+          path: spec.template.spec.terminationGracePeriodSeconds
+          value: 120
+      - documentSelector: *depWorkloadDoc
+        equal:
+          path: spec.template.spec.hostNetwork
+          value: true
+      - documentSelector: *depWorkloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: false
+      - documentSelector: *depWorkloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsGroup
+          value: 0
+      - documentSelector: *depWorkloadDoc
+        equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            requests:
+              cpu: 100m
+              memory: 200Mi
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+      - documentSelector: *depWorkloadDoc
+        equal:
+          path: spec.template.spec.containers[1].securityContext.readOnlyRootFilesystem
+          value: false
+      - documentSelector: *depWorkloadDoc
+        equal:
+          path: spec.template.spec.containers[1].securityContext.runAsGroup
+          value: 1001
+      - documentSelector: *depWorkloadDoc
+        equal:
+          path: spec.template.spec.containers[1].resources.limits
+          value:
+            cpu: 2000m
+            memory: 1Gi
+      - documentSelector: &rootWorkloadDoc
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.spec.securityContext.fsGroup
+          value: 568
+      - documentSelector: *rootWorkloadDoc
+        equal:
+          path: spec.template.spec.terminationGracePeriodSeconds
+          value: 60
+      - documentSelector: *rootWorkloadDoc
+        equal:
+          path: spec.template.spec.hostNetwork
+          value: false
+      - documentSelector: *rootWorkloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: true
+      - documentSelector: *rootWorkloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsGroup
+          value: 568
+      - documentSelector: *rootWorkloadDoc
+        equal:
+          path: spec.template.spec.containers[0].resources.limits
+          value:
+            cpu: 1500m
+            memory: 2400Mi
+
+  - it: should keep the objects of the chart primary
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        app: *rootWorkload
+      service:
+        app:
+          enabled: true
+          primary: true
+          ports:
+            app:
+              enabled: true
+              primary: true
+              protocol: http
+              port: 8080
+      ingress:
+        app:
+          enabled: true
+          primary: true
+          hosts:
+            - host: app.example.com
+              paths:
+                - path: /
+          integrations: &noIntegrations
+            traefik:
+              enabled: false
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              type: StatefulSet
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+          ingress:
+            main:
+              hosts:
+                - host: mydep.example.com
+                  paths:
+                    - path: /
+              integrations: *noIntegrations
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector:
+          path: metadata.labels['service.name']
+          value: app
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentSelector:
+          path: metadata.labels['service.name']
+          value: mydep-main
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector: &rootIngressDoc
+          path: spec.rules[0].host
+          value: app.example.com
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentSelector: *rootIngressDoc
+        equal:
+          path: spec.rules[0].http.paths[0].backend.service
+          value:
+            name: test-release-name-common-test
+            port:
+              number: 8080
+      - documentSelector: &depIngressDoc
+          path: spec.rules[0].host
+          value: mydep.example.com
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector: *depIngressDoc
+        equal:
+          path: spec.rules[0].http.paths[0].backend.service
+          value:
+            name: test-release-name-common-test-mydep-main
+            port:
+              number: 6379
+
+  - it: should not require primary objects in the chart
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              type: StatefulSet
+              podSpec:
+                containers:
+                  main:
+                    probes: *disabledProbes
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+          serviceAccount:
+            main: {}
+          rbac:
+            main:
+              rules:
+                - apiGroups:
+                    - ""
+                  resources:
+                    - pods
+                  verbs:
+                    - get
+          ingress:
+            main:
+              hosts:
+                - host: mydep.example.com
+                  paths:
+                    - path: /
+              integrations: *noIntegrations
+          metrics:
+            main:
+              type: servicemonitor
+              endpoints:
+                - port: main
+                  path: /metrics
+    asserts:
+      - hasDocuments:
+          count: 7
+      - documentSelector:
+          path: kind
+          value: Service
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector:
+          path: kind
+          value: ServiceAccount
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector:
+          path: kind
+          value: Ingress
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector:
+          path: kind
+          value: ServiceMonitor
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+
+  - it: should use the explicit primary objects of a dependency
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              type: StatefulSet
+              podSpec:
+                containers:
+                  main:
+                    probes: *disabledProbes
+            worker:
+              primary: true
+              type: Deployment
+              podSpec:
+                containers:
+                  main:
+                    probes: *disabledProbes
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+            db:
+              primary: true
+              ports:
+                db:
+                  protocol: tcp
+                  port: 5432
+                metrics:
+                  primary: true
+                  protocol: http
+                  port: 9187
+          ingress:
+            main:
+              hosts:
+                - host: mydep.example.com
+                  paths:
+                    - path: /
+              integrations: *noIntegrations
+    asserts:
+      - documentSelector:
+          path: metadata.labels['service.name']
+          value: mydep-db
+        equal:
+          path: spec.selector['pod.name']
+          value: mydep-worker
+      - documentSelector:
+          path: metadata.labels['service.name']
+          value: mydep-main
+        equal:
+          path: spec.selector['pod.name']
+          value: mydep-worker
+      - documentSelector:
+          path: kind
+          value: Ingress
+        equal:
+          path: spec.rules[0].http.paths[0].backend.service
+          value:
+            name: test-release-name-common-test
+            port:
+              number: 9187
+
+  - it: should use the only objects of a dependency as primary
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            server:
+              type: StatefulSet
+              podSpec:
+                containers:
+                  app:
+                    probes: *disabledProbes
+          service:
+            db:
+              ports:
+                db:
+                  protocol: tcp
+                  port: 5432
+          persistence:
+            data:
+              type: emptyDir
+              mountPath: /data
+          ingress:
+            main:
+              hosts:
+                - host: mydep.example.com
+                  paths:
+                    - path: /
+              integrations: *noIntegrations
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Service
+        equal:
+          path: spec.selector['pod.name']
+          value: mydep-server
+      - documentSelector: &workloadDoc
+          path: kind
+          value: StatefulSet
+        equal:
+          path: spec.template.spec.containers[0].name
+          value: test-release-name-common-test
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: mydep-data
+            mountPath: /data
+            readOnly: false
+      - documentSelector:
+          path: kind
+          value: Ingress
+        equal:
+          path: spec.rules[0].http.paths[0].backend.service
+          value:
+            name: test-release-name-common-test-mydep-db
+            port:
+              number: 5432
+
+  - it: should fail with multiple primary workloads in a dependency
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              primary: true
+            worker:
+              primary: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected at most one primary workload in dependency [mydep], but got [main, worker]
+
+  - it: should fail with multiple primary services in a dependency
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main: {}
+          service:
+            main:
+              primary: true
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+            db:
+              primary: true
+              ports:
+                db:
+                  protocol: tcp
+                  port: 5432
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected at most one primary service in dependency [mydep], but got [db, main]
+
+  - it: should not wait for the dependencies of the chart in the workloads of a dependency
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        app: *rootWorkload
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              type: StatefulSet
+              podSpec:
+                containers:
+                  main:
+                    probes: *disabledProbes
+            worker:
+              dbWait: true
+              type: Deployment
+              podSpec:
+                containers:
+                  main:
+                    probes: *disabledProbes
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test
+        equal:
+          path: spec.template.spec.initContainers[0].name
+          value: test-release-name-common-test-system-postgresql-wait
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        notExists:
+          path: spec.template.spec.initContainers
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-worker
+        equal:
+          path: spec.template.spec.initContainers[0].name
+          value: test-release-name-common-test-system-postgresql-wait

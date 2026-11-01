@@ -7,16 +7,18 @@ release:
 tests:
   - it: should pass with hibernate
     set:
-      cnpg:
-        mypg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: app
-          database: app
-          password: test-password
-          instances: 2
-          hibernate: true
-          pooler:
-            enabled: true
+          depconfig:
+            postgresqlUsername: app
+            postgresqlDatabase: app
+            password: test-password
+          operator:
+            instances: 2
+            hibernate: true
+            pooler:
+              enabled: true
     asserts:
       - documentIndex: &clusterDoc 1
         isKind:
@@ -45,16 +47,18 @@ tests:
     set:
       global:
         stopAll: true
-      cnpg:
-        mypg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: app
-          database: app
-          password: test-password
-          hibernate: false
-          instances: 2
-          pooler:
-            enabled: true
+          depconfig:
+            postgresqlUsername: app
+            postgresqlDatabase: app
+            password: test-password
+          operator:
+            hibernate: false
+            instances: 2
+            pooler:
+              enabled: true
     asserts:
       - documentIndex: *clusterDoc
         isKind:

@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Configuration for `persistence` entries with `type: nfs`.",
+  "properties": {
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "default": ""
+    },
+    "server": {
+      "type": "string",
+      "minLength": 1,
+      "default": ""
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "path",
+    "server"
+  ]
+}

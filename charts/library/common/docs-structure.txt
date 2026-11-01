@@ -1,0 +1,974 @@
+================================================================
+TRUECHARTS COMMON CHART CONFIGURATION STRUCTURE
+Extracted from documentation files
+================================================================
+
+=== TOP-LEVEL KEYS ===
+
+global (map) - Global values that apply to all charts
+  - labels (map)
+  - annotations (map)
+  - namespace (string)
+  - minNodePort (int) - default: 9000
+  - stopAll (bool) - default: false
+  - metallb (map)
+    - addServiceAnnotations (bool) - default: true
+  - traefik (map)
+    - addServiceAnnotations (bool) - default: true
+    - commonMiddlewares (list)
+
+fallbackDefaults (map) - Fallback defaults used when values not defined
+  - probeType (string) - default: http
+  - serviceProtocol (string) - default: tcp
+  - serviceType (string) - default: ClusterIP
+  - storageClass (string)
+  - persistenceType (string) - default: emptyDir
+  - pvcRetain (bool) - default: true
+  - pvcSize (string) - default: 100Gi
+  - vctSize (string) - default: 100Gi
+  - accessModes (list of string) - default: [ReadWriteOnce]
+  - probeTimeouts (map)
+    - liveness (map)
+      - initialDelaySeconds (int)
+      - periodSeconds (int)
+      - timeoutSeconds (int)
+      - failureThreshold (int)
+      - successThreshold (int)
+    - readiness (map) - same as liveness
+    - startup (map) - same as liveness
+  - topologyKey (string) - default: kubernetes.io/hostname
+
+operator (map) - Operator-specific settings
+  - register (bool) - default: false
+  - verify (map)
+    - enabled (bool) - default: true
+    - additionalsystem (list of string)
+
+extraTpl (list of string) - Define kubernetes resources, tpl resolved
+
+podOptions (map) - Options that apply to all pods
+  - enableServiceLinks (bool)
+  - hostNetwork (bool)
+  - hostPID (bool)
+  - hostUsers (bool)
+  - hostIPC (bool)
+  - shareProcessNamespace (bool)
+  - restartPolicy (string) - Always/OnFailure/Never
+  - dnsPolicy (string)
+  - dnsConfig (map)
+  - hostAliases (list)
+  - tolerations (list)
+  - runtimeClassName (string)
+  - automountServiceAccountToken (bool)
+  - terminationGracePeriodSeconds (int)
+
+containerOptions (map) - Options that apply to all containers
+  - NVIDIA_CAPS (list)
+
+TZ (string) - Timezone, default: UTC
+
+namespace (string) - Namespace for objects (not chart deps)
+
+resources (map) - Resources for all containers
+  - limits (map)
+    - cpu (string)
+    - memory (string)
+  - requests (map)
+    - cpu (string)
+    - memory (string)
+
+securityContext (map) - Security context for all containers/pods
+  - container (map)
+    - PUID (int)
+    - UMASK (string)
+    - runAsNonRoot (bool)
+    - runAsUser (int)
+    - runAsGroup (int)
+    - readOnlyRootFilesystem (bool)
+    - allowPrivilegeEscalation (bool)
+    - privileged (bool)
+    - seccompProfile (map)
+      - type (string)
+    - capabilities (map)
+      - add (list)
+      - drop (list)
+  - pod (map)
+    - fsGroup (int)
+    - fsGroupChangePolicy (string)
+    - supplementalGroups (list)
+    - sysctls (list)
+
+image (map) - Main image definition
+  - repository (string)
+  - tag (string)
+  - pullPolicy (string) - default: IfNotPresent
+
+Additional images can be defined as: nameImage (same structure)
+
+
+=== WORKLOAD TYPES ===
+
+workload.$name (map) - Variable-named workload objects
+  Common keys:
+  - enabled (bool)
+  - primary (bool)
+  - type (string)
+  - labels (map)
+  - annotations (map)
+  - namespace (string)
+  - podSpec (map)
+
+  Type: Deployment
+  - replicas (int) - default: 1
+  - revisionHistoryLimit (int) - default: 3
+  - strategy (string) - Recreate/RollingUpdate, default: Recreate
+  - rollingUpdate (map)
+    - maxUnavailable (int)
+    - maxSurge (int)
+
+  Type: StatefulSet
+  - replicas (int) - default: 1
+  - revisionHistoryLimit (int) - default: 3
+  - strategy (string) - OnDelete/RollingUpdate, default: RollingUpdate
+  - rollingUpdate (map)
+    - maxUnavailable (int)
+    - partition (int)
+
+  Type: DaemonSet
+  - revisionHistoryLimit (int) - default: 3
+  - strategy (string) - RollingUpdate/OnDelete, default: RollingUpdate
+  - rollingUpdate (map)
+    - maxUnavailable (int)
+    - maxSurge (int)
+
+  Type: Job
+  - completionMode (string) - Indexed/NonIndexed, default: NonIndexed
+  - backoffLimit (int) - default: 5
+  - completions (int)
+  - parallelism (int) - default: 1
+  - ttlSecondsAfterFinished (int) - default: 120
+  - activeDeadlineSeconds (int)
+
+  Type: CronJob
+  - schedule (string) - required
+  - timezone (string)
+  - concurrencyPolicy (string) - Allow/Replace/Forbid, default: Forbid
+  - failedJobsHistoryLimit (int) - default: 1
+  - successfulJobsHistoryLimit (int) - default: 3
+  - startingDeadlineSeconds (int)
+  - completionMode (string) - Indexed/NonIndexed, default: NonIndexed
+  - backoffLimit (int) - default: 5
+  - completions (int)
+  - parallelism (int) - default: 1
+  - ttlSecondsAfterFinished (int) - default: 120
+  - activeDeadlineSeconds (int)
+
+
+=== CONTAINER CONFIGURATION ===
+
+workload.$name.podSpec.containers.$name (map) - Variable-named containers
+workload.$name.podSpec.initContainers.$name (map) - Variable-named init containers
+
+  Common keys:
+  - enabled (bool)
+  - primary (bool) - containers only
+  - type (string) - initContainers only: init/install/upgrade
+  - imageSelector (string) - default: image
+  - stdin (bool)
+  - tty (bool)
+  - command (list/string)
+  - args (list/string)
+  - extraArgs (list/string)
+  - resources (map) - same structure as top-level resources
+  - securityContext (map) - same structure as top-level securityContext.container
+  - env (map) - environment variables
+  - envFrom (list) - environment from configmap/secret
+  - fixedEnv (map) - fixed environment variables
+  - termination (map)
+    - messagePath (string)
+    - messagePolicy (string)
+
+  Containers only (not initContainers):
+  - lifecycle (map)
+    - postStart (map)
+      - type (string)
+      - command (list/string)
+    - preStop (map)
+      - type (string)
+      - command (list/string)
+  - probes (map)
+    - liveness (map)
+      - enabled (bool)
+      - type (string) - http/tcp/exec/grpc
+      - port (int)
+      - path (string)
+      - command (list/string)
+      - timeouts (map)
+    - readiness (map) - same as liveness
+    - startup (map) - same as liveness
+
+
+=== SERVICE TYPES ===
+
+service.$name (map) - Variable-named service objects
+  Common keys:
+  - enabled (bool)
+  - primary (bool)
+  - namespace (string)
+  - labels (map)
+  - annotations (map)
+  - type (string) - ClusterIP/LoadBalancer/NodePort/ExternalIP/ExternalName
+  - expandObjectName (bool) - default: true
+  - clusterIP (string)
+  - ipFamilyPolicy (string) - SingleStack/PreferDualStack/RequireDualStack
+  - ipFamilies (list of string)
+  - sessionAffinity (string) - ClientIP/None
+  - sessionAffinityConfig (map)
+    - clientIP (map)
+      - timeoutSeconds (int)
+  - externalIPs (list of string)
+  - externalTrafficPolicy (string) - Cluster/Local
+  - publishNotReadyAddresses (bool)
+  - targetSelector (string) - pod name
+  - ports (map) - variable-named port definitions
+  - integrations (map)
+    - traefik (map)
+
+  Type-specific keys:
+  Type: LoadBalancer
+    - loadBalancerIP (string)
+    - loadBalancerSourceRanges (list of string)
+
+  Type: NodePort
+    - (no specific keys)
+
+  Type: ExternalName
+    - externalName (string) - required
+
+  Type: ExternalIP
+    - (uses externalIPs from common keys)
+
+  Port configuration (service.$name.ports.$portname):
+    - enabled (bool)
+    - primary (bool)
+    - port (int)
+    - targetPort (int)
+    - protocol (string) - http/https/tcp/udp
+    - nodePort (int) - for NodePort service
+
+
+=== PERSISTENCE TYPES ===
+
+persistence.$name (map) - Variable-named persistence objects
+  Common keys:
+  - enabled (bool)
+  - type (string) - pvc/hostPath/emptyDir/nfs/iscsi/device/configmap/secret/vct
+  - mountPath (string)
+  - mountPropagation (string) - None/HostToContainer/Bidirectional
+  - subPath (string)
+  - readOnly (bool)
+  - targetSelectAll (bool)
+  - targetSelector (map) - pod and container mapping
+
+  Type: pvc
+    - storageClass (string)
+    - size (string)
+    - retain (bool)
+    - accessModes (list of string)
+    - volumeMode (string)
+    - dataSource (map)
+    - dataSourceRef (map)
+    - static (map)
+
+  Type: vct (VolumeClaimTemplate)
+    - (same as pvc)
+
+  Type: hostPath
+    - hostPath (string)
+    - hostPathType (string)
+
+  Type: emptyDir
+    - medium (string)
+    - sizeLimit (string)
+
+  Type: nfs
+    - server (string)
+    - path (string)
+    - readOnly (bool)
+
+  Type: iscsi
+    - targetPortal (string)
+    - iqn (string)
+    - lun (int)
+    - fsType (string)
+    - readOnly (bool)
+    - portals (list of string)
+    - chapAuthDiscovery (bool)
+    - chapAuthSession (bool)
+    - secretRef (map)
+    - initiatorName (string)
+
+  Type: device
+    - devicePath (string)
+
+  Type: configmap
+    - objectName (string)
+    - expandObjectName (bool)
+    - defaultMode (string)
+    - items (list)
+
+  Type: secret
+    - objectName (string)
+    - expandObjectName (bool)
+    - defaultMode (string)
+    - items (list)
+
+
+=== MIDDLEWARE TYPES (Traefik) ===
+
+ingressMiddlewares.traefik.$name (map) - Variable-named middleware objects
+  Common keys:
+  - enabled (bool)
+  - expandObjectName (bool) - default: true
+  - namespace (string)
+  - labels (map)
+  - annotations (map)
+  - type (string) - middleware type
+  - data (map) - middleware-specific configuration
+
+Middleware Types:
+  - add-prefix
+  - basic-auth
+  - buffering
+  - chain
+  - compress
+  - content-type
+  - forward-auth
+  - headers
+  - ip-allow-list
+  - plugin-bouncer
+  - plugin-geoblock
+  - plugin-mod-security
+  - plugin-real-ip
+  - plugin-rewrite-response-headers
+  - plugin-theme-park
+  - rate-limit
+  - redirect-regex
+  - redirect-scheme
+  - replace-path-regex
+  - replace-path
+  - retry
+  - strip-prefix-regex
+  - strip-prefix
+
+
+=== OTHER TOP-LEVEL RESOURCES ===
+
+cnpg.$name (map) - CloudNativePG cluster
+  - enabled (bool)
+  - type (string) - cluster
+  - (cluster-specific configuration)
+
+hpa.$name (map) - HorizontalPodAutoscaler
+  - enabled (bool)
+  - targetSelector (string)
+  - minReplicas (int)
+  - maxReplicas (int)
+  - metrics (list)
+  - behavior (map)
+
+vpa.$name (map) - VerticalPodAutoscaler
+  - enabled (bool)
+  - targetSelector (string)
+  - updateMode (string) - Off/Initial/Recreate/Auto
+  - resourcePolicy (map)
+
+podDisruptionBudget.$name (map)
+  - enabled (bool)
+  - targetSelector (string)
+  - minAvailable (int/string)
+  - maxUnavailable (int/string)
+
+rbac.$name (map) - Role/ClusterRole definitions
+  - enabled (bool)
+  - clusterWide (bool)
+  - rules (list)
+  - labels (map)
+  - annotations (map)
+
+serviceAccount.$name (map)
+  - enabled (bool)
+  - primary (bool)
+  - targetSelectAll (bool)
+  - targetSelector (list of string)
+  - labels (map)
+  - annotations (map)
+
+networkPolicy.$name (map)
+  - enabled (bool)
+  - targetSelector (string)
+  - policyTypes (list of string)
+  - egress (list)
+  - ingress (list)
+
+secret.$name (map) - Kubernetes Secret
+  - enabled (bool)
+  - type (string)
+  - labels (map)
+  - annotations (map)
+  - data (map)
+  - stringData (map)
+
+configmap.$name (map) - Kubernetes ConfigMap
+  - enabled (bool)
+  - labels (map)
+  - annotations (map)
+  - data (map)
+
+credentials.$name (map) - Credential management
+  - enabled (bool)
+  - type (string)
+  - data (map)
+
+certificate.$name (map) - cert-manager Certificate
+  - enabled (bool)
+  - certificateIssuer (string)
+  - certificateSecretTemplate (map)
+  - hosts (list of string)
+  - dnsNames (list of string)
+
+route.$name (map) - OpenShift Route
+  - enabled (bool)
+  - targetSelector (string/map)
+  - host (string)
+  - path (string)
+  - tls (map)
+
+webhook.$name (map) - MutatingWebhook/ValidatingWebhook
+  - enabled (bool)
+  - type (string) - mutating/validating
+  - webhooks (list)
+
+storageClass.$name (map)
+  - enabled (bool)
+  - provisioner (string)
+  - reclaimPolicy (string)
+  - volumeBindingMode (string)
+  - allowVolumeExpansion (bool)
+  - parameters (map)
+
+volumeSnapshot.$name (map)
+  - enabled (bool)
+  - volumeSnapshotClassName (string)
+  - source (map)
+
+volumeSnapshotClass.$name (map)
+  - enabled (bool)
+  - driver (string)
+  - deletionPolicy (string)
+  - parameters (map)
+
+ingress.$name (map) - Ingress configuration
+  - enabled (bool)
+  - targetSelector (string/map)
+  - hosts (list)
+  - integrations (map)
+    - traefik (map)
+    - certManager (map)
+    - homepage (map)
+
+metrics.$name (map) - Metrics/monitoring configuration
+  - enabled (bool)
+  - type (string)
+  - endpoints (list)
+
+addons (map) - Addon configurations
+  - codeserver (map)
+  - netshoot (map)
+  - vpn (map)
+
+imagePullSecret.$name (map)
+  - enabled (bool)
+  - data (map)
+    - registry (string)
+    - username (string)
+    - password (string)
+    - email (string)
+
+priorityClass.$name (map)
+  - enabled (bool)
+  - value (int)
+  - preemptionPolicy (string)
+  - globalDefault (bool)
+  - description (string)
+
+notes (string) - Additional notes to display after installation
+
+
+================================================================
+SPECIAL FEATURES
+================================================================
+
+1. Variable-Named Objects:
+   - workload.$name - Multiple workloads with custom names
+   - service.$name - Multiple services with custom names
+   - persistence.$name - Multiple persistence volumes with custom names
+   - container.$name - Multiple containers with custom names
+   - ingressMiddlewares.traefik.$name - Multiple middlewares with custom names
+   - All other resource types support variable names
+
+2. Target Selectors:
+   - Services: targetSelector (pod name)
+   - Persistence: targetSelector (pod + container mapping)
+   - ServiceAccount: targetSelector (list of pod names)
+   - HPA/VPA: targetSelector (workload name)
+   - PodDisruptionBudget: targetSelector (workload name)
+   - NetworkPolicy: targetSelector (workload name)
+
+3. Primary Objects:
+   - One workload must be marked as primary: true
+   - One container per workload must be marked as primary: true
+   - Services and other resources can have primary designation
+
+4. Templating:
+   - Many string values support Helm tpl: {{ .Values.someValue }}
+   - Check 'Helm tpl' column in docs for each key
+
+5. Naming Schemes:
+   - Primary service: $FullName (release-name-chart-name)
+   - Non-primary: $FullName-$ResourceName
+   - Can be controlled with expandObjectName: false
+
+
+================================================================
+END OF CONFIGURATION STRUCTURE
+================================================================
+
+================================================================
+DETAILED CONFIGURATION KEYS
+================================================================
+
+=== CONTAINER ENV CONFIGURATION ===
+
+workload.$name.podSpec.containers.$name.env.$key (string or map)
+  When string: Direct value assignment (with tpl support)
+  When map, can have:
+    - value (string) - Direct value
+    - secretKeyRef (map)
+      - name (string) - Secret name (auto-expanded unless expandObjectName: false)
+      - key (string) - Secret key
+      - expandObjectName (bool) - default: true
+    - configMapKeyRef (map)
+      - name (string) - ConfigMap name (auto-expanded unless expandObjectName: false)
+      - key (string) - ConfigMap key
+      - expandObjectName (bool) - default: true
+    - fieldRef (map)
+      - fieldPath (string) - Field path (e.g. metadata.name, status.podIP)
+      - apiVersion (string)
+    - resourceFieldRef (map)
+      - containerName (string)
+      - resource (string)
+      - divisor (string)
+
+=== PROBE CONFIGURATION DETAILS ===
+
+workload.$name.podSpec.containers.$name.probes.$probe (liveness/readiness/startup)
+  - enabled (bool) - default: true
+  - type (string) - http/https/tcp/exec/grpc
+  - port (int) - Port number for http/https/tcp/grpc
+  - path (string) - Path for http/https (default: /)
+  - command (list of string) - Command for exec type
+  - httpHeaders (list) - HTTP headers for http/https
+    - name (string)
+    - value (string)
+  - initialDelaySeconds (int) - from fallbackDefaults.probeTimeouts
+  - periodSeconds (int) - from fallbackDefaults.probeTimeouts
+  - timeoutSeconds (int) - from fallbackDefaults.probeTimeouts
+  - failureThreshold (int) - from fallbackDefaults.probeTimeouts
+  - successThreshold (int) - from fallbackDefaults.probeTimeouts
+
+=== CNPG CLUSTER DETAILED CONFIGURATION ===
+
+cnpg.$name (map) - CloudNativePG cluster configuration
+  - enabled (bool)
+  - type (string) - must be "cluster"
+  - cluster (map)
+    - labels (map)
+    - annotations (map)
+    - env (map) - Same as container env
+    - envFrom (list) - Same as container envFrom
+    - instances (int) - default: 2
+    - singleNode (bool) - default: false
+    - logLevel (string) - error/warning/info/debug/trace
+    - primaryUpdateStrategy (string) - unsupervised/supervised
+    - primaryUpdateMethod (string) - switchover/restart
+    - imageName (string) - PostgreSQL image
+    - imagePullPolicy (string)
+    - postgresUID (int)
+    - postgresGID (int)
+    - storage (map)
+      - size (string)
+      - storageClass (string)
+      - walSize (string)
+      - walStorageClass (string)
+    - walStorage (map)
+      - enabled (bool)
+      - size (string)
+      - storageClass (string)
+    - monitoring (map)
+      - enabled (bool)
+      - podMonitor (map)
+        - enabled (bool)
+    - postgresql (map)
+      - parameters (map) - PostgreSQL configuration parameters
+      - pg_hba (list of string) - pg_hba.conf rules
+      - shared_preload_libraries (list of string)
+    - bootstrap (map)
+      - initdb (map)
+        - database (string)
+        - owner (string)
+        - secret (map)
+        - postInitSQL (list of string)
+        - postInitApplicationSQL (list of string)
+      - recovery (map)
+        - source (string)
+        - database (string)
+        - owner (string)
+        - secret (map)
+    - backup (map)
+      - enabled (bool)
+      - destinationPath (string)
+      - endpointURL (string)
+      - endpointCredentials (string)
+      - retentionPolicy (string)
+      - schedule (string)
+    - pooler (map)
+      - enabled (bool)
+      - instances (int)
+      - type (string) - rw/ro
+      - poolMode (string)
+      - parameters (map)
+
+=== SERVICE PORT CONFIGURATION ===
+
+service.$name.ports.$portname (map)
+  - enabled (bool) - default: true
+  - primary (bool) - default: false
+  - port (int) - required
+  - protocol (string) - http/https/tcp/udp - default from fallbackDefaults.serviceProtocol
+  - targetPort (int) - defaults to port value
+  - nodePort (int) - for NodePort service type
+  - appProtocol (string)
+
+=== INGRESS CONFIGURATION ===
+
+ingress.$name (map)
+  - enabled (bool)
+  - primary (bool)
+  - autoLink (bool) - default: true
+  - targetSelector (map/string)
+  - className (string)
+  - labels (map)
+  - annotations (map)
+  - hosts (list)
+    - host (string)
+    - paths (list)
+      - path (string)
+      - pathType (string) - Prefix/Exact/ImplementationSpecific
+      - service (map)
+        - name (string)
+        - port (int)
+  - tls (list)
+    - hosts (list of string)
+    - secretName (string)
+  - integrations (map)
+    - traefik (map)
+      - enabled (bool)
+      - allowCors (bool)
+      - entrypoints (list of string)
+      - middlewares (list)
+        - name (string)
+        - namespace (string)
+      - fixedMiddlewares (list) - same structure
+      - certManager (map)
+        - enabled (bool)
+        - certificateIssuer (string)
+      - homepage (map)
+        - enabled (bool)
+        - name (string)
+        - description (string)
+        - group (string)
+        - icon (string)
+        - weight (int)
+        - href (string)
+        - widget (map)
+
+=== PODDISRUPTIONBUDGET CONFIGURATION ===
+
+podDisruptionBudget.$name (map)
+  - enabled (bool)
+  - targetSelector (string) - workload name
+  - labels (map)
+  - annotations (map)
+  - minAvailable (int or string) - e.g. 1 or "50%"
+  - maxUnavailable (int or string) - e.g. 1 or "50%"
+  - unhealthyPodEvictionPolicy (string)
+
+=== VPA CONFIGURATION ===
+
+vpa.$name (map)
+  - enabled (bool)
+  - targetSelector (string) - workload name
+  - labels (map)
+  - annotations (map)
+  - updateMode (string) - Off/Initial/Recreate/Auto - default: Auto
+  - resourcePolicy (map)
+    - containerPolicies (list)
+      - containerName (string)
+      - mode (string)
+      - minAllowed (map)
+      - maxAllowed (map)
+      - controlledResources (list of string)
+      - controlledValues (string)
+
+=== NETWORKPOLICY CONFIGURATION ===
+
+networkPolicy.$name (map)
+  - enabled (bool)
+  - targetSelector (string) - workload name
+  - labels (map)
+  - annotations (map)
+  - policyTypes (list of string) - Ingress/Egress
+  - egress (list)
+    - to (list)
+      - ipBlock (map)
+        - cidr (string)
+        - except (list of string)
+      - namespaceSelector (map)
+      - podSelector (map)
+    - ports (list)
+      - port (int)
+      - protocol (string)
+  - ingress (list)
+    - from (list)
+      - ipBlock (map)
+      - namespaceSelector (map)
+      - podSelector (map)
+    - ports (list)
+      - port (int)
+      - protocol (string)
+
+=== CONFIGMAP CONFIGURATION ===
+
+configmap.$name (map)
+  - enabled (bool)
+  - labels (map)
+  - annotations (map)
+  - data (map) - key/value pairs (values as strings)
+
+=== SECRET CONFIGURATION ===
+
+secret.$name (map)
+  - enabled (bool)
+  - type (string) - Opaque/kubernetes.io/tls/etc
+  - labels (map)
+  - annotations (map)
+  - data (map) - key/value pairs (values will be base64 encoded)
+  - stringData (map) - key/value pairs (values as plain strings)
+
+=== SERVICEACCOUNT CONFIGURATION ===
+
+serviceAccount.$name (map)
+  - enabled (bool)
+  - primary (bool)
+  - targetSelectAll (bool)
+  - targetSelector (list of string) - workload names
+  - labels (map)
+  - annotations (map)
+
+=== PRIORITYCLASS CONFIGURATION ===
+
+priorityClass.$name (map)
+  - enabled (bool)
+  - value (int) - required
+  - preemptionPolicy (string) - PreemptLowerPriority/Never
+  - globalDefault (bool)
+  - description (string)
+  - labels (map)
+  - annotations (map)
+
+=== STORAGECLASS CONFIGURATION ===
+
+storageClass.$name (map)
+  - enabled (bool)
+  - provisioner (string) - required
+  - reclaimPolicy (string) - Retain/Delete - default: Retain
+  - volumeBindingMode (string) - Immediate/WaitForFirstConsumer
+  - allowVolumeExpansion (bool)
+  - mountOptions (list of string)
+  - parameters (map)
+  - allowedTopologies (list)
+  - labels (map)
+  - annotations (map)
+
+=== VOLUMESNAPSHOT CONFIGURATION ===
+
+volumeSnapshot.$name (map)
+  - enabled (bool)
+  - volumeSnapshotClassName (string)
+  - labels (map)
+  - annotations (map)
+  - source (map)
+    - persistentVolumeClaimName (string)
+
+=== VOLUMESNAPSHOTCLASS CONFIGURATION ===
+
+volumeSnapshotClass.$name (map)
+  - enabled (bool)
+  - driver (string) - required
+  - deletionPolicy (string) - Delete/Retain - default: Delete
+  - parameters (map)
+  - labels (map)
+  - annotations (map)
+
+=== CERTIFICATE CONFIGURATION ===
+
+certificate.$name (map)
+  - enabled (bool)
+  - certificateIssuer (string) - required
+  - certificateSecretTemplate (map)
+    - labels (map)
+    - annotations (map)
+  - hosts (list of string)
+  - dnsNames (list of string)
+  - uris (list of string)
+  - emailAddresses (list of string)
+  - ipAddresses (list of string)
+  - subject (map)
+  - keystores (map)
+  - usages (list of string)
+  - privateKey (map)
+    - algorithm (string)
+    - encoding (string)
+    - size (int)
+    - rotationPolicy (string)
+  - duration (string)
+  - renewBefore (string)
+  - labels (map)
+  - annotations (map)
+
+=== ROUTE CONFIGURATION (OpenShift) ===
+
+route.$name (map)
+  - enabled (bool)
+  - targetSelector (string/map) - service or port selector
+  - host (string)
+  - path (string)
+  - wildcardPolicy (string) - None/Subdomain
+  - tls (map)
+    - enabled (bool)
+    - termination (string) - edge/passthrough/reencrypt
+    - insecureEdgeTerminationPolicy (string)
+    - certificate (string)
+    - key (string)
+    - caCertificate (string)
+    - destinationCACertificate (string)
+  - labels (map)
+  - annotations (map)
+
+=== WEBHOOK CONFIGURATION ===
+
+webhook.$name (map)
+  - enabled (bool)
+  - type (string) - mutating/validating - required
+  - labels (map)
+  - annotations (map)
+  - webhooks (list)
+    - name (string)
+    - clientConfig (map)
+      - service (map)
+        - name (string)
+        - namespace (string)
+        - path (string)
+        - port (int)
+      - url (string)
+      - caBundle (string)
+    - rules (list)
+      - operations (list of string)
+      - apiGroups (list of string)
+      - apiVersions (list of string)
+      - resources (list of string)
+      - scope (string)
+    - admissionReviewVersions (list of string)
+    - sideEffects (string)
+    - timeoutSeconds (int)
+    - failurePolicy (string) - Fail/Ignore
+    - matchPolicy (string)
+    - namespaceSelector (map)
+    - objectSelector (map)
+
+=== IMAGEPULLSECRET CONFIGURATION ===
+
+imagePullSecret.$name (map)
+  - enabled (bool)
+  - data (map)
+    - registry (string)
+    - username (string)
+    - password (string)
+    - email (string)
+  - labels (map)
+  - annotations (map)
+
+=== METRICS CONFIGURATION ===
+
+metrics.$name (map)
+  - enabled (bool)
+  - type (string) - servicemonitor/podmonitor
+  - labels (map)
+  - annotations (map)
+  - endpoints (list)
+    - port (string)
+    - path (string)
+    - interval (string)
+    - scrapeTimeout (string)
+    - scheme (string)
+    - tlsConfig (map)
+    - bearerTokenFile (string)
+    - bearerTokenSecret (map)
+    - relabelings (list)
+    - metricRelabelings (list)
+
+=== CREDENTIALS CONFIGURATION ===
+
+credentials.$name (map)
+  - enabled (bool)
+  - type (string) - s3/basic/etc
+  - data (map) - credential-specific key/value pairs
+  - labels (map)
+  - annotations (map)
+
+=== ADDONS CONFIGURATION ===
+
+addons (map)
+  - codeserver (map)
+    - enabled (bool)
+    - image (map) - image configuration
+    - service (map) - service configuration
+    - ingress (map) - ingress configuration
+    - env (map) - environment variables
+    - volumeMounts (list) - volume mounts
+  - netshoot (map)
+    - enabled (bool)
+    - image (map)
+    - env (map)
+  - vpn (map)
+    - enabled (bool)
+    - type (string) - openvpn/wireguard/tailscale/gluetun
+    - image (map)
+    - env (map)
+    - config (map) - VPN-specific configuration
+    - killSwitch (bool)
+    - excludedNetworks_IPv4 (list)
+    - excludedNetworks_IPv6 (list)
+
+================================================================

@@ -1,0 +1,394 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "valkey": {
+      "allOf": [
+        {
+          "$ref": "../values.schema.json"
+        },
+        {
+          "$ref": "#/additionalProperties/allOf/1"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "operator": {
+              "type": "object",
+              "description": "Settings of the `ValkeyCluster` of the [valkey-operator](https://github.com/valkey-io/valkey-operator), used when `mode` is `operator`. The credentials stay in `depconfig`. Never merged into the chart values.",
+              "properties": {
+                "shards": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "default": 1,
+                  "description": "Number of shards (primaries) of the cluster."
+                },
+                "replicas": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "default": 0,
+                  "description": "Number of replicas per shard."
+                },
+                "image": {
+                  "type": "string",
+                  "default": "",
+                  "description": "Overrides the image of the nodes, as `repository:tag`. Defaults to `dependencies.valkey.image`."
+                },
+                "workloadType": {
+                  "type": "string",
+                  "enum": [
+                    "StatefulSet",
+                    "Deployment"
+                  ],
+                  "default": "StatefulSet",
+                  "description": "Workload of every node. Can not be changed after creation. `Deployment` does not support persistence."
+                },
+                "config": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "default": {},
+                  "description": "Valkey configuration directives (valkey.conf), eg `maxmemory-policy: allkeys-lru`. Booleans are written as `yes` and `no`."
+                },
+                "resources": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "default": {},
+                  "description": "Resources of the Valkey containers. Defaults to the `resources` of the chart."
+                },
+                "persistence": {
+                  "type": "object",
+                  "description": "Persistence of the nodes. Requires `workloadType: StatefulSet`, and can not be added or removed after creation.",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean",
+                      "default": true,
+                      "description": "Whether the nodes have a volume."
+                    },
+                    "size": {
+                      "type": "string",
+                      "default": "",
+                      "description": "Size of the volume of every node. Defaults to `global.fallbackDefaults.vctSize`."
+                    },
+                    "storageClass": {
+                      "type": "string",
+                      "default": "",
+                      "description": "Storage class of the volumes. Defaults to `global.fallbackDefaults.storageClass`."
+                    },
+                    "retain": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether the volumes are retained when a node is deleted. Defaults to `global.fallbackDefaults.pvcRetain`."
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "exporter": {
+                  "type": "object",
+                  "description": "Metrics exporter sidecar of every pod.",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean",
+                      "default": true,
+                      "description": "Whether the exporter sidecar runs."
+                    },
+                    "image": {
+                      "type": "string",
+                      "default": "",
+                      "description": "Overrides the image of the exporter."
+                    },
+                    "args": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "default": [],
+                      "description": "Command-line arguments of the exporter."
+                    },
+                    "resources": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "default": {},
+                      "description": "Resources of the exporter container."
+                    },
+                    "securityContext": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "default": {},
+                      "description": "Security context of the exporter container."
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "scheduling": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "default": {},
+                  "description": "Scheduling of the pods: `tolerations`, `nodeSelector`, `affinity`, `topologySpreadConstraints`, `priorityClassName`, `node` and `zone` (spreading and pinning). Passed to the `ValkeyCluster` as is."
+                },
+                "podDisruptionBudget": {
+                  "type": "object",
+                  "description": "PodDisruptionBudget managed by the operator.",
+                  "properties": {
+                    "mode": {
+                      "type": "string",
+                      "enum": [
+                        "Cluster",
+                        "Disabled"
+                      ],
+                      "default": "Cluster",
+                      "description": "`Cluster` creates one budget (`maxUnavailable: 1`) for all pods, `Disabled` creates none."
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "podMetadata": {
+                  "type": "object",
+                  "description": "Labels and annotations added to every pod. The operator rejects the keys it sets itself.",
+                  "properties": {
+                    "labels": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "default": {},
+                      "description": "Labels of the pods."
+                    },
+                    "annotations": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "default": {},
+                      "description": "Annotations of the pods."
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "imagePullSecrets": {
+                  "type": "array",
+                  "items": {
+                    "type": [
+                      "string",
+                      "object"
+                    ]
+                  },
+                  "default": [],
+                  "description": "Secrets used to pull the images. An item is a name, or an object with a `name`."
+                },
+                "podSecurityContext": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "default": {},
+                  "description": "Overrides of the security context of the pods. Defaults to the `securityContext` of the chart (`runAsUser`, `runAsGroup`, `fsGroup`)."
+                },
+                "serviceAccountName": {
+                  "type": "string",
+                  "default": "",
+                  "description": "Name of an existing ServiceAccount for the pods."
+                },
+                "terminationGracePeriodSeconds": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 1,
+                  "default": null,
+                  "description": "Grace period of the pods in seconds. The operator calculates it when unset."
+                },
+                "containers": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "default": [],
+                  "description": "Patches of the containers of the pods (strategic merge patch, by name: `server` and `metrics-exporter`), or additional sidecar containers."
+                },
+                "networking": {
+                  "type": "object",
+                  "description": "Networking of the cluster. TLS is not supported, as the credentials and the wait init container connect without it.",
+                  "properties": {
+                    "clusterDomain": {
+                      "type": "string",
+                      "default": "",
+                      "description": "Domain of the Kubernetes cluster. The operator uses `cluster.local` when unset."
+                    },
+                    "discovery": {
+                      "type": "object",
+                      "properties": {
+                        "preferredEndpointType": {
+                          "type": "string",
+                          "enum": [
+                            "",
+                            "IP",
+                            "Hostname"
+                          ],
+                          "default": "",
+                          "description": "How the nodes announce themselves. The operator uses `IP` when unset, `Hostname` requires `workloadType: StatefulSet`."
+                        }
+                      },
+                      "additionalProperties": false,
+                      "description": "Discovery (in-cluster announce) of the nodes."
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "users": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "name"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Name of the user. Can not start with `_`."
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "default": [],
+                  "description": "Additional users of the cluster, see the [valkey-operator docs](https://github.com/valkey-io/valkey-operator/blob/main/docs/valkeycluster.md#users). The `default` user always exists with the password of the credentials, an item named `default` overrides its settings."
+                },
+                "labels": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "default": {},
+                  "description": "Additional labels of the `ValkeyCluster`."
+                },
+                "annotations": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "default": {},
+                  "description": "Additional annotations of the `ValkeyCluster`."
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      ],
+      "description": "The valkey dependency. In `operator` mode a `ValkeyCluster` is spawned from `operator`."
+    },
+    "postgresql": {
+      "allOf": [
+        {
+          "$ref": "../values.schema.json"
+        },
+        {
+          "$ref": "#/additionalProperties/allOf/1"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": [
+                "standalone",
+                "operator"
+              ],
+              "default": "operator",
+              "description": "How postgresql is provided. Unlike the other dependencies it defaults to `operator`, so CloudNativePG runs it and the settings are under `operator`. `standalone` merges a plain PostgreSQL deployment into the chart. Both modes share `depconfig`, the connection details in `depconfig.creds` and the `postgresql-wait` init container."
+            },
+            "depconfig": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string",
+                  "default": "PLACEHOLDERPASSWORD",
+                  "description": "Password of the database user, for both modes."
+                },
+                "postgresqlUsername": {
+                  "type": "string",
+                  "minLength": 1,
+                  "default": "test",
+                  "description": "Name of the database user, for both modes."
+                },
+                "postgresqlDatabase": {
+                  "type": "string",
+                  "minLength": 1,
+                  "default": "test",
+                  "description": "Name of the database, for both modes."
+                },
+                "creds": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Connection details populated by the library, the same keys in both modes (eg `plainhost`, `plainporthost`, `complete`, `urlnossl`, `jdbc`). The read-only endpoint of the operator pooler (`operator.pooler.createRO`) adds the same keys suffixed with `RO` (eg `completeRO`). Read-only."
+                }
+              },
+              "additionalProperties": true,
+              "description": "Configuration of the dependency itself, for both modes. Never merged into the chart."
+            },
+            "operator": {
+              "$ref": "dependencies/postgresql/operator/operator.json",
+              "description": "Settings of the CloudNativePG `Cluster`, used when `mode` is `operator`. The credentials stay in `depconfig`. Never merged into the chart values."
+            }
+          }
+        }
+      ],
+      "description": "The postgresql dependency. In `operator` mode (default) a CloudNativePG `Cluster` is spawned from `operator`."
+    }
+  },
+  "additionalProperties": {
+    "allOf": [
+      {
+        "$ref": "../values.schema.json"
+      },
+      {
+        "type": "object",
+        "required": [
+          "enabled"
+        ],
+        "properties": {
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
+            "description": "Whether the dependency is enabled. Objects of disabled dependencies are not merged into the chart."
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "standalone",
+              "operator"
+            ],
+            "default": "standalone",
+            "description": "How the dependency is provided. `standalone` merges and deploys it with the chart, `operator` leaves it to an operator, so its objects are not merged into the chart. The credentials, wait init container and notes still apply."
+          },
+          "depconfig": {
+            "type": "object",
+            "properties": {
+              "password": {
+                "type": "string",
+                "description": "Password used by the dependency. Defaults to `PLACEHOLDERPASSWORD`."
+              },
+              "creds": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Connection details populated by the dependency (eg `plainhost`, `url`). Read-only."
+              }
+            },
+            "additionalProperties": true,
+            "description": "Configuration of the dependency itself. Never merged into the chart values."
+          },
+          "operator": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Settings specific to the operator providing the dependency (see `mode`). Never merged into the chart values."
+          }
+        }
+      }
+    ]
+  },
+  "description": "Configuration for `dependencies`. Each dependency contains a complete chart values structure. Its objects are merged into the chart under the name `<dependency>-<object>`."
+}

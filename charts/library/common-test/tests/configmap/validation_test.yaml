@@ -81,7 +81,7 @@ tests:
           data: {}
     asserts:
       - failedTemplate:
-          errorMessage: ConfigMap - Expected non-empty [data]
+          errorMessage: ConfigMap - Expected non-empty [data] or [binaryData]
 
   - it: should fail with empty enabled
     set:

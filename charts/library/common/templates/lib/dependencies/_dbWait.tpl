@@ -1,85 +1,114 @@
 {{- define "tc.v1.common.lib.deps.wait" -}}
-  {{- if .Values.redis.enabled -}}
-    {{- $container := include "tc.v1.common.lib.deps.wait.redis" $ | fromYaml -}}
-    {{- if $container -}}
-      {{- range .Values.workload -}}
-        {{- if not (hasKey .podSpec "initContainers") -}}
-          {{- $_ := set .podSpec "initContainers" dict -}}
-        {{- end -}}
-      {{- $_ := set .podSpec.initContainers "redis-wait" $container -}}
-      {{- end -}}
-    {{- end -}}
+  {{- $valkeyEnabled := false -}}
+  {{- $valkey := get (.Values.dependencies | default dict) "valkey" -}}
+  {{- if kindIs "map" $valkey -}}
+    {{- $valkeyEnabled = eq (include "tc.v1.common.lib.util.enabled" (dict
+                    "rootCtx" $ "objectData" $valkey
+                    "name" "valkey" "caller" "Dependencies"
+                    "key" "dependencies")) "true" -}}
   {{- end -}}
 
-  {{- if .Values.mariadb.enabled -}}
+  {{- if $valkeyEnabled -}}
+    {{- $container := include "tc.v1.common.lib.deps.wait.valkey" $ | fromYaml -}}
+    {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "valkey-wait" "container" $container) -}}
+
+  {{- end -}}
+
+  {{- $mariadbEnabled := false -}}
+  {{- $mariadb := get (.Values.dependencies | default dict) "mariadb" -}}
+  {{- if kindIs "map" $mariadb -}}
+    {{- $mariadbEnabled = eq (include "tc.v1.common.lib.util.enabled" (dict
+                    "rootCtx" $ "objectData" $mariadb
+                    "name" "mariadb" "caller" "Dependencies"
+                    "key" "dependencies")) "true" -}}
+  {{- end -}}
+
+  {{- if $mariadbEnabled -}}
     {{- $container := include "tc.v1.common.lib.deps.wait.mariadb" $ | fromYaml -}}
-    {{- if $container -}}
-      {{- range .Values.workload -}}
-        {{- if not (hasKey .podSpec "initContainers") -}}
-          {{- $_ := set .podSpec "initContainers" dict -}}
-        {{- end -}}
-      {{- $_ := set .podSpec.initContainers "mariadb-wait" $container -}}
-      {{- end -}}
-    {{- end -}}
+    {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "mariadb-wait" "container" $container) -}}
   {{- end -}}
 
-  {{- if .Values.mongodb.enabled -}}
+  {{- $postgresqlEnabled := false -}}
+  {{- $postgresql := get (.Values.dependencies | default dict) "postgresql" -}}
+  {{- if kindIs "map" $postgresql -}}
+    {{- $postgresqlEnabled = eq (include "tc.v1.common.lib.util.enabled" (dict
+                    "rootCtx" $ "objectData" $postgresql
+                    "name" "postgresql" "caller" "Dependencies"
+                    "key" "dependencies")) "true" -}}
+  {{- end -}}
+
+  {{- if $postgresqlEnabled -}}
+    {{- $container := include "tc.v1.common.lib.deps.wait.postgresql" $ | fromYaml -}}
+    {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "postgresql-wait" "container" $container) -}}
+  {{- end -}}
+
+  {{- $mongodbEnabled := false -}}
+  {{- $mongodb := get (.Values.dependencies | default dict) "mongodb" -}}
+  {{- if kindIs "map" $mongodb -}}
+    {{- $mongodbEnabled = eq (include "tc.v1.common.lib.util.enabled" (dict
+                    "rootCtx" $ "objectData" $mongodb
+                    "name" "mongodb" "caller" "Dependencies"
+                    "key" "dependencies")) "true" -}}
+  {{- end -}}
+
+  {{- if $mongodbEnabled -}}
     {{- $container := include "tc.v1.common.lib.deps.wait.mongodb" $ | fromYaml -}}
-    {{- if $container -}}
-      {{- range .Values.workload -}}
-        {{- if not (hasKey .podSpec "initContainers") -}}
-          {{- $_ := set .podSpec "initContainers" dict -}}
-        {{- end -}}
-      {{- $_ := set .podSpec.initContainers "mongodb-wait" $container -}}
-      {{- end -}}
-    {{- end -}}
+    {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "mongodb-wait" "container" $container) -}}
   {{- end -}}
 
-  {{- if .Values.clickhouse.enabled -}}
+  {{- $clickhouseEnabled := false -}}
+  {{- $clickhouse := get (.Values.dependencies | default dict) "clickhouse" -}}
+  {{- if kindIs "map" $clickhouse -}}
+    {{- $clickhouseEnabled = eq (include "tc.v1.common.lib.util.enabled" (dict
+                    "rootCtx" $ "objectData" $clickhouse
+                    "name" "clickhouse" "caller" "Dependencies"
+                    "key" "dependencies")) "true" -}}
+  {{- end -}}
+
+  {{- if $clickhouseEnabled -}}
     {{- $container := include "tc.v1.common.lib.deps.wait.clickhouse" $ | fromYaml -}}
-    {{- if $container -}}
-      {{- range .Values.workload -}}
-        {{- if not (hasKey .podSpec "initContainers") -}}
-          {{- $_ := set .podSpec "initContainers" dict -}}
-        {{- end -}}
-        {{- $_ := set .podSpec.initContainers "clickhouse-wait" $container -}}
-      {{- end -}}
-    {{- end -}}
+    {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "clickhouse-wait" "container" $container) -}}
   {{- end -}}
+{{- end -}}
 
-  {{- if .Values.solr.enabled -}}
-    {{- $container := include "tc.v1.common.lib.deps.wait.solr" $ | fromYaml -}}
-    {{- if $container -}}
-      {{- range .Values.workload -}}
-        {{- if not (hasKey .podSpec "initContainers") -}}
-          {{- $_ := set .podSpec "initContainers" dict -}}
+{{/* Adds a wait init container to all workloads that wait for the dependencies */}}
+{{/* Workloads with [dbWait: false] (eg the workloads of a dependency) are skipped */}}
+{{- define "tc.v1.common.lib.deps.wait.add" -}}
+  {{- $rootCtx := .rootCtx -}}
+  {{- $name := .name -}}
+  {{- $container := .container -}}
+
+  {{- if $container -}}
+    {{- range $wlName, $workload := $rootCtx.Values.workload -}}
+      {{- if not (kindIs "map" $workload) -}}{{- continue -}}{{- end -}}
+
+      {{- $dbWait := true -}}
+      {{- if hasKey $workload "dbWait" -}}
+        {{- $dbWait = $workload.dbWait -}}
+        {{- if kindIs "string" $dbWait -}}
+          {{- $dbWait = (tpl $dbWait $rootCtx) -}}
         {{- end -}}
-      {{- $_ := set .podSpec.initContainers "solr-wait" $container -}}
+        {{- $dbWait = (ne (toString $dbWait) "false") -}}
       {{- end -}}
-    {{- end -}}
-  {{- end -}}
+      {{- if not $dbWait -}}{{- continue -}}{{- end -}}
 
-  {{- $result := false -}}
-  {{- range .Values.cnpg -}}
-    {{- if .enabled -}}
-      {{- $result = true -}}
-    {{- end -}}
-  {{- end -}}
-
-  {{- if $result -}}
-    {{- $container := include "tc.v1.common.lib.deps.wait.cnpg" $ | fromYaml -}}
-    {{- if $container -}}
-      {{- range $.Values.workload -}}
-        {{- if not (hasKey .podSpec "initContainers") -}}
-          {{- $_ := set .podSpec "initContainers" dict -}}
-        {{- end -}}
-        {{- $_ := set .podSpec.initContainers "cnpg-wait" $container -}}
+      {{- if not (kindIs "map" $workload.podSpec) -}}
+        {{- $_ := set $workload "podSpec" dict -}}
       {{- end -}}
+      {{- if not (kindIs "map" $workload.podSpec.initContainers) -}}
+        {{- $_ := set $workload.podSpec "initContainers" dict -}}
+      {{- end -}}
+      {{- $_ := set $workload.podSpec.initContainers $name (mustDeepCopy $container) -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
 
-{{- define "tc.v1.common.lib.deps.wait.redis" -}}
+{{- define "tc.v1.common.lib.deps.wait.valkey" -}}
+{{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "valkey")) -}}
+{{- if not $service -}}
+  {{- fail "Dependencies - Expected dependency [valkey] to have an enabled primary service" -}}
+{{- end -}}
+{{- $service = $service | fromJson -}}
 enabled: true
 type: system
 imageSelector: valkeyClientImage
@@ -105,37 +134,38 @@ resources:
     cpu: 500m
     memory: 512Mi
 env:
-  REDIS_HOST:
+  VALKEY_HOST: {{ $service.name | quote }}
+  VALKEY_PORT: {{ $service.port | default 6379 | quote }}
+  VALKEY_PASSWORD:
     secretKeyRef:
       expandObjectName: false
-      name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
-      key: plainhost
-  REDIS_PASSWORD: "{{ .Values.redis.password }}"
-  REDIS_PORT: "6379"
+      name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+      key: valkey-password
 command:
   - "/bin/sh"
   - "-c"
   - |
     /bin/bash <<'EOF'
-    echo "Executing DB waits..."
-    [[ -n "$REDIS_PASSWORD" ]] && export REDISCLI_AUTH="$REDIS_PASSWORD";
+    echo "Executing Valkey wait..."
+    [[ -n "$VALKEY_PASSWORD" ]] && export REDISCLI_AUTH="$VALKEY_PASSWORD";
     export LIVE=false;
     until "$LIVE";
     do
       response=$(
           timeout -s 3 2 \
           valkey-cli \
-            -h "$REDIS_HOST" \
-            -p "$REDIS_PORT" \
+            -h "$VALKEY_HOST" \
+            -p "$VALKEY_PORT" \
             ping
         )
-      if [ "$response" == "PONG" ] || [ "$response" == "LOADING Redis is loading the dataset in memory" ]; then
+      # NOAUTH is a response too, this only waits for the server and has no password
+      if [ "$response" == "PONG" ] || [ "$response" == "LOADING Valkey is loading the dataset in memory" ] || [[ "$response" == NOAUTH* ]]; then
         LIVE=true
         echo "$response"
-        echo "Redis Responded, ending initcontainer and starting main container(s)..."
+        echo "Valkey Responded, ending initcontainer and starting main container(s)..."
       else
         echo "$response"
-        echo "Redis not responding... Sleeping for 10 sec..."
+        echo "Valkey not responding... Sleeping for 10 sec..."
         sleep 10
       fi;
     done
@@ -143,6 +173,11 @@ command:
 {{- end -}}
 
 {{- define "tc.v1.common.lib.deps.wait.mariadb" -}}
+{{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "mariadb")) -}}
+{{- if not $service -}}
+  {{- fail "Dependencies - Expected dependency [mariadb] to have an enabled primary service" -}}
+{{- end -}}
+{{- $service = $service | fromJson -}}
 enabled: true
 type: system
 imageSelector: mariadbClientImage
@@ -168,27 +203,33 @@ resources:
     cpu: 500m
     memory: 512Mi
 env:
-  MARIADB_HOST:
+  MARIADB_HOST: {{ $service.name | quote }}
+  MARIADB_PORT: {{ $service.port | default 3306 | quote }}
+  MARIADB_ROOT_PASSWORD:
     secretKeyRef:
       expandObjectName: false
       name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
-      key: plainhost
-  MARIADB_ROOT_PASSWORD: "{{ .Values.mariadb.rootPassword }}"
+      key: mariadb-root-password
 command:
   - "/bin/sh"
   - "-c"
   - |
     /bin/bash <<'EOF'
-    echo "Executing DB waits..."
+    echo "Executing MariaDB wait..."
     until
-      mysqladmin -uroot -h"${MARIADB_HOST}" -p"${MARIADB_ROOT_PASSWORD}" ping \
-      && mysqladmin -uroot -h"${MARIADB_HOST}" -p"${MARIADB_ROOT_PASSWORD}" status;
+      mysqladmin -uroot -h"${MARIADB_HOST}" -P"${MARIADB_PORT}" -p"${MARIADB_ROOT_PASSWORD}" ping \
+      && mysqladmin -uroot -h"${MARIADB_HOST}" -P"${MARIADB_PORT}" -p"${MARIADB_ROOT_PASSWORD}" status;
       do sleep 2;
     done
     EOF
 {{- end -}}
 
 {{- define "tc.v1.common.lib.deps.wait.mongodb" -}}
+{{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "mongodb")) -}}
+{{- if not $service -}}
+  {{- fail "Dependencies - Expected dependency [mongodb] to have an enabled primary service" -}}
+{{- end -}}
+{{- $service = $service | fromJson -}}
 enabled: true
 type: system
 imageSelector: mongodbClientImage
@@ -214,29 +255,31 @@ resources:
     cpu: 500m
     memory: 512Mi
 env:
-  MONGODB_HOST:
-    secretKeyRef:
-      expandObjectName: false
-      name: '{{ printf "%s-%s" .Release.Name "mongodbcreds" }}'
-      key: plainhost
-  MONGODB_DATABASE: "{{ .Values.mongodb.mongodbDatabase }}"
+  MONGODB_HOST: {{ $service.name | quote }}
+  MONGODB_PORT: {{ $service.port | default 27017 | quote }}
+  MONGODB_DATABASE: "{{ .Values.dependencies.mongodb.depconfig.mongodbDatabase }}"
 command:
   - "/bin/sh"
   - "-c"
   - |
     /bin/bash <<'EOF'
-    echo "Executing DB waits..."
+    echo "Executing MongoDB wait..."
     until
-      HOME=/config && echo "db.runCommand(\"ping\")" | mongosh --host ${MONGODB_HOST} --port 27017 ${MONGODB_DATABASE} --quiet;
+      HOME=/config && echo "db.runCommand(\"ping\")" | mongosh --host ${MONGODB_HOST} --port ${MONGODB_PORT} ${MONGODB_DATABASE} --quiet;
       do sleep 2;
     done
     EOF
 {{- end -}}
 
 {{- define "tc.v1.common.lib.deps.wait.clickhouse" -}}
+{{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "clickhouse")) -}}
+{{- if not $service -}}
+  {{- fail "Dependencies - Expected dependency [clickhouse] to have an enabled primary service" -}}
+{{- end -}}
+{{- $service = $service | fromJson -}}
 enabled: true
 type: system
-imageSelector: wgetImage
+imageSelector: ubuntuImage
 securityContext:
   runAsUser: 568
   runAsGroup: 568
@@ -259,84 +302,26 @@ resources:
     cpu: 500m
     memory: 512Mi
 env:
-  CLICKHOUSE_PING:
-    secretKeyRef:
-      expandObjectName: false
-      name: '{{ printf "%s-%s" .Release.Name "clickhousecreds" }}'
-      key: ping
+  CLICKHOUSE_HOST: {{ $service.name | quote }}
+  CLICKHOUSE_PORT: {{ $service.port | default 8123 | quote }}
 command:
   - "/bin/sh"
-args:
   - "-c"
   - |
-    echo "Executing DB waits..."
-    until wget --quiet --tries=1 --spider "${CLICKHOUSE_PING}"; do
+    echo "Executing ClickHouse wait..."
+    until wget --quiet --tries=1 --timeout=5 --spider "http://${CLICKHOUSE_HOST}:${CLICKHOUSE_PORT}/ping"; do
       echo "ClickHouse - no response. Sleeping 2 seconds..."
       sleep 2
     done
     echo "ClickHouse - accepting connections"
 {{- end -}}
 
-{{- define "tc.v1.common.lib.deps.wait.solr" -}}
-enabled: true
-type: system
-imageSelector: wgetImage
-securityContext:
-  runAsUser: 568
-  runAsGroup: 568
-  readOnlyRootFilesystem: true
-  runAsNonRoot: true
-  allowPrivilegeEscalation: false
-  privileged: false
-  seccompProfile:
-    type: RuntimeDefault
-  capabilities:
-    add: []
-    drop:
-      - ALL
-resources:
-  excludeExtra: true
-  requests:
-    cpu: 10m
-    memory: 50Mi
-  limits:
-    cpu: 500m
-    memory: 512Mi
-env:
-  SOLR_HOST:
-    secretKeyRef:
-      expandObjectName: false
-      name: '{{ printf "%s-%s" .Release.Name "solrcreds" }}'
-      key: plainhost
-  SOLR_CORES: "{{ .Values.solr.solrCores }}"
-  SOLR_ENABLE_AUTHENTICATION: "{{ .Values.solr.solrEnableAuthentication }}"
-  SOLR_ADMIN_USERNAME: "{{ .Values.solr.solrUsername }}"
-  SOLR_ADMIN_PASSWORD:
-    secretKeyRef:
-      expandObjectName: false
-      name: '{{ printf "%s-%s" .Release.Name "solrcreds" }}'
-      key: solr-password
-
-command:
-  - "/bin/sh"
-args:
-  - "-c"
-  - |
-    echo "Executing DB waits..."
-    if [ "$SOLR_ENABLE_AUTHENTICATION" == "yes" ]; then
-      until curl --fail --user "${SOLR_ADMIN_USERNAME}":"${SOLR_ADMIN_PASSWORD}" "${SOLR_HOST}":8983/solr/"${SOLR_CORES}"/admin/ping; do
-        echo "Solr is not responding... Sleeping 2 seconds..."
-        sleep 2
-      done
-    else
-      until curl --fail "${SOLR_HOST}":8983/solr/"${SOLR_CORES}"/admin/ping; do
-        echo "Solr is not responding... Sleeping 2 seconds..."
-        sleep 2
-      done
-    fi
-{{- end -}}
-
-{{- define "tc.v1.common.lib.deps.wait.cnpg" -}}
+{{/* The wait container for PostgreSQL, shared by the CNPG clusters and the postgresql dependency */}}
+{{/* Call this template:
+{{ include "tc.v1.common.lib.deps.wait.postgres" (dict "script" $script) }}
+script: The shell script that waits for the databases, see [cnpg.wait.script].
+*/}}
+{{- define "tc.v1.common.lib.deps.wait.postgres" -}}
 enabled: true
 type: system
 imageSelector: postgresClientImage
@@ -366,40 +351,59 @@ command:
   - "-c"
   - |
     /bin/sh <<'EOF'
-{{- range $name, $cnpg := .Values.cnpg -}}
-  {{- if $cnpg.enabled }}
-    echo "Executing DB waits..."
-    {{- $cnpgName := include "tc.v1.common.lib.chart.names.fullname" $ -}}
-    {{- $cnpgName = printf "%v-cnpg-%v" $cnpgName $name -}}
-
-    {{/* Wait RW CNPG */}}
-    {{- include "cnpg.wait.script" (dict "url" (printf "%s-rw" $cnpgName) "user" .user "db" .database "on" "CNPG RW") | nindent 4 -}}
-
-    {{- if and $cnpg.pooler $cnpg.pooler.enabled -}}
-      {{/* Wait RW Pooler */}}
-      {{- include "cnpg.wait.script" (dict "url" (printf "%s-pooler-rw" $cnpgName) "user" .user "db" .database "on" "CNPG Pooler RW") | nindent 4 -}}
-
-      {{/* Wait RO Pooler */}}
-      {{- if $cnpg.pooler.createRO -}}
-        {{- include "cnpg.wait.script" (dict "url" (printf "%s-pooler-ro" $cnpgName) "user" .user "db" .database "on" "CNPG Pooler RO") | nindent 4 -}}
-      {{- end -}}
-
-    {{- end -}}
-  {{- end -}}
-{{- end }}
-    echo "Done executing DB waits..."
+{{- .script | nindent 4 }}
     EOF
 {{- end -}}
 
+{{/* The wait init container of the postgresql dependency, the same for both modes */}}
+{{/* The host and port come from the primary service, like for the other dependencies */}}
+{{/* operator additionally waits on the rw service of the CNPG cluster itself, as the primary service is the one of the pooler when enabled */}}
+{{- define "tc.v1.common.lib.deps.wait.postgresql" -}}
+  {{- $dep := get (.Values.dependencies | default dict) "postgresql" -}}
+  {{- $depconfig := $dep.depconfig | default dict -}}
+  {{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "postgresql")) -}}
+  {{- if not $service -}}
+    {{- fail "Dependencies - Expected dependency [postgresql] to have an enabled primary service" -}}
+  {{- end -}}
+  {{- $service = $service | fromJson -}}
+  {{- $operator := eq (include "tc.v1.common.lib.dependencies.mode" (dict "objectData" $dep "depName" "postgresql")) "operator" -}}
+
+  {{- $lines := list "echo \"Executing DB waits...\"" -}}
+  {{- if $operator -}}
+    {{/* Wait RW CNPG */}}
+    {{- $lines = append $lines (include "cnpg.wait.script" (dict "url" $service.nameCluster "user" $depconfig.postgresqlUsername "db" $depconfig.postgresqlDatabase "on" "CNPG RW")) -}}
+
+    {{- if ne $service.name $service.nameCluster -}}
+      {{/* Wait RW Pooler */}}
+      {{- $lines = append $lines (include "cnpg.wait.script" (dict "url" $service.name "user" $depconfig.postgresqlUsername "db" $depconfig.postgresqlDatabase "on" "CNPG Pooler RW")) -}}
+
+      {{/* Wait RO Pooler */}}
+      {{- if $service.nameRO -}}
+        {{- $lines = append $lines (include "cnpg.wait.script" (dict "url" $service.nameRO "user" $depconfig.postgresqlUsername "db" $depconfig.postgresqlDatabase "on" "CNPG Pooler RO")) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- else -}}
+    {{- $lines = append $lines (include "cnpg.wait.script" (dict
+          "url" $service.name "port" $service.port
+          "user" $depconfig.postgresqlUsername "db" $depconfig.postgresqlDatabase
+          "on" "PostgreSQL")) -}}
+  {{- end -}}
+  {{- $lines = append $lines "echo \"Done executing DB waits...\"" -}}
+
+  {{- include "tc.v1.common.lib.deps.wait.postgres" (dict "script" (join "\n" $lines)) -}}
+{{- end -}}
+
+{{/* The wait script of a single PostgreSQL service, [port] is optional */}}
 {{- define "cnpg.wait.script" -}}
   {{- $url := .url -}}
+  {{- $port := .port -}}
   {{- $user := .user -}}
   {{- $db := .db -}}
   {{- $on := .on -}}
 echo "Testing Database availability on [{{ $on }}]"
 until
   echo "Testing database on url: [{{ $url }}]"
-  pg_isready -U {{ $user }} -d {{ $db }} -h {{ $url }}
+  pg_isready -U {{ $user }} -d {{ $db }} -h {{ $url }}{{ with $port }} -p {{ . }}{{ end }}
   do sleep 5
 done
 echo "Database available on url: [{{ $url }}]"

@@ -1,0 +1,475 @@
+suite: dependencies mode test
+templates:
+  - common.yaml
+  - NOTES.txt
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should merge the dependency by default
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 4
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-valkey-main
+      - documentSelector:
+          path: kind
+          value: Service
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-valkey-main
+
+  - it: should merge the dependency in standalone mode
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: standalone
+    asserts:
+      - hasDocuments:
+          count: 4
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-valkey-main
+
+  - it: should not merge the dependency in operator mode, but spawn the ValkeyCluster
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+    asserts:
+      - hasDocuments:
+          count: 2
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: metadata.name
+          value: test-release-name-valkeycreds
+      - documentSelector:
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-valkey
+
+  - it: should still create the credentials of valkey in operator mode
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          depconfig:
+            password: testpassword
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-valkeycreds
+        equal:
+          path: stringData
+          value:
+            valkey-password: testpassword
+            plain: valkey-test-release-name-common-test-valkey
+            plainhost: valkey-test-release-name-common-test-valkey
+            plainport: "6379"
+            plainporthost: valkey-test-release-name-common-test-valkey:6379
+            plainhostpass: valkey-test-release-name-common-test-valkey:testpassword
+            url: redis://default:testpassword@valkey-test-release-name-common-test-valkey:6379/0
+
+  - it: should still create the credentials of mariadb in operator mode
+    template: common.yaml
+    set:
+      dependencies:
+        mariadb:
+          enabled: true
+          mode: operator
+          depconfig:
+            password: test-password
+            rootPassword: test-root-password
+    asserts:
+      - hasDocuments:
+          count: 1
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-mariadbcreds
+        equal:
+          path: stringData.plainporthost
+          value: test-release-name-common-test-mariadb-main:3306
+
+  - it: should use the service of the operator for valkey, even when a service is set to primary
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          service:
+            main:
+              primary: true
+    asserts:
+      - hasDocuments:
+          count: 2
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-valkeycreds
+        equal:
+          path: stringData.plainhost
+          value: valkey-test-release-name-common-test-valkey
+
+  - it: should still add the wait init containers in operator mode
+    template: common.yaml
+    set:
+      image: &image
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+        mariadb:
+          enabled: true
+          mode: operator
+    asserts:
+      - hasDocuments:
+          count: 4
+      - documentSelector: &deploymentDoc
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.spec.initContainers[0].name
+          value: test-release-name-common-test-system-mariadb-wait
+      - documentSelector: *deploymentDoc
+        equal:
+          path: spec.template.spec.initContainers[1].name
+          value: test-release-name-common-test-system-valkey-wait
+      - documentSelector: *deploymentDoc
+        contains:
+          path: spec.template.spec.initContainers[0].env
+          content:
+            name: MARIADB_HOST
+            value: test-release-name-common-test-mariadb-main
+      - documentSelector: *deploymentDoc
+        contains:
+          path: spec.template.spec.initContainers[1].env
+          content:
+            name: VALKEY_HOST
+            value: valkey-test-release-name-common-test-valkey
+
+  - it: should still show the connection details in operator mode
+    template: NOTES.txt
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+        mariadb:
+          enabled: true
+          mode: operator
+          depconfig:
+            mariadbUsername: my-user
+            mariadbDatabase: my-database
+    asserts:
+      - matchRegexRaw:
+          pattern: "## Valkey Database\n- Host: valkey-test-release-name-common-test-valkey\n- Port: 6379\n"
+      - matchRegexRaw:
+          pattern: "## MariaDB Database\n- Host: test-release-name-common-test-mariadb-main\n- Port: 3306\n"
+      - matchRegexRaw:
+          pattern: "- Database: my-database\n- Username: my-user\n"
+
+  - it: should default postgresql to operator mode, and spawn the CNPG Cluster
+    template: common.yaml
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 3
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-main
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-postgresqlcreds
+        equal:
+          path: stringData.plainhost
+          value: test-release-name-common-test-cnpg-main-rw
+
+  - it: should merge postgresql in standalone mode
+    template: common.yaml
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          mode: standalone
+    asserts:
+      - hasDocuments:
+          count: 4
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-postgresql-main
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-postgresqlcreds
+        equal:
+          path: stringData.plainhost
+          value: test-release-name-common-test-postgresql-main
+
+  - it: should keep the other dependencies standalone by default, next to postgresql in operator mode
+    template: common.yaml
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+        valkey:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 7
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-main
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-valkey-main
+
+  - it: should apply the mode per dependency
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+        mariadb:
+          enabled: true
+          mode: standalone
+    asserts:
+      - hasDocuments:
+          count: 6
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mariadb-main
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-valkeycreds
+        isKind:
+          of: Secret
+
+  - it: should not merge any dependency in operator mode
+    template: common.yaml
+    set:
+      dependencies:
+        custom:
+          enabled: true
+          mode: operator
+          image:
+            repository: ghcr.io/traefik/whoami
+            tag: v1.0.0
+          workload:
+            main:
+              type: Deployment
+          service:
+            main:
+              ports:
+                main:
+                  port: 8080
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should merge any dependency without a mode
+    template: common.yaml
+    set:
+      dependencies:
+        custom:
+          enabled: true
+          image:
+            repository: ghcr.io/traefik/whoami
+            tag: v1.0.0
+          workload:
+            main:
+              type: Deployment
+          service:
+            main:
+              ports:
+                main:
+                  port: 8080
+    asserts:
+      - hasDocuments:
+          count: 2
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-custom-main
+
+  - it: should not merge the operator settings of a dependency
+    template: common.yaml
+    set:
+      dependencies:
+        custom:
+          enabled: true
+          operator:
+            version: "9.0"
+          image:
+            repository: ghcr.io/traefik/whoami
+            tag: v1.0.0
+          workload:
+            main:
+              type: Deployment
+              podSpec:
+                containers:
+                  main:
+                    env:
+                      OPERATOR_VERSION: "{{ .Values.dependencies.custom.operator.version }}"
+          service:
+            main:
+              ports:
+                main:
+                  port: 8080
+    asserts:
+      - hasDocuments:
+          count: 2
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: OPERATOR_VERSION
+            value: "9.0"
+
+  - it: should make the operator settings available in operator mode
+    template: common.yaml
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                env:
+                  OPERATOR_VERSION: "{{ .Values.dependencies.valkey.operator.version }}"
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            version: "9.0"
+    asserts:
+      - hasDocuments:
+          count: 3
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: OPERATOR_VERSION
+            value: "9.0"
+
+  - it: should fail with an invalid mode
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: invalid
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [dependencies.valkey.mode] to be one of [standalone, operator], but got [invalid]
+
+  - it: should fail with an invalid mode on a disabled dependency
+    template: common.yaml
+    set:
+      dependencies:
+        mariadb:
+          mode: invalid
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [dependencies.mariadb.mode] to be one of [standalone, operator], but got [invalid]
+
+  - it: should fail with a mode that is not a string
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: 1
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [dependencies.valkey.mode] to be one of [standalone, operator], but got [1]
+
+  - it: should fail with an invalid mode for postgresql
+    template: common.yaml
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          mode: invalid
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [dependencies.postgresql.mode] to be one of [standalone, operator], but got [invalid]

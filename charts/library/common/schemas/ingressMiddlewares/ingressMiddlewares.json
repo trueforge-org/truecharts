@@ -1,0 +1,917 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "traefik": {
+      "type": "object",
+      "properties": {
+        "tc-basic-secure-headers": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": [
+                "boolean",
+                "string"
+              ],
+              "description": "Create Middleware objects"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "add-prefix",
+                "basic-auth",
+                "buffering",
+                "chain",
+                "compress",
+                "content-type",
+                "forward-auth",
+                "headers",
+                "ip-allow-list",
+                "plugin-bouncer",
+                "plugin-geoblock",
+                "plugin-mod-security",
+                "plugin-real-ip",
+                "plugin-rewrite-response-headers",
+                "plugin-theme-park",
+                "rate-limit",
+                "redirect-regex",
+                "redirect-scheme",
+                "replace-path-regex",
+                "replace-path",
+                "retry",
+                "strip-prefix-regex",
+                "strip-prefix"
+              ],
+              "description": "Create Middleware objects"
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "accessControlAllowMethods": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Configuration for `ingressMiddlewares.traefik.tc-basic-secure-headers.data.accessControlAllowMethods.$item`."
+                  },
+                  "description": "Define the accessControlAllowMethods"
+                },
+                "accessControlMaxAge": {
+                  "type": "integer",
+                  "description": "Define the accessControlMaxAge"
+                },
+                "stsSeconds": {
+                  "type": "integer",
+                  "description": "Define the stsSeconds"
+                },
+                "forceSTSHeader": {
+                  "type": "boolean",
+                  "description": "Define the forceSTSHeader"
+                },
+                "contentTypeNosniff": {
+                  "type": "boolean",
+                  "description": "Define the contentTypeNosniff"
+                },
+                "browserXssFilter": {
+                  "type": "boolean",
+                  "description": "Define the browserXssFilter"
+                },
+                "referrerPolicy": {
+                  "type": "string",
+                  "description": "Define the referrerPolicy"
+                },
+                "customRequestHeaders": {
+                  "type": "object",
+                  "properties": {
+                    "X-Forwarded-Proto": {
+                      "type": "string",
+                      "description": "Configuration for `ingressMiddlewares.traefik.tc-basic-secure-headers.data.customRequestHeaders.X-Forwarded-Proto`."
+                    }
+                  },
+                  "additionalProperties": true,
+                  "description": "Define the customRequestHeaders"
+                }
+              },
+              "additionalProperties": true,
+              "description": "Create Middleware objects"
+            }
+          },
+          "additionalProperties": true,
+          "description": "Create Middleware objects"
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "pluginName": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the pluginName"
+              },
+              "api": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the api"
+              },
+              "allowLocalRequests": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the allowLocalRequests"
+              },
+              "logLocalRequests": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the logLocalRequests"
+              },
+              "logAllowedRequests": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the logAllowedRequests"
+              },
+              "logApiRequests": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the logApiRequests"
+              },
+              "apiTimeoutMs": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the apiTimeoutMs"
+              },
+              "cacheSize": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the cacheSize"
+              },
+              "forceMonthlyUpdate": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the forceMonthlyUpdate"
+              },
+              "allowUnknownCountries": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the allowUnknownCountries"
+              },
+              "unknownCountryApiResponse": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the unknownCountryApiResponse"
+              },
+              "blackListMode": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the blackListMode"
+              },
+              "silentStartUp": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the silentStartUp"
+              },
+              "addCountryHeader": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the addCountryHeader"
+              },
+              "countries": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the countries"
+              },
+              "scheme": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the scheme"
+              },
+              "permanent": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the permanent"
+              },
+              "sourceRange": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the sourceRange"
+              },
+              "ipStrategy": {
+                "type": "object",
+                "properties": {
+                  "excludedIPs": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Define the ipStrategy"
+                  },
+                  "depth": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Define the ipStrategy.depth"
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Define the ipStrategy"
+              },
+              "regex": {
+                "type": "string",
+                "description": "Define the regex"
+              },
+              "replacement": {
+                "type": "string",
+                "description": "Define the replacement"
+              },
+              "maxRequestBodyBytes": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the maxRequestBodyBytes"
+              },
+              "memRequestBodyBytes": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the memRequestBodyBytes"
+              },
+              "maxResponseBodyBytes": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the maxResponseBodyBytes"
+              },
+              "memResponseBodyBytes": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the memResponseBodyBytes"
+              },
+              "retryExpression": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the retryExpression"
+              },
+              "address": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the address"
+              },
+              "authResponseHeadersRegex": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the authResponseHeadersRegex"
+              },
+              "trustForwardHeader": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the trustForwardHeader"
+              },
+              "authResponseHeaders": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the authResponseHeaders"
+              },
+              "authRequestHeaders": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the authRequestHeaders"
+              },
+              "tls": {
+                "type": "object",
+                "properties": {
+                  "insecureSkipVerify": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Define the tls"
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Define the tls"
+              },
+              "attempts": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define retry attempts"
+              },
+              "initialInterval": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the initialInterval"
+              },
+              "excludednets": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the excludednets"
+              },
+              "middlewares": {
+                "type": "object",
+                "properties": {
+                  "expandObjectName": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Define the middlewares"
+                  },
+                  "name": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Define the middleware name"
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Define the middlewares"
+              },
+              "prefix": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the prefixes"
+              },
+              "forceSlash": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the forceSlash"
+              },
+              "users": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Define the users If this is set, the `secret` key must not be set."
+                  },
+                  "username": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Define the username"
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Define the users If this is set, the `secret` key must not be set."
+              },
+              "secret": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the secret If this is set, the `users` key must not be set."
+              },
+              "average": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the average rate limit"
+              },
+              "burst": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the burst rate limit"
+              },
+              "path": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the path"
+              },
+              "modSecurityUrl": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the modSecurityUrl"
+              },
+              "timeoutMillis": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the timeoutMillis"
+              },
+              "maxBodySize": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the maxBodySize"
+              },
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the enabled"
+              },
+              "logLevel": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the logLevel"
+              },
+              "updateIntervalSeconds": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the updateIntervalSeconds"
+              },
+              "updateMaxFailure": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the updateMaxFailure"
+              },
+              "defaultDecisionSeconds": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the defaultDecisionSeconds"
+              },
+              "httpTimeoutSeconds": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the httpTimeoutSeconds"
+              },
+              "crowdsec": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the crowdsecMode"
+              },
+              "crowdsecAppsecEnabled": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the crowdsecAppsecEnabled"
+              },
+              "crowdsecAppsecHost": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the crowdsecAppsecHost"
+              },
+              "crowdsecAppsecFailureBlock": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the crowdsecAppsecFailureBlock"
+              },
+              "crowdsecAppsecUnreachableBlock": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the crowdsecAppsecUnreachableBlock"
+              },
+              "crowdsecLapiKey": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the crowdsecLapiKey"
+              },
+              "crowdsecLapiHost": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the crowdsecLapiHost"
+              },
+              "crowdsecLapiTLSInsecureVerify": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the crowdsecLapiTLSInsecureVerify"
+              },
+              "crowdsecCapiMachineId": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the crowdsecCapiMachineId"
+              },
+              "crowdsecCapiPassword": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the crowdsecCapiPassword"
+              },
+              "crowdsecCapiScenarios": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the crowdsecCapiScenarios"
+              },
+              "forwardedHeadersTrustedIPs": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the forwardedHeadersTrustedIPs"
+              },
+              "clientTrustedIPs": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the clientTrustedIPs"
+              },
+              "forwardedHeadersCustomName": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the forwardedHeadersCustomName"
+              },
+              "remediationHeadersCustomName": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the remediationHeadersCustomName"
+              },
+              "redisCacheEnabled": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the redisCacheEnabled"
+              },
+              "redisCacheHost": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the redisCacheHost"
+              },
+              "redisCachePassword": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the redisCachePassword"
+              },
+              "redisCacheDatabase": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the redisCacheDatabase"
+              },
+              "crowdsecLapiTLSCertificateAuthority": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the crowdsecLapiTLSCertificateAuthority"
+              },
+              "crowdsecLapiTLSCertificateBouncer": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the crowdsecLapiTLSCertificateBouncer"
+              },
+              "crowdsecLapiTLSCertificateBouncerKey": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the crowdsecLapiTLSCertificateBouncerKey"
+              },
+              "captchaProvider": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the captchaProvider"
+              },
+              "captchaSiteKey": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the captchaSiteKey"
+              },
+              "captchaSecretKey": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the captchaSecretKey"
+              },
+              "captchaGracePeriodSeconds": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the captchaGracePeriodSeconds"
+              },
+              "captchaHTMLFilePath": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the captchaHTMLFilePath"
+              },
+              "banHTMLFilePath": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the banHTMLFilePath"
+              },
+              "customRequestHeaders": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the customRequestHeaders"
+              },
+              "customResponseHeaders": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the customResponseHeaders"
+              },
+              "accessControlAllowCredentials": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the accessControlAllowCredentials"
+              },
+              "accessControlAllowHeaders": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the accessControlAllowHeaders"
+              },
+              "accessControlAllowMethods": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the accessControlAllowMethods"
+              },
+              "accessControlAllowOriginList": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the accessControlAllowOriginList"
+              },
+              "accessControlExposeHeaders": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the accessControlExposeHeaders"
+              },
+              "accessControlMaxAge": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the accessControlMaxAge"
+              },
+              "addVaryHeader": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the addVaryHeader"
+              },
+              "allowedHosts": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the allowedHosts"
+              },
+              "hostsProxyHeaders": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the hostsProxyHeaders"
+              },
+              "sslProxyHeaders": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the sslProxyHeaders"
+              },
+              "stsSeconds": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the stsSeconds"
+              },
+              "stsIncludeSubdomains": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the stsIncludeSubdomains"
+              },
+              "stsPreload": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the stsPreload"
+              },
+              "forceSTSHeader": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the forceSTSHeader"
+              },
+              "frameDeny": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the frameDeny"
+              },
+              "customFrameOptionsValue": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the customFrameOptionsValue"
+              },
+              "contentTypeNosniff": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the contentTypeNosniff"
+              },
+              "browserXssFilter": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the browserXssFilter"
+              },
+              "customBrowserXSSValue": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the customBrowserXSSValue"
+              },
+              "contentSecurityPolicy": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the contentSecurityPolicy"
+              },
+              "publicKey": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the publicKey"
+              },
+              "referrerPolicy": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the referrerPolicy"
+              },
+              "permissionsPolicy": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the permissionsPolicy"
+              },
+              "isDevelopment": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the isDevelopment"
+              },
+              "app": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the app"
+              },
+              "theme": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the theme"
+              },
+              "baseUrl": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the baseUrl"
+              },
+              "addons": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Define the addons"
+              },
+              "rewrites": {
+                "type": "object",
+                "properties": {
+                  "header": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Define the header"
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Define the rewrites"
+              }
+            },
+            "additionalProperties": true,
+            "description": "Configuration for `traefik.$name.data`."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Configuration for `traefik.$name`."
+      },
+      "description": "Create Middleware objects"
+    }
+  },
+  "additionalProperties": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "add-prefix",
+            "basic-auth",
+            "buffering",
+            "chain",
+            "compress",
+            "content-type",
+            "forward-auth",
+            "headers",
+            "ip-allow-list",
+            "plugin-bouncer",
+            "plugin-geoblock",
+            "plugin-mod-security",
+            "plugin-real-ip",
+            "plugin-rewrite-response-headers",
+            "plugin-theme-park",
+            "rate-limit",
+            "redirect-regex",
+            "redirect-scheme",
+            "replace-path-regex",
+            "replace-path",
+            "retry",
+            "strip-prefix-regex",
+            "strip-prefix"
+          ],
+          "description": "Create Middleware objects"
+        },
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "properties": {},
+          "additionalProperties": true,
+          "description": "Enables or Disables the Middleware"
+        },
+        "namespace": {
+          "allOf": [
+            {
+              "$ref": "../special/namespaces.json"
+            }
+          ],
+          "description": "Define the namespace for this object"
+        },
+        "labels": {
+          "allOf": [
+            {
+              "$ref": "../special/labels.json"
+            }
+          ],
+          "description": "Additional labels for middleware"
+        },
+        "annotations": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true,
+          "description": "Additional annotations for middleware"
+        },
+        "data": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true,
+          "description": "Define the data of the middleware"
+        }
+      },
+      "additionalProperties": true,
+      "description": "Define Middleware"
+    },
+    "description": "Define Middleware - Available providers are:",
+    "default": {}
+  },
+  "description": "Create Middleware objects"
+}

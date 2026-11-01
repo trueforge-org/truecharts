@@ -1,4 +1,5 @@
 {{- define "tc.v1.common.lib.cnpg.cluster.validation" -}}
+  {{- $rootCtx := .rootCtx -}}
   {{- $objectData := .objectData -}}
 
   {{- $requiredKeys := (list "database" "user" "password") -}}
@@ -14,7 +15,7 @@
     {{- fail (printf "CNPG - Expected [pgVersion] to be a string, but got [%s]" (kindOf $objectData.pgVersion)) -}}
   {{- end -}}
 
-  {{- $validVersions := (list "15" "16") -}}
+  {{- $validVersions := (list "15" "16" "17" "18") -}}
   {{- if not (mustHas $objectData.pgVersion $validVersions) -}}
     {{- fail (printf "CNPG - Expected [pgVersion] to be one of [%s], but got [%s]" (join ", " $validVersions) $objectData.pgVersion) -}}
   {{- end -}}
@@ -43,6 +44,11 @@
     {{- if not (mustHas $objectData.type $validTypes) -}}
       {{- fail (printf "CNPG Cluster - Expected [type] to be one of [%s], but got [%s]" (join ", " $validTypes) $objectData.type) -}}
     {{- end -}}
+  {{- end -}}
+
+  {{/* pgvecto.rs (type vectors) publishes no PostgreSQL 18 image; it is superseded by VectorChord */}}
+  {{- if and (eq ($objectData.type | default "postgres") "vectors") (eq ($objectData.pgVersion | toString) "18") -}}
+    {{- fail "CNPG Cluster - type [vectors] is not available for pgVersion [18]; pgvecto.rs has been superseded by VectorChord, use type [vectorchord] instead" -}}
   {{- end -}}
 
   {{- if (hasKey $objectData "cluster") -}}
@@ -84,14 +90,9 @@
       {{- fail "CNPG Recovery - Expected a non-empty [recovery] key" -}}
     {{- end -}}
 
-    {{- $validMethods := (list "backup" "object_store" "pg_basebackup") -}}
+    {{- $validMethods := (list "object_store") -}}
     {{- if not (mustHas $objectData.recovery.method $validMethods) -}}
       {{- fail (printf "CNPG Recovery - Expected [recovery.method] to be one of [%s], but got [%s]" (join ", " $validMethods) $objectData.recovery.method) -}}
-    {{- end -}}
-    {{- if eq $objectData.recovery.method "backup" -}}
-      {{- if not $objectData.recovery.backupName -}}
-        {{- fail "CNPG Recovery - Expected a non-empty [recovery.backupName] key" -}}
-      {{- end -}}
     {{- end -}}
   {{- end -}}
 
@@ -107,31 +108,43 @@
     {{- end -}}
   {{- end -}}
 
+  {{/* [servername] used to be documented but never read. Do not start honoring it, as that would silently change the archive path */}}
+  {{- if and $objectData.recovery $objectData.recovery.servername -}}
+    {{- fail "CNPG Recovery - [recovery.servername] is not supported, use [recovery.serverName] instead. Note that the previous value was never applied" -}}
+  {{- end -}}
+  {{- if and $objectData.backups $objectData.backups.servername -}}
+    {{- fail "CNPG Backup - [backups.servername] is not supported, use [backups.serverName] instead. Note that the previous value was never applied" -}}
+  {{- end -}}
+
   {{- if (hasKey $objectData "backups") -}}
-    {{- if and $objectData.backups.enabled $objectData.backups.target -}}
-      {{- $validTargets := (list "primary" "prefer-standby") -}}
-      {{- if not (mustHas $objectData.backups.target $validTargets) -}}
-        {{- fail (printf "CNPG Backup - Expected [backups.target] to be one of [%s], but got [%s]" (join ", " $validTargets) $objectData.backups.target) -}}
+    {{- if $objectData.backups.enabled -}}
+      {{- with $objectData.backups.target -}}
+        {{- $validTargets := (list "primary" "prefer-standby") -}}
+        {{- if not (mustHas . $validTargets) -}}
+          {{- fail (printf "CNPG Backup - Expected [backups.target] to be one of [%s], but got [%s]" (join ", " $validTargets) .) -}}
+        {{- end -}}
       {{- end -}}
 
-      {{- $regexPolicy := "^[1-9][0-9]*[dwm]$" -}} {{/* Copied from upstream */}}
-      {{- if not (mustRegexMatch $regexPolicy $objectData.backups.retentionPolicy) -}}
-        {{- fail (printf "CNPG Backup - Expected [backups.retentionPolicy] to match regex [%s], got [%s]" $regexPolicy $objectData.backups.retentionPolicy) -}}
+      {{- with $objectData.backups.retentionPolicy -}}
+        {{- $regexPolicy := "^[1-9][0-9]*[dwm]$" -}} {{/* Copied from upstream */}}
+        {{- if not (mustRegexMatch $regexPolicy .) -}}
+          {{- fail (printf "CNPG Backup - Expected [backups.retentionPolicy] to match regex [%s], got [%s]" $regexPolicy .) -}}
+        {{- end -}}
       {{- end -}}
 
-      {{- if eq $objectData.mode "recovery" -}}
-        {{- $serverNameBackup := $objectData.backups.serverName | default $objectData.clusterName -}}
-        {{- $serverNameRecovery := $objectData.recovery.serverName | default $objectData.clusterName -}}
+      {{- $skipEmptyWalArchiveCheck := $rootCtx.Values.global.fallbackDefaults.cnpg.skipEmptyWalArchiveCheck -}}
+      {{- if and $objectData.cluster (kindIs "bool" $objectData.cluster.skipEmptyWalArchiveCheck) -}}
+        {{- $skipEmptyWalArchiveCheck = $objectData.cluster.skipEmptyWalArchiveCheck -}}
+      {{- end -}}
 
-        {{- if $objectData.backups.revision -}}
-          {{- $serverNameBackup = printf "%s-r%s" $serverNameBackup $objectData.backups.revision -}}
-        {{- end -}}
+      {{/* With the check on, CloudNativePG would never start archiving to the archive it recovered from, so fail early.
+      Only recovering from an object store reads an archive, and missing credentials are reported by the secret spawner */}}
+      {{- if and (not $skipEmptyWalArchiveCheck) (eq $objectData.mode "recovery") (eq $objectData.recovery.method "object_store") $objectData.backups.credentials $objectData.recovery.credentials -}}
+        {{- $backupStore := include "tc.v1.common.lib.cnpg.cluster.barmanObjectStoreConfig.getData" (dict "rootCtx" $rootCtx "objectData" $objectData "type" "backup") | fromYaml -}}
+        {{- $recoveryStore := include "tc.v1.common.lib.cnpg.cluster.barmanObjectStoreConfig.getData" (dict "rootCtx" $rootCtx "objectData" $objectData "type" "recovery") | fromYaml -}}
 
-        {{- if $objectData.recovery.revision -}}
-          {{- $serverNameRecovery = printf "%s-r%s" $serverNameRecovery $objectData.recovery.revision -}}
-        {{- end -}}
-
-        {{- if eq $serverNameBackup $serverNameRecovery -}}
+        {{/* The same server name is fine, as long as it is on a different location */}}
+        {{- if and (eq $backupStore.serverName $recoveryStore.serverName) (eq $backupStore.destinationPath $recoveryStore.destinationPath) (eq $backupStore.creds.url $recoveryStore.creds.url) -}}
           {{- if $objectData.backups.serverName -}}
             {{- fail (printf "CNPG Backup/Recovery - [backups.serverName] and [backups.revision] cannot match [recovery.serverName] and [recovery.revision] when in recovery mode and backup is enabled, for CNPG cluster [%s]" $objectData.clusterName) -}}
           {{- else -}}
@@ -142,5 +155,13 @@
     {{- end -}}
   {{- end -}}
 
+  {{/* Clusters without backups or object store recovery do not need the plugin */}}
+  {{- $backups := $objectData.backups | default dict -}}
+  {{- if or $backups.enabled (eq $objectData.mode "recovery") -}}
+    {{- $pluginAPI := include "tc.v1.common.lib.cnpg.barman.pluginAPI" . -}}
+    {{- if not ($rootCtx.Capabilities.APIVersions.Has $pluginAPI) -}}
+      {{- fail (printf "CNPG - Backups and recovery need the Barman Cloud plugin, but API [%s] was not found, for CNPG cluster [%s]. Install the plugin in the namespace of the CloudNativePG operator. When rendering without access to a cluster, pass [--api-versions %s]" $pluginAPI $objectData.clusterName $pluginAPI) -}}
+    {{- end -}}
+  {{- end -}}
 
 {{- end -}}

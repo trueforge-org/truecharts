@@ -1,0 +1,556 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "validating": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Create webhook objects"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "validating"
+          ],
+          "description": "Create webhook objects"
+        },
+        "webhooks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Create webhook objects"
+              },
+              "rules": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "apiGroups": {
+                      "type": "array",
+                      "description": "Create webhook objects"
+                    },
+                    "apiVersions": {
+                      "type": "array",
+                      "description": "Create webhook objects"
+                    },
+                    "operations": {
+                      "type": "array",
+                      "description": "Create webhook objects"
+                    },
+                    "resources": {
+                      "type": "array",
+                      "description": "Create webhook objects"
+                    }
+                  },
+                  "additionalProperties": true,
+                  "description": "Create webhook objects"
+                },
+                "description": "Create webhook objects"
+              },
+              "failurePolicy": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "Ignore",
+                      "Fail"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
+                "description": "Create webhook objects"
+              },
+              "matchPolicy": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "Exact",
+                      "Equivalent"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
+                "description": "Create webhook objects"
+              },
+              "sideEffects": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "None",
+                      "NoneOnDryRun"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
+                "description": "Create webhook objects"
+              },
+              "timeoutSeconds": {
+                "type": "integer",
+                "description": "Create webhook objects"
+              },
+              "admissionReviewVersions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Create webhook objects"
+              },
+              "clientConfig": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Create webhook objects"
+              },
+              "namespaceSelector": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Create webhook objects"
+              },
+              "objectSelector": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Create webhook objects"
+              }
+            },
+            "additionalProperties": true,
+            "description": "Create webhook objects"
+          },
+          "description": "Create webhook objects"
+        }
+      },
+      "additionalProperties": true,
+      "description": "Create webhook objects"
+    },
+    "mutating": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Create webhook objects"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "mutating"
+          ],
+          "description": "Create webhook objects"
+        },
+        "webhooks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Create webhook objects"
+              },
+              "rules": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "apiGroups": {
+                      "type": "array",
+                      "description": "Create webhook objects"
+                    },
+                    "apiVersions": {
+                      "type": "array",
+                      "description": "Create webhook objects"
+                    },
+                    "operations": {
+                      "type": "array",
+                      "description": "Create webhook objects"
+                    },
+                    "resources": {
+                      "type": "array",
+                      "description": "Create webhook objects"
+                    }
+                  },
+                  "additionalProperties": true,
+                  "description": "Create webhook objects"
+                },
+                "description": "Create webhook objects"
+              },
+              "failurePolicy": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "Ignore",
+                      "Fail"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
+                "description": "Create webhook objects"
+              },
+              "matchPolicy": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "Exact",
+                      "Equivalent"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
+                "description": "Create webhook objects"
+              },
+              "sideEffects": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "None",
+                      "NoneOnDryRun"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
+                "description": "Create webhook objects"
+              },
+              "reinvocationPolicy": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "Never",
+                      "IfNeeded"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
+                "description": "Create webhook objects"
+              },
+              "timeoutSeconds": {
+                "type": "integer",
+                "description": "Create webhook objects"
+              },
+              "admissionReviewVersions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Create webhook objects"
+              },
+              "clientConfig": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Create webhook objects"
+              },
+              "namespaceSelector": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Create webhook objects"
+              },
+              "objectSelector": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Create webhook objects"
+              }
+            },
+            "additionalProperties": true,
+            "description": "Create webhook objects"
+          },
+          "description": "Create webhook objects"
+        }
+      },
+      "additionalProperties": true,
+      "description": "Create webhook objects"
+    }
+  },
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "webhooks": {
+        "type": "array",
+        "properties": {},
+        "additionalProperties": {
+          "type": "object",
+          "properties": {
+            "rules": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "resources": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Create webhook objects"
+                  },
+                  "scope": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Define the scope of the rule for the webhook"
+                  },
+                  "apiGroups": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Define the apiGroups of the rule for the webhook"
+                  },
+                  "apiVersions": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Define the apiVersions of the rule for the webhook"
+                  },
+                  "operations": {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": true,
+                    "description": "Define the operations of the rule for the webhook"
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Configuration for `$name.webhooks.$name.rules.$name`."
+              },
+              "description": "Define the rules for the webhook"
+            },
+            "name": {
+              "type": "string",
+              "description": "Define the webhook name"
+            },
+            "failurePolicy": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "Ignore",
+                    "Fail"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\{\\{.*\\}\\}$"
+                }
+              ],
+              "description": "Define the failurePolicy for the webhook"
+            },
+            "matchPolicy": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "Exact",
+                    "Equivalent"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\{\\{.*\\}\\}$"
+                }
+              ],
+              "description": "Define the matchPolicy for the webhook"
+            },
+            "sideEffects": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "None",
+                    "NoneOnDryRun"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\{\\{.*\\}\\}$"
+                }
+              ],
+              "description": "Define the sideEffects for the webhook"
+            },
+            "reinvocationPolicy": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "Never",
+                    "IfNeeded"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\{\\{.*\\}\\}$"
+                }
+              ],
+              "description": "Define the reinvocationPolicy for the webhook"
+            },
+            "timeoutSeconds": {
+              "type": "integer",
+              "description": "Define the timeoutSeconds for the webhook"
+            },
+            "admissionReviewVersions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Define the admissionReviewVersions for the webhook"
+            },
+            "clientConfig": {
+              "type": "object",
+              "properties": {
+                "caBundle": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": true,
+                  "description": "Define the caBundle in clientConfig for the webhook"
+                },
+                "url": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": true,
+                  "description": "Define the url in clientConfig for the webhook, required if service is not defined in clientConfig"
+                },
+                "service": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Define the service name in clientConfig for the webhook"
+                    },
+                    "namespace": {
+                      "allOf": [
+                        {
+                          "$ref": "special/namespaces.json"
+                        }
+                      ],
+                      "description": "Define the service namespace in clientConfig for the webhook"
+                    },
+                    "path": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Define the service path in clientConfig for the webhook"
+                    },
+                    "port": {
+                      "type": "object",
+                      "properties": {},
+                      "additionalProperties": true,
+                      "description": "Define the service port in clientConfig for the webhook"
+                    }
+                  },
+                  "additionalProperties": true,
+                  "description": "Define the service in clientConfig for the webhook, required if url is not defined in clientConfig"
+                }
+              },
+              "additionalProperties": true,
+              "description": "Define the clientConfig for the webhook"
+            }
+          },
+          "additionalProperties": true,
+          "description": "Configuration for `$name.webhooks.$name`."
+        },
+        "description": "Define the webhooks.",
+        "default": []
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Enables or Disables the webhook",
+        "default": false
+      },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "special/namespaces.json"
+          }
+        ],
+        "description": "Define the namespace for this object",
+        "default": ""
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Additional labels for webhook",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
+      },
+      "annotations": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Additional annotations for webhook",
+        "default": {}
+      },
+      "type": {
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "mutating",
+              "validating"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ],
+        "description": "Define the type of the webhook.",
+        "default": ""
+      }
+    },
+    "additionalProperties": true,
+    "description": "Define a webhook object with the given name",
+    "default": {}
+  },
+  "description": "Create webhook objects"
+}

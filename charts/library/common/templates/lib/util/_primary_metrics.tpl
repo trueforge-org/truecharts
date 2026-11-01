@@ -4,8 +4,11 @@
 
   {{- $enabledMetrics := dict -}}
   {{- range $name, $metrics := $metrics -}}
-    {{- if $metrics.enabled -}}
-      {{- $_ := set $enabledMetrics $name $metrics -}}
+    {{- if and (kindIs "map" $metrics) $metrics.enabled -}}
+      {{/* Metrics of dependencies are only the primary of the release when they are explicitly set to primary */}}
+      {{- if or (not $metrics.dependency) $metrics.primary -}}
+        {{- $_ := set $enabledMetrics $name $metrics -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
 

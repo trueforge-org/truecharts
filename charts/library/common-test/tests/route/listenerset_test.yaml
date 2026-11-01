@@ -1,0 +1,265 @@
+suite: route listener set test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+capabilities:
+  apiVersions:
+    - gateway.networking.k8s.io/v1/ListenerSet
+    - cert-manager.io/v1
+tests:
+  - it: should attach a route to a listener set of the chart
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      listenerSet: &listenerSet
+        my-set:
+          enabled: true
+          parentRef:
+            name: external
+            namespace: networking
+          listeners:
+            - name: https
+              hostname: app.example.com
+              port: 443
+              protocol: HTTPS
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          listenerSet: my-set
+          hostnames:
+            - app.example.com
+    asserts:
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.parentRefs
+          value:
+            - group: gateway.networking.k8s.io
+              kind: ListenerSet
+              name: test-release-name-common-test-my-set
+              namespace: test-release-namespace
+
+  - it: should render one class for the listener sets of routes and the chart
+    set:
+      service: *service
+      listenerSet:
+        my-set:
+          enabled: true
+          parentRef:
+            name: external
+          listeners:
+            - name: https
+              hostname: other.example.com
+              port: 443
+              protocol: HTTPS
+      route: &certRoute
+        my-route:
+          enabled: true
+          primary: true
+          gateway: external
+          hostnames:
+            - app.example.com
+          integrations:
+            certManager:
+              enabled: true
+              certificateIssuer: my-issuer
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-external-443-my-issuer
+        equal:
+          path: spec.listeners
+          value:
+            - name: https-0
+              hostname: app.example.com
+              port: 443
+              protocol: HTTPS
+              tls:
+                mode: Terminate
+                certificateRefs:
+                  - group: ""
+                    kind: Secret
+                    name: test-release-name-common-test-tls-app-example-com
+              allowedRoutes:
+                namespaces:
+                  from: Same
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-my-set
+        isKind:
+          of: ListenerSet
+
+  - it: should fail with a route using the same hostname and port as a listener set
+    set:
+      service: *service
+      listenerSet:
+        my-set:
+          enabled: true
+          parentRef:
+            name: external
+          listeners:
+            - name: https
+              hostname: app.example.com
+              port: 443
+              protocol: HTTPS
+      route: *certRoute
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Route [my-route] and [listenerSet.my-set] use hostname [app.example.com] on the same gateway and port. Listeners conflict on a gateway and the oldest one wins. Attach the route with [listenerSet] instead of [tls]
+
+  - it: should not fail with the same hostname on another gateway
+    set:
+      service: *service
+      listenerSet:
+        my-set:
+          enabled: true
+          parentRef:
+            name: internal
+          listeners:
+            - name: https
+              hostname: app.example.com
+              port: 443
+              protocol: HTTPS
+      route: *certRoute
+    asserts:
+      - notFailedTemplate: {}
+
+  - it: should fail with a name conflicting with a listener set of a route
+    set:
+      service: *service
+      listenerSet:
+        external-443-my-issuer:
+          enabled: true
+          parentRef:
+            name: other
+          listeners:
+            - name: https
+              hostname: other.example.com
+              port: 443
+              protocol: HTTPS
+      route: *certRoute
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - ListenerSet [test-release-name-common-test-external-443-my-issuer] created for the TLS of a route has the same name as [listenerSet.external-443-my-issuer]. Rename one of them
+
+  - it: should fail with listenerSet and gateway on a route
+    set:
+      service: *service
+      listenerSet: *listenerSet
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          gateway: external
+          listenerSet: my-set
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Only one of [gateway, targetSelector, listenerSet] can be set on [route.my-route]
+
+  - it: should fail with listenerSet and tls on a route
+    set:
+      service: *service
+      listenerSet: *listenerSet
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          listenerSet: my-set
+          hostnames:
+            - app.example.com
+          integrations:
+            certManager:
+              enabled: true
+              certificateIssuer: my-issuer
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.my-route.listenerSet] cannot be used with [tls] or [integrations.certManager], those create their own ListenerSet. Set the certificate on the listeners of the ListenerSet instead
+
+  - it: should fail with a listener set that does not exist
+    set:
+      service: *service
+      route:
+        my-route:
+          enabled: true
+          primary: true
+          listenerSet: missing
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected [listenerSet] of route [my-route] to reference an enabled listener set, got [missing]
+
+  - it: should resolve the references of a listener set in a dependency
+    set:
+      service: *service
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+      dependencies:
+        my-dep:
+          enabled: true
+          gatewayClass:
+            my-class:
+              enabled: true
+              controllerName: example.com/controller
+          gateway:
+            my-gateway:
+              enabled: true
+              targetSelector: my-class
+              allowedListeners:
+                namespaces:
+                  from: Same
+              listeners:
+                - name: http
+                  port: 80
+                  protocol: HTTP
+          listenerSet:
+            my-set:
+              enabled: true
+              targetSelector: my-gateway
+              listeners:
+                - name: https
+                  hostname: dep.example.com
+                  port: 443
+                  protocol: HTTPS
+          route:
+            my-route:
+              enabled: true
+              listenerSet: my-set
+              hostnames:
+                - dep.example.com
+              rules:
+                - backendRefs:
+                    - name: some-service
+                      port: 80
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ListenerSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-my-dep-my-set
+      - documentSelector:
+          path: kind
+          value: ListenerSet
+        equal:
+          path: spec.parentRef.name
+          value: test-release-name-common-test-my-dep-my-gateway
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.parentRefs[0].name
+          value: test-release-name-common-test-my-dep-my-set

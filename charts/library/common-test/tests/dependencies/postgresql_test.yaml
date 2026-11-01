@@ -1,0 +1,324 @@
+suite: dependencies postgresql test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render the postgresql dependency with the defaults of common
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          mode: standalone
+    asserts:
+      - hasDocuments:
+          count: 4
+      - documentSelector: &secretDoc
+          path: kind
+          value: Secret
+        equal:
+          path: metadata.name
+          value: test-release-name-postgresqlcreds
+      - documentSelector: *secretDoc
+        equal:
+          path: stringData
+          value:
+            postgresql-password: PLACEHOLDERPASSWORD
+            plainhost: test-release-name-common-test-postgresql-main
+            plainporthost: test-release-name-common-test-postgresql-main:5432
+            url: postgresql://test:PLACEHOLDERPASSWORD@test-release-name-common-test-postgresql-main:5432/test
+            urlnossl: postgresql://test:PLACEHOLDERPASSWORD@test-release-name-common-test-postgresql-main:5432/test?sslmode=disable
+            jdbc: jdbc:postgresql://test-release-name-common-test-postgresql-main:5432/test
+      - documentSelector: &workloadDoc
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-postgresql-main
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.updateStrategy.type
+          value: RollingUpdate
+      - documentSelector: *workloadDoc
+        matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: ^oci\.trueforge\.org/containerforge/postgresql:[^@]+@sha256:[0-9a-f]{64}$
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsUser
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: true
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: test-release-name-postgresqlcreds
+                key: postgresql-password
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: POSTGRES_USER
+            value: test
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: POSTGRES_DB
+            value: test
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].livenessProbe.exec.command
+          value:
+            - /bin/sh
+            - -c
+            - pg_isready -h 127.0.0.1 -p 5432 -U "${POSTGRES_USER}" -d "${POSTGRES_DB}"
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].readinessProbe.exec.command
+          value:
+            - /bin/sh
+            - -c
+            - pg_isready -h 127.0.0.1 -p 5432 -U "${POSTGRES_USER}" -d "${POSTGRES_DB}"
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].startupProbe.exec.command
+          value:
+            - /bin/sh
+            - -c
+            - pg_isready -h 127.0.0.1 -p 5432 -U "${POSTGRES_USER}" -d "${POSTGRES_DB}"
+      - documentSelector: *workloadDoc
+        notExists:
+          path: spec.template.spec.initContainers
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: postgresql-data
+            mountPath: /config
+            readOnly: false
+      - documentSelector:
+          path: kind
+          value: PersistentVolumeClaim
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-postgresql-data
+      - documentSelector: &serviceDoc
+          path: kind
+          value: Service
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-postgresql-main
+      - documentSelector: *serviceDoc
+        equal:
+          path: spec.ports[0]
+          value:
+            name: main
+            port: 5432
+            protocol: TCP
+            targetPort: 5432
+      - documentSelector: *serviceDoc
+        equal:
+          path: spec.selector['pod.name']
+          value: postgresql-main
+
+  - it: should use the custom depconfig
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          mode: standalone
+          depconfig:
+            password: testpassword
+            postgresqlUsername: myuser
+            postgresqlDatabase: mydb
+    asserts:
+      - documentSelector: &secretDoc
+          path: kind
+          value: Secret
+        equal:
+          path: stringData
+          value:
+            postgresql-password: testpassword
+            plainhost: test-release-name-common-test-postgresql-main
+            plainporthost: test-release-name-common-test-postgresql-main:5432
+            url: postgresql://myuser:testpassword@test-release-name-common-test-postgresql-main:5432/mydb
+            urlnossl: postgresql://myuser:testpassword@test-release-name-common-test-postgresql-main:5432/mydb?sslmode=disable
+            jdbc: jdbc:postgresql://test-release-name-common-test-postgresql-main:5432/mydb
+      - documentSelector: &workloadDoc
+          path: kind
+          value: StatefulSet
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: POSTGRES_USER
+            value: myuser
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: POSTGRES_DB
+            value: mydb
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: test-release-name-postgresqlcreds
+                key: postgresql-password
+
+  - it: should render nothing with the postgresql dependency disabled
+    set:
+      dependencies:
+        postgresql:
+          enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should use the root postgresql18Image, and allow overriding it
+    set:
+      postgresql18Image:
+        repository: example.org/custom/postgresql
+        tag: "19"
+        pullPolicy: Always
+      dependencies:
+        postgresql:
+          enabled: true
+          mode: standalone
+    asserts:
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: spec.template.spec.containers[0].image
+          value: example.org/custom/postgresql:19
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: spec.template.spec.containers[0].imagePullPolicy
+          value: Always
+
+  - it: should not use the main image of the chart
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      dependencies:
+        postgresql:
+          enabled: true
+          mode: standalone
+    asserts:
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: "^oci\\.trueforge\\.org/containerforge/postgresql:"
+
+  - it: should expose the credentials to the workloads of the chart
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+                env:
+                  POSTGRES_URL: '{{ .Values.dependencies.postgresql.depconfig.creds.complete | trimAll "\"" }}'
+                  POSTGRES_HOST: '{{ .Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"" }}'
+                  POSTGRES_PASSWORD: "{{ .Values.dependencies.postgresql.depconfig.password }}"
+      dependencies:
+        postgresql:
+          enabled: true
+          mode: standalone
+          depconfig:
+            password: testpassword
+    asserts:
+      - documentSelector: &rootWorkloadDoc
+          path: metadata.name
+          value: test-release-name-common-test
+        equal:
+          path: kind
+          value: Deployment
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: POSTGRES_URL
+            value: postgresql://test:testpassword@test-release-name-common-test-postgresql-main:5432/test
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: POSTGRES_HOST
+            value: test-release-name-common-test-postgresql-main
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: POSTGRES_PASSWORD
+            value: testpassword
+
+  - it: should fail without a port for postgresql
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          mode: standalone
+          service:
+            main:
+              ports:
+                main:
+                  enabled: false
+    asserts:
+      - failedTemplate:
+          errorMessage: Service - Expected enabled service to have at least one port
+
+  - it: should fail without a username for postgresql
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          mode: standalone
+          depconfig:
+            postgresqlUsername: null
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [dependencies.postgresql.depconfig.postgresqlUsername] to not be empty
+
+  - it: should fail without a database for postgresql
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          mode: standalone
+          depconfig:
+            postgresqlDatabase: null
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [dependencies.postgresql.depconfig.postgresqlDatabase] to not be empty

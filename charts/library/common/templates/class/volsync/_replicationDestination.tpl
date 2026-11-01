@@ -33,7 +33,13 @@ objectData:
   {{- end -}}
   {{- if $volsyncData.dest.capacity -}}
     {{- $capacity = $volsyncData.dest.capacity -}}
-  {{- end }}
+  {{- end -}}
+
+  {{- if not (hasKey $volsyncData "resources") -}}
+    {{- $_ := set $volsyncData "resources" dict -}}
+  {{- end -}}
+  {{/* Exclude extra resources */}}
+  {{- $_ := set $volsyncData.resources "excludeExtra" true }}
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
@@ -67,6 +73,10 @@ spec:
     {{- end }}
     cleanupTempPVC: {{ $cleanupTempPVC }}
     cleanupCachePVC: {{ $cleanupCachePVC }}
+    {{- with (include "tc.v1.common.lib.container.resources" (dict "rootCtx" $rootCtx "objectData" $volsyncData) | trim) }}
+    moverResources:
+      {{- . | nindent 6 }}
+    {{- end }}
   {{- include "tc.v1.common.lib.volsync.storage" (dict "rootCtx" $rootCtx "objectData" $objectData "volsyncData" $volsyncData "target" "dest") | trim | nindent 4 }}
   {{- include "tc.v1.common.lib.volsync.cache" (dict "rootCtx" $rootCtx "objectData" $objectData "volsyncData" $volsyncData "target" "dest") | trim | nindent 4 }}
   {{- include "tc.v1.common.lib.volsync.moversecuritycontext" (dict "rootCtx" $rootCtx "objectData" $objectData "volsyncData" $volsyncData "target" "dest") | trim | nindent 4 }}

@@ -138,11 +138,51 @@ jobs:
           helm dependency update
           helm unittest -f "tests/**/*.yaml" . -v ./unit-values.yaml
 
+  schema-validation:
+    needs:
+      - lint
+    name: Schema Validation
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 1
+
+      - name: Install Helm
+        uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4
+        with:
+          version: v3.20.0
+
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
+        with:
+          python-version: "3.10"
+
+      - name: Install Python dependencies
+        run: pip install PyYAML ruamel.yaml
+
+      - name: Generate complete values structure
+        run: |
+          python3 charts/library/common/generate_complete_values_structure.py
+
+      - name: Run schema validation
+        run: |
+          python3 charts/library/common/test_schema.py --max-failures 0 --output-file stable_schema_validation.log
+          python3 charts/library/common/check_complete_values_schema_coverage.py
+
+      - name: Upload schema validation log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stable-schema-validation-log
+          path: stable_schema_validation.log
+
   install:
     # Install jobs are the slowest, do not start them if a fast check already failed
     needs:
       - lint
       - unittest
+      - schema-validation
     name: Install Charts (${{ matrix.versions.k3s }}, ${{ matrix.versions.helm }}, ${{ matrix.values }})
     runs-on: ubuntu-latest
     strategy:
@@ -169,8 +209,21 @@ jobs:
           # - codeserver-values.yaml
           - netshoot-values.yaml
           - metrics-values.yaml
+          - route-values.yaml
+          - route-tls-values.yaml
+          - gateway-values.yaml
+          - gatewayclass-values.yaml
           - cnpg-values.yaml
-          - cnpg-multi-values.yaml
+          - cnpg-pg17-values.yaml
+          - cnpg-pg18-values.yaml
+          - cnpg-pg18-postgis-values.yaml
+          - valkey-values.yaml
+          - valkey-operator-values.yaml
+          - mariadb-values.yaml
+          - clickhouse-values.yaml
+          - memcached-values.yaml
+          - mongodb-values.yaml
+          - postgresql-values.yaml
           - register-operator-values.yaml
           - autopermissions-values.yaml
           - credentials-values.yaml
@@ -280,7 +333,7 @@ jobs:
 
   # Summarize matrix https://github.community/t/status-check-for-a-matrix-jobs/127354/7
   common-tests-complete:
-    needs: [check_changes, lint, unittest, install]
+    needs: [check_changes, lint, unittest, schema-validation, install]
     if: ${{ always() }}
     name: Common Tests Completed
     runs-on:
@@ -290,6 +343,7 @@ jobs:
         run: |
           if [[ "${{ needs.check_changes.outputs.changes_detected }}" == 'true' && ( "${{ needs.lint.result }}" != "success" || \
                 "${{ needs.unittest.result }}" != "success" || \
+                "${{ needs.schema-validation.result }}" != "success" || \
                 "${{ needs.install.result }}" != "success") ]]; then
             echo "One or more jobs failed!"
             exit 1

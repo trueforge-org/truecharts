@@ -1,0 +1,317 @@
+suite: deprecations validation test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should fail with the enabled top level redis
+    set:
+      redis:
+        enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [redis] key, it is replaced by [dependencies.valkey]. Move [enabled] to [dependencies.valkey], and [password] to [dependencies.valkey.depconfig]. The connection details are available under [dependencies.valkey.depconfig.creds]
+
+  - it: should fail with the enabled top level valkey
+    set:
+      valkey:
+        enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [valkey] key, it is replaced by [dependencies.valkey]. Move [enabled] to [dependencies.valkey], and [password] to [dependencies.valkey.depconfig]. The connection details are available under [dependencies.valkey.depconfig.creds]
+
+  - it: should fail with the top level valkey enabled using a template
+    set:
+      useValkey: true
+      valkey:
+        enabled: "{{ .Values.useValkey }}"
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [valkey] key, it is replaced by [dependencies.valkey]. Move [enabled] to [dependencies.valkey], and [password] to [dependencies.valkey.depconfig]. The connection details are available under [dependencies.valkey.depconfig.creds]
+
+  - it: should fail with the enabled top level valkey, even when the dependency is enabled
+    set:
+      valkey:
+        enabled: true
+      dependencies:
+        valkey:
+          enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [valkey] key, it is replaced by [dependencies.valkey]. Move [enabled] to [dependencies.valkey], and [password] to [dependencies.valkey.depconfig]. The connection details are available under [dependencies.valkey.depconfig.creds]
+
+  - it: should fail with the enabled top level solr
+    set:
+      solr:
+        enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [solr] key, it is no longer supported and has no replacement. Remove [solr], or set [solr.enabled] to false
+
+  - it: should fail with the enabled top level clickhouse
+    set:
+      clickhouse:
+        enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [clickhouse] key, it is replaced by [dependencies.clickhouse]. Move [enabled] to [dependencies.clickhouse], and [password], [clickhouseUsername] and [clickhouseDatabase] to [dependencies.clickhouse.depconfig]. The connection details are available under [dependencies.clickhouse.depconfig.creds]
+
+  - it: should fail with the top level clickhouse enabled using a template
+    set:
+      useClickhouse: true
+      clickhouse:
+        enabled: "{{ .Values.useClickhouse }}"
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [clickhouse] key, it is replaced by [dependencies.clickhouse]. Move [enabled] to [dependencies.clickhouse], and [password], [clickhouseUsername] and [clickhouseDatabase] to [dependencies.clickhouse.depconfig]. The connection details are available under [dependencies.clickhouse.depconfig.creds]
+
+  - it: should fail with the enabled top level clickhouse, even when the dependency is enabled
+    set:
+      clickhouse:
+        enabled: true
+      dependencies:
+        clickhouse:
+          enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [clickhouse] key, it is replaced by [dependencies.clickhouse]. Move [enabled] to [dependencies.clickhouse], and [password], [clickhouseUsername] and [clickhouseDatabase] to [dependencies.clickhouse.depconfig]. The connection details are available under [dependencies.clickhouse.depconfig.creds]
+
+  - it: should fail with the enabled top level memcached
+    set:
+      memcached:
+        enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [memcached] key, it is replaced by [dependencies.memcached]. Move [enabled] to [dependencies.memcached]
+
+  - it: should fail with the top level memcached enabled using a template
+    set:
+      useMemcached: true
+      memcached:
+        enabled: "{{ .Values.useMemcached }}"
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [memcached] key, it is replaced by [dependencies.memcached]. Move [enabled] to [dependencies.memcached]
+
+  - it: should fail with the enabled top level memcached, even when the dependency is enabled
+    set:
+      memcached:
+        enabled: true
+      dependencies:
+        memcached:
+          enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [memcached] key, it is replaced by [dependencies.memcached]. Move [enabled] to [dependencies.memcached]
+
+  - it: should fail with the enabled top level cnpg
+    set:
+      cnpg:
+        enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [cnpg] key, it is replaced by [dependencies.postgresql]. Move [enabled] to [dependencies.postgresql], and [password], [user] (as [postgresqlUsername]) and [database] (as [postgresqlDatabase]) to [dependencies.postgresql.depconfig]. The connection details are available under [dependencies.postgresql.depconfig.creds]
+
+  - it: should fail with the top level cnpg enabled using a template
+    set:
+      useCnpg: true
+      cnpg:
+        enabled: "{{ .Values.useCnpg }}"
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [cnpg] key, it is replaced by [dependencies.postgresql]. Move [enabled] to [dependencies.postgresql], and [password], [user] (as [postgresqlUsername]) and [database] (as [postgresqlDatabase]) to [dependencies.postgresql.depconfig]. The connection details are available under [dependencies.postgresql.depconfig.creds]
+
+  - it: should fail with an enabled cnpg cluster
+    set:
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+    asserts:
+      - failedTemplate:
+          errorMessage: "Expected no [cnpg.my-pg] key, it is replaced by [dependencies.postgresql], which is provided by CloudNativePG by default. Move [enabled] to [dependencies.postgresql], [user], [database] and [password] to [dependencies.postgresql.depconfig] as [postgresqlUsername], [postgresqlDatabase] and [password], and the other settings to [dependencies.postgresql.operator]. Only a single cluster is supported. The connection details are available under [dependencies.postgresql.depconfig.creds]"
+
+  - it: should fail with the enabled cnpg cluster main, even when the dependency is enabled
+    set:
+      cnpg:
+        main:
+          enabled: true
+      dependencies:
+        postgresql:
+          enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: "Expected no [cnpg.main] key, it is replaced by [dependencies.postgresql], which is provided by CloudNativePG by default. Move [enabled] to [dependencies.postgresql], [user], [database] and [password] to [dependencies.postgresql.depconfig] as [postgresqlUsername], [postgresqlDatabase] and [password], and the other settings to [dependencies.postgresql.operator]. Only a single cluster is supported. The connection details are available under [dependencies.postgresql.depconfig.creds]"
+
+  - it: should not fail with a disabled top level cnpg and disabled cnpg clusters
+    set:
+      cnpg:
+        enabled: false
+        main:
+          enabled: false
+          user: test-user
+        my-pg:
+          user: test-user
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should fail with the unsupported cnpg key in a standalone dependency
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          mode: standalone
+          cnpg:
+            enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Key [cnpg] is not supported in dependency [postgresql]
+
+  - it: should not fail with the disabled top level solr, clickhouse, mongodb and memcached
+    set:
+      solr:
+        enabled: false
+        password: testpassword
+      clickhouse:
+        enabled: false
+        password: testpassword
+      mongodb:
+        enabled: false
+        password: testpassword
+      memcached:
+        enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should not fail with the top level solr, clickhouse, mongodb and memcached without enabled
+    set:
+      solr:
+        password: testpassword
+      clickhouse:
+        password: testpassword
+      mongodb:
+        password: testpassword
+      memcached:
+        password: testpassword
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should not fail with the disabled top level redis, valkey and clickhouse
+    set:
+      redis:
+        enabled: false
+        password: testpassword
+      valkey:
+        enabled: false
+        password: testpassword
+      clickhouse:
+        enabled: false
+        password: testpassword
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should not fail with the top level redis, valkey and clickhouse disabled using a template
+    set:
+      useValkey: false
+      redis:
+        enabled: "{{ .Values.useValkey }}"
+      valkey:
+        enabled: "{{ .Values.useValkey }}"
+      clickhouse:
+        enabled: "{{ .Values.useValkey }}"
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should not fail with the top level redis, valkey and clickhouse without enabled
+    set:
+      redis:
+        password: testpassword
+      valkey:
+        password: testpassword
+      clickhouse:
+        password: testpassword
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should not fail with the top level redis, valkey and clickhouse unset
+    set:
+      redis: null
+      valkey: null
+      clickhouse: null
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should not fail with the dependency valkey
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: metadata.name
+          value: test-release-name-valkeycreds
+
+  - it: should not fail with the dependency clickhouse
+    set:
+      dependencies:
+        clickhouse:
+          enabled: true
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: metadata.name
+          value: test-release-name-clickhousecreds
+
+  - it: should fail with the unused top level volumeClaimTemplates
+    set:
+      volumeClaimTemplates:
+        data:
+          enabled: true
+          mountPath: /data
+        config:
+          enabled: false
+    asserts:
+      - failedTemplate:
+          errorMessage: "Expected no [volumeClaimTemplates], as this key is not used, so [config, data] would not be persisted. Use [persistence] instead, a new volume on an existing StatefulSet can't use [type: vct]"
+
+  - it: should not fail with an empty top level volumeClaimTemplates
+    set:
+      volumeClaimTemplates: {}
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should fail with the removed vpn add-on
+    set:
+      addons:
+        vpn:
+          type: wireguard
+    asserts:
+      - failedTemplate:
+          errorMessage: Your current Common-Chart version does not support [.Values.addons.vpn] please use [.Values.addons.tailscale] or [.Values.addons.gluetun] instead
+
+  - it: should not fail with the supported add-ons
+    set:
+      addons:
+        gluetun:
+          enabled: false
+        tailscale:
+          enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0

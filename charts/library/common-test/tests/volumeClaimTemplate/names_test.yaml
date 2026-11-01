@@ -46,7 +46,7 @@ tests:
           value: test-release-name-common-test-my-volume1
       - documentIndex: *statefulSetDoc
         equal:
-          path: spec.template.spec.containers[0].volumeMounts[1].name
+          path: spec.template.spec.containers[0].volumeMounts[2].name
           value: test-release-name-common-test-my-volume1
       - documentIndex: *statefulSetDoc
         equal:
@@ -54,5 +54,5 @@ tests:
           value: test-release-name-common-test-my-volume2
       - documentIndex: *statefulSetDoc
         equal:
-          path: spec.template.spec.containers[0].volumeMounts[2].name
+          path: spec.template.spec.containers[0].volumeMounts[3].name
           value: test-release-name-common-test-my-volume2

@@ -31,6 +31,9 @@ global:
     # -- Default PVC Access Modes
     accessModes:
       - ReadWriteOnce
+    # -- Keep [strategy: RollingUpdate] on a single replica Deployment with ReadWriteOnce volumes
+    # Can be overruled per workload. Updates can get stuck, and two pods use the same data during an update
+    allowRollingUpdateWithRWO: false
     # -- Default VCT Access Modes
     vctAccessModes:
       - ReadWriteOnce
@@ -61,8 +64,11 @@ global:
     # -- Define a topologyKey for default topologySpreadConstraints
     # Will be used when defaultSpread: true
     topologyKey: kubernetes.io/hostname
+    # -- Port of the listeners created for route TLS. Can be overruled per route with listenerPort
+    # Traefik needs the port of its entrypoint here, which is not always the port it is exposed on
+    routeListenerPort: 443
     cnpg:
-      pgVersion: 16
+      pgVersion: 18
       skipEmptyWalArchiveCheck: true
   traefik:
     commonMiddlewares:
@@ -77,9 +83,14 @@ global:
 namespace: ""
 
 image:
-  repository: ghcr.io/traefik/whoami
+  repository: oci.trueforge.org/containerforge/whoami
   pullPolicy: IfNotPresent
-  tag: v1.12.0@sha256:c4717a8d1f0134a7444e24f881160e033991f23027c6c5a9a3f8fd22e70d1d44
+  tag: "1.12.0@sha256:ab5d621fc3ecf2ddcc52a728551bab0b942c1e777126b9595df1cfa4e7b9adfa"
+
+ubuntuImage:
+  repository: oci.trueforge.org/containerforge/ubuntu
+  tag: "26.4@sha256:205c6561352214872c61edea4909f29afe9be1eee6c61430ce627ca757c137ed"
+  pullPolicy: IfNotPresent
 
 chartContext:
   appUrl: ""
@@ -170,6 +181,8 @@ workload:
     enabled: true
     primary: true
     type: Deployment
+    # -- Additional labels used by this workload's pod selector
+    extraSelectorLabels: {}
     dbWait: true
     podSpec:
       containers:
@@ -378,6 +391,12 @@ persistence:
     mountPath: /dev/shm
     medium: Memory
     targetSelectAll: true
+  crontab:
+    enabled: true
+    type: emptyDir
+    mountPath: /var/spool/cron/crontabs/
+    medium: Memory
+    targetSelectAll: true
 #  backupexample:
 #    ## the default backup path, is the credential path suffixed by the releasename, volsync and both the pvc and volsync names
 #    enabled: true
@@ -501,8 +520,99 @@ imagePullSecret: {}
 # -- (docs/configmap.md)
 configmap: {}
 
+# -- Generate ConfigMaps from a folder in the Helm chart's filesystem
+# Your files will need to be two levels deep from the base path.
+# For example, if you set basePath to `files/configMaps/`, you should have this file tree:
+# files/configMaps/:
+# └── configmap1
+#     ├── file1
+#     └── file2
+# This will generate a ConfigMap named `configmap1` with keys `file1` and `file2`.
+configMapsFromFolder:
+  enabled: false
+  # -- The path in your parent chart's filesystem where you can add files to be converted into individual ConfigMaps.
+  basePath: ""
+  # -- Define overrides for the generated ConfigMaps, each key is the name of a folder in `basePath`
+  configMapsOverrides: {}
+  #   test:
+  #     # All ConfigMaps support a `forceRename` field, which allows you to rename the ConfigMap
+  #     forceRename: null
+  #     annotations:
+  #       test: test
+  #     labels:
+  #       test: test
+  #     # Configure how the individual files are added to the ConfigMap
+  #     fileAttributeOverrides:
+  #       # The key is the name of the file inside the ConfigMap's folder
+  #       test.tpl:
+  #         # If true the file won't be added to the ConfigMap
+  #         exclude: false
+  #         # If your file is a binary file like an image, set this to true. Takes precedence over `escaped`
+  #         binary: false
+  #         # If your file contains `gotpl` syntax that you don't want templated by Helm, set this to true
+  #         escaped: true
+  #       test.txt:
+  #         exclude: true
+  #   test2:
+  #     fileAttributeOverrides:
+  #       image.png:
+  #         binary: true
+
 # -- (docs/secret.md)
 secret: {}
+
+# -- (docs/externalSecret.md)
+# Requires the External Secrets Operator CRDs to be installed in the cluster.
+# Additional ExternalSecrets can be added by adding a dictionary key similar to the 'main' example.
+# [[ref]](https://external-secrets.io/latest/api/externalsecret/)
+externalSecret: {}
+#   main:
+#     # -- Enables or disables the ExternalSecret
+#     enabled: false
+#     # -- Prefix the object name with the chart fullname
+#     expandObjectName: true
+#     # -- Provide additional annotations which may be required.
+#     annotations: {}
+#     # -- Provide additional labels which may be required.
+#     labels: {}
+#     # -- How often the data is synced from the provider
+#     refreshInterval: 1h
+#     # -- When the data is synced from the provider
+#     # Valid options are CreatedOnce, Periodic, OnChange
+#     # refreshPolicy: Periodic
+#     # -- The SecretStore or ClusterSecretStore to fetch the data from
+#     secretStoreRef:
+#       name: ""
+#       # Valid options are SecretStore, ClusterSecretStore
+#       kind: SecretStore
+#     # -- The Kubernetes Secret created by the External Secrets Operator
+#     target:
+#       # Defaults to the name of the ExternalSecret
+#       name: ""
+#       # Valid options are Owner, Orphan, Merge, None
+#       creationPolicy: Owner
+#       # Valid options are Delete, Merge, Retain
+#       # deletionPolicy: Retain
+#       # immutable: false
+#       # Passed to the ExternalSecret as is, External Secrets Operator evaluates its own Go templates in here
+#       # template:
+#       #   type: Opaque
+#       #   data:
+#       #     config: '{{ .username }}:{{ .password }}'
+#     # -- Individual keys to fetch from the provider
+#     data:
+#       - secretKey: password
+#         remoteRef:
+#           key: my-app
+#           property: password
+#     # -- Fetch multiple keys from the provider at once, passed to the ExternalSecret as is
+#     dataFrom: []
+#     # dataFrom:
+#     #   - extract:
+#     #       key: my-app
+#     #   - find:
+#     #       name:
+#     #         regexp: "^my-app-"
 
 # -- (docs/serviceAccount.md)
 serviceAccount: {}
@@ -516,11 +626,7 @@ notes:
     # Thank you for installing {{ .Chart.Name }} by TrueCharts.
   # custom: "{{ toYaml $.Values }}"
   custom: |
-    {{- if .Values.chartContext.appUrl }}
-    ## Connecting externally
-    You can use this Chart by opening the following links in your browser:
-    - {{ toYaml .Values.chartContext.appUrl }}
-    {{- end }}
+    {{- include "tc.v1.common.lib.chart.externalUrls" $ }}
 
     {{ if .Chart.Dependencies }}
     ## Dependencies for {{ .Chart.Name }}
@@ -534,7 +640,7 @@ notes:
     ## Connecting Internally
 
     You can reach this chart inside your cluster, using the following service URLS:
-    {{- range $url := .Values.chartContext.internalUrls -}}
+    {{- range $url := .Values.chartContext.internalUrls }}
     - {{ $url }}
     {{- end }}
     {{- end }}
@@ -559,6 +665,9 @@ notes:
     OpenSource can only exist with your help, please consider supporting TrueCharts:
     https://trueforge.org/sponsor
   warnings: []
+  # -- Show credentials (eg, passwords in connection URLs) in the notes.
+  # When disabled, they are replaced by `HIDDEN`.
+  showCredentials: false
 
 ####
 ##
@@ -567,18 +676,18 @@ notes:
 ####
 
 gluetunImage:
-  repository: oci.trueforge.org/tccr/gluetun
-  tag: v3.40.0@sha256:a8189e29155e0f8142be1500ae068a92b189b1b25abbba036321e74d6389bf2b
+  repository: oci.trueforge.org/containerforge/gluetun
+  tag: "3.41.3@sha256:9f64b09c9ac35a5b3c66b0044efe5ad57f574140db91c408b5a32c7834151e91"
   pullPolicy: IfNotPresent
 
 netshootImage:
-  repository: oci.trueforge.org/tccr/netshoot
-  tag: v0.14.0@sha256:28ede4317d22391e7d89a15eb78dc2afc3587ece02c76c983dde7239a0e43679
+  repository: oci.trueforge.org/containerforge/netshoot
+  tag: "1.0.0@sha256:ecb3a85aed66ac72c76f9cb608656f7dbc810bb349eb301d1ea4d7a7f7ab9027"
   pullPolicy: IfNotPresent
 
 tailscaleImage:
-  repository: oci.trueforge.org/tccr/tailscale
-  tag: v1.88.3@sha256:878612592f133bc0728e978558b10a1c457371ac5949985d0584664c8e92c2f9
+  repository: oci.trueforge.org/containerforge/tailscale
+  tag: "1.104.4@sha256:c991b2cb4baa7d891f213687a70aaa1ec32254c560ef85fac0db14002438c442"
   pullPolicy: IfNotPresent
 
 codeserverImage:
@@ -586,39 +695,20 @@ codeserverImage:
   tag: "4.141.0@sha256:7539bf1f492206f49dfc22b483adfcefd010e6a2be6be4e42a04376fa7f9338f"
   pullPolicy: IfNotPresent
 
-alpineImage:
-  repository: oci.trueforge.org/tccr/alpine
-  tag: v3.22.1@sha256:6dc807ae4f2867cb2d00d061f8f579f1966420ad792c179ac68072ab235109f8
-  pullPolicy: IfNotPresent
-
-ubuntuImage:
-  repository: oci.trueforge.org/containerforge/ubuntu
-  tag: "26.4@sha256:205c6561352214872c61edea4909f29afe9be1eee6c61430ce627ca757c137ed"
-  pullPolicy: IfNotPresent
-
-scratchImage:
-  repository: oci.trueforge.org/containerforge/scratch
-  tag: "1.0.0@sha256:84182a2371dd7584ad752326b7150b4e928c640b7f70a249a3994b40f1db11fd"
-  pullPolicy: IfNotPresent
-
 kubectlImage:
   repository: oci.trueforge.org/containerforge/kubectl
   tag: "1.31.1@sha256:4a51a8930e778b7f996ab476e5fcef4385453d1b78362c878bcc2b2501f99a24"
   pullPolicy: IfNotPresent
 
-wgetImage:
-  repository: oci.trueforge.org/containerforge/ubuntu
-  tag: "26.4@sha256:205c6561352214872c61edea4909f29afe9be1eee6c61430ce627ca757c137ed"
-  pullPolicy: IfNotPresent
-
-yqImage:
-  pullPolicy: IfNotPresent
-  repository: oci.trueforge.org/containerforge/go-yq
-  tag: "4.54.1@sha256:c72dd476916ea3c51292adf9914780a2c4a978def8479053bb1ea37993cdbd53"
-
 postgresClientImage:
   repository: oci.trueforge.org/containerforge/postgresql-client
-  tag: "9.6.24@sha256:65e2aaef5c5decd8ed06f5c41cb77de6406e44006d6f3db12d0faac3f88fa1c8"
+  tag: "18.6.0@sha256:7c1565c07970e1cf3a5090b78204e282fa5a8857bec00d472c4b3ec72666d7b4"
+  pullPolicy: IfNotPresent
+
+# -- Image of the postgresql dependency (see [dependencies.postgresql])
+postgresql18Image:
+  repository: oci.trueforge.org/containerforge/postgresql
+  tag: "18.6.0@sha256:afbcd31f4e0d4d6174dced7c68819e0493b2194c5a0f6b783e16ed137944555b"
   pullPolicy: IfNotPresent
 
 mariadbClientImage:
@@ -626,16 +716,10 @@ mariadbClientImage:
   tag: "13.0.2@sha256:1343d11c7efc5345ab5cadf75457912efbd5069e7a49323c1527fd55c39d75fb"
   pullPolicy: IfNotPresent
 
-redisClientImage:
-  repository: oci.trueforge.org/containerforge/valkey-tools
-  tag: "1.1.0@sha256:39c25256ddcc04381e0be7eab150b5ddce54a4287782a29ddf37e781c68d1dad"
-  pullPolicy: IfNotPresent
-
 valkeyClientImage:
   repository: oci.trueforge.org/containerforge/valkey-tools
   tag: "1.1.0@sha256:39c25256ddcc04381e0be7eab150b5ddce54a4287782a29ddf37e781c68d1dad"
   pullPolicy: IfNotPresent
-
 mongodbClientImage:
   repository: oci.trueforge.org/containerforge/mongosh
   tag: "2.14.1@sha256:3dca8f9bde2eec214ae0718ac2a9de2f27809761f150b634a1533d98b53a6d08"
@@ -643,32 +727,57 @@ mongodbClientImage:
 
 postgres15Image:
   repository: ghcr.io/cloudnative-pg/postgresql
-  tag: "15.19@sha256:11274300143f02d369ea2ff6082b028b6b662915f06bf59f26b808b53823475a"
+  tag: "15.19-standard-trixie@sha256:f617efc030d3099362e7fca616bb6d83d102599abf9b7b5e225482e4d0306aa3"
   pullPolicy: IfNotPresent
 
 postgres16Image:
   repository: ghcr.io/cloudnative-pg/postgresql
-  tag: "16.15@sha256:34cd4159d07b3410a1b29da35072e2e927a0905e717a61afa3814624a2e8859a"
+  tag: "16.15-standard-trixie@sha256:1ec419e997a8bde5263b6951f4c5ebc4aa2e1937927001f2561025c0a816e174"
+  pullPolicy: IfNotPresent
+
+postgres17Image:
+  repository: ghcr.io/cloudnative-pg/postgresql
+  tag: "17.11-standard-trixie@sha256:ed6923f9ba2399cf9070379a353c710c29ced8a294be73986a2c3dae7e599ce3"
+  pullPolicy: IfNotPresent
+
+postgres18Image:
+  repository: ghcr.io/cloudnative-pg/postgresql
+  tag: "18.6-standard-trixie@sha256:39add80f5b1e573e2f6b641c66fd1a2f8dede67ca0330e870285bc1078551390"
   pullPolicy: IfNotPresent
 
 postgresPostgis15Image:
   repository: ghcr.io/cloudnative-pg/postgis
-  tag: "15-3.4@sha256:4596b193991cd2463a07d40e3d3d62c59f046a7dece8f163ad1aba15925a38e4"
+  tag: "15-3.6-standard-trixie@sha256:8e7f7463b0f99592378c97b8388eab2ddc424f902b401d98475c580b9eaff114"
   pullPolicy: IfNotPresent
 
 postgresPostgis16Image:
   repository: ghcr.io/cloudnative-pg/postgis
-  tag: "16-3.4@sha256:bb5a8590a8c934767482e34e1d103253f412aec703b77bbc52ad9044bf6e56f9"
+  tag: "16-3.6-standard-trixie@sha256:b7eb0a782570f5d04e6f7c6af6927002c532f9175c5879ed2aead61c51daae6f"
+  pullPolicy: IfNotPresent
+
+postgresPostgis17Image:
+  repository: ghcr.io/cloudnative-pg/postgis
+  tag: "17-3.6-standard-trixie@sha256:73593f14ce3ef6f5401a9867e6bbbcd9b8814029435d8d9dd32104458e06f769"
+  pullPolicy: IfNotPresent
+
+postgresPostgis18Image:
+  repository: ghcr.io/cloudnative-pg/postgis
+  tag: "18-3.6-standard-trixie@sha256:17f7fe666f6048120ed1a04f21e34791ed1ea5d7ddec83bab0931d4adf0748f0"
   pullPolicy: IfNotPresent
 
 postgresVectors15Image:
   repository: ghcr.io/tensorchord/cloudnative-pgvecto.rs
-  tag: "15.7-v0.2.1@sha256:dbdeddf0d635f76df41f745407816c87c7468df35e3b7b0665ca4e0500ff3048"
+  tag: "15.13-v0.4.0@sha256:dfdb863025674baf23ff245e18c3a6d3db54838fb26ebfa9b81c171c61dc4c90"
   pullPolicy: IfNotPresent
 
 postgresVectors16Image:
   repository: ghcr.io/tensorchord/cloudnative-pgvecto.rs
-  tag: "16.3-v0.2.1@sha256:f1a19d4fc4073b0671a72ad34ef012aa20d21b3ddf5b4b0c9077d54450db679a"
+  tag: "16.9-v0.4.0@sha256:d92dedeeb2c1c70110b72270e3f5ba90f222dcc6fb93988d9adb4d0da15a6a9d"
+  pullPolicy: IfNotPresent
+
+postgresVectors17Image:
+  repository: ghcr.io/tensorchord/cloudnative-pgvecto.rs
+  tag: "17.5-v0.4.0@sha256:cfa59ddef46bf642e3f6be9ad1878317ae5d4015707d02349bf1569d76b564e0"
   pullPolicy: IfNotPresent
 
 postgresVectorchord15Image:
@@ -681,24 +790,14 @@ postgresVectorchord16Image:
   tag: "16.15-1.1.1@sha256:f5a17fa05faf25e81304ee95e9f920d8ae077ac4a4ef0a1251e09c7197cbb236"
   pullPolicy: IfNotPresent
 
-# -- OpenVPN specific configuration
-# @default -- See below
-openvpnImage:
-  # -- Specify the openvpn client image
-  repository: oci.trueforge.org/tccr/openvpn-client
-  # -- Specify the openvpn client image tag
-  tag: latest@sha256:9bfdf50791d6e51056e31c03f73c9db329b2b72e7746155cfdc63e0c8b49b55a
-  # -- Specify the openvpn client image pull policy
+postgresVectorchord17Image:
+  repository: ghcr.io/tensorchord/cloudnative-vectorchord
+  tag: "17.11-1.1.1@sha256:bb7eb8442f76b1e74911f28585019a77022911f8cfa2ddcfb166ea6af85abd09"
   pullPolicy: IfNotPresent
 
-# -- WireGuard specific configuration
-# @default -- See below
-wireguardImage:
-  # -- Specify the WireGuard image
-  repository: oci.trueforge.org/tccr/wireguard
-  # -- Specify the WireGuard image tag
-  tag: v1.0.20210914@sha256:683b8b74d64ebd07f9955147539834c2a4b60fee51d2a36fa76b9aba689601bf
-  # -- Specify the WireGuard image pull policy
+postgresVectorchord18Image:
+  repository: ghcr.io/tensorchord/cloudnative-vectorchord
+  tag: "18.6-1.1.1@sha256:c7672bc011351a587cc292a94aac7eeebb593ed2e120077bd9c9944c9467db93"
   pullPolicy: IfNotPresent
 
 # -- Configure the ingresses for the chart here.
@@ -811,16 +910,151 @@ certificate: {}
 #       labels: {}
 #       annotations: {}
 
+# -- BETA: Configure the gateway API gateway classes for the chart here.
+# Additional gateway classes can be added by adding a dictionary key similar to the 'main' gateway class.
+# Please be aware that this is an early beta of this feature, TrueCharts does not guarantee this actually works.
+# Being BETA this can/will change in the future without notice, please do not use unless you want to take that risk
+# [[ref]](https://gateway-api.sigs.k8s.io/reference/spec/#gatewayclass)
+# @default -- See below
+gatewayClass:
+  main:
+    # -- Enables or disables the gateway class
+    enabled: false
+    # -- Provide additional annotations which may be required.
+    annotations: {}
+    # -- Provide additional labels which may be required.
+    labels: {}
+    # -- The name of the controller that will manage Gateways of this class
+    controllerName: ""
+    # -- Description helps describe a GatewayClass with more details
+    description: ""
+    # -- ParametersRef is a reference to a resource that contains the configuration parameters corresponding to the GatewayClass
+    # parametersRef:
+    #   group: ""
+    #   kind: ""
+    #   name: ""
+    #   namespace: ""
+
+# -- BETA: Configure the gateway API gateways for the chart here.
+# Additional gateways can be added by adding a dictionary key similar to the 'main' gateway.
+# Please be aware that this is an early beta of this feature, TrueCharts does not guarantee this actually works.
+# Being BETA this can/will change in the future without notice, please do not use unless you want to take that risk
+# [[ref]](https://gateway-api.sigs.k8s.io/reference/spec/#gateway)
+# @default -- See below
+gateway:
+  main:
+    # -- Enables or disables the gateway
+    enabled: false
+    # -- Provide additional annotations which may be required.
+    annotations: {}
+    # -- Provide additional labels which may be required.
+    labels: {}
+    # -- The name of the GatewayClass resource that this Gateway references
+    # Can be set directly or use targetSelector to automatically reference a gatewayClass
+    gatewayClassName: ""
+    # -- Optional: Name-based selector for automatic GatewayClass linking
+    # When set, automatically references the specified gatewayClass.$name
+    # targetSelector: main
+    # -- Optional: addresses, infrastructure, allowedListeners and tls are passed to the Gateway as is
+    # addresses:
+    #   - type: IPAddress
+    #     value: 192.168.1.10
+    # infrastructure:
+    #   annotations:
+    #     example: example
+    # -- Gateway listeners configuration
+    listeners:
+      - name: http
+        hostname:
+        port: 80
+        protocol: HTTP
+        allowedRoutes:
+          namespaces:
+            from: Same
+          kinds:
+            - group: gateway.networking.k8s.io
+              kind: HTTPRoute
+        # tls:
+        #   mode: Terminate
+        #   certificateRefs:
+        #     - kind: Secret
+        #       group: ""
+        #       name: example-cert
+        #       namespace:
+    # -- Allow ListenerSets to attach to this Gateway
+    # Required when a listenerSet uses targetSelector to attach to this gateway
+    # allowedListeners:
+    #   namespaces:
+    #     # Valid options are Same, All, Selector, None
+    #     from: Same
+    #     # Required when from is Selector
+    #     # selector:
+    #     #   matchLabels:
+    #     #     gateway-access: "true"
+
+# -- BETA: Configure the gateway listener sets for the chart here.
+# Additional listener sets can be added by adding a dictionary key similar to the 'main' listener set.
+# Please be aware that this is an early beta of this feature, TrueCharts does not guarantee this actually works.
+# Being BETA this can/will change in the future without notice, please do not use unless you want to take that risk
+# [[ref]](https://gateway-api.sigs.k8s.io/reference/spec/#listenerset)
+# @default -- See below
+listenerSet:
+  main:
+    # -- Enables or disables the listener set
+    enabled: false
+    # -- Prefix the object name with the chart fullname
+    expandObjectName: true
+    # -- Provide additional annotations which may be required.
+    annotations: {}
+    # -- Provide additional labels which may be required.
+    labels: {}
+    # -- Optional: Name-based selector for automatic Gateway linking
+    # When set, attaches to the specified gateway.$name of this chart,
+    # the referenced gateway must set allowedListeners.namespaces.from
+    # targetSelector: main
+    # -- The Gateway to attach to, when targetSelector is not used
+    parentRef:
+      group: gateway.networking.k8s.io
+      kind: Gateway
+      name: ""
+      # Defaults to the namespace of the listener set
+      namespace:
+    # -- Listeners that are added to the Gateway, same format as gateway.$name.listeners
+    listeners:
+      - name: https
+        hostname:
+        port: 443
+        protocol: HTTPS
+        allowedRoutes:
+          namespaces:
+            from: Same
+          kinds:
+            - group: gateway.networking.k8s.io
+              kind: HTTPRoute
+        # tls:
+        #   mode: Terminate
+        #   certificateRefs:
+        #     - kind: Secret
+        #       group: ""
+        #       name: example-cert
+        #       namespace:
+
 # -- BETA: Configure the gateway routes for the chart here.
 # Additional routes can be added by adding a dictionary key similar to the 'main' route.
 # Please be aware that this is an early beta of this feature, TrueCharts does not guarantee this actually works.
 # Being BETA this can/will change in the future without notice, please do not use unless you want to take that risk
-# [[ref]](https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io%2fv1alpha2)
+# [[ref]](https://gateway-api.sigs.k8s.io/reference/spec/#httproute)
 # @default -- See below
 route:
   main:
     # -- Enables or disables the route
     enabled: false
+    # -- Make this the primary route (used in notes, chart context, etc...).
+    # If there is more than 1 route, make sure that only 1 route is marked as primary.
+    primary: true
+    # -- Ensure this route is always enabled. An enabled ingress also satisfies this.
+    required: false
+    # expandObjectName: false
     # -- Set the route kind
     # Valid options are GRPCRoute, HTTPRoute, TCPRoute, TLSRoute, UDPRoute
     kind: HTTPRoute
@@ -828,29 +1062,163 @@ route:
     annotations: {}
     # -- Provide additional labels which may be required.
     labels: {}
+    # -- Select a gateway outside of this chart. Replaces parentRefs.
+    gateway: ""
+    # -- Name of a listenerSet.$name of this chart to attach to. Replaces parentRefs.
+    # Cannot be used with gateway, a targetSelector string, tls or integrations.certManager
+    listenerSet: ""
+    # -- Namespace of the selected gateway. Defaults to the namespace of the route.
+    gatewayNamespace: ""
+    # -- A string selects a gateway defined in this chart, and replaces parentRefs:
+    # targetSelector: main
+    # -- A map selects the default service and port of the rules, same as an ingress:
+    # targetSelector:
+    #   # service: port
+    #   main: main
     # -- Configure the resource the route attaches to.
+    # This is optional if targetSelector is used (targetSelector will override this)
     parentRefs:
       - group: gateway.networking.k8s.io
         kind: Gateway
+        # Name of a gateway in this chart. Takes the place of `name` and `namespace`
+        # targetSelector: main
         name:
+        # Defaults to the namespace of the route
         namespace:
+        # Attach to a single listener of the gateway
         sectionName:
-    # -- Host addresses
+        # port: 443
+    # -- Host addresses. Required for TLSRoute, not supported by TCPRoute and UDPRoute
     hostnames: []
-    # -- Configure rules for routing. Defaults to the primary service.
-    rules:
-      - backendRefs:
-          - group: ""
-            kind: Service
-            name:
-            namespace:
-            port:
-            weight: 1
-        ## Configure conditions used for matching incoming requests. Only for HTTPRoutes
-        matches:
-          - path:
-              type: PathPrefix
-              value: /
+    # -- Configure TLS for this route. It creates a ListenerSet on the selected gateway, and attaches
+    # the route to it. Needs [gateway] or a [targetSelector] string, and the gateway must allow
+    # ListenerSets with [allowedListeners]. Only for HTTPRoute and GRPCRoute.
+    # Both secretName and hosts can process a Helm template.
+    # Gets ignored when integrations.certManager is enabled
+    tls: []
+    #  - hosts:
+    #      - chart-example.local
+    #    # Exactly one of these
+    #    secretName: chart-example-tls
+    #    certificateIssuer: ""
+    #    clusterCertificate: ""
+    # -- Port of the created listeners. Defaults to global.fallbackDefaults.routeListenerPort
+    # listenerPort: 443
+    integrations:
+      # Same as an ingress. Needs cert-manager 1.20 or newer, with ListenerSet support enabled.
+      certManager:
+        enabled: false
+        certificateIssuer: ""
+      # For Traefik. Only for HTTPRoute and GRPCRoute. Needs the kubernetesCRD provider of Traefik enabled.
+      traefik:
+        enabled: false
+        # -- Allowed source IPs. Everything else is rejected.
+        ipWhitelist: []
+        # ipStrategy:
+        #   depth: 1
+        auth:
+          # empty to disable, options: "authentik" or "authelia"
+          type: ""
+          # Internal Domain name + port to reach the auth provider, excluding http(s)
+          internalHost: ""
+          # Optional: override default response headers
+          responseHeaders: []
+        # Only for HTTPRoute. Needs the theme park plugin installed in Traefik.
+        themePark:
+          enabled: false
+          app: ""
+          theme: ""
+        # Only for HTTPRoute. The regex must match the whole path. Each one is its own rule.
+        redirectRegex: []
+        #   - regex: ^/old/(.*)
+        #     replacement: https://example.com/new/${1}
+        #     permanent: true
+        # -- Anything else: any Middleware from ingressMiddlewares.traefik, same as an ingress
+        middlewares: []
+        #   - name: my-middleware
+      # For Envoy Gateway. Only for HTTPRoute and GRPCRoute.
+      envoy:
+        enabled: false
+        # -- Allowed source IPs. Everything else is rejected.
+        ipWhitelist: []
+        auth:
+          # empty to disable, options: "authentik" or "authelia"
+          type: ""
+          # service:port or service.namespace.svc.cluster.local:port
+          # A service in another namespace needs a ReferenceGrant in that namespace
+          internalHost: ""
+          # Optional: override default response headers
+          responseHeaders: []
+        # Only for HTTPRoute. Buffers HTML responses, see the Route docs.
+        themePark:
+          enabled: false
+          css: ""
+        # Only for HTTPRoute. The regex must match the whole path. Each one is its own rule.
+        # The replacement must be a fixed target, capture groups are not available on Envoy Gateway.
+        redirectRegex: []
+        #   - regex: ^/old/.*
+        #     replacement: https://example.com/new
+        #     permanent: true
+        # -- Anything else: the spec of the policy of that kind on this route, without a target.
+        # Envoy Gateway only applies one policy of a kind per route, so these are merged with the above.
+        securityPolicy: {}
+        #   cors:
+        #     allowOrigins:
+        #       - https://example.com
+        backendTrafficPolicy: {}
+        extensionPolicy: {}
+      # Same as an ingress. Only for HTTPRoute, and homepage needs [gateway: true] in its kubernetes.yaml
+      homepage:
+        enabled: false
+        # Default: chart name
+        name: ""
+        # Default: chart description
+        description: ""
+        # Default: no group
+        group: ""
+        # Default: chart icon
+        icon: ""
+        widget:
+          # Default: chartname
+          type: ""
+          # Default to the first backend of the route
+          url: ""
+          custom:
+            # somesetting: some value
+          customkv:
+            # - key: some key
+            #   value: some value
+    # -- Configure rules for routing. Without rules everything goes to the primary service.
+    # Fields a route kind does not support fail rendering, see the Route docs.
+    rules: []
+    #   - name: main
+    #     # Only for HTTPRoute and GRPCRoute. HTTPRoute defaults to all paths.
+    #     matches:
+    #       - path:
+    #           type: PathPrefix
+    #           value: /
+    #     # Only for HTTPRoute and GRPCRoute. A rule with only filters needs no backendRefs, eg a redirect.
+    #     filters:
+    #       - type: RequestHeaderModifier
+    #         requestHeaderModifier:
+    #           add:
+    #             - name: X-Example
+    #               value: example
+    #     # Only for HTTPRoute
+    #     timeouts:
+    #       request: 10s
+    #       backendRequest: 5s
+    #     backendRefs:
+    #       # Name of a service in this chart. Without this or `name`, the primary service is used.
+    #       - targetSelector: main
+    #         # Name of the object, without any expanding. Cannot be used with targetSelector.
+    #         # name: external-service
+    #         # Defaults to the primary port of the selected service
+    #         port: 8080
+    #         # Set to 0 to stop sending traffic to this backend
+    #         weight: 1
+    #         # Only for HTTPRoute and GRPCRoute
+    #         filters: []
 
 podDisruptionBudget:
   main:
@@ -894,6 +1262,121 @@ storageClass: {}
 #     allowVolumeExpansion: true
 #     volumeBindingMode: Immediate
 #     mountOptions: []
+
+# # -- create networkpolicy on demand
+# See docs/networkpolicy.md for full documentation
+networkpolicy:
+  main:
+    enabled: false
+    ### Policy Type
+    ## kubernetes: creates a NetworkPolicy (default)
+    ## cilium: creates a CiliumNetworkPolicy, requires the Cilium CRDs to be installed in the cluster
+    # type: kubernetes
+    ## (optional, cilium only) Create a CiliumClusterwideNetworkPolicy instead of a CiliumNetworkPolicy
+    ## Chart based selectors are pinned to the namespace of the chart
+    # clusterwide: false
+    ## (optional, cilium only) Free form description of the policy
+    # description: ""
+
+    ### Pod Selection Options (choose one):
+    ## Default: targets all pods in this chart
+    ## (optional, kubernetes only) Custom podSelector with matchLabels and matchExpressions
+    # podSelector:
+    #   matchLabels:
+    #     app: my-app
+    #   matchExpressions:
+    #     - key: environment
+    #       operator: In
+    #       values:
+    #         - production
+    ## (optional) Target a specific pod from this chart
+    # targetSelector: main-pod
+    ## (optional) Target multiple workloads by name or regular expression
+    # targetSelector:
+    #   - main
+    #   - worker
+    # targetSelectorRegex: "^worker-"
+    ## (optional) Target all pods in the namespace
+    # targetAllPods: false
+    ## (optional, cilium only) Custom endpointSelector with matchLabels and matchExpressions
+    # endpointSelector:
+    #   matchLabels:
+    #     app: my-app
+    ## (optional, cilium only) Host policy, selects nodes instead of pods
+    # nodeSelector:
+    #   matchLabels:
+    #     node-role.kubernetes.io/control-plane: ""
+
+    ## (optional, kubernetes only) Explicitly define policyTypes
+    ## Auto-detected based on ingress/egress rules if not specified
+    # policyTypes:
+    #   - Ingress
+    #   - Egress
+
+    ## (optional, cilium only) Control whether the policy puts the selected endpoints in default deny mode
+    # enableDefaultDeny:
+    #   ingress: true
+    #   egress: false
+
+    ## Ingress Rules (incoming traffic)
+    ## Empty list allows no ingress traffic
+    ingress: []
+    # ingress:
+    #   - from:
+    #       # Allow from pods with specific labels
+    #       - podSelector:
+    #           matchLabels:
+    #             role: frontend
+    #       # Allow from specific namespace
+    #       - namespaceSelector:
+    #           matchLabels:
+    #             environment: production
+    #       # Allow from IP range
+    #       - ipBlock:
+    #           cidr: 10.0.0.0/8
+    #           except:
+    #             - 10.1.0.0/16
+    #     ports:
+    #       - protocol: TCP
+    #         port: 8080
+    #       - protocol: TCP
+    #         port: 8443
+
+    ## Egress Rules (outgoing traffic)
+    ## Empty list allows no egress traffic
+    egress: []
+    # egress:
+    #   - to:
+    #       # Allow to pods with specific labels
+    #       - podSelector:
+    #           matchLabels:
+    #             role: database
+    #       # Allow to specific namespace
+    #       - namespaceSelector:
+    #           matchLabels:
+    #             name: kube-system
+    #       # Allow to external IPs
+    #       - ipBlock:
+    #           cidr: 0.0.0.0/0
+    #           except:
+    #             - 169.254.169.254/32
+    #     ports:
+    #       - protocol: TCP
+    #         port: 5432
+    #       - protocol: UDP
+    #         port: 53
+    #       # Port ranges (Kubernetes 1.25+)
+    #       - protocol: TCP
+    #         port: 8000
+    #         endPort: 9000
+
+    ## (optional, cilium only) Deny rules, these take precedence over allow rules
+    ## Same format as the Cilium ingress and egress rules
+    # ingressDeny: []
+    # egressDeny: []
+    # egressDeny:
+    #   - toEntities:
+    #       - world
 
 metrics:
   main:
@@ -985,8 +1468,6 @@ addons:
     enabled: false
     targetSelector:
       - main
-    # -- you can directly specify the config file here
-    config: ""
     container:
       enabled: true
       imageSelector: "tailscaleImage"
@@ -1010,34 +1491,28 @@ addons:
         TS_KUBE_SECRET: ""
         TS_SOCKET: /var/run/tailscale/tailscaled.sock
         TS_STATE_DIR: /var/lib/tailscale/state
-        TS_USERSPACE: true
-        TS_AUTH_ONCE: true
-        TS_ACCEPT_DNS: false
-        TS_AUTH_KEY: ""
-        TS_TAILSCALED_EXTRA_ARGS: ""
-        TS_EXTRA_ARGS: ""
-        TS_SOCKS5_SERVER: ""
-        TS_DEST_IP: ""
-        TS_ROUTES: ""
-        TS_OUTBOUND_HTTP_PROXY_LISTEN: ""
       securityContext:
         capabilities:
           add:
             - NET_ADMIN
             - NET_RAW
 
-    # -- Auth key to connect to the VPN Service
-    authkey: ""
-    # As a sidecar, it should only need to run in userspace
-    userspace: true
-    auth_once: true
-    accept_dns: false
-    routes: ""
-    dest_ip: ""
-    sock5_server: ""
-    extra_args: ""
-    daemon_extra_args: ""
-    outbound_http_proxy_listen: ""
+    # -- Tailscale settings
+    settings:
+      # -- you can directly specify the config file here
+      config: ""
+      # -- Auth key to connect to the VPN Service
+      authkey: ""
+      # As a sidecar, it should only need to run in userspace
+      userspace: true
+      auth_once: true
+      accept_dns: false
+      routes: ""
+      dest_ip: ""
+      sock5_server: ""
+      extra_args: ""
+      daemon_extra_args: ""
+      outbound_http_proxy_listen: ""
     # -- Annotations for tailscale sidecar
     annotations: {}
 
@@ -1134,275 +1609,597 @@ addons:
             - NET_ADMIN
             - NET_RAW
 
+# -- Dependency configuration - replaces helm-dependencies
+# Each dependency contains a complete chart values structure (workload, service, persistence, ...)
+# Its objects are merged into the chart under the name [<dependency>-<object>] (eg [workload.valkey-main])
+# and references between them (targetSelector, objectName, ...) are rewritten accordingly.
+# Objects inherit the defaults of the matching common object (eg [workload.main]) and default to [enabled: true].
+# Currently [valkey], [mariadb], [postgresql], [mongodb] and [clickhouse] are the only dependencies with additional handling (credentials secret, wait init container).
+# Disabled dependencies are not merged into the chart, so their defaults only apply once a chart sets [enabled: true].
+# Dependencies with [mode: operator] are not merged into the chart either, as an operator provides them. Their credentials secret, wait init container and notes still apply.
+# Settings for the operator go under [dependencies.<name>.operator], like [depconfig] it is never merged into the chart.
+# [postgresql] is provided by CloudNativePG by default ([mode: operator]), set [mode: standalone] to deploy a plain PostgreSQL with the chart instead.
+# Both modes of [postgresql] share [depconfig] (user, database, password and the resulting [creds]) and the [postgresql-wait] init container.
+# @default -- See below
+
 dependencies:
-
-##########################################################################
-# This section contains some pre-config for frequently used dependencies #
-##########################################################################
-
-cnpg:
-  main:
+  clickhouse:
     enabled: false
-    primary: true
-    # -- Puts the cnpg cluster in hibernation mode
-    hibernate: false
-    # Additional Labels and annotations for all cnpg objects
-    labels: {}
-    annotations: {}
-
-    # Type of the CNPG database. Available types:
-    # * `postgres`
-    # * `postgis`
-    # * `timescaledb`
-    # * `vectors`
-    # * `vectorchord`
-    type: postgres
-
-    # Version of Postgresql to use, changes cluster naming scheme
-    # * `15`
-    # * `16`
-    pgVersion: 16
-
-    # Cluster mode of operation. Available modes:
-    # * `standalone` - default mode. Creates new or updates an existing CNPG cluster.
-    # * `replica` - Creates a replica cluster from an existing CNPG cluster. # TODO
-    # * `recovery` - Same as standalone but creates a cluster from a backup, object store or via pg_basebackup.
+    # -- Settings of the dependency itself, never merged into the chart
+    depconfig:
+      password: "PLACEHOLDERPASSWORD"
+      clickhouseUsername: "test"
+      clickhouseDatabase: "test"
+      clickhouseDefaultAccessManagement: 0
+    image:
+      repository: oci.trueforge.org/containerforge/clickhouse
+      pullPolicy: IfNotPresent
+      tag: 26.10.2.103@sha256:5ea8293b50edf862efaa9362629ccfabcf93e2ffed5da552bde9fcb82d844b68
+    workload:
+      main:
+        replicas: 1
+        type: StatefulSet
+        strategy: RollingUpdate
+        podSpec:
+          containers:
+            main:
+              env:
+                CLICKHOUSE_DB: "{{ .Values.dependencies.clickhouse.depconfig.clickhouseDatabase }}"
+                CLICKHOUSE_USER: "{{ .Values.dependencies.clickhouse.depconfig.clickhouseUsername }}"
+                CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "{{ .Values.dependencies.clickhouse.depconfig.clickhouseDefaultAccessManagement }}"
+                CLICKHOUSE_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "clickhousecreds" }}'
+                    key: clickhouse-password
+              probes:
+                liveness:
+                  type: http
+                  path: /ping
+                readiness:
+                  type: http
+                  path: /ping
+                startup:
+                  type: http
+                  path: /ping
+    service:
+      main:
+        ports:
+          main:
+            protocol: http
+            port: 8123
+            targetPort: 8123
+    persistence:
+      data:
+        mountPath: /config
+  mariadb:
+    enabled: false
+    # -- How the dependency is provided: [standalone] merges it into the chart, [operator] leaves it to an operator (its objects are not merged)
     mode: standalone
-
-    # Database details
-    database: "app"
-    user: "app"
-    password: "PLACEHOLDERPASSWORD"
-
-    # Database cluster configuration
-    cluster:
-      # Additional Labels and annotations for cnpg cluster
+    # -- Settings of the operator providing the dependency, never merged into the chart
+    operator: {}
+    # -- Settings of the dependency itself, never merged into the chart
+    depconfig:
+      password: "PLACEHOLDERPASSWORD"
+      rootPassword: "PLACEHOLDERROOTPASSWORD"
+      mariadbUsername: "test"
+      mariadbDatabase: "test"
+    image:
+      repository: oci.trueforge.org/containerforge/mariadb
+      pullPolicy: IfNotPresent
+      tag: 11.8.6@sha256:24e779c583b4355d5b0972072de1240b685b78b0b8465acff5bea782b304e439
+    workload:
+      main:
+        replicas: 1
+        type: StatefulSet
+        strategy: RollingUpdate
+        podSpec:
+          containers:
+            main:
+              env:
+                MARIADB_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                    key: mariadb-password
+                MARIADB_ROOT_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                    key: mariadb-root-password
+                MARIADB_USER: "{{ .Values.dependencies.mariadb.depconfig.mariadbUsername }}"
+                MARIADB_DATABASE: "{{ .Values.dependencies.mariadb.depconfig.mariadbDatabase }}"
+              probes:
+                liveness:
+                  type: exec
+                  command: &mariadbProbeCommand
+                    - mariadb-admin
+                    - --no-defaults
+                    - -uroot
+                    - -h127.0.0.1
+                    - -P3306
+                    - ping
+                readiness:
+                  type: exec
+                  command: *mariadbProbeCommand
+                startup:
+                  type: exec
+                  command: *mariadbProbeCommand
+    service:
+      main:
+        ports:
+          main:
+            protocol: tcp
+            port: 3306
+            targetPort: 3306
+    persistence:
+      data:
+        mountPath: /config
+  postgresql:
+    enabled: false
+    # -- How the dependency is provided: [operator] (default) lets CloudNativePG run it, [standalone] merges a plain PostgreSQL into the chart
+    mode: operator
+    # -- Settings of the CloudNativePG cluster, used in [operator] mode. Never merged into the chart
+    operator:
+      # -- Puts the cnpg cluster in hibernation mode
+      hibernate: false
+      # Additional Labels and annotations for all cnpg objects
       labels: {}
       annotations: {}
-      # Additional environment variables to set on all pods created in the cluster
-      env: {}
-      envFrom: {}
 
-      # Number of instances
-      instances: 2
+      # Type of the CNPG database. Available types:
+      # * `postgres`
+      # * `postgis`
+      # * `timescaledb`
+      # * `vectors`
+      # * `vectorchord`
+      type: postgres
 
-      # set to true on single-node clusters to allow PVCs to be kept on instance restart
-      singleNode: false
+      # Version of Postgresql to use, changes cluster naming scheme
+      # Defaults to [global.fallbackDefaults.cnpg.pgVersion], and to `16` for type `vectors`
+      # * `15`
+      # * `16`
+      # * `17`
+      # * `18`
+      # pgVersion: 18
 
-      ## set to configure the skipEmptyWalArchiveCheck annotation
-      # skipEmptyWalArchiveCheck: true
-      # # -- storage size for the data pvc's
-      # # Follows the same spec as .Values.Persistence type=PVC
-      # storage:
-      #   size: "256Gi"
-      # # -- storage size for the wal pvc's
-      # # Follows the same spec as .Values.Persistence type=PVC
-      # walStorage:
-      #   size: "256Gi"
-      # -- Gets scaled to 0 if hibernation is true
-      ## See .Values.resources for more info
-      # resources:
+      # Cluster mode of operation. Available modes:
+      # * `standalone` - default mode. Creates new or updates an existing CNPG cluster.
+      # * `replica` - Creates a replica cluster from an existing CNPG cluster. # TODO
+      # * `recovery` - Same as standalone but creates a cluster from a backup or object store.
+      mode: standalone
 
-      # Method to follow to upgrade the primary server during a rolling update procedure, after all replicas have been
-      # successfully updated. It can be switchover (default) or in-place (restart).
-      primaryUpdateMethod: switchover
+      # Database cluster configuration
+      cluster:
+        # Additional Labels and annotations for cnpg cluster
+        labels: {}
+        annotations: {}
+        # Additional environment variables to set on all pods created in the cluster
+        env: {}
+        envFrom: {}
 
-      # Strategy to follow to upgrade the primary server during a rolling update procedure, after all replicas have been
-      # successfully updated: it can be automated (unsupervised - default) or manual (supervised)
-      # Example of rolling update strategy:
-      # - unsupervised: automated update of the primary once all
-      #                 replicas have been upgraded (default)
-      # - supervised: requires manual supervision to perform
-      #               the switchover of the primary
-      # -- change to supervised to disable unsupervised updates
-      primaryUpdateStrategy: unsupervised
+        # Number of instances
+        instances: 2
 
-      # The instances' log level, one of the following values: error, warning, info (default), debug, trace
-      logLevel: info
+        # set to true on single-node clusters to allow PVCs to be kept on instance restart
+        singleNode: false
 
-      # The configuration for the CA and related certificates
-      # See: https://cloudnative-pg.io/documentation/current/api_reference/#CertificatesConfiguration
-      certificates:
+        ## set to configure the skipEmptyWalArchiveCheck annotation
+        # skipEmptyWalArchiveCheck: true
+        # # -- storage size for the data pvc's
+        # # Follows the same spec as .Values.Persistence type=PVC
+        # storage:
+        #   size: "256Gi"
+        # # -- storage size for the wal pvc's
+        # # Follows the same spec as .Values.Persistence type=PVC
+        # walStorage:
+        #   size: "256Gi"
+        # -- Gets scaled to 0 if hibernation is true
+        ## See .Values.resources for more info
+        # resources:
 
-      # When this option is enabled, the operator will use the SuperuserSecret to update the postgres user password.
-      # If the secret is not present, the operator will automatically create one.
-      # When this option is disabled, the operator will ignore the SuperuserSecret content, delete it when automatically created,
-      # and then blank the password of the postgres user by setting it to NULL.
+        # Method to follow to upgrade the primary server during a rolling update procedure, after all replicas have been
+        # successfully updated. It can be switchover (default) or in-place (restart).
+        primaryUpdateMethod: switchover
 
-      # enableSuperuserAccess: true
+        # Strategy to follow to upgrade the primary server during a rolling update procedure, after all replicas have been
+        # successfully updated: it can be automated (unsupervised - default) or manual (supervised)
+        # Example of rolling update strategy:
+        # - unsupervised: automated update of the primary once all
+        #                 replicas have been upgraded (default)
+        # - supervised: requires manual supervision to perform
+        #               the switchover of the primary
+        # -- change to supervised to disable unsupervised updates
+        primaryUpdateStrategy: unsupervised
 
-      # Configuration of the PostgreSQL server
-      # See: https://cloudnative-pg.io/documentation/current/api_reference/#PostgresConfiguration
-      postgresql:
+        # The instances' log level, one of the following values: error, warning, info (default), debug, trace
+        logLevel: info
 
-      # BootstrapInitDB is the configuration of the bootstrap process when initdb is used
-      # See: https://cloudnative-pg.io/documentation/current/bootstrap/
-      # See: https://cloudnative-pg.io/documentation/current/api_reference/#bootstrapinitdb
-      initdb: {}
-      #   postInitSQL:
-      #     - CREATE EXTENSION IF NOT EXISTS vector;
-      #   postInitApplicationSQL:
-      #     - CREATE EXTENSION IF NOT EXISTS someextension;
-    # -- set to enable prometheus metrics
-    monitoring:
-      enablePodMonitor: false
-      disableDefaultQueries: false
-      customQueries: []
-      #   - name: "pg_cache_hit_ratio"
-      #     expandObjectName: true
-      #     key: "custom-key" (defaults to "custom-queries")
-      #     query: "SELECT current_database() as datname, sum(heap_blks_hit) / (sum(heap_blks_hit) + sum(heap_blks_read)) as ratio FROM pg_statio_user_tables;"
-      #     metrics:
-      #       - datname:
-      #           usage: "LABEL"
-      #           description: "Name of the database database"
-      #       - ratio:
-      #           usage: GAUGE
-      #           description: "Cache hit ratio"
-    # Recovery settings if the chosen mode is `recovery`.
-    recovery:
-      ##
-      # Backup Recovery Method
-      # Available recovery methods:
-      # * `backup` - Recovers a CNPG cluster from a CNPG backup (PITR supported) Needs to be on the same cluster in the same namespace.
-      # * `object_store` - Recovers a CNPG cluster from a barman object store (PITR supported).
-      # * `pg_basebackup` - Recovers a CNPG cluster viaa streaming replication protocol. Useful if you want to
-      #        migrate databases to CloudNativePG, even from outside Kubernetes. # TODO
-      method: object_store
-      ## set a revision to append to the serverName to ensure restore and backup dont target the same thing
-      # revision: 1
+        # The configuration for the CA and related certificates
+        # See: https://cloudnative-pg.io/documentation/current/api_reference/#CertificatesConfiguration
+        certificates:
 
-      # override serverName in recovery obkect
-      servername: ""
+        # When this option is enabled, the operator will use the SuperuserSecret to update the postgres user password.
+        # If the secret is not present, the operator will automatically create one.
+        # When this option is disabled, the operator will ignore the SuperuserSecret content, delete it when automatically created,
+        # and then blank the password of the postgres user by setting it to NULL.
 
-      ## Point in time recovery target. Specify one of the following:
-      pitrTarget:
-        # Time in RFC3339 format
-        time: ""
+        # enableSuperuserAccess: true
 
-      # Name of the backup to recover from. Required if method is `backup`.
-      backupName: ""
+        # Configuration of the PostgreSQL server
+        # See: https://cloudnative-pg.io/documentation/current/api_reference/#PostgresConfiguration
+        postgresql:
 
-      # Object Store Recovery Method
-      clusterName: ""
+        # BootstrapInitDB is the configuration of the bootstrap process when initdb is used
+        # See: https://cloudnative-pg.io/documentation/current/bootstrap/
+        # See: https://cloudnative-pg.io/documentation/current/api_reference/#bootstrapinitdb
+        initdb: {}
+        #   postInitSQL:
+        #     - CREATE EXTENSION IF NOT EXISTS vector;
+        #   postInitApplicationSQL:
+        #     - CREATE EXTENSION IF NOT EXISTS someextension;
+      # -- set to enable prometheus metrics
+      monitoring:
+        enablePodMonitor: false
+        disableDefaultQueries: false
+        customQueries: []
+        #   - name: "pg_cache_hit_ratio"
+        #     expandObjectName: true
+        #     key: "custom-key" (defaults to "custom-queries")
+        #     query: "SELECT current_database() as datname, sum(heap_blks_hit) / (sum(heap_blks_hit) + sum(heap_blks_read)) as ratio FROM pg_statio_user_tables;"
+        #     metrics:
+        #       - datname:
+        #           usage: "LABEL"
+        #           description: "Name of the database database"
+        #       - ratio:
+        #           usage: GAUGE
+        #           description: "Cache hit ratio"
+      # Recovery settings if the chosen cluster mode is `recovery`.
+      recovery:
+        ##
+        # Backup Recovery Method
+        # Available recovery methods:
+        # * `object_store` - Recovers a CNPG cluster from a barman object store (PITR supported).
+        method: object_store
+        ## set a revision to append to the serverName, so restore and backup use a different archive. Must be a string.
+        ## Required when cluster.skipEmptyWalArchiveCheck is false and both use the same archive.
+        # revision: "1"
 
-      # Overrides the provider specific default path. Defaults to:
-      # S3: s3://<bucket><path>
-      # Azure: https://<storageAccount>.<serviceName>.core.windows.net/<clusterName><path>
-      # Google: gs://<bucket><path>
-      destinationPath: ""
+        # override serverName in recovery object
+        serverName: ""
 
-    # Database cluster backup configuration
-    backups:
-      # You need to configure backups manually, so backups are disabled by default.
-      enabled: false
+        ## Point in time recovery target. Specify one of the following:
+        pitrTarget:
+          # Time in RFC3339 format
+          time: ""
 
-      encryption:
+        # Overrides the provider specific default path. Defaults to:
+        # S3: s3://<bucket><path>
+        # Azure: https://<storageAccount>.<serviceName>.core.windows.net/<clusterName><path>
+        # Google: gs://<bucket><path>
+        destinationPath: ""
+
+        # Configures the sidecar of the recovery job.
+        # See: https://cloudnative-pg.io/plugin-barman-cloud/docs/plugin-barman-cloud.v1/#instancesidecarconfiguration
+        # instanceSidecarConfiguration: {}
+
+      # Database cluster backup configuration
+      backups:
+        # You need to configure backups manually, so backups are disabled by default.
         enabled: false
-      ## set a revision to append to the serverName to ensure restore and backup dont target the same thing
-      # revision: 1
 
-      # override serverName in recovery obkect
-      servername: ""
+        encryption:
+          enabled: false
+        ## set a revision to append to the serverName, so restore and backup use a different archive. Must be a string.
+        ## Required when cluster.skipEmptyWalArchiveCheck is false and both use the same archive.
+        # revision: "1"
 
-      # Overrides the provider specific default path. Defaults to:
-      # S3: s3://<bucket><path>
-      # Azure: https://<storageAccount>.<serviceName>.core.windows.net/<clusterName><path>
-      # Google: gs://<bucket><path>
-      destinationPath: ""
+        # override serverName in the object store
+        serverName: ""
 
-      # default: primary, other option prefer-standby
-      target: ""
+        # Overrides the provider specific default path. Defaults to:
+        # S3: s3://<bucket><path>
+        # Azure: https://<storageAccount>.<serviceName>.core.windows.net/<clusterName><path>
+        # Google: gs://<bucket><path>
+        destinationPath: ""
 
-      # name of credentials in .Values.Credentials
-      credentials: ""
+        # default: prefer-standby, other option primary
+        target: ""
 
-      scheduledBackups:
-        - name: daily-backup
-          schedule: "0 0 0 * * *"
-          backupOwnerReference: self
-          immediate: true
-          suspend: false
+        # name of credentials in .Values.Credentials
+        credentials: ""
 
-      retentionPolicy: "30d"
+        scheduledBackups:
+          - name: daily-backup
+            schedule: "0 0 0 * * *"
+            backupOwnerReference: self
+            immediate: true
+            suspend: false
 
-      # - Manual list of backups
-      manualBackups: []
-      #   - name: today
-      #     labels: {}
-      #     annotations: {}
-      #   - name: beforeUpgrade
-      #     labels: {}
-      #     annotations: {}
+        retentionPolicy: "30d"
 
-    # Database cluster PgBouncer configuration
-    pooler:
-      enabled: false
-      # -- enable to create extra pgbouncer for readonly access
-      createRO: false
-      poolMode: session
-      # -- Gets scaled to 0 if hibernation is true
-      instances: 2
-      # parameters:
-      #   max_client_conn: "1000"
-      #   default_pool_size: "25"
+        # Configures the sidecar of the instance pods.
+        # See: https://cloudnative-pg.io/plugin-barman-cloud/docs/plugin-barman-cloud.v1/#instancesidecarconfiguration
+        # instanceSidecarConfiguration:
+        #   resources:
+        #     requests:
+        #       cpu: 50m
+        #       memory: 128Mi
+
+        # - Manual list of backups
+        manualBackups: []
+        #   - name: today
+        #     labels: {}
+        #     annotations: {}
+        #   - name: beforeUpgrade
+        #     labels: {}
+        #     annotations: {}
+
+      # Database cluster PgBouncer configuration
+      pooler:
+        enabled: false
+        # -- enable to create extra pgbouncer for readonly access
+        createRO: false
+        poolMode: session
+        # -- Gets scaled to 0 if hibernation is true
+        instances: 2
+        # parameters:
+        #   max_client_conn: "1000"
+        #   default_pool_size: "25"
+        labels: {}
+        annotations: {}
+    # -- Settings of the dependency itself, never merged into the chart. The user, database and password are used by both modes
+    # [creds] holds the connection details written by the library, in both modes (eg [creds.complete], [creds.plainhost], [creds.jdbc])
+    depconfig:
+      password: "PLACEHOLDERPASSWORD"
+      postgresqlUsername: "test"
+      postgresqlDatabase: "test"
+      creds: {}
+    workload:
+      main:
+        # The dependency itself never waits for a database
+        dbWait: false
+        replicas: 1
+        type: StatefulSet
+        strategy: RollingUpdate
+        podSpec:
+          containers:
+            main:
+              # The image is defined on the root of the values
+              imageSelector: postgresql18Image
+              env:
+                POSTGRES_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
+                POSTGRES_DB: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+                POSTGRES_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                    key: postgresql-password
+              probes:
+                liveness:
+                  enabled: true
+                  type: exec
+                  # The user and database are passed, without them the server logs a failed login for every probe
+                  command: &postgresqlProbeCommand
+                    - /bin/sh
+                    - -c
+                    - pg_isready -h 127.0.0.1 -p 5432 -U "${POSTGRES_USER}" -d "${POSTGRES_DB}"
+                readiness:
+                  enabled: true
+                  type: exec
+                  command: *postgresqlProbeCommand
+                startup:
+                  enabled: true
+                  type: exec
+                  command: *postgresqlProbeCommand
+    service:
+      main:
+        ports:
+          main:
+            protocol: tcp
+            port: 5432
+            targetPort: 5432
+    persistence:
+      data:
+        mountPath: /config
+  memcached:
+    enabled: false
+    image:
+      repository: oci.trueforge.org/containerforge/memcache
+      pullPolicy: IfNotPresent
+      tag: 1.6.40@sha256:970ce84d9e893fed91d74ffea3e83ca814c1ee8e07ef2f4a4a5a7ae96603c06b
+    workload:
+      main:
+        replicas: 1
+        type: Deployment
+        strategy: RollingUpdate
+    service:
+      main:
+        ports:
+          main:
+            protocol: tcp
+            port: 11211
+            targetPort: 11211
+  mongodb:
+    enabled: false
+    # -- Settings of the dependency itself, never merged into the chart
+    depconfig:
+      password: "PLACEHOLDERPASSWORD"
+      rootPassword: "PLACEHOLDERROOTPASSWORD"
+      mongodbUsername: "test"
+      mongodbDatabase: "test"
+    image:
+      repository: oci.trueforge.org/containerforge/mongodb
+      pullPolicy: IfNotPresent
+      tag: 9.0.4@sha256:1ee3da52f298ea42c4d8a423bd1ad49845bac521c49181c9cddd74b7a27fcd03
+    workload:
+      main:
+        replicas: 1
+        type: StatefulSet
+        strategy: RollingUpdate
+        podSpec:
+          containers:
+            main:
+              env:
+                MONGODB_USERNAME: "{{ .Values.dependencies.mongodb.depconfig.mongodbUsername }}"
+                MONGODB_DATABASE: "{{ .Values.dependencies.mongodb.depconfig.mongodbDatabase }}"
+                MONGODB_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "mongodbcreds" }}'
+                    key: mongodb-password
+                MONGODB_ROOT_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "mongodbcreds" }}'
+                    key: mongodb-root-password
+              probes:
+                liveness:
+                  type: exec
+                  command: &mongodbProbeCommand
+                    - mongosh
+                    - --quiet
+                    - --norc
+                    - --host
+                    - 127.0.0.1
+                    - --eval
+                    - "db.runCommand({ ping: 1 })"
+                readiness:
+                  type: exec
+                  command: *mongodbProbeCommand
+                startup:
+                  type: exec
+                  command: *mongodbProbeCommand
+    service:
+      main:
+        ports:
+          main:
+            protocol: tcp
+            port: 27017
+            targetPort: 27017
+    persistence:
+      data:
+        mountPath: /config
+  valkey:
+    enabled: false
+    # -- How the dependency is provided: [standalone] merges it into the chart, [operator] spawns a ValkeyCluster for the valkey-operator instead (its objects are not merged)
+    mode: standalone
+    # -- Settings of the ValkeyCluster (valkey-operator), only used when [mode] is [operator]. Never merged into the chart
+    # The credentials stay in [depconfig], the default user of the cluster uses the password of the credentials secret
+    # The host and port come from the Service the operator creates ([valkey-<release>-<chart>-valkey], 6379), [service] is ignored
+    # The image of the dependency is used for the nodes, unless [image] is set here
+    operator:
+      # -- Number of shards (primaries) of the cluster, at least 1
+      shards: 1
+      # -- Number of replicas per shard, 0 for none
+      replicas: 0
+      # -- Overrides the image of the nodes, defaults to [dependencies.valkey.image]
+      image: ""
+      # -- Workload of every node [StatefulSet|Deployment], can not be changed after creation
+      workloadType: StatefulSet
+      # -- Valkey configuration directives (valkey.conf), eg [maxmemory-policy: allkeys-lru]
+      config: {}
+      # -- Resources of the Valkey containers, defaults to the resources of the chart
+      resources: {}
+      # -- Persistence of the nodes, requires [workloadType: StatefulSet]. Can not be added or removed after creation
+      persistence:
+        enabled: true
+        # -- Size of the volume of every node, defaults to [global.fallbackDefaults.vctSize]
+        size: ""
+        # -- Storage class of the volumes, defaults to [global.fallbackDefaults.storageClass]
+        storageClass: ""
+        # -- Retain the volumes when a node is deleted, defaults to [global.fallbackDefaults.pvcRetain]
+        retain: false
+      # -- Metrics exporter sidecar of every pod
+      exporter:
+        enabled: true
+        image: ""
+        args: []
+        resources: {}
+        securityContext: {}
+      # -- Scheduling of the pods (tolerations, nodeSelector, affinity, topologySpreadConstraints, priorityClassName, node and zone spreading and pinning)
+      scheduling: {}
+      # -- PodDisruptionBudget managed by the operator, [mode] is [Cluster] or [Disabled]
+      podDisruptionBudget:
+        mode: Cluster
+      # -- Labels and annotations of every pod
+      podMetadata:
+        labels: {}
+        annotations: {}
+      # -- Names of the secrets used to pull the images
+      imagePullSecrets: []
+      # -- Overrides of the security context of the pods, defaults to the one of the chart
+      podSecurityContext: {}
+      # -- Name of an existing ServiceAccount for the pods
+      serviceAccountName: ""
+      # -- Grace period of the pods in seconds, the operator calculates it when unset
+      terminationGracePeriodSeconds: null
+      # -- Patches of the containers of the pods (strategic merge patch, by name), or additional containers
+      containers: []
+      # -- Networking of the cluster, TLS is not supported
+      networking:
+        # -- Domain of the Kubernetes cluster, defaults to [cluster.local]
+        clusterDomain: ""
+        discovery:
+          # -- How the nodes announce themselves [IP|Hostname], Hostname requires [workloadType: StatefulSet]
+          preferredEndpointType: ""
+      # -- Additional users of the cluster, see the valkey-operator docs. The [default] user is always managed, an item named [default] overrides its settings
+      users: []
+      # -- Labels of the ValkeyCluster
       labels: {}
+      # -- Annotations of the ValkeyCluster
       annotations: {}
+    # -- Settings of the dependency itself, never merged into the chart
+    depconfig:
+      password: "PLACEHOLDERPASSWORD"
+    image:
+      repository: oci.trueforge.org/containerforge/valkey
+      pullPolicy: IfNotPresent
+      tag: 9.0.4@sha256:387b5f54777a6451f73f1a49a45b5bb6d29e1e5838b7b5a9c84d80370995531e
+    workload:
+      main:
+        replicas: 1
+        type: StatefulSet
+        strategy: RollingUpdate
+        podSpec:
+          containers:
+            main:
+              env:
+                VALKEY_PORT: "{{ .Values.dependencies.valkey.service.main.ports.main.port }}"
+                VALKEY_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                    key: valkey-password
+              probes:
+                liveness:
+                  type: exec
+                  command:
+                    - sh
+                    - -c
+                    - /health/ping_liveness_local.sh 2
+                readiness:
+                  type: exec
+                  command:
+                    - sh
+                    - -c
+                    - /health/ping_readiness_local.sh 2
+                startup:
+                  type: exec
+                  command:
+                    - sh
+                    - -c
+                    - /health/ping_readiness_local.sh 2
+    service:
+      main:
+        ports:
+          main:
+            protocol: tcp
+            port: 6379
+    persistence:
+      data:
+        mountPath: /config
 
-    # -- contains credentials and urls output by generator
-    creds: {}
-
-# -- Redis dependency configuration
-# @default -- See below
-redis:
-  enabled: false
-  includeCommon: false
-  password: "PLACEHOLDERPASSWORD"
-  # -- can be used to make an easy accessible note which URLS to use to access the DB.
-  creds: {}
-  secret:
-    credentials:
-      enabled: false
-
-# -- mariadb dependency configuration
-# @default -- See below
-mariadb:
-  enabled: false
-  includeCommon: false
-  password: "PLACEHOLDERPASSWORD"
-  rootPassword: "PLACEHOLDERROOTPASSWORD"
-  # -- can be used to make an easy accessable note which URLS to use to access the DB.
-  creds: {}
-
-# -- mongodb dependency configuration
-# @default -- See below
-mongodb:
-  enabled: false
-  includeCommon: false
-  password: "PLACEHOLDERPASSWORD"
-  rootPassword: "PLACEHOLDERROOTPASSWORD"
-  # -- can be used to make an easy accessable note which URLS to use to access the DB.
-  creds: {}
-
-# -- clickhouse dependency configuration
-# @default -- See below
-clickhouse:
-  enabled: false
-  includeCommon: false
-  password: "PLACEHOLDERPASSWORD"
-  # -- can be used to make an easy accessable note which URLS to use to access the DB.
-  creds: {}
-
-# -- solr dependency configuration
-# @default -- See below
-solr:
-  enabled: false
-  includeCommon: false
-  password: "PLACEHOLDERPASSWORD"
-  solrCores: 1
-  solrEnableAuthentication: "no"
-  # -- can be used to make an easy accessable note which URLS to use to access the DB.
-  creds: {}
 
 # -- List of extra objects to deploy with the release
 extraTpl: []

@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Static provisioning settings for PVC/VCT in `custom` mode.",
+  "properties": {
+    "driver": {
+      "type": "string",
+      "minLength": 1,
+      "default": ""
+    },
+    "provisioner": {
+      "type": "string",
+      "minLength": 1,
+      "default": ""
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "driver",
+    "provisioner"
+  ]
+}

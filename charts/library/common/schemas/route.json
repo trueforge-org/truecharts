@@ -1,0 +1,467 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Configuration for `route.main.enabled`.",
+        "default": false
+      },
+      "primary": {
+        "type": "boolean",
+        "description": "Make this the primary route, used in notes and the chart context. Only 1 route can be primary.",
+        "default": true
+      },
+      "required": {
+        "type": "boolean",
+        "description": "Fail rendering if this route is disabled, unless an ingress is enabled.",
+        "default": false
+      },
+      "expandObjectName": {
+        "type": "boolean",
+        "description": "Prefix the name of the route with the name of the release and chart.",
+        "default": true
+      },
+      "kind": {
+        "type": "string",
+        "enum": [
+          "GRPCRoute",
+          "HTTPRoute",
+          "TCPRoute",
+          "TLSRoute",
+          "UDPRoute"
+        ],
+        "description": "Configuration for `route.main.kind`.",
+        "default": "HTTPRoute"
+      },
+      "annotations": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Configuration for `route.main.annotations`."
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Configuration for `route.main.labels`."
+      },
+      "gateway": {
+        "type": "string",
+        "description": "Name of a gateway outside of this chart. Replaces `parentRefs`. Cannot be used with a `targetSelector` string.",
+        "default": ""
+      },
+      "listenerSet": {
+        "type": "string",
+        "description": "Name of a `listenerSet` of this chart to attach to. Replaces `parentRefs`. Cannot be used with `gateway`, a `targetSelector` string, `tls` or `integrations.certManager`.",
+        "default": ""
+      },
+      "gatewayNamespace": {
+        "type": "string",
+        "description": "Namespace of `gateway`. Defaults to the namespace of the route.",
+        "default": ""
+      },
+      "targetSelector": {
+        "type": [
+          "null",
+          "string",
+          "object"
+        ],
+        "description": "A string selects a gateway in this chart and replaces `parentRefs`. A map of `service: port` selects the default backend, same as an ingress.",
+        "additionalProperties": {
+          "type": "string"
+        }
+      },
+      "parentRefs": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "group": {
+              "type": "string",
+              "description": "Configuration for `route.main.parentRefs.$item.group`."
+            },
+            "kind": {
+              "type": "string",
+              "description": "Configuration for `route.main.parentRefs.$item.kind`."
+            },
+            "name": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "Configuration for `route.main.parentRefs.$item.name`."
+            },
+            "namespace": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "Namespace of the parent. Defaults to the namespace of the route."
+            },
+            "sectionName": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "Attach to a single listener of the gateway. With `targetSelector` it must be a listener of that gateway."
+            },
+            "targetSelector": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "Name of a gateway in this chart. Takes the place of `name` and `namespace`."
+            },
+            "port": {
+              "type": [
+                "null",
+                "integer"
+              ],
+              "description": "Attach to the listeners of the gateway on this port."
+            }
+          },
+          "additionalProperties": true,
+          "description": "Configuration for `route.main.parentRefs.$item`."
+        },
+        "description": "Configuration for `route.main.parentRefs`."
+      },
+      "hostnames": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Host addresses, supports Helm `tpl`. Required for `TLSRoute`, not supported by `TCPRoute` and `UDPRoute`.",
+        "default": []
+      },
+      "tls": {
+        "type": "array",
+        "description": "TLS for this route. Creates a ListenerSet on the selected gateway and attaches the route to it. Needs `gateway` or a `targetSelector` string. Only for `HTTPRoute` and `GRPCRoute`. Ignored when `integrations.certManager` is enabled.",
+        "items": {
+          "type": "object",
+          "properties": {
+            "hosts": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Hostnames of this certificate. Supports Helm `tpl`."
+            },
+            "secretName": {
+              "type": "string",
+              "description": "Existing secret to use. Supports Helm `tpl`. Exactly one of `secretName`, `certificateIssuer` and `clusterCertificate`."
+            },
+            "certificateIssuer": {
+              "type": "string",
+              "description": "ClusterIssuer to create a Certificate with."
+            },
+            "clusterCertificate": {
+              "type": "string",
+              "description": "Name of a cluster certificate to use."
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "listenerPort": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 65535,
+        "description": "Port of the listeners created for `tls` and `integrations.certManager`. Defaults to `global.fallbackDefaults.routeListenerPort`."
+      },
+      "integrations": {
+        "type": "object",
+        "description": "Integrations of this route. `certManager`, `envoy`, `homepage` and `traefik` are supported, any other fails rendering.",
+        "properties": {
+          "certManager": {
+            "type": "object",
+            "description": "Issue a certificate per hostname, same as an ingress. Sets the annotations on the created ListenerSet. Needs cert-manager 1.20 or newer, with ListenerSet support enabled.",
+            "properties": {
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "description": "Enable the integration.",
+                "default": false
+              },
+              "certificateIssuer": {
+                "type": "string",
+                "description": "Name of the ClusterIssuer.",
+                "default": ""
+              }
+            },
+            "additionalProperties": true
+          },
+          "homepage": {
+            "type": "object",
+            "description": "Add the annotations for Homepage service discovery, same as an ingress. Only for `HTTPRoute`. Needs `gateway: true` in the `kubernetes.yaml` of Homepage.",
+            "properties": {
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "description": "Enable the integration.",
+                "default": false
+              }
+            },
+            "additionalProperties": true
+          },
+          "traefik": {
+            "type": "object",
+            "description": "Traefik `Middleware` objects attached to the route as `ExtensionRef` filters. Only for `HTTPRoute` and `GRPCRoute`. Needs the kubernetesCRD provider of Traefik enabled.",
+            "properties": {
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "description": "Enable the integration.",
+                "default": false
+              },
+              "ipWhitelist": {
+                "type": "array",
+                "description": "Allowed source IPs, everything else is rejected."
+              },
+              "ipStrategy": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "How Traefik determines the source IP."
+              },
+              "auth": {
+                "type": "object",
+                "description": "Authentication through Authelia or Authentik.",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "",
+                      "authentik",
+                      "authelia"
+                    ],
+                    "description": "Auth provider, empty to disable."
+                  },
+                  "internalHost": {
+                    "type": "string",
+                    "description": "Internal domain name and port of the auth provider, excluding http(s)."
+                  },
+                  "responseHeaders": {
+                    "type": "array",
+                    "description": "Override the default response headers passed on to the app."
+                  }
+                },
+                "additionalProperties": true
+              },
+              "themePark": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Theme park plugin, needs the plugin installed in Traefik. Only for `HTTPRoute`."
+              },
+              "redirectRegex": {
+                "type": "array",
+                "description": "List of `regex`, `replacement` and `permanent`. Only for `HTTPRoute`. The regex must match the whole path, and each one is its own rule. The replacement can use capture groups."
+              },
+              "middlewares": {
+                "type": "array",
+                "description": "Other middlewares from `ingressMiddlewares.traefik`, same as an ingress."
+              },
+              "chartMiddlewares": {
+                "type": "array",
+                "description": "Middlewares set by the chart, same as an ingress."
+              }
+            },
+            "additionalProperties": true
+          },
+          "envoy": {
+            "type": "object",
+            "description": "Envoy Gateway policies that target the route. Only for `HTTPRoute` and `GRPCRoute`.",
+            "properties": {
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "description": "Enable the integration.",
+                "default": false
+              },
+              "ipWhitelist": {
+                "type": "array",
+                "description": "Allowed source IPs, everything else is rejected."
+              },
+              "auth": {
+                "type": "object",
+                "description": "Authentication through Authelia or Authentik.",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "",
+                      "authentik",
+                      "authelia"
+                    ],
+                    "description": "Auth provider, empty to disable."
+                  },
+                  "internalHost": {
+                    "type": "string",
+                    "description": "`service:port` or `service.namespace.svc.cluster.local:port`. A service in another namespace needs a `ReferenceGrant` in that namespace."
+                  },
+                  "responseHeaders": {
+                    "type": "array",
+                    "description": "Override the default response headers passed on to the app."
+                  }
+                },
+                "additionalProperties": true
+              },
+              "themePark": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "`css` URL added to HTML responses with Lua. Only for `HTTPRoute`."
+              },
+              "redirectRegex": {
+                "type": "array",
+                "description": "List of `regex`, `replacement` and `permanent`. Only for `HTTPRoute`. The regex must match the whole path, and each one is its own rule. The replacement must be a fixed target without capture groups."
+              },
+              "securityPolicy": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Other `SecurityPolicy` settings, without a target. Merged with `ipWhitelist` and `auth`."
+              },
+              "backendTrafficPolicy": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "`BackendTrafficPolicy` settings, without a target."
+              },
+              "extensionPolicy": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "`EnvoyExtensionPolicy` settings, without a target. Merged with `themePark`."
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      },
+      "rules": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "backendRefs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "group": {
+                    "type": "string",
+                    "description": "Configuration for `route.main.rules.$item.backendRefs.$item.group`."
+                  },
+                  "kind": {
+                    "type": "string",
+                    "description": "Configuration for `route.main.rules.$item.backendRefs.$item.kind`."
+                  },
+                  "name": {
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "description": "Name of the object, without any expanding. Cannot be used with `targetSelector`."
+                  },
+                  "namespace": {
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "description": "Namespace of the backend. Defaults to the namespace of the route."
+                  },
+                  "port": {
+                    "type": [
+                      "null",
+                      "integer"
+                    ],
+                    "description": "Port of the backend. Defaults to the primary port of the selected service."
+                  },
+                  "weight": {
+                    "type": "integer",
+                    "description": "Share of the requests for this backend. Set to `0` to stop sending traffic to it. Defaults to `1`."
+                  },
+                  "targetSelector": {
+                    "type": [
+                      "null",
+                      "string",
+                      "object"
+                    ],
+                    "description": "Name of a service in this chart, or a map of `service: port` to select a port by name. Cannot be used with `name`.",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  },
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": true
+                    },
+                    "description": "Filters applied only to this backend. Only for `HTTPRoute` and `GRPCRoute`."
+                  }
+                },
+                "additionalProperties": true,
+                "description": "Configuration for `route.main.rules.$item.backendRefs.$item`."
+              },
+              "description": "Where to send requests. Without this and without `filters`, the rule uses the primary service."
+            },
+            "matches": {
+              "type": "array",
+              "description": "Conditions for matching requests. Only for `HTTPRoute` and `GRPCRoute`.",
+              "items": {
+                "$ref": "route/match.json"
+              }
+            },
+            "name": {
+              "type": "string",
+              "description": "Name of the rule."
+            },
+            "filters": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": true
+              },
+              "description": "Filters applied to requests matching this rule. Only for `HTTPRoute` and `GRPCRoute`. A rule with only filters needs no `backendRefs`, eg a redirect."
+            },
+            "timeouts": {
+              "$ref": "route/timeouts.json",
+              "description": "`request` and `backendRequest` timeouts. Only for `HTTPRoute`."
+            },
+            "retry": {
+              "type": "object",
+              "additionalProperties": true,
+              "description": "Retry configuration. Only for `HTTPRoute`."
+            },
+            "sessionPersistence": {
+              "type": "object",
+              "additionalProperties": true,
+              "description": "Session persistence, needs the experimental Gateway API channel. Only for `HTTPRoute` and `GRPCRoute`."
+            }
+          },
+          "additionalProperties": true,
+          "description": "Configuration for `route.main.rules.$item`."
+        },
+        "description": "Routing rules. Without rules everything goes to the primary service. Fields the route kind does not support fail rendering."
+      }
+    },
+    "additionalProperties": true,
+    "description": "Configuration for `route.main`.",
+    "default": {}
+  },
+  "description": "Configuration for `route`."
+}

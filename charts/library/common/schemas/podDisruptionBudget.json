@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "unhealthyPodEvictionPolicy": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Create Pod Disruption Budget objects",
+        "oneOf": [
+          {
+            "enum": [
+              "IfHealthyBudget",
+              "AlwaysAllow"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ],
+        "default": ""
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Create Pod Disruption Budget objects",
+        "default": false
+      },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "special/namespaces.json"
+          }
+        ],
+        "description": "Define the namespace for this object",
+        "default": ""
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Additional labels for Pod Disruption Budget",
+        "type": [
+          "object",
+          "string"
+        ],
+        "default": {}
+      },
+      "annotations": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Additional annotations for Pod Disruption Budget",
+        "default": {}
+      },
+      "minAvailable": {
+        "type": [
+          "integer",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the minAvailable.",
+        "default": ""
+      },
+      "maxUnavailable": {
+        "type": [
+          "integer",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Define the maxUnavailable.",
+        "default": ""
+      },
+      "targetSelector": {
+        "type": "string",
+        "description": "Configuration for `podDisruptionBudget.main.targetSelector`."
+      }
+    },
+    "additionalProperties": true,
+    "description": "Create Pod Disruption Budget objects",
+    "default": {}
+  },
+  "description": "Create Pod Disruption Budget objects"
+}

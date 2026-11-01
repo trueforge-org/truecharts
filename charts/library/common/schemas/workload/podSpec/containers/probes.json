@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Does **not** apply to `initContainers` See [probes](/truecharts-common/container/probes)",
+  "properties": {
+    "liveness": {
+      "$ref": "probes/probe.json",
+      "description": "Define the liveness probe."
+    },
+    "readiness": {
+      "$ref": "probes/probe.json",
+      "description": "Define the readiness probe."
+    },
+    "startup": {
+      "$ref": "probes/probe.json",
+      "description": "Define the startup probe."
+    }
+  },
+  "additionalProperties": {
+    "$ref": "probes/probe.json"
+  }
+}

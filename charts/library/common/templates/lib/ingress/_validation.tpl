@@ -161,6 +161,7 @@ objectData:
   {{- $hasEnabled := false -}}
 
   {{- range $name, $ingress := $.Values.ingress -}}
+    {{- if not (kindIs "map" $ingress) -}}{{- continue -}}{{- end -}}
 
     {{- $enabled := (include "tc.v1.common.lib.util.enabled" (dict
               "rootCtx" $ "objectData" $ingress
@@ -169,7 +170,10 @@ objectData:
 
     {{/* If ingress is enabled */}}
     {{- if eq $enabled "true" -}}
-      {{- $hasEnabled = true -}}
+      {{/* Ingresses of dependencies do not require a primary */}}
+      {{- if not $ingress.dependency -}}
+        {{- $hasEnabled = true -}}
+      {{- end -}}
 
       {{/* And ingress is primary */}}
       {{- if and (hasKey $ingress "primary") ($ingress.primary) -}}

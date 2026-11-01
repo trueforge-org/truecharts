@@ -4,223 +4,244 @@ templates:
 release:
   name: test-release-name
   namespace: test-release-namespace
+capabilities:
+  apiVersions:
+    - barmancloud.cnpg.io/v1/ObjectStore
 tests:
   - it: should fail without user
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          database: test-db
-          password: test-password
+          depconfig:
+            postgresqlUsername: ""
+            postgresqlDatabase: test-db
+            password: test-password
     asserts:
       - failedTemplate:
-          errorMessage: CNPG - Expected a non-empty [user] key
+          errorMessage: Dependencies - Expected [dependencies.postgresql.depconfig.postgresqlUsername] to not be empty
 
   - it: should fail without database
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          password: test-password
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: ""
+            password: test-password
     asserts:
       - failedTemplate:
-          errorMessage: CNPG - Expected a non-empty [database] key
-
-  - it: should fail without password
-    set:
-      cnpg:
-        my-pg:
-          enabled: true
-          user: test-user
-          database: test-db
-    asserts:
-      - failedTemplate:
-          errorMessage: CNPG - Expected a non-empty [password] key
+          errorMessage: Dependencies - Expected [dependencies.postgresql.depconfig.postgresqlDatabase] to not be empty
 
   - it: should fail with invalid pgVersion
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          pgVersion: invalid
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            pgVersion: invalid
     asserts:
       - failedTemplate:
-          errorMessage: CNPG - Expected [pgVersion] to be one of [15, 16], but got [invalid]
+          errorMessage: CNPG - Expected [pgVersion] to be one of [15, 16, 17, 18], but got [invalid]
+
+  - it: should fail with vectors on pgVersion 18
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            type: vectors
+            pgVersion: 18
+    asserts:
+      - failedTemplate:
+          errorMessage: CNPG Cluster - type [vectors] is not available for pgVersion [18]; pgvecto.rs has been superseded by VectorChord, use type [vectorchord] instead
 
   - it: should fail with hibernate not a bool
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          hibernate: invalid
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            hibernate: invalid
     asserts:
       - failedTemplate:
           errorMessage: CNPG - Expected [hibernate] to be a boolean, but got [string]
 
   - it: should fail with invalid mode
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          mode: invalid
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: invalid
     asserts:
       - failedTemplate:
           errorMessage: CNPG Cluster - Expected [mode] to be one of [standalone, replica, recovery], but got [invalid]
 
   - it: should fail with invalid type
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          type: invalid
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            type: invalid
     asserts:
       - failedTemplate:
           errorMessage: CNPG Cluster - Expected [type] to be one of [postgres, postgis, timescaledb, vectors, vectorchord], but got [invalid]
 
   - it: should fail with invalid log level
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          cluster:
-            logLevel: invalid
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            cluster:
+              logLevel: invalid
     asserts:
       - failedTemplate:
           errorMessage: CNPG Cluster - Expected [cluster.logLevel] to be one of [error, warning, info, debug, trace], but got [invalid]
 
   - it: should fail with invalid primaryUpdateStrategy
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          cluster:
-            primaryUpdateStrategy: invalid
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            cluster:
+              primaryUpdateStrategy: invalid
     asserts:
       - failedTemplate:
           errorMessage: CNPG Cluster - Expected [cluster.primaryUpdateStrategy] to be one of [supervised, unsupervised], but got [invalid]
 
   - it: should fail with invalid primaryUpdateMethod
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          cluster:
-            primaryUpdateMethod: invalid
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            cluster:
+              primaryUpdateMethod: invalid
     asserts:
       - failedTemplate:
           errorMessage: CNPG Cluster - Expected [cluster.primaryUpdateMethod] to be one of [switchover, restart], but got [invalid]
 
   - it: should fail with invalid walSegmentSize
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          cluster:
-            initdb:
-              walSegmentSize: invalid
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            cluster:
+              initdb:
+                walSegmentSize: invalid
     asserts:
       - failedTemplate:
           errorMessage: CNPG Cluster - Expected [cluster.initdb.walSegmentSize] to be an integer, but got [string]
 
   - it: should fail with too large walSegmentSize
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          cluster:
-            initdb:
-              walSegmentSize: 1025
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            cluster:
+              initdb:
+                walSegmentSize: 1025
     asserts:
       - failedTemplate:
           errorMessage: CNPG Cluster - Expected [cluster.initdb.walSegmentSize] to be between 1 and 1024, but got [1025]
 
   - it: should fail without recovery object when mode is recovery
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          mode: recovery
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery: null
     asserts:
       - failedTemplate:
           errorMessage: CNPG Recovery - Expected a non-empty [recovery] key
 
   - it: should fail with revision in recovery not a string
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          mode: recovery
-          recovery:
-            method: backup
-            backupName: some-backup-name
-            revision: 5
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: object_store
+              revision: 5
     asserts:
       - failedTemplate:
           errorMessage: CNPG Recovery - Expected [recovery.revision] to be a string, got [float64]
 
   - it: should fail with invalid recovery method
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          mode: recovery
-          recovery:
-            method: invalid
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: invalid
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Recovery - Expected [recovery.method] to be one of [backup, object_store, pg_basebackup], but got [invalid]
-
-  - it: should fail without backupName on recovery method backup
-    set:
-      cnpg:
-        my-pg:
-          enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          mode: recovery
-          recovery:
-            method: backup
-    asserts:
-      - failedTemplate:
-          errorMessage: CNPG Recovery - Expected a non-empty [recovery.backupName] key
+          errorMessage: CNPG Recovery - Expected [recovery.method] to be one of [object_store], but got [invalid]
 
   - it: should fail with revision in backups not a string
     set:
@@ -232,17 +253,19 @@ tests:
           bucket: some-bucket
           url: http://some-url
           encrKey: some-encr-key
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
-            revision: 5
-            target: primary
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              revision: 5
+              target: primary
     asserts:
       - failedTemplate:
           errorMessage: CNPG Backup - Expected [backups.revision] to be a string, got [float64]
@@ -251,16 +274,18 @@ tests:
     set:
       credentials:
         test: *test
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
-            target: invalid
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              target: invalid
     asserts:
       - failedTemplate:
           errorMessage: CNPG Backup - Expected [backups.target] to be one of [primary, prefer-standby], but got [invalid]
@@ -269,30 +294,349 @@ tests:
     set:
       credentials:
         test: *test
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
-            target: primary
-            retentionPolicy: invalid
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              target: primary
+              retentionPolicy: invalid
     asserts:
       - failedTemplate:
           errorMessage: CNPG Backup - Expected [backups.retentionPolicy] to match regex [^[1-9][0-9]*[dwm]$], got [invalid]
 
   - it: should fail with instances less than 1
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          instances: 0
-          user: test-user
-          database: test-db
-          password: test-password
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            instances: 0
     asserts:
       - failedTemplate:
           errorMessage: CNPG - Expected [instances] to be greater than 0, but got [0]
+
+  - it: should fail with invalid retentionPolicy without a target
+    set:
+      credentials:
+        test: *test
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              retentionPolicy: invalid
+    asserts:
+      - failedTemplate:
+          errorMessage: CNPG Backup - Expected [backups.retentionPolicy] to match regex [^[1-9][0-9]*[dwm]$], got [invalid]
+
+  - it: should not fail without a retentionPolicy
+    set:
+      credentials:
+        test: *test
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+    asserts:
+      - notFailedTemplate: {}
+
+  - it: should fail with recovery and backup on the same archive without a target
+    set:
+      credentials:
+        test: *test
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            cluster:
+              skipEmptyWalArchiveCheck: false
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: test
+            backups:
+              enabled: true
+              credentials: test
+    asserts:
+      - failedTemplate:
+          errorMessage: CNPG Backup/Recovery - [backups.revision] cannot match [recovery.revision] when in recovery mode and backup is enabled, for CNPG cluster [test-release-name-common-test-cnpg-main]
+
+  - it: should fail with recovery and backup on the same archive with the same serverName and revision
+    set:
+      credentials:
+        test: *test
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            cluster:
+              skipEmptyWalArchiveCheck: false
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: test
+              serverName: some-server-name
+              revision: "1"
+            backups:
+              enabled: true
+              credentials: test
+              target: primary
+              serverName: some-server-name
+              revision: "1"
+    asserts:
+      - failedTemplate:
+          errorMessage: CNPG Backup/Recovery - [backups.serverName] and [backups.revision] cannot match [recovery.serverName] and [recovery.revision] when in recovery mode and backup is enabled, for CNPG cluster [test-release-name-common-test-cnpg-main]
+
+  - it: should not fail with recovery and backup using a different revision
+    set:
+      credentials:
+        test: *test
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: test
+            backups:
+              enabled: true
+              credentials: test
+              revision: "1"
+    asserts:
+      - notFailedTemplate: {}
+
+  - it: should not fail with recovery and backup using the same serverName on a different bucket
+    set:
+      credentials:
+        test: *test
+        other:
+          <<: *test
+          bucket: other-bucket
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: test
+            backups:
+              enabled: true
+              credentials: other
+    asserts:
+      - notFailedTemplate: {}
+
+  - it: should not fail with recovery and backup using the same serverName and bucket on a different endpoint
+    set:
+      credentials:
+        test: *test
+        other:
+          <<: *test
+          url: http://some-other-url
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: test
+            backups:
+              enabled: true
+              credentials: other
+    asserts:
+      - notFailedTemplate: {}
+
+  - it: should fail with servername in recovery
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: object_store
+              servername: some-server-name
+    asserts:
+      - failedTemplate:
+          errorMessage: CNPG Recovery - [recovery.servername] is not supported, use [recovery.serverName] instead. Note that the previous value was never applied
+
+  - it: should fail with servername in backups
+    set:
+      credentials:
+        test: *test
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              servername: some-server-name
+    asserts:
+      - failedTemplate:
+          errorMessage: CNPG Backup - [backups.servername] is not supported, use [backups.serverName] instead. Note that the previous value was never applied
+
+  - it: should not fail when the plugin is installed
+    capabilities:
+      apiVersions:
+        - barmancloud.cnpg.io/v1/ObjectStore
+    set:
+      credentials:
+        test: *test
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+    asserts:
+      - notFailedTemplate: {}
+
+  - it: should not need the plugin without backups or recovery
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+    asserts:
+      - notFailedTemplate: {}
+
+  - it: should fail with recovery and backup on the same archive
+    capabilities:
+      apiVersions:
+        - barmancloud.cnpg.io/v1/ObjectStore
+    set:
+      credentials:
+        test: *test
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            cluster:
+              skipEmptyWalArchiveCheck: false
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: test
+            backups:
+              enabled: true
+              credentials: test
+    asserts:
+      - failedTemplate:
+          errorMessage: CNPG Backup/Recovery - [backups.revision] cannot match [recovery.revision] when in recovery mode and backup is enabled, for CNPG cluster [test-release-name-common-test-cnpg-main]
+
+  - it: should fail with the removed recovery method backup
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: backup
+    asserts:
+      - failedTemplate:
+          errorMessage: CNPG Recovery - Expected [recovery.method] to be one of [object_store], but got [backup]
+
+  - it: should not fail with recovery and backup on the same archive when the empty archive check is skipped
+    set:
+      credentials:
+        test:
+          type: s3
+          encrKey: some-encr-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+          bucket: some-bucket
+          url: http://some-url
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: test
+            backups:
+              enabled: true
+              credentials: test
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: metadata.annotations["cnpg.io/skipEmptyWalArchiveCheck"]
+          value: enabled

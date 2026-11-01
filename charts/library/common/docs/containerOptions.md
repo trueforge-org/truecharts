@@ -1,11 +1,11 @@
 ---
-title: Container Options
+title: Containeroptions
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/containeroptions#full-examples) section for complete examples.
+- This page is generated from JSON schema.
+- See the [Full Examples](/truecharts-common/containerOptions#full-examples) section for complete examples.
 
 :::
 
@@ -13,35 +13,39 @@ title: Container Options
 
 - `.Values.containerOptions`
 
-## Defaults
+---
 
-```yaml
-containerOptions:
-  NVIDIA_CAPS:
-    - all
-```
+## `containerOptions`
+
+Options that apply to all containers, unless overridden at the container level See more info about containerOptions [documentation](/truecharts-common/containeroptions)
+
+| Field      | Value              |
+| ---------- | ------------------ |
+| Key        | `containerOptions` |
+| Type       | `map`              |
+| Required   | ❌                 |
+| Helm `tpl` | ❌                 |
+| Default    | unset              |
 
 ---
 
-## `NVIDIA_CAPS`
+### `containerOptions.NVIDIA_CAPS`
 
 Defines the NVIDIA_CAPS to be passed as an environment variable to the container.
 
-|            |                                |
+| Field      | Value                          |
 | ---------- | ------------------------------ |
 | Key        | `containerOptions.NVIDIA_CAPS` |
-| Type       | `list` of `string`             |
-| Required   | ✅                             |
+| Type       | `list of string`               |
+| Required   | ❌                             |
 | Helm `tpl` | ❌                             |
-| Default    | `["all"]`                      |
+| Default    | `"[\"all\"]"`                  |
 
-Example:
+Example
 
 ```yaml
 containerOptions:
-  NVIDIA_CAPS:
-    - compute
-    - utility
+  NVIDIA_CAPS: ["all"]
 ```
 
 ---

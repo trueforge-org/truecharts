@@ -1,0 +1,754 @@
+suite: dependencies targetSelector test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should target the primary workload of the dependency with the service
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: &image
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main:
+              type: StatefulSet
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Service
+        equal:
+          path: spec.selector
+          value:
+            pod.name: mydep-main
+            app.kubernetes.io/name: common-test
+            app.kubernetes.io/instance: test-release-name
+
+  - it: should target other workloads of the dependency and of the chart with the service
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        app: &rootWorkload
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                probes: &disabledProbes
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              type: StatefulSet
+            worker:
+              type: DaemonSet
+              podSpec:
+                containers:
+                  main:
+                    probes: *disabledProbes
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+            worker:
+              targetSelector: worker
+              ports:
+                worker:
+                  protocol: tcp
+                  port: 6380
+            app:
+              targetSelector: app
+              ports:
+                app:
+                  protocol: http
+                  port: 8080
+    asserts:
+      - documentSelector:
+          path: metadata.labels['service.name']
+          value: mydep-main
+        equal:
+          path: spec.selector['pod.name']
+          value: mydep-main
+      - documentSelector:
+          path: metadata.labels['service.name']
+          value: mydep-worker
+        equal:
+          path: spec.selector
+          value:
+            pod.name: mydep-worker
+            app.kubernetes.io/name: common-test
+            app.kubernetes.io/instance: test-release-name
+      - documentSelector:
+          path: metadata.labels['service.name']
+          value: mydep-app
+        equal:
+          path: spec.selector
+          value:
+            pod.name: app
+            app.kubernetes.io/name: common-test
+            app.kubernetes.io/instance: test-release-name
+
+  - it: should fail with a service without a determinable primary workload
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            server:
+              type: StatefulSet
+            worker:
+              type: Deployment
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [targetSelector] on [service.main] in dependency [mydep], as no primary workload could be determined
+
+  - it: should mount persistence to the primary container of the dependency
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              type: StatefulSet
+              podSpec:
+                containers:
+                  main:
+                    probes: *disabledProbes
+                  sidecar:
+                    probes: *disabledProbes
+          configmap:
+            config:
+              data:
+                foo: bar
+          persistence:
+            data:
+              type: emptyDir
+              mountPath: /data
+            config:
+              type: configmap
+              objectName: config
+              mountPath: /config
+            sidecar:
+              type: emptyDir
+              mountPath: /sidecar
+              targetSelector:
+                main:
+                  sidecar: {}
+    asserts:
+      - documentSelector: &workloadDoc
+          path: kind
+          value: StatefulSet
+        contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: mydep-data
+            mountPath: /data
+            readOnly: false
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: mydep-config
+            mountPath: /config
+            readOnly: false
+      - documentSelector: *workloadDoc
+        notContains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: mydep-sidecar
+            mountPath: /sidecar
+            readOnly: false
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[1].name
+          value: test-release-name-common-test-sidecar
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[1].volumeMounts
+          content:
+            name: mydep-sidecar
+            mountPath: /sidecar
+            readOnly: false
+      - documentSelector: *workloadDoc
+        notContains:
+          path: spec.template.spec.containers[1].volumeMounts
+          content:
+            name: mydep-data
+            mountPath: /data
+            readOnly: false
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.volumes
+          content:
+            name: mydep-config
+            configMap:
+              name: test-release-name-common-test-mydep-config
+              optional: false
+
+  - it: should keep the name of configmaps that are not expanded
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              podSpec:
+                containers:
+                  main:
+                    probes: *disabledProbes
+          persistence:
+            config:
+              type: configmap
+              objectName: external-config
+              expandObjectName: false
+              mountPath: /config
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.volumes
+          content:
+            name: mydep-config
+            configMap:
+              name: external-config
+              optional: false
+
+  - it: should fail with persistence without a determinable primary workload
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            server:
+              type: StatefulSet
+            worker:
+              type: Deployment
+          persistence:
+            data:
+              type: emptyDir
+              mountPath: /data
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [targetSelector] or [targetSelectAll] on [persistence.data] in dependency [mydep], as no primary workload and container could be determined
+
+  - it: should reference the configmaps and secrets of the dependency in the containers
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              podSpec:
+                containers:
+                  main:
+                    probes: *disabledProbes
+                    env:
+                      FROM_CM:
+                        configMapKeyRef:
+                          name: config
+                          key: foo
+                      FROM_SECRET:
+                        secretKeyRef:
+                          name: creds
+                          key: pass
+                      FROM_EXTERNAL:
+                        secretKeyRef:
+                          expandObjectName: false
+                          name: external-secret
+                          key: pass
+                    envFrom:
+                      - configMapRef:
+                          name: config
+                      - secretRef:
+                          name: creds
+          configmap:
+            config:
+              data:
+                foo: bar
+          secret:
+            creds:
+              data:
+                pass: secret
+    asserts:
+      - documentSelector: &workloadDoc
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: FROM_CM
+            valueFrom:
+              configMapKeyRef:
+                name: test-release-name-common-test-mydep-config
+                key: foo
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: FROM_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: test-release-name-common-test-mydep-creds
+                key: pass
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: FROM_EXTERNAL
+            valueFrom:
+              secretKeyRef:
+                name: external-secret
+                key: pass
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].envFrom
+          value:
+            - configMapRef:
+                name: test-release-name-common-test-mydep-config
+            - secretRef:
+                name: test-release-name-common-test-mydep-creds
+      - documentSelector:
+          path: kind
+          value: ConfigMap
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-config
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-creds
+
+  - it: should bind the serviceAccount and rbac of the dependency to its primary workload
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              type: StatefulSet
+              podSpec:
+                containers:
+                  main:
+                    probes: *disabledProbes
+          serviceAccount:
+            main: {}
+          rbac:
+            main:
+              rules:
+                - apiGroups:
+                    - ""
+                  resources:
+                    - pods
+                  verbs:
+                    - get
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ServiceAccount
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: spec.template.spec.serviceAccountName
+          value: test-release-name-common-test-mydep-main
+      - documentSelector:
+          path: kind
+          value: Role
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector:
+          path: kind
+          value: RoleBinding
+        equal:
+          path: subjects
+          value:
+            - kind: ServiceAccount
+              name: test-release-name-common-test-mydep-main
+              namespace: test-release-namespace
+
+  - it: should not bind the serviceAccount of the dependency to the workloads of the chart
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        app: *rootWorkload
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              type: StatefulSet
+              podSpec:
+                containers:
+                  main:
+                    probes: *disabledProbes
+          serviceAccount:
+            main: {}
+    asserts:
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: spec.template.spec.serviceAccountName
+          value: test-release-name-common-test-mydep-main
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.spec.serviceAccountName
+          value: default
+
+  - it: should target the primary service of the dependency with the ingress
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              type: StatefulSet
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+            metrics:
+              ports:
+                metrics:
+                  protocol: http
+                  port: 9121
+          ingress:
+            main:
+              hosts:
+                - host: mydep.example.com
+                  paths:
+                    - path: /
+              integrations: &noIntegrations
+                traefik:
+                  enabled: false
+            metrics:
+              targetSelector:
+                metrics: metrics
+              hosts:
+                - host: metrics.example.com
+                  paths:
+                    - path: /
+              integrations: *noIntegrations
+    asserts:
+      - documentSelector: &mainIngressDoc
+          path: spec.rules[0].host
+          value: mydep.example.com
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector: *mainIngressDoc
+        equal:
+          path: spec.rules[0].http.paths[0].backend.service
+          value:
+            name: test-release-name-common-test-mydep-main
+            port:
+              number: 6379
+      - documentSelector: &metricsIngressDoc
+          path: spec.rules[0].host
+          value: metrics.example.com
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-metrics
+      - documentSelector: *metricsIngressDoc
+        equal:
+          path: spec.rules[0].http.paths[0].backend.service
+          value:
+            name: test-release-name-common-test-mydep-metrics
+            port:
+              number: 9121
+
+  - it: should fail with an ingress without a determinable primary service
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              type: StatefulSet
+          service:
+            db:
+              ports:
+                db:
+                  protocol: tcp
+                  port: 6379
+            metrics:
+              ports:
+                metrics:
+                  protocol: http
+                  port: 9121
+          ingress:
+            main:
+              hosts:
+                - host: mydep.example.com
+                  paths:
+                    - path: /
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [targetSelector] on [ingress.main] in dependency [mydep], as no primary service and port could be determined
+
+  - it: should target the primary service of the dependency with the route
+    set:
+      gateway:
+        main:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              type: StatefulSet
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+          route:
+            main:
+              kind: HTTPRoute
+              parentRefs:
+                - targetSelector: main
+              hostnames:
+                - mydep.example.com
+    asserts:
+      - documentSelector: &routeDoc
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector: *routeDoc
+        equal:
+          path: spec.parentRefs[0].name
+          value: test-release-name-common-test
+      - documentSelector: *routeDoc
+        equal:
+          path: spec.rules[0].backendRefs[0].name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector: *routeDoc
+        equal:
+          path: spec.rules[0].backendRefs[0].port
+          value: 6379
+
+  - it: should target all workloads of the dependency with the hpa
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        app: *rootWorkload
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              type: StatefulSet
+              podSpec:
+                containers:
+                  main:
+                    probes: *disabledProbes
+            worker:
+              type: Deployment
+              podSpec:
+                containers:
+                  main:
+                    probes: *disabledProbes
+          hpa:
+            main:
+              minReplicas: 1
+              maxReplicas: 3
+              target:
+                cpu: 80
+    asserts:
+      - hasDocuments:
+          count: 5
+      - documentSelector: &hpaDocs
+          path: kind
+          value: HorizontalPodAutoscaler
+          matchMany: true
+        matchRegex:
+          path: spec.scaleTargetRef.name
+          pattern: ^test-release-name-common-test-mydep-(main|worker)$
+      - documentSelector: *hpaDocs
+        notEqual:
+          path: spec.scaleTargetRef.name
+          value: test-release-name-common-test
+
+  - it: should target the primary workload of the dependency with the podDisruptionBudget and networkpolicy
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              type: StatefulSet
+              podSpec:
+                containers:
+                  main:
+                    probes: *disabledProbes
+          podDisruptionBudget:
+            main:
+              minAvailable: 1
+          networkpolicy:
+            main:
+              policyType: ingress
+              ingress:
+                - from:
+                    - podSelector: {}
+    asserts:
+      - documentSelector: &pdbDoc
+          path: kind
+          value: PodDisruptionBudget
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector: *pdbDoc
+        equal:
+          path: spec.selector.matchLabels
+          value:
+            pod.name: mydep-main
+            app.kubernetes.io/name: common-test
+            app.kubernetes.io/instance: test-release-name
+      - documentSelector: &netpolDoc
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector: *netpolDoc
+        equal:
+          path: spec.podSelector.matchLabels
+          value:
+            pod.name: mydep-main
+            app.kubernetes.io/name: common-test
+            app.kubernetes.io/instance: test-release-name
+
+  - it: should target the primary service of the dependency with the metrics
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              type: StatefulSet
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+          metrics:
+            main:
+              type: servicemonitor
+              endpoints:
+                - port: main
+                  path: /metrics
+    asserts:
+      - documentSelector: &metricsDoc
+          path: kind
+          value: ServiceMonitor
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector: *metricsDoc
+        equal:
+          path: spec.selector.matchLabels
+          value:
+            service.name: mydep-main
+            app.kubernetes.io/name: common-test
+            app.kubernetes.io/instance: test-release-name
+
+  - it: should target the primary workload of the dependency with the podmonitor
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              type: StatefulSet
+              podSpec:
+                containers:
+                  main:
+                    probes: *disabledProbes
+          metrics:
+            main:
+              type: podmonitor
+              endpoints:
+                - port: main
+                  path: /metrics
+    asserts:
+      - documentSelector: &podMonitorDoc
+          path: kind
+          value: PodMonitor
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector: *podMonitorDoc
+        equal:
+          path: spec.selector.matchLabels
+          value:
+            pod.name: mydep-main
+            app.kubernetes.io/name: common-test
+            app.kubernetes.io/instance: test-release-name

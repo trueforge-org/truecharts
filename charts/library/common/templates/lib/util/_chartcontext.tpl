@@ -21,6 +21,24 @@
   {{- end -}}
 {{- end -}}
 
+{{/* Returns the pod and service CIDR, as set in [global] or the defaults */}}
+{{- define "tc.v1.common.lib.util.chartcontext.cidrs" -}}
+  {{- $global := .global | default dict -}}
+
+  {{- $podCIDR := "172.16.0.0/16" -}}
+  {{- $svcCIDR := "172.17.0.0/16" -}}
+
+  {{- if $global.podCIDR -}}
+    {{- $podCIDR = $global.podCIDR -}}
+  {{- end -}}
+
+  {{- if $global.svcCIDR -}}
+    {{- $svcCIDR = $global.svcCIDR -}}
+  {{- end -}}
+
+  {{- (dict "podCIDR" $podCIDR "svcCIDR" $svcCIDR) | toJson -}}
+{{- end -}}
+
 {{- define "tc.v1.common.lib.util.chartcontext.data" -}}
   {{- $rootCtx := .rootCtx -}}
   {{- $objectData := .objectData -}}
@@ -30,28 +48,34 @@
   {{- $host := "127.0.0.1" -}}
   {{- $port := "443" -}}
   {{- $path := "/" -}}
-  {{- $podCIDR := "172.16.0.0/16" -}}
-  {{- $svcCIDR := "172.17.0.0/16" -}}
-
-  {{- if $rootCtx.Values.global.podCIDR -}}
-    {{- $podCIDR = $rootCtx.Values.global.podCIDR -}}
-  {{- end -}}
-
-  {{- if $rootCtx.Values.global.svcCIDR -}}
-    {{- $svcCIDR = $rootCtx.Values.global.svcCIDR -}}
-  {{- end -}}
+  {{- $cidrs := include "tc.v1.common.lib.util.chartcontext.cidrs" (dict "global" $rootCtx.Values.global) | fromJson -}}
+  {{- $podCIDR := $cidrs.podCIDR -}}
+  {{- $svcCIDR := $cidrs.svcCIDR -}}
 
   {{/* TODO: Find ways to implement CIDR detection */}}
 
-  {{/* If there is ingress, get data from the primary */}}
+  {{/* If there is ingress/route, get data from the primary */}}
   {{- $primaryIngressName := include "tc.v1.common.lib.util.ingress.primary" (dict "rootCtx" $rootCtx) -}}
   {{- $selectedIngress := (get $rootCtx.Values.ingress $primaryIngressName) -}}
+
+  {{- $primaryRouteName := include "tc.v1.common.lib.util.route.primary" (dict "rootCtx" $rootCtx) -}}
+  {{- $selectedRoute := dict -}}
+  {{- if $rootCtx.Values.route -}}
+    {{- $selectedRoute = (get $rootCtx.Values.route $primaryRouteName) -}}
+  {{- end -}}
 
   {{- with $objectData.targetSelector -}}
     {{- if .ingress -}}
       {{- $ing := (get $rootCtx.Values.ingress .ingress) -}}
       {{- if $ing -}}
         {{- $selectedIngress = $ing -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- if .route -}}
+      {{- $route := (get $rootCtx.Values.route .route) -}}
+      {{- if $route -}}
+        {{- $selectedRoute = $route -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}
@@ -105,8 +129,37 @@
     {{- end -}}
   {{- end -}}
 
-  {{/* If there is no ingress, we have to use service */}}
-  {{- if not $selectedIngress -}}
+  {{/* TCP and UDP routes have no URL, the service is used instead */}}
+  {{- if and $selectedRoute (mustHas ($selectedRoute.kind | default "HTTPRoute") (list "TCPRoute" "UDPRoute")) -}}
+    {{- $selectedRoute = dict -}}
+  {{- end -}}
+
+  {{- if and (not $selectedIngress) $selectedRoute -}}
+    {{- $endpoint := include "tc.v1.common.lib.route.endpoint" (dict "rootCtx" $rootCtx "objectData" $selectedRoute) | fromYaml -}}
+    {{- $protocol = $endpoint.protocol -}}
+    {{- $port = $endpoint.port -}}
+
+    {{- with $selectedRoute -}}
+      {{- if and (kindIs "slice" .hostnames) (gt (len .hostnames) 0) -}}
+        {{- $host = tpl ((.hostnames | default list) | mustFirst) $rootCtx -}}
+      {{- end -}}
+
+      {{- if and (eq (.kind | default "HTTPRoute") "HTTPRoute") (kindIs "slice" .rules) (gt (len .rules) 0) -}}
+        {{- $firstRule := ((.rules | default list) | mustFirst) -}}
+        {{- if and (kindIs "slice" $firstRule.matches) (gt (len $firstRule.matches) 0) -}}
+          {{- $firstMatch := (($firstRule.matches | default list) | mustFirst) -}}
+          {{- if $firstMatch.path -}}
+            {{- with $firstMatch.path.value -}}
+              {{- $path = tpl . $rootCtx -}}
+            {{- end -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{/* If there is no ingress/route, we have to use service */}}
+  {{- if and (not $selectedIngress) (not $selectedRoute) -}}
     {{- $primaryServiceName := include "tc.v1.common.lib.util.service.primary" (dict "rootCtx" $rootCtx) -}}
     {{- $selectedService := (get $rootCtx.Values.service $primaryServiceName) -}}
 

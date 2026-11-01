@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Define the port dict",
+  "properties": {
+    "nodePort": {
+      "type": [
+        "integer",
+        "string"
+      ],
+      "description": "Define the node port that will be exposed on the node"
+    },
+    "targetSelector": {
+      "type": "string",
+      "description": "Define the port dict"
+    },
+    "port": {
+      "type": [
+        "integer",
+        "string"
+      ],
+      "description": "Define the port that will be exposed by the service",
+      "minimum": 1
+    },
+    "targetPort": {
+      "type": [
+        "integer",
+        "string"
+      ],
+      "description": "Define the target port (No named ports)"
+    },
+    "protocol": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "tcp",
+            "udp",
+            "http",
+            "https"
+          ]
+        },
+        {
+          "type": "string",
+          "pattern": "^\\{\\{.*\\}\\}$"
+        }
+      ],
+      "description": "Define the port protocol Used by the container ports and probes, http and https are converted to tcp where needed"
+    },
+    "hostPort": {
+      "type": [
+        "integer",
+        "string"
+      ],
+      "description": "Define the hostPort, should be **avoided**, unless **ABSOLUTELY** necessary"
+    },
+    "enabled": {
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "description": "Configuration for `service.main.ports.main.enabled`."
+    },
+    "primary": {
+      "type": "boolean",
+      "description": "Configuration for `service.main.ports.main.primary`."
+    }
+  },
+  "additionalProperties": true
+}

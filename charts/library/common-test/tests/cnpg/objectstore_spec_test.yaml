@@ -1,0 +1,455 @@
+suite: cnpg object store spec test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+capabilities:
+  apiVersions:
+    - barmancloud.cnpg.io/v1/ObjectStore
+tests:
+  - it: should generate correct backup object store (s3)
+    set:
+      credentials:
+        test: &test
+          type: s3
+          accessKey: some-access-key
+          secretKey: some-secret-key
+          bucket: some-bucket
+          encrKey: some-encr-key
+          url: http://some-url
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              target: primary
+              retentionPolicy: 10d
+              credentials: test
+              destinationPath: some-path
+    asserts:
+      - documentSelector: &backupStore
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-main-backup
+        isKind:
+          of: ObjectStore
+      - documentSelector: *backupStore
+        isAPIVersion:
+          of: barmancloud.cnpg.io/v1
+      - documentSelector: *backupStore
+        equal:
+          path: metadata.namespace
+          value: test-release-namespace
+      - documentSelector: *backupStore
+        equal:
+          path: spec
+          value:
+            retentionPolicy: 10d
+            configuration:
+              data:
+                compression: bzip2
+                jobs: 2
+              wal:
+                compression: bzip2
+              destinationPath: some-path
+              endpointURL: http://some-url
+              s3Credentials:
+                accessKeyId:
+                  key: ACCESS_KEY_ID
+                  name: test-release-name-common-test-cnpg-main-provider-backup-s3-creds
+                secretAccessKey:
+                  key: ACCESS_SECRET_KEY
+                  name: test-release-name-common-test-cnpg-main-provider-backup-s3-creds
+      # Credentials are still rendered by the provider secret
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-main-provider-backup-s3-creds
+        equal:
+          path: stringData
+          value:
+            ACCESS_KEY_ID: some-access-key
+            ACCESS_SECRET_KEY: some-secret-key
+
+  - it: should use the default destination path (s3)
+    set:
+      credentials:
+        test:
+          <<: *test
+          path: some-path/
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+    asserts:
+      - documentSelector: *backupStore
+        equal:
+          path: spec.configuration.destinationPath
+          value: s3://some-bucket/some-path/test-release-name/cnpg
+
+  - it: should not set serverName, even with an override and a revision
+    set:
+      credentials:
+        test: *test
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              serverName: some-server-name
+              revision: "1"
+    asserts:
+      - documentSelector: *backupStore
+        notExists:
+          path: spec.configuration.serverName
+
+  - it: should not set retentionPolicy when not defined
+    set:
+      credentials:
+        test: *test
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              retentionPolicy: ""
+    asserts:
+      - documentSelector: *backupStore
+        notExists:
+          path: spec.retentionPolicy
+
+  - it: should set region (s3)
+    set:
+      credentials:
+        test:
+          <<: *test
+          region: some-region
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+    asserts:
+      - documentSelector: *backupStore
+        equal:
+          path: spec.configuration.s3Credentials.region
+          value:
+            key: REGION
+            name: test-release-name-common-test-cnpg-main-provider-backup-s3-creds
+
+  - it: should set endpointCA using customCA (s3)
+    set:
+      credentials:
+        test:
+          <<: *test
+          customCA: |-
+            -----BEGIN CERTIFICATE-----
+            ...
+            -----END CERTIFICATE-----
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+    asserts:
+      - documentSelector: *backupStore
+        equal:
+          path: spec.configuration.endpointCA
+          value:
+            name: test-release-name-common-test-cnpg-main-provider-backup-s3-ca
+            key: ca.crt
+
+  - it: should set endpointCA using customCASecretRef (s3)
+    set:
+      secret:
+        my-secret:
+          enabled: true
+          data:
+            my-key: some-ca
+      credentials:
+        test:
+          <<: *test
+          customCASecretRef:
+            name: my-secret
+            key: my-key
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+    asserts:
+      - documentSelector: *backupStore
+        equal:
+          path: spec.configuration.endpointCA
+          value:
+            name: test-release-name-common-test-my-secret
+            key: my-key
+
+  - it: should enable encryption when set
+    set:
+      credentials:
+        test: *test
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              encryption:
+                enabled: true
+    asserts:
+      - documentSelector: *backupStore
+        equal:
+          path: spec.configuration.data
+          value:
+            compression: bzip2
+            encryption: AES256
+            jobs: 2
+      - documentSelector: *backupStore
+        equal:
+          path: spec.configuration.wal
+          value:
+            compression: bzip2
+            encryption: AES256
+
+  - it: should disable compression when set to false
+    set:
+      credentials:
+        test: *test
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              compression:
+                enabled: false
+    asserts:
+      - documentSelector: *backupStore
+        equal:
+          path: spec.configuration.data
+          value:
+            jobs: 2
+      - documentSelector: *backupStore
+        notExists:
+          path: spec.configuration.wal
+
+  - it: should pass instanceSidecarConfiguration
+    set:
+      credentials:
+        test: *test
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              instanceSidecarConfiguration: &sidecar
+                retentionPolicyIntervalSeconds: 600
+                resources:
+                  requests:
+                    cpu: 50m
+                    memory: 128Mi
+    asserts:
+      - documentSelector: *backupStore
+        equal:
+          path: spec.instanceSidecarConfiguration
+          value: *sidecar
+
+  - it: should merge labels and annotations
+    set:
+      global:
+        labels:
+          global-label: global-value
+        annotations:
+          global-annotation: global-value
+      credentials:
+        test: *test
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            labels:
+              cnpg-label: cnpg-value
+            annotations:
+              cnpg-annotation: cnpg-value
+            backups:
+              enabled: true
+              credentials: test
+              labels:
+                backups-label: backups-value
+              annotations:
+                backups-annotation: backups-value
+    asserts:
+      - documentSelector: *backupStore
+        isSubset:
+          path: metadata.labels
+          content:
+            cnpg.io/cluster: test-release-name-common-test-cnpg-main
+            global-label: global-value
+            cnpg-label: cnpg-value
+            backups-label: backups-value
+      - documentSelector: *backupStore
+        isSubset:
+          path: metadata.annotations
+          content:
+            global-annotation: global-value
+            cnpg-annotation: cnpg-value
+            backups-annotation: backups-value
+
+  - it: should generate correct recovery object store (s3)
+    set:
+      credentials:
+        test:
+          <<: *test
+          path: some-path
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: test
+              retentionPolicy: 10d
+              instanceSidecarConfiguration:
+                logLevel: debug
+    asserts:
+      - documentSelector: &recoveryStore
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-main-recovery
+        isKind:
+          of: ObjectStore
+      - documentSelector: *recoveryStore
+        equal:
+          path: spec
+          value:
+            configuration:
+              destinationPath: s3://some-bucket/some-path/test-release-name/cnpg
+              endpointURL: http://some-url
+              s3Credentials:
+                accessKeyId:
+                  key: ACCESS_KEY_ID
+                  name: test-release-name-common-test-cnpg-main-provider-recovery-s3-creds
+                secretAccessKey:
+                  key: ACCESS_SECRET_KEY
+                  name: test-release-name-common-test-cnpg-main-provider-recovery-s3-creds
+            instanceSidecarConfiguration:
+              logLevel: debug
+
+  - it: should generate one object store per type, using their own credentials
+    set:
+      credentials:
+        from:
+          <<: *test
+          bucket: from-bucket
+        to:
+          <<: *test
+          bucket: to-bucket
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: from
+            backups:
+              enabled: true
+              credentials: to
+    asserts:
+      - documentSelector: *recoveryStore
+        equal:
+          path: spec.configuration.destinationPath
+          value: s3://from-bucket/test-release-name/cnpg
+      - documentSelector: *recoveryStore
+        notExists:
+          path: spec.configuration.data
+      - documentSelector: *backupStore
+        equal:
+          path: spec.configuration.destinationPath
+          value: s3://to-bucket/test-release-name/cnpg
+
+  - it: should not generate object stores when backups are disabled
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+    asserts:
+      - containsDocument:
+          kind: ObjectStore
+          apiVersion: barmancloud.cnpg.io/v1
+          any: true
+        not: true

@@ -86,27 +86,9 @@ objectData: The object data to be used to render the Pod.
     {{- $persistence := (mustDeepCopy $persistenceValues) -}}
     {{- $_ := set $persistence "shortName" $name -}}
 
-    {{- $selected := false -}}
-
-    {{- if $persistence.targetSelectAll -}}
-      {{- $selected = true -}}
-    {{- else if eq $objectData.shortName "autopermissions" -}}
-      {{- if and $persistence.autoPermissions $persistence.autoPermissions.enabled -}}
-        {{- $selected = true -}}
-      {{- end -}}
-    {{- else if $persistence.targetSelector -}}
-      {{- if not (kindIs "map" $persistence.targetSelector) -}}
-        {{- fail (printf "Persistence - Expected [targetSelector] to be [dict], but got [%s]" (kindOf $persistence.targetSelector)) -}}
-      {{- end -}}
-
-      {{- if (mustHas $objectData.shortName (keys $persistence.targetSelector)) -}}
-        {{- $selected = true -}}
-      {{- end -}}
-    {{- else if $objectData.primary -}}
-      {{- $selected = true -}}
+    {{- if not (include "tc.v1.common.lib.pod.volumes.isSelected" (dict "objectData" $objectData "persistence" $persistence)) -}}
+      {{- continue -}}
     {{- end -}}
-
-    {{- if not $selected -}}{{- continue -}}{{- end -}}
 
     {{- $type := ($persistence.type | default $rootCtx.Values.global.fallbackDefaults.persistenceType) -}}
     {{- if eq $type "vct" -}}{{- continue -}}{{- end -}}
@@ -119,4 +101,28 @@ objectData: The object data to be used to render the Pod.
   {{- end -}}
 
   {{- $selectedVolumes | toJson -}}
+{{- end -}}
+
+{{/* Returns true if the workload mounts the volume */}}
+{{- define "tc.v1.common.lib.pod.volumes.isSelected" -}}
+  {{- $objectData := .objectData -}}
+  {{- $persistence := .persistence -}}
+
+  {{- if $persistence.targetSelectAll -}}
+    {{- print "true" -}}
+  {{- else if eq $objectData.shortName "autopermissions" -}}
+    {{- if and $persistence.autoPermissions $persistence.autoPermissions.enabled -}}
+      {{- print "true" -}}
+    {{- end -}}
+  {{- else if $persistence.targetSelector -}}
+    {{- if not (kindIs "map" $persistence.targetSelector) -}}
+      {{- fail (printf "Persistence - Expected [targetSelector] to be [dict], but got [%s]" (kindOf $persistence.targetSelector)) -}}
+    {{- end -}}
+
+    {{- if (mustHas $objectData.shortName (keys $persistence.targetSelector)) -}}
+      {{- print "true" -}}
+    {{- end -}}
+  {{- else if $objectData.primary -}}
+    {{- print "true" -}}
+  {{- end -}}
 {{- end -}}

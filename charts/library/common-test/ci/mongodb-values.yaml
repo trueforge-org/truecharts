@@ -16,6 +16,18 @@ workload:
           args:
             - --port
             - "8080"
+          env:
+            MONGODB_HOST: '{{ .Values.dependencies.mongodb.depconfig.creds.plainhost | trimAll "\"" }}'
+            MONGODB_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mongodbcreds" }}'
+                key: url
+            MONGODB_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mongodbcreds" }}'
+                key: mongodb-password
           probes:
             liveness:
               enabled: true
@@ -24,5 +36,6 @@ workload:
             startup:
               enabled: true
 
-mongodb:
-  enabled: true
+dependencies:
+  mongodb:
+    enabled: true

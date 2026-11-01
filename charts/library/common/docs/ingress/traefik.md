@@ -1,228 +1,142 @@
 ---
-title: Traefik Integration
+title: Traefik
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
+- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/ingress/traefik#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.ingress.$name.integration.traefik`
-
-:::tip
-
-- Replace references to `$name` with the actual name you want to use.
-
-:::
+- `.Values.ingress.traefik`
 
 ---
 
-## `enabled`
+## `ingress.traefik`
+
+Create Ingress objects
+
+| Field      | Value             |
+| ---------- | ----------------- |
+| Key        | `ingress.traefik` |
+| Type       | `map`             |
+| Required   | ❌                |
+| Helm `tpl` | ❌                |
+| Default    | unset             |
+
+---
+
+### `ingress.traefik.chartMiddlewares`
+
+Same as middlewares but meant to be used by the chart developer to define some custom middleware specific to this ingress.
+
+| Field      | Value                              |
+| ---------- | ---------------------------------- |
+| Key        | `ingress.traefik.chartMiddlewares` |
+| Type       | `list of unknown`                  |
+| Required   | ❌                                 |
+| Helm `tpl` | ❌                                 |
+| Default    | `[]`                               |
+
+Example
+
+```yaml
+ingress:
+  traefik:
+    chartMiddlewares:
+      []
+```
+
+---
+
+### `ingress.traefik.enabled`
 
 Enables or Disables the traefik integration
 
-|            |                                              |
-| ---------- | -------------------------------------------- |
-| Key        | `ingress.$name.integrations.traefik.enabled` |
-| Type       | `bool`                                       |
-| Required   | ❌                                            |
-| Helm `tpl` | ❌                                            |
-| Default    | `false`                                      |
+| Field      | Value                     |
+| ---------- | ------------------------- |
+| Key        | `ingress.traefik.enabled` |
+| Type       | `boolean`                 |
+| Required   | ❌                        |
+| Helm `tpl` | ❌                        |
+| Default    | `false`                   |
 
 Example
 
 ```yaml
 ingress:
-  ingress-name:
-    integrations:
-      traefik:
-        enabled: true
+  traefik:
+    enabled: false
 ```
 
 ---
 
-## `entrypoints`
+### `ingress.traefik.entrypoints`
 
 Define the entrypoints for this traefik integration
 
-|            |                                                  |
-| ---------- | ------------------------------------------------ |
-| Key        | `ingress.$name.integrations.traefik.entrypoints` |
-| Type       | `list`                                           |
-| Required   | ❌                                                |
-| Helm `tpl` | ❌                                                |
-| Default    | `["websecure"]`                                  |
-
----
-
-## `forceTLS`
-
-Force TLS on this ingress
-
-:::note
-
-Adds the `traefik.ingress.kubernetes.io/router.tls` annotation.
-
-It does that both with this set OR when [entrypoints](/truecharts-common/ingress/traefik#entrypoints) include `websecure`
-
-:::
-
-|            |                                               |
-| ---------- | --------------------------------------------- |
-| Key        | `ingress.$name.integrations.traefik.forceTLS` |
-| Type       | `bool`                                        |
-| Required   | ❌                                             |
-| Helm `tpl` | ❌                                             |
-| Default    | `true`                                        |
+| Field      | Value                         |
+| ---------- | ----------------------------- |
+| Key        | `ingress.traefik.entrypoints` |
+| Type       | `list of string`              |
+| Required   | ❌                            |
+| Helm `tpl` | ❌                            |
+| Default    | `"[\"websecure\"]"`           |
 
 Example
 
 ```yaml
 ingress:
-  ingress-name:
-    integrations:
-      traefik:
-        forceTLS: true
+  traefik:
+    entrypoints: ["websecure"]
 ```
 
 ---
 
-## `middlewares`
+### `ingress.traefik.forceTLS`
+
+Force TLS on this ingress Adds the `traefik.ingress.kubernetes.io/router.tls` annotation.
+
+| Field      | Value                      |
+| ---------- | -------------------------- |
+| Key        | `ingress.traefik.forceTLS` |
+| Type       | `boolean`                  |
+| Required   | ❌                         |
+| Helm `tpl` | ❌                         |
+| Default    | `true`                     |
+
+Example
+
+```yaml
+ingress:
+  traefik:
+    forceTLS: true
+```
+
+---
+
+### `ingress.traefik.middlewares`
 
 The middlewares for this traefik integration
 
-|            |                                                  |
-| ---------- | ------------------------------------------------ |
-| Key        | `ingress.$name.integrations.traefik.middlewares` |
-| Type       | `list` of `map`                                  |
-| Required   | ❌                                                |
-| Helm `tpl` | ❌                                                |
-| Default    | `[]`                                             |
+| Field      | Value                         |
+| ---------- | ----------------------------- |
+| Key        | `ingress.traefik.middlewares` |
+| Type       | `list of unknown`             |
+| Required   | ❌                            |
+| Helm `tpl` | ❌                            |
+| Default    | `[]`                          |
 
 Example
 
 ```yaml
 ingress:
-  ingress-name:
-    integrations:
-      traefik:
-        middlewares:
-          - name: my-middleware
-            namespace: ""
-```
-
----
-
-### `middlewares[].name`
-
-The name of the middleware
-
-|            |                                                         |
-| ---------- | ------------------------------------------------------- |
-| Key        | `ingress.$name.integrations.traefik.middlewares[].name` |
-| Type       | `string`                                                |
-| Required   | ❌                                                       |
-| Helm `tpl` | ❌                                                       |
-| Default    | `""`                                                    |
-
-Example
-
-```yaml
-ingress:
-  ingress-name:
-    integrations:
-      traefik:
-        middlewares:
-          - name: my-middleware
-            namespace: ""
-```
-
----
-
-### `middlewares[].namespace`
-
-The namespace of the middleware
-
-:::tip
-
-If not defined, the current namespace will be used.
-
-:::
-
-|            |                                                              |
-| ---------- | ------------------------------------------------------------ |
-| Key        | `ingress.$name.integrations.traefik.middlewares[].namespace` |
-| Type       | `string`                                                     |
-| Required   | ❌                                                            |
-| Helm `tpl` | ❌                                                            |
-| Default    | `""`                                                         |
-
-Example
-
-```yaml
-ingress:
-  ingress-name:
-    integrations:
-      traefik:
-        middlewares:
-          - name: my-middleware
-            namespace: my-namespace
-```
-
----
-
-### `middlewares[].expandObjectName`
-
-Whether to expand the middleware name
-
-|            |                                                                     |
-| ---------- | ------------------------------------------------------------------- |
-| Key        | `ingress.$name.integrations.traefik.middlewares[].expandObjectName` |
-| Type       | `bool`                                                              |
-| Required   | ❌                                                                   |
-| Helm `tpl` | ❌                                                                   |
-| Default    | `true`                                                              |
-
-Example
-
-```yaml
-ingress:
-  ingress-name:
-    integrations:
-      traefik:
-        middlewares:
-          - name: my-middleware
-            expandObjectName: false
-```
-
----
-
-## `chartMiddlewares`
-
-Same as [middlewares](#middlewares) but meant to be used by the chart developer
-to define some custom middleware specific to this ingress.
-
-|            |                                                       |
-| ---------- | ----------------------------------------------------- |
-| Key        | `ingress.$name.integrations.traefik.chartMiddlewares` |
-| Type       | `list` of `map`                                       |
-| Required   | ❌                                                     |
-| Helm `tpl` | ❌                                                     |
-| Default    | `[]`                                                  |
-
-Example
-
-```yaml
-ingress:
-  ingress-name:
-    integrations:
-      traefik:
-        chartMiddlewares:
-          - name: my-middleware
+  traefik:
+    middlewares:
+      []
 ```
 
 ---

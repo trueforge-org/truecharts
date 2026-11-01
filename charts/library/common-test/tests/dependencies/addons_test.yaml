@@ -1,0 +1,845 @@
+suite: dependencies addons test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should add the netshoot container to the workload of the dependency
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main:
+              type: StatefulSet
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+          addons:
+            netshoot:
+              enabled: true
+    asserts:
+      - hasDocuments:
+          count: 2
+      - documentSelector: &workloadDoc
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentSelector: *workloadDoc
+        lengthEqual:
+          path: spec.template.spec.containers
+          count: 2
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].image
+          value: docker.io/some/image:1.0.0
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[1].name
+          value: test-release-name-common-test-netshoot
+      - documentSelector: *workloadDoc
+        matchRegex:
+          path: spec.template.spec.containers[1].image
+          pattern: ^oci.trueforge.org/containerforge/netshoot:1.0.0
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[1].command
+          value:
+            - /bin/sh
+            - -c
+            - sleep infinity
+
+  - it: should not add the containers of addons that are disabled
+    set:
+      someValue: false
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+          addons:
+            netshoot:
+              enabled: false
+            tailscale:
+              enabled: "{{ .Values.someValue }}"
+            codeserver: {}
+    asserts:
+      - hasDocuments:
+          count: 1
+      - documentSelector:
+          path: kind
+          value: Deployment
+        lengthEqual:
+          path: spec.template.spec.containers
+          count: 1
+
+  - it: should apply the override of the addon on top of the defaults of common
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+          addons:
+            netshoot:
+              enabled: true
+              container:
+                command:
+                  - /bin/sh
+                  - -c
+                  - sleep 1000
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.spec.containers[1].command
+          value:
+            - /bin/sh
+            - -c
+            - sleep 1000
+      - documentSelector:
+          path: kind
+          value: Deployment
+        isSubset:
+          path: spec.template.spec.containers[1].securityContext
+          content:
+            runAsUser: 0
+            runAsNonRoot: false
+
+  - it: should only add the addon to the dependency, not to the chart
+    set:
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: image
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+          addons:
+            netshoot:
+              enabled: true
+    asserts:
+      - hasDocuments:
+          count: 3
+      - documentIndex: 0
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentIndex: 0
+        lengthEqual:
+          path: spec.template.spec.containers
+          count: 1
+      - documentIndex: 1
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentIndex: 1
+        lengthEqual:
+          path: spec.template.spec.containers
+          count: 2
+
+  - it: should not inherit the settings of the addons of the chart
+    set:
+      addons:
+        netshoot:
+          enabled: true
+          container:
+            command:
+              - /bin/sh
+              - -c
+              - sleep 1
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: image
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+          addons:
+            netshoot:
+              enabled: true
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentIndex: 0
+        equal:
+          path: spec.template.spec.containers[1].command
+          value:
+            - /bin/sh
+            - -c
+            - sleep 1
+      - documentIndex: 1
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+      - documentIndex: 1
+        equal:
+          path: spec.template.spec.containers[1].command
+          value:
+            - /bin/sh
+            - -c
+            - sleep infinity
+
+  - it: should add the addons to the selected workloads of the dependency
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+            other:
+              type: Deployment
+              podSpec:
+                containers:
+                  main:
+                    primary: true
+                    imageSelector: image
+                    probes: &disabledProbes
+                      liveness:
+                        enabled: false
+                      readiness:
+                        enabled: false
+                      startup:
+                        enabled: false
+          addons:
+            netshoot:
+              enabled: true
+              targetSelector:
+                - other
+    asserts:
+      - hasDocuments:
+          count: 2
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+        lengthEqual:
+          path: spec.template.spec.containers
+          count: 1
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-other
+        lengthEqual:
+          path: spec.template.spec.containers
+          count: 2
+
+  - it: should add the addons of multiple dependencies
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+          addons:
+            netshoot:
+              enabled: true
+        other:
+          enabled: true
+          image:
+            repository: docker.io/some/other
+            tag: 2.0.0
+          workload:
+            main: {}
+          addons:
+            netshoot:
+              enabled: true
+              container:
+                command:
+                  - /bin/sh
+                  - -c
+                  - sleep 2
+    asserts:
+      - hasDocuments:
+          count: 2
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-main
+        equal:
+          path: spec.template.spec.containers[1].command
+          value:
+            - /bin/sh
+            - -c
+            - sleep infinity
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-other-main
+        equal:
+          path: spec.template.spec.containers[1].command
+          value:
+            - /bin/sh
+            - -c
+            - sleep 2
+
+  - it: should use the image of the dependency for the addon, when it defines one
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          netshootImage:
+            repository: docker.io/some/netshoot
+            tag: 3.0.0
+          workload:
+            main: {}
+          addons:
+            netshoot:
+              enabled: true
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.spec.containers[1].image
+          value: docker.io/some/netshoot:3.0.0
+
+  - it: should add the addon to the valkey dependency
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          addons:
+            netshoot:
+              enabled: true
+    asserts:
+      - hasDocuments:
+          count: 4
+      - documentSelector: &valkeyDoc
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-valkey-main
+      - documentSelector: *valkeyDoc
+        lengthEqual:
+          path: spec.template.spec.containers
+          count: 2
+      - documentSelector: *valkeyDoc
+        equal:
+          path: spec.template.spec.containers[1].name
+          value: test-release-name-common-test-netshoot
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: stringData.plainhost
+          value: test-release-name-common-test-valkey-main
+
+  - it: should keep the primary container of the dependency with an addon
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            app:
+              type: Deployment
+              podSpec:
+                containers:
+                  app:
+                    imageSelector: image
+                    probes: *disabledProbes
+          service:
+            web:
+              ports:
+                http:
+                  port: 8080
+          addons:
+            netshoot:
+              enabled: true
+    asserts:
+      - hasDocuments:
+          count: 2
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-app
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.spec.containers[0].name
+          value: test-release-name-common-test
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.spec.containers[1].name
+          value: test-release-name-common-test-netshoot
+
+  - it: should render the codeserver addon with a prefixed service and ingress
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+          service:
+            main:
+              ports:
+                main:
+                  port: 8080
+          addons:
+            codeserver:
+              enabled: true
+              ingress:
+                enabled: true
+    asserts:
+      - hasDocuments:
+          count: 4
+      - documentSelector: &workloadDoc
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.spec.containers[0].name
+          value: test-release-name-common-test-codeserver
+      - documentSelector: *workloadDoc
+        matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: ^oci.trueforge.org/containerforge/code-server:4.141.0
+      - documentIndex: &svcDoc 1
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-codeserver
+      - documentIndex: *svcDoc
+        equal:
+          path: kind
+          value: Service
+      - documentIndex: *svcDoc
+        equal:
+          path: spec.selector
+          value:
+            pod.name: mydep-main
+            app.kubernetes.io/name: common-test
+            app.kubernetes.io/instance: test-release-name
+      - documentIndex: *svcDoc
+        equal:
+          path: spec.ports[0].port
+          value: 12321
+      - documentIndex: &ingressDoc 3
+        isKind:
+          of: Ingress
+      - documentIndex: *ingressDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-codeserver
+      - documentIndex: *ingressDoc
+        equal:
+          path: spec.rules[0].http.paths[0].backend.service.name
+          value: test-release-name-common-test-mydep-codeserver
+
+  - it: should not make the objects of the codeserver addon primary in the dependency
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+          service:
+            app:
+              ports:
+                http:
+                  port: 8080
+          ingress:
+            web:
+              hosts:
+                - host: app.example.com
+                  paths:
+                    - path: /
+          addons:
+            codeserver:
+              enabled: true
+              ingress:
+                enabled: true
+    asserts:
+      - hasDocuments:
+          count: 5
+      - documentIndex: 3
+        isKind:
+          of: Ingress
+      - documentIndex: 3
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-codeserver
+      - documentIndex: 3
+        equal:
+          path: spec.rules[0].http.paths[0].backend.service.name
+          value: test-release-name-common-test-mydep-codeserver
+      - documentIndex: 4
+        isKind:
+          of: Ingress
+      - documentIndex: 4
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-web
+      - documentIndex: 4
+        equal:
+          path: spec.rules[0].http.paths[0].backend.service.name
+          value: test-release-name-common-test-mydep-app
+      - documentIndex: 4
+        equal:
+          path: spec.rules[0].http.paths[0].backend.service.port.number
+          value: 8080
+
+  - it: should not require a primary service in the chart for the codeserver addon of a dependency
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+          addons:
+            codeserver:
+              enabled: true
+    asserts:
+      - hasDocuments:
+          count: 2
+      - documentSelector:
+          path: kind
+          value: Service
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-codeserver
+
+  - it: should render the tailscale addon with its state in the dependency
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+          addons:
+            tailscale:
+              enabled: true
+              settings:
+                authkey: some-key
+    asserts:
+      - hasDocuments:
+          count: 2
+      - documentSelector: &workloadDoc
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.spec.automountServiceAccountToken
+          value: true
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[1].name
+          value: test-release-name-common-test-tailscale
+      - documentSelector: *workloadDoc
+        matchRegex:
+          path: spec.template.spec.containers[1].image
+          pattern: ^oci.trueforge.org/containerforge/tailscale:1.104.4
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[1].env
+          content:
+            name: TS_AUTH_KEY
+            valueFrom:
+              secretKeyRef:
+                name: test-release-name-common-test-mydep-tailscale-authkey
+                key: TS_AUTH_KEY
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[1].volumeMounts
+          content:
+            name: mydep-tailscalestate
+            mountPath: /var/lib/tailscale
+            readOnly: false
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.volumes
+          content:
+            name: mydep-tailscalestate
+            emptyDir: {}
+
+  - it: should render the gluetun addon with its secret and firewall settings in the dependency
+    set:
+      global:
+        podCIDR: 10.10.0.0/16
+        svcCIDR: 10.20.0.0/16
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+          service:
+            main:
+              ports:
+                main:
+                  port: 8080
+          addons:
+            gluetun:
+              enabled: true
+              container:
+                env:
+                  FIREWALL: "on"
+              secret:
+                vpn-conf:
+                  basePath: /gluetun/wireguard
+                  data:
+                    wg0.conf: |
+                      some conf
+    asserts:
+      - hasDocuments:
+          count: 3
+      - documentSelector: &workloadDoc
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.spec.containers[0].name
+          value: test-release-name-common-test-gluetun
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: FIREWALL_OUTBOUND_SUBNETS
+            value: 10.10.0.0/16,10.20.0.0/16
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: FIREWALL_INPUT_PORTS
+            value: "8080"
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: mydep-gluetun-vpn-conf
+            mountPath: /gluetun/wireguard
+            readOnly: false
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mydep-gluetun-vpn-conf
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: stringData
+          value:
+            wg0.conf: |
+              some conf
+
+  - it: should fail with an addon that is not supported
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+          addons:
+            vpn:
+              enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Addon [vpn] is not supported in dependency [mydep], expected one of [codeserver, gluetun, netshoot, tailscale]
+
+  - it: should fail with addons that are not a map
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+          addons: some-string
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [dependencies.mydep.addons] to be a [map], but got [string]
+
+  - it: should fail with an addon that is not a map
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+          addons:
+            netshoot: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [dependencies.mydep.addons.netshoot] to be a [map], but got [bool]
+
+  - it: should fail with an addon targeting a workload that is not defined in the dependency
+    set:
+      workload:
+        other:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: image
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+          addons:
+            netshoot:
+              enabled: true
+              targetSelector:
+                - other
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected workload [other], targeted by addon [netshoot], to be defined in dependency [mydep]
+
+  - it: should fail with an addon in a dependency without workloads
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          addons:
+            netshoot:
+              enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [targetSelector] of addon [netshoot] in dependency [mydep], as no primary workload could be determined
+
+  - it: should fail with a targetSelector of an addon that is not a list
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+          addons:
+            netshoot:
+              enabled: true
+              targetSelector: main
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [targetSelector] of addon [netshoot] in dependency [mydep] to be a [slice], but got [string]
+
+  - it: should fail with the codeserver addon on multiple workloads of the dependency
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main: {}
+            other:
+              podSpec:
+                containers:
+                  main:
+                    imageSelector: image
+          addons:
+            codeserver:
+              enabled: true
+              targetSelector:
+                - main
+                - other
+    asserts:
+      - failedTemplate:
+          errorMessage: Codeserver Addon - Can only be attached to a single workload at a time

@@ -1,0 +1,61 @@
+suite: dependencies postgresql notes test
+templates:
+  - common.yaml
+  - NOTES.txt
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should show the connection details of postgresql
+    template: NOTES.txt
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          mode: standalone
+          depconfig:
+            postgresqlUsername: my-user
+            postgresqlDatabase: my-database
+    asserts:
+      - matchRegexRaw:
+          pattern: "## PostgreSQL Database\n- Host: test-release-name-common-test-postgresql-main\n- Port: 5432\n"
+      - matchRegexRaw:
+          pattern: "- Database: my-database\n- Username: my-user\n"
+      - matchRegexRaw:
+          pattern: "- JDBC URL: .*jdbc:postgresql://test-release-name-common-test-postgresql-main:5432/my-database"
+
+  - it: should hide the password in the connection url of postgresql
+    template: NOTES.txt
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          mode: standalone
+          depconfig:
+            password: topsecretpassword
+    asserts:
+      - matchRegexRaw:
+          pattern: "- Connection URL: HIDDEN"
+      - notMatchRegexRaw:
+          pattern: "topsecretpassword"
+
+  - it: should show the connection url of postgresql with showCredentials
+    template: NOTES.txt
+    set:
+      notes:
+        showCredentials: true
+      dependencies:
+        postgresql:
+          enabled: true
+          mode: standalone
+          depconfig:
+            password: topsecretpassword
+    asserts:
+      - matchRegexRaw:
+          pattern: "- Connection URL: \"postgresql://test:topsecretpassword@test-release-name-common-test-postgresql-main:5432/test"
+
+  - it: should not show postgresql with the dependency disabled
+    template: NOTES.txt
+    asserts:
+      - notMatchRegexRaw:
+          pattern: "PostgreSQL Database"

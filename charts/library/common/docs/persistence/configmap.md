@@ -4,183 +4,98 @@ title: Configmap
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
+- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/persistence/configmap#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.persistence.$name`
-
-:::tip
-
-- See available persistence keys [here](/truecharts-common/persistence).
-- This options apply only when `type: configmap`.
-
-:::
+- `.Values.persistence.configmap`
 
 ---
 
-## `objectName`
+## `persistence.configmap`
 
-Define the configmap name.
+Create Configmap objects
 
-|            |                                |
-| ---------- | ------------------------------ |
-| Key        | `persistence.$name.objectName` |
-| Type       | `string`                       |
-| Required   | ✅                             |
-| Helm `tpl` | ✅                             |
-| Default    | `""`                           |
-
-Example
-
-```yaml
-persistence:
-  configmap-vol:
-    objectName: configmap-name
-```
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `persistence.configmap` |
+| Type       | `map`                   |
+| Required   | ❌                      |
+| Helm `tpl` | ❌                      |
+| Default    | unset                   |
 
 ---
 
-## `expandObjectName`
+### `persistence.configmap.$name.annotations`
 
-Whether to expand (adding the fullname as prefix) the configmap name.
+Additional annotations for configmap
 
-|            |                                      |
+| Field      | Value                                     |
+| ---------- | ----------------------------------------- |
+| Key        | `persistence.configmap.$name.annotations` |
+| Type       | `map`                                     |
+| Required   | ❌                                        |
+| Helm `tpl` | ❌                                        |
+| Default    | unset                                     |
+
+---
+
+### `persistence.configmap.$name.data`
+
+Create Configmap objects
+
+| Field      | Value                              |
+| ---------- | ---------------------------------- |
+| Key        | `persistence.configmap.$name.data` |
+| Type       | `map`                              |
+| Required   | ❌                                 |
+| Helm `tpl` | ❌                                 |
+| Default    | unset                              |
+
+---
+
+### `persistence.configmap.$name.enabled`
+
+Enables or Disables the Configmap
+
+| Field      | Value                                 |
+| ---------- | ------------------------------------- |
+| Key        | `persistence.configmap.$name.enabled` |
+| Type       | `boolean, string`                     |
+| Required   | ❌                                    |
+| Helm `tpl` | ❌                                    |
+| Default    | unset                                 |
+
+---
+
+### `persistence.configmap.$name.labels`
+
+Additional labels for configmap
+
+| Field      | Value                                |
 | ---------- | ------------------------------------ |
-| Key        | `persistence.$name.expandObjectName` |
-| Type       | `bool`                               |
+| Key        | `persistence.configmap.$name.labels` |
+| Type       | `map`                                |
 | Required   | ❌                                   |
-| Helm `tpl` | ✅                                   |
-| Default    | `true`                               |
-
-Example
-
-```yaml
-persistence:
-  configmap-vol:
-    expandObjectName: false
-```
+| Helm `tpl` | ❌                                   |
+| Default    | unset                                |
 
 ---
 
-## `optional`
+### `persistence.configmap.$name.namespace`
 
-Whether the configmap should be required or not.
+Define the namespace for this object
 
-|            |                              |
-| ---------- | ---------------------------- |
-| Key        | `persistence.$name.optional` |
-| Type       | `bool`                       |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
-| Default    | `false`                      |
-
-Example
-
-```yaml
-persistence:
-  configmap-vol:
-    optional: false
-```
-
----
-
-## `defaultMode`
-
-Define the defaultMode (must be a string in format of "0777").
-
-|            |                                 |
-| ---------- | ------------------------------- |
-| Key        | `persistence.$name.defaultMode` |
-| Type       | `string`                        |
-| Required   | ❌                              |
-| Helm `tpl` | ✅                              |
-| Default    | `""`                            |
-
-Example
-
-```yaml
-persistence:
-  configmap-vol:
-    defaultMode: "0777"
-```
-
----
-
-## `items`
-
-Define a list of items for configmap.
-
-|            |                           |
-| ---------- | ------------------------- |
-| Key        | `persistence.$name.items` |
-| Type       | `list`                    |
-| Required   | ❌                        |
-| Helm `tpl` | ❌                        |
-| Default    | `[]`                      |
-
-Example
-
-```yaml
-persistence:
-  configmap-vol:
-    items:
-      - key: key1
-        path: path1
-      - key: key2
-        path: path2
-```
-
----
-
-### `items[].key`
-
-Define the key of the configmap.
-
-|            |                                 |
-| ---------- | ------------------------------- |
-| Key        | `persistence.$name.items[].key` |
-| Type       | `string`                        |
-| Required   | ✅                              |
-| Helm `tpl` | ✅                              |
-| Default    | `""`                            |
-
-Example
-
-```yaml
-persistence:
-  configmap-vol:
-    items:
-      - key: key1
-        path: path1
-```
-
----
-
-### `items[].path`
-
-Define the path.
-
-|            |                                  |
-| ---------- | -------------------------------- |
-| Key        | `persistence.$name.items[].path` |
-| Type       | `string`                         |
-| Required   | ✅                               |
-| Helm `tpl` | ✅                               |
-| Default    | `""`                             |
-
-Example
-
-```yaml
-persistence:
-  configmap-vol:
-    items:
-      - key: key1
-        path: path1
-```
+| Field      | Value                                   |
+| ---------- | --------------------------------------- |
+| Key        | `persistence.configmap.$name.namespace` |
+| Type       | `map`                                   |
+| Required   | ❌                                      |
+| Helm `tpl` | ❌                                      |
+| Default    | unset                                   |
 
 ---
 

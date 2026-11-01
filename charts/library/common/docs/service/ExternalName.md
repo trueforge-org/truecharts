@@ -1,47 +1,31 @@
 ---
-title: ExternalName
+title: Externalname
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/service/externalname#full-examples) section for complete examples.
-- See the [Service](/truecharts-common/service) documentation for more information
+- This page is generated from JSON schema.
+- See the [Full Examples](/truecharts-common/service/ExternalName#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.service.$name`
-
-:::tip
-
-- See available service keys [here](/truecharts-common/service).
-- This options apply only when `type: ExternalName`.
-
-:::
+- `.Values.service.ExternalName`
 
 ---
 
-## `externalName`
+## `service.ExternalName`
 
 Configure ExternalName type
 
-|            |                              |
-| ---------- | ---------------------------- |
-| Key        | `service.$name.externalName` |
-| Type       | `string`                     |
-| Required   | ✅                           |
-| Helm `tpl` | ✅                           |
-| Default    | `""`                         |
-
-Example
-
-```yaml
-service:
-  some-service:
-    externalName: external-name
-```
+| Field      | Value                  |
+| ---------- | ---------------------- |
+| Key        | `service.ExternalName` |
+| Type       | `map`                  |
+| Required   | ❌                     |
+| Helm `tpl` | ❌                     |
+| Default    | unset                  |
 
 ---
 

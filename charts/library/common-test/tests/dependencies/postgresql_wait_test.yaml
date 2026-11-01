@@ -1,0 +1,151 @@
+suite: postgresql dependency wait test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should wait for postgresql in the workloads of the chart only
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        my-app: &appWorkload
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              my-container:
+                enabled: true
+                primary: true
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      dependencies:
+        postgresql: &postgresql
+          enabled: true
+          mode: standalone
+    asserts:
+      - documentSelector: &appDoc
+          path: kind
+          value: Deployment
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentSelector: *appDoc
+        equal:
+          path: spec.template.spec.initContainers[0].name
+          value: test-release-name-common-test-system-postgresql-wait
+      - documentSelector: *appDoc
+        equal:
+          path: spec.template.spec.initContainers[0].command
+          value:
+            - /bin/sh
+            - -c
+            - |-
+              /bin/sh <<'EOF'
+              echo "Executing DB waits..."
+              echo "Testing Database availability on [PostgreSQL]"
+              until
+                echo "Testing database on url: [test-release-name-common-test-postgresql-main]"
+                pg_isready -U test -d test -h test-release-name-common-test-postgresql-main -p 5432
+                do sleep 5
+              done
+              echo "Database available on url: [test-release-name-common-test-postgresql-main]"
+              echo "Done executing DB waits..."
+              EOF
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-postgresql-main
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        notExists:
+          path: spec.template.spec.initContainers
+
+  - it: should use the same wait container in operator mode
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        my-app: *appWorkload
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+    asserts:
+      - documentSelector: &appDoc
+          path: metadata.name
+          value: test-release-name-common-test
+        equal:
+          path: kind
+          value: Deployment
+      - documentSelector: *appDoc
+        lengthEqual:
+          path: spec.template.spec.initContainers
+          count: 1
+      - documentSelector: *appDoc
+        equal:
+          path: spec.template.spec.initContainers[0].name
+          value: test-release-name-common-test-system-postgresql-wait
+      - documentSelector: *appDoc
+        matchRegex:
+          path: spec.template.spec.initContainers[0].image
+          pattern: "^oci.trueforge.org/containerforge/postgresql-client:"
+      - documentSelector: *appDoc
+        matchRegex:
+          path: spec.template.spec.initContainers[0].command[2]
+          pattern: pg_isready -U test-user -d test-db -h test-release-name-common-test-cnpg-main-rw
+
+  - it: should never add a wait to the postgresql dependency itself, also with other dependencies
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        my-app: *appWorkload
+      dependencies:
+        postgresql: *postgresql
+        mariadb:
+          enabled: true
+        valkey:
+          enabled: true
+          depconfig:
+            password: test-password
+          image:
+            repository: oci.trueforge.org/containerforge/valkey
+            tag: 9.0.4
+          workload:
+            main:
+              type: StatefulSet
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+    asserts:
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+          matchMany: true
+        notExists:
+          path: spec.template.spec.initContainers
+      - documentSelector:
+          path: kind
+          value: Deployment
+        lengthEqual:
+          path: spec.template.spec.initContainers
+          count: 3

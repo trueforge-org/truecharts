@@ -7,6 +7,11 @@ global:
   traefik:
     commonMiddlewares: []
 
+ubuntuImage:
+  repository: oci.trueforge.org/containerforge/ubuntu
+  tag: "26.4@sha256:205c6561352214872c61edea4909f29afe9be1eee6c61430ce627ca757c137ed"
+  pullPolicy: IfNotPresent
+
 workload:
   main:
     enabled: false

@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "podSelector": {
+      "$ref": "labelSelector.json",
+      "description": "Select pods in the policy namespace."
+    },
+    "namespaceSelector": {
+      "$ref": "labelSelector.json",
+      "description": "Select namespaces by labels."
+    },
+    "ipBlock": {
+      "type": "object",
+      "properties": {
+        "cidr": {
+          "type": "string",
+          "description": "CIDR range to match."
+        },
+        "except": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "CIDR ranges excluded from the block."
+        }
+      },
+      "required": [
+        "cidr"
+      ],
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true,
+  "description": "A peer allowed by a NetworkPolicy rule."
+}
