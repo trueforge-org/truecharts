@@ -24,7 +24,7 @@ It will include / inject the required templates based on the given values.
     {{/* Add the code-server service */}}
     {{- if $codeSrv.service.enabled -}}
       {{/* Add the code-server service */}}
-      {{/* Objects of a dependency are never primary, so there is nothing to check ([$.dependency] is only set for dependencies) */}}
+      {{/* Addons of a dependency never set primaries, the objects of a dependency are only primary when explicitly set ([$.dependency] is only set for dependencies) */}}
       {{- $hasPrimaryService := kindIs "string" $.dependency -}}
       {{- if not $hasPrimaryService -}}
         {{- $result := (include "tc.v1.common.lib.service.hasPrimary" $) | fromJson -}}

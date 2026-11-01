@@ -5,8 +5,8 @@
   {{- $enabledcnpges := dict -}}
   {{- range $name, $cnpg := $cnpgs -}}
     {{- if and (kindIs "map" $cnpg) $cnpg.enabled -}}
-      {{/* CNPG objects of dependencies are never the primary of the release */}}
-      {{- if not $cnpg.dependency -}}
+      {{/* CNPG objects of dependencies are only the primary of the release when they are explicitly set to primary */}}
+      {{- if or (not $cnpg.dependency) $cnpg.primary -}}
         {{- $_ := set $enabledcnpges $name . -}}
       {{- end -}}
     {{- end -}}

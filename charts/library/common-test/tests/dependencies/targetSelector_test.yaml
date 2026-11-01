@@ -61,7 +61,6 @@ tests:
           image: *image
           workload:
             main:
-              primary: true
               type: StatefulSet
             worker:
               type: DaemonSet
@@ -602,7 +601,6 @@ tests:
           image: *image
           workload:
             main:
-              primary: true
               type: StatefulSet
               podSpec:
                 containers:

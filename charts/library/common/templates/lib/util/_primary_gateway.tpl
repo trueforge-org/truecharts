@@ -9,7 +9,7 @@
   {{- $result := "" -}}
   {{- range $name, $gateway := ($rootCtx.Values.gateway | default dict) -}}
     {{- if eq (include "tc.v1.common.lib.gateway.enabled" (dict "rootCtx" $rootCtx "objectData" $gateway "name" $name "key" "gateway" "caller" "Gateway")) "true" -}}
-      {{/* Gateways of dependencies are never the primary of the release */}}
+      {{/* Gateways of dependencies are only the primary of the release when they are explicitly set to primary, never by fallback */}}
       {{- if not $gateway.dependency -}}
         {{- $enabledgateways = mustAppend $enabledgateways $name -}}
       {{- end -}}

@@ -1,0 +1,301 @@
+suite: dependencies primary test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should run with only a primary workload of a dependency
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          workload:
+            main:
+              primary: true
+    asserts:
+      - documentSelector: &workloadDoc
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.selector.matchLabels
+          value:
+            pod.name: valkey-main
+            app.kubernetes.io/name: common-test
+            app.kubernetes.io/instance: test-release-name
+      - documentSelector: &serviceDoc
+          path: kind
+          value: Service
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-valkey-main
+      - documentSelector: *serviceDoc
+        equal:
+          path: spec.selector
+          value:
+            pod.name: valkey-main
+            app.kubernetes.io/name: common-test
+            app.kubernetes.io/instance: test-release-name
+
+  - it: should run with only the primary objects of a dependency
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          workload:
+            main:
+              primary: true
+          service:
+            main:
+              primary: true
+          serviceAccount:
+            main:
+              primary: true
+    asserts:
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: spec.template.spec.serviceAccountName
+          value: test-release-name-common-test
+      - documentSelector:
+          path: kind
+          value: ServiceAccount
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentSelector: &serviceDoc
+          path: kind
+          value: Service
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentSelector: *serviceDoc
+        equal:
+          path: spec.ports[0]
+          value:
+            name: main
+            port: 6379
+            protocol: TCP
+            targetPort: 6379
+
+  - it: should use the name of the primary service in the credentials of valkey
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          workload:
+            main:
+              primary: true
+          service:
+            main:
+              primary: true
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: stringData.plainhost
+          value: test-release-name-common-test
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: stringData.plainporthost
+          value: test-release-name-common-test:6379
+
+  - it: should keep the name of the service of valkey without a primary service
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          workload:
+            main:
+              primary: true
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: stringData.plainhost
+          value: test-release-name-common-test-valkey-main
+
+  - it: should not wait for itself when valkey is the primary workload
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          workload:
+            main:
+              primary: true
+    asserts:
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        notExists:
+          path: spec.template.spec.initContainers
+
+  - it: should use the primary ingress of a dependency
+    set:
+      dependencies:
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main:
+              primary: true
+              type: StatefulSet
+              podSpec:
+                containers:
+                  main:
+                    probes:
+                      liveness:
+                        enabled: false
+                      readiness:
+                        enabled: false
+                      startup:
+                        enabled: false
+          service:
+            main:
+              primary: true
+              ports:
+                main:
+                  protocol: http
+                  port: 8080
+          ingress:
+            main:
+              primary: true
+              hosts:
+                - host: mydep.example.com
+                  paths:
+                    - path: /
+              integrations:
+                traefik:
+                  enabled: false
+    asserts:
+      - documentSelector: &ingressDoc
+          path: kind
+          value: Ingress
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentSelector: *ingressDoc
+        equal:
+          path: spec.rules[0].http.paths[0].backend.service
+          value:
+            name: test-release-name-common-test
+            port:
+              number: 8080
+
+  - it: should keep the objects of the chart primary, when the dependency has none
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        app: &rootWorkload
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      dependencies:
+        valkey:
+          enabled: true
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-valkey-main
+
+  - it: should fail with a primary workload in the chart and in a dependency
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        app: *rootWorkload
+      dependencies:
+        valkey:
+          enabled: true
+          workload:
+            main:
+              primary: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Workload - Only one workload can be primary
+
+  - it: should fail with a primary workload in two dependencies
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          workload:
+            main:
+              primary: true
+        mydep:
+          enabled: true
+          image:
+            repository: docker.io/some/image
+            tag: 1.0.0
+          workload:
+            main:
+              primary: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Workload - Only one workload can be primary
+
+  - it: should fail with a primary service in the chart and in a dependency
+    set:
+      service:
+        app:
+          enabled: true
+          primary: true
+          ports:
+            app:
+              enabled: true
+              primary: true
+              protocol: http
+              port: 8080
+      dependencies:
+        valkey:
+          enabled: true
+          workload:
+            main:
+              primary: true
+          service:
+            main:
+              primary: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Service - Only one service can be primary

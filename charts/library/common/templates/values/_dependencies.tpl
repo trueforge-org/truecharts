@@ -69,6 +69,8 @@ so templates like [.Values.dependencies.$name.service.main.ports.main.port] keep
   {{- $noEnabledCollections := (list "credentials") -}}
   {{/* Collections with primary objects */}}
   {{- $primaryCollections := (list "workload" "service" "serviceAccount" "rbac" "ingress" "certificate" "gatewayClass" "gateway" "route" "networkpolicy" "metrics" "cnpg") -}}
+  {{/* Objects that are explicitly set to primary, they are the primary objects of the release. Keyed by [$collection.$object] */}}
+  {{- $releasePrimaries := dict -}}
 
   {{/* Classify the keys of the dependency */}}
   {{- $collections := dict -}}
@@ -121,6 +123,11 @@ so templates like [.Values.dependencies.$name.service.main.ports.main.port] keep
 
       {{- if and (not (has $collName $noEnabledCollections)) (not (hasKey $obj "enabled")) -}}
         {{- $_ := set $obj "enabled" true -}}
+      {{- end -}}
+
+      {{/* Must be recorded before the primaries are resolved, as that marks objects as primary too */}}
+      {{- if and (hasKey $obj "primary") (kindIs "bool" $obj.primary) $obj.primary -}}
+        {{- $_ := set $releasePrimaries (printf "%s.%s" $collName $objName) true -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}
@@ -285,12 +292,12 @@ so templates like [.Values.dependencies.$name.service.main.ports.main.port] keep
 
       {{- $copy := mustDeepCopy $obj -}}
 
-      {{/* Mark the object as part of the dependency, validations and primary lookups skip marked objects */}}
+      {{/* Mark the object as part of the dependency, validations and primary lookups skip marked objects that are not primary */}}
       {{- $_ := set $copy "dependency" $depName -}}
 
-      {{/* Objects of a dependency are never the primary objects of the release */}}
+      {{/* Objects of a dependency are only the primary objects of the release, when they explicitly set [primary: true] */}}
       {{- if or (has $collName $primaryCollections) (hasKey $copy "primary") -}}
-        {{- $_ := set $copy "primary" false -}}
+        {{- $_ := set $copy "primary" (hasKey $releasePrimaries (printf "%s.%s" $collName $objName)) -}}
       {{- end -}}
 
       {{- include "tc.v1.common.values.dependencies.rewrite" (dict

@@ -37,10 +37,13 @@ port: The port number of the primary port of the service
                       "name" $mergedKey "caller" "Dependencies"
                       "key" "service")) -}}
 
-      {{/* Objects of dependencies are never the primary of the release, so the expanded name is always suffixed */}}
+      {{/* Services of dependencies are only the primary of the release when they are explicitly set to primary, otherwise the expanded name is suffixed */}}
       {{- $name := $mergedKey -}}
       {{- if eq $expandName "true" -}}
-        {{- $name = printf "%s-%s" (include "tc.v1.common.lib.chart.names.fullname" $rootCtx) $mergedKey -}}
+        {{- $name = include "tc.v1.common.lib.chart.names.fullname" $rootCtx -}}
+        {{- if not $mergedSvc.primary -}}
+          {{- $name = printf "%s-%s" $name $mergedKey -}}
+        {{- end -}}
       {{- end -}}
 
       {{- $port := "" -}}
