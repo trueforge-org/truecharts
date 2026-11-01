@@ -13,8 +13,8 @@ tests:
           depconfig:
             password: testpassword
           image: &image
-            repository: docker.io/bitnamisecure/valkey
-            tag: 8.0.0
+            repository: oci.trueforge.org/containerforge/valkey
+            tag: 9.0.4
           workload:
             main:
               type: StatefulSet
@@ -36,7 +36,7 @@ tests:
               size: 1Gi
     asserts:
       - hasDocuments:
-          count: 4
+          count: 3
       - documentSelector: &secretDoc
           path: kind
           value: Secret
@@ -57,12 +57,6 @@ tests:
       - documentSelector: *secretDoc
         notExists:
           path: stringData.redis-password
-      - documentSelector:
-          path: kind
-          value: ConfigMap
-        equal:
-          path: metadata.name
-          value: test-release-name-common-test-valkey-health
       - documentSelector: &workloadDoc
           path: kind
           value: StatefulSet
@@ -72,7 +66,7 @@ tests:
       - documentSelector: *workloadDoc
         equal:
           path: spec.template.spec.containers[0].image
-          value: docker.io/bitnamisecure/valkey:8.0.0
+          value: oci.trueforge.org/containerforge/valkey:9.0.4
       - documentSelector: *workloadDoc
         contains:
           path: spec.template.spec.containers[0].env
@@ -125,7 +119,7 @@ tests:
           value: StatefulSet
         equal:
           path: spec.template.spec.containers[0].image
-          value: docker.io/bitnamisecure/valkey:latest@sha256:4dc6511a8a9d4d4cbf3ccf1270ddcc6929819a1e0f4005462cf782cc96d1c3b6
+          value: oci.trueforge.org/containerforge/valkey:9.0.4@sha256:387b5f54777a6451f73f1a49a45b5bb6d29e1e5838b7b5a9c84d80370995531e
 
   - it: should use the placeholder password without a password
     set:

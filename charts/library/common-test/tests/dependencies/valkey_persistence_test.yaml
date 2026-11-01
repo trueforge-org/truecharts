@@ -17,9 +17,9 @@ tests:
         valkey:
           enabled: true
           image:
-            repository: docker.io/bitnamisecure/valkey
+            repository: oci.trueforge.org/containerforge/valkey
             pullPolicy: IfNotPresent
-            tag: latest
+            tag: 9.0.4
           workload:
             main:
               enabled: true
@@ -41,7 +41,7 @@ tests:
           persistence:
             data:
               enabled: true
-              mountPath: /bitnami/valkey
+              mountPath: /config
               targetSelector:
                 main:
                   main: {}
@@ -58,6 +58,6 @@ tests:
         contains:
           path: spec.template.spec.containers[0].volumeMounts
           content:
-            mountPath: /bitnami/valkey
+            mountPath: /config
             name: valkey-data
             readOnly: false

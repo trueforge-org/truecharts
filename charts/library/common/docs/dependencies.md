@@ -39,8 +39,8 @@ dependencies:
     depconfig:
       password: "my-password"
     image:
-      repository: docker.io/bitnamisecure/valkey
-      tag: latest
+      repository: oci.trueforge.org/containerforge/valkey
+      tag: 9.0.4
     workload:
       main:
         type: StatefulSet
@@ -182,7 +182,7 @@ A reference to an object that is not defined in the dependency is kept as is, wh
 
 
 
-6. **Persistent Data**: Add a `persistence` entry for any data that has to survive a restart. Without one, the data is on the container filesystem and is lost with the pod. The `mountPath` has to be where the image stores its data, which is `/bitnami/valkey` for the Bitnami Valkey image. A top-level `volumeClaimTemplates` key is not used, and fails rendering.
+6. **Persistent Data**: Add a `persistence` entry for any data that has to survive a restart. Without one, the data is on the container filesystem and is lost with the pod. The `mountPath` has to be where the image stores its data, which is `/config` for the default Valkey image. A top-level `volumeClaimTemplates` key is not used, and fails rendering.
 
 7. **Connection Information**: Connection details for dependencies are automatically included in the chart notes.
 
@@ -251,9 +251,9 @@ dependencies:
     depconfig:
       password: "secure-password"
     image:
-      repository: docker.io/bitnamisecure/valkey
+      repository: oci.trueforge.org/containerforge/valkey
       pullPolicy: IfNotPresent
-      tag: latest
+      tag: 9.0.4
     workload:
       main:
         enabled: true
@@ -265,8 +265,6 @@ dependencies:
               enabled: true
               primary: true
               env:
-                REDIS_REPLICATION_MODE: master
-                ALLOW_EMPTY_PASSWORD: "no"
                 REDIS_PORT: "6379"
                 REDIS_PASSWORD: "{{ .Values.dependencies.valkey.depconfig.password }}"
               probes:
@@ -288,7 +286,7 @@ dependencies:
     persistence:
       data:
         enabled: true
-        mountPath: "/bitnami/valkey"
+        mountPath: /config
 
 workload:
   main:
