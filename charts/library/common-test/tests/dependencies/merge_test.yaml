@@ -281,12 +281,11 @@ tests:
           image:
             repository: docker.io/some/image
             tag: 1.0.0
-          addons:
-            codeserver:
-              enabled: true
+          mariadb:
+            enabled: true
     asserts:
       - failedTemplate:
-          errorMessage: Dependencies - Key [addons] is not supported in dependency [mydep]
+          errorMessage: Dependencies - Key [mariadb] is not supported in dependency [mydep]
 
   - it: should fail with a nested dependency
     set:
