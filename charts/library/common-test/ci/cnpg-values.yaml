@@ -27,6 +27,8 @@ workload:
 cnpg:
   main:
     enabled: true
+    # The default is covered by cnpg-multi-values.yaml
+    pgVersion: 16
     # -- number of instances for both postgres and pgbouncer
     instances: 2
     database: "app"

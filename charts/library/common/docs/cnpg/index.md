@@ -254,15 +254,31 @@ Define a CNPG cluster
 | Type       | `integer`              |
 | Required   | ❌                     |
 | Helm `tpl` | ❌                     |
-| Default    | `16`                   |
+| Default    | `18`                   |
 | Enum       | `15`, `16`, `17`, `18` |
+
+Without a value, `global.fallbackDefaults.cnpg.pgVersion` is used. `type: vectors` has no image for PostgreSQL 18, so without a value it uses `16`.
+
+:::caution[Changing the version of an existing cluster]
+
+CloudNativePG upgrades an existing cluster in place when its major version changes, with `pg_upgrade`. This also happens when a cluster has no `pgVersion` set and the default changes, so **set `pgVersion` to keep a cluster on its current version**.
+
+- Take a full backup first, and a new one afterwards. Older backups can't be used for point-in-time recovery across major versions.
+- All instances are stopped during the upgrade, and replicas are cloned again afterwards.
+- It needs CloudNativePG 1.26 or newer.
+- CloudNativePG only supports this between images on the same OS distribution. The images of this version of common moved to Debian 13, so a cluster on an older image should stay on its major version through that change, and upgrade afterwards.
+- Check that the extensions of the cluster can be upgraded, such as PostGIS or VectorChord.
+- If the upgrade fails, set `pgVersion` back to the previous version. CloudNativePG then starts the cluster on that version again.
+- Run `ANALYZE` afterwards, as `pg_upgrade` does not keep the statistics.
+
+:::
 
 Example
 
 ```yaml
 cnpg:
   $name:
-    pgVersion: 16
+    pgVersion: 18
 ```
 
 ---
