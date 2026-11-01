@@ -6,10 +6,8 @@
   {{/* Merge chart values and the common chart defaults */}}
   {{- include "tc.v1.common.values.init" . -}}
 
-  {{/* Nothing reads this key, so its volumes would silently not exist and their data would be lost on every restart */}}
-  {{- if .Values.volumeClaimTemplates -}}
-    {{- fail (printf "Expected no [volumeClaimTemplates], as this key is not used, so [%s] would not be persisted. Use [persistence] instead, a new volume on an existing StatefulSet can't use [type: vct]" (join ", " (keys .Values.volumeClaimTemplates | sortAlpha))) -}}
-  {{- end -}}
+  {{/* Fail on removed and deprecated keys, instead of silently ignoring them */}}
+  {{- include "tc.v1.common.values.deprecations" . -}}
 
   {{/* Ensure TrueCharts chart context information is available */}}
   {{- include "tc.v1.common.lib.util.chartcontext" . -}}
