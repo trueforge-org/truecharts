@@ -168,10 +168,6 @@ tests:
         matchRegex:
           path: spec.template.metadata.annotations.checksum/services
           pattern: ^[0-9a-f]{64}$
-      - documentIndex: *deploymentDoc
-        matchRegex:
-          path: spec.template.metadata.annotations.checksum/solr
-          pattern: ^[0-9a-f]{64}$
       - documentIndex: &otherDeploymentDoc 1
         isKind:
           of: Deployment

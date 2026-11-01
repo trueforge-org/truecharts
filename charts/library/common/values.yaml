@@ -1843,17 +1843,6 @@ clickhouse:
   # -- can be used to make an easy accessable note which URLS to use to access the DB.
   creds: {}
 
-# -- solr dependency configuration
-# @default -- See below
-solr:
-  enabled: false
-  includeCommon: false
-  password: "PLACEHOLDERPASSWORD"
-  solrCores: 1
-  solrEnableAuthentication: "no"
-  # -- can be used to make an easy accessable note which URLS to use to access the DB.
-  creds: {}
-
 # -- Dependency configuration - replaces helm-dependencies
 # Each dependency contains a complete chart values structure (workload, service, persistence, ...)
 # Its objects are merged into the chart under the name [<dependency>-<object>] (eg [workload.valkey-main])
