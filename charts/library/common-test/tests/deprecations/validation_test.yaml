@@ -49,14 +49,6 @@ tests:
       - failedTemplate:
           errorMessage: Expected no [solr] key, it is no longer supported and has no replacement. Remove [solr], or set [solr.enabled] to false
 
-  - it: should fail with the enabled top level mongodb
-    set:
-      mongodb:
-        enabled: true
-    asserts:
-      - failedTemplate:
-          errorMessage: Expected no [mongodb] key, it is no longer supported and has no replacement. Remove [mongodb], or set [mongodb.enabled] to false
-
   - it: should fail with the enabled top level clickhouse
     set:
       clickhouse:
@@ -113,18 +105,12 @@ tests:
       - failedTemplate:
           errorMessage: Expected no [memcached] key, it is replaced by [dependencies.memcached]. Move [enabled] to [dependencies.memcached]
 
-  - it: should fail with the top level mongodb enabled using a template
-    set:
-      useMongodb: true
-      mongodb:
-        enabled: "{{ .Values.useMongodb }}"
-    asserts:
-      - failedTemplate:
-          errorMessage: Expected no [mongodb] key, it is no longer supported and has no replacement. Remove [mongodb], or set [mongodb.enabled] to false
-
-  - it: should not fail with the disabled top level solr, mongodb and memcached
+  - it: should not fail with the disabled top level solr, clickhouse, mongodb and memcached
     set:
       solr:
+        enabled: false
+        password: testpassword
+      clickhouse:
         enabled: false
         password: testpassword
       mongodb:
@@ -136,9 +122,11 @@ tests:
       - hasDocuments:
           count: 0
 
-  - it: should not fail with the top level solr, mongodb and memcached without enabled
+  - it: should not fail with the top level solr, clickhouse, mongodb and memcached without enabled
     set:
       solr:
+        password: testpassword
+      clickhouse:
         password: testpassword
       mongodb:
         password: testpassword

@@ -115,10 +115,6 @@ tests:
           pattern: ^[0-9a-f]{64}$
       - documentIndex: *cronJobDoc
         matchRegex:
-          path: spec.jobTemplate.spec.template.metadata.annotations.checksum/mongodb
-          pattern: ^[0-9a-f]{64}$
-      - documentIndex: *cronJobDoc
-        matchRegex:
           path: spec.jobTemplate.spec.template.metadata.annotations.checksum/persistence
           pattern: ^[0-9a-f]{64}$
       - documentIndex: *cronJobDoc

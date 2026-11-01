@@ -422,7 +422,7 @@ tests:
   # ```bash
   # helm template test charts/library/common-test \
   #   --set dependencies.valkey.enabled=true \
-  #   --set mongodb.enabled=true \
+  #   --set dependencies.mongodb.enabled=true \
   #   --set dependencies.mariadb.enabled=true \
   #   --set dependencies.clickhouse.enabled=true \
   #   --set cnpg.my-pg.enabled=true \
@@ -454,8 +454,8 @@ tests:
   #         enabled: true
   #       clickhouse:
   #         enabled: true
-  #     mongodb:
-  #       enabled: true
+  #       mongodb:
+  #         enabled: true
   #     cnpg:
   #       my-pg:
   #         enabled: true
