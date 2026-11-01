@@ -41,6 +41,78 @@ tests:
       - failedTemplate:
           errorMessage: Expected no [valkey] key, it is replaced by [dependencies.valkey]. Move [enabled] to [dependencies.valkey], and [password] to [dependencies.valkey.depconfig]. The connection details are available under [dependencies.valkey.depconfig.creds]
 
+  - it: should fail with the enabled top level solr
+    set:
+      solr:
+        enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [solr] key, it is no longer supported and has no replacement. Remove [solr], or set [solr.enabled] to false
+
+  - it: should fail with the enabled top level mongodb
+    set:
+      mongodb:
+        enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [mongodb] key, it is no longer supported and has no replacement. Remove [mongodb], or set [mongodb.enabled] to false
+
+  - it: should fail with the enabled top level clickhouse
+    set:
+      clickhouse:
+        enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [clickhouse] key, it is no longer supported and has no replacement. Remove [clickhouse], or set [clickhouse.enabled] to false
+
+  - it: should fail with the enabled top level memcached
+    set:
+      memcached:
+        enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [memcached] key, it is no longer supported and has no replacement. Remove [memcached], or set [memcached.enabled] to false
+
+  - it: should fail with the top level mongodb enabled using a template
+    set:
+      useMongodb: true
+      mongodb:
+        enabled: "{{ .Values.useMongodb }}"
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [mongodb] key, it is no longer supported and has no replacement. Remove [mongodb], or set [mongodb.enabled] to false
+
+  - it: should not fail with the disabled top level solr, mongodb, clickhouse and memcached
+    set:
+      solr:
+        enabled: false
+        password: testpassword
+      mongodb:
+        enabled: false
+        password: testpassword
+      clickhouse:
+        enabled: false
+        password: testpassword
+      memcached:
+        enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should not fail with the top level solr, mongodb, clickhouse and memcached without enabled
+    set:
+      solr:
+        password: testpassword
+      mongodb:
+        password: testpassword
+      clickhouse:
+        password: testpassword
+      memcached:
+        password: testpassword
+    asserts:
+      - hasDocuments:
+          count: 0
+
   - it: should not fail with the disabled top level redis and valkey
     set:
       redis:
