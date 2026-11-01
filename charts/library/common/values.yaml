@@ -1852,6 +1852,8 @@ solr:
 # Objects inherit the defaults of the matching common object (eg [workload.main]) and default to [enabled: true].
 # Currently [valkey], [mariadb] and [clickhouse] are the only dependencies with additional handling (credentials secret, wait init container).
 # Disabled dependencies are not merged into the chart, so their defaults only apply once a chart sets [enabled: true].
+# Dependencies with [mode: operator] are not merged into the chart either, as an operator provides them. Their credentials secret, wait init container and notes still apply.
+# Settings for the operator go under [dependencies.<name>.operator], like [depconfig] it is never merged into the chart.
 # @default -- See below
 
 dependencies:
@@ -1906,6 +1908,10 @@ dependencies:
         mountPath: /config
   mariadb:
     enabled: false
+    # -- How the dependency is provided: [standalone] merges it into the chart, [operator] leaves it to an operator (its objects are not merged)
+    mode: standalone
+    # -- Settings of the operator providing the dependency, never merged into the chart
+    operator: {}
     # -- Settings of the dependency itself, never merged into the chart
     depconfig:
       password: "PLACEHOLDERPASSWORD"
@@ -1963,8 +1969,30 @@ dependencies:
     persistence:
       data:
         mountPath: /config
+  memcached:
+    enabled: false
+    image:
+      repository: oci.trueforge.org/containerforge/memcache
+      pullPolicy: IfNotPresent
+      tag: 1.6.40@sha256:970ce84d9e893fed91d74ffea3e83ca814c1ee8e07ef2f4a4a5a7ae96603c06b
+    workload:
+      main:
+        replicas: 1
+        type: Deployment
+        strategy: RollingUpdate
+    service:
+      main:
+        ports:
+          main:
+            protocol: tcp
+            port: 11211
+            targetPort: 11211
   valkey:
     enabled: false
+    # -- How the dependency is provided: [standalone] merges it into the chart, [operator] leaves it to an operator (its objects are not merged)
+    mode: standalone
+    # -- Settings of the operator providing the dependency, never merged into the chart
+    operator: {}
     # -- Settings of the dependency itself, never merged into the chart
     depconfig:
       password: "PLACEHOLDERPASSWORD"

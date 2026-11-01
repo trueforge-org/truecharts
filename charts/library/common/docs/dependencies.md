@@ -20,7 +20,7 @@ title: Dependencies
 ## `dependencies`
 
 Configuration for chart dependencies. Each key is the name of a dependency and contains a chart values structure, which is merged on top of the defaults of the same name in the common library.
-The `valkey`, `mariadb` and `clickhouse` dependencies are predefined in common with `enabled: false` and their full specification, so a chart only needs to enable them and set its overrides.
+The `valkey`, `mariadb`, `memcached` and `clickhouse` dependencies are predefined in common with `enabled: false` and their full specification, so a chart only needs to enable them and set its overrides.
 
 | Field      | Value          |
 | ---------- | -------------- |
@@ -28,7 +28,7 @@ The `valkey`, `mariadb` and `clickhouse` dependencies are predefined in common w
 | Type       | `map`          |
 | Required   | ❌             |
 | Helm `tpl` | ❌             |
-| Default    | `{clickhouse: {enabled: false, ...}, mariadb: {enabled: false, ...}, valkey: {enabled: false, ...}}` (see `dependencies.clickhouse`, `dependencies.mariadb` and `dependencies.valkey` in `values.yaml`) |
+| Default    | `{clickhouse: {enabled: false, ...}, mariadb: {enabled: false, ...}, memcached: {enabled: false, ...}, valkey: {enabled: false, ...}}` (see `dependencies.clickhouse`, `dependencies.mariadb`, `dependencies.memcached` and `dependencies.valkey` in `values.yaml`) |
 
 Example:
 
@@ -72,14 +72,15 @@ dependencies:
 
 The name of the dependency is used as the prefix of its objects, so it must be a valid DNS label (lowercase alphanumeric characters or `-`, starting and ending with an alphanumeric character).
 
-Besides `enabled` and `depconfig`, the dependency accepts the same keys as the chart values. They are handled as follows:
+Besides `enabled`, `mode`, `operator` and `depconfig`, the dependency accepts the same keys as the chart values. They are handled as follows:
 
 | Keys                                                                                                                                           | Handling                                                                                                                                                     |
 | ---------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `workload`, `service`, `persistence`, `configmap`, `secret`, `serviceAccount`, `rbac`, `ingress`, `route`, `hpa`, `metrics`, ... (any object collection) | Each object is added to the chart as `$name-$object` (eg `workload.valkey-main`). Fails if an object with that name already exists in the chart.            |
 | `image`, `*Image`                                                                                                                              | Added to the chart as `$nameImage` and `$name<Foo>Image` (eg `valkeyImage`, `valkeyClientImage` for `clientImage`). Containers are pointed to them. A container selecting `image` fails if the dependency defines none, a dependency never falls back to the main image of the chart. Other images of the chart can be selected explicitly (eg `imageSelector: someImage`). |
 | `securityContext`, `podOptions`, `resources`                                                                                                   | Applied as defaults to the pods and containers of the dependency only, the same way the chart-level keys apply to the chart.                                  |
-| `global`, `chartContext`, `notes`, `operator`, `fallbackDefaults`, `TZ`, `namespace`, `diagnosticMode`, `containerOptions`                     | Ignored. These apply to the whole release and are taken from the chart.                                                                                      |
+| `global`, `chartContext`, `notes`, `fallbackDefaults`, `TZ`, `namespace`, `diagnosticMode`, `containerOptions`                                 | Ignored. These apply to the whole release and are taken from the chart.                                                                                      |
+| `enabled`, `mode`, `depconfig`, `operator`                                                                                                     | Settings of the dependency itself, never merged into the chart. See [`mode`](#dependenciesnamemode), [`depconfig`](#dependenciesnamedepconfig) and [`operator`](#dependenciesnameoperator). |
 | `addons`                                                                                                                                       | Applied to the workloads of the dependency, see [Addons](#addons).                                                                                           |
 | `dependencies`, `configMapsFromFolder`, `extraTpl`, `ingressMiddlewares`, `mariadb`, `mongodb`, `clickhouse`, `solr`                 | Not supported, rendering fails.                                                                                                                              |
 | Any other key                                                                                                                                  | Kept as is and available to templates under `.Values.dependencies.$name.$key`.                                                                               |
@@ -88,7 +89,7 @@ Besides `enabled` and `depconfig`, the dependency accepts the same keys as the c
 
 ### `dependencies.$name.enabled`
 
-Enable or disable the dependency. Objects of disabled dependencies are not merged.
+Enable or disable the dependency. Objects of disabled dependencies are not merged, nor is anything else created for them.
 
 | Field      | Value                        |
 | ---------- | ---------------------------- |
@@ -97,6 +98,64 @@ Enable or disable the dependency. Objects of disabled dependencies are not merge
 | Required   | ✅                           |
 | Helm `tpl` | ✅                           |
 | Default    | unset                        |
+
+---
+
+### `dependencies.$name.mode`
+
+How the dependency is provided. See [Modes](#modes).
+
+| Field      | Value                                |
+| ---------- | ------------------------------------ |
+| Key        | `dependencies.$name.mode`            |
+| Type       | `string`                             |
+| Required   | ❌                                   |
+| Helm `tpl` | ❌                                   |
+| Default    | `standalone`                         |
+
+Valid values:
+
+- `standalone`: the objects of the dependency are merged into the chart, and deployed with it.
+- `operator`: the dependency is provided by an operator, its objects are **not** merged into the chart.
+
+Any other value fails rendering, also when the dependency is disabled.
+
+Example:
+
+```yaml
+dependencies:
+  valkey:
+    enabled: true
+    mode: operator
+```
+
+---
+
+### `dependencies.$name.operator`
+
+Settings specific to the operator that provides the dependency, used with `mode: operator` (see [Modes](#modes)).
+It is never merged into the chart values, the same as `depconfig`, and can be referenced by templates under `.Values.dependencies.$name.operator`.
+Common does not interpret its content, the keys are up to the chart.
+
+| Field      | Value                          |
+| ---------- | ------------------------------ |
+| Key        | `dependencies.$name.operator`  |
+| Type       | `map`                          |
+| Required   | ❌                             |
+| Helm `tpl` | ❌                             |
+| Default    | `{}`                           |
+
+Example:
+
+```yaml
+dependencies:
+  valkey:
+    enabled: true
+    mode: operator
+    operator:
+      version: "9.0"
+      replicas: 3
+```
 
 ---
 
@@ -143,6 +202,24 @@ Connection details, populated by the dependencies with additional handling (see 
 ---
 
 ## How Dependencies Work
+
+### Modes
+
+Every dependency has a `mode`, which defaults to `standalone`. This applies to all dependencies, the ones predefined in common and the ones a chart defines itself.
+
+| Mode         | Objects merged into the chart | Credentials secret, wait init container and notes |
+| ------------ | ----------------------------- | ------------------------------------------------- |
+| `standalone` | ✅                            | ✅ (for the dependencies that have them)          |
+| `operator`   | ❌                            | ✅ (for the dependencies that have them)          |
+
+In `operator` mode the dependency is expected to be provided by an operator, so the workloads, services, persistence, images, addons, etc. of the dependency are not added to the chart.
+Everything else keeps working, so a chart can switch between the modes without changing how the app connects to the dependency:
+
+- `.Values.dependencies.$name` is still normalized (defaults applied, primaries resolved), so templates keep working.
+- The credentials secret, the wait init container and the notes of the dependencies that have them (`valkey` and `mariadb`) are still created.
+  They point to the primary service of the dependency, **under the name it would have in `standalone` mode** (`$fullname-$name-$service`, also when it is set to `primary: true`).
+  The operator has to create its Service with that name and port, or the chart has to provide it.
+- Settings for the operator go under [`dependencies.$name.operator`](#dependenciesnameoperator), which is never merged into the chart. The objects of the operator itself (eg its custom resources) are not part of the dependency, a chart adds them to its own values (eg with `extraTpl`).
 
 ### Defaults
 
@@ -200,9 +277,9 @@ dependencies:
 
 This renders a `StatefulSet` and a `Service` named `$fullname`, and nothing else besides the objects of the dependency itself.
 
-3. **Universal Resource Prefixing**: When a dependency is enabled, ALL its resources (except excluded keys) are merged into the main chart with prefixed names:
+3. **Universal Resource Prefixing**: When a dependency is enabled (and in `standalone` mode), ALL its resources (except excluded keys) are merged into the main chart with prefixed names:
    - **Prefixed**: workload, service, configmap, secret, persistence, podDisruptionBudget, hpa, vpa, ingress, route, gateway, certificate, serviceAccount, rbac, networkPolicy, storageClass, and any other resource type
-   - **Excluded from prefixing**: global, securityContext, podOptions, enabled, depconfig, image (handled specially), chartContext, fallbackDefaults, notes, operator
+   - **Excluded from prefixing**: global, securityContext, podOptions, enabled, mode, depconfig, image (handled specially), chartContext, fallbackDefaults, notes, operator
    - Examples:
      - `workload.main` → `workload.$name-main`
      - `service.main` → `service.$name-main`
@@ -469,6 +546,45 @@ This renders, among others:
 
 ---
 
+## Memcached
+
+The `memcached` dependency is a plain cache without credentials, so it has no additional handling: no secret, no `depconfig`, no wait init container and no notes.
+It is the `memcached` chart of the `stable` train, as a dependency:
+
+- A `Deployment` with one replica, running `oci.trueforge.org/containerforge/memcache` with the default security context of common (UID and GID `568`, read-only root filesystem) and the default `tcp` probes.
+- A `Service` on port `11211`.
+- No persistence, memcached only keeps its data in memory.
+
+The Grafana dashboard of the `memcached` chart is not part of the dependency.
+
+The `Service` is named after the full name of the release with `-memcached-main` appended (eg `myapp-memcached-main`), reachable on port `11211`.
+
+### Moving from the `memcached` chart dependency
+
+Enabling the top-level `memcached` key fails with a message pointing to `dependencies.memcached`.
+Move `enabled` to `dependencies.memcached`. There is nothing else to move, as memcached has no settings and keeps no data.
+
+### Example
+
+The full specification of the `memcached` dependency (image, workload and service) is part of the defaults of common.
+A chart only enables it, and sets the values it needs to override:
+
+```yaml
+dependencies:
+  memcached:
+    enabled: true
+    workload:
+      main:
+        replicas: 2
+```
+
+This renders, among others:
+
+- `Deployment` `myapp-memcached-main`
+- `Service` `myapp-memcached-main` on port 11211
+
+---
+
 ## Valkey
 
 The `valkey` dependency has additional handling:
@@ -585,7 +701,7 @@ This renders, among others:
 
 ## Removed Top-Level Keys
 
-The `clickhouse` key on the root level of the values is replaced by `dependencies.clickhouse` (see [ClickHouse](#clickhouse)), the `mariadb` key by `dependencies.mariadb` (see [MariaDB](#mariadb)), and the `redis` and `valkey` keys by `dependencies.valkey`.
+The `clickhouse` key on the root level of the values is replaced by `dependencies.clickhouse` (see [ClickHouse](#clickhouse)), the `mariadb` key by `dependencies.mariadb` (see [MariaDB](#mariadb)), the `memcached` key by `dependencies.memcached` (see [Memcached](#memcached)), and the `redis` and `valkey` keys by `dependencies.valkey`.
 Rendering fails when one of them has `enabled: true` (also when set using a template), as it would otherwise be silently ignored.
 A disabled key, or one without `enabled`, never rendered anything and does not fail.
 
@@ -602,5 +718,5 @@ A disabled key, or one without `enabled`, never rendered anything and does not f
 | `clickhouse.clickhouseUsername`, `clickhouse.clickhouseDatabase`   | `dependencies.clickhouse.depconfig.clickhouseUsername`, `dependencies.clickhouse.depconfig.clickhouseDatabase` |
 | `clickhouse.creds`                                                 | `dependencies.clickhouse.depconfig.creds`                        |
 
-The `solr`, `mongodb` and `memcached` keys on the root level of the values are no longer supported and have no replacement.
+The `solr` and `mongodb` keys on the root level of the values are no longer supported and have no replacement.
 Rendering fails when one of them has `enabled: true` (also when set using a template). A disabled key, or one without `enabled`, does not fail.
