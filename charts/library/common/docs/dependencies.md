@@ -19,7 +19,8 @@ title: Dependencies
 
 ## `dependencies`
 
-Configuration for chart dependencies. Each key is the name of a dependency and contains a complete chart values structure.
+Configuration for chart dependencies. Each key is the name of a dependency and contains a chart values structure, which is merged on top of the defaults of the same name in the common library.
+The `valkey` dependency is predefined in common with `enabled: false` and its full specification, so a chart only needs to enable it and set its overrides.
 
 | Field      | Value          |
 | ---------- | -------------- |
@@ -27,7 +28,7 @@ Configuration for chart dependencies. Each key is the name of a dependency and c
 | Type       | `map`          |
 | Required   | ❌             |
 | Helm `tpl` | ❌             |
-| Default    | `{}`           |
+| Default    | `{valkey: {enabled: false, ...}}` (see `dependencies.valkey` in `values.yaml`) |
 
 Example:
 
@@ -217,7 +218,10 @@ The `valkey` dependency has additional handling:
 - An init container `valkey-wait` is added to the workloads of the chart (the ones with `dbWait` not set to `false`), waiting for Valkey to respond.
 - The connection details are included in the notes.
 
-### Full Example
+### Example
+
+The full specification of the `valkey` dependency (image, workload, service, persistence, probes and the health configmap) is part of the defaults of `dependencies.valkey` in the common library `values.yaml`.
+A chart only enables it and sets the values it needs to override:
 
 ```yaml
 image:
@@ -239,64 +243,6 @@ dependencies:
     enabled: true
     depconfig:
       password: "secure-password"
-    image:
-      repository: docker.io/bitnamisecure/valkey
-      pullPolicy: IfNotPresent
-      tag: latest
-    securityContext:
-      container:
-        readOnlyRootFilesystem: false
-        runAsGroup: 0
-    workload:
-      main:
-        type: StatefulSet
-        podSpec:
-          containers:
-            main:
-              env:
-                VALKEY_PORT: "{{ .Values.dependencies.valkey.service.main.ports.main.port }}"
-                VALKEY_PASSWORD: "{{ .Values.dependencies.valkey.depconfig.password }}"
-              probes:
-                liveness:
-                  type: exec
-                  command:
-                    - /health/ping_liveness_local.sh
-                    - "5"
-                readiness:
-                  type: exec
-                  command:
-                    - /health/ping_readiness_local.sh
-                    - "5"
-                startup:
-                  type: tcp
-    service:
-      main:
-        ports:
-          main:
-            protocol: tcp
-            port: 6379
-    persistence:
-      data:
-        type: vct
-        mountPath: /data
-      health:
-        type: configmap
-        objectName: health
-        defaultMode: "0755"
-        mountPath: /health
-    configmap:
-      health:
-        data:
-          ping_liveness_local.sh: |
-            #!/bin/bash
-            [[ -n "$VALKEY_PASSWORD" ]] && export REDISCLI_AUTH="$VALKEY_PASSWORD"
-            response=$(timeout -s 3 "$1" valkey-cli -h localhost -p "$VALKEY_PORT" ping)
-            if [ "$response" != "PONG" ] && [[ ! "$response" =~ ^.*LOADING.*$ ]]; then echo "$response"; exit 1; fi
-          ping_readiness_local.sh: |
-            #!/bin/bash
-            [[ -n "$VALKEY_PASSWORD" ]] && export REDISCLI_AUTH="$VALKEY_PASSWORD"
-            response=$(timeout -s 3 "$1" valkey-cli -h localhost -p "$VALKEY_PORT" ping)
-            if [ "$response" != "PONG" ]; then echo "$response"; exit 1; fi
 ```
 
 This renders, among others:

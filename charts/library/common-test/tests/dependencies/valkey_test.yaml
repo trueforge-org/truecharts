@@ -36,7 +36,7 @@ tests:
               size: 1Gi
     asserts:
       - hasDocuments:
-          count: 3
+          count: 4
       - documentSelector: &secretDoc
           path: kind
           value: Secret
@@ -57,6 +57,12 @@ tests:
       - documentSelector: *secretDoc
         notExists:
           path: stringData.redis-password
+      - documentSelector:
+          path: kind
+          value: ConfigMap
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-valkey-health
       - documentSelector: &workloadDoc
           path: kind
           value: StatefulSet
@@ -74,9 +80,9 @@ tests:
             name: VALKEY_PASSWORD
             value: testpassword
       - documentSelector: *workloadDoc
-        equal:
-          path: spec.template.spec.containers[0].livenessProbe.tcpSocket.port
-          value: 6379
+        matchRegex:
+          path: spec.template.spec.containers[0].livenessProbe.exec.command[2]
+          pattern: ping_liveness_local.sh
       - documentSelector: *workloadDoc
         notExists:
           path: spec.template.spec.initContainers
@@ -101,6 +107,25 @@ tests:
         equal:
           path: spec.selector['pod.name']
           value: valkey-main
+
+  - it: should use the common defaults of valkey
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: stringData.valkey-password
+          value: PLACEHOLDERPASSWORD
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: spec.template.spec.containers[0].image
+          value: docker.io/bitnamisecure/valkey:latest@sha256:4dc6511a8a9d4d4cbf3ccf1270ddcc6929819a1e0f4005462cf782cc96d1c3b6
 
   - it: should use the placeholder password without a password
     set:
@@ -289,28 +314,20 @@ tests:
           path: stringData.plainporthost
           value: test-release-name-common-test-valkey-db:16379
 
-  - it: should fail without a service for valkey
+  - it: should fail without a port for valkey
     set:
       dependencies:
         valkey:
           enabled: true
           image: *image
-          workload:
+          service:
             main:
-              type: StatefulSet
-              podSpec:
-                containers:
-                  main:
-                    probes:
-                      liveness:
-                        enabled: false
-                      readiness:
-                        enabled: false
-                      startup:
-                        enabled: false
+              ports:
+                main:
+                  enabled: false
     asserts:
       - failedTemplate:
-          errorMessage: Dependencies - Expected dependency [valkey] to have an enabled primary service
+          errorMessage: Service - Expected enabled service to have at least one port
 
   - it: should fail with a disabled primary service for valkey
     set:

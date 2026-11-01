@@ -3524,7 +3524,59 @@ addons:
       down: ''
     targetSelector:
     - ''
-dependencies: {}
+dependencies:
+  valkey:
+    enabled: false
+    depconfig:
+      password: ''
+    image:
+      repository: ''
+      pullPolicy: ''
+      tag: ''
+    securityContext:
+      container:
+        readOnlyRootFilesystem: false
+        runAsGroup: 0
+    workload:
+      objectname:
+        replicas: 1
+        type: ''
+        strategy: ''
+        podSpec:
+          containers:
+            objectname:
+              env:
+                ALLOW_EMPTY_PASSWORD: ''
+                VALKEY_PORT: ''
+                VALKEY_PASSWORD: ''
+              probes:
+                liveness:
+                  type: ''
+                  command:
+                  - ''
+                readiness:
+                  type: ''
+                  command:
+                  - ''
+                startup:
+                  type: ''
+                  command:
+                  - ''
+    service:
+      objectname:
+        ports:
+          objectname:
+            protocol: ''
+            port: 0
+    configmap:
+      objectname:
+        data:
+          ping_readiness_local.sh: ''
+          ping_liveness_local.sh: ''
+    persistence:
+      objectname:
+        type: ''
+        mountPath: ''
 cnpg:
   main:
     enabled: false
