@@ -407,12 +407,12 @@ The `depconfig` of the dependency accepts:
 | `mongodbUsername` | `test`                    | Name of the database user           |
 | `mongodbDatabase` | `test`                    | Name of the database                |
 
-The passwords are only applied when the database is initialized on an empty volume. Changing them later does **not** change the users of an existing database, and the app fails to authenticate.
-To change a password afterwards, change it in the database (eg with `mongosh`) as well.
+Both passwords are applied again on every start, so they can be changed later.
 The `url`, `urlssl` and `urltls` values do not escape the password, so avoid characters like `@`, `:` and `/` when an app uses those.
 
-The dependency runs `docker.io/bitnamisecure/mongodb` as a `StatefulSet` with one replica, as UID `568` and GID `0`, with a writable root filesystem (the image requires both).
-Its data is stored in the `data` volume, mounted at `/bitnami/mongodb`.
+The dependency runs `oci.trueforge.org/containerforge/mongodb` as a `StatefulSet` with one replica, as UID and GID `568` with a read-only root filesystem.
+Its data is stored in the `data` volume, mounted at `/config` (databases in `/config/db`).
+The database user gets the `readWrite` role on its own database, and the root user is always named `root`.
 
 ### Moving from the `mongodb` chart dependency
 
@@ -465,7 +465,7 @@ dependencies:
 This renders, among others:
 
 - `Deployment` `myapp` with the `mongodb-wait` init container
-- `StatefulSet` `myapp-mongodb-main` with the `data` volume mounted at `/bitnami/mongodb`
+- `StatefulSet` `myapp-mongodb-main` with the `data` volume mounted at `/config`
 - `Service` `myapp-mongodb-main` on port 27017
 - `PersistentVolumeClaim` `myapp-mongodb-data`
 - `Secret` `myapp-mongodbcreds`

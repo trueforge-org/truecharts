@@ -1922,14 +1922,9 @@ dependencies:
       mongodbUsername: "test"
       mongodbDatabase: "test"
     image:
-      repository: docker.io/bitnamisecure/mongodb
+      repository: oci.trueforge.org/containerforge/mongodb
       pullPolicy: IfNotPresent
-      tag: latest@sha256:ae3045b80e9640a1833da94864688733a04d536f611bc8aeee60f89f8be388e9
-    # The Bitnami image needs the root group and a writable root filesystem
-    securityContext:
-      container:
-        runAsGroup: 0
-        readOnlyRootFilesystem: false
+      tag: 9.0.4@sha256:c41800a0e724d003b16e85d1b28cb7b77724d81f4aea8ba429f51aea821672f9
     workload:
       main:
         replicas: 1
@@ -1955,9 +1950,13 @@ dependencies:
                 liveness:
                   type: exec
                   command: &mongodbProbeCommand
-                    - /bin/bash
-                    - -ec
-                    - echo "db.runCommand(\"ping\")" | mongosh --host localhost --port 27017 ${MONGODB_DATABASE} --quiet
+                    - mongosh
+                    - --quiet
+                    - --norc
+                    - --host
+                    - 127.0.0.1
+                    - --eval
+                    - "db.runCommand({ ping: 1 })"
                 readiness:
                   type: exec
                   command: *mongodbProbeCommand
@@ -1973,7 +1972,7 @@ dependencies:
             targetPort: 27017
     persistence:
       data:
-        mountPath: /bitnami/mongodb
+        mountPath: /config
   valkey:
     enabled: false
     # -- Settings of the dependency itself, never merged into the chart
