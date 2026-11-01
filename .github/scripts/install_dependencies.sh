@@ -119,6 +119,8 @@ fi
 
 values_yaml=$(cat "$curr_chart/values.yaml")
 cnpg_enabled=$(go-yq '.cnpg | map(.enabled) | any' <<<"$values_yaml")
+# PostgreSQL is provided by the cloudnative-pg operator, unless set to standalone
+postgresql_operator_enabled=$(go-yq '(.dependencies.postgresql.enabled == true) and ((.dependencies.postgresql.mode // "operator") == "operator")' <<<"$values_yaml")
 ingress_required=$(go-yq '.ingress | map(.required) | any' <<<"$values_yaml")
 ingress_enabled=$(go-yq '.ingress | map(.enabled) | any' <<<"$values_yaml")
 nginx_needed="false"
@@ -180,7 +182,7 @@ if [[ "$curr_chart" == "charts/stable/clusterissuer" ]]; then
     echo "Done installing cert-manager chart"
 fi
 
-if [[ "$cnpg_enabled" == "true" ]]; then
+if [[ "$cnpg_enabled" == "true" ]] || [[ "$postgresql_operator_enabled" == "true" ]]; then
     echo "Installing cloudnative-pg chart"
     if ! helm_install_with_retry cloudnative-pg oci://ghcr.io/cloudnative-pg/charts/cloudnative-pg --namespace cloudnative-pg --create-namespace --version "$CLOUDNATIVE_PG_CHART_VERSION"; then
         echo "Failed to install cloudnative-pg chart"

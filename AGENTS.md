@@ -66,7 +66,7 @@ These rules follow the organization's [security policy](https://github.com/truef
 
 - **Secrets and credentials**
   - Never commit real secrets, tokens, private keys or credentials, not even in tests, `ci/` values or docs examples. Use obvious placeholders. The `detect-private-key` pre-commit hook and GitGuardian in CI look for leaks, but do not rely on them.
-  - No default or hard-coded passwords. Let `common`, `cnpg` or the database dependency generate them, or generate them in a chart template.
+  - No default or hard-coded passwords. Let `common` or the database dependency (`dependencies.postgresql`, ...) generate them, or generate them in a chart template.
   - Keep credentials in Secrets. Give them to containers with `secretKeyRef` (or `envFrom` a Secret), never as plain `env` values and never in ConfigMaps.
   - Generated secrets must stay the same across upgrades: reuse the existing Secret with `lookup`, and only fall back to `randAlphaNum` on the first install.
   - Do not print credentials in `NOTES.txt`, logs or `fail` messages.

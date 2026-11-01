@@ -261,16 +261,6 @@ Display connection information for enabled dependencies and addons
   {{- $hasConnections := false -}}
   {{- $connections := list -}}
 
-  {{- /* Check for enabled databases */ -}}
-  {{- if .Values.cnpg -}}
-    {{- range $name, $cnpg := .Values.cnpg -}}
-      {{- if $cnpg.enabled -}}
-        {{- $hasConnections = true -}}
-        {{- $connections = append $connections (include "tc.v1.common.lib.chart.connections.cnpg" (dict "name" $name "cnpg" $cnpg "rootCtx" $) | trim) -}}
-      {{- end -}}
-    {{- end -}}
-  {{- end -}}
-
   {{/* MariaDB from the dependencies */}}
   {{- $mariadb := get (.Values.dependencies | default dict) "mariadb" -}}
   {{- if kindIs "map" $mariadb -}}
@@ -365,43 +355,6 @@ Display connection information for enabled dependencies and addons
 {{- end -}}
 
 {{/*
-CNPG connection information
-*/}}
-{{- define "tc.v1.common.lib.chart.connections.cnpg" -}}
-  {{- $name := .name -}}
-  {{- $cnpg := .cnpg -}}
-  {{- $rootCtx := .rootCtx -}}
-## CNPG Database: {{ $name }}
-  {{- if $cnpg.creds -}}
-  {{- if $cnpg.creds.host }}
-- Host: {{ $cnpg.creds.host | quote }}
-  {{- end -}}
-  {{- if $cnpg.creds.porthost }}
-- Host:Port: {{ $cnpg.creds.porthost | quote }}
-  {{- end -}}
-  {{- if $cnpg.database }}
-- Database: {{ $cnpg.database }}
-  {{- end -}}
-  {{- if $cnpg.user }}
-- Username: {{ $cnpg.user }}
-  {{- end -}}
-  {{- if $cnpg.creds.std }}
-- Connection URL: {{ include "tc.v1.common.lib.chart.notes.credential" (dict "rootCtx" $rootCtx "value" $cnpg.creds.std) | quote }}
-  {{- end -}}
-  {{- if $cnpg.creds.jdbc }}
-- JDBC URL: {{ $cnpg.creds.jdbc | quote }}
-  {{- end -}}
-  {{- if and $cnpg.pooler $cnpg.pooler.enabled $cnpg.pooler.createRO -}}
-  {{- if $cnpg.creds.stdRO }}
-- Read-Only URL: {{ include "tc.v1.common.lib.chart.notes.credential" (dict "rootCtx" $rootCtx "value" $cnpg.creds.stdRO) | quote }}
-  {{- end -}}
-  {{- end -}}
-  {{- else }}
-- Configuration pending (credentials will be available after initialization)
-  {{- end }}
-{{- end -}}
-
-{{/*
 MariaDB connection information
 */}}
 {{- define "tc.v1.common.lib.chart.connections.mariadb" -}}
@@ -433,7 +386,7 @@ MariaDB connection information
 {{- end -}}
 
 {{/*
-PostgreSQL connection information
+PostgreSQL connection information, for both modes (standalone and operator)
 */}}
 {{- define "tc.v1.common.lib.chart.connections.postgresql" -}}
 {{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "postgresql")) -}}
@@ -457,6 +410,9 @@ PostgreSQL connection information
   {{- end -}}
   {{- if $creds.jdbc }}
 - JDBC URL: {{ $creds.jdbc }}
+  {{- end -}}
+  {{- if $creds.completeRO }}
+- Read-Only URL: {{ include "tc.v1.common.lib.chart.notes.credential" (dict "rootCtx" $ "value" $creds.completeRO) }}
   {{- end -}}
 {{- else }}
 - Configuration pending (service will be available after initialization)

@@ -12,9 +12,6 @@
   {{/* Ensure TrueCharts chart context information is available */}}
   {{- include "tc.v1.common.lib.util.chartcontext" . -}}
 
-  {{/* Autogenerate postgresql passwords if needed */}}
-  {{- include "tc.v1.common.spawner.cnpg" . }}
-
   {{/* Autogenerate valkey passwords and credentials if needed */}}
   {{- include "tc.v1.common.dependencies.valkey.injector" . }}
 
@@ -26,6 +23,9 @@
 
   {{/* Autogenerate postgresql passwords and credentials if needed */}}
   {{- include "tc.v1.common.dependencies.postgresql.injector" . }}
+
+  {{/* Render the CNPG cluster of the postgresql dependency, when it is provided by the cloudnative-pg operator */}}
+  {{- include "tc.v1.common.spawner.cnpg" . }}
 
   {{/* Autogenerate mongodb passwords if needed */}}
   {{- include "tc.v1.common.dependencies.mongodb.injector" . }}

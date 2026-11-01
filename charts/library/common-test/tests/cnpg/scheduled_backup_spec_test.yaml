@@ -18,30 +18,32 @@ tests:
           encrKey: some-encr-key
           accessKey: some-access-key
           secretKey: some-secret-key
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            target: primary
-            retentionPolicy: 10d
-            credentials: test
-            destinationPath: some-path
-            scheduledBackups:
-              - name: daily
-                schedule: "0 0 * * *"
-                suspend: true
-              - name: weekly
-                schedule: "0 0 * * 0"
-                immediate: true
-                backupOwnerReference: cluster
-              - name: daily-magic-value
-                schedule: "@daily"
-              - name: continuous
-                schedule: "* * * * *"
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              target: primary
+              retentionPolicy: 10d
+              credentials: test
+              destinationPath: some-path
+              scheduledBackups:
+                - name: daily
+                  schedule: "0 0 * * *"
+                  suspend: true
+                - name: weekly
+                  schedule: "0 0 * * 0"
+                  immediate: true
+                  backupOwnerReference: cluster
+                - name: daily-magic-value
+                  schedule: "@daily"
+                - name: continuous
+                  schedule: "* * * * *"
     asserts:
       - documentIndex: &cnpgDoc0 0
         isKind:
@@ -52,7 +54,7 @@ tests:
       - documentIndex: *cnpgDoc0
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-my-pg-sched-backup-daily
+          value: test-release-name-common-test-cnpg-main-sched-backup-daily
       - documentIndex: *cnpgDoc0
         equal:
           path: spec
@@ -62,7 +64,7 @@ tests:
             suspend: true
             immediate: false
             cluster:
-              name: test-release-name-common-test-cnpg-my-pg
+              name: test-release-name-common-test-cnpg-main
             method: plugin
             pluginConfiguration:
               name: barman-cloud.cloudnative-pg.io
@@ -75,7 +77,7 @@ tests:
       - documentIndex: *cnpgDoc1
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-my-pg-sched-backup-weekly
+          value: test-release-name-common-test-cnpg-main-sched-backup-weekly
       - documentIndex: *cnpgDoc1
         equal:
           path: spec
@@ -85,7 +87,7 @@ tests:
             suspend: false
             immediate: true
             cluster:
-              name: test-release-name-common-test-cnpg-my-pg
+              name: test-release-name-common-test-cnpg-main
             method: plugin
             pluginConfiguration:
               name: barman-cloud.cloudnative-pg.io
@@ -98,7 +100,7 @@ tests:
       - documentIndex: *cnpgDoc2
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-my-pg-sched-backup-daily-magic-value
+          value: test-release-name-common-test-cnpg-main-sched-backup-daily-magic-value
       - documentIndex: *cnpgDoc2
         equal:
           path: spec
@@ -108,7 +110,7 @@ tests:
             suspend: false
             immediate: false
             cluster:
-              name: test-release-name-common-test-cnpg-my-pg
+              name: test-release-name-common-test-cnpg-main
             method: plugin
             pluginConfiguration:
               name: barman-cloud.cloudnative-pg.io
@@ -121,7 +123,7 @@ tests:
       - documentIndex: *cnpgDoc3
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-my-pg-sched-backup-continuous
+          value: test-release-name-common-test-cnpg-main-sched-backup-continuous
       - documentIndex: *cnpgDoc3
         equal:
           path: spec
@@ -131,7 +133,7 @@ tests:
             suspend: false
             immediate: false
             cluster:
-              name: test-release-name-common-test-cnpg-my-pg
+              name: test-release-name-common-test-cnpg-main
             method: plugin
             pluginConfiguration:
               name: barman-cloud.cloudnative-pg.io
@@ -149,18 +151,20 @@ tests:
           encrKey: some-encr-key
           accessKey: some-access-key
           secretKey: some-secret-key
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
-            scheduledBackups:
-              - name: daily
-                schedule: "0 0 * * *"
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              scheduledBackups:
+                - name: daily
+                  schedule: "0 0 * * *"
     asserts:
       - documentSelector:
           path: kind
@@ -173,7 +177,7 @@ tests:
             suspend: false
             immediate: false
             cluster:
-              name: test-release-name-common-test-cnpg-my-pg
+              name: test-release-name-common-test-cnpg-main
             method: plugin
             pluginConfiguration:
               name: barman-cloud.cloudnative-pg.io

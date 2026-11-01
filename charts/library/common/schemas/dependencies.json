@@ -274,6 +274,66 @@
         }
       ],
       "description": "The valkey dependency. In `operator` mode a `ValkeyCluster` is spawned from `operator`."
+    },
+    "postgresql": {
+      "allOf": [
+        {
+          "$ref": "../values.schema.json"
+        },
+        {
+          "$ref": "#/additionalProperties/allOf/1"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": [
+                "standalone",
+                "operator"
+              ],
+              "default": "operator",
+              "description": "How postgresql is provided. Unlike the other dependencies it defaults to `operator`, so CloudNativePG runs it and the settings are under `operator`. `standalone` merges a plain PostgreSQL deployment into the chart. Both modes share `depconfig`, the connection details in `depconfig.creds` and the `postgresql-wait` init container."
+            },
+            "depconfig": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string",
+                  "default": "PLACEHOLDERPASSWORD",
+                  "description": "Password of the database user, for both modes."
+                },
+                "postgresqlUsername": {
+                  "type": "string",
+                  "minLength": 1,
+                  "default": "test",
+                  "description": "Name of the database user, for both modes."
+                },
+                "postgresqlDatabase": {
+                  "type": "string",
+                  "minLength": 1,
+                  "default": "test",
+                  "description": "Name of the database, for both modes."
+                },
+                "creds": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Connection details populated by the library, the same keys in both modes (eg `plainhost`, `plainporthost`, `complete`, `urlnossl`, `jdbc`). The read-only endpoint of the operator pooler (`operator.pooler.createRO`) adds the same keys suffixed with `RO` (eg `completeRO`). Read-only."
+                }
+              },
+              "additionalProperties": true,
+              "description": "Configuration of the dependency itself, for both modes. Never merged into the chart."
+            },
+            "operator": {
+              "$ref": "dependencies/postgresql/operator/operator.json",
+              "description": "Settings of the CloudNativePG `Cluster`, used when `mode` is `operator`. The credentials stay in `depconfig`. Never merged into the chart values."
+            }
+          }
+        }
+      ],
+      "description": "The postgresql dependency. In `operator` mode (default) a CloudNativePG `Cluster` is spawned from `operator`."
     }
   },
   "additionalProperties": {

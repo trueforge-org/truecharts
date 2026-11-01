@@ -7,17 +7,13 @@ release:
 tests:
   - it: should generate correct name
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-        my-pg2:
-          enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
     asserts:
       - documentIndex: &clusterDoc 0
         isKind:
@@ -28,14 +24,4 @@ tests:
       - documentIndex: *clusterDoc
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-my-pg
-      - documentIndex: &otherclusterDoc 1
-        isKind:
-          of: Cluster
-      - documentIndex: *otherclusterDoc
-        isAPIVersion:
-          of: postgresql.cnpg.io/v1
-      - documentIndex: *otherclusterDoc
-        equal:
-          path: metadata.name
-          value: test-release-name-common-test-cnpg-my-pg2
+          value: test-release-name-common-test-cnpg-main
