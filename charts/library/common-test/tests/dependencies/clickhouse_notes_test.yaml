@@ -1,0 +1,32 @@
+suite: dependencies clickhouse notes test
+templates:
+  - common.yaml
+  - NOTES.txt
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should show the connection details of clickhouse
+    template: NOTES.txt
+    set:
+      dependencies:
+        clickhouse:
+          enabled: true
+          depconfig:
+            clickhouseUsername: my-user
+            clickhouseDatabase: my-database
+    asserts:
+      - matchRegexRaw:
+          pattern: "## ClickHouse Database\n- Host: test-release-name-common-test-clickhouse-main\n- Port: 8123\n"
+      - matchRegexRaw:
+          pattern: "- Host:Port: test-release-name-common-test-clickhouse-main:8123\n"
+      - matchRegexRaw:
+          pattern: "- Database: my-database\n- Username: my-user\n"
+      - matchRegexRaw:
+          pattern: "- JDBC URL: .*jdbc:ch://test-release-name-common-test-clickhouse-main:8123/my-database"
+
+  - it: should not show clickhouse with the dependency disabled
+    template: NOTES.txt
+    asserts:
+      - notMatchRegexRaw:
+          pattern: "ClickHouse Database"

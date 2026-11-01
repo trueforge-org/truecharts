@@ -1,0 +1,374 @@
+suite: dependencies clickhouse test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render the clickhouse dependency with the defaults of common
+    set:
+      dependencies:
+        clickhouse:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 4
+      - documentSelector: &secretDoc
+          path: kind
+          value: Secret
+        equal:
+          path: metadata.name
+          value: test-release-name-clickhousecreds
+      - documentSelector: *secretDoc
+        equal:
+          path: stringData
+          value:
+            clickhouse-password: PLACEHOLDERPASSWORD
+            plainhost: test-release-name-common-test-clickhouse-main
+            plainporthost: test-release-name-common-test-clickhouse-main:8123
+            ping: http://test-release-name-common-test-clickhouse-main:8123/ping
+            url: http://test:PLACEHOLDERPASSWORD@test-release-name-common-test-clickhouse-main:8123/test
+            jdbc: jdbc:ch://test-release-name-common-test-clickhouse-main:8123/test
+      - documentSelector: &workloadDoc
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-clickhouse-main
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.replicas
+          value: 1
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.updateStrategy.type
+          value: RollingUpdate
+      - documentSelector: *workloadDoc
+        matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: ^oci\.trueforge\.org/containerforge/clickhouse:[^@]+@sha256:[0-9a-f]{64}$
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsUser
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: true
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CLICKHOUSE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: test-release-name-clickhousecreds
+                key: clickhouse-password
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CLICKHOUSE_USER
+            value: test
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CLICKHOUSE_DB
+            value: test
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT
+            value: "0"
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].livenessProbe.httpGet
+          value:
+            port: 8123
+            path: /ping
+            scheme: HTTP
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].readinessProbe.httpGet
+          value:
+            port: 8123
+            path: /ping
+            scheme: HTTP
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].startupProbe.httpGet
+          value:
+            port: 8123
+            path: /ping
+            scheme: HTTP
+      - documentSelector: *workloadDoc
+        notExists:
+          path: spec.template.spec.initContainers
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: clickhouse-data
+            mountPath: /config
+            readOnly: false
+      - documentSelector:
+          path: kind
+          value: PersistentVolumeClaim
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-clickhouse-data
+      - documentSelector: &serviceDoc
+          path: kind
+          value: Service
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-clickhouse-main
+      - documentSelector: *serviceDoc
+        equal:
+          path: spec.ports[0]
+          value:
+            name: main
+            port: 8123
+            protocol: TCP
+            targetPort: 8123
+      - documentSelector: *serviceDoc
+        equal:
+          path: spec.selector['pod.name']
+          value: clickhouse-main
+
+  - it: should use the custom depconfig
+    set:
+      dependencies:
+        clickhouse:
+          enabled: true
+          depconfig:
+            password: testpassword
+            clickhouseUsername: myuser
+            clickhouseDatabase: mydb
+            clickhouseDefaultAccessManagement: 1
+    asserts:
+      - documentSelector: &secretDoc
+          path: kind
+          value: Secret
+        equal:
+          path: stringData
+          value:
+            clickhouse-password: testpassword
+            plainhost: test-release-name-common-test-clickhouse-main
+            plainporthost: test-release-name-common-test-clickhouse-main:8123
+            ping: http://test-release-name-common-test-clickhouse-main:8123/ping
+            url: http://myuser:testpassword@test-release-name-common-test-clickhouse-main:8123/mydb
+            jdbc: jdbc:ch://test-release-name-common-test-clickhouse-main:8123/mydb
+      - documentSelector: &workloadDoc
+          path: kind
+          value: StatefulSet
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CLICKHOUSE_USER
+            value: myuser
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CLICKHOUSE_DB
+            value: mydb
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT
+            value: "1"
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CLICKHOUSE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: test-release-name-clickhousecreds
+                key: clickhouse-password
+
+  - it: should render nothing with the clickhouse dependency disabled
+    set:
+      dependencies:
+        clickhouse:
+          enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should allow overriding the image of clickhouse
+    set:
+      dependencies:
+        clickhouse:
+          enabled: true
+          image:
+            repository: docker.io/clickhouse/clickhouse-server
+            tag: 25.8.1.1
+    asserts:
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: spec.template.spec.containers[0].image
+          value: docker.io/clickhouse/clickhouse-server:25.8.1.1
+
+  - it: should expose the credentials to the workloads of the chart
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+                env:
+                  CLICKHOUSE_URL: '{{ .Values.dependencies.clickhouse.depconfig.creds.complete | trimAll "\"" }}'
+                  CLICKHOUSE_HOST: '{{ .Values.dependencies.clickhouse.depconfig.creds.plainhost | trimAll "\"" }}'
+                  CLICKHOUSE_PORT: '{{ .Values.dependencies.clickhouse.depconfig.creds.plainport | trimAll "\"" }}'
+                  CLICKHOUSE_PING: '{{ .Values.dependencies.clickhouse.depconfig.creds.ping | trimAll "\"" }}'
+                  CLICKHOUSE_JDBC: '{{ .Values.dependencies.clickhouse.depconfig.creds.jdbc | trimAll "\"" }}'
+                  CLICKHOUSE_PASSWORD: "{{ .Values.dependencies.clickhouse.depconfig.password }}"
+      dependencies:
+        clickhouse:
+          enabled: true
+          depconfig:
+            password: testpassword
+    asserts:
+      - documentSelector: &rootWorkloadDoc
+          path: metadata.name
+          value: test-release-name-common-test
+        equal:
+          path: kind
+          value: Deployment
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CLICKHOUSE_URL
+            value: http://test:testpassword@test-release-name-common-test-clickhouse-main:8123/test
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CLICKHOUSE_HOST
+            value: test-release-name-common-test-clickhouse-main
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CLICKHOUSE_PORT
+            value: "8123"
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CLICKHOUSE_PING
+            value: http://test-release-name-common-test-clickhouse-main:8123/ping
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CLICKHOUSE_JDBC
+            value: jdbc:ch://test-release-name-common-test-clickhouse-main:8123/test
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CLICKHOUSE_PASSWORD
+            value: testpassword
+
+  - it: should use the explicit primary service of clickhouse
+    set:
+      dependencies:
+        clickhouse:
+          enabled: true
+          service:
+            main:
+              primary: false
+              ports:
+                main:
+                  primary: false
+            http:
+              enabled: true
+              primary: true
+              ports:
+                http:
+                  enabled: true
+                  primary: true
+                  protocol: tcp
+                  port: 18123
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: stringData.plainporthost
+          value: test-release-name-common-test:18123
+
+  - it: should keep the name of the service of clickhouse without a primary service
+    set:
+      dependencies:
+        clickhouse:
+          enabled: true
+          service:
+            main:
+              ports:
+                main:
+                  port: 18123
+                native:
+                  enabled: true
+                  protocol: tcp
+                  port: 9000
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: stringData.plainporthost
+          value: test-release-name-common-test-clickhouse-main:18123
+
+  - it: should fail with the removed top-level clickhouse key
+    set:
+      clickhouse:
+        enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [clickhouse] key, it is replaced by [dependencies.clickhouse]. Move [enabled] to [dependencies.clickhouse], and [password], [clickhouseUsername] and [clickhouseDatabase] to [dependencies.clickhouse.depconfig]. The connection details are available under [dependencies.clickhouse.depconfig.creds]
+
+  - it: should not fail with a disabled top-level clickhouse key
+    set:
+      clickhouse:
+        enabled: false
+    asserts:
+      - notFailedTemplate: {}
+
+  - it: should fail without a port for clickhouse
+    set:
+      dependencies:
+        clickhouse:
+          enabled: true
+          service:
+            main:
+              ports:
+                main:
+                  enabled: false
+    asserts:
+      - failedTemplate:
+          errorMessage: Service - Expected enabled service to have at least one port
