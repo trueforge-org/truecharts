@@ -370,3 +370,6 @@ A disabled key, or one without `enabled`, never rendered anything and does not f
 | `redis.enabled`, `valkey.enabled`   | `dependencies.valkey.enabled`            |
 | `redis.password`, `valkey.password` | `dependencies.valkey.depconfig.password` |
 | `redis.creds`, `valkey.creds`       | `dependencies.valkey.depconfig.creds`    |
+
+The `solr`, `mongodb`, `clickhouse` and `memcached` keys on the root level of the values are no longer supported and have no replacement.
+Rendering fails when one of them has `enabled: true` (also when set using a template). A disabled key, or one without `enabled`, does not fail.
