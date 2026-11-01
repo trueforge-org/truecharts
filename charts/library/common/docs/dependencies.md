@@ -307,11 +307,13 @@ The `depconfig` of the dependency accepts:
 | `clickhouseDefaultAccessManagement` | `0`                   | Set to `1` to allow the user to manage users and grants with SQL  |
 
 The password is applied again on every start, so it can be changed later.
-The database is only created when the volume is empty, so changing `clickhouseDatabase` later does not create a new database.
+The database is created on every start if it does not exist, so changing `clickhouseDatabase` later creates a new, empty database.
 The `url` value does not escape the password, so avoid characters like `@`, `:` and `/` when an app uses it.
 
-The dependency runs the upstream `docker.io/clickhouse/clickhouse-server` image as a `StatefulSet` with one replica, as UID and GID `568`.
-Its data is stored in the `data` volume, mounted at `/var/lib/clickhouse`.
+The dependency runs `oci.trueforge.org/containerforge/clickhouse` as a `StatefulSet` with one replica, as UID and GID `568` with a read-only root filesystem.
+Its data is stored in the `data` volume, mounted at `/config` (databases in `/config/data`).
+`clickhouseUsername` and `clickhouseDatabase` can only contain letters, numbers and underscores, otherwise the container does not start.
+The configured user replaces the `default` user of ClickHouse.
 
 ### Moving from the `clickhouse` chart dependency
 
@@ -363,7 +365,7 @@ dependencies:
 This renders, among others:
 
 - `Deployment` `myapp` with the `clickhouse-wait` init container
-- `StatefulSet` `myapp-clickhouse-main` with the `data` volume mounted at `/var/lib/clickhouse`
+- `StatefulSet` `myapp-clickhouse-main` with the `data` volume mounted at `/config`
 - `Service` `myapp-clickhouse-main` on port 8123
 - `PersistentVolumeClaim` `myapp-clickhouse-data`
 - `Secret` `myapp-clickhousecreds`

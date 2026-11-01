@@ -46,7 +46,7 @@ tests:
       - documentSelector: *workloadDoc
         matchRegex:
           path: spec.template.spec.containers[0].image
-          pattern: ^docker\.io/clickhouse/clickhouse-server:[^@]+@sha256:[0-9a-f]{64}$
+          pattern: ^oci\.trueforge\.org/containerforge/clickhouse:[^@]+@sha256:[0-9a-f]{64}$
       - documentSelector: *workloadDoc
         equal:
           path: spec.template.spec.containers[0].securityContext.runAsUser
@@ -54,7 +54,7 @@ tests:
       - documentSelector: *workloadDoc
         equal:
           path: spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
-          value: false
+          value: true
       - documentSelector: *workloadDoc
         contains:
           path: spec.template.spec.containers[0].env
@@ -111,7 +111,7 @@ tests:
           path: spec.template.spec.containers[0].volumeMounts
           content:
             name: clickhouse-data
-            mountPath: /var/lib/clickhouse
+            mountPath: /config
             readOnly: false
       - documentSelector:
           path: kind
