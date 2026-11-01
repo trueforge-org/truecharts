@@ -155,6 +155,20 @@ Configuration for `postgresClientImage`.
 
 ---
 
+### `images.postgresql18Image`
+
+Configuration for `postgresql18Image`.
+
+| Field      | Value                      |
+| ---------- | -------------------------- |
+| Key        | `images.postgresql18Image` |
+| Type       | `map`                      |
+| Required   | ❌                         |
+| Helm `tpl` | ❌                         |
+| Default    | unset                      |
+
+---
+
 ### `images.postgresPostgis15Image`
 
 Configuration for `postgresPostgis15Image`.

@@ -3136,6 +3136,10 @@ postgresClientImage:
   repository: ''
   tag: ''
   pullPolicy: ''
+postgresql18Image:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
 mariadbClientImage:
   repository: ''
   tag: ''
@@ -3737,6 +3741,50 @@ dependencies:
                 MARIADB_ROOT_PASSWORD: ''
                 MARIADB_USER: ''
                 MARIADB_DATABASE: ''
+              probes:
+                liveness:
+                  enabled: true
+                  type: ''
+                  command:
+                  - ''
+                readiness:
+                  enabled: true
+                  type: ''
+                  command:
+                  - ''
+                startup:
+                  enabled: true
+                  type: ''
+                  command:
+                  - ''
+    service:
+      objectname:
+        ports:
+          objectname:
+            protocol: ''
+            port: 0
+            targetPort: 0
+    persistence:
+      objectname:
+        enabled: true
+        mountPath: ''
+  postgresql:
+    enabled: false
+    depconfig:
+      password: ''
+      postgresqlUsername: ''
+      postgresqlDatabase: ''
+    workload:
+      objectname:
+        dbWait: false
+        podSpec:
+          containers:
+            objectname:
+              imageSelector: ''
+              env:
+                POSTGRES_USER: ''
+                POSTGRES_DB: ''
+                POSTGRES_PASSWORD: ''
               probes:
                 liveness:
                   enabled: true
