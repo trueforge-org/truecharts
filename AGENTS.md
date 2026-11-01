@@ -74,6 +74,7 @@ Always test with the **latest stable releases** of Helm and helm-unittest. The s
 - Check the current latest versions on the [Helm releases page](https://github.com/helm/helm/releases/latest) and the [helm-unittest releases page](https://github.com/helm-unittest/helm-unittest/releases/latest). Don't reuse versions you remember.
 - On Helm 4, `helm plugin install` needs `--verify=false` for helm-unittest, because the plugin source does not support verification. On Helm 3, omit that flag.
 - To upgrade helm-unittest on Helm 4, run `helm plugin uninstall unittest` and then install it again. `helm plugin update` fails for git-installed plugins.
+- CI runs the `common` unit tests with the helm-unittest version pinned as `helmUnitVersion` in `.github/workflows/common-tests.yaml`, which can be older than the latest. If a suite passes locally but fails in CI, check that version first.
 - The `common` CI also runs a compatibility matrix (Helm v3.14.0, v3.20.0 and v4.1.0 on k3s v1.33 to v1.35), so library templates must keep working on Helm 3.14.
 - Dependencies are pulled from `oci://oci.trueforge.org/truecharts`. Pulls occasionally fail with `unexpected EOF`; if that happens, retry `helm dependency build`.
 
@@ -110,7 +111,9 @@ Afterwards, remove generated dependency artifacts: `rm -rf charts/*/<chart>/char
 ## Commits and pull requests
 
 - Use conventional-commit style for commits and PR titles, e.g. `feat(jellyfin): add hardware transcoding option`, `fix(common): correct service port validation`. PRs are squash-merged, so the PR title becomes the commit message.
-- Target `master`. Make one logical change per PR; separate unrelated chart changes into separate PRs.
+- Target `master`. The exception is the `common` rework, see [`common2026`](.github/instructions/common-library.instructions.md#the-common2026-rework). Make one logical change per PR; separate unrelated chart changes into separate PRs.
+- Use the organization's PR template, [`.github/PULL_REQUEST_TEMPLATE.md` in `trueforge-org/.github`](https://github.com/trueforge-org/.github/blob/main/.github/PULL_REQUEST_TEMPLATE.md). It is not in this repository, so tools that create PRs from a body do not pick it up: fetch it and fill it in, keeping its sections and checkboxes. Only check the boxes that apply.
+- Do not add a "Generated with ..." line or similar tool attribution to PR descriptions.
 - In the PR description:
   - explain *what* changed and *why*
   - reference issues with `Fixes #<number>`

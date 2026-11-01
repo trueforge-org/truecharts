@@ -5,14 +5,16 @@
 # Helm 4: helm plugin install https://github.com/helm-unittest/helm-unittest --verify=false
 # Helm 3: helm plugin install https://github.com/helm-unittest/helm-unittest
 
+cd "$(dirname "$0")" || exit 1
+
 common_test_path="charts/library/common-test"
 
 function cleanup {
   if [ -d "$common_test_path/charts" ]; then
     echo "🧹 Cleaning up charts..."
     rm -r "$common_test_path/charts"
-    rm -f "$common_test_path/Chart.lock"
   fi
+  rm -f "$common_test_path/Chart.lock"
   # Clean snapshots
   find "$common_test_path" -type d -name __snapshot__ -exec rm -r {} +
 }
@@ -28,7 +30,7 @@ fi
 
 echo "🧪 Running tests..."
 # Run from the chart directory, same as CI (.github/workflows/common-tests.yaml)
-(cd "$common_test_path" && helm unittest --update-snapshot -f "tests/**/*.yaml" . -v ./unit-values.yaml)
+(cd "$common_test_path" && helm unittest -f "tests/**/*.yaml" . -v ./unit-values.yaml)
 result=$?
 
 cleanup

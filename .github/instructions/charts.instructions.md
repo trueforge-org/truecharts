@@ -27,7 +27,7 @@ charts/stable/<chart>/
 
 Charts are thin wrappers around the `common` library. Express everything through values that `common` understands, such as `workload`, `service`, `persistence`, `configmap`, `secret`, `ingress`, `cnpg`, `metrics` and `addons`. Do not hand-write Kubernetes manifests in `templates/`. The library documentation is at <https://trueforge.org/truecharts-common>, with the sources in `charts/library/common/docs/`.
 
-`charts/stable/app-template` is the minimal reference chart; copy its structure when creating a new chart.
+Use `charts/stable/app-template` as the reference for the file structure of a new chart. It lists `mariadb`, `valkey` and `mongodb` as dependencies and has `ci/` values, so leave out what the new chart does not need.
 
 ## `Chart.yaml`
 

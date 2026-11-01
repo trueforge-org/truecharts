@@ -9,6 +9,24 @@ These rules apply to `charts/library/common/` (the `common` library chart that e
 
 `common` is used by ~800 charts. Any change here affects all of them, so be conservative, keep backwards compatibility, and test thoroughly.
 
+## The `common2026` rework
+
+The next major version of `common` is developed on the `common2026` branch, and goes to `master` with [#41017](https://github.com/trueforge-org/truecharts/pull/41017). Remove this section once that is merged.
+
+- Target `common2026` with work on the rework. Check which branch a task is for when it is not clear, as the two differ a lot.
+- The database and cache rules in the chart instructions describe `master`. On `common2026`, these use `dependencies.<name>`, and the old top-level keys fail rendering. See `docs/dependencies.md` on that branch.
+- `common2026` has a `values.schema.json` with `schemas/`, plus `complete-values-structure.yaml` and `template-keys-structure.yaml`. Keep them in sync with `values.yaml`, and run `check_complete_values_schema_coverage.py` from `charts/library/common`.
+- All unit tests fail outside GitHub Actions on `common2026`, with `failing loading "file:///home/runner/work/truecharts/...`. The `$id` of `values.schema.json` holds the CI path, and has to stay that way. Run the tests in a scratch copy instead, and never commit the rewritten file:
+
+  ```bash
+  scratch="$(mktemp -d)"
+  cp -r charts/library "$scratch/"
+  sed -i "s#file:///home/runner/work/truecharts/truecharts/charts/library#file://$scratch/library#" "$scratch/library/common/values.schema.json"
+  cd "$scratch/library/common-test"
+  helm dependency update
+  helm unittest -f "tests/**/*.yaml" . -v ./unit-values.yaml
+  ```
+
 ## Layout and naming
 
 | Path (`charts/library/common/`) | Template names | Purpose |
@@ -41,7 +59,7 @@ These rules apply to `charts/library/common/` (the `common` library chart that e
 
 - Pass context as `dict "rootCtx" $ "objectData" $objectData` (plus `"caller"` where relevant). Do not rely on `.` being the root context inside helpers.
 - Render user-provided strings with `tpl` against `$rootCtx` wherever the docs say the key supports Helm `tpl`.
-- Never mutate `.Values` objects in place inside spawners. Work on `mustDeepCopy` copies, and use the `must*` sprig functions (`mustMerge`, `mustDeepCopy`, `mustToJson`, ...) so that errors fail loudly.
+- Do not change the objects of `.Values` in place inside spawners. Work on `mustDeepCopy` copies, and use the `must*` sprig functions (`mustMerge`, `mustDeepCopy`, `mustToJson`, ...) so that errors fail loudly.
 - Validate input and fail with clear messages in the existing format: `"<Caller> - Expected [<key>] to be <expectation>, but got [%v]"`, e.g. `fail (printf "ConfigMap - Expected [data] to be a dictionary, but got [%v]" (kindOf $objectData.data))`.
 - Keep whitespace control (`{{-` / `-}}`) consistent so the rendered YAML has no stray blank lines.
 - New object kinds need these pieces:
