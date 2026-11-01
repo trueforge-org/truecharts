@@ -48,7 +48,11 @@ dependencies:
           containers:
             main:
               env:
-                VALKEY_PASSWORD: "{{ .Values.dependencies.valkey.depconfig.password }}"
+                VALKEY_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                    key: valkey-password
     service:
       main:
         ports:
@@ -259,6 +263,8 @@ The `valkey` dependency has additional handling:
 
   The host and port are the ones of the primary service and port of the dependency.
   Like the `creds` of the other dependencies, the values are quoted strings, use `| trimAll "\""` when templating them.
+- `valkey-password`, `url` and `plainhostpass` are credentials (or contain them), so they must be loaded into the environment from this secret with `secretKeyRef` (with `expandObjectName: false`), and never be set as a plain value in `env`.
+  Only the host and port from `creds` are safe to use in a plain `env` value.
 - An init container `valkey-wait` is added to the workloads of the chart (the ones with `dbWait` not set to `false`), waiting for Valkey to respond.
 - The connection details are included in the notes.
 
@@ -292,7 +298,11 @@ dependencies:
               primary: true
               env:
                 REDIS_PORT: "6379"
-                REDIS_PASSWORD: "{{ .Values.dependencies.valkey.depconfig.password }}"
+                REDIS_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                    key: valkey-password
               probes:
                 liveness:
                   enabled: true
@@ -320,9 +330,17 @@ workload:
       containers:
         main:
           env:
-            REDIS_URL: '{{ .Values.dependencies.valkey.depconfig.creds.url | trimAll "\"" }}'
             REDIS_HOST: '{{ .Values.dependencies.valkey.depconfig.creds.plainhost | trimAll "\"" }}'
-            REDIS_PASSWORD: "{{ .Values.dependencies.valkey.depconfig.password }}"
+            REDIS_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                key: url
+            REDIS_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                key: valkey-password
 
 dependencies:
   valkey:
@@ -338,3 +356,17 @@ This renders, among others:
 - `Service` `myapp-valkey-main` on port 6379
 - `ConfigMap` `myapp-valkey-health`
 - `Secret` `myapp-valkeycreds`
+
+---
+
+## Removed Top-Level Keys
+
+The `redis` and `valkey` keys on the root level of the values are replaced by `dependencies.valkey`.
+Rendering fails when one of them has `enabled: true` (also when set using a template), as it would otherwise be silently ignored.
+A disabled key, or one without `enabled`, never rendered anything and does not fail.
+
+| Old key                             | New key                                  |
+| ----------------------------------- | ---------------------------------------- |
+| `redis.enabled`, `valkey.enabled`   | `dependencies.valkey.enabled`            |
+| `redis.password`, `valkey.password` | `dependencies.valkey.depconfig.password` |
+| `redis.creds`, `valkey.creds`       | `dependencies.valkey.depconfig.creds`    |

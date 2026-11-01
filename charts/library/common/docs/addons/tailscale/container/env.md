@@ -45,7 +45,7 @@ Configuration for `addons.tailscale.container.env.TS_ACCEPT_DNS`.
 
 ### `addons.tailscale.container.env.TS_AUTH_KEY`
 
-Configuration for `addons.tailscale.container.env.TS_AUTH_KEY`.
+The Tailscale auth key. Use `addons.tailscale.settings.authkey` instead, which stores the key in a secret instead of a plain environment variable.
 
 | Field      | Value                                        |
 | ---------- | -------------------------------------------- |

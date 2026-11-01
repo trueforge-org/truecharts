@@ -547,6 +547,10 @@ so templates like [.Values.dependencies.$name.service.main.ports.main.port] keep
     {{- end -}}
 
   {{- else if eq $collName "route" -}}
+    {{- if kindIs "string" $obj.listenerSet -}}
+      {{- $_ := set $obj "listenerSet" (include "tc.v1.common.values.dependencies.ref" (merge (dict "coll" "listenerSet" "name" $obj.listenerSet) $refCtx)) -}}
+    {{- end -}}
+
     {{- if kindIs "string" $obj.targetSelector -}}
       {{- $_ := set $obj "targetSelector" (include "tc.v1.common.values.dependencies.ref" (merge (dict "coll" "gateway" "name" $obj.targetSelector) $refCtx)) -}}
     {{- end -}}
@@ -592,6 +596,11 @@ so templates like [.Values.dependencies.$name.service.main.ports.main.port] keep
           {{- end -}}
         {{- end -}}
       {{- end -}}
+    {{- end -}}
+
+  {{- else if eq $collName "listenerSet" -}}
+    {{- if kindIs "string" $obj.targetSelector -}}
+      {{- $_ := set $obj "targetSelector" (include "tc.v1.common.values.dependencies.ref" (merge (dict "coll" "gateway" "name" $obj.targetSelector) $refCtx)) -}}
     {{- end -}}
 
   {{- else if eq $collName "gateway" -}}

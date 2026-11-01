@@ -59,6 +59,11 @@
         "description": "Name of a gateway outside of this chart. Replaces `parentRefs`. Cannot be used with a `targetSelector` string.",
         "default": ""
       },
+      "listenerSet": {
+        "type": "string",
+        "description": "Name of a `listenerSet` of this chart to attach to. Replaces `parentRefs`. Cannot be used with `gateway`, a `targetSelector` string, `tls` or `integrations.certManager`.",
+        "default": ""
+      },
       "gatewayNamespace": {
         "type": "string",
         "description": "Namespace of `gateway`. Defaults to the namespace of the route.",

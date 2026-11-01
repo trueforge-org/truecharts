@@ -73,7 +73,7 @@ Without TLS the listener is not known, so this relies on the first parentRef, un
   {{- $protocol := "https" -}}
   {{- $port := "443" -}}
 
-  {{- if and (not $objectData.tls) (not (include "tc.v1.common.lib.route.hasCertManager" (dict "objectData" $objectData))) (not $objectData.gateway) (not (kindIs "string" $objectData.targetSelector)) -}}
+  {{- if and (not $objectData.tls) (not (include "tc.v1.common.lib.route.hasCertManager" (dict "objectData" $objectData))) (not $objectData.gateway) (not $objectData.listenerSet) (not (kindIs "string" $objectData.targetSelector)) -}}
     {{- with $objectData.parentRefs -}}
       {{- $parentRef := first . -}}
       {{- if $parentRef.sectionName -}}

@@ -79,6 +79,45 @@ that share a hostname, for example with different paths, must share one listener
     {{- end -}}
   {{- end -}}
 
+  {{/* The listener sets of this chart can not take a name or a listener that a route needs, the oldest listener would win */}}
+  {{- range $name, $set := ($rootCtx.Values.listenerSet | default dict) -}}
+    {{- if ne (include "tc.v1.common.lib.gateway.enabled" (dict "rootCtx" $rootCtx "objectData" $set "name" $name "key" "listenerSet" "caller" "ListenerSet")) "true" -}}
+      {{- continue -}}
+    {{- end -}}
+
+    {{- $namespace := include "tc.v1.common.lib.metadata.namespace" (dict "rootCtx" $rootCtx "objectData" $set "caller" "ListenerSet") -}}
+    {{- $setName := include "tc.v1.common.lib.listenerSet.getFullName" (dict "rootCtx" $rootCtx "objectData" $set "name" $name) -}}
+    {{- if hasKey $listenerSets (printf "%s/%s" $namespace $setName) -}}
+      {{- fail (printf "Route - ListenerSet [%s] created for the TLS of a route has the same name as [listenerSet.%s]. Rename one of them" $setName $name) -}}
+    {{- end -}}
+
+    {{- $parentRef := $set.parentRef | default dict -}}
+    {{- $gatewayName := "" -}}
+    {{- $gatewayNamespace := $namespace -}}
+    {{- if $set.targetSelector -}}
+      {{- $target := get ($rootCtx.Values.gateway | default dict) $set.targetSelector -}}
+      {{- if not (kindIs "map" $target) -}}{{- continue -}}{{- end -}}
+      {{- $gatewayName = include "tc.v1.common.lib.util.gateway.getFullName" (dict "rootCtx" $rootCtx "name" $set.targetSelector) -}}
+      {{- $gatewayNamespace = include "tc.v1.common.lib.metadata.namespace" (dict "rootCtx" $rootCtx "objectData" $target "caller" "ListenerSet") -}}
+    {{- else if $parentRef.name -}}
+      {{- $gatewayName = tpl (toString $parentRef.name) $rootCtx -}}
+      {{- with $parentRef.namespace -}}
+        {{- $gatewayNamespace = tpl (toString .) $rootCtx -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- range $listener := $set.listeners -}}
+      {{- $host := "" -}}
+      {{- with $listener.hostname -}}
+        {{- $host = tpl . $rootCtx -}}
+      {{- end -}}
+      {{- $seen := get $seenHosts (printf "%s/%s/%d/%s" $gatewayNamespace $gatewayName ($listener.port | int) $host) -}}
+      {{- if $seen -}}
+        {{- fail (printf "Route - Route [%s] and [listenerSet.%s] use hostname [%s] on the same gateway and port. Listeners conflict on a gateway and the oldest one wins. Attach the route with [listenerSet] instead of [tls]" $seen.route $name $host) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
   {{- dict "listenerSets" $listenerSets "certificates" $certificates "routeParents" $routeParents | toYaml -}}
 {{- end -}}
 
