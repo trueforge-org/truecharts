@@ -257,8 +257,14 @@ Display connection information for enabled dependencies and addons
     {{- end -}}
   {{- end -}}
 
-  {{- if .Values.mariadb -}}
-    {{- if .Values.mariadb.enabled -}}
+  {{/* MariaDB from the dependencies */}}
+  {{- $mariadb := get (.Values.dependencies | default dict) "mariadb" -}}
+  {{- if kindIs "map" $mariadb -}}
+    {{- $mariadbEnabled := (include "tc.v1.common.lib.util.enabled" (dict
+                    "rootCtx" $ "objectData" $mariadb
+                    "name" "mariadb" "caller" "Dependencies"
+                    "key" "dependencies")) -}}
+    {{- if eq $mariadbEnabled "true" -}}
       {{- $hasConnections = true -}}
       {{- $connections = append $connections (include "tc.v1.common.lib.chart.connections.mariadb" . | trim) -}}
     {{- end -}}
@@ -367,29 +373,31 @@ CNPG connection information
 MariaDB connection information
 */}}
 {{- define "tc.v1.common.lib.chart.connections.mariadb" -}}
+{{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "mariadb")) -}}
+{{- $dep := get (.Values.dependencies | default dict) "mariadb" -}}
+{{- $depconfig := $dep.depconfig | default dict -}}
+{{- $creds := $depconfig.creds | default dict -}}
 ## MariaDB Database
-  {{- if .Values.mariadb.creds -}}
-  {{- if .Values.mariadb.creds.plainhost }}
-- Host: {{ .Values.mariadb.creds.plainhost }}
+{{- if $service -}}
+{{- $service = $service | fromJson }}
+- Host: {{ $service.name }}
+- Port: {{ $service.port }}
+- Host:Port: {{ $service.name }}:{{ $service.port }}
+  {{- if $depconfig.mariadbDatabase }}
+- Database: {{ $depconfig.mariadbDatabase }}
   {{- end -}}
-  {{- if .Values.mariadb.creds.plainporthost }}
-- Host:Port: {{ .Values.mariadb.creds.plainporthost }}
+  {{- if $depconfig.mariadbUsername }}
+- Username: {{ $depconfig.mariadbUsername }}
   {{- end -}}
-  {{- if .Values.mariadb.mariadbDatabase }}
-- Database: {{ .Values.mariadb.mariadbDatabase }}
+  {{- if $creds.complete }}
+- Connection URL: {{ $creds.complete }}
   {{- end -}}
-  {{- if .Values.mariadb.mariadbUsername }}
-- Username: {{ .Values.mariadb.mariadbUsername }}
+  {{- if $creds.jdbcmariadb }}
+- JDBC URL: {{ $creds.jdbcmariadb }}
   {{- end -}}
-  {{- if .Values.mariadb.creds.complete }}
-- Connection URL: {{ .Values.mariadb.creds.complete }}
-  {{- end -}}
-  {{- if .Values.mariadb.creds.jdbcmariadb }}
-- JDBC URL: {{ .Values.mariadb.creds.jdbcmariadb }}
-  {{- end -}}
-  {{- else }}
-- Configuration pending (credentials will be available after initialization)
-  {{- end }}
+{{- else }}
+- Configuration pending (service will be available after initialization)
+{{- end -}}
 {{- end -}}
 
 {{/*

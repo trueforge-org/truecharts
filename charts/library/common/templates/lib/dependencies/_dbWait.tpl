@@ -14,7 +14,16 @@
 
   {{- end -}}
 
-  {{- if .Values.mariadb.enabled -}}
+  {{- $mariadbEnabled := false -}}
+  {{- $mariadb := get (.Values.dependencies | default dict) "mariadb" -}}
+  {{- if kindIs "map" $mariadb -}}
+    {{- $mariadbEnabled = eq (include "tc.v1.common.lib.util.enabled" (dict
+                    "rootCtx" $ "objectData" $mariadb
+                    "name" "mariadb" "caller" "Dependencies"
+                    "key" "dependencies")) "true" -}}
+  {{- end -}}
+
+  {{- if $mariadbEnabled -}}
     {{- $container := include "tc.v1.common.lib.deps.wait.mariadb" $ | fromYaml -}}
     {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "mariadb-wait" "container" $container) -}}
   {{- end -}}
@@ -149,6 +158,11 @@ command:
 {{- end -}}
 
 {{- define "tc.v1.common.lib.deps.wait.mariadb" -}}
+{{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "mariadb")) -}}
+{{- if not $service -}}
+  {{- fail "Dependencies - Expected dependency [mariadb] to have an enabled primary service" -}}
+{{- end -}}
+{{- $service = $service | fromJson -}}
 enabled: true
 type: system
 imageSelector: mariadbClientImage
@@ -174,21 +188,22 @@ resources:
     cpu: 500m
     memory: 512Mi
 env:
-  MARIADB_HOST:
+  MARIADB_HOST: {{ $service.name | quote }}
+  MARIADB_PORT: {{ $service.port | default 3306 | quote }}
+  MARIADB_ROOT_PASSWORD:
     secretKeyRef:
       expandObjectName: false
       name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
-      key: plainhost
-  MARIADB_ROOT_PASSWORD: "{{ .Values.mariadb.rootPassword }}"
+      key: mariadb-root-password
 command:
   - "/bin/sh"
   - "-c"
   - |
     /bin/bash <<'EOF'
-    echo "Executing DB waits..."
+    echo "Executing MariaDB wait..."
     until
-      mysqladmin -uroot -h"${MARIADB_HOST}" -p"${MARIADB_ROOT_PASSWORD}" ping \
-      && mysqladmin -uroot -h"${MARIADB_HOST}" -p"${MARIADB_ROOT_PASSWORD}" status;
+      mysqladmin -uroot -h"${MARIADB_HOST}" -P"${MARIADB_PORT}" -p"${MARIADB_ROOT_PASSWORD}" ping \
+      && mysqladmin -uroot -h"${MARIADB_HOST}" -P"${MARIADB_PORT}" -p"${MARIADB_ROOT_PASSWORD}" status;
       do sleep 2;
     done
     EOF

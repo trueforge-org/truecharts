@@ -1,0 +1,319 @@
+suite: dependencies mariadb test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render the mariadb dependency with the defaults of common
+    set:
+      dependencies:
+        mariadb:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 5
+      - documentSelector: &secretDoc
+          path: kind
+          value: Secret
+        equal:
+          path: metadata.name
+          value: test-release-name-mariadbcreds
+      - documentSelector: *secretDoc
+        equal:
+          path: stringData
+          value:
+            mariadb-password: PLACEHOLDERPASSWORD
+            mariadb-root-password: PLACEHOLDERROOTPASSWORD
+            plainhost: test-release-name-common-test-mariadb-main
+            plainporthost: test-release-name-common-test-mariadb-main:3306
+            url: mysql://test:PLACEHOLDERPASSWORD@test-release-name-common-test-mariadb-main:3306/test
+            urlnossl: mysql://test:PLACEHOLDERPASSWORD@test-release-name-common-test-mariadb-main:3306/test?sslmode=disable
+            jdbc: jdbc:mariadb://test-release-name-common-test-mariadb-main:3306/test
+            jdbc-mariadb: jdbc:mariadb://test-release-name-common-test-mariadb-main:3306/test
+            jdbc-mysql: jdbc:mysql://test-release-name-common-test-mariadb-main:3306/test
+      - documentSelector: &workloadDoc
+          path: kind
+          value: Deployment
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mariadb-main
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].image
+          value: docker.io/bitnamisecure/mariadb:latest@sha256:2413a63287321a4f7b8edc769464b79d63c09b168e4e233322706ed19755f4a0
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MARIADB_PASSWORD
+            value: PLACEHOLDERPASSWORD
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MARIADB_ROOT_PASSWORD
+            value: PLACEHOLDERROOTPASSWORD
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MARIADB_USER
+            value: test
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MARIADB_DATABASE
+            value: test
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MARIADB_EXTRA_FLAGS
+            value: --init-file=/init/passinit.sql
+      - documentSelector: *workloadDoc
+        matchRegex:
+          path: spec.template.spec.containers[0].livenessProbe.exec.command[2]
+          pattern: /opt/bitnami/scripts/mariadb/healthcheck.sh
+      - documentSelector: *workloadDoc
+        matchRegex:
+          path: spec.template.spec.containers[0].readinessProbe.exec.command[2]
+          pattern: /opt/bitnami/scripts/mariadb/healthcheck.sh
+      - documentSelector: *workloadDoc
+        matchRegex:
+          path: spec.template.spec.containers[0].startupProbe.exec.command[2]
+          pattern: /opt/bitnami/scripts/mariadb/healthcheck.sh
+      - documentSelector: *workloadDoc
+        notExists:
+          path: spec.template.spec.initContainers
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: mariadb-data
+            mountPath: /bitnami/mariadb
+            readOnly: false
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: mariadb-passinit
+            mountPath: /init/passinit.sql
+            subPath: passinit.sql
+            readOnly: false
+      - documentSelector:
+          path: kind
+          value: PersistentVolumeClaim
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mariadb-data
+      - documentSelector: &configmapDoc
+          path: kind
+          value: ConfigMap
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mariadb-passinit
+      - documentSelector: *configmapDoc
+        matchRegex:
+          path: data["passinit.sql"]
+          pattern: ALTER USER root@'%' IDENTIFIED VIA mysql_native_password USING PASSWORD\("PLACEHOLDERROOTPASSWORD"\);
+      - documentSelector: *configmapDoc
+        matchRegex:
+          path: data["passinit.sql"]
+          pattern: ALTER USER test@'%' IDENTIFIED VIA mysql_native_password USING PASSWORD\("PLACEHOLDERPASSWORD"\);
+      - documentSelector: &serviceDoc
+          path: kind
+          value: Service
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mariadb-main
+      - documentSelector: *serviceDoc
+        equal:
+          path: spec.ports[0]
+          value:
+            name: main
+            port: 3306
+            protocol: TCP
+            targetPort: 3306
+      - documentSelector: *serviceDoc
+        equal:
+          path: spec.selector['pod.name']
+          value: mariadb-main
+
+  - it: should use the custom depconfig
+    set:
+      dependencies:
+        mariadb:
+          enabled: true
+          depconfig:
+            password: testpassword
+            rootPassword: testrootpassword
+            mariadbUsername: myuser
+            mariadbDatabase: mydb
+    asserts:
+      - documentSelector: &secretDoc
+          path: kind
+          value: Secret
+        equal:
+          path: stringData
+          value:
+            mariadb-password: testpassword
+            mariadb-root-password: testrootpassword
+            plainhost: test-release-name-common-test-mariadb-main
+            plainporthost: test-release-name-common-test-mariadb-main:3306
+            url: mysql://myuser:testpassword@test-release-name-common-test-mariadb-main:3306/mydb
+            urlnossl: mysql://myuser:testpassword@test-release-name-common-test-mariadb-main:3306/mydb?sslmode=disable
+            jdbc: jdbc:mariadb://test-release-name-common-test-mariadb-main:3306/mydb
+            jdbc-mariadb: jdbc:mariadb://test-release-name-common-test-mariadb-main:3306/mydb
+            jdbc-mysql: jdbc:mysql://test-release-name-common-test-mariadb-main:3306/mydb
+      - documentSelector: &workloadDoc
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MARIADB_USER
+            value: myuser
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MARIADB_DATABASE
+            value: mydb
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MARIADB_PASSWORD
+            value: testpassword
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MARIADB_ROOT_PASSWORD
+            value: testrootpassword
+
+  - it: should render nothing with the mariadb dependency disabled
+    set:
+      dependencies:
+        mariadb:
+          enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should expose the credentials to the workloads of the chart
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+                env:
+                  MARIADB_URL: '{{ .Values.dependencies.mariadb.depconfig.creds.complete | trimAll "\"" }}'
+                  MARIADB_HOST: '{{ .Values.dependencies.mariadb.depconfig.creds.plainhost | trimAll "\"" }}'
+                  MARIADB_PASSWORD: "{{ .Values.dependencies.mariadb.depconfig.password }}"
+      dependencies:
+        mariadb:
+          enabled: true
+          depconfig:
+            password: testpassword
+    asserts:
+      - documentSelector: &rootWorkloadDoc
+          path: metadata.name
+          value: test-release-name-common-test
+        equal:
+          path: kind
+          value: Deployment
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MARIADB_URL
+            value: mysql://test:testpassword@test-release-name-common-test-mariadb-main:3306/test
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MARIADB_HOST
+            value: test-release-name-common-test-mariadb-main
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MARIADB_PASSWORD
+            value: testpassword
+
+  - it: should use the explicit primary service of mariadb
+    set:
+      dependencies:
+        mariadb:
+          enabled: true
+          service:
+            main:
+              primary: false
+              ports:
+                main:
+                  primary: false
+            db:
+              enabled: true
+              primary: true
+              ports:
+                db:
+                  enabled: true
+                  primary: true
+                  protocol: tcp
+                  port: 13306
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: stringData.plainporthost
+          value: test-release-name-common-test-mariadb-db:13306
+
+  - it: should fail with the removed top-level mariadb key
+    set:
+      mariadb:
+        enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [mariadb] key, it is replaced by [dependencies.mariadb]. Move [enabled] to [dependencies.mariadb], and [password], [rootPassword], [mariadbUsername] and [mariadbDatabase] to [dependencies.mariadb.depconfig]. The connection details are available under [dependencies.mariadb.depconfig.creds]
+
+  - it: should fail with the removed top-level mariadb key, even when disabled
+    set:
+      mariadb:
+        enabled: false
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [mariadb] key, it is replaced by [dependencies.mariadb]. Move [enabled] to [dependencies.mariadb], and [password], [rootPassword], [mariadbUsername] and [mariadbDatabase] to [dependencies.mariadb.depconfig]. The connection details are available under [dependencies.mariadb.depconfig.creds]
+
+  - it: should fail without a port for mariadb
+    set:
+      dependencies:
+        mariadb:
+          enabled: true
+          service:
+            main:
+              ports:
+                main:
+                  enabled: false
+    asserts:
+      - failedTemplate:
+          errorMessage: Service - Expected enabled service to have at least one port

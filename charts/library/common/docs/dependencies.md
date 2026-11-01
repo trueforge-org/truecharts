@@ -20,7 +20,7 @@ title: Dependencies
 ## `dependencies`
 
 Configuration for chart dependencies. Each key is the name of a dependency and contains a chart values structure, which is merged on top of the defaults of the same name in the common library.
-The `valkey` dependency is predefined in common with `enabled: false` and its full specification, so a chart only needs to enable it and set its overrides.
+The `valkey` and `mariadb` dependencies are predefined in common with `enabled: false` and their full specification, so a chart only needs to enable them and set its overrides.
 
 | Field      | Value          |
 | ---------- | -------------- |
@@ -28,7 +28,7 @@ The `valkey` dependency is predefined in common with `enabled: false` and its fu
 | Type       | `map`          |
 | Required   | ❌             |
 | Helm `tpl` | ❌             |
-| Default    | `{valkey: {enabled: false, ...}}` (see `dependencies.valkey` in `values.yaml`) |
+| Default    | `{mariadb: {enabled: false, ...}, valkey: {enabled: false, ...}}` (see `dependencies.mariadb` and `dependencies.valkey` in `values.yaml`) |
 
 Example:
 
@@ -76,7 +76,7 @@ Besides `enabled` and `depconfig`, the dependency accepts the same keys as the c
 | `image`, `*Image`                                                                                                                              | Added to the chart as `$nameImage` and `$name<Foo>Image` (eg `valkeyImage`, `valkeyClientImage` for `clientImage`). Containers are pointed to them. A container selecting `image` fails if the dependency defines none, a dependency never falls back to the main image of the chart. Other images of the chart can be selected explicitly (eg `imageSelector: someImage`). |
 | `securityContext`, `podOptions`, `resources`                                                                                                   | Applied as defaults to the pods and containers of the dependency only, the same way the chart-level keys apply to the chart.                                  |
 | `global`, `chartContext`, `notes`, `operator`, `fallbackDefaults`, `TZ`, `namespace`, `diagnosticMode`, `containerOptions`                     | Ignored. These apply to the whole release and are taken from the chart.                                                                                      |
-| `addons`, `dependencies`, `configMapsFromFolder`, `extraTpl`, `ingressMiddlewares`, `mariadb`, `mongodb`, `clickhouse`, `solr`                 | Not supported, rendering fails.                                                                                                                              |
+| `addons`, `dependencies`, `configMapsFromFolder`, `extraTpl`, `ingressMiddlewares`, `mongodb`, `clickhouse`, `solr`                             | Not supported, rendering fails.                                                                                                                              |
 | Any other key                                                                                                                                  | Kept as is and available to templates under `.Values.dependencies.$name.$key`.                                                                               |
 
 ---
@@ -111,7 +111,7 @@ Configuration of the dependency itself. It is never merged into the chart values
 
 ### `dependencies.$name.depconfig.password`
 
-Password of the dependency, used by the dependencies with additional handling (see [Valkey](#valkey)).
+Password of the dependency, used by the dependencies with additional handling (see [MariaDB](#mariadb) and [Valkey](#valkey)).
 
 | Field      | Value                                   |
 | ---------- | --------------------------------------- |
@@ -125,7 +125,7 @@ Password of the dependency, used by the dependencies with additional handling (s
 
 ### `dependencies.$name.depconfig.creds`
 
-Connection details, populated by the dependencies with additional handling (see [Valkey](#valkey)). Read-only.
+Connection details, populated by the dependencies with additional handling (see [MariaDB](#mariadb) and [Valkey](#valkey)). Read-only.
 
 | Field      | Value                                |
 | ---------- | ------------------------------------ |
@@ -212,6 +212,80 @@ The `targetSelector` of service ports points to a container name and is not rewr
 
 Templates within the dependency can reference its own values under `.Values.dependencies.$name`, which is normalized the same way (defaults applied, primaries set).
 For example the password: `"{{ .Values.dependencies.valkey.depconfig.password }}"`.
+
+---
+
+## MariaDB
+
+The `mariadb` dependency has additional handling:
+
+- A secret named `$releaseName-mariadbcreds` is created with the connection details, and the same details are available under `.Values.dependencies.mariadb.depconfig.creds`:
+
+  | Key                     | `creds` key        | Example                                                              |
+  | ----------------------- | ------------------ | -------------------------------------------------------------------- |
+  | `mariadb-password`      | `mariadbPassword`  | `my-password`                                                        |
+  | `mariadb-root-password` | `mariadbRootPassword` | `my-root-password`                                                |
+  | `plainhost`             | `plain`, `plainhost` | `myapp-mariadb-main`                                               |
+  | -                       | `plainport`        | `3306`                                                               |
+  | `plainporthost`         | `plainporthost`    | `myapp-mariadb-main:3306`                                            |
+  | `url`                   | `complete`         | `mysql://test:my-password@myapp-mariadb-main:3306/test`              |
+  | `urlnossl`              | `urlnossl`         | `mysql://test:my-password@myapp-mariadb-main:3306/test?sslmode=disable` |
+  | `jdbc`                  | `jdbc`             | `jdbc:mariadb://myapp-mariadb-main:3306/test`                        |
+  | `jdbc-mysql`            | `jdbcmysql`        | `jdbc:mysql://myapp-mariadb-main:3306/test`                          |
+  | `jdbc-mariadb`          | `jdbcmariadb`      | `jdbc:mariadb://myapp-mariadb-main:3306/test`                        |
+
+  The host and port are the ones of the primary service and port of the dependency.
+  Like the `creds` of the other dependencies, the values are quoted strings, use `| trimAll "\""` when templating them.
+- An init container `mariadb-wait` is added to the workloads of the chart (the ones with `dbWait` not set to `false`), waiting for MariaDB to respond.
+- The connection details are included in the notes.
+
+The `depconfig` of the dependency accepts:
+
+| Key               | Default                   | Description                         |
+| ----------------- | ------------------------- | ----------------------------------- |
+| `password`        | `PLACEHOLDERPASSWORD`     | Password of the database user       |
+| `rootPassword`    | `PLACEHOLDERROOTPASSWORD` | Password of the `root` user         |
+| `mariadbUsername` | `test`                    | Name of the database user           |
+| `mariadbDatabase` | `test`                    | Name of the database                |
+
+### Example
+
+The full specification of the `mariadb` dependency (image, workload, service, persistence, probes and the password init configmap) is part of the defaults of `dependencies.mariadb` in the common library `values.yaml`.
+A chart only enables it and sets the values it needs to override:
+
+```yaml
+image:
+  repository: ghcr.io/example/app
+  tag: latest
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            DATABASE_URL: '{{ .Values.dependencies.mariadb.depconfig.creds.complete | trimAll "\"" }}'
+            DATABASE_HOST: '{{ .Values.dependencies.mariadb.depconfig.creds.plainhost | trimAll "\"" }}'
+            DATABASE_PASSWORD: "{{ .Values.dependencies.mariadb.depconfig.password }}"
+
+dependencies:
+  mariadb:
+    enabled: true
+    depconfig:
+      password: "secure-password"
+      rootPassword: "secure-root-password"
+      mariadbUsername: myapp
+      mariadbDatabase: myapp
+```
+
+This renders, among others:
+
+- `Deployment` `myapp` with the `mariadb-wait` init container
+- `Deployment` `myapp-mariadb-main` with the `data` volume and the `passinit` configmap mounted
+- `Service` `myapp-mariadb-main` on port 3306
+- `ConfigMap` `myapp-mariadb-passinit`
+- `PersistentVolumeClaim` `myapp-mariadb-data`
+- `Secret` `myapp-mariadbcreds`
 
 ---
 

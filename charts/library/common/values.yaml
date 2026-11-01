@@ -1677,16 +1677,6 @@ cnpg:
     # -- contains credentials and urls output by generator
     creds: {}
 
-# -- mariadb dependency configuration
-# @default -- See below
-mariadb:
-  enabled: false
-  includeCommon: false
-  password: "PLACEHOLDERPASSWORD"
-  rootPassword: "PLACEHOLDERROOTPASSWORD"
-  # -- can be used to make an easy accessable note which URLS to use to access the DB.
-  creds: {}
-
 # -- mongodb dependency configuration
 # @default -- See below
 mongodb:
@@ -1722,11 +1712,90 @@ solr:
 # Its objects are merged into the chart under the name [<dependency>-<object>] (eg [workload.valkey-main])
 # and references between them (targetSelector, objectName, ...) are rewritten accordingly.
 # Objects inherit the defaults of the matching common object (eg [workload.main]) and default to [enabled: true].
-# Currently [valkey] is the only dependency with additional handling (credentials secret, wait init container).
+# Currently [valkey] and [mariadb] are the only dependencies with additional handling (credentials secret, wait init container).
 # Disabled dependencies are not merged into the chart, so their defaults only apply once a chart sets [enabled: true].
 # @default -- See below
 
 dependencies:
+  mariadb:
+    enabled: false
+    # -- Settings of the dependency itself, never merged into the chart
+    depconfig:
+      password: "PLACEHOLDERPASSWORD"
+      rootPassword: "PLACEHOLDERROOTPASSWORD"
+      mariadbUsername: "test"
+      mariadbDatabase: "test"
+    image:
+      repository: docker.io/bitnamisecure/mariadb
+      pullPolicy: IfNotPresent
+      tag: latest@sha256:2413a63287321a4f7b8edc769464b79d63c09b168e4e233322706ed19755f4a0
+    securityContext:
+      container:
+        readOnlyRootFilesystem: false
+        runAsGroup: 0
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                MARIADB_PASSWORD: "{{ .Values.dependencies.mariadb.depconfig.password }}"
+                MARIADB_ROOT_PASSWORD: "{{ .Values.dependencies.mariadb.depconfig.rootPassword }}"
+                MARIADB_USER: "{{ .Values.dependencies.mariadb.depconfig.mariadbUsername }}"
+                MARIADB_DATABASE: "{{ .Values.dependencies.mariadb.depconfig.mariadbDatabase }}"
+                MARIADB_EXTRA_FLAGS: "--init-file=/init/passinit.sql"
+              probes:
+                liveness:
+                  enabled: true
+                  type: exec
+                  command:
+                    - /bin/bash
+                    - -ec
+                    - "until /opt/bitnami/scripts/mariadb/healthcheck.sh; do sleep 2; done"
+                readiness:
+                  enabled: true
+                  type: exec
+                  command:
+                    - /bin/bash
+                    - -ec
+                    - "until /opt/bitnami/scripts/mariadb/healthcheck.sh; do sleep 2; done"
+                startup:
+                  enabled: true
+                  type: exec
+                  command:
+                    - /bin/bash
+                    - -ec
+                    - "until /opt/bitnami/scripts/mariadb/healthcheck.sh; do sleep 2; done"
+    service:
+      main:
+        ports:
+          main:
+            protocol: tcp
+            port: 3306
+            targetPort: 3306
+    configmap:
+      passinit:
+        data:
+          passinit.sql: |-
+            ALTER USER root@'%' IDENTIFIED VIA mysql_native_password USING PASSWORD("{{ .Values.dependencies.mariadb.depconfig.rootPassword }}");
+            ALTER USER {{ .Values.dependencies.mariadb.depconfig.mariadbUsername }}@'%' IDENTIFIED VIA mysql_native_password USING PASSWORD("{{ .Values.dependencies.mariadb.depconfig.password }}");
+            FLUSH PRIVILEGES;
+    persistence:
+      data:
+        enabled: true
+        mountPath: /bitnami/mariadb
+      passinit:
+        enabled: true
+        type: configmap
+        objectName: passinit
+        items:
+          - key: passinit.sql
+            path: passinit.sql
+        targetSelector:
+          main:
+            main:
+              subPath: passinit.sql
+              mountPath: /init/passinit.sql
   valkey:
     enabled: false
     # -- Settings of the dependency itself, never merged into the chart
