@@ -18,6 +18,9 @@
   {{/* Autogenerate valkey passwords and credentials if needed */}}
   {{- include "tc.v1.common.dependencies.valkey.injector" . }}
 
+  {{/* Render the ValkeyCluster of the valkey dependency, when it is provided by the valkey-operator */}}
+  {{- include "tc.v1.common.spawner.valkey" . }}
+
   {{/* Autogenerate mariadb passwords if needed */}}
   {{- include "tc.v1.common.dependencies.mariadb.injector" . }}
 

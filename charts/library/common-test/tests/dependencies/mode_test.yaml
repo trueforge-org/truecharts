@@ -45,7 +45,7 @@ tests:
           path: metadata.name
           value: test-release-name-common-test-valkey-main
 
-  - it: should not merge the dependency in operator mode
+  - it: should not merge the dependency in operator mode, but spawn the ValkeyCluster
     template: common.yaml
     set:
       dependencies:
@@ -54,13 +54,19 @@ tests:
           mode: operator
     asserts:
       - hasDocuments:
-          count: 1
+          count: 2
       - documentSelector:
           path: kind
           value: Secret
         equal:
           path: metadata.name
           value: test-release-name-valkeycreds
+      - documentSelector:
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-valkey
 
   - it: should still create the credentials of valkey in operator mode
     template: common.yaml
@@ -79,12 +85,12 @@ tests:
           path: stringData
           value:
             valkey-password: testpassword
-            plain: test-release-name-common-test-valkey-main
-            plainhost: test-release-name-common-test-valkey-main
+            plain: valkey-test-release-name-common-test-valkey
+            plainhost: valkey-test-release-name-common-test-valkey
             plainport: "6379"
-            plainporthost: test-release-name-common-test-valkey-main:6379
-            plainhostpass: test-release-name-common-test-valkey-main:testpassword
-            url: redis://default:testpassword@test-release-name-common-test-valkey-main:6379/0
+            plainporthost: valkey-test-release-name-common-test-valkey:6379
+            plainhostpass: valkey-test-release-name-common-test-valkey:testpassword
+            url: redis://default:testpassword@valkey-test-release-name-common-test-valkey:6379/0
 
   - it: should still create the credentials of mariadb in operator mode
     template: common.yaml
@@ -106,7 +112,7 @@ tests:
           path: stringData.plainporthost
           value: test-release-name-common-test-mariadb-main:3306
 
-  - it: should name the service as in standalone mode, even when it is set to primary
+  - it: should use the service of the operator for valkey, even when a service is set to primary
     template: common.yaml
     set:
       dependencies:
@@ -118,13 +124,13 @@ tests:
               primary: true
     asserts:
       - hasDocuments:
-          count: 1
+          count: 2
       - documentSelector:
           path: metadata.name
           value: test-release-name-valkeycreds
         equal:
           path: stringData.plainhost
-          value: test-release-name-common-test-valkey-main
+          value: valkey-test-release-name-common-test-valkey
 
   - it: should still add the wait init containers in operator mode
     template: common.yaml
@@ -158,7 +164,7 @@ tests:
           mode: operator
     asserts:
       - hasDocuments:
-          count: 3
+          count: 4
       - documentSelector: &deploymentDoc
           path: kind
           value: Deployment
@@ -180,7 +186,7 @@ tests:
           path: spec.template.spec.initContainers[1].env
           content:
             name: VALKEY_HOST
-            value: test-release-name-common-test-valkey-main
+            value: valkey-test-release-name-common-test-valkey
 
   - it: should still show the connection details in operator mode
     template: NOTES.txt
@@ -197,7 +203,7 @@ tests:
             mariadbDatabase: my-database
     asserts:
       - matchRegexRaw:
-          pattern: "## Valkey Database\n- Host: test-release-name-common-test-valkey-main\n- Port: 6379\n"
+          pattern: "## Valkey Database\n- Host: valkey-test-release-name-common-test-valkey\n- Port: 6379\n"
       - matchRegexRaw:
           pattern: "## MariaDB Database\n- Host: test-release-name-common-test-mariadb-main\n- Port: 3306\n"
       - matchRegexRaw:
@@ -215,7 +221,7 @@ tests:
           mode: standalone
     asserts:
       - hasDocuments:
-          count: 5
+          count: 6
       - documentSelector:
           path: kind
           value: StatefulSet
@@ -346,7 +352,7 @@ tests:
             version: "9.0"
     asserts:
       - hasDocuments:
-          count: 2
+          count: 3
       - documentSelector:
           path: kind
           value: Deployment

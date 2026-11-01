@@ -22,6 +22,8 @@ METALLB_CHART_VERSION="0.15.3"
 CERT_MANAGER_CHART_VERSION="v1.19.3"
 # renovate: datasource=helm depName=cloudnative-pg repository=oci://ghcr.io/cloudnative-pg/charts
 CLOUDNATIVE_PG_CHART_VERSION="0.27.1"
+# renovate: datasource=helm depName=valkey-operator repository=https://valkey.io/valkey-helm
+VALKEY_OPERATOR_CHART_VERSION="0.8.0"
 # renovate: datasource=helm depName=metrics-server repository=oci://ghcr.io/home-operations/charts-mirror
 METRICS_SERVER_CHART_VERSION="3.13.0"
 # renovate: datasource=helm depName=volsync repository=oci://oci.trueforge.org/truecharts
@@ -77,6 +79,13 @@ if [[ "$curr_chart" == "charts/library/common-test" ]] && [[ -n "$dependency_sel
     if [[ "$dependency_selector" =~ cnpg.*-values.yaml ]]; then
         if ! helm_install_with_retry cloudnative-pg oci://ghcr.io/cloudnative-pg/charts/cloudnative-pg --namespace cloudnative-pg --create-namespace --version "$CLOUDNATIVE_PG_CHART_VERSION"; then
             echo "Failed to install cloudnative-pg chart"
+            exit 1
+        fi
+    fi
+
+    if [[ "$dependency_selector" =~ valkey.*operator.*-values.yaml ]]; then
+        if ! helm_install_with_retry valkey-operator valkey-operator --repo https://valkey.io/valkey-helm --namespace valkey-operator-system --create-namespace --version "$VALKEY_OPERATOR_CHART_VERSION"; then
+            echo "Failed to install valkey-operator chart"
             exit 1
         fi
     fi

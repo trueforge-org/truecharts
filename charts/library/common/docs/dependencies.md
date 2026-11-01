@@ -135,7 +135,7 @@ dependencies:
 
 Settings specific to the operator that provides the dependency, used with `mode: operator` (see [Modes](#modes)).
 It is never merged into the chart values, the same as `depconfig`, and can be referenced by templates under `.Values.dependencies.$name.operator`.
-Common does not interpret its content, the keys are up to the chart.
+Common does not interpret its content, unless the dependency has operator support. Currently only `valkey` does, see [Valkey Operator](#valkey-operator).
 
 | Field      | Value                          |
 | ---------- | ------------------------------ |
@@ -219,7 +219,8 @@ Everything else keeps working, so a chart can switch between the modes without c
 - The credentials secret, the wait init container and the notes of the dependencies that have them (`valkey` and `mariadb`) are still created.
   They point to the primary service of the dependency, **under the name it would have in `standalone` mode** (`$fullname-$name-$service`, also when it is set to `primary: true`).
   The operator has to create its Service with that name and port, or the chart has to provide it.
-- Settings for the operator go under [`dependencies.$name.operator`](#dependenciesnameoperator), which is never merged into the chart. The objects of the operator itself (eg its custom resources) are not part of the dependency, a chart adds them to its own values (eg with `extraTpl`).
+  The exception is `valkey`, whose [operator is supported by common](#valkey-operator): the host and port are the ones of the Service the valkey-operator creates for the `ValkeyCluster` that common spawns.
+- Settings for the operator go under [`dependencies.$name.operator`](#dependenciesnameoperator), which is never merged into the chart. The custom resources of an operator are not part of the dependency. Common spawns them for `valkey` (see [Valkey Operator](#valkey-operator)), for other dependencies a chart adds them to its own values (eg with `extraTpl`).
 
 ### Defaults
 
@@ -886,6 +887,84 @@ This renders, among others:
 - `Service` `myapp-valkey-main` on port 6379
 - `ConfigMap` `myapp-valkey-health`
 - `Secret` `myapp-valkeycreds`
+
+---
+
+## Valkey Operator
+
+With `mode: operator`, common spawns a `ValkeyCluster` (`valkey.io/v1alpha1`) of the [valkey-operator](https://github.com/valkey-io/valkey-operator) instead of merging the workload, service, persistence, etc. of the dependency.
+The [`ValkeyNode`](https://github.com/valkey-io/valkey-operator/blob/main/docs/valkeynode.md) resources are managed by the operator itself, so they are not rendered.
+The valkey-operator and its CRDs have to be installed in the cluster, a chart should add it to its `operator.verify` list.
+
+All settings of the cluster go under `dependencies.valkey.operator`. Only the credentials stay in `depconfig`.
+
+- The `ValkeyCluster` is named `$fullname-valkey`. The release name has to be short enough for the operator limits, rendering fails with a clear message otherwise (at most 43 characters for a `StatefulSet` including the digits of the highest shard and node index, 56 for a `Deployment`).
+- The operator creates a headless Service named `valkey-$clusterName` on port `6379`, which cannot be changed. This is the single source of truth for the host and port: the `plainhost`, `plainport`, `plainporthost` and `url` of `valkeycreds`, the `valkey-wait` init container and the notes all read them from the same helper, and the `service` of the dependency is ignored.
+- The password is never copied into the `ValkeyCluster`. The `default` user references the `valkey-password` key of the `$releaseName-valkeycreds` secret with `+@all ~* &*` permissions. An item named `default` in `operator.users` is merged over it, other items are added as users.
+- The image defaults to `dependencies.valkey.image`, `operator.image` overrides it.
+- `persistence` defaults to enabled for parity with `standalone`, and follows `global.fallbackDefaults` for the size (`vctSize`), storage class and `pvcRetain` (the operator itself retains by default, common deletes unless `retain: true`). It requires the `StatefulSet` workload type, and can not be added or removed later.
+- The chart level resources and security context (`runAsNonRoot`, `runAsUser`, `runAsGroup`, `fsGroup`) are applied, unless set in `operator`.
+- `networking.tls` is not supported, as the credentials and the wait init container connect without TLS. Rendering fails when it is set.
+- `global.stopAll` can not be honoured, as the operator requires at least one shard.
+
+| Key                                                      | Type     | Default                  | Description                                                                                                  |
+| -------------------------------------------------------- | -------- | ------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| `operator.shards`                                        | `int`    | `1`                      | Number of shards, at least `1`.                                                                              |
+| `operator.replicas`                                      | `int`    | `0`                      | Replicas per shard, at least `0`.                                                                            |
+| `operator.image`                                         | `string` | `""`                     | Overrides the image of `dependencies.valkey.image`.                                                          |
+| `operator.workloadType`                                  | `string` | `StatefulSet`            | `StatefulSet` or `Deployment`. Immutable.                                                                    |
+| `operator.config`                                        | `map`    | `{}`                     | Valkey configuration. Booleans become `yes`/`no`, values are templated.                                      |
+| `operator.resources`                                     | `map`    | `{}`                     | Resources of the Valkey containers. Defaults to the resources of the chart.                                  |
+| `operator.persistence.enabled`                           | `bool`   | `true`                   | Persist the data, requires `StatefulSet`.                                                                    |
+| `operator.persistence.size`                              | `string` | `""`                     | Size of the volume. Defaults to the fallback size of the chart. It can only grow.                            |
+| `operator.persistence.storageClass`                      | `string` | `""`                     | Storage class. Defaults to the one of the chart, `-` leaves it unset.                                        |
+| `operator.persistence.retain`                            | `bool`   | `false`                  | Retain the volumes when the cluster is deleted. Defaults to `global.fallbackDefaults.pvcRetain`.             |
+| `operator.exporter`                                      | `map`    | `{enabled: true, ...}`   | Metrics exporter (`enabled`, `image`, `args`, `resources`, `securityContext`).                               |
+| `operator.scheduling`                                    | `map`    | `{}`                     | Scheduling settings of the cluster, passed through.                                                          |
+| `operator.podDisruptionBudget.mode`                      | `string` | `Cluster`                | `Cluster` or `Disabled`.                                                                                     |
+| `operator.podMetadata`                                   | `map`    | `{labels: {}, annotations: {}}` | Extra labels and annotations of the pods.                                                             |
+| `operator.imagePullSecrets`                              | `list`   | `[]`                     | Names, or objects with a `name`.                                                                             |
+| `operator.podSecurityContext`                            | `map`    | `{}`                     | Overrides the security context derived from the chart.                                                       |
+| `operator.serviceAccountName`                            | `string` | `""`                     | Service account of the pods.                                                                                 |
+| `operator.terminationGracePeriodSeconds`                 | `int`    | unset                    | Termination grace period of the pods.                                                                        |
+| `operator.containers`                                    | `list`   | `[]`                     | Extra containers, passed through.                                                                            |
+| `operator.networking.clusterDomain`                      | `string` | `""`                     | Cluster domain used for the node addresses.                                                                  |
+| `operator.networking.discovery.preferredEndpointType`    | `string` | `""`                     | `IP` or `Hostname`. `Hostname` requires `StatefulSet`.                                                       |
+| `operator.users`                                         | `list`   | `[]`                     | Additional users, see the [valkey-operator docs](https://github.com/valkey-io/valkey-operator/blob/main/docs/valkeycluster.md#users). |
+| `operator.labels` / `operator.annotations`               | `map`    | `{}`                     | Extra labels and annotations of the `ValkeyCluster`.                                                         |
+
+### Example
+
+```yaml
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            REDIS_HOST: '{{ .Values.dependencies.valkey.depconfig.creds.plainhost | trimAll "\"" }}'
+            REDIS_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                key: valkey-password
+
+dependencies:
+  valkey:
+    enabled: true
+    mode: operator
+    depconfig:
+      password: "secure-password"
+    operator:
+      shards: 3
+      replicas: 1
+      config:
+        maxmemory-policy: allkeys-lru
+      persistence:
+        size: 5Gi
+```
+
+This renders the `ValkeyCluster` `myapp-valkey` and the `Secret` `myapp-valkeycreds`, and the `valkey-wait` init container waits for `valkey-myapp-valkey:6379`.
 
 ---
 
