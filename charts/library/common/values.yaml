@@ -68,7 +68,7 @@ global:
     # Traefik needs the port of its entrypoint here, which is not always the port it is exposed on
     routeListenerPort: 443
     cnpg:
-      pgVersion: 16
+      pgVersion: 18
       skipEmptyWalArchiveCheck: true
   traefik:
     commonMiddlewares:
@@ -1632,9 +1632,12 @@ cnpg:
     type: postgres
 
     # Version of Postgresql to use, changes cluster naming scheme
+    # Defaults to [global.fallbackDefaults.cnpg.pgVersion], and to `16` for type `vectors`
     # * `15`
     # * `16`
-    pgVersion: 16
+    # * `17`
+    # * `18`
+    # pgVersion: 18
 
     # Cluster mode of operation. Available modes:
     # * `standalone` - default mode. Creates new or updates an existing CNPG cluster.
