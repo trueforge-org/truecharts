@@ -7,11 +7,12 @@
   {{- $rootCtx := . -}}
   {{- $values := $rootCtx.Values -}}
 
-  {{/* Top-level keys of dependencies that moved to [dependencies.<name>]. */}}
+  {{/* Top-level keys of dependencies that moved to [dependencies.<name>], and top-level keys that were removed without a replacement. */}}
   {{/* Their [enabled] is taken into account, a disabled one never rendered anything, so it can safely stay in the values. */}}
   {{- $movedDependencies := dict "mariadb" "mariadb" "redis" "valkey" "valkey" "valkey" -}}
   {{- $movedSettings := dict "mariadb" "[password], [rootPassword], [mariadbUsername] and [mariadbDatabase]" "valkey" "[password]" -}}
-  {{- range $key := (keys $movedDependencies | sortAlpha) -}}
+  {{- $removedKeys := list "solr" "mongodb" "clickhouse" "memcached" -}}
+  {{- range $key := (concat (keys $movedDependencies | sortAlpha) $removedKeys) -}}
     {{- $value := get $values $key -}}
     {{- if and (kindIs "map" $value) (hasKey $value "enabled") (not (kindIs "invalid" $value.enabled)) -}}
       {{- $enabled := (include "tc.v1.common.lib.util.enabled" (dict
@@ -19,8 +20,12 @@
                       "name" $key "caller" "Deprecations"
                       "key" "values")) -}}
       {{- if eq $enabled "true" -}}
-        {{- $dep := get $movedDependencies $key -}}
-        {{- fail (printf "Expected no [%s] key, it is replaced by [dependencies.%s]. Move [enabled] to [dependencies.%s], and %s to [dependencies.%s.depconfig]. The connection details are available under [dependencies.%s.depconfig.creds]" $key $dep $dep (get $movedSettings $dep) $dep $dep) -}}
+        {{- if hasKey $movedDependencies $key -}}
+          {{- $dep := get $movedDependencies $key -}}
+          {{- fail (printf "Expected no [%s] key, it is replaced by [dependencies.%s]. Move [enabled] to [dependencies.%s], and %s to [dependencies.%s.depconfig]. The connection details are available under [dependencies.%s.depconfig.creds]" $key $dep $dep (get $movedSettings $dep) $dep $dep) -}}
+        {{- else -}}
+          {{- fail (printf "Expected no [%s] key, it is no longer supported and has no replacement. Remove [%s], or set [%s.enabled] to false" $key $key $key) -}}
+        {{- end -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}
