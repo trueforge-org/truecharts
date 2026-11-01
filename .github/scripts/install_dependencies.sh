@@ -38,13 +38,13 @@ helm_install_with_retry() {
 
     for attempt in 1 2 3; do
         echo "Installing ${release} (attempt ${attempt}/3)..."
-        if helm install "${release}" "$@" --wait --timeout "${HELM_WAIT_TIMEOUT}"; then
+        # upgrade --install, as a retry also has to work on a release that failed halfway
+        if helm upgrade --install "${release}" "$@" --wait --timeout "${HELM_WAIT_TIMEOUT}"; then
             return 0
         fi
 
         if [[ "${attempt}" -lt 3 ]]; then
             echo "Retrying ${release} after transient install failure..."
-            helm uninstall "${release}" --ignore-not-found --wait || true
             sleep $((attempt * 15))
         fi
     done

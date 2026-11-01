@@ -11,15 +11,13 @@ on:
       - "charts/library/common/**"
       - "charts/library/common-test/**"
       - ".github/workflows/common-tests.yaml"
+      - ".github/scripts/install_dependencies.sh"
   #pull_request:
   #  branches:
   #    - main
   #  paths:
   #    - "charts/charts/library/common/**"
   #    - ".github/workflows/common-tests.yaml"
-  # The full matrix, as pull requests only test the oldest and newest versions
-  schedule:
-    - cron: "0 3 * * *"
   workflow_dispatch:
 
 jobs:
@@ -27,7 +25,7 @@ jobs:
     runs-on:
       group: default
     outputs:
-      changes_detected: ${{ steps.filter.outputs.changed == 'true' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+      changes_detected: ${{ steps.filter.outputs.changed == 'true' || github.event_name == 'workflow_dispatch' }}
 
     steps:
       - name: Checkout code
@@ -43,6 +41,7 @@ jobs:
             - 'charts/library/common/**'
             - 'charts/library/common-test/**'
             - '.github/workflows/common-tests.yaml'
+            - '.github/scripts/install_dependencies.sh'
 
   lint:
     name: Lint Common
@@ -190,7 +189,7 @@ jobs:
       fail-fast: false
       matrix:
         # Pull requests test the lowest supported and the latest versions. Everything else tests all combinations
-        versions: ${{ fromJSON('[{"k3s":"v1.33","helm":"v3.14.0"},{"k3s":"v1.35","helm":"v4.1.0"}]') }}
+        versions: ${{ fromJSON(github.event_name == 'pull_request' && '[{"k3s":"v1.33","helm":"v3.14.0"},{"k3s":"v1.35","helm":"v4.1.0"}]' || '[{"k3s":"v1.33","helm":"v3.14.0"},{"k3s":"v1.33","helm":"v3.20.0"},{"k3s":"v1.33","helm":"v4.1.0"},{"k3s":"v1.34","helm":"v3.14.0"},{"k3s":"v1.34","helm":"v3.20.0"},{"k3s":"v1.34","helm":"v4.1.0"},{"k3s":"v1.35","helm":"v3.14.0"},{"k3s":"v1.35","helm":"v3.20.0"},{"k3s":"v1.35","helm":"v4.1.0"}]') }}
         values:
           - basic-values.yaml
           - configmap-values.yaml
@@ -227,6 +226,13 @@ jobs:
           - mongodb-values.yaml
           - postgresql-values.yaml
           - register-operator-values.yaml
+          - autopermissions-values.yaml
+          - credentials-values.yaml
+          - credentialsList-values.yaml
+          - init-values.yaml
+          - priorityclass-values.yaml
+          - schedule-values.yaml
+          - storageclass-values.yaml
           ## TODO: reenable when we've some credentials ready to rock for testing
           # - volsync-dest-values.yaml
           # - volsync-src-values.yaml
@@ -330,7 +336,7 @@ jobs:
   common-tests-complete:
     needs: [check_changes, lint, unittest, schema-validation, install]
     if: ${{ always() }}
-    name: Common Tets Completed
+    name: Common Tests Completed
     runs-on:
       group: default
     steps:
