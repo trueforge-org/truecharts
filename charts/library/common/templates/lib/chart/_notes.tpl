@@ -317,13 +317,6 @@ Display connection information for enabled dependencies and addons
     {{- end -}}
   {{- end -}}
 
-  {{- if .Values.solr -}}
-    {{- if .Values.solr.enabled -}}
-      {{- $hasConnections = true -}}
-      {{- $connections = append $connections (include "tc.v1.common.lib.chart.connections.solr" . | trim) -}}
-    {{- end -}}
-  {{- end -}}
-
   {{- /* Check for enabled addons */ -}}
   {{- if .Values.addons -}}
     {{- if .Values.addons.tailscale -}}
@@ -490,33 +483,6 @@ Clickhouse connection information
   {{- end -}}
   {{- if .Values.clickhouse.creds.jdbc }}
 - JDBC URL: {{ .Values.clickhouse.creds.jdbc }}
-  {{- end -}}
-  {{- else }}
-- Configuration pending (credentials will be available after initialization)
-  {{- end }}
-{{- end -}}
-
-{{/*
-Solr connection information
-Note: Solr uses 'portHost' (camelCase) from the injector, unlike other deps that use 'plainporthost'
-*/}}
-{{- define "tc.v1.common.lib.chart.connections.solr" -}}
-## Solr Search
-  {{- if .Values.solr.creds -}}
-  {{- if .Values.solr.creds.plainhost }}
-- Host: {{ .Values.solr.creds.plainhost }}
-  {{- end -}}
-  {{- if .Values.solr.creds.portHost }}
-- Host:Port: {{ .Values.solr.creds.portHost }}
-  {{- end -}}
-  {{- if .Values.solr.solrCores }}
-- Cores: {{ .Values.solr.solrCores }}
-  {{- end -}}
-  {{- if .Values.solr.solrEnableAuthentication }}
-- Authentication: {{ .Values.solr.solrEnableAuthentication }}
-  {{- end -}}
-  {{- if .Values.solr.creds.url }}
-- Connection URL: {{ include "tc.v1.common.lib.chart.notes.credential" (dict "rootCtx" $ "value" .Values.solr.creds.url) }}
   {{- end -}}
   {{- else }}
 - Configuration pending (credentials will be available after initialization)

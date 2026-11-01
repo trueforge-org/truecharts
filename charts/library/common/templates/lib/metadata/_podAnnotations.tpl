@@ -9,5 +9,4 @@ checksum/configmaps: {{ toJson $.Values.configmap | sha256sum }}
 checksum/secrets: {{ toJson $.Values.secret | sha256sum }}
 checksum/cnpg: {{ toJson $.Values.cnpg | sha256sum }}
 checksum/dependencies: {{ toJson $.Values.dependencies | sha256sum }}
-checksum/solr: {{ toJson $.Values.solr | sha256sum }}
 {{- end -}}

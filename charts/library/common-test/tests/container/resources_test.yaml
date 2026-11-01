@@ -403,7 +403,7 @@ tests:
   # Test purpose:
   # - Verify that init/wait containers for dependencies get standard resource limits
   # - Ensure "excludeExtra" flag prevents GPU resources from being added to specific containers
-  # - Check that 6 dependency wait containers (valkey, mongodb, mariadb, clickhouse, solr, cnpg)
+  # - Check that 5 dependency wait containers (valkey, mongodb, mariadb, clickhouse, cnpg)
   #   all receive the default resource limits (not the extra GPU limit)
   #
   # Expected document order (10 documents total):
@@ -425,7 +425,6 @@ tests:
   #   --set dependencies.mongodb.enabled=true \
   #   --set dependencies.mariadb.enabled=true \
   #   --set clickhouse.enabled=true \
-  #   --set solr.enabled=true \
   #   --set cnpg.my-pg.enabled=true \
   #   --set 'resources.limits.nvidia\.com/gpu=1'
   # # Check that initContainers have standard limits (500m CPU, 512Mi memory)
@@ -456,8 +455,6 @@ tests:
   #       mongodb:
   #         enabled: true
   #     clickhouse:
-  #       enabled: true
-  #     solr:
   #       enabled: true
   #     cnpg:
   #       my-pg:
@@ -591,18 +588,6 @@ tests:
   #         path: spec.template.spec.initContainers[4]
   #         content:
   #           name: test-release-name-common-test-system-valkey-wait
-  #           resources:
-  #             limits:
-  #               cpu: 500m
-  #               memory: 512Mi
-  #             requests:
-  #               cpu: 10m
-  #               memory: 50Mi
-  #     - documentIndex: 8
-  #       isSubset:
-  #         path: spec.template.spec.initContainers[5]
-  #         content:
-  #           name: test-release-name-common-test-system-solr-wait
   #           resources:
   #             limits:
   #               cpu: 500m
