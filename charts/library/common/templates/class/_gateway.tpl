@@ -64,52 +64,5 @@ spec:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   listeners:
-  {{- range $values.listeners }}
-  {{- $listenerName := .name }}
-  - name: {{ required (printf "listener name is required for Gateway %v" $fullName) .name }}
-    {{- if .hostname }}
-    hostname: {{ tpl .hostname $ | quote }}
-    {{- end }}
-    port: {{ required (printf "listener port is required for Gateway %v listener %v" $fullName .name) .port }}
-    protocol: {{ required (printf "listener protocol is required for Gateway %v listener %v" $fullName .name) .protocol }}
-    {{- if .tls }}
-    tls:
-      {{- if .tls.mode }}
-      mode: {{ .tls.mode }}
-      {{- end }}
-      {{- if .tls.certificateRefs }}
-      certificateRefs:
-      {{- range .tls.certificateRefs }}
-      - group: {{ default "" .group | quote }}
-        kind: {{ default "Secret" .kind }}
-        name: {{ required (printf "certificateRef name is required for Gateway %v listener %v" $fullName $listenerName) .name }}
-        {{- if .namespace }}
-        namespace: {{ .namespace }}
-        {{- end }}
-      {{- end }}
-      {{- end }}
-      {{- with .tls.options }}
-      options:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-    {{- end }}
-    {{- if .allowedRoutes }}
-    allowedRoutes:
-      {{- if .allowedRoutes.namespaces }}
-      namespaces:
-        from: {{ default "Same" .allowedRoutes.namespaces.from }}
-        {{- if .allowedRoutes.namespaces.selector }}
-        selector:
-          {{- toYaml .allowedRoutes.namespaces.selector | nindent 10 }}
-        {{- end }}
-      {{- end }}
-      {{- if .allowedRoutes.kinds }}
-      kinds:
-      {{- range .allowedRoutes.kinds }}
-      - group: {{ default "gateway.networking.k8s.io" .group }}
-        kind: {{ required (printf "allowedRoute kind is required for Gateway %v listener %v" $fullName $listenerName) .kind }}
-      {{- end }}
-      {{- end }}
-    {{- end }}
-  {{- end }}
+    {{- include "tc.v1.common.lib.gateway.listeners" (dict "rootCtx" $ "listeners" $values.listeners "caller" "Gateway" "name" $fullName) | trim | nindent 2 }}
 {{- end }}

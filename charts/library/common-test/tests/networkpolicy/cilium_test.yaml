@@ -1,0 +1,352 @@
+suite: Cilium network policy test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should create a CiliumNetworkPolicy targeting a workload
+    set:
+      component: worker
+      workload:
+        worker:
+          enabled: true
+          primary: true
+          type: Deployment
+          extraSelectorLabels:
+            app.example.com/component: "{{ .Values.component }}"
+          podSpec: {}
+      networkpolicy:
+        allow-dns:
+          enabled: true
+          type: cilium
+          targetSelector: worker
+          description: "{{ .Release.Name }} DNS"
+          enableDefaultDeny:
+            ingress: false
+            egress: false
+          ingress:
+            - fromEntities:
+                - cluster
+          ingressDeny:
+            - fromEntities:
+                - world
+          egress:
+            - toEntities:
+                - kube-dns
+          egressDeny:
+            - toCIDR:
+                - 169.254.169.254/32
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: CiliumNetworkPolicy
+      - documentIndex: 1
+        isAPIVersion:
+          of: cilium.io/v2
+      - documentIndex: 1
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-allow-dns
+      - documentIndex: 1
+        equal:
+          path: metadata.namespace
+          value: test-release-namespace
+      - documentIndex: 1
+        equal:
+          path: spec.description
+          value: test-release-name DNS
+      - documentIndex: 1
+        equal:
+          path: spec.endpointSelector.matchLabels
+          value:
+            app.kubernetes.io/instance: test-release-name
+            app.kubernetes.io/name: common-test
+            pod.name: worker
+            app.example.com/component: worker
+      - documentIndex: 1
+        equal:
+          path: spec.enableDefaultDeny
+          value:
+            ingress: false
+            egress: false
+      - documentIndex: 1
+        equal:
+          path: spec.ingressDeny
+          value:
+            - fromEntities:
+                - world
+      - documentIndex: 1
+        equal:
+          path: spec.egressDeny
+          value:
+            - toCIDR:
+                - 169.254.169.254/32
+
+  - it: should target multiple workloads with a shared chart selector and name expression
+    set:
+      workload:
+        frontend:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+        worker:
+          enabled: true
+          type: Deployment
+          podSpec: {}
+      networkpolicy:
+        selected:
+          enabled: true
+          type: cilium
+          targetSelector:
+            - frontend
+            - worker
+    asserts:
+      - documentIndex: 2
+        isKind:
+          of: CiliumNetworkPolicy
+      - documentIndex: 2
+        equal:
+          path: spec.endpointSelector.matchLabels
+          value:
+            app.kubernetes.io/instance: test-release-name
+            app.kubernetes.io/name: common-test
+      - documentIndex: 2
+        equal:
+          path: spec.endpointSelector.matchExpressions
+          value:
+            - key: pod.name
+              operator: In
+              values:
+                - frontend
+                - worker
+
+  - it: should create a clusterwide policy scoped to chart pods when targeting all pods
+    set:
+      networkpolicy:
+        cluster:
+          enabled: true
+          type: cilium
+          clusterwide: true
+          targetAllPods: true
+          ingress:
+            - fromEntities:
+                - cluster
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: CiliumClusterwideNetworkPolicy
+      - documentIndex: 0
+        isAPIVersion:
+          of: cilium.io/v2
+      - documentIndex: 0
+        notExists:
+          path: metadata.namespace
+      - documentIndex: 0
+        equal:
+          path: spec.endpointSelector.matchLabels
+          value:
+            k8s:io.kubernetes.pod.namespace: test-release-namespace
+
+  - it: should scope chart-derived selectors in a clusterwide policy
+    set:
+      workload:
+        worker:
+          enabled: true
+          primary: true
+          type: Deployment
+          extraSelectorLabels:
+            k8s:io.kubernetes.pod.namespace: wrong-namespace
+          podSpec: {}
+      networkpolicy:
+        cluster:
+          enabled: true
+          type: cilium
+          clusterwide: true
+          targetSelector: worker
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: CiliumClusterwideNetworkPolicy
+      - documentIndex: 1
+        equal:
+          path: spec.endpointSelector.matchLabels
+          value:
+            app.kubernetes.io/instance: test-release-name
+            app.kubernetes.io/name: common-test
+            pod.name: worker
+            k8s:io.kubernetes.pod.namespace: test-release-namespace
+
+  - it: should render a templated endpointSelector
+    set:
+      selector:
+        app: frontend
+      networkpolicy:
+        custom:
+          enabled: true
+          type: cilium
+          endpointSelector:
+            matchLabels:
+              app: "{{ .Values.selector.app }}"
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: spec.endpointSelector.matchLabels.app
+          value: frontend
+
+  - it: should preserve an explicitly empty endpointSelector
+    set:
+      networkpolicy:
+        custom:
+          enabled: true
+          type: cilium
+          endpointSelector: {}
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: spec.endpointSelector
+          value: {}
+
+  - it: should render a clusterwide host policy with a nodeSelector
+    set:
+      networkpolicy:
+        hosts:
+          enabled: true
+          type: cilium
+          clusterwide: true
+          nodeSelector:
+            matchLabels:
+              node-role.kubernetes.io/control-plane: ""
+          ingress:
+            - fromEntities:
+                - cluster
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: CiliumClusterwideNetworkPolicy
+      - documentIndex: 0
+        equal:
+          path: spec.nodeSelector.matchLabels
+          value:
+            node-role.kubernetes.io/control-plane: ""
+      - documentIndex: 0
+        notExists:
+          path: spec.endpointSelector
+
+  - it: should preserve an explicitly empty nodeSelector for a host policy
+    set:
+      networkpolicy:
+        hosts:
+          enabled: true
+          type: cilium
+          clusterwide: true
+          nodeSelector: {}
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: spec.nodeSelector
+          value: {}
+      - documentIndex: 0
+        notExists:
+          path: spec.endpointSelector
+
+  - it: should keep the default Kubernetes NetworkPolicy selector chart-wide
+    set:
+      networkpolicy:
+        default:
+          enabled: true
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: NetworkPolicy
+      - documentIndex: 0
+        equal:
+          path: spec.podSelector.matchLabels
+          value:
+            app.kubernetes.io/instance: test-release-name
+            app.kubernetes.io/name: common-test
+      - documentIndex: 0
+        notExists:
+          path: spec.podSelector.matchExpressions
+
+  - it: should reject an unknown policy type
+    set:
+      networkpolicy:
+        invalid:
+          enabled: true
+          type: unknown
+    asserts:
+      - failedTemplate:
+          errorMessage: NetworkPolicy - Expected [type] to be one of [kubernetes, cilium], but got [unknown]
+
+  - it: should reject Kubernetes-only podSelector on a Cilium policy
+    set:
+      networkpolicy:
+        invalid:
+          enabled: true
+          type: cilium
+          podSelector:
+            matchLabels:
+              app: frontend
+    asserts:
+      - failedTemplate:
+          errorMessage: NetworkPolicy - Key [podSelector] is not supported when [type] is [cilium], use [endpointSelector] instead
+
+  - it: should reject Cilium-only fields on a Kubernetes policy
+    set:
+      networkpolicy:
+        invalid:
+          enabled: true
+          description: invalid
+    asserts:
+      - failedTemplate:
+          errorMessage: NetworkPolicy - Key [description] is only supported when [type] is [cilium]
+
+  - it: should reject clusterwide Kubernetes policies
+    set:
+      networkpolicy:
+        invalid:
+          enabled: true
+          clusterwide: true
+    asserts:
+      - failedTemplate:
+          errorMessage: NetworkPolicy - Key [clusterwide] is only supported when [type] is [cilium]
+
+  - it: should reject multiple Cilium pod selection methods
+    set:
+      networkpolicy:
+        invalid:
+          enabled: true
+          type: cilium
+          targetAllPods: true
+          endpointSelector:
+            matchLabels:
+              app: frontend
+    asserts:
+      - failedTemplate:
+          errorMessage: NetworkPolicy - Only one of [endpointSelector, nodeSelector, targetSelector/targetSelectorRegex, targetAllPods] can be specified
+
+  - it: should require clusterwide for Cilium host policies
+    set:
+      networkpolicy:
+        invalid:
+          enabled: true
+          type: cilium
+          nodeSelector:
+            matchLabels:
+              node-role.kubernetes.io/control-plane: ""
+    asserts:
+      - failedTemplate:
+          errorMessage: "NetworkPolicy - Key [nodeSelector] requires [clusterwide: true]"
+
+  - it: should reject an invalid enableDefaultDeny value
+    set:
+      networkpolicy:
+        invalid:
+          enabled: true
+          type: cilium
+          enableDefaultDeny: false
+    asserts:
+      - failedTemplate:
+          errorMessage: NetworkPolicy - Expected [enableDefaultDeny] to be a dictionary, but got [bool]

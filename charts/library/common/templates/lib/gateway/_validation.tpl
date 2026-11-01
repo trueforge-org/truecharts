@@ -27,18 +27,21 @@
   {{- end -}}
 {{- end -}}
 
+{{/* Validates the listeners of a Gateway or ListenerSet. caller and key default to Gateway */}}
 {{- define "tc.v1.common.lib.gateway.validation" -}}
   {{- $objectData := .objectData -}}
   {{- $name := .name -}}
+  {{- $caller := .caller | default "Gateway" -}}
+  {{- $key := .key | default "gateway" -}}
 
   {{- if not $objectData.listeners -}}
-    {{- fail (printf "Gateway - Expected non-empty [gateway.%s.listeners]" $name) -}}
+    {{- fail (printf "%s - Expected non-empty [%s.%s.listeners]" $caller $key $name) -}}
   {{- end -}}
 
   {{- $listenerNames := list -}}
   {{- range $objectData.listeners -}}
     {{- if mustHas .name $listenerNames -}}
-      {{- fail (printf "Gateway - Expected listener names in [gateway.%s.listeners] to be unique, but [%s] is defined more than once" $name .name) -}}
+      {{- fail (printf "%s - Expected listener names in [%s.%s.listeners] to be unique, but [%s] is defined more than once" $caller $key $name .name) -}}
     {{- end -}}
     {{- $listenerNames = mustAppend $listenerNames .name -}}
   {{- end -}}
