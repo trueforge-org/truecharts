@@ -164,10 +164,41 @@ Within a dependency, the primary objects are resolved as follows: the object wit
 This applies to workloads, their containers, services, their ports and serviceAccounts.
 
 
-In the chart, the objects of a dependency are **never** primary (`primary: false`) and they are marked with the name of their dependency (`dependency: valkey`).
-Marked objects do not take part in the primary validation of the chart, so a chart does not need a primary object of its own in a collection that only has objects of dependencies.
+In the chart, the objects of a dependency are marked with the name of their dependency (`dependency: valkey`) and are **not** primary (`primary: false`), unless they explicitly set `primary: true`.
+Marked objects that are not primary do not take part in the primary validation of the chart, so a chart does not need a primary object of its own in a collection that only has objects of dependencies.
 The primary workload, service, ingress, etc. of the release stay the ones of the chart, and their names are not affected by the dependency
 (eg the Service of the chart is still named `$fullname`, the one of the dependency `$fullname-valkey-main`).
+
+#### Primary Objects of a Dependency
+
+An object of a dependency with an explicit `primary: true` becomes the primary object of the release, the same as the object would in the chart.
+It is named `$fullname` instead of `$fullname-$name-$object`, and is used wherever the chart looks for its primary object (notes, chart context, the credentials of `valkey`, ...).
+This works for every collection that has a primary object (`workload`, `service`, `serviceAccount`, `rbac`, `ingress`, `route`, `gateway`, `gatewayClass`, `networkpolicy`, `metrics`, `cnpg`, ...), and only objects that are set explicitly are primary.
+Being the primary object within the dependency (the only object, or the one named `main`) does not make it the primary object of the release.
+
+The usual rules apply, so there can only be one primary object per collection in the release, across the chart and all dependencies.
+To run a release without a workload of its own, disable the `main` objects of the chart and set the objects of the dependency to primary:
+
+```yaml
+workload:
+  main:
+    enabled: false
+service:
+  main:
+    enabled: false
+
+dependencies:
+  valkey:
+    enabled: true
+    workload:
+      main:
+        primary: true
+    service:
+      main:
+        primary: true
+```
+
+This renders a `StatefulSet` and a `Service` named `$fullname`, and nothing else besides the objects of the dependency itself.
 
 3. **Universal Resource Prefixing**: When a dependency is enabled, ALL its resources (except excluded keys) are merged into the main chart with prefixed names:
    - **Prefixed**: workload, service, configmap, secret, persistence, podDisruptionBudget, hpa, vpa, ingress, route, gateway, certificate, serviceAccount, rbac, networkPolicy, storageClass, and any other resource type
