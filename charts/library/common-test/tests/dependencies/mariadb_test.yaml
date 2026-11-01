@@ -300,7 +300,7 @@ tests:
           value: Secret
         equal:
           path: stringData.plainporthost
-          value: test-release-name-common-test-mariadb-db:13306
+          value: test-release-name-common-test:13306
 
   - it: should fail with the removed top-level mariadb key
     set:

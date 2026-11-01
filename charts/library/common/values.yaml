@@ -1929,6 +1929,24 @@ dependencies:
     persistence:
       data:
         mountPath: /config
+  memcached:
+    enabled: false
+    image:
+      repository: oci.trueforge.org/containerforge/memcache
+      pullPolicy: IfNotPresent
+      tag: 1.6.40@sha256:970ce84d9e893fed91d74ffea3e83ca814c1ee8e07ef2f4a4a5a7ae96603c06b
+    workload:
+      main:
+        replicas: 1
+        type: Deployment
+        strategy: RollingUpdate
+    service:
+      main:
+        ports:
+          main:
+            protocol: tcp
+            port: 11211
+            targetPort: 11211
   valkey:
     enabled: false
     # -- How the dependency is provided: [standalone] merges it into the chart, [operator] leaves it to an operator (its objects are not merged)
