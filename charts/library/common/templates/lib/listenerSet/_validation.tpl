@@ -53,3 +53,17 @@ name: The short name of the listener set.
   {{- end -}}
 
 {{- end -}}
+
+{{/* Returns the name of the object of a listener set */}}
+{{- define "tc.v1.common.lib.listenerSet.getFullName" -}}
+  {{- $expandName := (include "tc.v1.common.lib.util.expandName" (dict
+            "rootCtx" .rootCtx "objectData" .objectData
+            "name" .name "caller" "ListenerSet"
+            "key" "listenerSet")) -}}
+
+  {{- if eq $expandName "true" -}}
+    {{- printf "%s-%s" (include "tc.v1.common.lib.chart.names.fullname" .rootCtx) .name -}}
+  {{- else -}}
+    {{- .name -}}
+  {{- end -}}
+{{- end -}}

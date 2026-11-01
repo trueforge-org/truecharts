@@ -1055,6 +1055,9 @@ route:
     labels: {}
     # -- Select a gateway outside of this chart. Replaces parentRefs.
     gateway: ""
+    # -- Name of a listenerSet.$name of this chart to attach to. Replaces parentRefs.
+    # Cannot be used with gateway, a targetSelector string, tls or integrations.certManager
+    listenerSet: ""
     # -- Namespace of the selected gateway. Defaults to the namespace of the route.
     gatewayNamespace: ""
     # -- A string selects a gateway defined in this chart, and replaces parentRefs:

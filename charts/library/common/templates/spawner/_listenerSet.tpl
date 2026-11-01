@@ -4,8 +4,6 @@
 */}}
 
 {{- define "tc.v1.common.spawner.listenerSet" -}}
-  {{- $fullname := include "tc.v1.common.lib.chart.names.fullname" $ -}}
-
   {{- range $name, $listenerSet := .Values.listenerSet -}}
     {{- if not (kindIs "map" $listenerSet) -}}{{- continue -}}{{- end -}}
     {{- $enabled := (include "tc.v1.common.lib.util.enabled" (dict
@@ -18,16 +16,7 @@
       {{/* Create a copy of the listener set */}}
       {{- $objectData := (mustDeepCopy $listenerSet) -}}
 
-      {{- $objectName := $name -}}
-
-      {{- $expandName := (include "tc.v1.common.lib.util.expandName" (dict
-                "rootCtx" $ "objectData" $objectData
-                "name" $name "caller" "ListenerSet"
-                "key" "listenerSet")) -}}
-
-      {{- if eq $expandName "true" -}}
-        {{- $objectName = (printf "%s-%s" $fullname $name) -}}
-      {{- end -}}
+      {{- $objectName := include "tc.v1.common.lib.listenerSet.getFullName" (dict "rootCtx" $ "objectData" $objectData "name" $name) -}}
 
       {{- include "tc.v1.common.lib.util.metaListToDict" (dict "objectData" $objectData) -}}
 

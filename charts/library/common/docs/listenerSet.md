@@ -249,3 +249,9 @@ listenerSet:
           certificateRefs:
             - name: "{{ .Release.Name }}-tls"
 ```
+
+---
+
+## Attaching routes
+
+Attach a route with [`route.$name.listenerSet`](/truecharts-common/route). Routes with `tls` or `integrations.certManager` create their own ListenerSet, and can't also select one. See [TLS with your own listener set](/truecharts-common/route#tls-with-your-own-listener-set).

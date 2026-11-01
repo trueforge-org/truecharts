@@ -109,6 +109,28 @@ route:
 
 ---
 
+### `route.$name.listenerSet`
+
+Name of a `listenerSet` of this chart to attach to. Replaces `parentRefs`. Cannot be used with `gateway`, a `targetSelector` string, `tls` or `integrations.certManager`.
+
+| Field      | Value                     |
+| ---------- | ------------------------- |
+| Key        | `route.$name.listenerSet` |
+| Type       | `string`                  |
+| Required   | ❌                        |
+| Helm `tpl` | ❌                        |
+| Default    | `""`                      |
+
+Example
+
+```yaml
+route:
+  $name:
+    listenerSet: main
+```
+
+---
+
 ### `route.$name.gatewayNamespace`
 
 Namespace of `gateway`. Defaults to the namespace of the route.
@@ -474,6 +496,40 @@ The listener port defaults to `global.fallbackDefaults.routeListenerPort`, which
 Traefik keeps all certificates in one store and selects them by hostname across all listeners. Any namespace allowed by `allowedListeners` can therefore supply a certificate for a hostname on that gateway, so only allow namespaces you trust.
 
 `tls` works without that cert-manager feature, as `certificateIssuer` creates the `Certificate` directly.
+
+### TLS with your own listener set
+
+`tls` and `integrations.certManager` create a ListenerSet for you, per gateway and port. To control the listeners yourself, define a [`listenerSet`](/truecharts-common/listenerSet) and attach the route to it with `route.$name.listenerSet`.
+
+A route can't use both. Rendering also fails if a generated ListenerSet has the same name as one of yours, or if both use the same hostname and port on a gateway, because listeners conflict on a gateway and the oldest one wins. Only listener sets and routes in the same chart can be checked.
+
+```yaml
+listenerSet:
+  main:
+    enabled: true
+    parentRef:
+      name: external
+      namespace: networking
+    listeners:
+      - name: https
+        hostname: app.example.com
+        port: 443
+        protocol: HTTPS
+        tls:
+          mode: Terminate
+          certificateRefs:
+            - name: my-certificate
+        allowedRoutes:
+          namespaces:
+            from: Same
+
+route:
+  main:
+    enabled: true
+    listenerSet: main
+    hostnames:
+      - app.example.com
+```
 
 ## Migrating from an ingress
 

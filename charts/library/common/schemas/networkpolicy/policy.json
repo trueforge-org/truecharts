@@ -86,8 +86,14 @@
       "description": "Custom Kubernetes label selector for pods to which this policy applies."
     },
     "targetSelector": {
-      "type": "string",
-      "description": "Target a specific pod from this chart.",
+      "type": [
+        "string",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "description": "Target one or more workloads from this chart by name.",
       "default": ""
     },
     "targetSelectorRegex": {
