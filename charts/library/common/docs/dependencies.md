@@ -229,7 +229,7 @@ The `valkey` dependency has additional handling:
   | `plainport`       | `6379`                                             |
   | `plainporthost`   | `myapp-valkey-main:6379`                           |
   | `plainhostpass`   | `myapp-valkey-main:my-password`                    |
-  | `url`             | `redis://:my-password@myapp-valkey-main:6379/0`    |
+  | `url`             | `redis://default:my-password@myapp-valkey-main:6379/0`    |
 
   The host and port are the ones of the primary service and port of the dependency.
   Like the `creds` of the other dependencies, the values are quoted strings, use `| trimAll "\""` when templating them.
