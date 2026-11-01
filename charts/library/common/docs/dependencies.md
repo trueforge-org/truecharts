@@ -20,7 +20,7 @@ title: Dependencies
 ## `dependencies`
 
 Configuration for chart dependencies. Each key is the name of a dependency and contains a chart values structure, which is merged on top of the defaults of the same name in the common library.
-The `valkey` and `mariadb` dependencies are predefined in common with `enabled: false` and their full specification, so a chart only needs to enable them and set its overrides.
+The `valkey`, `mariadb` and `mongodb` dependencies are predefined in common with `enabled: false` and their full specification, so a chart only needs to enable them and set its overrides.
 
 | Field      | Value          |
 | ---------- | -------------- |
@@ -28,7 +28,7 @@ The `valkey` and `mariadb` dependencies are predefined in common with `enabled: 
 | Type       | `map`          |
 | Required   | ❌             |
 | Helm `tpl` | ❌             |
-| Default    | `{mariadb: {enabled: false, ...}, valkey: {enabled: false, ...}}` (see `dependencies.mariadb` and `dependencies.valkey` in `values.yaml`) |
+| Default    | `{mariadb: {enabled: false, ...}, mongodb: {enabled: false, ...}, valkey: {enabled: false, ...}}` (see `dependencies.mariadb`, `dependencies.mongodb` and `dependencies.valkey` in `values.yaml`) |
 
 Example:
 
@@ -116,7 +116,7 @@ Configuration of the dependency itself. It is never merged into the chart values
 
 ### `dependencies.$name.depconfig.password`
 
-Password of the dependency, used by the dependencies with additional handling (see [MariaDB](#mariadb) and [Valkey](#valkey)).
+Password of the dependency, used by the dependencies with additional handling (see [MariaDB](#mariadb), [MongoDB](#mongodb) and [Valkey](#valkey)).
 
 | Field      | Value                                   |
 | ---------- | --------------------------------------- |
@@ -130,7 +130,7 @@ Password of the dependency, used by the dependencies with additional handling (s
 
 ### `dependencies.$name.depconfig.creds`
 
-Connection details, populated by the dependencies with additional handling (see [MariaDB](#mariadb) and [Valkey](#valkey)). Read-only.
+Connection details, populated by the dependencies with additional handling (see [MariaDB](#mariadb), [MongoDB](#mongodb) and [Valkey](#valkey)). Read-only.
 
 | Field      | Value                                |
 | ---------- | ------------------------------------ |
@@ -373,6 +373,105 @@ This renders, among others:
 
 ---
 
+## MongoDB
+
+The `mongodb` dependency has additional handling:
+
+- A secret named `$releaseName-mongodbcreds` is created with the connection details, and the same details are available under `.Values.dependencies.mongodb.depconfig.creds`:
+
+  | Key                     | `creds` key           | Example                                                    |
+  | ----------------------- | --------------------- | ---------------------------------------------------------- |
+  | `mongodb-password`      | `mongodbPassword`     | `my-password`                                              |
+  | `mongodb-root-password` | `mongodbRootPassword` | `my-root-password`                                         |
+  | `plainhost`             | `plain`, `plainhost`  | `myapp-mongodb-main`                                       |
+  | -                       | `plainport`           | `27017`                                                    |
+  | `plainporthost`         | `plainporthost`       | `myapp-mongodb-main:27017`                                 |
+  | `url`                   | `complete`            | `mongodb://test:my-password@myapp-mongodb-main:27017/test` |
+  | `urlssl`                | `urlssl`              | the `url` followed by `?ssl=true`                          |
+  | `urltls`                | `urltls`              | the `url` followed by `?tls=true`                          |
+  | `jdbc`                  | `jdbc`                | `jdbc:mongodb://myapp-mongodb-main:27017/test`             |
+
+  The host and port are the ones of the primary service and port of the dependency.
+  Like the `creds` of the other dependencies, the values are quoted strings, use `| trimAll "\""` when templating them.
+- `mongodb-password`, `mongodb-root-password`, `url`, `urlssl`, `urltls` and `jdbc` are credentials (or contain them), so they must be loaded into the environment from this secret with `secretKeyRef` (with `expandObjectName: false`), and never be set as a plain value in `env`.
+  Only the host and port from `creds` are safe to use in a plain `env` value.
+- An init container `mongodb-wait` is added to the workloads of the chart (the ones with `dbWait` not set to `false`), waiting for MongoDB to respond to a `ping`. The ping needs no authentication, so it only checks that the server is reachable.
+- The connection details are included in the notes.
+
+The `depconfig` of the dependency accepts:
+
+| Key               | Default                   | Description                         |
+| ----------------- | ------------------------- | ----------------------------------- |
+| `password`        | `PLACEHOLDERPASSWORD`     | Password of the database user       |
+| `rootPassword`    | `PLACEHOLDERROOTPASSWORD` | Password of the `root` user         |
+| `mongodbUsername` | `test`                    | Name of the database user           |
+| `mongodbDatabase` | `test`                    | Name of the database                |
+
+The passwords are only applied when the database is initialized on an empty volume. Changing them later does **not** change the users of an existing database, and the app fails to authenticate.
+To change a password afterwards, change it in the database (eg with `mongosh`) as well.
+The `url`, `urlssl` and `urltls` values do not escape the password, so avoid characters like `@`, `:` and `/` when an app uses those.
+
+The dependency runs `docker.io/bitnamisecure/mongodb` as a `StatefulSet` with one replica, as UID `568` and GID `0`, with a writable root filesystem (the image requires both).
+Its data is stored in the `data` volume, mounted at `/bitnami/mongodb`.
+
+### Moving from the `mongodb` chart dependency
+
+Enabling the top-level `mongodb` key fails with a message pointing to `dependencies.mongodb`.
+Move `enabled` to `dependencies.mongodb`, and `mongodbUsername`, `mongodbDatabase`, `password` and `rootPassword` to `dependencies.mongodb.depconfig`.
+In values and templates of the chart, replace `.Values.mongodb.creds` with `.Values.dependencies.mongodb.depconfig.creds`.
+The name of the secret and its keys stay the same. The host is now the primary service of the dependency (eg `myapp-mongodb-main`), and `creds.plainport` now holds only the port instead of the host and port.
+
+The data is **not** moved. The dependency uses a new volume, and the old chart used another layout of the data.
+Back up the database with `mongodump` before upgrading, and restore it with `mongorestore` after the upgrade.
+
+### Example
+
+The full specification of the `mongodb` dependency (image, workload, service, persistence and probes) is part of the defaults of common.
+A chart only enables it and sets the values it needs to override:
+
+```yaml
+image:
+  repository: ghcr.io/example/app
+  tag: latest
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            MONGODB_HOST: '{{ .Values.dependencies.mongodb.depconfig.creds.plainhost | trimAll "\"" }}'
+            MONGODB_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mongodbcreds" }}'
+                key: url
+            MONGODB_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mongodbcreds" }}'
+                key: mongodb-password
+
+dependencies:
+  mongodb:
+    enabled: true
+    depconfig:
+      password: "secure-password"
+      rootPassword: "secure-root-password"
+      mongodbUsername: myapp
+      mongodbDatabase: myapp
+```
+
+This renders, among others:
+
+- `Deployment` `myapp` with the `mongodb-wait` init container
+- `StatefulSet` `myapp-mongodb-main` with the `data` volume mounted at `/bitnami/mongodb`
+- `Service` `myapp-mongodb-main` on port 27017
+- `PersistentVolumeClaim` `myapp-mongodb-data`
+- `Secret` `myapp-mongodbcreds`
+
+---
+
 ## Valkey
 
 The `valkey` dependency has additional handling:
@@ -489,7 +588,7 @@ This renders, among others:
 
 ## Removed Top-Level Keys
 
-The `mariadb` key on the root level of the values is replaced by `dependencies.mariadb` (see [MariaDB](#mariadb)), and the `redis` and `valkey` keys by `dependencies.valkey`.
+The `mariadb` key on the root level of the values is replaced by `dependencies.mariadb` (see [MariaDB](#mariadb)), the `mongodb` key by `dependencies.mongodb` (see [MongoDB](#mongodb)), and the `redis` and `valkey` keys by `dependencies.valkey`.
 Rendering fails when one of them has `enabled: true` (also when set using a template), as it would otherwise be silently ignored.
 A disabled key, or one without `enabled`, never rendered anything and does not fail.
 
@@ -499,5 +598,5 @@ A disabled key, or one without `enabled`, never rendered anything and does not f
 | `redis.password`, `valkey.password` | `dependencies.valkey.depconfig.password` |
 | `redis.creds`, `valkey.creds`       | `dependencies.valkey.depconfig.creds`    |
 
-The `solr`, `mongodb`, `clickhouse` and `memcached` keys on the root level of the values are no longer supported and have no replacement.
+The `solr`, `clickhouse` and `memcached` keys on the root level of the values are no longer supported and have no replacement.
 Rendering fails when one of them has `enabled: true` (also when set using a template). A disabled key, or one without `enabled`, does not fail.

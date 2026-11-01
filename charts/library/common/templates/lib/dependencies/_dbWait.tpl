@@ -28,7 +28,16 @@
     {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "mariadb-wait" "container" $container) -}}
   {{- end -}}
 
-  {{- if .Values.mongodb.enabled -}}
+  {{- $mongodbEnabled := false -}}
+  {{- $mongodb := get (.Values.dependencies | default dict) "mongodb" -}}
+  {{- if kindIs "map" $mongodb -}}
+    {{- $mongodbEnabled = eq (include "tc.v1.common.lib.util.enabled" (dict
+                    "rootCtx" $ "objectData" $mongodb
+                    "name" "mongodb" "caller" "Dependencies"
+                    "key" "dependencies")) "true" -}}
+  {{- end -}}
+
+  {{- if $mongodbEnabled -}}
     {{- $container := include "tc.v1.common.lib.deps.wait.mongodb" $ | fromYaml -}}
     {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "mongodb-wait" "container" $container) -}}
   {{- end -}}
@@ -210,6 +219,11 @@ command:
 {{- end -}}
 
 {{- define "tc.v1.common.lib.deps.wait.mongodb" -}}
+{{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "mongodb")) -}}
+{{- if not $service -}}
+  {{- fail "Dependencies - Expected dependency [mongodb] to have an enabled primary service" -}}
+{{- end -}}
+{{- $service = $service | fromJson -}}
 enabled: true
 type: system
 imageSelector: mongodbClientImage
@@ -235,20 +249,17 @@ resources:
     cpu: 500m
     memory: 512Mi
 env:
-  MONGODB_HOST:
-    secretKeyRef:
-      expandObjectName: false
-      name: '{{ printf "%s-%s" .Release.Name "mongodbcreds" }}'
-      key: plainhost
-  MONGODB_DATABASE: "{{ .Values.mongodb.mongodbDatabase }}"
+  MONGODB_HOST: {{ $service.name | quote }}
+  MONGODB_PORT: {{ $service.port | default 27017 | quote }}
+  MONGODB_DATABASE: "{{ .Values.dependencies.mongodb.depconfig.mongodbDatabase }}"
 command:
   - "/bin/sh"
   - "-c"
   - |
     /bin/bash <<'EOF'
-    echo "Executing DB waits..."
+    echo "Executing MongoDB wait..."
     until
-      HOME=/config && echo "db.runCommand(\"ping\")" | mongosh --host ${MONGODB_HOST} --port 27017 ${MONGODB_DATABASE} --quiet;
+      HOME=/config && echo "db.runCommand(\"ping\")" | mongosh --host ${MONGODB_HOST} --port ${MONGODB_PORT} ${MONGODB_DATABASE} --quiet;
       do sleep 2;
     done
     EOF

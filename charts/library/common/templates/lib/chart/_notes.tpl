@@ -297,8 +297,14 @@ Display connection information for enabled dependencies and addons
     {{- end -}}
   {{- end -}}
 
-  {{- if .Values.mongodb -}}
-    {{- if .Values.mongodb.enabled -}}
+  {{/* MongoDB from the dependencies */}}
+  {{- $mongodb := get (.Values.dependencies | default dict) "mongodb" -}}
+  {{- if kindIs "map" $mongodb -}}
+    {{- $mongodbEnabled := (include "tc.v1.common.lib.util.enabled" (dict
+                    "rootCtx" $ "objectData" $mongodb
+                    "name" "mongodb" "caller" "Dependencies"
+                    "key" "dependencies")) -}}
+    {{- if eq $mongodbEnabled "true" -}}
       {{- $hasConnections = true -}}
       {{- $connections = append $connections (include "tc.v1.common.lib.chart.connections.mongodb" . | trim) -}}
     {{- end -}}
@@ -434,29 +440,31 @@ Valkey connection information
 MongoDB connection information
 */}}
 {{- define "tc.v1.common.lib.chart.connections.mongodb" -}}
+{{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "mongodb")) -}}
+{{- $dep := get (.Values.dependencies | default dict) "mongodb" -}}
+{{- $depconfig := $dep.depconfig | default dict -}}
+{{- $creds := $depconfig.creds | default dict -}}
 ## MongoDB Database
-  {{- if .Values.mongodb.creds -}}
-  {{- if .Values.mongodb.creds.plainhost }}
-- Host: {{ .Values.mongodb.creds.plainhost }}
+{{- if $service -}}
+{{- $service = $service | fromJson }}
+- Host: {{ $service.name }}
+- Port: {{ $service.port }}
+- Host:Port: {{ $service.name }}:{{ $service.port }}
+  {{- if $depconfig.mongodbDatabase }}
+- Database: {{ $depconfig.mongodbDatabase }}
   {{- end -}}
-  {{- if .Values.mongodb.creds.plainporthost }}
-- Host:Port: {{ .Values.mongodb.creds.plainporthost }}
+  {{- if $depconfig.mongodbUsername }}
+- Username: {{ $depconfig.mongodbUsername }}
   {{- end -}}
-  {{- if .Values.mongodb.mongodbDatabase }}
-- Database: {{ .Values.mongodb.mongodbDatabase }}
+  {{- if $creds.complete }}
+- Connection URL: {{ include "tc.v1.common.lib.chart.notes.credential" (dict "rootCtx" $ "value" $creds.complete) }}
   {{- end -}}
-  {{- if .Values.mongodb.mongodbUsername }}
-- Username: {{ .Values.mongodb.mongodbUsername }}
+  {{- if $creds.jdbc }}
+- JDBC URL: {{ $creds.jdbc }}
   {{- end -}}
-  {{- if .Values.mongodb.creds.complete }}
-- Connection URL: {{ include "tc.v1.common.lib.chart.notes.credential" (dict "rootCtx" $ "value" .Values.mongodb.creds.complete) }}
-  {{- end -}}
-  {{- if .Values.mongodb.creds.jdbc }}
-- JDBC URL: {{ .Values.mongodb.creds.jdbc }}
-  {{- end -}}
-  {{- else }}
-- Configuration pending (credentials will be available after initialization)
-  {{- end }}
+{{- else }}
+- Configuration pending (service will be available after initialization)
+{{- end -}}
 {{- end -}}
 
 {{/*

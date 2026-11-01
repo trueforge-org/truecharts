@@ -1824,16 +1824,6 @@ cnpg:
     # -- contains credentials and urls output by generator
     creds: {}
 
-# -- mongodb dependency configuration
-# @default -- See below
-mongodb:
-  enabled: false
-  includeCommon: false
-  password: "PLACEHOLDERPASSWORD"
-  rootPassword: "PLACEHOLDERROOTPASSWORD"
-  # -- can be used to make an easy accessable note which URLS to use to access the DB.
-  creds: {}
-
 # -- clickhouse dependency configuration
 # @default -- See below
 clickhouse:
@@ -1859,7 +1849,7 @@ solr:
 # Its objects are merged into the chart under the name [<dependency>-<object>] (eg [workload.valkey-main])
 # and references between them (targetSelector, objectName, ...) are rewritten accordingly.
 # Objects inherit the defaults of the matching common object (eg [workload.main]) and default to [enabled: true].
-# Currently [valkey] and [mariadb] are the only dependencies with additional handling (credentials secret, wait init container).
+# Currently [valkey], [mariadb] and [mongodb] are the only dependencies with additional handling (credentials secret, wait init container).
 # Disabled dependencies are not merged into the chart, so their defaults only apply once a chart sets [enabled: true].
 # @default -- See below
 
@@ -1923,6 +1913,67 @@ dependencies:
     persistence:
       data:
         mountPath: /config
+  mongodb:
+    enabled: false
+    # -- Settings of the dependency itself, never merged into the chart
+    depconfig:
+      password: "PLACEHOLDERPASSWORD"
+      rootPassword: "PLACEHOLDERROOTPASSWORD"
+      mongodbUsername: "test"
+      mongodbDatabase: "test"
+    image:
+      repository: docker.io/bitnamisecure/mongodb
+      pullPolicy: IfNotPresent
+      tag: latest@sha256:ae3045b80e9640a1833da94864688733a04d536f611bc8aeee60f89f8be388e9
+    # The Bitnami image needs the root group and a writable root filesystem
+    securityContext:
+      container:
+        runAsGroup: 0
+        readOnlyRootFilesystem: false
+    workload:
+      main:
+        replicas: 1
+        type: StatefulSet
+        strategy: RollingUpdate
+        podSpec:
+          containers:
+            main:
+              env:
+                MONGODB_USERNAME: "{{ .Values.dependencies.mongodb.depconfig.mongodbUsername }}"
+                MONGODB_DATABASE: "{{ .Values.dependencies.mongodb.depconfig.mongodbDatabase }}"
+                MONGODB_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "mongodbcreds" }}'
+                    key: mongodb-password
+                MONGODB_ROOT_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "mongodbcreds" }}'
+                    key: mongodb-root-password
+              probes:
+                liveness:
+                  type: exec
+                  command: &mongodbProbeCommand
+                    - /bin/bash
+                    - -ec
+                    - echo "db.runCommand(\"ping\")" | mongosh --host localhost --port 27017 ${MONGODB_DATABASE} --quiet
+                readiness:
+                  type: exec
+                  command: *mongodbProbeCommand
+                startup:
+                  type: exec
+                  command: *mongodbProbeCommand
+    service:
+      main:
+        ports:
+          main:
+            protocol: tcp
+            port: 27017
+            targetPort: 27017
+    persistence:
+      data:
+        mountPath: /bitnami/mongodb
   valkey:
     enabled: false
     # -- Settings of the dependency itself, never merged into the chart

@@ -1,0 +1,385 @@
+suite: dependencies mongodb test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render the mongodb dependency with the defaults of common
+    set:
+      dependencies:
+        mongodb:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 4
+      - documentSelector: &secretDoc
+          path: kind
+          value: Secret
+        equal:
+          path: metadata.name
+          value: test-release-name-mongodbcreds
+      - documentSelector: *secretDoc
+        equal:
+          path: stringData
+          value:
+            mongodb-password: PLACEHOLDERPASSWORD
+            mongodb-root-password: PLACEHOLDERROOTPASSWORD
+            plainhost: test-release-name-common-test-mongodb-main
+            plainporthost: test-release-name-common-test-mongodb-main:27017
+            url: mongodb://test:PLACEHOLDERPASSWORD@test-release-name-common-test-mongodb-main:27017/test
+            urlssl: mongodb://test:PLACEHOLDERPASSWORD@test-release-name-common-test-mongodb-main:27017/test?ssl=true
+            urltls: mongodb://test:PLACEHOLDERPASSWORD@test-release-name-common-test-mongodb-main:27017/test?tls=true
+            jdbc: jdbc:mongodb://test-release-name-common-test-mongodb-main:27017/test
+      - documentSelector: &workloadDoc
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mongodb-main
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.updateStrategy.type
+          value: RollingUpdate
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.replicas
+          value: 1
+      - documentSelector: *workloadDoc
+        matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: ^docker\.io/bitnamisecure/mongodb:[^@]+@sha256:[0-9a-f]{64}$
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsUser
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsGroup
+          value: 0
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: false
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MONGODB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: test-release-name-mongodbcreds
+                key: mongodb-password
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MONGODB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: test-release-name-mongodbcreds
+                key: mongodb-root-password
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MONGODB_USERNAME
+            value: test
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MONGODB_DATABASE
+            value: test
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].livenessProbe.exec.command
+          value:
+            - /bin/bash
+            - -ec
+            - echo "db.runCommand(\"ping\")" | mongosh --host localhost --port 27017 ${MONGODB_DATABASE} --quiet
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].readinessProbe.exec.command
+          value:
+            - /bin/bash
+            - -ec
+            - echo "db.runCommand(\"ping\")" | mongosh --host localhost --port 27017 ${MONGODB_DATABASE} --quiet
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].startupProbe.exec.command
+          value:
+            - /bin/bash
+            - -ec
+            - echo "db.runCommand(\"ping\")" | mongosh --host localhost --port 27017 ${MONGODB_DATABASE} --quiet
+      - documentSelector: *workloadDoc
+        notExists:
+          path: spec.template.spec.initContainers
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: mongodb-data
+            mountPath: /bitnami/mongodb
+            readOnly: false
+      - documentSelector:
+          path: kind
+          value: PersistentVolumeClaim
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mongodb-data
+      - documentSelector: &serviceDoc
+          path: kind
+          value: Service
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mongodb-main
+      - documentSelector: *serviceDoc
+        equal:
+          path: spec.ports[0]
+          value:
+            name: main
+            port: 27017
+            protocol: TCP
+            targetPort: 27017
+      - documentSelector: *serviceDoc
+        equal:
+          path: spec.selector['pod.name']
+          value: mongodb-main
+
+  - it: should use the custom depconfig
+    set:
+      dependencies:
+        mongodb:
+          enabled: true
+          depconfig:
+            password: testpassword
+            rootPassword: testrootpassword
+            mongodbUsername: myuser
+            mongodbDatabase: mydb
+    asserts:
+      - documentSelector: &secretDoc
+          path: kind
+          value: Secret
+        equal:
+          path: stringData
+          value:
+            mongodb-password: testpassword
+            mongodb-root-password: testrootpassword
+            plainhost: test-release-name-common-test-mongodb-main
+            plainporthost: test-release-name-common-test-mongodb-main:27017
+            url: mongodb://myuser:testpassword@test-release-name-common-test-mongodb-main:27017/mydb
+            urlssl: mongodb://myuser:testpassword@test-release-name-common-test-mongodb-main:27017/mydb?ssl=true
+            urltls: mongodb://myuser:testpassword@test-release-name-common-test-mongodb-main:27017/mydb?tls=true
+            jdbc: jdbc:mongodb://test-release-name-common-test-mongodb-main:27017/mydb
+      - documentSelector: &workloadDoc
+          path: kind
+          value: StatefulSet
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MONGODB_USERNAME
+            value: myuser
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MONGODB_DATABASE
+            value: mydb
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MONGODB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: test-release-name-mongodbcreds
+                key: mongodb-password
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MONGODB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: test-release-name-mongodbcreds
+                key: mongodb-root-password
+
+  - it: should render nothing with the mongodb dependency disabled
+    set:
+      dependencies:
+        mongodb:
+          enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should expose the credentials to the workloads of the chart
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+                env:
+                  MONGODB_URL: '{{ .Values.dependencies.mongodb.depconfig.creds.complete | trimAll "\"" }}'
+                  MONGODB_HOST: '{{ .Values.dependencies.mongodb.depconfig.creds.plainhost | trimAll "\"" }}'
+                  MONGODB_PORT: '{{ .Values.dependencies.mongodb.depconfig.creds.plainport | trimAll "\"" }}'
+                  MONGODB_PASSWORD: "{{ .Values.dependencies.mongodb.depconfig.password }}"
+      dependencies:
+        mongodb:
+          enabled: true
+          depconfig:
+            password: testpassword
+    asserts:
+      - documentSelector: &rootWorkloadDoc
+          path: metadata.name
+          value: test-release-name-common-test
+        equal:
+          path: kind
+          value: Deployment
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MONGODB_URL
+            value: mongodb://test:testpassword@test-release-name-common-test-mongodb-main:27017/test
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MONGODB_HOST
+            value: test-release-name-common-test-mongodb-main
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MONGODB_PORT
+            value: "27017"
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MONGODB_PASSWORD
+            value: testpassword
+
+  - it: should use the explicit primary service of mongodb
+    set:
+      dependencies:
+        mongodb:
+          enabled: true
+          service:
+            main:
+              primary: false
+              ports:
+                main:
+                  primary: false
+            db:
+              enabled: true
+              primary: true
+              ports:
+                db:
+                  enabled: true
+                  primary: true
+                  protocol: tcp
+                  port: 37017
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: stringData.plainporthost
+          value: test-release-name-common-test:37017
+
+  - it: should use a custom port for mongodb
+    set:
+      dependencies:
+        mongodb:
+          enabled: true
+          service:
+            main:
+              ports:
+                main:
+                  port: 37017
+                  targetPort: 37017
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: stringData.plainporthost
+          value: test-release-name-common-test-mongodb-main:37017
+
+  - it: should fail with the removed top-level mongodb key
+    set:
+      mongodb:
+        enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [mongodb] key, it is replaced by [dependencies.mongodb]. Move [enabled] to [dependencies.mongodb], and [password], [rootPassword], [mongodbUsername] and [mongodbDatabase] to [dependencies.mongodb.depconfig]. The connection details are available under [dependencies.mongodb.depconfig.creds]
+
+  - it: should fail with the top-level mongodb key enabled using a template
+    set:
+      useMongodb: true
+      mongodb:
+        enabled: "{{ .Values.useMongodb }}"
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [mongodb] key, it is replaced by [dependencies.mongodb]. Move [enabled] to [dependencies.mongodb], and [password], [rootPassword], [mongodbUsername] and [mongodbDatabase] to [dependencies.mongodb.depconfig]. The connection details are available under [dependencies.mongodb.depconfig.creds]
+
+  - it: should fail with the enabled top-level mongodb key, even when the dependency is enabled
+    set:
+      mongodb:
+        enabled: true
+      dependencies:
+        mongodb:
+          enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [mongodb] key, it is replaced by [dependencies.mongodb]. Move [enabled] to [dependencies.mongodb], and [password], [rootPassword], [mongodbUsername] and [mongodbDatabase] to [dependencies.mongodb.depconfig]. The connection details are available under [dependencies.mongodb.depconfig.creds]
+
+  - it: should not fail with a disabled top-level mongodb key
+    set:
+      mongodb:
+        enabled: false
+        password: testpassword
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should not fail with a top-level mongodb key without enabled
+    set:
+      mongodb:
+        password: testpassword
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should fail without a port for mongodb
+    set:
+      dependencies:
+        mongodb:
+          enabled: true
+          service:
+            main:
+              ports:
+                main:
+                  enabled: false
+    asserts:
+      - failedTemplate:
+          errorMessage: Service - Expected enabled service to have at least one port
