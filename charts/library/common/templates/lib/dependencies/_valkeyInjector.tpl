@@ -36,7 +36,7 @@ This template generates the valkey credentials and the secret holding them
       {{- $dbPort := $service.port -}}
       {{- $portHost := printf "%v:%v" $dbHost $dbPort -}}
       {{/* Valkey speaks the redis protocol, most clients only accept the redis:// scheme */}}
-      {{- $url := printf "redis://:%v@%v/0" $dbPass $portHost -}}
+      {{- $url := printf "redis://default:%v@%v/0" $dbPass $portHost -}}
       {{- $hostPass := printf "%v:%v" $dbHost $dbPass -}}
 
       {{/* Append values to depconfig.creds, so apps using the dependency can use them */}}

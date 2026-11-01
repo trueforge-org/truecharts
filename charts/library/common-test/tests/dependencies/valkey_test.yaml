@@ -53,7 +53,7 @@ tests:
             plainport: "6379"
             plainporthost: test-release-name-common-test-valkey-main:6379
             plainhostpass: test-release-name-common-test-valkey-main:testpassword
-            url: redis://:testpassword@test-release-name-common-test-valkey-main:6379/0
+            url: redis://default:testpassword@test-release-name-common-test-valkey-main:6379/0
       - documentSelector: *secretDoc
         notExists:
           path: stringData.redis-password
@@ -240,7 +240,7 @@ tests:
           path: spec.template.spec.containers[0].env
           content:
             name: REDIS_URL
-            value: redis://:testpassword@test-release-name-common-test-valkey-main:6379/0
+            value: redis://default:testpassword@test-release-name-common-test-valkey-main:6379/0
       - documentSelector: *rootWorkloadDoc
         contains:
           path: spec.template.spec.containers[0].env
