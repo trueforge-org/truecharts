@@ -81,6 +81,7 @@ When dependencies or addons are enabled, the notes output will automatically inc
 **Supported Dependencies:**
 - **CNPG (PostgreSQL)**: Host, port, database, username, connection URLs, JDBC URLs
 - **MariaDB**: Host, port, database, username, connection URLs, JDBC URLs
+- **PostgreSQL** (the `postgresql` dependency): Host, port, database, username, connection URLs, JDBC URLs
 - **Valkey**: Host, port (from the `valkey` dependency)
 - **MongoDB**: Host, port, database, username, connection URLs, JDBC URLs
 - **Clickhouse**: Host, port, database, username, connection URLs, JDBC URLs

@@ -222,6 +222,26 @@
       "additionalProperties": true,
       "description": "Configuration for `postgresClientImage`."
     },
+    "postgresql18Image": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "description": "Configuration for `postgresql18Image.repository`."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Configuration for `postgresql18Image.tag`."
+        },
+        "pullPolicy": {
+          "type": "string",
+          "description": "Configuration for `postgresql18Image.pullPolicy`."
+        }
+      },
+      "additionalProperties": true,
+      "description": "Configuration for `postgresql18Image`."
+    },
     "postgresPostgis15Image": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",

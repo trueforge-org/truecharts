@@ -28,6 +28,20 @@
     {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "mariadb-wait" "container" $container) -}}
   {{- end -}}
 
+  {{- $postgresqlEnabled := false -}}
+  {{- $postgresql := get (.Values.dependencies | default dict) "postgresql" -}}
+  {{- if kindIs "map" $postgresql -}}
+    {{- $postgresqlEnabled = eq (include "tc.v1.common.lib.util.enabled" (dict
+                    "rootCtx" $ "objectData" $postgresql
+                    "name" "postgresql" "caller" "Dependencies"
+                    "key" "dependencies")) "true" -}}
+  {{- end -}}
+
+  {{- if $postgresqlEnabled -}}
+    {{- $container := include "tc.v1.common.lib.deps.wait.postgresql" $ | fromYaml -}}
+    {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "postgresql-wait" "container" $container) -}}
+  {{- end -}}
+
   {{- $mongodbEnabled := false -}}
   {{- $mongodb := get (.Values.dependencies | default dict) "mongodb" -}}
   {{- if kindIs "map" $mongodb -}}
@@ -314,7 +328,12 @@ command:
     echo "ClickHouse - accepting connections"
 {{- end -}}
 
-{{- define "tc.v1.common.lib.deps.wait.cnpg" -}}
+{{/* The wait container for PostgreSQL, shared by the CNPG clusters and the postgresql dependency */}}
+{{/* Call this template:
+{{ include "tc.v1.common.lib.deps.wait.postgres" (dict "script" $script) }}
+script: The shell script that waits for the databases, see [cnpg.wait.script].
+*/}}
+{{- define "tc.v1.common.lib.deps.wait.postgres" -}}
 enabled: true
 type: system
 imageSelector: postgresClientImage
@@ -344,40 +363,68 @@ command:
   - "-c"
   - |
     /bin/sh <<'EOF'
-{{- range $name, $cnpg := .Values.cnpg -}}
-  {{- if $cnpg.enabled }}
-    echo "Executing DB waits..."
-    {{- $cnpgName := include "tc.v1.common.lib.chart.names.fullname" $ -}}
-    {{- $cnpgName = printf "%v-cnpg-%v" $cnpgName $name -}}
-
-    {{/* Wait RW CNPG */}}
-    {{- include "cnpg.wait.script" (dict "url" (printf "%s-rw" $cnpgName) "user" .user "db" .database "on" "CNPG RW") | nindent 4 -}}
-
-    {{- if and $cnpg.pooler $cnpg.pooler.enabled -}}
-      {{/* Wait RW Pooler */}}
-      {{- include "cnpg.wait.script" (dict "url" (printf "%s-pooler-rw" $cnpgName) "user" .user "db" .database "on" "CNPG Pooler RW") | nindent 4 -}}
-
-      {{/* Wait RO Pooler */}}
-      {{- if $cnpg.pooler.createRO -}}
-        {{- include "cnpg.wait.script" (dict "url" (printf "%s-pooler-ro" $cnpgName) "user" .user "db" .database "on" "CNPG Pooler RO") | nindent 4 -}}
-      {{- end -}}
-
-    {{- end -}}
-  {{- end -}}
-{{- end }}
-    echo "Done executing DB waits..."
+{{- .script | nindent 4 }}
     EOF
 {{- end -}}
 
+{{- define "tc.v1.common.lib.deps.wait.cnpg" -}}
+  {{- $lines := list -}}
+  {{- range $name, $cnpg := .Values.cnpg -}}
+    {{- if $cnpg.enabled -}}
+      {{- $lines = append $lines "echo \"Executing DB waits...\"" -}}
+      {{- $cnpgName := include "tc.v1.common.lib.chart.names.fullname" $ -}}
+      {{- $cnpgName = printf "%v-cnpg-%v" $cnpgName $name -}}
+
+      {{/* Wait RW CNPG */}}
+      {{- $lines = append $lines (include "cnpg.wait.script" (dict "url" (printf "%s-rw" $cnpgName) "user" $cnpg.user "db" $cnpg.database "on" "CNPG RW")) -}}
+
+      {{- if and $cnpg.pooler $cnpg.pooler.enabled -}}
+        {{/* Wait RW Pooler */}}
+        {{- $lines = append $lines (include "cnpg.wait.script" (dict "url" (printf "%s-pooler-rw" $cnpgName) "user" $cnpg.user "db" $cnpg.database "on" "CNPG Pooler RW")) -}}
+
+        {{/* Wait RO Pooler */}}
+        {{- if $cnpg.pooler.createRO -}}
+          {{- $lines = append $lines (include "cnpg.wait.script" (dict "url" (printf "%s-pooler-ro" $cnpgName) "user" $cnpg.user "db" $cnpg.database "on" "CNPG Pooler RO")) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $lines = append $lines "echo \"Done executing DB waits...\"" -}}
+
+  {{- include "tc.v1.common.lib.deps.wait.postgres" (dict "script" (join "\n" $lines)) -}}
+{{- end -}}
+
+{{- define "tc.v1.common.lib.deps.wait.postgresql" -}}
+  {{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "postgresql")) -}}
+  {{- if not $service -}}
+    {{- fail "Dependencies - Expected dependency [postgresql] to have an enabled primary service" -}}
+  {{- end -}}
+  {{- $service = $service | fromJson -}}
+
+  {{- $dep := get (.Values.dependencies | default dict) "postgresql" -}}
+  {{- $depconfig := $dep.depconfig | default dict -}}
+
+  {{- $lines := list "echo \"Executing DB waits...\"" -}}
+  {{- $lines = append $lines (include "cnpg.wait.script" (dict
+        "url" $service.name "port" $service.port
+        "user" $depconfig.postgresqlUsername "db" $depconfig.postgresqlDatabase
+        "on" "PostgreSQL")) -}}
+  {{- $lines = append $lines "echo \"Done executing DB waits...\"" -}}
+
+  {{- include "tc.v1.common.lib.deps.wait.postgres" (dict "script" (join "\n" $lines)) -}}
+{{- end -}}
+
+{{/* The wait script of a single PostgreSQL service, [port] is optional */}}
 {{- define "cnpg.wait.script" -}}
   {{- $url := .url -}}
+  {{- $port := .port -}}
   {{- $user := .user -}}
   {{- $db := .db -}}
   {{- $on := .on -}}
 echo "Testing Database availability on [{{ $on }}]"
 until
   echo "Testing database on url: [{{ $url }}]"
-  pg_isready -U {{ $user }} -d {{ $db }} -h {{ $url }}
+  pg_isready -U {{ $user }} -d {{ $db }} -h {{ $url }}{{ with $port }} -p {{ . }}{{ end }}
   do sleep 5
 done
 echo "Database available on url: [{{ $url }}]"

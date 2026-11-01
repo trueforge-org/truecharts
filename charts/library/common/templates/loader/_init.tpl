@@ -21,6 +21,9 @@
   {{/* Autogenerate mariadb passwords if needed */}}
   {{- include "tc.v1.common.dependencies.mariadb.injector" . }}
 
+  {{/* Autogenerate postgresql passwords and credentials if needed */}}
+  {{- include "tc.v1.common.dependencies.postgresql.injector" . }}
+
   {{/* Autogenerate mongodb passwords if needed */}}
   {{- include "tc.v1.common.dependencies.mongodb.injector" . }}
 

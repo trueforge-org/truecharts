@@ -21,7 +21,7 @@ These rules apply to `charts/library/common/` (the `common` library chart that e
 | `templates/helpers/` | `tc.v1.common.helper.*`, `tc.v1.common.lib.helpers.*` | Shared helpers. |
 | `templates/values/` | `tc.v1.common.values.*` | Values initialisation and validation. |
 | `templates/addons/` | `tc.v1.common.addon.*` | Addons (VPN, code-server, netshoot, etc.). |
-| `templates/lib/dependencies/` | `tc.v1.common.lib.dependencies.*` | The `dependencies.<name>` system, with an injector per predefined dependency (`_valkeyInjector.tpl`, `_mariadbInjector.tpl`). |
+| `templates/lib/dependencies/` | `tc.v1.common.lib.dependencies.*` | The `dependencies.<name>` system, with an injector per predefined dependency (`_valkeyInjector.tpl`, `_mariadbInjector.tpl`, `_postgresqlInjector.tpl`). |
 | `templates/values/_deprecations.tpl` | `tc.v1.common.values.deprecations` | The single place for errors on removed and moved keys. |
 | `values.yaml` | — | Defaults for every chart. Changing a default changes all charts. |
 | `values.schema.json`, `schemas/**/*.json` | — | JSON schema of all values, see [Values schema](#values-schema). |
@@ -108,7 +108,7 @@ These rules apply to `charts/library/common/` (the `common` library chart that e
 `dependencies.<name>` replaces Helm chart dependencies (subcharts) for the services an app needs. `docs/dependencies.md` describes it in full.
 
 - Each dependency is a complete chart values structure. Its objects are merged into the chart as `<name>-<object>`, and its images as `<name>Image`. They are not primary unless they set `primary: true`. `depconfig` holds the settings of the dependency itself and is never merged.
-- `valkey` and `mariadb` are predefined in `values.yaml` and disabled by default. Their injectors create the `<release>-<name>creds` Secret, fill `depconfig.creds`, add a `<name>-wait` init container and add the connection details to the notes.
+- `valkey`, `mariadb` and `postgresql` are predefined in `values.yaml` and disabled by default. Their injectors create the `<release>-<name>creds` Secret, fill `depconfig.creds`, add a `<name>-wait` init container and add the connection details to the notes.
 - A new predefined dependency needs its defaults under `dependencies.<name>` in `values.yaml`, an injector when it provides credentials, the schema, a section in `docs/dependencies.md`, tests in `common-test/tests/dependencies/` and a `common-test/ci/<name>-values.yaml` install test.
 
 ## Deprecations
