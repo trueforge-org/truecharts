@@ -17,9 +17,17 @@ workload:
             - --port
             - "8080"
           env:
-            REDIS_URL: '{{ .Values.dependencies.valkey.depconfig.creds.url | trimAll "\"" }}'
             REDIS_HOST: '{{ .Values.dependencies.valkey.depconfig.creds.plainhost | trimAll "\"" }}'
-            REDIS_PASSWORD: "{{ .Values.dependencies.valkey.depconfig.password }}"
+            REDIS_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                key: url
+            REDIS_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                key: valkey-password
           probes:
             liveness:
               enabled: true

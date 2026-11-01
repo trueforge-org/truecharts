@@ -125,6 +125,10 @@
       "$ref": "schemas/secret.json",
       "description": "Create Secret objects"
     },
+    "externalSecret": {
+      "$ref": "schemas/externalSecret.json",
+      "description": "Create ExternalSecret objects"
+    },
     "serviceAccount": {
       "$ref": "schemas/serviceAccount.json",
       "description": "Create serviceAccount objects"
@@ -253,9 +257,17 @@
       "$ref": "schemas/gateway.json",
       "description": "Configure Gateway API gateways"
     },
+    "listenerSet": {
+      "$ref": "schemas/listenerSet.json",
+      "description": "Create Gateway API ListenerSet objects"
+    },
     "route": {
       "$ref": "schemas/route.json",
       "description": "Configuration for `route`."
+    },
+    "networkpolicy": {
+      "$ref": "schemas/networkpolicy.json",
+      "description": "Create NetworkPolicy or CiliumNetworkPolicy objects"
     },
     "podDisruptionBudget": {
       "$ref": "schemas/podDisruptionBudget.json",

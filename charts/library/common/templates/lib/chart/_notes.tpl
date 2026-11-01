@@ -241,6 +241,20 @@ These services can be reached from outside the cluster:
 {{- end -}}
 
 {{/*
+Returns the given credential, or HIDDEN unless notes.showCredentials is enabled
+Call this template:
+{{ include "tc.v1.common.lib.chart.notes.credential" (dict "rootCtx" $ "value" $value) }}
+*/}}
+{{- define "tc.v1.common.lib.chart.notes.credential" -}}
+  {{- $notes := .rootCtx.Values.notes | default dict -}}
+  {{- if $notes.showCredentials -}}
+    {{- .value -}}
+  {{- else -}}
+    HIDDEN
+  {{- end -}}
+{{- end -}}
+
+{{/*
 Display connection information for enabled dependencies and addons
 */}}
 {{- define "tc.v1.common.lib.chart.connections" -}}
@@ -354,14 +368,14 @@ CNPG connection information
 - Username: {{ $cnpg.user }}
   {{- end -}}
   {{- if $cnpg.creds.std }}
-- Connection URL: {{ $cnpg.creds.std | quote }}
+- Connection URL: {{ include "tc.v1.common.lib.chart.notes.credential" (dict "rootCtx" $rootCtx "value" $cnpg.creds.std) | quote }}
   {{- end -}}
   {{- if $cnpg.creds.jdbc }}
 - JDBC URL: {{ $cnpg.creds.jdbc | quote }}
   {{- end -}}
   {{- if and $cnpg.pooler $cnpg.pooler.enabled $cnpg.pooler.createRO -}}
   {{- if $cnpg.creds.stdRO }}
-- Read-Only URL: {{ $cnpg.creds.stdRO | quote }}
+- Read-Only URL: {{ include "tc.v1.common.lib.chart.notes.credential" (dict "rootCtx" $rootCtx "value" $cnpg.creds.stdRO) | quote }}
   {{- end -}}
   {{- end -}}
   {{- else }}
@@ -390,7 +404,7 @@ MariaDB connection information
 - Username: {{ $depconfig.mariadbUsername }}
   {{- end -}}
   {{- if $creds.complete }}
-- Connection URL: {{ $creds.complete }}
+- Connection URL: {{ include "tc.v1.common.lib.chart.notes.credential" (dict "rootCtx" $ "value" $creds.complete) }}
   {{- end -}}
   {{- if $creds.jdbcmariadb }}
 - JDBC URL: {{ $creds.jdbcmariadb }}
@@ -435,7 +449,7 @@ MongoDB connection information
 - Username: {{ .Values.mongodb.mongodbUsername }}
   {{- end -}}
   {{- if .Values.mongodb.creds.complete }}
-- Connection URL: {{ .Values.mongodb.creds.complete }}
+- Connection URL: {{ include "tc.v1.common.lib.chart.notes.credential" (dict "rootCtx" $ "value" .Values.mongodb.creds.complete) }}
   {{- end -}}
   {{- if .Values.mongodb.creds.jdbc }}
 - JDBC URL: {{ .Values.mongodb.creds.jdbc }}
@@ -464,7 +478,7 @@ Clickhouse connection information
 - Username: {{ .Values.clickhouse.clickhouseUsername }}
   {{- end -}}
   {{- if .Values.clickhouse.creds.complete }}
-- Connection URL: {{ .Values.clickhouse.creds.complete }}
+- Connection URL: {{ include "tc.v1.common.lib.chart.notes.credential" (dict "rootCtx" $ "value" .Values.clickhouse.creds.complete) }}
   {{- end -}}
   {{- if .Values.clickhouse.creds.jdbc }}
 - JDBC URL: {{ .Values.clickhouse.creds.jdbc }}
@@ -494,7 +508,7 @@ Note: Solr uses 'portHost' (camelCase) from the injector, unlike other deps that
 - Authentication: {{ .Values.solr.solrEnableAuthentication }}
   {{- end -}}
   {{- if .Values.solr.creds.url }}
-- Connection URL: {{ .Values.solr.creds.url }}
+- Connection URL: {{ include "tc.v1.common.lib.chart.notes.credential" (dict "rootCtx" $ "value" .Values.solr.creds.url) }}
   {{- end -}}
   {{- else }}
 - Configuration pending (credentials will be available after initialization)

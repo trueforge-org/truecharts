@@ -561,6 +561,59 @@ configMapsFromFolder:
 # -- (docs/secret.md)
 secret: {}
 
+# -- (docs/externalSecret.md)
+# Requires the External Secrets Operator CRDs to be installed in the cluster.
+# Additional ExternalSecrets can be added by adding a dictionary key similar to the 'main' example.
+# [[ref]](https://external-secrets.io/latest/api/externalsecret/)
+externalSecret: {}
+#   main:
+#     # -- Enables or disables the ExternalSecret
+#     enabled: false
+#     # -- Prefix the object name with the chart fullname
+#     expandObjectName: true
+#     # -- Provide additional annotations which may be required.
+#     annotations: {}
+#     # -- Provide additional labels which may be required.
+#     labels: {}
+#     # -- How often the data is synced from the provider
+#     refreshInterval: 1h
+#     # -- When the data is synced from the provider
+#     # Valid options are CreatedOnce, Periodic, OnChange
+#     # refreshPolicy: Periodic
+#     # -- The SecretStore or ClusterSecretStore to fetch the data from
+#     secretStoreRef:
+#       name: ""
+#       # Valid options are SecretStore, ClusterSecretStore
+#       kind: SecretStore
+#     # -- The Kubernetes Secret created by the External Secrets Operator
+#     target:
+#       # Defaults to the name of the ExternalSecret
+#       name: ""
+#       # Valid options are Owner, Orphan, Merge, None
+#       creationPolicy: Owner
+#       # Valid options are Delete, Merge, Retain
+#       # deletionPolicy: Retain
+#       # immutable: false
+#       # Passed to the ExternalSecret as is, External Secrets Operator evaluates its own Go templates in here
+#       # template:
+#       #   type: Opaque
+#       #   data:
+#       #     config: '{{ .username }}:{{ .password }}'
+#     # -- Individual keys to fetch from the provider
+#     data:
+#       - secretKey: password
+#         remoteRef:
+#           key: my-app
+#           property: password
+#     # -- Fetch multiple keys from the provider at once, passed to the ExternalSecret as is
+#     dataFrom: []
+#     # dataFrom:
+#     #   - extract:
+#     #       key: my-app
+#     #   - find:
+#     #       name:
+#     #         regexp: "^my-app-"
+
 # -- (docs/serviceAccount.md)
 serviceAccount: {}
 
@@ -612,6 +665,9 @@ notes:
     OpenSource can only exist with your help, please consider supporting TrueCharts:
     https://trueforge.org/sponsor
   warnings: []
+  # -- Show credentials (eg, passwords in connection URLs) in the notes.
+  # When disabled, they are replaced by `HIDDEN`.
+  showCredentials: false
 
 ####
 ##
@@ -919,6 +975,63 @@ gateway:
         #       group: ""
         #       name: example-cert
         #       namespace:
+    # -- Allow ListenerSets to attach to this Gateway
+    # Required when a listenerSet uses targetSelector to attach to this gateway
+    # allowedListeners:
+    #   namespaces:
+    #     # Valid options are Same, All, Selector, None
+    #     from: Same
+    #     # Required when from is Selector
+    #     # selector:
+    #     #   matchLabels:
+    #     #     gateway-access: "true"
+
+# -- BETA: Configure the gateway listener sets for the chart here.
+# Additional listener sets can be added by adding a dictionary key similar to the 'main' listener set.
+# Please be aware that this is an early beta of this feature, TrueCharts does not guarantee this actually works.
+# Being BETA this can/will change in the future without notice, please do not use unless you want to take that risk
+# [[ref]](https://gateway-api.sigs.k8s.io/reference/spec/#listenerset)
+# @default -- See below
+listenerSet:
+  main:
+    # -- Enables or disables the listener set
+    enabled: false
+    # -- Prefix the object name with the chart fullname
+    expandObjectName: true
+    # -- Provide additional annotations which may be required.
+    annotations: {}
+    # -- Provide additional labels which may be required.
+    labels: {}
+    # -- Optional: Name-based selector for automatic Gateway linking
+    # When set, attaches to the specified gateway.$name of this chart,
+    # the referenced gateway must set allowedListeners.namespaces.from
+    # targetSelector: main
+    # -- The Gateway to attach to, when targetSelector is not used
+    parentRef:
+      group: gateway.networking.k8s.io
+      kind: Gateway
+      name: ""
+      # Defaults to the namespace of the listener set
+      namespace:
+    # -- Listeners that are added to the Gateway, same format as gateway.$name.listeners
+    listeners:
+      - name: https
+        hostname:
+        port: 443
+        protocol: HTTPS
+        allowedRoutes:
+          namespaces:
+            from: Same
+          kinds:
+            - group: gateway.networking.k8s.io
+              kind: HTTPRoute
+        # tls:
+        #   mode: Terminate
+        #   certificateRefs:
+        #     - kind: Secret
+        #       group: ""
+        #       name: example-cert
+        #       namespace:
 
 # -- BETA: Configure the gateway routes for the chart here.
 # Additional routes can be added by adding a dictionary key similar to the 'main' route.
@@ -945,6 +1058,9 @@ route:
     labels: {}
     # -- Select a gateway outside of this chart. Replaces parentRefs.
     gateway: ""
+    # -- Name of a listenerSet.$name of this chart to attach to. Replaces parentRefs.
+    # Cannot be used with gateway, a targetSelector string, tls or integrations.certManager
+    listenerSet: ""
     # -- Namespace of the selected gateway. Defaults to the namespace of the route.
     gatewayNamespace: ""
     # -- A string selects a gateway defined in this chart, and replaces parentRefs:
@@ -1146,9 +1262,19 @@ storageClass: {}
 networkpolicy:
   main:
     enabled: false
+    ### Policy Type
+    ## kubernetes: creates a NetworkPolicy (default)
+    ## cilium: creates a CiliumNetworkPolicy, requires the Cilium CRDs to be installed in the cluster
+    # type: kubernetes
+    ## (optional, cilium only) Create a CiliumClusterwideNetworkPolicy instead of a CiliumNetworkPolicy
+    ## Chart based selectors are pinned to the namespace of the chart
+    # clusterwide: false
+    ## (optional, cilium only) Free form description of the policy
+    # description: ""
+
     ### Pod Selection Options (choose one):
     ## Default: targets all pods in this chart
-    ## (optional) Custom podSelector with matchLabels and matchExpressions
+    ## (optional, kubernetes only) Custom podSelector with matchLabels and matchExpressions
     # podSelector:
     #   matchLabels:
     #     app: my-app
@@ -1166,12 +1292,25 @@ networkpolicy:
     # targetSelectorRegex: "^worker-"
     ## (optional) Target all pods in the namespace
     # targetAllPods: false
+    ## (optional, cilium only) Custom endpointSelector with matchLabels and matchExpressions
+    # endpointSelector:
+    #   matchLabels:
+    #     app: my-app
+    ## (optional, cilium only) Host policy, selects nodes instead of pods
+    # nodeSelector:
+    #   matchLabels:
+    #     node-role.kubernetes.io/control-plane: ""
 
-    ## (optional) Explicitly define policyTypes
+    ## (optional, kubernetes only) Explicitly define policyTypes
     ## Auto-detected based on ingress/egress rules if not specified
     # policyTypes:
     #   - Ingress
     #   - Egress
+
+    ## (optional, cilium only) Control whether the policy puts the selected endpoints in default deny mode
+    # enableDefaultDeny:
+    #   ingress: true
+    #   egress: false
 
     ## Ingress Rules (incoming traffic)
     ## Empty list allows no ingress traffic
@@ -1224,6 +1363,14 @@ networkpolicy:
     #       - protocol: TCP
     #         port: 8000
     #         endPort: 9000
+
+    ## (optional, cilium only) Deny rules, these take precedence over allow rules
+    ## Same format as the Cilium ingress and egress rules
+    # ingressDeny: []
+    # egressDeny: []
+    # egressDeny:
+    #   - toEntities:
+    #       - world
 
 metrics:
   main:
@@ -1815,7 +1962,11 @@ dependencies:
             main:
               env:
                 VALKEY_PORT: "{{ .Values.dependencies.valkey.service.main.ports.main.port }}"
-                VALKEY_PASSWORD: "{{ .Values.dependencies.valkey.depconfig.password }}"
+                VALKEY_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                    key: valkey-password
               probes:
                 liveness:
                   type: exec

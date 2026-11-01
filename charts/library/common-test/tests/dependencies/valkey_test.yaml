@@ -18,11 +18,6 @@ tests:
           workload:
             main:
               type: StatefulSet
-              podSpec:
-                containers:
-                  main:
-                    env:
-                      VALKEY_PASSWORD: "{{ .Values.dependencies.valkey.depconfig.password }}"
           service:
             main:
               ports:
@@ -69,6 +64,15 @@ tests:
           value: oci.trueforge.org/containerforge/valkey:9.0.4
       - documentSelector: *workloadDoc
         contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VALKEY_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: test-release-name-valkeycreds
+                key: valkey-password
+      - documentSelector: *workloadDoc
+        notContains:
           path: spec.template.spec.containers[0].env
           content:
             name: VALKEY_PASSWORD
@@ -186,9 +190,17 @@ tests:
                   startup:
                     enabled: false
                 env:
-                  REDIS_URL: '{{ .Values.dependencies.valkey.depconfig.creds.url | trimAll "\"" }}'
                   REDIS_HOST: '{{ .Values.dependencies.valkey.depconfig.creds.plainhost | trimAll "\"" }}'
-                  REDIS_PASSWORD: "{{ .Values.dependencies.valkey.depconfig.password }}"
+                  REDIS_URL:
+                    secretKeyRef:
+                      expandObjectName: false
+                      name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                      key: url
+                  REDIS_PASSWORD:
+                    secretKeyRef:
+                      expandObjectName: false
+                      name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                      key: valkey-password
       dependencies:
         valkey: *valkey
     asserts:
@@ -240,7 +252,10 @@ tests:
           path: spec.template.spec.containers[0].env
           content:
             name: REDIS_URL
-            value: redis://default:testpassword@test-release-name-common-test-valkey-main:6379/0
+            valueFrom:
+              secretKeyRef:
+                name: test-release-name-valkeycreds
+                key: url
       - documentSelector: *rootWorkloadDoc
         contains:
           path: spec.template.spec.containers[0].env
@@ -249,6 +264,15 @@ tests:
             value: test-release-name-common-test-valkey-main
       - documentSelector: *rootWorkloadDoc
         contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: test-release-name-valkeycreds
+                key: valkey-password
+      - documentSelector: *rootWorkloadDoc
+        notContains:
           path: spec.template.spec.containers[0].env
           content:
             name: REDIS_PASSWORD
