@@ -378,7 +378,7 @@ This renders, among others:
 The `memcached` dependency is a plain cache without credentials, so it has no additional handling: no secret, no `depconfig`, no wait init container and no notes.
 It is the `memcached` chart of the `stable` train, as a dependency:
 
-- A `Deployment` with one replica, running `docker.io/bitnamisecure/memcached` with the default security context of common (UID and GID `568`, read-only root filesystem) and the default `tcp` probes.
+- A `Deployment` with one replica, running `oci.trueforge.org/containerforge/memcache` with the default security context of common (UID and GID `568`, read-only root filesystem) and the default `tcp` probes.
 - A `Service` on port `11211`.
 - No persistence, memcached only keeps its data in memory.
 
