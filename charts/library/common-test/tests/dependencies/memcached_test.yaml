@@ -1,0 +1,228 @@
+suite: dependencies memcached test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render the memcached dependency with the defaults of common
+    set:
+      dependencies:
+        memcached:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 2
+      - documentSelector: &workloadDoc
+          path: kind
+          value: Deployment
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-memcached-main
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.replicas
+          value: 1
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.strategy.type
+          value: RollingUpdate
+      - documentSelector: *workloadDoc
+        matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: ^oci\.trueforge\.org/containerforge/memcache:[^@]+@sha256:[0-9a-f]{64}$
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].ports
+          value:
+            - name: main
+              containerPort: 11211
+              protocol: TCP
+              hostPort: null
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsUser
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: true
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].livenessProbe.tcpSocket.port
+          value: 11211
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].readinessProbe.tcpSocket.port
+          value: 11211
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].startupProbe.tcpSocket.port
+          value: 11211
+      - documentSelector: *workloadDoc
+        notExists:
+          path: spec.template.spec.initContainers
+      - documentSelector: *workloadDoc
+        notExists:
+          path: spec.volumeClaimTemplates
+      - documentSelector: &serviceDoc
+          path: kind
+          value: Service
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-memcached-main
+      - documentSelector: *serviceDoc
+        equal:
+          path: spec.ports
+          value:
+            - name: main
+              port: 11211
+              protocol: TCP
+              targetPort: 11211
+      - documentSelector: *serviceDoc
+        equal:
+          path: spec.selector["pod.name"]
+          value: memcached-main
+
+  - it: should not render the memcached dependency by default
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should not render the memcached dependency when disabled
+    set:
+      dependencies:
+        memcached:
+          enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should not render the memcached dependency when enabled using a template evaluating to false
+    set:
+      useMemcached: false
+      dependencies:
+        memcached:
+          enabled: "{{ .Values.useMemcached }}"
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should render the memcached dependency when enabled using a template evaluating to true
+    set:
+      useMemcached: true
+      dependencies:
+        memcached:
+          enabled: "{{ .Values.useMemcached }}"
+    asserts:
+      - hasDocuments:
+          count: 2
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-memcached-main
+
+  - it: should allow overriding the image, replicas and port
+    set:
+      dependencies:
+        memcached:
+          enabled: true
+          image:
+            repository: docker.io/library/memcached
+            tag: 1.6.40
+          workload:
+            main:
+              replicas: 3
+          service:
+            main:
+              ports:
+                main:
+                  port: 11212
+                  targetPort: 11212
+    asserts:
+      - documentSelector: &workloadDoc
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.replicas
+          value: 3
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].image
+          value: docker.io/library/memcached:1.6.40
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].livenessProbe.tcpSocket.port
+          value: 11212
+      - documentSelector:
+          path: kind
+          value: Service
+        equal:
+          path: spec.ports[0].port
+          value: 11212
+
+  - it: should render the memcached dependency next to the workload of the chart
+    set:
+      service:
+        main:
+          enabled: true
+          ports:
+            main:
+              enabled: true
+              port: 8080
+      workload:
+        main:
+          enabled: true
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                args:
+                  - --port
+                  - "8080"
+                probes:
+                  liveness:
+                    enabled: true
+                  readiness:
+                    enabled: true
+                  startup:
+                    enabled: true
+      dependencies:
+        memcached:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 4
+      - documentIndex: 0
+        isKind:
+          of: Deployment
+      - documentIndex: 0
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentIndex: 1
+        isKind:
+          of: Deployment
+      - documentIndex: 1
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-memcached-main
+      - documentIndex: 1
+        notExists:
+          path: spec.template.spec.initContainers
+      - documentIndex: 2
+        isKind:
+          of: Service
+      - documentIndex: 2
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentIndex: 3
+        isKind:
+          of: Service
+      - documentIndex: 3
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-memcached-main

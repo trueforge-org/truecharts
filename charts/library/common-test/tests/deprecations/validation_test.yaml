@@ -71,7 +71,27 @@ tests:
         enabled: true
     asserts:
       - failedTemplate:
-          errorMessage: Expected no [memcached] key, it is no longer supported and has no replacement. Remove [memcached], or set [memcached.enabled] to false
+          errorMessage: Expected no [memcached] key, it is replaced by [dependencies.memcached]. Move [enabled] to [dependencies.memcached]
+
+  - it: should fail with the top level memcached enabled using a template
+    set:
+      useMemcached: true
+      memcached:
+        enabled: "{{ .Values.useMemcached }}"
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [memcached] key, it is replaced by [dependencies.memcached]. Move [enabled] to [dependencies.memcached]
+
+  - it: should fail with the enabled top level memcached, even when the dependency is enabled
+    set:
+      memcached:
+        enabled: true
+      dependencies:
+        memcached:
+          enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [memcached] key, it is replaced by [dependencies.memcached]. Move [enabled] to [dependencies.memcached]
 
   - it: should fail with the top level mongodb enabled using a template
     set:

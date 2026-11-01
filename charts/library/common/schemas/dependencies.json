@@ -19,6 +19,15 @@
             ],
             "description": "Whether the dependency is enabled. Objects of disabled dependencies are not merged into the chart."
           },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "standalone",
+              "operator"
+            ],
+            "default": "standalone",
+            "description": "How the dependency is provided. `standalone` merges and deploys it with the chart, `operator` leaves it to an operator, so its objects are not merged into the chart. The credentials, wait init container and notes still apply."
+          },
           "depconfig": {
             "type": "object",
             "properties": {
@@ -36,6 +45,11 @@
             },
             "additionalProperties": true,
             "description": "Configuration of the dependency itself. Never merged into the chart values."
+          },
+          "operator": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Settings specific to the operator providing the dependency (see `mode`). Never merged into the chart values."
           }
         }
       }
