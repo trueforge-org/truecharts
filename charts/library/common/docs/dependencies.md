@@ -312,3 +312,17 @@ This renders, among others:
 - `Service` `myapp-valkey-main` on port 6379
 - `ConfigMap` `myapp-valkey-health`
 - `Secret` `myapp-valkeycreds`
+
+---
+
+## Removed Top-Level Keys
+
+The `redis` and `valkey` keys on the root level of the values are replaced by `dependencies.valkey`.
+Rendering fails when one of them has `enabled: true` (also when set using a template), as it would otherwise be silently ignored.
+A disabled key, or one without `enabled`, never rendered anything and does not fail.
+
+| Old key                             | New key                                  |
+| ----------------------------------- | ---------------------------------------- |
+| `redis.enabled`, `valkey.enabled`   | `dependencies.valkey.enabled`            |
+| `redis.password`, `valkey.password` | `dependencies.valkey.depconfig.password` |
+| `redis.creds`, `valkey.creds`       | `dependencies.valkey.depconfig.creds`    |
