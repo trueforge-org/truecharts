@@ -1824,16 +1824,6 @@ cnpg:
     # -- contains credentials and urls output by generator
     creds: {}
 
-# -- mongodb dependency configuration
-# @default -- See below
-mongodb:
-  enabled: false
-  includeCommon: false
-  password: "PLACEHOLDERPASSWORD"
-  rootPassword: "PLACEHOLDERROOTPASSWORD"
-  # -- can be used to make an easy accessable note which URLS to use to access the DB.
-  creds: {}
-
 # -- clickhouse dependency configuration
 # @default -- See below
 clickhouse:
@@ -1848,7 +1838,7 @@ clickhouse:
 # Its objects are merged into the chart under the name [<dependency>-<object>] (eg [workload.valkey-main])
 # and references between them (targetSelector, objectName, ...) are rewritten accordingly.
 # Objects inherit the defaults of the matching common object (eg [workload.main]) and default to [enabled: true].
-# Currently [valkey] and [mariadb] are the only dependencies with additional handling (credentials secret, wait init container).
+# Currently [valkey], [mariadb] and [mongodb] are the only dependencies with additional handling (credentials secret, wait init container).
 # Disabled dependencies are not merged into the chart, so their defaults only apply once a chart sets [enabled: true].
 # Dependencies with [mode: operator] are not merged into the chart either, as an operator provides them. Their credentials secret, wait init container and notes still apply.
 # Settings for the operator go under [dependencies.<name>.operator], like [depconfig] it is never merged into the chart.
@@ -1936,6 +1926,66 @@ dependencies:
             protocol: tcp
             port: 11211
             targetPort: 11211
+  mongodb:
+    enabled: false
+    # -- Settings of the dependency itself, never merged into the chart
+    depconfig:
+      password: "PLACEHOLDERPASSWORD"
+      rootPassword: "PLACEHOLDERROOTPASSWORD"
+      mongodbUsername: "test"
+      mongodbDatabase: "test"
+    image:
+      repository: oci.trueforge.org/containerforge/mongodb
+      pullPolicy: IfNotPresent
+      tag: 9.0.4@sha256:98b1e3b789a43e80c45319aba93b6b513c7ff62f445906b8326b9f0cdc0f5ec0
+    workload:
+      main:
+        replicas: 1
+        type: StatefulSet
+        strategy: RollingUpdate
+        podSpec:
+          containers:
+            main:
+              env:
+                MONGODB_USERNAME: "{{ .Values.dependencies.mongodb.depconfig.mongodbUsername }}"
+                MONGODB_DATABASE: "{{ .Values.dependencies.mongodb.depconfig.mongodbDatabase }}"
+                MONGODB_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "mongodbcreds" }}'
+                    key: mongodb-password
+                MONGODB_ROOT_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "mongodbcreds" }}'
+                    key: mongodb-root-password
+              probes:
+                liveness:
+                  type: exec
+                  command: &mongodbProbeCommand
+                    - mongosh
+                    - --quiet
+                    - --norc
+                    - --host
+                    - 127.0.0.1
+                    - --eval
+                    - "db.runCommand({ ping: 1 })"
+                readiness:
+                  type: exec
+                  command: *mongodbProbeCommand
+                startup:
+                  type: exec
+                  command: *mongodbProbeCommand
+    service:
+      main:
+        ports:
+          main:
+            protocol: tcp
+            port: 27017
+            targetPort: 27017
+    persistence:
+      data:
+        mountPath: /config
   valkey:
     enabled: false
     # -- How the dependency is provided: [standalone] merges it into the chart, [operator] leaves it to an operator (its objects are not merged)
