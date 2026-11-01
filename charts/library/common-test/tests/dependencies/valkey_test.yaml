@@ -1,0 +1,372 @@
+suite: dependencies valkey test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render the valkey dependency with its credentials secret
+    set:
+      dependencies:
+        valkey: &valkey
+          enabled: true
+          depconfig:
+            password: testpassword
+          image: &image
+            repository: docker.io/bitnamisecure/valkey
+            tag: 8.0.0
+          workload:
+            main:
+              type: StatefulSet
+              podSpec:
+                containers:
+                  main:
+                    env:
+                      VALKEY_PASSWORD: "{{ .Values.dependencies.valkey.depconfig.password }}"
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+          persistence:
+            data:
+              type: vct
+              mountPath: /data
+              size: 1Gi
+    asserts:
+      - hasDocuments:
+          count: 4
+      - documentSelector: &secretDoc
+          path: kind
+          value: Secret
+        equal:
+          path: metadata.name
+          value: test-release-name-valkeycreds
+      - documentSelector: *secretDoc
+        equal:
+          path: stringData
+          value:
+            valkey-password: testpassword
+            plain: test-release-name-common-test-valkey-main
+            plainhost: test-release-name-common-test-valkey-main
+            plainport: "6379"
+            plainporthost: test-release-name-common-test-valkey-main:6379
+            plainhostpass: test-release-name-common-test-valkey-main:testpassword
+            url: redis://:testpassword@test-release-name-common-test-valkey-main:6379/0
+      - documentSelector: *secretDoc
+        notExists:
+          path: stringData.redis-password
+      - documentSelector:
+          path: kind
+          value: ConfigMap
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-valkey-health
+      - documentSelector: &workloadDoc
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-valkey-main
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].image
+          value: docker.io/bitnamisecure/valkey:8.0.0
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VALKEY_PASSWORD
+            value: testpassword
+      - documentSelector: *workloadDoc
+        matchRegex:
+          path: spec.template.spec.containers[0].livenessProbe.exec.command[2]
+          pattern: ping_liveness_local.sh
+      - documentSelector: *workloadDoc
+        notExists:
+          path: spec.template.spec.initContainers
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.volumeClaimTemplates[0].metadata.name
+          value: test-release-name-common-test-valkey-data
+      - documentSelector: *workloadDoc
+        contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: test-release-name-common-test-valkey-data
+            mountPath: /data
+            readOnly: false
+      - documentSelector: &serviceDoc
+          path: kind
+          value: Service
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-valkey-main
+      - documentSelector: *serviceDoc
+        equal:
+          path: spec.selector['pod.name']
+          value: valkey-main
+
+  - it: should use the common defaults of valkey
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: stringData.valkey-password
+          value: PLACEHOLDERPASSWORD
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: spec.template.spec.containers[0].image
+          value: docker.io/bitnamisecure/valkey:latest@sha256:4dc6511a8a9d4d4cbf3ccf1270ddcc6929819a1e0f4005462cf782cc96d1c3b6
+
+  - it: should use the placeholder password without a password
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              type: StatefulSet
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: stringData.valkey-password
+          value: PLACEHOLDERPASSWORD
+
+  - it: should render nothing with the valkey dependency disabled
+    set:
+      dependencies:
+        valkey:
+          enabled: false
+          image: *image
+          workload:
+            main:
+              type: StatefulSet
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should wait for valkey in the workloads of the chart
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        main: &rootWorkload
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+                env:
+                  REDIS_URL: '{{ .Values.dependencies.valkey.depconfig.creds.url | trimAll "\"" }}'
+                  REDIS_HOST: '{{ .Values.dependencies.valkey.depconfig.creds.plainhost | trimAll "\"" }}'
+                  REDIS_PASSWORD: "{{ .Values.dependencies.valkey.depconfig.password }}"
+      dependencies:
+        valkey: *valkey
+    asserts:
+      - documentSelector: &rootWorkloadDoc
+          path: kind
+          value: Deployment
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentSelector: *rootWorkloadDoc
+        equal:
+          path: spec.template.spec.initContainers[0].name
+          value: test-release-name-common-test-system-valkey-wait
+      - documentSelector: *rootWorkloadDoc
+        matchRegex:
+          path: spec.template.spec.initContainers[0].image
+          pattern: "^oci.trueforge.org/containerforge/valkey-tools:"
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.initContainers[0].env
+          content:
+            name: VALKEY_HOST
+            value: test-release-name-common-test-valkey-main
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.initContainers[0].env
+          content:
+            name: VALKEY_PORT
+            value: "6379"
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.initContainers[0].env
+          content:
+            name: VALKEY_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: test-release-name-valkeycreds
+                key: valkey-password
+      - documentSelector: *rootWorkloadDoc
+        matchRegex:
+          path: spec.template.spec.initContainers[0].command[2]
+          pattern: valkey-cli
+      - documentSelector: *rootWorkloadDoc
+        matchRegex:
+          path: spec.template.spec.initContainers[0].command[2]
+          pattern: REDISCLI_AUTH
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REDIS_URL
+            value: redis://:testpassword@test-release-name-common-test-valkey-main:6379/0
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REDIS_HOST
+            value: test-release-name-common-test-valkey-main
+      - documentSelector: *rootWorkloadDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REDIS_PASSWORD
+            value: testpassword
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        notExists:
+          path: spec.template.spec.initContainers
+
+  - it: should not wait for valkey in workloads of the chart with dbWait disabled
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        main:
+          <<: *rootWorkload
+          dbWait: false
+      dependencies:
+        valkey: *valkey
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notExists:
+          path: spec.template.spec.initContainers
+
+  - it: should use the explicit primary service of valkey
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          depconfig:
+            password: testpassword
+          image: *image
+          workload:
+            main:
+              type: StatefulSet
+          service:
+            main:
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+            db:
+              primary: true
+              ports:
+                db:
+                  protocol: tcp
+                  port: 16379
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: stringData.plainporthost
+          value: test-release-name-common-test-valkey-db:16379
+
+  - it: should fail without a port for valkey
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          image: *image
+          service:
+            main:
+              ports:
+                main:
+                  enabled: false
+    asserts:
+      - failedTemplate:
+          errorMessage: Service - Expected enabled service to have at least one port
+
+  - it: should fail with a disabled primary service for valkey
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          image: *image
+          workload:
+            main:
+              type: StatefulSet
+          service:
+            main:
+              enabled: false
+              ports:
+                main:
+                  protocol: tcp
+                  port: 6379
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected dependency [valkey] to have an enabled primary service
+
+  - it: should add the dependencies checksum to the pods
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        main: *rootWorkload
+      dependencies:
+        valkey: *valkey
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        matchRegex:
+          path: spec.template.metadata.annotations.checksum/dependencies
+          pattern: ^[0-9a-f]{64}$
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notExists:
+          path: spec.template.metadata.annotations.checksum/redis

@@ -537,8 +537,11 @@
         "default": {}
       },
       "dbWait": {
-        "type": "boolean",
-        "description": "Configuration for `workload.main.dbWait`."
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Whether init containers waiting for the enabled dependencies (cnpg, mariadb, mongodb, clickhouse, solr, valkey) are added to the workload. Defaults to `true`, the workloads of dependencies default to `false`."
       }
     },
     "additionalProperties": true,

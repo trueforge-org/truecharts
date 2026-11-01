@@ -4,10 +4,10 @@ title: Dependencies
 
 :::note
 
-- This page documents the new dependencies feature that replaces helm-dependencies.
-- Dependencies allow you to include complete chart values.yaml structures within your chart.
-- Each dependency is merged into the main chart with prefixed resource names to avoid conflicts.
-- Dependency configuration (credentials, passwords, etc.) is stored under `depconfig` and not merged.
+- Dependencies replace helm-dependencies (sub charts) for the services an app needs, like a Valkey cache.
+- Each dependency is a complete chart values structure (`workload`, `service`, `persistence`, ...) defined inline under `dependencies.$name`.
+- The objects of a dependency are merged into the chart under the name `$name-$object` and all references between them are rewritten, so they never conflict with the objects of the chart.
+- Configuration of the dependency itself (password, generated credentials) lives under `depconfig` and is never merged.
 
 :::
 
@@ -19,15 +19,16 @@ title: Dependencies
 
 ## `dependencies`
 
-Configuration for chart dependencies. Each dependency should contain a complete chart values.yaml structure. Resources from dependencies are automatically merged into the main chart with prefixed names (e.g., `valkey-main` for a dependency named `valkey` with a workload named `main`).
+Configuration for chart dependencies. Each key is the name of a dependency and contains a chart values structure, which is merged on top of the defaults of the same name in the common library.
+The `valkey` dependency is predefined in common with `enabled: false` and its full specification, so a chart only needs to enable it and set its overrides.
 
-| Field      | Value           |
-| ---------- | --------------- |
-| Key        | `dependencies`  |
-| Type       | `map`           |
-| Required   | ❌              |
-| Helm `tpl` | ❌              |
-| Default    | `{}`            |
+| Field      | Value          |
+| ---------- | -------------- |
+| Key        | `dependencies` |
+| Type       | `map`          |
+| Required   | ❌             |
+| Helm `tpl` | ❌             |
+| Default    | `{valkey: {enabled: false, ...}}` (see `dependencies.valkey` in `values.yaml`) |
 
 Example:
 
@@ -37,42 +38,52 @@ dependencies:
     enabled: true
     depconfig:
       password: "my-password"
-      # Generated credentials available at:
-      # .Values.dependencies.valkey.depconfig.creds.url
-      # .Values.dependencies.valkey.depconfig.creds.redis-password
-      # .Values.dependencies.valkey.depconfig.creds.plainhost
     image:
       repository: docker.io/bitnamisecure/valkey
       tag: latest
     workload:
       main:
-        enabled: true
         type: StatefulSet
         podSpec:
           containers:
             main:
-              enabled: true
-              primary: true
               env:
-                REDIS_PASSWORD: "{{ .Values.dependencies.valkey.depconfig.password }}"
+                VALKEY_PASSWORD: "{{ .Values.dependencies.valkey.depconfig.password }}"
     service:
       main:
-        enabled: true
         ports:
           main:
-            enabled: true
+            protocol: tcp
             port: 6379
     persistence:
       data:
-        enabled: true
-        mountPath: /bitnami/valkey
+        type: vct
+        mountPath: /config
+
 ```
+
+---
+
+### `dependencies.$name`
+
+The name of the dependency is used as the prefix of its objects, so it must be a valid DNS label (lowercase alphanumeric characters or `-`, starting and ending with an alphanumeric character).
+
+Besides `enabled` and `depconfig`, the dependency accepts the same keys as the chart values. They are handled as follows:
+
+| Keys                                                                                                                                           | Handling                                                                                                                                                     |
+| ---------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `workload`, `service`, `persistence`, `configmap`, `secret`, `serviceAccount`, `rbac`, `ingress`, `route`, `hpa`, `metrics`, ... (any object collection) | Each object is added to the chart as `$name-$object` (eg `workload.valkey-main`). Fails if an object with that name already exists in the chart.            |
+| `image`, `*Image`                                                                                                                              | Added to the chart as `$nameImage` and `$name<Foo>Image` (eg `valkeyImage`, `valkeyClientImage` for `clientImage`). Containers are pointed to them. A container selecting `image` fails if the dependency defines none, a dependency never falls back to the main image of the chart. Other images of the chart can be selected explicitly (eg `imageSelector: someImage`). |
+| `securityContext`, `podOptions`, `resources`                                                                                                   | Applied as defaults to the pods and containers of the dependency only, the same way the chart-level keys apply to the chart.                                  |
+| `global`, `chartContext`, `notes`, `operator`, `fallbackDefaults`, `TZ`, `namespace`, `diagnosticMode`, `containerOptions`                     | Ignored. These apply to the whole release and are taken from the chart.                                                                                      |
+| `addons`, `dependencies`, `configMapsFromFolder`, `extraTpl`, `ingressMiddlewares`, `mariadb`, `mongodb`, `clickhouse`, `solr`                 | Not supported, rendering fails.                                                                                                                              |
+| Any other key                                                                                                                                  | Kept as is and available to templates under `.Values.dependencies.$name.$key`.                                                                               |
 
 ---
 
 ### `dependencies.$name.enabled`
 
-Enable or disable the dependency.
+Enable or disable the dependency. Objects of disabled dependencies are not merged.
 
 | Field      | Value                        |
 | ---------- | ---------------------------- |
@@ -86,10 +97,7 @@ Enable or disable the dependency.
 
 ### `dependencies.$name.depconfig`
 
-Configuration specific to the dependency that should NOT be merged into the main values tree. This includes:
-- Input configuration (like passwords)
-- Generated credentials
-- Any other metadata about the dependency
+Configuration of the dependency itself. It is never merged into the chart values and can be referenced by templates under `.Values.dependencies.$name.depconfig`.
 
 | Field      | Value                          |
 | ---------- | ------------------------------ |
@@ -99,29 +107,62 @@ Configuration specific to the dependency that should NOT be merged into the main
 | Helm `tpl` | ❌                             |
 | Default    | `{}`                           |
 
-Example:
+---
 
-```yaml
-dependencies:
-  valkey:
-    enabled: true
-    depconfig:
-      password: "secure-password"
-      # After initialization, credentials are available:
-      # .Values.dependencies.valkey.depconfig.creds.url
-      # .Values.dependencies.valkey.depconfig.creds.redis-password
-      # .Values.dependencies.valkey.depconfig.creds.plainhost
-      # .Values.dependencies.valkey.depconfig.creds.plainporthost
-      # .Values.dependencies.valkey.depconfig.creds.plainhostpass
-```
+### `dependencies.$name.depconfig.password`
+
+Password of the dependency, used by the dependencies with additional handling (see [Valkey](#valkey)).
+
+| Field      | Value                                   |
+| ---------- | --------------------------------------- |
+| Key        | `dependencies.$name.depconfig.password` |
+| Type       | `string`                                |
+| Required   | ❌                                      |
+| Helm `tpl` | ❌                                      |
+| Default    | `PLACEHOLDERPASSWORD`                   |
+
+---
+
+### `dependencies.$name.depconfig.creds`
+
+Connection details, populated by the dependencies with additional handling (see [Valkey](#valkey)). Read-only.
+
+| Field      | Value                                |
+| ---------- | ------------------------------------ |
+| Key        | `dependencies.$name.depconfig.creds` |
+| Type       | `map`                                |
+| Required   | ❌                                   |
+| Helm `tpl` | ❌                                   |
+| Default    | `{}`                                 |
 
 ---
 
 ## How Dependencies Work
 
-1. **Complete Chart Values**: Each dependency under `dependencies.$name` should contain a complete chart values.yaml structure with all the resources it needs (workload, service, configmap, etc.)
+### Defaults
 
-2. **Depconfig Exclusion**: The `depconfig` subdict is NOT merged into main values. It contains dependency-specific configuration and generated credentials.
+Objects of a dependency inherit the defaults of the object with the same name in the common library, exactly like the objects of a chart do.
+For example `workload.main` of a dependency inherits `type: Deployment`, the `main` container with `imageSelector: image` and its default probes,
+and `service.main` inherits its `main` port with `protocol: http`.
+
+The `enabled`, `primary`, `targetSelector` and `dbWait` keys are not inherited, they are resolved within the dependency.
+Objects without an `enabled` key default to `enabled: true`, even if the object is disabled by default in common (eg `ingress.main`).
+
+The default probes of common target `service.main.ports.main`. Within a dependency they are pointed to `dependencies.$name.service.main.ports.main`.
+If the dependency has no `service.main.ports.main`, the default probes are disabled instead.
+
+The workloads of a dependency default to `dbWait: false`, so they do not wait for the dependencies of the chart (including themselves).
+
+### Primary Objects
+
+Within a dependency, the primary objects are resolved as follows: the object with `primary: true`, otherwise the only object of the collection, otherwise the object named `main`.
+This applies to workloads, their containers, services, their ports and serviceAccounts.
+
+
+In the chart, the objects of a dependency are **never** primary (`primary: false`) and they are marked with the name of their dependency (`dependency: valkey`).
+Marked objects do not take part in the primary validation of the chart, so a chart does not need a primary object of its own in a collection that only has objects of dependencies.
+The primary workload, service, ingress, etc. of the release stay the ones of the chart, and their names are not affected by the dependency
+(eg the Service of the chart is still named `$fullname`, the one of the dependency `$fullname-valkey-main`).
 
 3. **Universal Resource Prefixing**: When a dependency is enabled, ALL its resources (except excluded keys) are merged into the main chart with prefixed names:
    - **Prefixed**: workload, service, configmap, secret, persistence, podDisruptionBudget, hpa, vpa, ingress, route, gateway, certificate, serviceAccount, rbac, networkPolicy, storageClass, and any other resource type
@@ -133,23 +174,77 @@ dependencies:
      - `persistence.data` → `persistence.$name-data`
      - Any new resource type automatically gets prefixed
 
-4. **Image Handling**: The `image` key is handled specially - instead of prefixing resources within it, the key itself is prefixed to `$nameImage` (e.g., `valkeyImage`)
 
-5. **Automatic Init Containers**: The common chart automatically detects dependency services (like valkey) and creates appropriate init containers to wait for them to be ready.
+### References
+
+All references to other objects are rewritten to the prefixed names, when the referenced object is defined within the dependency.
+A reference to an object that is not defined in the dependency is kept as is, which means it points to the object of the chart.
+
+
 
 6. **Persistent Data**: Add a `persistence` entry for any data that has to survive a restart. Without one, the data is on the container filesystem and is lost with the pod. The `mountPath` has to be where the image stores its data, which is `/bitnami/valkey` for the Bitnami Valkey image. A top-level `volumeClaimTemplates` key is not used, and fails rendering.
 
 7. **Connection Information**: Connection details for dependencies are automatically included in the chart notes.
 
-7. **Credential Generation**: For database-like dependencies (valkey, mariadb, mongodb, etc.), credentials are automatically generated and stored in `depconfig.creds`.
+
+| Object                                   | Reference                                                    | Default                                                         |
+| ---------------------------------------- | ------------------------------------------------------------ | --------------------------------------------------------------- |
+| `service`                                | `targetSelector` → workload                                  | primary workload of the dependency                              |
+| `persistence`                            | `targetSelector` → workloads and containers                  | primary workload and container of the dependency                |
+| `persistence` (`configmap`, `secret`)    | `objectName` → configmap or secret                           | -                                                               |
+| `persistence` (`volsync`)                | `credentials` → credentials                                  | -                                                               |
+| `serviceAccount`, `imagePullSecret`      | `targetSelector` → workloads                                 | primary workload of the dependency                              |
+| `rbac`                                   | `serviceAccounts` → serviceAccounts                          | primary serviceAccount of the dependency                        |
+| `ingress`                                | `targetSelector` → service and port                          | primary service and port of the dependency                      |
+| `route`                                  | `targetSelector`, `parentRefs[].targetSelector` → gateway    | -                                                               |
+| `route`                                  | `rules[].backendRefs[].targetSelector` → service             | primary service of the dependency                               |
+| `gateway`                                | `targetSelector` → gatewayClass                              | -                                                               |
+| `hpa`, `vpa`                             | `targetSelector` → workloads                                 | all workloads of the dependency                                 |
+| `podDisruptionBudget`, `networkpolicy`   | `targetSelector` → workload                                  | primary workload of the dependency                              |
+| `metrics`                                | `targetSelector` → service (or workload for `podmonitor`)    | primary service (or workload) of the dependency                 |
+| `cnpg`                                   | `backups.credentials`, `recovery.credentials` → credentials  | -                                                               |
+| containers                               | `imageSelector` → image                                      | `image` of the dependency (required, unless another image is selected)  |
+| containers                               | `env.*.configMapKeyRef`, `env.*.secretKeyRef`, `envFrom[]`   | -                                                               |
+
+The `targetSelector` of service ports points to a container name and is not rewritten.
+
+### Templating
+
+Templates within the dependency can reference its own values under `.Values.dependencies.$name`, which is normalized the same way (defaults applied, primaries set).
+For example the password: `"{{ .Values.dependencies.valkey.depconfig.password }}"`.
 
 ---
 
-## Full Examples
+## Valkey
 
-### Valkey Dependency
+The `valkey` dependency has additional handling:
+
+- A secret named `$releaseName-valkeycreds` is created with the connection details, and the same details are available under `.Values.dependencies.valkey.depconfig.creds`:
+
+  | Key               | Example                                            |
+  | ----------------- | -------------------------------------------------- |
+  | `valkey-password` | `my-password`                                      |
+  | `plain`           | `myapp-valkey-main`                                |
+  | `plainhost`       | `myapp-valkey-main`                                |
+  | `plainport`       | `6379`                                             |
+  | `plainporthost`   | `myapp-valkey-main:6379`                           |
+  | `plainhostpass`   | `myapp-valkey-main:my-password`                    |
+  | `url`             | `redis://:my-password@myapp-valkey-main:6379/0`    |
+
+  The host and port are the ones of the primary service and port of the dependency.
+  Like the `creds` of the other dependencies, the values are quoted strings, use `| trimAll "\""` when templating them.
+- An init container `valkey-wait` is added to the workloads of the chart (the ones with `dbWait` not set to `false`), waiting for Valkey to respond.
+- The connection details are included in the notes.
+
+### Example
+
+The full specification of the `valkey` dependency (image, workload, service, persistence, probes and the health configmap) is part of the defaults of `dependencies.valkey` in the common library `values.yaml`.
+A chart only enables it and sets the values it needs to override:
 
 ```yaml
+image:
+  repository: ghcr.io/example/app
+  tag: latest
 dependencies:
   valkey:
     enabled: true
@@ -195,42 +290,27 @@ dependencies:
         enabled: true
         mountPath: "/bitnami/valkey"
 
-# In your main workload, access credentials:
 workload:
   main:
     podSpec:
       containers:
         main:
           env:
-            REDIS_URL: "{{ .Values.dependencies.valkey.depconfig.creds.url }}"
-            REDIS_HOST: "{{ .Values.dependencies.valkey.depconfig.creds.plainhost }}"
+            REDIS_URL: '{{ .Values.dependencies.valkey.depconfig.creds.url | trimAll "\"" }}'
+            REDIS_HOST: '{{ .Values.dependencies.valkey.depconfig.creds.plainhost | trimAll "\"" }}'
             REDIS_PASSWORD: "{{ .Values.dependencies.valkey.depconfig.password }}"
+
+dependencies:
+  valkey:
+    enabled: true
+    depconfig:
+      password: "secure-password"
 ```
 
----
+This renders, among others:
 
-## Differences from Helm Dependencies
-
-This dependencies feature differs from traditional helm chart dependencies:
-
-1. **No Separate Charts**: Dependencies are defined inline in values.yaml, not as separate helm charts in Chart.yaml
-2. **Name Prefixing**: All resources get prefixed with the dependency name to avoid conflicts
-3. **Single Release**: Everything is deployed as a single helm release
-4. **Easier Configuration**: No need to manage separate chart repositories or versions
-5. **Automatic Integration**: Init containers and connection information are automatically handled
-6. **Depconfig Structure**: Configuration and credentials are stored in `depconfig` subdict and not merged
-
----
-
-## Notes
-
-- Dependencies replace the traditional helm-dependencies mechanism
-- Each dependency can contain any valid chart values.yaml structure
-- ALL resource types are automatically prefixed to prevent naming conflicts (except excluded keys like global, depconfig, etc.)
-- New resource types automatically work without code changes - they just get prefixed
-- The `enabled` flag is automatically added to resources if not present
-- Init containers are automatically created to wait for dependency services to be ready
-- Connection information is automatically included in chart notes
-- Configuration and credentials are stored under `depconfig` and accessible via `.Values.dependencies.$name.depconfig`
-- Credentials for database dependencies are automatically generated and stored in `depconfig.creds`
-
+- `Deployment` `myapp` with the `valkey-wait` init container
+- `StatefulSet` `myapp-valkey-main` with the `data` volume claim template and the `health` configmap mounted
+- `Service` `myapp-valkey-main` on port 6379
+- `ConfigMap` `myapp-valkey-health`
+- `Secret` `myapp-valkeycreds`

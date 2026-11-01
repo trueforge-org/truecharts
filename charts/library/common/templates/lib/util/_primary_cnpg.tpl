@@ -5,7 +5,10 @@
   {{- $enabledcnpges := dict -}}
   {{- range $name, $cnpg := $cnpgs -}}
     {{- if and (kindIs "map" $cnpg) $cnpg.enabled -}}
-      {{- $_ := set $enabledcnpges $name . -}}
+      {{/* CNPG objects of dependencies are never the primary of the release */}}
+      {{- if not $cnpg.dependency -}}
+        {{- $_ := set $enabledcnpges $name . -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
 
