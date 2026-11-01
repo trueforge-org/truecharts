@@ -1824,16 +1824,6 @@ cnpg:
     # -- contains credentials and urls output by generator
     creds: {}
 
-# -- mariadb dependency configuration
-# @default -- See below
-mariadb:
-  enabled: false
-  includeCommon: false
-  password: "PLACEHOLDERPASSWORD"
-  rootPassword: "PLACEHOLDERROOTPASSWORD"
-  # -- can be used to make an easy accessable note which URLS to use to access the DB.
-  creds: {}
-
 # -- mongodb dependency configuration
 # @default -- See below
 mongodb:
@@ -1869,11 +1859,70 @@ solr:
 # Its objects are merged into the chart under the name [<dependency>-<object>] (eg [workload.valkey-main])
 # and references between them (targetSelector, objectName, ...) are rewritten accordingly.
 # Objects inherit the defaults of the matching common object (eg [workload.main]) and default to [enabled: true].
-# Currently [valkey] is the only dependency with additional handling (credentials secret, wait init container).
+# Currently [valkey] and [mariadb] are the only dependencies with additional handling (credentials secret, wait init container).
 # Disabled dependencies are not merged into the chart, so their defaults only apply once a chart sets [enabled: true].
 # @default -- See below
 
 dependencies:
+  mariadb:
+    enabled: false
+    # -- Settings of the dependency itself, never merged into the chart
+    depconfig:
+      password: "PLACEHOLDERPASSWORD"
+      rootPassword: "PLACEHOLDERROOTPASSWORD"
+      mariadbUsername: "test"
+      mariadbDatabase: "test"
+    image:
+      repository: oci.trueforge.org/containerforge/mariadb
+      pullPolicy: IfNotPresent
+      tag: 11.8.6@sha256:24e779c583b4355d5b0972072de1240b685b78b0b8465acff5bea782b304e439
+    workload:
+      main:
+        replicas: 1
+        type: StatefulSet
+        strategy: RollingUpdate
+        podSpec:
+          containers:
+            main:
+              env:
+                MARIADB_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                    key: mariadb-password
+                MARIADB_ROOT_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                    key: mariadb-root-password
+                MARIADB_USER: "{{ .Values.dependencies.mariadb.depconfig.mariadbUsername }}"
+                MARIADB_DATABASE: "{{ .Values.dependencies.mariadb.depconfig.mariadbDatabase }}"
+              probes:
+                liveness:
+                  type: exec
+                  command: &mariadbProbeCommand
+                    - mariadb-admin
+                    - --no-defaults
+                    - -uroot
+                    - -h127.0.0.1
+                    - -P3306
+                    - ping
+                readiness:
+                  type: exec
+                  command: *mariadbProbeCommand
+                startup:
+                  type: exec
+                  command: *mariadbProbeCommand
+    service:
+      main:
+        ports:
+          main:
+            protocol: tcp
+            port: 3306
+            targetPort: 3306
+    persistence:
+      data:
+        mountPath: /config
   valkey:
     enabled: false
     # -- Settings of the dependency itself, never merged into the chart

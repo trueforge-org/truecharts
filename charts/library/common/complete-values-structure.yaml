@@ -2562,7 +2562,6 @@ workload:
             MARIADB_ROOT_PASSWORD: ''
             MARIADB_USER: ''
             MARIADB_DATABASE: ''
-            MARIADB_EXTRA_FLAGS: ''
             BORG_UID: ''
             BORG_GID: ''
             DBNAME: ''
@@ -3660,6 +3659,58 @@ dependencies:
       objectname:
         type: ''
         mountPath: ''
+  mariadb:
+    enabled: false
+    depconfig:
+      password: ''
+      rootPassword: ''
+      mariadbUsername: ''
+      mariadbDatabase: ''
+    image:
+      repository: ''
+      pullPolicy: ''
+      tag: ''
+    securityContext:
+      container:
+        readOnlyRootFilesystem: false
+        runAsGroup: 0
+    workload:
+      objectname:
+        podSpec:
+          containers:
+            objectname:
+              env:
+                MARIADB_PASSWORD: ''
+                MARIADB_ROOT_PASSWORD: ''
+                MARIADB_USER: ''
+                MARIADB_DATABASE: ''
+              probes:
+                liveness:
+                  enabled: true
+                  type: ''
+                  command:
+                  - ''
+                readiness:
+                  enabled: true
+                  type: ''
+                  command:
+                  - ''
+                startup:
+                  enabled: true
+                  type: ''
+                  command:
+                  - ''
+    service:
+      objectname:
+        ports:
+          objectname:
+            protocol: ''
+            port: 0
+            targetPort: 0
+    persistence:
+      objectname:
+        enabled: true
+        mountPath: ''
 cnpg:
   main:
     enabled: false
@@ -3750,14 +3801,6 @@ redis:
       enabled: false
   redisUsername: ''
   username: ''
-mariadb:
-  enabled: false
-  includeCommon: false
-  password: ''
-  rootPassword: ''
-  creds: {}
-  mariadbUsername: ''
-  mariadbDatabase: ''
 mongodb:
   enabled: false
   includeCommon: false

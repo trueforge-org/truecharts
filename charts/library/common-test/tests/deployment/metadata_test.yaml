@@ -154,10 +154,6 @@ tests:
           pattern: ^[0-9a-f]{64}$
       - documentIndex: *deploymentDoc
         matchRegex:
-          path: spec.template.metadata.annotations.checksum/mariadb
-          pattern: ^[0-9a-f]{64}$
-      - documentIndex: *deploymentDoc
-        matchRegex:
           path: spec.template.metadata.annotations.checksum/mongodb
           pattern: ^[0-9a-f]{64}$
       - documentIndex: *deploymentDoc
