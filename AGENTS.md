@@ -83,7 +83,8 @@ Always test with the **latest stable releases** of Helm and helm-unittest. The s
 Run the checks for the area you touched (see the scoped instructions for details):
 
 ```bash
-# Repository hooks (yamllint, markdownlint, trailing whitespace, EOF, etc.) on changed files
+# Repository hooks (whitespace, line endings, YAML syntax, private keys, etc.) on changed files
+# These do not include yamllint or markdownlint, see Style below
 pre-commit run --files <changed files>
 
 # Application chart (from the repository root)
@@ -103,8 +104,8 @@ Afterwards, remove generated dependency artifacts: `rm -rf charts/*/<chart>/char
 
 ## Style
 
-- YAML: 2-space indentation and a final newline (see `.editorconfig`). Must pass `.github/yaml-lint-conf.yaml`.
-- Markdown: must pass `.markdownlint.yaml`. Use `-` for lists; long lines are allowed.
+- YAML: 2-space indentation and a final newline (see `.editorconfig`). Must pass `.github/yaml-lint-conf.yaml`, which `tc-lint.sh` checks for charts.
+- Markdown: must pass `.markdownlint.yaml`. Use `-` for lists; long lines are allowed. No hook or CI job runs this, so run `markdownlint` yourself.
 - Go templates: follow the existing whitespace-trimming (`{{-` / `-}}`) and indentation style of the file you are editing.
 - Keep comments in `values.yaml` short and useful. Do not remove existing explanatory comments.
 
