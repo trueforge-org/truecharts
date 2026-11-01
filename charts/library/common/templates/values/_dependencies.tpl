@@ -1,4 +1,4 @@
-{{/* Merges the enabled dependencies into the chart values */}}
+{{/* Merges the enabled dependencies into the chart values, except the ones in operator mode */}}
 {{/* Call this template:
 {{ include "tc.v1.common.values.dependencies" (dict "rootCtx" $ "mergedValues" $mergedValues "commonValues" $commonValues) }}
 rootCtx: The root context of the chart.
@@ -40,27 +40,34 @@ so templates like [.Values.dependencies.$name.service.main.ports.main.port] keep
                     "name" $depName "caller" "Dependencies"
                     "key" "dependencies")) -}}
 
+    {{/* Validates the mode, and makes the default explicit */}}
+    {{- $mode := (include "tc.v1.common.lib.dependencies.mode" (dict "objectData" $depValues "depName" $depName)) -}}
+    {{- $_ := set $depValues "mode" $mode -}}
+
+    {{/* The dependencies in operator mode are provided by an operator, so their objects are not merged into the chart. They are still normalized, for the credentials, wait and notes */}}
     {{- if eq $enabled "true" -}}
       {{- include "tc.v1.common.values.dependencies.merge" (dict
             "rootCtx" $rootCtx "mergedValues" $mergedValues "commonValues" $commonValues
-            "depName" $depName "depValues" $depValues) -}}
+            "depName" $depName "depValues" $depValues "standalone" (eq $mode "standalone")) -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
 
 {{/* Merges a single dependency into the chart values */}}
+{{/* In operator mode ([standalone: false]) the dependency is only normalized in place, nothing is added to the chart */}}
 {{- define "tc.v1.common.values.dependencies.merge" -}}
   {{- $rootCtx := .rootCtx -}}
   {{- $mergedValues := .mergedValues -}}
   {{- $commonValues := .commonValues -}}
   {{- $depName := .depName -}}
   {{- $dep := .depValues -}}
+  {{- $standalone := .standalone -}}
 
   {{/* Keys that control the dependency itself and are never merged */}}
   {{/* The objects of the addons are added to the collections of the dependency instead */}}
-  {{- $controlKeys := (list "enabled" "depconfig" "addons") -}}
+  {{- $controlKeys := (list "enabled" "mode" "depconfig" "operator" "addons") -}}
   {{/* Release wide settings, the ones of the chart apply to the whole release */}}
-  {{- $ignoredKeys := (list "global" "chartContext" "notes" "operator" "fallbackDefaults" "TZ" "namespace" "diagnosticMode" "containerOptions" "common") -}}
+  {{- $ignoredKeys := (list "global" "chartContext" "notes" "fallbackDefaults" "TZ" "namespace" "diagnosticMode" "containerOptions" "common") -}}
   {{/* Features that can not be scoped to a dependency */}}
   {{- $unsupportedKeys := (list "dependencies" "configMapsFromFolder" "extraTpl" "mariadb" "mongodb" "clickhouse" "solr" "ingressMiddlewares" "volumeClaimTemplates") -}}
   {{/* Defaults that are applied to the workloads of the dependency, instead of the whole release */}}
@@ -99,6 +106,7 @@ so templates like [.Values.dependencies.$name.service.main.ports.main.port] keep
 
   {{/* Images are stored on the root as [$nameImage], [$nameFooImage] */}}
   {{- range $key, $newKey := $images -}}
+    {{- if not $standalone -}}{{- continue -}}{{- end -}}
     {{- if hasKey $mergedValues $newKey -}}
       {{- fail (printf "Dependencies - Image [%s] of dependency [%s] conflicts with the existing key [%s]" $key $depName $newKey) -}}
     {{- end -}}
@@ -133,9 +141,12 @@ so templates like [.Values.dependencies.$name.service.main.ports.main.port] keep
   {{- end -}}
 
   {{/* Addons add containers and objects to the dependency, so they are applied after the defaults and before the primaries are resolved */}}
-  {{- include "tc.v1.common.values.dependencies.addons" (dict
-        "rootCtx" $rootCtx "mergedValues" $mergedValues "commonValues" $commonValues
-        "depName" $depName "dep" $dep "collections" $collections) -}}
+  {{/* They are not applied in operator mode, as the workloads of the dependency are not deployed */}}
+  {{- if $standalone -}}
+    {{- include "tc.v1.common.values.dependencies.addons" (dict
+          "rootCtx" $rootCtx "mergedValues" $mergedValues "commonValues" $commonValues
+          "depName" $depName "dep" $dep "collections" $collections) -}}
+  {{- end -}}
 
   {{/* Scoped defaults */}}
   {{- $depSecurityContext := dict -}}
@@ -279,6 +290,7 @@ so templates like [.Values.dependencies.$name.service.main.ports.main.port] keep
 
   {{/* Add prefixed copies of the objects to the collections of the chart */}}
   {{- range $collName, $objects := $collections -}}
+    {{- if not $standalone -}}{{- continue -}}{{- end -}}
     {{- if not (kindIs "map" (get $mergedValues $collName)) -}}
       {{- $_ := set $mergedValues $collName dict -}}
     {{- end -}}
