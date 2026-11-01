@@ -305,10 +305,6 @@
       "$ref": "schemas/dependencies.json",
       "description": "Configuration for `dependencies`."
     },
-    "cnpg": {
-      "$ref": "schemas/cnpg/cnpg.json",
-      "description": "Define a CNPG cluster"
-    },
     "extraTpl": {
       "$ref": "schemas/extraTpl.json",
       "description": "Define kubernetes resources, 1 per list item, tpl will be resolved",
@@ -437,26 +433,6 @@
     "env": {
       "$ref": "schemas/workload/podSpec/containers/env.json",
       "description": "See [env](/truecharts-common/container/env)"
-    },
-    "primaryUpdateMethod": {
-      "$ref": "schemas/cnpg/cluster/primaryUpdateMethod.json",
-      "description": "TODO ---"
-    },
-    "primaryUpdateStrategy": {
-      "$ref": "schemas/cnpg/cluster/primaryUpdateStrategy.json",
-      "description": "TODO ---"
-    },
-    "certificates": {
-      "$ref": "schemas/cnpg/cluster/certificates.json",
-      "description": "TODO ---"
-    },
-    "postgresql": {
-      "$ref": "schemas/cnpg/cluster/postgresql.json",
-      "description": "TODO ---"
-    },
-    "initdb": {
-      "$ref": "schemas/cnpg/cluster/initdb.json",
-      "description": "TODO ---"
     }
   },
   "additionalProperties": true

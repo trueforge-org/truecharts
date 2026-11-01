@@ -33,44 +33,46 @@ tests:
         annotations:
           g_annotation1: global_annotation1
           g_annotation2: "{{ .Values.annotation2 }}"
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          labels:
-            label1: "{{ .Values.label1 }}"
-            label2: label2
-          annotations:
-            annotation1: "{{ .Values.annotation1 }}"
-            annotation2: annotation2
-          annotationsList:
-            - name: some-annotation
-              value: some-value
-          labelsList:
-            - name: some-label
-              value: some-value
-          backups:
-            enabled: true
-            target: primary
-            retentionPolicy: 10d
-            credentials: test
-            destinationPath: some-path
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
             labels:
-              label5: label5
+              label1: "{{ .Values.label1 }}"
+              label2: label2
             annotations:
-              annotation5: annotation5
-            scheduledBackups:
-              - name: daily
-                schedule: "0 0 * * *"
-                backupOwnerReference: self
-                labels:
-                  label3: "{{ .Values.label3 }}"
-                  label4: label4
-                annotations:
-                  annotation3: "{{ .Values.annotation3 }}"
-                  annotation4: annotation4
+              annotation1: "{{ .Values.annotation1 }}"
+              annotation2: annotation2
+            annotationsList:
+              - name: some-annotation
+                value: some-value
+            labelsList:
+              - name: some-label
+                value: some-value
+            backups:
+              enabled: true
+              target: primary
+              retentionPolicy: 10d
+              credentials: test
+              destinationPath: some-path
+              labels:
+                label5: label5
+              annotations:
+                annotation5: annotation5
+              scheduledBackups:
+                - name: daily
+                  schedule: "0 0 * * *"
+                  backupOwnerReference: self
+                  labels:
+                    label3: "{{ .Values.label3 }}"
+                    label4: label4
+                  annotations:
+                    annotation3: "{{ .Values.annotation3 }}"
+                    annotation4: annotation4
     asserts:
       - documentIndex: &backupDoc 0
         isKind:
@@ -99,7 +101,7 @@ tests:
             app.kubernetes.io/instance: test-release-name
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/version: *appVer
-            cnpg.io/cluster: test-release-name-common-test-cnpg-my-pg
+            cnpg.io/cluster: test-release-name-common-test-cnpg-main
             g_label1: global_label1
             g_label2: global_label2
             label1: label1
@@ -117,23 +119,25 @@ tests:
     set:
       credentials:
         test: *test
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          namespace: some-namespace
-          backups:
-            enabled: true
-            target: primary
-            retentionPolicy: 10d
-            credentials: test
-            destinationPath: some-path
-            scheduledBackups:
-              - name: daily
-                schedule: "0 0 * * *"
-                backupOwnerReference: self
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            namespace: some-namespace
+            backups:
+              enabled: true
+              target: primary
+              retentionPolicy: 10d
+              credentials: test
+              destinationPath: some-path
+              scheduledBackups:
+                - name: daily
+                  schedule: "0 0 * * *"
+                  backupOwnerReference: self
     asserts:
       - documentIndex: *backupDoc
         equal:
@@ -145,23 +149,25 @@ tests:
       credentials:
         test: *test
       key: some-namespace
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          namespace: "{{ .Values.key }}"
-          backups:
-            enabled: true
-            target: primary
-            retentionPolicy: 10d
-            credentials: test
-            destinationPath: some-path
-            scheduledBackups:
-              - name: daily
-                schedule: "0 0 * * *"
-                backupOwnerReference: self
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            namespace: "{{ .Values.key }}"
+            backups:
+              enabled: true
+              target: primary
+              retentionPolicy: 10d
+              credentials: test
+              destinationPath: some-path
+              scheduledBackups:
+                - name: daily
+                  schedule: "0 0 * * *"
+                  backupOwnerReference: self
     asserts:
       - documentIndex: *backupDoc
         equal:
@@ -175,22 +181,24 @@ tests:
       key: global-namespace
       global:
         namespace: "{{ .Values.key }}"
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            target: primary
-            retentionPolicy: 10d
-            credentials: test
-            destinationPath: some-path
-            scheduledBackups:
-              - name: daily
-                schedule: "0 0 * * *"
-                backupOwnerReference: self
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              target: primary
+              retentionPolicy: 10d
+              credentials: test
+              destinationPath: some-path
+              scheduledBackups:
+                - name: daily
+                  schedule: "0 0 * * *"
+                  backupOwnerReference: self
     asserts:
       - documentIndex: *backupDoc
         equal:
@@ -205,22 +213,24 @@ tests:
       namespace: "{{ .Values.key }}"
       global:
         namespace: global-namespace
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            target: primary
-            retentionPolicy: 10d
-            credentials: test
-            destinationPath: some-path
-            scheduledBackups:
-              - name: daily
-                schedule: "0 0 * * *"
-                backupOwnerReference: self
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              target: primary
+              retentionPolicy: 10d
+              credentials: test
+              destinationPath: some-path
+              scheduledBackups:
+                - name: daily
+                  schedule: "0 0 * * *"
+                  backupOwnerReference: self
     asserts:
       - documentIndex: *backupDoc
         equal:

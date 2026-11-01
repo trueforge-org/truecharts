@@ -10,6 +10,7 @@ tests:
       dependencies:
         postgresql:
           enabled: true
+          mode: standalone
     asserts:
       - hasDocuments:
           count: 4
@@ -133,6 +134,7 @@ tests:
       dependencies:
         postgresql:
           enabled: true
+          mode: standalone
           depconfig:
             password: testpassword
             postgresqlUsername: myuser
@@ -192,6 +194,7 @@ tests:
       dependencies:
         postgresql:
           enabled: true
+          mode: standalone
     asserts:
       - documentSelector:
           path: kind
@@ -214,6 +217,7 @@ tests:
       dependencies:
         postgresql:
           enabled: true
+          mode: standalone
     asserts:
       - documentSelector:
           path: kind
@@ -251,6 +255,7 @@ tests:
       dependencies:
         postgresql:
           enabled: true
+          mode: standalone
           depconfig:
             password: testpassword
     asserts:
@@ -284,6 +289,7 @@ tests:
       dependencies:
         postgresql:
           enabled: true
+          mode: standalone
           service:
             main:
               ports:
@@ -298,6 +304,7 @@ tests:
       dependencies:
         postgresql:
           enabled: true
+          mode: standalone
           depconfig:
             postgresqlUsername: null
     asserts:
@@ -309,6 +316,7 @@ tests:
       dependencies:
         postgresql:
           enabled: true
+          mode: standalone
           depconfig:
             postgresqlDatabase: null
     asserts:

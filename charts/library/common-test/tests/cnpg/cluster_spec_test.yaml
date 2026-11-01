@@ -11,13 +11,15 @@ tests:
         repository: ghcr.io/cloudnative-pg/postgresql
         tag: "16.3"
         pullPolicy: IfNotPresent
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          pgVersion: 16
-          user: test-user
-          database: test-db
-          password: test-password
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            pgVersion: 16
     asserts:
       - documentIndex: &clusterDoc 0
         isKind:
@@ -28,7 +30,7 @@ tests:
       - documentIndex: *clusterDoc
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-my-pg
+          value: test-release-name-common-test-cnpg-main
       - documentIndex: *clusterDoc
         equal:
           path: spec
@@ -68,7 +70,7 @@ tests:
             bootstrap:
               initdb:
                 secret:
-                  name: test-release-name-common-test-cnpg-my-pg-user
+                  name: test-release-name-common-test-cnpg-main-user
                 database: test-db
                 owner: test-user
                 dataChecksums: true
@@ -78,16 +80,18 @@ tests:
         repository: ghcr.io/cloudnative-pg/postgresql
         tag: "16.3"
         pullPolicy: IfNotPresent
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          pgVersion: 16
-          user: test-user
-          database: test-db
-          password: test-password
-          cluster:
-            postgresUID: 666
-            postgresGID: 666
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            pgVersion: 16
+            cluster:
+              postgresUID: 666
+              postgresGID: 666
     asserts:
       - documentIndex: &clusterDoc 0
         isKind:
@@ -98,7 +102,7 @@ tests:
       - documentIndex: *clusterDoc
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-my-pg
+          value: test-release-name-common-test-cnpg-main
       - documentIndex: *clusterDoc
         equal:
           path: spec
@@ -138,7 +142,7 @@ tests:
             bootstrap:
               initdb:
                 secret:
-                  name: test-release-name-common-test-cnpg-my-pg-user
+                  name: test-release-name-common-test-cnpg-main-user
                 database: test-db
                 owner: test-user
                 dataChecksums: true
@@ -154,12 +158,13 @@ tests:
           vctAccessModes:
             - ReadWriteMany
             - ReadWriteOnce
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
     asserts:
       - documentIndex: *clusterDoc
         isKind:
@@ -170,7 +175,7 @@ tests:
       - documentIndex: *clusterDoc
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-my-pg
+          value: test-release-name-common-test-cnpg-main
       - documentIndex: *clusterDoc
         isSubset:
           path: spec
@@ -195,14 +200,15 @@ tests:
 
   - it: should default to postgres 18
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
     asserts:
-      - documentIndex: 0
+      - documentIndex: *clusterDoc
         matchRegex:
           path: spec.imageName
           pattern: ^ghcr\.io/cloudnative-pg/postgresql:18\.
@@ -213,44 +219,49 @@ tests:
         fallbackDefaults:
           cnpg:
             pgVersion: 17
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
     asserts:
-      - documentIndex: 0
+      - documentIndex: *clusterDoc
         matchRegex:
           path: spec.imageName
           pattern: ^ghcr\.io/cloudnative-pg/postgresql:17\.
 
   - it: should keep a set version with the newer default
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          pgVersion: 16
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            pgVersion: 16
     asserts:
-      - documentIndex: 0
+      - documentIndex: *clusterDoc
         matchRegex:
           path: spec.imageName
           pattern: ^ghcr\.io/cloudnative-pg/postgresql:16\.
 
   - it: should keep vectors on postgres 16 without a set version, as it has no image for 18
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          type: vectors
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            type: vectors
     asserts:
-      - documentIndex: 0
+      - documentIndex: *clusterDoc
         matchRegex:
           path: spec.imageName
           pattern: /cloudnative-pgvecto\.rs:16\.
@@ -261,15 +272,17 @@ tests:
         fallbackDefaults:
           cnpg:
             pgVersion: 17
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          type: vectors
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            type: vectors
     asserts:
-      - documentIndex: 0
+      - documentIndex: *clusterDoc
         matchRegex:
           path: spec.imageName
           pattern: /cloudnative-pgvecto\.rs:17\.
@@ -279,14 +292,16 @@ tests:
       postgresVectors15Image:
         repository: ghcr.io/tensorchord/cloudnative-pgvecto.rs
         tag: "15.6-v0.2.1"
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          pgVersion: 15
-          type: vectors
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            pgVersion: 15
+            type: vectors
     asserts:
       - documentIndex: *clusterDoc
         isKind:
@@ -297,7 +312,7 @@ tests:
       - documentIndex: *clusterDoc
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-my-pg
+          value: test-release-name-common-test-cnpg-main
       - documentIndex: *clusterDoc
         equal:
           path: spec.imageName
@@ -308,13 +323,15 @@ tests:
       postgres15Image:
         repository: ghcr.io/cloudnative-pg/postgresql
         tag: "15.6"
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          pgVersion: 15
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            pgVersion: 15
     asserts:
       - documentIndex: *clusterDoc
         isKind:
@@ -325,7 +342,7 @@ tests:
       - documentIndex: *clusterDoc
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-my-pg
+          value: test-release-name-common-test-cnpg-main
       - documentIndex: *clusterDoc
         equal:
           path: spec.imageName
@@ -336,13 +353,15 @@ tests:
       postgres17Image:
         repository: ghcr.io/cloudnative-pg/postgresql
         tag: "17.10"
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          pgVersion: 17
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            pgVersion: 17
     asserts:
       - documentIndex: *clusterDoc
         equal:
@@ -354,13 +373,15 @@ tests:
       postgres18Image:
         repository: ghcr.io/cloudnative-pg/postgresql
         tag: "18.4"
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          pgVersion: 18
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            pgVersion: 18
     asserts:
       - documentIndex: *clusterDoc
         equal:
@@ -372,14 +393,16 @@ tests:
       postgresPostgis17Image:
         repository: ghcr.io/cloudnative-pg/postgis
         tag: "17-3.5"
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          type: postgis
-          pgVersion: 17
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            type: postgis
+            pgVersion: 17
     asserts:
       - documentIndex: *clusterDoc
         equal:
@@ -391,14 +414,16 @@ tests:
       postgresPostgis18Image:
         repository: ghcr.io/cloudnative-pg/postgis
         tag: "18-3.6-standard-bookworm"
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          type: postgis
-          pgVersion: 18
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            type: postgis
+            pgVersion: 18
     asserts:
       - documentIndex: *clusterDoc
         equal:
@@ -410,14 +435,16 @@ tests:
       postgresVectors17Image:
         repository: ghcr.io/tensorchord/cloudnative-pgvecto.rs
         tag: "17.5-v0.4.0"
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          type: vectors
-          pgVersion: 17
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            type: vectors
+            pgVersion: 17
     asserts:
       - documentIndex: *clusterDoc
         equal:
@@ -429,14 +456,16 @@ tests:
       postgresVectorchord17Image:
         repository: ghcr.io/tensorchord/cloudnative-vectorchord
         tag: "17.9-1.1.1"
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          type: vectorchord
-          pgVersion: 17
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            type: vectorchord
+            pgVersion: 17
     asserts:
       - documentIndex: *clusterDoc
         equal:
@@ -448,14 +477,16 @@ tests:
       postgresVectorchord18Image:
         repository: ghcr.io/tensorchord/cloudnative-vectorchord
         tag: "18.3-1.1.1"
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          type: vectorchord
-          pgVersion: 18
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            type: vectorchord
+            pgVersion: 18
     asserts:
       - documentIndex: *clusterDoc
         equal:
@@ -466,54 +497,56 @@ tests:
     set:
       ext1: some-extension
       ext2: some-other-extension
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          cluster:
-            enableSuperuserAccess: false
-            imageName: some-image
-            primaryUpdateStrategy: supervised
-            primaryUpdateMethod: restart
-            postgresUID: 26
-            postgresGID: 26
-            logLevel: debug
-            instances: 3
-            initdb:
-              dataChecksums: false
-              encoding: some-encoding
-              localeCollate: some-locale
-              localeCtype: some-locale
-              walSegmentSize: 16
-              postInitApplicationSQL:
-                - CREATE EXTENSION IF NOT EXISTS {{ .Values.ext1 }};
-                - CREATE EXTENSION IF NOT EXISTS {{ .Values.ext2 }};
-              postInitSQL:
-                - CREATE EXTENSION IF NOT EXISTS {{ .Values.ext1 }}1;
-                - CREATE EXTENSION IF NOT EXISTS {{ .Values.ext2 }}2;
-              postInitTemplateSQL:
-                - CREATE EXTENSION IF NOT EXISTS {{ .Values.ext1 }}1;
-                - CREATE EXTENSION IF NOT EXISTS {{ .Values.ext2 }}2;
-            nodeMaintenanceWindow:
-              reusePVC: false
-              inProgress: true
-            resources:
-              limits:
-                cpu: 2000m
-                memory: 4Gi
-              requests:
-                cpu: 20m
-                memory: 100Mi
-            storage:
-              size: 200Gi
-              accessModes:
-                - ReadWriteMany
-            walStorage:
-              size: 200Gi
-              accessModes:
-                - ReadWriteMany
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            cluster:
+              enableSuperuserAccess: false
+              imageName: some-image
+              primaryUpdateStrategy: supervised
+              primaryUpdateMethod: restart
+              postgresUID: 26
+              postgresGID: 26
+              logLevel: debug
+              instances: 3
+              initdb:
+                dataChecksums: false
+                encoding: some-encoding
+                localeCollate: some-locale
+                localeCtype: some-locale
+                walSegmentSize: 16
+                postInitApplicationSQL:
+                  - CREATE EXTENSION IF NOT EXISTS {{ .Values.ext1 }};
+                  - CREATE EXTENSION IF NOT EXISTS {{ .Values.ext2 }};
+                postInitSQL:
+                  - CREATE EXTENSION IF NOT EXISTS {{ .Values.ext1 }}1;
+                  - CREATE EXTENSION IF NOT EXISTS {{ .Values.ext2 }}2;
+                postInitTemplateSQL:
+                  - CREATE EXTENSION IF NOT EXISTS {{ .Values.ext1 }}1;
+                  - CREATE EXTENSION IF NOT EXISTS {{ .Values.ext2 }}2;
+              nodeMaintenanceWindow:
+                reusePVC: false
+                inProgress: true
+              resources:
+                limits:
+                  cpu: 2000m
+                  memory: 4Gi
+                requests:
+                  cpu: 20m
+                  memory: 100Mi
+              storage:
+                size: 200Gi
+                accessModes:
+                  - ReadWriteMany
+              walStorage:
+                size: 200Gi
+                accessModes:
+                  - ReadWriteMany
     asserts:
       - documentIndex: *clusterDoc
         isKind:
@@ -557,7 +590,7 @@ tests:
             bootstrap:
               initdb:
                 secret:
-                  name: test-release-name-common-test-cnpg-my-pg-user
+                  name: test-release-name-common-test-cnpg-main-user
                 database: test-db
                 owner: test-user
                 dataChecksums: false
@@ -584,12 +617,13 @@ tests:
         requests:
           cpu: 20m
           memory: 100Mi
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
     asserts:
       - documentIndex: *clusterDoc
         isKind:
@@ -608,19 +642,21 @@ tests:
 
   - it: should pass with custom-conf
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: app
-          database: app
-          password: test-password
-          cluster:
-            postgresql:
-              key1: value1
-              key2: '{{ printf "test-tpl" }}'
-            preloadLibraries:
-              - pg_stat_statements
-              - pg_cron
+          depconfig:
+            postgresqlUsername: app
+            postgresqlDatabase: app
+            password: test-password
+          operator:
+            cluster:
+              postgresql:
+                key1: value1
+                key2: '{{ printf "test-tpl" }}'
+              preloadLibraries:
+                - pg_stat_statements
+                - pg_cron
     asserts:
       - documentIndex: *clusterDoc
         isKind:
@@ -642,24 +678,26 @@ tests:
       postgresTimescaledb16Image:
         repository: docker.io/timescale/timescaledb
         tag: "some-tag"
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          pgVersion: 16
-          user: app
-          database: app
-          password: test-password
-          type: timescaledb
-          cluster:
-            initdb:
-              postInitApplicationSQL:
-                - CREATE EXTENSION IF NOT EXISTS some-extension;
-            postgresql:
-              key1: value1
-              key2: '{{ printf "test-tpl" }}'
-            preloadLibraries:
-              - pg_stat_statements
-              - pg_cron
+          depconfig:
+            postgresqlUsername: app
+            postgresqlDatabase: app
+            password: test-password
+          operator:
+            pgVersion: 16
+            type: timescaledb
+            cluster:
+              initdb:
+                postInitApplicationSQL:
+                  - CREATE EXTENSION IF NOT EXISTS some-extension;
+              postgresql:
+                key1: value1
+                key2: '{{ printf "test-tpl" }}'
+              preloadLibraries:
+                - pg_stat_statements
+                - pg_cron
     asserts:
       - documentIndex: *clusterDoc
         isKind:
@@ -679,7 +717,7 @@ tests:
             bootstrap:
               initdb:
                 secret:
-                  name: test-release-name-common-test-cnpg-my-pg-user
+                  name: test-release-name-common-test-cnpg-main-user
                 database: app
                 owner: app
                 dataChecksums: true
@@ -692,23 +730,25 @@ tests:
       postgresPostgis16Image:
         repository: docker.io/postgis/postgisdb
         tag: "some-tag"
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: app
-          database: app
-          password: test-password
-          type: postgis
-          cluster:
-            initdb:
-              postInitApplicationSQL:
-                - CREATE EXTENSION IF NOT EXISTS some-extension;
-            postgresql:
-              key1: value1
-              key2: '{{ printf "test-tpl" }}'
-            preloadLibraries:
-              - pg_stat_statements
-              - pg_cron
+          depconfig:
+            postgresqlUsername: app
+            postgresqlDatabase: app
+            password: test-password
+          operator:
+            type: postgis
+            cluster:
+              initdb:
+                postInitApplicationSQL:
+                  - CREATE EXTENSION IF NOT EXISTS some-extension;
+              postgresql:
+                key1: value1
+                key2: '{{ printf "test-tpl" }}'
+              preloadLibraries:
+                - pg_stat_statements
+                - pg_cron
     asserts:
       - documentIndex: *clusterDoc
         isKind:
@@ -727,7 +767,7 @@ tests:
             bootstrap:
               initdb:
                 secret:
-                  name: test-release-name-common-test-cnpg-my-pg-user
+                  name: test-release-name-common-test-cnpg-main-user
                 database: app
                 owner: app
                 dataChecksums: true
@@ -743,23 +783,25 @@ tests:
       postgresVectors16Image:
         repository: docker.io/vectors/vectors
         tag: "some-tag"
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: app
-          database: app
-          password: test-password
-          type: vectors
-          cluster:
-            initdb:
-              postInitApplicationSQL:
-                - CREATE EXTENSION IF NOT EXISTS some-extension;
-            postgresql:
-              key1: value1
-              key2: '{{ printf "test-tpl" }}'
-            preloadLibraries:
-              - pg_stat_statements
-              - pg_cron
+          depconfig:
+            postgresqlUsername: app
+            postgresqlDatabase: app
+            password: test-password
+          operator:
+            type: vectors
+            cluster:
+              initdb:
+                postInitApplicationSQL:
+                  - CREATE EXTENSION IF NOT EXISTS some-extension;
+              postgresql:
+                key1: value1
+                key2: '{{ printf "test-tpl" }}'
+              preloadLibraries:
+                - pg_stat_statements
+                - pg_cron
     asserts:
       - documentIndex: *clusterDoc
         isKind:
@@ -779,7 +821,7 @@ tests:
             bootstrap:
               initdb:
                 secret:
-                  name: test-release-name-common-test-cnpg-my-pg-user
+                  name: test-release-name-common-test-cnpg-main-user
                 database: app
                 owner: app
                 dataChecksums: true
@@ -792,23 +834,25 @@ tests:
       postgresVectorchord16Image:
         repository: docker.io/vectorchord/vectorchord
         tag: "some-tag"
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: app
-          database: app
-          password: test-password
-          type: vectorchord
-          cluster:
-            initdb:
-              postInitApplicationSQL:
-                - CREATE EXTENSION IF NOT EXISTS some-extension;
-            postgresql:
-              key1: value1
-              key2: '{{ printf "test-tpl" }}'
-            preloadLibraries:
-              - pg_stat_statements
-              - pg_cron
+          depconfig:
+            postgresqlUsername: app
+            postgresqlDatabase: app
+            password: test-password
+          operator:
+            type: vectorchord
+            cluster:
+              initdb:
+                postInitApplicationSQL:
+                  - CREATE EXTENSION IF NOT EXISTS some-extension;
+              postgresql:
+                key1: value1
+                key2: '{{ printf "test-tpl" }}'
+              preloadLibraries:
+                - pg_stat_statements
+                - pg_cron
     asserts:
       - documentIndex: *clusterDoc
         isKind:
@@ -828,7 +872,7 @@ tests:
             bootstrap:
               initdb:
                 secret:
-                  name: test-release-name-common-test-cnpg-my-pg-user
+                  name: test-release-name-common-test-cnpg-main-user
                 database: app
                 owner: app
                 dataChecksums: true
@@ -841,16 +885,18 @@ tests:
       postgresTimescaledb16Image:
         repository: docker.io/timescale/timescaledb
         tag: "some-tag"
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          pgVersion: 16
-          user: app
-          database: app
-          password: test-password
-          type: timescaledb
-          monitoring:
-            enablePodMonitor: true
+          depconfig:
+            postgresqlUsername: app
+            postgresqlDatabase: app
+            password: test-password
+          operator:
+            pgVersion: 16
+            type: timescaledb
+            monitoring:
+              enablePodMonitor: true
     asserts:
       - documentIndex: *clusterDoc
         isKind:
@@ -867,40 +913,42 @@ tests:
       postgresTimescaledb16Image:
         repository: docker.io/timescale/timescaledb
         tag: "some-tag"
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          pgVersion: 16
-          user: app
-          database: app
-          password: test-password
-          type: timescaledb
-          monitoring:
-            enablePodMonitor: true
-            disableDefaultQueries: true
-            customQueries:
-              - name: test-query
-                query: test-query
-                metrics:
-                  - a-gauge:
-                      usage: GAUGE
-                      description: test-metric
-                  - a-counter:
-                      usage: COUNTER
-                      description: test-metric
-              - name: test-query2
-                query: test-query2
-                metrics:
-                  - a-gauge:
-                      usage: GAUGE
-                      description: test-metric
-                  - a-counter:
-                      usage: COUNTER
-                      description: test-metric
-              - name: test-query3
-                query: test-query3
-                expandObjectName: false
-                key: test-key
+          depconfig:
+            postgresqlUsername: app
+            postgresqlDatabase: app
+            password: test-password
+          operator:
+            pgVersion: 16
+            type: timescaledb
+            monitoring:
+              enablePodMonitor: true
+              disableDefaultQueries: true
+              customQueries:
+                - name: test-query
+                  query: test-query
+                  metrics:
+                    - a-gauge:
+                        usage: GAUGE
+                        description: test-metric
+                    - a-counter:
+                        usage: COUNTER
+                        description: test-metric
+                - name: test-query2
+                  query: test-query2
+                  metrics:
+                    - a-gauge:
+                        usage: GAUGE
+                        description: test-metric
+                    - a-counter:
+                        usage: COUNTER
+                        description: test-metric
+                - name: test-query3
+                  query: test-query3
+                  expandObjectName: false
+                  key: test-key
     asserts:
       - documentIndex: *clusterDoc
         isKind:
@@ -912,9 +960,9 @@ tests:
             enablePodMonitor: true
             disableDefaultQueries: true
             customQueriesConfigMap:
-              - name: test-release-name-common-test-cnpg-my-pg-test-query
+              - name: test-release-name-common-test-cnpg-main-test-query
                 key: custom-queries
-              - name: test-release-name-common-test-cnpg-my-pg-test-query2
+              - name: test-release-name-common-test-cnpg-main-test-query2
                 key: custom-queries
               - name: test-query3
                 key: test-key
@@ -937,23 +985,25 @@ tests:
         repository: ghcr.io/cloudnative-pg/postgresql
         tag: "16.3"
         pullPolicy: IfNotPresent
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          cluster:
-            env:
-              VAR1: some-value
-              VAR2:
-                configMapKeyRef:
-                  name: configmap-name
-                  key: key1
-              VAR3:
-                secretKeyRef:
-                  name: secret-name
-                  key: key2
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            cluster:
+              env:
+                VAR1: some-value
+                VAR2:
+                  configMapKeyRef:
+                    name: configmap-name
+                    key: key1
+                VAR3:
+                  secretKeyRef:
+                    name: secret-name
+                    key: key2
     asserts:
       - documentIndex: *clusterDoc
         isKind:
@@ -964,7 +1014,7 @@ tests:
       - documentIndex: *clusterDoc
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-my-pg
+          value: test-release-name-common-test-cnpg-main
       - documentIndex: *clusterDoc
         isSubset:
           path: spec
@@ -1001,18 +1051,20 @@ tests:
         repository: ghcr.io/cloudnative-pg/postgresql
         tag: "16.3"
         pullPolicy: IfNotPresent
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          cluster:
-            envFrom:
-              - configMapRef:
-                  name: configmap-name
-              - secretRef:
-                  name: secret-name
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            cluster:
+              envFrom:
+                - configMapRef:
+                    name: configmap-name
+                - secretRef:
+                    name: secret-name
     asserts:
       - documentIndex: *clusterDoc
         isKind:
@@ -1023,7 +1075,7 @@ tests:
       - documentIndex: *clusterDoc
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-my-pg
+          value: test-release-name-common-test-cnpg-main
       - documentIndex: *clusterDoc
         isSubset:
           path: spec

@@ -69,13 +69,13 @@ so templates like [.Values.dependencies.$name.service.main.ports.main.port] keep
   {{/* Release wide settings, the ones of the chart apply to the whole release */}}
   {{- $ignoredKeys := (list "global" "chartContext" "notes" "fallbackDefaults" "TZ" "namespace" "diagnosticMode" "containerOptions" "common") -}}
   {{/* Features that can not be scoped to a dependency */}}
-  {{- $unsupportedKeys := (list "dependencies" "configMapsFromFolder" "extraTpl" "mariadb" "mongodb" "clickhouse" "solr" "ingressMiddlewares" "volumeClaimTemplates") -}}
+  {{- $unsupportedKeys := (list "dependencies" "configMapsFromFolder" "extraTpl" "mariadb" "mongodb" "clickhouse" "solr" "cnpg" "ingressMiddlewares" "volumeClaimTemplates") -}}
   {{/* Defaults that are applied to the workloads of the dependency, instead of the whole release */}}
   {{- $scopedKeys := (list "securityContext" "podOptions" "resources") -}}
   {{/* Collections whose objects do not have an [enabled] key */}}
   {{- $noEnabledCollections := (list "credentials") -}}
   {{/* Collections with primary objects */}}
-  {{- $primaryCollections := (list "workload" "service" "serviceAccount" "rbac" "ingress" "certificate" "gatewayClass" "gateway" "route" "networkpolicy" "metrics" "cnpg") -}}
+  {{- $primaryCollections := (list "workload" "service" "serviceAccount" "rbac" "ingress" "certificate" "gatewayClass" "gateway" "route" "networkpolicy" "metrics") -}}
   {{/* Objects that are explicitly set to primary, they are the primary objects of the release. Keyed by [$collection.$object] */}}
   {{- $releasePrimaries := dict -}}
 
@@ -689,12 +689,5 @@ so templates like [.Values.dependencies.$name.service.main.ports.main.port] keep
       {{- end -}}
     {{- end -}}
 
-  {{- else if eq $collName "cnpg" -}}
-    {{- range $section := (list "backups" "recovery") -}}
-      {{- $data := get $obj $section -}}
-      {{- if and (kindIs "map" $data) (kindIs "string" $data.credentials) -}}
-        {{- $_ := set $data "credentials" (include "tc.v1.common.values.dependencies.ref" (merge (dict "coll" "credentials" "name" $data.credentials) $refCtx)) -}}
-      {{- end -}}
-    {{- end -}}
   {{- end -}}
 {{- end -}}

@@ -1609,230 +1609,6 @@ addons:
             - NET_ADMIN
             - NET_RAW
 
-##########################################################################
-# This section contains some pre-config for frequently used dependencies #
-##########################################################################
-
-cnpg:
-  main:
-    enabled: false
-    primary: true
-    # -- Puts the cnpg cluster in hibernation mode
-    hibernate: false
-    # Additional Labels and annotations for all cnpg objects
-    labels: {}
-    annotations: {}
-
-    # Type of the CNPG database. Available types:
-    # * `postgres`
-    # * `postgis`
-    # * `timescaledb`
-    # * `vectors`
-    # * `vectorchord`
-    type: postgres
-
-    # Version of Postgresql to use, changes cluster naming scheme
-    # Defaults to [global.fallbackDefaults.cnpg.pgVersion], and to `16` for type `vectors`
-    # * `15`
-    # * `16`
-    # * `17`
-    # * `18`
-    # pgVersion: 18
-
-    # Cluster mode of operation. Available modes:
-    # * `standalone` - default mode. Creates new or updates an existing CNPG cluster.
-    # * `replica` - Creates a replica cluster from an existing CNPG cluster. # TODO
-    # * `recovery` - Same as standalone but creates a cluster from a backup or object store.
-    mode: standalone
-
-    # Database details
-    database: "app"
-    user: "app"
-    password: "PLACEHOLDERPASSWORD"
-
-    # Database cluster configuration
-    cluster:
-      # Additional Labels and annotations for cnpg cluster
-      labels: {}
-      annotations: {}
-      # Additional environment variables to set on all pods created in the cluster
-      env: {}
-      envFrom: {}
-
-      # Number of instances
-      instances: 2
-
-      # set to true on single-node clusters to allow PVCs to be kept on instance restart
-      singleNode: false
-
-      ## set to configure the skipEmptyWalArchiveCheck annotation
-      # skipEmptyWalArchiveCheck: true
-      # # -- storage size for the data pvc's
-      # # Follows the same spec as .Values.Persistence type=PVC
-      # storage:
-      #   size: "256Gi"
-      # # -- storage size for the wal pvc's
-      # # Follows the same spec as .Values.Persistence type=PVC
-      # walStorage:
-      #   size: "256Gi"
-      # -- Gets scaled to 0 if hibernation is true
-      ## See .Values.resources for more info
-      # resources:
-
-      # Method to follow to upgrade the primary server during a rolling update procedure, after all replicas have been
-      # successfully updated. It can be switchover (default) or in-place (restart).
-      primaryUpdateMethod: switchover
-
-      # Strategy to follow to upgrade the primary server during a rolling update procedure, after all replicas have been
-      # successfully updated: it can be automated (unsupervised - default) or manual (supervised)
-      # Example of rolling update strategy:
-      # - unsupervised: automated update of the primary once all
-      #                 replicas have been upgraded (default)
-      # - supervised: requires manual supervision to perform
-      #               the switchover of the primary
-      # -- change to supervised to disable unsupervised updates
-      primaryUpdateStrategy: unsupervised
-
-      # The instances' log level, one of the following values: error, warning, info (default), debug, trace
-      logLevel: info
-
-      # The configuration for the CA and related certificates
-      # See: https://cloudnative-pg.io/documentation/current/api_reference/#CertificatesConfiguration
-      certificates:
-
-      # When this option is enabled, the operator will use the SuperuserSecret to update the postgres user password.
-      # If the secret is not present, the operator will automatically create one.
-      # When this option is disabled, the operator will ignore the SuperuserSecret content, delete it when automatically created,
-      # and then blank the password of the postgres user by setting it to NULL.
-
-      # enableSuperuserAccess: true
-
-      # Configuration of the PostgreSQL server
-      # See: https://cloudnative-pg.io/documentation/current/api_reference/#PostgresConfiguration
-      postgresql:
-
-      # BootstrapInitDB is the configuration of the bootstrap process when initdb is used
-      # See: https://cloudnative-pg.io/documentation/current/bootstrap/
-      # See: https://cloudnative-pg.io/documentation/current/api_reference/#bootstrapinitdb
-      initdb: {}
-      #   postInitSQL:
-      #     - CREATE EXTENSION IF NOT EXISTS vector;
-      #   postInitApplicationSQL:
-      #     - CREATE EXTENSION IF NOT EXISTS someextension;
-    # -- set to enable prometheus metrics
-    monitoring:
-      enablePodMonitor: false
-      disableDefaultQueries: false
-      customQueries: []
-      #   - name: "pg_cache_hit_ratio"
-      #     expandObjectName: true
-      #     key: "custom-key" (defaults to "custom-queries")
-      #     query: "SELECT current_database() as datname, sum(heap_blks_hit) / (sum(heap_blks_hit) + sum(heap_blks_read)) as ratio FROM pg_statio_user_tables;"
-      #     metrics:
-      #       - datname:
-      #           usage: "LABEL"
-      #           description: "Name of the database database"
-      #       - ratio:
-      #           usage: GAUGE
-      #           description: "Cache hit ratio"
-    # Recovery settings if the chosen mode is `recovery`.
-    recovery:
-      ##
-      # Backup Recovery Method
-      # Available recovery methods:
-      # * `object_store` - Recovers a CNPG cluster from a barman object store (PITR supported).
-      method: object_store
-      ## set a revision to append to the serverName, so restore and backup use a different archive. Must be a string.
-      ## Required when cluster.skipEmptyWalArchiveCheck is false and both use the same archive.
-      # revision: "1"
-
-      # override serverName in recovery object
-      serverName: ""
-
-      ## Point in time recovery target. Specify one of the following:
-      pitrTarget:
-        # Time in RFC3339 format
-        time: ""
-
-      # Overrides the provider specific default path. Defaults to:
-      # S3: s3://<bucket><path>
-      # Azure: https://<storageAccount>.<serviceName>.core.windows.net/<clusterName><path>
-      # Google: gs://<bucket><path>
-      destinationPath: ""
-
-      # Configures the sidecar of the recovery job.
-      # See: https://cloudnative-pg.io/plugin-barman-cloud/docs/plugin-barman-cloud.v1/#instancesidecarconfiguration
-      # instanceSidecarConfiguration: {}
-
-    # Database cluster backup configuration
-    backups:
-      # You need to configure backups manually, so backups are disabled by default.
-      enabled: false
-
-      encryption:
-        enabled: false
-      ## set a revision to append to the serverName, so restore and backup use a different archive. Must be a string.
-      ## Required when cluster.skipEmptyWalArchiveCheck is false and both use the same archive.
-      # revision: "1"
-
-      # override serverName in the object store
-      serverName: ""
-
-      # Overrides the provider specific default path. Defaults to:
-      # S3: s3://<bucket><path>
-      # Azure: https://<storageAccount>.<serviceName>.core.windows.net/<clusterName><path>
-      # Google: gs://<bucket><path>
-      destinationPath: ""
-
-      # default: prefer-standby, other option primary
-      target: ""
-
-      # name of credentials in .Values.Credentials
-      credentials: ""
-
-      scheduledBackups:
-        - name: daily-backup
-          schedule: "0 0 0 * * *"
-          backupOwnerReference: self
-          immediate: true
-          suspend: false
-
-      retentionPolicy: "30d"
-
-      # Configures the sidecar of the instance pods.
-      # See: https://cloudnative-pg.io/plugin-barman-cloud/docs/plugin-barman-cloud.v1/#instancesidecarconfiguration
-      # instanceSidecarConfiguration:
-      #   resources:
-      #     requests:
-      #       cpu: 50m
-      #       memory: 128Mi
-
-      # - Manual list of backups
-      manualBackups: []
-      #   - name: today
-      #     labels: {}
-      #     annotations: {}
-      #   - name: beforeUpgrade
-      #     labels: {}
-      #     annotations: {}
-
-    # Database cluster PgBouncer configuration
-    pooler:
-      enabled: false
-      # -- enable to create extra pgbouncer for readonly access
-      createRO: false
-      poolMode: session
-      # -- Gets scaled to 0 if hibernation is true
-      instances: 2
-      # parameters:
-      #   max_client_conn: "1000"
-      #   default_pool_size: "25"
-      labels: {}
-      annotations: {}
-
-    # -- contains credentials and urls output by generator
-    creds: {}
-
 # -- Dependency configuration - replaces helm-dependencies
 # Each dependency contains a complete chart values structure (workload, service, persistence, ...)
 # Its objects are merged into the chart under the name [<dependency>-<object>] (eg [workload.valkey-main])
@@ -1842,6 +1618,8 @@ cnpg:
 # Disabled dependencies are not merged into the chart, so their defaults only apply once a chart sets [enabled: true].
 # Dependencies with [mode: operator] are not merged into the chart either, as an operator provides them. Their credentials secret, wait init container and notes still apply.
 # Settings for the operator go under [dependencies.<name>.operator], like [depconfig] it is never merged into the chart.
+# [postgresql] is provided by CloudNativePG by default ([mode: operator]), set [mode: standalone] to deploy a plain PostgreSQL with the chart instead.
+# Both modes of [postgresql] share [depconfig] (user, database, password and the resulting [creds]) and the [postgresql-wait] init container.
 # @default -- See below
 
 dependencies:
@@ -1959,11 +1737,224 @@ dependencies:
         mountPath: /config
   postgresql:
     enabled: false
-    # -- Settings of the dependency itself, never merged into the chart
+    # -- How the dependency is provided: [operator] (default) lets CloudNativePG run it, [standalone] merges a plain PostgreSQL into the chart
+    mode: operator
+    # -- Settings of the CloudNativePG cluster, used in [operator] mode. Never merged into the chart
+    operator:
+      # -- Puts the cnpg cluster in hibernation mode
+      hibernate: false
+      # Additional Labels and annotations for all cnpg objects
+      labels: {}
+      annotations: {}
+
+      # Type of the CNPG database. Available types:
+      # * `postgres`
+      # * `postgis`
+      # * `timescaledb`
+      # * `vectors`
+      # * `vectorchord`
+      type: postgres
+
+      # Version of Postgresql to use, changes cluster naming scheme
+      # Defaults to [global.fallbackDefaults.cnpg.pgVersion], and to `16` for type `vectors`
+      # * `15`
+      # * `16`
+      # * `17`
+      # * `18`
+      # pgVersion: 18
+
+      # Cluster mode of operation. Available modes:
+      # * `standalone` - default mode. Creates new or updates an existing CNPG cluster.
+      # * `replica` - Creates a replica cluster from an existing CNPG cluster. # TODO
+      # * `recovery` - Same as standalone but creates a cluster from a backup or object store.
+      mode: standalone
+
+      # Database cluster configuration
+      cluster:
+        # Additional Labels and annotations for cnpg cluster
+        labels: {}
+        annotations: {}
+        # Additional environment variables to set on all pods created in the cluster
+        env: {}
+        envFrom: {}
+
+        # Number of instances
+        instances: 2
+
+        # set to true on single-node clusters to allow PVCs to be kept on instance restart
+        singleNode: false
+
+        ## set to configure the skipEmptyWalArchiveCheck annotation
+        # skipEmptyWalArchiveCheck: true
+        # # -- storage size for the data pvc's
+        # # Follows the same spec as .Values.Persistence type=PVC
+        # storage:
+        #   size: "256Gi"
+        # # -- storage size for the wal pvc's
+        # # Follows the same spec as .Values.Persistence type=PVC
+        # walStorage:
+        #   size: "256Gi"
+        # -- Gets scaled to 0 if hibernation is true
+        ## See .Values.resources for more info
+        # resources:
+
+        # Method to follow to upgrade the primary server during a rolling update procedure, after all replicas have been
+        # successfully updated. It can be switchover (default) or in-place (restart).
+        primaryUpdateMethod: switchover
+
+        # Strategy to follow to upgrade the primary server during a rolling update procedure, after all replicas have been
+        # successfully updated: it can be automated (unsupervised - default) or manual (supervised)
+        # Example of rolling update strategy:
+        # - unsupervised: automated update of the primary once all
+        #                 replicas have been upgraded (default)
+        # - supervised: requires manual supervision to perform
+        #               the switchover of the primary
+        # -- change to supervised to disable unsupervised updates
+        primaryUpdateStrategy: unsupervised
+
+        # The instances' log level, one of the following values: error, warning, info (default), debug, trace
+        logLevel: info
+
+        # The configuration for the CA and related certificates
+        # See: https://cloudnative-pg.io/documentation/current/api_reference/#CertificatesConfiguration
+        certificates:
+
+        # When this option is enabled, the operator will use the SuperuserSecret to update the postgres user password.
+        # If the secret is not present, the operator will automatically create one.
+        # When this option is disabled, the operator will ignore the SuperuserSecret content, delete it when automatically created,
+        # and then blank the password of the postgres user by setting it to NULL.
+
+        # enableSuperuserAccess: true
+
+        # Configuration of the PostgreSQL server
+        # See: https://cloudnative-pg.io/documentation/current/api_reference/#PostgresConfiguration
+        postgresql:
+
+        # BootstrapInitDB is the configuration of the bootstrap process when initdb is used
+        # See: https://cloudnative-pg.io/documentation/current/bootstrap/
+        # See: https://cloudnative-pg.io/documentation/current/api_reference/#bootstrapinitdb
+        initdb: {}
+        #   postInitSQL:
+        #     - CREATE EXTENSION IF NOT EXISTS vector;
+        #   postInitApplicationSQL:
+        #     - CREATE EXTENSION IF NOT EXISTS someextension;
+      # -- set to enable prometheus metrics
+      monitoring:
+        enablePodMonitor: false
+        disableDefaultQueries: false
+        customQueries: []
+        #   - name: "pg_cache_hit_ratio"
+        #     expandObjectName: true
+        #     key: "custom-key" (defaults to "custom-queries")
+        #     query: "SELECT current_database() as datname, sum(heap_blks_hit) / (sum(heap_blks_hit) + sum(heap_blks_read)) as ratio FROM pg_statio_user_tables;"
+        #     metrics:
+        #       - datname:
+        #           usage: "LABEL"
+        #           description: "Name of the database database"
+        #       - ratio:
+        #           usage: GAUGE
+        #           description: "Cache hit ratio"
+      # Recovery settings if the chosen cluster mode is `recovery`.
+      recovery:
+        ##
+        # Backup Recovery Method
+        # Available recovery methods:
+        # * `object_store` - Recovers a CNPG cluster from a barman object store (PITR supported).
+        method: object_store
+        ## set a revision to append to the serverName, so restore and backup use a different archive. Must be a string.
+        ## Required when cluster.skipEmptyWalArchiveCheck is false and both use the same archive.
+        # revision: "1"
+
+        # override serverName in recovery object
+        serverName: ""
+
+        ## Point in time recovery target. Specify one of the following:
+        pitrTarget:
+          # Time in RFC3339 format
+          time: ""
+
+        # Overrides the provider specific default path. Defaults to:
+        # S3: s3://<bucket><path>
+        # Azure: https://<storageAccount>.<serviceName>.core.windows.net/<clusterName><path>
+        # Google: gs://<bucket><path>
+        destinationPath: ""
+
+        # Configures the sidecar of the recovery job.
+        # See: https://cloudnative-pg.io/plugin-barman-cloud/docs/plugin-barman-cloud.v1/#instancesidecarconfiguration
+        # instanceSidecarConfiguration: {}
+
+      # Database cluster backup configuration
+      backups:
+        # You need to configure backups manually, so backups are disabled by default.
+        enabled: false
+
+        encryption:
+          enabled: false
+        ## set a revision to append to the serverName, so restore and backup use a different archive. Must be a string.
+        ## Required when cluster.skipEmptyWalArchiveCheck is false and both use the same archive.
+        # revision: "1"
+
+        # override serverName in the object store
+        serverName: ""
+
+        # Overrides the provider specific default path. Defaults to:
+        # S3: s3://<bucket><path>
+        # Azure: https://<storageAccount>.<serviceName>.core.windows.net/<clusterName><path>
+        # Google: gs://<bucket><path>
+        destinationPath: ""
+
+        # default: prefer-standby, other option primary
+        target: ""
+
+        # name of credentials in .Values.Credentials
+        credentials: ""
+
+        scheduledBackups:
+          - name: daily-backup
+            schedule: "0 0 0 * * *"
+            backupOwnerReference: self
+            immediate: true
+            suspend: false
+
+        retentionPolicy: "30d"
+
+        # Configures the sidecar of the instance pods.
+        # See: https://cloudnative-pg.io/plugin-barman-cloud/docs/plugin-barman-cloud.v1/#instancesidecarconfiguration
+        # instanceSidecarConfiguration:
+        #   resources:
+        #     requests:
+        #       cpu: 50m
+        #       memory: 128Mi
+
+        # - Manual list of backups
+        manualBackups: []
+        #   - name: today
+        #     labels: {}
+        #     annotations: {}
+        #   - name: beforeUpgrade
+        #     labels: {}
+        #     annotations: {}
+
+      # Database cluster PgBouncer configuration
+      pooler:
+        enabled: false
+        # -- enable to create extra pgbouncer for readonly access
+        createRO: false
+        poolMode: session
+        # -- Gets scaled to 0 if hibernation is true
+        instances: 2
+        # parameters:
+        #   max_client_conn: "1000"
+        #   default_pool_size: "25"
+        labels: {}
+        annotations: {}
+    # -- Settings of the dependency itself, never merged into the chart. The user, database and password are used by both modes
+    # [creds] holds the connection details written by the library, in both modes (eg [creds.complete], [creds.plainhost], [creds.jdbc])
     depconfig:
       password: "PLACEHOLDERPASSWORD"
       postgresqlUsername: "test"
       postgresqlDatabase: "test"
+      creds: {}
     workload:
       main:
         # The dependency itself never waits for a database

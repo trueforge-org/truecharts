@@ -18,16 +18,18 @@ tests:
           bucket: some-bucket
           encrKey: some-encr-key
           url: http://some-url
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            retentionPolicy: 10d
-            credentials: test
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              retentionPolicy: 10d
+              credentials: test
     asserts:
       - documentSelector: &cluster
           path: kind
@@ -38,8 +40,8 @@ tests:
             - name: barman-cloud.cloudnative-pg.io
               isWALArchiver: true
               parameters:
-                barmanObjectName: test-release-name-common-test-cnpg-my-pg-backup
-                serverName: test-release-name-common-test-cnpg-my-pg
+                barmanObjectName: test-release-name-common-test-cnpg-main-backup
+                serverName: test-release-name-common-test-cnpg-main
       # The webhook rejects a WAL archiver plugin along with barmanObjectStore
       - documentSelector: *cluster
         notExists:
@@ -49,17 +51,19 @@ tests:
     set:
       credentials:
         test: *test
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            target: primary
-            retentionPolicy: 10d
-            credentials: test
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              target: primary
+              retentionPolicy: 10d
+              credentials: test
     asserts:
       - documentSelector: *cluster
         equal:
@@ -74,37 +78,41 @@ tests:
     set:
       credentials:
         test: *test
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
-            revision: some-revision
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              revision: some-revision
     asserts:
       - documentSelector: *cluster
         equal:
           path: spec.plugins[0].parameters.serverName
-          value: test-release-name-common-test-cnpg-my-pg-rsome-revision
+          value: test-release-name-common-test-cnpg-main-rsome-revision
 
   - it: should override serverName when set (and also take account revision)
     set:
       credentials:
         test: *test
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
-            serverName: some-server-name
-            revision: "1"
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              serverName: some-server-name
+              revision: "1"
     asserts:
       - documentSelector: *cluster
         equal:
@@ -113,12 +121,13 @@ tests:
 
   - it: should not use the plugin without backups or recovery
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
     asserts:
       - documentSelector: *cluster
         notExists:
@@ -131,16 +140,18 @@ tests:
     set:
       credentials:
         test: *test
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          mode: recovery
-          recovery:
-            method: object_store
-            credentials: test
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: test
     asserts:
       - documentSelector: *cluster
         equal:
@@ -148,20 +159,20 @@ tests:
           value:
             recovery:
               secret:
-                name: test-release-name-common-test-cnpg-my-pg-user
+                name: test-release-name-common-test-cnpg-main-user
               owner: test-user
               database: test-db
-              source: test-release-name-common-test-cnpg-my-pg
+              source: test-release-name-common-test-cnpg-main
       - documentSelector: *cluster
         equal:
           path: spec.externalClusters
           value:
-            - name: test-release-name-common-test-cnpg-my-pg
+            - name: test-release-name-common-test-cnpg-main
               plugin:
                 name: barman-cloud.cloudnative-pg.io
                 parameters:
-                  barmanObjectName: test-release-name-common-test-cnpg-my-pg-recovery
-                  serverName: test-release-name-common-test-cnpg-my-pg
+                  barmanObjectName: test-release-name-common-test-cnpg-main-recovery
+                  serverName: test-release-name-common-test-cnpg-main
       - documentSelector: *cluster
         notExists:
           path: spec.plugins
@@ -170,18 +181,20 @@ tests:
     set:
       credentials:
         test: *test
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          mode: recovery
-          recovery:
-            method: object_store
-            credentials: test
-            serverName: some-server-name
-            revision: "1"
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: test
+              serverName: some-server-name
+              revision: "1"
     asserts:
       - documentSelector: *cluster
         equal:
@@ -195,29 +208,31 @@ tests:
             plugin:
               name: barman-cloud.cloudnative-pg.io
               parameters:
-                barmanObjectName: test-release-name-common-test-cnpg-my-pg-recovery
+                barmanObjectName: test-release-name-common-test-cnpg-main-recovery
                 serverName: some-server-name-r1
 
   - it: should recover and archive using separate object stores
     set:
       credentials:
         test: *test
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          mode: recovery
-          recovery:
-            method: object_store
-            credentials: test
-            pitrTarget:
-              time: "2026-01-01T00:00:00Z"
-          backups:
-            enabled: true
-            credentials: test
-            revision: "1"
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: test
+              pitrTarget:
+                time: "2026-01-01T00:00:00Z"
+            backups:
+              enabled: true
+              credentials: test
+              revision: "1"
     asserts:
       - documentSelector: *cluster
         equal:
@@ -227,28 +242,30 @@ tests:
         equal:
           path: spec.externalClusters[0].plugin.parameters
           value:
-            barmanObjectName: test-release-name-common-test-cnpg-my-pg-recovery
-            serverName: test-release-name-common-test-cnpg-my-pg
+            barmanObjectName: test-release-name-common-test-cnpg-main-recovery
+            serverName: test-release-name-common-test-cnpg-main
       - documentSelector: *cluster
         equal:
           path: spec.plugins[0].parameters
           value:
-            barmanObjectName: test-release-name-common-test-cnpg-my-pg-backup
-            serverName: test-release-name-common-test-cnpg-my-pg-r1
+            barmanObjectName: test-release-name-common-test-cnpg-main-backup
+            serverName: test-release-name-common-test-cnpg-main-r1
       - documentSelector: *cluster
         notExists:
           path: spec.backup
 
   - it: should allow a false skipEmptyWalArchiveCheck to override the default
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          cluster:
-            skipEmptyWalArchiveCheck: false
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            cluster:
+              skipEmptyWalArchiveCheck: false
     asserts:
       - documentSelector: *cluster
         notExists:
@@ -264,18 +281,20 @@ tests:
           secretKey: some-secret-key
           bucket: some-bucket
           url: http://some-url
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          mode: recovery
-          recovery:
-            method: object_store
-            credentials: test
-            pitrTarget:
-              time: "2026-10-31T12:00:00Z"
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: test
+              pitrTarget:
+                time: "2026-10-31T12:00:00Z"
     asserts:
       - documentSelector:
           path: kind

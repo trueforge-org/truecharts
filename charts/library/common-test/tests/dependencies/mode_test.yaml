@@ -209,6 +209,75 @@ tests:
       - matchRegexRaw:
           pattern: "- Database: my-database\n- Username: my-user\n"
 
+  - it: should default postgresql to operator mode, and spawn the CNPG Cluster
+    template: common.yaml
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 3
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-main
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-postgresqlcreds
+        equal:
+          path: stringData.plainhost
+          value: test-release-name-common-test-cnpg-main-rw
+
+  - it: should merge postgresql in standalone mode
+    template: common.yaml
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          mode: standalone
+    asserts:
+      - hasDocuments:
+          count: 4
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-postgresql-main
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-postgresqlcreds
+        equal:
+          path: stringData.plainhost
+          value: test-release-name-common-test-postgresql-main
+
+  - it: should keep the other dependencies standalone by default, next to postgresql in operator mode
+    template: common.yaml
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+        valkey:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 7
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-main
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-valkey-main
+
   - it: should apply the mode per dependency
     template: common.yaml
     set:
@@ -393,3 +462,14 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: Dependencies - Expected [dependencies.valkey.mode] to be one of [standalone, operator], but got [1]
+
+  - it: should fail with an invalid mode for postgresql
+    template: common.yaml
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          mode: invalid
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [dependencies.postgresql.mode] to be one of [standalone, operator], but got [invalid]

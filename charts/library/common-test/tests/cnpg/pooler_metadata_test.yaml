@@ -22,30 +22,32 @@ tests:
         annotations:
           g_annotation1: global_annotation1
           g_annotation2: "{{ .Values.annotation2 }}"
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          labels:
-            label1: "{{ .Values.label1 }}"
-            label2: label2
-          annotations:
-            annotation1: "{{ .Values.annotation1 }}"
-            annotation2: annotation2
-          annotationsList:
-            - name: some-annotation
-              value: some-value
-          labelsList:
-            - name: some-label
-              value: some-value
-          pooler:
-            enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
             labels:
-              label3: "{{ .Values.label3 }}"
+              label1: "{{ .Values.label1 }}"
+              label2: label2
             annotations:
-              annotation3: "{{ .Values.annotation3 }}"
+              annotation1: "{{ .Values.annotation1 }}"
+              annotation2: annotation2
+            annotationsList:
+              - name: some-annotation
+                value: some-value
+            labelsList:
+              - name: some-label
+                value: some-value
+            pooler:
+              enabled: true
+              labels:
+                label3: "{{ .Values.label3 }}"
+              annotations:
+                annotation3: "{{ .Values.annotation3 }}"
     asserts:
       - documentIndex: &poolerDoc 0
         isKind:
@@ -90,15 +92,17 @@ tests:
 
   - it: should pass with cnpg pooler created with namespace
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          namespace: some-namespace
-          pooler:
-            enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            namespace: some-namespace
+            pooler:
+              enabled: true
     asserts:
       - documentIndex: *poolerDoc
         equal:
@@ -108,15 +112,17 @@ tests:
   - it: should pass with cnpg pooler created with object namespace from tpl
     set:
       key: some-namespace
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          namespace: "{{ .Values.key }}"
-          pooler:
-            enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            namespace: "{{ .Values.key }}"
+            pooler:
+              enabled: true
     asserts:
       - documentIndex: *poolerDoc
         equal:
@@ -128,14 +134,16 @@ tests:
       key: global-namespace
       global:
         namespace: "{{ .Values.key }}"
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          pooler:
-            enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            pooler:
+              enabled: true
     asserts:
       - documentIndex: *poolerDoc
         equal:
@@ -148,14 +156,16 @@ tests:
       namespace: "{{ .Values.key }}"
       global:
         namespace: global-namespace
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          pooler:
-            enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            pooler:
+              enabled: true
     asserts:
       - documentIndex: *poolerDoc
         equal:

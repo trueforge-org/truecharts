@@ -43,7 +43,11 @@ def resolve_ref(current_file: Path, ref: str) -> tuple[Path, Any]:
     return target_file, target_schema
 
 
-def gather_branch_schemas(schema: Any, schema_file: Path) -> list[tuple[Any, Path]]:
+def gather_branch_schemas(
+    schema: Any,
+    schema_file: Path,
+    seen_refs: frozenset[tuple[Path, str]] = frozenset(),
+) -> list[tuple[Any, Path]]:
     if not isinstance(schema, dict):
         return []
 
@@ -51,7 +55,12 @@ def gather_branch_schemas(schema: Any, schema_file: Path) -> list[tuple[Any, Pat
 
     if "$ref" in schema and isinstance(schema["$ref"], str):
         ref_file, ref_schema = resolve_ref(schema_file, schema["$ref"])
-        branches.append((ref_schema, ref_file))
+        ref_key = (ref_file, schema["$ref"].partition("#")[2])
+        # The referenced schema can combine others with allOf, so it is expanded too (once, to not loop on cyclic refs)
+        if ref_key in seen_refs:
+            branches.append((ref_schema, ref_file))
+        else:
+            branches.extend(gather_branch_schemas(ref_schema, ref_file, seen_refs | {ref_key}))
 
     branches.append((schema, schema_file))
 
@@ -60,7 +69,7 @@ def gather_branch_schemas(schema: Any, schema_file: Path) -> list[tuple[Any, Pat
         if isinstance(options, list):
             for option in options:
                 if isinstance(option, dict):
-                    branches.extend(gather_branch_schemas(option, schema_file))
+                    branches.extend(gather_branch_schemas(option, schema_file, seen_refs))
 
     return branches
 

@@ -156,8 +156,9 @@ def normalize_variable_keys(data: Any, parent_key: str = "", in_operator: bool =
         service.main -> service.objectname
         persistence.config -> persistence.objectname
 
-    The settings under an `operator` key (eg dependencies.valkey.operator) have a
-    fixed structure, so their keys are never replaced.
+    The settings under an `operator` key (eg dependencies.valkey.operator or
+    dependencies.postgresql.operator) have a fixed structure, so their keys are
+    never replaced.
     """
     if not isinstance(data, dict):
         return data

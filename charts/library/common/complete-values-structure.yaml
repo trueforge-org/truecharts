@@ -3813,6 +3813,7 @@ dependencies:
       password: ''
       postgresqlUsername: ''
       postgresqlDatabase: ''
+      creds: {}
     workload:
       objectname:
         dbWait: false
@@ -3851,6 +3852,60 @@ dependencies:
       objectname:
         enabled: true
         mountPath: ''
+    mode: ''
+    operator:
+      hibernate: false
+      labels: {}
+      annotations: {}
+      type: ''
+      pgVersion: 18
+      mode: ''
+      cluster:
+        labels: {}
+        annotations: {}
+        env: {}
+        envFrom: {}
+        instances: 2
+        singleNode: false
+        primaryUpdateMethod: ''
+        primaryUpdateStrategy: ''
+        logLevel: ''
+        certificates: null
+        postgresql: null
+        initdb: {}
+      monitoring:
+        enablePodMonitor: false
+        disableDefaultQueries: false
+        customQueries: []
+      recovery:
+        method: ''
+        serverName: ''
+        pitrTarget:
+          time: ''
+        destinationPath: ''
+      backups:
+        enabled: false
+        encryption:
+          enabled: false
+        serverName: ''
+        destinationPath: ''
+        target: ''
+        credentials: ''
+        scheduledBackups:
+        - name: ''
+          schedule: ''
+          backupOwnerReference: ''
+          immediate: true
+          suspend: false
+        retentionPolicy: ''
+        manualBackups: []
+      pooler:
+        enabled: false
+        createRO: false
+        poolMode: ''
+        instances: 2
+        labels: {}
+        annotations: {}
   memcached:
     enabled: false
     image:
@@ -3917,86 +3972,6 @@ dependencies:
       objectname:
         enabled: true
         mountPath: ''
-cnpg:
-  main:
-    enabled: false
-    primary: true
-    hibernate: false
-    labels: {}
-    annotations: {}
-    type: ''
-    pgVersion: 18
-    mode: ''
-    database: ''
-    user: ''
-    password: ''
-    cluster:
-      labels: {}
-      annotations: {}
-      env: {}
-      envFrom: {}
-      instances: 2
-      singleNode: false
-      primaryUpdateMethod: ''
-      primaryUpdateStrategy: ''
-      logLevel: ''
-      certificates: null
-      postgresql: null
-      initdb:
-        postInitApplicationSQL:
-        - ''
-    monitoring:
-      enablePodMonitor: false
-      disableDefaultQueries: false
-      customQueries: []
-    recovery:
-      method: ''
-      serverName: ''
-      pitrTarget:
-        time: ''
-      destinationPath: ''
-      instanceSidecarConfiguration: {}
-    backups:
-      objectname: false
-    pooler:
-      objectname: false
-    creds: {}
-    username: ''
-    instances: 2
-    primaryUpdateStrategy: ''
-    storage:
-      size: ''
-      walsize: ''
-  ro:
-    enabled: true
-    instances: 2
-    database: ''
-    user: ''
-    password: ''
-    primaryUpdateStrategy: ''
-    storage:
-      size: ''
-      walsize: ''
-    pooler:
-      objectname: true
-    monitoring:
-      enablePodMonitor: false
-    creds: {}
-  mon:
-    enabled: true
-    instances: 2
-    database: ''
-    user: ''
-    password: ''
-    primaryUpdateStrategy: ''
-    storage:
-      size: ''
-      walsize: ''
-    pooler:
-      objectname: true
-    monitoring:
-      enablePodMonitor: true
-    creds: {}
 redis:
   enabled: false
   includeCommon: false

@@ -79,9 +79,8 @@ The URL scheme and port of a route come from:
 When dependencies or addons are enabled, the notes output will automatically include a "Connection Information" section with:
 
 **Supported Dependencies:**
-- **CNPG (PostgreSQL)**: Host, port, database, username, connection URLs, JDBC URLs
 - **MariaDB**: Host, port, database, username, connection URLs, JDBC URLs
-- **PostgreSQL** (the `postgresql` dependency): Host, port, database, username, connection URLs, JDBC URLs
+- **PostgreSQL** (the `postgresql` dependency, in `operator` or `standalone` mode): Host, port, database, username, connection URLs, JDBC URLs, and the read-only URL when the CNPG pooler has `createRO` enabled
 - **Valkey**: Host, port (from the `valkey` dependency)
 - **MongoDB**: Host, port, database, username, connection URLs, JDBC URLs
 - **Clickhouse**: Host, port, database, username, connection URLs, JDBC URLs
@@ -211,22 +210,23 @@ notes:
     This is a custom message
 ```
 
-### Example Output with CNPG and Valkey
+### Example Output with PostgreSQL and Valkey
 
-When a chart has CNPG and the Valkey dependency enabled, the notes output will include (the connection URL contains the password, so it is hidden unless `notes.showCredentials` is `true`):
+When a chart has the PostgreSQL (in the default `operator` mode, so provided by CNPG) and Valkey dependencies enabled, the notes output will include (the connection URL contains the password, so it is hidden unless `notes.showCredentials` is `true`):
 
 ```
 # Thank you for installing myapp by TrueCharts.
 
 # Connection Information
 
-## CNPG Database: main
-- Host: "myapp-main-rw"
-- Host:Port: "myapp-main-rw:5432"
+## PostgreSQL Database
+- Host: myapp-cnpg-main-rw
+- Port: 5432
+- Host:Port: myapp-cnpg-main-rw:5432
 - Database: app
 - Username: app
-- Connection URL: "HIDDEN"
-- JDBC URL: "jdbc:postgresql://myapp-main-rw:5432/app"
+- Connection URL: HIDDEN
+- JDBC URL: "jdbc:postgresql://myapp-cnpg-main-rw:5432/app"
 
 ## Valkey Database
 - Host: myapp-valkey-main

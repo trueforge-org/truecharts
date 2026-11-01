@@ -18,22 +18,24 @@ tests:
           bucket: some-bucket
           encrKey: some-encr-key
           url: http://some-url
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            target: primary
-            retentionPolicy: 10d
-            credentials: test
-            destinationPath: some-path
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              target: primary
+              retentionPolicy: 10d
+              credentials: test
+              destinationPath: some-path
     asserts:
       - documentSelector: &backupStore
           path: metadata.name
-          value: test-release-name-common-test-cnpg-my-pg-backup
+          value: test-release-name-common-test-cnpg-main-backup
         isKind:
           of: ObjectStore
       - documentSelector: *backupStore
@@ -59,14 +61,14 @@ tests:
               s3Credentials:
                 accessKeyId:
                   key: ACCESS_KEY_ID
-                  name: test-release-name-common-test-cnpg-my-pg-provider-backup-s3-creds
+                  name: test-release-name-common-test-cnpg-main-provider-backup-s3-creds
                 secretAccessKey:
                   key: ACCESS_SECRET_KEY
-                  name: test-release-name-common-test-cnpg-my-pg-provider-backup-s3-creds
+                  name: test-release-name-common-test-cnpg-main-provider-backup-s3-creds
       # Credentials are still rendered by the provider secret
       - documentSelector:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-my-pg-provider-backup-s3-creds
+          value: test-release-name-common-test-cnpg-main-provider-backup-s3-creds
         equal:
           path: stringData
           value:
@@ -79,15 +81,17 @@ tests:
         test:
           <<: *test
           path: some-path/
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
     asserts:
       - documentSelector: *backupStore
         equal:
@@ -98,17 +102,19 @@ tests:
     set:
       credentials:
         test: *test
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
-            serverName: some-server-name
-            revision: "1"
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              serverName: some-server-name
+              revision: "1"
     asserts:
       - documentSelector: *backupStore
         notExists:
@@ -118,15 +124,18 @@ tests:
     set:
       credentials:
         test: *test
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              retentionPolicy: ""
     asserts:
       - documentSelector: *backupStore
         notExists:
@@ -138,22 +147,24 @@ tests:
         test:
           <<: *test
           region: some-region
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
     asserts:
       - documentSelector: *backupStore
         equal:
           path: spec.configuration.s3Credentials.region
           value:
             key: REGION
-            name: test-release-name-common-test-cnpg-my-pg-provider-backup-s3-creds
+            name: test-release-name-common-test-cnpg-main-provider-backup-s3-creds
 
   - it: should set endpointCA using customCA (s3)
     set:
@@ -164,21 +175,23 @@ tests:
             -----BEGIN CERTIFICATE-----
             ...
             -----END CERTIFICATE-----
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
     asserts:
       - documentSelector: *backupStore
         equal:
           path: spec.configuration.endpointCA
           value:
-            name: test-release-name-common-test-cnpg-my-pg-provider-backup-s3-ca
+            name: test-release-name-common-test-cnpg-main-provider-backup-s3-ca
             key: ca.crt
 
   - it: should set endpointCA using customCASecretRef (s3)
@@ -194,15 +207,17 @@ tests:
           customCASecretRef:
             name: my-secret
             key: my-key
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
     asserts:
       - documentSelector: *backupStore
         equal:
@@ -215,17 +230,19 @@ tests:
     set:
       credentials:
         test: *test
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
-            encryption:
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
               enabled: true
+              credentials: test
+              encryption:
+                enabled: true
     asserts:
       - documentSelector: *backupStore
         equal:
@@ -245,17 +262,19 @@ tests:
     set:
       credentials:
         test: *test
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
-            compression:
-              enabled: false
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              compression:
+                enabled: false
     asserts:
       - documentSelector: *backupStore
         equal:
@@ -270,21 +289,23 @@ tests:
     set:
       credentials:
         test: *test
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
-            instanceSidecarConfiguration: &sidecar
-              retentionPolicyIntervalSeconds: 600
-              resources:
-                requests:
-                  cpu: 50m
-                  memory: 128Mi
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              instanceSidecarConfiguration: &sidecar
+                retentionPolicyIntervalSeconds: 600
+                resources:
+                  requests:
+                    cpu: 50m
+                    memory: 128Mi
     asserts:
       - documentSelector: *backupStore
         equal:
@@ -300,29 +321,31 @@ tests:
           global-annotation: global-value
       credentials:
         test: *test
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          labels:
-            cnpg-label: cnpg-value
-          annotations:
-            cnpg-annotation: cnpg-value
-          backups:
-            enabled: true
-            credentials: test
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
             labels:
-              backups-label: backups-value
+              cnpg-label: cnpg-value
             annotations:
-              backups-annotation: backups-value
+              cnpg-annotation: cnpg-value
+            backups:
+              enabled: true
+              credentials: test
+              labels:
+                backups-label: backups-value
+              annotations:
+                backups-annotation: backups-value
     asserts:
       - documentSelector: *backupStore
         isSubset:
           path: metadata.labels
           content:
-            cnpg.io/cluster: test-release-name-common-test-cnpg-my-pg
+            cnpg.io/cluster: test-release-name-common-test-cnpg-main
             global-label: global-value
             cnpg-label: cnpg-value
             backups-label: backups-value
@@ -340,23 +363,25 @@ tests:
         test:
           <<: *test
           path: some-path
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          mode: recovery
-          recovery:
-            method: object_store
-            credentials: test
-            retentionPolicy: 10d
-            instanceSidecarConfiguration:
-              logLevel: debug
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: test
+              retentionPolicy: 10d
+              instanceSidecarConfiguration:
+                logLevel: debug
     asserts:
       - documentSelector: &recoveryStore
           path: metadata.name
-          value: test-release-name-common-test-cnpg-my-pg-recovery
+          value: test-release-name-common-test-cnpg-main-recovery
         isKind:
           of: ObjectStore
       - documentSelector: *recoveryStore
@@ -369,35 +394,37 @@ tests:
               s3Credentials:
                 accessKeyId:
                   key: ACCESS_KEY_ID
-                  name: test-release-name-common-test-cnpg-my-pg-provider-recovery-s3-creds
+                  name: test-release-name-common-test-cnpg-main-provider-recovery-s3-creds
                 secretAccessKey:
                   key: ACCESS_SECRET_KEY
-                  name: test-release-name-common-test-cnpg-my-pg-provider-recovery-s3-creds
+                  name: test-release-name-common-test-cnpg-main-provider-recovery-s3-creds
             instanceSidecarConfiguration:
               logLevel: debug
 
   - it: should generate one object store per type, using their own credentials
     set:
       credentials:
-        from: &from
+        from:
           <<: *test
           bucket: from-bucket
         to:
           <<: *test
           bucket: to-bucket
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          mode: recovery
-          recovery:
-            method: object_store
-            credentials: from
-          backups:
-            enabled: true
-            credentials: to
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: from
+            backups:
+              enabled: true
+              credentials: to
     asserts:
       - documentSelector: *recoveryStore
         equal:
@@ -413,12 +440,13 @@ tests:
 
   - it: should not generate object stores when backups are disabled
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
     asserts:
       - containsDocument:
           kind: ObjectStore

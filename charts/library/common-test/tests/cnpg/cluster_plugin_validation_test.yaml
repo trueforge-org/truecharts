@@ -15,18 +15,20 @@ tests:
           secretKey: some-secret-key
           bucket: some-bucket
           url: http://some-url
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
     asserts:
       - failedTemplate:
-          errorMessage: CNPG - Backups and recovery need the Barman Cloud plugin, but API [barmancloud.cnpg.io/v1/ObjectStore] was not found, for CNPG cluster [test-release-name-common-test-cnpg-my-pg]. Install the plugin in the namespace of the CloudNativePG operator. When rendering without access to a cluster, pass [--api-versions barmancloud.cnpg.io/v1/ObjectStore]
+          errorMessage: CNPG - Backups and recovery need the Barman Cloud plugin, but API [barmancloud.cnpg.io/v1/ObjectStore] was not found, for CNPG cluster [test-release-name-common-test-cnpg-main]. Install the plugin in the namespace of the CloudNativePG operator. When rendering without access to a cluster, pass [--api-versions barmancloud.cnpg.io/v1/ObjectStore]
 
   - it: should fail with object store recovery when the plugin is not installed
     set:
@@ -38,17 +40,19 @@ tests:
           secretKey: some-secret-key
           bucket: some-bucket
           url: http://some-url
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          mode: recovery
-          recovery:
-            method: object_store
-            credentials: test
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: test
     asserts:
       - failedTemplate:
-          errorMessage: CNPG - Backups and recovery need the Barman Cloud plugin, but API [barmancloud.cnpg.io/v1/ObjectStore] was not found, for CNPG cluster [test-release-name-common-test-cnpg-my-pg]. Install the plugin in the namespace of the CloudNativePG operator. When rendering without access to a cluster, pass [--api-versions barmancloud.cnpg.io/v1/ObjectStore]
+          errorMessage: CNPG - Backups and recovery need the Barman Cloud plugin, but API [barmancloud.cnpg.io/v1/ObjectStore] was not found, for CNPG cluster [test-release-name-common-test-cnpg-main]. Install the plugin in the namespace of the CloudNativePG operator. When rendering without access to a cluster, pass [--api-versions barmancloud.cnpg.io/v1/ObjectStore]
 

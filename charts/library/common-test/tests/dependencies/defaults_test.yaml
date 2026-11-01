@@ -638,12 +638,6 @@ tests:
         tag: v1.0.0
       workload:
         app: *rootWorkload
-      cnpg:
-        main:
-          enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
       dependencies:
         mydep:
           enabled: true
@@ -662,13 +656,19 @@ tests:
                 containers:
                   main:
                     probes: *disabledProbes
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
     asserts:
       - documentSelector:
           path: metadata.name
           value: test-release-name-common-test
         equal:
           path: spec.template.spec.initContainers[0].name
-          value: test-release-name-common-test-system-cnpg-wait
+          value: test-release-name-common-test-system-postgresql-wait
       - documentSelector:
           path: kind
           value: StatefulSet
@@ -679,4 +679,4 @@ tests:
           value: test-release-name-common-test-mydep-worker
         equal:
           path: spec.template.spec.initContainers[0].name
-          value: test-release-name-common-test-system-cnpg-wait
+          value: test-release-name-common-test-system-postgresql-wait

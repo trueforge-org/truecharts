@@ -12,6 +12,8 @@ port: The port number of the primary port of the service
 
 In operator mode the service is not merged into the chart, as the operator provides it.
 For valkey the name and port are the ones of the Service that the valkey-operator creates (key and mergedKey are not returned).
+For postgresql the name and port are the ones of the read/write Service of the CNPG cluster, or of its pooler when enabled (key and mergedKey are not returned).
+For postgresql the read-only Service of the pooler is returned as well (nameRO, empty when there is none), it uses the same port.
 For the other dependencies the name is the one it would have in standalone mode (never the primary name), so the operator has to create the Service with that name.
 */}}
 {{- define "tc.v1.common.lib.dependencies.primaryService" -}}
@@ -24,6 +26,8 @@ For the other dependencies the name is the one it would have in standalone mode 
 
   {{- if and $operator (eq $depName "valkey") -}}
     {{- $result = include "tc.v1.common.lib.dependencies.valkey.operator.service" (dict "rootCtx" $rootCtx) | fromJson -}}
+  {{- else if and $operator (eq $depName "postgresql") -}}
+    {{- $result = include "tc.v1.common.lib.dependencies.postgresql.operator.service" (dict "rootCtx" $rootCtx) | fromJson -}}
   {{- else if and (kindIs "map" $dep) (kindIs "map" $dep.service) -}}
     {{- range $svcName, $svc := $dep.service -}}
       {{- if not (kindIs "map" $svc) -}}{{- continue -}}{{- end -}}
@@ -73,7 +77,7 @@ For the other dependencies the name is the one it would have in standalone mode 
   {{- end -}}
 {{- end -}}
 
-{{/* Returns the mode of a dependency: standalone (default) or operator */}}
+{{/* Returns the mode of a dependency: standalone (default) or operator. PostgreSQL defaults to operator */}}
 {{/* Call this template:
 {{ include "tc.v1.common.lib.dependencies.mode" (dict "objectData" $dep "depName" "valkey") }}
 objectData: The values of the dependency.
@@ -88,6 +92,9 @@ operator: The dependency is provided by an operator. Its objects are not merged 
 
   {{- $validModes := (list "standalone" "operator") -}}
   {{- $mode := "standalone" -}}
+  {{- if eq $depName "postgresql" -}}
+    {{- $mode = "operator" -}}
+  {{- end -}}
   {{- if and (kindIs "map" $objectData) (hasKey $objectData "mode") -}}
     {{- $mode = $objectData.mode -}}
   {{- end -}}
