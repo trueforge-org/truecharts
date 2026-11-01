@@ -27,7 +27,7 @@ charts/stable/<chart>/
 
 Charts are thin wrappers around the `common` library. Express everything through values that `common` understands, such as `workload`, `service`, `persistence`, `configmap`, `secret`, `ingress`, `cnpg`, `metrics` and `addons`. Do not hand-write Kubernetes manifests in `templates/`. The library documentation is at <https://trueforge.org/truecharts-common>, with the sources in `charts/library/common/docs/`.
 
-Use `charts/stable/app-template` as the reference for the file structure of a new chart. It lists `mariadb`, `valkey` and `mongodb` as dependencies and has `ci/` values, so leave out what the new chart does not need.
+Use `charts/stable/app-template` as the reference for the file structure of a new chart. It has `ci/` values, so leave out what the new chart does not need. Use `dependencies.<name>` for databases and caches, never Helm chart dependencies (see [Databases and caches](#databases-and-caches)).
 
 ## `Chart.yaml`
 
@@ -36,9 +36,8 @@ Use `charts/stable/app-template` as the reference for the file structure of a ne
   - **minor**: features and minor app upgrades
   - **patch**: fixes, patch app upgrades and digest changes
 - Dependencies:
-  - `common` must be the **first** dependency, from `oci://oci.trueforge.org/truecharts`.
-  - Other TrueCharts dependencies (e.g. `valkey` with `alias: redis` and `condition: redis.enabled`; `mariadb`; `mongodb`) come from the same OCI repository and are listed alphabetically after `common`.
-  - Keep the full dependency block format used by existing charts (`condition`, `alias`, `tags` and `import-values` keys present).
+  - `common`, from `oci://oci.trueforge.org/truecharts`, is the only dependency. Keep the full dependency block format used by existing charts (`condition`, `alias`, `tags` and `import-values` keys present).
+  - Do not add Helm chart dependencies (subcharts) such as `valkey`, `redis` or `mariadb`. Databases and caches are configured in `values.yaml`, see [Databases and caches](#databases-and-caches).
   - Never use `file://` dependencies in app charts.
   - Do not bump the `common` version by hand unless the task requires a feature from a newer `common`. Renovate handles routine bumps.
 - Don't edit the fields that `forgetool` manages, as listed in `AGENTS.md`: helm/kube annotations, `kubeVersion`, `maintainers`, `home`, `icon`, `sources` and `appVersion`.
@@ -47,25 +46,44 @@ Use `charts/stable/app-template` as the reference for the file structure of a ne
 ## `values.yaml`
 
 - Keep the first line exactly: `# yaml-language-server: $schema=./values.schema.json`.
+- Every key must be valid for the `common` values schema (`charts/library/common/values.schema.json`). CI validates the `values.yaml` of every chart against it, see [Validate locally](#validate-locally).
 - Only set values that differ from the `common` defaults in `charts/library/common/values.yaml`. Do not copy defaults.
 - Images:
   - Use `image: { repository, pullPolicy: IfNotPresent, tag: <version>@sha256:<digest> }`. Always pin by digest; Renovate keeps both the tag and the digest up to date.
   - Put extra images in `<name>Image` keys (e.g. `postgresImage`, `configImage`) and select them in containers with `imageSelector: <name>Image`.
 - The primary workload, container, service and port are named `main`. Keep existing object names, ports, keys and persistence `mountPath`s stable, because renaming them breaks upgrades and needs a **major** bump.
-- Security:
-  - `common` defaults to UID/GID `568`, `readOnlyRootFilesystem: true`, no privilege escalation and dropped capabilities.
-  - Only relax these (e.g. `runAsNonRoot: false`, `runAsUser: 0`, `readOnlyRootFilesystem: false`) when the app actually requires it, and leave a short comment explaining why.
+- Security (see also `AGENTS.md` → Security):
+  - `common` defaults meet the Pod Security Standard "restricted": UID/GID `568`, `readOnlyRootFilesystem: true`, no privilege escalation, all capabilities dropped and the `RuntimeDefault` seccomp profile.
+  - Only relax these (e.g. `runAsNonRoot: false`, `runAsUser: 0`, `readOnlyRootFilesystem: false`, an added capability) when the app actually requires it, as little as possible, and leave a short comment explaining why.
+  - Give credentials to containers with `secretKeyRef` to a Secret, never as a plain `env` value or in a `configmap`. Plain values are fine for hosts and ports.
+  - `externalSecret` can load secrets from an external store, and `networkpolicy` can limit traffic. Do not enable them by default.
 - Persistence: all user data and configuration must be stored on `persistence` volumes and survive restarts and upgrades.
-- Databases and caches:
-  - Use the built-in helpers rather than custom deployments.
-  - PostgreSQL: `cnpg.main` (set `enabled`, `user` and `database`). Reference credentials via `.Values.cnpg.main.creds.*` in `tpl` strings, or via `secretKeyRef` to `cnpg-main-urls` (keys such as `host`, `std`, `jdbc`).
-  - Valkey/Redis: the `redis` dependency, using `.Values.redis.creds.*`.
-  - MariaDB and MongoDB: the `mariadb` and `mongodb` dependencies.
 - Most `common` value strings are rendered with `tpl` (see the "Helm `tpl`" row in the common docs), so you can reference other values, e.g. `"{{ .Values.service.main.ports.main.port }}"`.
 - App requirements, from the TrueCharts development guidelines:
   - no default or hard-coded passwords: generate secrets in templates, or let `common`/the dependencies generate them
   - no manual config-file editing required to get a working app
   - sensible, secure defaults
+
+### Databases and caches
+
+Use the built-in options of `common` rather than custom deployments:
+
+- PostgreSQL: `cnpg.main` (set `enabled`, `user` and `database`). Give the credentials to the app with `secretKeyRef` to the `cnpg-main-urls` Secret (keys such as `std`, `nossl`, `host` and `jdbc`). Only use `.Values.cnpg.main.creds.*` in `tpl` strings for values that hold no password.
+- Valkey (also for apps that expect Redis) and MariaDB: enable `dependencies.valkey` or `dependencies.mariadb`, and only override what the app needs. Do not set a password in the chart values.
+  - The connection details are in the `<release>-valkeycreds` and `<release>-mariadbcreds` Secrets, e.g. `valkey-password` or `mariadb-password`. Load credentials from them with `secretKeyRef` and `expandObjectName: false`:
+
+    ```yaml
+    env:
+      REDIS_HOST: '{{ .Values.dependencies.valkey.depconfig.creds.plainhost | trimAll "\"" }}'
+      REDIS_PASSWORD:
+        secretKeyRef:
+          expandObjectName: false
+          name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+          key: valkey-password
+    ```
+
+  - The same details are in `.Values.dependencies.<name>.depconfig.creds`, as quoted strings. Only use the host and port from there, with `| trimAll "\""`.
+- The top-level `redis`, `valkey` and `mariadb` keys fail rendering when enabled. MongoDB, Solr, ClickHouse and Memcached are no longer available. See `charts/library/common/docs/dependencies.md`.
 
 ## Custom templates
 
@@ -115,7 +133,12 @@ result_file=/tmp/lint_result.txt .github/scripts/tc-lint.sh "[\"$chart\"]" origi
 
 pre-commit run --files $(git diff --name-only origin/master -- "$chart")
 
+# Validate values.yaml against the common values schema, like CI does for every chart
+tmp="$(mktemp -d)" && ln -s "$PWD/$chart" "$tmp/"
+python3 charts/library/common/test_schema.py --stable-dir "$tmp" --common-test-ci-dir "$tmp" --output-file "$tmp/schema.log"
+rm -rf "$tmp"
+
 rm -rf "$chart/charts" "$chart/Chart.lock"   # never commit these
 ```
 
-`tc-lint.sh` needs `helm`, `yamllint`, `yamale`, GNU `parallel` and `jq`.
+`tc-lint.sh` needs `helm`, `yamllint`, `yamale`, GNU `parallel` and `jq`. When a key is valid for `common` but fails the schema check, the schema needs fixing in `charts/library/common`; mention it rather than removing the key.
