@@ -43,6 +43,40 @@ Define the activeDeadlineSeconds
 
 ---
 
+### `workload.$name.allowRollingUpdateWithRWO`
+
+Keep `strategy: RollingUpdate` on a single replica Deployment with `ReadWriteOnce` volumes, instead of changing it to `Recreate`. Overrules `global.fallbackDefaults.allowRollingUpdateWithRWO`. `ReadWriteOncePod` volumes always use `Recreate`.
+
+| Field      | Value                                      |
+| ---------- | ------------------------------------------ |
+| Key        | `workload.$name.allowRollingUpdateWithRWO` |
+| Type       | `boolean`                                  |
+| Required   | ❌                                         |
+| Helm `tpl` | ❌                                         |
+| Default    | unset                                      |
+
+:::caution
+
+Rolling updates with `ReadWriteOnce` storage are not safe for every app or storage:
+
+- An update gets stuck if the storage stays locked to the old pod. This can happen on the same node with storage like iSCSI, and on another node with any `ReadWriteOnce` storage.
+- Two pods use the same data during an update, which can damage data of apps that expect to be alone, for example with SQLite or database migrations.
+
+Common shows a warning in the notes when this is enabled.
+
+:::
+
+Example
+
+```yaml
+workload:
+  workload-name:
+    strategy: RollingUpdate
+    allowRollingUpdateWithRWO: true
+```
+
+---
+
 ### `workload.$name.annotations`
 
 Define annotations for workload
@@ -149,7 +183,8 @@ workload:
 
 ### `workload.$name.dbWait`
 
-Configuration for `workload.main.dbWait`.
+Whether init containers waiting for the enabled dependencies (cnpg, mariadb, mongodb, clickhouse, solr, valkey) are added to the workload.
+The workloads of [dependencies](/truecharts-common/dependencies) default to `false`, so they do not wait for themselves.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
@@ -157,7 +192,7 @@ Configuration for `workload.main.dbWait`.
 | Type       | `boolean`               |
 | Required   | ❌                      |
 | Helm `tpl` | ❌                      |
-| Default    | unset                   |
+| Default    | `true`                  |
 
 ---
 
@@ -451,6 +486,8 @@ Define the strategy of the workload
 | Helm `tpl` | ❌                                      |
 | Default    | unset                                   |
 | Enum       | `Recreate`, `RollingUpdate`, `OnDelete` |
+
+A single replica Deployment uses `Recreate` if it mounts a `ReadWriteOnce` or `ReadWriteOncePod` volume. See [`allowRollingUpdateWithRWO`](#workloadnameallowrollingupdatewithrwo) to keep `RollingUpdate` with `ReadWriteOnce`.
 
 ---
 

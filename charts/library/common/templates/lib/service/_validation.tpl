@@ -92,7 +92,10 @@ objectData:
       {{- end -}}
 
       {{- if eq $enabled "true" -}}
-        {{- $hasEnabled = true -}}
+        {{/* Services of dependencies do not require a primary */}}
+        {{- if not $service.dependency -}}
+          {{- $hasEnabled = true -}}
+        {{- end -}}
 
         {{/* And service is primary */}}
         {{- if and (hasKey $service "primary") ($service.primary) -}}

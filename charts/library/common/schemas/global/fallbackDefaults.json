@@ -4,7 +4,8 @@
   "properties": {
     "storageClass": {
       "type": ["string", "null"],
-      "description": "Configuration for `global.fallbackDefaults.storageClass`."
+      "description": "Configuration for `global.fallbackDefaults.storageClass`.",
+      "default": null
     },
     "probeType": {
       "type": "string",
@@ -27,13 +28,13 @@
     "persistenceType": {
       "type": "string",
       "description": "Configuration for `global.fallbackDefaults.persistenceType`.",
-      "default": "emptyDir",
+      "default": "pvc",
       "minLength": 1
     },
     "pvcRetain": {
       "type": "boolean",
       "description": "Configuration for `global.fallbackDefaults.pvcRetain`.",
-      "default": true
+      "default": false
     },
     "pvcSize": {
       "type": "string",
@@ -54,7 +55,9 @@
         "description": "Configuration for `global.fallbackDefaults.accessModes.$item`."
       },
       "description": "Configuration for `global.fallbackDefaults.accessModes`.",
-      "default": "ReadWriteOnce"
+      "default": [
+        "ReadWriteOnce"
+      ]
     },
     "vctAccessModes": {
       "type": "array",
@@ -62,7 +65,10 @@
         "type": "string",
         "description": "Configuration for `global.fallbackDefaults.vctAccessModes.$item`."
       },
-      "description": "Configuration for `global.fallbackDefaults.vctAccessModes`."
+      "description": "Configuration for `global.fallbackDefaults.vctAccessModes`.",
+      "default": [
+        "ReadWriteOnce"
+      ]
     },
     "probeTimeouts": {
       "type": "object",
@@ -73,13 +79,13 @@
             "initialDelaySeconds": {
               "type": "integer",
               "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.initialDelaySeconds`.",
-              "default": 10,
+              "default": 12,
               "minimum": 1
             },
             "periodSeconds": {
               "type": "integer",
               "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.periodSeconds`.",
-              "default": 10,
+              "default": 15,
               "minimum": 1
             },
             "timeoutSeconds": {
@@ -104,8 +110,8 @@
           "additionalProperties": true,
           "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness`.",
           "default": {
-            "initialDelaySeconds": 10,
-            "periodSeconds": 10,
+            "initialDelaySeconds": 12,
+            "periodSeconds": 15,
             "timeoutSeconds": 5,
             "failureThreshold": 5,
             "successThreshold": 1
@@ -123,7 +129,7 @@
             "periodSeconds": {
               "type": "integer",
               "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.periodSeconds`.",
-              "default": 10,
+              "default": 12,
               "minimum": 1
             },
             "timeoutSeconds": {
@@ -135,7 +141,7 @@
             "failureThreshold": {
               "type": "integer",
               "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.failureThreshold`.",
-              "default": 5,
+              "default": 4,
               "minimum": 1
             },
             "successThreshold": {
@@ -149,9 +155,9 @@
           "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness`.",
           "default": {
             "initialDelaySeconds": 10,
-            "periodSeconds": 10,
+            "periodSeconds": 12,
             "timeoutSeconds": 5,
-            "failureThreshold": 5,
+            "failureThreshold": 4,
             "successThreshold": 2
           }
         },
@@ -173,7 +179,7 @@
             "timeoutSeconds": {
               "type": "integer",
               "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.timeoutSeconds`.",
-              "default": 2,
+              "default": 3,
               "minimum": 1
             },
             "failureThreshold": {
@@ -194,7 +200,7 @@
           "default": {
             "initialDelaySeconds": 10,
             "periodSeconds": 5,
-            "timeoutSeconds": 2,
+            "timeoutSeconds": 3,
             "failureThreshold": 60,
             "successThreshold": 1
           }
@@ -231,24 +237,30 @@
       "description": "Configuration for `global.fallbackDefaults.topologyKey`.",
       "default": "kubernetes.io/hostname"
     },
+    "allowRollingUpdateWithRWO": {
+      "type": "boolean",
+      "description": "Keep `strategy: RollingUpdate` on a single replica Deployment with `ReadWriteOnce` volumes, instead of changing it to `Recreate`. Can be overruled with `workload.$name.allowRollingUpdateWithRWO`. Updates can get stuck if the storage stays locked to the old pod, which can happen on the same node with storage like iSCSI, and two pods use the same data during an update.",
+      "default": false
+    },
+    "routeListenerPort": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 65535,
+      "description": "Port of the listeners created for route TLS. Can be overruled per route with `route.$name.listenerPort`. Traefik needs the port of its entrypoint here, which is not always the port it is exposed on.",
+      "default": 443
+    },
     "cnpg": {
       "type": "object",
       "properties": {
         "pgVersion": {
           "type": "integer",
-          "description": "Configuration for `global.fallbackDefaults.cnpg.pgVersion`."
+          "description": "Configuration for `global.fallbackDefaults.cnpg.pgVersion`.",
+          "default": 16
         },
         "skipEmptyWalArchiveCheck": {
           "type": "boolean",
-          "description": "Configuration for `global.fallbackDefaults.cnpg.skipEmptyWalArchiveCheck`."
-        },
-        "barmanMode": {
-          "type": "string",
-          "enum": [
-            "inTree",
-            "plugin"
-          ],
-          "description": "Default for `cnpg.$name.barmanMode`."
+          "description": "Configuration for `global.fallbackDefaults.cnpg.skipEmptyWalArchiveCheck`.",
+          "default": true
         }
       },
       "additionalProperties": true,

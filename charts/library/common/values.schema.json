@@ -26,8 +26,12 @@
       "$ref": "schemas/chartContext.json",
       "description": "Configuration for `chartContext`."
     },
+    "common": {
+      "$ref": "schemas/common.json",
+      "description": "Values to merge into the common chart defaults before chart-specific overrides."
+    },
     "securityContext": {
-      "$ref": "schemas/workload/podSpec/containers/securityContext.json",
+      "$ref": "schemas/securityContext.json",
       "description": "Define security context for all containers and pods, unless overridden at the container/pod level See more info about securityContext [here](/truecharts-common/securitycontext)",
       "type": "object",
       "x-docs-required": true,
@@ -185,6 +189,14 @@
       "$ref": "schemas/images.json#/properties/postgres16Image",
       "description": "Configuration for `postgres16Image`."
     },
+    "postgres17Image": {
+      "$ref": "schemas/images.json#/properties/postgres17Image",
+      "description": "Configuration for `postgres17Image`."
+    },
+    "postgres18Image": {
+      "$ref": "schemas/images.json#/properties/postgres18Image",
+      "description": "Configuration for `postgres18Image`."
+    },
     "postgresPostgis15Image": {
       "$ref": "schemas/images.json#/properties/postgresPostgis15Image",
       "description": "Configuration for `postgresPostgis15Image`."
@@ -192,6 +204,14 @@
     "postgresPostgis16Image": {
       "$ref": "schemas/images.json#/properties/postgresPostgis16Image",
       "description": "Configuration for `postgresPostgis16Image`."
+    },
+    "postgresPostgis17Image": {
+      "$ref": "schemas/images.json#/properties/postgresPostgis17Image",
+      "description": "Configuration for `postgresPostgis17Image`."
+    },
+    "postgresPostgis18Image": {
+      "$ref": "schemas/images.json#/properties/postgresPostgis18Image",
+      "description": "Configuration for `postgresPostgis18Image`."
     },
     "postgresVectors15Image": {
       "$ref": "schemas/images.json#/properties/postgresVectors15Image",
@@ -201,6 +221,10 @@
       "$ref": "schemas/images.json#/properties/postgresVectors16Image",
       "description": "Configuration for `postgresVectors16Image`."
     },
+    "postgresVectors17Image": {
+      "$ref": "schemas/images.json#/properties/postgresVectors17Image",
+      "description": "Configuration for `postgresVectors17Image`."
+    },
     "postgresVectorchord15Image": {
       "$ref": "schemas/images.json#/properties/postgresVectorchord15Image",
       "description": "Configuration for `postgresVectorchord15Image`."
@@ -209,6 +233,14 @@
       "$ref": "schemas/images.json#/properties/postgresVectorchord16Image",
       "description": "Configuration for `postgresVectorchord16Image`."
     },
+    "postgresVectorchord17Image": {
+      "$ref": "schemas/images.json#/properties/postgresVectorchord17Image",
+      "description": "Configuration for `postgresVectorchord17Image`."
+    },
+    "postgresVectorchord18Image": {
+      "$ref": "schemas/images.json#/properties/postgresVectorchord18Image",
+      "description": "Configuration for `postgresVectorchord18Image`."
+    },
     "ingress": {
       "$ref": "schemas/ingress/ingress.json",
       "description": "Create Ingress objects"
@@ -216,6 +248,14 @@
     "certificate": {
       "$ref": "schemas/certificate.json",
       "description": "Define certificates"
+    },
+    "gatewayClass": {
+      "$ref": "schemas/gatewayclass.json",
+      "description": "Configure Gateway API gateway classes"
+    },
+    "gateway": {
+      "$ref": "schemas/gateway.json",
+      "description": "Configure Gateway API gateways"
     },
     "listenerSet": {
       "$ref": "schemas/listenerSet.json",
@@ -244,6 +284,10 @@
     "storageClass": {
       "$ref": "schemas/storageClass.json",
       "description": "Define storage classes"
+    },
+    "networkpolicy": {
+      "$ref": "schemas/networkpolicy.json",
+      "description": "Create Network Policy objects"
     },
     "metrics": {
       "$ref": "schemas/metrics.json",
