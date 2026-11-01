@@ -2088,10 +2088,73 @@ dependencies:
         mountPath: /config
   valkey:
     enabled: false
-    # -- How the dependency is provided: [standalone] merges it into the chart, [operator] leaves it to an operator (its objects are not merged)
+    # -- How the dependency is provided: [standalone] merges it into the chart, [operator] spawns a ValkeyCluster for the valkey-operator instead (its objects are not merged)
     mode: standalone
-    # -- Settings of the operator providing the dependency, never merged into the chart
-    operator: {}
+    # -- Settings of the ValkeyCluster (valkey-operator), only used when [mode] is [operator]. Never merged into the chart
+    # The credentials stay in [depconfig], the default user of the cluster uses the password of the credentials secret
+    # The host and port come from the Service the operator creates ([valkey-<release>-<chart>-valkey], 6379), [service] is ignored
+    # The image of the dependency is used for the nodes, unless [image] is set here
+    operator:
+      # -- Number of shards (primaries) of the cluster, at least 1
+      shards: 1
+      # -- Number of replicas per shard, 0 for none
+      replicas: 0
+      # -- Overrides the image of the nodes, defaults to [dependencies.valkey.image]
+      image: ""
+      # -- Workload of every node [StatefulSet|Deployment], can not be changed after creation
+      workloadType: StatefulSet
+      # -- Valkey configuration directives (valkey.conf), eg [maxmemory-policy: allkeys-lru]
+      config: {}
+      # -- Resources of the Valkey containers, defaults to the resources of the chart
+      resources: {}
+      # -- Persistence of the nodes, requires [workloadType: StatefulSet]. Can not be added or removed after creation
+      persistence:
+        enabled: true
+        # -- Size of the volume of every node, defaults to [global.fallbackDefaults.vctSize]
+        size: ""
+        # -- Storage class of the volumes, defaults to [global.fallbackDefaults.storageClass]
+        storageClass: ""
+        # -- Retain the volumes when a node is deleted, defaults to [global.fallbackDefaults.pvcRetain]
+        retain: false
+      # -- Metrics exporter sidecar of every pod
+      exporter:
+        enabled: true
+        image: ""
+        args: []
+        resources: {}
+        securityContext: {}
+      # -- Scheduling of the pods (tolerations, nodeSelector, affinity, topologySpreadConstraints, priorityClassName, node and zone spreading and pinning)
+      scheduling: {}
+      # -- PodDisruptionBudget managed by the operator, [mode] is [Cluster] or [Disabled]
+      podDisruptionBudget:
+        mode: Cluster
+      # -- Labels and annotations of every pod
+      podMetadata:
+        labels: {}
+        annotations: {}
+      # -- Names of the secrets used to pull the images
+      imagePullSecrets: []
+      # -- Overrides of the security context of the pods, defaults to the one of the chart
+      podSecurityContext: {}
+      # -- Name of an existing ServiceAccount for the pods
+      serviceAccountName: ""
+      # -- Grace period of the pods in seconds, the operator calculates it when unset
+      terminationGracePeriodSeconds: null
+      # -- Patches of the containers of the pods (strategic merge patch, by name), or additional containers
+      containers: []
+      # -- Networking of the cluster, TLS is not supported
+      networking:
+        # -- Domain of the Kubernetes cluster, defaults to [cluster.local]
+        clusterDomain: ""
+        discovery:
+          # -- How the nodes announce themselves [IP|Hostname], Hostname requires [workloadType: StatefulSet]
+          preferredEndpointType: ""
+      # -- Additional users of the cluster, see the valkey-operator docs. The [default] user is always managed, an item named [default] overrides its settings
+      users: []
+      # -- Labels of the ValkeyCluster
+      labels: {}
+      # -- Annotations of the ValkeyCluster
+      annotations: {}
     # -- Settings of the dependency itself, never merged into the chart
     depconfig:
       password: "PLACEHOLDERPASSWORD"
