@@ -1861,11 +1861,17 @@ solr:
 # Objects inherit the defaults of the matching common object (eg [workload.main]) and default to [enabled: true].
 # Currently [valkey] and [mariadb] are the only dependencies with additional handling (credentials secret, wait init container).
 # Disabled dependencies are not merged into the chart, so their defaults only apply once a chart sets [enabled: true].
+# Dependencies with [mode: operator] are not merged into the chart either, as an operator provides them. Their credentials secret, wait init container and notes still apply.
+# Settings for the operator go under [dependencies.<name>.operator], like [depconfig] it is never merged into the chart.
 # @default -- See below
 
 dependencies:
   mariadb:
     enabled: false
+    # -- How the dependency is provided: [standalone] merges it into the chart, [operator] leaves it to an operator (its objects are not merged)
+    mode: standalone
+    # -- Settings of the operator providing the dependency, never merged into the chart
+    operator: {}
     # -- Settings of the dependency itself, never merged into the chart
     depconfig:
       password: "PLACEHOLDERPASSWORD"
@@ -1925,6 +1931,10 @@ dependencies:
         mountPath: /config
   valkey:
     enabled: false
+    # -- How the dependency is provided: [standalone] merges it into the chart, [operator] leaves it to an operator (its objects are not merged)
+    mode: standalone
+    # -- Settings of the operator providing the dependency, never merged into the chart
+    operator: {}
     # -- Settings of the dependency itself, never merged into the chart
     depconfig:
       password: "PLACEHOLDERPASSWORD"
