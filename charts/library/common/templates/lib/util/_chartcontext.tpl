@@ -21,6 +21,24 @@
   {{- end -}}
 {{- end -}}
 
+{{/* Returns the pod and service CIDR, as set in [global] or the defaults */}}
+{{- define "tc.v1.common.lib.util.chartcontext.cidrs" -}}
+  {{- $global := .global | default dict -}}
+
+  {{- $podCIDR := "172.16.0.0/16" -}}
+  {{- $svcCIDR := "172.17.0.0/16" -}}
+
+  {{- if $global.podCIDR -}}
+    {{- $podCIDR = $global.podCIDR -}}
+  {{- end -}}
+
+  {{- if $global.svcCIDR -}}
+    {{- $svcCIDR = $global.svcCIDR -}}
+  {{- end -}}
+
+  {{- (dict "podCIDR" $podCIDR "svcCIDR" $svcCIDR) | toJson -}}
+{{- end -}}
+
 {{- define "tc.v1.common.lib.util.chartcontext.data" -}}
   {{- $rootCtx := .rootCtx -}}
   {{- $objectData := .objectData -}}
@@ -30,16 +48,9 @@
   {{- $host := "127.0.0.1" -}}
   {{- $port := "443" -}}
   {{- $path := "/" -}}
-  {{- $podCIDR := "172.16.0.0/16" -}}
-  {{- $svcCIDR := "172.17.0.0/16" -}}
-
-  {{- if $rootCtx.Values.global.podCIDR -}}
-    {{- $podCIDR = $rootCtx.Values.global.podCIDR -}}
-  {{- end -}}
-
-  {{- if $rootCtx.Values.global.svcCIDR -}}
-    {{- $svcCIDR = $rootCtx.Values.global.svcCIDR -}}
-  {{- end -}}
+  {{- $cidrs := include "tc.v1.common.lib.util.chartcontext.cidrs" (dict "global" $rootCtx.Values.global) | fromJson -}}
+  {{- $podCIDR := $cidrs.podCIDR -}}
+  {{- $svcCIDR := $cidrs.svcCIDR -}}
 
   {{/* TODO: Find ways to implement CIDR detection */}}
 

@@ -24,10 +24,13 @@ It will include / inject the required templates based on the given values.
     {{/* Add the code-server service */}}
     {{- if $codeSrv.service.enabled -}}
       {{/* Add the code-server service */}}
-      {{- $hasPrimaryService := false -}}
-      {{- $result := (include "tc.v1.common.lib.service.hasPrimary" $) | fromJson -}}
-      {{- if and $result.hasEnabled $result.hasPrimary -}}
-        {{- $hasPrimaryService = true -}}
+      {{/* Objects of a dependency are never primary, so there is nothing to check ([$.dependency] is only set for dependencies) */}}
+      {{- $hasPrimaryService := kindIs "string" $.dependency -}}
+      {{- if not $hasPrimaryService -}}
+        {{- $result := (include "tc.v1.common.lib.service.hasPrimary" $) | fromJson -}}
+        {{- if and $result.hasEnabled $result.hasPrimary -}}
+          {{- $hasPrimaryService = true -}}
+        {{- end -}}
       {{- end -}}
 
       {{- $svcValues := $codeSrv.service -}}
@@ -51,10 +54,12 @@ It will include / inject the required templates based on the given values.
         {{- $_ := set $ingressValues "targetSelector" (dict "codeserver" "codeserver") -}}
       {{- end -}}
 
-      {{- $hasPrimaryIngress := false -}}
-      {{- $result := (include "tc.v1.common.lib.ingress.hasPrimary" $) | fromJson -}}
-      {{- if and $result.hasEnabled $result.hasPrimary -}}
-        {{- $hasPrimaryIngress = true -}}
+      {{- $hasPrimaryIngress := kindIs "string" $.dependency -}}
+      {{- if not $hasPrimaryIngress -}}
+        {{- $result := (include "tc.v1.common.lib.ingress.hasPrimary" $) | fromJson -}}
+        {{- if and $result.hasEnabled $result.hasPrimary -}}
+          {{- $hasPrimaryIngress = true -}}
+        {{- end -}}
       {{- end -}}
 
       {{- if not $hasPrimaryIngress -}}

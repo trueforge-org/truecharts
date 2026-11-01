@@ -80,7 +80,8 @@ Besides `enabled` and `depconfig`, the dependency accepts the same keys as the c
 | `image`, `*Image`                                                                                                                              | Added to the chart as `$nameImage` and `$name<Foo>Image` (eg `valkeyImage`, `valkeyClientImage` for `clientImage`). Containers are pointed to them. A container selecting `image` fails if the dependency defines none, a dependency never falls back to the main image of the chart. Other images of the chart can be selected explicitly (eg `imageSelector: someImage`). |
 | `securityContext`, `podOptions`, `resources`                                                                                                   | Applied as defaults to the pods and containers of the dependency only, the same way the chart-level keys apply to the chart.                                  |
 | `global`, `chartContext`, `notes`, `operator`, `fallbackDefaults`, `TZ`, `namespace`, `diagnosticMode`, `containerOptions`                     | Ignored. These apply to the whole release and are taken from the chart.                                                                                      |
-| `addons`, `dependencies`, `configMapsFromFolder`, `extraTpl`, `ingressMiddlewares`, `mariadb`, `mongodb`, `clickhouse`, `solr`                 | Not supported, rendering fails.                                                                                                                              |
+| `addons`                                                                                                                                       | Applied to the workloads of the dependency, see [Addons](#addons).                                                                                           |
+| `dependencies`, `configMapsFromFolder`, `extraTpl`, `ingressMiddlewares`, `mariadb`, `mongodb`, `clickhouse`, `solr`                 | Not supported, rendering fails.                                                                                                                              |
 | Any other key                                                                                                                                  | Kept as is and available to templates under `.Values.dependencies.$name.$key`.                                                                               |
 
 ---
@@ -216,6 +217,31 @@ The `targetSelector` of service ports points to a container name and is not rewr
 
 Templates within the dependency can reference its own values under `.Values.dependencies.$name`, which is normalized the same way (defaults applied, primaries set).
 For example the password: `"{{ .Values.dependencies.valkey.depconfig.password }}"`.
+
+### Addons
+
+The addons `codeserver`, `gluetun`, `netshoot` and `tailscale` can be enabled per dependency, under `dependencies.$name.addons`.
+They use the same keys as the [addons of the chart](/truecharts-common/addons), and are applied to the workloads of the dependency.
+
+```yaml
+dependencies:
+  valkey:
+    enabled: true
+    addons:
+      netshoot:
+        enabled: true
+```
+
+- The addons inherit the defaults of the common library, **not** the addons configured on the chart. The same addon can be configured differently on the chart and on each dependency.
+- `enabled` supports `tpl`. Addons that are not enabled are ignored.
+- Without a `targetSelector`, an addon targets the primary workload of the dependency (see [Primary Objects](#primary-objects)).
+  A `targetSelector` must list workloads of the dependency, otherwise rendering fails. This also applies to the `[main]` default of `gluetun` and `tailscale`.
+- The containers, services, ingresses, persistence and secrets of an addon are added to the dependency, and are merged and prefixed with `$name-` like its other objects
+  (eg the secret `vpn-conf` of `gluetun` becomes `$name-gluetun-vpn-conf`).
+- The objects of an addon never become the primary ones of the dependency. The primary container and service stay the ones the dependency would have without the addon.
+  This includes the `codeserver` service and ingress, which are not primary either.
+- The addon images (`netshootImage`, `gluetunImage`, `tailscaleImage`, `codeserverImage`) default to the ones of the chart. A dependency can use another image by defining the image itself (eg `dependencies.valkey.netshootImage`).
+- The notes only list the connection details of the addons of the chart, not the ones of its dependencies.
 
 ---
 
