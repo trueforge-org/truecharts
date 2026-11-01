@@ -48,6 +48,10 @@
     {{- $_ := set $objectData "shortName" $name -}}
 
     {{/* Call class to create the object */}}
-    {{- include "tc.v1.common.class.networkpolicy" (dict "rootCtx" $ "objectData" $objectData) -}}
+    {{- if eq (include "tc.v1.common.lib.networkpolicy.type" (dict "rootCtx" $ "objectData" $objectData)) "cilium" -}}
+      {{- include "tc.v1.common.class.ciliumnetworkpolicy" (dict "rootCtx" $ "objectData" $objectData) -}}
+    {{- else -}}
+      {{- include "tc.v1.common.class.networkpolicy" (dict "rootCtx" $ "objectData" $objectData) -}}
+    {{- end -}}
   {{- end -}}
 {{- end -}}

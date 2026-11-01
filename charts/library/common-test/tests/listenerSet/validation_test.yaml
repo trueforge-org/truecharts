@@ -1,0 +1,215 @@
+suite: listenerSet validation test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should fail without targetSelector and parentRef
+    set:
+      listenerSet:
+        main:
+          enabled: true
+          listeners:
+            - name: tcp
+              port: 9000
+              protocol: TCP
+    asserts:
+      - failedTemplate:
+          errorMessage: ListenerSet - Expected one of [targetSelector, parentRef.name] in [listenerSet.main] to be non-empty
+
+  - it: should fail with both targetSelector and parentRef
+    set:
+      gateway:
+        main:
+          enabled: true
+          gatewayClassName: test-gateway-class
+          allowedListeners:
+            namespaces:
+              from: Same
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+      listenerSet:
+        main:
+          enabled: true
+          targetSelector: main
+          parentRef:
+            name: shared-gateway
+          listeners:
+            - name: tcp
+              port: 9000
+              protocol: TCP
+    asserts:
+      - failedTemplate:
+          errorMessage: ListenerSet - Only one of [targetSelector, parentRef.name] can be specified in [listenerSet.main]
+
+  - it: should fail when parentRef is not a dictionary
+    set:
+      listenerSet:
+        main:
+          enabled: true
+          parentRef: shared-gateway
+          listeners:
+            - name: tcp
+              port: 9000
+              protocol: TCP
+    asserts:
+      - failedTemplate:
+          errorMessage: ListenerSet - Expected [listenerSet.main.parentRef] to be a dictionary, but got [string]
+
+  - it: should fail with targetSelector on an unknown gateway
+    set:
+      listenerSet:
+        main:
+          enabled: true
+          targetSelector: missing
+          listeners:
+            - name: tcp
+              port: 9000
+              protocol: TCP
+    asserts:
+      - failedTemplate:
+          errorMessage: ListenerSet - Expected [targetSelector] of listenerSet [main] to reference an enabled gateway, got [missing]
+
+  - it: should fail with targetSelector on a disabled gateway
+    set:
+      gateway:
+        main:
+          enabled: false
+          gatewayClassName: test-gateway-class
+          allowedListeners:
+            namespaces:
+              from: Same
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+      listenerSet:
+        main:
+          enabled: true
+          targetSelector: main
+          listeners:
+            - name: tcp
+              port: 9000
+              protocol: TCP
+    asserts:
+      - failedTemplate:
+          errorMessage: ListenerSet - Expected [targetSelector] of listenerSet [main] to reference an enabled gateway, got [main]
+
+  - it: should fail when the gateway does not allow listener sets
+    set:
+      gateway:
+        main:
+          enabled: true
+          gatewayClassName: test-gateway-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+      listenerSet:
+        main:
+          enabled: true
+          targetSelector: main
+          listeners:
+            - name: tcp
+              port: 9000
+              protocol: TCP
+    asserts:
+      - failedTemplate:
+          errorMessage: ListenerSet - Expected gateway [main] referenced by [listenerSet.main.targetSelector] to allow listener sets, set [gateway.main.allowedListeners.namespaces.from] to one of [Same, All, Selector]
+
+  - it: should require a namespace selector when the gateway uses from Selector
+    set:
+      gateway:
+        main:
+          enabled: true
+          gatewayClassName: test-gateway-class
+          allowedListeners:
+            namespaces:
+              from: Selector
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+      listenerSet:
+        main:
+          enabled: true
+          targetSelector: main
+          listeners:
+            - name: tcp
+              port: 9000
+              protocol: TCP
+    asserts:
+      - failedTemplate:
+          errorMessage: ListenerSet - Expected [gateway.main.allowedListeners.namespaces.selector] when from is [Selector]
+
+  - it: should reject an invalid from value when the gateway targets listener sets
+    set:
+      gateway:
+        main:
+          enabled: true
+          gatewayClassName: test-gateway-class
+          allowedListeners:
+            namespaces:
+              from: Invalid
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+      listenerSet:
+        main:
+          enabled: true
+          targetSelector: main
+          listeners:
+            - name: tcp
+              port: 9000
+              protocol: TCP
+    asserts:
+      - failedTemplate:
+          errorMessage: ListenerSet - Expected [gateway.main.allowedListeners.namespaces.from] to be one of [Same, All, Selector], but got [Invalid]
+
+  - it: should fail without listeners
+    set:
+      listenerSet:
+        main:
+          enabled: true
+          parentRef:
+            name: shared-gateway
+          listeners: []
+    asserts:
+      - failedTemplate:
+          errorMessage: ListenerSet - Expected non-empty [listenerSet.main.listeners]
+
+  - it: should fail with duplicate listener names
+    set:
+      listenerSet:
+        main:
+          enabled: true
+          parentRef:
+            name: shared-gateway
+          listeners:
+            - name: tcp
+              port: 9000
+              protocol: TCP
+            - name: tcp
+              port: 9001
+              protocol: TCP
+    asserts:
+      - failedTemplate:
+          errorMessage: ListenerSet - Expected listener names in [listenerSet.main.listeners] to be unique, but [tcp] is defined more than once
+
+  - it: should fail without a listener port
+    set:
+      listenerSet:
+        main:
+          enabled: true
+          parentRef:
+            name: shared-gateway
+          listeners:
+            - name: tcp
+              protocol: TCP
+    asserts:
+      - failedTemplate:
+          errorMessage: listener port is required for ListenerSet test-release-name-common-test-main listener tcp

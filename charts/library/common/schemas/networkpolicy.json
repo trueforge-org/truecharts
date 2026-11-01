@@ -67,6 +67,38 @@
         "description": "Additional annotations for Network Policy",
         "default": {}
       },
+      "type": {
+        "type": "string",
+        "oneOf": [
+          {
+            "enum": [
+              "kubernetes",
+              "cilium"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ],
+        "description": "Type of policy to create. `kubernetes` creates a NetworkPolicy, `cilium` creates a CiliumNetworkPolicy and requires the Cilium CRDs",
+        "default": "kubernetes"
+      },
+      "clusterwide": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Cilium only. Create a CiliumClusterwideNetworkPolicy instead of a CiliumNetworkPolicy, chart based selectors are pinned to the namespace of the chart",
+        "default": false
+      },
+      "description": {
+        "type": "string",
+        "description": "Cilium only. Free form description of the policy, supports Helm `tpl`",
+        "default": ""
+      },
       "podSelector": {
         "type": [
           "object",
@@ -162,6 +194,62 @@
         "description": "Target all pods in the namespace",
         "default": false
       },
+      "endpointSelector": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "properties": {
+          "matchLabels": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Match endpoints by labels"
+          },
+          "matchExpressions": {
+            "type": [
+              "array",
+              "string"
+            ],
+            "items": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true
+            },
+            "description": "Match endpoints by label expressions"
+          }
+        },
+        "additionalProperties": true,
+        "description": "Cilium only. Select the endpoints to which this policy applies, supports Helm `tpl`"
+      },
+      "nodeSelector": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "properties": {
+          "matchLabels": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Match nodes by labels"
+          },
+          "matchExpressions": {
+            "type": [
+              "array",
+              "string"
+            ],
+            "items": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true
+            },
+            "description": "Match nodes by label expressions"
+          }
+        },
+        "additionalProperties": true,
+        "description": "Cilium only. Host policy, select the nodes to which this policy applies instead of pods. Requires `clusterwide: true`, supports Helm `tpl`"
+      },
       "policyTypes": {
         "type": [
           "array",
@@ -189,6 +277,27 @@
             "pattern": "^\\{\\{.*\\}\\}$"
           }
         ]
+      },
+      "enableDefaultDeny": {
+        "type": "object",
+        "properties": {
+          "ingress": {
+            "type": [
+              "boolean",
+              "string"
+            ],
+            "description": "Put the selected endpoints in ingress default deny mode"
+          },
+          "egress": {
+            "type": [
+              "boolean",
+              "string"
+            ],
+            "description": "Put the selected endpoints in egress default deny mode"
+          }
+        },
+        "additionalProperties": true,
+        "description": "Cilium only. Control whether the policy puts the selected endpoints in default deny mode"
       },
       "ingress": {
         "type": [
@@ -305,6 +414,20 @@
         "description": "List of ingress rules",
         "default": []
       },
+      "ingressDeny": {
+        "type": [
+          "array",
+          "string"
+        ],
+        "items": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true,
+          "description": "Configuration for `$name.ingressDeny.$item`."
+        },
+        "description": "Cilium only. List of ingress deny rules, these take precedence over allow rules, supports Helm `tpl`",
+        "default": []
+      },
       "egress": {
         "type": [
           "array",
@@ -419,12 +542,26 @@
         },
         "description": "List of egress rules",
         "default": []
+      },
+      "egressDeny": {
+        "type": [
+          "array",
+          "string"
+        ],
+        "items": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true,
+          "description": "Configuration for `$name.egressDeny.$item`."
+        },
+        "description": "Cilium only. List of egress deny rules, these take precedence over allow rules, supports Helm `tpl`",
+        "default": []
       }
     },
     "additionalProperties": true,
     "description": "Create Network Policy objects",
     "default": {}
   },
-  "description": "Create Network Policy objects",
+  "description": "Create NetworkPolicy or CiliumNetworkPolicy objects",
   "default": {}
 }

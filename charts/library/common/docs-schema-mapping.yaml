@@ -1,5 +1,5 @@
 # Mapping of documentation files to their related schema files
-# Format: 
+# Format:
 #   docs/<path>.md -> schemas/<path>.json (or related schema paths)
 
 # Top-level documentation and schemas
@@ -25,6 +25,9 @@ docs/containerOptions.md:
 docs/credentials.md:
   - schemas/credentials.json
 
+docs/externalSecret.md:
+  - schemas/externalSecret.json
+
 docs/fallbackDefaults.md:
   - schemas/global/fallbackDefaults.json
 
@@ -38,6 +41,9 @@ docs/hpa.md:
 docs/imagePullSecret.md:
   - schemas/imagePullSecret.json
   - schemas/images.json
+
+docs/listenerSet.md:
+  - schemas/listenerSet.json
 
 docs/metrics.md:
   - schemas/metrics.json

@@ -197,6 +197,12 @@
             },
             "matches": {
               "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true,
+                "description": "Configuration for `route.main.rules.$item.matches.$item`."
+              },
               "description": "Conditions for matching requests. Only for `HTTPRoute` and `GRPCRoute`."
             },
             "name": {
