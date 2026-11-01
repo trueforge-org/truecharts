@@ -47,11 +47,6 @@
     {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "clickhouse-wait" "container" $container) -}}
   {{- end -}}
 
-  {{- if .Values.solr.enabled -}}
-    {{- $container := include "tc.v1.common.lib.deps.wait.solr" $ | fromYaml -}}
-    {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "solr-wait" "container" $container) -}}
-  {{- end -}}
-
   {{- $result := false -}}
   {{- range .Values.cnpg -}}
     {{- if .enabled -}}
@@ -306,65 +301,6 @@ command:
       sleep 2
     done
     echo "ClickHouse - accepting connections"
-{{- end -}}
-
-{{- define "tc.v1.common.lib.deps.wait.solr" -}}
-enabled: true
-type: system
-imageSelector: ubuntuImage
-securityContext:
-  runAsUser: 568
-  runAsGroup: 568
-  readOnlyRootFilesystem: true
-  runAsNonRoot: true
-  allowPrivilegeEscalation: false
-  privileged: false
-  seccompProfile:
-    type: RuntimeDefault
-  capabilities:
-    add: []
-    drop:
-      - ALL
-resources:
-  excludeExtra: true
-  requests:
-    cpu: 10m
-    memory: 50Mi
-  limits:
-    cpu: 500m
-    memory: 512Mi
-env:
-  SOLR_HOST:
-    secretKeyRef:
-      expandObjectName: false
-      name: '{{ printf "%s-%s" .Release.Name "solrcreds" }}'
-      key: plainhost
-  SOLR_CORES: "{{ .Values.solr.solrCores }}"
-  SOLR_ENABLE_AUTHENTICATION: "{{ .Values.solr.solrEnableAuthentication }}"
-  SOLR_ADMIN_USERNAME: "{{ .Values.solr.solrUsername }}"
-  SOLR_ADMIN_PASSWORD:
-    secretKeyRef:
-      expandObjectName: false
-      name: '{{ printf "%s-%s" .Release.Name "solrcreds" }}'
-      key: solr-password
-
-command:
-  - "/bin/sh"
-args:
-  - "-c"
-  - |
-    echo "Executing DB waits..."
-    if [ "$SOLR_ENABLE_AUTHENTICATION" == "yes" ]; then
-      until curl --fail --user "${SOLR_ADMIN_USERNAME}":"${SOLR_ADMIN_PASSWORD}" "${SOLR_HOST}":8983/solr/"${SOLR_CORES}"/admin/ping; do
-        echo "Solr is not responding... Sleeping 2 seconds..."
-        sleep 2
-      done
-    else
-      until curl --fail "${SOLR_HOST}":8983/solr/"${SOLR_CORES}"/admin/ping; do
-        echo "Solr is not responding... Sleeping 2 seconds..."
-        sleep 2
-      done
-    fi
 {{- end -}}
 
 {{- define "tc.v1.common.lib.deps.wait.cnpg" -}}
