@@ -63,7 +63,27 @@ tests:
         enabled: true
     asserts:
       - failedTemplate:
-          errorMessage: Expected no [clickhouse] key, it is no longer supported and has no replacement. Remove [clickhouse], or set [clickhouse.enabled] to false
+          errorMessage: Expected no [clickhouse] key, it is replaced by [dependencies.clickhouse]. Move [enabled] to [dependencies.clickhouse], and [password], [clickhouseUsername] and [clickhouseDatabase] to [dependencies.clickhouse.depconfig]. The connection details are available under [dependencies.clickhouse.depconfig.creds]
+
+  - it: should fail with the top level clickhouse enabled using a template
+    set:
+      useClickhouse: true
+      clickhouse:
+        enabled: "{{ .Values.useClickhouse }}"
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [clickhouse] key, it is replaced by [dependencies.clickhouse]. Move [enabled] to [dependencies.clickhouse], and [password], [clickhouseUsername] and [clickhouseDatabase] to [dependencies.clickhouse.depconfig]. The connection details are available under [dependencies.clickhouse.depconfig.creds]
+
+  - it: should fail with the enabled top level clickhouse, even when the dependency is enabled
+    set:
+      clickhouse:
+        enabled: true
+      dependencies:
+        clickhouse:
+          enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [clickhouse] key, it is replaced by [dependencies.clickhouse]. Move [enabled] to [dependencies.clickhouse], and [password], [clickhouseUsername] and [clickhouseDatabase] to [dependencies.clickhouse.depconfig]. The connection details are available under [dependencies.clickhouse.depconfig.creds]
 
   - it: should fail with the enabled top level memcached
     set:
@@ -82,15 +102,12 @@ tests:
       - failedTemplate:
           errorMessage: Expected no [mongodb] key, it is no longer supported and has no replacement. Remove [mongodb], or set [mongodb.enabled] to false
 
-  - it: should not fail with the disabled top level solr, mongodb, clickhouse and memcached
+  - it: should not fail with the disabled top level solr, mongodb and memcached
     set:
       solr:
         enabled: false
         password: testpassword
       mongodb:
-        enabled: false
-        password: testpassword
-      clickhouse:
         enabled: false
         password: testpassword
       memcached:
@@ -99,13 +116,11 @@ tests:
       - hasDocuments:
           count: 0
 
-  - it: should not fail with the top level solr, mongodb, clickhouse and memcached without enabled
+  - it: should not fail with the top level solr, mongodb and memcached without enabled
     set:
       solr:
         password: testpassword
       mongodb:
-        password: testpassword
-      clickhouse:
         password: testpassword
       memcached:
         password: testpassword
@@ -113,7 +128,7 @@ tests:
       - hasDocuments:
           count: 0
 
-  - it: should not fail with the disabled top level redis and valkey
+  - it: should not fail with the disabled top level redis, valkey and clickhouse
     set:
       redis:
         enabled: false
@@ -121,35 +136,43 @@ tests:
       valkey:
         enabled: false
         password: testpassword
+      clickhouse:
+        enabled: false
+        password: testpassword
     asserts:
       - hasDocuments:
           count: 0
 
-  - it: should not fail with the top level redis and valkey disabled using a template
+  - it: should not fail with the top level redis, valkey and clickhouse disabled using a template
     set:
       useValkey: false
       redis:
         enabled: "{{ .Values.useValkey }}"
       valkey:
         enabled: "{{ .Values.useValkey }}"
+      clickhouse:
+        enabled: "{{ .Values.useValkey }}"
     asserts:
       - hasDocuments:
           count: 0
 
-  - it: should not fail with the top level redis and valkey without enabled
+  - it: should not fail with the top level redis, valkey and clickhouse without enabled
     set:
       redis:
         password: testpassword
       valkey:
         password: testpassword
+      clickhouse:
+        password: testpassword
     asserts:
       - hasDocuments:
           count: 0
 
-  - it: should not fail with the top level redis and valkey unset
+  - it: should not fail with the top level redis, valkey and clickhouse unset
     set:
       redis: null
       valkey: null
+      clickhouse: null
     asserts:
       - hasDocuments:
           count: 0
@@ -166,6 +189,19 @@ tests:
         equal:
           path: metadata.name
           value: test-release-name-valkeycreds
+
+  - it: should not fail with the dependency clickhouse
+    set:
+      dependencies:
+        clickhouse:
+          enabled: true
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: metadata.name
+          value: test-release-name-clickhousecreds
 
   - it: should fail with the unused top level volumeClaimTemplates
     set:

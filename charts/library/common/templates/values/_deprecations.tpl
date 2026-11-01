@@ -9,9 +9,9 @@
 
   {{/* Top-level keys of dependencies that moved to [dependencies.<name>], and top-level keys that were removed without a replacement. */}}
   {{/* Their [enabled] is taken into account, a disabled one never rendered anything, so it can safely stay in the values. */}}
-  {{- $movedDependencies := dict "mariadb" "mariadb" "redis" "valkey" "valkey" "valkey" -}}
-  {{- $movedSettings := dict "mariadb" "[password], [rootPassword], [mariadbUsername] and [mariadbDatabase]" "valkey" "[password]" -}}
-  {{- $removedKeys := list "solr" "mongodb" "clickhouse" "memcached" -}}
+  {{- $movedDependencies := dict "clickhouse" "clickhouse" "mariadb" "mariadb" "redis" "valkey" "valkey" "valkey" -}}
+  {{- $movedSettings := dict "clickhouse" "[password], [clickhouseUsername] and [clickhouseDatabase]" "mariadb" "[password], [rootPassword], [mariadbUsername] and [mariadbDatabase]" "valkey" "[password]" -}}
+  {{- $removedKeys := list "solr" "mongodb" "memcached" -}}
   {{- range $key := (concat (keys $movedDependencies | sortAlpha) $removedKeys) -}}
     {{- $value := get $values $key -}}
     {{- if and (kindIs "map" $value) (hasKey $value "enabled") (not (kindIs "invalid" $value.enabled)) -}}

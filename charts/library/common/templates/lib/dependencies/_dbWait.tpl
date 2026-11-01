@@ -33,7 +33,16 @@
     {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "mongodb-wait" "container" $container) -}}
   {{- end -}}
 
-  {{- if .Values.clickhouse.enabled -}}
+  {{- $clickhouseEnabled := false -}}
+  {{- $clickhouse := get (.Values.dependencies | default dict) "clickhouse" -}}
+  {{- if kindIs "map" $clickhouse -}}
+    {{- $clickhouseEnabled = eq (include "tc.v1.common.lib.util.enabled" (dict
+                    "rootCtx" $ "objectData" $clickhouse
+                    "name" "clickhouse" "caller" "Dependencies"
+                    "key" "dependencies")) "true" -}}
+  {{- end -}}
+
+  {{- if $clickhouseEnabled -}}
     {{- $container := include "tc.v1.common.lib.deps.wait.clickhouse" $ | fromYaml -}}
     {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "clickhouse-wait" "container" $container) -}}
   {{- end -}}
@@ -255,6 +264,11 @@ command:
 {{- end -}}
 
 {{- define "tc.v1.common.lib.deps.wait.clickhouse" -}}
+{{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "clickhouse")) -}}
+{{- if not $service -}}
+  {{- fail "Dependencies - Expected dependency [clickhouse] to have an enabled primary service" -}}
+{{- end -}}
+{{- $service = $service | fromJson -}}
 enabled: true
 type: system
 imageSelector: ubuntuImage
@@ -280,18 +294,14 @@ resources:
     cpu: 500m
     memory: 512Mi
 env:
-  CLICKHOUSE_PING:
-    secretKeyRef:
-      expandObjectName: false
-      name: '{{ printf "%s-%s" .Release.Name "clickhousecreds" }}'
-      key: ping
+  CLICKHOUSE_HOST: {{ $service.name | quote }}
+  CLICKHOUSE_PORT: {{ $service.port | default 8123 | quote }}
 command:
   - "/bin/sh"
-args:
   - "-c"
   - |
-    echo "Executing DB waits..."
-    until wget --quiet --tries=1 --spider "${CLICKHOUSE_PING}"; do
+    echo "Executing ClickHouse wait..."
+    until wget --quiet --tries=1 --timeout=5 --spider "http://${CLICKHOUSE_HOST}:${CLICKHOUSE_PORT}/ping"; do
       echo "ClickHouse - no response. Sleeping 2 seconds..."
       sleep 2
     done
