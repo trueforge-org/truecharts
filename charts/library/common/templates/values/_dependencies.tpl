@@ -57,11 +57,12 @@ so templates like [.Values.dependencies.$name.service.main.ports.main.port] keep
   {{- $dep := .depValues -}}
 
   {{/* Keys that control the dependency itself and are never merged */}}
-  {{- $controlKeys := (list "enabled" "depconfig") -}}
+  {{/* The objects of the addons are added to the collections of the dependency instead */}}
+  {{- $controlKeys := (list "enabled" "depconfig" "addons") -}}
   {{/* Release wide settings, the ones of the chart apply to the whole release */}}
   {{- $ignoredKeys := (list "global" "chartContext" "notes" "operator" "fallbackDefaults" "TZ" "namespace" "diagnosticMode" "containerOptions" "common") -}}
   {{/* Features that can not be scoped to a dependency */}}
-  {{- $unsupportedKeys := (list "addons" "dependencies" "configMapsFromFolder" "extraTpl" "mariadb" "mongodb" "clickhouse" "solr" "ingressMiddlewares" "volumeClaimTemplates") -}}
+  {{- $unsupportedKeys := (list "dependencies" "configMapsFromFolder" "extraTpl" "mariadb" "mongodb" "clickhouse" "solr" "ingressMiddlewares" "volumeClaimTemplates") -}}
   {{/* Defaults that are applied to the workloads of the dependency, instead of the whole release */}}
   {{- $scopedKeys := (list "securityContext" "podOptions" "resources") -}}
   {{/* Collections whose objects do not have an [enabled] key */}}
@@ -123,6 +124,11 @@ so templates like [.Values.dependencies.$name.service.main.ports.main.port] keep
       {{- end -}}
     {{- end -}}
   {{- end -}}
+
+  {{/* Addons add containers and objects to the dependency, so they are applied after the defaults and before the primaries are resolved */}}
+  {{- include "tc.v1.common.values.dependencies.addons" (dict
+        "rootCtx" $rootCtx "mergedValues" $mergedValues "commonValues" $commonValues
+        "depName" $depName "dep" $dep "collections" $collections) -}}
 
   {{/* Scoped defaults */}}
   {{- $depSecurityContext := dict -}}
