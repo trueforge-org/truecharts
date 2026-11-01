@@ -3711,6 +3711,24 @@ dependencies:
       objectname:
         enabled: true
         mountPath: ''
+  memcached:
+    enabled: false
+    image:
+      repository: ''
+      pullPolicy: ''
+      tag: ''
+    workload:
+      objectname:
+        replicas: 0
+        type: ''
+        strategy: ''
+    service:
+      objectname:
+        ports:
+          objectname:
+            protocol: ''
+            port: 0
+            targetPort: 0
 cnpg:
   main:
     enabled: false
