@@ -597,7 +597,7 @@ tests:
                 authkey: some-key
     asserts:
       - hasDocuments:
-          count: 1
+          count: 2
       - documentSelector: &workloadDoc
           path: kind
           value: Deployment
@@ -617,7 +617,10 @@ tests:
           path: spec.template.spec.containers[1].env
           content:
             name: TS_AUTH_KEY
-            value: some-key
+            valueFrom:
+              secretKeyRef:
+                name: test-release-name-common-test-mydep-tailscale-authkey
+                key: TS_AUTH_KEY
       - documentSelector: *workloadDoc
         contains:
           path: spec.template.spec.containers[1].volumeMounts
