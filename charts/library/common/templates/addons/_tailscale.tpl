@@ -12,8 +12,15 @@ It will include / inject the required templates based on the given values.
     {{- if $settings.config -}}
       {{- $_ := set $env "TS_CONFIG" $settings.config -}}
     {{- end -}}
+    {{/* The auth key is a credential, so it is stored in a secret and loaded from there into the env */}}
     {{- if $settings.authkey -}}
-      {{- $_ := set $env "TS_AUTH_KEY" $settings.authkey -}}
+      {{- $_ := set $.Values.secret "tailscale-authkey" (dict
+        "enabled" true
+        "data" (dict "TS_AUTH_KEY" $settings.authkey)
+      ) -}}
+      {{- $_ := set $env "TS_AUTH_KEY" (dict
+        "secretKeyRef" (dict "name" "tailscale-authkey" "key" "TS_AUTH_KEY")
+      ) -}}
     {{- end -}}
     {{- if hasKey $settings "userspace" -}}
       {{- $_ := set $env "TS_USERSPACE" $settings.userspace -}}
