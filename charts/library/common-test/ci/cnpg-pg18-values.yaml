@@ -24,28 +24,25 @@ workload:
             startup:
               enabled: true
 
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    # -- exercise PostgreSQL 18 (postgres18Image)
-    pgVersion: 18
-    # -- number of instances for both postgres and pgbouncer
-    instances: 2
-    database: "app"
-    user: "app"
-    password: test-password
-    # -- change to supervised to disable unsupervised updates
-    primaryUpdateStrategy: unsupervised
-    # -- storage size for the two pvc's per instance
-    storage:
-      size: "256Gi"
-      walsize: "256Gi"
-    pooler:
-      # -- enable to create extra pgbouncer for readonly access
-      createRO: false
-      instances: 2
-    # -- set to enable prometheus metrics
-    monitoring:
-      enablePodMonitor: false
-    # -- contains credentials and urls output by generator
-    creds: {}
+    mode: operator
+    depconfig:
+      postgresqlDatabase: app
+      postgresqlUsername: app
+      password: test-password
+    operator:
+      # -- no pgVersion, exercises the default PostgreSQL 18 (postgres18Image)
+      cluster:
+        # -- number of instances for both postgres and pgbouncer
+        instances: 2
+        # -- change to supervised to disable unsupervised updates
+        primaryUpdateStrategy: unsupervised
+      pooler:
+        # -- enable to create extra pgbouncer for readonly access
+        createRO: false
+        instances: 2
+      monitoring:
+        # -- set to enable prometheus metrics
+        enablePodMonitor: false

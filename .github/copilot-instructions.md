@@ -20,7 +20,7 @@ This is a condensed summary. The full, canonical instructions are in [`AGENTS.md
 - Don't manually alter chart READMEs, changelogs, `.helmignore` or icons; they are generated.
 - Don't hand-edit the `Chart.yaml` fields managed by `forgetool`: helm/kube version annotations, `kubeVersion`, `maintainers`, `home`, `icon`, `sources` and `appVersion`.
 - Pin images as `tag: <version>@sha256:<digest>`. Renovate handles image, digest and `common` dependency updates.
-- `common` (`oci://oci.trueforge.org/truecharts`) is the only chart dependency. Databases and caches use `cnpg` (PostgreSQL) or `dependencies.valkey` / `dependencies.mariadb` in `values.yaml`, not Helm subcharts. Don't commit `charts/` dependency folders, `Chart.lock` or `__snapshot__/`.
+- `common` (`oci://oci.trueforge.org/truecharts`) is the only chart dependency. Databases and caches use `dependencies.postgresql` (CloudNativePG by default), `dependencies.valkey` or `dependencies.mariadb` in `values.yaml`, not Helm subcharts. Don't commit `charts/` dependency folders, `Chart.lock` or `__snapshot__/`.
 - Chart values must be valid for the `common` values schema (`charts/library/common/values.schema.json`).
 - No default passwords; user data must be stored on persistent volumes.
 - Security:

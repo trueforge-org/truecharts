@@ -14,14 +14,15 @@ tests:
         test:
           type: azure
           connectionString: some-connection-string
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          backups:
-            enabled: true
-            credentials: test
-            manualBackups:
-              - name:
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              manualBackups:
+                - name:
     asserts:
       - failedTemplate:
           errorMessage: CNPG Backup - Expected non-empty [name] in [backups.manualBackups] entry
@@ -32,17 +33,18 @@ tests:
         test:
           type: azure
           connectionString: some-connection-string
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          backups:
-            enabled: true
-            credentials: test
-            manualBackups:
-              - name: _invalid
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              manualBackups:
+                - name: _invalid
     asserts:
       - failedTemplate:
-          errorMessage: Name [test-release-name-common-test-cnpg-my-pg-backup-_invalid] is not valid. Must start and end with an alphanumeric lowercase character. It can contain '-'. And must be at most 253 characters.
+          errorMessage: Name [test-release-name-common-test-cnpg-main-backup-_invalid] is not valid. Must start and end with an alphanumeric lowercase character. It can contain '-'. And must be at most 253 characters.
 
   - it: should fail with invalid url in s3 credentials
     set:
@@ -54,17 +56,19 @@ tests:
           encrKey: some-encr-key
           accessKey: some-access-key
           secretKey: some-secret-key
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
-            manualBackups:
-              - name: today
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              manualBackups:
+                - name: today
     asserts:
       - failedTemplate:
           errorMessage: CNPG Backup - Expected [url] in [credentials.test] to start with [http://] or [https://]. It was observed that sometimes can cause issues if it does not. Got [some-url]
@@ -94,17 +98,19 @@ tests:
           customCASecretRef:
             name: my-secret
             key: my-key
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          backups:
-            enabled: true
-            credentials: test
-            manualBackups:
-              - name: today
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              manualBackups:
+                - name: today
     asserts:
       - failedTemplate:
           errorMessage: CNPG Backup - Both [customCA] and [customCASecretRef] defined in [credentials.test]. Choose one

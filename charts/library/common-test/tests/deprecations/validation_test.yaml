@@ -105,6 +105,72 @@ tests:
       - failedTemplate:
           errorMessage: Expected no [memcached] key, it is replaced by [dependencies.memcached]. Move [enabled] to [dependencies.memcached]
 
+  - it: should fail with the enabled top level cnpg
+    set:
+      cnpg:
+        enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [cnpg] key, it is replaced by [dependencies.postgresql]. Move [enabled] to [dependencies.postgresql], and [password], [user] (as [postgresqlUsername]) and [database] (as [postgresqlDatabase]) to [dependencies.postgresql.depconfig]. The connection details are available under [dependencies.postgresql.depconfig.creds]
+
+  - it: should fail with the top level cnpg enabled using a template
+    set:
+      useCnpg: true
+      cnpg:
+        enabled: "{{ .Values.useCnpg }}"
+    asserts:
+      - failedTemplate:
+          errorMessage: Expected no [cnpg] key, it is replaced by [dependencies.postgresql]. Move [enabled] to [dependencies.postgresql], and [password], [user] (as [postgresqlUsername]) and [database] (as [postgresqlDatabase]) to [dependencies.postgresql.depconfig]. The connection details are available under [dependencies.postgresql.depconfig.creds]
+
+  - it: should fail with an enabled cnpg cluster
+    set:
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+    asserts:
+      - failedTemplate:
+          errorMessage: "Expected no [cnpg.my-pg] key, it is replaced by [dependencies.postgresql], which is provided by CloudNativePG by default. Move [enabled] to [dependencies.postgresql], [user], [database] and [password] to [dependencies.postgresql.depconfig] as [postgresqlUsername], [postgresqlDatabase] and [password], and the other settings to [dependencies.postgresql.operator]. Only a single cluster is supported. The connection details are available under [dependencies.postgresql.depconfig.creds]"
+
+  - it: should fail with the enabled cnpg cluster main, even when the dependency is enabled
+    set:
+      cnpg:
+        main:
+          enabled: true
+      dependencies:
+        postgresql:
+          enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: "Expected no [cnpg.main] key, it is replaced by [dependencies.postgresql], which is provided by CloudNativePG by default. Move [enabled] to [dependencies.postgresql], [user], [database] and [password] to [dependencies.postgresql.depconfig] as [postgresqlUsername], [postgresqlDatabase] and [password], and the other settings to [dependencies.postgresql.operator]. Only a single cluster is supported. The connection details are available under [dependencies.postgresql.depconfig.creds]"
+
+  - it: should not fail with a disabled top level cnpg and disabled cnpg clusters
+    set:
+      cnpg:
+        enabled: false
+        main:
+          enabled: false
+          user: test-user
+        my-pg:
+          user: test-user
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should fail with the unsupported cnpg key in a standalone dependency
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          mode: standalone
+          cnpg:
+            enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Key [cnpg] is not supported in dependency [postgresql]
+
   - it: should not fail with the disabled top level solr, clickhouse, mongodb and memcached
     set:
       solr:

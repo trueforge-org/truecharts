@@ -69,18 +69,6 @@
     {{- $container := include "tc.v1.common.lib.deps.wait.clickhouse" $ | fromYaml -}}
     {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "clickhouse-wait" "container" $container) -}}
   {{- end -}}
-
-  {{- $result := false -}}
-  {{- range .Values.cnpg -}}
-    {{- if .enabled -}}
-      {{- $result = true -}}
-    {{- end -}}
-  {{- end -}}
-
-  {{- if $result -}}
-    {{- $container := include "tc.v1.common.lib.deps.wait.cnpg" $ | fromYaml -}}
-    {{- include "tc.v1.common.lib.deps.wait.add" (dict "rootCtx" $ "name" "cnpg-wait" "container" $container) -}}
-  {{- end -}}
 {{- end -}}
 
 {{/* Adds a wait init container to all workloads that wait for the dependencies */}}
@@ -367,48 +355,39 @@ command:
     EOF
 {{- end -}}
 
-{{- define "tc.v1.common.lib.deps.wait.cnpg" -}}
-  {{- $lines := list -}}
-  {{- range $name, $cnpg := .Values.cnpg -}}
-    {{- if $cnpg.enabled -}}
-      {{- $lines = append $lines "echo \"Executing DB waits...\"" -}}
-      {{- $cnpgName := include "tc.v1.common.lib.chart.names.fullname" $ -}}
-      {{- $cnpgName = printf "%v-cnpg-%v" $cnpgName $name -}}
-
-      {{/* Wait RW CNPG */}}
-      {{- $lines = append $lines (include "cnpg.wait.script" (dict "url" (printf "%s-rw" $cnpgName) "user" $cnpg.user "db" $cnpg.database "on" "CNPG RW")) -}}
-
-      {{- if and $cnpg.pooler $cnpg.pooler.enabled -}}
-        {{/* Wait RW Pooler */}}
-        {{- $lines = append $lines (include "cnpg.wait.script" (dict "url" (printf "%s-pooler-rw" $cnpgName) "user" $cnpg.user "db" $cnpg.database "on" "CNPG Pooler RW")) -}}
-
-        {{/* Wait RO Pooler */}}
-        {{- if $cnpg.pooler.createRO -}}
-          {{- $lines = append $lines (include "cnpg.wait.script" (dict "url" (printf "%s-pooler-ro" $cnpgName) "user" $cnpg.user "db" $cnpg.database "on" "CNPG Pooler RO")) -}}
-        {{- end -}}
-      {{- end -}}
-    {{- end -}}
-  {{- end -}}
-  {{- $lines = append $lines "echo \"Done executing DB waits...\"" -}}
-
-  {{- include "tc.v1.common.lib.deps.wait.postgres" (dict "script" (join "\n" $lines)) -}}
-{{- end -}}
-
+{{/* The wait init container of the postgresql dependency, the same for both modes */}}
+{{/* The host and port come from the primary service, like for the other dependencies */}}
+{{/* operator additionally waits on the rw service of the CNPG cluster itself, as the primary service is the one of the pooler when enabled */}}
 {{- define "tc.v1.common.lib.deps.wait.postgresql" -}}
+  {{- $dep := get (.Values.dependencies | default dict) "postgresql" -}}
+  {{- $depconfig := $dep.depconfig | default dict -}}
   {{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "postgresql")) -}}
   {{- if not $service -}}
     {{- fail "Dependencies - Expected dependency [postgresql] to have an enabled primary service" -}}
   {{- end -}}
   {{- $service = $service | fromJson -}}
-
-  {{- $dep := get (.Values.dependencies | default dict) "postgresql" -}}
-  {{- $depconfig := $dep.depconfig | default dict -}}
+  {{- $operator := eq (include "tc.v1.common.lib.dependencies.mode" (dict "objectData" $dep "depName" "postgresql")) "operator" -}}
 
   {{- $lines := list "echo \"Executing DB waits...\"" -}}
-  {{- $lines = append $lines (include "cnpg.wait.script" (dict
-        "url" $service.name "port" $service.port
-        "user" $depconfig.postgresqlUsername "db" $depconfig.postgresqlDatabase
-        "on" "PostgreSQL")) -}}
+  {{- if $operator -}}
+    {{/* Wait RW CNPG */}}
+    {{- $lines = append $lines (include "cnpg.wait.script" (dict "url" $service.nameCluster "user" $depconfig.postgresqlUsername "db" $depconfig.postgresqlDatabase "on" "CNPG RW")) -}}
+
+    {{- if ne $service.name $service.nameCluster -}}
+      {{/* Wait RW Pooler */}}
+      {{- $lines = append $lines (include "cnpg.wait.script" (dict "url" $service.name "user" $depconfig.postgresqlUsername "db" $depconfig.postgresqlDatabase "on" "CNPG Pooler RW")) -}}
+
+      {{/* Wait RO Pooler */}}
+      {{- if $service.nameRO -}}
+        {{- $lines = append $lines (include "cnpg.wait.script" (dict "url" $service.nameRO "user" $depconfig.postgresqlUsername "db" $depconfig.postgresqlDatabase "on" "CNPG Pooler RO")) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- else -}}
+    {{- $lines = append $lines (include "cnpg.wait.script" (dict
+          "url" $service.name "port" $service.port
+          "user" $depconfig.postgresqlUsername "db" $depconfig.postgresqlDatabase
+          "on" "PostgreSQL")) -}}
+  {{- end -}}
   {{- $lines = append $lines "echo \"Done executing DB waits...\"" -}}
 
   {{- include "tc.v1.common.lib.deps.wait.postgres" (dict "script" (join "\n" $lines)) -}}

@@ -146,10 +146,6 @@ tests:
           pattern: ^[0-9a-f]{64}$
       - documentIndex: *statefulSetDoc
         matchRegex:
-          path: spec.template.metadata.annotations.checksum/cnpg
-          pattern: ^[0-9a-f]{64}$
-      - documentIndex: *statefulSetDoc
-        matchRegex:
           path: spec.template.metadata.annotations.checksum/configmaps
           pattern: ^[0-9a-f]{64}$
       - documentIndex: *statefulSetDoc

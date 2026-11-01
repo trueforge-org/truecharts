@@ -109,13 +109,14 @@ These rules apply to `charts/library/common/` (the `common` library chart that e
 
 - Each dependency is a complete chart values structure. Its objects are merged into the chart as `<name>-<object>`, and its images as `<name>Image`. They are not primary unless they set `primary: true`. `depconfig` holds the settings of the dependency itself and is never merged.
 - `valkey`, `mariadb` and `postgresql` are predefined in `values.yaml` and disabled by default. Their injectors create the `<release>-<name>creds` Secret, fill `depconfig.creds`, add a `<name>-wait` init container and add the connection details to the notes.
+- `mode` is `standalone` (objects merged into the chart) or `operator` (an operator provides it, nothing is merged), and defaults to `standalone`, except for `postgresql` which defaults to `operator`. `valkey` and `postgresql` have operator support: common spawns a `ValkeyCluster` or a single CNPG `Cluster`, configured in `dependencies.<name>.operator`. Both resolve the host and port of the operator service with `primaryService`, so the credentials, the wait init container and the notes always agree. Keep the structure of the two the same.
 - A new predefined dependency needs its defaults under `dependencies.<name>` in `values.yaml`, an injector when it provides credentials, the schema, a section in `docs/dependencies.md`, tests in `common-test/tests/dependencies/` and a `common-test/ci/<name>-values.yaml` install test.
 
 ## Deprecations
 
 Removed or moved keys must fail with a clear message instead of being silently ignored. Add them to the lists in `templates/values/_deprecations.tpl` (`tc.v1.common.values.deprecations`), which is the single place for these errors, and add a `failedTemplate` test for them.
 
-- The top-level `redis`, `valkey` and `mariadb` keys fail when enabled, pointing to `dependencies.<name>`.
+- The top-level `redis`, `valkey`, `mariadb` and `cnpg` keys fail when enabled, pointing to `dependencies.<name>`. `cnpg.<name>.enabled` fails too, with the migration steps.
 - `solr`, `mongodb`, `clickhouse` and `memcached` were removed without a replacement, and fail when enabled.
 - `volumeClaimTemplates` and `addons.vpn` fail too. Use `persistence`, and the `tailscale` or `gluetun` addons.
 
@@ -123,7 +124,7 @@ Removed or moved keys must fail with a clear message instead of being silently i
 
 The general rules are in [`AGENTS.md`](../../AGENTS.md#security). In the library:
 
-- Render credentials into Secrets only, never into ConfigMaps or plain `env` values. Containers get them with `secretKeyRef`, e.g. to the `cnpg-main-urls` or `<release>-valkeycreds` Secret. `tests/dependencies/credentials_test.yaml` checks this. Extend it when you add credentials.
+- Render credentials into Secrets only, never into ConfigMaps or plain `env` values. Containers get them with `secretKeyRef`, e.g. to the `<release>-postgresqlcreds` or `<release>-valkeycreds` Secret. `tests/dependencies/credentials_test.yaml` checks this. Extend it when you add credentials.
 - Only show credentials in the notes when the user enables `notes.showCredentials`, which defaults to `false`.
 - Keep the defaults compatible with the Pod Security Standard "restricted". Templates must not loosen the security context on their own. For example, do not force `runAsNonRoot: false` when the user did not set it.
 - New features that widen access, such as host ports, host paths, RBAC rules or service account tokens, are disabled by default.
