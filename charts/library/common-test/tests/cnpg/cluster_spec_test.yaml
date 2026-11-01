@@ -14,6 +14,7 @@ tests:
       cnpg:
         my-pg:
           enabled: true
+          pgVersion: 16
           user: test-user
           database: test-db
           password: test-password
@@ -80,6 +81,7 @@ tests:
       cnpg:
         my-pg:
           enabled: true
+          pgVersion: 16
           user: test-user
           database: test-db
           password: test-password
@@ -190,6 +192,87 @@ tests:
                 resources:
                   requests:
                     storage: 100Gi
+
+  - it: should default to postgres 18
+    set:
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+    asserts:
+      - documentIndex: 0
+        matchRegex:
+          path: spec.imageName
+          pattern: ^ghcr\.io/cloudnative-pg/postgresql:18\.
+
+  - it: should use the version of the fallback defaults
+    set:
+      global:
+        fallbackDefaults:
+          cnpg:
+            pgVersion: 17
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+    asserts:
+      - documentIndex: 0
+        matchRegex:
+          path: spec.imageName
+          pattern: ^ghcr\.io/cloudnative-pg/postgresql:17\.
+
+  - it: should keep a set version with the newer default
+    set:
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          pgVersion: 16
+    asserts:
+      - documentIndex: 0
+        matchRegex:
+          path: spec.imageName
+          pattern: ^ghcr\.io/cloudnative-pg/postgresql:16\.
+
+  - it: should keep vectors on postgres 16 without a set version, as it has no image for 18
+    set:
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          type: vectors
+    asserts:
+      - documentIndex: 0
+        matchRegex:
+          path: spec.imageName
+          pattern: /cloudnative-pgvecto\.rs:16\.
+
+  - it: should use the fallback version for vectors when it is not 18
+    set:
+      global:
+        fallbackDefaults:
+          cnpg:
+            pgVersion: 17
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          type: vectors
+    asserts:
+      - documentIndex: 0
+        matchRegex:
+          path: spec.imageName
+          pattern: /cloudnative-pgvecto\.rs:17\.
 
   - it: should generate correct imageName with changed type and pgVersion
     set:
@@ -562,6 +645,7 @@ tests:
       cnpg:
         my-pg:
           enabled: true
+          pgVersion: 16
           user: app
           database: app
           password: test-password
@@ -760,6 +844,7 @@ tests:
       cnpg:
         my-pg:
           enabled: true
+          pgVersion: 16
           user: app
           database: app
           password: test-password
@@ -785,6 +870,7 @@ tests:
       cnpg:
         my-pg:
           enabled: true
+          pgVersion: 16
           user: app
           database: app
           password: test-password

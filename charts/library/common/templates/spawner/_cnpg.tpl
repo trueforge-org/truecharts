@@ -24,7 +24,12 @@
     {{- if eq $enabled "true" -}}
 
       {{/* Handle version string */}}
-      {{- $pgVersion := ($objectData.pgVersion | default $.Values.global.fallbackDefaults.cnpg.pgVersion) | toString -}}
+      {{/* pgvecto.rs has no image for PostgreSQL 18, so without a set version this type stays on 16 */}}
+      {{- $pgFallback := $.Values.global.fallbackDefaults.cnpg.pgVersion -}}
+      {{- if and (eq ($objectData.type | default "postgres") "vectors") (eq ($pgFallback | toString) "18") -}}
+        {{- $pgFallback = 16 -}}
+      {{- end -}}
+      {{- $pgVersion := ($objectData.pgVersion | default $pgFallback) | toString -}}
 
       {{/* Set the updated pgVersion version to objectData */}}
       {{- $_ := set $objectData "pgVersion" $pgVersion -}}
