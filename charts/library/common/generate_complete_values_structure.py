@@ -4,13 +4,14 @@
 Generate complete-values-structure.yaml from all chart values files.
 
 This script collects all values.yaml files from:
-- All charts under charts/stable/* and charts/incubator/*
+- All charts under charts/stable/* and charts/incubator/*, but only for the root-level
+  keys defined by the library, so they never add root-level keys
 - Common-test ci-values from charts/library/common-test/ci/*values.yaml
 - Common values.yaml from charts/library/common/values.yaml
 - Keys listed under `set:` in common-test unittests (charts/library/common-test/tests/**/*_test.yaml)
 
-It merges them into a comprehensive structure showing all possible keys,
-while preserving comments from the existing file where they exist.
+It merges them into a comprehensive structure showing all possible keys.
+The file is rebuilt from these sources on every run, so keys removed from the sources are removed from the output.
 """
 
 import argparse
@@ -300,6 +301,27 @@ def collect_all_values_files(repo_root: Path) -> List[Path]:
     return values_files
 
 
+def is_chart_values_file(values_file: Path, repo_root: Path) -> bool:
+    """Return True if the file is the values.yaml of an app chart under charts/stable or charts/incubator."""
+    return values_file.relative_to(repo_root / "charts").parts[0] in ("stable", "incubator")
+
+
+def collect_library_root_keys(repo_root: Path) -> set:
+    """
+    Return the root-level keys defined by the library: common, common-test and the `set:` blocks of its unittests.
+
+    These are the only root-level keys the complete structure may have. App charts may add keys under them, not new root-level keys.
+    """
+    root_keys = set()
+    for values_file in collect_all_values_files(repo_root):
+        if not is_chart_values_file(values_file, repo_root):
+            root_keys.update((load_yaml_file(values_file) or {}).keys())
+    for unittest_file in collect_unittest_files(repo_root):
+        for set_values in load_unittest_set_values(unittest_file):
+            root_keys.update(set_values.keys())
+    return root_keys
+
+
 def collect_unittest_files(repo_root: Path) -> List[Path]:
     """Collect the helm-unittest files of common-test, in a stable order."""
     tests_dir = repo_root / "charts" / "library" / "common-test" / "tests"
@@ -343,44 +365,6 @@ def merge_into_structure(complete_structure: Any, data: Dict[str, Any]) -> Any:
     return merge_structures(complete_structure, data)
 
 
-def load_existing_with_comments(file_path: Path) -> Any:
-    """Load existing file with comments preserved using ruamel.yaml."""
-    if not HAS_RUAMEL:
-        return {}
-    
-    if not file_path.exists():
-        return None
-    
-    try:
-        # Read file and skip header comments
-        with open(file_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-        
-        # Find where the actual YAML content starts (after the header block)
-        lines = content.split('\n')
-        yaml_start = 0
-        in_header = False
-        for i, line in enumerate(lines):
-            if line.strip().startswith('# ============'):
-                in_header = True
-            elif in_header and line.strip() and not line.strip().startswith('#'):
-                yaml_start = i
-                break
-            elif in_header and i > 0 and not line.strip():
-                # Empty line after header block
-                yaml_start = i + 1
-        
-        # Load only the YAML content part
-        yaml_content = '\n'.join(lines[yaml_start:])
-        yaml_loader = make_yaml_loader(str(file_path), line_offset=yaml_start)
-        yaml_loader.width = 120
-        yaml_loader.indent(mapping=2, sequence=2, offset=0)
-        return yaml_loader.load(yaml_content)
-    except Exception as e:
-        print(f"Warning: Failed to load existing file with comments: {e}", file=sys.stderr)
-        return None
-
-
 def merge_preserving_comments(base: Any, new: Any) -> Any:
     """
     Merge new data into base while preserving comments in base.
@@ -422,26 +406,21 @@ def merge_preserving_comments(base: Any, new: Any) -> Any:
     return new
 
 
-def generate_complete_structure(repo_root: Path, existing_file: Path = None) -> Dict[str, Any]:
-    """Generate the complete values structure from all charts."""
+def generate_complete_structure(repo_root: Path) -> Dict[str, Any]:
+    """Generate the complete values structure from all charts, starting from an empty structure."""
     print("Collecting values files...", file=sys.stderr)
     values_files = collect_all_values_files(repo_root)
     print(f"Found {len(values_files)} values files to process", file=sys.stderr)
-    
-    # Try to load existing file with comments first
-    if existing_file and existing_file.exists() and HAS_RUAMEL:
-        print(f"Loading existing file to preserve comments: {existing_file}", file=sys.stderr)
-        complete_structure = load_existing_with_comments(existing_file)
-        if complete_structure is None:
-            complete_structure = {}
-    else:
-        complete_structure = {}
-    
+    library_root_keys = collect_library_root_keys(repo_root)
+
+    complete_structure = {}
     for i, values_file in enumerate(values_files, 1):
         if i % 100 == 0:
             print(f"Processing {i}/{len(values_files)}...", file=sys.stderr)
         
         values_data = load_yaml_file(values_file)
+        if is_chart_values_file(values_file, repo_root):
+            values_data = {key: value for key, value in (values_data or {}).items() if key in library_root_keys}
         complete_structure = merge_into_structure(complete_structure, values_data)
 
     unittest_files = collect_unittest_files(repo_root)
@@ -545,7 +524,7 @@ def main() -> int:
     
     # Generate structure
     try:
-        structure = generate_complete_structure(repo_root, existing_file=output_path)
+        structure = generate_complete_structure(repo_root)
         write_complete_structure(output_path, structure)
         print("Success!", file=sys.stderr)
         return 0
