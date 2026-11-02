@@ -58,13 +58,16 @@
                   "description": "If your file contains gotpl syntax that you don't want templated by Helm, set this to true",
                   "default": false
                 }
-              }
+              },
+              "additionalProperties": false
             }
           }
-        }
+        },
+        "additionalProperties": false
       },
       "default": {}
     }
   },
+  "additionalProperties": false,
   "description": "Generate ConfigMaps from a folder structure in the Helm chart's filesystem"
 }
