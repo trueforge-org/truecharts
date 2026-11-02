@@ -801,23 +801,23 @@ postgresVectorchord18Image:
   pullPolicy: IfNotPresent
 
 postgresTimescaledb15Image:
-  repository: docker.io/timescale/timescaledb-ha
-  tag: "pg15.18-ts2.28.3@sha256:5bbd5284622255918875ec5cd7f8621e9eb1d9d8fe96b3f4a0eec835d235d877"
+  repository: ghcr.io/imusmanmalik/timescaledb-postgis
+  tag: "15.19-3.6.4-standard-trixie@sha256:bfca1a94d057fedbcef9024d71d1e35bde0e9134e577def8db49c2690462398f"
   pullPolicy: IfNotPresent
 
 postgresTimescaledb16Image:
-  repository: docker.io/timescale/timescaledb-ha
-  tag: "pg16.15-ts2.31.0@sha256:98f88217cb7be56655f842d9920f90d0b4893b67b3463f93084548b433ed5c93"
+  repository: ghcr.io/imusmanmalik/timescaledb-postgis
+  tag: "16.15-3.6.4-standard-trixie@sha256:3906ce0e8daacbc4fc353d59eb9fbcf7ca12ab791f7559935bfc233cc1651241"
   pullPolicy: IfNotPresent
 
 postgresTimescaledb17Image:
-  repository: docker.io/timescale/timescaledb-ha
-  tag: "pg17.11-ts2.31.0@sha256:3f0b3f6bdf4912878444a36e6113a18346309583c4d1a61d81a0c511342a1afd"
+  repository: ghcr.io/imusmanmalik/timescaledb-postgis
+  tag: "17.11-3.6.4-standard-trixie@sha256:4847c1b5bc8189409fd7d95c0d6894ab34e7873eeeb61b95724eaec412f0bd74"
   pullPolicy: IfNotPresent
 
 postgresTimescaledb18Image:
-  repository: docker.io/timescale/timescaledb-ha
-  tag: "pg18.6-ts2.31.0@sha256:ad8b5095c9e9f19b3c97794133f1dd80f09da9566a5687f79b6208324b98a388"
+  repository: ghcr.io/imusmanmalik/timescaledb-postgis
+  tag: "18.6-3.6.4-standard-trixie@sha256:f60b818db7503abbbb1bd4dfbe3ada838292240c476f1fd970042eaef8cf3939"
   pullPolicy: IfNotPresent
 
 # -- Configure the ingresses for the chart here.

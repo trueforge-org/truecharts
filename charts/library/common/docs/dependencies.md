@@ -691,7 +691,7 @@ All settings of the cluster go under `dependencies.postgresql.operator`. Only th
 | `operator.recovery`                                      | `map`    | `{method: object_store}` | Recovery source, used when `operator.mode` is `recovery`.                                                    |
 | `operator.backups`                                       | `map`    | `{enabled: false, ...}`  | Barman Cloud backups (`credentials`, `scheduledBackups`, `manualBackups`, `retentionPolicy`, ...).           |
 
-`type: timescaledb` uses the `postgresTimescaledb<version>Image` images (`timescale/timescaledb-ha`), whose `postgres` user has UID and GID `1000`. `cluster.postgresUID` and `cluster.postgresGID` default to that for this type, and to `26` for the other types.
+`type: timescaledb` uses the `postgresTimescaledb<version>Image` images (`imusmanmalik/timescaledb-postgis`), which add TimescaleDB and PostGIS to the images of CloudNativePG.
 
 See [Operator](dependencies/postgresql/operator/index.md) for all the settings.
 
