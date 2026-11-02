@@ -686,7 +686,7 @@ tests:
           value: Cluster
         matchRegex:
           path: spec.imageName
-          pattern: ^ghcr\.io/imusmanmalik/timescaledb-postgis:18\.[0-9]+-[^@]+@sha256:[0-9a-f]{64}$
+          pattern: ^oci\.trueforge\.org/containerforge/timescaledb18:18\.[0-9.]+@sha256:[0-9a-f]{64}$
       - documentSelector: *timescaleClusterDoc
         equal:
           path: spec.postgresUID
@@ -706,7 +706,7 @@ tests:
           value: Cluster
         matchRegex:
           path: spec.imageName
-          pattern: ^ghcr\.io/imusmanmalik/timescaledb-postgis:15\.
+          pattern: ^oci\.trueforge\.org/containerforge/timescaledb15:15\.
 
   - it: should pass with timescaledb
     set:
