@@ -98,7 +98,7 @@ These rules apply to `charts/library/common/` (the `common` library chart that e
   - Then run `python3 charts/library/common/generate_docs.py`. By default it also checks the structure and formatting of the pages.
   - List new pages with their schema files in `docs-schema-mapping.yaml`.
   - `python3 charts/library/common/generate_docs.py --check` fails when the pages are not up to date, or when a file in `examples/` has no page. CI runs it. Text that only exists in a page is lost on the next run, so put text about a key in its schema `description`, and other sections after `## Full Examples` in `examples/`.
-- `complete-values-structure.yaml` lists the keys of all chart, `common-test/ci` and `common` values files. `template-keys-structure.yaml` lists the keys the templates read. Regenerate them after changing values or templates:
+- `complete-values-structure.yaml` is rebuilt on every run from the `common` and `common-test` values files, the `set:` blocks of the `common-test` unittests, and the values files of charts under `charts/stable` and `charts/incubator`. Charts only add keys under root-level keys defined by the library, never new root-level keys. `template-keys-structure.yaml` lists the keys the templates read. Regenerate them after changing values or templates:
 
   ```bash
   pip install PyYAML ruamel.yaml
