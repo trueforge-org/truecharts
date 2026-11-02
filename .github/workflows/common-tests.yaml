@@ -81,6 +81,11 @@ jobs:
                   --charts charts/library/common-test \
                   --debug
 
+      - name: Check the schema on a chart that depends on common
+        run: |
+          python3 charts/library/common/generate_bundled_schema.py --check
+          .github/scripts/test_chart_schema.sh
+
   unittest:
     needs:
       - lint

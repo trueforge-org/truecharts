@@ -133,7 +133,7 @@ Minimum Node Port Allowed
 | ---------- | -------------------- |
 | Key        | `global.minNodePort` |
 | Type       | `integer`            |
-| Required   | ✅                   |
+| Required   | ❌                   |
 | Helm `tpl` | ❌                   |
 | Default    | `9000`               |
 | Minimum    | `1`                  |

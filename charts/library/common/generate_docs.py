@@ -21,8 +21,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--schema",
         type=Path,
-        default=script_dir / "values.schema.json",
-        help="Path to the source JSON schema (default: charts/library/common/values.schema.json)",
+        default=script_dir / "values.schema.source.json",
+        help="Path to the source JSON schema (default: charts/library/common/values.schema.source.json)",
     )
     parser.add_argument(
         "--output",

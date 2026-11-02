@@ -5,7 +5,7 @@
     "valkey": {
       "allOf": [
         {
-          "$ref": "../values.schema.json"
+          "$ref": "../values.schema.source.json"
         },
         {
           "$ref": "#/additionalProperties/allOf/1"
@@ -278,7 +278,7 @@
     "postgresql": {
       "allOf": [
         {
-          "$ref": "../values.schema.json"
+          "$ref": "../values.schema.source.json"
         },
         {
           "$ref": "#/additionalProperties/allOf/1"
@@ -339,13 +339,10 @@
   "additionalProperties": {
     "allOf": [
       {
-        "$ref": "../values.schema.json"
+        "$ref": "../values.schema.source.json"
       },
       {
         "type": "object",
-        "required": [
-          "enabled"
-        ],
         "properties": {
           "enabled": {
             "type": [
@@ -387,6 +384,11 @@
             "description": "Settings specific to the operator providing the dependency (see `mode`). Never merged into the chart values."
           }
         }
+      },
+      {
+        "required": [
+          "enabled"
+        ]
       }
     ]
   },
