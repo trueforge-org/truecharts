@@ -91,11 +91,11 @@
                   "description": "Define the customRequestHeaders"
                 }
               },
-              "additionalProperties": true,
+              "additionalProperties": false,
               "description": "Create Middleware objects"
             }
           },
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Create Middleware objects"
         }
       },
@@ -189,7 +189,7 @@
                     "description": "Define the ipStrategy.depth"
                   }
                 },
-                "additionalProperties": true,
+                "additionalProperties": false,
                 "description": "Define the ipStrategy"
               },
               "regex": {
@@ -254,7 +254,7 @@
                     "description": "Define the tls"
                   }
                 },
-                "additionalProperties": true,
+                "additionalProperties": false,
                 "description": "Define the tls"
               },
               "attempts": {
@@ -284,7 +284,7 @@
                       "description": "Define the middleware name"
                     }
                   },
-                  "additionalProperties": true
+                  "additionalProperties": false
                 }
               },
               "prefix": {
@@ -313,7 +313,7 @@
                       "description": "Define the username"
                     }
                   },
-                  "additionalProperties": true
+                  "additionalProperties": false
                 }
               },
               "secret": {
@@ -624,15 +624,15 @@
                       "description": "Define the header"
                     }
                   },
-                  "additionalProperties": true
+                  "additionalProperties": false
                 }
               }
             },
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Configuration for `traefik.$name.data`."
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Configuration for `traefik.$name`."
       },
       "description": "Create Middleware objects"
@@ -711,7 +711,7 @@
           "description": "Define the data of the middleware"
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Define Middleware"
     },
     "description": "Define Middleware - Available providers are:",

@@ -36,7 +36,7 @@
           "description": "Define persistence objects"
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Define persistence objects"
     },
     "varlogs": {
@@ -77,7 +77,7 @@
           "description": "Define persistence objects"
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Define persistence objects"
     },
     "varrun": {
@@ -118,7 +118,7 @@
           "description": "Define persistence objects"
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Define persistence objects"
     },
     "tmp": {
@@ -159,7 +159,7 @@
           "description": "Define persistence objects"
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Define persistence objects"
     },
     "devshm": {
@@ -200,7 +200,7 @@
           "description": "Define persistence objects"
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Define persistence objects"
     },
     "crontab": {
@@ -241,7 +241,7 @@
           "description": "Define persistence objects"
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Define persistence objects"
     }
   },
@@ -286,7 +286,7 @@
               "description": "Define the key of the secret."
             }
           },
-          "additionalProperties": true
+          "additionalProperties": false
         },
         "description": "Define a list of items for secret."
       },
@@ -305,7 +305,7 @@
                 "description": "Define the username"
               }
             },
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Define the authSession"
           },
           "authDiscovery": {
@@ -328,11 +328,11 @@
                 "description": "Define the passwordInitiator"
               }
             },
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Define the authDiscovery"
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Define the iSCSI"
       },
       "path": {
@@ -372,7 +372,7 @@
                 "description": "Define the subPath for the container"
               }
             },
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Define a map named after the container to mount the volume"
           },
           "description": "Define a map named after the pod to define the volume",
@@ -446,7 +446,7 @@
             "description": "Define the kind of the dataSource"
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Define dataSource for the pvc"
       },
       "static": {
@@ -485,7 +485,7 @@
             "description": "Define the custom provisioner"
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Define static provisioning for the pvc"
       },
       "mountOptions": {
@@ -506,7 +506,7 @@
               "description": "Define the key of the mountOption"
             }
           },
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Configuration for `$name.mountOptions.$name`."
         }
       },
@@ -546,7 +546,7 @@
               "description": "Define the annotations of the volumeSnapshot"
             }
           },
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Configuration for `$name.volumeSnapshots.$name`."
         }
       },
@@ -645,7 +645,7 @@
         "default": false
       }
     },
-    "additionalProperties": true,
+    "additionalProperties": false,
     "description": "Define persistence",
     "default": {}
   },

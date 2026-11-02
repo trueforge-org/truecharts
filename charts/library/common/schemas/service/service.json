@@ -19,7 +19,7 @@
             "default": {}
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Define the integrations for this service",
         "default": {}
       },
@@ -216,11 +216,11 @@
                 "default": ""
               }
             },
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Configuration for `$name.sessionAffinityConfig.clientIP`."
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Configuration for `$name.sessionAffinityConfig`."
       },
       "externalIPs": {
@@ -266,7 +266,7 @@
         "description": "Configuration for `service.main.primary`."
       }
     },
-    "additionalProperties": true,
+    "additionalProperties": false,
     "description": "Define service",
     "default": {}
   },

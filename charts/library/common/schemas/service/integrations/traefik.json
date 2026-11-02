@@ -50,7 +50,7 @@
                 "minLength": 1
               }
             },
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Define the configMapRef",
             "default": {}
           },
@@ -69,12 +69,12 @@
                 "default": true
               }
             },
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Define the secretRef",
             "default": {}
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Configuration for `$name.integrations.traefik.rootCAs.$name`."
       },
       "description": "List of kubernetes secrets (in the same namespace) containing certificate authorities to use when performing TLS verification of the backend service.",
@@ -82,5 +82,5 @@
     }
   },
   "description": "Define service objects",
-  "additionalProperties": true
+  "additionalProperties": false
 }

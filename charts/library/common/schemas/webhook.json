@@ -47,7 +47,7 @@
                       "description": "Create webhook objects"
                     }
                   },
-                  "additionalProperties": true,
+                  "additionalProperties": false,
                   "description": "Create webhook objects"
                 },
                 "description": "Create webhook objects"
@@ -130,13 +130,13 @@
                 "description": "Create webhook objects"
               }
             },
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Create webhook objects"
           },
           "description": "Create webhook objects"
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Create webhook objects"
     },
     "mutating": {
@@ -184,7 +184,7 @@
                       "description": "Create webhook objects"
                     }
                   },
-                  "additionalProperties": true,
+                  "additionalProperties": false,
                   "description": "Create webhook objects"
                 },
                 "description": "Create webhook objects"
@@ -283,13 +283,13 @@
                 "description": "Create webhook objects"
               }
             },
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Create webhook objects"
           },
           "description": "Create webhook objects"
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Create webhook objects"
     }
   },
@@ -329,7 +329,7 @@
                     "description": "Define the operations of the rule for the webhook"
                   }
                 },
-                "additionalProperties": true,
+                "additionalProperties": false,
                 "description": "Configuration for `$name.webhooks.$name.rules.$name`."
               },
               "description": "Define the rules for the webhook"
@@ -451,15 +451,15 @@
                       "description": "Define the service port in clientConfig for the webhook"
                     }
                   },
-                  "additionalProperties": true,
+                  "additionalProperties": false,
                   "description": "Define the service in clientConfig for the webhook, required if url is not defined in clientConfig"
                 }
               },
-              "additionalProperties": true,
+              "additionalProperties": false,
               "description": "Define the clientConfig for the webhook"
             }
           },
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Configuration for `$name.webhooks.$name`."
         },
         "description": "Define the webhooks.",
@@ -525,7 +525,7 @@
         "default": ""
       }
     },
-    "additionalProperties": true,
+    "additionalProperties": false,
     "description": "Define a webhook object with the given name",
     "default": {}
   },

@@ -82,6 +82,7 @@ These rules apply to `charts/library/common/` (the `common` library chart that e
 - Helm validates a subchart's schema only against that subchart's own values, not against the values of the chart. So `.github/scripts/add_chart_schema.sh` copies the schema of the `common` version a chart depends on into the chart: on release (`cr.sh`) and while linting (`tc-lint.sh`). These copies are not committed. `.github/scripts/test_chart_schema.sh` checks this end to end.
 - The source and tooling of `common` are not packaged. They are listed in `templates/helmignore.tpl`, which `forgetool charts genmeta` writes to the `.helmignore` of every chart, so a new file in the root of `common` has to be added there too.
 - Every key in `values.yaml` and every key the templates read must be in the schema. When you add, rename or remove a key, change the schema in the same PR.
+- Set `"additionalProperties": false` on every object with a fixed set of keys, so unknown keys are rejected. Keep it open only at the values root and where key names are arbitrary: name-keyed collections (`configmap.<name>`, `workload.<name>`, ...) and what they spawn (services, workloads, containers, envs, ingresses, anything with a spawner template). The number of known keys does not decide this, the nature of the keys does. A closed object must list every key the chart and the templates use, or `test_schema.py` fails.
 - Follow the patterns of the existing schema files:
   - Collections of named objects (`configmap.<name>`, `workload.<name>`, ...) use `"properties": {}`, with the object schema in `additionalProperties`.
   - Use relative `$ref`s for shared parts, wrapped in `allOf`, e.g. `"allOf": [{ "$ref": "special/labels.json" }]`. A file must not `$ref` itself, which `test_schema.py` rejects.
@@ -203,4 +204,4 @@ Never commit `common-test/charts/`, `common-test/Chart.lock` or `__snapshot__/` 
 `./run_common_tests.sh` runs these after the unit tests, the same as the `schema-validation` job in CI. They need Python 3 with PyYAML.
 
 - `test_schema.py` runs `helm lint` on `common` with every `charts/stable/*/values.yaml` and `common-test/ci/*values.yaml`. That is about 850 files and takes a few minutes, and writes the results to `stable_schema_validation.log`. Set `SCHEMA_MAX_FAILURES=<n>` to stop after `n` failures.
-- `check_complete_values_schema_coverage.py` must report 100% coverage of both structure files.
+- `check_complete_values_schema_coverage.py` must report 100% coverage of both structure files. 

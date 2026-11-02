@@ -45,7 +45,7 @@
                   "description": "Configuration for `addons.tailscale.container.probes.liveness.enabled`."
                 }
               },
-              "additionalProperties": true,
+              "additionalProperties": false,
               "description": "Configuration for `addons.tailscale.container.probes.liveness`."
             },
             "readiness": {
@@ -59,7 +59,7 @@
                   "description": "Configuration for `addons.tailscale.container.probes.readiness.enabled`."
                 }
               },
-              "additionalProperties": true,
+              "additionalProperties": false,
               "description": "Configuration for `addons.tailscale.container.probes.readiness`."
             },
             "startup": {
@@ -73,11 +73,11 @@
                   "description": "Configuration for `addons.tailscale.container.probes.startup.enabled`."
                 }
               },
-              "additionalProperties": true,
+              "additionalProperties": false,
               "description": "Configuration for `addons.tailscale.container.probes.startup`."
             }
           },
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Configuration for `addons.tailscale.container.probes`."
         },
         "command": {
@@ -96,7 +96,7 @@
               "description": "Configuration for `addons.tailscale.container.resources.excludeExtra`."
             }
           },
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Configuration for `addons.tailscale.container.resources`."
         },
         "env": {
@@ -118,15 +118,15 @@
                   "description": "Configuration for `addons.tailscale.container.securityContext.capabilities.add`."
                 }
               },
-              "additionalProperties": true,
+              "additionalProperties": false,
               "description": "Configuration for `addons.tailscale.container.securityContext.capabilities`."
             }
           },
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Configuration for `addons.tailscale.container.securityContext`."
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Addons to the workloads"
     },
     "settings": {
@@ -177,7 +177,7 @@
           "description": "Configuration for `addons.tailscale.settings.outbound_http_proxy_listen`."
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Tailscale settings"
     },
     "annotations": {
@@ -187,6 +187,6 @@
       "description": "Configuration for `addons.tailscale.annotations`."
     }
   },
-  "additionalProperties": true,
+  "additionalProperties": false,
   "description": "Addons to the workloads"
 }
