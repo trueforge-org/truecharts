@@ -108,7 +108,7 @@ tests:
             type: invalid
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Cluster - Expected [type] to be one of [postgres, postgis, timescaledb, vectors, vectorchord], but got [invalid]
+          errorMessage: CNPG Cluster - Expected [type] to be one of [postgres, postgis, vectors, vectorchord], but got [invalid]
 
   - it: should fail with invalid log level
     set:

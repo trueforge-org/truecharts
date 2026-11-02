@@ -240,14 +240,14 @@ Configuration for `dependencies.postgresql.operator.recovery`.
 
 Type of the CNPG database.
 
-| Field      | Value                                                          |
-| ---------- | -------------------------------------------------------------- |
-| Key        | `dependencies.postgresql.operator.type`                        |
-| Type       | `string`                                                       |
-| Required   | ❌                                                             |
-| Helm `tpl` | ❌                                                             |
-| Default    | `"postgres"`                                                   |
-| Enum       | `postgres`, `postgis`, `timescaledb`, `vectors`, `vectorchord` |
+| Field      | Value                                           |
+| ---------- | ----------------------------------------------- |
+| Key        | `dependencies.postgresql.operator.type`         |
+| Type       | `string`                                        |
+| Required   | ❌                                              |
+| Helm `tpl` | ❌                                              |
+| Default    | `"postgres"`                                    |
+| Enum       | `postgres`, `postgis`, `vectors`, `vectorchord` |
 
 Example
 

@@ -117,24 +117,11 @@
   {{- if (kindIs "slice" $objectData.cluster.preloadLibraries) -}}
     {{- $preloadLibraries = $objectData.cluster.preloadLibraries -}}
   {{- end -}}
-  {{- if eq $objectData.type "timescaledb" -}}
-    {{- $preloadLibraries = mustAppend $preloadLibraries "timescaledb" -}}
-  {{- end -}}
   {{- if eq $objectData.type "vectors" -}}
     {{- $preloadLibraries = mustAppend $preloadLibraries "vectors.so" -}}
   {{- end -}}
   {{- if eq $objectData.type "vectorchord" -}}
     {{- $preloadLibraries = mustAppend $preloadLibraries "vchord.so" -}}
-  {{- end -}}
-
-  {{/* TimescaleDB sends telemetry by default, a chart can still enable it */}}
-  {{- if eq $objectData.type "timescaledb" -}}
-    {{- if not (kindIs "map" $objectData.cluster.postgresql) -}}
-      {{- $_ := set $objectData.cluster "postgresql" dict -}}
-    {{- end -}}
-    {{- if not (hasKey $objectData.cluster.postgresql "timescaledb.telemetry_level") -}}
-      {{- $_ := set $objectData.cluster.postgresql "timescaledb.telemetry_level" "off" -}}
-    {{- end -}}
   {{- end -}}
 
   {{/* Storage */}}
