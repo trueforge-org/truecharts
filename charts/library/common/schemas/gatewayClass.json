@@ -29,11 +29,17 @@
       },
       "controllerName": {
         "type": "string",
-        "description": "The name of the controller that will manage Gateways of this class."
+        "description": "The name of the controller that will manage Gateways of this class.",
+        "examples": [
+          "traefik.io/gateway-controller"
+        ]
       },
       "description": {
         "type": "string",
-        "description": "Configuration for `gatewayClass.main.description`. Description helps describe a GatewayClass with more details."
+        "description": "Description helps describe a GatewayClass with more details.",
+        "examples": [
+          "Traefik-based gateway class"
+        ]
       },
       "parametersRef": {
         "type": "object",
@@ -62,7 +68,7 @@
           }
         },
         "additionalProperties": true,
-        "description": "Configuration for `gatewayClass.main.parametersRef`. ParametersRef is a reference to a resource that contains the configuration parameters corresponding to the GatewayClass."
+        "description": "ParametersRef is a reference to a resource that contains the configuration parameters corresponding to the GatewayClass.\n\nFields for parametersRef:\n- `group`: API group of the referenced resource (required)\n- `kind`: Kind of the referenced resource (required)\n- `name`: Name of the referenced resource (required)\n- `namespace`: Optional namespace of the referenced resource"
       }
     },
     "additionalProperties": true,

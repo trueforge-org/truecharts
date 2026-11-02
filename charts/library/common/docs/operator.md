@@ -49,17 +49,3 @@ operator:
 ```
 
 ---
-
-### `operator.verify`
-
-Contains specific settings for verifying system
-
-| Field      | Value             |
-| ---------- | ----------------- |
-| Key        | `operator.verify` |
-| Type       | `map`             |
-| Required   | ❌                |
-| Helm `tpl` | ❌                |
-| Default    | unset             |
-
----

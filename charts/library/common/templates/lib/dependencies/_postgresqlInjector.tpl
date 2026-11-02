@@ -44,6 +44,11 @@ It is the same for both modes (standalone and operator), only the host differs
     {{- if eq $enabled "true" -}}
       {{- include "tc.v1.common.lib.dependencies.postgresql.depconfig" (dict "rootCtx" $ "dep" $dep) -}}
 
+      {{/* The version selects the image of the cluster, in standalone mode the image decides the version */}}
+      {{- if and (eq (include "tc.v1.common.lib.dependencies.mode" (dict "objectData" $dep "depName" "postgresql")) "standalone") (kindIs "map" $dep.operator) $dep.operator.pgVersion -}}
+        {{- fail (printf "Dependencies - Expected [dependencies.postgresql.operator.pgVersion] to not be set in [standalone] mode, which runs the PostgreSQL version of [postgresql18Image], but got [%v]" $dep.operator.pgVersion) -}}
+      {{- end -}}
+
       {{/* The host is the primary service of the dependency, for both modes */}}
       {{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "postgresql")) -}}
       {{- if not $service -}}

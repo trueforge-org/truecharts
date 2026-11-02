@@ -148,7 +148,7 @@ Define the namespace for this object
 | Field      | Value                                 |
 | ---------- | ------------------------------------- |
 | Key        | `podDisruptionBudget.$name.namespace` |
-| Type       | `map`                                 |
+| Type       | `string`                              |
 | Required   | ❌                                    |
 | Helm `tpl` | ❌                                    |
 | Default    | `""`                                  |
@@ -213,7 +213,6 @@ podDisruptionBudget:
       key: value
       keytpl: "{{ .Values.some.value }}"
     minAvailable: 1
-    maxUnavailable: 1
     unhealthyPodEvictionPolicy: IfHealthyBudget
 
   other-pdb-name:

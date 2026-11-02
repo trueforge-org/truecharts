@@ -222,6 +222,10 @@ Everything else keeps working, so a chart can switch between the modes without c
   The exceptions are `valkey` and `postgresql`, whose operators are supported by common ([Valkey Operator](#valkey-operator), [PostgreSQL Operator](#postgresql-operator)): the host and port are the ones of the Service the operator creates for the `ValkeyCluster` or the CNPG `Cluster` that common spawns.
 - Settings for the operator go under [`dependencies.$name.operator`](#dependenciesnameoperator), which is never merged into the chart. The custom resources of an operator are not part of the dependency. Common spawns them for `valkey` and `postgresql` (see [Valkey Operator](#valkey-operator) and [PostgreSQL Operator](#postgresql-operator)), for other dependencies a chart adds them to its own values (eg with `extraTpl`).
 
+> [!WARNING]
+> Switching the mode of a dependency that already has data does **not** move the data. The modes store it in different volumes, so the new mode starts empty, and the volumes of the old mode are removed with its objects unless they are retained.
+> Back up the data before you switch (eg with `pg_dump`), and restore it afterwards.
+
 ### Defaults
 
 Objects of a dependency inherit the defaults of the object with the same name in the common library, exactly like the objects of a chart do.
@@ -282,28 +286,21 @@ dependencies:
 
 This renders a `StatefulSet` and a `Service` named `$fullname`, and nothing else besides the objects of the dependency itself.
 
-3. **Universal Resource Prefixing**: When a dependency is enabled (and in `standalone` mode), ALL its resources (except excluded keys) are merged into the main chart with prefixed names:
-   - **Prefixed**: workload, service, configmap, secret, persistence, podDisruptionBudget, hpa, vpa, ingress, route, gateway, certificate, serviceAccount, rbac, networkPolicy, storageClass, and any other resource type
-   - **Excluded from prefixing**: global, securityContext, podOptions, enabled, mode, depconfig, image (handled specially), chartContext, fallbackDefaults, notes, operator
-   - Examples:
-     - `workload.main` → `workload.$name-main`
-     - `service.main` → `service.$name-main`
-     - `configmap.config` → `configmap.$name-config`
-     - `persistence.data` → `persistence.$name-data`
-     - Any new resource type automatically gets prefixed
+### Object Names
 
+When a dependency is enabled and in `standalone` mode, its objects are merged into the chart under a prefixed name. This applies to every object collection, including new ones:
+
+- `workload.main` becomes `workload.$name-main`
+- `service.main` becomes `service.$name-main`
+- `configmap.config` becomes `configmap.$name-config`
+- `persistence.data` becomes `persistence.$name-data`
+
+These keys are not prefixed: `global`, `securityContext`, `podOptions`, `enabled`, `mode`, `depconfig`, `image` (handled separately), `chartContext`, `fallbackDefaults`, `notes` and `operator`.
 
 ### References
 
 All references to other objects are rewritten to the prefixed names, when the referenced object is defined within the dependency.
 A reference to an object that is not defined in the dependency is kept as is, which means it points to the object of the chart.
-
-
-
-6. **Persistent Data**: Add a `persistence` entry for any data that has to survive a restart. Without one, the data is on the container filesystem and is lost with the pod. The `mountPath` has to be where the image stores its data, which is `/config` for the default Valkey image. A top-level `volumeClaimTemplates` key is not used, and fails rendering.
-
-7. **Connection Information**: Connection details for dependencies are automatically included in the chart notes.
-
 
 | Object                                   | Reference                                                    | Default                                                         |
 | ---------------------------------------- | ------------------------------------------------------------ | --------------------------------------------------------------- |
@@ -324,6 +321,10 @@ A reference to an object that is not defined in the dependency is kept as is, wh
 | containers                               | `env.*.configMapKeyRef`, `env.*.secretKeyRef`, `envFrom[]`   | -                                                               |
 
 The `targetSelector` of service ports points to a container name and is not rewritten.
+
+### Persistent Data
+
+Add a `persistence` entry for any data that has to survive a restart. Without one, the data is on the container filesystem and is lost with the pod. The `mountPath` has to be where the image stores its data, which is `/config` for the default Valkey image. A top-level `volumeClaimTemplates` key is not used, and fails rendering.
 
 ### Templating
 
@@ -472,7 +473,7 @@ The `mariadb` dependency has additional handling:
   | `jdbc-mysql`            | `jdbcmysql`        | `jdbc:mysql://myapp-mariadb-main:3306/test`                          |
   | `jdbc-mariadb`          | `jdbcmariadb`      | `jdbc:mariadb://myapp-mariadb-main:3306/test`                        |
 
-  The host and port are the ones of the primary service and port of the dependency in `standalone` mode, and the ones of the CNPG service in `operator` mode (see [PostgreSQL Operator](#postgresql-operator)). The keys are the same in both modes.
+  The host and port are the ones of the primary service and port of the dependency.
   Like the `creds` of the other dependencies, the values are quoted strings, use `| trimAll "\""` when templating them.
 - An init container `mariadb-wait` is added to the workloads of the chart (the ones with `dbWait` not set to `false`), waiting for MariaDB to respond.
 - The connection details are included in the notes.
@@ -567,11 +568,11 @@ Both modes share the same handling:
   | `plainhost`           | `plain`, `plainhost` | `myapp-postgresql-main`                                                      |
   | -                     | `plainport`          | `5432`                                                                       |
   | `plainporthost`       | `plainporthost`      | `myapp-postgresql-main:5432`                                                 |
-  | `url`                 | `complete`           | `postgresql://test:my-password@myapp-postgresql-main:5432/test`              |
-  | `urlnossl`            | `urlnossl`           | `postgresql://test:my-password@myapp-postgresql-main:5432/test?sslmode=disable` |
-  | `jdbc`                | `jdbc`               | `jdbc:postgresql://myapp-postgresql-main:5432/test`                          |
+  | `url`                 | `complete`           | `postgresql://app:my-password@myapp-postgresql-main:5432/app`                |
+  | `urlnossl`            | `urlnossl`           | `postgresql://app:my-password@myapp-postgresql-main:5432/app?sslmode=disable`   |
+  | `jdbc`                | `jdbc`               | `jdbc:postgresql://myapp-postgresql-main:5432/app`                            |
 
-  The host and port are the ones of the primary service and port of the dependency.
+  The host and port are the ones of the primary service and port of the dependency in `standalone` mode, and the ones of the CNPG service in `operator` mode (see [PostgreSQL Operator](#postgresql-operator)). The keys are the same in both modes.
   Like the `creds` of the other dependencies, the values are quoted strings, use `| trimAll "\""` when templating them.
 - An init container `postgresql-wait` is added to the workloads of the chart (the ones with `dbWait` not set to `false`), waiting for PostgreSQL to respond.
   It is the same container in both modes, based on `postgresClientImage` and `pg_isready`.
@@ -582,8 +583,8 @@ The `depconfig` of the dependency accepts:
 | Key                  | Default               | Description                                               |
 | -------------------- | --------------------- | --------------------------------------------------------- |
 | `password`           | `PLACEHOLDERPASSWORD` | Password of the database user                             |
-| `postgresqlUsername` | `test`                | Name of the database user. The superuser of the server in `standalone` mode, the owner of the database in `operator` mode |
-| `postgresqlDatabase` | `test`                | Name of the database, created on the first start          |
+| `postgresqlUsername` | `app`                 | Name of the database user. The superuser of the server in `standalone` mode, the owner of the database in `operator` mode |
+| `postgresqlDatabase` | `app`                 | Name of the database, created on the first start          |
 
 The `url` and `urlnossl` values do not escape the password, so avoid characters like `@`, `:` and `/` when an app uses those.
 
@@ -591,6 +592,7 @@ The rest of this section describes the `standalone` mode. The image does not off
 
 The dependency runs `oci.trueforge.org/containerforge/postgresql` as a `StatefulSet` with one replica, as UID and GID `568` with a read-only root filesystem.
 The image is defined at the root of the chart as `postgresql18Image`, and selected by the container with `imageSelector: postgresql18Image`, so it can be overridden like any other image of the chart.
+This mode runs the PostgreSQL version of that image. Setting `operator.pgVersion` fails rendering, and the other settings under `operator`, like `type`, do not apply to this mode.
 Its data is stored in the `data` volume, mounted at `/config` (the data directory is `/config/<major version>`).
 
 > [!WARNING]
@@ -651,7 +653,7 @@ This renders, among others:
 ## PostgreSQL Operator
 
 With `mode: operator` (the default), common spawns a CloudNativePG `Cluster` (`postgresql.cnpg.io/v1`) instead of merging the workload, service and persistence of the dependency.
-The cloudnative-pg operator, and for backups the barman-cloud plugin, with their CRDs have to be installed in the cluster, a chart should add them to its `operator.verify` list.
+The cloudnative-pg operator, and for backups the barman-cloud plugin, with their CRDs have to be installed in the cluster.
 
 All settings of the cluster go under `dependencies.postgresql.operator`. Only the credentials stay in `depconfig`, which is shared with the `standalone` mode. They are the same setting, so a chart can switch between the modes without changing how the app connects.
 
@@ -686,6 +688,8 @@ All settings of the cluster go under `dependencies.postgresql.operator`. Only th
 | `operator.recovery`                                      | `map`    | `{method: object_store}` | Recovery source, used when `operator.mode` is `recovery`.                                                    |
 | `operator.backups`                                       | `map`    | `{enabled: false, ...}`  | Barman Cloud backups (`credentials`, `scheduledBackups`, `manualBackups`, `retentionPolicy`, ...).           |
 
+`type: timescaledb` uses the `postgresTimescaledb<version>Image` images (`oci.trueforge.org/containerforge/timescaledb<version>`), which add TimescaleDB to the images of CloudNativePG. PostgreSQL 15 stays on TimescaleDB 2.28.3, the last release for that version. The telemetry of TimescaleDB is off by default, set `timescaledb.telemetry_level` under `operator.cluster.postgresql` to change it.
+
 See [Operator](dependencies/postgresql/operator/index.md) for all the settings.
 
 ### Moving from the `cnpg` key
@@ -693,7 +697,6 @@ See [Operator](dependencies/postgresql/operator/index.md) for all the settings.
 The `cnpg` key on the root level of the values is replaced by `dependencies.postgresql`. See [Removed Top-Level Keys](#removed-top-level-keys).
 Changes to be aware of:
 
-- The default user and database are `test` (`depconfig` is shared with `standalone`), instead of the `app` of CNPG. Set `postgresqlUsername` and `postgresqlDatabase` to keep the old values.
 - Only a single cluster per release. The object names (`$fullname-cnpg-main`, `$fullname-cnpg-main-user`, ...) are the ones of the former `cnpg.main`, so a chart that only used `main` upgrades in place.
 - The `cnpg-main-urls` secret and the `cnpg.main.creds` values are replaced by the `postgresqlcreds` secret and `depconfig.creds`. The keys are named as in the table above (eg `plainporthost`, `url`, `jdbc`, and `urlRO` etc for the read-only pooler).
 - The `checksum/cnpg` annotation is no longer added to the pods, as the credentials are in `postgresqlcreds`.
@@ -903,59 +906,13 @@ The `valkey` dependency has additional handling:
 
 ### Example
 
-The full specification of the `valkey` dependency (image, workload, service, persistence, probes and the health configmap) is part of the defaults of `dependencies.valkey` in the common library `values.yaml`.
+The full specification of the `valkey` dependency (image, workload, service, persistence and probes) is part of the defaults of `dependencies.valkey` in the common library `values.yaml`.
 A chart only enables it and sets the values it needs to override:
 
 ```yaml
 image:
   repository: ghcr.io/example/app
   tag: latest
-dependencies:
-  valkey:
-    enabled: true
-    depconfig:
-      password: "secure-password"
-    image:
-      repository: oci.trueforge.org/containerforge/valkey
-      pullPolicy: IfNotPresent
-      tag: 9.0.4
-    workload:
-      main:
-        enabled: true
-        replicas: 1
-        type: StatefulSet
-        podSpec:
-          containers:
-            main:
-              enabled: true
-              primary: true
-              env:
-                REDIS_PORT: "6379"
-                REDIS_PASSWORD:
-                  secretKeyRef:
-                    expandObjectName: false
-                    name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
-                    key: valkey-password
-              probes:
-                liveness:
-                  enabled: true
-                  type: exec
-                  command:
-                    - sh
-                    - -c
-                    - /health/ping_liveness_local.sh 2
-    service:
-      main:
-        enabled: true
-        ports:
-          main:
-            enabled: true
-            port: 6379
-            targetPort: 6379
-    persistence:
-      data:
-        enabled: true
-        mountPath: /config
 
 workload:
   main:
@@ -985,9 +942,9 @@ dependencies:
 This renders, among others:
 
 - `Deployment` `myapp` with the `valkey-wait` init container
-- `StatefulSet` `myapp-valkey-main` with the `data` volume claim template and the `health` configmap mounted
+- `StatefulSet` `myapp-valkey-main` with the `data` volume mounted at `/config`
 - `Service` `myapp-valkey-main` on port 6379
-- `ConfigMap` `myapp-valkey-health`
+- `PersistentVolumeClaim` `myapp-valkey-data`
 - `Secret` `myapp-valkeycreds`
 
 ---
@@ -996,7 +953,7 @@ This renders, among others:
 
 With `mode: operator`, common spawns a `ValkeyCluster` (`valkey.io/v1alpha1`) of the [valkey-operator](https://github.com/valkey-io/valkey-operator) instead of merging the workload, service, persistence, etc. of the dependency.
 The [`ValkeyNode`](https://github.com/valkey-io/valkey-operator/blob/main/docs/valkeynode.md) resources are managed by the operator itself, so they are not rendered.
-The valkey-operator and its CRDs have to be installed in the cluster, a chart should add it to its `operator.verify` list.
+The valkey-operator and its CRDs have to be installed in the cluster.
 
 All settings of the cluster go under `dependencies.valkey.operator`. Only the credentials stay in `depconfig`.
 

@@ -118,7 +118,7 @@ Define the namespace for this object
 | Field      | Value                    |
 | ---------- | ------------------------ |
 | Key        | `secret.$name.namespace` |
-| Type       | `map`                    |
+| Type       | `string`                 |
 | Required   | ❌                       |
 | Helm `tpl` | ❌                       |
 | Default    | `""`                     |

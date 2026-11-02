@@ -17,7 +17,7 @@ title: Notes
 
 ## `notes`
 
-Define values for `NOTES.txt`
+Configuration for NOTES.txt output. Automatically includes connection information for enabled dependencies (mariadb, postgresql, valkey, mongodb, clickhouse) and addons (tailscale, codeserver, netshoot). Rendering order: header → custom → connections (auto) → footer → warnings.
 
 The notes system automatically includes connection information for enabled dependencies (databases) and addons when the chart is installed or upgraded. This provides users with immediate access to connection strings and configuration details.
 
@@ -37,6 +37,156 @@ notes:
 ```
 
 ---
+
+### `notes.custom`
+
+Custom text for NOTES.txt. Rendered after header, before connection information.
+
+| Field      | Value          |
+| ---------- | -------------- |
+| Key        | `notes.custom` |
+| Type       | `string`       |
+| Required   | ❌             |
+| Helm `tpl` | ❌             |
+| Default    | `""`           |
+
+Example
+
+```yaml
+notes:
+  custom: ""
+```
+
+---
+
+### `notes.footer`
+
+Footer text for NOTES.txt. Rendered after connection information, before warnings.
+
+| Field      | Value          |
+| ---------- | -------------- |
+| Key        | `notes.footer` |
+| Type       | `string`       |
+| Required   | ❌             |
+| Helm `tpl` | ❌             |
+| Default    | See schema     |
+
+Example
+
+```yaml
+notes:
+  footer: "# Documentation\nDocumentation for this chart can be found at ...\n# Bug reports\nIf you find a bug in this chart, please file an issue at ...\n"
+```
+
+---
+
+### `notes.header`
+
+Header text for NOTES.txt. Rendered first in the output.
+
+| Field      | Value                                                                         |
+| ---------- | ----------------------------------------------------------------------------- |
+| Key        | `notes.header`                                                                |
+| Type       | `string`                                                                      |
+| Required   | ❌                                                                            |
+| Helm `tpl` | ❌                                                                            |
+| Default    | `"# Welcome to TrueCharts!\nThank you for installing <{{ .Chart.Name }}>.\n"` |
+
+Example
+
+```yaml
+notes:
+  header: "# Welcome to TrueCharts!\nThank you for installing <{{ .Chart.Name }}>.\n"
+```
+
+---
+
+### `notes.showCredentials`
+
+Show credentials (eg, passwords in connection URLs) in NOTES.txt. When disabled, they are replaced by `HIDDEN`.
+
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `notes.showCredentials` |
+| Type       | `boolean`               |
+| Required   | ❌                      |
+| Helm `tpl` | ❌                      |
+| Default    | `false`                 |
+
+Example
+
+```yaml
+notes:
+  showCredentials: false
+```
+
+---
+
+### `notes.warnings`
+
+List of warning messages to display. Rendered last in the output.
+
+| Field      | Value            |
+| ---------- | ---------------- |
+| Key        | `notes.warnings` |
+| Type       | `list of string` |
+| Required   | ❌               |
+| Helm `tpl` | ❌               |
+| Default    | unset            |
+
+---
+
+## Full Examples
+
+### Basic Custom Message
+
+```yaml
+notes:
+  custom: |
+    This is a custom message
+```
+
+### Example Output with PostgreSQL and Valkey
+
+When a chart has the PostgreSQL (in the default `operator` mode, so provided by CNPG) and Valkey dependencies enabled, the notes output will include (the connection URL contains the password, so it is hidden unless `notes.showCredentials` is `true`):
+
+```
+# Thank you for installing myapp by TrueCharts.
+
+# Connection Information
+
+## PostgreSQL Database
+- Host: myapp-cnpg-main-rw
+- Port: 5432
+- Host:Port: myapp-cnpg-main-rw:5432
+- Database: app
+- Username: app
+- Connection URL: HIDDEN
+- JDBC URL: "jdbc:postgresql://myapp-cnpg-main-rw:5432/app"
+
+## Valkey Database
+- Host: myapp-valkey-main
+- Port: 6379
+- Host:Port: myapp-valkey-main:6379
+
+## Documentation
+Please check out the TrueCharts documentation on:
+https://truecharts.org
+```
+
+### Example Output with Addons
+
+When addons like Tailscale are enabled:
+
+```
+# Connection Information
+
+## Tailscale VPN Addon
+- Status: Enabled
+- Routes: 10.0.0.0/8
+- Userspace Mode: true
+- Note: Tailscale provides secure VPN connectivity as a sidecar container
+```
 
 ## External URLs
 
@@ -199,55 +349,3 @@ Configuration for `notes.warnings`.
 | Default    | unset             |
 
 ---
-
-## Full Examples
-
-### Basic Custom Message
-
-```yaml
-notes:
-  custom: |
-    This is a custom message
-```
-
-### Example Output with PostgreSQL and Valkey
-
-When a chart has the PostgreSQL (in the default `operator` mode, so provided by CNPG) and Valkey dependencies enabled, the notes output will include (the connection URL contains the password, so it is hidden unless `notes.showCredentials` is `true`):
-
-```
-# Thank you for installing myapp by TrueCharts.
-
-# Connection Information
-
-## PostgreSQL Database
-- Host: myapp-cnpg-main-rw
-- Port: 5432
-- Host:Port: myapp-cnpg-main-rw:5432
-- Database: app
-- Username: app
-- Connection URL: HIDDEN
-- JDBC URL: "jdbc:postgresql://myapp-cnpg-main-rw:5432/app"
-
-## Valkey Database
-- Host: myapp-valkey-main
-- Port: 6379
-- Host:Port: myapp-valkey-main:6379
-
-## Documentation
-Please check out the TrueCharts documentation on:
-https://truecharts.org
-```
-
-### Example Output with Addons
-
-When addons like Tailscale are enabled:
-
-```
-# Connection Information
-
-## Tailscale VPN Addon
-- Status: Enabled
-- Routes: 10.0.0.0/8
-- Userspace Mode: true
-- Note: Tailscale provides secure VPN connectivity as a sidecar container
-```

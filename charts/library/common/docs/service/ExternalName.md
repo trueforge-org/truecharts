@@ -22,7 +22,7 @@ Configure ExternalName type
 | Field      | Value                  |
 | ---------- | ---------------------- |
 | Key        | `service.ExternalName` |
-| Type       | `map`                  |
+| Type       | `string`               |
 | Required   | ❌                     |
 | Helm `tpl` | ❌                     |
 | Default    | unset                  |

@@ -103,28 +103,6 @@ global:
 
 ---
 
-### `global.metallb`
-
-Settings for metallb integration
-
-| Field      | Value                             |
-| ---------- | --------------------------------- |
-| Key        | `global.metallb`                  |
-| Type       | `map`                             |
-| Required   | ❌                                |
-| Helm `tpl` | ❌                                |
-| Default    | `{"addServiceAnnotations": true}` |
-
-Example
-
-```yaml
-global:
-  metallb:
-    addServiceAnnotations: true
-```
-
----
-
 ### `global.minNodePort`
 
 Minimum Node Port Allowed
@@ -133,7 +111,7 @@ Minimum Node Port Allowed
 | ---------- | -------------------- |
 | Key        | `global.minNodePort` |
 | Type       | `integer`            |
-| Required   | ✅                   |
+| Required   | ❌                   |
 | Helm `tpl` | ❌                   |
 | Default    | `9000`               |
 | Minimum    | `1`                  |
@@ -193,20 +171,19 @@ global:
 
 Settings for traefik integration
 
-| Field      | Value                                                                                         |
-| ---------- | --------------------------------------------------------------------------------------------- |
-| Key        | `global.traefik`                                                                              |
-| Type       | `map`                                                                                         |
-| Required   | ❌                                                                                            |
-| Helm `tpl` | ❌                                                                                            |
-| Default    | `{"addServiceAnnotations": true, "commonMiddlewares": [{"name": "tc-basic-secure-headers"}]}` |
+| Field      | Value                                                          |
+| ---------- | -------------------------------------------------------------- |
+| Key        | `global.traefik`                                               |
+| Type       | `map`                                                          |
+| Required   | ❌                                                             |
+| Helm `tpl` | ❌                                                             |
+| Default    | `{"commonMiddlewares": [{"name": "tc-basic-secure-headers"}]}` |
 
 Example
 
 ```yaml
 global:
   traefik:
-    addServiceAnnotations: true
     commonMiddlewares:
       -
         name: "tc-basic-secure-headers"

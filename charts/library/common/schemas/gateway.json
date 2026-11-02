@@ -29,11 +29,17 @@
       },
       "gatewayClassName": {
         "type": "string",
-        "description": "Name of the GatewayClass resource that this Gateway references."
+        "description": "The name of the GatewayClass resource that this Gateway references.",
+        "examples": [
+          "traefik"
+        ]
       },
       "targetSelector": {
         "type": "string",
-        "description": "Configuration for `gateway.main.targetSelector`. Name-based selector for automatic GatewayClass linking."
+        "description": "Name-based selector for automatic GatewayClass linking. When set, automatically references the specified `gatewayClass.$name`.",
+        "examples": [
+          "main"
+        ]
       },
       "addresses": {
         "type": "array",
@@ -89,7 +95,7 @@
           }
         },
         "additionalProperties": true,
-        "description": "Configure namespaces.from as Same, All, Selector, or None to control which ListenerSets may attach. Set namespaces.selector when from is Selector."
+        "description": "Configure `namespaces.from` as `Same`, `All`, `Selector`, or `None` to control which ListenerSets may attach. Set `namespaces.selector` when `from` is `Selector`."
       },
       "tls": {
         "type": "object",
@@ -234,7 +240,7 @@
           "additionalProperties": true,
           "description": "Configuration for `gateway.main.listeners.$item`."
         },
-        "description": "Configuration for `gateway.main.listeners`."
+        "description": "Array of listener definitions that define the network ports and protocols the Gateway listens on.\n\nEach listener must specify:\n- `name`: Unique name for the listener\n- `port`: Network port to listen on\n- `protocol`: Protocol (HTTP, HTTPS, TCP, TLS, UDP)\n- `hostname`: Optional hostname filter\n- `tls`: Optional TLS configuration\n- `allowedRoutes`: Optional configuration for which routes can attach"
       }
     },
     "additionalProperties": true,

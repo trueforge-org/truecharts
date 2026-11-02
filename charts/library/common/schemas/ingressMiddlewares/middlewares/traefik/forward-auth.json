@@ -31,6 +31,14 @@
     },
     "insecureSkipVerify": {
       "type": "boolean"
+    },
+    "maxResponseBodySize": {
+      "type": "integer",
+      "description": "Define the maxResponseBodySize, in bytes. `-1` means unlimited",
+      "default": -1,
+      "examples": [
+        1048576
+      ]
     }
   },
   "additionalProperties": true,

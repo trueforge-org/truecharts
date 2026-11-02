@@ -47,14 +47,6 @@ Define the activeDeadlineSeconds
 
 Keep `strategy: RollingUpdate` on a single replica Deployment with `ReadWriteOnce` volumes, instead of changing it to `Recreate`. Overrules `global.fallbackDefaults.allowRollingUpdateWithRWO`. `ReadWriteOncePod` volumes always use `Recreate`.
 
-| Field      | Value                                      |
-| ---------- | ------------------------------------------ |
-| Key        | `workload.$name.allowRollingUpdateWithRWO` |
-| Type       | `boolean`                                  |
-| Required   | ❌                                         |
-| Helm `tpl` | ❌                                         |
-| Default    | unset                                      |
-
 :::caution
 
 Rolling updates with `ReadWriteOnce` storage are not safe for every app or storage:
@@ -66,12 +58,19 @@ Common shows a warning in the notes when this is enabled.
 
 :::
 
+| Field      | Value                                      |
+| ---------- | ------------------------------------------ |
+| Key        | `workload.$name.allowRollingUpdateWithRWO` |
+| Type       | `boolean`                                  |
+| Required   | ❌                                         |
+| Helm `tpl` | ❌                                         |
+| Default    | unset                                      |
+
 Example
 
 ```yaml
 workload:
-  workload-name:
-    strategy: RollingUpdate
+  $name:
     allowRollingUpdateWithRWO: true
 ```
 
@@ -189,10 +188,10 @@ The workloads of [dependencies](/truecharts-common/dependencies) default to `fal
 | Field      | Value                   |
 | ---------- | ----------------------- |
 | Key        | `workload.$name.dbWait` |
-| Type       | `boolean`               |
+| Type       | `boolean, string`       |
 | Required   | ❌                      |
 | Helm `tpl` | ❌                      |
-| Default    | `true`                  |
+| Default    | unset                   |
 
 ---
 
@@ -214,6 +213,29 @@ Example
 workload:
   $name:
     enabled: false
+```
+
+---
+
+### `workload.$name.extraSelectorLabels`
+
+Additional labels included in the workload selector and pod labels.
+
+| Field      | Value                                |
+| ---------- | ------------------------------------ |
+| Key        | `workload.$name.extraSelectorLabels` |
+| Type       | `map`                                |
+| Required   | ❌                                   |
+| Helm `tpl` | ❌                                   |
+| Default    | `{}`                                 |
+
+Example
+
+```yaml
+workload:
+  $name:
+    extraSelectorLabels:
+      app.example.com/component: worker
 ```
 
 ---
@@ -251,29 +273,6 @@ workload:
   $name:
     initContainers:
       {}
-```
-
----
-
-### `workload.$name.extraSelectorLabels`
-
-Additional labels included in the workload selector and pod labels.
-
-| Field      | Value                                  |
-| ---------- | -------------------------------------- |
-| Key        | `workload.$name.extraSelectorLabels`   |
-| Type       | `map`                                  |
-| Required   | ❌                                     |
-| Helm `tpl` | ✅                                     |
-| Default    | `{}`                                   |
-
-Example
-
-```yaml
-workload:
-  $name:
-    extraSelectorLabels:
-      app.example.com/component: worker
 ```
 
 ---
@@ -478,6 +477,8 @@ Define the startingDeadlineSeconds
 
 Define the strategy of the workload
 
+A single replica Deployment uses `Recreate` if it mounts a `ReadWriteOnce` or `ReadWriteOncePod` volume. See `allowRollingUpdateWithRWO` to keep `RollingUpdate` with `ReadWriteOnce`.
+
 | Field      | Value                                   |
 | ---------- | --------------------------------------- |
 | Key        | `workload.$name.strategy`               |
@@ -486,8 +487,6 @@ Define the strategy of the workload
 | Helm `tpl` | ❌                                      |
 | Default    | unset                                   |
 | Enum       | `Recreate`, `RollingUpdate`, `OnDelete` |
-
-A single replica Deployment uses `Recreate` if it mounts a `ReadWriteOnce` or `ReadWriteOncePod` volume. See [`allowRollingUpdateWithRWO`](#workloadnameallowrollingupdatewithrwo) to keep `RollingUpdate` with `ReadWriteOnce`.
 
 ---
 

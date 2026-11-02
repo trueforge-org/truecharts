@@ -54,7 +54,7 @@ tests:
               echo "Testing Database availability on [PostgreSQL]"
               until
                 echo "Testing database on url: [test-release-name-common-test-postgresql-main]"
-                pg_isready -U test -d test -h test-release-name-common-test-postgresql-main -p 5432
+                pg_isready -U app -d app -h test-release-name-common-test-postgresql-main -p 5432
                 do sleep 5
               done
               echo "Database available on url: [test-release-name-common-test-postgresql-main]"

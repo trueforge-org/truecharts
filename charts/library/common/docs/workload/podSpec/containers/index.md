@@ -37,7 +37,7 @@ Configuration for `workload.podSpec.containers`.
 - [Envfrom](envFrom.md) - Define envFrom for the container
 - [Fixedenv](fixedEnv.md) - See [fixedEnv](/truecharts-common/container/fixedenv).
 - [Lifecycle](lifecycle.md) - Does **not** apply to `initContainers`. See [lifecycle](/truecharts-common/container/lifecycle).
-- [Probes](probes.md) - Does **not** apply to `initContainers` See [probes](/truecharts-common/container/probes)
+- [Probes](probes/) - Does **not** apply to `initContainers` See [probes](/truecharts-common/container/probes)
 - [Resources](resources.md) - The resources that the container can use.
 - [Securitycontext](securityContext.md) - Define securityContext for the container
 

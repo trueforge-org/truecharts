@@ -10,7 +10,7 @@ import yaml
 BASE_DIR = Path(__file__).resolve().parent
 VALUES_FILE = BASE_DIR / "complete-values-structure.yaml"
 TEMPLATE_KEYS_FILE = BASE_DIR / "template-keys-structure.yaml"
-ROOT_SCHEMA_FILE = BASE_DIR / "values.schema.json"
+ROOT_SCHEMA_FILE = BASE_DIR / "values.schema.source.json"
 
 
 def load_json(path: Path) -> Any:

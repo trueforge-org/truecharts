@@ -141,6 +141,34 @@ Configuration for `postgres16Image`.
 
 ---
 
+### `images.postgres17Image`
+
+Configuration for `postgres17Image`.
+
+| Field      | Value                    |
+| ---------- | ------------------------ |
+| Key        | `images.postgres17Image` |
+| Type       | `map`                    |
+| Required   | ❌                       |
+| Helm `tpl` | ❌                       |
+| Default    | unset                    |
+
+---
+
+### `images.postgres18Image`
+
+Configuration for `postgres18Image`.
+
+| Field      | Value                    |
+| ---------- | ------------------------ |
+| Key        | `images.postgres18Image` |
+| Type       | `map`                    |
+| Required   | ❌                       |
+| Helm `tpl` | ❌                       |
+| Default    | unset                    |
+
+---
+
 ### `images.postgresClientImage`
 
 Configuration for `postgresClientImage`.
@@ -152,20 +180,6 @@ Configuration for `postgresClientImage`.
 | Required   | ❌                           |
 | Helm `tpl` | ❌                           |
 | Default    | unset                        |
-
----
-
-### `images.postgresql18Image`
-
-Configuration for `postgresql18Image`.
-
-| Field      | Value                      |
-| ---------- | -------------------------- |
-| Key        | `images.postgresql18Image` |
-| Type       | `map`                      |
-| Required   | ❌                         |
-| Helm `tpl` | ❌                         |
-| Default    | unset                      |
 
 ---
 
@@ -197,6 +211,90 @@ Configuration for `postgresPostgis16Image`.
 
 ---
 
+### `images.postgresPostgis17Image`
+
+Configuration for `postgresPostgis17Image`.
+
+| Field      | Value                           |
+| ---------- | ------------------------------- |
+| Key        | `images.postgresPostgis17Image` |
+| Type       | `map`                           |
+| Required   | ❌                              |
+| Helm `tpl` | ❌                              |
+| Default    | unset                           |
+
+---
+
+### `images.postgresPostgis18Image`
+
+Configuration for `postgresPostgis18Image`.
+
+| Field      | Value                           |
+| ---------- | ------------------------------- |
+| Key        | `images.postgresPostgis18Image` |
+| Type       | `map`                           |
+| Required   | ❌                              |
+| Helm `tpl` | ❌                              |
+| Default    | unset                           |
+
+---
+
+### `images.postgresTimescaledb15Image`
+
+Configuration for `postgresTimescaledb15Image`.
+
+| Field      | Value                               |
+| ---------- | ----------------------------------- |
+| Key        | `images.postgresTimescaledb15Image` |
+| Type       | `map`                               |
+| Required   | ❌                                  |
+| Helm `tpl` | ❌                                  |
+| Default    | unset                               |
+
+---
+
+### `images.postgresTimescaledb16Image`
+
+Configuration for `postgresTimescaledb16Image`.
+
+| Field      | Value                               |
+| ---------- | ----------------------------------- |
+| Key        | `images.postgresTimescaledb16Image` |
+| Type       | `map`                               |
+| Required   | ❌                                  |
+| Helm `tpl` | ❌                                  |
+| Default    | unset                               |
+
+---
+
+### `images.postgresTimescaledb17Image`
+
+Configuration for `postgresTimescaledb17Image`.
+
+| Field      | Value                               |
+| ---------- | ----------------------------------- |
+| Key        | `images.postgresTimescaledb17Image` |
+| Type       | `map`                               |
+| Required   | ❌                                  |
+| Helm `tpl` | ❌                                  |
+| Default    | unset                               |
+
+---
+
+### `images.postgresTimescaledb18Image`
+
+Configuration for `postgresTimescaledb18Image`.
+
+| Field      | Value                               |
+| ---------- | ----------------------------------- |
+| Key        | `images.postgresTimescaledb18Image` |
+| Type       | `map`                               |
+| Required   | ❌                                  |
+| Helm `tpl` | ❌                                  |
+| Default    | unset                               |
+
+---
+
 ### `images.postgresVectorchord15Image`
 
 Configuration for `postgresVectorchord15Image`.
@@ -218,6 +316,34 @@ Configuration for `postgresVectorchord16Image`.
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
 | Key        | `images.postgresVectorchord16Image` |
+| Type       | `map`                               |
+| Required   | ❌                                  |
+| Helm `tpl` | ❌                                  |
+| Default    | unset                               |
+
+---
+
+### `images.postgresVectorchord17Image`
+
+Configuration for `postgresVectorchord17Image`.
+
+| Field      | Value                               |
+| ---------- | ----------------------------------- |
+| Key        | `images.postgresVectorchord17Image` |
+| Type       | `map`                               |
+| Required   | ❌                                  |
+| Helm `tpl` | ❌                                  |
+| Default    | unset                               |
+
+---
+
+### `images.postgresVectorchord18Image`
+
+Configuration for `postgresVectorchord18Image`.
+
+| Field      | Value                               |
+| ---------- | ----------------------------------- |
+| Key        | `images.postgresVectorchord18Image` |
 | Type       | `map`                               |
 | Required   | ❌                                  |
 | Helm `tpl` | ❌                                  |
@@ -250,6 +376,34 @@ Configuration for `postgresVectors16Image`.
 | Required   | ❌                              |
 | Helm `tpl` | ❌                              |
 | Default    | unset                           |
+
+---
+
+### `images.postgresVectors17Image`
+
+Configuration for `postgresVectors17Image`.
+
+| Field      | Value                           |
+| ---------- | ------------------------------- |
+| Key        | `images.postgresVectors17Image` |
+| Type       | `map`                           |
+| Required   | ❌                              |
+| Helm `tpl` | ❌                              |
+| Default    | unset                           |
+
+---
+
+### `images.postgresql18Image`
+
+Configuration for `postgresql18Image`.
+
+| Field      | Value                      |
+| ---------- | -------------------------- |
+| Key        | `images.postgresql18Image` |
+| Type       | `map`                      |
+| Required   | ❌                         |
+| Helm `tpl` | ❌                         |
+| Default    | unset                      |
 
 ---
 
@@ -309,22 +463,22 @@ imagePullSecret:
     annotations:
       key: value
       keytpl: "{{ .Values.some.value }}"
-      data:
-        registry: quay.io
-        username: my_user
-        password: my_pass
-        email: my_mail@example.com
-      targetSelectAll: true
+    data:
+      registry: quay.io
+      username: my_user
+      password: my_pass
+      email: my_mail@example.com
+    targetSelectAll: true
 
   other-pull-secret-name:
     enabled: true
     namespace: some-namespace
-      data:
-        registry: "{{ .Values.my_registry }}"
-        username: "{{ .Values.my_user }}"
-        password: "{{ .Values.my_pass }}"
-        email: "{{ .Values.my_mail }}"
-      targetSelector:
-        - workload-name1
-        - workload-name2
+    data:
+      registry: "{{ .Values.my_registry }}"
+      username: "{{ .Values.my_user }}"
+      password: "{{ .Values.my_pass }}"
+      email: "{{ .Values.my_mail }}"
+    targetSelector:
+      - workload-name1
+      - workload-name2
 ```

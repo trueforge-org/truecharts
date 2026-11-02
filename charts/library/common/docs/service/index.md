@@ -190,7 +190,7 @@ Configure ExternalName type
 | Field      | Value                        |
 | ---------- | ---------------------------- |
 | Key        | `service.$name.externalName` |
-| Type       | `map`                        |
+| Type       | `string`                     |
 | Required   | ❌                           |
 | Helm `tpl` | ❌                           |
 | Default    | unset                        |
@@ -361,7 +361,7 @@ Define the namespace for this object
 | Field      | Value                     |
 | ---------- | ------------------------- |
 | Key        | `service.$name.namespace` |
-| Type       | `map`                     |
+| Type       | `string`                  |
 | Required   | ❌                        |
 | Helm `tpl` | ❌                        |
 | Default    | `""`                      |

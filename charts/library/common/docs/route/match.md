@@ -1,0 +1,86 @@
+---
+title: Match
+---
+
+:::note
+
+- This page is generated from JSON schema.
+- See the [Full Examples](/truecharts-common/route/match#full-examples) section for complete examples.
+
+:::
+
+## Appears in
+
+- `.Values.route.match`
+
+---
+
+## `route.match`
+
+A match condition for an HTTP or gRPC route.
+
+| Field      | Value         |
+| ---------- | ------------- |
+| Key        | `route.match` |
+| Type       | `map`         |
+| Required   | ❌            |
+| Helm `tpl` | ❌            |
+| Default    | unset         |
+
+---
+
+### `route.match.headers`
+
+No description provided.
+
+| Field      | Value                 |
+| ---------- | --------------------- |
+| Key        | `route.match.headers` |
+| Type       | `list of map`         |
+| Required   | ❌                    |
+| Helm `tpl` | ❌                    |
+| Default    | unset                 |
+
+---
+
+### `route.match.method`
+
+No description provided.
+
+| Field      | Value                |
+| ---------- | -------------------- |
+| Key        | `route.match.method` |
+| Type       | `string`             |
+| Required   | ❌                   |
+| Helm `tpl` | ❌                   |
+| Default    | unset                |
+
+---
+
+### `route.match.path`
+
+Path condition for the match.
+
+| Field      | Value              |
+| ---------- | ------------------ |
+| Key        | `route.match.path` |
+| Type       | `map`              |
+| Required   | ❌                 |
+| Helm `tpl` | ❌                 |
+| Default    | unset              |
+
+---
+
+### `route.match.queryParams`
+
+No description provided.
+
+| Field      | Value                     |
+| ---------- | ------------------------- |
+| Key        | `route.match.queryParams` |
+| Type       | `list of map`             |
+| Required   | ❌                        |
+| Helm `tpl` | ❌                        |
+| Default    | unset                     |
+
+---

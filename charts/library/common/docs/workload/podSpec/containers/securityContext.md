@@ -29,6 +29,54 @@ Define securityContext for the container
 
 ---
 
+### `workload.podSpec.containers.securityContext.PUID`
+
+Default user ID used for container environment variables.
+
+| Field      | Value                                              |
+| ---------- | -------------------------------------------------- |
+| Key        | `workload.podSpec.containers.securityContext.PUID` |
+| Type       | `integer`                                          |
+| Required   | ❌                                                 |
+| Helm `tpl` | ❌                                                 |
+| Default    | `568`                                              |
+
+Example
+
+```yaml
+workload:
+  podSpec:
+    containers:
+      securityContext:
+        PUID: 568
+```
+
+---
+
+### `workload.podSpec.containers.securityContext.UMASK`
+
+Default file creation mask used for container environment variables.
+
+| Field      | Value                                               |
+| ---------- | --------------------------------------------------- |
+| Key        | `workload.podSpec.containers.securityContext.UMASK` |
+| Type       | `string`                                            |
+| Required   | ❌                                                  |
+| Helm `tpl` | ❌                                                  |
+| Default    | `"0022"`                                            |
+
+Example
+
+```yaml
+workload:
+  podSpec:
+    containers:
+      securityContext:
+        UMASK: 0022
+```
+
+---
+
 ### `workload.podSpec.containers.securityContext.allowPrivilegeEscalation`
 
 Define the allowPrivilegeEscalation for the container
@@ -129,15 +177,26 @@ Define the runAsUser for the container
 
 ### `workload.podSpec.containers.securityContext.seccompProfile`
 
-Define the seccompProfile for the container
+Define the seccompProfile for the container.
 
 | Field      | Value                                                        |
 | ---------- | ------------------------------------------------------------ |
 | Key        | `workload.podSpec.containers.securityContext.seccompProfile` |
-| Type       | `map`                                                        |
+| Type       | `map, null`                                                  |
 | Required   | ❌                                                           |
 | Helm `tpl` | ❌                                                           |
-| Default    | unset                                                        |
+| Default    | `{"type": "RuntimeDefault"}`                                 |
+
+Example
+
+```yaml
+workload:
+  podSpec:
+    containers:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+```
 
 ---
 
