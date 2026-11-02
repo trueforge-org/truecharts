@@ -148,12 +148,6 @@
     {{- $skipEmptyWalArchiveCheck = $objectData.cluster.skipEmptyWalArchiveCheck -}}
   {{- end -}}
 
-  {{/* The images of CloudNativePG use 26, the postgres user of the TimescaleDB images is 1000 */}}
-  {{- $defaultPostgresID := 26 -}}
-  {{- if eq $objectData.type "timescaledb" -}}
-    {{- $defaultPostgresID = 1000 -}}
-  {{- end -}}
-
   {{- $imageName := $objectData.cluster.imageName -}}
   {{- if not $imageName -}}
     {{/* Ensure version and container tracking */}}
@@ -195,8 +189,8 @@ metadata:
 spec:
   imageName: {{ $imageName }}
   {{/* This ignores `0` on purpose. */}}
-  postgresUID: {{ $objectData.cluster.postgresUID | default $defaultPostgresID }}
-  postgresGID: {{ $objectData.cluster.postgresGID | default $defaultPostgresID }}
+  postgresUID: {{ $objectData.cluster.postgresUID | default 26 }}
+  postgresGID: {{ $objectData.cluster.postgresGID | default 26 }}
   enableSuperuserAccess: {{ $enableSuperUser }}
   primaryUpdateStrategy: {{ $primaryUpdateStrategy }}
   primaryUpdateMethod: {{ $primaryUpdateMethod }}
