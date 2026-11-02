@@ -30,3 +30,25 @@ OWNERS
 icon.png
 icon.webp
 icon-small.webp
+# source of the schema and tooling of common, values.schema.json is generated from it
+/values.schema.source.json
+/schemas
+/README.txt
+/check_complete_values_schema_coverage.py
+/complete-values-structure.yaml
+/docs-schema-mapping.yaml
+/docs-structure.txt
+/docs-summary.txt
+/examples
+/generate_bundled_schema.py
+/generate_complete_values_structure.py
+/generate_docs.py
+/generate_template_keys_structure.py
+/generator-todo.md
+/improve_schemas.py
+/manual-docs-todo.md
+/newdocs-missing-index.md
+/quick-reference.txt
+/template-keys-structure.yaml
+/test_output.txt
+/test_schema.py
