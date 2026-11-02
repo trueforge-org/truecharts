@@ -1625,6 +1625,21 @@ addons:
 dependencies:
   clickhouse:
     enabled: false
+    # -- Applied to this dependency only, so it does not run as root when the chart does
+    securityContext:
+      container:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        privileged: false
+        capabilities:
+          add: []
+          drop:
+            - ALL
+      pod:
+        fsGroup: 568
     # -- Settings of the dependency itself, never merged into the chart
     depconfig:
       password: "PLACEHOLDERPASSWORD"
@@ -1674,6 +1689,21 @@ dependencies:
         mountPath: /config
   mariadb:
     enabled: false
+    # -- Applied to this dependency only, so it does not run as root when the chart does
+    securityContext:
+      container:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        privileged: false
+        capabilities:
+          add: []
+          drop:
+            - ALL
+      pod:
+        fsGroup: 568
     # -- How the dependency is provided: [standalone] merges it into the chart, [operator] leaves it to an operator (its objects are not merged)
     mode: standalone
     # -- Settings of the operator providing the dependency, never merged into the chart
@@ -1737,6 +1767,21 @@ dependencies:
         mountPath: /config
   postgresql:
     enabled: false
+    # -- Applied to this dependency only, so it does not run as root when the chart does
+    securityContext:
+      container:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        privileged: false
+        capabilities:
+          add: []
+          drop:
+            - ALL
+      pod:
+        fsGroup: 568
     # -- How the dependency is provided: [operator] (default) lets CloudNativePG run it, [standalone] merges a plain PostgreSQL into the chart
     mode: operator
     # -- Settings of the CloudNativePG cluster, used in [operator] mode. Never merged into the chart
@@ -2004,6 +2049,21 @@ dependencies:
         mountPath: /config
   memcached:
     enabled: false
+    # -- Applied to this dependency only, so it does not run as root when the chart does
+    securityContext:
+      container:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        privileged: false
+        capabilities:
+          add: []
+          drop:
+            - ALL
+      pod:
+        fsGroup: 568
     image:
       repository: oci.trueforge.org/containerforge/memcache
       pullPolicy: IfNotPresent
@@ -2022,6 +2082,21 @@ dependencies:
             targetPort: 11211
   mongodb:
     enabled: false
+    # -- Applied to this dependency only, so it does not run as root when the chart does
+    securityContext:
+      container:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        privileged: false
+        capabilities:
+          add: []
+          drop:
+            - ALL
+      pod:
+        fsGroup: 568
     # -- Settings of the dependency itself, never merged into the chart
     depconfig:
       password: "PLACEHOLDERPASSWORD"
@@ -2082,6 +2157,21 @@ dependencies:
         mountPath: /config
   valkey:
     enabled: false
+    # -- Applied to this dependency only, so it does not run as root when the chart does
+    securityContext:
+      container:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        privileged: false
+        capabilities:
+          add: []
+          drop:
+            - ALL
+      pod:
+        fsGroup: 568
     # -- How the dependency is provided: [standalone] merges it into the chart, [operator] spawns a ValkeyCluster for the valkey-operator instead (its objects are not merged)
     mode: standalone
     # -- Settings of the ValkeyCluster (valkey-operator), only used when [mode] is [operator]. Never merged into the chart

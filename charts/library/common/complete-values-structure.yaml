@@ -3797,6 +3797,20 @@ dependencies:
                   command:
                   - ''
     service:
+    securityContext:
+      container:
+        runAsNonRoot: true
+        runAsUser: 0
+        runAsGroup: 0
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        privileged: false
+        capabilities:
+          add: []
+          drop:
+          - ''
+      pod:
+        fsGroup: 0
       objectname:
         ports:
           objectname:
@@ -3960,6 +3974,20 @@ dependencies:
                   enabled: true
                   type: ''
                   command:
+    securityContext:
+      container:
+        runAsNonRoot: true
+        runAsUser: 0
+        runAsGroup: 0
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        privileged: false
+        capabilities:
+          add: []
+          drop:
+          - ''
+      pod:
+        fsGroup: 0
                   - ''
     service:
       objectname:
@@ -3978,6 +4006,20 @@ redis:
   password: ''
   creds: {}
   secret:
+    securityContext:
+      container:
+        runAsNonRoot: true
+        runAsUser: 0
+        runAsGroup: 0
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        privileged: false
+        capabilities:
+          add: []
+          drop:
+          - ''
+      pod:
+        fsGroup: 0
     objectname:
       enabled: false
   redisUsername: ''
@@ -4026,6 +4068,20 @@ invidious:
     inbound:
       external_port: 0
       https_only: false
+    securityContext:
+      container:
+        runAsNonRoot: true
+        runAsUser: 0
+        runAsGroup: 0
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        privileged: false
+        capabilities:
+          add: []
+          drop:
+          - ''
+      pod:
+        fsGroup: 0
       domain: ''
       hsts: true
     outbound:
