@@ -110,7 +110,7 @@
               "minimum": 1
             }
           },
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness`.",
           "default": {
             "initialDelaySeconds": 12,
@@ -154,7 +154,7 @@
               "minimum": 1
             }
           },
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness`.",
           "default": {
             "initialDelaySeconds": 10,
@@ -198,7 +198,7 @@
               "minimum": 1
             }
           },
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup`.",
           "default": {
             "initialDelaySeconds": 10,
@@ -209,7 +209,7 @@
           }
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Configuration for `global.fallbackDefaults.probeTimeouts`.",
       "default": {
         "liveness": {
@@ -266,10 +266,10 @@
           "default": true
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Configuration for `global.fallbackDefaults.cnpg`."
     }
   },
-  "additionalProperties": true,
+  "additionalProperties": false,
   "description": "Configuration for `global.fallbackDefaults`."
 }

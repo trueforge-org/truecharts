@@ -65,7 +65,7 @@
               "description": "Configuration for `metrics.main.endpoints.$item.honorLabels`."
             }
           },
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Configuration for `metrics.main.endpoints.$item`."
         },
         "description": "Configuration for `metrics.main.endpoints`."
@@ -151,12 +151,12 @@
             "description": "Configuration for `metrics.main.prometheusRule.additionalgroups`."
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Configuration for `metrics.main.prometheusRule`.",
         "default": "{ enabled: false }"
       }
     },
-    "additionalProperties": true,
+    "additionalProperties": false,
     "description": "Configuration for `metrics.main`.",
     "default": {}
   },

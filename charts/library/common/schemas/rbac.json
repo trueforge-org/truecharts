@@ -24,7 +24,7 @@
               "description": "Define the `name` of `subjects` entry"
             }
           },
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Configuration for `$name.subjects.$name`."
         },
         "description": "Define `subjects` for (Cluster)RoleBinding",
@@ -124,13 +124,13 @@
               "description": "Define the `verbs` list for the `rules` for the (Cluster)Role"
             }
           },
-          "additionalProperties": true
+          "additionalProperties": false
         },
         "description": "Define the `rules` for the (Cluster)Role",
         "default": []
       }
     },
-    "additionalProperties": true,
+    "additionalProperties": false,
     "description": "Define rbac",
     "default": {}
   },

@@ -42,7 +42,7 @@
                       "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.minAllowed.memory`."
                     }
                   },
-                  "additionalProperties": true,
+                  "additionalProperties": false,
                   "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.minAllowed`."
                 },
                 "maxAllowed": {
@@ -57,7 +57,7 @@
                       "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.maxAllowed.memory`."
                     }
                   },
-                  "additionalProperties": true,
+                  "additionalProperties": false,
                   "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.maxAllowed`."
                 },
                 "controlledResources": {
@@ -69,18 +69,18 @@
                   "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.controlledResources`."
                 }
               },
-              "additionalProperties": true,
+              "additionalProperties": false,
               "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item`."
             },
             "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies`."
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Configuration for `vpa.main.resourcePolicy`.",
         "default": {}
       }
     },
-    "additionalProperties": true,
+    "additionalProperties": false,
     "description": "Configuration for `vpa.main`.",
     "default": {}
   },
