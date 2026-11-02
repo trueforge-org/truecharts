@@ -89,7 +89,7 @@
                   "description": "Define extraArg(s). Those are appended **after** the `args`."
                 }
               },
-              "additionalProperties": true,
+              "additionalProperties": false,
               "description": "Configuration for `$name.podSpec.containers.$name`."
             },
             "description": "Configuration for `$name.podSpec.containers`."
@@ -105,7 +105,7 @@
                   "description": "Define the type of container - Only applies to `initContainers`"
                 }
               },
-              "additionalProperties": true,
+              "additionalProperties": false,
               "description": "Configuration for `$name.podSpec.initContainers.$name`."
             },
             "description": "Configuration for `$name.podSpec.initContainers`."
@@ -200,7 +200,7 @@
                   "description": "Pod's hostAliases hostnames"
                 }
               },
-              "additionalProperties": true
+              "additionalProperties": false
             }
           },
           "dnsPolicy": {
@@ -233,11 +233,11 @@
                       "description": "Pod's dnsConfig options value"
                     }
                   },
-                  "additionalProperties": true
+                  "additionalProperties": false
                 }
               }
             },
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Pod's dnsConfig"
           },
           "tolerations": {
@@ -267,7 +267,7 @@
                   "description": "Pod's tolerations tolerationSeconds"
                 }
               },
-              "additionalProperties": true
+              "additionalProperties": false
             }
           },
           "runtimeClassName": {
@@ -279,7 +279,7 @@
             "description": "Pod-level security context."
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Define the podSpec for the workload",
         "default": {}
       },
@@ -376,7 +376,7 @@
             "description": "Define the maxSurge Can only be used when `workload.$name.strategy` is `RollingUpdate`"
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Define the rollingUpdate options Can only be used when `workload.$name.strategy` is `RollingUpdate`"
       },
       "initContainers": {
@@ -530,7 +530,7 @@
         "description": "Whether init containers waiting for the enabled dependencies (mariadb, postgresql, mongodb, clickhouse, valkey) are added to the workload.\nThe workloads of [dependencies](/truecharts-common/dependencies) default to `false`, so they do not wait for themselves."
       }
     },
-    "additionalProperties": true,
+    "additionalProperties": false,
     "description": "Define workload",
     "default": {}
   },

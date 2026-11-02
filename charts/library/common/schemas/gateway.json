@@ -58,7 +58,7 @@
           "required": [
             "value"
           ],
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "A requested address for the gateway."
         },
         "description": "Requested addresses for the gateway. Passed as is."
@@ -104,15 +104,15 @@
                     "description": "Match namespaces by label expressions."
                   }
                 },
-                "additionalProperties": true,
+                "additionalProperties": false,
                 "description": "Namespace selector used when `from` is `Selector`."
               }
             },
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Namespaces from which ListenerSets may attach."
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Configure `namespaces.from` as `Same`, `All`, `Selector`, or `None` to control which ListenerSets may attach. Set `namespaces.selector` when `from` is `Selector`."
       },
       "tls": {
@@ -190,7 +190,7 @@
                         "description": "Configuration for `gateway.main.listeners.$item.tls.certificateRefs.$item.namespace`."
                       }
                     },
-                    "additionalProperties": true,
+                    "additionalProperties": false,
                     "description": "Configuration for `gateway.main.listeners.$item.tls.certificateRefs.$item`."
                   },
                   "description": "Configuration for `gateway.main.listeners.$item.tls.certificateRefs`."
@@ -201,7 +201,7 @@
                   "description": "Implementation specific TLS options. Passed as is."
                 }
               },
-              "additionalProperties": true,
+              "additionalProperties": false,
               "description": "Configuration for `gateway.main.listeners.$item.tls`."
             },
             "allowedRoutes": {
@@ -227,7 +227,7 @@
                       "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes.namespaces.selector`."
                     }
                   },
-                  "additionalProperties": true,
+                  "additionalProperties": false,
                   "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes.namespaces`."
                 },
                 "kinds": {
@@ -245,23 +245,23 @@
                         "minLength": 1
                       }
                     },
-                    "additionalProperties": true,
+                    "additionalProperties": false,
                     "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes.kinds.$item`."
                   },
                   "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes.kinds`."
                 }
               },
-              "additionalProperties": true,
+              "additionalProperties": false,
               "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes`."
             }
           },
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Configuration for `gateway.main.listeners.$item`."
         },
         "description": "Array of listener definitions that define the network ports and protocols the Gateway listens on.\n\nEach listener must specify:\n- `name`: Unique name for the listener\n- `port`: Network port to listen on\n- `protocol`: Protocol (HTTP, HTTPS, TCP, TLS, UDP)\n- `hostname`: Optional hostname filter\n- `tls`: Optional TLS configuration\n- `allowedRoutes`: Optional configuration for which routes can attach"
       }
     },
-    "additionalProperties": true,
+    "additionalProperties": false,
     "description": "Configuration for `gateway.main`.",
     "default": {}
   },

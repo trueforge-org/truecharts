@@ -26,7 +26,7 @@
           "default": "RuntimeDefault"
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Define the seccompProfile for the container.",
       "default": {
         "type": "RuntimeDefault"
@@ -79,7 +79,7 @@
           "default": false
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Define the capabilities for the container If at least one capability is defined in either [`add`](/truecharts-common/container/securitycontext/#securitycontextcapabilitiesadd) or [`drop`](/truecharts-common/container/securitycontext/#securitycontextcapabilitiesdrop)"
     },
     "PUID": {
@@ -93,6 +93,6 @@
       "default": "0022"
     }
   },
-  "additionalProperties": true,
+  "additionalProperties": false,
   "description": "Define securityContext for the container"
 }

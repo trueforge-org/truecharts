@@ -22,7 +22,7 @@
           "default": "2400Mi"
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "The maximum amount of resources that the container can use. Limits are **optional**, can be set to \"unlimited\" by setting it's values (`cpu` and `memory`) to `0`.",
       "default": {
         "cpu": "1500m",
@@ -49,7 +49,7 @@
           "default": "200Mi"
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "The minimum amount of resources that the container needs. Requests are **required**, because without it, kubernetes uses the `limits` as the `requests`.",
       "default": {
         "cpu": "75m",
@@ -61,6 +61,6 @@
       "description": "Exclude non-CPU and memory resource values when rendering this container."
     }
   },
-  "additionalProperties": true,
+  "additionalProperties": false,
   "description": "The resources that the container can use."
 }

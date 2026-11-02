@@ -41,7 +41,7 @@
           "description": "Configuration for `global.diagnosticMode.enabled`."
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Configuration for `global.diagnosticMode`."
     },
     "fallbackDefaults": {
@@ -65,7 +65,7 @@
                 "description": "Configuration for `global.traefik.commonMiddlewares.$item.name`."
               }
             },
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Configuration for `global.traefik.commonMiddlewares.$item`."
           },
           "description": "Settings for traefik integration",
@@ -76,7 +76,7 @@
           ]
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Settings for traefik integration",
       "default": {
         "commonMiddlewares": [
@@ -98,6 +98,6 @@
       "default": false
     }
   },
-  "additionalProperties": true,
+  "additionalProperties": false,
   "description": "Global values that apply to all charts See more info about global values [here](/truecharts-common/global)"
 }

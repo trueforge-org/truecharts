@@ -17,7 +17,7 @@
           "type": "string"
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Path condition for the match."
     },
     "headers": {
@@ -39,7 +39,7 @@
             ]
           }
         },
-        "additionalProperties": true
+        "additionalProperties": false
       }
     },
     "queryParams": {
@@ -61,7 +61,7 @@
             ]
           }
         },
-        "additionalProperties": true
+        "additionalProperties": false
       }
     },
     "method": {
@@ -71,6 +71,6 @@
       ]
     }
   },
-  "additionalProperties": true,
+  "additionalProperties": false,
   "description": "A match condition for an HTTP or gRPC route."
 }

@@ -142,7 +142,7 @@
           "description": "Match endpoints by label expressions"
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Cilium only. Select the endpoints to which this policy applies, supports Helm `tpl`"
     },
     "nodeSelector": {
@@ -170,7 +170,7 @@
           "description": "Match nodes by label expressions"
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Cilium only. Host policy, select the nodes to which this policy applies instead of pods. Requires `clusterwide: true`, supports Helm `tpl`"
     },
     "policyTypes": {
@@ -202,7 +202,7 @@
           "description": "Put the selected endpoints in egress default deny mode"
         }
       },
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Cilium only. Control whether the policy puts the selected endpoints in default deny mode"
     },
     "ingress": {
@@ -250,6 +250,6 @@
       "default": []
     }
   },
-  "additionalProperties": true,
+  "additionalProperties": false,
   "description": "Configuration for a NetworkPolicy."
 }
