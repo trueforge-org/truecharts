@@ -204,4 +204,4 @@ Never commit `common-test/charts/`, `common-test/Chart.lock` or `__snapshot__/` 
 `./run_common_tests.sh` runs these after the unit tests, the same as the `schema-validation` job in CI. They need Python 3 with PyYAML.
 
 - `test_schema.py` runs `helm lint` on `common` with every `charts/stable/*/values.yaml` and `common-test/ci/*values.yaml`. That is about 850 files and takes a few minutes, and writes the results to `stable_schema_validation.log`. Set `SCHEMA_MAX_FAILURES=<n>` to stop after `n` failures.
-- `check_complete_values_schema_coverage.py` must report 100% coverage of both structure files. The one exception is the PR that closes `additionalProperties` on objects that had it open, because closing them lowers the coverage by design. That exception is for that PR only; every other PR must reach 100%.
+- `check_complete_values_schema_coverage.py` must report 100% coverage of both structure files. 
