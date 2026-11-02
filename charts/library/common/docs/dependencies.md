@@ -592,7 +592,7 @@ The rest of this section describes the `standalone` mode. The image does not off
 
 The dependency runs `oci.trueforge.org/containerforge/postgresql` as a `StatefulSet` with one replica, as UID and GID `568` with a read-only root filesystem.
 The image is defined at the root of the chart as `postgresql18Image`, and selected by the container with `imageSelector: postgresql18Image`, so it can be overridden like any other image of the chart.
-This mode runs the PostgreSQL version of that image. Setting `operator.pgVersion` fails rendering, and the other settings under `operator`, like `type`, do not apply to this mode.
+This mode runs the PostgreSQL version of that image. Everything under `operator`, like `pgVersion` and `type`, only applies to `operator` mode and is ignored in this mode.
 Its data is stored in the `data` volume, mounted at `/config` (the data directory is `/config/<major version>`).
 
 > [!WARNING]
