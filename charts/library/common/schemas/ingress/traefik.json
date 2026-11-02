@@ -53,7 +53,7 @@
             "description": "The namespace of the middleware If not defined, the current namespace will be used."
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Configuration for `$name.integrations.traefik.middlewares.$name`."
       },
       "description": "The middlewares for this traefik integration",
@@ -67,5 +67,5 @@
     }
   },
   "description": "Create Ingress objects",
-  "additionalProperties": true
+  "additionalProperties": false
 }

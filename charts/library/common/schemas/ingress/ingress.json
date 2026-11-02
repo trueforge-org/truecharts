@@ -63,7 +63,7 @@
                     "description": "Configuration for `ingress.main.integrations.nginx.themepark.css`."
                   }
                 },
-                "additionalProperties": true,
+                "additionalProperties": false,
                 "description": "Configuration for `ingress.main.integrations.nginx.themepark`."
               },
               "ipWhitelist": {
@@ -90,15 +90,15 @@
                     "description": "Configuration for `ingress.main.integrations.nginx.auth.responseHeaders`."
                   }
                 },
-                "additionalProperties": true,
+                "additionalProperties": false,
                 "description": "Configuration for `ingress.main.integrations.nginx.auth`."
               }
             },
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Configuration for `ingress.main.integrations.nginx`."
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Create Ingress objects",
         "default": {}
       },
@@ -223,17 +223,17 @@
                         "description": "Define the service port for this path"
                       }
                     },
-                    "additionalProperties": true,
+                    "additionalProperties": false,
                     "description": "Overrides the selected service for this path"
                   }
                 },
-                "additionalProperties": true,
+                "additionalProperties": false,
                 "description": "Configuration for `ingress.main.hosts.$item.paths.$item`."
               },
               "description": "Define the paths for this ingress"
             }
           },
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Configuration for `ingress.main.hosts.$item`."
         },
         "description": "Define the hosts for this ingress",
@@ -264,14 +264,14 @@
               "description": "Define the cluster certificate for this TLS"
             }
           },
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Configuration for `ingress.main.tls.$item`."
         },
         "description": "Define TLS for this ingress",
         "default": []
       }
     },
-    "additionalProperties": true,
+    "additionalProperties": false,
     "description": "Create Ingress objects",
     "default": {}
   },
