@@ -170,14 +170,7 @@ Configuration for `dependencies.postgresql.operator.monitoring`.
 
 Version of PostgreSQL to use, changes the cluster naming scheme. Without a value, `global.fallbackDefaults.cnpg.pgVersion` is used, and `type: vectors` uses `16` as it has no image for PostgreSQL 18. It only applies to `operator` mode, setting it in `standalone` mode fails rendering.
 
-| Field      | Value                                        |
-| ---------- | -------------------------------------------- |
-| Key        | `dependencies.postgresql.operator.pgVersion` |
-| Type       | `integer`                                    |
-| Required   | ❌                                           |
-| Helm `tpl` | ❌                                           |
-| Default    | `18`                                         |
-| Enum       | `15`, `16`, `17`, `18`                       |
+It only applies to `operator` mode, setting it in `standalone` mode fails rendering.
 
 Without a value, `global.fallbackDefaults.cnpg.pgVersion` is used. `type: vectors` has no image for PostgreSQL 18, so without a value it uses `16`.
 
@@ -194,6 +187,15 @@ CloudNativePG upgrades an existing cluster in place when its major version chang
 - Run `ANALYZE` afterwards, as `pg_upgrade` does not keep the statistics.
 
 :::
+
+| Field      | Value                                        |
+| ---------- | -------------------------------------------- |
+| Key        | `dependencies.postgresql.operator.pgVersion` |
+| Type       | `integer`                                    |
+| Required   | ❌                                           |
+| Helm `tpl` | ❌                                           |
+| Default    | `18`                                         |
+| Enum       | `15`, `16`, `17`, `18`                       |
 
 Example
 

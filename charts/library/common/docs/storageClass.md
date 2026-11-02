@@ -235,7 +235,7 @@ storageClass:
     parameters:
       param1: value1
       param2: value2
-    reclaimPolicy: retain
+    reclaimPolicy: Retain
     allowVolumeExpansion: true
     volumeBindingMode: Immediate
     mountOptions:

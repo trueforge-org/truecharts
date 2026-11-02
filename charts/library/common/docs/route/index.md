@@ -1,3 +1,355 @@
+---
+title: Route
+---
+
+:::note
+
+- This page is generated from JSON schema.
+- See the [Full Examples](/truecharts-common/route#full-examples) section for complete examples.
+
+:::
+
+## Appears in
+
+- `.Values.route`
+
+---
+
+## `route`
+
+Configuration for `route`.
+
+| Field      | Value   |
+| ---------- | ------- |
+| Key        | `route` |
+| Type       | `map`   |
+| Required   | ❌      |
+| Helm `tpl` | ❌      |
+| Default    | unset   |
+
+---
+
+### `route.$name.annotations`
+
+Configuration for `route.main.annotations`.
+
+| Field      | Value                     |
+| ---------- | ------------------------- |
+| Key        | `route.$name.annotations` |
+| Type       | `map`                     |
+| Required   | ❌                        |
+| Helm `tpl` | ❌                        |
+| Default    | unset                     |
+
+---
+
+### `route.$name.enabled`
+
+Configuration for `route.main.enabled`.
+
+| Field      | Value                 |
+| ---------- | --------------------- |
+| Key        | `route.$name.enabled` |
+| Type       | `boolean, string`     |
+| Required   | ❌                    |
+| Helm `tpl` | ❌                    |
+| Default    | `false`               |
+
+Example
+
+```yaml
+route:
+  $name:
+    enabled: false
+```
+
+---
+
+### `route.$name.expandObjectName`
+
+Prefix the name of the route with the name of the release and chart.
+
+| Field      | Value                          |
+| ---------- | ------------------------------ |
+| Key        | `route.$name.expandObjectName` |
+| Type       | `boolean`                      |
+| Required   | ❌                             |
+| Helm `tpl` | ❌                             |
+| Default    | `true`                         |
+
+Example
+
+```yaml
+route:
+  $name:
+    expandObjectName: true
+```
+
+---
+
+### `route.$name.gateway`
+
+Name of a gateway outside of this chart. Replaces `parentRefs`. Cannot be used with a `targetSelector` string.
+
+| Field      | Value                 |
+| ---------- | --------------------- |
+| Key        | `route.$name.gateway` |
+| Type       | `string`              |
+| Required   | ❌                    |
+| Helm `tpl` | ❌                    |
+| Default    | `""`                  |
+
+Example
+
+```yaml
+route:
+  $name:
+    gateway: ""
+```
+
+---
+
+### `route.$name.gatewayNamespace`
+
+Namespace of `gateway`. Defaults to the namespace of the route.
+
+| Field      | Value                          |
+| ---------- | ------------------------------ |
+| Key        | `route.$name.gatewayNamespace` |
+| Type       | `string`                       |
+| Required   | ❌                             |
+| Helm `tpl` | ❌                             |
+| Default    | `""`                           |
+
+Example
+
+```yaml
+route:
+  $name:
+    gatewayNamespace: ""
+```
+
+---
+
+### `route.$name.hostnames`
+
+Host addresses, supports Helm `tpl`. Required for `TLSRoute`, not supported by `TCPRoute` and `UDPRoute`.
+
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `route.$name.hostnames` |
+| Type       | `list of string`        |
+| Required   | ❌                      |
+| Helm `tpl` | ❌                      |
+| Default    | `[]`                    |
+
+Example
+
+```yaml
+route:
+  $name:
+    hostnames:
+      []
+```
+
+---
+
+### `route.$name.integrations`
+
+Integrations of this route. `certManager`, `envoy`, `homepage` and `traefik` are supported, any other fails rendering.
+
+| Field      | Value                      |
+| ---------- | -------------------------- |
+| Key        | `route.$name.integrations` |
+| Type       | `map`                      |
+| Required   | ❌                         |
+| Helm `tpl` | ❌                         |
+| Default    | unset                      |
+
+---
+
+### `route.$name.kind`
+
+Configuration for `route.main.kind`.
+
+| Field      | Value                                                        |
+| ---------- | ------------------------------------------------------------ |
+| Key        | `route.$name.kind`                                           |
+| Type       | `string`                                                     |
+| Required   | ❌                                                           |
+| Helm `tpl` | ❌                                                           |
+| Default    | `"HTTPRoute"`                                                |
+| Enum       | `GRPCRoute`, `HTTPRoute`, `TCPRoute`, `TLSRoute`, `UDPRoute` |
+
+Example
+
+```yaml
+route:
+  $name:
+    kind: HTTPRoute
+```
+
+---
+
+### `route.$name.labels`
+
+Configuration for `route.main.labels`.
+
+| Field      | Value                |
+| ---------- | -------------------- |
+| Key        | `route.$name.labels` |
+| Type       | `map`                |
+| Required   | ❌                   |
+| Helm `tpl` | ❌                   |
+| Default    | unset                |
+
+---
+
+### `route.$name.listenerPort`
+
+Port of the listeners created for `tls` and `integrations.certManager`. Defaults to `global.fallbackDefaults.routeListenerPort`.
+
+| Field      | Value                      |
+| ---------- | -------------------------- |
+| Key        | `route.$name.listenerPort` |
+| Type       | `integer`                  |
+| Required   | ❌                         |
+| Helm `tpl` | ❌                         |
+| Default    | unset                      |
+| Minimum    | `1`                        |
+| Maximum    | `65535`                    |
+
+---
+
+### `route.$name.listenerSet`
+
+Name of a `listenerSet` of this chart to attach to. Replaces `parentRefs`. Cannot be used with `gateway`, a `targetSelector` string, `tls` or `integrations.certManager`.
+
+| Field      | Value                     |
+| ---------- | ------------------------- |
+| Key        | `route.$name.listenerSet` |
+| Type       | `string`                  |
+| Required   | ❌                        |
+| Helm `tpl` | ❌                        |
+| Default    | `""`                      |
+
+Example
+
+```yaml
+route:
+  $name:
+    listenerSet: ""
+```
+
+---
+
+### `route.$name.parentRefs`
+
+Configuration for `route.main.parentRefs`.
+
+| Field      | Value                    |
+| ---------- | ------------------------ |
+| Key        | `route.$name.parentRefs` |
+| Type       | `list of map`            |
+| Required   | ❌                       |
+| Helm `tpl` | ❌                       |
+| Default    | unset                    |
+
+---
+
+### `route.$name.primary`
+
+Make this the primary route, used in notes and the chart context. Only 1 route can be primary.
+
+| Field      | Value                 |
+| ---------- | --------------------- |
+| Key        | `route.$name.primary` |
+| Type       | `boolean`             |
+| Required   | ❌                    |
+| Helm `tpl` | ❌                    |
+| Default    | `true`                |
+
+Example
+
+```yaml
+route:
+  $name:
+    primary: true
+```
+
+---
+
+### `route.$name.required`
+
+Fail rendering if this route is disabled, unless an ingress is enabled.
+
+| Field      | Value                  |
+| ---------- | ---------------------- |
+| Key        | `route.$name.required` |
+| Type       | `boolean`              |
+| Required   | ❌                     |
+| Helm `tpl` | ❌                     |
+| Default    | `false`                |
+
+Example
+
+```yaml
+route:
+  $name:
+    required: false
+```
+
+---
+
+### `route.$name.rules`
+
+Routing rules. Without rules everything goes to the primary service. Fields the route kind does not support fail rendering.
+
+| Field      | Value               |
+| ---------- | ------------------- |
+| Key        | `route.$name.rules` |
+| Type       | `list of map`       |
+| Required   | ❌                  |
+| Helm `tpl` | ❌                  |
+| Default    | unset               |
+
+---
+
+### `route.$name.targetSelector`
+
+A string selects a gateway in this chart and replaces `parentRefs`. A map of `service: port` selects the default backend, same as an ingress.
+
+| Field      | Value                        |
+| ---------- | ---------------------------- |
+| Key        | `route.$name.targetSelector` |
+| Type       | `null, string, map`          |
+| Required   | ❌                           |
+| Helm `tpl` | ❌                           |
+| Default    | unset                        |
+
+---
+
+### `route.$name.tls`
+
+TLS for this route. Creates a ListenerSet on the selected gateway and attaches the route to it. Needs `gateway` or a `targetSelector` string. Only for `HTTPRoute` and `GRPCRoute`. Ignored when `integrations.certManager` is enabled.
+
+| Field      | Value             |
+| ---------- | ----------------- |
+| Key        | `route.$name.tls` |
+| Type       | `list of map`     |
+| Required   | ❌                |
+| Helm `tpl` | ❌                |
+| Default    | unset             |
+
+---
+
+## Child Pages
+
+- [Match](match.md) - A match condition for an HTTP or gRPC route.
+- [Timeouts](timeouts.md) - Timeout configuration for an HTTP route.
+
+---
+
 ## Full Examples
 
 ```yaml
@@ -151,6 +503,40 @@ The listener port defaults to `global.fallbackDefaults.routeListenerPort`, which
 Traefik keeps all certificates in one store and selects them by hostname across all listeners. Any namespace allowed by `allowedListeners` can therefore supply a certificate for a hostname on that gateway, so only allow namespaces you trust.
 
 `tls` works without that cert-manager feature, as `certificateIssuer` creates the `Certificate` directly.
+
+### TLS with your own listener set
+
+`tls` and `integrations.certManager` create a ListenerSet for you, per gateway and port. To control the listeners yourself, define a [`listenerSet`](/truecharts-common/listenerSet) and attach the route to it with `route.$name.listenerSet`.
+
+A route can't use both. Rendering also fails if a generated ListenerSet has the same name as one of yours, or if both use the same hostname and port on a gateway, because listeners conflict on a gateway and the oldest one wins. Only listener sets and routes in the same chart can be checked.
+
+```yaml
+listenerSet:
+  main:
+    enabled: true
+    parentRef:
+      name: external
+      namespace: networking
+    listeners:
+      - name: https
+        hostname: app.example.com
+        port: 443
+        protocol: HTTPS
+        tls:
+          mode: Terminate
+          certificateRefs:
+            - name: my-certificate
+        allowedRoutes:
+          namespaces:
+            from: Same
+
+route:
+  main:
+    enabled: true
+    listenerSet: main
+    hostnames:
+      - app.example.com
+```
 
 ## Migrating from an ingress
 

@@ -50,7 +50,7 @@ Override the PUID for the container
 | Field      | Value                                       |
 | ---------- | ------------------------------------------- |
 | Key        | `workload.podSpec.containers.fixedEnv.PUID` |
-| Type       | `map`                                       |
+| Type       | `string, integer`                           |
 | Required   | ❌                                          |
 | Helm `tpl` | ❌                                          |
 | Default    | unset                                       |
@@ -64,7 +64,7 @@ Override the timezone for the container
 | Field      | Value                                     |
 | ---------- | ----------------------------------------- |
 | Key        | `workload.podSpec.containers.fixedEnv.TZ` |
-| Type       | `map`                                     |
+| Type       | `string`                                  |
 | Required   | ❌                                        |
 | Helm `tpl` | ❌                                        |
 | Default    | unset                                     |
@@ -78,7 +78,7 @@ Override the umask for the container
 | Field      | Value                                        |
 | ---------- | -------------------------------------------- |
 | Key        | `workload.podSpec.containers.fixedEnv.UMASK` |
-| Type       | `map`                                        |
+| Type       | `string, integer`                            |
 | Required   | ❌                                           |
 | Helm `tpl` | ❌                                           |
 | Default    | unset                                        |

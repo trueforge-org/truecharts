@@ -114,6 +114,9 @@ package_chart() {
     args+=(--config "$config")
   fi
 
+  # Helm only validates the values of a chart against a schema in the chart itself
+  .github/scripts/add_chart_schema.sh "$chart"
+
   echo "Packaging chart '$chart'..."
   cr package "${args[@]}"
 }

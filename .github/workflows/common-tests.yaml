@@ -81,6 +81,11 @@ jobs:
                   --charts charts/library/common-test \
                   --debug
 
+      - name: Check the schema on a chart that depends on common
+        run: |
+          python3 charts/library/common/generate_bundled_schema.py --check
+          .github/scripts/test_chart_schema.sh
+
   unittest:
     needs:
       - lint
@@ -169,6 +174,7 @@ jobs:
         run: |
           python3 charts/library/common/test_schema.py --max-failures 0 --output-file stable_schema_validation.log
           python3 charts/library/common/check_complete_values_schema_coverage.py
+          python3 charts/library/common/generate_docs.py --check
 
       - name: Upload schema validation log
         if: always()

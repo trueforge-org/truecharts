@@ -22,7 +22,7 @@ See [args](/truecharts-common/container/args#args) ---
 | Field      | Value                              |
 | ---------- | ---------------------------------- |
 | Key        | `workload.podSpec.containers.args` |
-| Type       | `map, string, list of unknown`     |
+| Type       | `map, string, list of string`      |
 | Required   | ❌                                 |
 | Helm `tpl` | ❌                                 |
 | Default    | unset                              |

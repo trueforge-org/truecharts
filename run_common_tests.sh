@@ -87,20 +87,15 @@ trap cleanup EXIT
 trap 'exit 130' INT TERM
 
 # The unit tests run in a scratch copy, so no build artifacts or snapshots end up in the repository.
-# The "$id" of values.schema.json holds the CI checkout path, and its "$ref"s resolve relative to it.
-# The copy points it to itself, the file in the repository must keep the CI path.
 scratch_dir="$(mktemp -d)" || fail "Failed to create a scratch directory"
 cp -R charts/library "$scratch_dir/" || fail "Failed to copy charts/library"
 common_test_path="$scratch_dir/library/common-test"
-scratch_schema="$scratch_dir/library/common/values.schema.json"
 rm -rf "$common_test_path/charts" "$common_test_path/Chart.lock"
-if [ -f "$scratch_schema" ]; then
-  escaped_id="$(printf '%s' "file://$scratch_schema" | sed 's/[\\&#]/\\&/g')"
-  if ! sed -E "s#(\"\\\$id\"[[:space:]]*:[[:space:]]*\")[^\"]*\"#\1${escaped_id}\"#" "$scratch_schema" > "$scratch_schema.tmp" ||
-    ! mv "$scratch_schema.tmp" "$scratch_schema"; then
-    fail "Failed to point the \$id of values.schema.json to the scratch copy"
-  fi
-fi
+
+echo "📦 Checking the bundled schema..."
+python3 charts/library/common/generate_bundled_schema.py --check || fail "values.schema.json is not up to date"
+python3 charts/library/common/generate_docs.py --check || fail "The docs are not up to date"
+.github/scripts/test_chart_schema.sh || fail "The schema is not validated on a chart that depends on common"
 
 echo "🔨 Building common..."
 helm dependency update "$common_test_path" || fail "Failed to build common"
@@ -147,4 +142,3 @@ python3 "$common_coverage_script" || { status=$?; cleanup; exit "$status"; }
 cleanup
 
 echo "✅ Common tests passed"
-

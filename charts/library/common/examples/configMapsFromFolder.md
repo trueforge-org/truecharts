@@ -1,42 +1,33 @@
-# ConfigMaps From Folder Examples
+## Full Examples
 
-## Basic Example
+### Basic Example
 
-Enable the feature and specify the base path where your config files are stored:
+Your file structure:
+```
+myapp/
+├── Chart.yaml
+├── values.yaml
+└── files/
+    └── configMaps/
+        ├── app-config/
+        │   ├── config.json
+        │   └── settings.yaml
+        └── scripts/
+            └── startup.sh
+```
 
+Your values.yaml:
 ```yaml
 configMapsFromFolder:
   enabled: true
   basePath: "files/configMaps"
 ```
 
-With this file structure in your chart:
-```
-files/
-└── configMaps/
-    ├── app-config/
-    │   ├── config.json
-    │   └── settings.yaml
-    └── scripts/
-        └── startup.sh
-```
+This will create two ConfigMaps:
+- `myapp-app-config` with keys: `config.json`, `settings.yaml`
+- `myapp-scripts` with key: `startup.sh`
 
-This will automatically create:
-- A ConfigMap named `<release-name>-app-config` with `config.json` and `settings.yaml`
-- A ConfigMap named `<release-name>-scripts` with `startup.sh`
-
-## Override ConfigMap Names
-
-```yaml
-configMapsFromFolder:
-  enabled: true
-  basePath: "files/configMaps"
-  configMapsOverrides:
-    app-config:
-      forceRename: "my-custom-config"
-```
-
-## Add Labels and Annotations
+### Advanced Example with Overrides
 
 ```yaml
 configMapsFromFolder:
@@ -44,29 +35,26 @@ configMapsFromFolder:
   basePath: "files/configMaps"
   configMapsOverrides:
     app-config:
+      forceRename: "my-custom-config-name"
       labels:
         environment: production
         team: platform
       annotations:
-        description: "Application configuration"
-```
-
-## File-Level Controls
-
-### Exclude Files
-
-```yaml
-configMapsFromFolder:
-  enabled: true
-  basePath: "files/configMaps"
-  configMapsOverrides:
-    app-config:
+        description: "Application configuration files"
       fileAttributeOverrides:
-        README.md:
-          exclude: true  # Don't include this file
+        config.json:
+          exclude: false
+        template.tpl:
+          escaped: true  # Don't process Helm templates in this file
+    scripts:
+      fileAttributeOverrides:
+        startup.sh:
+          exclude: false
+        logo.png:
+          binary: true  # Treat as binary, will be base64 encoded
 ```
 
-### Handle Binary Files
+### Example with Binary Files
 
 ```yaml
 configMapsFromFolder:
@@ -76,65 +64,9 @@ configMapsFromFolder:
     images:
       fileAttributeOverrides:
         logo.png:
-          binary: true  # Will be base64 encoded
-```
-
-Binary files with common extensions (png, jpg, pdf, etc.) are automatically detected and base64 encoded.
-
-### Escape Helm Templates
-
-If a file contains `{{ }}` syntax that you don't want Helm to process:
-
-```yaml
-configMapsFromFolder:
-  enabled: true
-  basePath: "files/configMaps"
-  configMapsOverrides:
-    templates:
-      fileAttributeOverrides:
-        app.template:
-          escaped: true  # Preserve {{ }} in the file
-```
-
-## Complete Example
-
-```yaml
-configMapsFromFolder:
-  enabled: true
-  basePath: "files/configMaps"
-  configMapsOverrides:
-    # Application configuration
-    app-config:
-      forceRename: "myapp-config"
-      labels:
-        app: myapp
-        component: config
-      annotations:
-        description: "Main application configuration"
-      fileAttributeOverrides:
-        config.json:
-          exclude: false
-        .gitkeep:
-          exclude: true
-    
-    # Scripts
-    scripts:
-      labels:
-        app: myapp
-        component: scripts
-      fileAttributeOverrides:
-        init.sh:
-          exclude: false
-        deprecated.sh:
-          exclude: true
-    
-    # Assets with binary files
-    assets:
-      fileAttributeOverrides:
-        logo.png:
           binary: true
+        icon.svg:
+          binary: false  # SVG can be stored as text
         favicon.ico:
           binary: true
-        style.css:
-          binary: false
 ```

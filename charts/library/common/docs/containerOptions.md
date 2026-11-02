@@ -39,13 +39,14 @@ Defines the NVIDIA_CAPS to be passed as an environment variable to the container
 | Type       | `list of string`               |
 | Required   | ❌                             |
 | Helm `tpl` | ❌                             |
-| Default    | `"[\"all\"]"`                  |
+| Default    | `["all"]`                      |
 
 Example
 
 ```yaml
 containerOptions:
-  NVIDIA_CAPS: ["all"]
+  NVIDIA_CAPS:
+    - all
 ```
 
 ---
