@@ -43,6 +43,24 @@
       },
       "addresses": {
         "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "Type of the address, like `IPAddress` or `Hostname`. Defaults to `IPAddress` in Gateway API."
+            },
+            "value": {
+              "type": "string",
+              "description": "The address value, like an IP address or a hostname."
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "additionalProperties": true,
+          "description": "A requested address for the gateway."
+        },
         "description": "Requested addresses for the gateway. Passed as is."
       },
       "infrastructure": {
