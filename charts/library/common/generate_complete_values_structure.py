@@ -7,6 +7,7 @@ This script collects all values.yaml files from:
 - All charts under charts/stable/* and charts/incubator/*
 - Common-test ci-values from charts/library/common-test/ci/*values.yaml
 - Common values.yaml from charts/library/common/values.yaml
+- Keys listed under `set:` in common-test unittests (charts/library/common-test/tests/**/*_test.yaml)
 
 It merges them into a comprehensive structure showing all possible keys,
 while preserving comments from the existing file where they exist.
@@ -14,6 +15,7 @@ while preserving comments from the existing file where they exist.
 
 import argparse
 import sys
+import warnings
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -173,17 +175,13 @@ def normalize_variable_keys(data: Any, parent_key: str = "", in_operator: bool =
     # Check if current parent_key is one that contains variable-named children
     if parent_key in PARENT_KEYS_WITH_VARIABLE_CHILDREN and not in_operator:
         # This dict contains variable-named objects
-        # Collect all the child objects and merge them into a single 'objectname' entry
+        # Merge all the child objects into a single 'objectname' entry, so keys that only some children set are kept
         if data:
-            # Get the first key as a template for the objectname entry
-            first_key = next(iter(data.keys()))
-            first_value = data[first_key]
-            
-            # Recursively normalize the template value
-            normalized_template = normalize_variable_keys(first_value, first_key, in_operator)
-            
-            # Return a dict with just 'objectname' as the key
-            result['objectname'] = normalized_template
+            template = None
+            for child_key, child_value in data.items():
+                normalized_child = normalize_variable_keys(child_value, child_key, in_operator)
+                template = merge_into_structure(template, normalized_child)
+            result['objectname'] = template
             return result
         else:
             return result
@@ -239,6 +237,49 @@ def collect_all_values_files(repo_root: Path) -> List[Path]:
         values_files.insert(0, common_values)  # Add at beginning for base structure
     
     return values_files
+
+
+def collect_unittest_files(repo_root: Path) -> List[Path]:
+    """Collect the helm-unittest files of common-test, in a stable order."""
+    tests_dir = repo_root / "charts" / "library" / "common-test" / "tests"
+    if not tests_dir.exists():
+        return []
+    return sorted(tests_dir.rglob("*_test.yaml"))
+
+
+def expects_template_failure(test: Dict[str, Any]) -> bool:
+    """Return True if a unittest asserts that rendering fails, so its `set:` values are invalid on purpose."""
+    return any(isinstance(a, dict) and "failedTemplate" in a for a in test.get("asserts") or [])
+
+
+def load_unittest_set_values(file_path: Path) -> List[Dict[str, Any]]:
+    """
+    Return the `set:` blocks of a helm-unittest file.
+
+    `set:` can be on the suite and on each test. Its keys are chart values,
+    so they are merged like the keys of the values files. Tests that expect
+    a template failure are skipped, as their values are invalid on purpose
+    (eg `targetSelector` given as a mapping to check that it is rejected).
+    """
+    with warnings.catch_warnings():
+        # ruamel warns when a unittest file reuses an anchor across its tests
+        warnings.simplefilter("ignore")
+        suite = load_yaml_file(file_path)
+
+    set_blocks = []
+    if isinstance(suite.get("set"), dict):
+        set_blocks.append(suite["set"])
+    for test in suite.get("tests") or []:
+        if isinstance(test, dict) and isinstance(test.get("set"), dict) and not expects_template_failure(test):
+            set_blocks.append(test["set"])
+    return set_blocks
+
+
+def merge_into_structure(complete_structure: Any, data: Dict[str, Any]) -> Any:
+    """Merge a values dict into the complete structure, keeping comments when possible."""
+    if HAS_RUAMEL and complete_structure:
+        return merge_preserving_comments(complete_structure, data)
+    return merge_structures(complete_structure, data)
 
 
 def load_existing_with_comments(file_path: Path) -> Any:
@@ -343,10 +384,13 @@ def generate_complete_structure(repo_root: Path, existing_file: Path = None) -> 
             print(f"Processing {i}/{len(values_files)}...", file=sys.stderr)
         
         values_data = load_yaml_file(values_file)
-        if HAS_RUAMEL and complete_structure:
-            complete_structure = merge_preserving_comments(complete_structure, values_data)
-        else:
-            complete_structure = merge_structures(complete_structure, values_data)
+        complete_structure = merge_into_structure(complete_structure, values_data)
+
+    unittest_files = collect_unittest_files(repo_root)
+    print(f"Found {len(unittest_files)} common-test unittest files", file=sys.stderr)
+    for unittest_file in unittest_files:
+        for set_values in load_unittest_set_values(unittest_file):
+            complete_structure = merge_into_structure(complete_structure, set_values)
     
     print("Merge complete. Normalizing structure...", file=sys.stderr)
     
