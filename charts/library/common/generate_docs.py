@@ -459,7 +459,7 @@ def schema_maximum(
 
 
 def enum_to_inline_text(values: list[Any]) -> str:
-    rendered = [f"`{json.dumps(item, ensure_ascii=False).strip('"')}`" for item in values]
+    rendered = ["`" + json.dumps(item, ensure_ascii=False).strip('"') + "`" for item in values]
     joined = ", ".join(rendered)
     if len(joined) > 160:
         return f"{len(values)} values"
