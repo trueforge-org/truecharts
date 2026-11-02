@@ -36,7 +36,7 @@ Requested addresses for the gateway. Passed as is.
 | Field      | Value                     |
 | ---------- | ------------------------- |
 | Key        | `gateway.$name.addresses` |
-| Type       | `list of unknown`         |
+| Type       | `list of map`             |
 | Required   | ❌                        |
 | Helm `tpl` | ❌                        |
 | Default    | unset                     |
