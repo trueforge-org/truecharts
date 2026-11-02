@@ -677,7 +677,7 @@ All settings of the cluster go under `dependencies.postgresql.operator`. Only th
 
 | Key                                                      | Type     | Default                  | Description                                                                                                  |
 | -------------------------------------------------------- | -------- | ------------------------ | ------------------------------------------------------------------------------------------------------------ |
-| `operator.type`                                          | `string` | `postgres`               | `postgres`, `postgis`, `timescaledb`, `vectors` or `vectorchord`.                                            |
+| `operator.type`                                          | `string` | `postgres`               | `postgres`, `postgis`, `vectors` or `vectorchord`.                                                           |
 | `operator.pgVersion`                                     | `int`    | `18`                     | Major version of PostgreSQL, `15` to `18`. Selects the image of the chart. Defaults to the PostgreSQL 18 fallback.      |
 | `operator.mode`                                          | `string` | `standalone`             | `standalone` creates the cluster, `recovery` creates it from a backup or object store.                       |
 | `operator.hibernate`                                     | `bool`   | `false`                  | Puts the cluster in hibernation. The poolers are scaled to `0`.                                              |
@@ -687,8 +687,6 @@ All settings of the cluster go under `dependencies.postgresql.operator`. Only th
 | `operator.monitoring`                                    | `map`    | `{enablePodMonitor: false, ...}` | Metrics (`enablePodMonitor`, `disableDefaultQueries`, `customQueries`).                              |
 | `operator.recovery`                                      | `map`    | `{method: object_store}` | Recovery source, used when `operator.mode` is `recovery`.                                                    |
 | `operator.backups`                                       | `map`    | `{enabled: false, ...}`  | Barman Cloud backups (`credentials`, `scheduledBackups`, `manualBackups`, `retentionPolicy`, ...).           |
-
-`type: timescaledb` uses the `postgresTimescaledb<version>Image` images (`oci.trueforge.org/containerforge/timescaledb<version>`), which add TimescaleDB to the images of CloudNativePG. PostgreSQL 15 stays on TimescaleDB 2.28.3, the last release for that version. The telemetry of TimescaleDB is off by default, set `timescaledb.telemetry_level` under `operator.cluster.postgresql` to change it.
 
 See [Operator](dependencies/postgresql/operator/index.md) for all the settings.
 
