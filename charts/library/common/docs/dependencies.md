@@ -656,7 +656,7 @@ This renders, among others:
 ## PostgreSQL Operator
 
 With `mode: operator` (the default), common spawns a CloudNativePG `Cluster` (`postgresql.cnpg.io/v1`) instead of merging the workload, service and persistence of the dependency.
-The cloudnative-pg operator, and for backups the barman-cloud plugin, with their CRDs have to be installed in the cluster, a chart should add them to its `operator.verify` list.
+The cloudnative-pg operator, and for backups the barman-cloud plugin, with their CRDs have to be installed in the cluster.
 
 All settings of the cluster go under `dependencies.postgresql.operator`. Only the credentials stay in `depconfig`, which is shared with the `standalone` mode. They are the same setting, so a chart can switch between the modes without changing how the app connects.
 
@@ -1002,7 +1002,7 @@ This renders, among others:
 
 With `mode: operator`, common spawns a `ValkeyCluster` (`valkey.io/v1alpha1`) of the [valkey-operator](https://github.com/valkey-io/valkey-operator) instead of merging the workload, service, persistence, etc. of the dependency.
 The [`ValkeyNode`](https://github.com/valkey-io/valkey-operator/blob/main/docs/valkeynode.md) resources are managed by the operator itself, so they are not rendered.
-The valkey-operator and its CRDs have to be installed in the cluster, a chart should add it to its `operator.verify` list.
+The valkey-operator and its CRDs have to be installed in the cluster.
 
 All settings of the cluster go under `dependencies.valkey.operator`. Only the credentials stay in `depconfig`.
 

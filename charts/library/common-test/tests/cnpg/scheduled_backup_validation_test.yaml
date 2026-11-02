@@ -50,9 +50,6 @@ tests:
 
   - it: should fail with invalid backupOwnerReference in scheduledBackups backup
     set:
-      operator:
-        verify:
-          enabled: false
       dependencies:
         postgresql:
           enabled: true
