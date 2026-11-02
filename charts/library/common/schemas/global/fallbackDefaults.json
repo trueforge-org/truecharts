@@ -3,7 +3,10 @@
   "type": "object",
   "properties": {
     "storageClass": {
-      "type": ["string", "null"],
+      "type": [
+        "string",
+        "null"
+      ],
       "description": "Configuration for `global.fallbackDefaults.storageClass`.",
       "default": null
     },
@@ -239,7 +242,7 @@
     },
     "allowRollingUpdateWithRWO": {
       "type": "boolean",
-      "description": "Keep `strategy: RollingUpdate` on a single replica Deployment with `ReadWriteOnce` volumes, instead of changing it to `Recreate`. Can be overruled with `workload.$name.allowRollingUpdateWithRWO`. Updates can get stuck if the storage stays locked to the old pod, which can happen on the same node with storage like iSCSI, and two pods use the same data during an update.",
+      "description": "Keep `strategy: RollingUpdate` on a single replica Deployment with `ReadWriteOnce` volumes, instead of changing it to `Recreate`. Can be overruled with `workload.$name.allowRollingUpdateWithRWO`. Updates can get stuck if the storage stays locked to the old pod, which can happen on the same node with storage like iSCSI, and two pods use the same data during an update.\n\n:::caution\n\nEnabling this applies to all workloads of the chart that set `strategy: RollingUpdate`. Common shows a warning in the notes for each of them.\n\n:::",
       "default": false
     },
     "routeListenerPort": {

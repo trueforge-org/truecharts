@@ -39,14 +39,43 @@ Configuration for `global.fallbackDefaults.accessModes`.
 | Type       | `list of string`                      |
 | Required   | ❌                                    |
 | Helm `tpl` | ❌                                    |
-| Default    | `"ReadWriteOnce"`                     |
+| Default    | `["ReadWriteOnce"]`                   |
 
 Example
 
 ```yaml
 global:
   fallbackDefaults:
-    accessModes: ReadWriteOnce
+    accessModes:
+      - ReadWriteOnce
+```
+
+---
+
+### `global.fallbackDefaults.allowRollingUpdateWithRWO`
+
+Keep `strategy: RollingUpdate` on a single replica Deployment with `ReadWriteOnce` volumes, instead of changing it to `Recreate`. Can be overruled with `workload.$name.allowRollingUpdateWithRWO`. Updates can get stuck if the storage stays locked to the old pod, which can happen on the same node with storage like iSCSI, and two pods use the same data during an update.
+
+:::caution
+
+Enabling this applies to all workloads of the chart that set `strategy: RollingUpdate`. Common shows a warning in the notes for each of them.
+
+:::
+
+| Field      | Value                                               |
+| ---------- | --------------------------------------------------- |
+| Key        | `global.fallbackDefaults.allowRollingUpdateWithRWO` |
+| Type       | `boolean`                                           |
+| Required   | ❌                                                  |
+| Helm `tpl` | ❌                                                  |
+| Default    | `false`                                             |
+
+Example
+
+```yaml
+global:
+  fallbackDefaults:
+    allowRollingUpdateWithRWO: false
 ```
 
 ---
@@ -75,7 +104,7 @@ Configuration for `global.fallbackDefaults.persistenceType`.
 | Type       | `string`                                  |
 | Required   | ❌                                        |
 | Helm `tpl` | ❌                                        |
-| Default    | `"emptyDir"`                              |
+| Default    | `"pvc"`                                   |
 | Min Length | `1`                                       |
 
 Example
@@ -83,7 +112,7 @@ Example
 ```yaml
 global:
   fallbackDefaults:
-    persistenceType: emptyDir
+    persistenceType: pvc
 ```
 
 ---
@@ -161,14 +190,14 @@ Configuration for `global.fallbackDefaults.pvcRetain`.
 | Type       | `boolean`                           |
 | Required   | ❌                                  |
 | Helm `tpl` | ❌                                  |
-| Default    | `true`                              |
+| Default    | `false`                             |
 
 Example
 
 ```yaml
 global:
   fallbackDefaults:
-    pvcRetain: true
+    pvcRetain: false
 ```
 
 ---
@@ -192,34 +221,6 @@ Example
 global:
   fallbackDefaults:
     pvcSize: 100Gi
-```
-
----
-
-### `global.fallbackDefaults.allowRollingUpdateWithRWO`
-
-Keep `strategy: RollingUpdate` on a single replica Deployment with `ReadWriteOnce` volumes, instead of changing it to `Recreate`. Can be overruled with `workload.$name.allowRollingUpdateWithRWO`. Updates can get stuck if the storage stays locked to the old pod, which can happen on the same node with storage like iSCSI, and two pods use the same data during an update.
-
-:::caution
-
-Enabling this applies to all workloads of the chart that set `strategy: RollingUpdate`. Common shows a warning in the notes for each of them.
-
-:::
-
-| Field      | Value                                               |
-| ---------- | --------------------------------------------------- |
-| Key        | `global.fallbackDefaults.allowRollingUpdateWithRWO` |
-| Type       | `boolean`                                           |
-| Required   | ❌                                                  |
-| Helm `tpl` | ❌                                                  |
-| Default    | `false`                                             |
-
-Example
-
-```yaml
-global:
-  fallbackDefaults:
-    allowRollingUpdateWithRWO: false
 ```
 
 ---
@@ -340,7 +341,16 @@ Configuration for `global.fallbackDefaults.vctAccessModes`.
 | Type       | `list of string`                         |
 | Required   | ❌                                       |
 | Helm `tpl` | ❌                                       |
-| Default    | unset                                    |
+| Default    | `["ReadWriteOnce"]`                      |
+
+Example
+
+```yaml
+global:
+  fallbackDefaults:
+    vctAccessModes:
+      - ReadWriteOnce
+```
 
 ---
 

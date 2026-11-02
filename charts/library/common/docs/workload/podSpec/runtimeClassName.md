@@ -22,7 +22,7 @@ See [Runtime Class Name](/truecharts-common/workload#runtimeclassname)
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
 | Key        | `workload.podSpec.runtimeClassName` |
-| Type       | `map`                               |
+| Type       | `string`                            |
 | Required   | ❌                                  |
 | Helm `tpl` | ❌                                  |
 | Default    | unset                               |

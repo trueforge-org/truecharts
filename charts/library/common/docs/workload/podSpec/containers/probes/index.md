@@ -29,94 +29,9 @@ Does **not** apply to `initContainers` See [probes](/truecharts-common/container
 
 ---
 
-### `workload.podSpec.containers.probes.$name.enabled`
-
-Enable or disable the probe
-
-| Field      | Value                                              |
-| ---------- | -------------------------------------------------- |
-| Key        | `workload.podSpec.containers.probes.$name.enabled` |
-| Type       | `boolean, string`                                  |
-| Required   | ❌                                                 |
-| Helm `tpl` | ❌                                                 |
-| Default    | unset                                              |
-
----
-
-### `workload.podSpec.containers.probes.$name.httpHeaders`
-
-Define the httpHeaders - Only applies when `type: http/https`
-
-| Field      | Value                                                  |
-| ---------- | ------------------------------------------------------ |
-| Key        | `workload.podSpec.containers.probes.$name.httpHeaders` |
-| Type       | `map`                                                  |
-| Required   | ❌                                                     |
-| Helm `tpl` | ❌                                                     |
-| Default    | unset                                                  |
-
----
-
-### `workload.podSpec.containers.probes.$name.path`
-
-Define the path - Only applies when `type: http/https`
-
-| Field      | Value                                           |
-| ---------- | ----------------------------------------------- |
-| Key        | `workload.podSpec.containers.probes.$name.path` |
-| Type       | `string`                                        |
-| Required   | ❌                                              |
-| Helm `tpl` | ❌                                              |
-| Default    | unset                                           |
-
----
-
-### `workload.podSpec.containers.probes.$name.port`
-
-Define the port - Only applies when `type: grpc/tcp/http/https`
-
-| Field      | Value                                           |
-| ---------- | ----------------------------------------------- |
-| Key        | `workload.podSpec.containers.probes.$name.port` |
-| Type       | `integer, string`                               |
-| Required   | ❌                                              |
-| Helm `tpl` | ❌                                              |
-| Default    | unset                                           |
-
----
-
-### `workload.podSpec.containers.probes.$name.spec`
-
-Define the probe spec
-
-| Field      | Value                                           |
-| ---------- | ----------------------------------------------- |
-| Key        | `workload.podSpec.containers.probes.$name.spec` |
-| Type       | `map`                                           |
-| Required   | ❌                                              |
-| Helm `tpl` | ❌                                              |
-| Default    | unset                                           |
-
----
-
-### `workload.podSpec.containers.probes.$name.type`
-
-Define probe type
-
-| Field      | Value                                           |
-| ---------- | ----------------------------------------------- |
-| Key        | `workload.podSpec.containers.probes.$name.type` |
-| Type       | `string`                                        |
-| Required   | ❌                                              |
-| Helm `tpl` | ❌                                              |
-| Default    | unset                                           |
-| Enum       | `exec`, `http`, `https`, `tcp`, `grpc`          |
-
----
-
 ### `workload.podSpec.containers.probes.liveness`
 
-Define the liveness probe
+Define the liveness probe.
 
 | Field      | Value                                         |
 | ---------- | --------------------------------------------- |
@@ -126,11 +41,13 @@ Define the liveness probe
 | Helm `tpl` | ❌                                            |
 | Default    | unset                                         |
 
+See [Liveness](probe.md) for full configuration.
+
 ---
 
 ### `workload.podSpec.containers.probes.readiness`
 
-Define the readiness probe
+Define the readiness probe.
 
 | Field      | Value                                          |
 | ---------- | ---------------------------------------------- |
@@ -140,11 +57,13 @@ Define the readiness probe
 | Helm `tpl` | ❌                                             |
 | Default    | unset                                          |
 
+See [Readiness](probe.md) for full configuration.
+
 ---
 
 ### `workload.podSpec.containers.probes.startup`
 
-Define the startup probe
+Define the startup probe.
 
 | Field      | Value                                        |
 | ---------- | -------------------------------------------- |
@@ -153,6 +72,14 @@ Define the startup probe
 | Required   | ❌                                           |
 | Helm `tpl` | ❌                                           |
 | Default    | unset                                        |
+
+See [Startup](probe.md) for full configuration.
+
+---
+
+## Child Pages
+
+- [Probe](probe.md) - Configuration for a workload probe.
 
 ---
 

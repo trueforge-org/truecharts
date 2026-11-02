@@ -140,7 +140,7 @@ Define the namespace for this object (Only when clusterWide is false)
 | Field      | Value                  |
 | ---------- | ---------------------- |
 | Key        | `rbac.$name.namespace` |
-| Type       | `map`                  |
+| Type       | `string`               |
 | Required   | ❌                     |
 | Helm `tpl` | ❌                     |
 | Default    | `""`                   |

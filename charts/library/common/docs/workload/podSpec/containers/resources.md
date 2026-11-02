@@ -29,6 +29,20 @@ The resources that the container can use.
 
 ---
 
+### `workload.podSpec.containers.resources.excludeExtra`
+
+Exclude non-CPU and memory resource values when rendering this container.
+
+| Field      | Value                                                |
+| ---------- | ---------------------------------------------------- |
+| Key        | `workload.podSpec.containers.resources.excludeExtra` |
+| Type       | `boolean`                                            |
+| Required   | ❌                                                   |
+| Helm `tpl` | ❌                                                   |
+| Default    | unset                                                |
+
+---
+
 ### `workload.podSpec.containers.resources.limits`
 
 The maximum amount of resources that the container can use. Limits are **optional**, can be set to "unlimited" by setting it's values (`cpu` and `memory`) to `0`.
@@ -39,7 +53,7 @@ The maximum amount of resources that the container can use. Limits are **optiona
 | Type       | `map`                                          |
 | Required   | ❌                                             |
 | Helm `tpl` | ❌                                             |
-| Default    | `{"cpu": "4000m", "memory": "8Gi"}`            |
+| Default    | `{"cpu": "1500m", "memory": "2400Mi"}`         |
 
 Example
 
@@ -49,8 +63,8 @@ workload:
     containers:
       resources:
         limits:
-          cpu: 4000m
-          memory: 8Gi
+          cpu: 1500m
+          memory: 2400Mi
 ```
 
 ---
@@ -65,7 +79,7 @@ The minimum amount of resources that the container needs. Requests are **require
 | Type       | `map`                                            |
 | Required   | ❌                                               |
 | Helm `tpl` | ❌                                               |
-| Default    | `{"cpu": "10m", "memory": "50Mi"}`               |
+| Default    | `{"cpu": "75m", "memory": "200Mi"}`              |
 
 Example
 
@@ -75,8 +89,8 @@ workload:
     containers:
       resources:
         requests:
-          cpu: 10m
-          memory: 50Mi
+          cpu: 75m
+          memory: 200Mi
 ```
 
 ---

@@ -14,12 +14,15 @@
     },
     "configMapsOverrides": {
       "type": "object",
-      "description": "Define overrides for the generated ConfigMaps, each key is the name of a folder in basePath",
+      "description": "Define overrides for the generated ConfigMaps, each key is the name of a folder in basePath.\n\nEach override accepts:\n\n- `forceRename`: Force a specific name for the ConfigMap instead of the auto-generated name\n- `annotations`: Additional annotations for the ConfigMap\n- `labels`: Additional labels for the ConfigMap\n- `fileAttributeOverrides`: Configure how individual files are added to the ConfigMap, per file name\n  - `exclude`: If true the file won't be added to the ConfigMap\n  - `binary`: If your file is a binary file like an image, set this to true. Takes precedence over escaped\n  - `escaped`: If your file contains gotpl syntax that you don't want templated by Helm, set this to true",
       "additionalProperties": {
         "type": "object",
         "properties": {
           "forceRename": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "description": "Force a specific name for the ConfigMap instead of the auto-generated name"
           },
           "annotations": {

@@ -172,7 +172,7 @@ Define the namespace for this object
 | Field      | Value                         |
 | ---------- | ----------------------------- |
 | Key        | `certificate.$name.namespace` |
-| Type       | `map`                         |
+| Type       | `string`                      |
 | Required   | ❌                            |
 | Helm `tpl` | ❌                            |
 | Default    | `""`                          |

@@ -29,6 +29,34 @@ Configuration for `gateway`.
 
 ---
 
+### `gateway.$name.addresses`
+
+Requested addresses for the gateway. Passed as is.
+
+| Field      | Value                     |
+| ---------- | ------------------------- |
+| Key        | `gateway.$name.addresses` |
+| Type       | `list of unknown`         |
+| Required   | ❌                        |
+| Helm `tpl` | ❌                        |
+| Default    | unset                     |
+
+---
+
+### `gateway.$name.allowedListeners`
+
+Configure `namespaces.from` as `Same`, `All`, `Selector`, or `None` to control which ListenerSets may attach. Set `namespaces.selector` when `from` is `Selector`.
+
+| Field      | Value                            |
+| ---------- | -------------------------------- |
+| Key        | `gateway.$name.allowedListeners` |
+| Type       | `map`                            |
+| Required   | ❌                               |
+| Helm `tpl` | ❌                               |
+| Default    | unset                            |
+
+---
+
 ### `gateway.$name.annotations`
 
 Configuration for `gateway.main.annotations`.
@@ -67,15 +95,15 @@ gateway:
 
 ### `gateway.$name.gatewayClassName`
 
-Configuration for `gateway.main.gatewayClassName`. The name of the GatewayClass resource that this Gateway references.
+The name of the GatewayClass resource that this Gateway references.
 
-| Field      | Value                             |
-| ---------- | --------------------------------- |
-| Key        | `gateway.$name.gatewayClassName`  |
-| Type       | `string`                          |
-| Required   | ✅ (when gateway is enabled)     |
-| Helm `tpl` | ❌                                |
-| Default    | unset                             |
+| Field      | Value                            |
+| ---------- | -------------------------------- |
+| Key        | `gateway.$name.gatewayClassName` |
+| Type       | `string`                         |
+| Required   | ❌                               |
+| Helm `tpl` | ❌                               |
+| Default    | unset                            |
 
 Example
 
@@ -87,25 +115,17 @@ gateway:
 
 ---
 
-### `gateway.$name.targetSelector`
+### `gateway.$name.infrastructure`
 
-Configuration for `gateway.main.targetSelector`. Name-based selector for automatic GatewayClass linking. When set, automatically references the specified `gatewayClass.$name`.
+Infrastructure settings of the gateway. Passed as is.
 
-| Field      | Value                           |
-| ---------- | ------------------------------- |
-| Key        | `gateway.$name.targetSelector`  |
-| Type       | `string`                        |
-| Required   | ❌                              |
-| Helm `tpl` | ❌                              |
-| Default    | unset                           |
-
-Example
-
-```yaml
-gateway:
-  $name:
-    targetSelector: main  # Links to gatewayClass.main
-```
+| Field      | Value                          |
+| ---------- | ------------------------------ |
+| Key        | `gateway.$name.infrastructure` |
+| Type       | `map`                          |
+| Required   | ❌                             |
+| Helm `tpl` | ❌                             |
+| Default    | unset                          |
 
 ---
 
@@ -125,15 +145,7 @@ Configuration for `gateway.main.labels`.
 
 ### `gateway.$name.listeners`
 
-Configuration for `gateway.main.listeners`. Array of listener definitions that define the network ports and protocols the Gateway listens on.
-
-| Field      | Value                     |
-| ---------- | ------------------------- |
-| Key        | `gateway.$name.listeners` |
-| Type       | `list of map`             |
-| Required   | ✅ (when gateway is enabled) |
-| Helm `tpl` | ❌                        |
-| Default    | unset                     |
+Array of listener definitions that define the network ports and protocols the Gateway listens on.
 
 Each listener must specify:
 - `name`: Unique name for the listener
@@ -143,47 +155,35 @@ Each listener must specify:
 - `tls`: Optional TLS configuration
 - `allowedRoutes`: Optional configuration for which routes can attach
 
----
-
-### `gateway.$name.addresses`
-
-Requested addresses for the gateway. Passed as is.
-
 | Field      | Value                     |
 | ---------- | ------------------------- |
-| Key        | `gateway.$name.addresses` |
-| Type       | `list of unknown`         |
+| Key        | `gateway.$name.listeners` |
+| Type       | `list of map`             |
 | Required   | ❌                        |
 | Helm `tpl` | ❌                        |
 | Default    | unset                     |
 
 ---
 
-### `gateway.$name.allowedListeners`
+### `gateway.$name.targetSelector`
 
-Configure `namespaces.from` as `Same`, `All`, `Selector`, or `None` to control which ListenerSets may attach. Set `namespaces.selector` when `from` is `Selector`.
-
-| Field      | Value                            |
-| ---------- | -------------------------------- |
-| Key        | `gateway.$name.allowedListeners` |
-| Type       | `map`                            |
-| Required   | ❌                               |
-| Helm `tpl` | ❌                               |
-| Default    | unset                            |
-
----
-
-### `gateway.$name.infrastructure`
-
-Infrastructure settings of the gateway. Passed as is.
+Name-based selector for automatic GatewayClass linking. When set, automatically references the specified `gatewayClass.$name`.
 
 | Field      | Value                          |
 | ---------- | ------------------------------ |
-| Key        | `gateway.$name.infrastructure` |
-| Type       | `map`                          |
+| Key        | `gateway.$name.targetSelector` |
+| Type       | `string`                       |
 | Required   | ❌                             |
 | Helm `tpl` | ❌                             |
 | Default    | unset                          |
+
+Example
+
+```yaml
+gateway:
+  $name:
+    targetSelector: main
+```
 
 ---
 

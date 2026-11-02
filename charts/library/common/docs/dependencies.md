@@ -286,28 +286,21 @@ dependencies:
 
 This renders a `StatefulSet` and a `Service` named `$fullname`, and nothing else besides the objects of the dependency itself.
 
-3. **Universal Resource Prefixing**: When a dependency is enabled (and in `standalone` mode), ALL its resources (except excluded keys) are merged into the main chart with prefixed names:
-   - **Prefixed**: workload, service, configmap, secret, persistence, podDisruptionBudget, hpa, vpa, ingress, route, gateway, certificate, serviceAccount, rbac, networkPolicy, storageClass, and any other resource type
-   - **Excluded from prefixing**: global, securityContext, podOptions, enabled, mode, depconfig, image (handled specially), chartContext, fallbackDefaults, notes, operator
-   - Examples:
-     - `workload.main` → `workload.$name-main`
-     - `service.main` → `service.$name-main`
-     - `configmap.config` → `configmap.$name-config`
-     - `persistence.data` → `persistence.$name-data`
-     - Any new resource type automatically gets prefixed
+### Object Names
 
+When a dependency is enabled and in `standalone` mode, its objects are merged into the chart under a prefixed name. This applies to every object collection, including new ones:
+
+- `workload.main` becomes `workload.$name-main`
+- `service.main` becomes `service.$name-main`
+- `configmap.config` becomes `configmap.$name-config`
+- `persistence.data` becomes `persistence.$name-data`
+
+These keys are not prefixed: `global`, `securityContext`, `podOptions`, `enabled`, `mode`, `depconfig`, `image` (handled separately), `chartContext`, `fallbackDefaults`, `notes` and `operator`.
 
 ### References
 
 All references to other objects are rewritten to the prefixed names, when the referenced object is defined within the dependency.
 A reference to an object that is not defined in the dependency is kept as is, which means it points to the object of the chart.
-
-
-
-6. **Persistent Data**: Add a `persistence` entry for any data that has to survive a restart. Without one, the data is on the container filesystem and is lost with the pod. The `mountPath` has to be where the image stores its data, which is `/config` for the default Valkey image. A top-level `volumeClaimTemplates` key is not used, and fails rendering.
-
-7. **Connection Information**: Connection details for dependencies are automatically included in the chart notes.
-
 
 | Object                                   | Reference                                                    | Default                                                         |
 | ---------------------------------------- | ------------------------------------------------------------ | --------------------------------------------------------------- |
@@ -328,6 +321,10 @@ A reference to an object that is not defined in the dependency is kept as is, wh
 | containers                               | `env.*.configMapKeyRef`, `env.*.secretKeyRef`, `envFrom[]`   | -                                                               |
 
 The `targetSelector` of service ports points to a container name and is not rewritten.
+
+### Persistent Data
+
+Add a `persistence` entry for any data that has to survive a restart. Without one, the data is on the container filesystem and is lost with the pod. The `mountPath` has to be where the image stores its data, which is `/config` for the default Valkey image. A top-level `volumeClaimTemplates` key is not used, and fails rendering.
 
 ### Templating
 
@@ -476,7 +473,7 @@ The `mariadb` dependency has additional handling:
   | `jdbc-mysql`            | `jdbcmysql`        | `jdbc:mysql://myapp-mariadb-main:3306/test`                          |
   | `jdbc-mariadb`          | `jdbcmariadb`      | `jdbc:mariadb://myapp-mariadb-main:3306/test`                        |
 
-  The host and port are the ones of the primary service and port of the dependency in `standalone` mode, and the ones of the CNPG service in `operator` mode (see [PostgreSQL Operator](#postgresql-operator)). The keys are the same in both modes.
+  The host and port are the ones of the primary service and port of the dependency.
   Like the `creds` of the other dependencies, the values are quoted strings, use `| trimAll "\""` when templating them.
 - An init container `mariadb-wait` is added to the workloads of the chart (the ones with `dbWait` not set to `false`), waiting for MariaDB to respond.
 - The connection details are included in the notes.
@@ -575,7 +572,7 @@ Both modes share the same handling:
   | `urlnossl`            | `urlnossl`           | `postgresql://app:my-password@myapp-postgresql-main:5432/app?sslmode=disable`   |
   | `jdbc`                | `jdbc`               | `jdbc:postgresql://myapp-postgresql-main:5432/app`                            |
 
-  The host and port are the ones of the primary service and port of the dependency.
+  The host and port are the ones of the primary service and port of the dependency in `standalone` mode, and the ones of the CNPG service in `operator` mode (see [PostgreSQL Operator](#postgresql-operator)). The keys are the same in both modes.
   Like the `creds` of the other dependencies, the values are quoted strings, use `| trimAll "\""` when templating them.
 - An init container `postgresql-wait` is added to the workloads of the chart (the ones with `dbWait` not set to `false`), waiting for PostgreSQL to respond.
   It is the same container in both modes, based on `postgresClientImage` and `pg_isready`.
@@ -909,59 +906,13 @@ The `valkey` dependency has additional handling:
 
 ### Example
 
-The full specification of the `valkey` dependency (image, workload, service, persistence, probes and the health configmap) is part of the defaults of `dependencies.valkey` in the common library `values.yaml`.
+The full specification of the `valkey` dependency (image, workload, service, persistence and probes) is part of the defaults of `dependencies.valkey` in the common library `values.yaml`.
 A chart only enables it and sets the values it needs to override:
 
 ```yaml
 image:
   repository: ghcr.io/example/app
   tag: latest
-dependencies:
-  valkey:
-    enabled: true
-    depconfig:
-      password: "secure-password"
-    image:
-      repository: oci.trueforge.org/containerforge/valkey
-      pullPolicy: IfNotPresent
-      tag: 9.0.4
-    workload:
-      main:
-        enabled: true
-        replicas: 1
-        type: StatefulSet
-        podSpec:
-          containers:
-            main:
-              enabled: true
-              primary: true
-              env:
-                REDIS_PORT: "6379"
-                REDIS_PASSWORD:
-                  secretKeyRef:
-                    expandObjectName: false
-                    name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
-                    key: valkey-password
-              probes:
-                liveness:
-                  enabled: true
-                  type: exec
-                  command:
-                    - sh
-                    - -c
-                    - /health/ping_liveness_local.sh 2
-    service:
-      main:
-        enabled: true
-        ports:
-          main:
-            enabled: true
-            port: 6379
-            targetPort: 6379
-    persistence:
-      data:
-        enabled: true
-        mountPath: /config
 
 workload:
   main:
@@ -991,9 +942,9 @@ dependencies:
 This renders, among others:
 
 - `Deployment` `myapp` with the `valkey-wait` init container
-- `StatefulSet` `myapp-valkey-main` with the `data` volume claim template and the `health` configmap mounted
+- `StatefulSet` `myapp-valkey-main` with the `data` volume mounted at `/config`
 - `Service` `myapp-valkey-main` on port 6379
-- `ConfigMap` `myapp-valkey-health`
+- `PersistentVolumeClaim` `myapp-valkey-data`
 - `Secret` `myapp-valkeycreds`
 
 ---

@@ -235,7 +235,7 @@
    "description": "Define certificates"
   },
   "gatewayClass": {
-   "$ref": "#/definitions/gatewayclass",
+   "$ref": "#/definitions/gatewayClass",
    "description": "Configure Gateway API gateway classes"
   },
   "gateway": {
@@ -1023,7 +1023,7 @@
     },
     "configMapsOverrides": {
      "type": "object",
-     "description": "Define overrides for the generated ConfigMaps, each key is the name of a folder in basePath",
+     "description": "Define overrides for the generated ConfigMaps, each key is the name of a folder in basePath.\n\nEach override accepts:\n\n- `forceRename`: Force a specific name for the ConfigMap instead of the auto-generated name\n- `annotations`: Additional annotations for the ConfigMap\n- `labels`: Additional labels for the ConfigMap\n- `fileAttributeOverrides`: Configure how individual files are added to the ConfigMap, per file name\n  - `exclude`: If true the file won't be added to the ConfigMap\n  - `binary`: If your file is a binary file like an image, set this to true. Takes precedence over escaped\n  - `escaped`: If your file contains gotpl syntax that you don't want templated by Helm, set this to true",
      "additionalProperties": {
       "type": "object",
       "properties": {
@@ -1552,13 +1552,13 @@
           "postgresqlUsername": {
            "type": "string",
            "minLength": 1,
-           "default": "test",
+           "default": "app",
            "description": "Name of the database user, for both modes."
           },
           "postgresqlDatabase": {
            "type": "string",
            "minLength": 1,
-           "default": "test",
+           "default": "app",
            "description": "Name of the database, for both modes."
           },
           "creds": {
@@ -1847,7 +1847,7 @@
       17,
       18
      ],
-     "description": "Version of PostgreSQL to use, changes the cluster naming scheme. Without a value, `global.fallbackDefaults.cnpg.pgVersion` is used, and `type: vectors` uses `16` as it has no image for PostgreSQL 18.",
+     "description": "Version of PostgreSQL to use, changes the cluster naming scheme. Without a value, `global.fallbackDefaults.cnpg.pgVersion` is used, and `type: vectors` uses `16` as it has no image for PostgreSQL 18. It only applies to `operator` mode, setting it in `standalone` mode fails rendering.\n\nIt only applies to `operator` mode, setting it in `standalone` mode fails rendering.\n\nWithout a value, `global.fallbackDefaults.cnpg.pgVersion` is used. `type: vectors` has no image for PostgreSQL 18, so without a value it uses `16`.\n\n:::caution[Changing the version of an existing cluster]\n\nCloudNativePG upgrades an existing cluster in place when its major version changes, with `pg_upgrade`. This also happens when a cluster has no `pgVersion` set and the default changes, so **set `pgVersion` to keep a cluster on its current version**.\n\n- Take a full backup first, and a new one afterwards. Older backups can't be used for point-in-time recovery across major versions.\n- All instances are stopped during the upgrade, and replicas are cloned again afterwards.\n- It needs CloudNativePG 1.26 or newer.\n- CloudNativePG only supports this between images on the same OS distribution. The images of this version of common moved to Debian 13, so a cluster on an older image should stay on its major version through that change, and upgrade afterwards.\n- Check that the extensions of the cluster can be upgraded, such as PostGIS or VectorChord.\n- If the upgrade fails, set `pgVersion` back to the previous version. CloudNativePG then starts the cluster on that version again.\n- Run `ANALYZE` afterwards, as `pg_upgrade` does not keep the statistics.\n\n:::",
      "default": 18
     },
     "mode": {
@@ -2462,11 +2462,17 @@
      },
      "gatewayClassName": {
       "type": "string",
-      "description": "Name of the GatewayClass resource that this Gateway references."
+      "description": "The name of the GatewayClass resource that this Gateway references.",
+      "examples": [
+       "traefik"
+      ]
      },
      "targetSelector": {
       "type": "string",
-      "description": "Configuration for `gateway.main.targetSelector`. Name-based selector for automatic GatewayClass linking."
+      "description": "Name-based selector for automatic GatewayClass linking. When set, automatically references the specified `gatewayClass.$name`.",
+      "examples": [
+       "main"
+      ]
      },
      "addresses": {
       "type": "array",
@@ -2522,7 +2528,7 @@
        }
       },
       "additionalProperties": true,
-      "description": "Configure namespaces.from as Same, All, Selector, or None to control which ListenerSets may attach. Set namespaces.selector when from is Selector."
+      "description": "Configure `namespaces.from` as `Same`, `All`, `Selector`, or `None` to control which ListenerSets may attach. Set `namespaces.selector` when `from` is `Selector`."
      },
      "tls": {
       "type": "object",
@@ -2667,7 +2673,7 @@
        "additionalProperties": true,
        "description": "Configuration for `gateway.main.listeners.$item`."
       },
-      "description": "Configuration for `gateway.main.listeners`."
+      "description": "Array of listener definitions that define the network ports and protocols the Gateway listens on.\n\nEach listener must specify:\n- `name`: Unique name for the listener\n- `port`: Network port to listen on\n- `protocol`: Protocol (HTTP, HTTPS, TCP, TLS, UDP)\n- `hostname`: Optional hostname filter\n- `tls`: Optional TLS configuration\n- `allowedRoutes`: Optional configuration for which routes can attach"
      }
     },
     "additionalProperties": true,
@@ -2676,7 +2682,7 @@
    },
    "description": "Configuration for `gateway`."
   },
-  "gatewayclass": {
+  "gatewayClass": {
    "type": "object",
    "properties": {},
    "additionalProperties": {
@@ -2706,11 +2712,17 @@
      },
      "controllerName": {
       "type": "string",
-      "description": "The name of the controller that will manage Gateways of this class."
+      "description": "The name of the controller that will manage Gateways of this class.",
+      "examples": [
+       "traefik.io/gateway-controller"
+      ]
      },
      "description": {
       "type": "string",
-      "description": "Configuration for `gatewayClass.main.description`. Description helps describe a GatewayClass with more details."
+      "description": "Description helps describe a GatewayClass with more details.",
+      "examples": [
+       "Traefik-based gateway class"
+      ]
      },
      "parametersRef": {
       "type": "object",
@@ -2739,7 +2751,7 @@
        }
       },
       "additionalProperties": true,
-      "description": "Configuration for `gatewayClass.main.parametersRef`. ParametersRef is a reference to a resource that contains the configuration parameters corresponding to the GatewayClass."
+      "description": "ParametersRef is a reference to a resource that contains the configuration parameters corresponding to the GatewayClass.\n\nFields for parametersRef:\n- `group`: API group of the referenced resource (required)\n- `kind`: Kind of the referenced resource (required)\n- `name`: Name of the referenced resource (required)\n- `namespace`: Optional namespace of the referenced resource"
      }
     },
     "additionalProperties": true,
@@ -2991,7 +3003,7 @@
     },
     "allowRollingUpdateWithRWO": {
      "type": "boolean",
-     "description": "Keep `strategy: RollingUpdate` on a single replica Deployment with `ReadWriteOnce` volumes, instead of changing it to `Recreate`. Can be overruled with `workload.$name.allowRollingUpdateWithRWO`. Updates can get stuck if the storage stays locked to the old pod, which can happen on the same node with storage like iSCSI, and two pods use the same data during an update.",
+     "description": "Keep `strategy: RollingUpdate` on a single replica Deployment with `ReadWriteOnce` volumes, instead of changing it to `Recreate`. Can be overruled with `workload.$name.allowRollingUpdateWithRWO`. Updates can get stuck if the storage stays locked to the old pod, which can happen on the same node with storage like iSCSI, and two pods use the same data during an update.\n\n:::caution\n\nEnabling this applies to all workloads of the chart that set `strategy: RollingUpdate`. Common shows a warning in the notes for each of them.\n\n:::",
      "default": false
     },
     "routeListenerPort": {
@@ -3662,6 +3674,82 @@
      },
      "additionalProperties": true,
      "description": "Configuration for `postgresVectorchord18Image`."
+    },
+    "postgresTimescaledb15Image": {
+     "type": "object",
+     "properties": {
+      "repository": {
+       "type": "string",
+       "description": "Configuration for `postgresTimescaledb15Image.repository`."
+      },
+      "tag": {
+       "type": "string",
+       "description": "Configuration for `postgresTimescaledb15Image.tag`."
+      },
+      "pullPolicy": {
+       "type": "string",
+       "description": "Configuration for `postgresTimescaledb15Image.pullPolicy`."
+      }
+     },
+     "additionalProperties": true,
+     "description": "Configuration for `postgresTimescaledb15Image`."
+    },
+    "postgresTimescaledb16Image": {
+     "type": "object",
+     "properties": {
+      "repository": {
+       "type": "string",
+       "description": "Configuration for `postgresTimescaledb16Image.repository`."
+      },
+      "tag": {
+       "type": "string",
+       "description": "Configuration for `postgresTimescaledb16Image.tag`."
+      },
+      "pullPolicy": {
+       "type": "string",
+       "description": "Configuration for `postgresTimescaledb16Image.pullPolicy`."
+      }
+     },
+     "additionalProperties": true,
+     "description": "Configuration for `postgresTimescaledb16Image`."
+    },
+    "postgresTimescaledb17Image": {
+     "type": "object",
+     "properties": {
+      "repository": {
+       "type": "string",
+       "description": "Configuration for `postgresTimescaledb17Image.repository`."
+      },
+      "tag": {
+       "type": "string",
+       "description": "Configuration for `postgresTimescaledb17Image.tag`."
+      },
+      "pullPolicy": {
+       "type": "string",
+       "description": "Configuration for `postgresTimescaledb17Image.pullPolicy`."
+      }
+     },
+     "additionalProperties": true,
+     "description": "Configuration for `postgresTimescaledb17Image`."
+    },
+    "postgresTimescaledb18Image": {
+     "type": "object",
+     "properties": {
+      "repository": {
+       "type": "string",
+       "description": "Configuration for `postgresTimescaledb18Image.repository`."
+      },
+      "tag": {
+       "type": "string",
+       "description": "Configuration for `postgresTimescaledb18Image.tag`."
+      },
+      "pullPolicy": {
+       "type": "string",
+       "description": "Configuration for `postgresTimescaledb18Image.pullPolicy`."
+      }
+     },
+     "additionalProperties": true,
+     "description": "Configuration for `postgresTimescaledb18Image`."
     },
     "postgresVectors15Image": {
      "type": "object",
@@ -5609,7 +5697,7 @@
    "additionalProperties": {
     "$ref": "#/definitions/networkpolicy.policy"
    },
-   "description": "Configuration for NetworkPolicy objects."
+   "description": "Create NetworkPolicy or CiliumNetworkPolicy objects"
   },
   "networkpolicy.egressRule": {
    "type": "object",
@@ -6060,35 +6148,13 @@
     }
    },
    "additionalProperties": true,
-   "description": "Configuration for NOTES.txt output. Automatically includes connection information for enabled dependencies (mariadb, postgresql, valkey, mongodb, clickhouse) and addons (tailscale, codeserver, netshoot). Rendering order: header → custom → connections (auto) → footer → warnings.",
+   "description": "Configuration for NOTES.txt output. Automatically includes connection information for enabled dependencies (mariadb, postgresql, valkey, mongodb, clickhouse) and addons (tailscale, codeserver, netshoot). Rendering order: header → custom → connections (auto) → footer → warnings.\n\nThe notes system automatically includes connection information for enabled dependencies (databases) and addons when the chart is installed or upgraded. This provides users with immediate access to connection strings and configuration details.",
    "default": {}
   },
   "operator": {
    "type": "object",
    "description": "Contains specific settings for helm charts containing or using system",
    "properties": {
-    "verify": {
-     "type": "object",
-     "properties": {
-      "additionalsystem": {
-       "type": "object",
-       "properties": {},
-       "additionalProperties": true,
-       "description": "Contains specific settings for helm charts containing or using system",
-       "default": []
-      },
-      "enabled": {
-       "type": [
-        "boolean",
-        "string"
-       ],
-       "description": "Enables or disables the verification of system",
-       "default": true
-      }
-     },
-     "additionalProperties": true,
-     "description": "Contains specific settings for verifying system"
-    },
     "register": {
      "type": "boolean",
      "description": "Adds a configmap in the operator's namespace to register the chart as an operator",
@@ -10393,7 +10459,10 @@
      },
      "allowRollingUpdateWithRWO": {
       "type": "boolean",
-      "description": "Keep `strategy: RollingUpdate` on a single replica Deployment with `ReadWriteOnce` volumes, instead of changing it to `Recreate`. Overrules `global.fallbackDefaults.allowRollingUpdateWithRWO`. `ReadWriteOncePod` volumes always use `Recreate`."
+      "description": "Keep `strategy: RollingUpdate` on a single replica Deployment with `ReadWriteOnce` volumes, instead of changing it to `Recreate`. Overrules `global.fallbackDefaults.allowRollingUpdateWithRWO`. `ReadWriteOncePod` volumes always use `Recreate`.\n\n:::caution\n\nRolling updates with `ReadWriteOnce` storage are not safe for every app or storage:\n\n- An update gets stuck if the storage stays locked to the old pod. This can happen on the same node with storage like iSCSI, and on another node with any `ReadWriteOnce` storage.\n- Two pods use the same data during an update, which can damage data of apps that expect to be alone, for example with SQLite or database migrations.\n\nCommon shows a warning in the notes when this is enabled.\n\n:::",
+      "examples": [
+       true
+      ]
      },
      "strategy": {
       "oneOf": [
@@ -10443,7 +10512,7 @@
         "additionalProperties": true
        }
       ],
-      "description": "Define the strategy of the workload"
+      "description": "Define the strategy of the workload\n\nA single replica Deployment uses `Recreate` if it mounts a `ReadWriteOnce` or `ReadWriteOncePod` volume. See [`allowRollingUpdateWithRWO`](#workloadnameallowrollingupdatewithrwo) to keep `RollingUpdate` with `ReadWriteOnce`."
      },
      "rollingUpdate": {
       "type": "object",
@@ -10559,8 +10628,13 @@
       "additionalProperties": {
        "type": "string"
       },
-      "description": "Additional labels included in the workload selector and pod labels",
-      "default": {}
+      "description": "Additional labels included in the workload selector and pod labels.",
+      "default": {},
+      "examples": [
+       {
+        "app.example.com/component": "worker"
+       }
+      ]
      },
      "labels": {
       "allOf": [
@@ -10619,7 +10693,7 @@
        "boolean",
        "string"
       ],
-      "description": "Whether init containers waiting for the enabled dependencies (mariadb, postgresql, mongodb, clickhouse, valkey) are added to the workload. Defaults to `true`, the workloads of dependencies default to `false`."
+      "description": "Whether init containers waiting for the enabled dependencies (mariadb, postgresql, mongodb, clickhouse, valkey) are added to the workload.\nThe workloads of [dependencies](/truecharts-common/dependencies) default to `false`, so they do not wait for themselves."
      }
     },
     "additionalProperties": true,

@@ -97,6 +97,7 @@ These rules apply to `charts/library/common/` (the `common` library chart that e
   - Change the schema, or the `## Full Examples` section in `examples/<page>.md`, which mirrors the path of the page in `docs/`.
   - Then run `python3 charts/library/common/generate_docs.py`. By default it also checks the structure and formatting of the pages.
   - List new pages with their schema files in `docs-schema-mapping.yaml`.
+  - `python3 charts/library/common/generate_docs.py --check` fails when the pages are not up to date, or when a file in `examples/` has no page. CI runs it. Text that only exists in a page is lost on the next run, so put text about a key in its schema `description`, and other sections after `## Full Examples` in `examples/`.
 - `complete-values-structure.yaml` lists the keys of all chart, `common-test/ci` and `common` values files. `template-keys-structure.yaml` lists the keys the templates read. Regenerate them after changing values or templates:
 
   ```bash

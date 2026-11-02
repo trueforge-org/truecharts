@@ -7,8 +7,14 @@ import os
 import re
 import shutil
 import subprocess
+import tempfile
 from pathlib import Path
 from typing import Any, Iterable
+
+
+# Written by hand, and generate_docs must not write a page with the same URL
+HANDWRITTEN_PAGES = {Path("dependencies.md")}
+SKIPPED_GENERATED_PAGES = {Path("dependencies/index.md")}
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -62,6 +68,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--clean",
         action="store_true",
         help="Remove output directory before generation",
+    )
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="Fail when the pages in --output are not what the schema and examples generate, without changing them",
     )
     parser.add_argument(
         "--no-verify-structure",
@@ -1340,6 +1351,8 @@ def generate_docs(
 
     for doc_path_tuple, page in sorted(pages.items(), key=lambda item: (len(item[0]), item[0])):
         rel_page = markdown_paths[doc_path_tuple]
+        if rel_page in SKIPPED_GENERATED_PAGES:
+            continue
         target = output / rel_page
         target.parent.mkdir(parents=True, exist_ok=True)
 
@@ -1402,6 +1415,7 @@ def verify_generated_structure(
     resolver = SchemaResolver(schemas_root=schemas_root)
     pages = collect_schema_file_pages(schemas_root=schemas_root, resolver=resolver)
     expected_paths = set(compute_schema_style_markdown_paths(pages.keys(), dynamic_segment).values())
+    expected_paths = (expected_paths - SKIPPED_GENERATED_PAGES) | HANDWRITTEN_PAGES
     actual_paths = set(path.relative_to(output) for path in output.rglob("*.md"))
 
     missing_paths = sorted(expected_paths - actual_paths)
@@ -1456,12 +1470,57 @@ def verify_generated_markdown_formatting(output: Path) -> tuple[bool, str]:
     return True, f"markdownlint passed for {len(md_files)} generated files"
 
 
+def find_differences(generated: Path, output: Path) -> list[str]:
+    generated_pages = {path.relative_to(generated) for path in generated.rglob("*.md")}
+    output_pages = {path.relative_to(output) for path in output.rglob("*.md")} - HANDWRITTEN_PAGES
+
+    differences = [f"missing: {page}" for page in sorted(generated_pages - output_pages)]
+    differences += [f"not generated: {page}" for page in sorted(output_pages - generated_pages)]
+    differences += [
+        f"out of date: {page}"
+        for page in sorted(generated_pages & output_pages)
+        if (generated / page).read_text(encoding="utf-8") != (output / page).read_text(encoding="utf-8")
+    ]
+    return differences
+
+
+def find_unused_examples(examples_root: Path, generated: Path) -> list[str]:
+    return [
+        f"example without a page: {path.relative_to(examples_root)}"
+        for path in sorted(examples_root.rglob("*.md"))
+        if not (generated / path.relative_to(examples_root)).exists()
+    ]
+
+
 def main() -> int:
     parser = build_parser()
     args = parser.parse_args()
 
     schema_path = args.schema.resolve()
     schema = load_schema(schema_path)
+
+    if args.check:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            generated = Path(temp_dir)
+            generate_docs(
+                schema=schema,
+                schema_path=schema_path,
+                output=generated,
+                base_url=args.base_url.rstrip("/"),
+                max_depth=max(0, args.max_depth),
+                clean=False,
+                dynamic_segment=args.dynamic_segment,
+                schemas_root=args.schemas_root.resolve(),
+                examples_root=args.examples_root.resolve(),
+            )
+            problems = find_differences(generated, args.output.resolve())
+            problems += find_unused_examples(args.examples_root.resolve(), generated)
+        if problems:
+            print("The docs are not up to date, run generate_docs.py:")
+            print("\n".join(f"  - {problem}" for problem in problems))
+            return 1
+        print("The docs are up to date")
+        return 0
 
     generate_docs(
         schema=schema,

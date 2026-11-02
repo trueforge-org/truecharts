@@ -19,12 +19,12 @@ title: Extratpl
 
 Define kubernetes resources, 1 per list item, tpl will be resolved
 
-| Field      | Value         |
-| ---------- | ------------- |
-| Key        | `extraTpl`    |
-| Type       | `list of map` |
-| Required   | ❌            |
-| Helm `tpl` | ❌            |
-| Default    | unset         |
+| Field      | Value                 |
+| ---------- | --------------------- |
+| Key        | `extraTpl`            |
+| Type       | `list of map, string` |
+| Required   | ❌                    |
+| Helm `tpl` | ❌                    |
+| Default    | unset                 |
 
 ---

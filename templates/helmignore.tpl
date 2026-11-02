@@ -50,5 +50,4 @@ icon-small.webp
 /newdocs-missing-index.md
 /quick-reference.txt
 /template-keys-structure.yaml
-/test_output.txt
 /test_schema.py
