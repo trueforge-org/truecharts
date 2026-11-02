@@ -161,13 +161,13 @@ tests:
           value: Cluster
         equal:
           path: spec.bootstrap.initdb.database
-          value: test
+          value: app
       - documentSelector:
           path: kind
           value: Cluster
         equal:
           path: spec.bootstrap.initdb.owner
-          value: test
+          value: app
       - documentSelector:
           path: metadata.name
           value: test-release-name-postgresqlcreds
@@ -222,10 +222,10 @@ tests:
             plainhostRO: test-release-name-common-test-cnpg-main-pooler-ro
             plainporthost: test-release-name-common-test-cnpg-main-pooler-rw:5432
             plainporthostRO: test-release-name-common-test-cnpg-main-pooler-ro:5432
-            url: postgresql://test:testpassword@test-release-name-common-test-cnpg-main-pooler-rw:5432/my-database
-            urlRO: postgresql://test:testpassword@test-release-name-common-test-cnpg-main-pooler-ro:5432/my-database
-            urlnossl: postgresql://test:testpassword@test-release-name-common-test-cnpg-main-pooler-rw:5432/my-database?sslmode=disable
-            urlnosslRO: postgresql://test:testpassword@test-release-name-common-test-cnpg-main-pooler-ro:5432/my-database?sslmode=disable
+            url: postgresql://app:testpassword@test-release-name-common-test-cnpg-main-pooler-rw:5432/my-database
+            urlRO: postgresql://app:testpassword@test-release-name-common-test-cnpg-main-pooler-ro:5432/my-database
+            urlnossl: postgresql://app:testpassword@test-release-name-common-test-cnpg-main-pooler-rw:5432/my-database?sslmode=disable
+            urlnosslRO: postgresql://app:testpassword@test-release-name-common-test-cnpg-main-pooler-ro:5432/my-database?sslmode=disable
             jdbc: jdbc:postgresql://test-release-name-common-test-cnpg-main-pooler-rw:5432/my-database
             jdbcRO: jdbc:postgresql://test-release-name-common-test-cnpg-main-pooler-ro:5432/my-database
 
@@ -288,7 +288,7 @@ tests:
       - documentSelector: *deploymentDoc
         matchRegex:
           path: spec.template.spec.initContainers[0].command[2]
-          pattern: pg_isready -U test -d test -h test-release-name-common-test-cnpg-main-rw
+          pattern: pg_isready -U app -d app -h test-release-name-common-test-cnpg-main-rw
 
   - it: should wait on the cluster, the pooler and the read-only pooler
     template: common.yaml
@@ -326,15 +326,15 @@ tests:
       - documentSelector: *deploymentDoc
         matchRegex:
           path: spec.template.spec.initContainers[0].command[2]
-          pattern: pg_isready -U test -d test -h test-release-name-common-test-cnpg-main-rw
+          pattern: pg_isready -U app -d app -h test-release-name-common-test-cnpg-main-rw
       - documentSelector: *deploymentDoc
         matchRegex:
           path: spec.template.spec.initContainers[0].command[2]
-          pattern: pg_isready -U test -d test -h test-release-name-common-test-cnpg-main-pooler-rw
+          pattern: pg_isready -U app -d app -h test-release-name-common-test-cnpg-main-pooler-rw
       - documentSelector: *deploymentDoc
         matchRegex:
           path: spec.template.spec.initContainers[0].command[2]
-          pattern: pg_isready -U test -d test -h test-release-name-common-test-cnpg-main-pooler-ro
+          pattern: pg_isready -U app -d app -h test-release-name-common-test-cnpg-main-pooler-ro
 
   - it: should show the connection details in the notes in operator mode
     template: NOTES.txt

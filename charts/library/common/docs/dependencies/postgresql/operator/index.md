@@ -168,7 +168,7 @@ Configuration for `dependencies.postgresql.operator.monitoring`.
 
 ### `dependencies.postgresql.operator.pgVersion`
 
-Version of PostgreSQL to use, changes the cluster naming scheme. Without a value, `global.fallbackDefaults.cnpg.pgVersion` is used, and `type: vectors` uses `16` as it has no image for PostgreSQL 18.
+Version of PostgreSQL to use, changes the cluster naming scheme. Without a value, `global.fallbackDefaults.cnpg.pgVersion` is used, and `type: vectors` uses `16` as it has no image for PostgreSQL 18. It applies to both modes, in `standalone` mode it selects the `postgresql<version>Image` of the chart.
 
 | Field      | Value                                        |
 | ---------- | -------------------------------------------- |

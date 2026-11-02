@@ -800,6 +800,26 @@ postgresVectorchord18Image:
   tag: "18.6-1.1.1@sha256:c7672bc011351a587cc292a94aac7eeebb593ed2e120077bd9c9944c9467db93"
   pullPolicy: IfNotPresent
 
+postgresTimescaledb15Image:
+  repository: docker.io/timescale/timescaledb-ha
+  tag: "pg15.18-ts2.28.3@sha256:5bbd5284622255918875ec5cd7f8621e9eb1d9d8fe96b3f4a0eec835d235d877"
+  pullPolicy: IfNotPresent
+
+postgresTimescaledb16Image:
+  repository: docker.io/timescale/timescaledb-ha
+  tag: "pg16.15-ts2.31.0@sha256:98f88217cb7be56655f842d9920f90d0b4893b67b3463f93084548b433ed5c93"
+  pullPolicy: IfNotPresent
+
+postgresTimescaledb17Image:
+  repository: docker.io/timescale/timescaledb-ha
+  tag: "pg17.11-ts2.31.0@sha256:3f0b3f6bdf4912878444a36e6113a18346309583c4d1a61d81a0c511342a1afd"
+  pullPolicy: IfNotPresent
+
+postgresTimescaledb18Image:
+  repository: docker.io/timescale/timescaledb-ha
+  tag: "pg18.6-ts2.31.0@sha256:ad8b5095c9e9f19b3c97794133f1dd80f09da9566a5687f79b6208324b98a388"
+  pullPolicy: IfNotPresent
+
 # -- Configure the ingresses for the chart here.
 # Additional ingresses can be added by adding a dictionary key similar to the 'main' ingress.
 # @default -- See below
@@ -1997,8 +2017,8 @@ dependencies:
     # [creds] holds the connection details written by the library, in both modes (eg [creds.complete], [creds.plainhost], [creds.jdbc])
     depconfig:
       password: "PLACEHOLDERPASSWORD"
-      postgresqlUsername: "test"
-      postgresqlDatabase: "test"
+      postgresqlUsername: "app"
+      postgresqlDatabase: "app"
       creds: {}
     workload:
       main:
@@ -2011,7 +2031,8 @@ dependencies:
           containers:
             main:
               # The image is defined on the root of the values
-              imageSelector: postgresql18Image
+              # The image of [operator.pgVersion], see [tc.v1.common.lib.dependencies.postgresql.standaloneImage]
+              imageSelector: '{{ include "tc.v1.common.lib.dependencies.postgresql.standaloneImage" $ }}'
               env:
                 POSTGRES_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
                 POSTGRES_DB: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"

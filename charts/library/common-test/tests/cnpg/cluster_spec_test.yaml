@@ -673,6 +673,52 @@ tests:
                 - pg_stat_statements
                 - pg_cron
 
+  - it: should use the TimescaleDB image and its user
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          operator:
+            type: timescaledb
+    asserts:
+      - documentSelector: &timescaleClusterDoc
+          path: kind
+          value: Cluster
+        matchRegex:
+          path: spec.imageName
+          pattern: ^docker\.io/timescale/timescaledb-ha:pg18\.[^@]+@sha256:[0-9a-f]{64}$
+      - documentSelector: *timescaleClusterDoc
+        equal:
+          path: spec.postgresUID
+          value: 1000
+      - documentSelector: *timescaleClusterDoc
+        equal:
+          path: spec.postgresGID
+          value: 1000
+
+  - it: should allow overriding the user of timescaledb
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          operator:
+            type: timescaledb
+            pgVersion: 15
+            cluster:
+              postgresUID: 2000
+              postgresGID: 2000
+    asserts:
+      - documentSelector: &timescaleClusterDoc
+          path: kind
+          value: Cluster
+        matchRegex:
+          path: spec.imageName
+          pattern: ^docker\.io/timescale/timescaledb-ha:pg15\.
+      - documentSelector: *timescaleClusterDoc
+        equal:
+          path: spec.postgresUID
+          value: 2000
+
   - it: should pass with timescaledb
     set:
       postgresTimescaledb16Image:

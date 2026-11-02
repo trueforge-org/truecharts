@@ -169,6 +169,62 @@ Configuration for `postgresql18Image`.
 
 ---
 
+### `images.postgresTimescaledb15Image`
+
+Configuration for `postgresTimescaledb15Image`.
+
+| Field      | Value                      |
+| ---------- | -------------------------- |
+| Key        | `images.postgresTimescaledb15Image` |
+| Type       | `map`                      |
+| Required   | ❌                         |
+| Helm `tpl` | ❌                         |
+| Default    | unset                      |
+
+---
+
+### `images.postgresTimescaledb16Image`
+
+Configuration for `postgresTimescaledb16Image`.
+
+| Field      | Value                      |
+| ---------- | -------------------------- |
+| Key        | `images.postgresTimescaledb16Image` |
+| Type       | `map`                      |
+| Required   | ❌                         |
+| Helm `tpl` | ❌                         |
+| Default    | unset                      |
+
+---
+
+### `images.postgresTimescaledb17Image`
+
+Configuration for `postgresTimescaledb17Image`.
+
+| Field      | Value                      |
+| ---------- | -------------------------- |
+| Key        | `images.postgresTimescaledb17Image` |
+| Type       | `map`                      |
+| Required   | ❌                         |
+| Helm `tpl` | ❌                         |
+| Default    | unset                      |
+
+---
+
+### `images.postgresTimescaledb18Image`
+
+Configuration for `postgresTimescaledb18Image`.
+
+| Field      | Value                      |
+| ---------- | -------------------------- |
+| Key        | `images.postgresTimescaledb18Image` |
+| Type       | `map`                      |
+| Required   | ❌                         |
+| Helm `tpl` | ❌                         |
+| Default    | unset                      |
+
+---
+
 ### `images.postgresPostgis15Image`
 
 Configuration for `postgresPostgis15Image`.
