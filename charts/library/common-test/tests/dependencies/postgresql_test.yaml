@@ -185,17 +185,22 @@ tests:
       - hasDocuments:
           count: 0
 
-  - it: should fail when operator.pgVersion is set in standalone mode
+  - it: should ignore the operator settings in standalone mode
     set:
       dependencies:
         postgresql:
           enabled: true
           mode: standalone
           operator:
-            pgVersion: 18
+            pgVersion: 16
+            type: postgis
     asserts:
-      - failedTemplate:
-          errorMessage: Dependencies - Expected [dependencies.postgresql.operator.pgVersion] to not be set in [standalone] mode, which runs the PostgreSQL version of [postgresql18Image], but got [18]
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: ^oci\.trueforge\.org/containerforge/postgresql:18\.
 
   - it: should not use the fallback version in standalone mode
     set:
