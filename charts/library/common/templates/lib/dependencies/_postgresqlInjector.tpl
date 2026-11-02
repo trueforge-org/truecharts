@@ -27,23 +27,6 @@ The user and database are part of the connection urls (and of the CNPG bootstrap
   {{- end -}}
 {{- end -}}
 
-{{/* Returns the name of the image of the postgresql dependency in standalone mode */}}
-{{/* Call this template:
-{{ include "tc.v1.common.lib.dependencies.postgresql.standaloneImage" $ }}
-
-The version is [operator.pgVersion], with the same fallback as the operator mode, so a chart can switch between the modes.
-*/}}
-{{- define "tc.v1.common.lib.dependencies.postgresql.standaloneImage" -}}
-  {{- $dep := get (.Values.dependencies | default dict) "postgresql" | default dict -}}
-  {{- $operator := $dep.operator | default dict -}}
-  {{- $version := ($operator.pgVersion | default .Values.global.fallbackDefaults.cnpg.pgVersion) | toString -}}
-  {{- $image := printf "postgresql%sImage" $version -}}
-  {{- if not (hasKey .Values $image) -}}
-    {{- fail (printf "Dependencies - Expected [%s] to exist for PostgreSQL [%s] in [standalone] mode. Define the image in the chart, or set [dependencies.postgresql.operator.pgVersion] to a version that has one" $image $version) -}}
-  {{- end -}}
-  {{- $image -}}
-{{- end -}}
-
 {{/*
 This template generates the postgresql credentials and the secret holding them
 It is the same for both modes (standalone and operator), only the host differs
@@ -60,6 +43,11 @@ It is the same for both modes (standalone and operator), only the host differs
 
     {{- if eq $enabled "true" -}}
       {{- include "tc.v1.common.lib.dependencies.postgresql.depconfig" (dict "rootCtx" $ "dep" $dep) -}}
+
+      {{/* The version selects the image of the cluster, in standalone mode the image decides the version */}}
+      {{- if and (eq (include "tc.v1.common.lib.dependencies.mode" (dict "objectData" $dep "depName" "postgresql")) "standalone") (kindIs "map" $dep.operator) $dep.operator.pgVersion -}}
+        {{- fail (printf "Dependencies - Expected [dependencies.postgresql.operator.pgVersion] to not be set in [standalone] mode, which runs the PostgreSQL version of [postgresql18Image], but got [%v]" $dep.operator.pgVersion) -}}
+      {{- end -}}
 
       {{/* The host is the primary service of the dependency, for both modes */}}
       {{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "postgresql")) -}}

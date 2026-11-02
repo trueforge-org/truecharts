@@ -594,8 +594,8 @@ The `url` and `urlnossl` values do not escape the password, so avoid characters 
 The rest of this section describes the `standalone` mode. The image does not offer TLS, which is why `urlnossl` is the same connection with `sslmode=disable`.
 
 The dependency runs `oci.trueforge.org/containerforge/postgresql` as a `StatefulSet` with one replica, as UID and GID `568` with a read-only root filesystem.
-The image is defined at the root of the chart as `postgresql<version>Image`, so it can be overridden like any other image of the chart.
-The version is `operator.pgVersion`, the same setting as in `operator` mode, with `global.fallbackDefaults.cnpg.pgVersion` (`18`) as the fallback. Common only has `postgresql18Image`, so another version fails rendering unless the chart defines its image. The other settings under `operator`, like `type`, do not apply to this mode.
+The image is defined at the root of the chart as `postgresql18Image`, and selected by the container with `imageSelector: postgresql18Image`, so it can be overridden like any other image of the chart.
+This mode runs the PostgreSQL version of that image. Setting `operator.pgVersion` fails rendering, and the other settings under `operator`, like `type`, do not apply to this mode.
 Its data is stored in the `data` volume, mounted at `/config` (the data directory is `/config/<major version>`).
 
 > [!WARNING]

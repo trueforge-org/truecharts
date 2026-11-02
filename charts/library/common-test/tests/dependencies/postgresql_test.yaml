@@ -185,32 +185,20 @@ tests:
       - hasDocuments:
           count: 0
 
-  - it: should select the image of operator.pgVersion in standalone mode
+  - it: should fail when operator.pgVersion is set in standalone mode
     set:
-      postgresql16Image:
-        repository: example.org/custom/postgresql
-        tag: "16"
-        pullPolicy: IfNotPresent
       dependencies:
         postgresql:
           enabled: true
           mode: standalone
           operator:
-            pgVersion: 16
+            pgVersion: 18
     asserts:
-      - documentSelector:
-          path: kind
-          value: StatefulSet
-        equal:
-          path: spec.template.spec.containers[0].image
-          value: example.org/custom/postgresql:16
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [dependencies.postgresql.operator.pgVersion] to not be set in [standalone] mode, which runs the PostgreSQL version of [postgresql18Image], but got [18]
 
-  - it: should select the image of the fallback version in standalone mode
+  - it: should not use the fallback version in standalone mode
     set:
-      postgresql16Image:
-        repository: example.org/custom/postgresql
-        tag: "16"
-        pullPolicy: IfNotPresent
       global:
         fallbackDefaults:
           cnpg:
@@ -223,47 +211,9 @@ tests:
       - documentSelector:
           path: kind
           value: StatefulSet
-        equal:
+        matchRegex:
           path: spec.template.spec.containers[0].image
-          value: example.org/custom/postgresql:16
-
-  - it: should fail when there is no image for operator.pgVersion in standalone mode
-    set:
-      dependencies:
-        postgresql:
-          enabled: true
-          mode: standalone
-          operator:
-            pgVersion: 16
-    asserts:
-      - failedTemplate:
-          errorMessage: Dependencies - Expected [postgresql16Image] to exist for PostgreSQL [16] in [standalone] mode. Define the image in the chart, or set [dependencies.postgresql.operator.pgVersion] to a version that has one
-
-  - it: should allow a dependency to select another image in standalone mode
-    set:
-      myImage:
-        repository: example.org/custom/image
-        tag: "1"
-        pullPolicy: IfNotPresent
-      dependencies:
-        postgresql:
-          enabled: true
-          mode: standalone
-          operator:
-            pgVersion: 16
-          workload:
-            main:
-              podSpec:
-                containers:
-                  main:
-                    imageSelector: myImage
-    asserts:
-      - documentSelector:
-          path: kind
-          value: StatefulSet
-        equal:
-          path: spec.template.spec.containers[0].image
-          value: example.org/custom/image:1
+          pattern: ^oci\.trueforge\.org/containerforge/postgresql:18\.
 
   - it: should use the root postgresql18Image, and allow overriding it
     set:

@@ -2031,8 +2031,7 @@ dependencies:
           containers:
             main:
               # The image is defined on the root of the values
-              # The image of [operator.pgVersion], see [tc.v1.common.lib.dependencies.postgresql.standaloneImage]
-              imageSelector: '{{ include "tc.v1.common.lib.dependencies.postgresql.standaloneImage" $ }}'
+              imageSelector: postgresql18Image
               env:
                 POSTGRES_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
                 POSTGRES_DB: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
