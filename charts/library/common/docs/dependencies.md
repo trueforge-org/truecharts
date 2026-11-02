@@ -236,6 +236,10 @@ If the dependency has no `service.main.ports.main`, the default probes are disab
 
 The workloads of a dependency default to `dbWait: false`, so they do not wait for the dependencies of the chart (including themselves).
 
+The dependencies predefined in common set their own `securityContext` (UID and GID `568`, read-only root filesystem, no privileges or added capabilities, `fsGroup` `568`), as their images can not run as root.
+So a chart that runs as root (eg `securityContext.container.runAsUser: 0`) does not change how they run. Set `dependencies.$name.securityContext` to change it.
+A dependency that a chart defines itself has no such defaults and inherits the `securityContext` of the chart for anything it does not set. The containers of its addons keep their own settings.
+
 ### Primary Objects
 
 Within a dependency, the primary objects are resolved as follows: the object with `primary: true`, otherwise the only object of the collection, otherwise the object named `main`.
