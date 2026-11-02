@@ -27,9 +27,9 @@ tests:
             postgresql-password: PLACEHOLDERPASSWORD
             plainhost: test-release-name-common-test-postgresql-main
             plainporthost: test-release-name-common-test-postgresql-main:5432
-            url: postgresql://test:PLACEHOLDERPASSWORD@test-release-name-common-test-postgresql-main:5432/test
-            urlnossl: postgresql://test:PLACEHOLDERPASSWORD@test-release-name-common-test-postgresql-main:5432/test?sslmode=disable
-            jdbc: jdbc:postgresql://test-release-name-common-test-postgresql-main:5432/test
+            url: postgresql://app:PLACEHOLDERPASSWORD@test-release-name-common-test-postgresql-main:5432/app
+            urlnossl: postgresql://app:PLACEHOLDERPASSWORD@test-release-name-common-test-postgresql-main:5432/app?sslmode=disable
+            jdbc: jdbc:postgresql://test-release-name-common-test-postgresql-main:5432/app
       - documentSelector: &workloadDoc
           path: kind
           value: StatefulSet
@@ -66,13 +66,13 @@ tests:
           path: spec.template.spec.containers[0].env
           content:
             name: POSTGRES_USER
-            value: test
+            value: app
       - documentSelector: *workloadDoc
         contains:
           path: spec.template.spec.containers[0].env
           content:
             name: POSTGRES_DB
-            value: test
+            value: app
       - documentSelector: *workloadDoc
         equal:
           path: spec.template.spec.containers[0].livenessProbe.exec.command
@@ -185,6 +185,36 @@ tests:
       - hasDocuments:
           count: 0
 
+  - it: should fail when operator.pgVersion is set in standalone mode
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          mode: standalone
+          operator:
+            pgVersion: 18
+    asserts:
+      - failedTemplate:
+          errorMessage: Dependencies - Expected [dependencies.postgresql.operator.pgVersion] to not be set in [standalone] mode, which runs the PostgreSQL version of [postgresql18Image], but got [18]
+
+  - it: should not use the fallback version in standalone mode
+    set:
+      global:
+        fallbackDefaults:
+          cnpg:
+            pgVersion: 16
+      dependencies:
+        postgresql:
+          enabled: true
+          mode: standalone
+    asserts:
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: ^oci\.trueforge\.org/containerforge/postgresql:18\.
+
   - it: should use the root postgresql18Image, and allow overriding it
     set:
       postgresql18Image:
@@ -270,7 +300,7 @@ tests:
           path: spec.template.spec.containers[0].env
           content:
             name: POSTGRES_URL
-            value: postgresql://test:testpassword@test-release-name-common-test-postgresql-main:5432/test
+            value: postgresql://app:testpassword@test-release-name-common-test-postgresql-main:5432/app
       - documentSelector: *rootWorkloadDoc
         contains:
           path: spec.template.spec.containers[0].env

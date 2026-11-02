@@ -673,6 +673,86 @@ tests:
                 - pg_stat_statements
                 - pg_cron
 
+  - it: should use the TimescaleDB image, with a tag that CloudNativePG accepts
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          operator:
+            type: timescaledb
+    asserts:
+      - documentSelector: &timescaleClusterDoc
+          path: kind
+          value: Cluster
+        matchRegex:
+          path: spec.imageName
+          pattern: ^oci\.trueforge\.org/containerforge/timescaledb18:18\.[0-9.]+@sha256:[0-9a-f]{64}$
+      - documentSelector: *timescaleClusterDoc
+        equal:
+          path: spec.postgresUID
+          value: 26
+
+  - it: should turn off the telemetry of timescaledb
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          operator:
+            type: timescaledb
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: spec.postgresql.parameters["timescaledb.telemetry_level"]
+          value: "off"
+
+  - it: should allow a chart to set the telemetry of timescaledb
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          operator:
+            type: timescaledb
+            cluster:
+              postgresql:
+                timescaledb.telemetry_level: basic
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: spec.postgresql.parameters["timescaledb.telemetry_level"]
+          value: basic
+
+  - it: should not set the telemetry of timescaledb on other types
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Cluster
+        notExists:
+          path: spec.postgresql
+
+  - it: should select the TimescaleDB image of the set version
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          operator:
+            type: timescaledb
+            pgVersion: 15
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Cluster
+        matchRegex:
+          path: spec.imageName
+          pattern: ^oci\.trueforge\.org/containerforge/timescaledb15:15\.
+
   - it: should pass with timescaledb
     set:
       postgresTimescaledb16Image:
@@ -710,6 +790,7 @@ tests:
               parameters:
                 key1: value1
                 key2: test-tpl
+                timescaledb.telemetry_level: "off"
               shared_preload_libraries:
                 - pg_stat_statements
                 - pg_cron

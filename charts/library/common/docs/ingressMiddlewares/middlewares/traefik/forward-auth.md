@@ -38,7 +38,7 @@ No description provided.
 | Key        | `ingressMiddlewares.middlewares.traefik.forward-auth.address` |
 | Type       | `string`                                                      |
 | Required   | ✅                                                            |
-| Helm `tpl` | ✅                                                            |
+| Helm `tpl` | ❌                                                            |
 | Default    | unset                                                         |
 | Min Length | `1`                                                           |
 
@@ -125,6 +125,30 @@ No description provided.
 
 ---
 
+### `ingressMiddlewares.middlewares.traefik.forward-auth.maxResponseBodySize`
+
+Define the maxResponseBodySize, in bytes. `-1` means unlimited
+
+| Field      | Value                                                                     |
+| ---------- | ------------------------------------------------------------------------- |
+| Key        | `ingressMiddlewares.middlewares.traefik.forward-auth.maxResponseBodySize` |
+| Type       | `integer`                                                                 |
+| Required   | ❌                                                                        |
+| Helm `tpl` | ❌                                                                        |
+| Default    | `-1`                                                                      |
+
+Example
+
+```yaml
+ingressMiddlewares:
+  middlewares:
+    traefik:
+      forward-auth:
+        maxResponseBodySize: 1048576
+```
+
+---
+
 ### `ingressMiddlewares.middlewares.traefik.forward-auth.tls`
 
 No description provided.
@@ -170,30 +194,6 @@ ingressMiddlewares:
     traefik:
       forward-auth:
         trustForwardHeader: false
-```
-
----
-
-### `ingressMiddlewares.middlewares.traefik.forward-auth.maxResponseBodySize`
-
-Define the maxResponseBodySize
-
-|            |                                                                           |
-| ---------- | -----------------------------------------------------------               |
-| Key        | `ingressMiddlewares.middlewares.traefik.forward-auth.maxResponseBodySize` |
-| Type       | `int`                                                                     |
-| Required   | ❌                                                                        |
-| Helm `tpl` | ❌                                                                        |
-| Default    | `-1` (unlimited)                                                          |
-
-Example
-
-```yaml
-ingressMiddlewares:
-  middlewares:
-    traefik:
-      forward-auth:
-        maxResponseBodySize: 1048576 # 1MB
 ```
 
 ---

@@ -17,7 +17,7 @@ title: Addons
 
 ## `addons`
 
-Addons to the workloads
+Addons to the workloads.
 
 | Field      | Value    |
 | ---------- | -------- |
@@ -29,112 +29,60 @@ Addons to the workloads
 
 ---
 
-### `addons.$name.container`
+### `addons.codeserver`
 
-Define additional options for the container See container options in the [container](/truecharts-common/container) section.
+Configuration for the code-server addon.
 
-| Field      | Value                    |
-| ---------- | ------------------------ |
-| Key        | `addons.$name.container` |
-| Type       | `map`                    |
-| Required   | ❌                       |
-| Helm `tpl` | ❌                       |
-| Default    | unset                    |
+| Field      | Value               |
+| ---------- | ------------------- |
+| Key        | `addons.codeserver` |
+| Type       | `map`               |
+| Required   | ❌                  |
+| Helm `tpl` | ❌                  |
+| Default    | unset               |
 
-See [$name.container](../workload/) for full configuration.
-
----
-
-### `addons.$name.enabled`
-
-Enables or Disables the Addon
-
-| Field      | Value                  |
-| ---------- | ---------------------- |
-| Key        | `addons.$name.enabled` |
-| Type       | `boolean, string`      |
-| Required   | ❌                     |
-| Helm `tpl` | ❌                     |
-| Default    | unset                  |
+See [Codeserver](codeserver/) for full configuration.
 
 ---
 
-### `addons.$name.ingress`
+### `addons.gluetun`
 
-Define additional options for the ingress See ingress options in the [ingress](/truecharts-common/ingress) section.
+Configuration for the Gluetun addon.
 
-| Field      | Value                  |
-| ---------- | ---------------------- |
-| Key        | `addons.$name.ingress` |
-| Type       | `map`                  |
-| Required   | ❌                     |
-| Helm `tpl` | ❌                     |
-| Default    | unset                  |
+| Field      | Value            |
+| ---------- | ---------------- |
+| Key        | `addons.gluetun` |
+| Type       | `map`            |
+| Required   | ❌               |
+| Helm `tpl` | ❌               |
+| Default    | unset            |
 
----
-
-### `addons.$name.secret`
-
-Define additional options for the secret See secret options in the [secret](/truecharts-common/secret) section.
-
-| Field      | Value                 |
-| ---------- | --------------------- |
-| Key        | `addons.$name.secret` |
-| Type       | `map, null`           |
-| Required   | ❌                    |
-| Helm `tpl` | ❌                    |
-| Default    | unset                 |
+See [Gluetun](gluetun/) for full configuration.
 
 ---
 
-### `addons.$name.service`
+### `addons.tailscale`
 
-Define additional options for the service See service options in the [service](/truecharts-common/service) section.
+Addons to the workloads
 
-| Field      | Value                  |
-| ---------- | ---------------------- |
-| Key        | `addons.$name.service` |
-| Type       | `map`                  |
-| Required   | ❌                     |
-| Helm `tpl` | ❌                     |
-| Default    | unset                  |
+| Field      | Value              |
+| ---------- | ------------------ |
+| Key        | `addons.tailscale` |
+| Type       | `map`              |
+| Required   | ❌                 |
+| Helm `tpl` | ❌                 |
+| Default    | unset              |
 
-See [$name.service](../service/) for full configuration.
-
----
-
-### `addons.$name.settings`
-
-Addon-specific settings that vary by addon type
-
-| Field      | Value                   |
-| ---------- | ----------------------- |
-| Key        | `addons.$name.settings` |
-| Type       | `map`                   |
-| Required   | ❌                      |
-| Helm `tpl` | ❌                      |
-| Default    | unset                   |
-
----
-
-### `addons.$name.targetSelector`
-
-Define the workloads to add the addon to
-
-| Field      | Value                         |
-| ---------- | ----------------------------- |
-| Key        | `addons.$name.targetSelector` |
-| Type       | `list of string`              |
-| Required   | ❌                            |
-| Helm `tpl` | ❌                            |
-| Default    | unset                         |
+See [Tailscale](tailscale/) for full configuration.
 
 ---
 
 ## Child Pages
 
-- [Codeserver](codeserver/) - Configuration for `addons.codeserver`.
-- [Gluetun](gluetun/) - Configuration for `addons.gluetun`.
+- [Addon](addon.md) - Configuration for a workload addon.
+- [Codeserver](codeserver/) - Configuration for the code-server addon.
+- [Container](container.md) - Container configuration for an addon.
+- [Gluetun](gluetun/) - Configuration for the Gluetun addon.
 - [Tailscale](tailscale/) - Addons to the workloads
 
 ---

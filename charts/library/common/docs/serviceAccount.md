@@ -104,7 +104,7 @@ Define the namespace for this object
 | Field      | Value                            |
 | ---------- | -------------------------------- |
 | Key        | `serviceAccount.$name.namespace` |
-| Type       | `map`                            |
+| Type       | `string`                         |
 | Required   | ❌                               |
 | Helm `tpl` | ❌                               |
 | Default    | `""`                             |

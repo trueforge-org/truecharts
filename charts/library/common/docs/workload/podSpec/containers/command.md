@@ -22,7 +22,7 @@ See [command](/truecharts-common/container/command) ---
 | Field      | Value                                 |
 | ---------- | ------------------------------------- |
 | Key        | `workload.podSpec.containers.command` |
-| Type       | `map, string, list of unknown`        |
+| Type       | `map, string, list of string`         |
 | Required   | ❌                                    |
 | Helm `tpl` | ❌                                    |
 | Default    | unset                                 |

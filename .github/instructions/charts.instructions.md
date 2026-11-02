@@ -46,6 +46,7 @@ Use `charts/stable/app-template` as the reference for the file structure of a ne
 ## `values.yaml`
 
 - Keep the first line exactly: `# yaml-language-server: $schema=./values.schema.json`.
+  - The `values.schema.json` of a chart is not committed. It is the schema of the `common` version the chart depends on, added on release so Helm validates the values on install, and while linting. To get it for your editor, run `.github/scripts/add_chart_schema.sh charts/stable/<chart>`.
 - Every key must be valid for the `common` values schema (`charts/library/common/values.schema.json`). CI validates the `values.yaml` of every chart against it, see [Validate locally](#validate-locally).
 - Only set values that differ from the `common` defaults in `charts/library/common/values.yaml`. Do not copy defaults.
 - Images:

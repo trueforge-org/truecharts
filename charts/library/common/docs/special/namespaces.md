@@ -22,7 +22,7 @@ Common namespaces object.
 | Field      | Value                |
 | ---------- | -------------------- |
 | Key        | `special.namespaces` |
-| Type       | `map`                |
+| Type       | `string`             |
 | Required   | ❌                   |
 | Helm `tpl` | ❌                   |
 | Default    | unset                |

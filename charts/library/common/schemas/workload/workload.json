@@ -315,7 +315,10 @@
       },
       "allowRollingUpdateWithRWO": {
         "type": "boolean",
-        "description": "Keep `strategy: RollingUpdate` on a single replica Deployment with `ReadWriteOnce` volumes, instead of changing it to `Recreate`. Overrules `global.fallbackDefaults.allowRollingUpdateWithRWO`. `ReadWriteOncePod` volumes always use `Recreate`."
+        "description": "Keep `strategy: RollingUpdate` on a single replica Deployment with `ReadWriteOnce` volumes, instead of changing it to `Recreate`. Overrules `global.fallbackDefaults.allowRollingUpdateWithRWO`. `ReadWriteOncePod` volumes always use `Recreate`.\n\n:::caution\n\nRolling updates with `ReadWriteOnce` storage are not safe for every app or storage:\n\n- An update gets stuck if the storage stays locked to the old pod. This can happen on the same node with storage like iSCSI, and on another node with any `ReadWriteOnce` storage.\n- Two pods use the same data during an update, which can damage data of apps that expect to be alone, for example with SQLite or database migrations.\n\nCommon shows a warning in the notes when this is enabled.\n\n:::",
+        "examples": [
+          true
+        ]
       },
       "strategy": {
         "oneOf": [
@@ -365,7 +368,7 @@
             "additionalProperties": true
           }
         ],
-        "description": "Define the strategy of the workload"
+        "description": "Define the strategy of the workload\n\nA single replica Deployment uses `Recreate` if it mounts a `ReadWriteOnce` or `ReadWriteOncePod` volume. See [`allowRollingUpdateWithRWO`](#workloadnameallowrollingupdatewithrwo) to keep `RollingUpdate` with `ReadWriteOnce`."
       },
       "rollingUpdate": {
         "type": "object",
@@ -481,8 +484,13 @@
         "additionalProperties": {
           "type": "string"
         },
-        "description": "Additional labels included in the workload selector and pod labels",
-        "default": {}
+        "description": "Additional labels included in the workload selector and pod labels.",
+        "default": {},
+        "examples": [
+          {
+            "app.example.com/component": "worker"
+          }
+        ]
       },
       "labels": {
         "allOf": [
@@ -541,7 +549,7 @@
           "boolean",
           "string"
         ],
-        "description": "Whether init containers waiting for the enabled dependencies (mariadb, postgresql, mongodb, clickhouse, valkey) are added to the workload. Defaults to `true`, the workloads of dependencies default to `false`."
+        "description": "Whether init containers waiting for the enabled dependencies (mariadb, postgresql, mongodb, clickhouse, valkey) are added to the workload.\nThe workloads of [dependencies](/truecharts-common/dependencies) default to `false`, so they do not wait for themselves."
       }
     },
     "additionalProperties": true,

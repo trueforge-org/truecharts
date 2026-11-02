@@ -52,7 +52,7 @@ tests:
             password: topsecretpassword
     asserts:
       - matchRegexRaw:
-          pattern: "- Connection URL: \"postgresql://test:topsecretpassword@test-release-name-common-test-postgresql-main:5432/test"
+          pattern: "- Connection URL: \"postgresql://app:topsecretpassword@test-release-name-common-test-postgresql-main:5432/app"
 
   - it: should not show postgresql with the dependency disabled
     template: NOTES.txt

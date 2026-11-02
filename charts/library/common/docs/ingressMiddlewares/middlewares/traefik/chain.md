@@ -75,7 +75,7 @@ No description provided.
 ## Full Examples
 
 ```yaml
-middlewares:
+ingressMiddlewares:
   traefik:
     middleware-name:
       enabled: true
