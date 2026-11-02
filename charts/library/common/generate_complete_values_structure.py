@@ -14,6 +14,7 @@ while preserving comments from the existing file where they exist.
 """
 
 import argparse
+import copy
 import sys
 import warnings
 from pathlib import Path
@@ -30,20 +31,80 @@ except ImportError:
     print("Install with: pip install ruamel.yaml", file=sys.stderr)
 
 
+def merge_duplicate_pairs(constructor: Any, pairs: List[Any], source: str, line_offset: int = 0) -> List[Any]:
+    """
+    Merge the repeated keys of one YAML mapping, which loaders reject or silently overwrite.
+
+    Mappings under the same key are merged, keeping the keys of both. For other values the
+    last one wins, as in PyYAML. Every repeated key is reported as a warning.
+    """
+    merged: List[Any] = []
+    index_of: Dict[Any, int] = {}
+    for key_node, value_node in pairs:
+        key = constructor.construct_object(key_node, deep=True)
+        try:
+            index = index_of.get(key)
+        except TypeError:
+            merged.append((key_node, value_node))
+            continue
+        if index is None:
+            index_of[key] = len(merged)
+            merged.append((key_node, value_node))
+            continue
+
+        first_key_node, first_value = merged[index]
+        if first_value.id == "mapping" and value_node.id == "mapping":
+            combined = copy.copy(first_value)
+            combined.value = first_value.value + value_node.value
+            merged[index] = (first_key_node, combined)
+            action = "merged"
+        else:
+            merged[index] = (first_key_node, value_node)
+            action = "last value kept"
+        line = key_node.start_mark.line + 1 + line_offset
+        print(f"Warning: {source}: duplicate key '{key}' at line {line} ({action})", file=sys.stderr)
+    return merged
+
+
+def make_yaml_loader(source: str, line_offset: int = 0) -> Any:
+    """Return a ruamel round-trip loader that merges repeated mapping keys instead of failing on them."""
+    from ruamel.yaml.constructor import RoundTripConstructor
+
+    class DuplicateKeyMergingConstructor(RoundTripConstructor):
+        def construct_mapping(self, node, maptyp, deep=False):
+            if node.id == "mapping":
+                node.value = merge_duplicate_pairs(self, node.value, source, line_offset)
+            return super().construct_mapping(node, maptyp, deep)
+
+    yaml_loader = YAML()
+    yaml_loader.Constructor = DuplicateKeyMergingConstructor
+    yaml_loader.preserve_quotes = True
+    yaml_loader.default_flow_style = False
+    return yaml_loader
+
+
+def make_safe_loader(source: str) -> Any:
+    """Return a PyYAML loader that merges repeated mapping keys instead of silently overwriting them."""
+    import yaml
+
+    class DuplicateKeyMergingLoader(yaml.SafeLoader):
+        def construct_mapping(self, node, deep=False):
+            if node.id == "mapping":
+                node.value = merge_duplicate_pairs(self, node.value, source)
+            return super().construct_mapping(node, deep=deep)
+
+    return DuplicateKeyMergingLoader
+
+
 def load_yaml_file(file_path: Path) -> Dict[str, Any]:
     """Load a YAML file and return its content."""
     try:
-        if HAS_RUAMEL:
-            yaml_loader = YAML()
-            yaml_loader.preserve_quotes = True
-            yaml_loader.default_flow_style = False
-            with open(file_path, 'r', encoding='utf-8') as f:
-                content = yaml_loader.load(f)
-                return content if isinstance(content, dict) else {}
-        else:
-            with open(file_path, 'r', encoding='utf-8') as f:
-                content = yaml.safe_load(f)
-                return content if isinstance(content, dict) else {}
+        with open(file_path, 'r', encoding='utf-8') as f:
+            if HAS_RUAMEL:
+                content = make_yaml_loader(str(file_path)).load(f)
+            else:
+                content = yaml.load(f, Loader=make_safe_loader(str(file_path)))
+            return content if isinstance(content, dict) else {}
     except Exception as e:
         print(f"Warning: Failed to load {file_path}: {e}", file=sys.stderr)
         return {}
@@ -291,12 +352,6 @@ def load_existing_with_comments(file_path: Path) -> Any:
         return None
     
     try:
-        yaml_loader = YAML()
-        yaml_loader.preserve_quotes = True
-        yaml_loader.default_flow_style = False
-        yaml_loader.width = 120
-        yaml_loader.indent(mapping=2, sequence=2, offset=0)
-        
         # Read file and skip header comments
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
@@ -317,6 +372,9 @@ def load_existing_with_comments(file_path: Path) -> Any:
         
         # Load only the YAML content part
         yaml_content = '\n'.join(lines[yaml_start:])
+        yaml_loader = make_yaml_loader(str(file_path), line_offset=yaml_start)
+        yaml_loader.width = 120
+        yaml_loader.indent(mapping=2, sequence=2, offset=0)
         return yaml_loader.load(yaml_content)
     except Exception as e:
         print(f"Warning: Failed to load existing file with comments: {e}", file=sys.stderr)
