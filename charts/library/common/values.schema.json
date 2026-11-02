@@ -1784,6 +1784,42 @@
       "array",
       "object"
      ],
+     "items": {
+      "type": "object",
+      "properties": {
+       "configMapRef": {
+        "type": "object",
+        "properties": {
+         "expandObjectName": {
+          "type": "boolean",
+          "description": "Whether to expand (adding the fullname as prefix) the configmap name"
+         },
+         "name": {
+          "type": "string",
+          "description": "Define the configmap name. This will be automatically expanded to `fullname-configmap-name`."
+         }
+        },
+        "additionalProperties": true,
+        "description": "Define the configMapRef"
+       },
+       "secretRef": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string",
+          "description": "Define the secret name. This will be automatically expanded to `fullname-secret-name`."
+         },
+         "expandObjectName": {
+          "type": "boolean",
+          "description": "Whether to expand (adding the fullname as prefix) the secret name"
+         }
+        },
+        "additionalProperties": true,
+        "description": "Define the secretRef"
+       }
+      },
+      "additionalProperties": true
+     },
      "description": "See [envFrom](/truecharts-common/container/envfrom)",
      "default": "[]"
     },
@@ -2582,6 +2618,24 @@
      },
      "addresses": {
       "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "type": {
+         "type": "string",
+         "description": "Type of the address, like `IPAddress` or `Hostname`. Defaults to `IPAddress` in Gateway API."
+        },
+        "value": {
+         "type": "string",
+         "description": "The address value, like an IP address or a hostname."
+        }
+       },
+       "required": [
+        "value"
+       ],
+       "additionalProperties": true,
+       "description": "A requested address for the gateway."
+      },
       "description": "Requested addresses for the gateway. Passed as is."
      },
      "infrastructure": {
@@ -7466,6 +7520,21 @@
              "array",
              "null"
             ],
+            "items": {
+             "type": "object",
+             "properties": {
+              "key": {
+               "type": "string",
+               "description": "Define the key for the custom annotation. Sets the `gethomepage.dev/widget.$key` annotation"
+              },
+              "value": {
+               "type": "string",
+               "description": "Define the value for the custom annotation"
+              }
+             },
+             "additionalProperties": true,
+             "description": "A custom setting of the widget."
+            },
             "description": "Custom settings of the widget, as a list of `key` and `value`."
            }
           }
@@ -7545,10 +7614,58 @@
          },
          "redirectRegex": {
           "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "regex": {
+             "type": "string",
+             "description": "Regex matching the whole path of the request. The `^` and `$` anchors are optional."
+            },
+            "replacement": {
+             "type": "string",
+             "description": "URL to redirect to. Can use capture groups from the regex."
+            },
+            "permanent": {
+             "type": "boolean",
+             "description": "Use a permanent redirect (301) instead of a temporary one (302)."
+            }
+           },
+           "required": [
+            "regex",
+            "replacement"
+           ],
+           "additionalProperties": true,
+           "description": "A redirect rule of the traefik integration."
+          },
           "description": "List of `regex`, `replacement` and `permanent`. Only for `HTTPRoute`. The regex must match the whole path, and each one is its own rule. The replacement can use capture groups."
          },
          "middlewares": {
           "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string",
+             "description": "Name of the middleware. If expanded, it must be defined under `ingressMiddlewares.traefik`."
+            },
+            "namespace": {
+             "type": "string",
+             "description": "Namespace of the middleware. It must be the same as the route, which is also the default."
+            },
+            "expandObjectName": {
+             "type": [
+              "boolean",
+              "string"
+             ],
+             "description": "Whether to expand the name with the chart name. Defaults to `true`."
+            }
+           },
+           "required": [
+            "name"
+           ],
+           "additionalProperties": true,
+           "description": "A middleware of the traefik integration."
+          },
           "description": "Other middlewares from `ingressMiddlewares.traefik`, same as an ingress."
          },
          "chartMiddlewares": {
@@ -7620,6 +7737,29 @@
          },
          "redirectRegex": {
           "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "regex": {
+             "type": "string",
+             "description": "Regex matching the whole path of the request."
+            },
+            "replacement": {
+             "type": "string",
+             "description": "Fixed URL to redirect to. Capture groups, a query and a fragment are not supported."
+            },
+            "permanent": {
+             "type": "boolean",
+             "description": "Use a permanent redirect (301) instead of a temporary one (302)."
+            }
+           },
+           "required": [
+            "regex",
+            "replacement"
+           ],
+           "additionalProperties": true,
+           "description": "A redirect rule of the envoy integration."
+          },
           "description": "List of `regex`, `replacement` and `permanent`. Only for `HTTPRoute`. The regex must match the whole path, and each one is its own rule. The replacement must be a fixed target without capture groups."
          },
          "securityPolicy": {

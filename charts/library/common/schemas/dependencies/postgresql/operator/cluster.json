@@ -37,7 +37,43 @@
         "array",
         "object"
       ],
-      "description": "See [envFrom](/truecharts-common/container/envfrom)",
+      "items": {
+          "type": "object",
+          "properties": {
+            "configMapRef": {
+              "type": "object",
+              "properties": {
+                "expandObjectName": {
+                  "type": "boolean",
+                  "description": "Whether to expand (adding the fullname as prefix) the configmap name"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Define the configmap name. This will be automatically expanded to `fullname-configmap-name`."
+                }
+              },
+              "additionalProperties": true,
+              "description": "Define the configMapRef"
+            },
+            "secretRef": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Define the secret name. This will be automatically expanded to `fullname-secret-name`."
+                },
+                "expandObjectName": {
+                  "type": "boolean",
+                  "description": "Whether to expand (adding the fullname as prefix) the secret name"
+                }
+              },
+              "additionalProperties": true,
+              "description": "Define the secretRef"
+            }
+          },
+          "additionalProperties": true
+        },
+        "description": "See [envFrom](/truecharts-common/container/envfrom)",
       "default": "[]"
     },
     "instances": {
