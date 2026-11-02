@@ -16,7 +16,7 @@
             "description": "Define the configmap name This will be automatically expanded to `fullname-configmap-name`."
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Define the configMapRef"
       },
       "secretRef": {
@@ -31,11 +31,11 @@
             "description": "Whether to expand (adding the fullname as prefix) the secret name"
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Define the secretRef"
       }
     },
-    "additionalProperties": true
+    "additionalProperties": false
   },
   "description": "Define envFrom for the container"
 }
