@@ -960,9 +960,7 @@
       "default": {}
      },
      "certificateIssuer": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "string",
       "description": "Define the certificate issuer for this certificate",
       "default": "",
       "minLength": 1
@@ -1188,9 +1186,7 @@
       "type": "object",
       "properties": {
        "name": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the secret name This will be automatically expanded to `fullname-secret-name`.",
         "minLength": 1
        },
@@ -1580,6 +1576,116 @@
       }
      ],
      "description": "The postgresql dependency. In `operator` mode (default) a CloudNativePG `Cluster` is spawned from `operator`."
+    },
+    "mariadb": {
+     "allOf": [
+      {
+       "$ref": "#"
+      },
+      {
+       "$ref": "#/definitions/dependencies/additionalProperties/allOf/1"
+      },
+      {
+       "type": "object",
+       "properties": {
+        "depconfig": {
+         "type": "object",
+         "properties": {
+          "rootPassword": {
+           "type": "string",
+           "minLength": 1,
+           "description": "Password of the `root` user."
+          },
+          "mariadbUsername": {
+           "type": "string",
+           "minLength": 1,
+           "description": "Name of the database user."
+          },
+          "mariadbDatabase": {
+           "type": "string",
+           "minLength": 1,
+           "description": "Name of the database."
+          }
+         },
+         "additionalProperties": true
+        }
+       }
+      }
+     ]
+    },
+    "mongodb": {
+     "allOf": [
+      {
+       "$ref": "#"
+      },
+      {
+       "$ref": "#/definitions/dependencies/additionalProperties/allOf/1"
+      },
+      {
+       "type": "object",
+       "properties": {
+        "depconfig": {
+         "type": "object",
+         "properties": {
+          "rootPassword": {
+           "type": "string",
+           "minLength": 1,
+           "description": "Password of the `root` user."
+          },
+          "mongodbUsername": {
+           "type": "string",
+           "minLength": 1,
+           "description": "Name of the database user."
+          },
+          "mongodbDatabase": {
+           "type": "string",
+           "minLength": 1,
+           "description": "Name of the database."
+          }
+         },
+         "additionalProperties": true
+        }
+       }
+      }
+     ]
+    },
+    "clickhouse": {
+     "allOf": [
+      {
+       "$ref": "#"
+      },
+      {
+       "$ref": "#/definitions/dependencies/additionalProperties/allOf/1"
+      },
+      {
+       "type": "object",
+       "properties": {
+        "depconfig": {
+         "type": "object",
+         "properties": {
+          "clickhouseUsername": {
+           "type": "string",
+           "minLength": 1,
+           "description": "Name of the database user."
+          },
+          "clickhouseDatabase": {
+           "type": "string",
+           "minLength": 1,
+           "description": "Name of the database."
+          },
+          "clickhouseDefaultAccessManagement": {
+           "type": [
+            "integer",
+            "string"
+           ],
+           "description": "Set to `1` to allow the user to manage users and grants with SQL."
+          }
+         },
+         "additionalProperties": true
+        }
+       }
+      }
+     ]
     }
    },
    "additionalProperties": {
@@ -1674,9 +1780,10 @@
      "default": {}
     },
     "envFrom": {
-     "type": "object",
-     "properties": {},
-     "additionalProperties": true,
+     "type": [
+      "array",
+      "object"
+     ],
      "description": "See [envFrom](/truecharts-common/container/envfrom)",
      "default": "[]"
     },
@@ -3230,14 +3337,7 @@
      },
      "existingSecret": {
       "type": "string",
-      "properties": {},
-      "additionalProperties": true,
-      "description": "Define the existing secret name If this is defined, only the following keys are used:",
-      "enum": [
-       "enabled",
-       "targetSelectAll",
-       "targetSelector"
-      ]
+      "description": "Define the existing secret name. If this is defined, only the `enabled`, `targetSelectAll` and `targetSelector` keys are used."
      },
      "namespace": {
       "allOf": [
@@ -3984,7 +4084,7 @@
       "properties": {},
       "additionalProperties": true,
       "description": "Create Ingress objects",
-      "default": "nil"
+      "default": ""
      },
      "targetSelector": {
       "type": "object",
@@ -4013,11 +4113,6 @@
            },
            "pathType": {
             "type": "string",
-            "enum": [
-             "Prefix",
-             "Exact",
-             "ImplementationSpecific"
-            ],
             "description": "Define the path type for this ingress (Prefix, Exact, ImplementationSpecific)"
            },
            "overrideService": {
@@ -4255,15 +4350,14 @@
       "type": "object",
       "properties": {
        "expandObjectName": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": [
+         "boolean",
+         "string"
+        ],
         "description": "The middlewares for this traefik integration"
        },
        "name": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "The name of the middleware"
        },
        "namespace": {
@@ -4398,126 +4492,86 @@
         "type": "object",
         "properties": {
          "pluginName": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the pluginName"
          },
          "api": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the api"
          },
          "allowLocalRequests": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the allowLocalRequests"
          },
          "logLocalRequests": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the logLocalRequests"
          },
          "logAllowedRequests": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the logAllowedRequests"
          },
          "logApiRequests": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the logApiRequests"
          },
          "apiTimeoutMs": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "number",
           "description": "Define the apiTimeoutMs"
          },
          "cacheSize": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "number",
           "description": "Define the cacheSize"
          },
          "forceMonthlyUpdate": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the forceMonthlyUpdate"
          },
          "allowUnknownCountries": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the allowUnknownCountries"
          },
          "unknownCountryApiResponse": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the unknownCountryApiResponse"
          },
          "blackListMode": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the blackListMode"
          },
          "silentStartUp": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the silentStartUp"
          },
          "addCountryHeader": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the addCountryHeader"
          },
          "countries": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "array",
           "description": "Define the countries"
          },
          "scheme": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the scheme"
          },
          "permanent": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the permanent"
          },
          "sourceRange": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "array",
           "description": "Define the sourceRange"
          },
          "ipStrategy": {
           "type": "object",
           "properties": {
            "excludedIPs": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "array",
             "description": "Define the ipStrategy"
            },
            "depth": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "number",
             "description": "Define the ipStrategy.depth"
            }
           },
@@ -4525,7 +4579,10 @@
           "description": "Define the ipStrategy"
          },
          "regex": {
-          "type": "string",
+          "type": [
+           "array",
+           "string"
+          ],
           "description": "Define the regex"
          },
          "replacement": {
@@ -4533,72 +4590,53 @@
           "description": "Define the replacement"
          },
          "maxRequestBodyBytes": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "number",
           "description": "Define the maxRequestBodyBytes"
          },
          "memRequestBodyBytes": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": [
+           "null",
+           "number"
+          ],
           "description": "Define the memRequestBodyBytes"
          },
          "maxResponseBodyBytes": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "number",
           "description": "Define the maxResponseBodyBytes"
          },
          "memResponseBodyBytes": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "number",
           "description": "Define the memResponseBodyBytes"
          },
          "retryExpression": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the retryExpression"
          },
          "address": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the address"
          },
          "authResponseHeadersRegex": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the authResponseHeadersRegex"
          },
          "trustForwardHeader": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the trustForwardHeader"
          },
          "authResponseHeaders": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "array",
           "description": "Define the authResponseHeaders"
          },
          "authRequestHeaders": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "array",
           "description": "Define the authRequestHeaders"
          },
          "tls": {
           "type": "object",
           "properties": {
            "insecureSkipVerify": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "boolean",
             "description": "Define the tls"
            }
           },
@@ -4606,113 +4644,90 @@
           "description": "Define the tls"
          },
          "attempts": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "number",
           "description": "Define retry attempts"
          },
          "initialInterval": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "number",
           "description": "Define the initialInterval"
          },
          "excludednets": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "array",
           "description": "Define the excludednets"
          },
          "middlewares": {
-          "type": "object",
-          "properties": {
-           "expandObjectName": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
-            "description": "Define the middlewares"
+          "type": "array",
+          "description": "Define the middlewares",
+          "items": {
+           "type": "object",
+           "properties": {
+            "expandObjectName": {
+             "type": "boolean",
+             "description": "Define the middlewares"
+            },
+            "name": {
+             "type": "string",
+             "description": "Define the middleware name"
+            }
            },
-           "name": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
-            "description": "Define the middleware name"
-           }
-          },
-          "additionalProperties": true,
-          "description": "Define the middlewares"
+           "additionalProperties": true
+          }
          },
          "prefix": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": [
+           "array",
+           "string"
+          ],
           "description": "Define the prefixes"
          },
          "forceSlash": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the forceSlash"
          },
          "users": {
-          "type": "object",
-          "properties": {
-           "password": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
-            "description": "Define the users If this is set, the `secret` key must not be set."
+          "type": "array",
+          "description": "Define the users If this is set, the `secret` key must not be set.",
+          "items": {
+           "type": "object",
+           "properties": {
+            "password": {
+             "type": "string",
+             "description": "Define the users If this is set, the `secret` key must not be set."
+            },
+            "username": {
+             "type": "string",
+             "description": "Define the username"
+            }
            },
-           "username": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
-            "description": "Define the username"
-           }
-          },
-          "additionalProperties": true,
-          "description": "Define the users If this is set, the `secret` key must not be set."
+           "additionalProperties": true
+          }
          },
          "secret": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the secret If this is set, the `users` key must not be set."
          },
          "average": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "number",
           "description": "Define the average rate limit"
          },
          "burst": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "number",
           "description": "Define the burst rate limit"
          },
          "path": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the path"
          },
          "modSecurityUrl": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the modSecurityUrl"
          },
          "timeoutMillis": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "number",
           "description": "Define the timeoutMillis"
          },
          "maxBodySize": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "number",
           "description": "Define the maxBodySize"
          },
          "enabled": {
@@ -4725,33 +4740,23 @@
           "description": "Define the enabled"
          },
          "logLevel": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the logLevel"
          },
          "updateIntervalSeconds": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "number",
           "description": "Define the updateIntervalSeconds"
          },
          "updateMaxFailure": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "number",
           "description": "Define the updateMaxFailure"
          },
          "defaultDecisionSeconds": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "number",
           "description": "Define the defaultDecisionSeconds"
          },
          "httpTimeoutSeconds": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "number",
           "description": "Define the httpTimeoutSeconds"
          },
          "crowdsec": {
@@ -4761,165 +4766,111 @@
           "description": "Define the crowdsecMode"
          },
          "crowdsecAppsecEnabled": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the crowdsecAppsecEnabled"
          },
          "crowdsecAppsecHost": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the crowdsecAppsecHost"
          },
          "crowdsecAppsecFailureBlock": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the crowdsecAppsecFailureBlock"
          },
          "crowdsecAppsecUnreachableBlock": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the crowdsecAppsecUnreachableBlock"
          },
          "crowdsecLapiKey": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the crowdsecLapiKey"
          },
          "crowdsecLapiHost": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the crowdsecLapiHost"
          },
          "crowdsecLapiTLSInsecureVerify": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the crowdsecLapiTLSInsecureVerify"
          },
          "crowdsecCapiMachineId": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the crowdsecCapiMachineId"
          },
          "crowdsecCapiPassword": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the crowdsecCapiPassword"
          },
          "crowdsecCapiScenarios": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "array",
           "description": "Define the crowdsecCapiScenarios"
          },
          "forwardedHeadersTrustedIPs": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "array",
           "description": "Define the forwardedHeadersTrustedIPs"
          },
          "clientTrustedIPs": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "array",
           "description": "Define the clientTrustedIPs"
          },
          "forwardedHeadersCustomName": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the forwardedHeadersCustomName"
          },
          "remediationHeadersCustomName": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the remediationHeadersCustomName"
          },
          "redisCacheEnabled": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the redisCacheEnabled"
          },
          "redisCacheHost": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the redisCacheHost"
          },
          "redisCachePassword": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the redisCachePassword"
          },
          "redisCacheDatabase": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the redisCacheDatabase"
          },
          "crowdsecLapiTLSCertificateAuthority": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the crowdsecLapiTLSCertificateAuthority"
          },
          "crowdsecLapiTLSCertificateBouncer": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the crowdsecLapiTLSCertificateBouncer"
          },
          "crowdsecLapiTLSCertificateBouncerKey": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the crowdsecLapiTLSCertificateBouncerKey"
          },
          "captchaProvider": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the captchaProvider"
          },
          "captchaSiteKey": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the captchaSiteKey"
          },
          "captchaSecretKey": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the captchaSecretKey"
          },
          "captchaGracePeriodSeconds": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "number",
           "description": "Define the captchaGracePeriodSeconds"
          },
          "captchaHTMLFilePath": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the captchaHTMLFilePath"
          },
          "banHTMLFilePath": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the banHTMLFilePath"
          },
          "customRequestHeaders": {
@@ -4935,57 +4886,39 @@
           "description": "Define the customResponseHeaders"
          },
          "accessControlAllowCredentials": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the accessControlAllowCredentials"
          },
          "accessControlAllowHeaders": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "array",
           "description": "Define the accessControlAllowHeaders"
          },
          "accessControlAllowMethods": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "array",
           "description": "Define the accessControlAllowMethods"
          },
          "accessControlAllowOriginList": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "array",
           "description": "Define the accessControlAllowOriginList"
          },
          "accessControlExposeHeaders": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "array",
           "description": "Define the accessControlExposeHeaders"
          },
          "accessControlMaxAge": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "number",
           "description": "Define the accessControlMaxAge"
          },
          "addVaryHeader": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the addVaryHeader"
          },
          "allowedHosts": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "array",
           "description": "Define the allowedHosts"
          },
          "hostsProxyHeaders": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "array",
           "description": "Define the hostsProxyHeaders"
          },
          "sslProxyHeaders": {
@@ -4995,125 +4928,90 @@
           "description": "Define the sslProxyHeaders"
          },
          "stsSeconds": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "number",
           "description": "Define the stsSeconds"
          },
          "stsIncludeSubdomains": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the stsIncludeSubdomains"
          },
          "stsPreload": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the stsPreload"
          },
          "forceSTSHeader": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the forceSTSHeader"
          },
          "frameDeny": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the frameDeny"
          },
          "customFrameOptionsValue": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the customFrameOptionsValue"
          },
          "contentTypeNosniff": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the contentTypeNosniff"
          },
          "browserXssFilter": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the browserXssFilter"
          },
          "customBrowserXSSValue": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the customBrowserXSSValue"
          },
          "contentSecurityPolicy": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the contentSecurityPolicy"
          },
          "publicKey": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the publicKey"
          },
          "referrerPolicy": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the referrerPolicy"
          },
          "permissionsPolicy": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the permissionsPolicy"
          },
          "isDevelopment": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "boolean",
           "description": "Define the isDevelopment"
          },
          "app": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the app"
          },
          "theme": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the theme"
          },
          "baseUrl": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the baseUrl"
          },
          "addons": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "array",
           "description": "Define the addons"
          },
          "rewrites": {
-          "type": "object",
-          "properties": {
-           "header": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
-            "description": "Define the header"
-           }
-          },
-          "additionalProperties": true,
-          "description": "Define the rewrites"
+          "type": "array",
+          "description": "Define the rewrites",
+          "items": {
+           "type": "object",
+           "properties": {
+            "header": {
+             "type": "string",
+             "description": "Define the header"
+            }
+           },
+           "additionalProperties": true
+          }
          }
         },
         "additionalProperties": true,
@@ -6045,17 +5943,17 @@
     "header": {
      "type": "string",
      "description": "Header text for NOTES.txt. Rendered first in the output.",
-     "default": "# Welcome to TrueCharts!\nThank you for installing <{{ .Chart.Name }}>.\n"
+     "default": "# Thank you for installing {{ .Chart.Name }} by TrueCharts.\n"
     },
     "custom": {
      "type": "string",
      "description": "Custom text for NOTES.txt. Rendered after header, before connection information.",
-     "default": ""
+     "default": "{{- include \"tc.v1.common.lib.chart.externalUrls\" $ }}\n\n{{ if .Chart.Dependencies }}\n## Dependencies for {{ .Chart.Name }}\n\n{{- range .Chart.Dependencies }}\n- Chart: {{ .Repository }}/{{ .Name }}\n  Version: {{ .Version }}\n{{- end }}\n{{- end }}\n{{- if .Values.chartContext.internalUrls }}\n## Connecting Internally\n\nYou can reach this chart inside your cluster, using the following service URLS:\n{{- range $url := .Values.chartContext.internalUrls }}\n- {{ $url }}\n{{- end }}\n{{- end }}\n\n## Sources for {{ .Chart.Name }}\n\n{{- range .Chart.Sources }}\n- {{ . }}\n{{- end -}}\n\n{{- $link := .Chart.Annotations.docs -}}\n{{- if not $link -}}\n  {{- $link = .Chart.Home -}}\n{{- end }}\n\nSee more for **{{ $.Chart.Name }}** at ({{ $link }})\n"
     },
     "footer": {
      "type": "string",
      "description": "Footer text for NOTES.txt. Rendered after connection information, before warnings.",
-     "default": "# Documentation\nDocumentation for this chart can be found at ...\n# Bug reports\nIf you find a bug in this chart, please file an issue at ...\n"
+     "default": "## Documentation\nPlease check out the TrueCharts documentation on:\nhttps://truecharts.org\n\nOpenSource can only exist with your help, please consider supporting TrueCharts:\nhttps://trueforge.org/sponsor\n"
     },
     "warnings": {
      "type": "array",
@@ -6384,15 +6282,11 @@
         "type": "object",
         "properties": {
          "password": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the iSCSI"
          },
          "username": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the username"
          }
         },
@@ -6403,27 +6297,19 @@
         "type": "object",
         "properties": {
          "username": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the username"
          },
          "password": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the password"
          },
          "usernameInitiator": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the usernameInitiator"
          },
          "passwordInitiator": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the passwordInitiator"
          }
         },
@@ -6435,22 +6321,21 @@
       "description": "Define the iSCSI"
      },
      "path": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "string",
       "description": "Define the nfs export share path"
      },
      "server": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "string",
       "description": "Define the nfs server"
      },
      "targetSelector": {
       "type": "object",
       "properties": {},
       "additionalProperties": {
-       "type": "object",
+       "type": [
+        "object",
+        "null"
+       ],
        "properties": {},
        "additionalProperties": {
         "type": "object",
@@ -6512,27 +6397,22 @@
       "description": "Define the namespace for this object"
      },
      "retain": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "boolean",
       "description": "Define wether the to add helm annotation to retain resource on uninstall. This does not **guarantee** that the resource will be retained."
      },
      "accessModes": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": [
+       "array",
+       "string"
+      ],
       "description": "Define the accessModes of the PVC, if it's single can be defined as a string, multiple as a list"
      },
      "volumeName": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "string",
       "description": "Define the volumeName of a PV, backing the claim"
      },
      "existingClaim": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "string",
       "description": "Define an existing claim to use"
      },
      "storageClass": {
@@ -6543,15 +6423,11 @@
       "type": "object",
       "properties": {
        "name": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define dataSource for the pvc"
        },
        "kind": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the kind of the dataSource"
        }
       },
@@ -6562,51 +6438,35 @@
       "type": "object",
       "properties": {
        "mode": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define static provisioning for the pvc"
        },
        "server": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the nfs server"
        },
        "share": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the nfs export share path"
        },
        "user": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the smb user"
        },
        "password": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the smb password"
        },
        "domain": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the smb domain"
        },
        "driver": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the custom driver"
        },
        "provisioner": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the custom provisioner"
        }
       },
@@ -6614,45 +6474,39 @@
       "description": "Define static provisioning for the pvc"
      },
      "mountOptions": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": {
+      "type": "array",
+      "description": "Define mountOptions for the pvc. Available only for `static.mode: nfs|smb`",
+      "items": {
        "type": "object",
        "properties": {
         "value": {
-         "type": "object",
-         "properties": {},
-         "additionalProperties": true,
+         "type": [
+          "number",
+          "string"
+         ],
          "description": "Define mountOptions for the pvc. Available only for `static.mode: nfs|smb`"
         },
         "key": {
-         "type": "object",
-         "properties": {},
-         "additionalProperties": true,
+         "type": "string",
          "description": "Define the key of the mountOption"
         }
        },
        "additionalProperties": true,
        "description": "Configuration for `$name.mountOptions.$name`."
-      },
-      "description": "Define mountOptions for the pvc. Available only for `static.mode: nfs|smb`"
+      }
      },
      "volumeSnapshots": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": {
+      "type": "array",
+      "description": "Define volumeSnapshots for the pvc",
+      "items": {
        "type": "object",
        "properties": {
         "volumeSnapshotClassName": {
-         "type": "object",
-         "properties": {},
-         "additionalProperties": true,
+         "type": "string",
          "description": "Define volumeSnapshots for the pvc"
         },
         "name": {
-         "type": "object",
-         "properties": {},
-         "additionalProperties": true,
+         "type": "string",
          "description": "Define the name of the volumeSnapshot"
         },
         "enabled": {
@@ -6679,49 +6533,37 @@
        },
        "additionalProperties": true,
        "description": "Configuration for `$name.volumeSnapshots.$name`."
-      },
-      "description": "Define volumeSnapshots for the pvc"
+      }
      },
      "fsType": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "string",
       "description": "Define the fsType"
      },
      "targetPortal": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "string",
       "description": "Define the targetPortal"
      },
      "iqn": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "string",
       "description": "Define the iqn"
      },
      "lun": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": [
+       "integer",
+       "string"
+      ],
       "description": "Define the lun"
      },
      "initiatorName": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "string",
       "description": "Define the initiatorName"
      },
      "iscsiInterface": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "string",
       "description": "Define the iscsiInterface"
      },
      "portals": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "array",
       "description": "Define the portals"
      },
      "enabled": {
@@ -6744,7 +6586,8 @@
        "device",
        "configmap",
        "secret",
-       "vct"
+       "vct",
+       "projected"
       ]
      },
      "mountPath": {
@@ -6756,11 +6599,6 @@
      "mountPropagation": {
       "type": "string",
       "description": "Define the mountPropagation for the persistence, applies to all containers that are selected",
-      "enum": [
-       "None",
-       "HostToContainer",
-       "Bidirectional"
-      ],
       "oneOf": [
        {
         "enum": [
@@ -6805,9 +6643,7 @@
     "type": "object",
     "properties": {
      "unhealthyPodEvictionPolicy": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "string",
       "description": "Create Pod Disruption Budget objects",
       "oneOf": [
        {
@@ -6929,7 +6765,10 @@
    "additionalProperties": true
   },
   "podOptions.hostAliases": {
-   "type": "array",
+   "type": [
+    "array",
+    "string"
+   ],
    "description": "See [Host Aliases](/truecharts-common/workload#hostaliases)",
    "items": {
     "type": "object",
@@ -7083,7 +6922,10 @@
      "default": false
     },
     "terminationGracePeriodSeconds": {
-     "type": "integer",
+     "type": [
+      "integer",
+      "string"
+     ],
      "description": "See [Termination Grace Period Seconds](/truecharts-common/workload#terminationgraceperiodseconds)",
      "default": 60
     }
@@ -7237,21 +7079,15 @@
        "type": "object",
        "properties": {
         "apiGroup": {
-         "type": "object",
-         "properties": {},
-         "additionalProperties": true,
+         "type": "string",
          "description": "Create rbac objects"
         },
         "kind": {
-         "type": "object",
-         "properties": {},
-         "additionalProperties": true,
+         "type": "string",
          "description": "Define the `kind` of `subjects` entry"
         },
         "name": {
-         "type": "object",
-         "properties": {},
-         "additionalProperties": true,
+         "type": "string",
          "description": "Define the `name` of `subjects` entry"
         }
        },
@@ -7492,7 +7328,8 @@
         "port": {
          "type": [
           "null",
-          "integer"
+          "integer",
+          "string"
          ],
          "description": "Attach to the listeners of the gateway on this port."
         }
@@ -7580,6 +7417,58 @@
           ],
           "description": "Enable the integration.",
           "default": false
+         },
+         "name": {
+          "type": "string",
+          "description": "Name of the entry on the homepage.",
+          "default": ""
+         },
+         "description": {
+          "type": "string",
+          "description": "Description of the entry on the homepage.",
+          "default": ""
+         },
+         "group": {
+          "type": "string",
+          "description": "Group of the entry on the homepage.",
+          "default": ""
+         },
+         "icon": {
+          "type": "string",
+          "description": "Icon of the entry on the homepage.",
+          "default": ""
+         },
+         "widget": {
+          "type": "object",
+          "description": "Widget of the entry on the homepage.",
+          "additionalProperties": true,
+          "properties": {
+           "type": {
+            "type": "string",
+            "description": "Type of the widget. Defaults to the name of the chart.",
+            "default": ""
+           },
+           "url": {
+            "type": "string",
+            "description": "URL of the widget. Defaults to the first host of the route.",
+            "default": ""
+           },
+           "custom": {
+            "type": [
+             "object",
+             "null"
+            ],
+            "description": "Custom settings of the widget.",
+            "additionalProperties": true
+           },
+           "customkv": {
+            "type": [
+             "array",
+             "null"
+            ],
+            "description": "Custom settings of the widget, as a list of `key` and `value`."
+           }
+          }
          }
         },
         "additionalProperties": true
@@ -7632,7 +7521,27 @@
          "themePark": {
           "type": "object",
           "additionalProperties": true,
-          "description": "Theme park plugin, needs the plugin installed in Traefik. Only for `HTTPRoute`."
+          "description": "Theme park plugin, needs the plugin installed in Traefik. Only for `HTTPRoute`.",
+          "properties": {
+           "enabled": {
+            "type": [
+             "boolean",
+             "string"
+            ],
+            "description": "Enable the theme.",
+            "default": false
+           },
+           "app": {
+            "type": "string",
+            "description": "Name of the theme.park app.",
+            "default": ""
+           },
+           "theme": {
+            "type": "string",
+            "description": "Name of the theme.park theme.",
+            "default": ""
+           }
+          }
          },
          "redirectRegex": {
           "type": "array",
@@ -7692,7 +7601,22 @@
          "themePark": {
           "type": "object",
           "additionalProperties": true,
-          "description": "`css` URL added to HTML responses with Lua. Only for `HTTPRoute`."
+          "description": "`css` URL added to HTML responses with Lua. Only for `HTTPRoute`.",
+          "properties": {
+           "enabled": {
+            "type": [
+             "boolean",
+             "string"
+            ],
+            "description": "Enable the theme.",
+            "default": false
+           },
+           "css": {
+            "type": "string",
+            "description": "URL of the CSS file added to HTML responses.",
+            "default": ""
+           }
+          }
          },
          "redirectRegex": {
           "type": "array",
@@ -7754,7 +7678,8 @@
            "port": {
             "type": [
              "null",
-             "integer"
+             "integer",
+             "string"
             ],
             "description": "Port of the backend. Defaults to the primary port of the selected service."
            },
@@ -7899,7 +7824,10 @@
      }
     },
     "method": {
-     "type": "string"
+     "type": [
+      "object",
+      "string"
+     ]
     }
    },
    "additionalProperties": true,
@@ -8066,9 +7994,7 @@
           "default": true
          },
          "name": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the configmap name This will be automatically expanded to `fullname-configmap-name`.",
           "default": "",
           "minLength": 1
@@ -8082,9 +8008,7 @@
         "type": "object",
         "properties": {
          "name": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "string",
           "description": "Define the secret name This will be automatically expanded to `fullname-secret-name`.",
           "default": "",
           "minLength": 1
@@ -8221,27 +8145,19 @@
       "default": {}
      },
      "sharedKey": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "string",
       "description": "Sets the shared key in `metallb.io/allow-shared-ip` **MetalLB** Annotation"
      },
      "loadBalancerIP": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "string",
       "description": "Define the load balancer IP, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIPs`"
      },
      "loadBalancerIPs": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "array",
       "description": "Define the load balancer IPs, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIP`"
      },
      "loadBalancerSourceRanges": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "array",
       "description": "Define the load balancer source ranges"
      },
      "externalIP": {
@@ -8260,15 +8176,11 @@
       "description": "Define whether to use `EndpointSlice` or `Endpoint`"
      },
      "addressType": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "string",
       "description": "Define the addressType for External IP"
      },
      "appProtocol": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "string",
       "description": "Define the appProtocol for External IP"
      },
      "enabled": {
@@ -8727,15 +8639,11 @@
       "type": "object",
       "properties": {
        "persistentVolumeClaimName": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define a volume snapshot"
        },
        "volumeSnapshotContentName": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the volume snapshot content name"
        }
       },
@@ -8885,9 +8793,6 @@
       },
       "type": {
        "type": "string",
-       "enum": [
-        "validating"
-       ],
        "description": "Create webhook objects"
       },
       "webhooks": {
@@ -9025,9 +8930,6 @@
       },
       "type": {
        "type": "string",
-       "enum": [
-        "mutating"
-       ],
        "description": "Create webhook objects"
       },
       "webhooks": {
@@ -9186,33 +9088,23 @@
           "type": "object",
           "properties": {
            "resources": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "array",
             "description": "Create webhook objects"
            },
            "scope": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "string",
             "description": "Define the scope of the rule for the webhook"
            },
            "apiGroups": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "array",
             "description": "Define the apiGroups of the rule for the webhook"
            },
            "apiVersions": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "array",
             "description": "Define the apiVersions of the rule for the webhook"
            },
            "operations": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "array",
             "description": "Define the operations of the rule for the webhook"
            }
           },
@@ -9304,24 +9196,18 @@
          "type": "object",
          "properties": {
           "caBundle": {
-           "type": "object",
-           "properties": {},
-           "additionalProperties": true,
+           "type": "string",
            "description": "Define the caBundle in clientConfig for the webhook"
           },
           "url": {
-           "type": "object",
-           "properties": {},
-           "additionalProperties": true,
+           "type": "string",
            "description": "Define the url in clientConfig for the webhook, required if service is not defined in clientConfig"
           },
           "service": {
            "type": "object",
            "properties": {
             "name": {
-             "type": "object",
-             "properties": {},
-             "additionalProperties": true,
+             "type": "string",
              "description": "Define the service name in clientConfig for the webhook"
             },
             "namespace": {
@@ -9333,15 +9219,14 @@
              "description": "Define the service namespace in clientConfig for the webhook"
             },
             "path": {
-             "type": "object",
-             "properties": {},
-             "additionalProperties": true,
+             "type": "string",
              "description": "Define the service path in clientConfig for the webhook"
             },
             "port": {
-             "type": "object",
-             "properties": {},
-             "additionalProperties": true,
+             "type": [
+              "integer",
+              "string"
+             ],
              "description": "Define the service port in clientConfig for the webhook"
             }
            },
@@ -9607,9 +9492,7 @@
    "description": "See [fixedEnv](/truecharts-common/container/fixedenv).",
    "properties": {
     "NVIDIA_CAPS": {
-     "type": "object",
-     "properties": {},
-     "additionalProperties": true,
+     "type": "array",
      "description": "Override fixedEnv for the container By default it will set the following environment variables:"
     },
     "TZ": {
@@ -9660,9 +9543,7 @@
       "description": "Define lifecycle for the container"
      },
      "type": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "string",
       "description": "Define hook type"
      },
      "port": {
@@ -9784,6 +9665,16 @@
      },
      "additionalProperties": true,
      "description": "Probe timing and threshold settings."
+    },
+    "command": {
+     "type": [
+      "array",
+      "string"
+     ],
+     "description": "Define the command to run. Only applies when `type: exec`",
+     "items": {
+      "type": "string"
+     }
     }
    },
    "additionalProperties": true,
@@ -10062,7 +9953,10 @@
    "additionalProperties": true
   },
   "workload.terminationGracePeriodSeconds": {
-   "type": "integer",
+   "type": [
+    "integer",
+    "string"
+   ],
    "description": "See [Termination Grace Period Seconds](/truecharts-common/workload#terminationgraceperiodseconds)",
    "additionalProperties": true
   },
@@ -10169,11 +10063,6 @@
          "properties": {
           "type": {
            "type": "string",
-           "enum": [
-            "init",
-            "install",
-            "upgrade"
-           ],
            "description": "Define the type of container - Only applies to `initContainers`"
           }
          },
@@ -10251,29 +10140,29 @@
         "description": "Pod's nodeSelector"
        },
        "topologySpreadConstraints": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "array",
         "description": "Pod's topologySpreadConstraints"
        },
        "hostAliases": {
-        "type": "object",
-        "properties": {
-         "ip": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
-          "description": "Pod's hostAliases ip"
+        "type": [
+         "array",
+         "string"
+        ],
+        "description": "Pod's hostAliases",
+        "items": {
+         "type": "object",
+         "properties": {
+          "ip": {
+           "type": "string",
+           "description": "Pod's hostAliases ip"
+          },
+          "hostnames": {
+           "type": "array",
+           "description": "Pod's hostAliases hostnames"
+          }
          },
-         "hostnames": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
-          "description": "Pod's hostAliases hostnames"
-         }
-        },
-        "additionalProperties": true,
-        "description": "Pod's hostAliases"
+         "additionalProperties": true
+        }
        },
        "dnsPolicy": {
         "$ref": "#/definitions/workload.podSpec.dnsPolicy",
@@ -10283,76 +10172,64 @@
         "type": "object",
         "properties": {
          "nameservers": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "array",
           "description": "Pod's dnsConfig nameservers"
          },
          "searches": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "type": "array",
           "description": "Pod's dnsConfig searches"
          },
          "options": {
-          "type": "object",
-          "properties": {
-           "name": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
-            "description": "Pod's dnsConfig options name"
+          "type": "array",
+          "description": "Pod's dnsConfig options",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string",
+             "description": "Pod's dnsConfig options name"
+            },
+            "value": {
+             "type": "string",
+             "description": "Pod's dnsConfig options value"
+            }
            },
-           "value": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
-            "description": "Pod's dnsConfig options value"
-           }
-          },
-          "additionalProperties": true,
-          "description": "Pod's dnsConfig options"
+           "additionalProperties": true
+          }
          }
         },
         "additionalProperties": true,
         "description": "Pod's dnsConfig"
        },
        "tolerations": {
-        "type": "object",
-        "properties": {
-         "operator": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
-          "description": "Pod's tolerations operator"
+        "type": "array",
+        "description": "Pod's tolerations",
+        "items": {
+         "type": "object",
+         "properties": {
+          "operator": {
+           "type": "string",
+           "description": "Pod's tolerations operator"
+          },
+          "key": {
+           "type": "string",
+           "description": "Pod's tolerations key Required only when `operator` = `Equal`"
+          },
+          "value": {
+           "type": "string",
+           "description": "Pod's tolerations value Required only when `operator` = `Equal`"
+          },
+          "effect": {
+           "type": "string",
+           "description": "Pod's tolerations effect"
+          },
+          "tolerationSeconds": {
+           "type": "number",
+           "description": "Pod's tolerations tolerationSeconds"
+          }
          },
-         "key": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
-          "description": "Pod's tolerations key Required only when `operator` = `Equal`"
-         },
-         "value": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
-          "description": "Pod's tolerations value Required only when `operator` = `Equal`"
-         },
-         "effect": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
-          "description": "Pod's tolerations effect"
-         },
-         "tolerationSeconds": {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true,
-          "description": "Pod's tolerations tolerationSeconds"
-         }
-        },
-        "additionalProperties": true,
-        "description": "Pod's tolerations"
+         "additionalProperties": true
+        }
        },
        "runtimeClassName": {
         "$ref": "#/definitions/workload.podSpec.runtimeClassName",
@@ -10375,9 +10252,7 @@
       "description": "Define the number of replicas"
      },
      "revisionHistoryLimit": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "number",
       "description": "Define the number of history revisions"
      },
      "allowRollingUpdateWithRWO": {
@@ -10413,19 +10288,22 @@
           "type": "object",
           "properties": {
            "maxUnavailable": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true
+            "type": [
+             "integer",
+             "string"
+            ]
            },
            "partition": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true
+            "type": [
+             "integer",
+             "string"
+            ]
            },
            "maxSurge": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true
+            "type": [
+             "integer",
+             "string"
+            ]
            }
           },
           "additionalProperties": true,
@@ -10441,21 +10319,21 @@
       "type": "object",
       "properties": {
        "maxUnavailable": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": [
+         "integer",
+         "string"
+        ],
         "description": "Define the maxUnavailable Can only be used when `workload.$name.strategy` is `RollingUpdate`"
        },
        "partition": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "number",
         "description": "Define the partition Can only be used when `workload.$name.strategy` is `RollingUpdate`"
        },
        "maxSurge": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": [
+         "integer",
+         "string"
+        ],
         "description": "Define the maxSurge Can only be used when `workload.$name.strategy` is `RollingUpdate`"
        }
       },
@@ -10478,15 +10356,11 @@
       "description": "Define the completionMode"
      },
      "backoffLimit": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "number",
       "description": "Define the backoffLimit"
      },
      "completions": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "number",
       "description": "Define the completions"
      },
      "parallelism": {
@@ -10494,9 +10368,7 @@
       "description": "Define the parallelism"
      },
      "ttlSecondsAfterFinished": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "number",
       "description": "Define the ttlSecondsAfterFinished"
      },
      "activeDeadlineSeconds": {

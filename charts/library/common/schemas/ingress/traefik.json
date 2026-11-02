@@ -34,15 +34,14 @@
         "type": "object",
         "properties": {
           "expandObjectName": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": [
+              "boolean",
+              "string"
+            ],
             "description": "The middlewares for this traefik integration"
           },
           "name": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "string",
             "description": "The name of the middleware"
           },
           "namespace": {

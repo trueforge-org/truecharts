@@ -124,7 +124,8 @@
             "port": {
               "type": [
                 "null",
-                "integer"
+                "integer",
+                "string"
               ],
               "description": "Attach to the listeners of the gateway on this port."
             }
@@ -212,6 +213,58 @@
                 ],
                 "description": "Enable the integration.",
                 "default": false
+              },
+              "name": {
+                "type": "string",
+                "description": "Name of the entry on the homepage.",
+                "default": ""
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the entry on the homepage.",
+                "default": ""
+              },
+              "group": {
+                "type": "string",
+                "description": "Group of the entry on the homepage.",
+                "default": ""
+              },
+              "icon": {
+                "type": "string",
+                "description": "Icon of the entry on the homepage.",
+                "default": ""
+              },
+              "widget": {
+                "type": "object",
+                "description": "Widget of the entry on the homepage.",
+                "additionalProperties": true,
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "Type of the widget. Defaults to the name of the chart.",
+                    "default": ""
+                  },
+                  "url": {
+                    "type": "string",
+                    "description": "URL of the widget. Defaults to the first host of the route.",
+                    "default": ""
+                  },
+                  "custom": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "description": "Custom settings of the widget.",
+                    "additionalProperties": true
+                  },
+                  "customkv": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "description": "Custom settings of the widget, as a list of `key` and `value`."
+                  }
+                }
               }
             },
             "additionalProperties": true
@@ -264,7 +317,27 @@
               "themePark": {
                 "type": "object",
                 "additionalProperties": true,
-                "description": "Theme park plugin, needs the plugin installed in Traefik. Only for `HTTPRoute`."
+                "description": "Theme park plugin, needs the plugin installed in Traefik. Only for `HTTPRoute`.",
+                "properties": {
+                  "enabled": {
+                    "type": [
+                      "boolean",
+                      "string"
+                    ],
+                    "description": "Enable the theme.",
+                    "default": false
+                  },
+                  "app": {
+                    "type": "string",
+                    "description": "Name of the theme.park app.",
+                    "default": ""
+                  },
+                  "theme": {
+                    "type": "string",
+                    "description": "Name of the theme.park theme.",
+                    "default": ""
+                  }
+                }
               },
               "redirectRegex": {
                 "type": "array",
@@ -324,7 +397,22 @@
               "themePark": {
                 "type": "object",
                 "additionalProperties": true,
-                "description": "`css` URL added to HTML responses with Lua. Only for `HTTPRoute`."
+                "description": "`css` URL added to HTML responses with Lua. Only for `HTTPRoute`.",
+                "properties": {
+                  "enabled": {
+                    "type": [
+                      "boolean",
+                      "string"
+                    ],
+                    "description": "Enable the theme.",
+                    "default": false
+                  },
+                  "css": {
+                    "type": "string",
+                    "description": "URL of the CSS file added to HTML responses.",
+                    "default": ""
+                  }
+                }
               },
               "redirectRegex": {
                 "type": "array",
@@ -386,7 +474,8 @@
                   "port": {
                     "type": [
                       "null",
-                      "integer"
+                      "integer",
+                      "string"
                     ],
                     "description": "Port of the backend. Defaults to the primary port of the selected service."
                   },

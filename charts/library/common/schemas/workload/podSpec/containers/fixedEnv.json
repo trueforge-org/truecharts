@@ -4,9 +4,7 @@
   "description": "See [fixedEnv](/truecharts-common/container/fixedenv).",
   "properties": {
     "NVIDIA_CAPS": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": "array",
       "description": "Override fixedEnv for the container By default it will set the following environment variables:"
     },
     "TZ": {
@@ -14,11 +12,17 @@
       "description": "Override the timezone for the container"
     },
     "UMASK": {
-      "type": ["string", "integer"],
+      "type": [
+        "string",
+        "integer"
+      ],
       "description": "Override the umask for the container"
     },
     "PUID": {
-      "type": ["string", "integer"],
+      "type": [
+        "string",
+        "integer"
+      ],
       "description": "Override the PUID for the container"
     }
   },

@@ -106,126 +106,86 @@
             "type": "object",
             "properties": {
               "pluginName": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the pluginName"
               },
               "api": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the api"
               },
               "allowLocalRequests": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the allowLocalRequests"
               },
               "logLocalRequests": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the logLocalRequests"
               },
               "logAllowedRequests": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the logAllowedRequests"
               },
               "logApiRequests": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the logApiRequests"
               },
               "apiTimeoutMs": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "number",
                 "description": "Define the apiTimeoutMs"
               },
               "cacheSize": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "number",
                 "description": "Define the cacheSize"
               },
               "forceMonthlyUpdate": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the forceMonthlyUpdate"
               },
               "allowUnknownCountries": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the allowUnknownCountries"
               },
               "unknownCountryApiResponse": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the unknownCountryApiResponse"
               },
               "blackListMode": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the blackListMode"
               },
               "silentStartUp": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the silentStartUp"
               },
               "addCountryHeader": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the addCountryHeader"
               },
               "countries": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "array",
                 "description": "Define the countries"
               },
               "scheme": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the scheme"
               },
               "permanent": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the permanent"
               },
               "sourceRange": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "array",
                 "description": "Define the sourceRange"
               },
               "ipStrategy": {
                 "type": "object",
                 "properties": {
                   "excludedIPs": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true,
+                    "type": "array",
                     "description": "Define the ipStrategy"
                   },
                   "depth": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true,
+                    "type": "number",
                     "description": "Define the ipStrategy.depth"
                   }
                 },
@@ -233,7 +193,10 @@
                 "description": "Define the ipStrategy"
               },
               "regex": {
-                "type": "string",
+                "type": [
+                  "array",
+                  "string"
+                ],
                 "description": "Define the regex"
               },
               "replacement": {
@@ -241,72 +204,53 @@
                 "description": "Define the replacement"
               },
               "maxRequestBodyBytes": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "number",
                 "description": "Define the maxRequestBodyBytes"
               },
               "memRequestBodyBytes": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": [
+                  "null",
+                  "number"
+                ],
                 "description": "Define the memRequestBodyBytes"
               },
               "maxResponseBodyBytes": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "number",
                 "description": "Define the maxResponseBodyBytes"
               },
               "memResponseBodyBytes": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "number",
                 "description": "Define the memResponseBodyBytes"
               },
               "retryExpression": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the retryExpression"
               },
               "address": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the address"
               },
               "authResponseHeadersRegex": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the authResponseHeadersRegex"
               },
               "trustForwardHeader": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the trustForwardHeader"
               },
               "authResponseHeaders": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "array",
                 "description": "Define the authResponseHeaders"
               },
               "authRequestHeaders": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "array",
                 "description": "Define the authRequestHeaders"
               },
               "tls": {
                 "type": "object",
                 "properties": {
                   "insecureSkipVerify": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true,
+                    "type": "boolean",
                     "description": "Define the tls"
                   }
                 },
@@ -314,113 +258,90 @@
                 "description": "Define the tls"
               },
               "attempts": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "number",
                 "description": "Define retry attempts"
               },
               "initialInterval": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "number",
                 "description": "Define the initialInterval"
               },
               "excludednets": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "array",
                 "description": "Define the excludednets"
               },
               "middlewares": {
-                "type": "object",
-                "properties": {
-                  "expandObjectName": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true,
-                    "description": "Define the middlewares"
+                "type": "array",
+                "description": "Define the middlewares",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "expandObjectName": {
+                      "type": "boolean",
+                      "description": "Define the middlewares"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Define the middleware name"
+                    }
                   },
-                  "name": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true,
-                    "description": "Define the middleware name"
-                  }
-                },
-                "additionalProperties": true,
-                "description": "Define the middlewares"
+                  "additionalProperties": true
+                }
               },
               "prefix": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": [
+                  "array",
+                  "string"
+                ],
                 "description": "Define the prefixes"
               },
               "forceSlash": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the forceSlash"
               },
               "users": {
-                "type": "object",
-                "properties": {
-                  "password": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true,
-                    "description": "Define the users If this is set, the `secret` key must not be set."
+                "type": "array",
+                "description": "Define the users If this is set, the `secret` key must not be set.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "password": {
+                      "type": "string",
+                      "description": "Define the users If this is set, the `secret` key must not be set."
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "Define the username"
+                    }
                   },
-                  "username": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true,
-                    "description": "Define the username"
-                  }
-                },
-                "additionalProperties": true,
-                "description": "Define the users If this is set, the `secret` key must not be set."
+                  "additionalProperties": true
+                }
               },
               "secret": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the secret If this is set, the `users` key must not be set."
               },
               "average": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "number",
                 "description": "Define the average rate limit"
               },
               "burst": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "number",
                 "description": "Define the burst rate limit"
               },
               "path": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the path"
               },
               "modSecurityUrl": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the modSecurityUrl"
               },
               "timeoutMillis": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "number",
                 "description": "Define the timeoutMillis"
               },
               "maxBodySize": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "number",
                 "description": "Define the maxBodySize"
               },
               "enabled": {
@@ -433,33 +354,23 @@
                 "description": "Define the enabled"
               },
               "logLevel": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the logLevel"
               },
               "updateIntervalSeconds": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "number",
                 "description": "Define the updateIntervalSeconds"
               },
               "updateMaxFailure": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "number",
                 "description": "Define the updateMaxFailure"
               },
               "defaultDecisionSeconds": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "number",
                 "description": "Define the defaultDecisionSeconds"
               },
               "httpTimeoutSeconds": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "number",
                 "description": "Define the httpTimeoutSeconds"
               },
               "crowdsec": {
@@ -469,165 +380,111 @@
                 "description": "Define the crowdsecMode"
               },
               "crowdsecAppsecEnabled": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the crowdsecAppsecEnabled"
               },
               "crowdsecAppsecHost": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the crowdsecAppsecHost"
               },
               "crowdsecAppsecFailureBlock": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the crowdsecAppsecFailureBlock"
               },
               "crowdsecAppsecUnreachableBlock": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the crowdsecAppsecUnreachableBlock"
               },
               "crowdsecLapiKey": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the crowdsecLapiKey"
               },
               "crowdsecLapiHost": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the crowdsecLapiHost"
               },
               "crowdsecLapiTLSInsecureVerify": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the crowdsecLapiTLSInsecureVerify"
               },
               "crowdsecCapiMachineId": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the crowdsecCapiMachineId"
               },
               "crowdsecCapiPassword": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the crowdsecCapiPassword"
               },
               "crowdsecCapiScenarios": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "array",
                 "description": "Define the crowdsecCapiScenarios"
               },
               "forwardedHeadersTrustedIPs": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "array",
                 "description": "Define the forwardedHeadersTrustedIPs"
               },
               "clientTrustedIPs": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "array",
                 "description": "Define the clientTrustedIPs"
               },
               "forwardedHeadersCustomName": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the forwardedHeadersCustomName"
               },
               "remediationHeadersCustomName": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the remediationHeadersCustomName"
               },
               "redisCacheEnabled": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the redisCacheEnabled"
               },
               "redisCacheHost": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the redisCacheHost"
               },
               "redisCachePassword": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the redisCachePassword"
               },
               "redisCacheDatabase": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the redisCacheDatabase"
               },
               "crowdsecLapiTLSCertificateAuthority": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the crowdsecLapiTLSCertificateAuthority"
               },
               "crowdsecLapiTLSCertificateBouncer": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the crowdsecLapiTLSCertificateBouncer"
               },
               "crowdsecLapiTLSCertificateBouncerKey": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the crowdsecLapiTLSCertificateBouncerKey"
               },
               "captchaProvider": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the captchaProvider"
               },
               "captchaSiteKey": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the captchaSiteKey"
               },
               "captchaSecretKey": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the captchaSecretKey"
               },
               "captchaGracePeriodSeconds": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "number",
                 "description": "Define the captchaGracePeriodSeconds"
               },
               "captchaHTMLFilePath": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the captchaHTMLFilePath"
               },
               "banHTMLFilePath": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the banHTMLFilePath"
               },
               "customRequestHeaders": {
@@ -643,57 +500,39 @@
                 "description": "Define the customResponseHeaders"
               },
               "accessControlAllowCredentials": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the accessControlAllowCredentials"
               },
               "accessControlAllowHeaders": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "array",
                 "description": "Define the accessControlAllowHeaders"
               },
               "accessControlAllowMethods": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "array",
                 "description": "Define the accessControlAllowMethods"
               },
               "accessControlAllowOriginList": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "array",
                 "description": "Define the accessControlAllowOriginList"
               },
               "accessControlExposeHeaders": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "array",
                 "description": "Define the accessControlExposeHeaders"
               },
               "accessControlMaxAge": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "number",
                 "description": "Define the accessControlMaxAge"
               },
               "addVaryHeader": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the addVaryHeader"
               },
               "allowedHosts": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "array",
                 "description": "Define the allowedHosts"
               },
               "hostsProxyHeaders": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "array",
                 "description": "Define the hostsProxyHeaders"
               },
               "sslProxyHeaders": {
@@ -703,125 +542,90 @@
                 "description": "Define the sslProxyHeaders"
               },
               "stsSeconds": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "number",
                 "description": "Define the stsSeconds"
               },
               "stsIncludeSubdomains": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the stsIncludeSubdomains"
               },
               "stsPreload": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the stsPreload"
               },
               "forceSTSHeader": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the forceSTSHeader"
               },
               "frameDeny": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the frameDeny"
               },
               "customFrameOptionsValue": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the customFrameOptionsValue"
               },
               "contentTypeNosniff": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the contentTypeNosniff"
               },
               "browserXssFilter": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the browserXssFilter"
               },
               "customBrowserXSSValue": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the customBrowserXSSValue"
               },
               "contentSecurityPolicy": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the contentSecurityPolicy"
               },
               "publicKey": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the publicKey"
               },
               "referrerPolicy": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the referrerPolicy"
               },
               "permissionsPolicy": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the permissionsPolicy"
               },
               "isDevelopment": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "boolean",
                 "description": "Define the isDevelopment"
               },
               "app": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the app"
               },
               "theme": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the theme"
               },
               "baseUrl": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the baseUrl"
               },
               "addons": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "array",
                 "description": "Define the addons"
               },
               "rewrites": {
-                "type": "object",
-                "properties": {
-                  "header": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true,
-                    "description": "Define the header"
-                  }
-                },
-                "additionalProperties": true,
-                "description": "Define the rewrites"
+                "type": "array",
+                "description": "Define the rewrites",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "string",
+                      "description": "Define the header"
+                    }
+                  },
+                  "additionalProperties": true
+                }
               }
             },
             "additionalProperties": true,

@@ -9,15 +9,11 @@
         "type": "object",
         "properties": {
           "persistentVolumeClaimName": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "string",
             "description": "Define a volume snapshot"
           },
           "volumeSnapshotContentName": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "string",
             "description": "Define the volume snapshot content name"
           }
         },

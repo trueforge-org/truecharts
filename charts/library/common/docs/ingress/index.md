@@ -129,14 +129,14 @@ Create Ingress objects
 | Type       | `string`                         |
 | Required   | ❌                               |
 | Helm `tpl` | ❌                               |
-| Default    | `"nil"`                          |
+| Default    | `""`                             |
 
 Example
 
 ```yaml
 ingress:
   $name:
-    ingressClassName: nil
+    ingressClassName: ""
 ```
 
 ---

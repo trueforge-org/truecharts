@@ -11,17 +11,15 @@
         "additionalProperties": true,
         "description": "Create Configmap objects"
       },
-        "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
         "description": "Enables or Disables the Configmap"
       },
       "namespace": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the namespace for this object"
       },
       "labels": {

@@ -77,6 +77,16 @@
       },
       "additionalProperties": true,
       "description": "Probe timing and threshold settings."
+    },
+    "command": {
+      "type": [
+        "array",
+        "string"
+      ],
+      "description": "Define the command to run. Only applies when `type: exec`",
+      "items": {
+        "type": "string"
+      }
     }
   },
   "additionalProperties": true,
