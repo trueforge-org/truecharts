@@ -40,7 +40,7 @@
   {{- end -}}
 
   {{- if (hasKey $objectData "type") -}}
-    {{- $validTypes := (list "postgres" "postgis" "timescaledb" "vectors" "vectorchord") -}}
+    {{- $validTypes := (list "postgres" "postgis" "vectors" "vectorchord") -}}
     {{- if not (mustHas $objectData.type $validTypes) -}}
       {{- fail (printf "CNPG Cluster - Expected [type] to be one of [%s], but got [%s]" (join ", " $validTypes) $objectData.type) -}}
     {{- end -}}

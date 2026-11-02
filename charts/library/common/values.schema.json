@@ -1832,7 +1832,6 @@
      "enum": [
       "postgres",
       "postgis",
-      "timescaledb",
       "vectors",
       "vectorchord"
      ],
@@ -3674,82 +3673,6 @@
      },
      "additionalProperties": true,
      "description": "Configuration for `postgresVectorchord18Image`."
-    },
-    "postgresTimescaledb15Image": {
-     "type": "object",
-     "properties": {
-      "repository": {
-       "type": "string",
-       "description": "Configuration for `postgresTimescaledb15Image.repository`."
-      },
-      "tag": {
-       "type": "string",
-       "description": "Configuration for `postgresTimescaledb15Image.tag`."
-      },
-      "pullPolicy": {
-       "type": "string",
-       "description": "Configuration for `postgresTimescaledb15Image.pullPolicy`."
-      }
-     },
-     "additionalProperties": true,
-     "description": "Configuration for `postgresTimescaledb15Image`."
-    },
-    "postgresTimescaledb16Image": {
-     "type": "object",
-     "properties": {
-      "repository": {
-       "type": "string",
-       "description": "Configuration for `postgresTimescaledb16Image.repository`."
-      },
-      "tag": {
-       "type": "string",
-       "description": "Configuration for `postgresTimescaledb16Image.tag`."
-      },
-      "pullPolicy": {
-       "type": "string",
-       "description": "Configuration for `postgresTimescaledb16Image.pullPolicy`."
-      }
-     },
-     "additionalProperties": true,
-     "description": "Configuration for `postgresTimescaledb16Image`."
-    },
-    "postgresTimescaledb17Image": {
-     "type": "object",
-     "properties": {
-      "repository": {
-       "type": "string",
-       "description": "Configuration for `postgresTimescaledb17Image.repository`."
-      },
-      "tag": {
-       "type": "string",
-       "description": "Configuration for `postgresTimescaledb17Image.tag`."
-      },
-      "pullPolicy": {
-       "type": "string",
-       "description": "Configuration for `postgresTimescaledb17Image.pullPolicy`."
-      }
-     },
-     "additionalProperties": true,
-     "description": "Configuration for `postgresTimescaledb17Image`."
-    },
-    "postgresTimescaledb18Image": {
-     "type": "object",
-     "properties": {
-      "repository": {
-       "type": "string",
-       "description": "Configuration for `postgresTimescaledb18Image.repository`."
-      },
-      "tag": {
-       "type": "string",
-       "description": "Configuration for `postgresTimescaledb18Image.tag`."
-      },
-      "pullPolicy": {
-       "type": "string",
-       "description": "Configuration for `postgresTimescaledb18Image.pullPolicy`."
-      }
-     },
-     "additionalProperties": true,
-     "description": "Configuration for `postgresTimescaledb18Image`."
     },
     "postgresVectors15Image": {
      "type": "object",

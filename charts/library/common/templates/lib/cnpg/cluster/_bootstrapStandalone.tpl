@@ -16,10 +16,6 @@
   {{- end -}}
 
   {{/* PostInitApplicationSQL */}}
-  {{- if eq $objectData.type "timescaledb" -}}
-    {{- $postInitApplicationSQL = concat $postInitApplicationSQL (list
-      "CREATE EXTENSION IF NOT EXISTS timescaledb;") -}}
-  {{- end -}}
   {{- if eq $objectData.type "postgis" -}}
     {{- $postInitApplicationSQL = concat $postInitApplicationSQL (list
       "CREATE EXTENSION IF NOT EXISTS postgis;"
