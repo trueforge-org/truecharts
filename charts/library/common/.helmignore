@@ -30,3 +30,25 @@ OWNERS
 icon.png
 icon.webp
 icon-small.webp
+# schema of common, its $id only resolves in CI and its $refs need the source tree
+/values.schema.json
+/schemas
+# tooling and generated files of common
+/README.txt
+/check_complete_values_schema_coverage.py
+/complete-values-structure.yaml
+/docs-schema-mapping.yaml
+/docs-structure.txt
+/docs-summary.txt
+/examples
+/generate_complete_values_structure.py
+/generate_docs.py
+/generate_template_keys_structure.py
+/generator-todo.md
+/improve_schemas.py
+/manual-docs-todo.md
+/newdocs-missing-index.md
+/quick-reference.txt
+/template-keys-structure.yaml
+/test_output.txt
+/test_schema.py

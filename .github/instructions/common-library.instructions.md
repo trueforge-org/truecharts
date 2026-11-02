@@ -78,6 +78,7 @@ These rules apply to `charts/library/common/` (the `common` library chart that e
 
 - `values.schema.json` (JSON Schema draft-07) is the root. Each top-level key has a `$ref` to its own file in `schemas/`, e.g. `schemas/configmap.json` or `schemas/workload/podSpec/containers/env.json`.
 - Its `$id` holds the path of the CI checkout (`file:///home/runner/work/truecharts/truecharts/...`), and the `$ref`s resolve relative to it. Keep it that way, and never commit a local path. See [Unit tests](#unit-tests) for running tests locally.
+- The schema and the tooling of `common` are not packaged, as the `$id` does not resolve outside CI and every chart using `common` would fail to render. They are listed in `templates/helmignore.tpl`, which `forgetool charts genmeta` writes to the `.helmignore` of every chart, so a file added to the root of `common` has to be added there too. `helm lint` reads the schema from disk, so `test_schema.py` still validates against it.
 - Every key in `values.yaml` and every key the templates read must be in the schema. When you add, rename or remove a key, change the schema in the same PR.
 - Follow the patterns of the existing schema files:
   - Collections of named objects (`configmap.<name>`, `workload.<name>`, ...) use `"properties": {}`, with the object schema in `additionalProperties`.
