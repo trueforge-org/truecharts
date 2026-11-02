@@ -48,13 +48,13 @@ Custom text for NOTES.txt. Rendered after header, before connection information.
 | Type       | `string`       |
 | Required   | ❌             |
 | Helm `tpl` | ❌             |
-| Default    | `""`           |
+| Default    | See schema     |
 
 Example
 
 ```yaml
 notes:
-  custom: ""
+  custom: "{{- include \"tc.v1.common.lib.chart.externalUrls\" $ }}\n\n{{ if .Chart.Dependencies }}\n## Dependencies for {{ .Chart.Name }}\n\n{{- range .Chart.Dependencies }}\n- Chart: {{ .Repository }}/{{ .Name }}\n  Version: {{ .Version }}\n{{- end }}\n{{- end }}\n{{- if .Values.chartContext.internalUrls }}\n## Connecting Internally\n\nYou can reach this chart inside your cluster, using the following service URLS:\n{{- range $url := .Values.chartContext.internalUrls }}\n- {{ $url }}\n{{- end }}\n{{- end }}\n\n## Sources for {{ .Chart.Name }}\n\n{{- range .Chart.Sources }}\n- {{ . }}\n{{- end -}}\n\n{{- $link := .Chart.Annotations.docs -}}\n{{- if not $link -}}\n  {{- $link = .Chart.Home -}}\n{{- end }}\n\nSee more for **{{ $.Chart.Name }}** at ({{ $link }})\n"
 ```
 
 ---
@@ -75,7 +75,7 @@ Example
 
 ```yaml
 notes:
-  footer: "# Documentation\nDocumentation for this chart can be found at ...\n# Bug reports\nIf you find a bug in this chart, please file an issue at ...\n"
+  footer: "## Documentation\nPlease check out the TrueCharts documentation on:\nhttps://truecharts.org\n\nOpenSource can only exist with your help, please consider supporting TrueCharts:\nhttps://trueforge.org/sponsor\n"
 ```
 
 ---
@@ -84,19 +84,19 @@ notes:
 
 Header text for NOTES.txt. Rendered first in the output.
 
-| Field      | Value                                                                         |
-| ---------- | ----------------------------------------------------------------------------- |
-| Key        | `notes.header`                                                                |
-| Type       | `string`                                                                      |
-| Required   | ❌                                                                            |
-| Helm `tpl` | ❌                                                                            |
-| Default    | `"# Welcome to TrueCharts!\nThank you for installing <{{ .Chart.Name }}>.\n"` |
+| Field      | Value                                                             |
+| ---------- | ----------------------------------------------------------------- |
+| Key        | `notes.header`                                                    |
+| Type       | `string`                                                          |
+| Required   | ❌                                                                |
+| Helm `tpl` | ❌                                                                |
+| Default    | `"# Thank you for installing {{ .Chart.Name }} by TrueCharts.\n"` |
 
 Example
 
 ```yaml
 notes:
-  header: "# Welcome to TrueCharts!\nThank you for installing <{{ .Chart.Name }}>.\n"
+  header: "# Thank you for installing {{ .Chart.Name }} by TrueCharts.\n"
 ```
 
 ---

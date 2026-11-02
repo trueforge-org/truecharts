@@ -106,7 +106,7 @@ Define the backoffLimit
 | Field      | Value                         |
 | ---------- | ----------------------------- |
 | Key        | `workload.$name.backoffLimit` |
-| Type       | `map`                         |
+| Type       | `number`                      |
 | Required   | ❌                            |
 | Helm `tpl` | ❌                            |
 | Default    | unset                         |
@@ -135,7 +135,7 @@ Define the completions
 | Field      | Value                        |
 | ---------- | ---------------------------- |
 | Key        | `workload.$name.completions` |
-| Type       | `map`                        |
+| Type       | `number`                     |
 | Required   | ❌                           |
 | Helm `tpl` | ❌                           |
 | Default    | unset                        |
@@ -402,7 +402,7 @@ Define the number of history revisions
 | Field      | Value                                 |
 | ---------- | ------------------------------------- |
 | Key        | `workload.$name.revisionHistoryLimit` |
-| Type       | `map`                                 |
+| Type       | `number`                              |
 | Required   | ❌                                    |
 | Helm `tpl` | ❌                                    |
 | Default    | unset                                 |
@@ -525,7 +525,7 @@ Define the ttlSecondsAfterFinished
 | Field      | Value                                    |
 | ---------- | ---------------------------------------- |
 | Key        | `workload.$name.ttlSecondsAfterFinished` |
-| Type       | `map`                                    |
+| Type       | `number`                                 |
 | Required   | ❌                                       |
 | Helm `tpl` | ❌                                       |
 | Default    | unset                                    |

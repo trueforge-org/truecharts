@@ -4,7 +4,10 @@
   "description": "Configuration for service entries with `type: NodePort`.",
   "properties": {
     "nodePort": {
-      "type": "integer",
+      "type": [
+        "integer",
+        "string"
+      ],
       "minimum": 1
     }
   },

@@ -92,7 +92,7 @@ Define hook type
 | Field      | Value                                              |
 | ---------- | -------------------------------------------------- |
 | Key        | `workload.podSpec.containers.lifecycle.$name.type` |
-| Type       | `map`                                              |
+| Type       | `string`                                           |
 | Required   | ❌                                                 |
 | Helm `tpl` | ❌                                                 |
 | Default    | unset                                              |

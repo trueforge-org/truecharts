@@ -334,6 +334,116 @@
         }
       ],
       "description": "The postgresql dependency. In `operator` mode (default) a CloudNativePG `Cluster` is spawned from `operator`."
+    },
+    "mariadb": {
+      "allOf": [
+        {
+          "$ref": "../values.schema.source.json"
+        },
+        {
+          "$ref": "#/additionalProperties/allOf/1"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "depconfig": {
+              "type": "object",
+              "properties": {
+                "rootPassword": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Password of the `root` user."
+                },
+                "mariadbUsername": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Name of the database user."
+                },
+                "mariadbDatabase": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Name of the database."
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      ]
+    },
+    "mongodb": {
+      "allOf": [
+        {
+          "$ref": "../values.schema.source.json"
+        },
+        {
+          "$ref": "#/additionalProperties/allOf/1"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "depconfig": {
+              "type": "object",
+              "properties": {
+                "rootPassword": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Password of the `root` user."
+                },
+                "mongodbUsername": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Name of the database user."
+                },
+                "mongodbDatabase": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Name of the database."
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      ]
+    },
+    "clickhouse": {
+      "allOf": [
+        {
+          "$ref": "../values.schema.source.json"
+        },
+        {
+          "$ref": "#/additionalProperties/allOf/1"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "depconfig": {
+              "type": "object",
+              "properties": {
+                "clickhouseUsername": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Name of the database user."
+                },
+                "clickhouseDatabase": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Name of the database."
+                },
+                "clickhouseDefaultAccessManagement": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ],
+                  "description": "Set to `1` to allow the user to manage users and grants with SQL."
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      ]
     }
   },
   "additionalProperties": {

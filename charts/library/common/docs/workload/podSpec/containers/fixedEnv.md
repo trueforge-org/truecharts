@@ -36,7 +36,7 @@ Override fixedEnv for the container By default it will set the following environ
 | Field      | Value                                              |
 | ---------- | -------------------------------------------------- |
 | Key        | `workload.podSpec.containers.fixedEnv.NVIDIA_CAPS` |
-| Type       | `map`                                              |
+| Type       | `list of unknown`                                  |
 | Required   | ❌                                                 |
 | Helm `tpl` | ❌                                                 |
 | Default    | unset                                              |

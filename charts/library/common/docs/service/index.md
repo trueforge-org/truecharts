@@ -36,7 +36,7 @@ Define the addressType for External IP
 | Field      | Value                       |
 | ---------- | --------------------------- |
 | Key        | `service.$name.addressType` |
-| Type       | `map`                       |
+| Type       | `string`                    |
 | Required   | ❌                          |
 | Helm `tpl` | ❌                          |
 | Default    | unset                       |
@@ -73,7 +73,7 @@ Define the appProtocol for External IP
 | Field      | Value                       |
 | ---------- | --------------------------- |
 | Key        | `service.$name.appProtocol` |
-| Type       | `map`                       |
+| Type       | `string`                    |
 | Required   | ❌                          |
 | Helm `tpl` | ❌                          |
 | Default    | unset                       |
@@ -319,7 +319,7 @@ Define the load balancer IP, sets the `metallb.io/loadBalancerIPs` **MetalLB** a
 | Field      | Value                          |
 | ---------- | ------------------------------ |
 | Key        | `service.$name.loadBalancerIP` |
-| Type       | `map`                          |
+| Type       | `string`                       |
 | Required   | ❌                             |
 | Helm `tpl` | ❌                             |
 | Default    | unset                          |
@@ -333,7 +333,7 @@ Define the load balancer IPs, sets the `metallb.io/loadBalancerIPs` **MetalLB** 
 | Field      | Value                           |
 | ---------- | ------------------------------- |
 | Key        | `service.$name.loadBalancerIPs` |
-| Type       | `map`                           |
+| Type       | `list of unknown`               |
 | Required   | ❌                              |
 | Helm `tpl` | ❌                              |
 | Default    | unset                           |
@@ -347,7 +347,7 @@ Define the load balancer source ranges
 | Field      | Value                                    |
 | ---------- | ---------------------------------------- |
 | Key        | `service.$name.loadBalancerSourceRanges` |
-| Type       | `map`                                    |
+| Type       | `list of unknown`                        |
 | Required   | ❌                                       |
 | Helm `tpl` | ❌                                       |
 | Default    | unset                                    |
@@ -479,7 +479,7 @@ Sets the shared key in `metallb.io/allow-shared-ip` **MetalLB** Annotation
 | Field      | Value                     |
 | ---------- | ------------------------- |
 | Key        | `service.$name.sharedKey` |
-| Type       | `map`                     |
+| Type       | `string`                  |
 | Required   | ❌                        |
 | Helm `tpl` | ❌                        |
 | Default    | unset                     |

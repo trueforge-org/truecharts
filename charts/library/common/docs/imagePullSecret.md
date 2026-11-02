@@ -99,16 +99,15 @@ imagePullSecret:
 
 ### `imagePullSecret.$name.existingSecret`
 
-Define the existing secret name If this is defined, only the following keys are used:
+Define the existing secret name. If this is defined, only the `enabled`, `targetSelectAll` and `targetSelector` keys are used.
 
-| Field      | Value                                          |
-| ---------- | ---------------------------------------------- |
-| Key        | `imagePullSecret.$name.existingSecret`         |
-| Type       | `string`                                       |
-| Required   | ❌                                             |
-| Helm `tpl` | ❌                                             |
-| Default    | unset                                          |
-| Enum       | `enabled`, `targetSelectAll`, `targetSelector` |
+| Field      | Value                                  |
+| ---------- | -------------------------------------- |
+| Key        | `imagePullSecret.$name.existingSecret` |
+| Type       | `string`                               |
+| Required   | ❌                                     |
+| Helm `tpl` | ❌                                     |
+| Default    | unset                                  |
 
 ---
 

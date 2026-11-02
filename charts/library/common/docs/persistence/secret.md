@@ -92,7 +92,7 @@ Define the namespace for this object
 | Field      | Value                                |
 | ---------- | ------------------------------------ |
 | Key        | `persistence.secret.$name.namespace` |
-| Type       | `map`                                |
+| Type       | `string`                             |
 | Required   | ❌                                   |
 | Helm `tpl` | ❌                                   |
 | Default    | unset                                |

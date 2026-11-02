@@ -29,6 +29,20 @@ Configuration for a workload probe.
 
 ---
 
+### `workload.podSpec.containers.probes.probe.command`
+
+Define the command to run. Only applies when `type: exec`
+
+| Field      | Value                                              |
+| ---------- | -------------------------------------------------- |
+| Key        | `workload.podSpec.containers.probes.probe.command` |
+| Type       | `list, string`                                     |
+| Required   | ❌                                                 |
+| Helm `tpl` | ❌                                                 |
+| Default    | unset                                              |
+
+---
+
 ### `workload.podSpec.containers.probes.probe.enabled`
 
 Enable or disable the probe.

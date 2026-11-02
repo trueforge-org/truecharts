@@ -36,7 +36,7 @@ No description provided.
 | Field      | Value                       |
 | ---------- | --------------------------- |
 | Key        | `service.NodePort.nodePort` |
-| Type       | `integer`                   |
+| Type       | `integer, string`           |
 | Required   | ✅                          |
 | Helm `tpl` | ❌                          |
 | Default    | unset                       |

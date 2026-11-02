@@ -50,7 +50,7 @@ No description provided.
 | Field      | Value                |
 | ---------- | -------------------- |
 | Key        | `route.match.method` |
-| Type       | `string`             |
+| Type       | `map, string`        |
 | Required   | ❌                   |
 | Helm `tpl` | ❌                   |
 | Default    | unset                |

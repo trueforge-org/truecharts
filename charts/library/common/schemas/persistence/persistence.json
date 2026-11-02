@@ -297,15 +297,11 @@
             "type": "object",
             "properties": {
               "password": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the iSCSI"
               },
               "username": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the username"
               }
             },
@@ -316,27 +312,19 @@
             "type": "object",
             "properties": {
               "username": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the username"
               },
               "password": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the password"
               },
               "usernameInitiator": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the usernameInitiator"
               },
               "passwordInitiator": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the passwordInitiator"
               }
             },
@@ -348,22 +336,21 @@
         "description": "Define the iSCSI"
       },
       "path": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the nfs export share path"
       },
       "server": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the nfs server"
       },
       "targetSelector": {
         "type": "object",
         "properties": {},
         "additionalProperties": {
-          "type": "object",
+          "type": [
+            "object",
+            "null"
+          ],
           "properties": {},
           "additionalProperties": {
             "type": "object",
@@ -425,27 +412,22 @@
         "description": "Define the namespace for this object"
       },
       "retain": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "boolean",
         "description": "Define wether the to add helm annotation to retain resource on uninstall. This does not **guarantee** that the resource will be retained."
       },
       "accessModes": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": [
+          "array",
+          "string"
+        ],
         "description": "Define the accessModes of the PVC, if it's single can be defined as a string, multiple as a list"
       },
       "volumeName": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the volumeName of a PV, backing the claim"
       },
       "existingClaim": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define an existing claim to use"
       },
       "storageClass": {
@@ -456,15 +438,11 @@
         "type": "object",
         "properties": {
           "name": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "string",
             "description": "Define dataSource for the pvc"
           },
           "kind": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "string",
             "description": "Define the kind of the dataSource"
           }
         },
@@ -475,51 +453,35 @@
         "type": "object",
         "properties": {
           "mode": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "string",
             "description": "Define static provisioning for the pvc"
           },
           "server": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "string",
             "description": "Define the nfs server"
           },
           "share": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "string",
             "description": "Define the nfs export share path"
           },
           "user": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "string",
             "description": "Define the smb user"
           },
           "password": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "string",
             "description": "Define the smb password"
           },
           "domain": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "string",
             "description": "Define the smb domain"
           },
           "driver": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "string",
             "description": "Define the custom driver"
           },
           "provisioner": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "string",
             "description": "Define the custom provisioner"
           }
         },
@@ -527,45 +489,39 @@
         "description": "Define static provisioning for the pvc"
       },
       "mountOptions": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": {
+        "type": "array",
+        "description": "Define mountOptions for the pvc. Available only for `static.mode: nfs|smb`",
+        "items": {
           "type": "object",
           "properties": {
             "value": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "type": [
+                "number",
+                "string"
+              ],
               "description": "Define mountOptions for the pvc. Available only for `static.mode: nfs|smb`"
             },
             "key": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "type": "string",
               "description": "Define the key of the mountOption"
             }
           },
           "additionalProperties": true,
           "description": "Configuration for `$name.mountOptions.$name`."
-        },
-        "description": "Define mountOptions for the pvc. Available only for `static.mode: nfs|smb`"
+        }
       },
       "volumeSnapshots": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": {
+        "type": "array",
+        "description": "Define volumeSnapshots for the pvc",
+        "items": {
           "type": "object",
           "properties": {
             "volumeSnapshotClassName": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "type": "string",
               "description": "Define volumeSnapshots for the pvc"
             },
             "name": {
-              "type": "object",
-              "properties": {},
-              "additionalProperties": true,
+              "type": "string",
               "description": "Define the name of the volumeSnapshot"
             },
             "enabled": {
@@ -592,49 +548,37 @@
           },
           "additionalProperties": true,
           "description": "Configuration for `$name.volumeSnapshots.$name`."
-        },
-        "description": "Define volumeSnapshots for the pvc"
+        }
       },
       "fsType": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the fsType"
       },
       "targetPortal": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the targetPortal"
       },
       "iqn": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the iqn"
       },
       "lun": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": [
+          "integer",
+          "string"
+        ],
         "description": "Define the lun"
       },
       "initiatorName": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the initiatorName"
       },
       "iscsiInterface": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the iscsiInterface"
       },
       "portals": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "array",
         "description": "Define the portals"
       },
       "enabled": {
@@ -657,7 +601,8 @@
           "device",
           "configmap",
           "secret",
-          "vct"
+          "vct",
+          "projected"
         ]
       },
       "mountPath": {
@@ -669,11 +614,6 @@
       "mountPropagation": {
         "type": "string",
         "description": "Define the mountPropagation for the persistence, applies to all containers that are selected",
-        "enum": [
-          "None",
-          "HostToContainer",
-          "Bidirectional"
-        ],
         "oneOf": [
           {
             "enum": [
