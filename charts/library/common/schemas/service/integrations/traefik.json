@@ -44,9 +44,7 @@
                 "default": true
               },
               "name": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the configmap name This will be automatically expanded to `fullname-configmap-name`.",
                 "default": "",
                 "minLength": 1
@@ -60,9 +58,7 @@
             "type": "object",
             "properties": {
               "name": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "string",
                 "description": "Define the secret name This will be automatically expanded to `fullname-secret-name`.",
                 "default": "",
                 "minLength": 1

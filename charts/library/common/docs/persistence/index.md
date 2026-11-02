@@ -36,7 +36,7 @@ Define the accessModes of the PVC, if it's single can be defined as a string, mu
 | Field      | Value                           |
 | ---------- | ------------------------------- |
 | Key        | `persistence.$name.accessModes` |
-| Type       | `map`                           |
+| Type       | `list, string`                  |
 | Required   | ❌                              |
 | Helm `tpl` | ❌                              |
 | Default    | unset                           |
@@ -114,7 +114,7 @@ Define an existing claim to use
 | Field      | Value                             |
 | ---------- | --------------------------------- |
 | Key        | `persistence.$name.existingClaim` |
-| Type       | `map`                             |
+| Type       | `string`                          |
 | Required   | ❌                                |
 | Helm `tpl` | ❌                                |
 | Default    | unset                             |
@@ -142,7 +142,7 @@ Define the fsType
 | Field      | Value                      |
 | ---------- | -------------------------- |
 | Key        | `persistence.$name.fsType` |
-| Type       | `map`                      |
+| Type       | `string`                   |
 | Required   | ❌                         |
 | Helm `tpl` | ❌                         |
 | Default    | unset                      |
@@ -184,7 +184,7 @@ Define the initiatorName
 | Field      | Value                             |
 | ---------- | --------------------------------- |
 | Key        | `persistence.$name.initiatorName` |
-| Type       | `map`                             |
+| Type       | `string`                          |
 | Required   | ❌                                |
 | Helm `tpl` | ❌                                |
 | Default    | unset                             |
@@ -198,7 +198,7 @@ Define the iqn
 | Field      | Value                   |
 | ---------- | ----------------------- |
 | Key        | `persistence.$name.iqn` |
-| Type       | `map`                   |
+| Type       | `string`                |
 | Required   | ❌                      |
 | Helm `tpl` | ❌                      |
 | Default    | unset                   |
@@ -226,7 +226,7 @@ Define the iscsiInterface
 | Field      | Value                              |
 | ---------- | ---------------------------------- |
 | Key        | `persistence.$name.iscsiInterface` |
-| Type       | `map`                              |
+| Type       | `string`                           |
 | Required   | ❌                                 |
 | Helm `tpl` | ❌                                 |
 | Default    | unset                              |
@@ -268,7 +268,7 @@ Define the lun
 | Field      | Value                   |
 | ---------- | ----------------------- |
 | Key        | `persistence.$name.lun` |
-| Type       | `map`                   |
+| Type       | `integer, string`       |
 | Required   | ❌                      |
 | Helm `tpl` | ❌                      |
 | Default    | unset                   |
@@ -296,7 +296,7 @@ Define mountOptions for the pvc. Available only for `static.mode: nfs|smb`
 | Field      | Value                            |
 | ---------- | -------------------------------- |
 | Key        | `persistence.$name.mountOptions` |
-| Type       | `map`                            |
+| Type       | `list of map`                    |
 | Required   | ❌                               |
 | Helm `tpl` | ❌                               |
 | Default    | unset                            |
@@ -398,7 +398,7 @@ Define the nfs export share path
 | Field      | Value                    |
 | ---------- | ------------------------ |
 | Key        | `persistence.$name.path` |
-| Type       | `map`                    |
+| Type       | `string`                 |
 | Required   | ❌                       |
 | Helm `tpl` | ❌                       |
 | Default    | unset                    |
@@ -412,7 +412,7 @@ Define the portals
 | Field      | Value                       |
 | ---------- | --------------------------- |
 | Key        | `persistence.$name.portals` |
-| Type       | `map`                       |
+| Type       | `list of unknown`           |
 | Required   | ❌                          |
 | Helm `tpl` | ❌                          |
 | Default    | unset                       |
@@ -448,7 +448,7 @@ Define wether the to add helm annotation to retain resource on uninstall. This d
 | Field      | Value                      |
 | ---------- | -------------------------- |
 | Key        | `persistence.$name.retain` |
-| Type       | `map`                      |
+| Type       | `boolean`                  |
 | Required   | ❌                         |
 | Helm `tpl` | ❌                         |
 | Default    | unset                      |
@@ -462,7 +462,7 @@ Define the nfs server
 | Field      | Value                      |
 | ---------- | -------------------------- |
 | Key        | `persistence.$name.server` |
-| Type       | `map`                      |
+| Type       | `string`                   |
 | Required   | ❌                         |
 | Helm `tpl` | ❌                         |
 | Default    | unset                      |
@@ -540,7 +540,7 @@ Define the targetPortal
 | Field      | Value                            |
 | ---------- | -------------------------------- |
 | Key        | `persistence.$name.targetPortal` |
-| Type       | `map`                            |
+| Type       | `string`                         |
 | Required   | ❌                               |
 | Helm `tpl` | ❌                               |
 | Default    | unset                            |
@@ -596,14 +596,14 @@ persistence:
 
 Define the persistence type
 
-| Field      | Value                                                                                 |
-| ---------- | ------------------------------------------------------------------------------------- |
-| Key        | `persistence.$name.type`                                                              |
-| Type       | `string`                                                                              |
-| Required   | ❌                                                                                    |
-| Helm `tpl` | ❌                                                                                    |
-| Default    | unset                                                                                 |
-| Enum       | `pvc`, `hostPath`, `emptyDir`, `nfs`, `iscsi`, `device`, `configmap`, `secret`, `vct` |
+| Field      | Value                                                                                              |
+| ---------- | -------------------------------------------------------------------------------------------------- |
+| Key        | `persistence.$name.type`                                                                           |
+| Type       | `string`                                                                                           |
+| Required   | ❌                                                                                                 |
+| Helm `tpl` | ❌                                                                                                 |
+| Default    | unset                                                                                              |
+| Enum       | `pvc`, `hostPath`, `emptyDir`, `nfs`, `iscsi`, `device`, `configmap`, `secret`, `vct`, `projected` |
 
 ---
 
@@ -614,7 +614,7 @@ Define the volumeName of a PV, backing the claim
 | Field      | Value                          |
 | ---------- | ------------------------------ |
 | Key        | `persistence.$name.volumeName` |
-| Type       | `map`                          |
+| Type       | `string`                       |
 | Required   | ❌                             |
 | Helm `tpl` | ❌                             |
 | Default    | unset                          |
@@ -628,7 +628,7 @@ Define volumeSnapshots for the pvc
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
 | Key        | `persistence.$name.volumeSnapshots` |
-| Type       | `map`                               |
+| Type       | `list of map`                       |
 | Required   | ❌                                  |
 | Helm `tpl` | ❌                                  |
 | Default    | unset                               |

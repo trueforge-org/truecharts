@@ -33,9 +33,10 @@
       "default": {}
     },
     "envFrom": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": true,
+      "type": [
+        "array",
+        "object"
+      ],
       "description": "See [envFrom](/truecharts-common/container/envfrom)",
       "default": "[]"
     },

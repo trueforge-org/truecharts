@@ -14,9 +14,6 @@
         },
         "type": {
           "type": "string",
-          "enum": [
-            "validating"
-          ],
           "description": "Create webhook objects"
         },
         "webhooks": {
@@ -154,9 +151,6 @@
         },
         "type": {
           "type": "string",
-          "enum": [
-            "mutating"
-          ],
           "description": "Create webhook objects"
         },
         "webhooks": {
@@ -315,33 +309,23 @@
                 "type": "object",
                 "properties": {
                   "resources": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true,
+                    "type": "array",
                     "description": "Create webhook objects"
                   },
                   "scope": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true,
+                    "type": "string",
                     "description": "Define the scope of the rule for the webhook"
                   },
                   "apiGroups": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true,
+                    "type": "array",
                     "description": "Define the apiGroups of the rule for the webhook"
                   },
                   "apiVersions": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true,
+                    "type": "array",
                     "description": "Define the apiVersions of the rule for the webhook"
                   },
                   "operations": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true,
+                    "type": "array",
                     "description": "Define the operations of the rule for the webhook"
                   }
                 },
@@ -433,24 +417,18 @@
               "type": "object",
               "properties": {
                 "caBundle": {
-                  "type": "object",
-                  "properties": {},
-                  "additionalProperties": true,
+                  "type": "string",
                   "description": "Define the caBundle in clientConfig for the webhook"
                 },
                 "url": {
-                  "type": "object",
-                  "properties": {},
-                  "additionalProperties": true,
+                  "type": "string",
                   "description": "Define the url in clientConfig for the webhook, required if service is not defined in clientConfig"
                 },
                 "service": {
                   "type": "object",
                   "properties": {
                     "name": {
-                      "type": "object",
-                      "properties": {},
-                      "additionalProperties": true,
+                      "type": "string",
                       "description": "Define the service name in clientConfig for the webhook"
                     },
                     "namespace": {
@@ -462,15 +440,14 @@
                       "description": "Define the service namespace in clientConfig for the webhook"
                     },
                     "path": {
-                      "type": "object",
-                      "properties": {},
-                      "additionalProperties": true,
+                      "type": "string",
                       "description": "Define the service path in clientConfig for the webhook"
                     },
                     "port": {
-                      "type": "object",
-                      "properties": {},
-                      "additionalProperties": true,
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
                       "description": "Define the service port in clientConfig for the webhook"
                     }
                   },

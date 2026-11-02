@@ -41,27 +41,19 @@
         "default": {}
       },
       "sharedKey": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Sets the shared key in `metallb.io/allow-shared-ip` **MetalLB** Annotation"
       },
       "loadBalancerIP": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the load balancer IP, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIPs`"
       },
       "loadBalancerIPs": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "array",
         "description": "Define the load balancer IPs, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIP`"
       },
       "loadBalancerSourceRanges": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "array",
         "description": "Define the load balancer source ranges"
       },
       "externalIP": {
@@ -80,15 +72,11 @@
         "description": "Define whether to use `EndpointSlice` or `Endpoint`"
       },
       "addressType": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the addressType for External IP"
       },
       "appProtocol": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "string",
         "description": "Define the appProtocol for External IP"
       },
       "enabled": {

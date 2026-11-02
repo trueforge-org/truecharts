@@ -133,6 +133,20 @@ See [Chartcontext](../../chartContext.md) for full configuration.
 
 ---
 
+### `dependencies.postgresql.clickhouse`
+
+No description provided.
+
+| Field      | Value                                |
+| ---------- | ------------------------------------ |
+| Key        | `dependencies.postgresql.clickhouse` |
+| Type       | `map`                                |
+| Required   | ❌                                   |
+| Helm `tpl` | ❌                                   |
+| Default    | unset                                |
+
+---
+
 ### `dependencies.postgresql.codeserverImage`
 
 Configuration for `codeserverImage`.
@@ -531,7 +545,7 @@ See [Host Aliases](/truecharts-common/workload#hostaliases)
 | Field      | Value                                 |
 | ---------- | ------------------------------------- |
 | Key        | `dependencies.postgresql.hostAliases` |
-| Type       | `list of map`                         |
+| Type       | `list, string`                        |
 | Required   | ❌                                    |
 | Helm `tpl` | ❌                                    |
 | Default    | unset                                 |
@@ -732,6 +746,20 @@ See [Listenerset](../../listenerSet.md) for full configuration.
 
 ---
 
+### `dependencies.postgresql.mariadb`
+
+No description provided.
+
+| Field      | Value                             |
+| ---------- | --------------------------------- |
+| Key        | `dependencies.postgresql.mariadb` |
+| Type       | `map`                             |
+| Required   | ❌                                |
+| Helm `tpl` | ❌                                |
+| Default    | unset                             |
+
+---
+
 ### `dependencies.postgresql.mariadbClientImage`
 
 Configuration for `mariadbClientImage`.
@@ -784,6 +812,20 @@ dependencies:
   postgresql:
     mode: operator
 ```
+
+---
+
+### `dependencies.postgresql.mongodb`
+
+No description provided.
+
+| Field      | Value                             |
+| ---------- | --------------------------------- |
+| Key        | `dependencies.postgresql.mongodb` |
+| Type       | `map`                             |
+| Required   | ❌                                |
+| Helm `tpl` | ❌                                |
+| Default    | unset                             |
 
 ---
 
@@ -1521,7 +1563,7 @@ See [Termination Grace Period Seconds](/truecharts-common/workload#terminationgr
 | Field      | Value                                                   |
 | ---------- | ------------------------------------------------------- |
 | Key        | `dependencies.postgresql.terminationGracePeriodSeconds` |
-| Type       | `integer`                                               |
+| Type       | `integer, string`                                       |
 | Required   | ❌                                                      |
 | Helm `tpl` | ❌                                                      |
 | Default    | unset                                                   |

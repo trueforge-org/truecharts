@@ -184,7 +184,7 @@ Create Pod Disruption Budget objects
 | Field      | Value                                                  |
 | ---------- | ------------------------------------------------------ |
 | Key        | `podDisruptionBudget.$name.unhealthyPodEvictionPolicy` |
-| Type       | `map, string`                                          |
+| Type       | `string`                                               |
 | Required   | ❌                                                     |
 | Helm `tpl` | ❌                                                     |
 | Default    | `""`                                                   |

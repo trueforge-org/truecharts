@@ -100,7 +100,7 @@ See [envFrom](/truecharts-common/container/envfrom)
 | Field      | Value                                              |
 | ---------- | -------------------------------------------------- |
 | Key        | `dependencies.postgresql.operator.cluster.envFrom` |
-| Type       | `map`                                              |
+| Type       | `list, map`                                        |
 | Required   | ❌                                                 |
 | Helm `tpl` | ❌                                                 |
 | Default    | `"[]"`                                             |

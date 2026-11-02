@@ -102,11 +102,6 @@
               "properties": {
                 "type": {
                   "type": "string",
-                  "enum": [
-                    "init",
-                    "install",
-                    "upgrade"
-                  ],
                   "description": "Define the type of container - Only applies to `initContainers`"
                 }
               },
@@ -184,29 +179,29 @@
             "description": "Pod's nodeSelector"
           },
           "topologySpreadConstraints": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "array",
             "description": "Pod's topologySpreadConstraints"
           },
           "hostAliases": {
-            "type": "object",
-            "properties": {
-              "ip": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Pod's hostAliases ip"
+            "type": [
+              "array",
+              "string"
+            ],
+            "description": "Pod's hostAliases",
+            "items": {
+              "type": "object",
+              "properties": {
+                "ip": {
+                  "type": "string",
+                  "description": "Pod's hostAliases ip"
+                },
+                "hostnames": {
+                  "type": "array",
+                  "description": "Pod's hostAliases hostnames"
+                }
               },
-              "hostnames": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Pod's hostAliases hostnames"
-              }
-            },
-            "additionalProperties": true,
-            "description": "Pod's hostAliases"
+              "additionalProperties": true
+            }
           },
           "dnsPolicy": {
             "$ref": "podSpec/dnsPolicy.json",
@@ -216,76 +211,64 @@
             "type": "object",
             "properties": {
               "nameservers": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "array",
                 "description": "Pod's dnsConfig nameservers"
               },
               "searches": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
+                "type": "array",
                 "description": "Pod's dnsConfig searches"
               },
               "options": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true,
-                    "description": "Pod's dnsConfig options name"
+                "type": "array",
+                "description": "Pod's dnsConfig options",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Pod's dnsConfig options name"
+                    },
+                    "value": {
+                      "type": "string",
+                      "description": "Pod's dnsConfig options value"
+                    }
                   },
-                  "value": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true,
-                    "description": "Pod's dnsConfig options value"
-                  }
-                },
-                "additionalProperties": true,
-                "description": "Pod's dnsConfig options"
+                  "additionalProperties": true
+                }
               }
             },
             "additionalProperties": true,
             "description": "Pod's dnsConfig"
           },
           "tolerations": {
-            "type": "object",
-            "properties": {
-              "operator": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Pod's tolerations operator"
+            "type": "array",
+            "description": "Pod's tolerations",
+            "items": {
+              "type": "object",
+              "properties": {
+                "operator": {
+                  "type": "string",
+                  "description": "Pod's tolerations operator"
+                },
+                "key": {
+                  "type": "string",
+                  "description": "Pod's tolerations key Required only when `operator` = `Equal`"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Pod's tolerations value Required only when `operator` = `Equal`"
+                },
+                "effect": {
+                  "type": "string",
+                  "description": "Pod's tolerations effect"
+                },
+                "tolerationSeconds": {
+                  "type": "number",
+                  "description": "Pod's tolerations tolerationSeconds"
+                }
               },
-              "key": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Pod's tolerations key Required only when `operator` = `Equal`"
-              },
-              "value": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Pod's tolerations value Required only when `operator` = `Equal`"
-              },
-              "effect": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Pod's tolerations effect"
-              },
-              "tolerationSeconds": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Pod's tolerations tolerationSeconds"
-              }
-            },
-            "additionalProperties": true,
-            "description": "Pod's tolerations"
+              "additionalProperties": true
+            }
           },
           "runtimeClassName": {
             "$ref": "podSpec/runtimeClassName.json",
@@ -308,9 +291,7 @@
         "description": "Define the number of replicas"
       },
       "revisionHistoryLimit": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "number",
         "description": "Define the number of history revisions"
       },
       "allowRollingUpdateWithRWO": {
@@ -346,19 +327,22 @@
                 "type": "object",
                 "properties": {
                   "maxUnavailable": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true
+                    "type": [
+                      "integer",
+                      "string"
+                    ]
                   },
                   "partition": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true
+                    "type": [
+                      "integer",
+                      "string"
+                    ]
                   },
                   "maxSurge": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": true
+                    "type": [
+                      "integer",
+                      "string"
+                    ]
                   }
                 },
                 "additionalProperties": true,
@@ -374,21 +358,21 @@
         "type": "object",
         "properties": {
           "maxUnavailable": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": [
+              "integer",
+              "string"
+            ],
             "description": "Define the maxUnavailable Can only be used when `workload.$name.strategy` is `RollingUpdate`"
           },
           "partition": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": "number",
             "description": "Define the partition Can only be used when `workload.$name.strategy` is `RollingUpdate`"
           },
           "maxSurge": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": true,
+            "type": [
+              "integer",
+              "string"
+            ],
             "description": "Define the maxSurge Can only be used when `workload.$name.strategy` is `RollingUpdate`"
           }
         },
@@ -411,15 +395,11 @@
         "description": "Define the completionMode"
       },
       "backoffLimit": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "number",
         "description": "Define the backoffLimit"
       },
       "completions": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "number",
         "description": "Define the completions"
       },
       "parallelism": {
@@ -427,9 +407,7 @@
         "description": "Define the parallelism"
       },
       "ttlSecondsAfterFinished": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true,
+        "type": "number",
         "description": "Define the ttlSecondsAfterFinished"
       },
       "activeDeadlineSeconds": {

@@ -22,7 +22,7 @@ See [Termination Grace Period Seconds](/truecharts-common/workload#terminationgr
 | Field      | Value                                    |
 | ---------- | ---------------------------------------- |
 | Key        | `workload.terminationGracePeriodSeconds` |
-| Type       | `integer`                                |
+| Type       | `integer, string`                        |
 | Required   | ❌                                       |
 | Helm `tpl` | ❌                                       |
 | Default    | unset                                    |

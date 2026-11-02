@@ -59,7 +59,7 @@ Define the certificate issuer for this certificate
 | Field      | Value                                 |
 | ---------- | ------------------------------------- |
 | Key        | `certificate.$name.certificateIssuer` |
-| Type       | `map`                                 |
+| Type       | `string`                              |
 | Required   | ❌                                    |
 | Helm `tpl` | ❌                                    |
 | Default    | `""`                                  |

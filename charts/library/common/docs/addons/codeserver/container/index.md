@@ -110,7 +110,7 @@ Define the backoffLimit
 | Field      | Value                                            |
 | ---------- | ------------------------------------------------ |
 | Key        | `addons.codeserver.container.$name.backoffLimit` |
-| Type       | `map`                                            |
+| Type       | `number`                                         |
 | Required   | ❌                                               |
 | Helm `tpl` | ❌                                               |
 | Default    | unset                                            |
@@ -139,7 +139,7 @@ Define the completions
 | Field      | Value                                           |
 | ---------- | ----------------------------------------------- |
 | Key        | `addons.codeserver.container.$name.completions` |
-| Type       | `map`                                           |
+| Type       | `number`                                        |
 | Required   | ❌                                              |
 | Helm `tpl` | ❌                                              |
 | Default    | unset                                           |
@@ -422,7 +422,7 @@ Define the number of history revisions
 | Field      | Value                                                    |
 | ---------- | -------------------------------------------------------- |
 | Key        | `addons.codeserver.container.$name.revisionHistoryLimit` |
-| Type       | `map`                                                    |
+| Type       | `number`                                                 |
 | Required   | ❌                                                       |
 | Helm `tpl` | ❌                                                       |
 | Default    | unset                                                    |
@@ -547,7 +547,7 @@ Define the ttlSecondsAfterFinished
 | Field      | Value                                                       |
 | ---------- | ----------------------------------------------------------- |
 | Key        | `addons.codeserver.container.$name.ttlSecondsAfterFinished` |
-| Type       | `map`                                                       |
+| Type       | `number`                                                    |
 | Required   | ❌                                                          |
 | Helm `tpl` | ❌                                                          |
 | Default    | unset                                                       |

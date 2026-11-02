@@ -170,7 +170,7 @@
         "properties": {},
         "additionalProperties": true,
         "description": "Create Ingress objects",
-        "default": "nil"
+        "default": ""
       },
       "targetSelector": {
         "type": "object",
@@ -199,11 +199,6 @@
                   },
                   "pathType": {
                     "type": "string",
-                    "enum": [
-                      "Prefix",
-                      "Exact",
-                      "ImplementationSpecific"
-                    ],
                     "description": "Define the path type for this ingress (Prefix, Exact, ImplementationSpecific)"
                   },
                   "overrideService": {

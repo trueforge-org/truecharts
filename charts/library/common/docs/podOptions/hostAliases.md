@@ -22,7 +22,7 @@ See [Host Aliases](/truecharts-common/workload#hostaliases)
 | Field      | Value                    |
 | ---------- | ------------------------ |
 | Key        | `podOptions.hostAliases` |
-| Type       | `list of map`            |
+| Type       | `list, string`           |
 | Required   | ❌                       |
 | Helm `tpl` | ❌                       |
 | Default    | unset                    |

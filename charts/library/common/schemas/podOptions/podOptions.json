@@ -122,7 +122,10 @@
       "default": false
     },
     "terminationGracePeriodSeconds": {
-      "type": "integer",
+      "type": [
+        "integer",
+        "string"
+      ],
       "description": "See [Termination Grace Period Seconds](/truecharts-common/workload#terminationgraceperiodseconds)",
       "default": 60
     }
