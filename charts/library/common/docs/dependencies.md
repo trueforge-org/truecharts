@@ -691,7 +691,7 @@ All settings of the cluster go under `dependencies.postgresql.operator`. Only th
 | `operator.recovery`                                      | `map`    | `{method: object_store}` | Recovery source, used when `operator.mode` is `recovery`.                                                    |
 | `operator.backups`                                       | `map`    | `{enabled: false, ...}`  | Barman Cloud backups (`credentials`, `scheduledBackups`, `manualBackups`, `retentionPolicy`, ...).           |
 
-`type: timescaledb` uses the `postgresTimescaledb<version>Image` images (`oci.trueforge.org/containerforge/timescaledb<version>`), which add TimescaleDB to the images of CloudNativePG. PostgreSQL 15 stays on TimescaleDB 2.28.3, the last release for that version.
+`type: timescaledb` uses the `postgresTimescaledb<version>Image` images (`oci.trueforge.org/containerforge/timescaledb<version>`), which add TimescaleDB to the images of CloudNativePG. PostgreSQL 15 stays on TimescaleDB 2.28.3, the last release for that version. The telemetry of TimescaleDB is off by default, set `timescaledb.telemetry_level` under `operator.cluster.postgresql` to change it.
 
 See [Operator](dependencies/postgresql/operator/index.md) for all the settings.
 
