@@ -154,6 +154,28 @@
         "additionalProperties": false,
         "description": "Configuration for `metrics.main.prometheusRule`.",
         "default": "{ enabled: false }"
+      },
+      "targetSelector": {
+        "type": "string",
+        "description": "Configuration for `metrics.main.targetSelector`."
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Configuration for `metrics.main.labels`."
+      },
+      "annotations": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "description": "Configuration for `metrics.main.annotations`."
+      },
+      "nameOverride": {
+        "type": "string",
+        "description": "Configuration for `metrics.main.nameOverride`."
       }
     },
     "additionalProperties": false,

@@ -18,6 +18,59 @@
         "description": "Configuration for `vpa.main.targetSelector`.",
         "default": []
       },
+      "updatePolicy": {
+        "type": "object",
+        "properties": {
+          "updateMode": {
+            "type": "string",
+            "enum": [
+              "Auto",
+              "Off",
+              "Initial",
+              "Recreate"
+            ],
+            "description": "Configuration for `vpa.main.updatePolicy.updateMode`."
+          },
+          "minReplicas": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Configuration for `vpa.main.updatePolicy.minReplicas`."
+          },
+          "evictionRequirements": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "resources": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "cpu",
+                      "memory"
+                    ],
+                    "description": "Configuration for `vpa.main.updatePolicy.evictionRequirements.$item.resources.$item`."
+                  },
+                  "description": "Configuration for `vpa.main.updatePolicy.evictionRequirements.$item.resources`."
+                },
+                "changeRequirement": {
+                  "type": "string",
+                  "enum": [
+                    "TargetHigherThanRequests",
+                    "TargetLowerThanRequests"
+                  ],
+                  "description": "Configuration for `vpa.main.updatePolicy.evictionRequirements.$item.changeRequirement`."
+                }
+              },
+              "additionalProperties": false,
+              "description": "Configuration for `vpa.main.updatePolicy.evictionRequirements.$item`."
+            },
+            "description": "Configuration for `vpa.main.updatePolicy.evictionRequirements`."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Configuration for `vpa.main.updatePolicy`."
+      },
       "resourcePolicy": {
         "type": "object",
         "properties": {
@@ -29,6 +82,22 @@
                 "containerName": {
                   "type": "string",
                   "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.containerName`."
+                },
+                "mode": {
+                  "type": "string",
+                  "enum": [
+                    "Auto",
+                    "Off"
+                  ],
+                  "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.mode`. `Off` skips rendering the container policy."
+                },
+                "controlledValues": {
+                  "type": "string",
+                  "enum": [
+                    "RequestsAndLimits",
+                    "RequestsOnly"
+                  ],
+                  "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.controlledValues`."
                 },
                 "minAllowed": {
                   "type": "object",
@@ -78,6 +147,17 @@
         "additionalProperties": false,
         "description": "Configuration for `vpa.main.resourcePolicy`.",
         "default": {}
+      },
+      "workload": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Kind of the targeted workload (Deployment, StatefulSet or DaemonSet)."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Set by the library to a copy of the workload this VPA targets. Any value set by the user is overwritten."
       }
     },
     "additionalProperties": false,

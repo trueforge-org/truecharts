@@ -30,6 +30,14 @@
       "description": "Namespace to apply to all objects, unless overridden at the object level Does not apply to chart deps, use global.namespace for that",
       "default": ""
     },
+    "podCIDR": {
+      "type": "string",
+      "description": "Configuration for `global.podCIDR`."
+    },
+    "svcCIDR": {
+      "type": "string",
+      "description": "Configuration for `global.svcCIDR`."
+    },
     "diagnosticMode": {
       "type": "object",
       "properties": {
