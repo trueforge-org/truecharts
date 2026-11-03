@@ -451,25 +451,37 @@
             "depconfig": {
               "type": "object",
               "properties": {
+                "password": {
+                  "type": "string",
+                  "default": "PLACEHOLDERPASSWORD",
+                  "description": "Password of the database user."
+                },
                 "clickhouseUsername": {
                   "type": "string",
                   "minLength": 1,
+                  "default": "test",
                   "description": "Name of the database user."
                 },
                 "clickhouseDatabase": {
                   "type": "string",
                   "minLength": 1,
+                  "default": "test",
                   "description": "Name of the database."
                 },
                 "clickhouseDefaultAccessManagement": {
-                  "type": [
-                    "integer",
-                    "string"
-                  ],
+                  "type": "integer",
+                  "default": 0,
                   "description": "Set to `1` to allow the user to manage users and grants with SQL."
+                },
+                "creds": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Connection details populated by the library (eg `plainhost`, `complete`). Read-only."
                 }
               },
-              "additionalProperties": true
+              "additionalProperties": false
             }
           }
         }
