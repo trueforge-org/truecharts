@@ -30,13 +30,22 @@
     },
     "config": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "boolean"
+        ]
+      },
       "default": {},
       "description": "Valkey configuration directives (valkey.conf), eg `maxmemory-policy: allkeys-lru`. Booleans are written as `yes` and `no`."
     },
     "resources": {
-      "type": "object",
-      "additionalProperties": true,
+      "allOf": [
+        {
+          "$ref": "../../../workload/podSpec/containers/resources.json"
+        }
+      ],
       "default": {},
       "description": "Resources of the Valkey containers. Defaults to the `resources` of the chart."
     },
@@ -46,6 +55,12 @@
           "$ref": "persistence.json"
         }
       ],
+      "default": {
+        "enabled": true,
+        "size": "",
+        "storageClass": "",
+        "retain": false
+      },
       "description": "Persistence of the nodes. Requires `workloadType: StatefulSet`, and can not be added or removed after creation."
     },
     "exporter": {
@@ -54,13 +69,23 @@
           "$ref": "exporter.json"
         }
       ],
+      "default": {
+        "enabled": true,
+        "image": "",
+        "args": [],
+        "resources": {},
+        "securityContext": {}
+      },
       "description": "Metrics exporter sidecar of every pod."
     },
     "scheduling": {
-      "type": "object",
-      "additionalProperties": true,
+      "allOf": [
+        {
+          "$ref": "scheduling.json"
+        }
+      ],
       "default": {},
-      "description": "Scheduling of the pods: `tolerations`, `nodeSelector`, `affinity`, `topologySpreadConstraints`, `priorityClassName`, `node` and `zone` (spreading and pinning). Passed to the `ValkeyCluster` as is."
+      "description": "Scheduling of the pods: `tolerations`, `nodeSelector`, `affinity`, `topologySpreadConstraints`, `priorityClassName`, `node` and `zone` (spreading and pinning)."
     },
     "podDisruptionBudget": {
       "allOf": [
@@ -68,6 +93,9 @@
           "$ref": "podDisruptionBudget.json"
         }
       ],
+      "default": {
+        "mode": "Cluster"
+      },
       "description": "PodDisruptionBudget managed by the operator."
     },
     "podMetadata": {
@@ -76,22 +104,43 @@
           "$ref": "podMetadata.json"
         }
       ],
+      "default": {
+        "labels": {},
+        "annotations": {}
+      },
       "description": "Labels and annotations added to every pod. The operator rejects the keys it sets itself."
     },
     "imagePullSecrets": {
       "type": "array",
       "items": {
-        "type": [
-          "string",
-          "object"
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the Secret."
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false
+          }
         ]
       },
       "default": [],
       "description": "Secrets used to pull the images. An item is a name, or an object with a `name`."
     },
     "podSecurityContext": {
-      "type": "object",
-      "additionalProperties": true,
+      "allOf": [
+        {
+          "$ref": "podSecurityContext.json"
+        }
+      ],
       "default": {},
       "description": "Overrides of the security context of the pods. Defaults to the `securityContext` of the chart (`runAsUser`, `runAsGroup`, `fsGroup`)."
     },
@@ -112,8 +161,7 @@
     "containers": {
       "type": "array",
       "items": {
-        "type": "object",
-        "additionalProperties": true
+        "$ref": "container.json"
       },
       "default": [],
       "description": "Patches of the containers of the pods (strategic merge patch, by name: `server` and `metrics-exporter`), or additional sidecar containers."
@@ -124,22 +172,18 @@
           "$ref": "networking.json"
         }
       ],
+      "default": {
+        "clusterDomain": "",
+        "discovery": {
+          "preferredEndpointType": ""
+        }
+      },
       "description": "Networking of the cluster. TLS is not supported, as the credentials and the wait init container connect without it."
     },
     "users": {
       "type": "array",
       "items": {
-        "type": "object",
-        "required": [
-          "name"
-        ],
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "Name of the user. Can not start with `_`."
-          }
-        },
-        "additionalProperties": true
+        "$ref": "user.json"
       },
       "default": [],
       "description": "Additional users of the cluster, see the [valkey-operator docs](https://github.com/valkey-io/valkey-operator/blob/main/docs/valkeycluster.md#users). The `default` user always exists with the password of the credentials, an item named `default` overrides its settings."

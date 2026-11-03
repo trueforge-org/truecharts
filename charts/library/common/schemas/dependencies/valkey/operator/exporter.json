@@ -21,14 +21,20 @@
       "description": "Command-line arguments of the exporter."
     },
     "resources": {
-      "type": "object",
-      "additionalProperties": true,
+      "allOf": [
+        {
+          "$ref": "resourceRequirements.json"
+        }
+      ],
       "default": {},
       "description": "Resources of the exporter container."
     },
     "securityContext": {
-      "type": "object",
-      "additionalProperties": true,
+      "allOf": [
+        {
+          "$ref": "securityContext.json"
+        }
+      ],
       "default": {},
       "description": "Security context of the exporter container."
     }
