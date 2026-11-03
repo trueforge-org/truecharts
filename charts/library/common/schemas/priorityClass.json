@@ -5,6 +5,10 @@
   "additionalProperties": {
     "type": "object",
     "properties": {
+      "provisioner": {
+        "type": "string",
+        "description": "Provisioner name for the priority class. Set in the common-test priorityclass fixture; the priority class templates ignore it."
+      },
       "preemptionPolicy": {
         "type": "string",
         "description": "Define priority classes",
