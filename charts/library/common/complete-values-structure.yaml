@@ -4420,6 +4420,30 @@ postgresql18Image:
   repository: ''
   tag: ''
   pullPolicy: ''
+clickhouseImage:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
+mariadbImage:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
+memcachedImage:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
+mongodbImage:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
+valkeyImage:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
+valkeyExporterImage:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
 mariadbClientImage:
   repository: ''
   tag: ''
@@ -5131,13 +5155,36 @@ metrics:
       honorLabels: false
     prometheusRule:
       enabled: false
-      groups: {}
+      groups:
+        somegroup:
+          rules:
+          - alert: ''
+            expr: ''
+          additionalrules:
+          - alert: ''
+            expr: ''
       additionalgroups:
-      labels: {}
-      rules: []
+      - name: ''
+        rules:
+        - alert: ''
+          expr: ''
+      labels:
+        shared: ''
+        release: ''
+      rules:
+      - alert: ''
+        expr: ''
+        for: ''
+      annotations:
+        rule-annotation: ''
     targetSelector: ''
     apiKey: ''
     matchLabels: ''
+    labels:
+      shared: ''
+      metrics-only: ''
+    annotations:
+      metrics-annotation: ''
   servermetrics:
     enabled: true
     type: ''
@@ -5438,10 +5485,6 @@ dependencies:
       clickhouseUsername: ''
       clickhouseDatabase: ''
       clickhouseDefaultAccessManagement: 0
-    image:
-      repository: ''
-      pullPolicy: ''
-      tag: ''
     workload:
       objectname:
         replicas: 1
@@ -5450,6 +5493,7 @@ dependencies:
         podSpec:
           containers:
             objectname:
+              imageSelector: ''
               env:
                 CLICKHOUSE_DB: ''
                 CLICKHOUSE_USER: ''
@@ -5506,10 +5550,6 @@ dependencies:
       rootPassword: ''
       mariadbUsername: ''
       mariadbDatabase: ''
-    image:
-      repository: ''
-      pullPolicy: ''
-      tag: ''
     workload:
       objectname:
         replicas: 1
@@ -5518,6 +5558,7 @@ dependencies:
         podSpec:
           containers:
             objectname:
+              imageSelector: ''
               env:
                 MARIADB_PASSWORD:
                   secretKeyRef:
@@ -5797,15 +5838,15 @@ dependencies:
           - ''
       pod:
         fsGroup: 0
-    image:
-      repository: ''
-      pullPolicy: ''
-      tag: ''
     workload:
       objectname:
         replicas: 1
         type: ''
         strategy: ''
+        podSpec:
+          containers:
+            objectname:
+              imageSelector: ''
     service:
       objectname:
         ports:
@@ -5834,10 +5875,6 @@ dependencies:
       rootPassword: ''
       mongodbUsername: ''
       mongodbDatabase: ''
-    image:
-      repository: ''
-      pullPolicy: ''
-      tag: ''
     workload:
       objectname:
         replicas: 1
@@ -5846,6 +5883,7 @@ dependencies:
         podSpec:
           containers:
             objectname:
+              imageSelector: ''
               env:
                 MONGODB_USERNAME: ''
                 MONGODB_DATABASE: ''
@@ -5906,7 +5944,7 @@ dependencies:
     operator:
       shards: 1
       replicas: 0
-      image: ''
+      imageSelector: ''
       workloadType: ''
       config:
         maxmemory-policy: ''
@@ -5926,7 +5964,7 @@ dependencies:
         retain: false
       exporter:
         enabled: true
-        image: ''
+        imageSelector: ''
         args: []
         resources: {}
         securityContext: {}
@@ -5969,10 +6007,6 @@ dependencies:
         cluster-annotation: ''
     depconfig:
       password: ''
-    image:
-      repository: ''
-      pullPolicy: ''
-      tag: ''
     workload:
       objectname:
         replicas: 1
@@ -5981,6 +6015,7 @@ dependencies:
         podSpec:
           containers:
             objectname:
+              imageSelector: ''
               env:
                 VALKEY_PORT: ''
                 VALKEY_PASSWORD:
@@ -6006,7 +6041,6 @@ dependencies:
                   enabled: false
               enabled: true
               primary: true
-              imageSelector: ''
         primary: true
         enabled: true
     service:
@@ -6281,6 +6315,12 @@ flag: false
 cron: ''
 someTimezone: ''
 useMemcached: false
+otherValkeyImage:
+  repository: ''
+  tag: ''
+otherExporterImage:
+  repository: ''
+  tag: ''
 solr:
   enabled: false
   password: ''

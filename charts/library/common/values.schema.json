@@ -154,6 +154,30 @@
    "$ref": "#/definitions/images/properties/postgresql18Image",
    "description": "Configuration for `postgresql18Image`."
   },
+  "clickhouseImage": {
+   "$ref": "#/definitions/images/properties/clickhouseImage",
+   "description": "Image of the clickhouse dependency, selected by its container."
+  },
+  "mariadbImage": {
+   "$ref": "#/definitions/images/properties/mariadbImage",
+   "description": "Image of the mariadb dependency, selected by its container."
+  },
+  "memcachedImage": {
+   "$ref": "#/definitions/images/properties/memcachedImage",
+   "description": "Image of the memcached dependency, selected by its container."
+  },
+  "mongodbImage": {
+   "$ref": "#/definitions/images/properties/mongodbImage",
+   "description": "Image of the mongodb dependency, selected by its container."
+  },
+  "valkeyImage": {
+   "$ref": "#/definitions/images/properties/valkeyImage",
+   "description": "Image of the valkey dependency, selected by its container in `standalone` mode and by `dependencies.valkey.operator.imageSelector` in `operator` mode."
+  },
+  "valkeyExporterImage": {
+   "$ref": "#/definitions/images/properties/valkeyExporterImage",
+   "description": "Image of the metrics exporter of the valkey dependency in `operator` mode, selected by `dependencies.valkey.operator.exporter.imageSelector`."
+  },
   "mariadbClientImage": {
    "$ref": "#/definitions/images/properties/mariadbClientImage",
    "description": "Configuration for `mariadbClientImage`."
@@ -1172,27 +1196,27 @@
    "properties": {
     "appUrl": {
      "type": "string",
-     "description": "Configuration for `chartContext.appUrl`."
+     "description": "URL of the app, from the primary ingress or route, eg `https://app.example.com/`. Without either, it points to `127.0.0.1`."
     },
     "podCIDR": {
      "type": "string",
-     "description": "Configuration for `chartContext.podCIDR`."
+     "description": "CIDR of the pods, from `global.podCIDR`, defaults to `172.16.0.0/16`."
     },
     "svcCIDR": {
      "type": "string",
-     "description": "Configuration for `chartContext.svcCIDR`."
+     "description": "CIDR of the services, from `global.svcCIDR`, defaults to `172.17.0.0/16`."
     },
     "internalUrls": {
      "type": "array",
      "items": {
       "type": "string",
-      "description": "Configuration for `chartContext.internalUrls.$item`."
+      "description": "Host and port of a service, eg `release-app.namespace.svc.cluster.local:8080`."
      },
-     "description": "Configuration for `chartContext.internalUrls`. Set by the library, which appends the internal URLs of the services."
+     "description": "Internal URLs of the services of the chart."
     }
    },
    "additionalProperties": false,
-   "description": "Configuration for `chartContext`."
+   "description": "Details about the release that common works out on every render, to use in Helm `tpl` strings such as `{{ .Values.chartContext.appUrl }}`. Common sets these keys itself and replaces values set here."
   },
   "common": {
    "allOf": [
@@ -1493,7 +1517,8 @@
         "operator": {
          "$ref": "#/definitions/dependencies.valkey.operator.operator",
          "description": "Settings of the `ValkeyCluster` of the [valkey-operator](https://github.com/valkey-io/valkey-operator), used when `mode` is `operator`. The credentials stay in `depconfig`. Never merged into the chart values."
-        }
+        },
+        "image": false
        }
       }
      ],
@@ -1554,7 +1579,8 @@
         "operator": {
          "$ref": "#/definitions/dependencies.postgresql.operator.operator",
          "description": "Settings of the CloudNativePG `Cluster`, used when `mode` is `operator`. The credentials stay in `depconfig`. Never merged into the chart values."
-        }
+        },
+        "image": false
        }
       }
      ],
@@ -1606,7 +1632,8 @@
           }
          },
          "additionalProperties": false
-        }
+        },
+        "image": false
        }
       }
      ]
@@ -1657,7 +1684,8 @@
           }
          },
          "additionalProperties": false
-        }
+        },
+        "image": false
        }
       }
      ]
@@ -1707,10 +1735,28 @@
           }
          },
          "additionalProperties": false
-        }
+        },
+        "image": false
        }
       }
      ]
+    },
+    "memcached": {
+     "allOf": [
+      {
+       "$ref": "#"
+      },
+      {
+       "$ref": "#/definitions/dependencies/additionalProperties/allOf/1"
+      },
+      {
+       "type": "object",
+       "properties": {
+        "image": false
+       }
+      }
+     ],
+     "description": "The memcached dependency. It has no credentials, the chart connects to its primary service."
     }
    },
    "additionalProperties": {
@@ -1757,7 +1803,17 @@
        "operator": {
         "type": "object",
         "description": "Settings specific to the operator providing the dependency (see `mode`). Never merged into the chart values."
-       }
+       },
+       "dependencies": false,
+       "configMapsFromFolder": false,
+       "extraTpl": false,
+       "ingressMiddlewares": false,
+       "volumeClaimTemplates": false,
+       "cnpg": false,
+       "solr": false,
+       "mariadb": false,
+       "mongodb": false,
+       "clickhouse": false
       }
      },
      {
@@ -3654,10 +3710,10 @@
      "default": true,
      "description": "Whether the exporter sidecar runs."
     },
-    "image": {
+    "imageSelector": {
      "type": "string",
-     "default": "",
-     "description": "Overrides the image of the exporter."
+     "default": "valkeyExporterImage",
+     "description": "Image of the exporter, the name of an image on the root of the values."
     },
     "args": {
      "type": "array",
@@ -3741,10 +3797,10 @@
      "default": 0,
      "description": "Number of replicas per shard."
     },
-    "image": {
+    "imageSelector": {
      "type": "string",
-     "default": "",
-     "description": "Overrides the image of the nodes, as `repository:tag`. Defaults to `dependencies.valkey.image`."
+     "default": "valkeyImage",
+     "description": "Image of the nodes, the name of an image on the root of the values. Defaults to `valkeyImage`, the image of the standalone mode."
     },
     "workloadType": {
      "type": "string",
@@ -3798,7 +3854,7 @@
      ],
      "default": {
       "enabled": true,
-      "image": "",
+      "imageSelector": "valkeyExporterImage",
       "args": [],
       "resources": {},
       "securityContext": {}
@@ -7387,6 +7443,120 @@
      },
      "additionalProperties": false,
      "description": "Configuration for `valkeyClientImage`."
+    },
+    "clickhouseImage": {
+     "type": "object",
+     "properties": {
+      "repository": {
+       "type": "string",
+       "description": "Repository of the image."
+      },
+      "tag": {
+       "type": "string",
+       "description": "Tag of the image, pinned by digest."
+      },
+      "pullPolicy": {
+       "type": "string",
+       "description": "Pull policy of the image."
+      }
+     },
+     "additionalProperties": false,
+     "description": "Image of the clickhouse dependency, selected by its container."
+    },
+    "mariadbImage": {
+     "type": "object",
+     "properties": {
+      "repository": {
+       "type": "string",
+       "description": "Repository of the image."
+      },
+      "tag": {
+       "type": "string",
+       "description": "Tag of the image, pinned by digest."
+      },
+      "pullPolicy": {
+       "type": "string",
+       "description": "Pull policy of the image."
+      }
+     },
+     "additionalProperties": false,
+     "description": "Image of the mariadb dependency, selected by its container."
+    },
+    "memcachedImage": {
+     "type": "object",
+     "properties": {
+      "repository": {
+       "type": "string",
+       "description": "Repository of the image."
+      },
+      "tag": {
+       "type": "string",
+       "description": "Tag of the image, pinned by digest."
+      },
+      "pullPolicy": {
+       "type": "string",
+       "description": "Pull policy of the image."
+      }
+     },
+     "additionalProperties": false,
+     "description": "Image of the memcached dependency, selected by its container."
+    },
+    "mongodbImage": {
+     "type": "object",
+     "properties": {
+      "repository": {
+       "type": "string",
+       "description": "Repository of the image."
+      },
+      "tag": {
+       "type": "string",
+       "description": "Tag of the image, pinned by digest."
+      },
+      "pullPolicy": {
+       "type": "string",
+       "description": "Pull policy of the image."
+      }
+     },
+     "additionalProperties": false,
+     "description": "Image of the mongodb dependency, selected by its container."
+    },
+    "valkeyImage": {
+     "type": "object",
+     "properties": {
+      "repository": {
+       "type": "string",
+       "description": "Repository of the image."
+      },
+      "tag": {
+       "type": "string",
+       "description": "Tag of the image, pinned by digest."
+      },
+      "pullPolicy": {
+       "type": "string",
+       "description": "Pull policy of the image."
+      }
+     },
+     "additionalProperties": false,
+     "description": "Image of the valkey dependency, selected by its container in `standalone` mode and by `dependencies.valkey.operator.imageSelector` in `operator` mode."
+    },
+    "valkeyExporterImage": {
+     "type": "object",
+     "properties": {
+      "repository": {
+       "type": "string",
+       "description": "Repository of the image."
+      },
+      "tag": {
+       "type": "string",
+       "description": "Tag of the image, pinned by digest."
+      },
+      "pullPolicy": {
+       "type": "string",
+       "description": "Pull policy of the image."
+      }
+     },
+     "additionalProperties": false,
+     "description": "Image of the metrics exporter of the valkey dependency in `operator` mode, selected by `dependencies.valkey.operator.exporter.imageSelector`."
     }
    },
    "additionalProperties": false,
@@ -9264,7 +9434,7 @@
          "boolean",
          "string"
         ],
-        "description": "Configuration for `metrics.main.prometheusRule.enabled`."
+        "description": "Create a PrometheusRule for this metrics object. Nothing is created when there are no rules."
        },
        "labels": {
         "allOf": [
@@ -9272,17 +9442,23 @@
           "$ref": "#/definitions/special.labels"
          }
         ],
-        "description": "Configuration for `metrics.main.prometheusRule.labels`. Set by stable charts (blocky, grafana, ntfy, kubelet-csr-approver), but the common PrometheusRule template ignores it; use `metrics.main.labels`."
+        "description": "Labels of the PrometheusRule. They take precedence over the `labels` of the metrics object."
+       },
+       "annotations": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+         "type": "string",
+         "description": "Value of the annotation"
+        },
+        "description": "Annotations of the PrometheusRule. They take precedence over the `annotations` of the metrics object."
        },
        "rules": {
         "type": "array",
         "items": {
-         "type": "object",
-         "additionalProperties": {
-          "description": "A setting passed on as is."
-         }
+         "$ref": "#/definitions/metrics/additionalProperties/properties/prometheusRule/properties/groups/additionalProperties/properties/rules/items"
         },
-        "description": "Configuration for `metrics.main.prometheusRule.rules`. Set by stable charts (blocky, grafana, ntfy), but the common PrometheusRule template ignores it; use `groups` or `additionalgroups` for rules."
+        "description": "Rules of a group named after the PrometheusRule. Use `groups` for more than one group."
        },
        "groups": {
         "type": "object",
@@ -9345,7 +9521,10 @@
           },
           "additionalrules": {
            "type": "array",
-           "description": "Configuration for `metrics.main.prometheusRule.groups.$name.additionalrules`. Rules added via the SCALE GUI without overwriting `rules`."
+           "description": "Configuration for `metrics.main.prometheusRule.groups.$name.additionalrules`. Rules added via the SCALE GUI without overwriting `rules`.",
+           "items": {
+            "$ref": "#/definitions/metrics/additionalProperties/properties/prometheusRule/properties/groups/additionalProperties/properties/rules/items"
+           }
           }
          },
          "additionalProperties": false,

@@ -78,17 +78,17 @@ dependencies:
 
 ---
 
-### `dependencies.valkey.operator.exporter.image`
+### `dependencies.valkey.operator.exporter.imageSelector`
 
-Overrides the image of the exporter.
+Image of the exporter, the name of an image on the root of the values.
 
-| Field      | Value                                         |
-| ---------- | --------------------------------------------- |
-| Key        | `dependencies.valkey.operator.exporter.image` |
-| Type       | `string`                                      |
-| Required   | ❌                                            |
-| Helm `tpl` | ❌                                            |
-| Default    | `""`                                          |
+| Field      | Value                                                 |
+| ---------- | ----------------------------------------------------- |
+| Key        | `dependencies.valkey.operator.exporter.imageSelector` |
+| Type       | `string`                                              |
+| Required   | ❌                                                    |
+| Helm `tpl` | ❌                                                    |
+| Default    | `"valkeyExporterImage"`                               |
 
 Example
 
@@ -97,7 +97,7 @@ dependencies:
   valkey:
     operator:
       exporter:
-        image: ""
+        imageSelector: valkeyExporterImage
 ```
 
 ---

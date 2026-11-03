@@ -132,6 +132,22 @@ See [Chartcontext](chartContext.md) for full configuration.
 
 ---
 
+### `common.clickhouseImage`
+
+Image of the clickhouse dependency, selected by its container.
+
+| Field      | Value                    |
+| ---------- | ------------------------ |
+| Key        | `common.clickhouseImage` |
+| Type       | `map`                    |
+| Required   | ❌                       |
+| Helm `tpl` | ❌                       |
+| Default    | unset                    |
+
+See [Clickhouseimage](images.md) for full configuration.
+
+---
+
 ### `common.codeserverImage`
 
 Configuration for `codeserverImage`.
@@ -730,6 +746,38 @@ See [Mariadbclientimage](images.md) for full configuration.
 
 ---
 
+### `common.mariadbImage`
+
+Image of the mariadb dependency, selected by its container.
+
+| Field      | Value                 |
+| ---------- | --------------------- |
+| Key        | `common.mariadbImage` |
+| Type       | `map`                 |
+| Required   | ❌                    |
+| Helm `tpl` | ❌                    |
+| Default    | unset                 |
+
+See [Mariadbimage](images.md) for full configuration.
+
+---
+
+### `common.memcachedImage`
+
+Image of the memcached dependency, selected by its container.
+
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `common.memcachedImage` |
+| Type       | `map`                   |
+| Required   | ❌                      |
+| Helm `tpl` | ❌                      |
+| Default    | unset                   |
+
+See [Memcachedimage](images.md) for full configuration.
+
+---
+
 ### `common.metrics`
 
 Configuration for `metrics`.
@@ -759,6 +807,22 @@ Configuration for `mongodbClientImage`.
 | Default    | unset                       |
 
 See [Mongodbclientimage](images.md) for full configuration.
+
+---
+
+### `common.mongodbImage`
+
+Image of the mongodb dependency, selected by its container.
+
+| Field      | Value                 |
+| ---------- | --------------------- |
+| Key        | `common.mongodbImage` |
+| Type       | `map`                 |
+| Required   | ❌                    |
+| Helm `tpl` | ❌                    |
+| Default    | unset                 |
+
+See [Mongodbimage](images.md) for full configuration.
 
 ---
 
@@ -1519,6 +1583,38 @@ Configuration for `valkeyClientImage`.
 | Default    | unset                      |
 
 See [Valkeyclientimage](images.md) for full configuration.
+
+---
+
+### `common.valkeyExporterImage`
+
+Image of the metrics exporter of the valkey dependency in `operator` mode, selected by `dependencies.valkey.operator.exporter.imageSelector`.
+
+| Field      | Value                        |
+| ---------- | ---------------------------- |
+| Key        | `common.valkeyExporterImage` |
+| Type       | `map`                        |
+| Required   | ❌                           |
+| Helm `tpl` | ❌                           |
+| Default    | unset                        |
+
+See [Valkeyexporterimage](images.md) for full configuration.
+
+---
+
+### `common.valkeyImage`
+
+Image of the valkey dependency, selected by its container in `standalone` mode and by `dependencies.valkey.operator.imageSelector` in `operator` mode.
+
+| Field      | Value                |
+| ---------- | -------------------- |
+| Key        | `common.valkeyImage` |
+| Type       | `map`                |
+| Required   | ❌                   |
+| Helm `tpl` | ❌                   |
+| Default    | unset                |
+
+See [Valkeyimage](images.md) for full configuration.
 
 ---
 

@@ -133,17 +133,19 @@ See [Chartcontext](../../chartContext.md) for full configuration.
 
 ---
 
-### `dependencies.postgresql.clickhouse`
+### `dependencies.postgresql.clickhouseImage`
 
-No description provided.
+Image of the clickhouse dependency, selected by its container.
 
-| Field      | Value                                |
-| ---------- | ------------------------------------ |
-| Key        | `dependencies.postgresql.clickhouse` |
-| Type       | `map`                                |
-| Required   | ❌                                   |
-| Helm `tpl` | ❌                                   |
-| Default    | unset                                |
+| Field      | Value                                     |
+| ---------- | ----------------------------------------- |
+| Key        | `dependencies.postgresql.clickhouseImage` |
+| Type       | `map`                                     |
+| Required   | ❌                                        |
+| Helm `tpl` | ❌                                        |
+| Default    | unset                                     |
+
+See [Clickhouseimage](../../images.md) for full configuration.
 
 ---
 
@@ -192,22 +194,6 @@ Values to merge into the common chart defaults before chart-specific overrides.
 | Default    | unset                            |
 
 See [Common](../../common.md) for full configuration.
-
----
-
-### `dependencies.postgresql.configMapsFromFolder`
-
-Generate ConfigMaps from a folder structure in the Helm chart's filesystem
-
-| Field      | Value                                          |
-| ---------- | ---------------------------------------------- |
-| Key        | `dependencies.postgresql.configMapsFromFolder` |
-| Type       | `map`                                          |
-| Required   | ❌                                             |
-| Helm `tpl` | ❌                                             |
-| Default    | unset                                          |
-
-See [Configmapsfromfolder](../../configMapsFromFolder.md) for full configuration.
 
 ---
 
@@ -277,7 +263,7 @@ See [Defaultspread](../../workload/podSpec/defaultSpread.md) for full configurat
 
 ### `dependencies.postgresql.depconfig`
 
-Configuration of the dependency itself, for both modes. Never merged into the chart.
+No description provided.
 
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
@@ -286,22 +272,6 @@ Configuration of the dependency itself, for both modes. Never merged into the ch
 | Required   | ❌                                  |
 | Helm `tpl` | ❌                                  |
 | Default    | unset                               |
-
----
-
-### `dependencies.postgresql.dependencies`
-
-Configuration for `dependencies`.
-
-| Field      | Value                                  |
-| ---------- | -------------------------------------- |
-| Key        | `dependencies.postgresql.dependencies` |
-| Type       | `map`                                  |
-| Required   | ❌                                     |
-| Helm `tpl` | ❌                                     |
-| Default    | unset                                  |
-
-See [Dependencies](../) for full configuration.
 
 ---
 
@@ -369,6 +339,20 @@ See [Enableservicelinks](../../workload/podSpec/enableServiceLinks.md) for full 
 
 ---
 
+### `dependencies.postgresql.enabled`
+
+Whether the dependency is enabled. Objects of disabled dependencies are not merged into the chart.
+
+| Field      | Value                             |
+| ---------- | --------------------------------- |
+| Key        | `dependencies.postgresql.enabled` |
+| Type       | `boolean, string`                 |
+| Required   | ❌                                |
+| Helm `tpl` | ❌                                |
+| Default    | unset                             |
+
+---
+
 ### `dependencies.postgresql.env`
 
 See [env](/truecharts-common/container/env)
@@ -414,31 +398,6 @@ Create ExternalSecret objects
 | Default    | unset                                    |
 
 See [Externalsecret](../../externalSecret.md) for full configuration.
-
----
-
-### `dependencies.postgresql.extraTpl`
-
-Define kubernetes resources, 1 per list item, tpl will be resolved
-
-| Field      | Value                              |
-| ---------- | ---------------------------------- |
-| Key        | `dependencies.postgresql.extraTpl` |
-| Type       | `list of map, string`              |
-| Required   | ❌                                 |
-| Helm `tpl` | ❌                                 |
-| Default    | `[]`                               |
-
-See [Extratpl](../../extraTpl.md) for full configuration.
-
-Example
-
-```yaml
-dependencies:
-  postgresql:
-    extraTpl:
-      []
-```
 
 ---
 
@@ -634,22 +593,6 @@ See [Hpa](../../hpa.md) for full configuration.
 
 ---
 
-### `dependencies.postgresql.image`
-
-Defines the image details
-
-| Field      | Value                           |
-| ---------- | ------------------------------- |
-| Key        | `dependencies.postgresql.image` |
-| Type       | `map`                           |
-| Required   | ❌                              |
-| Helm `tpl` | ❌                              |
-| Default    | unset                           |
-
-See [Image](../../image.md) for full configuration.
-
----
-
 ### `dependencies.postgresql.imagePullSecret`
 
 Define image pull secrets
@@ -679,22 +622,6 @@ Create Ingress objects
 | Default    | unset                             |
 
 See [Ingress](../../ingress/) for full configuration.
-
----
-
-### `dependencies.postgresql.ingressMiddlewares`
-
-Create Middleware objects
-
-| Field      | Value                                        |
-| ---------- | -------------------------------------------- |
-| Key        | `dependencies.postgresql.ingressMiddlewares` |
-| Type       | `map`                                        |
-| Required   | ❌                                           |
-| Helm `tpl` | ❌                                           |
-| Default    | unset                                        |
-
-See [Ingressmiddlewares](../../ingressMiddlewares/) for full configuration.
 
 ---
 
@@ -744,20 +671,6 @@ See [Listenerset](../../listenerSet.md) for full configuration.
 
 ---
 
-### `dependencies.postgresql.mariadb`
-
-No description provided.
-
-| Field      | Value                             |
-| ---------- | --------------------------------- |
-| Key        | `dependencies.postgresql.mariadb` |
-| Type       | `map`                             |
-| Required   | ❌                                |
-| Helm `tpl` | ❌                                |
-| Default    | unset                             |
-
----
-
 ### `dependencies.postgresql.mariadbClientImage`
 
 Configuration for `mariadbClientImage`.
@@ -771,6 +684,38 @@ Configuration for `mariadbClientImage`.
 | Default    | unset                                        |
 
 See [Mariadbclientimage](../../images.md) for full configuration.
+
+---
+
+### `dependencies.postgresql.mariadbImage`
+
+Image of the mariadb dependency, selected by its container.
+
+| Field      | Value                                  |
+| ---------- | -------------------------------------- |
+| Key        | `dependencies.postgresql.mariadbImage` |
+| Type       | `map`                                  |
+| Required   | ❌                                     |
+| Helm `tpl` | ❌                                     |
+| Default    | unset                                  |
+
+See [Mariadbimage](../../images.md) for full configuration.
+
+---
+
+### `dependencies.postgresql.memcachedImage`
+
+Image of the memcached dependency, selected by its container.
+
+| Field      | Value                                    |
+| ---------- | ---------------------------------------- |
+| Key        | `dependencies.postgresql.memcachedImage` |
+| Type       | `map`                                    |
+| Required   | ❌                                       |
+| Helm `tpl` | ❌                                       |
+| Default    | unset                                    |
+
+See [Memcachedimage](../../images.md) for full configuration.
 
 ---
 
@@ -792,7 +737,7 @@ See [Metrics](../../metrics.md) for full configuration.
 
 ### `dependencies.postgresql.mode`
 
-How postgresql is provided. Unlike the other dependencies it defaults to `operator`, so CloudNativePG runs it and the settings are under `operator`. `standalone` merges a plain PostgreSQL deployment into the chart. Both modes share `depconfig`, the connection details in `depconfig.creds` and the `postgresql-wait` init container.
+No description provided.
 
 | Field      | Value                          |
 | ---------- | ------------------------------ |
@@ -800,7 +745,7 @@ How postgresql is provided. Unlike the other dependencies it defaults to `operat
 | Type       | `string`                       |
 | Required   | ❌                             |
 | Helm `tpl` | ❌                             |
-| Default    | `"operator"`                   |
+| Default    | `"standalone"`                 |
 | Enum       | `standalone`, `operator`       |
 
 Example
@@ -808,22 +753,8 @@ Example
 ```yaml
 dependencies:
   postgresql:
-    mode: operator
+    mode: standalone
 ```
-
----
-
-### `dependencies.postgresql.mongodb`
-
-No description provided.
-
-| Field      | Value                             |
-| ---------- | --------------------------------- |
-| Key        | `dependencies.postgresql.mongodb` |
-| Type       | `map`                             |
-| Required   | ❌                                |
-| Helm `tpl` | ❌                                |
-| Default    | unset                             |
 
 ---
 
@@ -840,6 +771,22 @@ Configuration for `mongodbClientImage`.
 | Default    | unset                                        |
 
 See [Mongodbclientimage](../../images.md) for full configuration.
+
+---
+
+### `dependencies.postgresql.mongodbImage`
+
+Image of the mongodb dependency, selected by its container.
+
+| Field      | Value                                  |
+| ---------- | -------------------------------------- |
+| Key        | `dependencies.postgresql.mongodbImage` |
+| Type       | `map`                                  |
+| Required   | ❌                                     |
+| Helm `tpl` | ❌                                     |
+| Default    | unset                                  |
+
+See [Mongodbimage](../../images.md) for full configuration.
 
 ---
 
@@ -934,7 +881,7 @@ dependencies:
 
 ### `dependencies.postgresql.operator`
 
-Settings of the CloudNativePG `Cluster`, used when `mode` is `operator`. The credentials stay in `depconfig`. Never merged into the chart values.
+No description provided.
 
 | Field      | Value                              |
 | ---------- | ---------------------------------- |
@@ -943,8 +890,6 @@ Settings of the CloudNativePG `Cluster`, used when `mode` is `operator`. The cre
 | Required   | ❌                                 |
 | Helm `tpl` | ❌                                 |
 | Default    | unset                              |
-
-See [Operator](operator/) for full configuration.
 
 ---
 
@@ -1249,20 +1194,6 @@ Configuration for `postgresVectors17Image`.
 | Default    | unset                                            |
 
 See [Postgresvectors17image](../../images.md) for full configuration.
-
----
-
-### `dependencies.postgresql.postgresql`
-
-The postgresql dependency. In `operator` mode (default) a CloudNativePG `Cluster` is spawned from `operator`.
-
-| Field      | Value                                |
-| ---------- | ------------------------------------ |
-| Key        | `dependencies.postgresql.postgresql` |
-| Type       | `map`                                |
-| Required   | ❌                                   |
-| Helm `tpl` | ❌                                   |
-| Default    | unset                                |
 
 ---
 
@@ -1618,20 +1549,6 @@ See [Ubuntuimage](../../images.md) for full configuration.
 
 ---
 
-### `dependencies.postgresql.valkey`
-
-The valkey dependency. In `operator` mode a `ValkeyCluster` is spawned from `operator`.
-
-| Field      | Value                            |
-| ---------- | -------------------------------- |
-| Key        | `dependencies.postgresql.valkey` |
-| Type       | `map`                            |
-| Required   | ❌                               |
-| Helm `tpl` | ❌                               |
-| Default    | unset                            |
-
----
-
 ### `dependencies.postgresql.valkeyClientImage`
 
 Configuration for `valkeyClientImage`.
@@ -1645,6 +1562,38 @@ Configuration for `valkeyClientImage`.
 | Default    | unset                                       |
 
 See [Valkeyclientimage](../../images.md) for full configuration.
+
+---
+
+### `dependencies.postgresql.valkeyExporterImage`
+
+Image of the metrics exporter of the valkey dependency in `operator` mode, selected by `dependencies.valkey.operator.exporter.imageSelector`.
+
+| Field      | Value                                         |
+| ---------- | --------------------------------------------- |
+| Key        | `dependencies.postgresql.valkeyExporterImage` |
+| Type       | `map`                                         |
+| Required   | ❌                                            |
+| Helm `tpl` | ❌                                            |
+| Default    | unset                                         |
+
+See [Valkeyexporterimage](../../images.md) for full configuration.
+
+---
+
+### `dependencies.postgresql.valkeyImage`
+
+Image of the valkey dependency, selected by its container in `standalone` mode and by `dependencies.valkey.operator.imageSelector` in `operator` mode.
+
+| Field      | Value                                 |
+| ---------- | ------------------------------------- |
+| Key        | `dependencies.postgresql.valkeyImage` |
+| Type       | `map`                                 |
+| Required   | ❌                                    |
+| Helm `tpl` | ❌                                    |
+| Default    | unset                                 |
+
+See [Valkeyimage](../../images.md) for full configuration.
 
 ---
 
@@ -1733,3 +1682,40 @@ See [Workload](../../workload/) for full configuration.
 - [Operator](operator/) - Settings of the CloudNativePG cluster that provides the `postgresql` dependency in `operator` mode. Never merged into the chart values.
 
 ---
+
+## Full Examples
+
+PostgreSQL provided by CloudNativePG, the default `operator` mode, with the connection details from the credentials secret:
+
+```yaml
+dependencies:
+  postgresql:
+    enabled: true
+    depconfig:
+      postgresqlUsername: app
+      postgresqlDatabase: app
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            DATABASE_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: url
+```
+
+A plain PostgreSQL deployment in the chart instead, the `standalone` mode. It runs `postgresql18Image`:
+
+```yaml
+dependencies:
+  postgresql:
+    enabled: true
+    mode: standalone
+    depconfig:
+      postgresqlUsername: app
+      postgresqlDatabase: app
+```

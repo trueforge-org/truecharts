@@ -144,3 +144,18 @@ objectData: The [operator] settings of the valkey dependency.
     {{- end -}}
   {{- end -}}
 {{- end -}}
+
+{{/* Returns [repository:tag] of an image on the root of the values, as the ValkeyCluster takes the image as a string */}}
+{{/* Call this template:
+{{ include "tc.v1.common.lib.dependencies.valkey.operator.image" (dict "rootCtx" $ "selector" "valkeyImage" "key" "imageSelector") }}
+rootCtx: The root context of the chart.
+selector: The name of the image on the root of the values.
+key: The key under [dependencies.valkey.operator] the selector comes from, for the error message.
+*/}}
+{{- define "tc.v1.common.lib.dependencies.valkey.operator.image" -}}
+  {{- $image := get .rootCtx.Values .selector -}}
+  {{- if not (and (kindIs "map" $image) $image.repository $image.tag) -}}
+    {{- fail (printf "Valkey Operator - Expected [%s] of [dependencies.valkey.operator.%s] to be an image on the root of the values, with [repository] and [tag]" .selector .key) -}}
+  {{- end -}}
+  {{- printf "%s:%s" $image.repository $image.tag -}}
+{{- end -}}

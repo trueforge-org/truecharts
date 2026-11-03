@@ -7,10 +7,10 @@
       "default": true,
       "description": "Whether the exporter sidecar runs."
     },
-    "image": {
+    "imageSelector": {
       "type": "string",
-      "default": "",
-      "description": "Overrides the image of the exporter."
+      "default": "valkeyExporterImage",
+      "description": "Image of the exporter, the name of an image on the root of the values."
     },
     "args": {
       "type": "array",

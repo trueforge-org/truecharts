@@ -138,16 +138,16 @@ tests:
               cpu: 1500m
               memory: 2400Mi
 
-  - it: should use the image of the dependency, unless it is overridden
+  - it: should use the image of the standalone mode for the nodes
     template: common.yaml
     set:
+      valkeyImage:
+        repository: example.com/valkey
+        tag: 9.1.0
       dependencies:
         valkey:
           enabled: true
           mode: operator
-          image:
-            repository: example.com/valkey
-            tag: 9.1.0
     asserts:
       - documentSelector:
           path: kind
@@ -156,15 +156,18 @@ tests:
           path: spec.image
           value: example.com/valkey:9.1.0
 
-  - it: should use the image of the operator settings
+  - it: should use the image selected in the operator settings
     template: common.yaml
     set:
+      otherValkeyImage:
+        repository: example.com/other/valkey
+        tag: 9.0.1
       dependencies:
         valkey:
           enabled: true
           mode: operator
           operator:
-            image: example.com/other/valkey:9.0.1
+            imageSelector: otherValkeyImage
     asserts:
       - documentSelector:
           path: kind
@@ -325,6 +328,9 @@ tests:
   - it: should render the settings of the operator
     template: common.yaml
     set:
+      valkeyExporterImage:
+        repository: example.com/redis-exporter
+        tag: 1.94.0
       global:
         fallbackDefaults:
           storageClass: default-class
@@ -419,6 +425,7 @@ tests:
           path: spec.exporter
           value:
             enabled: false
+            image: example.com/redis-exporter:1.94.0
       - documentSelector: *clusterDoc
         equal:
           path: spec.scheduling
@@ -817,3 +824,86 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "of the ValkeyCluster to be at most 56 characters"
+
+  - it: should use the exporter image on the root of the values
+    template: common.yaml
+    set:
+      valkeyExporterImage:
+        repository: example.com/redis-exporter
+        tag: 1.94.0
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+    asserts:
+      - documentSelector: &clusterDoc
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: spec.exporter.image
+          value: example.com/redis-exporter:1.94.0
+
+  - it: should use the exporter image selected in the operator settings
+    template: common.yaml
+    set:
+      otherExporterImage:
+        repository: example.com/other-exporter
+        tag: 2.0.0
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            exporter:
+              imageSelector: otherExporterImage
+    asserts:
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.exporter.image
+          value: example.com/other-exporter:2.0.0
+
+  - it: should fail with an image selector that is not on the root of the values
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          operator:
+            imageSelector: missingImage
+    asserts:
+      - failedTemplate:
+          errorMessage: Valkey Operator - Expected [missingImage] of [dependencies.valkey.operator.imageSelector] to be an image on the root of the values, with [repository] and [tag]
+
+  - it: should use the security context of the dependency over the one of the chart
+    template: common.yaml
+    set:
+      securityContext:
+        container:
+          runAsUser: 1000
+          runAsGroup: 1000
+        pod:
+          fsGroup: 1000
+      dependencies:
+        valkey:
+          enabled: true
+          mode: operator
+          securityContext:
+            container:
+              runAsUser: 2000
+              runAsGroup: 2001
+            pod:
+              fsGroup: 2002
+    asserts:
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.podSecurityContext.runAsUser
+          value: 2000
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.podSecurityContext.runAsGroup
+          value: 2001
+      - documentSelector: *clusterDoc
+        equal:
+          path: spec.podSecurityContext.fsGroup
+          value: 2002

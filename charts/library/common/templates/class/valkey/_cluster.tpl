@@ -132,9 +132,10 @@ objectData:
     {{- $_ := set $spec "networking" . -}}
   {{- end -}}
 
-  {{/* The pods run with the security context of the chart, the operator sets none and the volumes would not be writable */}}
-  {{- $containerSecCtx := $rootCtx.Values.securityContext.container -}}
-  {{- $podSecCtx := $rootCtx.Values.securityContext.pod -}}
+  {{/* The pods run with the security context of the dependency, on top of the one of the chart. The operator sets none and the volumes would not be writable */}}
+  {{- $secCtx := mustMergeOverwrite (mustDeepCopy ($rootCtx.Values.securityContext | default dict)) (mustDeepCopy ($rootCtx.Values.dependencies.valkey.securityContext | default dict)) -}}
+  {{- $containerSecCtx := $secCtx.container | default dict -}}
+  {{- $podSecCtx := $secCtx.pod | default dict -}}
   {{- $podSecurityContext := dict
         "runAsNonRoot" true
         "runAsUser" $containerSecCtx.runAsUser

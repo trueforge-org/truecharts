@@ -9,7 +9,8 @@
     {{- end -}}
   {{- end -}}
 
-  {{- $totalRulesCount := 0 -}}
+  {{/* Rules directly under [prometheusRule.rules] form a group of their own */}}
+  {{- $totalRulesCount := len ($values.prometheusRule.rules | default list) -}}
   {{- range $id, $groupValues := $values.prometheusRule.groups }}
     {{- $g := (kindIs "map" $groupValues | ternary $groupValues dict) -}}
     {{- $totalRulesCount = add $totalRulesCount (len ($g.rules | default list)) (len ($g.additionalrules | default list)) -}}
@@ -20,8 +21,9 @@
   {{- end }}
 
 {{- if gt $totalRulesCount 0 -}}
-  {{- $prometheusruleLabels := $values.labels -}}
-  {{- $prometheusruleAnnotations := $values.annotations -}}
+  {{/* The labels and annotations of [prometheusRule] apply on top of the ones of the metrics object */}}
+  {{- $prometheusruleLabels := mustMerge (mustDeepCopy ($values.prometheusRule.labels | default dict)) ($values.labels | default dict) -}}
+  {{- $prometheusruleAnnotations := mustMerge (mustDeepCopy ($values.prometheusRule.annotations | default dict)) ($values.annotations | default dict) -}}
 
   {{- if and (hasKey $values "nameOverride") $values.nameOverride -}}
     {{- $prometheusruleName = printf "%v-%v" $prometheusruleName $values.nameOverride -}}
@@ -44,6 +46,10 @@ metadata:
   {{- end }}
 spec:
   groups:
+    {{- with $values.prometheusRule.rules }}
+      {{- include "tc.v1.common.class.prometheusrule.rendergroup" (dict "name" $prometheusruleName "groupValues" (dict "rules" .)) | nindent 4 }}
+    {{- end }}
+
     {{- range $id, $groupValues := $values.prometheusRule.groups }}
       {{- $g := (kindIs "map" $groupValues | ternary $groupValues dict) -}}
       {{- $rulesCount := add (len ($g.rules | default list)) (len ($g.additionalrules | default list)) -}}

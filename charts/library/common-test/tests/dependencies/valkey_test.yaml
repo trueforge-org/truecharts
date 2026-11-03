@@ -7,14 +7,14 @@ release:
 tests:
   - it: should render the valkey dependency with its credentials secret
     set:
+      valkeyImage:
+        repository: oci.trueforge.org/containerforge/valkey
+        tag: 9.0.4
       dependencies:
         valkey: &valkey
           enabled: true
           depconfig:
             password: testpassword
-          image: &image
-            repository: oci.trueforge.org/containerforge/valkey
-            tag: 9.0.4
           workload:
             main:
               type: StatefulSet
@@ -130,7 +130,6 @@ tests:
       dependencies:
         valkey:
           enabled: true
-          image: *image
           workload:
             main:
               type: StatefulSet
@@ -153,7 +152,6 @@ tests:
       dependencies:
         valkey:
           enabled: false
-          image: *image
           workload:
             main:
               type: StatefulSet
@@ -308,7 +306,6 @@ tests:
           enabled: true
           depconfig:
             password: testpassword
-          image: *image
           workload:
             main:
               type: StatefulSet
@@ -337,7 +334,6 @@ tests:
       dependencies:
         valkey:
           enabled: true
-          image: *image
           service:
             main:
               ports:
@@ -352,7 +348,6 @@ tests:
       dependencies:
         valkey:
           enabled: true
-          image: *image
           workload:
             main:
               type: StatefulSet
