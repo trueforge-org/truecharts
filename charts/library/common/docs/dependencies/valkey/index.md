@@ -133,17 +133,19 @@ See [Chartcontext](../../chartContext.md) for full configuration.
 
 ---
 
-### `dependencies.valkey.clickhouse`
+### `dependencies.valkey.clickhouseImage`
 
-No description provided.
+Image of the clickhouse dependency, selected by its container.
 
-| Field      | Value                            |
-| ---------- | -------------------------------- |
-| Key        | `dependencies.valkey.clickhouse` |
-| Type       | `map`                            |
-| Required   | ❌                               |
-| Helm `tpl` | ❌                               |
-| Default    | unset                            |
+| Field      | Value                                 |
+| ---------- | ------------------------------------- |
+| Key        | `dependencies.valkey.clickhouseImage` |
+| Type       | `map`                                 |
+| Required   | ❌                                    |
+| Helm `tpl` | ❌                                    |
+| Default    | unset                                 |
+
+See [Clickhouseimage](../../images.md) for full configuration.
 
 ---
 
@@ -192,22 +194,6 @@ Values to merge into the common chart defaults before chart-specific overrides.
 | Default    | unset                        |
 
 See [Common](../../common.md) for full configuration.
-
----
-
-### `dependencies.valkey.configMapsFromFolder`
-
-Generate ConfigMaps from a folder structure in the Helm chart's filesystem
-
-| Field      | Value                                      |
-| ---------- | ------------------------------------------ |
-| Key        | `dependencies.valkey.configMapsFromFolder` |
-| Type       | `map`                                      |
-| Required   | ❌                                         |
-| Helm `tpl` | ❌                                         |
-| Default    | unset                                      |
-
-See [Configmapsfromfolder](../../configMapsFromFolder.md) for full configuration.
 
 ---
 
@@ -275,19 +261,17 @@ See [Defaultspread](../../workload/podSpec/defaultSpread.md) for full configurat
 
 ---
 
-### `dependencies.valkey.dependencies`
+### `dependencies.valkey.depconfig`
 
-Configuration for `dependencies`.
+Configuration of the dependency itself. Never merged into the chart values.
 
-| Field      | Value                              |
-| ---------- | ---------------------------------- |
-| Key        | `dependencies.valkey.dependencies` |
-| Type       | `map`                              |
-| Required   | ❌                                 |
-| Helm `tpl` | ❌                                 |
-| Default    | unset                              |
-
-See [Dependencies](../) for full configuration.
+| Field      | Value                           |
+| ---------- | ------------------------------- |
+| Key        | `dependencies.valkey.depconfig` |
+| Type       | `map`                           |
+| Required   | ❌                              |
+| Helm `tpl` | ❌                              |
+| Default    | unset                           |
 
 ---
 
@@ -355,6 +339,20 @@ See [Enableservicelinks](../../workload/podSpec/enableServiceLinks.md) for full 
 
 ---
 
+### `dependencies.valkey.enabled`
+
+Whether the dependency is enabled. Objects of disabled dependencies are not merged into the chart.
+
+| Field      | Value                         |
+| ---------- | ----------------------------- |
+| Key        | `dependencies.valkey.enabled` |
+| Type       | `boolean, string`             |
+| Required   | ❌                            |
+| Helm `tpl` | ❌                            |
+| Default    | unset                         |
+
+---
+
 ### `dependencies.valkey.env`
 
 See [env](/truecharts-common/container/env)
@@ -400,31 +398,6 @@ Create ExternalSecret objects
 | Default    | unset                                |
 
 See [Externalsecret](../../externalSecret.md) for full configuration.
-
----
-
-### `dependencies.valkey.extraTpl`
-
-Define kubernetes resources, 1 per list item, tpl will be resolved
-
-| Field      | Value                          |
-| ---------- | ------------------------------ |
-| Key        | `dependencies.valkey.extraTpl` |
-| Type       | `list of map, string`          |
-| Required   | ❌                             |
-| Helm `tpl` | ❌                             |
-| Default    | `[]`                           |
-
-See [Extratpl](../../extraTpl.md) for full configuration.
-
-Example
-
-```yaml
-dependencies:
-  valkey:
-    extraTpl:
-      []
-```
 
 ---
 
@@ -620,22 +593,6 @@ See [Hpa](../../hpa.md) for full configuration.
 
 ---
 
-### `dependencies.valkey.image`
-
-Defines the image details
-
-| Field      | Value                       |
-| ---------- | --------------------------- |
-| Key        | `dependencies.valkey.image` |
-| Type       | `map`                       |
-| Required   | ❌                          |
-| Helm `tpl` | ❌                          |
-| Default    | unset                       |
-
-See [Image](../../image.md) for full configuration.
-
----
-
 ### `dependencies.valkey.imagePullSecret`
 
 Define image pull secrets
@@ -665,22 +622,6 @@ Create Ingress objects
 | Default    | unset                         |
 
 See [Ingress](../../ingress/) for full configuration.
-
----
-
-### `dependencies.valkey.ingressMiddlewares`
-
-Create Middleware objects
-
-| Field      | Value                                    |
-| ---------- | ---------------------------------------- |
-| Key        | `dependencies.valkey.ingressMiddlewares` |
-| Type       | `map`                                    |
-| Required   | ❌                                       |
-| Helm `tpl` | ❌                                       |
-| Default    | unset                                    |
-
-See [Ingressmiddlewares](../../ingressMiddlewares/) for full configuration.
 
 ---
 
@@ -730,20 +671,6 @@ See [Listenerset](../../listenerSet.md) for full configuration.
 
 ---
 
-### `dependencies.valkey.mariadb`
-
-No description provided.
-
-| Field      | Value                         |
-| ---------- | ----------------------------- |
-| Key        | `dependencies.valkey.mariadb` |
-| Type       | `map`                         |
-| Required   | ❌                            |
-| Helm `tpl` | ❌                            |
-| Default    | unset                         |
-
----
-
 ### `dependencies.valkey.mariadbClientImage`
 
 Configuration for `mariadbClientImage`.
@@ -757,6 +684,38 @@ Configuration for `mariadbClientImage`.
 | Default    | unset                                    |
 
 See [Mariadbclientimage](../../images.md) for full configuration.
+
+---
+
+### `dependencies.valkey.mariadbImage`
+
+Image of the mariadb dependency, selected by its container.
+
+| Field      | Value                              |
+| ---------- | ---------------------------------- |
+| Key        | `dependencies.valkey.mariadbImage` |
+| Type       | `map`                              |
+| Required   | ❌                                 |
+| Helm `tpl` | ❌                                 |
+| Default    | unset                              |
+
+See [Mariadbimage](../../images.md) for full configuration.
+
+---
+
+### `dependencies.valkey.memcachedImage`
+
+Image of the memcached dependency, selected by its container.
+
+| Field      | Value                                |
+| ---------- | ------------------------------------ |
+| Key        | `dependencies.valkey.memcachedImage` |
+| Type       | `map`                                |
+| Required   | ❌                                   |
+| Helm `tpl` | ❌                                   |
+| Default    | unset                                |
+
+See [Memcachedimage](../../images.md) for full configuration.
 
 ---
 
@@ -776,17 +735,26 @@ See [Metrics](../../metrics.md) for full configuration.
 
 ---
 
-### `dependencies.valkey.mongodb`
+### `dependencies.valkey.mode`
 
-No description provided.
+How the dependency is provided. `standalone` merges and deploys it with the chart, `operator` leaves it to an operator, so its objects are not merged into the chart. The credentials, wait init container and notes still apply.
 
-| Field      | Value                         |
-| ---------- | ----------------------------- |
-| Key        | `dependencies.valkey.mongodb` |
-| Type       | `map`                         |
-| Required   | ❌                            |
-| Helm `tpl` | ❌                            |
-| Default    | unset                         |
+| Field      | Value                      |
+| ---------- | -------------------------- |
+| Key        | `dependencies.valkey.mode` |
+| Type       | `string`                   |
+| Required   | ❌                         |
+| Helm `tpl` | ❌                         |
+| Default    | `"standalone"`             |
+| Enum       | `standalone`, `operator`   |
+
+Example
+
+```yaml
+dependencies:
+  valkey:
+    mode: standalone
+```
 
 ---
 
@@ -803,6 +771,22 @@ Configuration for `mongodbClientImage`.
 | Default    | unset                                    |
 
 See [Mongodbclientimage](../../images.md) for full configuration.
+
+---
+
+### `dependencies.valkey.mongodbImage`
+
+Image of the mongodb dependency, selected by its container.
+
+| Field      | Value                              |
+| ---------- | ---------------------------------- |
+| Key        | `dependencies.valkey.mongodbImage` |
+| Type       | `map`                              |
+| Required   | ❌                                 |
+| Helm `tpl` | ❌                                 |
+| Default    | unset                              |
+
+See [Mongodbimage](../../images.md) for full configuration.
 
 ---
 
@@ -897,7 +881,7 @@ dependencies:
 
 ### `dependencies.valkey.operator`
 
-Settings of the `ValkeyCluster` of the [valkey-operator](https://github.com/valkey-io/valkey-operator), used when `mode` is `operator`. The credentials stay in `depconfig`. Never merged into the chart values.
+No description provided.
 
 | Field      | Value                          |
 | ---------- | ------------------------------ |
@@ -906,8 +890,6 @@ Settings of the `ValkeyCluster` of the [valkey-operator](https://github.com/valk
 | Required   | ❌                             |
 | Helm `tpl` | ❌                             |
 | Default    | unset                          |
-
-See [Operator](operator/) for full configuration.
 
 ---
 
@@ -1212,20 +1194,6 @@ Configuration for `postgresVectors17Image`.
 | Default    | unset                                        |
 
 See [Postgresvectors17image](../../images.md) for full configuration.
-
----
-
-### `dependencies.valkey.postgresql`
-
-The postgresql dependency. In `operator` mode (default) a CloudNativePG `Cluster` is spawned from `operator`.
-
-| Field      | Value                            |
-| ---------- | -------------------------------- |
-| Key        | `dependencies.valkey.postgresql` |
-| Type       | `map`                            |
-| Required   | ❌                               |
-| Helm `tpl` | ❌                               |
-| Default    | unset                            |
 
 ---
 
@@ -1581,20 +1549,6 @@ See [Ubuntuimage](../../images.md) for full configuration.
 
 ---
 
-### `dependencies.valkey.valkey`
-
-The valkey dependency. In `operator` mode a `ValkeyCluster` is spawned from `operator`.
-
-| Field      | Value                        |
-| ---------- | ---------------------------- |
-| Key        | `dependencies.valkey.valkey` |
-| Type       | `map`                        |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
-| Default    | unset                        |
-
----
-
 ### `dependencies.valkey.valkeyClientImage`
 
 Configuration for `valkeyClientImage`.
@@ -1608,6 +1562,38 @@ Configuration for `valkeyClientImage`.
 | Default    | unset                                   |
 
 See [Valkeyclientimage](../../images.md) for full configuration.
+
+---
+
+### `dependencies.valkey.valkeyExporterImage`
+
+Image of the metrics exporter of the valkey dependency in `operator` mode, selected by `dependencies.valkey.operator.exporter.imageSelector`.
+
+| Field      | Value                                     |
+| ---------- | ----------------------------------------- |
+| Key        | `dependencies.valkey.valkeyExporterImage` |
+| Type       | `map`                                     |
+| Required   | ❌                                        |
+| Helm `tpl` | ❌                                        |
+| Default    | unset                                     |
+
+See [Valkeyexporterimage](../../images.md) for full configuration.
+
+---
+
+### `dependencies.valkey.valkeyImage`
+
+Image of the valkey dependency, selected by its container in `standalone` mode and by `dependencies.valkey.operator.imageSelector` in `operator` mode.
+
+| Field      | Value                             |
+| ---------- | --------------------------------- |
+| Key        | `dependencies.valkey.valkeyImage` |
+| Type       | `map`                             |
+| Required   | ❌                                |
+| Helm `tpl` | ❌                                |
+| Default    | unset                             |
+
+See [Valkeyimage](../../images.md) for full configuration.
 
 ---
 
@@ -1696,3 +1682,42 @@ See [Workload](../../workload/) for full configuration.
 - [Operator](operator/)
 
 ---
+
+## Full Examples
+
+A Valkey cache next to the app, with the connection details from the credentials secret:
+
+```yaml
+dependencies:
+  valkey:
+    enabled: true
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            REDIS_HOST: '{{ .Values.dependencies.valkey.depconfig.creds.plainhost | trimAll "\"" }}'
+            REDIS_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                key: valkey-password
+```
+
+Another image, or more resources for the dependency only:
+
+```yaml
+valkeyImage:
+  repository: oci.trueforge.org/containerforge/valkey
+  tag: 9.0.4@sha256:387b5f54777a6451f73f1a49a45b5bb6d29e1e5838b7b5a9c84d80370995531e
+  pullPolicy: IfNotPresent
+
+dependencies:
+  valkey:
+    enabled: true
+    resources:
+      limits:
+        memory: 1Gi
+```

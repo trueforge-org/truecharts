@@ -521,6 +521,126 @@
       },
       "additionalProperties": false,
       "description": "Configuration for `valkeyClientImage`."
+    },
+    "clickhouseImage": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "description": "Repository of the image."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Tag of the image, pinned by digest."
+        },
+        "pullPolicy": {
+          "type": "string",
+          "description": "Pull policy of the image."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Image of the clickhouse dependency, selected by its container."
+    },
+    "mariadbImage": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "description": "Repository of the image."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Tag of the image, pinned by digest."
+        },
+        "pullPolicy": {
+          "type": "string",
+          "description": "Pull policy of the image."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Image of the mariadb dependency, selected by its container."
+    },
+    "memcachedImage": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "description": "Repository of the image."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Tag of the image, pinned by digest."
+        },
+        "pullPolicy": {
+          "type": "string",
+          "description": "Pull policy of the image."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Image of the memcached dependency, selected by its container."
+    },
+    "mongodbImage": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "description": "Repository of the image."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Tag of the image, pinned by digest."
+        },
+        "pullPolicy": {
+          "type": "string",
+          "description": "Pull policy of the image."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Image of the mongodb dependency, selected by its container."
+    },
+    "valkeyImage": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "description": "Repository of the image."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Tag of the image, pinned by digest."
+        },
+        "pullPolicy": {
+          "type": "string",
+          "description": "Pull policy of the image."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Image of the valkey dependency, selected by its container in `standalone` mode and by `dependencies.valkey.operator.imageSelector` in `operator` mode."
+    },
+    "valkeyExporterImage": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "description": "Repository of the image."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Tag of the image, pinned by digest."
+        },
+        "pullPolicy": {
+          "type": "string",
+          "description": "Pull policy of the image."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Image of the metrics exporter of the valkey dependency in `operator` mode, selected by `dependencies.valkey.operator.exporter.imageSelector`."
     }
   },
   "additionalProperties": false,

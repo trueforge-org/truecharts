@@ -16,7 +16,8 @@
             "operator": {
               "$ref": "dependencies/valkey/operator/operator.json",
               "description": "Settings of the `ValkeyCluster` of the [valkey-operator](https://github.com/valkey-io/valkey-operator), used when `mode` is `operator`. The credentials stay in `depconfig`. Never merged into the chart values."
-            }
+            },
+            "image": false
           }
         }
       ],
@@ -77,7 +78,8 @@
             "operator": {
               "$ref": "dependencies/postgresql/operator/operator.json",
               "description": "Settings of the CloudNativePG `Cluster`, used when `mode` is `operator`. The credentials stay in `depconfig`. Never merged into the chart values."
-            }
+            },
+            "image": false
           }
         }
       ],
@@ -129,7 +131,8 @@
                 }
               },
               "additionalProperties": false
-            }
+            },
+            "image": false
           }
         }
       ]
@@ -180,7 +183,8 @@
                 }
               },
               "additionalProperties": false
-            }
+            },
+            "image": false
           }
         }
       ]
@@ -230,10 +234,28 @@
                 }
               },
               "additionalProperties": false
-            }
+            },
+            "image": false
           }
         }
       ]
+    },
+    "memcached": {
+      "allOf": [
+        {
+          "$ref": "../values.schema.source.json"
+        },
+        {
+          "$ref": "#/additionalProperties/allOf/1"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "image": false
+          }
+        }
+      ],
+      "description": "The memcached dependency. It has no credentials, the chart connects to its primary service."
     }
   },
   "additionalProperties": {
@@ -280,7 +302,17 @@
           "operator": {
             "type": "object",
             "description": "Settings specific to the operator providing the dependency (see `mode`). Never merged into the chart values."
-          }
+          },
+          "dependencies": false,
+          "configMapsFromFolder": false,
+          "extraTpl": false,
+          "ingressMiddlewares": false,
+          "volumeClaimTemplates": false,
+          "cnpg": false,
+          "solr": false,
+          "mariadb": false,
+          "mongodb": false,
+          "clickhouse": false
         }
       },
       {

@@ -69,7 +69,16 @@ Ingress configuration for the addon.
 | Type       | `map`                  |
 | Required   | ❌                     |
 | Helm `tpl` | ❌                     |
-| Default    | unset                  |
+| Default    | `{}`                   |
+
+Example
+
+```yaml
+addons:
+  addon:
+    ingress:
+      {}
+```
 
 ---
 
@@ -83,7 +92,16 @@ Secret configuration for the addon.
 | Type       | `map, null`           |
 | Required   | ❌                    |
 | Helm `tpl` | ❌                    |
-| Default    | unset                 |
+| Default    | `{}`                  |
+
+Example
+
+```yaml
+addons:
+  addon:
+    secret:
+      {}
+```
 
 ---
 
@@ -97,9 +115,18 @@ Service configuration for the addon.
 | Type       | `map`                  |
 | Required   | ❌                     |
 | Helm `tpl` | ❌                     |
-| Default    | unset                  |
+| Default    | `{}`                   |
 
 See [Service](../service/) for full configuration.
+
+Example
+
+```yaml
+addons:
+  addon:
+    service:
+      {}
+```
 
 ---
 

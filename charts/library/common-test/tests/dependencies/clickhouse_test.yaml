@@ -200,14 +200,14 @@ tests:
       - hasDocuments:
           count: 0
 
-  - it: should allow overriding the image of clickhouse
+  - it: should allow overriding the image of clickhouse on the root
     set:
+      clickhouseImage:
+        repository: docker.io/clickhouse/clickhouse-server
+        tag: 25.8.1.1
       dependencies:
         clickhouse:
           enabled: true
-          image:
-            repository: docker.io/clickhouse/clickhouse-server
-            tag: 25.8.1.1
     asserts:
       - documentSelector:
           path: kind

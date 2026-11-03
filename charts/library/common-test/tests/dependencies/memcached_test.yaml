@@ -126,12 +126,12 @@ tests:
 
   - it: should allow overriding the image, replicas and port
     set:
+      memcachedImage:
+        repository: docker.io/library/memcached
+        tag: 1.6.40
       dependencies:
         memcached:
           enabled: true
-          image:
-            repository: docker.io/library/memcached
-            tag: 1.6.40
           workload:
             main:
               replicas: 3

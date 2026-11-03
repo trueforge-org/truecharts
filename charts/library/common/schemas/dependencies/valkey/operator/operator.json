@@ -14,10 +14,10 @@
       "default": 0,
       "description": "Number of replicas per shard."
     },
-    "image": {
+    "imageSelector": {
       "type": "string",
-      "default": "",
-      "description": "Overrides the image of the nodes, as `repository:tag`. Defaults to `dependencies.valkey.image`."
+      "default": "valkeyImage",
+      "description": "Image of the nodes, the name of an image on the root of the values. Defaults to `valkeyImage`, the image of the standalone mode."
     },
     "workloadType": {
       "type": "string",
@@ -71,7 +71,7 @@
       ],
       "default": {
         "enabled": true,
-        "image": "",
+        "imageSelector": "valkeyExporterImage",
         "args": [],
         "resources": {},
         "securityContext": {}

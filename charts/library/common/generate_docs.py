@@ -184,6 +184,11 @@ class SchemaResolver:
         resolved_ref_path = self._remap_to_local_schema_path(ref_path).resolve()
 
         base_schema = self._load(resolved_ref_path)
+        # A JSON pointer after the # selects a part of the file
+        pointer = ref.split("#", 1)[1] if "#" in ref else ""
+        for part in [p for p in pointer.split("/") if p]:
+            part = part.replace("~1", "/").replace("~0", "~")
+            base_schema = base_schema[int(part)] if isinstance(base_schema, list) else base_schema[part]
         resolved_base, source_path, _ = self.resolve_node(base_schema, resolved_ref_path)
 
         merged = copy.deepcopy(resolved_base)
@@ -694,6 +699,8 @@ def iter_child_properties(
     out: list[tuple[str, dict[str, Any], bool, Path | None]] = []
     grouped_children: dict[str, list[tuple[dict[str, Any], Path | None]]] = {}
     grouped_required: dict[str, bool] = {}
+    # Keys that a variant forbids with a `false` schema are not documented
+    forbidden: set[str] = set()
 
     def add_child(name: str, child_schema: dict[str, Any], required: bool, child_source: Path | None) -> None:
         grouped_children.setdefault(name, []).append((child_schema, child_source))
@@ -715,6 +722,8 @@ def iter_child_properties(
                 child = properties[key]
                 if isinstance(child, dict):
                     add_child(key, child, key in variant_required, variant_source)
+                elif child is False:
+                    forbidden.add(key)
 
         additional_properties = variant.get("additionalProperties")
         if isinstance(additional_properties, dict):
@@ -731,6 +740,8 @@ def iter_child_properties(
                         add_child(f"$name.{key}", child, key in entry_required, variant_source)
 
     for key in sorted(grouped_children.keys()):
+        if key in forbidden:
+            continue
         candidates = grouped_children[key]
         unique: list[tuple[dict[str, Any], Path | None]] = []
         seen: set[str] = set()

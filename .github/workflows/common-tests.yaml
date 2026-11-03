@@ -167,6 +167,7 @@ jobs:
 
       - name: Run schema validation
         run: |
+          python3 charts/library/common/generate_bundled_schema.py --check
           python3 charts/library/common/test_schema.py --max-failures 0 --output-file stable_schema_validation.log
           python3 charts/library/common/check_complete_values_schema_coverage.py
           python3 charts/library/common/generate_docs.py --check
@@ -194,6 +195,7 @@ jobs:
         values:
           - basic-values.yaml
           - configmap-values.yaml
+          - configmaps-from-folder-values.yaml
           - secrets-values.yaml
           - imagePullSecret-values.yaml
           - daemonset-values.yaml
@@ -220,6 +222,7 @@ jobs:
           - cnpg-pg18-postgis-values.yaml
           - valkey-values.yaml
           - valkey-operator-values.yaml
+          - valkey-addons-values.yaml
           - mariadb-values.yaml
           - clickhouse-values.yaml
           - memcached-values.yaml

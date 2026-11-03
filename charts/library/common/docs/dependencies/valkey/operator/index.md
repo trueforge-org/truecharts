@@ -105,13 +105,13 @@ dependencies:
 
 Metrics exporter sidecar of every pod.
 
-| Field      | Value                                                                                |
-| ---------- | ------------------------------------------------------------------------------------ |
-| Key        | `dependencies.valkey.operator.exporter`                                              |
-| Type       | `map`                                                                                |
-| Required   | ❌                                                                                   |
-| Helm `tpl` | ❌                                                                                   |
-| Default    | `{"enabled": true, "image": "", "args": [], "resources": {}, "securityContext": {}}` |
+| Field      | Value                                                                                                           |
+| ---------- | --------------------------------------------------------------------------------------------------------------- |
+| Key        | `dependencies.valkey.operator.exporter`                                                                         |
+| Type       | `map`                                                                                                           |
+| Required   | ❌                                                                                                              |
+| Helm `tpl` | ❌                                                                                                              |
+| Default    | `{"enabled": true, "imageSelector": "valkeyExporterImage", "args": [], "resources": {}, "securityContext": {}}` |
 
 Example
 
@@ -121,36 +121,13 @@ dependencies:
     operator:
       exporter:
         enabled: true
-        image: ""
+        imageSelector: valkeyExporterImage
         args:
           []
         resources:
           {}
         securityContext:
           {}
-```
-
----
-
-### `dependencies.valkey.operator.image`
-
-Overrides the image of the nodes, as `repository:tag`. Defaults to `dependencies.valkey.image`.
-
-| Field      | Value                                |
-| ---------- | ------------------------------------ |
-| Key        | `dependencies.valkey.operator.image` |
-| Type       | `string`                             |
-| Required   | ❌                                   |
-| Helm `tpl` | ❌                                   |
-| Default    | `""`                                 |
-
-Example
-
-```yaml
-dependencies:
-  valkey:
-    operator:
-      image: ""
 ```
 
 ---
@@ -175,6 +152,29 @@ dependencies:
     operator:
       imagePullSecrets:
         []
+```
+
+---
+
+### `dependencies.valkey.operator.imageSelector`
+
+Image of the nodes, the name of an image on the root of the values. Defaults to `valkeyImage`, the image of the standalone mode.
+
+| Field      | Value                                        |
+| ---------- | -------------------------------------------- |
+| Key        | `dependencies.valkey.operator.imageSelector` |
+| Type       | `string`                                     |
+| Required   | ❌                                           |
+| Helm `tpl` | ❌                                           |
+| Default    | `"valkeyImage"`                              |
+
+Example
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      imageSelector: valkeyImage
 ```
 
 ---
@@ -528,3 +528,40 @@ dependencies:
 - [User](user.md)
 
 ---
+
+## Full Examples
+
+A `ValkeyCluster` with three shards and a replica per shard, provided by the valkey-operator:
+
+```yaml
+dependencies:
+  valkey:
+    enabled: true
+    mode: operator
+    operator:
+      shards: 3
+      replicas: 1
+      config:
+        maxmemory-policy: allkeys-lru
+      persistence:
+        enabled: true
+        size: 2Gi
+      exporter:
+        enabled: true
+```
+
+The nodes use `valkeyImage` and the exporter `valkeyExporterImage`, both on the root of the values. To use another image, select it:
+
+```yaml
+myValkeyImage:
+  repository: oci.trueforge.org/containerforge/valkey
+  tag: 9.0.4@sha256:387b5f54777a6451f73f1a49a45b5bb6d29e1e5838b7b5a9c84d80370995531e
+  pullPolicy: IfNotPresent
+
+dependencies:
+  valkey:
+    enabled: true
+    mode: operator
+    operator:
+      imageSelector: myValkeyImage
+```

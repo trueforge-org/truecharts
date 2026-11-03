@@ -67,6 +67,9 @@ check_rejected "an invalid [service]" --set service=invalid
 # Through a $ref, and through the $ref back to the root in dependencies
 check_rejected "an invalid [operator.pgVersion]" --set dependencies.postgresql.operator.pgVersion=19
 check_rejected "an invalid key in a custom dependency" --set dependencies.custom.service=invalid
+# Keys that fail rendering in a dependency, in a predefined and a custom one
+check_rejected "[extraTpl] in a dependency" --set 'dependencies.valkey.extraTpl[0]=test'
+check_rejected "[dependencies] in a dependency" --set dependencies.custom.dependencies.other.enabled=true
 
 # Partial overrides are fine, the schema sees the values before the defaults of common are merged
 cat >"$scratch_dir/partial-values.yaml" <<EOF

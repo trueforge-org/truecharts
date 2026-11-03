@@ -41,7 +41,6 @@ tests:
       dependencies:
         valkey:
           enabled: true
-          image: *image
           workload:
             main:
               enabled: true
@@ -49,7 +48,17 @@ tests:
               strategy: RollingUpdate
               podSpec:
                 containers:
-                  main: *container
+                  main:
+                    enabled: true
+                    primary: true
+                    imageSelector: valkeyImage
+                    probes:
+                      liveness:
+                        enabled: false
+                      readiness:
+                        enabled: false
+                      startup:
+                        enabled: false
           service:
             main:
               enabled: true

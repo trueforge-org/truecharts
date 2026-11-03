@@ -31,12 +31,12 @@ No description provided.
 
 ### `addons.codeserver.container.args`
 
-Define workload objects
+Define arg(s). If it's single, can be defined as string
 
 | Field      | Value                              |
 | ---------- | ---------------------------------- |
 | Key        | `addons.codeserver.container.args` |
-| Type       | `map`                              |
+| Type       | `map, string, list of string`      |
 | Required   | ❌                                 |
 | Helm `tpl` | ❌                                 |
 | Default    | unset                              |
@@ -47,12 +47,12 @@ See [Args](../../../workload/) for full configuration.
 
 ### `addons.codeserver.container.command`
 
-Define workload objects
+Define command(s). If it's single, can be defined as string
 
 | Field      | Value                                 |
 | ---------- | ------------------------------------- |
 | Key        | `addons.codeserver.container.command` |
-| Type       | `map`                                 |
+| Type       | `map, string, list of string`         |
 | Required   | ❌                                    |
 | Helm `tpl` | ❌                                    |
 | Default    | unset                                 |
@@ -63,12 +63,12 @@ See [Command](../../../workload/) for full configuration.
 
 ### `addons.codeserver.container.enabled`
 
-Define workload objects
+Define if the container is enabled or not
 
 | Field      | Value                                 |
 | ---------- | ------------------------------------- |
 | Key        | `addons.codeserver.container.enabled` |
-| Type       | `map`                                 |
+| Type       | `boolean, string`                     |
 | Required   | ❌                                    |
 | Helm `tpl` | ❌                                    |
 | Default    | unset                                 |
@@ -79,12 +79,12 @@ See [Enabled](../../../workload/) for full configuration.
 
 ### `addons.codeserver.container.env`
 
-Define workload objects
+Define env(s) for the container
 
 | Field      | Value                             |
 | ---------- | --------------------------------- |
 | Key        | `addons.codeserver.container.env` |
-| Type       | `map`                             |
+| Type       | `map, null`                       |
 | Required   | ❌                                |
 | Helm `tpl` | ❌                                |
 | Default    | unset                             |
@@ -95,12 +95,12 @@ See [Env](../../../workload/) for full configuration.
 
 ### `addons.codeserver.container.envFrom`
 
-Define workload objects
+Define envFrom for the container
 
 | Field      | Value                                 |
 | ---------- | ------------------------------------- |
 | Key        | `addons.codeserver.container.envFrom` |
-| Type       | `map`                                 |
+| Type       | `list of map`                         |
 | Required   | ❌                                    |
 | Helm `tpl` | ❌                                    |
 | Default    | unset                                 |
@@ -111,12 +111,12 @@ See [Envfrom](../../../workload/) for full configuration.
 
 ### `addons.codeserver.container.extraArgs`
 
-Define workload objects
+Define extraArg(s). Those are appended **after** the `args`.
 
 | Field      | Value                                   |
 | ---------- | --------------------------------------- |
 | Key        | `addons.codeserver.container.extraArgs` |
-| Type       | `map`                                   |
+| Type       | `string, list of unknown`               |
 | Required   | ❌                                      |
 | Helm `tpl` | ❌                                      |
 | Default    | unset                                   |
@@ -127,7 +127,7 @@ See [Extraargs](../../../workload/) for full configuration.
 
 ### `addons.codeserver.container.fixedEnv`
 
-Define workload objects
+Override fixedEnv for the container By default it will set the following environment variables:
 
 | Field      | Value                                  |
 | ---------- | -------------------------------------- |
@@ -143,12 +143,12 @@ See [Fixedenv](../../../workload/) for full configuration.
 
 ### `addons.codeserver.container.imageSelector`
 
-Define workload objects
+Define the image `map` to use
 
 | Field      | Value                                       |
 | ---------- | ------------------------------------------- |
 | Key        | `addons.codeserver.container.imageSelector` |
-| Type       | `map`                                       |
+| Type       | `string`                                    |
 | Required   | ❌                                          |
 | Helm `tpl` | ❌                                          |
 | Default    | unset                                       |
@@ -159,7 +159,7 @@ See [Imageselector](../../../workload/) for full configuration.
 
 ### `addons.codeserver.container.lifecycle`
 
-Define workload objects
+Define lifecycle for the container
 
 | Field      | Value                                   |
 | ---------- | --------------------------------------- |
@@ -175,12 +175,12 @@ See [Lifecycle](../../../workload/) for full configuration.
 
 ### `addons.codeserver.container.primary`
 
-Define workload objects
+Define if the container is primary or not Does **not** apply to `initContainers`
 
 | Field      | Value                                 |
 | ---------- | ------------------------------------- |
 | Key        | `addons.codeserver.container.primary` |
-| Type       | `map`                                 |
+| Type       | `boolean`                             |
 | Required   | ❌                                    |
 | Helm `tpl` | ❌                                    |
 | Default    | unset                                 |
@@ -191,7 +191,7 @@ See [Primary](../../../workload/) for full configuration.
 
 ### `addons.codeserver.container.probes`
 
-Define workload objects
+Define probes for the container
 
 | Field      | Value                                |
 | ---------- | ------------------------------------ |
@@ -207,7 +207,7 @@ See [Probes](../../../workload/) for full configuration.
 
 ### `addons.codeserver.container.resources`
 
-Define workload objects
+The resources that the container can use.
 
 | Field      | Value                                   |
 | ---------- | --------------------------------------- |
@@ -223,12 +223,12 @@ See [Resources](../../../workload/) for full configuration.
 
 ### `addons.codeserver.container.securityContext`
 
-Define workload objects
+Define securityContext for the container
 
 | Field      | Value                                         |
 | ---------- | --------------------------------------------- |
 | Key        | `addons.codeserver.container.securityContext` |
-| Type       | `map`                                         |
+| Type       | `map, null`                                   |
 | Required   | ❌                                            |
 | Helm `tpl` | ❌                                            |
 | Default    | unset                                         |
@@ -239,12 +239,12 @@ See [Securitycontext](../../../workload/) for full configuration.
 
 ### `addons.codeserver.container.stdin`
 
-Define workload objects
+Define if the container should have stdin enabled or not
 
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
 | Key        | `addons.codeserver.container.stdin` |
-| Type       | `map`                               |
+| Type       | `boolean`                           |
 | Required   | ❌                                  |
 | Helm `tpl` | ❌                                  |
 | Default    | unset                               |
@@ -269,7 +269,7 @@ Workloads to which this container is attached.
 
 ### `addons.codeserver.container.termination`
 
-Define workload objects
+Define termination for the container
 
 | Field      | Value                                     |
 | ---------- | ----------------------------------------- |
@@ -285,12 +285,12 @@ See [Termination](../../../workload/) for full configuration.
 
 ### `addons.codeserver.container.tty`
 
-Define workload objects
+Define if the container should have tty enabled or not
 
 | Field      | Value                             |
 | ---------- | --------------------------------- |
 | Key        | `addons.codeserver.container.tty` |
-| Type       | `map`                             |
+| Type       | `boolean`                         |
 | Required   | ❌                                |
 | Helm `tpl` | ❌                                |
 | Default    | unset                             |

@@ -172,6 +172,30 @@
       "$ref": "schemas/images.json#/properties/postgresql18Image",
       "description": "Configuration for `postgresql18Image`."
     },
+    "clickhouseImage": {
+      "$ref": "schemas/images.json#/properties/clickhouseImage",
+      "description": "Image of the clickhouse dependency, selected by its container."
+    },
+    "mariadbImage": {
+      "$ref": "schemas/images.json#/properties/mariadbImage",
+      "description": "Image of the mariadb dependency, selected by its container."
+    },
+    "memcachedImage": {
+      "$ref": "schemas/images.json#/properties/memcachedImage",
+      "description": "Image of the memcached dependency, selected by its container."
+    },
+    "mongodbImage": {
+      "$ref": "schemas/images.json#/properties/mongodbImage",
+      "description": "Image of the mongodb dependency, selected by its container."
+    },
+    "valkeyImage": {
+      "$ref": "schemas/images.json#/properties/valkeyImage",
+      "description": "Image of the valkey dependency, selected by its container in `standalone` mode and by `dependencies.valkey.operator.imageSelector` in `operator` mode."
+    },
+    "valkeyExporterImage": {
+      "$ref": "schemas/images.json#/properties/valkeyExporterImage",
+      "description": "Image of the metrics exporter of the valkey dependency in `operator` mode, selected by `dependencies.valkey.operator.exporter.imageSelector`."
+    },
     "mariadbClientImage": {
       "$ref": "schemas/images.json#/properties/mariadbClientImage",
       "description": "Configuration for `mariadbClientImage`."

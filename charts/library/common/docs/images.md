@@ -29,6 +29,20 @@ Bundled image schemas.
 
 ---
 
+### `images.clickhouseImage`
+
+Image of the clickhouse dependency, selected by its container.
+
+| Field      | Value                    |
+| ---------- | ------------------------ |
+| Key        | `images.clickhouseImage` |
+| Type       | `map`                    |
+| Required   | ❌                       |
+| Helm `tpl` | ❌                       |
+| Default    | unset                    |
+
+---
+
 ### `images.codeserverImage`
 
 Configuration for `codeserverImage`.
@@ -85,6 +99,34 @@ Configuration for `mariadbClientImage`.
 
 ---
 
+### `images.mariadbImage`
+
+Image of the mariadb dependency, selected by its container.
+
+| Field      | Value                 |
+| ---------- | --------------------- |
+| Key        | `images.mariadbImage` |
+| Type       | `map`                 |
+| Required   | ❌                    |
+| Helm `tpl` | ❌                    |
+| Default    | unset                 |
+
+---
+
+### `images.memcachedImage`
+
+Image of the memcached dependency, selected by its container.
+
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `images.memcachedImage` |
+| Type       | `map`                   |
+| Required   | ❌                      |
+| Helm `tpl` | ❌                      |
+| Default    | unset                   |
+
+---
+
 ### `images.mongodbClientImage`
 
 Configuration for `mongodbClientImage`.
@@ -96,6 +138,20 @@ Configuration for `mongodbClientImage`.
 | Required   | ❌                          |
 | Helm `tpl` | ❌                          |
 | Default    | unset                       |
+
+---
+
+### `images.mongodbImage`
+
+Image of the mongodb dependency, selected by its container.
+
+| Field      | Value                 |
+| ---------- | --------------------- |
+| Key        | `images.mongodbImage` |
+| Type       | `map`                 |
+| Required   | ❌                    |
+| Helm `tpl` | ❌                    |
+| Default    | unset                 |
 
 ---
 
@@ -390,6 +446,34 @@ Configuration for `valkeyClientImage`.
 | Required   | ❌                         |
 | Helm `tpl` | ❌                         |
 | Default    | unset                      |
+
+---
+
+### `images.valkeyExporterImage`
+
+Image of the metrics exporter of the valkey dependency in `operator` mode, selected by `dependencies.valkey.operator.exporter.imageSelector`.
+
+| Field      | Value                        |
+| ---------- | ---------------------------- |
+| Key        | `images.valkeyExporterImage` |
+| Type       | `map`                        |
+| Required   | ❌                           |
+| Helm `tpl` | ❌                           |
+| Default    | unset                        |
+
+---
+
+### `images.valkeyImage`
+
+Image of the valkey dependency, selected by its container in `standalone` mode and by `dependencies.valkey.operator.imageSelector` in `operator` mode.
+
+| Field      | Value                |
+| ---------- | -------------------- |
+| Key        | `images.valkeyImage` |
+| Type       | `map`                |
+| Required   | ❌                   |
+| Helm `tpl` | ❌                   |
+| Default    | unset                |
 
 ---
 

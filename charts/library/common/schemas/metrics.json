@@ -171,7 +171,7 @@
               "boolean",
               "string"
             ],
-            "description": "Configuration for `metrics.main.prometheusRule.enabled`."
+            "description": "Create a PrometheusRule for this metrics object. Nothing is created when there are no rules."
           },
           "labels": {
             "allOf": [
@@ -179,17 +179,23 @@
                 "$ref": "special/labels.json"
               }
             ],
-            "description": "Configuration for `metrics.main.prometheusRule.labels`. Set by stable charts (blocky, grafana, ntfy, kubelet-csr-approver), but the common PrometheusRule template ignores it; use `metrics.main.labels`."
+            "description": "Labels of the PrometheusRule. They take precedence over the `labels` of the metrics object."
+          },
+          "annotations": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": {
+              "type": "string",
+              "description": "Value of the annotation"
+            },
+            "description": "Annotations of the PrometheusRule. They take precedence over the `annotations` of the metrics object."
           },
           "rules": {
             "type": "array",
             "items": {
-              "type": "object",
-              "additionalProperties": {
-                "description": "A setting passed on as is."
-              }
+              "$ref": "#/additionalProperties/properties/prometheusRule/properties/groups/additionalProperties/properties/rules/items"
             },
-            "description": "Configuration for `metrics.main.prometheusRule.rules`. Set by stable charts (blocky, grafana, ntfy), but the common PrometheusRule template ignores it; use `groups` or `additionalgroups` for rules."
+            "description": "Rules of a group named after the PrometheusRule. Use `groups` for more than one group."
           },
           "groups": {
             "type": "object",
@@ -252,7 +258,10 @@
                 },
                 "additionalrules": {
                   "type": "array",
-                  "description": "Configuration for `metrics.main.prometheusRule.groups.$name.additionalrules`. Rules added via the SCALE GUI without overwriting `rules`."
+                  "description": "Configuration for `metrics.main.prometheusRule.groups.$name.additionalrules`. Rules added via the SCALE GUI without overwriting `rules`.",
+                  "items": {
+                    "$ref": "#/additionalProperties/properties/prometheusRule/properties/groups/additionalProperties/properties/rules/items"
+                  }
                 }
               },
               "additionalProperties": false,

@@ -711,6 +711,42 @@ postgresql18Image:
   tag: "18.6.0@sha256:afbcd31f4e0d4d6174dced7c68819e0493b2194c5a0f6b783e16ed137944555b"
   pullPolicy: IfNotPresent
 
+# -- Image of the clickhouse dependency (see [dependencies.clickhouse])
+clickhouseImage:
+  repository: oci.trueforge.org/containerforge/clickhouse
+  tag: "26.10.2.103@sha256:5ea8293b50edf862efaa9362629ccfabcf93e2ffed5da552bde9fcb82d844b68"
+  pullPolicy: IfNotPresent
+
+# -- Image of the mariadb dependency (see [dependencies.mariadb])
+mariadbImage:
+  repository: oci.trueforge.org/containerforge/mariadb
+  tag: "11.8.6@sha256:24e779c583b4355d5b0972072de1240b685b78b0b8465acff5bea782b304e439"
+  pullPolicy: IfNotPresent
+
+# -- Image of the memcached dependency (see [dependencies.memcached])
+memcachedImage:
+  repository: oci.trueforge.org/containerforge/memcache
+  tag: "1.6.40@sha256:970ce84d9e893fed91d74ffea3e83ca814c1ee8e07ef2f4a4a5a7ae96603c06b"
+  pullPolicy: IfNotPresent
+
+# -- Image of the mongodb dependency (see [dependencies.mongodb])
+mongodbImage:
+  repository: oci.trueforge.org/containerforge/mongodb
+  tag: "9.0.4@sha256:1ee3da52f298ea42c4d8a423bd1ad49845bac521c49181c9cddd74b7a27fcd03"
+  pullPolicy: IfNotPresent
+
+# -- Image of the valkey dependency (see [dependencies.valkey])
+valkeyImage:
+  repository: oci.trueforge.org/containerforge/valkey
+  tag: "9.0.4@sha256:387b5f54777a6451f73f1a49a45b5bb6d29e1e5838b7b5a9c84d80370995531e"
+  pullPolicy: IfNotPresent
+
+# -- Image of the metrics exporter of the valkey dependency in operator mode (see [dependencies.valkey.operator.exporter])
+valkeyExporterImage:
+  repository: oci.trueforge.org/containerforge/redis-exporter
+  tag: "1.94.0@sha256:4e7642d5892fe7a74811af07444bc08550d2ab6d334a9f0323b399e6823f2a17"
+  pullPolicy: IfNotPresent
+
 mariadbClientImage:
   repository: oci.trueforge.org/containerforge/mariadb-client
   tag: "13.0.2@sha256:1343d11c7efc5345ab5cadf75457912efbd5069e7a49323c1527fd55c39d75fb"
@@ -1657,10 +1693,6 @@ dependencies:
       clickhouseUsername: "test"
       clickhouseDatabase: "test"
       clickhouseDefaultAccessManagement: 0
-    image:
-      repository: oci.trueforge.org/containerforge/clickhouse
-      pullPolicy: IfNotPresent
-      tag: 26.10.2.103@sha256:5ea8293b50edf862efaa9362629ccfabcf93e2ffed5da552bde9fcb82d844b68
     workload:
       main:
         replicas: 1
@@ -1669,6 +1701,8 @@ dependencies:
         podSpec:
           containers:
             main:
+              # The image is defined on the root of the values
+              imageSelector: clickhouseImage
               env:
                 CLICKHOUSE_DB: "{{ .Values.dependencies.clickhouse.depconfig.clickhouseDatabase }}"
                 CLICKHOUSE_USER: "{{ .Values.dependencies.clickhouse.depconfig.clickhouseUsername }}"
@@ -1725,10 +1759,6 @@ dependencies:
       rootPassword: "PLACEHOLDERROOTPASSWORD"
       mariadbUsername: "test"
       mariadbDatabase: "test"
-    image:
-      repository: oci.trueforge.org/containerforge/mariadb
-      pullPolicy: IfNotPresent
-      tag: 11.8.6@sha256:24e779c583b4355d5b0972072de1240b685b78b0b8465acff5bea782b304e439
     workload:
       main:
         replicas: 1
@@ -1737,6 +1767,8 @@ dependencies:
         podSpec:
           containers:
             main:
+              # The image is defined on the root of the values
+              imageSelector: mariadbImage
               env:
                 MARIADB_PASSWORD:
                   secretKeyRef:
@@ -2074,15 +2106,16 @@ dependencies:
             - ALL
       pod:
         fsGroup: 568
-    image:
-      repository: oci.trueforge.org/containerforge/memcache
-      pullPolicy: IfNotPresent
-      tag: 1.6.40@sha256:970ce84d9e893fed91d74ffea3e83ca814c1ee8e07ef2f4a4a5a7ae96603c06b
     workload:
       main:
         replicas: 1
         type: Deployment
         strategy: RollingUpdate
+        podSpec:
+          containers:
+            main:
+              # The image is defined on the root of the values
+              imageSelector: memcachedImage
     service:
       main:
         ports:
@@ -2113,10 +2146,6 @@ dependencies:
       rootPassword: "PLACEHOLDERROOTPASSWORD"
       mongodbUsername: "test"
       mongodbDatabase: "test"
-    image:
-      repository: oci.trueforge.org/containerforge/mongodb
-      pullPolicy: IfNotPresent
-      tag: 9.0.4@sha256:1ee3da52f298ea42c4d8a423bd1ad49845bac521c49181c9cddd74b7a27fcd03
     workload:
       main:
         replicas: 1
@@ -2125,6 +2154,8 @@ dependencies:
         podSpec:
           containers:
             main:
+              # The image is defined on the root of the values
+              imageSelector: mongodbImage
               env:
                 MONGODB_USERNAME: "{{ .Values.dependencies.mongodb.depconfig.mongodbUsername }}"
                 MONGODB_DATABASE: "{{ .Values.dependencies.mongodb.depconfig.mongodbDatabase }}"
@@ -2187,14 +2218,14 @@ dependencies:
     # -- Settings of the ValkeyCluster (valkey-operator), only used when [mode] is [operator]. Never merged into the chart
     # The credentials stay in [depconfig], the default user of the cluster uses the password of the credentials secret
     # The host and port come from the Service the operator creates ([valkey-<release>-<chart>-valkey], 6379), [service] is ignored
-    # The image of the dependency is used for the nodes, unless [image] is set here
+    # The nodes use the same image as the standalone mode, [valkeyImage]
     operator:
       # -- Number of shards (primaries) of the cluster, at least 1
       shards: 1
       # -- Number of replicas per shard, 0 for none
       replicas: 0
-      # -- Overrides the image of the nodes, defaults to [dependencies.valkey.image]
-      image: ""
+      # -- Image of the nodes, on the root of the values
+      imageSelector: valkeyImage
       # -- Workload of every node [StatefulSet|Deployment], can not be changed after creation
       workloadType: StatefulSet
       # -- Valkey configuration directives (valkey.conf), eg [maxmemory-policy: allkeys-lru]
@@ -2213,7 +2244,8 @@ dependencies:
       # -- Metrics exporter sidecar of every pod
       exporter:
         enabled: true
-        image: ""
+        # -- Image of the exporter, on the root of the values
+        imageSelector: valkeyExporterImage
         args: []
         resources: {}
         securityContext: {}
@@ -2252,10 +2284,6 @@ dependencies:
     # -- Settings of the dependency itself, never merged into the chart
     depconfig:
       password: "PLACEHOLDERPASSWORD"
-    image:
-      repository: oci.trueforge.org/containerforge/valkey
-      pullPolicy: IfNotPresent
-      tag: 9.0.4@sha256:387b5f54777a6451f73f1a49a45b5bb6d29e1e5838b7b5a9c84d80370995531e
     workload:
       main:
         replicas: 1
@@ -2264,6 +2292,8 @@ dependencies:
         podSpec:
           containers:
             main:
+              # The image is defined on the root of the values
+              imageSelector: valkeyImage
               env:
                 VALKEY_PORT: "{{ .Values.dependencies.valkey.service.main.ports.main.port }}"
                 VALKEY_PASSWORD:

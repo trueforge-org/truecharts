@@ -38,9 +38,6 @@ dependencies:
     enabled: true
     depconfig:
       password: "my-password"
-    image:
-      repository: oci.trueforge.org/containerforge/valkey
-      tag: 9.0.4
     workload:
       main:
         type: StatefulSet
@@ -409,7 +406,8 @@ Back up the data before upgrading, and restore it after the upgrade.
 
 ### Example
 
-The full specification of the `clickhouse` dependency (image, workload, service, persistence and probes) is part of the defaults of common.
+The full specification of the `clickhouse` dependency (workload, service, persistence and probes) is part of the defaults of common.
+Its image is `clickhouseImage` on the root of the values, and can be overridden there.
 A chart only enables it and sets the values it needs to override:
 
 ```yaml
@@ -505,7 +503,8 @@ Back up the database with `mariadb-dump` before upgrading, and restore it after 
 
 ### Example
 
-The full specification of the `mariadb` dependency (image, workload, service, persistence and probes) is part of the defaults of common.
+The full specification of the `mariadb` dependency (workload, service, persistence and probes) is part of the defaults of common.
+Its image is `mariadbImage` on the root of the values, and can be overridden there.
 A chart only enables it and sets the values it needs to override:
 
 ```yaml
@@ -761,7 +760,8 @@ Move `enabled` to `dependencies.memcached`. There is nothing else to move, as me
 
 ### Example
 
-The full specification of the `memcached` dependency (image, workload and service) is part of the defaults of common.
+The full specification of the `memcached` dependency (workload and service) is part of the defaults of common.
+Its image is `memcachedImage` on the root of the values, and can be overridden there.
 A chart only enables it, and sets the values it needs to override:
 
 ```yaml
@@ -833,7 +833,8 @@ Back up the database with `mongodump` before upgrading, and restore it with `mon
 
 ### Example
 
-The full specification of the `mongodb` dependency (image, workload, service, persistence and probes) is part of the defaults of common.
+The full specification of the `mongodb` dependency (workload, service, persistence and probes) is part of the defaults of common.
+Its image is `mongodbImage` on the root of the values, and can be overridden there.
 A chart only enables it and sets the values it needs to override:
 
 ```yaml
@@ -904,7 +905,8 @@ The `valkey` dependency has additional handling:
 
 ### Example
 
-The full specification of the `valkey` dependency (image, workload, service, persistence and probes) is part of the defaults of `dependencies.valkey` in the common library `values.yaml`.
+The full specification of the `valkey` dependency (workload, service, persistence and probes) is part of the defaults of `dependencies.valkey` in the common library `values.yaml`.
+Its image is `valkeyImage` on the root of the values, and can be overridden there.
 A chart only enables it and sets the values it needs to override:
 
 ```yaml
@@ -958,9 +960,9 @@ All settings of the cluster go under `dependencies.valkey.operator`. Only the cr
 - The `ValkeyCluster` is named `$fullname-valkey`. The release name has to be short enough for the operator limits, rendering fails with a clear message otherwise (at most 43 characters for a `StatefulSet` including the digits of the highest shard and node index, 56 for a `Deployment`).
 - The operator creates a headless Service named `valkey-$clusterName` on port `6379`, which cannot be changed. This is the single source of truth for the host and port: the `plainhost`, `plainport`, `plainporthost` and `url` of `valkeycreds`, the `valkey-wait` init container and the notes all read them from the same helper, and the `service` of the dependency is ignored.
 - The password is never copied into the `ValkeyCluster`. The `default` user references the `valkey-password` key of the `$releaseName-valkeycreds` secret with `+@all ~* &*` permissions. An item named `default` in `operator.users` is merged over it, other items are added as users.
-- The image defaults to `dependencies.valkey.image`, `operator.image` overrides it.
+- The nodes use `valkeyImage` and the exporter `valkeyExporterImage`, both on the root of the values. `operator.imageSelector` and `operator.exporter.imageSelector` select another image on the root.
 - `persistence` defaults to enabled for parity with `standalone`, and follows `global.fallbackDefaults` for the size (`vctSize`), storage class and `pvcRetain` (the operator itself retains by default, common deletes unless `retain: true`). It requires the `StatefulSet` workload type, and can not be added or removed later.
-- The chart level resources and security context (`runAsNonRoot`, `runAsUser`, `runAsGroup`, `fsGroup`) are applied, unless set in `operator`.
+- The resources of the chart are applied, unless set in `operator`. The security context (`runAsNonRoot`, `runAsUser`, `runAsGroup`, `fsGroup`) comes from `dependencies.valkey.securityContext`, on top of the one of the chart, unless set in `operator.podSecurityContext`.
 - `networking.tls` is not supported, as the credentials and the wait init container connect without TLS. Rendering fails when it is set.
 - `global.stopAll` can not be honoured, as the operator requires at least one shard.
 
@@ -968,7 +970,7 @@ All settings of the cluster go under `dependencies.valkey.operator`. Only the cr
 | -------------------------------------------------------- | -------- | ------------------------ | ------------------------------------------------------------------------------------------------------------ |
 | `operator.shards`                                        | `int`    | `1`                      | Number of shards, at least `1`.                                                                              |
 | `operator.replicas`                                      | `int`    | `0`                      | Replicas per shard, at least `0`.                                                                            |
-| `operator.image`                                         | `string` | `""`                     | Overrides the image of `dependencies.valkey.image`.                                                          |
+| `operator.imageSelector`                                 | `string` | `valkeyImage`            | Image of the nodes, on the root of the values.                                                               |
 | `operator.workloadType`                                  | `string` | `StatefulSet`            | `StatefulSet` or `Deployment`. Immutable.                                                                    |
 | `operator.config`                                        | `map`    | `{}`                     | Valkey configuration. Booleans become `yes`/`no`, values are templated.                                      |
 | `operator.resources`                                     | `map`    | `{}`                     | Resources of the Valkey containers. Defaults to the resources of the chart.                                  |
@@ -976,7 +978,7 @@ All settings of the cluster go under `dependencies.valkey.operator`. Only the cr
 | `operator.persistence.size`                              | `string` | `""`                     | Size of the volume. Defaults to the fallback size of the chart. It can only grow.                            |
 | `operator.persistence.storageClass`                      | `string` | `""`                     | Storage class. Defaults to the one of the chart, `-` leaves it unset.                                        |
 | `operator.persistence.retain`                            | `bool`   | `false`                  | Retain the volumes when the cluster is deleted. Defaults to `global.fallbackDefaults.pvcRetain`.             |
-| `operator.exporter`                                      | `map`    | `{enabled: true, ...}`   | Metrics exporter (`enabled`, `image`, `args`, `resources`, `securityContext`).                               |
+| `operator.exporter`                                      | `map`    | `{enabled: true, ...}`   | Metrics exporter (`enabled`, `imageSelector`, `args`, `resources`, `securityContext`).                       |
 | `operator.scheduling`                                    | `map`    | `{}`                     | Scheduling settings of the cluster, passed through.                                                          |
 | `operator.podDisruptionBudget.mode`                      | `string` | `Cluster`                | `Cluster` or `Disabled`.                                                                                     |
 | `operator.podMetadata`                                   | `map`    | `{labels: {}, annotations: {}}` | Extra labels and annotations of the pods.                                                             |

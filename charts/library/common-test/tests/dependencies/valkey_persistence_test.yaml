@@ -16,10 +16,6 @@ tests:
       dependencies:
         valkey:
           enabled: true
-          image:
-            repository: oci.trueforge.org/containerforge/valkey
-            pullPolicy: IfNotPresent
-            tag: 9.0.4
           workload:
             main:
               enabled: true

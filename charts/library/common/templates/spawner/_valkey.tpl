@@ -26,15 +26,17 @@
       {{- $_ := set $objectData "name" (include "tc.v1.common.lib.dependencies.valkey.operator.clusterName" (dict "rootCtx" $)) -}}
       {{- $_ := set $objectData "shortName" "valkey" -}}
 
-      {{/* The image defaults to the one of the dependency, so there is a single place to update it */}}
-      {{- $image := $objectData.image -}}
-      {{- if not $image -}}
-        {{- if not (and (kindIs "map" $dep.image) $dep.image.repository $dep.image.tag) -}}
-          {{- fail "Valkey Operator - Expected [dependencies.valkey.operator.image] or [dependencies.valkey.image.repository] and [dependencies.valkey.image.tag] to be set" -}}
-        {{- end -}}
-        {{- $image = printf "%s:%s" $dep.image.repository $dep.image.tag -}}
+      {{/* The images are defined on the root of the values, the same image as the standalone mode by default */}}
+      {{- $_ := set $objectData "image" (include "tc.v1.common.lib.dependencies.valkey.operator.image" (dict
+            "rootCtx" $ "selector" ($objectData.imageSelector | default "valkeyImage") "key" "imageSelector")) -}}
+
+      {{- if and $objectData.exporter (not (kindIs "map" $objectData.exporter)) -}}
+        {{- fail (printf "Valkey Operator - Expected [dependencies.valkey.operator.exporter] to be a [map], but got [%s]" (kindOf $objectData.exporter)) -}}
       {{- end -}}
-      {{- $_ := set $objectData "image" $image -}}
+      {{- $exporter := $objectData.exporter | default dict -}}
+      {{- $_ := set $exporter "image" (include "tc.v1.common.lib.dependencies.valkey.operator.image" (dict
+            "rootCtx" $ "selector" ($exporter.imageSelector | default "valkeyExporterImage") "key" "exporter.imageSelector")) -}}
+      {{- $_ := set $objectData "exporter" $exporter -}}
 
       {{- include "tc.v1.common.lib.dependencies.valkey.operator.validation" (dict "rootCtx" $ "objectData" $objectData) -}}
 

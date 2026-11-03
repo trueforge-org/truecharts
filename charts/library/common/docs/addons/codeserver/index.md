@@ -75,7 +75,16 @@ Ingress of the code-server addon. Either one Ingress object, or named Ingress ob
 | Type       | `map`                       |
 | Required   | ❌                          |
 | Helm `tpl` | ❌                          |
-| Default    | unset                       |
+| Default    | `{}`                        |
+
+Example
+
+```yaml
+addons:
+  codeserver:
+    ingress:
+      {}
+```
 
 ---
 
@@ -89,7 +98,16 @@ Gateway API route of the code-server addon, the same as a `route.<name>` of the 
 | Type       | `map`                     |
 | Required   | ❌                        |
 | Helm `tpl` | ❌                        |
-| Default    | unset                     |
+| Default    | `{}`                      |
+
+Example
+
+```yaml
+addons:
+  codeserver:
+    route:
+      {}
+```
 
 ---
 
@@ -103,7 +121,16 @@ Service of the code-server addon. Either one Service object, or named Service ob
 | Type       | `map`                       |
 | Required   | ❌                          |
 | Helm `tpl` | ❌                          |
-| Default    | unset                       |
+| Default    | `{}`                        |
+
+Example
+
+```yaml
+addons:
+  codeserver:
+    service:
+      {}
+```
 
 ---
 
