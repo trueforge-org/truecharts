@@ -6,7 +6,16 @@
       "type": [
         "boolean",
         "string"
-      ]
+      ],
+      "default": false,
+      "description": "Enable the code-server addon."
+    },
+    "targetSelector": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Workloads to which the code-server addon is attached. Defaults to `main`."
     },
     "container": {
       "allOf": [
@@ -34,11 +43,6 @@
       ]
     }
   },
-  "allOf": [
-    {
-      "$ref": "addon.json"
-    }
-  ],
   "additionalProperties": false,
   "description": "Configuration for the code-server addon."
 }
