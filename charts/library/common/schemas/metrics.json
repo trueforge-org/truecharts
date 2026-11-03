@@ -36,6 +36,16 @@
         "description": "Configuration for `metrics.main.selector`.",
         "default": {}
       },
+      "matchLabels": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "additionalProperties": {
+          "type": "string"
+        },
+        "description": "Configuration for `metrics.main.matchLabels`. Set in common-test fixtures and ignored by the common ServiceMonitor and PodMonitor templates, which build their own matchLabels; use `selector` to set matchers."
+      },
       "endpoints": {
         "type": [
           "array",
@@ -79,6 +89,22 @@
               "string"
             ],
             "description": "Configuration for `metrics.main.prometheusRule.enabled`."
+          },
+          "labels": {
+            "allOf": [
+              {
+                "$ref": "special/labels.json"
+              }
+            ],
+            "description": "Configuration for `metrics.main.prometheusRule.labels`. Set by stable charts (blocky, grafana, ntfy, kubelet-csr-approver), but the common PrometheusRule template ignores it; use `metrics.main.labels`."
+          },
+          "rules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "description": "Configuration for `metrics.main.prometheusRule.rules`. Set by stable charts (blocky, grafana, ntfy), but the common PrometheusRule template ignores it; use `groups` or `additionalgroups` for rules."
           },
           "groups": {
             "type": "object",
@@ -176,6 +202,10 @@
       "nameOverride": {
         "type": "string",
         "description": "Configuration for `metrics.main.nameOverride`."
+      },
+      "apiKey": {
+        "type": "string",
+        "description": "Configuration for `metrics.main.apiKey`. Read by stable charts (sabnzbd, bazarr) through their own metrics values, not by the common templates."
       }
     },
     "additionalProperties": false,
