@@ -68,6 +68,10 @@
     "primary": {
       "type": "boolean",
       "description": "Configuration for `service.main.ports.main.primary`."
+    },
+    "protcol": {
+      "type": "string",
+      "description": "Legacy misspelling of `protocol` in the protonmail-bridge chart values. The templates ignore this key, use `protocol` instead."
     }
   },
   "additionalProperties": false
