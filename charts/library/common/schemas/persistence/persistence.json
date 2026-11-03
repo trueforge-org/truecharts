@@ -458,7 +458,7 @@
       "annotations": {
         "type": "object",
         "properties": {},
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Additional annotations for persistence"
       },
       "namespace": {
@@ -605,19 +605,19 @@
                 "string"
               ],
               "properties": {},
-              "additionalProperties": true,
+              "additionalProperties": false,
               "description": "Define if the volumeSnapshot is enabled"
             },
             "labels": {
               "type": "object",
               "properties": {},
-              "additionalProperties": true,
+              "additionalProperties": false,
               "description": "Define the labels of the volumeSnapshot"
             },
             "annotations": {
               "type": "object",
               "properties": {},
-              "additionalProperties": true,
+              "additionalProperties": false,
               "description": "Define the annotations of the volumeSnapshot"
             }
           },
@@ -756,7 +756,7 @@
             "annotations": {
               "type": "object",
               "properties": {},
-              "additionalProperties": true,
+              "additionalProperties": false,
               "description": "Additional annotations for the VolSync resources"
             },
             "resources": {

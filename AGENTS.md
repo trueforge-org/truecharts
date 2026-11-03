@@ -43,7 +43,7 @@ Every directory under `charts/<train>/` is treated as a chart by CI and release 
 7. **Do not change CI workflows, Renovate config or repository-wide tooling** unless the task is specifically about them.
 8. **Never commit secrets, real credentials or default passwords**, and follow the [security rules](#security) below.
 9. **Run the validation** described below and in the scoped instructions before finishing. If you cannot run something, say so explicitly in your summary or PR.
-10. **No placeholder open schemas in `common`.** Never use `"additionalProperties": true` on an object with a fixed set of keys to avoid typing them. List every key the chart and templates use, `$ref` shared parts, and keep `additionalProperties` open only for arbitrary key names. See [Values schema](.github/instructions/common-library.instructions.md#values-schema).
+10. **No placeholder open schemas in `common`.** `"additionalProperties": true` is ONLY allowed on the values root. Everywhere else, use `"additionalProperties": false` on fixed objects, list every key the chart and templates use, `$ref` shared parts, and type every key. Arbitrary keys (name-keyed collections and anything with a spawner) use the typed pattern, never `true`. See [Values schema](.github/instructions/common-library.instructions.md#values-schema).
 
 ## Agent workflow
 

@@ -176,7 +176,7 @@
           "annotations": {
             "type": "object",
             "properties": {},
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Define annotations for podSpec"
           },
           "automountServiceAccountToken": {
@@ -226,7 +226,7 @@
           "affinity": {
             "type": "object",
             "properties": {},
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Overrides `podOptions.affinity` for this workload."
           },
           "serviceAccountName": {
@@ -240,7 +240,7 @@
           "nodeSelector": {
             "type": "object",
             "properties": {},
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Pod's nodeSelector"
           },
           "topologySpreadConstraints": {
@@ -414,11 +414,11 @@
                     ]
                   }
                 },
-                "additionalProperties": true,
+                "additionalProperties": false,
                 "description": "Define rollingUpdate options under strategy"
               }
             },
-            "additionalProperties": true
+            "additionalProperties": false
           }
         ],
         "description": "Define the strategy of the workload\n\nA single replica Deployment uses `Recreate` if it mounts a `ReadWriteOnce` or `ReadWriteOncePod` volume. See [`allowRollingUpdateWithRWO`](#workloadnameallowrollingupdatewithrwo) to keep `RollingUpdate` with `ReadWriteOnce`."
@@ -451,7 +451,7 @@
       "initContainers": {
         "type": "object",
         "properties": {},
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Define workload objects",
         "default": {}
       },
@@ -578,7 +578,7 @@
           "string"
         ],
         "properties": {},
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Define annotations for workload",
         "default": {}
       },
@@ -607,7 +607,7 @@
       "containers": {
         "type": "object",
         "properties": {},
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Define container(s) for the workload See [Container](/truecharts-common/container/) for more information",
         "default": {}
       },

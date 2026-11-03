@@ -6,51 +6,51 @@
     "enabled": {
       "type": "boolean",
       "properties": {},
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Enables or Disables the homepage integration",
       "default": false
     },
     "name": {
       "type": "string",
       "properties": {},
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Define the name for the application Sets the `gethomepage.dev/name` annotation"
     },
     "description": {
       "type": "string",
       "properties": {},
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Define the description for the application Sets the `gethomepage.dev/description` annotation"
     },
     "group": {
       "type": "string",
       "properties": {},
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Define the group for the application Sets the `gethomepage.dev/group` annotation",
       "default": ""
     },
     "icon": {
       "type": "string",
       "properties": {},
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Define the icon for the application Sets the `gethomepage.dev/icon` annotation"
     },
     "href": {
       "type": "string",
       "properties": {},
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Define the href for the application Sets the `gethomepage.dev/href` annotation"
     },
     "weight": {
       "type": "integer",
       "properties": {},
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Define the weight for the application Sets the `gethomepage.dev/weight` annotation"
     },
     "podSelector": {
       "type": "array",
       "properties": {},
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Define the pods to select Sets the `gethomepage.dev/pod-selector` annotation",
       "default": []
     },
@@ -80,32 +80,32 @@
         "enabled": {
           "type": "boolean",
           "properties": {},
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Enables or Disables the widget",
           "default": true
         },
         "type": {
           "type": "string",
           "properties": {},
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Define configuration for the widget"
         },
         "version": {
           "type": "integer",
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Define the version of the widget Sets the `gethomepage.dev/widget.version` annotation",
           "default": 1
         },
         "url": {
           "type": "string",
           "properties": {},
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Define configuration for the widget"
         },
         "custom": {
           "type": ["object", "null"],
           "properties": {},
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Define configuration for the widget",
           "default": null
         }

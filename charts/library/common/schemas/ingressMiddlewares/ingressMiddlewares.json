@@ -87,7 +87,7 @@
                       "description": "Configuration for `ingressMiddlewares.traefik.tc-basic-secure-headers.data.customRequestHeaders.X-Forwarded-Proto`."
                     }
                   },
-                  "additionalProperties": true,
+                  "additionalProperties": false,
                   "description": "Define the customRequestHeaders"
                 }
               },
@@ -157,7 +157,7 @@
           "annotations": {
             "type": "object",
             "properties": {},
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Additional annotations for middleware"
           },
           "expandObjectName": {
@@ -416,7 +416,7 @@
                   "string"
                 ],
                 "properties": {},
-                "additionalProperties": true,
+                "additionalProperties": false,
                 "description": "Define the enabled"
               },
               "logLevel": {
@@ -442,7 +442,7 @@
               "crowdsec": {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true,
+                "additionalProperties": false,
                 "description": "Define the crowdsecMode"
               },
               "crowdsecAppsecEnabled": {
@@ -564,13 +564,13 @@
               "customRequestHeaders": {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true,
+                "additionalProperties": false,
                 "description": "Define the customRequestHeaders"
               },
               "customResponseHeaders": {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true,
+                "additionalProperties": false,
                 "description": "Define the customResponseHeaders"
               },
               "accessControlAllowCredentials": {
@@ -619,7 +619,7 @@
               "sslProxyHeaders": {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true,
+                "additionalProperties": false,
                 "description": "Define the sslProxyHeaders"
               },
               "stsSeconds": {
@@ -772,7 +772,7 @@
             "string"
           ],
           "properties": {},
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Enables or Disables the Middleware"
         },
         "namespace": {
@@ -794,7 +794,7 @@
         "annotations": {
           "type": "object",
           "properties": {},
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Additional annotations for middleware"
         },
         "expandObjectName": {
@@ -804,7 +804,7 @@
         "data": {
           "type": "object",
           "properties": {},
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Define the data of the middleware"
         }
       },

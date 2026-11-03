@@ -126,28 +126,28 @@
           "string"
         ],
         "properties": {},
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Create Ingress objects",
         "default": false
       },
       "primary": {
         "type": "boolean",
         "properties": {},
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Create Ingress objects",
         "default": false
       },
       "expandObjectName": {
         "type": "boolean",
         "properties": {},
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Define if the object name should be expanded",
         "default": false
       },
       "required": {
         "type": "boolean",
         "properties": {},
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Create Ingress objects",
         "default": false
       },
@@ -179,7 +179,7 @@
           "string"
         ],
         "properties": {},
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Create Ingress objects",
         "default": {}
       },
@@ -202,14 +202,14 @@
       "ingressClassName": {
         "type": "string",
         "properties": {},
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Create Ingress objects",
         "default": ""
       },
       "targetSelector": {
         "type": "object",
         "properties": {},
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Define the `service: port` to assign the ingress",
         "default": "{}"
       },

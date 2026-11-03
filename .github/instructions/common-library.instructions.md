@@ -82,8 +82,25 @@ These rules apply to `charts/library/common/` (the `common` library chart that e
 - Helm validates a subchart's schema only against that subchart's own values, not against the values of the chart. So `.github/scripts/add_chart_schema.sh` copies the schema of the `common` version a chart depends on into the chart: on release (`cr.sh`) and while linting (`tc-lint.sh`). These copies are not committed. `.github/scripts/test_chart_schema.sh` checks this end to end.
 - The source and tooling of `common` are not packaged. They are listed in `templates/helmignore.tpl`, which `forgetool charts genmeta` writes to the `.helmignore` of every chart, so a new file in the root of `common` has to be added there too.
 - Every key in `values.yaml` and every key the templates read must be in the schema. When you add, rename or remove a key, change the schema in the same PR.
-- Set `"additionalProperties": false` on every object with a fixed set of keys, so unknown keys are rejected. Keep it open only at the values root and where key names are arbitrary: name-keyed collections (`configmap.<name>`, `workload.<name>`, ...) and what they spawn (services, workloads, containers, envs, ingresses, anything with a spawner template). The number of known keys does not decide this, the nature of the keys does. A closed object must list every key the chart and the templates use, or `test_schema.py` fails.
-- Never use a placeholder `"additionalProperties": true` to skip listing the keys of an object with a fixed set of keys. It accepts any value, so neither `test_schema.py` nor the coverage check can catch a missing or misspelled key. Type every key instead. For a name-keyed collection whose values have a known type, type the values (e.g. `"additionalProperties": {"type": "string"}`) rather than `true`.
+- Set `"additionalProperties": false` on every object with a fixed set of keys, so unknown keys are rejected. A closed object must list every key the chart and the templates use, or `test_schema.py` fails. The number of known keys does not decide this, the nature of the keys does.
+- `"additionalProperties": true` is ONLY allowed on the values root (`values.schema.source.json`). Nowhere else: not on fixed objects, not on arbitrary keys, not on templates or leaf values.
+- Arbitrary keys are keys with any name that all share the same child structure. They are recognised by an `objectName` in the structure, or by a spawner attached to the key (the `spawner/` template iterates over it). Name-keyed collections (`configmap.<name>`, `workload.<name>`, `service.<name>`, `ingress.<name>`, ...) and the objects they spawn are arbitrary keys. Handle them like this:
+
+  ```json
+  "workload": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean", "default": true }
+      },
+      "additionalProperties": false
+    }
+  }
+  ```
+
+  The object under `additionalProperties` is typed and closed, so it lists every key it uses. A name-keyed collection whose values have a known scalar type is typed the same way, e.g. `"additionalProperties": {"type": "string"}`.
 - Follow the patterns of the existing schema files:
   - Collections of named objects (`configmap.<name>`, `workload.<name>`, ...) use `"properties": {}`, with the object schema in `additionalProperties`.
   - Use relative `$ref`s for shared parts, wrapped in `allOf`, e.g. `"allOf": [{ "$ref": "special/labels.json" }]`. A file must not `$ref` itself, which `test_schema.py` rejects.
