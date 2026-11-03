@@ -109,8 +109,72 @@
           "groups": {
             "type": "object",
             "properties": {},
-            "additionalProperties": false,
-            "description": "Configuration for `metrics.main.prometheusRule.groups`."
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Configuration for `metrics.main.prometheusRule.groups.$name.name`. Overrides the group name, which defaults to the key."
+                },
+                "rules": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "alert": {
+                        "type": "string",
+                        "description": "Name of the alert rule."
+                      },
+                      "record": {
+                        "type": "string",
+                        "description": "Name of the recording rule."
+                      },
+                      "expr": {
+                        "type": "string",
+                        "description": "PromQL expression to evaluate."
+                      },
+                      "for": {
+                        "type": "string",
+                        "description": "Duration the expression must be true before the alert fires."
+                      },
+                      "keep_firing_for": {
+                        "type": "string",
+                        "description": "Duration the alert keeps firing after the expression is no longer true."
+                      },
+                      "labels": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": {
+                          "type": "string",
+                          "description": "Value of the label"
+                        },
+                        "description": "Labels added to the alert or recording rule."
+                      },
+                      "annotations": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": {
+                          "type": "string",
+                          "description": "Value of the annotation"
+                        },
+                        "description": "Annotations added to the alert or recording rule."
+                      }
+                    },
+                    "additionalProperties": false,
+                    "description": "Configuration for `metrics.main.prometheusRule.groups.$name.rules.$item`."
+                  },
+                  "description": "Configuration for `metrics.main.prometheusRule.groups.$name.rules`."
+                },
+                "additionalrules": {
+                  "type": "array",
+                  "description": "Configuration for `metrics.main.prometheusRule.groups.$name.additionalrules`. Rules added via the SCALE GUI without overwriting `rules`."
+                }
+              },
+              "additionalProperties": false,
+              "description": "Configuration for `metrics.main.prometheusRule.groups.$name`."
+            },
+            "description": "Configuration for `metrics.main.prometheusRule.groups`. Each key is the name of a group.",
+            "default": {}
           },
           "additionalgroups": {
             "oneOf": [

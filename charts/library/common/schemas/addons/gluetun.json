@@ -52,7 +52,12 @@
             "description": "Octal file mode of the mounted files, for example `0777`."
           },
           "data": {
-            "$ref": "../secret.json#/additionalProperties/properties/data",
+            "type": "object",
+            "properties": {},
+            "additionalProperties": {
+              "type": "string",
+              "description": "Content of the file"
+            },
             "description": "Files of the secret, keyed by file name."
           },
           "namespace": {
