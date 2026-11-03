@@ -38,6 +38,20 @@
       "type": "string",
       "description": "Working directory of the container."
     },
+    "ports": {
+      "type": "array",
+      "items": {
+        "$ref": "container/port.json"
+      },
+      "description": "Ports the container listens on."
+    },
+    "envFrom": {
+      "type": "array",
+      "items": {
+        "$ref": "container/envFrom.json"
+      },
+      "description": "Sources of environment variables of the container."
+    },
     "env": {
       "type": "array",
       "items": {
@@ -168,6 +182,99 @@
         }
       ],
       "description": "Security context of the container."
+    },
+    "resizePolicy": {
+      "type": "array",
+      "items": {
+        "$ref": "container/resizePolicy.json"
+      },
+      "description": "Resize policy of the resources of the container."
+    },
+    "restartPolicy": {
+      "type": "string",
+      "enum": [
+        "Always",
+        "Never",
+        "OnFailure"
+      ],
+      "description": "Restart policy of the container. Only used for sidecars (init containers)."
+    },
+    "restartPolicyRules": {
+      "type": "array",
+      "items": {
+        "$ref": "container/restartRule.json"
+      },
+      "description": "Rules that decide whether the container is restarted on exit."
+    },
+    "volumeMounts": {
+      "type": "array",
+      "items": {
+        "$ref": "container/volumeMount.json"
+      },
+      "description": "Volumes mounted in the container."
+    },
+    "volumeDevices": {
+      "type": "array",
+      "items": {
+        "$ref": "container/volumeDevice.json"
+      },
+      "description": "Block devices mapped in the container."
+    },
+    "livenessProbe": {
+      "allOf": [
+        {
+          "$ref": "container/probe.json"
+        }
+      ],
+      "description": "Liveness probe of the container."
+    },
+    "readinessProbe": {
+      "allOf": [
+        {
+          "$ref": "container/probe.json"
+        }
+      ],
+      "description": "Readiness probe of the container."
+    },
+    "startupProbe": {
+      "allOf": [
+        {
+          "$ref": "container/probe.json"
+        }
+      ],
+      "description": "Startup probe of the container."
+    },
+    "lifecycle": {
+      "allOf": [
+        {
+          "$ref": "container/lifecycle.json"
+        }
+      ],
+      "description": "Lifecycle hooks of the container."
+    },
+    "terminationMessagePath": {
+      "type": "string",
+      "description": "Path of the file the termination message is written to."
+    },
+    "terminationMessagePolicy": {
+      "type": "string",
+      "enum": [
+        "File",
+        "FallbackToLogsOnError"
+      ],
+      "description": "Where the termination message is read from."
+    },
+    "stdin": {
+      "type": "boolean",
+      "description": "Whether stdin is kept open for the container."
+    },
+    "stdinOnce": {
+      "type": "boolean",
+      "description": "Whether stdin is closed after the first attach."
+    },
+    "tty": {
+      "type": "boolean",
+      "description": "Whether a TTY is allocated for the container."
     }
   },
   "required": [

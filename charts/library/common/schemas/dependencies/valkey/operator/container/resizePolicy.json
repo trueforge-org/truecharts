@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "resourceName": {
+      "type": "string",
+      "description": "Resource to resize, for example `cpu` or `memory`."
+    },
+    "restartPolicy": {
+      "type": "string",
+      "enum": [
+        "NotRequired",
+        "RestartContainer"
+      ],
+      "description": "Whether the container is restarted when the resource is resized."
+    }
+  },
+  "required": [
+    "resourceName",
+    "restartPolicy"
+  ],
+  "additionalProperties": false,
+  "description": "Resize policy of a resource of the container."
+}
