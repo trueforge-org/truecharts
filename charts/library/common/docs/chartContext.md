@@ -43,6 +43,20 @@ Configuration for `chartContext.appUrl`.
 
 ---
 
+### `chartContext.internalUrls`
+
+Configuration for `chartContext.internalUrls`. Set by the library, which appends the internal URLs of the services.
+
+| Field      | Value                       |
+| ---------- | --------------------------- |
+| Key        | `chartContext.internalUrls` |
+| Type       | `list of string`            |
+| Required   | ❌                          |
+| Helm `tpl` | ❌                          |
+| Default    | unset                       |
+
+---
+
 ### `chartContext.podCIDR`
 
 Configuration for `chartContext.podCIDR`.

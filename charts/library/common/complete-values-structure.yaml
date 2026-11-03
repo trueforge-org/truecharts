@@ -19,11 +19,9 @@ global:
   labels:
     g_label1: ''
     g_label2: ''
-    global-label: ''
   annotations:
     g_annotation1: ''
     g_annotation2: ''
-    global-annotation: ''
   namespace: ''
   diagnosticMode:
     enabled: false
@@ -71,8 +69,6 @@ global:
   minNodePort: 0
   stopAll: false
   ignoreIsStopped: true
-  podCIDR: ''
-  svcCIDR: ''
 namespace: ''
 image:
   repository: ''
@@ -189,27 +185,27 @@ workload:
               path: ''
               custom: true
               spec:
-                failureThreshold: 5
-                httpGet:
-                  path: ''
-                  port: ''
-                initialDelaySeconds: 30
-                periodSeconds: 10
-                timeoutSeconds: 10
                 exec:
                   command:
                   - ''
+                failureThreshold: 5
+                initialDelaySeconds: 60
+                periodSeconds: 10
                 successThreshold: 1
+                timeoutSeconds: 10
+                httpGet:
+                  path: ''
+                  port: ''
               command:
               - ''
               httpHeaders:
-                Authorization: ''
-                Accept: ''
                 Host: ''
+                Accept: ''
+                Authorization: ''
+              initialDelaySeconds: 30
               exec:
                 command:
                 - ''
-              initialDelaySeconds: 30
             readiness:
               enabled: true
               type: ''
@@ -217,27 +213,26 @@ workload:
               path: ''
               custom: true
               spec:
-                failureThreshold: 5
-                httpGet:
-                  path: ''
-                  port: ''
-                initialDelaySeconds: 30
-                periodSeconds: 10
-                timeoutSeconds: 10
                 exec:
                   command:
                   - ''
-                successThreshold: 5
+                initialDelaySeconds: 60
+                periodSeconds: 26
+                failureThreshold: 6
+                httpGet:
+                  path: ''
+                  port: ''
+                timeoutSeconds: 10
               command:
               - ''
               httpHeaders:
-                Authorization: ''
-                Accept: ''
                 Host: ''
+                Accept: ''
+                Authorization: ''
+              initialDelaySeconds: 30
               exec:
                 command:
                 - ''
-              initialDelaySeconds: 30
             startup:
               enabled: true
               type: ''
@@ -245,355 +240,132 @@ workload:
               path: ''
               custom: true
               spec:
+                exec:
+                  command:
+                  - ''
+                initialDelaySeconds: 60
+                periodSeconds: 25
                 failureThreshold: 5
                 httpGet:
                   path: ''
                   port: ''
-                initialDelaySeconds: 30
-                periodSeconds: 10
                 timeoutSeconds: 10
-                exec:
-                  command:
-                  - ''
-                successThreshold: 1
               command:
               - ''
               httpHeaders:
-                Authorization: ''
-                Accept: ''
                 Host: ''
+                Accept: ''
+                Authorization: ''
+              failureThreshold: 0
+              initialDelaySeconds: 30
               exec:
                 command:
                 - ''
-              failureThreshold: 0
-              initialDelaySeconds: 30
           env:
-            GAME_ID: ''
-            GAME_PARAMS: ''
-            VALIDATE: ''
-            APP_NAME: ''
-            APP_KEY:
-              secretKeyRef:
-                name: ''
-                key: ''
-            APP_ENV: ''
-            APP_DEBUG: false
-            SERVAS_ENABLE_REGISTRATION: true
-            DB_CONNECTION: ''
-            DB_HOST:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
-            DB_PORT: 0
-            DB_DATABASE: ''
-            DB_USERNAME: ''
-            DB_PASSWORD: ''
-            PASSWORD: ''
             DISABLE_AUTH: ''
             GROUPID: ''
+            PASSWORD: ''
             ROOT: ''
             USER: ''
             USERID: 0
-            VNC_PASSWORD: ''
+            CLICKHOUSE_DB: ''
+            CLICKHOUSE_USER: ''
+            CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: ''
+            CLICKHOUSE_PASSWORD:
+              secretKeyRef:
+                expandObjectName: ''
+                name: ''
+                key: ''
+            TAKEOFF_DEVICE: ''
+            TAKEOFF_MODEL_NAME: ''
+            TAKEOFF_QUANT_TYPE: ''
+            TAKEOFF_MAX_BATCH_SIZE: ''
+            TAKEOFF_DISABLE_BATCHING: ''
+            DEFAULTADMIN: ''
+            DEFAULTADMINPWD: ''
+            CUSTOM_RES_H: ''
+            CUSTOM_RES_W: ''
+            DATA_PERM: ''
+            NPM_CONFIG_AUDIT: ''
+            NPM_CONFIG_FUND: ''
+            PORT: ''
+            DATABASE_CLIENT: ''
+            DATABASE_PORT: 0
             DATABASE_NAME: ''
-            DATABASE_USER: ''
-            DATABASE_PORT: ''
-            REDIS_USER: ''
-            REDIS_PORT: ''
-            REDIS_PROTOCOL: ''
-            BASEROW_CADDY_ADDRESSES: ''
-            BASEROW_TRIGGER_SYNC_TEMPLATES_AFTER_MIGRATION: false
-            BASEROW_PUBLIC_URL: ''
-            FROM_EMAIL: ''
-            EMAIL_SMTP: ''
-            EMAIL_SMTP_USE_TLS: ''
-            EMAIL_SMTP_HOST: ''
-            EMAIL_SMTP_PORT: 0
-            EMAIL_SMTP_USER: ''
-            EMAIL_SMTP_PASSWORD: ''
             DATABASE_HOST:
               secretKeyRef:
                 name: ''
                 key: ''
+            DATABASE_USERNAME: ''
             DATABASE_PASSWORD:
               secretKeyRef:
                 name: ''
                 key: ''
-            REDIS_HOST:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
-            REDIS_PASSWORD: ''
-            SECRET_KEY:
-              secretKeyRef:
-                name: ''
-                key: ''
-            SCHEDULE: ''
-            TOKEN: ''
-            AUTH_LIST: ''
-            PASSWRD: ''
-            USERNAME: ''
-            WORLD_INDEX: ''
-            WORLD_NAME: ''
-            ANNOUNCEMENT: ''
-            MAX_SECRET_LENGTH: ''
-            MESSAGES_CONFIRM_VIEW_SECRET_BUTTON: ''
-            MESSAGES_CONFIRM_VIEW_SECRET_HEADER: ''
-            MESSAGES_ERROR_SECRET_TOO_LONG: ''
-            MESSAGES_SUBMIT_SECRET_BUTTON: ''
-            MESSAGES_SUBMIT_SECRET_HEADER: ''
-            MESSAGES_SUBMIT_SECRET_SUBHEADER: ''
-            MESSAGES_VIEW_CODE_HEADER: ''
-            MESSAGES_VIEW_CODE_SUBHEADER: ''
-            MESSAGES_VIEW_SECRET_HEADER: ''
-            PRUNE_ENABLED: ''
-            PRUNE_MAX_DAYS: ''
-            PRUNE_MIN_DAYS: ''
-            RETURN_FULL_URL: ''
-            SITE_TITLE: ''
-            CRON: ''
-            FEATURES_CLIENT_SETTINGS: true
-            FEATURES_DHCP_SERVER_CONFIG: true
-            FEATURES_DHCP_STATIC_LEASES: true
-            FEATURES_DNS_ACCESS_LISTS: true
-            FEATURES_DNS_REWRITES: true
-            FEATURES_DNS_SERVER_CONFIG: true
-            FEATURES_FILTERS: true
-            FEATURES_GENERAL_SETTINGS: true
-            FEATURES_QUERY_LOG_CONFIG: true
-            FEATURES_SERVICES: true
-            FEATURES_STATS_CONFIG: true
-            ORIGIN_PASSWORD: ''
-            ORIGIN_URL: ''
-            ORIGIN_USERNAME: ''
-            REPLICA_AUTO_SETUP: false
-            REPLICA_INTERFACE_NAME: ''
-            REPLICA_PASSWORD: ''
-            REPLICA_URL: ''
-            REPLICA_USERNAME: ''
-            RUN_ON_START: true
-            TIMETAGGER_BIND: ''
-            CUSTOM_PORT: ''
+            NODE_ENV: ''
+            STRAPI_DISABLE_UPDATE_NOTIFICATION: true
+            FAST_REFRESH: false
+            EXTRA_ARGS: ''
+            JWT_SECRET: ''
+            ADMIN_JWT_SECRET: ''
+            APP_KEYS: ''
+            UP_PROMETHEUS_DISABLE: false
+            LISTENING_ADDRESS: ''
+            CONFIG: ''
+            PERIOD: ''
+            IPV6_PREFIX: ''
+            PUBLICIP_FETCHERS: ''
+            PUBLICIP_HTTP_PROVIDERS: ''
+            PUBLICIPV4_HTTP_PROVIDERS: ''
+            PUBLICIPV6_HTTP_PROVIDERS: ''
+            PUBLICIP_DNS_PROVIDERS: ''
+            PUBLICIP_DNS_TIMEOUT: ''
+            UPDATE_COOLDOWN_PERIOD: ''
+            HTTP_TIMEOUT: ''
+            BACKUP_PERIOD: ''
+            LOG_LEVEL: ''
+            LOG_CALLER: ''
+            SHOUTRRR_ADDRESSES: ''
+            POSTGRES_NAME: ''
             POSTGRES_USER: ''
             POSTGRES_PASSWORD:
               secretKeyRef:
                 name: ''
                 key: ''
                 expandObjectName: false
-            POSTGRES_IP:
+            POSTGRES_HOST:
               secretKeyRef:
                 name: ''
                 key: ''
-            POSTGRES_PORT: 0
-            JWT_SECRET:
-              secretKeyRef:
-                name: ''
-                key: ''
-            GITURL: ''
-            PYUSER: ''
-            PYPASS: ''
-            GAME_PORT: ''
-            QUERY_PORT: ''
-            SRV_MAXPLAYERS: ''
-            SRV_NAME: ''
-            BAIKAL_SKIP_CHOWN: false
-            CACHE_DOMAINS_REPO: ''
-            CACHE_DOMAINS_BRANCH: ''
-            UPSTREAM_DNS: ''
-            DISABLE_BLIZZARD: false
-            DISABLE_RIOT: false
-            DISABLE_UPLAY: false
-            DISABLE_ORIGIN: false
-            DISABLE_SONY: false
-            DISABLE_SQUARE: false
-            GALAXY_NAME: ''
-            DATABASE_URL:
-              secretKeyRef:
-                name: ''
-                key: ''
-                expandObjectName: false
-            NEXTAUTH_SECRET:
-              secretKeyRef:
-                name: ''
-                key: ''
-            NEXTAUTH_URL: ''
-            PAGINATION_TAKE_COUNT: ''
-            STORAGE_FOLDER: ''
-            AUTOSCROLL_TIMEOUT: ''
-            NEXT_PUBLIC_DISABLE_REGISTRATION: ''
-            RE_ARCHIVE_LIMIT: ''
-            CLAMAV_NO_CLAMD: false
-            CLAMAV_NO_FRESHCLAMD: false
-            CLAMAV_NO_MILTERD: ''
-            CLAMD_STARTUP_TIMEOUT: 0
-            FRESHCLAM_CHECKS: 1
-            UPTIMEROBOT_API_KEY: ''
-            GENERIC_TIMEZONE: ''
-            DB_TYPE: ''
-            DB_POSTGRESDB_USER: ''
-            DB_POSTGRESDB_DATABASE: ''
-            DB_POSTGRESDB_PORT: 0
-            QUEUE_BULL_REDIS_PORT: 0
-            N8N_USER_FOLDER: ''
-            DB_POSTGRESDB_HOST:
-              secretKeyRef:
-                name: ''
-                key: ''
-            DB_POSTGRESDB_PASSWORD:
-              secretKeyRef:
-                name: ''
-                key: ''
-            QUEUE_BULL_REDIS_HOST:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
-            QUEUE_BULL_REDIS_PASSWORD: ''
-            MODELSTORE-DETECTION: ''
-            MODE: ''
-            THREADCOUNT: 5
-            API-KEY: ''
-            ADMIN-KEY: ''
-            HTTP_ALLOWED: ''
-            DISABLE_IPV6: true
-            DB_MYSQL_PORT: 0
-            DB_MYSQL_NAME: ''
-            DB_MYSQL_USER: ''
-            DB_MYSQL_HOST:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
-            DB_MYSQL_PASSWORD: ''
-            GAME_CONFIG: ''
-            MANUAL_UPDATES: ''
-            SERVER_KEY: ''
-            SRV_ADR: ''
-            START_VARS: ''
-            DB_USER: ''
-            JAVA_OPTS: ''
-            ARM_UID: ''
-            ARM_GID: ''
-            ROMM_AUTH_SECRET_KEY: ''
-            SCAN_WORKERS: 4
-            ROMM_PORT: ''
-            ROMM_BASE_URL: ''
-            LOGLEVEL: ''
-            ROMM_DB_DRIVER: ''
-            DB_NAME: ''
-            DB_PASSWD: ''
-            REDIS_USERNAME: ''
-            IGDB_CLIENT_ID: ''
-            IGDB_CLIENT_SECRET: ''
-            LOG_LEVEL: ''
-            INIT_SEAFILE_ADMIN_EMAIL: ''
-            INIT_SEAFILE_ADMIN_PASSWORD: ''
-            TIME_ZONE: ''
-            SEAFILE_LOG_TO_STDOUT: ''
-            SITE_ROOT: ''
-            SEAFILE_SERVER_HOSTNAME: ''
-            SEAFILE_SERVER_PROTOCOL: ''
-            JWT_PRIVATE_KEY: ''
-            SEAFILE_MYSQL_DB_HOST:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
-            SEAFILE_MYSQL_DB_PORT: ''
-            SEAFILE_MYSQL_DB_USER: ''
-            SEAFILE_MYSQL_DB_CCNET_DB_NAME: ''
-            SEAFILE_MYSQL_DB_SEAFILE_DB_NAME: ''
-            SEAFILE_MYSQL_DB_SEAHUB_DB_NAME: ''
-            INIT_SEAFILE_MYSQL_ROOT_PASSWORD: ''
-            SEAFILE_MYSQL_DB_PASSWORD: ''
-            CACHE_PROVIDER: ''
-            ENABLE_NOTIFICATION_SERVER: ''
-            NOTIFICATION_SERVER_URL: ''
-            ENABLE_SEADOC: ''
-            SEADOC_SERVER_URL: ''
-            ENABLE_SEAFILE_AI: ''
-            SEAFILE_AI_SERVER_URL: ''
-            MD_FILE_COUNT_LIMIT: ''
+            TMDB_API_KEY: ''
+            DHT_CRAWLER_SAVE_FILES_THRESHOLD: ''
+            DATA_PATH: ''
+            HOST: ''
+            SECRET: ''
+            DBG: 0
+            REFRESH_TIME_MINUTES: 2
+            STEAM_WEB_API_KEY: ''
+            DISCORD_BOT_TOKEN: ''
+            TELEGRAM_BOT_TOKEN: ''
+            SLACK_BOT_TOKEN: ''
+            SLACK_APP_TOKEN: ''
             BACKREST_PORT: ''
             BACKREST_DATA: ''
             BACKREST_CONFIG: ''
             XDG_CACHE_HOME: ''
             TMPDIR: ''
-            REDIS_REPLICATION_MODE: ''
-            ALLOW_EMPTY_PASSWORD: ''
+            GAME_ID: ''
             GAME_NAME: ''
-            PORT: ''
-            TWITCH_CLIENT_ID: ''
-            TWITCH_CLIENT_SECRET: ''
-            MAX_UPLOAD: 0
-            PHP_MEMORY_LIMIT: ''
-            PHP_MAX_FILE_UPLOAD: 0
-            FM_HOME: ''
-            TITLE: ''
-            RPC_PORT: ''
-            LISTEN_PORT: ''
-            DISK_CACHE: ''
-            IPV6_MODE: false
-            UPDATE_TRACKERS: false
-            CUSTOM_TRACKER_URL: ''
-            RPC_SECRET: ''
-            DATA_PERM: ''
-            LMP_V: ''
-            PS_SHARED_SECRET: ''
-            LITESTREAM_BUCKET: ''
-            LITESTREAM_ENDPOINT: ''
-            LITESTREAM_ACCESS_KEY_ID: ''
-            LITESTREAM_SECRET_ACCESS_KEY: ''
-            LITESTREAM_RETENTION: ''
-            VNC_PW: ''
-            VNC_RESOLUTION: ''
-            MAIL_CONFIGURATION: false
-            LOG_DRIVER: ''
-            DB_DRIVER: ''
-            DB_HOSTNAME:
-              secretKeyRef:
-                name: ''
-                key: ''
-            TIMEZONE: ''
-            MM_SQLSETTINGS_DRIVERNAME: ''
-            MM_BLEVESETTINGS_INDEXDIR: ''
-            MM_SERVICESETTINGS_SITEURL: ''
-            MM_SQLSETTINGS_DATASOURCE: ''
-            COLLECTOR_CRON_SCHEDULE: ''
-            COLLECTOR_HOST_ID: ''
-            PS_HTTP_PORT: ''
-            PS_LOG_LEVEL: ''
-            WS_CONTENT: ''
-            OPEN_PROFILES: ''
-            OPEN_REGISTRATIONS: ''
-            COOKIE_SECRET: ''
-            CONFIG: ''
-            DATA: ''
-            NC_PUBLIC_URL: ''
-            NC_DISABLE_TELE: true
-            DISABLE_SPLASH_SCREEN: false
-            NC_JWT_EXPIRES_IN: ''
-            NC_INVITE_ONLY_SIGNUP: false
-            NC_DISABLE_CACHE: false
-            NC_DISABLE_ERR_REPORT: true
-            NC_REQUEST_BODY_SIZE: ''
-            NC_EXPORT_MAX_TIMEOUT: 0
-            NC_SENTRY_DSN: ''
-            NC_REDIS_URL:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
-            NC_AUTH_JWT_SECRET:
-              secretKeyRef:
-                name: ''
-                key: ''
-            AWS_ACCESS_KEY_ID: ''
-            AWS_SECRET_ACCESS_KEY: ''
-            AWS_BUCKET: ''
-            AWS_BUCKET_PATH: ''
+            GAME_PARAMS: ''
+            GAME_PORT: ''
+            PASSWRD: ''
+            USERNAME: ''
+            VALIDATE: ''
+            APP_DOMAIN: ''
+            APP_HOST: ''
+            APP_PASSWORD: ''
+            token: ''
+            DBNAME: ''
+            DBTYPE: ''
             COMMENTO_PORT: ''
             COMMENTO_FORBID_NEW_OWNERS: false
             COMMENTO_GZIP_STATIC: true
@@ -610,93 +382,113 @@ workload:
               secretKeyRef:
                 name: ''
                 key: ''
-            INSTALL4J_ADD_VM_PARAMS: ''
-            DEBUG: ''
-            LOG: ''
-            SOCKET_LOG: ''
-            OBSERVIUM_ADMIN_USER: ''
-            OBSERVIUM_ADMIN_PASS: ''
-            OBSERVIUM_base_url: ''
-            OBSERVIUM_auth_mechanism: ''
-            OBSERVIUM_db_extension: ''
-            OBSERVIUM_db_host:
+            SECRET_KEY:
               secretKeyRef:
-                expandObjectName: false
                 name: ''
                 key: ''
-            OBSERVIUM_db_name: ''
-            OBSERVIUM_db_pass: ''
-            OBSERVIUM_db_user: ''
-            OBSERVIUM_cache__enable: true
-            OBSERVIUM_cache__driver: ''
+            MINUTES_BETWEEN_VIDEO_SCANS: 5
+            ADMIN_PASSWORD: ''
+            CLI_ARGS: null
+            KEYBOARD: ''
+            SUBFOLDER: ''
+            CUSTOM_PORT: ''
+            GALAXY_NAME: ''
+            QUERY_PORT: ''
+            SERVER_NAME: ''
+            DB_USERNAME: ''
+            DB_DATABASE: ''
+            DB_CONNECTION: ''
+            DB_PORT: 0
+            REDIS_DB: ''
+            REDIS_CACHE_DB: ''
+            CACHE_DRIVER: ''
+            SESSION_DRIVER: ''
+            REDIS_SCHEME: ''
+            REDIS_PORT: 0
             APP_URL: ''
-            TRUST_PROXY: ''
-            ANALYTICS_DISABLED: ''
-            VERSION_CHECK_DISABLED: ''
-            MAXMIND_LICENSE_KEY: ''
-            ENCRYPTION_KEY: ''
-            DB_CONNECTION_STRING: ''
-            FORCE_HTTPS: false
-            PGSSLMODE: ''
-            URL: ''
-            SLACK_MESSAGE_ACTIONS: true
-            ENABLE_UPDATES: true
-            WEB_CONCURRENCY: 1
-            MAXIMUM_IMPORT_SIZE: 0
-            DEFAULT_LANGUAGE: ''
-            FILE_STORAGE: ''
-            FILE_STORAGE_UPLOAD_MAX_SIZE: ''
-            REDIS_URL:
+            TRUSTED_PROXIES: ''
+            DB_HOST:
+              secretKeyRef:
+                name: ''
+                key: ''
+                expandObjectName: false
+            DB_PASSWORD:
+              secretKeyRef:
+                name: ''
+                key: ''
+                expandObjectName: false
+            REDIS_HOST:
               secretKeyRef:
                 expandObjectName: false
                 name: ''
                 key: ''
-            UTILS_SECRET:
+            REDIS_PASSWORD: ''
+            STATIC_CRON_TOKEN:
               secretKeyRef:
                 name: ''
                 key: ''
-            SABNZBD__HOST_WHITELIST_ENTRIES: ''
-            SABNZBD__PORT: ''
-            MY_NODE_NAME:
-              fieldRef:
-                fieldPath: ''
-            MY_POD_NAMESPACE:
-              fieldRef:
-                fieldPath: ''
-            MY_POD_NAME:
-              fieldRef:
-                fieldPath: ''
-            NETDATA_CLAIM_URL: ''
-            NETDATA_CLAIM_TOKEN: ''
-            NETDATA_CLAIM_ROOMS: ''
-            TVH_TUNER_COUNT: ''
-            TVH_URL: ''
-            QBITRR_OVERRIDES_DATA_PATH: ''
-            GLANCES_OPT: ''
-            GATUS_CONFIG_PATH: ''
-            GATUS_DELAY_START_SECONDS: 10
-            API_SECRET:
+            APP_KEY:
               secretKeyRef:
-                key: ''
                 name: ''
-            BASE_URL: ''
-            BG_HIGH: ''
-            BG_LOW: ''
-            BG_TARGET_BOTTOM: ''
-            BG_TARGET_TOP: ''
-            DISPLAY_UNITS: ''
-            ENABLE: ''
-            INSECURE_USE_http: ''
-            MONGO_CONNECTION: ''
-            THEME: ''
-            TIME_FORMAT: ''
-            DATABASE_CONNECTION: ''
-            http_PASS: ''
-            http_USER: ''
-            TUBESYNC_DEBUG: ''
-            TUBESYNC_HOSTS: ''
-            TUBESYNC_WORKERS: ''
-            WEB_PORT: ''
+                key: ''
+            MARIADB_PASSWORD: ''
+            MARIADB_ROOT_PASSWORD: ''
+            MARIADB_USER: ''
+            MARIADB_DATABASE: ''
+            MARIADB_EXTRA_FLAGS: ''
+            TEST_URL: ''
+            BROWSER_TIMEOUT: 0
+            HEADLESS: true
+            LOG_HTML: false
+            CAPTCHA_SOLVER: ''
+            VNC_PASSWORD: ''
+            HUMHUB_AUTO_INSTALL: true
+            HUMHUB_INTEGRITY_CHECK: true
+            WAIT_FOR_DB: true
+            HUMHUB_DB_USER: ''
+            HUMHUB_DB_NAME: ''
+            HUMHUB_DB_PASSWORD: ''
+            HUMHUB_DB_HOST:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
+            HUMHUB_QUEUE_CLASS: ''
+            HUMHUB_CACHE_CLASS: ''
+            HUMHUB_CACHE_EXPIRE_TIME: 0
+            HUMHUB_REDIS_PORT: 0
+            HUMHUB_REDIS_HOSTNAME:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
+            HUMHUB_REDIS_PASSWORD: ''
+            HUMHUB_MAILER_SYSTEM_EMAIL_ADDRESS: ''
+            HUMHUB_MAILER_SYSTEM_EMAIL_NAME: ''
+            HUMHUB_MAILER_TRANSPORT_TYPE: ''
+            HUMHUB_MAILER_HOSTNAME: ''
+            HUMHUB_MAILER_PORT: ''
+            HUMHUB_MAILER_USERNAME: ''
+            HUMHUB_MAILER_PASSWORD: ''
+            HUMHUB_MAILER_ENCRYPTION: ''
+            HUMHUB_MAILER_ALLOW_SELF_SIGNED_CERTS: ''
+            HUMHUB_PROTO: ''
+            HUMHUB_HOST: ''
+            HUMHUB_ADMIN_LOGIN: ''
+            HUMHUB_ADMIN_EMAIL: ''
+            HUMHUB_ADMIN_PASSWORD: ''
+            NETWORK_TEST_ON_START: false
+            INCLUDE_PUBLIC_IP_IN_NAT_1_TO_1_IP: true
+            UDP_MUX_PORT: ''
+            mkvdts2ac3_params: ''
+            output_format: ''
+            parameters: ''
+            script: ''
+            PVE_VERIFY_SSL: ''
+            PVE_USER: ''
+            PVE_TOKEN_NAME: ''
+            TWITCH_CLIENT_ID: ''
+            TWITCH_CLIENT_SECRET: ''
             SFTPGO_COMMON__DEFENDER__ENABLED: ''
             SFTPGO_FTPD__BINDINGS__0__DEBUG: ''
             SFTPGO_FTPD__BINDINGS__0__FORCE_PASSIVE_IP: ''
@@ -728,31 +520,245 @@ workload:
             SFTPGO_PLUGIN_GEOIPFILTER_DB_FILE: ''
             SFTPGO_PLUGIN_GEOIPFILTER_ALLOWED_COUNTRIES: ''
             SFTPGO_PLUGIN_GEOIPFILTER_DENIED_COUNTRIES: ''
-            HBOX_MODE: ''
-            HBOX_WEB_PORT: ''
-            HBOX_WEB_HOST: ''
-            HBOX_AUTH_API_KEY_PEPPER: ''
-            HBOX_LOG_LEVEL: ''
-            HBOX_LOG_FORMAT: ''
-            HBOX_OPTIONS_TRUST_PROXY: ''
-            HBOX_DATABASE_DRIVER: ''
-            HBOX_DATABASE_HOST:
+            db_url: ''
+            password: ''
+            username: ''
+            CONVERSION_FORMAT: ''
+            DELETE_TS: ''
+            POST_PROCESS: ''
+            SOURCE_EXT: ''
+            SUBTITLES: ''
+            ADDITIONAL: ''
+            ALGO_MODE: ''
+            POOL_URL: ''
+            YOUR_ADDRESS: ''
+            YOUR_WORKER_NAME: ''
+            PREFIX: ''
+            TOKEN: ''
+            SERVER_PORT: ''
+            RCON_PORT: ''
+            ENABLE_QUERY: ''
+            ENABLE_SSH: ''
+            EULA: ''
+            GUI: ''
+            OVERRIDE_SERVER_PROPERTIES: true
+            VERSION: ''
+            TYPE: ''
+            DIFFICULTY: ''
+            MAX_PLAYERS: 20
+            MAX_WORLD_SIZE: 0
+            ALLOW_NETHER: true
+            ANNOUNCE_PLAYER_ACHIEVEMENTS: true
+            ENABLE_COMMAND_BLOCK: false
+            FORCE_GAMEMODE: false
+            GENERATE_STRUCTURES: true
+            HARDCORE: false
+            MAX_BUILD_HEIGHT: 0
+            MAX_TICK_TIME: 0
+            SPAWN_ANIMALS: true
+            SPAWN_MONSTERS: true
+            SPAWN_NPCS: true
+            VIEW_DISTANCE: 16
+            MODE: ''
+            MOTD: ''
+            PVP: false
+            LEVEL_TYPE: ''
+            LEVEL: ''
+            ONLINE_MODE: true
+            MEMORY: ''
+            RCON_PASSWORD: ''
+            IMMICH_MACHINE_LEARNING_ENABLED: ''
+            IMMICH_MACHINE_LEARNING_URL: ''
+            IMMICH_PORT: ''
+            IMMICH_WORKERS_INCLUDE: ''
+            DB_DATABASE_NAME: ''
+            DB_HOSTNAME: ''
+            REDIS_HOSTNAME: ''
+            REDIS_DBINDEX: ''
+            comet__Database__ConnectionString: ''
+            ADDON_ID: ''
+            ADDON_NAME: ''
+            ZILEAN_URL: ''
+            INDEXER_MANAGER_TYPE: ''
+            INDEXER_MANAGER_TIMEOUT: ''
+            GET_TORRENT_TIMEOUT: ''
+            FASTAPI_WORKERS: ''
+            SCRAPE_TORRENTIO: ''
+            DATABASE_TYPE: ''
+            DATABASE_URL: ''
+            SPOOLMAN_HOST: ''
+            SPOOLMAN_PORT: ''
+            SPOOLMAN_DIR_DATA: ''
+            SPOOLMAN_DIR_LOGS: ''
+            SPOOLMAN_DB_TYPE: ''
+            SPOOLMAN_DB_HOST:
               secretKeyRef:
                 name: ''
                 key: ''
-            HBOX_DATABASE_PORT: ''
-            HBOX_DATABASE_USERNAME: ''
-            HBOX_DATABASE_PASSWORD:
+            SPOOLMAN_DB_PORT: 0
+            SPOOLMAN_DB_NAME: ''
+            SPOOLMAN_DB_USERNAME: ''
+            SPOOLMAN_DB_PASSWORD:
               secretKeyRef:
                 name: ''
                 key: ''
-            HBOX_DATABASE_DATABASE: ''
-            HBOX_DATABASE_SSL_MODE: ''
-            PROFILE_ID: ''
-            RADARR_KEY: ''
-            RADARR_URL: ''
-            RADARR4K_KEY: ''
-            RADARR4K_URL: ''
+            SPOOLMAN_DEBUG_MODE: true
+            API_SECRET:
+              secretKeyRef:
+                key: ''
+                name: ''
+            CONFIG_PATH: ''
+            DB_DRIVER: ''
+            DB_NAME: ''
+            DB_USER: ''
+            SP_SERVER_LISTEN: ''
+            SP_DB_TYPE: ''
+            SP_DB_URL:
+              secretKeyRef:
+                name: ''
+                key: ''
+            SP_FILESTORAGE_LOCAL_ROOT: ''
+            ND_MUSICFOLDER: ''
+            ND_SCANNER_SCHEDULE: ''
+            ND_LOGLEVEL: ''
+            ND_SESSIONTIMEOUT: ''
+            ND_ENABLETRANSCODINGCONFIG: false
+            API_URL: ''
+            MODELSTORE-DETECTION: ''
+            THREADCOUNT: 5
+            API-KEY: ''
+            ADMIN-KEY: ''
+            APP_CLEAN_INTERVAL: ''
+            APP_DEBUG: ''
+            KEY:
+              secretKeyRef:
+                name: ''
+                key: ''
+            MEND_RNV_ACCEPT_TOS: ''
+            MEND_RNV_LICENSE_KEY: ''
+            MEND_RNV_PLATFORM: ''
+            MEND_RNV_GITHUB_APP_ID: ''
+            MEND_RNV_GITHUB_APP_KEY: ''
+            MEND_RNV_WEBHOOK_SECRET: ''
+            MEND_RNV_SERVER_PORT: ''
+            MONGO_URL: ''
+            BASIC_URL: ''
+            GAME_VERSION: ''
+            DOCKER_ENABLE_SECURITY: false
+            INSTALL_BOOK_AND_ADVANCED_HTML_OPS: false
+            LANGS: ''
+            APPLICATION_URL: ''
+            GDRIVE_CLIENT_ID: ''
+            GDRIVE_CLIENT_SECRET: ''
+            DROPBOX_CLIENT_ID: ''
+            ONLYOFFICE_URL: ''
+            CRON: ''
+            FEATURES_CLIENT_SETTINGS: true
+            FEATURES_DHCP_SERVER_CONFIG: true
+            FEATURES_DHCP_STATIC_LEASES: true
+            FEATURES_DNS_ACCESS_LISTS: true
+            FEATURES_DNS_REWRITES: true
+            FEATURES_DNS_SERVER_CONFIG: true
+            FEATURES_FILTERS: true
+            FEATURES_GENERAL_SETTINGS: true
+            FEATURES_QUERY_LOG_CONFIG: true
+            FEATURES_SERVICES: true
+            FEATURES_STATS_CONFIG: true
+            ORIGIN_PASSWORD: ''
+            ORIGIN_URL: ''
+            ORIGIN_USERNAME: ''
+            REPLICA_AUTO_SETUP: false
+            REPLICA_INTERFACE_NAME: ''
+            REPLICA_PASSWORD: ''
+            REPLICA_URL: ''
+            REPLICA_USERNAME: ''
+            RUN_ON_START: true
+            enable_integration: ''
+            MALOJA_DATA_DIRECTORY: ''
+            MALOJA_HOST: ''
+            GAME_V: ''
+            SRV_NAME: ''
+            INSTALL_ASSETTO_SERVER_MANAGER: ''
+            INSTALL_STRACKER: ''
+            REGENERATE_SETTINGS: ''
+            SITE_ROOT: ''
+            SITE_NAME: ''
+            SUPERUSER_EMAIL: ''
+            SUPERUSER_PASSWORD: ''
+            AUTOSAVENUM: 5
+            DEBUG: false
+            DISABLESEASONALEVENTS: false
+            LOG: false
+            MAXOBJECTS: 0
+            MAXPLAYERS: 4
+            MAXTICKRATE: 30
+            ROOTLESS: false
+            SERVERGAMEPORT: ''
+            SERVERIP: ''
+            SERVERSTREAMING: true
+            SKIPUPDATE: false
+            STEAMBETA: false
+            TIMEOUT: 30
+            VMOVERRIDE: false
+            FG_LOG_LEVEL: ''
+            FG_LOG_FILE: ''
+            FG_WEBUI_PASSWD: ''
+            INIT_ASSETS: true
+            TVH_TUNER_COUNT: ''
+            TVH_URL: ''
+            DECONZ_WEB_PORT: ''
+            DECONZ_WS_PORT: ''
+            DECONZ_VNC_PORT: ''
+            DECONZ_UID: ''
+            DECONZ_GID: ''
+            DECONZ_DEVICE: ''
+            DECONZ_UPNP: 0
+            DECONZ_START_VERBOSE: 0
+            DECONZ_VNC_MODE: 1
+            DECONZ_VNC_PASSWORD: ''
+            SHLINK_SERVER_URL: ''
+            SHLINK_SERVER_API_KEY: ''
+            SHLINK_SERVER_NAME: ''
+            UPDATE_IPV4: true
+            UPDATE_IPV6: true
+            DETECTION_MODE: ''
+            CF_APITOKEN: ''
+            CF_HOSTS: ''
+            INTERVAL: 0
+            SCHEDULE: ''
+            THELOUNGE_HOME: ''
+            PWM_APPLICATIONFLAGS: ''
+            DATABASE_USER: ''
+            REDIS_USER: ''
+            REDIS_PROTOCOL: ''
+            BASEROW_CADDY_ADDRESSES: ''
+            BASEROW_TRIGGER_SYNC_TEMPLATES_AFTER_MIGRATION: false
+            BASEROW_PUBLIC_URL: ''
+            FROM_EMAIL: ''
+            EMAIL_SMTP: ''
+            EMAIL_SMTP_USE_TLS: ''
+            EMAIL_SMTP_HOST: ''
+            EMAIL_SMTP_PORT: 0
+            EMAIL_SMTP_USER: ''
+            EMAIL_SMTP_PASSWORD: ''
+            HTTP_PORT: ''
+            DISABLE_BUILTIN_AUTH: false
+            FLOOD_AUTH: ''
+            DATABASE_CONNECTION: ''
+            http_PASS: ''
+            http_USER: ''
+            TUBESYNC_DEBUG: ''
+            TUBESYNC_HOSTS: ''
+            TUBESYNC_WORKERS: ''
+            SIGNAL_CLI_UID: 0
+            SIGNAL_CLI_GID: 0
+            CLIENT_ID: ''
+            CLIENT_SECRET: ''
+            NEXTAUTH_SECRET: ''
+            NEXTAUTH_URL: ''
+            REDDIT_REDIRECT: ''
+            CHECK_FOR_UPDATES: ''
+            START_PARAMS: ''
             user: ''
             group: ''
             user_id: ''
@@ -784,177 +790,254 @@ workload:
             command_line_options: ''
             notification_title: ''
             notification_type: ''
-            SERVER_PORT: ''
-            RCON_PORT: ''
-            ENABLE_QUERY: ''
-            ENABLE_SSH: ''
-            EULA: ''
-            GUI: ''
-            OVERRIDE_SERVER_PROPERTIES: true
-            VERSION: ''
-            TYPE: ''
-            DIFFICULTY: ''
-            MAX_PLAYERS: 20
-            MAX_WORLD_SIZE: 0
-            ALLOW_NETHER: true
-            ANNOUNCE_PLAYER_ACHIEVEMENTS: true
-            ENABLE_COMMAND_BLOCK: false
-            FORCE_GAMEMODE: false
-            GENERATE_STRUCTURES: true
-            HARDCORE: false
-            MAX_BUILD_HEIGHT: 0
-            MAX_TICK_TIME: 0
-            SPAWN_ANIMALS: true
-            SPAWN_MONSTERS: true
-            SPAWN_NPCS: true
-            VIEW_DISTANCE: 16
-            MOTD: ''
-            PVP: false
-            LEVEL_TYPE: ''
-            LEVEL: ''
-            ONLINE_MODE: true
-            MEMORY: ''
-            RCON_PASSWORD: ''
-            EXPIRY_DAYS: ''
-            RUST_LOG: ''
-            SQLITE_URI: ''
-            MINUTES_BETWEEN_VIDEO_SCANS: 5
-            ADMIN_PASSWORD: ''
-            IDRAC_HOST: ''
-            IDRAC_USERNAME: ''
-            IDRAC_PASSWORD: ''
-            FAN_SPEED: 5
-            CPU_TEMPERATURE_THRESHOLD: 50
-            CHECK_INTERVAL: 60
-            DISABLE_THIRD_PARTY_PCIE_CARD_DELL_DEFAULT_COOLING_RESPONSE: false
-            DEFAULT_ROOM: ''
-            EMBY_SERVER: ''
-            SSL_CERT_FILE: ''
-            STASH_PORT: ''
-            STASH_STASH: ''
-            STASH_GENERATED: ''
-            STASH_METADATA: ''
-            STASH_CACHE: ''
-            PHOTOVIEW_LISTEN_PORT: ''
-            PHOTOVIEW_LISTEN_IP: ''
-            PHOTOVIEW_DATABASE_DRIVER: ''
-            PHOTOVIEW_MEDIA_CACHE: ''
-            MAPBOX_TOKEN: ''
-            PHOTOVIEW_DISABLE_FACE_RECOGNITION: false
-            PHOTOVIEW_DISABLE_VIDEO_ENCODING: false
-            PHOTOVIEW_DISABLE_RAW_PROCESSING: false
-            PHOTOVIEW_POSTGRES_URL:
+            DATA: ''
+            GENERIC_TIMEZONE: ''
+            DB_TYPE: ''
+            DB_POSTGRESDB_USER: ''
+            DB_POSTGRESDB_DATABASE: ''
+            DB_POSTGRESDB_PORT: 0
+            QUEUE_BULL_REDIS_PORT: 0
+            N8N_USER_FOLDER: ''
+            DB_POSTGRESDB_HOST:
               secretKeyRef:
                 name: ''
                 key: ''
-            GAME_PARAMS_EXTRA: ''
-            MAP: ''
-            SERVER_NAME: ''
-            SRV_ADMIN_PWD: ''
-            SRV_PWD: ''
-            MODSEC_DATA_DIR: ''
-            MODSEC_TMP_DIR: ''
-            MODSEC_UPLOAD_DIR: ''
+            DB_POSTGRESDB_PASSWORD:
+              secretKeyRef:
+                name: ''
+                key: ''
+            QUEUE_BULL_REDIS_HOST:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
+            QUEUE_BULL_REDIS_PASSWORD: ''
+            POSTGRES_PORT: ''
+            POSTGRES_DB: ''
+            CLIENT_URL: ''
+            LIBRARY_BROWSE_ROOT: ''
+            BOOK_DOCK_PATH: ''
+            SETUP_BOOTSTRAP_TOKEN: ''
+            NODE_MAX_OLD_SPACE_SIZE: ''
+            NITTER_SESSIONS_FILE: ''
+            LRR_UID: ''
+            LRR_GID: ''
+            TG_API_HASH: ''
+            TG_API_ID: ''
+            TG_AUTHORIZED_USER_ID: ''
+            TG_BOT_TOKEN: ''
+            TG_PROGRESS_DOWNLOAD: ''
+            TRUST_PROXY: ''
+            ANALYTICS_DISABLED: ''
+            VERSION_CHECK_DISABLED: ''
+            MAXMIND_LICENSE_KEY: ''
+            ENCRYPTION_KEY: ''
+            DB_CONNECTION_STRING: ''
+            SLSKD_SLSK_LISTEN_IP_ADDRESS: ''
+            SLSKD_SLSK_LISTEN_PORT: ''
+            SLSKD_HTTP_PORT: ''
+            APP_DIR: ''
+            SLSKD_SHARED_DIR: ''
+            SLSKD_DOWNLOADS_DIR: ''
+            SLSKD_INCOMPLETE_DIR: ''
+            SLSKD_USERNAME: ''
+            SLSKD_PASSWORD: ''
+            SLSKD_JWT_KEY:
+              secretKeyRef:
+                name: ''
+                key: ''
+            CUSTOMER_KEY: ''
+            IDENTIFIER: ''
+            PROVIDER_KEY: ''
+            SLOTS: ''
+            FORCE_HTTPS: false
+            PGSSLMODE: ''
+            URL: ''
+            SLACK_MESSAGE_ACTIONS: true
+            ENABLE_UPDATES: true
+            WEB_CONCURRENCY: 1
+            MAXIMUM_IMPORT_SIZE: 0
+            DEFAULT_LANGUAGE: ''
+            FILE_STORAGE: ''
+            FILE_STORAGE_UPLOAD_MAX_SIZE: ''
+            REDIS_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
+            UTILS_SECRET:
+              secretKeyRef:
+                name: ''
+                key: ''
+            MYSQL_HOST:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
+            MYSQL_PORT: ''
+            MYSQL_USERNAME: ''
+            MYSQL_PSW: ''
+            MYSQL_DATABASE: ''
+            MYSQL_ROOT_PASSWORD: ''
+            JWT_EXP: 1
+            USER_LIMIT: 0
+            UPLOAD_DIR: ''
+            API_PORT: ''
+            TREFLE_KEY: ''
+            ALLOWED_ORIGINS: ''
+            CACHE_TTL: 0
+            CACHE_HOST:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
+            CACHE_PORT: 0
+            SSL_ENABLED: false
+            CERTIFICATE_PATH: ''
+            SABNZBD__HOST_WHITELIST_ENTRIES: ''
+            SABNZBD__PORT: ''
+            MAIL_CONFIGURATION: false
+            LOG_DRIVER: ''
+            VNC_PW: ''
+            VNC_RESOLUTION: ''
+            DB_PASS:
+              secretKeyRef:
+                name: ''
+                key: ''
+            TITLE: ''
+            FAVICON: ''
+            DEFAULT_PAD_TEXT: ''
+            USER_PASSWORD: ''
+            DATABASE_ADAPTER: ''
+            SECRET_KEY_BASE:
+              secretKeyRef:
+                name: ''
+                key: ''
+            TRAKT_ID: ''
+            TRAKT_SECRET: ''
+            DISABLE_IPV6: true
+            DB_MYSQL_PORT: 0
+            DB_MYSQL_NAME: ''
+            DB_MYSQL_USER: ''
+            DB_MYSQL_HOST:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
+            DB_MYSQL_PASSWORD: ''
+            FF_SYNCSERVER_PUBLIC_URL: ''
+            FF_SYNCSERVER_FORCE_WSGI_ENVIRON: true
+            FF_SYNCSERVER_ACCESSLOG: false
+            FF_SYNCSERVER_LOGLEVEL: ''
+            FF_SYNCSERVER_ALLOW_NEW_USERS: true
+            FF_SYNCSERVER_FORWARDED_ALLOW_IPS: ''
+            FF_SYNCSERVER_SQLURI:
+              secretKeyRef:
+                name: ''
+                key: ''
+            FF_SYNCSERVER_SECRET: ''
+            OVERRIDE_PASSWORD: ''
+            STORAGE_FILEPATH: ''
+            STORAGE_TYPE: ''
+            DB_ENGINE: ''
+            TANDOOR_PORT: ''
+            ALLOWED_HOSTS: ''
+            COMMENT_PREF_DEFAULT: 1
+            CSRF_TRUSTED_ORIGINS: ''
+            FRACTION_PREF_DEFAULT: 0
+            GUNICORN_MEDIA: 0
+            SHOPPING_MIN_AUTOSYNC_INTERVAL: 5
+            BASE_URL: ''
+            USE_X_SETTINGS: true
+            HIDE_REFERER: true
+            FETCH_WORKERS: 10
             UPS_HOST: ''
             UPS_PORT: 0
             UPS_USER: ''
             UPS_PASSWORD: ''
-            OPENWEBRX_ADMIN_USER: ''
-            OPENWEBRX_ADMIN_PASSWORD: ''
-            LEAF_TYPE: ''
-            MQTT_HOST: ''
-            MQTT_PORT: 0
-            MQTT_BASE_TOPIC: ''
-            UPDATE_INTERVAL_MINUTES: 60
-            CHARGING_UPDATE_INTERVAL_MINUTES: 60
-            LEAF_USERNAME: ''
-            LEAF_PASSWORD: ''
-            MQTT_USERNAME: ''
-            MQTT_PASSWORD: ''
-            BORG_UID: ''
-            BORG_GID: ''
-            QBT_RUN: false
-            QBT_SCHEDULE: 30
-            QBT_CROSS_SEED: false
-            QBT_RECHECK: false
-            QBT_CAT_UPDATE: false
-            QBT_TAG_UPDATE: false
-            QBT_REM_UNREGISTERED: false
-            QBT_TAG_TRACKER_ERROR: false
-            QBT_REM_ORPHANED: false
-            QBT_TAG_NOHARDLINKS: false
-            QBT_SHARE_LIMITS: false
-            QBT_SKIP_CLEANUP: false
-            QBT_SKIP_QB_VERSION_CHECK: false
-            QBT_DRY_RUN: false
-            QBT_LOG_LEVEL: ''
-            QBT_DIVIDER: ''
-            QBT_WIDTH: 100
-            MQTT_PASS: ''
-            MQTT_USER: ''
-            TOPIC_PREFIX: ''
-            VENSTAR_HOST: ''
             STEAMCMD_DIR: ''
             SERVER_DIR: ''
-            UPDATE_PUBLIC_IP: ''
-            BACKUP: ''
-            BACKUP_INTERVAL: ''
-            BACKUP_TO_KEEP: ''
-            SP_SERVER_LISTEN: ''
-            SP_DB_TYPE: ''
-            SP_DB_URL:
-              secretKeyRef:
-                name: ''
-                key: ''
-            SP_FILESTORAGE_LOCAL_ROOT: ''
-            APP_BRANCH: ''
-            BLACKLIST: ''
-            DELAY: ''
-            NOSEARCH: ''
-            NOTIFICATIONS: ''
-            RUNNOW: ''
-            SKIPUPDATE: ''
-            SORT: ''
-            WOPI_ENABLED: true
-            JWT_ENABLED: true
-            REDIS_SERVER_PORT: 0
-            DB_PWD:
-              secretKeyRef:
-                name: ''
-                key: ''
-            REDIS_SERVER_HOST:
+            SPOTWEB_SYSTEMTYPE: ''
+            SPOTWEB_FIRSTNAME: ''
+            SPOTWEB_LASTNAME: ''
+            SPOTWEB_MAIL: ''
+            SPOTWEB_RETRIEVE: ''
+            DB_SCHEMA: ''
+            SPOTWEB_USERNAME: ''
+            SPOTWEB_PASSWORD: ''
+            EXILEMOD_SERVER_URL: ''
+            MARIA_DB_ROOT_PWD: ''
+            WORKSHOP_MAN_INST: ''
+            JELLYFIN_DATA_DIR: ''
+            JELLYFIN_CONFIG_DIR: ''
+            JELLYFIN_LOG_DIR: ''
+            JELLYFIN_CACHE_DIR: ''
+            JELLYFIN_PublishedServerUrl: ''
+            EXPIRY_DAYS: ''
+            RUST_LOG: ''
+            SQLITE_URI: ''
+            ZEROTIER_API_SECRET: ''
+            ZEROTIER_IDENTITY_PUBLIC: ''
+            ZEROTIER_IDENTITY_SECRET: ''
+            dbhost:
               secretKeyRef:
                 expandObjectName: false
                 name: ''
                 key: ''
-            REDIS_SERVER_PASS:
+            dbuser: ''
+            dbname: ''
+            dbpass: ''
+            dbport: 0
+            igdbclientid: ''
+            igdbclientsecret: ''
+            GOKAPI_LENGTH_ID: ''
+            GOKAPI_MAX_FILESIZE: ''
+            GOKAPI_MAX_MEMORY_UPLOAD: ''
+            GOKAPI_PASSWORD: ''
+            GOKAPI_USERNAME: ''
+            INSTANCE_IP: ''
+            INSTANCE_IDENTIFIER: ''
+            BOOTSTRAP_ROLES: ''
+            ADMIN_TOKEN:
+              secretKeyRef:
+                name: ''
+                key: ''
+            INSTANCE_LISTEN: ''
+            SERVER_ROOT: ''
+            SHIORI_DIR: ''
+            SHIORI_DBMS: ''
+            SHIORI_PG_PORT: ''
+            SHIORI_PG_USER: ''
+            SHIORI_PG_NAME: ''
+            SHIORI_PG_HOST:
+              secretKeyRef:
+                name: ''
+                key: ''
+            SHIORI_PG_PASS:
+              secretKeyRef:
+                name: ''
+                key: ''
+            fleet_admin_authentication_type: ''
+            fleet_database_username: ''
+            fleet_database_url:
               secretKeyRef:
                 expandObjectName: false
                 name: ''
                 key: ''
-            ND_MUSICFOLDER: ''
-            ND_SCANNER_SCHEDULE: ''
-            ND_LOGLEVEL: ''
-            ND_SESSIONTIMEOUT: ''
-            ND_ENABLETRANSCODINGCONFIG: false
-            REDIS_DB: ''
-            REDIS_CACHE_DB: ''
-            CACHE_DRIVER: ''
-            SESSION_DRIVER: ''
-            REDIS_SCHEME: ''
-            TRUSTED_PROXIES: ''
-            STATIC_CRON_TOKEN:
-              secretKeyRef:
-                name: ''
-                key: ''
-            STORAGE_DIR: ''
-            PASSWORDMINCHAR: 8
-            PASSWORDMAXCHAR: 0
-            PASSWORDLOWERCASE: 1
-            PASSWORDUPPERCASE: 1
-            PASSWORDNUMERIC: 1
-            PASSWORDSYMBOL: 1
-            PASSWORDREQUIREMENTS: 4
+            fleet_database_password: ''
+            CR_CONF_Database.Type: ''
+            CR_CONF_Database.Host: ''
+            CR_CONF_Database.User: ''
+            CR_CONF_Database.Name: ''
+            CR_CONF_Database.Password: ''
+            CR_CONF_Database.Port: 0
+            CR_CONF_Redis.Server: ''
+            CR_CONF_Redis.User: ''
+            CR_CONF_Redis.Password: ''
+            WORLD_INDEX: ''
+            WORLD_NAME: ''
+            OPTIONS: ''
+            ROOT_URL: ''
             PASTEY_LISTEN_PORT: ''
             PASTEY_LISTEN_ADDRESS: ''
             PASTEY_BEHIND_PROXY: false
@@ -969,117 +1052,101 @@ workload:
             PASTEY_FORCE_SHOW_RECENT: false
             PASTEY_IGNORE_GUESS: ''
             PASTEY_SHOW_CLI_BUTTON: true
-            ME_CONFIG_MONGODB_PORT: ''
-            ME_CONFIG_MONGODB_SERVER: ''
-            ME_CONFIG_BASICAUTH_USERNAME: ''
-            ME_CONFIG_BASICAUTH_PASSWORD: ''
-            ME_CONFIG_OPTIONS_EDITORTHEME: ''
-            ME_CONFIG_MONGODB_AUTH_DATABASE: ''
-            ME_CONFIG_MONGODB_AUTH_USERNAME: ''
-            ME_CONFIG_MONGODB_AUTH_PASSWORD: ''
-            ZO_ROOT_USER_EMAIL: ''
-            ZO_ROOT_USER_PASSWORD: ''
-            ZO_DATA_DIR: ''
-            ZO_WEB_URL: ''
-            ZO_TELEMETRY: ''
-            SSHWIFTY_HOSTNAME: ''
-            SSHWIFTY_SHAREDKEY: ''
-            DialTimeout: 10
-            SSHWIFTY_LISTENPORT: ''
-            SSHWIFTY_LISTENINTERFACE: ''
-            SSHWIFTY_INITIALTIMEOUT: 3
-            SSHWIFTY_READTIMEOUT: 60
-            SSHWIFTY_WRITETIMEOUT: 60
-            SSHWIFTY_HEARTBEATTIMEOUT: 20
-            SSHWIFTY_READDELAY: 10
-            SSHWIFTY_WRITEELAY: 10
-            GENERATE_NEW_SAVE: false
-            LOAD_LATEST_SAVE: true
-            SAVE_NAME: ''
-            UPDATE_MODS_ON_START: ''
-            API_BINDING: ''
-            IN_KUBE_CLUSTER: true
-            DEFAULT: ''
-            MAPPING: ''
-            BUNDLE_WITHOUT: ''
-            DATABASE_ENCODING: ''
-            DATABASE_TYPE: ''
-            DATABASE_USERNAME: ''
-            RAILS_ENV: ''
-            TRAKT_ID: ''
-            TRAKT_SECRET: ''
-            HTTP_PORT: ''
-            HTTP_ALL_INTERFACES: ''
-            NODE_ENV: ''
-            MYDOMAIN: ''
-            ZTNCUI_PASSWD: ''
-            PAPERMERGE__SECURITY__SECRET_KEY:
+            COMMUNITY_NAME: ''
+            SLACK_TOKEN: ''
+            SLACK_URL: ''
+            ALPHA_VANTAGE_API_KEY: ''
+            ACCESS_TOKEN_SALT:
               secretKeyRef:
                 name: ''
                 key: ''
-            PAPERMERGE__AUTH__USERNAME: ''
-            PAPERMERGE__AUTH__PASSWORD: ''
-            PAPERMERGE__DATABASE__URL: ''
-            PAPERMERGE__REDIS__URL:
+            JWT_SECRET_KEY:
+              secretKeyRef:
+                name: ''
+                key: ''
+            GAME_PARAMS_EXTRA: ''
+            MAP: ''
+            SRV_ADMIN_PWD: ''
+            SRV_PWD: ''
+            LLDAP_HTTP_PORT: ''
+            LLDAP_LDAP_PORT: ''
+            LLDAP_HTTP_URL: ''
+            LLDAP_LDAP_BASE_DN: ''
+            LLDAP_LDAP_USER_DN: ''
+            LLDAP_LDAP_USER_EMAIL: ''
+            LLDAP_LDAP_USER_PASS: ''
+            LLDAP_VERBOSE: false
+            LLDAP_SMTP_OPTIONS__ENABLE_PASSWORD_RESET: false
+            LLDAP_SMTP_OPTIONS__SERVER: ''
+            LLDAP_SMTP_OPTIONS__PORT: 0
+            LLDAP_SMTP_OPTIONS__SMTP_ENCRYPTION: ''
+            LLDAP_SMTP_OPTIONS__USER: ''
+            LLDAP_SMTP_OPTIONS__PASSWORD: ''
+            LLDAP_SMTP_OPTIONS__FROM: ''
+            LLDAP_SMTP_OPTIONS__REPLY_TO: ''
+            LLDAP_JWT_SECRET:
+            - secretRef:
+                name: ''
+                key: ''
+            LLDAP_key_file: ''
+            LLDAP_database_url:
+              secretKeyRef:
+                name: ''
+                key: ''
+            STORE_PASSWORD: ''
+            STORE_USER: ''
+            PAGINATION_TAKE_COUNT: ''
+            STORAGE_FOLDER: ''
+            AUTOSCROLL_TIMEOUT: ''
+            NEXT_PUBLIC_DISABLE_REGISTRATION: ''
+            RE_ARCHIVE_LIMIT: ''
+            INIT_SEAFILE_ADMIN_EMAIL: ''
+            INIT_SEAFILE_ADMIN_PASSWORD: ''
+            TIME_ZONE: ''
+            SEAFILE_LOG_TO_STDOUT: ''
+            SEAFILE_SERVER_HOSTNAME: ''
+            SEAFILE_SERVER_PROTOCOL: ''
+            JWT_PRIVATE_KEY: ''
+            SEAFILE_MYSQL_DB_HOST:
               secretKeyRef:
                 expandObjectName: false
                 name: ''
                 key: ''
-            FLOOD_AUTH: ''
-            HOSTNAME: ''
-            JOB_SERVER_URL: ''
-            SESSION_SECRET: ''
+            SEAFILE_MYSQL_DB_PORT: ''
+            SEAFILE_MYSQL_DB_USER: ''
+            SEAFILE_MYSQL_DB_CCNET_DB_NAME: ''
+            SEAFILE_MYSQL_DB_SEAFILE_DB_NAME: ''
+            SEAFILE_MYSQL_DB_SEAHUB_DB_NAME: ''
+            INIT_SEAFILE_MYSQL_ROOT_PASSWORD: ''
+            SEAFILE_MYSQL_DB_PASSWORD: ''
+            CACHE_PROVIDER: ''
+            ENABLE_NOTIFICATION_SERVER: ''
+            NOTIFICATION_SERVER_URL: ''
+            ENABLE_SEADOC: ''
+            SEADOC_SERVER_URL: ''
+            ENABLE_SEAFILE_AI: ''
+            SEAFILE_AI_SERVER_URL: ''
+            MD_FILE_COUNT_LIMIT: ''
+            PROFILE_ID: ''
+            RADARR_KEY: ''
+            RADARR_URL: ''
+            RADARR4K_KEY: ''
+            RADARR4K_URL: ''
             PLEX_TOKEN: ''
             PLEX_URL: ''
-            QBT_WEBUI_PORT: ''
-            QBT_TORRENTING_PORT: ''
-            ZEROTIER_API_SECRET: ''
-            ZEROTIER_IDENTITY_PUBLIC: ''
-            ZEROTIER_IDENTITY_SECRET: ''
-            STATE_DIR: ''
-            DOWNLOAD_DIR: ''
-            OUTPUT_TEMPLATE: ''
-            YTDL_OPTIONS: ''
-            HOME: ''
-            REDIS_SERVER_PASSWORD: ''
-            ANONADDY_DOMAIN: ''
-            MAIL_FROM_NAME: ''
-            MAIL_FROM_ADDRESS: ''
-            MAIL_DRIVER: ''
-            MAIL_HOST: ''
-            MAIL_PORT: 25
-            MAIL_ENCRYPTION: ''
-            MAIL_EHLO_DOMAIN: ''
-            MAIL_VERIFY_PEER: false
-            ANONADDY_SECRET:
+            DATA_DIR: ''
+            APPFILE: ''
+            APPPATH: ''
+            VUID: ''
+            AUDIOBOOKSHELF_UID: ''
+            AUDIOBOOKSHELF_GID: ''
+            TOKEN_SECRET:
               secretKeyRef:
                 name: ''
                 key: ''
-            CRON_SCHEDULE: ''
-            CAVES: ''
-            FORCE_X64: ''
-            DISPATCHARR_ENV: ''
-            CHECK_FREQUENCY: 0
-            YOURLS_DB_HOST:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
-            YOURLS_DB_NAME: ''
-            YOURLS_DB_USER: ''
-            YOURLS_DB_PASS:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
-            YOURLS_PRIVATE: false
-            YOURLS_SITE: ''
-            YOURLS_USER: ''
-            YOURLS_PASS: ''
-            APP_DATA: ''
-            ODOO_RC: ''
-            DROPBOX_GID: ''
-            DROPBOX_UID: ''
+            WWW_PORT: ''
+            EXTRA_CMD_ARG: ''
+            WRITABLE_PATH: ''
             ATUIN_HOST: ''
             ATUIN_PORT: ''
             ATUIN_OPEN_REGISTRATION: ''
@@ -1093,206 +1160,84 @@ workload:
               secretKeyRef:
                 name: ''
                 key: ''
-            COMMUNITY_NAME: ''
-            SLACK_TOKEN: ''
-            SLACK_URL: ''
-            comet__Database__ConnectionString: ''
-            ADDON_ID: ''
-            ADDON_NAME: ''
-            ZILEAN_URL: ''
-            INDEXER_MANAGER_TYPE: ''
-            INDEXER_MANAGER_TIMEOUT: ''
-            GET_TORRENT_TIMEOUT: ''
-            FASTAPI_WORKERS: ''
-            SCRAPE_TORRENTIO: ''
-            CLICKHOUSE_DB: ''
-            CLICKHOUSE_USER: ''
-            CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: ''
-            CLICKHOUSE_PASSWORD:
-              secretKeyRef:
-                expandObjectName: ''
-                name: ''
-                key: ''
-            JTS3_LOG: ''
-            WEBUI_PWD: ''
-            GUI_PWD: ''
-            HTTPS_PORT: ''
-            REDIRECT_TO_HTTPS: true
-            APPFILE: ''
-            APPPATH: ''
-            HOSTS: ''
-            ytdl_mongodb_connection_string:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
-            ytdl_port: ''
-            ytdl_use_local_db: false
-            ALLOW_CONFIG_MUTATIONS: true
-            write_ytdl_config: true
-            ytdl_url: ''
-            ytdl_multi_user_mode: false
-            ytdl_allow_subscriptions: true
-            ytdl_subscriptions_check_interval: 0
-            ytdl_subscriptions_redownload_fresh_uploads: false
-            ytdl_allow_theme_change: true
-            ytdl_default_theme: ''
-            ytdl_title_top: ''
-            ytdl_file_manager_enabled: true
-            ytdl_enable_downloads_manager: true
-            ytdl_allow_quality_select: true
-            ytdl_download_only_mode: false
-            ytdl_use_api_key: false
-            ytdl_api_key: ''
-            ytdl_youtube_api_key: ''
-            ytdl_use_twitch_api: false
-            ytdl_twitch_api_key: ''
-            ytdl_twitch_auto_download_chat: false
-            ytdl_use_sponsorblock_api: false
-            ytdl_generate_nfo_files: false
-            ytdl_default_file_output: ''
-            ytdl_custom_args: ''
-            ytdl_allow_playlist_categorization: true
-            ytdl_use_youtubedl_archive: false
-            ytdl_include_thumbnail: true
-            ytdl_include_metadata: true
-            ytdl_max_concurrent_downloads: 5
-            ytdl_download_rate_limit: ''
-            ytdl_default_downloader: ''
-            ytdl_use_default_downloading_agent: true
-            ytdl_custom_downloading_agent: ''
-            ytdl_logger_level: ''
-            ytdl_jwt_expiration: 0
-            ytdl_allow_advanced_download: false
-            ytdl_use_cookies: false
-            ADMINER_DESIGN: ''
-            ADMINER_PLUGINS: ''
-            API_FILE: ''
-            PROXY_TARGET: ''
-            AUTH_TOKEN_HEADER: ''
-            AUTH_TOKEN_PREFIX: ''
-            CSRF_TOKEN: ''
-            ARGS: ''
-            DB_BACKEND: ''
-            DB_PGSQL_USERNAME: ''
-            DB_PGSQL_DATABASE: ''
-            DB_PGSQL_PORT: 0
-            AUTH_AUTHENTICATOR: ''
-            RUN_OPTS: ''
-            DB_PGSQL_PASSWORD:
-              secretKeyRef:
-                name: ''
-                key: ''
-            DB_PGSQL_HOSTNAME:
-              secretKeyRef:
-                name: ''
-                key: ''
-            IMMICH_MACHINE_LEARNING_ENABLED: ''
-            IMMICH_MACHINE_LEARNING_URL: ''
-            IMMICH_PORT: ''
-            IMMICH_WORKERS_INCLUDE: ''
-            DB_DATABASE_NAME: ''
-            REDIS_HOSTNAME: ''
-            REDIS_DBINDEX: ''
-            CHEVERETO_DB_DRIVER: ''
-            CHEVERETO_DB_NAME: ''
-            CHEVERETO_DB_USER: ''
-            CHEVERETO_DB_PORT: ''
-            CHEVERETO_TAG: ''
-            CHEVERETO_DB_HOST:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
-            CHEVERETO_DB_PASS:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
-            DOCS_BASE_URL: ''
-            APP_IPMI_HOST: ''
-            APP_IPMI_PASS: ''
-            APP_IPMI_USER: ''
-            KEYBOARD: ''
-            MARIADB_PASSWORD: ''
-            MARIADB_ROOT_PASSWORD: ''
-            MARIADB_USER: ''
-            MARIADB_DATABASE: ''
-            MARIADB_EXTRA_FLAGS: ''
-            PUBLIC_URL: ''
-            AUTH_TOKEN_SECRET: ''
-            BIND__PORT: ''
-            SETUP: true
-            EMAIL: ''
-            ADDRESS: ''
-            STORAGE: ''
-            WALLET: ''
-            SPLUNK_START_ARGS: ''
-            SPLUNK_PASSWORD: ''
-            WORKSPACE_DIR: ''
-            METRICS_JSON_PATH: ''
-            HOST: ''
-            WORKSPACE_DELETE_EXPIRED: false
-            WORKSPACE_EXPIRE_DAYS: 30
-            CHROME_REFRESH_TIME: 0
-            MAX_CONCURRENT_SESSIONS: 5
-            MAX_QUEUE_LENGTH: 5
-            CONNECTION_TIMEOUT: 0
-            DEFAULT_BLOCK_ADS: true
-            DEFAULT_HEADLESS: true
-            DEFAULT_IGNORE_HTTPS_ERRORS: true
-            DEFAULT_IGNORE_DEFAULT_ARGS: true
-            ENABLE_API_GET: true
-            FUNCTION_ENABLE_INCOGNITO_MODE: true
-            EXIT_ON_HEALTH_FAILURE: true
-            DISABLE_AUTO_SET_DOWNLOAD_BEHAVIOR: false
-            ENABLE_DEBUGGER: true
-            ENABLE_CORS: false
-            ENABLE_XVBF: true
-            LOG_DIR: ''
-            LOG_FILE: ''
-            LOG_BACKUP_COUNT: ''
-            LOG_MAX_SIZE_MB: ''
-            CALENDAR_URLS: ''
-            USE_DISCORD: ''
-            DISCORD_WEBHOOK_URL: ''
-            DISCORD_HIDE_MENTION_INSTRUCTIONS: ''
-            DISCORD_MENTION_ROLE_ID: ''
-            USE_SLACK: ''
-            SLACK_WEBHOOK_URL: ''
-            CUSTOM_HEADER: ''
-            ENABLE_CUSTOM_DISCORD_FOOTER: ''
-            ENABLE_CUSTOM_SLACK_FOOTER: ''
-            SHOW_DATE_RANGE: ''
-            START_WEEK_ON_MONDAY: ''
-            RUN_ON_STARTUP: ''
-            ADD_LEADING_ZERO: ''
-            CALENDAR_RANGE: ''
-            DEDUPLICATE_EVENTS: ''
-            DISPLAY_TIME: ''
-            HTTP_TIMEOUT: ''
-            PASSED_EVENT_HANDLING: ''
-            RUN_TIME: ''
-            SCHEDULE_DAY: ''
-            SCHEDULE_TYPE: ''
-            SHOW_TIMEZONE_IN_SUBHEADER: ''
-            USE_24_HOUR: ''
+            MYSQL_PASSWORD: ''
+            MYSQL_USER: ''
+            PMA_HOST: ''
+            PMA_PORT: ''
+            DISCORD_TOKEN: ''
+            SPOTIFY_CLIENT_ID: ''
+            SPOTIFY_CLIENT_SECRET: ''
+            YOUTUBE_API_KEY: ''
+            BOT_STATUS: ''
+            BOT_ACTIVITY_TYPE: ''
+            BOT_ACTIVITY: ''
+            BOT_ACTIVITY_URL: ''
+            REGISTER_COMMANDS_ON_BOT: ''
+            CACHE_LIMIT: ''
+            WS_CONTENT: ''
+            PLEX_PREFERENCE_GDM: ''
+            PLEX_PREFERENCE_SEC_CON: ''
+            ALLOWED_NETWORKS: ''
+            PLEX_CLAIM: ''
+            GAME_CONFIG: ''
+            MANUAL_UPDATES: ''
+            SERVER_KEY: ''
+            SRV_ADR: ''
+            START_VARS: ''
+            BUNDLE_WITHOUT: ''
+            DATABASE_ENCODING: ''
+            RAILS_ENV: ''
+            ADMIN_PWD: ''
+            HOME: ''
+            CRONTAB_SCHEDULE: ''
+            ICS_PASSWORD: ''
+            ICS_URL: ''
+            ICS_USERNAME: ''
+            UPDATE_PUBLIC_IP: ''
+            BACKUP: ''
+            BACKUP_INTERVAL: ''
+            BACKUP_TO_KEEP: ''
+            DB_LOG_QUERIES: ''
             UPTIME_KUMA_PORT: ''
-            dbhost:
+            HOMEPAGE_ALLOWED_HOSTS: ''
+            VNC_VIEW_ONLY: ''
+            DATABASE_PASS:
               secretKeyRef:
-                expandObjectName: false
                 name: ''
                 key: ''
-            dbuser: ''
-            dbname: ''
-            dbpass: ''
-            dbport: 0
-            igdbclientid: ''
-            igdbclientsecret: ''
-            SIA_API_PASSWORD: ''
-            SIA_WALLET_PASSWORD: ''
-            VS_CHANNEL: ''
-            DOMAIN: ''
+            DISABLE_MQTT: true
+            MQTT_HOST: ''
+            MQTT_PORT: 0
+            MQTT_USERNAME: ''
+            MQTT_PASSWORD: ''
+            APP_BASE_URL: ''
+            APP_PORT: ''
+            DB_CLIENT: ''
+            POSTGRES_DATABASE: ''
+            MAILER_ENABLED: 0
+            MAILER_HOST: ''
+            MAILER_PORT: 0
+            MAILER_SECURITY: ''
+            MAILER_AUTH_USER: ''
+            MAILER_AUTH_PASSWORD: ''
+            MAILER_NOREPLY_NAME: ''
+            MAILER_NOREPLY_EMAIL: ''
+            APWD: ''
+            AUTO_SAV_I: ''
+            DIFF: ''
+            ELC: ''
+            ILR: ''
+            LOG_LVL: ''
+            MAX_CLIENTS: ''
+            MAXLEVEL: ''
+            MINLEVEL: ''
+            MOD_NAME: ''
+            ONEPARTY: ''
+            PAUSEAPLAY: ''
+            PPW: ''
+            PUBLIC_SRV: ''
+            RLD_W_E: ''
+            SERVERVAULT: ''
             am_arkNoPortDecrement: ''
             am_arkGameIniFile: ''
             am_arkGameUserSettingsIniFile: ''
@@ -1313,101 +1258,52 @@ workload:
             am_ark_RCONEnabled: ''
             am_ark_ServerAdminPassword: ''
             am_arkflag_USECACHE: ''
-            MAXMEM: 0
-            APP_CLEAN_INTERVAL: ''
-            KASM_PORT: ''
-            DOCKER_HUB_PASSWORD: ''
-            DOCKER_HUB_USERNAME: ''
-            AMCREST_HOST: ''
-            AMCREST_PORT: 80
-            HOME_ASSISTANT: ''
-            HOME_ASSISTANT_PREFIX: ''
-            AMCREST_USERNAME: ''
-            AMCREST_PASSWORD: ''
-            FLEXO_LISTEN_IP_ADDRESS: ''
-            FLEXO_PORT: ''
-            TAKE_FILE_OWNERSHIP: false
-            INSTALL_ASSETTO_SERVER_MANAGER: ''
-            INSTALL_STRACKER: ''
-            ALPHA_VANTAGE_API_KEY: ''
-            ACCESS_TOKEN_SALT:
+            ASR_MODEL: ''
+            ASR_ENGINE: ''
+            MB_JETTY_PORT: ''
+            JAVA_TIMEZONE: ''
+            MB_DB_TYPE: ''
+            MB_DB_USER: ''
+            MB_DB_DBNAME: ''
+            MB_DB_PORT: 0
+            MB_DB_HOST:
               secretKeyRef:
                 name: ''
                 key: ''
-            JWT_SECRET_KEY:
+            MB_DB_PASS:
               secretKeyRef:
                 name: ''
                 key: ''
-            GAME_MOD: ''
-            ENABLE_BEPINEX: ''
-            MYSQL_USERNAME: ''
-            MYSQL_HOST:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
-            MYSQL_PASSWORD:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
-            OVERRIDE_PASSWORD: ''
-            STORAGE_FILEPATH: ''
-            STORAGE_TYPE: ''
-            DL_URL_PATCH: ''
-            DL_URL_PR: ''
-            Q3_MAP: ''
-            Q3_PORT: ''
-            CLI_ARGS:
-            CUSTOM_RES_H: ''
-            CUSTOM_RES_W: ''
-            THUNDERBIRD_LANG: ''
-            THUNDERBIRD_V: ''
-            TTRSS_SELF_URL_PATH: ''
-            ADMIN_USER_PASS: ''
-            TTRSS_DB_NAME: ''
-            TTRSS_DB_USER: ''
-            TTRSS_DB_PORT: ''
-            TTRSS_DB_PASS:
-              secretKeyRef:
-                name: ''
-                key: ''
-            TTRSS_DB_HOST:
-              secretKeyRef:
-                name: ''
-                key: ''
-            PGADMIN_DEFAULT_EMAIL: ''
-            PGADMIN_DEFAULT_PASSWORD: ''
-            ADMIN_EMAIL: ''
-            RUN_CHOWN: true
-            DB_MONGO_LOCAL: true
-            LISTENER_PORT: ''
-            SERIAL_DEVICE: ''
-            BAUD_RATE: 0
-            CLOAK_KEY: ''
-            SECRET_KEY_BASE: ''
-            ECTO_IPV6: false
-            REGISTRATION: ''
-            LOCALE: ''
-            SMTP_HOST: ''
-            SMTP_USERNAME: ''
-            SMTP_PASSWORD: ''
-            SMTP_SSL: false
-            EMAIL_FROM: ''
-            EMAIL_NAME: ''
-            NITTER_SESSIONS_FILE: ''
-            DATA_DIR: ''
-            DISCORD_TOKEN: ''
-            SPOTIFY_CLIENT_ID: ''
-            SPOTIFY_CLIENT_SECRET: ''
-            YOUTUBE_API_KEY: ''
-            BOT_STATUS: ''
-            BOT_ACTIVITY_TYPE: ''
-            BOT_ACTIVITY: ''
-            BOT_ACTIVITY_URL: ''
-            REGISTER_COMMANDS_ON_BOT: ''
-            CACHE_LIMIT: ''
-            OPTIONS: ''
+            SSHWIFTY_HOSTNAME: ''
+            SSHWIFTY_SHAREDKEY: ''
+            DialTimeout: 10
+            SSHWIFTY_LISTENPORT: ''
+            SSHWIFTY_LISTENINTERFACE: ''
+            SSHWIFTY_INITIALTIMEOUT: 3
+            SSHWIFTY_READTIMEOUT: 60
+            SSHWIFTY_WRITETIMEOUT: 60
+            SSHWIFTY_HEARTBEATTIMEOUT: 20
+            SSHWIFTY_READDELAY: 10
+            SSHWIFTY_WRITEELAY: 10
+            KROMGO_PROMETHEUS_URL: ''
+            KROMGO_SERVER_PORT: ''
+            KROMGO_HEALTH_PORT: ''
+            TASMO_DEBUG: 1
+            UPLOAD_PROVIDER: ''
+            UPLOAD_FOLDER: ''
+            LOG_FOLDER: ''
+            MAIL_USEAUTH: false
+            MAILFROM_ADDR: ''
+            MAIL_SERVER: ''
+            MAIL_PORT: 0
+            MAIL_USERNAME: ''
+            MAIL_PASSWORD: ''
+            MAIL_TLS: false
+            MAIL_SSL: false
+            SAFE_MODE: true
+            REVERSE_PROXY: false
+            OAUTH_CLIENT_ID: ''
+            OAUTH_CLIENT_SECRET: ''
             PAPERLESS_PORT: ''
             PAPERLESS_DATA_DIR: ''
             PAPERLESS_CONSUMPTION_DIR: ''
@@ -1446,123 +1342,54 @@ workload:
             PAPERLESS_ADMIN_MAIL: ''
             PAPERLESS_OCR_LANGUAGE: ''
             PAPERLESS_OCR_LANGUAGES: ''
-            JELLYFIN_HOST: ''
-            SIGNUP_ENABLED: ''
-            TMDB_KEY: ''
-            HYTALE_AUTO_UPDATE: false
-            HYTALE_PORT: ''
-            HYTALE_ALLOW_OP: true
-            HYTALE_BACKUP_ENALBED: false
-            HYTALE_BACKUP_DIR: ''
-            HYTALE_BACKUP_FREQ: 30
-            BEACON_PORT: ''
-            PWM_APPLICATIONFLAGS: ''
-            CORS_ORIGIN: ''
-            ANKISYNCD_USERNAME: ''
-            ANKISYNCD_PASSWORD: ''
-            FILE_DIR: ''
-            MAX_DOWNLOADS: ''
-            MAX_EXPIRE_SECONDS: ''
-            MAX_FILE_SIZE: ''
-            AUTO_INSTALL: true
-            INSTALL_PORT: 80
-            LANGUAGE: ''
-            SITE_NAME: ''
-            SITE_URL: ''
-            CONTACT_EMAIL: ''
-            ADMIN_NAME: ''
-            webUIPort: ''
-            serverPort: ''
-            internalNode: true
-            serverIP: ''
-            nodeID: ''
-            NPM_CONFIG_AUDIT: ''
-            NPM_CONFIG_FUND: ''
-            DATABASE_CLIENT: ''
-            STRAPI_DISABLE_UPDATE_NOTIFICATION: true
-            FAST_REFRESH: false
-            EXTRA_ARGS: ''
-            ADMIN_JWT_SECRET: ''
-            APP_KEYS: ''
-            SQLITE_DATABASE: ''
-            DB_PASS:
-              secretKeyRef:
-                name: ''
-                key: ''
-            GUAC_PASS: ''
-            GUAC_USER: ''
-            DEFAULTADMIN: ''
-            DEFAULTADMINPWD: ''
-            CASEMAP: ''
-            IP_ADDR: ''
-            IRCD: ''
-            LOCAL_HOSTNAME: ''
-            SSL: ''
-            API_TOKEN: ''
-            RECORD_TYPE: ''
-            ZONE_NAME: ''
-            RUTORRENT_PORT: ''
-            PORT_RTORRENT: ''
-            RT_DHT_PORT: ''
-            XMLRPC_PORT: ''
-            WEBDAV_PORT: ''
-            RT_INC_PORT: ''
-            SHLINK_SERVER_URL: ''
-            SHLINK_SERVER_API_KEY: ''
-            SHLINK_SERVER_NAME: ''
-            INSECURE: false
-            db_url: ''
-            password: ''
-            username: ''
-            INIT_MEMORY: ''
-            MAX_MEMORY: ''
-            NETWORKADDRESS_CACHE_TTL: 60
-            REPLACE_ENV_VARIABLES: false
-            ENV_VARIABLE_PREFIX: ''
-            JELLYFIN_DATA_DIR: ''
-            JELLYFIN_CONFIG_DIR: ''
-            JELLYFIN_LOG_DIR: ''
-            JELLYFIN_CACHE_DIR: ''
-            JELLYFIN_PublishedServerUrl: ''
-            EXTRA_PARAMS: ''
-            PROWLARR__SERVER__PORT: ''
-            PROWLARR__AUTH__METHOD: ''
-            PROWLARR__AUTH__REQUIRED: ''
-            SERVER_ROOT: ''
-            PLEX_LOGIN: ''
-            PLEX_PASSWORD: ''
-            SITE_OWNER: ''
-            SESSION_LIFETIME: ''
-            MAIL_FROM: ''
-            MAIL_USERNAME: ''
-            MAIL_PASSWORD: ''
-            AUTHENTICATION_GUARD: ''
-            AUTH_PROXY_HEADER_FOR_USER: ''
-            AUTH_PROXY_HEADER_FOR_EMAIL: ''
-            PROXY_LOGOUT_URL: ''
-            WEBAUTHN_NAME: ''
-            WEBAUTHN_ID: ''
-            WEBAUTHN_ICON: ''
-            WEBAUTHN_USER_VERIFICATION: ''
-            MYSQL_PORT: ''
-            MYSQL_PSW: ''
-            MYSQL_DATABASE: ''
-            MYSQL_ROOT_PASSWORD: ''
-            JWT_EXP: 1
-            USER_LIMIT: 0
-            UPLOAD_DIR: ''
-            API_PORT: ''
-            TREFLE_KEY: ''
-            ALLOWED_ORIGINS: ''
-            CACHE_TTL: 0
-            CACHE_HOST:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
-            CACHE_PORT: 0
-            SSL_ENABLED: false
-            CERTIFICATE_PATH: ''
+            HOST_IP: ''
+            FRIENDICA_TZ: ''
+            FRIENDICA_DATA_DIR: ''
+            FRIENDICA_CONFIG_DIR: ''
+            FRIENDICA_ADMIN_MAIL: ''
+            FRIENDICA_URL: ''
+            FRIENDICA_UPGRADE: false
+            FRIENDICA_SITENAME: ''
+            PHP_MEMORY_LIMIT: ''
+            PHP_UPLOAD_LIMIT: ''
+            REDIS_PW: ''
+            JELLYFIN_TYPE: ''
+            FLOOD_OPTION_RUNDIR: ''
+            DDNSR53_CREDENTIALS_ACCESSKEYID: ''
+            DDNSR53_CREDENTIALS_SECRETACCESSKEY: ''
+            DDNSR53_ROUTE53_HOSTEDZONEID: ''
+            DDNSR53_ROUTE53_RECORDSSET_0_NAME: ''
+            DDNSR53_ROUTE53_RECORDSSET_0_TTL: ''
+            DDNSR53_ROUTE53_RECORDSSET_0_TYPE: ''
+            LOG_JSON: ''
+            MAX_RETRIES: ''
+            UPTIMEROBOT_API_KEY: ''
+            WHOOGLE_CONFIG_COUNTRY: ''
+            WHOOGLE_CONFIG_THEME: ''
+            WHOOGLE_CONFIG_SAFE: true
+            WHOOGLE_CONFIG_ALTS: false
+            WHOOGLE_CONFIG_TOR: false
+            WHOOGLE_CONFIG_NEW_TAB: false
+            WHOOGLE_CONFIG_GET_ONLY: false
+            WHOOGLE_CONFIG_URL: ''
+            WHOOGLE_CONFIG_STYLE: ''
+            CLOAK_KEY: ''
+            ECTO_IPV6: false
+            REGISTRATION: ''
+            LOCALE: ''
+            SMTP_HOST: ''
+            SMTP_USERNAME: ''
+            SMTP_PASSWORD: ''
+            SMTP_SSL: false
+            EMAIL_FROM: ''
+            EMAIL_NAME: ''
+            GFX_PK_V: ''
+            CAVES: ''
+            FORCE_X64: ''
+            DOMAIN: ''
+            URL_BASE: ''
+            QUASSEL_CORE: ''
+            QUASSEL_PORT: 0
             AUTHELIA_SESSION_SECRET: ''
             AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET: ''
             AUTHELIA_STORAGE_ENCRYPTION_KEY: ''
@@ -1577,187 +1404,98 @@ workload:
             AUTHELIA_SESSION_REDIS_PORT: ''
             AUTHELIA_SESSION_REDIS_DATABASE_INDEX: ''
             AUTHELIA_SESSION_REDIS_PASSWORD: ''
-            DEFAULT_DOMAIN: ''
-            GEOLITE_LICENSE_KEY: ''
-            ANONYMIZE_REMOTE_ADDR: true
-            ENABLE_PERIODIC_VISIT_LOCATE: true
-            IS_HTTPS_ENABLED: true
-            REDIS_SERVERS:
+            API_FILE: ''
+            PROXY_TARGET: ''
+            AUTH_TOKEN_HEADER: ''
+            AUTH_TOKEN_PREFIX: ''
+            CSRF_TOKEN: ''
+            DEFAULT_ROOM: ''
+            EMBY_SERVER: ''
+            CHEVERETO_DB_DRIVER: ''
+            CHEVERETO_DB_NAME: ''
+            CHEVERETO_DB_USER: ''
+            CHEVERETO_DB_PORT: ''
+            CHEVERETO_TAG: ''
+            CHEVERETO_DB_HOST:
               secretKeyRef:
                 expandObjectName: false
                 name: ''
                 key: ''
-            LOG_ENV_VARS: false
-            UNMASKED: false
-            DATABASE_ADAPTER: ''
-            ENTRY: ''
-            SCHEME: ''
-            SHIORI_DIR: ''
-            SHIORI_DBMS: ''
-            SHIORI_PG_PORT: ''
-            SHIORI_PG_USER: ''
-            SHIORI_PG_NAME: ''
-            SHIORI_PG_HOST:
+            CHEVERETO_DB_PASS:
               secretKeyRef:
+                expandObjectName: false
                 name: ''
                 key: ''
-            SHIORI_PG_PASS:
-              secretKeyRef:
-                name: ''
-                key: ''
-            RELAY_NETWORKS: ''
-            RELAY_DOMAINS: ''
-            SMARTHOST_ADDRESS: ''
-            SMARTHOST_PORT: ''
-            SMARTHOST_USER: ''
-            SMARTHOST_PASSWORD: ''
-            SMARTHOST_ALIASES: ''
-            SUBDOMAINS: ''
-            CONFIG_PATH: ''
-            APPLICATION_URL: ''
-            GDRIVE_CLIENT_ID: ''
-            GDRIVE_CLIENT_SECRET: ''
-            DROPBOX_CLIENT_ID: ''
-            ONLYOFFICE_URL: ''
-            TASMO_DEBUG: 1
-            zurg_FORCE_ENV: ''
-            NOTIFICATION_TYPE: ''
-            PROVIDER: ''
-            PUSHOVER_TITLE: ''
-            PUSHOVER_TOKEN: ''
-            PUSHOVER_USER: ''
-            RECOVERY_ALERT: ''
-            ACCESS_KEY: ''
-            S3CMDPARAMS: ''
-            S3PATH: ''
+            ENABLE_BEPINEX: ''
+            RPC_PORT: ''
+            LISTEN_PORT: ''
+            DISK_CACHE: ''
+            IPV6_MODE: false
+            UPDATE_TRACKERS: false
+            CUSTOM_TRACKER_URL: ''
+            RPC_SECRET: ''
+            PS_SHARED_SECRET: ''
+            LITESTREAM_BUCKET: ''
+            LITESTREAM_ENDPOINT: ''
+            LITESTREAM_ACCESS_KEY_ID: ''
+            LITESTREAM_SECRET_ACCESS_KEY: ''
+            LITESTREAM_RETENTION: ''
             PORT_NOVNC_WEB: ''
             WEB_UI_MODE: ''
             ENABLE_VNC_AUDIO: false
             ENABLE_SUNSHINE: false
             ENABLE_EVDEV_INPUTS: false
-            IPFS_PROFILE: ''
-            IPFS_SWARM_KEY: ''
-            IPFS_SWARM_KEY_FILE: ''
-            DATA_PATH: ''
-            DL_URL: ''
-            FORCE_UPDATE: ''
-            DOCKER_ENABLE_SECURITY: false
-            INSTALL_BOOK_AND_ADVANCED_HTML_OPS: false
-            LANGS: ''
-            CHATID: ''
-            BASIC_AUTH: ''
-            BASIC_AUTH_PASSWORD: ''
-            BASIC_AUTH_USERNAME: ''
-            EXCLUDE_IPS: ''
-            SKIP_ARCHIVED_LOGS: ''
-            MQTT_DOWN: ''
-            MQTT_SERVER: ''
-            MQTT_UP: ''
-            SLEEP: ''
-            LOG_ROOT: ''
-            DUPLICATI__WEBSERVICE_PASSWORD: ''
-            SETTINGS_ENCRYPTION_KEY: ''
-            DUPLICATI__ALLOW_INSECURE_DATAFOLDER: true
-            DASH_URL: ''
-            HA_URL: ''
-            LATITUDE: 46
-            LONGITUDE: 0
-            ELEVATION: 0
-            DELUGE_RPC_HOSTNAME: ''
-            DELUGE_RPC_PORT: 0
-            DELUGE_RPC_PASSWORD: ''
-            DELUGE_RPC_USERNAME: ''
-            DELUGE_RPC_VERSION: ''
-            STORM_API_KEY: ''
-            PHPLDAPADMIN_HTTPS: ''
-            PHPLDAPADMIN_TRUST_PROXY_SSL: ''
-            HEXO_PLUGINS: ''
-            DASHDOT_PORT: ''
-            SRV_NETTYPE: ''
-            SRV_WORLDNAME: ''
-            OXIDE_MOD: ''
-            SERVER_DISCRIPTION: ''
-            CONVERSION_FORMAT: ''
-            DELETE_TS: ''
-            POST_PROCESS: ''
-            SOURCE_EXT: ''
-            SUBTITLES: ''
-            BASIC_URL: ''
-            GAME_VERSION: ''
-            GFX_PK_V: ''
-            IS_PERSISTENT: true
-            APIKEY_PATH: ''
-            LOG_PATH: ''
-            SECRETKEY_PATH: ''
-            BLOB_STORAGE_PATH: ''
-            OVERRIDE_DATABASE: true
-            DATABASE_SSL: false
-            EXECUTION_MODE: ''
-            FLOWISE_USERNAME: ''
-            FLOWISE_PASSWORD: 0
-            FLOWISE_FILE_SIZE_LIMIT: ''
-            CORS_ORIGINS: ''
-            FLOWISE_SECRETKEY_OVERWRITE:
+            INIT_MEMORY: ''
+            MAX_MEMORY: ''
+            NETWORKADDRESS_CACHE_TTL: 60
+            REPLACE_ENV_VARIABLES: false
+            ENV_VARIABLE_PREFIX: ''
+            CACHE_TYPE: ''
+            PUPPETEER_WS_ENDPOINT: ''
+            NODE_NAME: ''
+            DISALLOW_ROBOT: false
+            TITLE_LENGTH_LIMIT: 0
+            HTTP_BASIC_AUTH_NAME: ''
+            HTTP_BASIC_AUTH_PASS: ''
+            BITBUCKET_USERNAME: ''
+            BITBUCKET_PASSWORD: ''
+            GITHUB_ACCESS_TOKEN: ''
+            GOOGLE_FONTS_API_KEY: ''
+            YOUTUBE_KEY: ''
+            TELEGRAM_TOKEN: ''
+            LASTFM_API_KEY: ''
+            JTS3_LOG: ''
+            MAX_UPLOAD: 0
+            PHP_MAX_FILE_UPLOAD: 0
+            NOVNC_RESIZE: ''
+            RUNASROOT: ''
+            USER_LOCALES: ''
+            PHOTOVIEW_LISTEN_PORT: ''
+            PHOTOVIEW_LISTEN_IP: ''
+            PHOTOVIEW_DATABASE_DRIVER: ''
+            PHOTOVIEW_MEDIA_CACHE: ''
+            MAPBOX_TOKEN: ''
+            PHOTOVIEW_DISABLE_FACE_RECOGNITION: false
+            PHOTOVIEW_DISABLE_VIDEO_ENCODING: false
+            PHOTOVIEW_DISABLE_RAW_PROCESSING: false
+            PHOTOVIEW_POSTGRES_URL:
               secretKeyRef:
                 name: ''
                 key: ''
-            LANGCHAIN_TRACING_V2: false
-            CACHE_DISK_SIZE: ''
-            CACHE_MAX_AGE: ''
-            CACHE_INDEX_SIZE: ''
-            NOFETCH: ''
-            BACKUP_FILES: ''
-            SERVERCONFIG: ''
-            SECRET: ''
-            DBG: 0
-            REFRESH_TIME_MINUTES: 2
-            STEAM_WEB_API_KEY: ''
-            DISCORD_BOT_TOKEN: ''
-            TELEGRAM_BOT_TOKEN: ''
-            SLACK_BOT_TOKEN: ''
-            SLACK_APP_TOKEN: ''
-            MAX_WORKERS: 0
-            MAX_WORKERS_PER_GAME: 3
-            RECORDING_FRAMERATE: 30
-            STORAGE_PROVIDER: ''
-            STORAGE_SQLITE_PATH: ''
-            AUTH_COOKIE_SECURE: ''
-            TAKEOFF_DEVICE: ''
-            TAKEOFF_MODEL_NAME: ''
-            TAKEOFF_QUANT_TYPE: ''
-            TAKEOFF_MAX_BATCH_SIZE: ''
-            TAKEOFF_DISABLE_BATCHING: ''
-            NEKO_BIND: ''
-            NEKO_PATH_PREFIX: ''
-            NEKO_NAT1TO1: ''
-            NEKO_TCPMUX: ''
-            NEKO_UDPMUX: ''
-            NEKO_FILE_TRANSFER_ENABLED: true
-            NEKO_FILE_TRANSFER_PATH: ''
-            NEKO_CONTROL_PROTECTION: ''
-            NEKO_IMPLICIT_CONTROL: ''
-            NEKO_LOCKS: ''
-            NEKO_PASSWORD: ''
-            NEKO_PASSWORD_ADMIN: ''
-            NEKO_PROXY: ''
-            NEKO_SCREEN: ''
-            NEKO_CORS: ''
-            APWD: ''
-            AUTO_SAV_I: ''
-            DIFF: ''
-            ELC: ''
-            ILR: ''
-            LOG_LVL: ''
-            MAX_CLIENTS: ''
-            MAXLEVEL: ''
-            MINLEVEL: ''
-            MOD_NAME: ''
-            ONEPARTY: ''
-            PAUSEAPLAY: ''
-            PPW: ''
-            PUBLIC_SRV: ''
-            RLD_W_E: ''
-            SERVERVAULT: ''
+            PYTHONUNBUFFERED: ''
+            SD_WEBUI_VARIANT: ''
+            GITURL: ''
+            PYUSER: ''
+            PYPASS: ''
+            SPOTIFY_USER_ID: ''
+            DEEZER_USER_ID: ''
+            DEEZER_PLAYLIST_ID: ''
+            WRITE_MISSING_AS_CSV: ''
+            APPEND_SERVICE_SUFFIX: ''
+            ADD_PLAYLIST_POSTER: ''
+            ADD_PLAYLIST_DESCRIPTION: ''
+            APPEND_INSTEAD_OF_SYNC: ''
+            SECONDS_TO_WAIT: ''
             PRIMARY: ''
             REPLICAS: ''
             FULL_SYNC: ''
@@ -1779,112 +1517,211 @@ workload:
             SYNC_GRAVITY_DOMAIN_LIST_BY_GROUP: ''
             SYNC_GRAVITY_CLIENT: ''
             SYNC_GRAVITY_CLIENT_BY_GROUP: ''
-            PREFIX: ''
-            FRONT_URL: ''
-            OIDC_ISSUER: ''
-            OIDC_CLIENT_ID: ''
-            OIDC_CLIENT_SECRET: ''
-            APPLE_CLIENT_ID: ''
-            APPLE_CLIENT_SECRET: ''
-            GOOGLE_CLIENT_ID: ''
-            GOOGLE_CLIENT_SECRET: ''
-            STORAGE_PATH: ''
-            AUTHOR_NAME: ''
-            DESCRIPTION: ''
-            SHOW_OFFICIAL_GITHUB: ''
-            MONGODB_USERNAME: ''
-            MONGODB_DATABASE: ''
-            MONGODB_PASSWORD: ''
-            MONGODB_ROOT_PASSWORD: ''
-            PLEX_PREFERENCE_GDM: ''
-            PLEX_PREFERENCE_SEC_CON: ''
-            ALLOWED_NETWORKS: ''
-            PLEX_CLAIM: ''
-            NOVNC_RESIZE: ''
-            RUNASROOT: ''
-            USER_LOCALES: ''
-            OPENHAB_HTTP_PORT: ''
-            OPENHAB_HTTPS_PORT: ''
-            MB_JETTY_PORT: ''
-            JAVA_TIMEZONE: ''
-            MB_DB_TYPE: ''
-            MB_DB_USER: ''
-            MB_DB_DBNAME: ''
-            MB_DB_PORT: 0
-            MB_DB_HOST:
+            nodeID: ''
+            serverIP: ''
+            serverPort: 0
+            DASHDOT_PORT: ''
+            LIDARR__SERVER__PORT: ''
+            LIDARR__AUTH__METHOD: ''
+            LIDARR__AUTH__REQUIRED: ''
+            NB_UID: ''
+            NB_GID: ''
+            NB_UMASK: ''
+            DOCKER_STACKS_JUPYTER_CMD: ''
+            RESTARTABLE: ''
+            MAX_WORKERS: 0
+            MAX_WORKERS_PER_GAME: 3
+            RECORDING_FRAMERATE: 30
+            STORAGE_DIR: ''
+            PASSWORDMINCHAR: 8
+            PASSWORDMAXCHAR: 0
+            PASSWORDLOWERCASE: 1
+            PASSWORDUPPERCASE: 1
+            PASSWORDNUMERIC: 1
+            PASSWORDSYMBOL: 1
+            PASSWORDREQUIREMENTS: 4
+            BLOG_TITLE: ''
+            BLOG_NAME: ''
+            BLOG_LANG: ''
+            BLOG_DB_CONNECTION: ''
+            BLOG_POSTGRES_USER: ''
+            BLOG_POSTGRES_PORT: ''
+            BLOG_DB_NAME: ''
+            BLOG_POSTGRES_PASS:
               secretKeyRef:
                 name: ''
                 key: ''
-            MB_DB_PASS:
+            BLOG_POSTGRES_HOST:
               secretKeyRef:
                 name: ''
                 key: ''
-            FB_ADDRESS: ''
-            FB_BASEURL: ''
-            FB_DATABASE: ''
-            FB_CONFIG: ''
-            FB_ROOT: ''
-            FB_PORT: ''
-            DEV: ''
-            ROOT_PWD: ''
-            ADMIN_PWD: ''
-            REGEN_INI: true
-            SERVER: ''
-            AUTO_UPDATE: true
-            ALLOWED_HOSTS: ''
-            AUTO_SIGNUP: false
-            LANGUAGE_CODE: ''
-            SHELL_DEBUG: false
-            DEBUG_DJANGO: false
-            DB_ENGINE: ''
-            REDIS_URI:
+            BLOG_NICK: ''
+            BLOG_PASS: ''
+            PAPERMERGE__SECURITY__SECRET_KEY:
+              secretKeyRef:
+                name: ''
+                key: ''
+            PAPERMERGE__AUTH__USERNAME: ''
+            PAPERMERGE__AUTH__PASSWORD: ''
+            PAPERMERGE__DATABASE__URL: ''
+            PAPERMERGE__REDIS__URL:
               secretKeyRef:
                 expandObjectName: false
                 name: ''
                 key: ''
-            SUPER_USER: ''
-            SUPER_PASS: ''
-            SUPER_EMAIL: ''
-            POSTGRES_HOST:
+            PROXY_DOMAIN: ''
+            LOG_ROOT: ''
+            NC_PUBLIC_URL: ''
+            NC_DISABLE_TELE: true
+            DISABLE_SPLASH_SCREEN: false
+            NC_JWT_EXPIRES_IN: ''
+            NC_INVITE_ONLY_SIGNUP: false
+            NC_DISABLE_CACHE: false
+            NC_DISABLE_ERR_REPORT: true
+            NC_REQUEST_BODY_SIZE: ''
+            NC_EXPORT_MAX_TIMEOUT: 0
+            NC_SENTRY_DSN: ''
+            NC_REDIS_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
+            NC_AUTH_JWT_SECRET:
               secretKeyRef:
                 name: ''
                 key: ''
-            POSTGRES_DB: ''
-            TANDOOR_PORT: ''
-            COMMENT_PREF_DEFAULT: 1
-            CSRF_TRUSTED_ORIGINS: ''
-            FRACTION_PREF_DEFAULT: 0
-            GUNICORN_MEDIA: 0
-            SHOPPING_MIN_AUTOSYNC_INTERVAL: 5
-            PG_CONNECT: ''
-            USE_DB: ''
-            IFACES: ''
-            TIMEOUT: ''
-            SHOUTRRR_URL: ''
-            token: ''
-            ANONYMOUS_METHODS: ''
-            AUTH_TYPE: ''
-            LOCATION: ''
-            PUMASK: ''
-            REALM: ''
-            SERVER_NAMES: ''
-            SSL_CERT: ''
-            UPLOAD_PROVIDER: ''
-            UPLOAD_FOLDER: ''
-            LOG_FOLDER: ''
-            MAIL_USEAUTH: false
-            MAILFROM_ADDR: ''
-            MAIL_SERVER: ''
-            MAIL_TLS: false
-            MAIL_SSL: false
-            SAFE_MODE: true
-            REVERSE_PROXY: false
-            OAUTH_CLIENT_ID: ''
-            OAUTH_CLIENT_SECRET: ''
-            HOMEPAGE_ALLOWED_HOSTS: ''
-            EXILEMOD_SERVER_URL: ''
-            MARIA_DB_ROOT_PWD: ''
-            WORKSHOP_MAN_INST: ''
+            AWS_ACCESS_KEY_ID: ''
+            AWS_SECRET_ACCESS_KEY: ''
+            AWS_BUCKET: ''
+            AWS_BUCKET_PATH: ''
+            AIRSONIC_PORT: ''
+            CONTEXT_PATH: ''
+            AIRSONIC_DIR: ''
+            JAVA_OPTS: ''
+            spring_liquibase_parameters_userTableQuote: ''
+            spring_datasource_username: ''
+            spring_datasource_url:
+              secretKeyRef:
+                name: ''
+                key: ''
+            spring_datasource_password:
+              secretKeyRef:
+                name: ''
+                key: ''
+            SUBDOMAINS: ''
+            LOG_FILE: false
+            CMD_PORT: ''
+            CMD_DB_PORT: ''
+            CMD_DB_DIALECT: ''
+            CMD_DB_USERNAME: ''
+            CMD_DB_DATABASE: ''
+            CMD_SESSION_SECRET:
+              secretKeyRef:
+                name: ''
+                key: ''
+            CMD_DB_HOST:
+              secretKeyRef:
+                name: ''
+                key: ''
+            CMD_DB_PASSWORD:
+              secretKeyRef:
+                name: ''
+                key: ''
+            CMD_FORBIDDEN_NOTE_IDS: ''
+            CMD_IMAGE_UPLOAD_TYPE: ''
+            CMD_SOURCE_URL: ''
+            CMD_TOOBUSY_LAG: 70
+            CMD_ALLOW_GRAVATAR: true
+            CMD_DOMAIN: false
+            CMD_PROTOCOL_USESSL: false
+            CMD_URL_ADDPORT: false
+            FORCE_UPDATE: ''
+            DELAY: ''
+            NOTIFICATION_TYPE: ''
+            PROVIDER: ''
+            PUSHOVER_TITLE: ''
+            PUSHOVER_TOKEN: ''
+            PUSHOVER_USER: ''
+            RECOVERY_ALERT: ''
+            POSTGRES_IP:
+              secretKeyRef:
+                name: ''
+                key: ''
+            BAIKAL_SKIP_CHOWN: false
+            IS_PERSISTENT: true
+            REDMINE_DB_DATABASE: ''
+            REDMINE_DB_USERNAME: ''
+            REDMINE_DB_PORT: ''
+            REDMINE_NO_DB_MIGRATE: ''
+            REDMINE_PLUGINS_MIGRATE: ''
+            REDMINE_DB_PASSWORD:
+              secretKeyRef:
+                name: ''
+                key: ''
+            REDMINE_DB_POSTGRES:
+              secretKeyRef:
+                name: ''
+                key: ''
+            REDMINE_SECRET_KEY_BASE:
+              secretKeyRef:
+                name: ''
+                key: ''
+            QBITRR_OVERRIDES_DATA_PATH: ''
+            SEMAPHORE_DB_DIALECT: ''
+            SEMAPHORE_DB_USER: ''
+            SEMAPHORE_DB: ''
+            SEMAPHORE_DB_PORT: 0
+            SEMAPHORE_DB_HOST:
+              secretKeyRef:
+                name: ''
+                key: ''
+            SEMAPHORE_DB_PASS:
+              secretKeyRef:
+                name: ''
+                key: ''
+            SEMAPHORE_ACCESS_KEY_ENCRYPTION:
+              secretKeyRef:
+                name: ''
+                key: ''
+            SEMAPHORE_PLAYBOOK_PATH: ''
+            SEMAPHORE_ADMIN: ''
+            SEMAPHORE_ADMIN_NAME: ''
+            SEMAPHORE_ADMIN_PASSWORD: ''
+            SEMAPHORE_ADMIN_EMAIL: ''
+            SEMAPHORE_LDAP_ACTIVATED: ''
+            SEMAPHORE_LDAP_NEEDTLS: ''
+            HTTP_ALL_INTERFACES: ''
+            MYDOMAIN: ''
+            ZTNCUI_PASSWD: ''
+            WOPI_ENABLED: true
+            JWT_ENABLED: true
+            REDIS_SERVER_PORT: 0
+            DB_PWD:
+              secretKeyRef:
+                name: ''
+                key: ''
+            REDIS_SERVER_HOST:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
+            REDIS_SERVER_PASS:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
+            DL_URL: ''
+            RUNTIME_NAME: ''
+            STARTER_PARAMS: ''
+            XMS_SIZE: ''
+            XMX_SIZE: ''
+            OXIDE_MOD: ''
+            SERVER_DISCRIPTION: ''
+            GAME_MOD: ''
+            REDIS_SERVER_PASSWORD: ''
+            ES_Serilog__MinimumLevel__Default: ''
+            ES_Reflector__Watcher__Timeout: ''
+            ES_Reflector__Kubernetes__SkipTlsVerify: ''
             CA_COUNTRY: ''
             CA_LOCALITY: ''
             CA_ORGANIZATION: ''
@@ -1897,32 +1734,129 @@ workload:
             DH_FILE: ''
             DH_LENGTH: ''
             DISPLAY_SECRETS: ''
+            EXTRA_PARAMS: ''
             LISTENING_IP: ''
             MAX_BPS: ''
             PRIVKEY_FILE: ''
+            REALM: ''
             TOTAL_QUOTA: ''
-            SPOTWEB_SYSTEMTYPE: ''
-            SPOTWEB_FIRSTNAME: ''
-            SPOTWEB_LASTNAME: ''
-            SPOTWEB_MAIL: ''
-            SPOTWEB_RETRIEVE: ''
-            DB_SCHEMA: ''
-            SPOTWEB_USERNAME: ''
-            SPOTWEB_PASSWORD: ''
-            SUBFOLDER: ''
+            ANONYMOUS_METHODS: ''
+            AUTH_TYPE: ''
+            LOCATION: ''
+            PUMASK: ''
+            SERVER_NAMES: ''
+            SSL_CERT: ''
+            INSTANCE_NAME: ''
+            PUBLIC_IP: ''
+            TCD_ENABLE_FILES_API: false
+            TCD_EXPOSE_LOGS_TO_PUBLIC: false
+            TCD_MIGRATE_OLD_VOD_JSON: false
+            SMTP_ADDRESS: ''
+            SMTP_AUTHENTICATION: ''
+            SMTP_DOMAIN: ''
+            SMTP_EMAIL_FROM: ''
+            SMTP_EMAIL_TO: ''
+            SMTP_ENABLE_STARTTLS_AUTO: ''
+            SMTP_PORT: ''
+            ADMIN_USERNAME: ''
+            DOCS_DEFAULT_LANGUAGE: ''
+            DOCS_BASE_URL: ''
+            DOCS_SMTP_HOSTNAME: ''
+            DOCS_SMTP_PORT: 0
+            DOCS_ADMIN_EMAIL_INIT: ''
+            DOCS_ADMIN_PASSWORD_INIT: ''
+            DOCS_SMTP_USERNAME: ''
+            DOCS_SMTP_PASSWORD: ''
+            QBT_WEBUI_PORT: ''
+            QBT_TORRENTING_PORT: ''
+            INSECURE: false
+            HTTPS_PORT: ''
+            REDIRECT_TO_HTTPS: true
+            ANONADDY_DOMAIN: ''
+            MAIL_FROM_NAME: ''
+            MAIL_FROM_ADDRESS: ''
+            MAIL_DRIVER: ''
+            MAIL_HOST: ''
+            MAIL_ENCRYPTION: ''
+            MAIL_EHLO_DOMAIN: ''
+            MAIL_VERIFY_PEER: false
+            ANONADDY_SECRET:
+              secretKeyRef:
+                name: ''
+                key: ''
+            DB_BACKEND: ''
+            DB_PGSQL_USERNAME: ''
+            DB_PGSQL_DATABASE: ''
+            DB_PGSQL_PORT: 0
+            AUTH_AUTHENTICATOR: ''
+            RUN_OPTS: ''
+            DB_PGSQL_PASSWORD:
+              secretKeyRef:
+                name: ''
+                key: ''
+            DB_PGSQL_HOSTNAME:
+              secretKeyRef:
+                name: ''
+                key: ''
             CREATE_ADMIN: 1
             RUN_MIGRATIONS: 1
-            ADMIN_USERNAME: ''
-            TEST_URL: ''
-            BROWSER_TIMEOUT: 0
-            HEADLESS: true
-            LOG_HTML: false
-            CAPTCHA_SOLVER: ''
+            REGEN_INI: true
+            SERVER: ''
+            AUTO_UPDATE: true
+            AUTO_SIGNUP: false
+            LANGUAGE_CODE: ''
+            SHELL_DEBUG: false
+            DEBUG_DJANGO: false
+            REDIS_URI:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
+            SUPER_USER: ''
+            SUPER_PASS: ''
+            SUPER_EMAIL: ''
+            DEFAULT_PORT: ''
+            DEFAULT_SSL_PORT: ''
+            BACKUP_VERSIONS_TO_KEEP: 5
+            CONFIG_DIR: ''
+            MIRROR_DIR: ''
+            APACHE2_PORT: ''
+            CRON_SCHEDULE: ''
+            RUN_CHOWN: true
+            DB_MONGO_LOCAL: true
+            LOG_DIR: ''
+            LOG_BACKUP_COUNT: ''
+            LOG_MAX_SIZE_MB: ''
+            CALENDAR_URLS: ''
+            USE_DISCORD: ''
+            DISCORD_WEBHOOK_URL: ''
+            DISCORD_HIDE_MENTION_INSTRUCTIONS: ''
+            DISCORD_MENTION_ROLE_ID: ''
+            USE_SLACK: ''
+            SLACK_WEBHOOK_URL: ''
+            CUSTOM_HEADER: ''
+            ENABLE_CUSTOM_DISCORD_FOOTER: ''
+            ENABLE_CUSTOM_SLACK_FOOTER: ''
+            SHOW_DATE_RANGE: ''
+            START_WEEK_ON_MONDAY: ''
+            RUN_ON_STARTUP: ''
+            ADD_LEADING_ZERO: ''
+            CALENDAR_RANGE: ''
+            DEDUPLICATE_EVENTS: ''
+            DISPLAY_TIME: ''
+            PASSED_EVENT_HANDLING: ''
+            RUN_TIME: ''
+            SCHEDULE_DAY: ''
+            SCHEDULE_TYPE: ''
+            SHOW_TIMEZONE_IN_SUBHEADER: ''
+            USE_24_HOUR: ''
             GITHUB_COM_TOKEN: ''
             RENOVATE_AUTODISCOVER: ''
             RENOVATE_TOKEN: ''
             RENOVATE_CONFIG_FILE: ''
             RENOVATE_CACHE_DIR: ''
+            SOCKET_LOG: ''
+            SQLITE_DATABASE: ''
             CF_API_TOKEN: ''
             CF_API_KEY: ''
             CF_API_EMAIL: ''
@@ -1934,92 +1868,262 @@ workload:
             OVH_CONSUMER_KEY: ''
             SCW_ACCESS_KEY: ''
             SCW_SECRET_KEY: ''
-            ESPHOME_DASHBOARD_USE_PING: false
-            ESPHOME_DASHBOARD_RELATIVE_URL: ''
-            AUTOSAVENUM: 5
-            DISABLESEASONALEVENTS: false
-            MAXOBJECTS: 0
-            MAXPLAYERS: 4
-            MAXTICKRATE: 30
-            ROOTLESS: false
-            SERVERGAMEPORT: ''
-            SERVERIP: ''
-            SERVERSTREAMING: true
-            STEAMBETA: false
-            VMOVERRIDE: false
-            LIDARR__SERVER__PORT: ''
-            LIDARR__AUTH__METHOD: ''
-            LIDARR__AUTH__REQUIRED: ''
-            APP_DOMAIN: ''
-            APP_HOST: ''
-            APP_PASSWORD: ''
-            DBNAME: ''
-            DBTYPE: ''
-            CRONTAB_SCHEDULE: ''
-            ICS_PASSWORD: ''
-            ICS_URL: ''
-            ICS_USERNAME: ''
-            CONFIG_USE_ENVIRONMENT_VARIABLES: true
-            LOGGER_CONSOLE: true
-            DATABASE_DRIVER: ''
-            INIT_ASSETS: true
-            REGENERATE_SETTINGS: ''
-            SUPERUSER_EMAIL: ''
-            SUPERUSER_PASSWORD: ''
-            MYSQL_USER: ''
-            PMA_HOST: ''
-            PMA_PORT: ''
-            VALKEY_PORT: ''
-            VALKEY_PASSWORD: ''
-            AdvertiseOnline: ''
-            Ban: ''
-            EnableSingleplayer: ''
-            ExternalPort: ''
-            ListenPort: ''
-            Mod: ''
-            Name: ''
-            Password: ''
-            CONFIG_DIR: ''
-            MIRROR_DIR: ''
-            APACHE2_PORT: ''
-            MONGO_URL:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
-            PROVIDER_REGEX: ''
-            BYPASS_DNS_RESOLUTION: true
-            IGNORE_NON_SYSTEM_NODE: false
-            ALLOWED_DNS_NAMES: 1
-            BYPASS_HOSTNAME_CHECK: false
-            LEADER_ELECTION: true
-            MEND_RNV_ACCEPT_TOS: ''
-            MEND_RNV_LICENSE_KEY: ''
-            MEND_RNV_PLATFORM: ''
-            MEND_RNV_GITHUB_APP_ID: ''
-            MEND_RNV_GITHUB_APP_KEY: ''
-            MEND_RNV_WEBHOOK_SECRET: ''
-            MEND_RNV_SERVER_PORT: ''
+            HOSTS: ''
+            JELLYFIN_HOST: ''
+            SIGNUP_ENABLED: ''
+            TMDB_KEY: ''
+            SONARR__SERVER__PORT: ''
+            SONARR__AUTH__METHOD: ''
+            SONARR__AUTH__REQUIRED: ''
+            AUTHOR_NAME: ''
+            DESCRIPTION: ''
+            SHOW_OFFICIAL_GITHUB: ''
+            FILE_DIR: ''
+            MAX_DOWNLOADS: ''
+            MAX_EXPIRE_SECONDS: ''
+            MAX_FILE_SIZE: ''
+            ANNOUNCEMENT: ''
+            MAX_SECRET_LENGTH: ''
+            MESSAGES_CONFIRM_VIEW_SECRET_BUTTON: ''
+            MESSAGES_CONFIRM_VIEW_SECRET_HEADER: ''
+            MESSAGES_ERROR_SECRET_TOO_LONG: ''
+            MESSAGES_SUBMIT_SECRET_BUTTON: ''
+            MESSAGES_SUBMIT_SECRET_HEADER: ''
+            MESSAGES_SUBMIT_SECRET_SUBHEADER: ''
+            MESSAGES_VIEW_CODE_HEADER: ''
+            MESSAGES_VIEW_CODE_SUBHEADER: ''
+            MESSAGES_VIEW_SECRET_HEADER: ''
+            PRUNE_ENABLED: ''
+            PRUNE_MAX_DAYS: ''
+            PRUNE_MIN_DAYS: ''
+            RETURN_FULL_URL: ''
+            SITE_TITLE: ''
+            BIND_IP: ''
+            BIND_PORT: ''
+            SOCKS_PROXY_ENABLED: false
+            SOCKS_PROXY_HOST: ''
+            SOCKS_PROXY_PORT: ''
+            DOWNLOAD_AS_CBZ: true
+            BASIC_AUTH_ENABLED: false
+            BASIC_AUTH_USERNAME: ''
+            BASIC_AUTH_PASSWORD: ''
+            GQL_DEBUG: false
+            WEB_UI_ENABLED: true
+            WEB_UI_FLAVOR: ''
+            WEB_UI_CHANNEL: ''
+            WEB_UI_UPDATE_INTERVAL: 23
+            AUTO_DOWNLOAD_CHAPTERS: false
+            AUTO_DOWNLOAD_EXCLUDE_UNREAD: true
+            AUTO_DOWNLOAD_AHEAD_LIMIT: 0
+            EXTENSION_REPOS: ''
+            MAX_SOURCES_IN_PARALLEL: 6
+            UPDATE_EXCLUDE_UNREAD: true
+            UPDATE_EXCLUDE_STARTED: true
+            UPDATE_EXCLUDE_COMPLETED: true
+            UPDATE_INTERVAL: 12
+            UPDATE_MANGA_INFO: false
+            BACKUP_TTL: 14
+            FLARESOLVERR_ENABLED: false
+            FLARESOLVERR_URL: ''
+            FLARESOLVERR_TIMEOUT: 60
+            FLARESOLVERR_SESSION_NAME: ''
+            FLARESOLVERR_SESSION_TTL: 15
+            CASEMAP: ''
+            IP_ADDR: ''
+            IRCD: ''
+            LOCAL_HOSTNAME: ''
+            SSL: ''
+            MAIL_MAILER: ''
+            MAIL_SCHEME: ''
+            PUBLIC_DASHBOARD: true
+            APP_NAME: ''
+            NODE_IP:
+              fieldRef:
+                fieldPath: ''
+            TUNNEL_TOKEN: ''
+            CPAD_MAIN_DOMAIN: ''
+            CPAD_CONF: ''
             GODADDY_API_KEY: ''
             GODADDY_API_SECRET: ''
             GODADDY_DOMAINS: ''
-            URL_BASE: ''
-            QUASSEL_CORE: ''
-            QUASSEL_PORT: 0
+            PGADMIN_DEFAULT_EMAIL: ''
+            PGADMIN_DEFAULT_PASSWORD: ''
+            PG_CONNECT: ''
+            USE_DB: ''
+            IFACES: ''
+            THEME: ''
+            SHOUTRRR_URL: ''
+            BACKUP_FILES: ''
+            SERVERCONFIG: ''
+            ACCESS_KEY: ''
+            REGION: ''
+            S3PATH: ''
+            S3SYNCPARAMS: ''
+            LISTENER_PORT: ''
+            SERIAL_DEVICE: ''
+            BAUD_RATE: 0
+            SSL_CERT_FILE: ''
+            APP_DATA: ''
+            DASH_URL: ''
+            HA_URL: ''
+            LATITUDE: 46
+            LONGITUDE: 0
+            ELEVATION: 0
+            TIMEZONE: ''
+            webUIPort: ''
+            internalNode: true
+            ROCKET_FORCE_UPDATE: ''
+            ROCKET_MOD: ''
+            ROCKET_URL: ''
+            SRV_NETTYPE: ''
+            SRV_WORLDNAME: ''
+            SIA_API_PASSWORD: ''
+            SIA_WALLET_PASSWORD: ''
+            WEBUI_PWD: ''
+            GUI_PWD: ''
+            ROMM_AUTH_SECRET_KEY: ''
+            SCAN_WORKERS: 4
+            ROMM_PORT: ''
+            ROMM_BASE_URL: ''
+            LOGLEVEL: ''
+            ROMM_DB_DRIVER: ''
+            DB_PASSWD: ''
+            REDIS_USERNAME: ''
+            IGDB_CLIENT_ID: ''
+            IGDB_CLIENT_SECRET: ''
+            GATUS_CONFIG_PATH: ''
+            GATUS_DELAY_START_SECONDS: 10
+            DEBUG_OUTPUT: ''
+            PUBLIC_URL: ''
+            AUTH_TOKEN_SECRET: ''
+            SESSION_SECRET: ''
+            BIND__PORT: ''
+            LMP_V: ''
+            ADMIN_EMAIL: ''
+            BEASTHOST: ''
+            LAT: ''
+            LONG: ''
+            MLATHOST: ''
+            FB_ADDRESS: ''
+            FB_BASEURL: ''
+            FB_DATABASE: ''
+            FB_CONFIG: ''
+            FB_ROOT: ''
+            FB_PORT: ''
+            DROPBOX_GID: ''
+            DROPBOX_UID: ''
+            INTPORT: ''
+            DEEMIX_SINGLE_USER: false
+            DISPATCHARR_ENV: ''
+            STATE_DIR: ''
+            DOWNLOAD_DIR: ''
+            OUTPUT_TEMPLATE: ''
+            YTDL_OPTIONS: ''
+            PEERPORT: ''
+            FLEXO_LISTEN_IP_ADDRESS: ''
+            FLEXO_PORT: ''
+            BACKUPPC_UUID: ''
+            BACKUPPC_GUID: ''
+            GF_SECURITY_ADMIN_USER: ''
+            GF_SECURITY_ADMIN_PASSWORD: ''
+            GF_INSTALL_PLUGINS: ''
+            GF_AUTH_LDAP_ENABLED: ''
+            GF_AUTH_LDAP_ALLOW_SIGN_UP: ''
+            GF_SERVER_HTTP_PORT: 0
+            GF_DATABASE_TYPE: ''
+            GF_DATABASE_NAME: ''
+            GF_DATABASE_USER: ''
+            GF_DATABASE_SSL_MODE: ''
+            GF_DATABASE_HOST:
+              secretKeyRef:
+                name: ''
+                key: ''
+            GF_DATABASE_PASSWORD:
+              secretKeyRef:
+                name: ''
+                key: ''
+            ODOO_RC: ''
+            ALLOW_EMPTY_PASSWORD: ''
+            VALKEY_PORT: ''
+            VALKEY_PASSWORD: ''
+            APP_ENV: ''
+            SERVAS_ENABLE_REGISTRATION: true
+            ORIGIN: ''
+            USER_APPROVAL_REQUIRED: true
+            IMAGE_MAX_SIZE: ''
             HEIGHT: ''
             WIDTH: ''
             HEADLINE: ''
-            INSTANCE_NAME: ''
-            PUBLIC_IP: ''
-            FRIENDICA_TZ: ''
-            FRIENDICA_DATA_DIR: ''
-            FRIENDICA_CONFIG_DIR: ''
-            FRIENDICA_ADMIN_MAIL: ''
-            FRIENDICA_URL: ''
-            FRIENDICA_UPGRADE: false
-            FRIENDICA_SITENAME: ''
-            PHP_UPLOAD_LIMIT: ''
-            REDIS_PW: ''
+            SRV_MAXPLAYERS: ''
+            HBOX_MODE: ''
+            HBOX_WEB_PORT: ''
+            HBOX_WEB_HOST: ''
+            HBOX_AUTH_API_KEY_PEPPER: ''
+            HBOX_LOG_LEVEL: ''
+            HBOX_LOG_FORMAT: ''
+            HBOX_OPTIONS_TRUST_PROXY: ''
+            HBOX_DATABASE_DRIVER: ''
+            HBOX_DATABASE_HOST:
+              secretKeyRef:
+                name: ''
+                key: ''
+            HBOX_DATABASE_PORT: ''
+            HBOX_DATABASE_USERNAME: ''
+            HBOX_DATABASE_PASSWORD:
+              secretKeyRef:
+                name: ''
+                key: ''
+            HBOX_DATABASE_DATABASE: ''
+            HBOX_DATABASE_SSL_MODE: ''
+            DOCKER_TLS_CERTDIR: ''
+            IDRAC_HOST: ''
+            IDRAC_USERNAME: ''
+            IDRAC_PASSWORD: ''
+            FAN_SPEED: 5
+            CPU_TEMPERATURE_THRESHOLD: 50
+            CHECK_INTERVAL: 60
+            DISABLE_THIRD_PARTY_PCIE_CARD_DELL_DEFAULT_COOLING_RESPONSE: false
+            PREVENT_SIGNUPS: ''
+            SLASH_PORT: ''
+            ALLOWED_TYPES: ''
+            ENABLE_AVIF: ''
+            QUALITY: ''
+            ENTRY: ''
+            SCHEME: ''
+            WEB_PORT: ''
+            CLAMAV_NO_CLAMD: false
+            CLAMAV_NO_FRESHCLAMD: false
+            CLAMAV_NO_MILTERD: ''
+            CLAMD_STARTUP_TIMEOUT: 0
+            FRESHCLAM_CHECKS: 1
+            PIHOLE_UID: ''
+            PIHOLE_GID: ''
+            FTLCONF_dns_upstreams: ''
+            FTLCONF_webserver_api_password: ''
+            RUTORRENT_PORT: ''
+            PORT_RTORRENT: ''
+            RT_DHT_PORT: ''
+            XMLRPC_PORT: ''
+            WEBDAV_PORT: ''
+            RT_INC_PORT: ''
+            RELAY: ''
+            ENCRYPTED_ONLY: 1
+            MULTIHOME: ''
+            OVERSEERR__URL: ''
+            DISCORD__MAX_RESULTS: 25
+            DISCORD__REQUESTED_MSG_STYLE: ''
+            SONARR__URL: ''
+            SONARR__QUALITY_PROFILE: ''
+            SONARR__LANGUAGE_PROFILE: ''
+            RADARR__URL: ''
+            RADARR__QUALITY_PROFILE: ''
+            PARTIAL_SEASONS: true
+            OVERSEERR__API: ''
+            OVERSEERR__DEFAULT_ID: ''
+            SONARR__API: ''
+            RADARR__API: ''
+            DISCORD__ROLE_ID: ''
+            DISCORD__TOKEN: ''
             RWA_ADMIN: ''
             RWA_ENV: ''
             RWA_WEB_RCON: ''
@@ -2035,36 +2139,102 @@ workload:
             RWA_USERNAME: ''
             RWA_PASSWORD: ''
             RWA_RCON_PASSWORD: ''
-            VNC_VIEW_ONLY: ''
-            ASR_MODEL: ''
-            ASR_ENGINE: ''
-            KROMGO_PROMETHEUS_URL: ''
-            KROMGO_SERVER_PORT: ''
-            KROMGO_HEALTH_PORT: ''
-            site_domain: ''
-            DATABASE_PASS:
+            PHPLDAPADMIN_HTTPS: ''
+            PHPLDAPADMIN_TRUST_PROXY_SSL: ''
+            GONIC_LISTEN_ADDR: ''
+            GONIC_DB_PATH: ''
+            GONIC_CACHE_PATH: ''
+            GONIC_PLAYLISTS_PATH: ''
+            GONIC_PODCAST_PATH: ''
+            GONIC_MUSIC_PATH: ''
+            STORAGE_PROVIDER: ''
+            STORAGE_SQLITE_PATH: ''
+            AUTH_COOKIE_SECURE: ''
+            WEBLATE_TIME_ZONE: ''
+            ADDRESS: ''
+            MODELS_PATH: ''
+            IMAGE_PATH: ''
+            BUILD_TYPE: ''
+            REBUILD: false
+            CORS: ''
+            GALLERIES: ''
+            PRELOAD_MODELS: ''
+            CORS_ALLOW_ORIGINS: ''
+            SPLUNK_START_ARGS: ''
+            SPLUNK_PASSWORD: ''
+            bootwait: ''
+            checkfreq: ''
+            devicelist: ''
+            API_BINDING: ''
+            IN_KUBE_CLUSTER: true
+            DEFAULT: ''
+            MAPPING: ''
+            IPFS_PROFILE: ''
+            IPFS_SWARM_KEY: ''
+            IPFS_SWARM_KEY_FILE: ''
+            STASH_PORT: ''
+            STASH_STASH: ''
+            STASH_GENERATED: ''
+            STASH_METADATA: ''
+            STASH_CACHE: ''
+            PLEX_LOGIN: ''
+            PLEX_PASSWORD: ''
+            PS_HTTP_PORT: ''
+            PS_LOG_LEVEL: ''
+            MM_SQLSETTINGS_DRIVERNAME: ''
+            MM_BLEVESETTINGS_INDEXDIR: ''
+            MM_SERVICESETTINGS_SITEURL: ''
+            MM_SQLSETTINGS_DATASOURCE: ''
+            MANAGE_HTTPS_PORT: ''
+            PORTAL_HTTPS_PORT: ''
+            ARM_UID: ''
+            ARM_GID: ''
+            HYTALE_AUTO_UPDATE: false
+            HYTALE_PORT: ''
+            HYTALE_ALLOW_OP: true
+            HYTALE_BACKUP_ENALBED: false
+            HYTALE_BACKUP_DIR: ''
+            HYTALE_BACKUP_FREQ: 30
+            REMOTE_HOST: ''
+            REMOTE_PORT: ''
+            HOSTNAME: ''
+            JOB_SERVER_URL: ''
+            COLLECTOR_CRON_SCHEDULE: ''
+            COLLECTOR_HOST_ID: ''
+            META_TITLE: ''
+            META_DESCRIPTION: ''
+            META_AUTHOR: ''
+            SPEEDTEST_PORT: ''
+            DEFAULT_DOMAIN: ''
+            GEOLITE_LICENSE_KEY: ''
+            ANONYMIZE_REMOTE_ADDR: true
+            ENABLE_PERIODIC_VISIT_LOCATE: true
+            IS_HTTPS_ENABLED: true
+            REDIS_SERVERS:
               secretKeyRef:
+                expandObjectName: false
                 name: ''
                 key: ''
-            DISABLE_MQTT: true
+            BASE_PATH: ''
+            TOKEN_EXPIRY: ''
+            ALLOW_NEW_ACCOUNTS: ''
+            DISABLE_ACCOUNTS: ''
+            DISABLE_INTERNAL_ACCOUNTS: ''
+            OIDC_ENABLED: ''
+            OIDC_DISPLAY_NAME: ''
+            OIDC_ISSUER_URL: ''
+            OIDC_CLIENT_ID: ''
+            OIDC_CLIENT_SECRET: ''
+            OIDC_SCOPES: ''
+            MENU_VERSION: ''
+            TFTPD_OPTS: ''
             Zilean__Database__ConnectionString: ''
-            PYTHONUNBUFFERED: ''
-            SD_WEBUI_VARIANT: ''
-            HOMEBRIDGE_CONFIG_UI: 1
-            FLOOD_OPTION_RUNDIR: ''
-            DB_LOG_QUERIES: ''
-            KEY:
-              secretKeyRef:
-                name: ''
-                key: ''
-            INSTANCE_IP: ''
-            INSTANCE_IDENTIFIER: ''
-            BOOTSTRAP_ROLES: ''
-            ADMIN_TOKEN:
-              secretKeyRef:
-                name: ''
-                key: ''
-            INSTANCE_LISTEN: ''
+            DN_API_KEY: ''
+            DN_BIND_ADDR: ''
+            DN_UPSTREAMS_0: ''
+            PROWLARR__SERVER__PORT: ''
+            PROWLARR__AUTH__METHOD: ''
+            PROWLARR__AUTH__REQUIRED: ''
             PHOENIX_HTTP_PORT: ''
             EXTERNAL_URL: ''
             PHOENIX_SECURE_COOKIES: ''
@@ -2113,70 +2283,34 @@ workload:
             CONNECTIVITY_CHECKS_ENABLED: ''
             CONNECTIVITY_CHECKS_INTERVAL: ''
             TELEMETRY_ENABLED: ''
-            PIHOLE_UID: ''
-            PIHOLE_GID: ''
-            FTLCONF_dns_upstreams: ''
-            FTLCONF_webserver_api_password: ''
-            HOST_ADDR: ''
-            HOST_CONF_PORT: ''
-            HOST_TUN_PROTOCOL: ''
-            HOST_TUN_PORT: ''
-            PASTE_ENABLE_CHARTS: ''
-            RI_APP_PORT: ''
-            RI_FILES_LOGGER: ''
-            RI_LOG_LEVEL: ''
-            REGION: ''
-            S3SYNCPARAMS: ''
-            ADDITIONAL: ''
-            ALGO_MODE: ''
-            POOL_URL: ''
-            YOUR_ADDRESS: ''
-            YOUR_WORKER_NAME: ''
-            BIND_IP: ''
-            BIND_PORT: ''
-            SOCKS_PROXY_ENABLED: false
-            SOCKS_PROXY_HOST: ''
-            SOCKS_PROXY_PORT: ''
-            DOWNLOAD_AS_CBZ: true
-            BASIC_AUTH_ENABLED: false
-            GQL_DEBUG: false
-            WEB_UI_ENABLED: true
-            WEB_UI_FLAVOR: ''
-            WEB_UI_CHANNEL: ''
-            WEB_UI_UPDATE_INTERVAL: 23
-            AUTO_DOWNLOAD_CHAPTERS: false
-            AUTO_DOWNLOAD_EXCLUDE_UNREAD: true
-            AUTO_DOWNLOAD_AHEAD_LIMIT: 0
-            EXTENSION_REPOS: ''
-            MAX_SOURCES_IN_PARALLEL: 6
-            UPDATE_EXCLUDE_UNREAD: true
-            UPDATE_EXCLUDE_STARTED: true
-            UPDATE_EXCLUDE_COMPLETED: true
-            UPDATE_INTERVAL: 12
-            UPDATE_MANGA_INFO: false
-            BACKUP_TTL: 14
-            FLARESOLVERR_ENABLED: false
-            FLARESOLVERR_URL: ''
-            FLARESOLVERR_TIMEOUT: 60
-            FLARESOLVERR_SESSION_NAME: ''
-            FLARESOLVERR_SESSION_TTL: 15
-            FF_SYNCSERVER_PUBLIC_URL: ''
-            FF_SYNCSERVER_FORCE_WSGI_ENVIRON: true
-            FF_SYNCSERVER_ACCESSLOG: false
-            FF_SYNCSERVER_LOGLEVEL: ''
-            FF_SYNCSERVER_ALLOW_NEW_USERS: true
-            FF_SYNCSERVER_FORWARDED_ALLOW_IPS: ''
-            FF_SYNCSERVER_SQLURI:
-              secretKeyRef:
-                name: ''
-                key: ''
-            FF_SYNCSERVER_SECRET: ''
-            REMOTE_HOST: ''
-            REMOTE_PORT: ''
-            MENU_VERSION: ''
-            TFTPD_OPTS: ''
-            MALOJA_DATA_DIRECTORY: ''
-            MALOJA_HOST: ''
+            ZO_ROOT_USER_EMAIL: ''
+            ZO_ROOT_USER_PASSWORD: ''
+            ZO_DATA_DIR: ''
+            ZO_WEB_URL: ''
+            ZO_TELEMETRY: ''
+            APP_BRANCH: ''
+            BLACKLIST: ''
+            NOSEARCH: ''
+            NOTIFICATIONS: ''
+            RUNNOW: ''
+            SORT: ''
+            OPEN_PROFILES: ''
+            OPEN_REGISTRATIONS: ''
+            COOKIE_SECRET: ''
+            NTFY_LISTEN_HTTP: ''
+            NTFY_BASE_URL: ''
+            NTFY_BEHIND_PROXY: false
+            ENABLE_FIREBASE_FILE: false
+            ENABLE_CACHE_FILE: false
+            ENABLE_ATTACHMENT_CACHE_DIR: false
+            ENABLE_AUTH_FILE: false
+            NTFY_ENABLE_METRICS: ''
+            NTFY_UPSTREAM_BASE_URL: ''
+            ENABLE_MJPG_STREAMER: ''
+            MJPG_STREAMER_INPUT: null
+            CAMERA_DEV: null
+            ANKISYNCD_USERNAME: ''
+            ANKISYNCD_PASSWORD: ''
             PING_INTERVAL: ''
             PING_RETRY: ''
             PING_TIMEOUT: ''
@@ -2184,366 +2318,165 @@ workload:
             PUSHOVER_MESSAGE: ''
             PUSHOVER_PRIORITY: ''
             PUSHOVER_USER_TOKEN: ''
-            RUNTIME_NAME: ''
-            STARTER_PARAMS: ''
-            XMS_SIZE: ''
-            XMX_SIZE: ''
-            CPAD_MAIN_DOMAIN: ''
-            CPAD_CONF: ''
-            PROXY_DOMAIN: ''
-            REDMINE_DB_DATABASE: ''
-            REDMINE_DB_USERNAME: ''
-            REDMINE_DB_PORT: ''
-            REDMINE_NO_DB_MIGRATE: ''
-            REDMINE_PLUGINS_MIGRATE: ''
-            REDMINE_DB_PASSWORD:
-              secretKeyRef:
-                name: ''
-                key: ''
-            REDMINE_DB_POSTGRES:
-              secretKeyRef:
-                name: ''
-                key: ''
-            REDMINE_SECRET_KEY_BASE:
-              secretKeyRef:
-                name: ''
-                key: ''
-            NODE_IP:
-              fieldRef:
-                fieldPath: ''
-            CMD_PORT: ''
-            CMD_DB_PORT: ''
-            CMD_DB_DIALECT: ''
-            CMD_DB_USERNAME: ''
-            CMD_DB_DATABASE: ''
-            CMD_SESSION_SECRET:
-              secretKeyRef:
-                name: ''
-                key: ''
-            CMD_DB_HOST:
-              secretKeyRef:
-                name: ''
-                key: ''
-            CMD_DB_PASSWORD:
-              secretKeyRef:
-                name: ''
-                key: ''
-            CMD_FORBIDDEN_NOTE_IDS: ''
-            CMD_IMAGE_UPLOAD_TYPE: ''
-            CMD_SOURCE_URL: ''
-            CMD_TOOBUSY_LAG: 70
-            CMD_ALLOW_GRAVATAR: true
-            CMD_DOMAIN: false
-            CMD_PROTOCOL_USESSL: false
-            CMD_URL_ADDPORT: false
-            DOCKER_TLS_CERTDIR: ''
-            NODE_NAME:
-              fieldRef:
-                fieldPath: ''
-            mkvdts2ac3_params: ''
-            output_format: ''
-            parameters: ''
-            script: ''
-            DOWNLOAD: ''
-            HUMHUB_AUTO_INSTALL: true
-            HUMHUB_INTEGRITY_CHECK: true
-            WAIT_FOR_DB: true
-            HUMHUB_DB_USER: ''
-            HUMHUB_DB_NAME: ''
-            HUMHUB_DB_PASSWORD: ''
-            HUMHUB_DB_HOST:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
-            HUMHUB_QUEUE_CLASS: ''
-            HUMHUB_CACHE_CLASS: ''
-            HUMHUB_CACHE_EXPIRE_TIME: 0
-            HUMHUB_REDIS_PORT: 0
-            HUMHUB_REDIS_HOSTNAME:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
-            HUMHUB_REDIS_PASSWORD: ''
-            HUMHUB_MAILER_SYSTEM_EMAIL_ADDRESS: ''
-            HUMHUB_MAILER_SYSTEM_EMAIL_NAME: ''
-            HUMHUB_MAILER_TRANSPORT_TYPE: ''
-            HUMHUB_MAILER_HOSTNAME: ''
-            HUMHUB_MAILER_PORT: ''
-            HUMHUB_MAILER_USERNAME: ''
-            HUMHUB_MAILER_PASSWORD: ''
-            HUMHUB_MAILER_ENCRYPTION: ''
-            HUMHUB_MAILER_ALLOW_SELF_SIGNED_CERTS: ''
-            HUMHUB_PROTO: ''
-            HUMHUB_HOST: ''
-            HUMHUB_ADMIN_LOGIN: ''
-            HUMHUB_ADMIN_EMAIL: ''
-            HUMHUB_ADMIN_PASSWORD: ''
-            NB_UID: ''
-            NB_GID: ''
-            NB_UMASK: ''
-            DOCKER_STACKS_JUPYTER_CMD: ''
-            RESTARTABLE: ''
-            API_URL: ''
-            RELAY: ''
-            ENCRYPTED_ONLY: 1
-            GONIC_LISTEN_ADDR: ''
-            GONIC_DB_PATH: ''
-            GONIC_CACHE_PATH: ''
-            GONIC_PLAYLISTS_PATH: ''
-            GONIC_PODCAST_PATH: ''
-            GONIC_MUSIC_PATH: ''
-            PVE_VERIFY_SSL: ''
-            PVE_USER: ''
-            PVE_TOKEN_NAME: ''
-            HOST_IP: ''
-            BOOKLORE_PORT: ''
-            ES_Serilog__MinimumLevel__Default: ''
-            ES_Reflector__Watcher__Timeout: ''
-            ES_Reflector__Kubernetes__SkipTlsVerify: ''
-            OVERSEERR__URL: ''
-            DISCORD__MAX_RESULTS: 25
-            DISCORD__REQUESTED_MSG_STYLE: ''
-            SONARR__URL: ''
-            SONARR__QUALITY_PROFILE: ''
-            SONARR__LANGUAGE_PROFILE: ''
-            RADARR__URL: ''
-            RADARR__QUALITY_PROFILE: ''
-            PARTIAL_SEASONS: true
-            OVERSEERR__API: ''
-            OVERSEERR__DEFAULT_ID: ''
-            SONARR__API: ''
-            RADARR__API: ''
-            DISCORD__ROLE_ID: ''
-            DISCORD__TOKEN: ''
-            SPEEDTEST_PORT: ''
-            DOCS_DEFAULT_LANGUAGE: ''
-            DOCS_SMTP_HOSTNAME: ''
-            DOCS_SMTP_PORT: 0
-            DOCS_ADMIN_EMAIL_INIT: ''
-            DOCS_ADMIN_PASSWORD_INIT: ''
-            DOCS_SMTP_USERNAME: ''
-            DOCS_SMTP_PASSWORD: ''
-            SONARR__SERVER__PORT: ''
-            SONARR__AUTH__METHOD: ''
-            SONARR__AUTH__REQUIRED: ''
-            SPOTIFY_USER_ID: ''
-            DEEZER_USER_ID: ''
-            DEEZER_PLAYLIST_ID: ''
-            WRITE_MISSING_AS_CSV: ''
-            APPEND_SERVICE_SUFFIX: ''
-            ADD_PLAYLIST_POSTER: ''
-            ADD_PLAYLIST_DESCRIPTION: ''
-            APPEND_INSTEAD_OF_SYNC: ''
-            SECONDS_TO_WAIT: ''
-            STORE_PASSWORD: ''
-            STORE_USER: ''
-            POSTGRES_NAME: ''
-            TMDB_API_KEY: ''
-            DHT_CRAWLER_SAVE_FILES_THRESHOLD: ''
-            MAIL_MAILER: ''
-            MAIL_SCHEME: ''
-            PUBLIC_DASHBOARD: true
-            USE_X_SETTINGS: true
-            HIDE_REFERER: true
-            FETCH_WORKERS: 10
-            BASE_PATH: ''
-            TOKEN_EXPIRY: ''
-            ALLOW_NEW_ACCOUNTS: ''
-            DISABLE_ACCOUNTS: ''
-            DISABLE_INTERNAL_ACCOUNTS: ''
-            OIDC_ENABLED: ''
-            OIDC_DISPLAY_NAME: ''
-            OIDC_ISSUER_URL: ''
-            OIDC_SCOPES: ''
-            CLIENT_URL: ''
-            LIBRARY_BROWSE_ROOT: ''
-            BOOK_DOCK_PATH: ''
-            SETUP_BOOTSTRAP_TOKEN: ''
-            NODE_MAX_OLD_SPACE_SIZE: ''
-            TCD_ENABLE_FILES_API: false
-            TCD_EXPOSE_LOGS_TO_PUBLIC: false
-            TCD_MIGRATE_OLD_VOD_JSON: false
-            BEASTHOST: ''
-            LAT: ''
-            LONG: ''
-            MLATHOST: ''
-            LISTENING_ADDRESS: ''
-            PERIOD: ''
-            IPV6_PREFIX: ''
-            PUBLICIP_FETCHERS: ''
-            PUBLICIP_HTTP_PROVIDERS: ''
-            PUBLICIPV4_HTTP_PROVIDERS: ''
-            PUBLICIPV6_HTTP_PROVIDERS: ''
-            PUBLICIP_DNS_PROVIDERS: ''
-            PUBLICIP_DNS_TIMEOUT: ''
-            UPDATE_COOLDOWN_PERIOD: ''
-            BACKUP_PERIOD: ''
-            LOG_CALLER: ''
-            SHOUTRRR_ADDRESSES: ''
-            WWW_PORT: ''
-            EXTRA_CMD_ARG: ''
-            VOLUMES_FILES: ''
-            VOLUMES_IMAGES: ''
-            VOLUMES_LOG: ''
-            DB_SYSTEM: ''
-            SERVER_ADMIN_USERNAME: ''
-            SERVER_ADMIN_PASSWORD: ''
-            SERVER_REGISTRATION_DISABLED: ''
-            SERVER_ACCOUNT_ACTIVATION_DISABLED: ''
-            SERVER_LOG_LEVEL: ''
-            SERVER_CORS_ALLOWED_ORIGINS: ''
-            GAMES_INDEX_INTERVAL_IN_MINUTES: ''
-            GAMES_SEARCH_RECURSIVE: ''
-            GAMES_SUPPORTED_FILE_FORMATS: ''
-            IMAGE_GC_KEEP_DAYS: ''
-            IMAGE_GC_INTERVAL_MINUTES: ''
-            RAWG_API_URL: ''
-            RAWG_API_CACHE_DAYS: ''
-            RAWG_API_KEY: ''
-            WEBSITE_NAME: ''
-            TEMPLATE: ''
-            RUN_MODE: ''
-            fleet_admin_authentication_type: ''
-            fleet_database_username: ''
-            fleet_database_url:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
-            fleet_database_password: ''
-            GAME_V: ''
-            PREVENT_SIGNUPS: ''
-            GOKAPI_LENGTH_ID: ''
-            GOKAPI_MAX_FILESIZE: ''
-            GOKAPI_MAX_MEMORY_UPLOAD: ''
-            GOKAPI_PASSWORD: ''
-            GOKAPI_USERNAME: ''
-            MODELS_PATH: ''
-            IMAGE_PATH: ''
-            BUILD_TYPE: ''
-            REBUILD: false
-            CORS: ''
-            GALLERIES: ''
-            PRELOAD_MODELS: ''
-            CORS_ALLOW_ORIGINS: ''
-            LLDAP_HTTP_PORT: ''
-            LLDAP_LDAP_PORT: ''
-            LLDAP_HTTP_URL: ''
-            LLDAP_LDAP_BASE_DN: ''
-            LLDAP_LDAP_USER_DN: ''
-            LLDAP_LDAP_USER_EMAIL: ''
-            LLDAP_LDAP_USER_PASS: ''
-            LLDAP_VERBOSE: false
-            LLDAP_SMTP_OPTIONS__ENABLE_PASSWORD_RESET: false
-            LLDAP_SMTP_OPTIONS__SERVER: ''
-            LLDAP_SMTP_OPTIONS__PORT: 0
-            LLDAP_SMTP_OPTIONS__SMTP_ENCRYPTION: ''
-            LLDAP_SMTP_OPTIONS__USER: ''
-            LLDAP_SMTP_OPTIONS__PASSWORD: ''
-            LLDAP_SMTP_OPTIONS__FROM: ''
-            LLDAP_SMTP_OPTIONS__REPLY_TO: ''
-            LLDAP_JWT_SECRET:
-            - secretRef:
-                name: ''
-                key: ''
-            LLDAP_key_file: ''
-            LLDAP_database_url:
-              secretKeyRef:
-                name: ''
-                key: ''
-            FAVICON: ''
-            DEFAULT_PAD_TEXT: ''
-            USER_PASSWORD: ''
-            LD_SERVER_PORT: ''
-            LD_REQUEST_TIMEOUT: 60
-            LD_DISABLE_BACKGROUND_TASKS: false
-            LD_DISABLE_URL_VALIDATION: false
-            LD_SUPERUSER_NAME: ''
-            LD_SUPERUSER_PASSWORD: ''
-            ZIGBEE2MQTT_DATA: ''
-            ZIGBEE2MQTT_CONFIG_FRONTEND_PORT: ''
-            USE_CUSTOM_CONFIG_FILE: false
-            ZIGBEE2MQTT_CONFIG_MQTT_USER: ''
-            ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD: ''
-            SPOOLMAN_HOST: ''
-            SPOOLMAN_PORT: ''
-            SPOOLMAN_DIR_DATA: ''
-            SPOOLMAN_DIR_LOGS: ''
-            SPOOLMAN_DB_TYPE: ''
-            SPOOLMAN_DB_HOST:
-              secretKeyRef:
-                name: ''
-                key: ''
-            SPOOLMAN_DB_PORT: 0
-            SPOOLMAN_DB_NAME: ''
-            SPOOLMAN_DB_USERNAME: ''
-            SPOOLMAN_DB_PASSWORD:
-              secretKeyRef:
-                name: ''
-                key: ''
-            SPOOLMAN_DEBUG_MODE: true
+            LOG_ENV_VARS: false
+            UNMASKED: false
             BIND_ADDRESS: ''
-            IMPOSTOR_Server__PublicIp: ''
-            IMPOSTOR_Server__ListenIp: ''
-            IMPOSTOR_AntiCheat__Enabled: true
-            IMPOSTOR_AntiCheat__BanIpFromGame: true
-            IMPOSTOR_Debug__GameRecorderEnabled: false
-            IMPOSTOR_Debug__GameRecorderPath: ''
-            CLIENT_ID: ''
-            CLIENT_SECRET: ''
-            REDDIT_REDIRECT: ''
-            LRR_UID: ''
-            LRR_GID: ''
-            bootwait: ''
-            checkfreq: ''
-            devicelist: ''
-            UP_PROMETHEUS_DISABLE: false
-            TUNNEL_TOKEN: ''
+            CONFIG_USE_ENVIRONMENT_VARIABLES: true
+            LOGGER_CONSOLE: true
+            DATABASE_DRIVER: ''
+            WORKSPACE_DIR: ''
+            METRICS_JSON_PATH: ''
+            WORKSPACE_DELETE_EXPIRED: false
+            WORKSPACE_EXPIRE_DAYS: 30
+            CHROME_REFRESH_TIME: 0
+            MAX_CONCURRENT_SESSIONS: 5
+            MAX_QUEUE_LENGTH: 5
+            CONNECTION_TIMEOUT: 0
+            DEFAULT_BLOCK_ADS: true
+            DEFAULT_HEADLESS: true
+            DEFAULT_IGNORE_HTTPS_ERRORS: true
+            DEFAULT_IGNORE_DEFAULT_ARGS: true
+            ENABLE_API_GET: true
+            FUNCTION_ENABLE_INCOGNITO_MODE: true
+            EXIT_ON_HEALTH_FAILURE: true
+            DISABLE_AUTO_SET_DOWNLOAD_BEHAVIOR: false
+            ENABLE_DEBUGGER: true
+            ENABLE_CORS: false
+            ENABLE_XVBF: true
             TS3SERVER_LICENSE: ''
-            DEBUG_OUTPUT: ''
-            CACHE_TYPE: ''
-            PUPPETEER_WS_ENDPOINT: ''
-            DISALLOW_ROBOT: false
-            TITLE_LENGTH_LIMIT: 0
-            HTTP_BASIC_AUTH_NAME: ''
-            HTTP_BASIC_AUTH_PASS: ''
-            BITBUCKET_USERNAME: ''
-            BITBUCKET_PASSWORD: ''
-            GITHUB_ACCESS_TOKEN: ''
-            GOOGLE_FONTS_API_KEY: ''
-            YOUTUBE_KEY: ''
-            TELEGRAM_TOKEN: ''
-            LASTFM_API_KEY: ''
-            DDNSR53_CREDENTIALS_ACCESSKEYID: ''
-            DDNSR53_CREDENTIALS_SECRETACCESSKEY: ''
-            DDNSR53_ROUTE53_HOSTEDZONEID: ''
-            DDNSR53_ROUTE53_RECORDSSET_0_NAME: ''
-            DDNSR53_ROUTE53_RECORDSSET_0_TTL: ''
-            DDNSR53_ROUTE53_RECORDSSET_0_TYPE: ''
-            LOG_JSON: ''
-            MAX_RETRIES: ''
-            WHOOGLE_CONFIG_COUNTRY: ''
-            WHOOGLE_CONFIG_THEME: ''
-            WHOOGLE_CONFIG_SAFE: true
-            WHOOGLE_CONFIG_ALTS: false
-            WHOOGLE_CONFIG_TOR: false
-            WHOOGLE_CONFIG_NEW_TAB: false
-            WHOOGLE_CONFIG_GET_ONLY: false
-            WHOOGLE_CONFIG_URL: ''
-            WHOOGLE_CONFIG_STYLE: ''
-            AUDIOBOOKSHELF_UID: ''
-            AUDIOBOOKSHELF_GID: ''
-            TOKEN_SECRET:
+            SCRYPTED_INSECURE_PORT: ''
+            HEXO_PLUGINS: ''
+            MY_NODE_NAME:
+              fieldRef:
+                fieldPath: ''
+            MY_POD_NAMESPACE:
+              fieldRef:
+                fieldPath: ''
+            MY_POD_NAME:
+              fieldRef:
+                fieldPath: ''
+            NETDATA_CLAIM_URL: ''
+            NETDATA_CLAIM_TOKEN: ''
+            NETDATA_CLAIM_ROOMS: ''
+            YOURLS_DB_HOST:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
+            YOURLS_DB_NAME: ''
+            YOURLS_DB_USER: ''
+            YOURLS_DB_PASS:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
+            YOURLS_PRIVATE: false
+            YOURLS_SITE: ''
+            YOURLS_USER: ''
+            YOURLS_PASS: ''
+            NEKO_BIND: ''
+            NEKO_PATH_PREFIX: ''
+            NEKO_NAT1TO1: ''
+            NEKO_TCPMUX: ''
+            NEKO_UDPMUX: ''
+            NEKO_FILE_TRANSFER_ENABLED: true
+            NEKO_FILE_TRANSFER_PATH: ''
+            NEKO_CONTROL_PROTECTION: ''
+            NEKO_IMPLICIT_CONTROL: ''
+            NEKO_LOCKS: ''
+            NEKO_PASSWORD: ''
+            NEKO_PASSWORD_ADMIN: ''
+            NEKO_PROXY: ''
+            NEKO_SCREEN: ''
+            NEKO_CORS: ''
+            MQTT_DOWN: ''
+            MQTT_SERVER: ''
+            MQTT_UP: ''
+            SLEEP: ''
+            INSTALL4J_ADD_VM_PARAMS: ''
+            BASIC_AUTH: ''
+            EXCLUDE_IPS: ''
+            SKIP_ARCHIVED_LOGS: ''
+            CACHE_DOMAINS_REPO: ''
+            CACHE_DOMAINS_BRANCH: ''
+            UPSTREAM_DNS: ''
+            CACHE_DISK_SIZE: ''
+            CACHE_MAX_AGE: ''
+            CACHE_INDEX_SIZE: ''
+            NOFETCH: ''
+            site_domain: ''
+            zurg_FORCE_ENV: ''
+            HTTP_ALLOWED: ''
+            APP_IPMI_HOST: ''
+            APP_IPMI_PASS: ''
+            APP_IPMI_USER: ''
+            OBSERVIUM_ADMIN_USER: ''
+            OBSERVIUM_ADMIN_PASS: ''
+            OBSERVIUM_base_url: ''
+            OBSERVIUM_auth_mechanism: ''
+            OBSERVIUM_db_extension: ''
+            OBSERVIUM_db_host:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
+            OBSERVIUM_db_name: ''
+            OBSERVIUM_db_pass: ''
+            OBSERVIUM_db_user: ''
+            OBSERVIUM_cache__enable: true
+            OBSERVIUM_cache__driver: ''
+            GUAC_PASS: ''
+            GUAC_USER: ''
+            MQTT_PASS: ''
+            MQTT_USER: ''
+            TOPIC_PREFIX: ''
+            VENSTAR_HOST: ''
+            MONGODB_USERNAME: ''
+            MONGODB_DATABASE: ''
+            MONGODB_PASSWORD: ''
+            MONGODB_ROOT_PASSWORD: ''
+            TTRSS_SELF_URL_PATH: ''
+            ADMIN_USER_PASS: ''
+            TTRSS_DB_NAME: ''
+            TTRSS_DB_USER: ''
+            TTRSS_DB_PORT: ''
+            TTRSS_DB_PASS:
               secretKeyRef:
                 name: ''
                 key: ''
-            WEBLATE_TIME_ZONE: ''
-            POSTGRES_DATABASE: ''
-            ALLOWED_TYPES: ''
-            ENABLE_AVIF: ''
-            QUALITY: ''
+            TTRSS_DB_HOST:
+              secretKeyRef:
+                name: ''
+                key: ''
+            DUPLICATI__WEBSERVICE_PASSWORD: ''
+            SETTINGS_ENCRYPTION_KEY: ''
+            DUPLICATI__ALLOW_INSECURE_DATAFOLDER: true
+            CORS_ORIGIN: ''
+            DOWNLOAD: ''
+            DL_URL_PATCH: ''
+            DL_URL_PR: ''
+            Q3_MAP: ''
+            Q3_PORT: ''
+            QBT_RUN: false
+            QBT_SCHEDULE: 30
+            QBT_CROSS_SEED: false
+            QBT_RECHECK: false
+            QBT_CAT_UPDATE: false
+            QBT_TAG_UPDATE: false
+            QBT_REM_UNREGISTERED: false
+            QBT_TAG_TRACKER_ERROR: false
+            QBT_REM_ORPHANED: false
+            QBT_TAG_NOHARDLINKS: false
+            QBT_SHARE_LIMITS: false
+            QBT_SKIP_CLEANUP: false
+            QBT_SKIP_QB_VERSION_CHECK: false
+            QBT_DRY_RUN: false
+            QBT_LOG_LEVEL: ''
+            QBT_DIVIDER: ''
+            QBT_WIDTH: 100
+            MODSEC_DATA_DIR: ''
+            MODSEC_TMP_DIR: ''
+            MODSEC_UPLOAD_DIR: ''
             PHOTOPRISM_ORIGINALS_PATH: ''
             PHOTOPRISM_IMPORT_PATH: ''
             PHOTOPRISM_TEMP_PATH: ''
@@ -2570,134 +2503,79 @@ workload:
                 name: ''
                 key: ''
             PHOTOPRISM_ADMIN_PASSWORD: ''
-            SECRET_ENCRYPTION_KEY: ''
-            NETWORK_TEST_ON_START: false
-            INCLUDE_PUBLIC_IP_IN_NAT_1_TO_1_IP: true
-            UDP_MUX_PORT: ''
-            SEMAPHORE_DB_DIALECT: ''
-            SEMAPHORE_DB_USER: ''
-            SEMAPHORE_DB: ''
-            SEMAPHORE_DB_PORT: 0
-            SEMAPHORE_DB_HOST:
+            RELAY_NETWORKS: ''
+            RELAY_DOMAINS: ''
+            SMARTHOST_ADDRESS: ''
+            SMARTHOST_PORT: ''
+            SMARTHOST_USER: ''
+            SMARTHOST_PASSWORD: ''
+            SMARTHOST_ALIASES: ''
+            MAXMEM: 0
+            LEAF_TYPE: ''
+            MQTT_BASE_TOPIC: ''
+            UPDATE_INTERVAL_MINUTES: 60
+            CHARGING_UPDATE_INTERVAL_MINUTES: 60
+            LEAF_USERNAME: ''
+            LEAF_PASSWORD: ''
+            OPENHAB_HTTP_PORT: ''
+            OPENHAB_HTTPS_PORT: ''
+            REDIS_REPLICATION_MODE: ''
+            AdvertiseOnline: ''
+            Ban: ''
+            EnableSingleplayer: ''
+            ExternalPort: ''
+            ListenPort: ''
+            Mod: ''
+            Name: ''
+            Password: ''
+            WEBSITE_NAME: ''
+            TEMPLATE: ''
+            RUN_MODE: ''
+            DELUGE_RPC_HOSTNAME: ''
+            DELUGE_RPC_PORT: 0
+            DELUGE_RPC_PASSWORD: ''
+            DELUGE_RPC_USERNAME: ''
+            DELUGE_RPC_VERSION: ''
+            STORM_API_KEY: ''
+            RI_APP_PORT: ''
+            RI_FILES_LOGGER: ''
+            RI_LOG_LEVEL: ''
+            TAKE_FILE_OWNERSHIP: false
+            APIKEY_PATH: ''
+            LOG_PATH: ''
+            SECRETKEY_PATH: ''
+            BLOB_STORAGE_PATH: ''
+            OVERRIDE_DATABASE: true
+            DATABASE_SSL: false
+            EXECUTION_MODE: ''
+            FLOWISE_USERNAME: ''
+            FLOWISE_PASSWORD: 0
+            FLOWISE_FILE_SIZE_LIMIT: ''
+            CORS_ORIGINS: ''
+            FLOWISE_SECRETKEY_OVERWRITE:
               secretKeyRef:
                 name: ''
                 key: ''
-            SEMAPHORE_DB_PASS:
-              secretKeyRef:
-                name: ''
-                key: ''
-            SEMAPHORE_ACCESS_KEY_ENCRYPTION:
-              secretKeyRef:
-                name: ''
-                key: ''
-            SEMAPHORE_PLAYBOOK_PATH: ''
-            SEMAPHORE_ADMIN: ''
-            SEMAPHORE_ADMIN_NAME: ''
-            SEMAPHORE_ADMIN_PASSWORD: ''
-            SEMAPHORE_ADMIN_EMAIL: ''
-            SEMAPHORE_LDAP_ACTIVATED: ''
-            SEMAPHORE_LDAP_NEEDTLS: ''
-            FG_LOG_LEVEL: ''
-            FG_LOG_FILE: ''
-            FG_WEBUI_PASSWD: ''
-            DEFAULT_PORT: ''
-            DEFAULT_SSL_PORT: ''
-            BACKUP_VERSIONS_TO_KEEP: 5
-            SLASH_PORT: ''
-            ENABLE_MJPG_STREAMER: ''
-            MJPG_STREAMER_INPUT:
-            CAMERA_DEV:
-            SLSKD_SLSK_LISTEN_IP_ADDRESS: ''
-            SLSKD_SLSK_LISTEN_PORT: ''
-            SLSKD_HTTP_PORT: ''
-            APP_DIR: ''
-            SLSKD_SHARED_DIR: ''
-            SLSKD_DOWNLOADS_DIR: ''
-            SLSKD_INCOMPLETE_DIR: ''
-            SLSKD_USERNAME: ''
-            SLSKD_PASSWORD: ''
-            SLSKD_JWT_KEY:
-              secretKeyRef:
-                name: ''
-                key: ''
-            TG_API_HASH: ''
-            TG_API_ID: ''
-            TG_AUTHORIZED_USER_ID: ''
-            TG_BOT_TOKEN: ''
-            TG_PROGRESS_DOWNLOAD: ''
-            SCRYPTED_INSECURE_PORT: ''
+            LANGCHAIN_TRACING_V2: false
+            OPENWEBRX_ADMIN_USER: ''
+            OPENWEBRX_ADMIN_PASSWORD: ''
+            HOMEBRIDGE_CONFIG_UI: 1
+            DEV: ''
+            ROOT_PWD: ''
+            FM_HOME: ''
+            WEBPAGE_TITLE: ''
+            GENERATE_NEW_SAVE: false
+            LOAD_LATEST_SAVE: true
+            SAVE_NAME: ''
+            UPDATE_MODS_ON_START: ''
+            THUNDERBIRD_LANG: ''
+            THUNDERBIRD_V: ''
+            BOOKLORE_PORT: ''
             DB_SSL: false
             IS_CREATION_ENABLED: true
             IS_DASHBOARD_ENABLED: true
             IS_REGISTRATION_ENABLED: true
             CONNECT_WITH_FRANZ: true
-            GF_SECURITY_ADMIN_USER: ''
-            GF_SECURITY_ADMIN_PASSWORD: ''
-            GF_INSTALL_PLUGINS: ''
-            GF_AUTH_LDAP_ENABLED: ''
-            GF_AUTH_LDAP_ALLOW_SIGN_UP: ''
-            GF_SERVER_HTTP_PORT: 0
-            GF_DATABASE_TYPE: ''
-            GF_DATABASE_NAME: ''
-            GF_DATABASE_USER: ''
-            GF_DATABASE_SSL_MODE: ''
-            GF_DATABASE_HOST:
-              secretKeyRef:
-                name: ''
-                key: ''
-            GF_DATABASE_PASSWORD:
-              secretKeyRef:
-                name: ''
-                key: ''
-            THELOUNGE_HOME: ''
-            VUID: ''
-            INTPORT: ''
-            DEEMIX_SINGLE_USER: false
-            AIRSONIC_PORT: ''
-            CONTEXT_PATH: ''
-            AIRSONIC_DIR: ''
-            spring_liquibase_parameters_userTableQuote: ''
-            spring_datasource_username: ''
-            spring_datasource_url:
-              secretKeyRef:
-                name: ''
-                key: ''
-            spring_datasource_password:
-              secretKeyRef:
-                name: ''
-                key: ''
-            RADARR__SERVER__PORT: ''
-            RADARR__AUTH__METHOD: ''
-            RADARR__AUTH__REQUIRED: ''
-            SMTP_ADDRESS: ''
-            SMTP_AUTHENTICATION: ''
-            SMTP_DOMAIN: ''
-            SMTP_EMAIL_FROM: ''
-            SMTP_EMAIL_TO: ''
-            SMTP_ENABLE_STARTTLS_AUTO: ''
-            SMTP_PORT: ''
-            DISABLE_BUILTIN_AUTH: false
-            MANAGE_HTTPS_PORT: ''
-            PORTAL_HTTPS_PORT: ''
-            CHECK_FOR_UPDATES: ''
-            START_PARAMS: ''
-            CUSTOMER_KEY: ''
-            IDENTIFIER: ''
-            PROVIDER_KEY: ''
-            SLOTS: ''
-            STATUS_HTTP: true
-            STATUS_HTTP_PORT: ''
-            SUPERVISOR_HTTP: true
-            SUPERVISOR_HTTP_PORT: ''
-            SERVER_PUBLIC: true
-            BACKUPS: true
-            BACKUPS_INTERVAL: 0
-            BACKUPS_DIRECTORY: ''
-            BACKUPS_MAX_AGE: 3
-            SUPERVISOR_HTTP_USER: ''
-            SUPERVISOR_HTTP_PASS: ''
-            SERVER_PASS: ''
-            ROOT_URL: ''
             ENABLE_LAN_VISIBILITY: true
             GAMEMODE: ''
             ALLOW_CHEATS: false
@@ -2715,113 +2593,202 @@ workload:
             PLAYER_MOVEMENT_DISTANCE_THRESHOLD: 0
             PLAYER_MOVEMENT_DURATION_THRESHOLD_IN_MS: 0
             CORRECT_PLAYER_MOVEMENT: false
-            MULTIHOME: ''
-            STREAMABLE_LOGIN: ''
-            STREAMABLE_PASSWORD: ''
-            PEERPORT: ''
-            WEBPAGE_TITLE: ''
-            META_TITLE: ''
-            META_DESCRIPTION: ''
-            META_AUTHOR: ''
-            BACKUPPC_UUID: ''
-            BACKUPPC_GUID: ''
-            DECONZ_WEB_PORT: ''
-            DECONZ_WS_PORT: ''
-            DECONZ_VNC_PORT: ''
-            DECONZ_UID: ''
-            DECONZ_GID: ''
-            DECONZ_DEVICE: ''
-            DECONZ_UPNP: 0
-            DECONZ_START_VERBOSE: 0
-            DECONZ_VNC_MODE: 1
-            DECONZ_VNC_PASSWORD: ''
-            ORIGIN: ''
-            USER_APPROVAL_REQUIRED: true
-            IMAGE_MAX_SIZE: ''
-            UPDATE_IPV4: true
-            UPDATE_IPV6: true
-            DETECTION_MODE: ''
-            CF_APITOKEN: ''
-            CF_HOSTS: ''
-            INTERVAL: 0
-            CR_CONF_Database.Type: ''
-            CR_CONF_Database.Host: ''
-            CR_CONF_Database.User: ''
-            CR_CONF_Database.Name: ''
-            CR_CONF_Database.Password: ''
-            CR_CONF_Database.Port: 0
-            CR_CONF_Redis.Server: ''
-            CR_CONF_Redis.User: ''
-            CR_CONF_Redis.Password: ''
-            enable_integration: ''
-            AUTH: ''
-            ROCKET_FORCE_UPDATE: ''
-            ROCKET_MOD: ''
-            ROCKET_URL: ''
+            AUTO_INSTALL: true
+            INSTALL_PORT: 80
+            LANGUAGE: ''
+            SITE_URL: ''
+            CONTACT_EMAIL: ''
+            ADMIN_NAME: ''
+            PROVIDER_REGEX: ''
+            BYPASS_DNS_RESOLUTION: true
+            IGNORE_NON_SYSTEM_NODE: false
+            ALLOWED_DNS_NAMES: 1
+            BYPASS_HOSTNAME_CHECK: false
+            LEADER_ELECTION: true
+            FRONT_URL: ''
+            OIDC_ISSUER: ''
+            APPLE_CLIENT_ID: ''
+            APPLE_CLIENT_SECRET: ''
+            GOOGLE_CLIENT_ID: ''
+            GOOGLE_CLIENT_SECRET: ''
+            STORAGE_PATH: ''
+            CHECK_FREQUENCY: 0
+            KASM_PORT: ''
+            DOCKER_HUB_PASSWORD: ''
+            DOCKER_HUB_USERNAME: ''
             MULTUS_NODE_NAME:
               fieldRef:
                 fieldPath: ''
-            WRITABLE_PATH: ''
-            BLOG_TITLE: ''
-            BLOG_NAME: ''
-            BLOG_LANG: ''
-            BLOG_DB_CONNECTION: ''
-            BLOG_POSTGRES_USER: ''
-            BLOG_POSTGRES_PORT: ''
-            BLOG_DB_NAME: ''
-            BLOG_POSTGRES_PASS:
+            BEACON_PORT: ''
+            AMCREST_HOST: ''
+            AMCREST_PORT: 80
+            HOME_ASSISTANT: ''
+            HOME_ASSISTANT_PREFIX: ''
+            AMCREST_USERNAME: ''
+            AMCREST_PASSWORD: ''
+            STREAMABLE_LOGIN: ''
+            STREAMABLE_PASSWORD: ''
+            BG_HIGH: ''
+            BG_LOW: ''
+            BG_TARGET_BOTTOM: ''
+            BG_TARGET_TOP: ''
+            DISPLAY_UNITS: ''
+            ENABLE: ''
+            INSECURE_USE_http: ''
+            MONGO_CONNECTION: ''
+            TIME_FORMAT: ''
+            CHATID: ''
+            SECRET_ENCRYPTION_KEY: ''
+            LD_SERVER_PORT: ''
+            LD_REQUEST_TIMEOUT: 60
+            LD_DISABLE_BACKGROUND_TASKS: false
+            LD_DISABLE_URL_VALIDATION: false
+            LD_SUPERUSER_NAME: ''
+            LD_SUPERUSER_PASSWORD: ''
+            API_TOKEN: ''
+            RECORD_TYPE: ''
+            ZONE_NAME: ''
+            BORG_UID: ''
+            BORG_GID: ''
+            S3CMDPARAMS: ''
+            ARGS: ''
+            HOST_ADDR: ''
+            HOST_CONF_PORT: ''
+            HOST_TUN_PROTOCOL: ''
+            HOST_TUN_PORT: ''
+            ESPHOME_DASHBOARD_USE_PING: false
+            ESPHOME_DASHBOARD_RELATIVE_URL: ''
+            ME_CONFIG_MONGODB_PORT: ''
+            ME_CONFIG_MONGODB_SERVER: ''
+            ME_CONFIG_BASICAUTH_USERNAME: ''
+            ME_CONFIG_BASICAUTH_PASSWORD: ''
+            ME_CONFIG_OPTIONS_EDITORTHEME: ''
+            ME_CONFIG_MONGODB_AUTH_DATABASE: ''
+            ME_CONFIG_MONGODB_AUTH_USERNAME: ''
+            ME_CONFIG_MONGODB_AUTH_PASSWORD: ''
+            RADARR__SERVER__PORT: ''
+            RADARR__AUTH__METHOD: ''
+            RADARR__AUTH__REQUIRED: ''
+            PASTE_ENABLE_CHARTS: ''
+            TIMETAGGER_BIND: ''
+            SITE_OWNER: ''
+            SESSION_LIFETIME: ''
+            MAIL_FROM: ''
+            AUTHENTICATION_GUARD: ''
+            AUTH_PROXY_HEADER_FOR_USER: ''
+            AUTH_PROXY_HEADER_FOR_EMAIL: ''
+            PROXY_LOGOUT_URL: ''
+            WEBAUTHN_NAME: ''
+            WEBAUTHN_ID: ''
+            WEBAUTHN_ICON: ''
+            WEBAUTHN_USER_VERIFICATION: ''
+            ytdl_mongodb_connection_string:
               secretKeyRef:
+                expandObjectName: false
                 name: ''
                 key: ''
-            BLOG_POSTGRES_HOST:
-              secretKeyRef:
-                name: ''
-                key: ''
-            BLOG_NICK: ''
-            BLOG_PASS: ''
-            NTFY_LISTEN_HTTP: ''
-            NTFY_BASE_URL: ''
-            NTFY_BEHIND_PROXY: false
-            ENABLE_FIREBASE_FILE: false
-            ENABLE_CACHE_FILE: false
-            ENABLE_ATTACHMENT_CACHE_DIR: false
-            ENABLE_AUTH_FILE: false
-            NTFY_ENABLE_METRICS: ''
-            NTFY_UPSTREAM_BASE_URL: ''
-            JELLYFIN_TYPE: ''
-            DN_API_KEY: ''
-            DN_BIND_ADDR: ''
-            DN_UPSTREAMS_0: ''
-            SIGNAL_CLI_UID: 0
-            SIGNAL_CLI_GID: 0
-            APP_BASE_URL: ''
-            APP_PORT: ''
-            DB_CLIENT: ''
-            MAILER_ENABLED: 0
-            MAILER_HOST: ''
-            MAILER_PORT: 0
-            MAILER_SECURITY: ''
-            MAILER_AUTH_USER: ''
-            MAILER_AUTH_PASSWORD: ''
-            MAILER_NOREPLY_NAME: ''
-            MAILER_NOREPLY_EMAIL: ''
+            ytdl_port: ''
+            ytdl_use_local_db: false
+            ALLOW_CONFIG_MUTATIONS: true
+            write_ytdl_config: true
+            ytdl_url: ''
+            ytdl_multi_user_mode: false
+            ytdl_allow_subscriptions: true
+            ytdl_subscriptions_check_interval: 0
+            ytdl_subscriptions_redownload_fresh_uploads: false
+            ytdl_allow_theme_change: true
+            ytdl_default_theme: ''
+            ytdl_title_top: ''
+            ytdl_file_manager_enabled: true
+            ytdl_enable_downloads_manager: true
+            ytdl_allow_quality_select: true
+            ytdl_download_only_mode: false
+            ytdl_use_api_key: false
+            ytdl_api_key: ''
+            ytdl_youtube_api_key: ''
+            ytdl_use_twitch_api: false
+            ytdl_twitch_api_key: ''
+            ytdl_twitch_auto_download_chat: false
+            ytdl_use_sponsorblock_api: false
+            ytdl_generate_nfo_files: false
+            ytdl_default_file_output: ''
+            ytdl_custom_args: ''
+            ytdl_allow_playlist_categorization: true
+            ytdl_use_youtubedl_archive: false
+            ytdl_include_thumbnail: true
+            ytdl_include_metadata: true
+            ytdl_max_concurrent_downloads: 5
+            ytdl_download_rate_limit: ''
+            ytdl_default_downloader: ''
+            ytdl_use_default_downloading_agent: true
+            ytdl_custom_downloading_agent: ''
+            ytdl_logger_level: ''
+            ytdl_jwt_expiration: 0
+            ytdl_allow_advanced_download: false
+            ytdl_use_cookies: false
+            DISABLE_BLIZZARD: false
+            DISABLE_RIOT: false
+            DISABLE_UPLAY: false
+            DISABLE_ORIGIN: false
+            DISABLE_SONY: false
+            DISABLE_SQUARE: false
+            ZIGBEE2MQTT_DATA: ''
+            ZIGBEE2MQTT_CONFIG_FRONTEND_PORT: ''
+            USE_CUSTOM_CONFIG_FILE: false
+            ZIGBEE2MQTT_CONFIG_MQTT_USER: ''
+            ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD: ''
+            STATUS_HTTP: true
+            STATUS_HTTP_PORT: ''
+            SUPERVISOR_HTTP: true
+            SUPERVISOR_HTTP_PORT: ''
+            SERVER_PUBLIC: true
+            BACKUPS: true
+            BACKUPS_INTERVAL: 0
+            BACKUPS_DIRECTORY: ''
+            BACKUPS_MAX_AGE: 3
+            SUPERVISOR_HTTP_USER: ''
+            SUPERVISOR_HTTP_PASS: ''
+            SERVER_PASS: ''
+            AUTH_LIST: ''
+            ADMINER_DESIGN: ''
+            ADMINER_PLUGINS: ''
+            AUTH: ''
+            IMPOSTOR_Server__PublicIp: ''
+            IMPOSTOR_Server__ListenIp: ''
+            IMPOSTOR_AntiCheat__Enabled: true
+            IMPOSTOR_AntiCheat__BanIpFromGame: true
+            IMPOSTOR_Debug__GameRecorderEnabled: false
+            IMPOSTOR_Debug__GameRecorderPath: ''
+            VS_CHANNEL: ''
+            GLANCES_OPT: ''
+            SETUP: true
+            EMAIL: ''
+            STORAGE: ''
+            WALLET: ''
+            VOLUMES_FILES: ''
+            VOLUMES_IMAGES: ''
+            VOLUMES_LOG: ''
+            DB_SYSTEM: ''
+            SERVER_ADMIN_USERNAME: ''
+            SERVER_ADMIN_PASSWORD: ''
+            SERVER_REGISTRATION_DISABLED: ''
+            SERVER_ACCOUNT_ACTIVATION_DISABLED: ''
+            SERVER_LOG_LEVEL: ''
+            SERVER_CORS_ALLOWED_ORIGINS: ''
+            GAMES_INDEX_INTERVAL_IN_MINUTES: ''
+            GAMES_SEARCH_RECURSIVE: ''
+            GAMES_SUPPORTED_FILE_FORMATS: ''
+            IMAGE_GC_KEEP_DAYS: ''
+            IMAGE_GC_INTERVAL_MINUTES: ''
+            RAWG_API_URL: ''
+            RAWG_API_CACHE_DAYS: ''
+            RAWG_API_KEY: ''
             MINIO_ROOT_USER: ''
             MINIO_ROOT_PASSWORD: ''
             MINIO_VOLUMES: ''
             MINIO_CONSOLE_ADDRESS: ''
             MINIO_BROWSER_REDIRECT_URL: ''
             MINIO_LICENSE: ''
-            CLICKHOUSE_HOST: ''
-            CLICKHOUSE_URL:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
-            POSTGRES_URL:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
             MARIADB_HOST: ''
             MARIADB_URL:
               secretKeyRef:
@@ -2834,11 +2801,18 @@ workload:
                 expandObjectName: false
                 name: ''
                 key: ''
-            CLICKHOUSE_PORT: ''
-            CLICKHOUSE_PING: ''
-            CLICKHOUSE_JDBC: ''
+            POSTGRES_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
+            CLICKHOUSE_HOST: ''
+            CLICKHOUSE_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
             OPERATOR_VERSION: ''
-            MONGODB_PORT: ''
             INTERFACE: ''
             APIKEY: ''
             ENABLE_ADDITIONAL_METRICS: false
@@ -2856,6 +2830,37 @@ workload:
             REQ_PASSWORD: ''
             REQ_URL: ''
             REQ_METHOD: ''
+            OLLAMA_BASE_URL: ''
+            WEBUI_SECRET_KEY:
+              secretKeyRef:
+                name: ''
+                key: ''
+            AUTOMATIC1111_BASE_URL: ''
+            ENABLE_SIGNUP: ''
+            DEFAULT_USER_ROLE: ''
+            WHISPER_MODEL: ''
+            RAG_EMBEDDING_MODEL: ''
+            RAG_EMBEDDING_MODEL_DEVICE_TYPE: ''
+            WEBUI_AUTH_TRUSTED_EMAIL_HEADER: ''
+            NGINX_CLIENT_MAX_BODY_SIZE: ''
+            NGINX_KEEPALIVE_TIMEOUT: ''
+            NGINX_UPSTREAM: ''
+            HUMHUB_REVERSEPROXY_WHITELIST: ''
+            APP_UPSTREAM: ''
+            APP_WEB_ROOT: ''
+            APP_BASE: ''
+            MACHINE_LEARNING_CACHE_FOLDER: ''
+            TRANSFORMERS_CACHE: ''
+            REVERSE_GEOCODING_DUMP_DIRECTORY: ''
+            IMMICH_WORKERS_EXCLUDE: ''
+            CSRF_KEY:
+              secretKeyRef:
+                name: ''
+                key: ''
+            QBT_USERNAME: ''
+            QBT_PASSWORD: ''
+            QBT_ADDR: ''
+            GTN_ADDR: ''
             FOLDER_ANNOTATION: ''
             SESSION_POLL_INTERVAL_MS: ''
             CRON_ACTIVITY_SYNC: ''
@@ -2870,25 +2875,6 @@ workload:
             CRON_FULL_SYNC: ''
             CRON_DELETED_ITEMS_CLEANUP: ''
             SKIP_STARTUP_FULL_SYNC: ''
-            QBT_USERNAME: ''
-            QBT_PASSWORD: ''
-            QBT_ADDR: ''
-            GTN_ADDR: ''
-            CSRF_KEY:
-              secretKeyRef:
-                name: ''
-                key: ''
-            MACHINE_LEARNING_CACHE_FOLDER: ''
-            TRANSFORMERS_CACHE: ''
-            REVERSE_GEOCODING_DUMP_DIRECTORY: ''
-            IMMICH_WORKERS_EXCLUDE: ''
-            APP_UPSTREAM: ''
-            APP_WEB_ROOT: ''
-            APP_BASE: ''
-            NGINX_CLIENT_MAX_BODY_SIZE: ''
-            NGINX_KEEPALIVE_TIMEOUT: ''
-            NGINX_UPSTREAM: ''
-            HUMHUB_REVERSEPROXY_WHITELIST: ''
             UPDATES: ''
             PREFILL_ONSTARTUP: ''
             LOGCLEANUP: ''
@@ -2902,18 +2888,6 @@ workload:
             ENABLE_STEAM: ''
             PREFILL_PARAMS_STEAM: ''
             CRON_SCHED_STEAM: ''
-            OLLAMA_BASE_URL: ''
-            WEBUI_SECRET_KEY:
-              secretKeyRef:
-                name: ''
-                key: ''
-            AUTOMATIC1111_BASE_URL: ''
-            ENABLE_SIGNUP: ''
-            DEFAULT_USER_ROLE: ''
-            WHISPER_MODEL: ''
-            RAG_EMBEDDING_MODEL: ''
-            RAG_EMBEDDING_MODEL_DEVICE_TYPE: ''
-            WEBUI_AUTH_TRUSTED_EMAIL_HEADER: ''
             BACK_URL: ''
             VAR1: ''
             VAR2: ''
@@ -2944,13 +2918,18 @@ workload:
             VAR11: 0
             VAR12: ''
             VAR13: ''
-          command:
-          - ''
           args:
           - ''
+          lifecycle:
+            postStart:
+              type: ''
+              command:
+              - ''
           envFrom:
           - secretRef:
               name: ''
+          command:
+          - ''
           securityContext:
             capabilities:
               add:
@@ -2962,27 +2941,8 @@ workload:
             runAsGroup: 0
             readOnlyRootFilesystem: false
             runAsNonRoot: true
-            allowPrivilegeEscalation: true
             privileged: true
-            seccompProfile:
-              type: ''
-              profile: ''
-          lifecycle:
-            postStart:
-              type: ''
-              command:
-              - ''
-              port: ''
-              host: ''
-              path: ''
-              httpHeaders:
-                key: ''
-            preStop:
-              type: ''
-              port: 80
-              command: ''
-          tty: true
-          stdin: true
+            allowPrivilegeEscalation: true
           resources:
             excludeExtra: true
             limits:
@@ -2995,35 +2955,31 @@ workload:
             requests:
               cpu: ''
               memory: ''
+          tty: true
+          stdin: true
           extraArgs:
           - ''
           termination:
             messagePolicy: ''
-            messagePath: ''
           type: ''
       initContainers:
         objectname:
+          type: ''
           enabled: true
           imageSelector: ''
-          type: ''
-          command:
-          - ''
-          securityContext:
-            runAsUser: 0
-            runAsNonRoot: false
-            runAsGroup: 0
-            readOnlyRootFilesystem: false
-            allowPrivilegeEscalation: false
-            privileged: true
-            capabilities:
-              drop:
-              - ''
-          envFrom:
-          - configMapRef:
-              name: ''
+          command: ''
           args:
           - ''
           env:
+            ZIGBEE2MQTT_CONFIG_FRONTEND_PORT: ''
+            ZIGBEE2MQTT_CONFIG_PERMIT_JOIN: ''
+            ZIGBEE2MQTT_CONFIG_MQTT_SERVER: ''
+            ZIGBEE2MQTT_CONFIG_MQTT_USER: ''
+            ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD: ''
+            ZIGBEE2MQTT_CONFIG_MQTT_BASE_TOPIC: ''
+            ZIGBEE2MQTT_CONFIG_SERIAL_PORT: ''
+            ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER: ''
+            USE_CUSTOM_CONFIG_FILE: ''
             POSTGRES_DB:
               secretKeyRef:
                 name: ''
@@ -3040,16 +2996,9 @@ workload:
             REDIS_SERVER_PORT: ''
             REDIS_SERVER_PASSWORD: ''
             DATABASE_URL: ''
-            ODOO_RC: ''
-            ZIGBEE2MQTT_CONFIG_FRONTEND_PORT: ''
-            ZIGBEE2MQTT_CONFIG_PERMIT_JOIN: ''
-            ZIGBEE2MQTT_CONFIG_MQTT_SERVER: ''
-            ZIGBEE2MQTT_CONFIG_MQTT_USER: ''
-            ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD: ''
-            ZIGBEE2MQTT_CONFIG_MQTT_BASE_TOPIC: ''
-            ZIGBEE2MQTT_CONFIG_SERIAL_PORT: ''
-            ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER: ''
-            USE_CUSTOM_CONFIG_FILE: ''
+            NODE_IP:
+              fieldRef:
+                fieldPath: ''
             SECRET_KEY:
               secretKeyRef:
                 name: ''
@@ -3058,16 +3007,20 @@ workload:
               secretKeyRef:
                 name: ''
                 key: ''
-            NODE_IP:
-              fieldRef:
-                fieldPath: ''
-            key: ''
-            key2: ''
-            key3:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
+            ODOO_RC: ''
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            allowPrivilegeEscalation: false
+            privileged: true
+            capabilities:
+              drop:
+              - ''
+          envFrom:
+          - configMapRef:
+              name: ''
           resources:
             excludeExtra: true
             requests:
@@ -3077,17 +3030,10 @@ workload:
           image: ''
           termination:
             messagePolicy: ''
-          probes:
-            liveness:
-              enabled: true
-            readiness:
-              enabled: true
-            startup:
-              enabled: true
       automountServiceAccountToken: true
-      type: ''
       restartPolicy: ''
       hostname: ''
+      type: ''
       hostNetwork: true
       terminationGracePeriodSeconds: 3
       labels:
@@ -3096,9 +3042,6 @@ workload:
       annotations:
         pod-annotation1: ''
         pod-annotation2: ''
-      my-container:
-        enabled: true
-        primary: true
       dnsConfig:
         nameservers:
         - ''
@@ -3127,13 +3070,12 @@ workload:
       priorityClassName: ''
       runtimeClassName: ''
       schedulerName: ''
-      serviceAccountName: ''
       shareProcessNamespace: false
       tolerations:
       - operator: ''
         effect: ''
         tolerationSeconds: 0
-    replicas: 2
+    replicas: 1
     strategy: ''
     schedule: ''
     concurrencyPolicy: ''
@@ -3185,62 +3127,10 @@ vpa:
           memory: ''
         controlledResources:
         - ''
-  vpa-name:
-    enabled: true
-    targetSelector:
-    - ''
-    updatePolicy:
-      minReplicas: 2
-      evictionRequirements:
-      - resources:
-        - ''
-        changeRequirement: ''
-    resourcePolicy:
-      containerPolicies:
-      - containerName: ''
-        mode: ''
-        controlledResources:
-        - ''
-        controlledValues: ''
-        minAllowed:
-          cpu: ''
-          memory: ''
-        maxAllowed:
-          cpu: ''
-          memory: ''
 hpa:
   main:
     enabled: false
     targetSelector: []
-  vpa-name:
-    enabled: true
-  hpa-name:
-    enabled: true
-    targetSelector:
-    - ''
-    minReplicas: 50
-    maxReplicas: 100
-    behavior:
-      scaleUp:
-        stabilizationWindowSeconds: 50
-        policies:
-        - type: ''
-          value: 10
-          periodSeconds: 60
-      scaleDown:
-        selectPolicy: ''
-        stabilizationWindowSeconds: 0
-        policies:
-        - type: ''
-          value: 20
-          periodSeconds: 60
-    metrics:
-    - type: ''
-      resource:
-        name: ''
-        target:
-          type: ''
-          averageUtilization: 80
 service:
   objectname:
     enabled: true
@@ -3252,14 +3142,13 @@ service:
         protocol: ''
         port: 0
         targetPort: 0
+        type: ''
         targetSelector: ''
         hostPort: 0
         nodePort: 0
-        type: ''
         protcol: ''
-        appProtocol: ''
-    type: ''
     targetSelector: ''
+    type: ''
     externalIP: ''
     useSlice: true
     clusterIP: ''
@@ -3269,24 +3158,6 @@ service:
       app.kubernetes.io/component: ''
     publishNotReadyAddresses: true
     loadBalancerIP: ''
-    loadBalancerIPs:
-    - ''
-    integrations:
-      cilium:
-        enabled: true
-        sharedKey: ''
-      traefik:
-        enabled: true
-        forceTLS: true
-        insecureSkipVerify: true
-        serverName: ''
-        rootCAs:
-        - secretRef:
-            name: ''
-            expandObjectName: false
-      metallb:
-        enabled: true
-        sharedKey: ''
     ipFamilyPolicy: ''
     ipFamilies:
     - ''
@@ -3296,25 +3167,23 @@ service:
     sessionAffinityConfig:
       clientIP:
         timeoutSeconds: ''
-    externalTrafficPolicy: ''
-    addressType: ''
-    namespace: ''
     externalName: ''
+    externalTrafficPolicy: ''
+    loadBalancerIPs:
+    - ''
     loadBalancerSourceRanges:
     - ''
     allocateLoadBalancerNodePorts: true
-    labels:
-      label1: ''
-      label2: ''
-    annotations:
-      annotation1: ''
-      annotation2: ''
-    annotationsList:
-    - name: ''
-      value: ''
-    labelsList:
-    - name: ''
-      value: ''
+    integrations:
+      traefik:
+        enabled: true
+        forceTLS: true
+        insecureSkipVerify: true
+        serverName: ''
+        rootCAs:
+        - secretRef:
+            name: ''
+            expandObjectName: false
 credentials:
   mys3:
     type: ''
@@ -3323,11 +3192,6 @@ credentials:
     accessKey: ''
     secretKey: ''
     encrKey: ''
-    region: ''
-    customCA: ''
-    customCASecretRef:
-      name: ''
-      key: ''
   test:
     type: ''
     url: ''
@@ -3336,39 +3200,6 @@ credentials:
     accessKey: ''
     secretKey: ''
     region: ''
-    customCA: ''
-    path: ''
-    customCASecretRef:
-      name: ''
-      key: ''
-  other:
-    bucket: ''
-    type: ''
-    accessKey: ''
-    secretKey: ''
-    url: ''
-    encrKey: ''
-  from:
-    bucket: ''
-    type: ''
-    accessKey: ''
-    secretKey: ''
-    encrKey: ''
-    url: ''
-  to:
-    bucket: ''
-    type: ''
-    accessKey: ''
-    secretKey: ''
-    encrKey: ''
-    url: ''
-  MyS3:
-    type: ''
-    url: ''
-    bucket: ''
-    encrKey: ''
-    accessKey: ''
-    secretKey: ''
     customCA: ''
 ingressMiddlewares:
   traefik:
@@ -3407,24 +3238,6 @@ ingressMiddlewares:
       data:
         prefix:
         - ''
-    some-unused-middleware:
-      enabled: false
-      type: ''
-    some-middleware:
-      enabled: false
-      type: ''
-      data:
-        foo: ''
-    some-chart-middleware:
-      enabled: false
-      type: ''
-      data:
-        foo: ''
-    some-user-middleware:
-      enabled: false
-      type: ''
-      data:
-        foo: ''
     my-middleware1:
       enabled: true
       type: ''
@@ -3435,10 +3248,9 @@ ingressMiddlewares:
         annotation1: ''
         annotation2: ''
       data:
-        foo: ''
+        maxRequestBodyBytes: 0
         prefix: ''
         secret: ''
-        maxRequestBodyBytes: 0
         memRequestBodyBytes: 0
         maxResponseBodyBytes: 0
         memResponseBodyBytes: 0
@@ -3446,16 +3258,6 @@ ingressMiddlewares:
         middlewares:
         - name: ''
           expandObjectName: false
-        address: ''
-        authResponseHeadersRegex: ''
-        trustForwardHeader: true
-        maxResponseBodySize: 0
-        authResponseHeaders:
-        - ''
-        authRequestHeaders:
-        - ''
-        tls:
-          insecureSkipVerify: true
         customRequestHeaders:
           some-name: ''
           some-other-name: ''
@@ -3588,13 +3390,13 @@ ingressMiddlewares:
         users:
         - username: ''
           password: ''
-        foo: ''
+        maxRequestBodyBytes: 0
     my-middleware3:
       enabled: true
       type: ''
       expandObjectName: false
       data:
-        foo: ''
+        maxRequestBodyBytes: 0
 persistence:
   objectname:
     enabled: true
@@ -3607,42 +3409,42 @@ persistence:
       main:
         main:
           mountPath: ''
-          readOnly: true
           subPath: ''
-        prepare-runtime: {}
-        setup-postgres-dirs:
+          readOnly: true
+        exportarr:
+          mountPath: ''
+          readOnly: true
+        init-config: {}
+        1-create-config-file: {}
+        affine-migration:
           mountPath: ''
         migrate:
           mountPath: ''
+        arm-perms: {}
+        init-conf:
+          mountPath: ''
         init-perms:
+          mountPath: ''
+        prepare-runtime: {}
+        setup-postgres-dirs:
           mountPath: ''
         1-create-key-file: {}
         update-config-ini:
           mountPath: ''
-        arm-perms: {}
-        exportarr:
-          mountPath: ''
-          readOnly: true
-        1-create-config-file: {}
-        affine-migration:
-          mountPath: ''
-        init-config: {}
-        init-conf:
-          mountPath: ''
+        init: {}
         1-create-seed:
           mountPath: ''
           subPath: ''
         2-apply-seed:
           mountPath: ''
           subPath: ''
+        configuration:
+          mountPath: ''
+        download-dashboards: {}
         init-db:
           mountPath: ''
           subPath: ''
           readOnly: true
-        init: {}
-        configuration:
-          mountPath: ''
-        download-dashboards: {}
         cleanup: {}
         multus-plugin-installer: {}
         talos-plugin-installer: {}
@@ -3653,77 +3455,55 @@ persistence:
       preview-cron:
         preview-cron:
           mountPath: ''
+      notify:
+        notify:
+          mountPath: ''
+          readOnly: true
       nginx:
         nginx:
           mountPath: ''
           readOnly: true
           subPath: ''
-      ui:
-        ui:
-          mountPath: ''
       plextraktsync-cron:
         cron:
           mountPath: ''
       updater:
         updater:
           mountPath: ''
-      notify:
-        notify:
-          mountPath: ''
-          readOnly: true
       aria2:
         aria2:
           mountPath: ''
-      guacd:
-        guacd:
+      ui:
+        ui:
+          mountPath: ''
+      microservices:
+        microservices:
+          mountPath: ''
+      machinelearning:
+        machinelearning:
           mountPath: ''
       worker:
         worker:
           mountPath: ''
         blueprints:
           mountPath: ''
-      microservices:
-        microservices:
+      guacd:
+        guacd:
           mountPath: ''
       geoip:
         geoip:
           mountPath: ''
-      machinelearning:
-        machinelearning:
-          mountPath: ''
-      workload-name1:
-        container-name2: {}
-      workload-name:
-        container-name2: {}
-        container-name1:
-          mountPath: ''
-          readOnly: false
-          mountPropagation: ''
-          subPath: ''
-      workload-name2:
-        container-name1: {}
-      other-workload:
-        other-container: {}
-    accessMode: ''
     objectName: ''
-    subPath: ''
     readOnly: true
-    objectname: true
+    subPath: ''
+    accessMode: ''
     items:
     - key: ''
       path: ''
-    defaultMode: ''
     hostPath: ''
+    defaultMode: ''
     hostPathType: ''
-    optional: true
     mountPropagation: ''
-    autoPermissions:
-      enabled: true
-      chown: true
-      chmod: 0
-      recursive: true
-      user: 0
-      group: 0
     volsync:
     - name: ''
       type: ''
@@ -3733,21 +3513,18 @@ persistence:
       src:
         enabled: true
     copyMethod: ''
-    accessModes:
-    - ''
     labels:
       labelexample1: ''
       label1: ''
       label2: ''
     storageClass: ''
-    server: ''
-    path: ''
-    static:
-      mode: ''
-      share: ''
-      server: ''
-      username: ''
-      password: ''
+    autoPermissions:
+      enabled: true
+      chown: true
+      chmod: 0
+    existingClaim: ''
+    accessModes: ''
+    volumeName: ''
     annotations:
       annotation1: ''
       annotation2: ''
@@ -3758,36 +3535,15 @@ persistence:
     - name: ''
       value: ''
     retain: true
-    existingClaim: ''
-    volumeName: ''
     namespace: ''
-    mountOptions:
-    - key: ''
-    expandObjectName: false
-    iscsi:
-      fsType: ''
-      targetPortal: ''
-      iqn: ''
-      lun: ''
-      initiatorName: ''
-      iscsiInterface: ''
-      portals:
-      - ''
-      authSession:
-        username: ''
-        password: ''
-        usernameInitiator: ''
-        passwordInitiator: ''
-      authDiscovery:
-        username: ''
-        password: ''
-        usernameInitiator: ''
-        passwordInitiator: ''
-    sources:
-    - serviceAccountToken:
-        expirationSeconds: 0
-        audience: ''
-        path: ''
+    static:
+      mode: ''
+      server: ''
+      share: ''
+      username: ''
+      password: ''
+    path: ''
+    server: ''
 volumeSnapshotClass:
   class1:
     enabled: true
@@ -3822,7 +3578,7 @@ volumeSnapshotClass:
     enabled: true
     driver: ''
     parameters:
-      "{{ .Values.some_key }}": ''
+      '{{ .Values.some_key }}': ''
       parameter2: 5
 volumeSnapshots:
   example1:
@@ -3841,12 +3597,10 @@ volumeSnapshots:
     labelsList:
     - name: ''
       value: ''
-    volumeSnapshotClassName: ''
   example2:
     enabled: true
     source:
       volumeSnapshotContentName: ''
-      persistentVolumeClaimName: ''
 imagePullSecret:
   image-secret-name:
     enabled: true
@@ -3894,41 +3648,61 @@ imagePullSecret:
   my-pull-secret3:
     enabled: true
     existingSecret: ''
-  pull-secret1:
-    enabled: true
-    data:
-      registry: ''
-      username: ''
-      password: ''
-      email: ''
-    targetSelectAll: true
-    targetSelector:
-    - ''
-  pull-secret2:
-    enabled: true
-    data:
-      registry: ''
-      username: ''
-      password: ''
-      email: ''
-    targetSelectAll: true
-    targetSelector:
-    - ''
-  pull-secret3:
-    enabled: true
-    existingSecret: ''
 configmap:
   objectname:
     enabled: true
+    labels:
+      grafana_dashboard: ''
+      grafana_datasource: ''
+      label1: ''
+      label2: ''
     data:
+      upUAP.json: ''
+      upclients.json: ''
+      upUSW.json: ''
+      upnetwork.json: ''
+      upUSG.json: ''
+      upDPI.json: ''
+      bitmagnet.json: ''
+      pve.json: ''
+      memcached.json: ''
+      truenasexporter.json: ''
+      blocky.json: ''
+      blockypostgres.json: ''
+      spegel.json: ''
+      smartctl.json: ''
+      speedtest.json: ''
+      prowlarr.json: ''
+      bitmagnetpsql.yaml: ''
+      datasourceteslamatepsql.yaml: ''
+      datasourceblockypsql.yaml: ''
+      passinit.sql: ''
       ENABLE_CJK_FONT: ''
       KEEP_APP_RUNNING: ''
       SECURE_CONNECTION: ''
       DISPLAY_WIDTH: ''
       DISPLAY_HEIGHT: ''
-      config.yml: ''
-      config.yaml: ''
-      nginx.conf.template: ''
+      init.sh: ''
+      configuration.yaml.default: ''
+      recorder.default: ''
+      enable-console-logging.sh: ''
+      VISION-FACE: ''
+      VISION-DETECTION: ''
+      VISION-SCENE: ''
+      VISION-ENHANCE: ''
+      appsettings.json: ''
+      sessions.jsonl: ''
+      DARK_MODE: ''
+      MAKEMKV_KEY: ''
+      AUTO_DISC_RIPPER_INTERVAL: ''
+      AUTO_DISC_RIPPER_BD_MODE: ''
+      AUTO_DISC_RIPPER_MAKEMKV_PROFILE: ''
+      AUTO_DISC_RIPPER: ''
+      AUTO_DISC_RIPPER_EJECT: ''
+      AUTO_DISC_RIPPER_PARALLEL_RIP: ''
+      AUTO_DISC_RIPPER_NO_GUI_PROGRESS: ''
+      AUTO_DISC_RIPPER_FORCE_UNIQUE_OUTPUT_DIR: ''
+      DISABLE_RESTART_SESSION_DIALOG_WINDOW: ''
       custom.js: ''
       custom.css: ''
       kubernetes.yaml: ''
@@ -3936,39 +3710,56 @@ configmap:
       widgets.yaml: ''
       services.yaml: ''
       bookmarks.yaml: ''
-      renovate-config.json: ''
-      mosquitto.conf: ''
       graphite_mapping.conf: ''
+      mosquitto.conf: ''
+      renovate-config.json: ''
+      config.yaml: ''
+      config.yml: ''
       grafana.ini: ''
       ldap.toml: ''
+      nginx.conf.template: ''
       daemon-config.json: ''
-      VISION-FACE: ''
-      VISION-DETECTION: ''
-      VISION-SCENE: ''
-      VISION-ENHANCE: ''
+      plugins.yaml: ''
+      Engine.ini: ''
+      Game.ini: ''
+      GameUserSettings.ini: ''
+      crontab: ''
+      dashboard_volsync.json: ''
+      settings: ''
+      kong.yml: ''
+      CHEVERETO_HTTPS: ''
+      CHEVERETO_DISABLE_UPDATE_HTTP: ''
+      CHEVERETO_DISABLE_UPDATE_CLI: ''
+      AUTOMATED_CONVERSION_KEEP_SOURCE: ''
+      AUTOMATED_CONVERSION_PRESET: ''
+      AUTOMATED_CONVERSION_FORMAT: ''
+      AUTOMATED_CONVERSION_NON_VIDEO_FILE_ACTION: ''
+      provider.yaml: ''
       ping_readiness_local.sh: ''
       ping_liveness_local.sh: ''
       ping_readiness_master.sh: ''
       ping_liveness_master.sh: ''
       ping_readiness_local_and_master.sh: ''
       ping_liveness_local_and_master.sh: ''
-      blocky.json: ''
-      blockypostgres.json: ''
-      prowlarr.json: ''
-      truenasexporter.json: ''
-      spegel.json: ''
-      pve.json: ''
-      speedtest.json: ''
-      memcached.json: ''
-      bitmagnet.json: ''
-      smartctl.json: ''
-      datasourceblockypsql.yaml: ''
-      datasourceteslamatepsql.yaml: ''
-      bitmagnetpsql.yaml: ''
+      disk-config: ''
+      NTFY_ATTACHMENT_CACHE_DIR: ''
+      NTFY_CACHE_FILE: ''
+      NTFY_AUTH_FILE: ''
+      NTFY_FIREBASE_KEY_FILE: ''
       netdata-conf: ''
       go-d-conf: ''
       go-d-k8s-state-conf: ''
-      DISABLE_RESTART_SESSION_DIALOG_WINDOW: ''
+      LIBREDDIT_DEFAULT_THEME: ''
+      LIBREDDIT_DEFAULT_FRONT_PAGE: ''
+      LIBREDDIT_DEFAULT_LAYOUT: ''
+      LIBREDDIT_DEFAULT_POST_SORT: ''
+      LIBREDDIT_DEFAULT_COMMENT_SORT: ''
+      LIBREDDIT_DEFAULT_WIDE: ''
+      LIBREDDIT_DEFAULT_SHOW_NSFW: ''
+      LIBREDDIT_DEFAULT_USE_HLS: ''
+      LIBREDDIT_DEFAULT_HIDE_HLS_NOTIFICATION: ''
+      LIBREDDIT_DEFAULT_AUTOPLAY_VIDEOS: ''
+      plex_update.sh: ''
       OPENSUBTITLES_USERNAME: ''
       OPENSUBTITLES_PASSWORD: ''
       FILEBOT_CUSTOM_OPTIONS: ''
@@ -3988,74 +3779,13 @@ configmap:
       AMC_CUSTOM_OPTIONS: ''
       AMC_INSTALL_PKGS: ''
       USE_FILEBOT_BETA: ''
-      settings: ''
-      kong.yml: ''
-      CHEVERETO_HTTPS: ''
-      CHEVERETO_DISABLE_UPDATE_HTTP: ''
-      CHEVERETO_DISABLE_UPDATE_CLI: ''
-      passinit.sql: ''
-      Engine.ini: ''
-      Game.ini: ''
-      GameUserSettings.ini: ''
-      crontab: ''
-      sessions.jsonl: ''
-      appsettings.json: ''
-      DARK_MODE: ''
-      plex_update.sh: ''
-      enable-console-logging.sh: ''
-      init.sh: ''
-      configuration.yaml.default: ''
-      recorder.default: ''
-      LIBREDDIT_DEFAULT_THEME: ''
-      LIBREDDIT_DEFAULT_FRONT_PAGE: ''
-      LIBREDDIT_DEFAULT_LAYOUT: ''
-      LIBREDDIT_DEFAULT_POST_SORT: ''
-      LIBREDDIT_DEFAULT_COMMENT_SORT: ''
-      LIBREDDIT_DEFAULT_WIDE: ''
-      LIBREDDIT_DEFAULT_SHOW_NSFW: ''
-      LIBREDDIT_DEFAULT_USE_HLS: ''
-      LIBREDDIT_DEFAULT_HIDE_HLS_NOTIFICATION: ''
-      LIBREDDIT_DEFAULT_AUTOPLAY_VIDEOS: ''
-      dashboard_volsync.json: ''
-      plugins.yaml: ''
-      AUTOMATED_CONVERSION_KEEP_SOURCE: ''
-      AUTOMATED_CONVERSION_PRESET: ''
-      AUTOMATED_CONVERSION_FORMAT: ''
-      AUTOMATED_CONVERSION_NON_VIDEO_FILE_ACTION: ''
-      disk-config: ''
-      MAKEMKV_KEY: ''
-      AUTO_DISC_RIPPER_INTERVAL: ''
-      AUTO_DISC_RIPPER_BD_MODE: ''
-      AUTO_DISC_RIPPER_MAKEMKV_PROFILE: ''
-      AUTO_DISC_RIPPER: ''
-      AUTO_DISC_RIPPER_EJECT: ''
-      AUTO_DISC_RIPPER_PARALLEL_RIP: ''
-      AUTO_DISC_RIPPER_NO_GUI_PROGRESS: ''
-      AUTO_DISC_RIPPER_FORCE_UNIQUE_OUTPUT_DIR: ''
-      upUAP.json: ''
-      upclients.json: ''
-      upUSW.json: ''
-      upnetwork.json: ''
-      upUSG.json: ''
-      upDPI.json: ''
-      provider.yaml: ''
-      NTFY_ATTACHMENT_CACHE_DIR: ''
-      NTFY_CACHE_FILE: ''
-      NTFY_AUTH_FILE: ''
-      NTFY_FIREBASE_KEY_FILE: ''
       key: ''
       key1: ''
       key2: ''
       key3: ''
       nginx.conf2: ''
       foo: ''
-      some-key: ''
       ca.crt: ''
-    labels:
-      grafana_dashboard: ''
-      grafana_datasource: ''
-      label1: ''
-      label2: ''
     expandObjectName: false
     annotations:
       annotation1: ''
@@ -4089,22 +3819,18 @@ secret:
     enabled: true
     data:
       clickhouse-password: ''
+      PVE_TOKEN_VALUE: ''
       mongodb-password: ''
       mongodb-root-password: ''
-      PVE_TOKEN_VALUE: ''
-      private.key: ''
       configuration.yaml: ''
+      private.key: ''
       minio.license: ''
       key: ''
       key1: ''
       key2: ''
       key3: ''
       nginx.conf2: ''
-      key4: ''
-      my-key: ''
       foo: ''
-      some-key: ''
-      ca.crt: ''
     type: ''
     labels:
       label1: ''
@@ -4178,27 +3904,12 @@ serviceAccount:
     enabled: true
     targetSelector:
     - ''
-  sa-name1:
-    enabled: true
-    primary: true
-    targetSelectAll: true
-    targetSelector:
-    - ''
-  sa-name2:
-    enabled: true
-    primary: false
-    targetSelector:
-    - ''
   my-sa:
     enabled: true
     primary: true
-  my-other-sa:
-    enabled: true
-    primary: false
   my-sa1:
     enabled: true
     primary: true
-    namespace: ''
     labels:
       label1: ''
       label2: ''
@@ -4211,6 +3922,7 @@ serviceAccount:
     labelsList:
     - name: ''
       value: ''
+    namespace: ''
   my-sa2:
     enabled: true
 rbac:
@@ -4234,17 +3946,6 @@ rbac:
     annotations:
       key: ''
       key1: ''
-  blueprints:
-    enabled: ''
-    primary: true
-    clusterWide: true
-    rules:
-    - apiGroups:
-      - ''
-      resources:
-      - ''
-      verbs:
-      - ''
   role:
     enabled: true
     primary: false
@@ -4322,9 +4023,10 @@ rbac:
       - ''
       verbs:
       - ''
-  my-rbac:
-    enabled: true
+  blueprints:
+    enabled: ''
     primary: true
+    clusterWide: true
     rules:
     - apiGroups:
       - ''
@@ -4332,11 +4034,7 @@ rbac:
       - ''
       verbs:
       - ''
-    subjects:
-    - kind: ''
-      name: ''
-      apiGroup: ''
-  z-rbac:
+  my-rbac:
     enabled: true
     primary: true
     rules:
@@ -4357,44 +4055,9 @@ rbac:
       - ''
       verbs:
       - ''
-    subjects:
-    - kind: ''
-      name: ''
-      apiGroup: ''
-    primary: false
-    labels:
-      label1: ''
-      label2: ''
-    annotations:
-      annotation1: ''
-      annotation2: ''
   my-rbac3:
     enabled: true
-    serviceAccounts:
-    - ''
-    rules:
-    - apiGroups:
-      - ''
-      resources:
-      - ''
-      verbs:
-      - ''
     allServiceAccounts: true
-  my-rbac1:
-    enabled: true
-    primary: true
-    labels:
-      label1: ''
-      label2: ''
-    annotations:
-      annotation1: ''
-      annotation2: ''
-    annotationsList:
-    - name: ''
-      value: ''
-    labelsList:
-    - name: ''
-      value: ''
     rules:
     - apiGroups:
       - ''
@@ -4402,7 +4065,6 @@ rbac:
       - ''
       verbs:
       - ''
-    namespace: ''
 notes:
   header: ''
   custom: ''
@@ -4550,16 +4212,12 @@ ingress:
         themepark:
           enabled: false
           css: ''
-        ipWhitelist:
-        - ''
+        ipWhitelist: []
         auth:
           type: ''
           internalHost: ''
           externalHost: ''
           responseHeaders: []
-        themePark:
-          enabled: true
-          css: ''
       homepage:
         enabled: false
         name: ''
@@ -4582,12 +4240,12 @@ ingress:
         podSelector:
         - ''
     targetSelector:
-      front: ''
       webserver: ''
       api: ''
       websockets: ''
-      assets: ''
+      front: ''
       comm: ''
+      assets: ''
       supervisor: ''
       my-service2: ''
     certificateIssuer: ''
@@ -4679,7 +4337,7 @@ gateway:
     gatewayClassName: ''
     listeners:
     - name: ''
-      hostname:
+      hostname: null
       port: 80
       protocol: ''
       allowedRoutes:
@@ -4799,7 +4457,7 @@ listenerSet:
       namespace: ''
     listeners:
     - name: ''
-      hostname:
+      hostname: null
       port: 0
       protocol: ''
       allowedRoutes:
@@ -4841,9 +4499,9 @@ route:
     parentRefs:
     - group: ''
       kind: ''
-      name:
-      namespace:
-      sectionName:
+      name: null
+      namespace: null
+      sectionName: null
     hostnames:
     - ''
     tls:
@@ -4937,7 +4595,6 @@ podDisruptionBudget:
     minAvailable: 1
     customLabels:
       label1: ''
-      label2: ''
     labels:
       label1: ''
       label2: ''
@@ -4952,8 +4609,6 @@ podDisruptionBudget:
       value: ''
     namespace: ''
     maxUnavailable: 1
-    unhealthyPodEvictionPolicy: ''
-    targetSelector: ''
   my-pdb2:
     enabled: true
     customLabels:
@@ -5043,48 +4698,12 @@ priorityClass:
     description: ''
   example1:
     enabled: true
-    labels:
-      label1: ''
-      label2: ''
-    annotations:
-      annotation1: ''
-      annotation2: ''
-    annotationsList:
-    - name: ''
-      value: ''
-    labelsList:
-    - name: ''
-      value: ''
-    value: 0
-    preemptionPolicy: ''
-    globalDefault: true
-    description: ''
   example2:
     enabled: true
 storageClass:
   example1:
     enabled: true
     provisioner: ''
-    labels:
-      label1: ''
-      label2: ''
-    annotations:
-      annotation1: ''
-      annotation2: ''
-    annotationsList:
-    - name: ''
-      value: ''
-    labelsList:
-    - name: ''
-      value: ''
-    isDefault: true
-    reclaimPolicy: ''
-    allowVolumeExpansion: false
-    parameters:
-      param1: ''
-      param2: ''
-    mountOptions:
-    - ''
   example2:
     enabled: true
     provisioner: ''
@@ -5105,55 +4724,35 @@ storageClass:
     volumeBindingMode: ''
     mountOptions: []
 networkpolicy:
-  main:
+  objectname:
     enabled: false
-    ingress: []
-    egress: []
-  allow-dns:
-    enabled: true
+    ingress:
+    - fromEntities:
+      - ''
+    egress:
+    - toEntities:
+      - ''
     type: ''
     targetSelector: ''
     description: ''
     enableDefaultDeny:
       ingress: false
       egress: false
-    ingress:
-    - fromEntities:
-      - ''
     ingressDeny:
     - fromEntities:
-      - ''
-    egress:
-    - toEntities:
       - ''
     egressDeny:
     - toCIDR:
       - ''
-  selected:
-    enabled: true
-    type: ''
-    targetSelector:
-    - ''
     targetSelectorRegex: ''
-  cluster:
-    enabled: true
-    type: ''
     clusterwide: true
     targetAllPods: true
-    ingress:
-    - fromEntities:
-      - ''
-    targetSelector: ''
-  custom:
-    enabled: true
-    type: ''
     endpointSelector:
       matchLabels:
         app: ''
-  hosts:
-    objectname: true
-  default:
-    enabled: true
+    nodeSelector:
+      matchLabels:
+        node-role.kubernetes.io/control-plane: ''
 metrics:
   main:
     enabled: false
@@ -5169,7 +4768,7 @@ metrics:
     prometheusRule:
       enabled: false
       groups: {}
-      additionalgroups:
+      additionalgroups: null
       labels: {}
       rules: []
     targetSelector: ''
@@ -5257,14 +4856,7 @@ addons:
     enabled: false
     targetSelector:
     - ''
-    secret:
-      objectname:
-        basePath: ''
-        data:
-          wg0.conf: ''
-          up.sh: ''
-          down.sh: ''
-        defaultMode: ''
+    secret: null
     container:
       enabled: true
       imageSelector: ''
@@ -5291,10 +4883,6 @@ addons:
         FIREWALL: ''
         FIREWALL_OUTBOUND_SUBNETS: ''
         FIREWALL_INPUT_PORTS: ''
-        key: ''
-        key1: ''
-        key2: ''
-        key3: ''
   tailscale:
     enabled: false
     targetSelector:
@@ -5357,12 +4945,6 @@ addons:
       imageSelector: ''
       resources:
         excludeExtra: true
-        limits:
-          cpu: ''
-          memory: ''
-        requests:
-          cpu: ''
-          memory: ''
       securityContext:
         runAsUser: 0
         runAsGroup: 0
@@ -5404,12 +4986,12 @@ addons:
     type: ''
     env:
       something: ''
-    targetSelector:
-    - ''
     config: ''
     scripts:
       up: ''
       down: ''
+    targetSelector:
+    - ''
 dependencies:
   clickhouse:
     enabled: false
@@ -5470,10 +5052,6 @@ dependencies:
             protocol: ''
             port: 0
             targetPort: 0
-            primary: false
-            enabled: true
-        primary: false
-        enabled: true
     persistence:
       objectname:
         mountPath: ''
@@ -5545,10 +5123,6 @@ dependencies:
             protocol: ''
             port: 0
             targetPort: 0
-            primary: false
-            enabled: true
-        primary: false
-        enabled: true
     persistence:
       objectname:
         mountPath: ''
@@ -5574,11 +5148,9 @@ dependencies:
       labels:
         label1: ''
         label2: ''
-        cnpg-label: ''
       annotations:
         annotation1: ''
         annotation2: ''
-        cnpg-annotation: ''
       type: ''
       mode: ''
       cluster:
@@ -5586,75 +5158,21 @@ dependencies:
           label3: ''
         annotations:
           annotation3: ''
-        env:
-          VAR1: ''
-          VAR2:
-            configMapKeyRef:
-              name: ''
-              key: ''
-          VAR3:
-            secretKeyRef:
-              name: ''
-              key: ''
-        envFrom:
-        - configMapRef:
-            name: ''
+        env: {}
+        envFrom: {}
         instances: 2
         singleNode: false
         primaryUpdateMethod: ''
         primaryUpdateStrategy: ''
         logLevel: ''
-        certificates:
-        postgresql:
-          key1: ''
-          key2: ''
-        initdb:
-          dataChecksums: false
-          encoding: ''
-          localeCollate: ''
-          localeCtype: ''
-          walSegmentSize: 16
-          postInitApplicationSQL:
-          - ''
-          postInitSQL:
-          - ''
-          postInitTemplateSQL:
-          - ''
+        certificates: null
+        postgresql: null
+        initdb: {}
         skipEmptyWalArchiveCheck: false
-        postgresUID: 0
-        postgresGID: 0
-        enableSuperuserAccess: false
-        imageName: ''
-        nodeMaintenanceWindow:
-          reusePVC: false
-          inProgress: true
-        resources:
-          limits:
-            cpu: ''
-            memory: ''
-          requests:
-            cpu: ''
-            memory: ''
-        storage:
-          size: ''
-          accessModes:
-          - ''
-        walStorage:
-          size: ''
-          accessModes:
-          - ''
-        preloadLibraries:
-        - ''
       monitoring:
         enablePodMonitor: false
         disableDefaultQueries: false
-        customQueries:
-        - name: ''
-          query: ''
-          metrics:
-          - a-gauge:
-              usage: ''
-              description: ''
+        customQueries: []
       recovery:
         method: ''
         serverName: ''
@@ -5663,9 +5181,6 @@ dependencies:
         destinationPath: ''
         credentials: ''
         revision: ''
-        retentionPolicy: ''
-        instanceSidecarConfiguration:
-          logLevel: ''
       backups:
         enabled: false
         encryption:
@@ -5691,19 +5206,9 @@ dependencies:
             annotation4: ''
         labels:
           label5: ''
-          backups-label: ''
         annotations:
           annotation5: ''
-          backups-annotation: ''
         revision: ''
-        compression:
-          enabled: false
-        instanceSidecarConfiguration:
-          retentionPolicyIntervalSeconds: 0
-          resources:
-            requests:
-              cpu: ''
-              memory: ''
       pooler:
         enabled: false
         createRO: false
@@ -5716,7 +5221,7 @@ dependencies:
         parameters:
           some: ''
           someOther: ''
-      pgVersion: 16
+      pgVersion: 17
       annotationsList:
       - name: ''
         value: ''
@@ -5873,10 +5378,6 @@ dependencies:
             protocol: ''
             port: 0
             targetPort: 0
-            primary: false
-            enabled: true
-        primary: false
-        enabled: true
     persistence:
       objectname:
         mountPath: ''
@@ -5902,17 +5403,8 @@ dependencies:
       replicas: 0
       image: ''
       workloadType: ''
-      config:
-        maxmemory-policy: ''
-        appendonly: true
-        maxmemory: ''
-      resources:
-        requests:
-          cpu: ''
-          memory: ''
-        limits:
-          cpu: ''
-          memory: ''
+      config: {}
+      resources: {}
       persistence:
         enabled: true
         size: ''
@@ -5924,43 +5416,24 @@ dependencies:
         args: []
         resources: {}
         securityContext: {}
-      scheduling:
-        nodeSelector:
-          disk: ''
-        node:
-          spread:
-            shard:
-              mode: ''
+      scheduling: {}
       podDisruptionBudget:
         mode: ''
       podMetadata:
-        labels:
-          foo: ''
-        annotations:
-          bar: ''
-      imagePullSecrets:
-      - ''
+        labels: {}
+        annotations: {}
+      imagePullSecrets: []
       podSecurityContext: {}
       serviceAccountName: ''
-      terminationGracePeriodSeconds: 60
+      terminationGracePeriodSeconds: null
       containers: []
       networking:
         clusterDomain: ''
         discovery:
           preferredEndpointType: ''
-      users:
-      - name: ''
-        passwordSecret:
-          name: ''
-          keys:
-          - ''
-        commands:
-          allow:
-          - ''
-      labels:
-        cluster-label: ''
-      annotations:
-        cluster-annotation: ''
+      users: []
+      labels: {}
+      annotations: {}
     depconfig:
       password: ''
     image:
@@ -6001,7 +5474,6 @@ dependencies:
               enabled: true
               primary: true
               imageSelector: ''
-        primary: true
         enabled: true
     service:
       objectname:
@@ -6019,34 +5491,9 @@ dependencies:
         targetSelector:
           main:
             main: {}
-        type: ''
-        size: ''
     addons:
       netshoot:
         enabled: true
-    serviceAccount:
-      main:
-        primary: true
-  other:
-    enabled: true
-    image:
-      repository: ''
-      tag: ''
-    workload:
-      objectname:
-        type: ''
-    addons:
-      netshoot:
-        enabled: true
-        container:
-          command:
-          - ''
-    service:
-      objectname:
-        ports:
-          objectname:
-            protocol: ''
-            port: 0
   custom:
     enabled: true
     mode: ''
@@ -6106,10 +5553,6 @@ dependencies:
             port: 80
 extraTpl:
 - ''
-mariadb:
-  enabled: true
-  mariadbUsername: ''
-  mariadbDatabase: ''
 cnpg:
   main:
     enabled: true
@@ -6130,19 +5573,10 @@ redis:
   redisUsername: ''
   username: ''
   password: ''
-memcached:
-  enabled: true
-  password: ''
-password: ''
 mongodb:
   enabled: false
   mongodbUsername: ''
   mongodbDatabase: ''
-  password: ''
-clickhouse:
-  enabled: true
-  clickhouseUsername: ''
-  clickhouseDatabase: ''
   password: ''
 additionalContainers:
   browserless:
@@ -6171,6 +5605,25 @@ additionalContainers:
         port: 0
         type: ''
         path: ''
+clickhouse:
+  enabled: true
+  clickhouseUsername: ''
+  clickhouseDatabase: ''
+  password: ''
+memcached:
+  enabled: true
+  password: ''
+args:
+- ''
+key1: ''
+key2: 80
+key3: ''
+key4: ''
+key5: 81
+key6: false
+envFrom:
+- secretRef:
+    name: ''
 networkPolicy:
   main:
     enabled: true
@@ -6192,21 +5645,6 @@ networkPolicy:
       ports:
       - protocol: ''
         port: 0
-args:
-- ''
-key1: ''
-key2: 80
-key3: ''
-key4: ''
-key5: 81
-key6: false
-envFrom:
-- secretRef:
-    name: ''
-registry: ''
-user: ''
-pass: ''
-email: ''
 credentialsList:
 - name: ''
   type: ''
@@ -6215,15 +5653,6 @@ credentialsList:
   accessKey: ''
   secretKey: ''
   encrKey: ''
-volumeSnapshotLocation:
-  test:
-    enabled: true
-    provider: ''
-    credential:
-      aws:
-        id: ''
-        key: ''
-    config: {}
 schedules:
   test:
     enabled: true
@@ -6247,6 +5676,19 @@ schedules:
       storageLocation: ''
       includedNamespaces:
       - ''
+volumeSnapshotLocation:
+  test:
+    enabled: true
+    provider: ''
+    credential:
+      aws:
+        id: ''
+        key: ''
+    config: {}
+registry: ''
+user: ''
+pass: ''
+email: ''
 crd:
   verify:
     enabled: false
@@ -6259,19 +5701,8 @@ annotation1: ''
 annotation2: ''
 annotation3: ''
 key: ''
-createChartContextConfigmap: true
-enabled: true
-port: 0
-ip: ''
-path: ''
-ext1: ''
-ext2: ''
 param: ''
 data: ''
-some_port: 80
-some_path: ''
-some_config_name: ''
-some_secret_name: ''
 some_value: ''
 some_other_value: 2
 imageDictToUse: ''
@@ -6279,21 +5710,8 @@ imageGPU:
   repository: ''
   tag: ''
   pullPolicy: ''
-some_command: ''
-some_host: ''
-some_protocol: ''
-probe_type: ''
-some_policy: ''
-some_propagation: ''
-some_sub_path: ''
-flag: false
 cron: ''
 someTimezone: ''
-someValue: false
-useMemcached: false
-someImage:
-  repository: ''
-  tag: ''
 solr:
   enabled: false
   password: ''
@@ -6315,20 +5733,10 @@ k5: ''
 k6: ''
 someHost: ''
 somePath: ''
-someType: ''
-otherhost: ''
-othercertissuer: ''
-initType: ''
-render: true
-initImage:
-  repository: ''
-  tag: ''
-  pullPolicy: ''
 component: ''
 selector:
   app: ''
 someIP: ''
-version: 0
 some_mode: ''
 some_size: ''
 some_vol_name: ''
@@ -6338,6 +5746,7 @@ s1: ''
 property: ''
 value: 2
 policy: ''
+ip: ''
 host1: ''
 host2: ''
 disk_type: ''
@@ -6349,50 +5758,23 @@ op: ''
 effect: ''
 op1: ''
 effect1: ''
-some_object: ''
-some_key: ''
+some_path: ''
 some_type: ''
-some_medium: ''
-some_lun: 0
-some_iqn: ''
-some_targetPortal: ''
-some_fsType: ''
-some_initiatorName: ''
-some_interface: ''
-some_portals:
-- ''
-username: ''
 some_server: ''
-some_audience: ''
-some_ref: ''
-some_container: ''
-some_resource: ''
-percentage: ''
-some_verb: ''
-some_group: ''
-some_kind: ''
-some_name: ''
-some_api_group: ''
-some_non_resource_url: ''
+some_policy: ''
 some_family: ''
 some_ip: ''
 some_other_ip: ''
 some_affinity: ''
 some_timeout: 100
+some_port: 0
 some_target_port: 0
-some_external_ip: ''
-some_address_type: ''
-some_app_protocol: ''
+some_protocol: ''
+some_name: ''
 some_extra_ip: ''
 some_range: ''
-proto: ''
-some_nodePort: 0
-disabled: false
-test:
-  key1: ''
-  key2: ''
-authHost: ''
 some_driver: ''
+some_key: ''
 k7: ''
 k8: ''
 k9: ''

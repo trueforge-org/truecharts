@@ -157,7 +157,10 @@
           "annotations": {
             "type": "object",
             "properties": {},
-            "additionalProperties": false,
+            "additionalProperties": {
+              "type": "string",
+              "description": "Value of the annotation"
+            },
             "description": "Additional annotations for middleware"
           },
           "expandObjectName": {
@@ -564,13 +567,19 @@
               "customRequestHeaders": {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": false,
+                "additionalProperties": {
+                  "type": "string",
+                  "description": "Value of the header"
+                },
                 "description": "Define the customRequestHeaders"
               },
               "customResponseHeaders": {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": false,
+                "additionalProperties": {
+                  "type": "string",
+                  "description": "Value of the header"
+                },
                 "description": "Define the customResponseHeaders"
               },
               "accessControlAllowCredentials": {
@@ -619,7 +628,10 @@
               "sslProxyHeaders": {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": false,
+                "additionalProperties": {
+                  "type": "string",
+                  "description": "Value of the header"
+                },
                 "description": "Define the sslProxyHeaders"
               },
               "stsSeconds": {
@@ -794,7 +806,10 @@
         "annotations": {
           "type": "object",
           "properties": {},
-          "additionalProperties": false,
+          "additionalProperties": {
+            "type": "string",
+            "description": "Value of the annotation"
+          },
           "description": "Additional annotations for middleware"
         },
         "expandObjectName": {
@@ -804,8 +819,10 @@
         "data": {
           "type": "object",
           "properties": {},
-          "additionalProperties": false,
-          "description": "Define the data of the middleware"
+          "description": "Define the data of the middleware",
+          "additionalProperties": {
+            "description": "A setting of the middleware, passed on as is."
+          }
         }
       },
       "additionalProperties": false,

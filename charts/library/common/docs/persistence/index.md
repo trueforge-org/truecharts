@@ -29,6 +29,20 @@ Define persistence objects
 
 ---
 
+### `persistence.$name.accessMode`
+
+Legacy singular spelling of `accessModes`. Set by common-test fixtures (statefulset) but ignored by the templates, which read `accessModes`.
+
+| Field      | Value                          |
+| ---------- | ------------------------------ |
+| Key        | `persistence.$name.accessMode` |
+| Type       | `string`                       |
+| Required   | ❌                             |
+| Helm `tpl` | ❌                             |
+| Default    | unset                          |
+
+---
+
 ### `persistence.$name.accessModes`
 
 Define the accessModes of the PVC, if it's single can be defined as a string, multiple as a list
@@ -57,6 +71,49 @@ Additional annotations for persistence
 
 ---
 
+### `persistence.$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                               |
+| ---------- | ----------------------------------- |
+| Key        | `persistence.$name.annotationsList` |
+| Type       | `list of map`                       |
+| Required   | ❌                                  |
+| Helm `tpl` | ❌                                  |
+| Default    | unset                               |
+
+---
+
+### `persistence.$name.autoPermissions`
+
+Define automatic permission handling for the mount
+
+| Field      | Value                               |
+| ---------- | ----------------------------------- |
+| Key        | `persistence.$name.autoPermissions` |
+| Type       | `map`                               |
+| Required   | ❌                                  |
+| Helm `tpl` | ❌                                  |
+| Default    | unset                               |
+
+---
+
+### `persistence.$name.copyMethod`
+
+Define the VolSync copyMethod at item level. Set by common-test volsync fixtures, but the templates only read `copyMethod` inside `volsync` entries, so it is ignored here.
+
+| Field      | Value                          |
+| ---------- | ------------------------------ |
+| Key        | `persistence.$name.copyMethod` |
+| Type       | `string`                       |
+| Required   | ❌                             |
+| Helm `tpl` | ❌                             |
+| Default    | unset                          |
+| Enum       | `Clone`, `Direct`, `Snapshot`  |
+
+---
+
 ### `persistence.$name.dataSource`
 
 Define dataSource for the pvc
@@ -82,6 +139,20 @@ Define the defaultMode (must be a string in format of "0777").
 | Required   | ❌                              |
 | Helm `tpl` | ❌                              |
 | Default    | unset                           |
+
+---
+
+### `persistence.$name.domain`
+
+Define the domain of the SMB share, used by the smb CSI driver
+
+| Field      | Value                      |
+| ---------- | -------------------------- |
+| Key        | `persistence.$name.domain` |
+| Type       | `string`                   |
+| Required   | ❌                         |
+| Helm `tpl` | ❌                         |
+| Default    | unset                      |
 
 ---
 
@@ -261,6 +332,20 @@ Additional labels for persistence
 
 ---
 
+### `persistence.$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+| Field      | Value                          |
+| ---------- | ------------------------------ |
+| Key        | `persistence.$name.labelsList` |
+| Type       | `list of map`                  |
+| Required   | ❌                             |
+| Helm `tpl` | ❌                             |
+| Default    | unset                          |
+
+---
+
 ### `persistence.$name.lun`
 
 Define the lun
@@ -346,6 +431,20 @@ persistence:
   $name:
     mountPropagation: ""
 ```
+
+---
+
+### `persistence.$name.name`
+
+Set by the chart, the name of the generated persistence resource. Do not set this manually
+
+| Field      | Value                    |
+| ---------- | ------------------------ |
+| Key        | `persistence.$name.name` |
+| Type       | `string`                 |
+| Required   | ❌                       |
+| Helm `tpl` | ❌                       |
+| Default    | unset                    |
 
 ---
 
@@ -469,6 +568,20 @@ Define the nfs server
 
 ---
 
+### `persistence.$name.shortName`
+
+Set by the chart, the short name of the persistence used in generated resource names. Do not set this manually
+
+| Field      | Value                         |
+| ---------- | ----------------------------- |
+| Key        | `persistence.$name.shortName` |
+| Type       | `string`                      |
+| Required   | ❌                            |
+| Helm `tpl` | ❌                            |
+| Default    | unset                         |
+
+---
+
 ### `persistence.$name.size`
 
 Define the sizeLimit of the emptyDir
@@ -480,6 +593,20 @@ Define the sizeLimit of the emptyDir
 | Required   | ❌                       |
 | Helm `tpl` | ❌                       |
 | Default    | unset                    |
+
+---
+
+### `persistence.$name.sources`
+
+Define projected sources for this persistence
+
+| Field      | Value                       |
+| ---------- | --------------------------- |
+| Key        | `persistence.$name.sources` |
+| Type       | `list of map`               |
+| Required   | ❌                          |
+| Helm `tpl` | ❌                          |
+| Default    | unset                       |
 
 ---
 
@@ -604,6 +731,20 @@ Define the persistence type
 | Helm `tpl` | ❌                                                                                                 |
 | Default    | unset                                                                                              |
 | Enum       | `pvc`, `hostPath`, `emptyDir`, `nfs`, `iscsi`, `device`, `configmap`, `secret`, `vct`, `projected` |
+
+---
+
+### `persistence.$name.volsync`
+
+Define VolSync backups and restores for this persistence
+
+| Field      | Value                       |
+| ---------- | --------------------------- |
+| Key        | `persistence.$name.volsync` |
+| Type       | `list of map`               |
+| Required   | ❌                          |
+| Helm `tpl` | ❌                          |
+| Default    | unset                       |
 
 ---
 

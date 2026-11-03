@@ -43,95 +43,140 @@ def resolve_ref(current_file: Path, ref: str) -> tuple[Path, Any]:
     return target_file, target_schema
 
 
+# A schema that applies to a values node: (schema, file, required). Branches of allOf and $refs are
+# required, so a key they reject is not allowed. Branches of oneOf and anyOf are not.
+Branch = tuple[Any, Path, bool]
+
+
 def gather_branch_schemas(
     schema: Any,
     schema_file: Path,
+    required: bool = True,
     seen_refs: frozenset[tuple[Path, str]] = frozenset(),
-) -> list[tuple[Any, Path]]:
+) -> list[Branch]:
     if not isinstance(schema, dict):
         return []
 
-    branches: list[tuple[Any, Path]] = []
+    branches: list[Branch] = []
 
     if "$ref" in schema and isinstance(schema["$ref"], str):
         ref_file, ref_schema = resolve_ref(schema_file, schema["$ref"])
         ref_key = (ref_file, schema["$ref"].partition("#")[2])
         # The referenced schema can combine others with allOf, so it is expanded too (once, to not loop on cyclic refs)
         if ref_key in seen_refs:
-            branches.append((ref_schema, ref_file))
+            branches.append((ref_schema, ref_file, required))
         else:
-            branches.extend(gather_branch_schemas(ref_schema, ref_file, seen_refs | {ref_key}))
+            branches.extend(gather_branch_schemas(ref_schema, ref_file, required, seen_refs | {ref_key}))
 
-    branches.append((schema, schema_file))
+    branches.append((schema, schema_file, required))
 
     for key in ("allOf", "oneOf", "anyOf"):
         options = schema.get(key)
         if isinstance(options, list):
             for option in options:
                 if isinstance(option, dict):
-                    branches.extend(gather_branch_schemas(option, schema_file, seen_refs))
+                    branches.extend(
+                        gather_branch_schemas(option, schema_file, required and key == "allOf", seen_refs)
+                    )
 
     return branches
 
 
-def find_child_schema(
-    parent_schema: Any,
-    parent_file: Path,
-    key: str,
-) -> list[tuple[Any, Path]]:
-    candidates: list[tuple[Any, Path]] = []
+def find_child_schema(schemas: list[Branch], key: str) -> tuple[list[Branch], bool]:
+    """Returns the schemas that describe the key, and whether a required schema rejects it."""
+    candidates: list[Branch] = []
+    rejected = False
 
-    for branch_schema, branch_file in gather_branch_schemas(parent_schema, parent_file):
-        if not isinstance(branch_schema, dict):
-            continue
+    for schema, schema_file, required in schemas:
+        for branch_schema, branch_file, branch_required in gather_branch_schemas(schema, schema_file, required):
+            if not isinstance(branch_schema, dict):
+                continue
 
-        props = branch_schema.get("properties")
-        if isinstance(props, dict) and key in props and isinstance(props[key], dict):
-            candidates.append((props[key], branch_file))
+            props = branch_schema.get("properties")
+            if isinstance(props, dict) and key in props:
+                if isinstance(props[key], dict):
+                    candidates.append((props[key], branch_file, branch_required))
+                # additionalProperties only applies to the keys that are not in properties
+                continue
 
-        addl = branch_schema.get("additionalProperties")
-        if isinstance(addl, dict):
-            candidates.append((addl, branch_file))
-        elif addl is True:
-            candidates.append(({"type": "object", "additionalProperties": True}, branch_file))
+            addl = branch_schema.get("additionalProperties")
+            if isinstance(addl, dict):
+                candidates.append((addl, branch_file, branch_required))
+            elif addl is True:
+                candidates.append(({"type": "object", "additionalProperties": True}, branch_file, branch_required))
+            elif addl is False and branch_required:
+                rejected = True
+
+    return candidates, rejected
+
+
+def find_dynamic_child_schemas(schemas: list[Branch]) -> list[Branch]:
+    """Returns the schemas of all keys of an object, for a key that a template computes."""
+    candidates: list[Branch] = []
+
+    for schema, schema_file, required in schemas:
+        for branch_schema, branch_file, branch_required in gather_branch_schemas(schema, schema_file, required):
+            if not isinstance(branch_schema, dict):
+                continue
+            props = branch_schema.get("properties")
+            if isinstance(props, dict):
+                candidates.extend((child, branch_file, False) for child in props.values() if isinstance(child, dict))
+            addl = branch_schema.get("additionalProperties")
+            if isinstance(addl, dict):
+                candidates.append((addl, branch_file, False))
+            elif addl is True:
+                candidates.append(({"type": "object", "additionalProperties": True}, branch_file, False))
 
     return candidates
 
 
+# Keys that common sets itself on its copies of the values, which the template key extraction cannot tell apart from values keys
+INTERNAL_TEMPLATE_PATHS = {
+    "$/ingress/objectName/name",
+    "$/service/objectName/ports/objectName/containerPort",
+    "$/service/objectName/ports/objectName/serviceName",
+}
+
+STRUCTURE_KEYWORDS = ("type", "properties", "additionalProperties", "patternProperties", "items", "$ref", "allOf", "oneOf", "anyOf")
+
+
 def validate_node(
     yaml_node: Any,
-    schema: Any,
-    schema_file: Path,
+    schemas: list[Branch],
     path: str,
     missing: list[str],
+    dynamic_key: str | None = None,
 ) -> None:
+    # A schema without any structure (only a description) is a setting that is passed on as is, so anything below it is allowed
+    if any(isinstance(schema, dict) and not any(k in schema for k in STRUCTURE_KEYWORDS) for schema, _, _ in schemas):
+        return
+
     if isinstance(yaml_node, dict):
         for key, value in yaml_node.items():
             if not isinstance(key, str):
                 continue
-            candidates = find_child_schema(schema, schema_file, key)
-            if not candidates:
+            if key == dynamic_key:
+                candidates, rejected = find_dynamic_child_schemas(schemas), False
+            else:
+                candidates, rejected = find_child_schema(schemas, key)
+            if rejected or not candidates:
                 missing.append(f"{path}/{key}")
                 continue
-            for next_schema, next_file in candidates:
-                validate_node(value, next_schema, next_file, f"{path}/{key}", missing)
+            validate_node(value, candidates, f"{path}/{key}", missing, dynamic_key)
         return
 
     if isinstance(yaml_node, list):
-        item_candidates: list[tuple[Any, Path]] = []
-        for branch_schema, branch_file in gather_branch_schemas(schema, schema_file):
-            if not isinstance(branch_schema, dict):
-                continue
-            items = branch_schema.get("items")
-            if isinstance(items, dict):
-                item_candidates.append((items, branch_file))
+        item_candidates: list[Branch] = []
+        for schema, schema_file, required in schemas:
+            for branch_schema, branch_file, branch_required in gather_branch_schemas(schema, schema_file, required):
+                if not isinstance(branch_schema, dict):
+                    continue
+                items = branch_schema.get("items")
+                if isinstance(items, dict):
+                    item_candidates.append((items, branch_file, branch_required))
 
         for index, item in enumerate(yaml_node):
-            if item_candidates:
-                for next_schema, next_file in item_candidates:
-                    validate_node(item, next_schema, next_file, f"{path}[{index}]", missing)
-            else:
-                validate_node(item, schema, schema_file, f"{path}[{index}]", missing)
+            validate_node(item, item_candidates or schemas, f"{path}[{index}]", missing, dynamic_key)
 
 
 def collect_yaml_key_paths(yaml_node: Any, path: str, paths: set[str]) -> None:
@@ -165,10 +210,12 @@ def main() -> int:
     collect_yaml_key_paths(template_keys_data, "$", template_key_paths)
 
     # Validate complete-values-structure against schema
-    validate_node(values_data, root_schema, ROOT_SCHEMA_FILE, "$", missing)
+    validate_node(values_data, [(root_schema, ROOT_SCHEMA_FILE, True)], "$", missing)
 
     # Validate template-keys-structure against schema
-    validate_node(template_keys_data, root_schema, ROOT_SCHEMA_FILE, "$", template_missing)
+    # In template-keys-structure.yaml, objectName stands for a key that a template computes (eg with get)
+    validate_node(template_keys_data, [(root_schema, ROOT_SCHEMA_FILE, True)], "$", template_missing, "objectName")
+    template_missing = [p for p in template_missing if p not in INTERNAL_TEMPLATE_PATHS]
 
     # Calculate coverage for complete-values-structure
     unique_missing = sorted(set(missing))

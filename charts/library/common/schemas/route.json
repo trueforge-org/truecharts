@@ -43,7 +43,10 @@
       "annotations": {
         "type": "object",
         "properties": {},
-        "additionalProperties": false,
+        "additionalProperties": {
+          "type": "string",
+          "description": "Value of the annotation"
+        },
         "description": "Configuration for `route.main.annotations`."
       },
       "labels": {
@@ -284,7 +287,17 @@
                       "null"
                     ],
                     "description": "Custom settings of the widget.",
-                    "additionalProperties": false
+                    "properties": {},
+                    "additionalProperties": {
+                      "type": [
+                        "string",
+                        "number",
+                        "boolean",
+                        "null"
+                      ],
+                      "description": "Value of the widget setting. Supports Helm `tpl`, empty values are skipped.",
+                      "x-helm-tpl": true
+                    }
                   },
                   "customkv": {
                     "type": [
@@ -331,8 +344,31 @@
               },
               "ipStrategy": {
                 "type": "object",
-                "additionalProperties": false,
-                "description": "How Traefik determines the source IP."
+                "description": "How Traefik determines the source IP.",
+                "properties": {
+                  "depth": {
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "description": "Position of the IP to use in `X-Forwarded-For`, counted from the right."
+                  },
+                  "excludedIPs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "IPs to skip in `X-Forwarded-For`."
+                  },
+                  "ipv6Subnet": {
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "description": "Prefix length to group IPv6 addresses by."
+                  }
+                },
+                "additionalProperties": false
               },
               "auth": {
                 "type": "object",
@@ -535,18 +571,24 @@
               },
               "securityPolicy": {
                 "type": "object",
-                "additionalProperties": false,
-                "description": "Other `SecurityPolicy` settings, without a target. Merged with `ipWhitelist` and `auth`."
+                "description": "Other `SecurityPolicy` settings, without a target. Merged with `ipWhitelist` and `auth`.",
+                "additionalProperties": {
+                  "description": "A setting of the policy, passed on as is."
+                }
               },
               "backendTrafficPolicy": {
                 "type": "object",
-                "additionalProperties": false,
-                "description": "`BackendTrafficPolicy` settings, without a target."
+                "description": "`BackendTrafficPolicy` settings, without a target.",
+                "additionalProperties": {
+                  "description": "A setting of the policy, passed on as is."
+                }
               },
               "extensionPolicy": {
                 "type": "object",
-                "additionalProperties": false,
-                "description": "`EnvoyExtensionPolicy` settings, without a target. Merged with `themePark`."
+                "description": "`EnvoyExtensionPolicy` settings, without a target. Merged with `themePark`.",
+                "additionalProperties": {
+                  "description": "A setting of the policy, passed on as is."
+                }
               }
             },
             "additionalProperties": false
@@ -613,7 +655,9 @@
                     "type": "array",
                     "items": {
                       "type": "object",
-                      "additionalProperties": false
+                      "additionalProperties": {
+                        "description": "A setting passed on as is."
+                      }
                     },
                     "description": "Filters applied only to this backend. Only for `HTTPRoute` and `GRPCRoute`."
                   }
@@ -638,7 +682,9 @@
               "type": "array",
               "items": {
                 "type": "object",
-                "additionalProperties": false
+                "additionalProperties": {
+                  "description": "A setting passed on as is."
+                }
               },
               "description": "Filters applied to requests matching this rule. Only for `HTTPRoute` and `GRPCRoute`. A rule with only filters needs no `backendRefs`, eg a redirect."
             },
@@ -648,13 +694,17 @@
             },
             "retry": {
               "type": "object",
-              "additionalProperties": false,
-              "description": "Retry configuration. Only for `HTTPRoute`."
+              "description": "Retry configuration. Only for `HTTPRoute`.",
+              "additionalProperties": {
+                "description": "A setting passed on as is."
+              }
             },
             "sessionPersistence": {
               "type": "object",
-              "additionalProperties": false,
-              "description": "Session persistence, needs the experimental Gateway API channel. Only for `HTTPRoute` and `GRPCRoute`."
+              "description": "Session persistence, needs the experimental Gateway API channel. Only for `HTTPRoute` and `GRPCRoute`.",
+              "additionalProperties": {
+                "description": "A setting passed on as is."
+              }
             }
           },
           "additionalProperties": false,

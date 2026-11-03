@@ -52,6 +52,34 @@ podDisruptionBudget:
 
 ---
 
+### `podDisruptionBudget.$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                                       |
+| ---------- | ------------------------------------------- |
+| Key        | `podDisruptionBudget.$name.annotationsList` |
+| Type       | `list of map`                               |
+| Required   | ❌                                          |
+| Helm `tpl` | ❌                                          |
+| Default    | unset                                       |
+
+---
+
+### `podDisruptionBudget.$name.customLabels`
+
+Custom labels used to select the pods covered by this Pod Disruption Budget, replacing the automatically selected pod labels
+
+| Field      | Value                                    |
+| ---------- | ---------------------------------------- |
+| Key        | `podDisruptionBudget.$name.customLabels` |
+| Type       | `map`                                    |
+| Required   | ❌                                       |
+| Helm `tpl` | ❌                                       |
+| Default    | unset                                    |
+
+---
+
 ### `podDisruptionBudget.$name.enabled`
 
 Create Pod Disruption Budget objects
@@ -94,6 +122,20 @@ podDisruptionBudget:
     labels:
       {}
 ```
+
+---
+
+### `podDisruptionBudget.$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+| Field      | Value                                  |
+| ---------- | -------------------------------------- |
+| Key        | `podDisruptionBudget.$name.labelsList` |
+| Type       | `list of map`                          |
+| Required   | ❌                                     |
+| Helm `tpl` | ❌                                     |
+| Default    | unset                                  |
 
 ---
 

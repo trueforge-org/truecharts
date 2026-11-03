@@ -29,6 +29,20 @@ Configuration for `hpa`.
 
 ---
 
+### `hpa.$name.behavior`
+
+Configuration for `hpa.main.behavior`.
+
+| Field      | Value                |
+| ---------- | -------------------- |
+| Key        | `hpa.$name.behavior` |
+| Type       | `map`                |
+| Required   | ❌                   |
+| Helm `tpl` | ❌                   |
+| Default    | unset                |
+
+---
+
 ### `hpa.$name.enabled`
 
 Configuration for `hpa.main.enabled`.
@@ -48,6 +62,48 @@ hpa:
   $name:
     enabled: false
 ```
+
+---
+
+### `hpa.$name.maxReplicas`
+
+Configuration for `hpa.main.maxReplicas`. Must be greater than or equal to `minReplicas`.
+
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `hpa.$name.maxReplicas` |
+| Type       | `integer`               |
+| Required   | ❌                      |
+| Helm `tpl` | ❌                      |
+| Default    | unset                   |
+
+---
+
+### `hpa.$name.metrics`
+
+Configuration for `hpa.main.metrics`. List of metric specs, each selecting one of Resource, Pods, Object, External or ContainerResource.
+
+| Field      | Value               |
+| ---------- | ------------------- |
+| Key        | `hpa.$name.metrics` |
+| Type       | `list of map`       |
+| Required   | ❌                  |
+| Helm `tpl` | ❌                  |
+| Default    | unset               |
+
+---
+
+### `hpa.$name.minReplicas`
+
+Configuration for `hpa.main.minReplicas`.
+
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `hpa.$name.minReplicas` |
+| Type       | `integer`               |
+| Required   | ❌                      |
+| Helm `tpl` | ❌                      |
+| Default    | unset                   |
 
 ---
 
@@ -71,6 +127,20 @@ hpa:
     targetSelector:
       []
 ```
+
+---
+
+### `hpa.$name.workload`
+
+Set by the library to a copy of the workload this HPA targets. Any value set by the user is overwritten.
+
+| Field      | Value                |
+| ---------- | -------------------- |
+| Key        | `hpa.$name.workload` |
+| Type       | `map`                |
+| Required   | ❌                   |
+| Helm `tpl` | ❌                   |
+| Default    | unset                |
 
 ---
 

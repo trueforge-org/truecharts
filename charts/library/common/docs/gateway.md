@@ -165,6 +165,48 @@ Each listener must specify:
 
 ---
 
+### `gateway.$name.nameOverride`
+
+Configuration for `gateway.main.nameOverride`.
+
+| Field      | Value                        |
+| ---------- | ---------------------------- |
+| Key        | `gateway.$name.nameOverride` |
+| Type       | `string`                     |
+| Required   | ❌                           |
+| Helm `tpl` | ❌                           |
+| Default    | unset                        |
+
+---
+
+### `gateway.$name.namespace`
+
+Configuration for `gateway.main.namespace`.
+
+| Field      | Value                     |
+| ---------- | ------------------------- |
+| Key        | `gateway.$name.namespace` |
+| Type       | `string`                  |
+| Required   | ❌                        |
+| Helm `tpl` | ❌                        |
+| Default    | unset                     |
+
+---
+
+### `gateway.$name.primary`
+
+Configuration for `gateway.main.primary`.
+
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `gateway.$name.primary` |
+| Type       | `boolean`               |
+| Required   | ❌                      |
+| Helm `tpl` | ❌                      |
+| Default    | unset                   |
+
+---
+
 ### `gateway.$name.targetSelector`
 
 Name-based selector for automatic GatewayClass linking. When set, automatically references the specified `gatewayClass.$name`.

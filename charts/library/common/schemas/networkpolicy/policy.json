@@ -45,9 +45,13 @@
         "object",
         "string"
       ],
-      "additionalProperties": false,
+      "additionalProperties": {
+        "type": "string",
+        "description": "Value of the annotation"
+      },
       "description": "Additional annotations for this NetworkPolicy.",
-      "default": {}
+      "default": {},
+      "properties": {}
     },
     "annotationsList": {
       "allOf": [
@@ -142,7 +146,10 @@
         "matchLabels": {
           "type": "object",
           "properties": {},
-          "additionalProperties": false,
+          "additionalProperties": {
+            "type": "string",
+            "description": "Value of the label"
+          },
           "description": "Match endpoints by labels"
         },
         "matchExpressions": {
@@ -152,7 +159,23 @@
           ],
           "items": {
             "type": "object",
-            "properties": {},
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "Label key the selector applies to."
+              },
+              "operator": {
+                "type": "string",
+                "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
+              }
+            },
             "additionalProperties": false
           },
           "description": "Match endpoints by label expressions"
@@ -170,7 +193,10 @@
         "matchLabels": {
           "type": "object",
           "properties": {},
-          "additionalProperties": false,
+          "additionalProperties": {
+            "type": "string",
+            "description": "Value of the label"
+          },
           "description": "Match nodes by labels"
         },
         "matchExpressions": {
@@ -180,7 +206,23 @@
           ],
           "items": {
             "type": "object",
-            "properties": {},
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "Label key the selector applies to."
+              },
+              "operator": {
+                "type": "string",
+                "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
+              }
+            },
             "additionalProperties": false
           },
           "description": "Match nodes by label expressions"
@@ -236,9 +278,52 @@
       ],
       "items": {
         "type": "object",
-        "properties": {},
-        "additionalProperties": false,
-        "description": "Configuration for `$name.ingressDeny.$item`."
+        "properties": {
+          "fromEndpoints": {
+            "type": "array",
+            "items": {
+              "description": "An endpoint selector, passed on as is."
+            },
+            "description": "Endpoints the rule applies to."
+          },
+          "fromEntities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Entities the rule applies to, e.g. `world` or `cluster`."
+          },
+          "fromCIDR": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "CIDRs the rule applies to."
+          },
+          "fromCIDRSet": {
+            "type": "array",
+            "items": {
+              "description": "A CIDR with exceptions, passed on as is."
+            },
+            "description": "CIDRs with exceptions the rule applies to."
+          },
+          "toPorts": {
+            "type": "array",
+            "items": {
+              "description": "A port rule, passed on as is."
+            },
+            "description": "Ports the rule applies to."
+          },
+          "icmps": {
+            "type": "array",
+            "items": {
+              "description": "An ICMP rule, passed on as is."
+            },
+            "description": "ICMP types the rule applies to."
+          }
+        },
+        "description": "Configuration for `$name.ingressDeny.$item`.",
+        "additionalProperties": false
       },
       "description": "Cilium only. List of ingress deny rules, these take precedence over allow rules, supports Helm `tpl`",
       "default": []
@@ -258,9 +343,52 @@
       ],
       "items": {
         "type": "object",
-        "properties": {},
-        "additionalProperties": false,
-        "description": "Configuration for `$name.egressDeny.$item`."
+        "properties": {
+          "toEndpoints": {
+            "type": "array",
+            "items": {
+              "description": "An endpoint selector, passed on as is."
+            },
+            "description": "Endpoints the rule applies to."
+          },
+          "toEntities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Entities the rule applies to, e.g. `world` or `cluster`."
+          },
+          "toCIDR": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "CIDRs the rule applies to."
+          },
+          "toCIDRSet": {
+            "type": "array",
+            "items": {
+              "description": "A CIDR with exceptions, passed on as is."
+            },
+            "description": "CIDRs with exceptions the rule applies to."
+          },
+          "toPorts": {
+            "type": "array",
+            "items": {
+              "description": "A port rule, passed on as is."
+            },
+            "description": "Ports the rule applies to."
+          },
+          "icmps": {
+            "type": "array",
+            "items": {
+              "description": "An ICMP rule, passed on as is."
+            },
+            "description": "ICMP types the rule applies to."
+          }
+        },
+        "description": "Configuration for `$name.egressDeny.$item`.",
+        "additionalProperties": false
       },
       "description": "Cilium only. List of egress deny rules, these take precedence over allow rules, supports Helm `tpl`",
       "default": []

@@ -56,3 +56,17 @@ Peers that may receive traffic.
 | Default    | unset                         |
 
 ---
+
+### `networkpolicy.egressRule.toEntities`
+
+Cilium only: entities (for example `world`, `cluster`, `host` or `all`) allowed to receive traffic. Ignored for Kubernetes NetworkPolicies.
+
+| Field      | Value                                 |
+| ---------- | ------------------------------------- |
+| Key        | `networkpolicy.egressRule.toEntities` |
+| Type       | `list of string`                      |
+| Required   | ❌                                    |
+| Helm `tpl` | ❌                                    |
+| Default    | unset                                 |
+
+---

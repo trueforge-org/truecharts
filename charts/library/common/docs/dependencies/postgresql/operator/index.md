@@ -36,7 +36,7 @@ Additional annotations for all CNPG objects.
 | Field      | Value                                          |
 | ---------- | ---------------------------------------------- |
 | Key        | `dependencies.postgresql.operator.annotations` |
-| Type       | `map, string`                                  |
+| Type       | `map`                                          |
 | Required   | ❌                                             |
 | Helm `tpl` | ❌                                             |
 | Default    | `{}`                                           |
@@ -50,6 +50,20 @@ dependencies:
       annotations:
         {}
 ```
+
+---
+
+### `dependencies.postgresql.operator.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the `annotations` of all CNPG objects.
+
+| Field      | Value                                              |
+| ---------- | -------------------------------------------------- |
+| Key        | `dependencies.postgresql.operator.annotationsList` |
+| Type       | `list of map`                                      |
+| Required   | ❌                                                 |
+| Helm `tpl` | ❌                                                 |
+| Default    | unset                                              |
 
 ---
 
@@ -104,6 +118,20 @@ dependencies:
 
 ---
 
+### `dependencies.postgresql.operator.instances`
+
+Number of instances. Must be at least 1 when set. Only validated, the CNPG cluster uses `cluster.instances`.
+
+| Field      | Value                                        |
+| ---------- | -------------------------------------------- |
+| Key        | `dependencies.postgresql.operator.instances` |
+| Type       | `integer`                                    |
+| Required   | ❌                                           |
+| Helm `tpl` | ❌                                           |
+| Default    | unset                                        |
+
+---
+
 ### `dependencies.postgresql.operator.labels`
 
 Additional labels for all CNPG objects.
@@ -111,7 +139,7 @@ Additional labels for all CNPG objects.
 | Field      | Value                                     |
 | ---------- | ----------------------------------------- |
 | Key        | `dependencies.postgresql.operator.labels` |
-| Type       | `map, string`                             |
+| Type       | `map`                                     |
 | Required   | ❌                                        |
 | Helm `tpl` | ❌                                        |
 | Default    | `{}`                                      |
@@ -125,6 +153,20 @@ dependencies:
       labels:
         {}
 ```
+
+---
+
+### `dependencies.postgresql.operator.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the `labels` of all CNPG objects.
+
+| Field      | Value                                         |
+| ---------- | --------------------------------------------- |
+| Key        | `dependencies.postgresql.operator.labelsList` |
+| Type       | `list of map`                                 |
+| Required   | ❌                                            |
+| Helm `tpl` | ❌                                            |
+| Default    | unset                                         |
 
 ---
 
@@ -156,13 +198,40 @@ dependencies:
 
 Configuration for `dependencies.postgresql.operator.monitoring`.
 
-| Field      | Value                                         |
-| ---------- | --------------------------------------------- |
-| Key        | `dependencies.postgresql.operator.monitoring` |
-| Type       | `map`                                         |
-| Required   | ❌                                            |
-| Helm `tpl` | ❌                                            |
-| Default    | unset                                         |
+| Field      | Value                                                                              |
+| ---------- | ---------------------------------------------------------------------------------- |
+| Key        | `dependencies.postgresql.operator.monitoring`                                      |
+| Type       | `map`                                                                              |
+| Required   | ❌                                                                                 |
+| Helm `tpl` | ❌                                                                                 |
+| Default    | `{"enablePodMonitor": false, "disableDefaultQueries": false, "customQueries": []}` |
+
+Example
+
+```yaml
+dependencies:
+  postgresql:
+    operator:
+      monitoring:
+        enablePodMonitor: false
+        disableDefaultQueries: false
+        customQueries:
+          []
+```
+
+---
+
+### `dependencies.postgresql.operator.namespace`
+
+Namespace of the CNPG objects. Templated with `tpl`, and overrides `global.namespace` and `namespace`.
+
+| Field      | Value                                        |
+| ---------- | -------------------------------------------- |
+| Key        | `dependencies.postgresql.operator.namespace` |
+| Type       | `string`                                     |
+| Required   | ❌                                           |
+| Helm `tpl` | ❌                                           |
+| Default    | unset                                        |
 
 ---
 
@@ -263,6 +332,7 @@ dependencies:
 ## Child Pages
 
 - [Cluster](cluster/)
+- [Instancesidecarconfiguration](instanceSidecarConfiguration.md) - Configuration of the sidecar that runs in the CNPG instance pods. Passed verbatim to the `instanceSidecarConfiguration` of the CNPG ObjectStore.
 
 ---
 

@@ -8,5 +8,8 @@
       "description": "Configuration for `podOptions.nodeSelector.kubernetes.io/arch`."
     }
   },
-  "additionalProperties": false
+  "additionalProperties": {
+    "type": "string",
+    "description": "Value of the node label"
+  }
 }

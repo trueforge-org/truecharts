@@ -81,6 +81,20 @@ See [Fallbackdefaults](fallbackDefaults.md) for full configuration.
 
 ---
 
+### `global.ignoreIsStopped`
+
+Ignore isStopped when applying global stop behaviour. Set by the stable external-service chart; no common template reads it.
+
+| Field      | Value                    |
+| ---------- | ------------------------ |
+| Key        | `global.ignoreIsStopped` |
+| Type       | `boolean`                |
+| Required   | ❌                       |
+| Helm `tpl` | ❌                       |
+| Default    | unset                    |
+
+---
+
 ### `global.labels`
 
 Additional Labels that apply to all objects
@@ -146,6 +160,20 @@ global:
 
 ---
 
+### `global.podCIDR`
+
+Configuration for `global.podCIDR`.
+
+| Field      | Value            |
+| ---------- | ---------------- |
+| Key        | `global.podCIDR` |
+| Type       | `string`         |
+| Required   | ❌               |
+| Helm `tpl` | ❌               |
+| Default    | unset            |
+
+---
+
 ### `global.stopAll`
 
 Applies different techniques to stop all objects in the chart and its dependencies
@@ -164,6 +192,20 @@ Example
 global:
   stopAll: false
 ```
+
+---
+
+### `global.svcCIDR`
+
+Configuration for `global.svcCIDR`.
+
+| Field      | Value            |
+| ---------- | ---------------- |
+| Key        | `global.svcCIDR` |
+| Type       | `string`         |
+| Required   | ❌               |
+| Helm `tpl` | ❌               |
+| Default    | unset            |
 
 ---
 

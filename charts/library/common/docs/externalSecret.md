@@ -52,6 +52,20 @@ externalSecret:
 
 ---
 
+### `externalSecret.$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                                  |
+| ---------- | -------------------------------------- |
+| Key        | `externalSecret.$name.annotationsList` |
+| Type       | `list of map`                          |
+| Required   | ❌                                     |
+| Helm `tpl` | ❌                                     |
+| Default    | unset                                  |
+
+---
+
 ### `externalSecret.$name.data`
 
 Individual keys to fetch from the provider, supports Helm `tpl`.
@@ -162,6 +176,20 @@ externalSecret:
     labels:
       {}
 ```
+
+---
+
+### `externalSecret.$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+| Field      | Value                             |
+| ---------- | --------------------------------- |
+| Key        | `externalSecret.$name.labelsList` |
+| Type       | `list of map`                     |
+| Required   | ❌                                |
+| Helm `tpl` | ❌                                |
+| Default    | unset                             |
 
 ---
 

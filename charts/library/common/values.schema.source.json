@@ -406,8 +406,8 @@
       "description": "See [termination](/truecharts-common/container/termination)"
     },
     "lifecycle": {
-      "$ref": "schemas/workload/podSpec/containers/lifecycle.json",
-      "description": "Does **not** apply to `initContainers` See [lifecycle](/truecharts-common/container/lifecycle)"
+      "type": "object",
+      "description": "Not read by common. Set the lifecycle of a container in `workload.<name>.podSpec.containers.<name>.lifecycle`."
     },
     "probes": {
       "$ref": "schemas/workload/podSpec/containers/probes.json",

@@ -716,7 +716,7 @@ See [Kubectlimage](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.lifecycle`
 
-Does **not** apply to `initContainers` See [lifecycle](/truecharts-common/container/lifecycle)
+Not read by common. Set the lifecycle of a container in `workload.<name>.podSpec.containers.<name>.lifecycle`.
 
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
@@ -725,8 +725,6 @@ Does **not** apply to `initContainers` See [lifecycle](/truecharts-common/contai
 | Required   | ❌                                  |
 | Helm `tpl` | ❌                                  |
 | Default    | unset                               |
-
-See [Lifecycle](../../workload/podSpec/containers/lifecycle.md) for full configuration.
 
 ---
 
@@ -936,7 +934,7 @@ dependencies:
 
 ### `dependencies.postgresql.operator`
 
-Contains specific settings for helm charts containing or using system
+Settings of the CloudNativePG `Cluster`, used when `mode` is `operator`. The credentials stay in `depconfig`. Never merged into the chart values.
 
 | Field      | Value                              |
 | ---------- | ---------------------------------- |
@@ -946,7 +944,7 @@ Contains specific settings for helm charts containing or using system
 | Helm `tpl` | ❌                                 |
 | Default    | unset                              |
 
-See [Operator](../../operator.md) for full configuration.
+See [Operator](operator/) for full configuration.
 
 ---
 

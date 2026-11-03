@@ -17,7 +17,7 @@ title: Primaryupdatemethod
 
 ## `dependencies.postgresql.operator.cluster.primaryUpdateMethod`
 
-TODO ---
+Method to upgrade the primary server during a rolling update. `switchover` promotes an upgraded replica, `restart` restarts the primary in place.
 
 | Field      | Value                                                          |
 | ---------- | -------------------------------------------------------------- |
@@ -26,6 +26,7 @@ TODO ---
 | Required   | ❌                                                             |
 | Helm `tpl` | ❌                                                             |
 | Default    | unset                                                          |
+| Enum       | `switchover`, `restart`                                        |
 
 ---
 

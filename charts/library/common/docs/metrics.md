@@ -29,6 +29,34 @@ Configuration for `metrics`.
 
 ---
 
+### `metrics.$name.annotations`
+
+Configuration for `metrics.main.annotations`.
+
+| Field      | Value                       |
+| ---------- | --------------------------- |
+| Key        | `metrics.$name.annotations` |
+| Type       | `map`                       |
+| Required   | ❌                          |
+| Helm `tpl` | ❌                          |
+| Default    | unset                       |
+
+---
+
+### `metrics.$name.apiKey`
+
+Configuration for `metrics.main.apiKey`. Read by stable charts (sabnzbd, bazarr) through their own metrics values, not by the common templates.
+
+| Field      | Value                  |
+| ---------- | ---------------------- |
+| Key        | `metrics.$name.apiKey` |
+| Type       | `string`               |
+| Required   | ❌                     |
+| Helm `tpl` | ❌                     |
+| Default    | unset                  |
+
+---
+
 ### `metrics.$name.enabled`
 
 Configuration for `metrics.main.enabled`.
@@ -62,6 +90,48 @@ Configuration for `metrics.main.endpoints`.
 | Required   | ❌                        |
 | Helm `tpl` | ❌                        |
 | Default    | unset                     |
+
+---
+
+### `metrics.$name.labels`
+
+Configuration for `metrics.main.labels`.
+
+| Field      | Value                  |
+| ---------- | ---------------------- |
+| Key        | `metrics.$name.labels` |
+| Type       | `map`                  |
+| Required   | ❌                     |
+| Helm `tpl` | ❌                     |
+| Default    | unset                  |
+
+---
+
+### `metrics.$name.matchLabels`
+
+Configuration for `metrics.main.matchLabels`. Set in common-test fixtures and ignored by the common ServiceMonitor and PodMonitor templates, which build their own matchLabels; use `selector` to set matchers.
+
+| Field      | Value                       |
+| ---------- | --------------------------- |
+| Key        | `metrics.$name.matchLabels` |
+| Type       | `map, string`               |
+| Required   | ❌                          |
+| Helm `tpl` | ❌                          |
+| Default    | unset                       |
+
+---
+
+### `metrics.$name.nameOverride`
+
+Configuration for `metrics.main.nameOverride`.
+
+| Field      | Value                        |
+| ---------- | ---------------------------- |
+| Key        | `metrics.$name.nameOverride` |
+| Type       | `string`                     |
+| Required   | ❌                           |
+| Helm `tpl` | ❌                           |
+| Default    | unset                        |
 
 ---
 
@@ -121,6 +191,20 @@ metrics:
     selector:
       {}
 ```
+
+---
+
+### `metrics.$name.targetSelector`
+
+Configuration for `metrics.main.targetSelector`.
+
+| Field      | Value                          |
+| ---------- | ------------------------------ |
+| Key        | `metrics.$name.targetSelector` |
+| Type       | `string`                       |
+| Required   | ❌                             |
+| Helm `tpl` | ❌                             |
+| Default    | unset                          |
 
 ---
 

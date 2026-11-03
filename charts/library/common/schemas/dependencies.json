@@ -275,12 +275,10 @@
                 "description": "Connection details populated by the dependency (eg `plainhost`, `url`). Read-only."
               }
             },
-            "additionalProperties": false,
             "description": "Configuration of the dependency itself. Never merged into the chart values."
           },
           "operator": {
             "type": "object",
-            "additionalProperties": false,
             "description": "Settings specific to the operator providing the dependency (see `mode`). Never merged into the chart values."
           }
         }
@@ -289,6 +287,22 @@
         "required": [
           "enabled"
         ]
+      },
+      {
+        "properties": {
+          "depconfig": {
+            "properties": {
+              "password": {},
+              "creds": {}
+            },
+            "additionalProperties": false
+          },
+          "operator": {
+            "additionalProperties": {
+              "description": "A setting for the operator. Never merged into the chart values."
+            }
+          }
+        }
       }
     ]
   },

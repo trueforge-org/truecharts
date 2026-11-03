@@ -31,7 +31,9 @@ Configuration for `special`.
 
 ## Child Pages
 
+- [Annotationslist](annotationsList.md) - Additional annotations as a list of name and value pairs. Merged into the `annotations` of the object.
 - [Labels](labels.md) - Common labels object.
+- [Labelslist](labelsList.md) - Additional labels as a list of name and value pairs. Merged into the `labels` of the object.
 - [Namespaces](namespaces.md) - Common namespaces object.
 
 ---

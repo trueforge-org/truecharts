@@ -17,12 +17,12 @@ title: Postgresql
 
 ## `dependencies.postgresql.operator.cluster.postgresql`
 
-TODO ---
+Parameters of the PostgreSQL server. Each parameter is passed to CNPG as a string, so every value must be a string.
 
 | Field      | Value                                                 |
 | ---------- | ----------------------------------------------------- |
 | Key        | `dependencies.postgresql.operator.cluster.postgresql` |
-| Type       | `null, string, number, integer, boolean, map, list`   |
+| Type       | `map, null`                                           |
 | Required   | ❌                                                    |
 | Helm `tpl` | ❌                                                    |
 | Default    | unset                                                 |

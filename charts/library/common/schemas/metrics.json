@@ -31,7 +31,42 @@
           "object",
           "string"
         ],
-        "properties": {},
+        "properties": {
+          "matchLabels": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": {
+              "type": "string",
+              "description": "Value of the label"
+            },
+            "description": "Match by labels."
+          },
+          "matchExpressions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "Label key the selector applies to."
+                },
+                "operator": {
+                  "type": "string",
+                  "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
+                },
+                "values": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
+                }
+              },
+              "additionalProperties": false
+            },
+            "description": "Match by label expressions."
+          }
+        },
         "additionalProperties": false,
         "description": "Configuration for `metrics.main.selector`.",
         "default": {}
@@ -73,6 +108,54 @@
             "honorLabels": {
               "type": "boolean",
               "description": "Configuration for `metrics.main.endpoints.$item.honorLabels`."
+            },
+            "scheme": {
+              "type": "string",
+              "description": "Scheme of the scrape request, `http` or `https`."
+            },
+            "params": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Values of the query parameter"
+              },
+              "description": "Query parameters of the scrape request, keyed by name. Supports Helm `tpl`.",
+              "x-helm-tpl": true
+            },
+            "tlsConfig": {
+              "type": "object",
+              "description": "TLS settings of the scrape request, passed on as is.",
+              "additionalProperties": {
+                "description": "A setting passed on as is."
+              }
+            },
+            "relabelings": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "description": "A relabel config, passed on as is.",
+                "additionalProperties": {
+                  "description": "A setting passed on as is."
+                }
+              },
+              "description": "Relabelings applied before scraping. Supports Helm `tpl`.",
+              "x-helm-tpl": true
+            },
+            "metricRelabelings": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "description": "A relabel config, passed on as is.",
+                "additionalProperties": {
+                  "description": "A setting passed on as is."
+                }
+              },
+              "description": "Relabelings applied to the scraped metrics. Supports Helm `tpl`.",
+              "x-helm-tpl": true
             }
           },
           "additionalProperties": false,
@@ -102,7 +185,9 @@
             "type": "array",
             "items": {
               "type": "object",
-              "additionalProperties": false
+              "additionalProperties": {
+                "description": "A setting passed on as is."
+              }
             },
             "description": "Configuration for `metrics.main.prometheusRule.rules`. Set by stable charts (blocky, grafana, ntfy), but the common PrometheusRule template ignores it; use `groups` or `additionalgroups` for rules."
           },
@@ -260,7 +345,10 @@
       "annotations": {
         "type": "object",
         "properties": {},
-        "additionalProperties": false,
+        "additionalProperties": {
+          "type": "string",
+          "description": "Value of the annotation"
+        },
         "description": "Configuration for `metrics.main.annotations`."
       },
       "nameOverride": {

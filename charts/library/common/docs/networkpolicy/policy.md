@@ -52,6 +52,20 @@ networkpolicy:
 
 ---
 
+### `networkpolicy.policy.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                                  |
+| ---------- | -------------------------------------- |
+| Key        | `networkpolicy.policy.annotationsList` |
+| Type       | `list of map`                          |
+| Required   | ❌                                     |
+| Helm `tpl` | ❌                                     |
+| Default    | unset                                  |
+
+---
+
 ### `networkpolicy.policy.clusterwide`
 
 Cilium only. Create a CiliumClusterwideNetworkPolicy instead of a CiliumNetworkPolicy, chart based selectors are pinned to the namespace of the chart
@@ -280,6 +294,20 @@ networkpolicy:
     labels:
       {}
 ```
+
+---
+
+### `networkpolicy.policy.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+| Field      | Value                             |
+| ---------- | --------------------------------- |
+| Key        | `networkpolicy.policy.labelsList` |
+| Type       | `list of map`                     |
+| Required   | ❌                                |
+| Helm `tpl` | ❌                                |
+| Default    | unset                             |
 
 ---
 

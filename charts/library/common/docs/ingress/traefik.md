@@ -36,7 +36,7 @@ Same as middlewares but meant to be used by the chart developer to define some c
 | Field      | Value                              |
 | ---------- | ---------------------------------- |
 | Key        | `ingress.traefik.chartMiddlewares` |
-| Type       | `list of unknown`                  |
+| Type       | `list of map`                      |
 | Required   | ❌                                 |
 | Helm `tpl` | ❌                                 |
 | Default    | `[]`                               |
@@ -125,7 +125,7 @@ The middlewares for this traefik integration
 | Field      | Value                         |
 | ---------- | ----------------------------- |
 | Key        | `ingress.traefik.middlewares` |
-| Type       | `list of unknown`             |
+| Type       | `list of map`                 |
 | Required   | ❌                            |
 | Helm `tpl` | ❌                            |
 | Default    | `[]`                          |

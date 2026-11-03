@@ -251,6 +251,20 @@ podOptions:
 
 ---
 
+### `podOptions.hostUsers`
+
+Override the calculated hostUsers for all pods. If set, takes precedence over the automated calculation. See [Host Users](/truecharts-common/workload#hostusers)
+
+| Field      | Value                  |
+| ---------- | ---------------------- |
+| Key        | `podOptions.hostUsers` |
+| Type       | `boolean`              |
+| Required   | ❌                     |
+| Helm `tpl` | ❌                     |
+| Default    | unset                  |
+
+---
+
 ### `podOptions.nodeSelector`
 
 See [Node Selector](/truecharts-common/workload#nodeselector)
@@ -291,6 +305,21 @@ Example
 podOptions:
   priorityClassName: ""
 ```
+
+---
+
+### `podOptions.restartPolicy`
+
+Default restartPolicy for all pods, can be overruled per pod. Jobs and CronJobs default to OnFailure, other workloads default to Always. See [Restart Policy](/truecharts-common/workload#restartpolicy)
+
+| Field      | Value                          |
+| ---------- | ------------------------------ |
+| Key        | `podOptions.restartPolicy`     |
+| Type       | `string`                       |
+| Required   | ❌                             |
+| Helm `tpl` | ❌                             |
+| Default    | unset                          |
+| Enum       | `Never`, `Always`, `OnFailure` |
 
 ---
 
