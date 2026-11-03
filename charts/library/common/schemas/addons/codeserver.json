@@ -33,7 +33,24 @@
       ]
     },
     "service": {
-      "$ref": "../service/service.json#/additionalProperties"
+      "anyOf": [
+        {
+          "$ref": "../service/service.json#/additionalProperties"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "$ref": "../service/service.json#/additionalProperties/properties/enabled"
+            }
+          },
+          "additionalProperties": {
+            "$ref": "../service/service.json#/additionalProperties"
+          },
+          "description": "Named Service objects of the code-server addon, next to `enabled`."
+        }
+      ],
+      "description": "Service of the code-server addon. Either one Service object, or named Service objects next to `enabled`."
     },
     "ingress": {
       "anyOf": [
