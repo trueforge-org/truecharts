@@ -66,6 +66,24 @@
                 "additionalProperties": false,
                 "description": "Configuration for `ingress.main.integrations.nginx.themepark`."
               },
+              "themePark": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": [
+                      "boolean",
+                      "string"
+                    ],
+                    "description": "Configuration for `ingress.main.integrations.nginx.themePark.enabled`."
+                  },
+                  "css": {
+                    "type": "string",
+                    "description": "Configuration for `ingress.main.integrations.nginx.themePark.css`."
+                  }
+                },
+                "additionalProperties": false,
+                "description": "Configuration for `ingress.main.integrations.nginx.themePark`."
+              },
               "ipWhitelist": {
                 "type": "array",
                 "description": "Configuration for `ingress.main.integrations.nginx.ipWhitelist`."
@@ -164,6 +182,22 @@
         "additionalProperties": true,
         "description": "Create Ingress objects",
         "default": {}
+      },
+      "annotationsList": {
+        "allOf": [
+          {
+            "$ref": "../special/annotationsList.json"
+          }
+        ],
+        "description": "Additional annotations as a list of name and value pairs, merged into the annotations"
+      },
+      "labelsList": {
+        "allOf": [
+          {
+            "$ref": "../special/labelsList.json"
+          }
+        ],
+        "description": "Additional labels as a list of name and value pairs, merged into the labels"
       },
       "ingressClassName": {
         "type": "string",

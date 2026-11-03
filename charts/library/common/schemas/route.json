@@ -54,6 +54,14 @@
         ],
         "description": "Configuration for `route.main.labels`."
       },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "special/namespaces.json"
+          }
+        ],
+        "description": "Configuration for `route.main.namespace`."
+      },
       "gateway": {
         "type": "string",
         "description": "Name of a gateway outside of this chart. Replaces `parentRefs`. Cannot be used with a `targetSelector` string.",
@@ -234,14 +242,35 @@
                 "description": "Icon of the entry on the homepage.",
                 "default": ""
               },
+              "href": {
+                "type": "string",
+                "description": "Href of the entry on the homepage. Supports Helm `tpl`."
+              },
+              "weight": {
+                "type": "integer",
+                "description": "Weight of the entry on the homepage, used for sorting within its group."
+              },
+              "podSelector": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Names of the pods to check for the status of the entry on the homepage."
+              },
               "widget": {
                 "type": "object",
                 "description": "Widget of the entry on the homepage.",
                 "additionalProperties": false,
                 "properties": {
+                  "enabled": {
+                    "type": "boolean",
+                    "description": "Enables or Disables the widget."
+                  },
+                  "version": {
+                    "type": "integer",
+                    "description": "Version of the widget."
+                  },
                   "type": {
-                    "type": "string",
-                    "description": "Type of the widget. Defaults to the name of the chart.",
                     "default": ""
                   },
                   "url": {
