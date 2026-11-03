@@ -389,18 +389,22 @@
             "boolean",
             "string"
           ],
+          "default": false,
           "description": "Configuration for `dependencies.postgresql.operator.pooler.enabled`."
         },
         "createRO": {
           "type": "boolean",
+          "default": false,
           "description": "Configuration for `dependencies.postgresql.operator.pooler.createRO`."
         },
         "poolMode": {
           "type": "string",
+          "default": "session",
           "description": "Configuration for `dependencies.postgresql.operator.pooler.poolMode`."
         },
         "instances": {
           "type": "integer",
+          "default": 2,
           "description": "Configuration for `dependencies.postgresql.operator.pooler.instances`."
         },
         "parameters": {
