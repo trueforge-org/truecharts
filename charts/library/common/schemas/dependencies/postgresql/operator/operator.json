@@ -404,17 +404,19 @@
           "description": "Configuration for `dependencies.postgresql.operator.pooler.instances`."
         },
         "labels": {
-          "allOf": [
-            {
-              "$ref": "../../../special/labels.json"
-            }
-          ],
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {},
           "description": "Configuration for `dependencies.postgresql.operator.pooler.labels`."
         },
         "annotations": {
           "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {},
           "description": "Configuration for `dependencies.postgresql.operator.pooler.annotations`."
         }
       },
