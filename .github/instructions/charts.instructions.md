@@ -5,13 +5,13 @@ description: "Rules for TrueCharts application charts (charts/stable and charts/
 
 # Application chart instructions
 
-These rules apply to application charts in `charts/stable/<chart>/` and `charts/incubator/<chart>/`. They add to the general rules in [`AGENTS.md`](../../AGENTS.md): minimal changes, a SemVer bump of `version` on every non-docs change, and no edits to generated files.
+These rules apply to application charts in `charts/stable/<chart>/` and `charts/incubator/<chart>/`. They add to the general rules in [`AGENTS.md`](../../AGENTS.md): minimal changes, a SemVer bump of `version` on every non-docs change in a PR that targets `master`, and no edits to generated files.
 
 ## Chart layout
 
 ```text
 charts/stable/<chart>/
-├── Chart.yaml            # bump `version` for every non-docs change
+├── Chart.yaml            # bump `version` for every non-docs change (PRs into master only)
 ├── values.yaml           # chart configuration; only overrides of `common` defaults
 ├── templates/
 │   ├── common.yaml       # {{ include "tc.v1.common.loader.all" . }}

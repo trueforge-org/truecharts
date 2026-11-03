@@ -65,7 +65,7 @@ These rules apply to `charts/library/common/` (the `common` library chart that e
 
 ## Change checklist
 
-1. Bump `version` in `charts/library/common/Chart.yaml` following the SemVer rules in `AGENTS.md`: patch for fixes, minor for new features or options, major for breaking changes. **Do not bump `charts/library/common-test`**, which stays at `1.0.0` and depends on `common` via `file://../common/`.
+1. Bump `version` in `charts/library/common/Chart.yaml` (only in a PR that targets `master`) following the SemVer rules in `AGENTS.md`: patch for fixes, minor for new features or options, major for breaking changes. **Do not bump `charts/library/common-test`**, which stays at `1.0.0` and depends on `common` via `file://../common/`.
 2. Add or update helm-unittest suites in `charts/library/common-test/tests/<area>/*_test.yaml`. Cover both the happy path and the validation (`failedTemplate`) paths.
 3. Update `charts/library/common/values.yaml` if you add or change defaults. Keep the existing comment style.
 4. Update the schema in `schemas/` (and `values.schema.json` for a new top-level key) for every added, changed or removed key. See [Values schema](#values-schema).
