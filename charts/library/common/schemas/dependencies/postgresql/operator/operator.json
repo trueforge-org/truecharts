@@ -403,6 +403,13 @@
           "type": "integer",
           "description": "Configuration for `dependencies.postgresql.operator.pooler.instances`."
         },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Configuration for `dependencies.postgresql.operator.pooler.parameters`."
+        },
         "labels": {
           "type": "object",
           "additionalProperties": {
