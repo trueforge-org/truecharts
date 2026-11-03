@@ -480,6 +480,19 @@
         ],
         "description": "Define the accessModes of the PVC, if it's single can be defined as a string, multiple as a list"
       },
+      "accessMode": {
+        "type": "string",
+        "description": "Legacy singular spelling of `accessModes`. Set by common-test fixtures (statefulset) but ignored by the templates, which read `accessModes`."
+      },
+      "copyMethod": {
+        "type": "string",
+        "enum": [
+          "Clone",
+          "Direct",
+          "Snapshot"
+        ],
+        "description": "Define the VolSync copyMethod at item level. Set by common-test volsync fixtures, but the templates only read `copyMethod` inside `volsync` entries, so it is ignored here."
+      },
       "volumeName": {
         "type": "string",
         "description": "Define the volumeName of a PV, backing the claim"
