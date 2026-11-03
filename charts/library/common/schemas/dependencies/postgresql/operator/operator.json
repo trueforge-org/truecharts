@@ -91,11 +91,13 @@
       "properties": {
         "enablePodMonitor": {
           "type": "boolean",
-          "description": "Configuration for `dependencies.postgresql.operator.monitoring.enablePodMonitor`."
+          "description": "Configuration for `dependencies.postgresql.operator.monitoring.enablePodMonitor`.",
+          "default": false
         },
         "disableDefaultQueries": {
           "type": "boolean",
-          "description": "Configuration for `dependencies.postgresql.operator.monitoring.disableDefaultQueries`."
+          "description": "Configuration for `dependencies.postgresql.operator.monitoring.disableDefaultQueries`.",
+          "default": false
         },
         "customQueries": {
           "type": "array",
@@ -148,11 +150,17 @@
             "additionalProperties": false,
             "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item`."
           },
-          "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries`."
+          "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries`.",
+          "default": []
         }
       },
       "additionalProperties": false,
-      "description": "Configuration for `dependencies.postgresql.operator.monitoring`."
+      "description": "Configuration for `dependencies.postgresql.operator.monitoring`.",
+      "default": {
+        "enablePodMonitor": false,
+        "disableDefaultQueries": false,
+        "customQueries": []
+      }
     },
     "recovery": {
       "type": "object",
