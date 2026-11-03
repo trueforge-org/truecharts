@@ -176,7 +176,10 @@
           "annotations": {
             "type": "object",
             "properties": {},
-            "additionalProperties": false,
+            "additionalProperties": {
+              "type": "string",
+              "description": "Value of the annotation"
+            },
             "description": "Define annotations for podSpec"
           },
           "automountServiceAccountToken": {
@@ -226,8 +229,10 @@
           "affinity": {
             "type": "object",
             "properties": {},
-            "additionalProperties": false,
-            "description": "Overrides `podOptions.affinity` for this workload."
+            "description": "Overrides `podOptions.affinity` for this workload.",
+            "additionalProperties": {
+              "description": "A setting passed on as is."
+            }
           },
           "serviceAccountName": {
             "type": "string",
@@ -240,7 +245,10 @@
           "nodeSelector": {
             "type": "object",
             "properties": {},
-            "additionalProperties": false,
+            "additionalProperties": {
+              "type": "string",
+              "description": "Value of the node label"
+            },
             "description": "Pod's nodeSelector"
           },
           "topologySpreadConstraints": {
@@ -578,7 +586,10 @@
           "string"
         ],
         "properties": {},
-        "additionalProperties": false,
+        "additionalProperties": {
+          "type": "string",
+          "description": "Value of the annotation"
+        },
         "description": "Define annotations for workload",
         "default": {}
       },

@@ -382,8 +382,8 @@
    "description": "See [termination](/truecharts-common/container/termination)"
   },
   "lifecycle": {
-   "$ref": "#/definitions/workload.podSpec.containers.lifecycle",
-   "description": "Does **not** apply to `initContainers` See [lifecycle](/truecharts-common/container/lifecycle)"
+   "type": "object",
+   "description": "Not read by common. Set the lifecycle of a container in `workload.<name>.podSpec.containers.<name>.lifecycle`."
   },
   "probes": {
    "$ref": "#/definitions/workload.podSpec.containers.probes",
@@ -682,7 +682,12 @@
         "description": "Octal file mode of the mounted files, for example `0777`."
        },
        "data": {
-        "$ref": "#/definitions/secret/additionalProperties/properties/data",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+         "type": "string",
+         "description": "Content of the file"
+        },
         "description": "Files of the secret, keyed by file name."
        },
        "namespace": {
@@ -750,7 +755,14 @@
      "description": "Allowed inbound ports."
     }
    },
-   "additionalProperties": false
+   "additionalProperties": {
+    "type": [
+     "boolean",
+     "number",
+     "string"
+    ],
+    "description": "Additional environment variable for the Gluetun container, keyed by variable name."
+   }
   },
   "addons.netshoot": {
    "type": "object",
@@ -1021,7 +1033,10 @@
     "annotations": {
      "type": "object",
      "properties": {},
-     "additionalProperties": false,
+     "additionalProperties": {
+      "type": "string",
+      "description": "Value of the annotation"
+     },
      "description": "Configuration for `addons.tailscale.annotations`."
     }
    },
@@ -1040,15 +1055,19 @@
        "annotations": {
         "type": "object",
         "properties": {},
-        "additionalProperties": false,
-        "description": "Define certificates"
+        "additionalProperties": {
+         "type": "string",
+         "description": "Value of the annotation"
+        },
+        "description": "Define the annotations for this certificate secret template"
        },
        "labels": {
-        "allOf": [
-         {
-          "$ref": "#/definitions/special.labels"
-         }
-        ],
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+         "type": "string",
+         "description": "Value of the label"
+        },
         "description": "Define the labels for this certificate secret template"
        }
       },
@@ -1076,16 +1095,16 @@
       "default": ""
      },
      "labels": {
-      "allOf": [
-       {
-        "$ref": "#/definitions/special.labels"
-       }
-      ],
-      "description": "Define the labels for this certificate",
       "type": [
        "object",
        "string"
       ],
+      "properties": {},
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the label"
+      },
+      "description": "Define the labels for this certificate",
       "default": {}
      },
      "annotationsList": {
@@ -1110,7 +1129,10 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Define the annotations for this certificate",
       "default": {}
      },
@@ -1165,9 +1187,12 @@
    "description": "Configuration for `chartContext`."
   },
   "common": {
-   "type": "object",
-   "additionalProperties": false,
-   "description": "Shared values merged into the common chart defaults before chart-specific values."
+   "allOf": [
+    {
+     "$ref": "#"
+    }
+   ],
+   "description": "Shared values merged into the common chart defaults before chart-specific values. In a chart that depends on common, Helm puts all values of common here, so it takes the same values as the chart itself."
   },
   "configMapsFromFolder": {
    "type": "object",
@@ -1198,13 +1223,19 @@
        "annotations": {
         "type": "object",
         "description": "Additional annotations for the ConfigMap",
-        "additionalProperties": false,
+        "additionalProperties": {
+         "type": "string",
+         "description": "Value of the annotation"
+        },
         "default": {}
        },
        "labels": {
         "type": "object",
         "description": "Additional labels for the ConfigMap",
-        "additionalProperties": false,
+        "additionalProperties": {
+         "type": "string",
+         "description": "Value of the label"
+        },
         "default": {}
        },
        "fileAttributeOverrides": {
@@ -1261,8 +1292,11 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
-      "description": "Create Configmap objects"
+      "additionalProperties": {
+       "type": "string",
+       "description": "Content of the ConfigMap entry"
+      },
+      "description": "Data entries of the ConfigMap, keyed by file or variable name"
      },
      "enabled": {
       "type": [
@@ -1282,16 +1316,16 @@
       "default": ""
      },
      "labels": {
-      "allOf": [
-       {
-        "$ref": "#/definitions/special.labels"
-       }
-      ],
-      "description": "Additional labels for configmap",
       "type": [
        "object",
        "string"
       ],
+      "properties": {},
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the label"
+      },
+      "description": "Additional labels for configmap",
       "default": {}
      },
      "annotationsList": {
@@ -1316,7 +1350,10 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Additional annotations for configmap",
       "default": {}
      }
@@ -1707,12 +1744,10 @@
           "description": "Connection details populated by the dependency (eg `plainhost`, `url`). Read-only."
          }
         },
-        "additionalProperties": false,
         "description": "Configuration of the dependency itself. Never merged into the chart values."
        },
        "operator": {
         "type": "object",
-        "additionalProperties": false,
         "description": "Settings specific to the operator providing the dependency (see `mode`). Never merged into the chart values."
        }
       }
@@ -1721,6 +1756,22 @@
       "required": [
        "enabled"
       ]
+     },
+     {
+      "properties": {
+       "depconfig": {
+        "properties": {
+         "password": {},
+         "creds": {}
+        },
+        "additionalProperties": false
+       },
+       "operator": {
+        "additionalProperties": {
+         "description": "A setting for the operator. Never merged into the chart values."
+        }
+       }
+      }
      }
     ]
    },
@@ -4997,7 +5048,10 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Additional annotations for ExternalSecret",
       "default": {}
      },
@@ -5086,9 +5140,63 @@
        },
        "template": {
         "type": "object",
-        "properties": {},
-        "additionalProperties": false,
-        "description": "Template for the created Secret, passed as is. External Secrets Operator evaluates its own Go templates in here."
+        "properties": {
+         "type": {
+          "type": "string",
+          "description": "Type of the created Secret."
+         },
+         "engineVersion": {
+          "type": "string",
+          "description": "Version of the template engine."
+         },
+         "mergePolicy": {
+          "type": "string",
+          "description": "How the template is merged with the fetched data."
+         },
+         "data": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": {
+           "type": "string",
+           "description": "Template of the key"
+          },
+          "description": "Keys of the created Secret, rendered as templates."
+         },
+         "templateFrom": {
+          "type": "array",
+          "items": {
+           "description": "A template source, passed on as is."
+          },
+          "description": "Templates loaded from ConfigMaps or Secrets."
+         },
+         "metadata": {
+          "type": "object",
+          "properties": {
+           "annotations": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": {
+             "type": "string",
+             "description": "Value of the annotation"
+            },
+            "description": "Annotations of the created Secret."
+           },
+           "labels": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": {
+             "type": "string",
+             "description": "Value of the label"
+            },
+            "description": "Labels of the created Secret."
+           }
+          },
+          "additionalProperties": false,
+          "description": "Metadata of the created Secret."
+         }
+        },
+        "description": "Template for the created Secret, passed as is. External Secrets Operator evaluates its own Go templates in here.",
+        "additionalProperties": false
        }
       },
       "additionalProperties": false,
@@ -5155,8 +5263,10 @@
         "sourceRef": {
          "type": "object",
          "properties": {},
-         "additionalProperties": false,
-         "description": "Override the store for this key, passed as is."
+         "description": "Override the store for this key, passed as is.",
+         "additionalProperties": {
+          "description": "A setting passed on as is."
+         }
         }
        },
        "additionalProperties": false,
@@ -5175,31 +5285,87 @@
        "properties": {
         "extract": {
          "type": "object",
-         "properties": {},
-         "additionalProperties": false,
-         "description": "Extract all keys from a single provider entry."
+         "properties": {
+          "key": {
+           "type": "string",
+           "description": "Key of the entry in the provider."
+          },
+          "property": {
+           "type": "string",
+           "description": "Property of the entry to extract."
+          },
+          "version": {
+           "type": "string",
+           "description": "Version of the entry."
+          },
+          "conversionStrategy": {
+           "type": "string",
+           "description": "How the value is converted or decoded, passed on as is."
+          },
+          "decodingStrategy": {
+           "type": "string",
+           "description": "How the value is converted or decoded, passed on as is."
+          },
+          "metadataPolicy": {
+           "type": "string",
+           "description": "Whether to fetch the metadata of the entry."
+          }
+         },
+         "description": "Extract all keys from a single provider entry.",
+         "additionalProperties": false
         },
         "find": {
          "type": "object",
          "properties": {},
-         "additionalProperties": false,
-         "description": "Find provider entries by name or tags."
+         "description": "Find provider entries by name or tags.",
+         "additionalProperties": {
+          "description": "A setting passed on as is."
+         }
         },
         "rewrite": {
          "type": "array",
          "items": {
           "type": "object",
-          "properties": {},
-          "additionalProperties": false,
-          "description": "Configuration for `externalSecret.main.dataFrom.$item.rewrite.$item`."
+          "properties": {
+           "regexp": {
+            "type": "object",
+            "properties": {
+             "source": {
+              "type": "string",
+              "description": "Regular expression to match the keys."
+             },
+             "target": {
+              "type": "string",
+              "description": "Replacement of the matched part."
+             }
+            },
+            "additionalProperties": false,
+            "description": "Rewrite the keys with a regular expression."
+           },
+           "transform": {
+            "type": "object",
+            "properties": {
+             "template": {
+              "type": "string",
+              "description": "Go template that gets the key as `.value`."
+             }
+            },
+            "additionalProperties": false,
+            "description": "Rewrite the keys with a template."
+           }
+          },
+          "description": "Configuration for `externalSecret.main.dataFrom.$item.rewrite.$item`.",
+          "additionalProperties": false
          },
          "description": "Rewrite the keys of the fetched data."
         },
         "sourceRef": {
          "type": "object",
          "properties": {},
-         "additionalProperties": false,
-         "description": "Override the store for this entry, passed as is."
+         "description": "Override the store for this entry, passed as is.",
+         "additionalProperties": {
+          "description": "A setting passed on as is."
+         }
         }
        },
        "additionalProperties": false,
@@ -5224,8 +5390,10 @@
      "string"
     ],
     "properties": {},
-    "additionalProperties": false,
-    "description": "Configuration for `$item`."
+    "description": "Configuration for `$item`.",
+    "additionalProperties": {
+     "description": "A setting passed on as is."
+    }
    }
   },
   "gateway": {
@@ -5257,7 +5425,10 @@
      "annotations": {
       "type": "object",
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Configuration for `gateway.main.annotations`."
      },
      "labels": {
@@ -5306,8 +5477,47 @@
      },
      "infrastructure": {
       "type": "object",
-      "additionalProperties": false,
-      "description": "Infrastructure settings of the gateway. Passed as is."
+      "description": "Infrastructure settings of the gateway. Passed as is.",
+      "properties": {
+       "annotations": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+         "type": "string",
+         "description": "Value of the annotation"
+        },
+        "description": "Annotations for the resources created for the gateway."
+       },
+       "labels": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+         "type": "string",
+         "description": "Value of the label"
+        },
+        "description": "Labels for the resources created for the gateway."
+       },
+       "parametersRef": {
+        "type": "object",
+        "properties": {
+         "group": {
+          "type": "string",
+          "description": "API group of the parameters resource."
+         },
+         "kind": {
+          "type": "string",
+          "description": "Kind of the parameters resource."
+         },
+         "name": {
+          "type": "string",
+          "description": "Name of the parameters resource."
+         }
+        },
+        "additionalProperties": false,
+        "description": "Implementation specific parameters of the gateway."
+       }
+      },
+      "additionalProperties": false
      },
      "allowedListeners": {
       "type": "object",
@@ -5332,14 +5542,33 @@
            "matchLabels": {
             "type": "object",
             "properties": {},
-            "additionalProperties": false,
+            "additionalProperties": {
+             "type": "string",
+             "description": "Value of the label"
+            },
             "description": "Match namespaces by labels."
            },
            "matchExpressions": {
             "type": "array",
             "items": {
              "type": "object",
-             "properties": {},
+             "properties": {
+              "key": {
+               "type": "string",
+               "description": "Label key the selector applies to."
+              },
+              "operator": {
+               "type": "string",
+               "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
+              },
+              "values": {
+               "type": "array",
+               "items": {
+                "type": "string"
+               },
+               "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
+              }
+             },
              "additionalProperties": false
             },
             "description": "Match namespaces by label expressions."
@@ -5358,8 +5587,24 @@
      },
      "tls": {
       "type": "object",
-      "additionalProperties": false,
-      "description": "Gateway wide TLS settings. Passed as is."
+      "description": "Gateway wide TLS settings. Passed as is.",
+      "properties": {
+       "frontend": {
+        "type": "object",
+        "description": "TLS settings for connections from clients, passed on as is.",
+        "additionalProperties": {
+         "description": "A setting passed on as is."
+        }
+       },
+       "backend": {
+        "type": "object",
+        "description": "TLS settings for connections to backends, passed on as is.",
+        "additionalProperties": {
+         "description": "A setting passed on as is."
+        }
+       }
+      },
+      "additionalProperties": false
      },
      "listeners": {
       "type": "array",
@@ -5438,8 +5683,10 @@
           },
           "options": {
            "type": "object",
-           "additionalProperties": false,
-           "description": "Implementation specific TLS options. Passed as is."
+           "description": "Implementation specific TLS options. Passed as is.",
+           "additionalProperties": {
+            "description": "A setting passed on as is."
+           }
           }
          },
          "additionalProperties": false,
@@ -5463,7 +5710,42 @@
             },
             "selector": {
              "type": "object",
-             "properties": {},
+             "properties": {
+              "matchLabels": {
+               "type": "object",
+               "properties": {},
+               "additionalProperties": {
+                "type": "string",
+                "description": "Value of the label"
+               },
+               "description": "Match by labels."
+              },
+              "matchExpressions": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "key": {
+                  "type": "string",
+                  "description": "Label key the selector applies to."
+                 },
+                 "operator": {
+                  "type": "string",
+                  "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
+                 },
+                 "values": {
+                  "type": "array",
+                  "items": {
+                   "type": "string"
+                  },
+                  "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
+                 }
+                },
+                "additionalProperties": false
+               },
+               "description": "Match by label expressions."
+              }
+             },
              "additionalProperties": false,
              "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes.namespaces.selector`."
             }
@@ -5525,7 +5807,10 @@
      "annotations": {
       "type": "object",
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Configuration for `gatewayClass.main.annotations`."
      },
      "labels": {
@@ -5882,7 +6167,9 @@
       "string"
      ],
      "properties": {},
-     "additionalProperties": false,
+     "additionalProperties": {
+      "type": "string"
+     },
      "description": "Additional Annotations that apply to all objects",
      "default": {}
     },
@@ -6247,7 +6534,10 @@
               "matchLabels": {
                "type": "object",
                "properties": {},
-               "additionalProperties": false,
+               "additionalProperties": {
+                "type": "string",
+                "description": "Value of the label"
+               },
                "description": "Configuration for `hpa.main.metrics.$item.pods.metric.selector.matchLabels`."
               }
              },
@@ -6292,7 +6582,10 @@
               "matchLabels": {
                "type": "object",
                "properties": {},
-               "additionalProperties": false,
+               "additionalProperties": {
+                "type": "string",
+                "description": "Value of the label"
+               },
                "description": "Configuration for `hpa.main.metrics.$item.object.metric.selector.matchLabels`."
               }
              },
@@ -6371,7 +6664,10 @@
               "matchLabels": {
                "type": "object",
                "properties": {},
-               "additionalProperties": false,
+               "additionalProperties": {
+                "type": "string",
+                "description": "Value of the label"
+               },
                "description": "Configuration for `hpa.main.metrics.$item.external.metric.selector.matchLabels`."
               }
              },
@@ -6560,7 +6856,10 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Additional annotations for image pull secret",
       "default": {}
      },
@@ -7286,7 +7585,10 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Create Ingress objects",
       "default": {}
      },
@@ -7316,7 +7618,10 @@
      "targetSelector": {
       "type": "object",
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Name of the port in the service"
+      },
       "description": "Define the `service: port` to assign the ingress",
       "default": "{}"
      },
@@ -7538,9 +7843,17 @@
         "null"
        ],
        "properties": {},
-       "additionalProperties": false,
        "description": "Define configuration for the widget",
-       "default": null
+       "default": null,
+       "additionalProperties": {
+        "type": [
+         "string",
+         "number",
+         "boolean",
+         "null"
+        ],
+        "description": "Value of the widget setting. Supports Helm `tpl`, empty values are skipped."
+       }
       }
      },
      "additionalProperties": false,
@@ -7580,8 +7893,7 @@
     },
     "middlewares": {
      "type": "array",
-     "properties": {},
-     "additionalProperties": {
+     "items": {
       "type": "object",
       "properties": {
        "expandObjectName": {
@@ -7605,14 +7917,39 @@
        }
       },
       "additionalProperties": false,
-      "description": "Configuration for `$name.integrations.traefik.middlewares.$name`."
+      "description": "A middleware of the traefik integration."
      },
      "description": "The middlewares for this traefik integration",
      "default": []
     },
     "chartMiddlewares": {
      "type": "array",
-     "additionalProperties": false,
+     "items": {
+      "type": "object",
+      "properties": {
+       "expandObjectName": {
+        "type": [
+         "boolean",
+         "string"
+        ],
+        "description": "The middlewares for this traefik integration"
+       },
+       "name": {
+        "type": "string",
+        "description": "The name of the middleware"
+       },
+       "namespace": {
+        "allOf": [
+         {
+          "$ref": "#/definitions/special.namespaces"
+         }
+        ],
+        "description": "The namespace of the middleware If not defined, the current namespace will be used."
+       }
+      },
+      "additionalProperties": false,
+      "description": "A middleware of the traefik integration."
+     },
      "description": "Same as [middlewares](#middlewares) but meant to be used by the chart developer to define some custom middleware specific to this ingress.",
      "default": []
     }
@@ -7778,7 +8115,10 @@
        "annotations": {
         "type": "object",
         "properties": {},
-        "additionalProperties": false,
+        "additionalProperties": {
+         "type": "string",
+         "description": "Value of the annotation"
+        },
         "description": "Additional annotations for middleware"
        },
        "expandObjectName": {
@@ -8185,13 +8525,19 @@
          "customRequestHeaders": {
           "type": "object",
           "properties": {},
-          "additionalProperties": false,
+          "additionalProperties": {
+           "type": "string",
+           "description": "Value of the header"
+          },
           "description": "Define the customRequestHeaders"
          },
          "customResponseHeaders": {
           "type": "object",
           "properties": {},
-          "additionalProperties": false,
+          "additionalProperties": {
+           "type": "string",
+           "description": "Value of the header"
+          },
           "description": "Define the customResponseHeaders"
          },
          "accessControlAllowCredentials": {
@@ -8240,7 +8586,10 @@
          "sslProxyHeaders": {
           "type": "object",
           "properties": {},
-          "additionalProperties": false,
+          "additionalProperties": {
+           "type": "string",
+           "description": "Value of the header"
+          },
           "description": "Define the sslProxyHeaders"
          },
          "stsSeconds": {
@@ -8415,7 +8764,10 @@
       "annotations": {
        "type": "object",
        "properties": {},
-       "additionalProperties": false,
+       "additionalProperties": {
+        "type": "string",
+        "description": "Value of the annotation"
+       },
        "description": "Additional annotations for middleware"
       },
       "expandObjectName": {
@@ -8425,8 +8777,10 @@
       "data": {
        "type": "object",
        "properties": {},
-       "additionalProperties": false,
-       "description": "Define the data of the middleware"
+       "description": "Define the data of the middleware",
+       "additionalProperties": {
+        "description": "A setting of the middleware, passed on as is."
+       }
       }
      },
      "additionalProperties": false,
@@ -8503,7 +8857,10 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Additional annotations for ListenerSet",
       "default": {}
      },
@@ -8622,8 +8979,10 @@
           },
           "options": {
            "type": "object",
-           "additionalProperties": false,
-           "description": "Implementation specific TLS options. Passed as is."
+           "description": "Implementation specific TLS options. Passed as is.",
+           "additionalProperties": {
+            "description": "A setting passed on as is."
+           }
           }
          },
          "additionalProperties": false,
@@ -8647,7 +9006,42 @@
             },
             "selector": {
              "type": "object",
-             "properties": {},
+             "properties": {
+              "matchLabels": {
+               "type": "object",
+               "properties": {},
+               "additionalProperties": {
+                "type": "string",
+                "description": "Value of the label"
+               },
+               "description": "Match by labels."
+              },
+              "matchExpressions": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "key": {
+                  "type": "string",
+                  "description": "Label key the selector applies to."
+                 },
+                 "operator": {
+                  "type": "string",
+                  "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
+                 },
+                 "values": {
+                  "type": "array",
+                  "items": {
+                   "type": "string"
+                  },
+                  "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
+                 }
+                },
+                "additionalProperties": false
+               },
+               "description": "Match by label expressions."
+              }
+             },
              "additionalProperties": false,
              "description": "Configuration for `listenerSet.main.listeners.$item.allowedRoutes.namespaces.selector`."
             }
@@ -8725,7 +9119,42 @@
        "object",
        "string"
       ],
-      "properties": {},
+      "properties": {
+       "matchLabels": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+         "type": "string",
+         "description": "Value of the label"
+        },
+        "description": "Match by labels."
+       },
+       "matchExpressions": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "key": {
+           "type": "string",
+           "description": "Label key the selector applies to."
+          },
+          "operator": {
+           "type": "string",
+           "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
+          },
+          "values": {
+           "type": "array",
+           "items": {
+            "type": "string"
+           },
+           "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
+          }
+         },
+         "additionalProperties": false
+        },
+        "description": "Match by label expressions."
+       }
+      },
       "additionalProperties": false,
       "description": "Configuration for `metrics.main.selector`.",
       "default": {}
@@ -8767,6 +9196,51 @@
         "honorLabels": {
          "type": "boolean",
          "description": "Configuration for `metrics.main.endpoints.$item.honorLabels`."
+        },
+        "scheme": {
+         "type": "string",
+         "description": "Scheme of the scrape request, `http` or `https`."
+        },
+        "params": {
+         "type": "object",
+         "properties": {},
+         "additionalProperties": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          },
+          "description": "Values of the query parameter"
+         },
+         "description": "Query parameters of the scrape request, keyed by name. Supports Helm `tpl`."
+        },
+        "tlsConfig": {
+         "type": "object",
+         "description": "TLS settings of the scrape request, passed on as is.",
+         "additionalProperties": {
+          "description": "A setting passed on as is."
+         }
+        },
+        "relabelings": {
+         "type": "array",
+         "items": {
+          "type": "object",
+          "description": "A relabel config, passed on as is.",
+          "additionalProperties": {
+           "description": "A setting passed on as is."
+          }
+         },
+         "description": "Relabelings applied before scraping. Supports Helm `tpl`."
+        },
+        "metricRelabelings": {
+         "type": "array",
+         "items": {
+          "type": "object",
+          "description": "A relabel config, passed on as is.",
+          "additionalProperties": {
+           "description": "A setting passed on as is."
+          }
+         },
+         "description": "Relabelings applied to the scraped metrics. Supports Helm `tpl`."
         }
        },
        "additionalProperties": false,
@@ -8796,15 +9270,81 @@
         "type": "array",
         "items": {
          "type": "object",
-         "additionalProperties": false
+         "additionalProperties": {
+          "description": "A setting passed on as is."
+         }
         },
         "description": "Configuration for `metrics.main.prometheusRule.rules`. Set by stable charts (blocky, grafana, ntfy), but the common PrometheusRule template ignores it; use `groups` or `additionalgroups` for rules."
        },
        "groups": {
         "type": "object",
         "properties": {},
-        "additionalProperties": false,
-        "description": "Configuration for `metrics.main.prometheusRule.groups`."
+        "additionalProperties": {
+         "type": "object",
+         "properties": {
+          "name": {
+           "type": "string",
+           "description": "Configuration for `metrics.main.prometheusRule.groups.$name.name`. Overrides the group name, which defaults to the key."
+          },
+          "rules": {
+           "type": "array",
+           "items": {
+            "type": "object",
+            "properties": {
+             "alert": {
+              "type": "string",
+              "description": "Name of the alert rule."
+             },
+             "record": {
+              "type": "string",
+              "description": "Name of the recording rule."
+             },
+             "expr": {
+              "type": "string",
+              "description": "PromQL expression to evaluate."
+             },
+             "for": {
+              "type": "string",
+              "description": "Duration the expression must be true before the alert fires."
+             },
+             "keep_firing_for": {
+              "type": "string",
+              "description": "Duration the alert keeps firing after the expression is no longer true."
+             },
+             "labels": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": {
+               "type": "string",
+               "description": "Value of the label"
+              },
+              "description": "Labels added to the alert or recording rule."
+             },
+             "annotations": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": {
+               "type": "string",
+               "description": "Value of the annotation"
+              },
+              "description": "Annotations added to the alert or recording rule."
+             }
+            },
+            "additionalProperties": false,
+            "description": "Configuration for `metrics.main.prometheusRule.groups.$name.rules.$item`."
+           },
+           "description": "Configuration for `metrics.main.prometheusRule.groups.$name.rules`."
+          },
+          "additionalrules": {
+           "type": "array",
+           "description": "Configuration for `metrics.main.prometheusRule.groups.$name.additionalrules`. Rules added via the SCALE GUI without overwriting `rules`."
+          }
+         },
+         "additionalProperties": false,
+         "description": "Configuration for `metrics.main.prometheusRule.groups.$name`."
+        },
+        "description": "Configuration for `metrics.main.prometheusRule.groups`. Each key is the name of a group.",
+        "default": {}
        },
        "additionalgroups": {
         "oneOf": [
@@ -8890,7 +9430,10 @@
      "annotations": {
       "type": "object",
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Configuration for `metrics.main.annotations`."
      },
      "nameOverride": {
@@ -9115,9 +9658,13 @@
       "object",
       "string"
      ],
-     "additionalProperties": false,
+     "additionalProperties": {
+      "type": "string",
+      "description": "Value of the annotation"
+     },
      "description": "Additional annotations for this NetworkPolicy.",
-     "default": {}
+     "default": {},
+     "properties": {}
     },
     "annotationsList": {
      "allOf": [
@@ -9212,7 +9759,10 @@
       "matchLabels": {
        "type": "object",
        "properties": {},
-       "additionalProperties": false,
+       "additionalProperties": {
+        "type": "string",
+        "description": "Value of the label"
+       },
        "description": "Match endpoints by labels"
       },
       "matchExpressions": {
@@ -9222,7 +9772,23 @@
        ],
        "items": {
         "type": "object",
-        "properties": {},
+        "properties": {
+         "key": {
+          "type": "string",
+          "description": "Label key the selector applies to."
+         },
+         "operator": {
+          "type": "string",
+          "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
+         },
+         "values": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          },
+          "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
+         }
+        },
         "additionalProperties": false
        },
        "description": "Match endpoints by label expressions"
@@ -9240,7 +9806,10 @@
       "matchLabels": {
        "type": "object",
        "properties": {},
-       "additionalProperties": false,
+       "additionalProperties": {
+        "type": "string",
+        "description": "Value of the label"
+       },
        "description": "Match nodes by labels"
       },
       "matchExpressions": {
@@ -9250,7 +9819,23 @@
        ],
        "items": {
         "type": "object",
-        "properties": {},
+        "properties": {
+         "key": {
+          "type": "string",
+          "description": "Label key the selector applies to."
+         },
+         "operator": {
+          "type": "string",
+          "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
+         },
+         "values": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          },
+          "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
+         }
+        },
         "additionalProperties": false
        },
        "description": "Match nodes by label expressions"
@@ -9306,9 +9891,52 @@
      ],
      "items": {
       "type": "object",
-      "properties": {},
-      "additionalProperties": false,
-      "description": "Configuration for `$name.ingressDeny.$item`."
+      "properties": {
+       "fromEndpoints": {
+        "type": "array",
+        "items": {
+         "description": "An endpoint selector, passed on as is."
+        },
+        "description": "Endpoints the rule applies to."
+       },
+       "fromEntities": {
+        "type": "array",
+        "items": {
+         "type": "string"
+        },
+        "description": "Entities the rule applies to, e.g. `world` or `cluster`."
+       },
+       "fromCIDR": {
+        "type": "array",
+        "items": {
+         "type": "string"
+        },
+        "description": "CIDRs the rule applies to."
+       },
+       "fromCIDRSet": {
+        "type": "array",
+        "items": {
+         "description": "A CIDR with exceptions, passed on as is."
+        },
+        "description": "CIDRs with exceptions the rule applies to."
+       },
+       "toPorts": {
+        "type": "array",
+        "items": {
+         "description": "A port rule, passed on as is."
+        },
+        "description": "Ports the rule applies to."
+       },
+       "icmps": {
+        "type": "array",
+        "items": {
+         "description": "An ICMP rule, passed on as is."
+        },
+        "description": "ICMP types the rule applies to."
+       }
+      },
+      "description": "Configuration for `$name.ingressDeny.$item`.",
+      "additionalProperties": false
      },
      "description": "Cilium only. List of ingress deny rules, these take precedence over allow rules, supports Helm `tpl`",
      "default": []
@@ -9328,9 +9956,52 @@
      ],
      "items": {
       "type": "object",
-      "properties": {},
-      "additionalProperties": false,
-      "description": "Configuration for `$name.egressDeny.$item`."
+      "properties": {
+       "toEndpoints": {
+        "type": "array",
+        "items": {
+         "description": "An endpoint selector, passed on as is."
+        },
+        "description": "Endpoints the rule applies to."
+       },
+       "toEntities": {
+        "type": "array",
+        "items": {
+         "type": "string"
+        },
+        "description": "Entities the rule applies to, e.g. `world` or `cluster`."
+       },
+       "toCIDR": {
+        "type": "array",
+        "items": {
+         "type": "string"
+        },
+        "description": "CIDRs the rule applies to."
+       },
+       "toCIDRSet": {
+        "type": "array",
+        "items": {
+         "description": "A CIDR with exceptions, passed on as is."
+        },
+        "description": "CIDRs with exceptions the rule applies to."
+       },
+       "toPorts": {
+        "type": "array",
+        "items": {
+         "description": "A port rule, passed on as is."
+        },
+        "description": "Ports the rule applies to."
+       },
+       "icmps": {
+        "type": "array",
+        "items": {
+         "description": "An ICMP rule, passed on as is."
+        },
+        "description": "ICMP types the rule applies to."
+       }
+      },
+      "description": "Configuration for `$name.egressDeny.$item`.",
+      "additionalProperties": false
      },
      "description": "Cilium only. List of egress deny rules, these take precedence over allow rules, supports Helm `tpl`",
      "default": []
@@ -9861,7 +10532,10 @@
      "annotations": {
       "type": "object",
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Additional annotations for persistence"
      },
      "namespace": {
@@ -10014,13 +10688,19 @@
         "labels": {
          "type": "object",
          "properties": {},
-         "additionalProperties": false,
+         "additionalProperties": {
+          "type": "string",
+          "description": "Value of the label"
+         },
          "description": "Define the labels of the volumeSnapshot"
         },
         "annotations": {
          "type": "object",
          "properties": {},
-         "additionalProperties": false,
+         "additionalProperties": {
+          "type": "string",
+          "description": "Value of the annotation"
+         },
          "description": "Define the annotations of the volumeSnapshot"
         }
        },
@@ -10159,7 +10839,10 @@
         "annotations": {
          "type": "object",
          "properties": {},
-         "additionalProperties": false,
+         "additionalProperties": {
+          "type": "string",
+          "description": "Value of the annotation"
+         },
          "description": "Additional annotations for the VolSync resources"
         },
         "resources": {
@@ -10706,7 +11389,10 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Additional annotations for Pod Disruption Budget",
       "default": {}
      },
@@ -10832,7 +11518,10 @@
      "description": "Configuration for `podOptions.nodeSelector.kubernetes.io/arch`."
     }
    },
-   "additionalProperties": false
+   "additionalProperties": {
+    "type": "string",
+    "description": "Value of the node label"
+   }
   },
   "podOptions.podOptions": {
    "type": "object",
@@ -10865,8 +11554,10 @@
     "affinity": {
      "type": "object",
      "properties": {},
-     "additionalProperties": false,
-     "description": "Configuration for `podOptions.affinity`."
+     "description": "Configuration for `podOptions.affinity`.",
+     "additionalProperties": {
+      "description": "A setting passed on as is."
+     }
     },
     "dnsPolicy": {
      "type": "string",
@@ -11035,7 +11726,42 @@
      },
      "labelSelector": {
       "type": "object",
-      "properties": {},
+      "properties": {
+       "matchLabels": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+         "type": "string",
+         "description": "Value of the label"
+        },
+        "description": "Match by labels."
+       },
+       "matchExpressions": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "key": {
+           "type": "string",
+           "description": "Label key the selector applies to."
+          },
+          "operator": {
+           "type": "string",
+           "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
+          },
+          "values": {
+           "type": "array",
+           "items": {
+            "type": "string"
+           },
+           "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
+          }
+         },
+         "additionalProperties": false
+        },
+        "description": "Match by label expressions."
+       }
+      },
       "additionalProperties": false,
       "description": "Configuration for `topologySpreadConstraints.$item.labelSelector`."
      }
@@ -11116,7 +11842,10 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Additional annotations for priority class",
       "default": {}
      },
@@ -11235,7 +11964,10 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Additional annotations for rbac",
       "default": {}
      },
@@ -11254,7 +11986,9 @@
        {
         "type": "object",
         "properties": {},
-        "additionalProperties": false
+        "additionalProperties": {
+         "description": "A setting passed on as is."
+        }
        }
       ],
       "description": "Define the service account(s) to assign the (Cluster)RoleBinding",
@@ -11339,7 +12073,10 @@
      "annotations": {
       "type": "object",
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Configuration for `route.main.annotations`."
      },
      "labels": {
@@ -11580,7 +12317,16 @@
              "null"
             ],
             "description": "Custom settings of the widget.",
-            "additionalProperties": false
+            "properties": {},
+            "additionalProperties": {
+             "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+             ],
+             "description": "Value of the widget setting. Supports Helm `tpl`, empty values are skipped."
+            }
            },
            "customkv": {
             "type": [
@@ -11627,8 +12373,31 @@
          },
          "ipStrategy": {
           "type": "object",
-          "additionalProperties": false,
-          "description": "How Traefik determines the source IP."
+          "description": "How Traefik determines the source IP.",
+          "properties": {
+           "depth": {
+            "type": [
+             "integer",
+             "string"
+            ],
+            "description": "Position of the IP to use in `X-Forwarded-For`, counted from the right."
+           },
+           "excludedIPs": {
+            "type": "array",
+            "items": {
+             "type": "string"
+            },
+            "description": "IPs to skip in `X-Forwarded-For`."
+           },
+           "ipv6Subnet": {
+            "type": [
+             "integer",
+             "string"
+            ],
+            "description": "Prefix length to group IPv6 addresses by."
+           }
+          },
+          "additionalProperties": false
          },
          "auth": {
           "type": "object",
@@ -11831,18 +12600,24 @@
          },
          "securityPolicy": {
           "type": "object",
-          "additionalProperties": false,
-          "description": "Other `SecurityPolicy` settings, without a target. Merged with `ipWhitelist` and `auth`."
+          "description": "Other `SecurityPolicy` settings, without a target. Merged with `ipWhitelist` and `auth`.",
+          "additionalProperties": {
+           "description": "A setting of the policy, passed on as is."
+          }
          },
          "backendTrafficPolicy": {
           "type": "object",
-          "additionalProperties": false,
-          "description": "`BackendTrafficPolicy` settings, without a target."
+          "description": "`BackendTrafficPolicy` settings, without a target.",
+          "additionalProperties": {
+           "description": "A setting of the policy, passed on as is."
+          }
          },
          "extensionPolicy": {
           "type": "object",
-          "additionalProperties": false,
-          "description": "`EnvoyExtensionPolicy` settings, without a target. Merged with `themePark`."
+          "description": "`EnvoyExtensionPolicy` settings, without a target. Merged with `themePark`.",
+          "additionalProperties": {
+           "description": "A setting of the policy, passed on as is."
+          }
          }
         },
         "additionalProperties": false
@@ -11909,7 +12684,9 @@
             "type": "array",
             "items": {
              "type": "object",
-             "additionalProperties": false
+             "additionalProperties": {
+              "description": "A setting passed on as is."
+             }
             },
             "description": "Filters applied only to this backend. Only for `HTTPRoute` and `GRPCRoute`."
            }
@@ -11934,7 +12711,9 @@
          "type": "array",
          "items": {
           "type": "object",
-          "additionalProperties": false
+          "additionalProperties": {
+           "description": "A setting passed on as is."
+          }
          },
          "description": "Filters applied to requests matching this rule. Only for `HTTPRoute` and `GRPCRoute`. A rule with only filters needs no `backendRefs`, eg a redirect."
         },
@@ -11944,13 +12723,17 @@
         },
         "retry": {
          "type": "object",
-         "additionalProperties": false,
-         "description": "Retry configuration. Only for `HTTPRoute`."
+         "description": "Retry configuration. Only for `HTTPRoute`.",
+         "additionalProperties": {
+          "description": "A setting passed on as is."
+         }
         },
         "sessionPersistence": {
          "type": "object",
-         "additionalProperties": false,
-         "description": "Session persistence, needs the experimental Gateway API channel. Only for `HTTPRoute` and `GRPCRoute`."
+         "description": "Session persistence, needs the experimental Gateway API channel. Only for `HTTPRoute` and `GRPCRoute`.",
+         "additionalProperties": {
+          "description": "A setting passed on as is."
+         }
         }
        },
        "additionalProperties": false,
@@ -12067,7 +12850,10 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Content of the key"
+      },
       "description": "Create Secret objects"
      },
      "enabled": {
@@ -12122,7 +12908,10 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Additional annotations for secret",
       "default": {}
      },
@@ -12510,7 +13299,10 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Additional annotations for service",
       "default": {}
      },
@@ -12748,7 +13540,10 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Additional annotations for service account",
       "default": {}
      },
@@ -12787,7 +13582,9 @@
   "special.labels": {
    "type": "object",
    "properties": {},
-   "additionalProperties": false,
+   "additionalProperties": {
+    "type": "string"
+   },
    "description": "Common labels object."
   },
   "special.labelsList": {
@@ -12880,7 +13677,10 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Additional annotations for storage class",
       "default": {}
      },
@@ -12898,7 +13698,10 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the parameter"
+      },
       "description": "Define the parameters for this storage class",
       "default": {}
      },
@@ -12944,7 +13747,10 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the parameter"
+      },
       "description": "Define a volume snapshot class",
       "default": {}
      },
@@ -12983,7 +13789,10 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Define the annotations of the volume snapshot class",
       "default": {}
      },
@@ -13087,7 +13896,10 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Define the annotations of the volume snapshot class",
       "default": {}
      },
@@ -13394,18 +14206,90 @@
          "clientConfig": {
           "type": "object",
           "properties": {},
-          "additionalProperties": false,
-          "description": "Create webhook objects"
+          "description": "Create webhook objects",
+          "additionalProperties": {
+           "description": "A setting passed on as is."
+          }
          },
          "namespaceSelector": {
           "type": "object",
-          "properties": {},
+          "properties": {
+           "matchLabels": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": {
+             "type": "string",
+             "description": "Value of the label"
+            },
+            "description": "Match by labels."
+           },
+           "matchExpressions": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "key": {
+               "type": "string",
+               "description": "Label key the selector applies to."
+              },
+              "operator": {
+               "type": "string",
+               "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
+              },
+              "values": {
+               "type": "array",
+               "items": {
+                "type": "string"
+               },
+               "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
+              }
+             },
+             "additionalProperties": false
+            },
+            "description": "Match by label expressions."
+           }
+          },
           "additionalProperties": false,
           "description": "Create webhook objects"
          },
          "objectSelector": {
           "type": "object",
-          "properties": {},
+          "properties": {
+           "matchLabels": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": {
+             "type": "string",
+             "description": "Value of the label"
+            },
+            "description": "Match by labels."
+           },
+           "matchExpressions": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "key": {
+               "type": "string",
+               "description": "Label key the selector applies to."
+              },
+              "operator": {
+               "type": "string",
+               "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
+              },
+              "values": {
+               "type": "array",
+               "items": {
+                "type": "string"
+               },
+               "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
+              }
+             },
+             "additionalProperties": false
+            },
+            "description": "Match by label expressions."
+           }
+          },
           "additionalProperties": false,
           "description": "Create webhook objects"
          }
@@ -13551,18 +14435,90 @@
          "clientConfig": {
           "type": "object",
           "properties": {},
-          "additionalProperties": false,
-          "description": "Create webhook objects"
+          "description": "Create webhook objects",
+          "additionalProperties": {
+           "description": "A setting passed on as is."
+          }
          },
          "namespaceSelector": {
           "type": "object",
-          "properties": {},
+          "properties": {
+           "matchLabels": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": {
+             "type": "string",
+             "description": "Value of the label"
+            },
+            "description": "Match by labels."
+           },
+           "matchExpressions": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "key": {
+               "type": "string",
+               "description": "Label key the selector applies to."
+              },
+              "operator": {
+               "type": "string",
+               "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
+              },
+              "values": {
+               "type": "array",
+               "items": {
+                "type": "string"
+               },
+               "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
+              }
+             },
+             "additionalProperties": false
+            },
+            "description": "Match by label expressions."
+           }
+          },
           "additionalProperties": false,
           "description": "Create webhook objects"
          },
          "objectSelector": {
           "type": "object",
-          "properties": {},
+          "properties": {
+           "matchLabels": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": {
+             "type": "string",
+             "description": "Value of the label"
+            },
+            "description": "Match by labels."
+           },
+           "matchExpressions": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "key": {
+               "type": "string",
+               "description": "Label key the selector applies to."
+              },
+              "operator": {
+               "type": "string",
+               "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
+              },
+              "values": {
+               "type": "array",
+               "items": {
+                "type": "string"
+               },
+               "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
+              }
+             },
+             "additionalProperties": false
+            },
+            "description": "Match by label expressions."
+           }
+          },
           "additionalProperties": false,
           "description": "Create webhook objects"
          }
@@ -13801,7 +14757,10 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Additional annotations for webhook",
       "default": {}
      },
@@ -14061,15 +15020,111 @@
    "properties": {
     "preStop": {
      "type": "object",
-     "properties": {},
+     "properties": {
+      "type": {
+       "type": "string",
+       "enum": [
+        "exec",
+        "http",
+        "https"
+       ],
+       "description": "Type of the hook. `exec` runs `command`, `http` and `https` send a GET request."
+      },
+      "command": {
+       "type": [
+        "array",
+        "string"
+       ],
+       "items": {
+        "type": "string"
+       },
+       "description": "Command to run, for `type: exec`. Supports Helm `tpl`."
+      },
+      "port": {
+       "type": [
+        "integer",
+        "string"
+       ],
+       "description": "Port of the request, for `type: http` and `https`. Supports Helm `tpl`."
+      },
+      "path": {
+       "type": "string",
+       "description": "Path of the request, for `type: http` and `https`. Supports Helm `tpl`."
+      },
+      "host": {
+       "type": "string",
+       "description": "Host of the request, for `type: http` and `https`. Supports Helm `tpl`."
+      },
+      "httpHeaders": {
+       "type": "object",
+       "properties": {},
+       "additionalProperties": {
+        "type": [
+         "string",
+         "number",
+         "boolean"
+        ],
+        "description": "Value of the header"
+       },
+       "description": "Headers of the request, keyed by name, for `type: http` and `https`. Supports Helm `tpl`."
+      }
+     },
      "additionalProperties": false,
-     "description": "Define preStop lifecycle"
+     "description": "Define the preStop hook"
     },
     "postStart": {
      "type": "object",
-     "properties": {},
+     "properties": {
+      "type": {
+       "type": "string",
+       "enum": [
+        "exec",
+        "http",
+        "https"
+       ],
+       "description": "Type of the hook. `exec` runs `command`, `http` and `https` send a GET request."
+      },
+      "command": {
+       "type": [
+        "array",
+        "string"
+       ],
+       "items": {
+        "type": "string"
+       },
+       "description": "Command to run, for `type: exec`. Supports Helm `tpl`."
+      },
+      "port": {
+       "type": [
+        "integer",
+        "string"
+       ],
+       "description": "Port of the request, for `type: http` and `https`. Supports Helm `tpl`."
+      },
+      "path": {
+       "type": "string",
+       "description": "Path of the request, for `type: http` and `https`. Supports Helm `tpl`."
+      },
+      "host": {
+       "type": "string",
+       "description": "Host of the request, for `type: http` and `https`. Supports Helm `tpl`."
+      },
+      "httpHeaders": {
+       "type": "object",
+       "properties": {},
+       "additionalProperties": {
+        "type": [
+         "string",
+         "number",
+         "boolean"
+        ],
+        "description": "Value of the header"
+       },
+       "description": "Headers of the request, keyed by name, for `type: http` and `https`. Supports Helm `tpl`."
+      }
+     },
      "additionalProperties": false,
-     "description": "Define preStop lifecycle"
+     "description": "Define the postStart hook"
     }
    },
    "additionalProperties": false
@@ -14746,7 +15801,10 @@
        "annotations": {
         "type": "object",
         "properties": {},
-        "additionalProperties": false,
+        "additionalProperties": {
+         "type": "string",
+         "description": "Value of the annotation"
+        },
         "description": "Define annotations for podSpec"
        },
        "automountServiceAccountToken": {
@@ -14796,8 +15854,10 @@
        "affinity": {
         "type": "object",
         "properties": {},
-        "additionalProperties": false,
-        "description": "Overrides `podOptions.affinity` for this workload."
+        "description": "Overrides `podOptions.affinity` for this workload.",
+        "additionalProperties": {
+         "description": "A setting passed on as is."
+        }
        },
        "serviceAccountName": {
         "type": "string",
@@ -14810,7 +15870,10 @@
        "nodeSelector": {
         "type": "object",
         "properties": {},
-        "additionalProperties": false,
+        "additionalProperties": {
+         "type": "string",
+         "description": "Value of the node label"
+        },
         "description": "Pod's nodeSelector"
        },
        "topologySpreadConstraints": {
@@ -15148,7 +16211,10 @@
        "string"
       ],
       "properties": {},
-      "additionalProperties": false,
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
       "description": "Define annotations for workload",
       "default": {}
      },

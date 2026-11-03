@@ -52,9 +52,23 @@ configmap:
 
 ---
 
+### `configmap.$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                             |
+| ---------- | --------------------------------- |
+| Key        | `configmap.$name.annotationsList` |
+| Type       | `list of map`                     |
+| Required   | ❌                                |
+| Helm `tpl` | ❌                                |
+| Default    | unset                             |
+
+---
+
 ### `configmap.$name.data`
 
-Create Configmap objects
+Data entries of the ConfigMap, keyed by file or variable name
 
 | Field      | Value                  |
 | ---------- | ---------------------- |
@@ -88,6 +102,28 @@ configmap:
 
 ---
 
+### `configmap.$name.expandObjectName`
+
+Prefix the object name with the chart fullname
+
+| Field      | Value                              |
+| ---------- | ---------------------------------- |
+| Key        | `configmap.$name.expandObjectName` |
+| Type       | `boolean, string`                  |
+| Required   | ❌                                 |
+| Helm `tpl` | ❌                                 |
+| Default    | `true`                             |
+
+Example
+
+```yaml
+configmap:
+  $name:
+    expandObjectName: true
+```
+
+---
+
 ### `configmap.$name.labels`
 
 Additional labels for configmap
@@ -108,6 +144,20 @@ configmap:
     labels:
       {}
 ```
+
+---
+
+### `configmap.$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+| Field      | Value                        |
+| ---------- | ---------------------------- |
+| Key        | `configmap.$name.labelsList` |
+| Type       | `list of map`                |
+| Required   | ❌                           |
+| Helm `tpl` | ❌                           |
+| Default    | unset                        |
 
 ---
 

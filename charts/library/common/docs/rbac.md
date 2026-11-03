@@ -66,6 +66,20 @@ rbac:
 
 ---
 
+### `rbac.$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                        |
+| ---------- | ---------------------------- |
+| Key        | `rbac.$name.annotationsList` |
+| Type       | `list of map`                |
+| Required   | ❌                           |
+| Helm `tpl` | ❌                           |
+| Default    | unset                        |
+
+---
+
 ### `rbac.$name.clusterWide`
 
 Sets the rbac as cluster wide (ClusterRole, ClusterRoleBinding)
@@ -130,6 +144,20 @@ rbac:
     labels:
       {}
 ```
+
+---
+
+### `rbac.$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `rbac.$name.labelsList` |
+| Type       | `list of map`           |
+| Required   | ❌                      |
+| Helm `tpl` | ❌                      |
+| Default    | unset                   |
 
 ---
 

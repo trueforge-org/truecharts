@@ -28,7 +28,10 @@
       "annotations": {
         "type": "object",
         "properties": {},
-        "additionalProperties": false,
+        "additionalProperties": {
+          "type": "string",
+          "description": "Value of the annotation"
+        },
         "description": "Configuration for `gateway.main.annotations`."
       },
       "labels": {
@@ -77,8 +80,47 @@
       },
       "infrastructure": {
         "type": "object",
-        "additionalProperties": false,
-        "description": "Infrastructure settings of the gateway. Passed as is."
+        "description": "Infrastructure settings of the gateway. Passed as is.",
+        "properties": {
+          "annotations": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": {
+              "type": "string",
+              "description": "Value of the annotation"
+            },
+            "description": "Annotations for the resources created for the gateway."
+          },
+          "labels": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": {
+              "type": "string",
+              "description": "Value of the label"
+            },
+            "description": "Labels for the resources created for the gateway."
+          },
+          "parametersRef": {
+            "type": "object",
+            "properties": {
+              "group": {
+                "type": "string",
+                "description": "API group of the parameters resource."
+              },
+              "kind": {
+                "type": "string",
+                "description": "Kind of the parameters resource."
+              },
+              "name": {
+                "type": "string",
+                "description": "Name of the parameters resource."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Implementation specific parameters of the gateway."
+          }
+        },
+        "additionalProperties": false
       },
       "allowedListeners": {
         "type": "object",
@@ -103,14 +145,33 @@
                   "matchLabels": {
                     "type": "object",
                     "properties": {},
-                    "additionalProperties": false,
+                    "additionalProperties": {
+                      "type": "string",
+                      "description": "Value of the label"
+                    },
                     "description": "Match namespaces by labels."
                   },
                   "matchExpressions": {
                     "type": "array",
                     "items": {
                       "type": "object",
-                      "properties": {},
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "description": "Label key the selector applies to."
+                        },
+                        "operator": {
+                          "type": "string",
+                          "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
+                        },
+                        "values": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
+                        }
+                      },
                       "additionalProperties": false
                     },
                     "description": "Match namespaces by label expressions."
@@ -129,8 +190,24 @@
       },
       "tls": {
         "type": "object",
-        "additionalProperties": false,
-        "description": "Gateway wide TLS settings. Passed as is."
+        "description": "Gateway wide TLS settings. Passed as is.",
+        "properties": {
+          "frontend": {
+            "type": "object",
+            "description": "TLS settings for connections from clients, passed on as is.",
+            "additionalProperties": {
+              "description": "A setting passed on as is."
+            }
+          },
+          "backend": {
+            "type": "object",
+            "description": "TLS settings for connections to backends, passed on as is.",
+            "additionalProperties": {
+              "description": "A setting passed on as is."
+            }
+          }
+        },
+        "additionalProperties": false
       },
       "listeners": {
         "type": "array",
@@ -209,8 +286,10 @@
                 },
                 "options": {
                   "type": "object",
-                  "additionalProperties": false,
-                  "description": "Implementation specific TLS options. Passed as is."
+                  "description": "Implementation specific TLS options. Passed as is.",
+                  "additionalProperties": {
+                    "description": "A setting passed on as is."
+                  }
                 }
               },
               "additionalProperties": false,
@@ -234,7 +313,42 @@
                     },
                     "selector": {
                       "type": "object",
-                      "properties": {},
+                      "properties": {
+                        "matchLabels": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": {
+                            "type": "string",
+                            "description": "Value of the label"
+                          },
+                          "description": "Match by labels."
+                        },
+                        "matchExpressions": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "key": {
+                                "type": "string",
+                                "description": "Label key the selector applies to."
+                              },
+                              "operator": {
+                                "type": "string",
+                                "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
+                              },
+                              "values": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
+                              }
+                            },
+                            "additionalProperties": false
+                          },
+                          "description": "Match by label expressions."
+                        }
+                      },
                       "additionalProperties": false,
                       "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes.namespaces.selector`."
                     }

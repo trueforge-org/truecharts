@@ -65,7 +65,10 @@
           "string"
         ],
         "properties": {},
-        "additionalProperties": false,
+        "additionalProperties": {
+          "type": "string",
+          "description": "Value of the annotation"
+        },
         "description": "Additional annotations for ListenerSet",
         "default": {}
       },
@@ -184,8 +187,10 @@
                 },
                 "options": {
                   "type": "object",
-                  "additionalProperties": false,
-                  "description": "Implementation specific TLS options. Passed as is."
+                  "description": "Implementation specific TLS options. Passed as is.",
+                  "additionalProperties": {
+                    "description": "A setting passed on as is."
+                  }
                 }
               },
               "additionalProperties": false,
@@ -209,7 +214,42 @@
                     },
                     "selector": {
                       "type": "object",
-                      "properties": {},
+                      "properties": {
+                        "matchLabels": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": {
+                            "type": "string",
+                            "description": "Value of the label"
+                          },
+                          "description": "Match by labels."
+                        },
+                        "matchExpressions": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "key": {
+                                "type": "string",
+                                "description": "Label key the selector applies to."
+                              },
+                              "operator": {
+                                "type": "string",
+                                "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
+                              },
+                              "values": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
+                              }
+                            },
+                            "additionalProperties": false
+                          },
+                          "description": "Match by label expressions."
+                        }
+                      },
                       "additionalProperties": false,
                       "description": "Configuration for `listenerSet.main.listeners.$item.allowedRoutes.namespaces.selector`."
                     }

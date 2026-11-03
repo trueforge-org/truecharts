@@ -17,15 +17,85 @@ title: Certificates
 
 ## `dependencies.postgresql.operator.cluster.certificates`
 
-TODO ---
+The CA and TLS certificates of the CNPG cluster. The chart does not render this key yet, so it currently has no effect.
 
 | Field      | Value                                                   |
 | ---------- | ------------------------------------------------------- |
 | Key        | `dependencies.postgresql.operator.cluster.certificates` |
-| Type       | `null, string, number, integer, boolean, map, list`     |
+| Type       | `map, null`                                             |
 | Required   | ❌                                                      |
 | Helm `tpl` | ❌                                                      |
 | Default    | unset                                                   |
+
+---
+
+### `dependencies.postgresql.operator.cluster.certificates.clientCASecret`
+
+Name of the secret that contains the CA certificate for the client certificates.
+
+| Field      | Value                                                                  |
+| ---------- | ---------------------------------------------------------------------- |
+| Key        | `dependencies.postgresql.operator.cluster.certificates.clientCASecret` |
+| Type       | `string`                                                               |
+| Required   | ❌                                                                     |
+| Helm `tpl` | ❌                                                                     |
+| Default    | unset                                                                  |
+
+---
+
+### `dependencies.postgresql.operator.cluster.certificates.replicationTLSSecret`
+
+Name of the secret that contains the TLS certificate for streaming replication.
+
+| Field      | Value                                                                        |
+| ---------- | ---------------------------------------------------------------------------- |
+| Key        | `dependencies.postgresql.operator.cluster.certificates.replicationTLSSecret` |
+| Type       | `string`                                                                     |
+| Required   | ❌                                                                           |
+| Helm `tpl` | ❌                                                                           |
+| Default    | unset                                                                        |
+
+---
+
+### `dependencies.postgresql.operator.cluster.certificates.serverAltDNSNames`
+
+Additional DNS names to add to the server certificate.
+
+| Field      | Value                                                                     |
+| ---------- | ------------------------------------------------------------------------- |
+| Key        | `dependencies.postgresql.operator.cluster.certificates.serverAltDNSNames` |
+| Type       | `list of string`                                                          |
+| Required   | ❌                                                                        |
+| Helm `tpl` | ❌                                                                        |
+| Default    | unset                                                                     |
+
+---
+
+### `dependencies.postgresql.operator.cluster.certificates.serverCASecret`
+
+Name of the secret that contains the CA certificate for the server certificates.
+
+| Field      | Value                                                                  |
+| ---------- | ---------------------------------------------------------------------- |
+| Key        | `dependencies.postgresql.operator.cluster.certificates.serverCASecret` |
+| Type       | `string`                                                               |
+| Required   | ❌                                                                     |
+| Helm `tpl` | ❌                                                                     |
+| Default    | unset                                                                  |
+
+---
+
+### `dependencies.postgresql.operator.cluster.certificates.serverTLSSecret`
+
+Name of the secret that contains the TLS certificate for the server.
+
+| Field      | Value                                                                   |
+| ---------- | ----------------------------------------------------------------------- |
+| Key        | `dependencies.postgresql.operator.cluster.certificates.serverTLSSecret` |
+| Type       | `string`                                                                |
+| Required   | ❌                                                                      |
+| Helm `tpl` | ❌                                                                      |
+| Default    | unset                                                                   |
 
 ---
 

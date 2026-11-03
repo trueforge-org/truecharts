@@ -105,7 +105,7 @@ List of kubernetes secrets (in the same namespace) containing certificate author
 | Field      | Value                                  |
 | ---------- | -------------------------------------- |
 | Key        | `service.integrations.traefik.rootCAs` |
-| Type       | `list of unknown`                      |
+| Type       | `list of map`                          |
 | Required   | ❌                                     |
 | Helm `tpl` | ❌                                     |
 | Default    | `[]`                                   |

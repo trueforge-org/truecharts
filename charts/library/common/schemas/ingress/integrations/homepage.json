@@ -58,7 +58,10 @@
       "type": "object",
       "properties": {
         "customkv": {
-          "type": ["array", "null"],
+          "type": [
+            "array",
+            "null"
+          ],
           "items": {
             "type": "object",
             "properties": {
@@ -103,11 +106,23 @@
           "description": "Define configuration for the widget"
         },
         "custom": {
-          "type": ["object", "null"],
+          "type": [
+            "object",
+            "null"
+          ],
           "properties": {},
-          "additionalProperties": false,
           "description": "Define configuration for the widget",
-          "default": null
+          "default": null,
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ],
+            "description": "Value of the widget setting. Supports Helm `tpl`, empty values are skipped.",
+            "x-helm-tpl": true
+          }
         }
       },
       "additionalProperties": false,

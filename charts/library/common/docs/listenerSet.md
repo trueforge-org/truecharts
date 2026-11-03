@@ -52,6 +52,20 @@ listenerSet:
 
 ---
 
+### `listenerSet.$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                               |
+| ---------- | ----------------------------------- |
+| Key        | `listenerSet.$name.annotationsList` |
+| Type       | `list of map`                       |
+| Required   | ❌                                  |
+| Helm `tpl` | ❌                                  |
+| Default    | unset                               |
+
+---
+
 ### `listenerSet.$name.enabled`
 
 Enables or Disables the ListenerSet
@@ -116,6 +130,20 @@ listenerSet:
     labels:
       {}
 ```
+
+---
+
+### `listenerSet.$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+| Field      | Value                          |
+| ---------- | ------------------------------ |
+| Key        | `listenerSet.$name.labelsList` |
+| Type       | `list of map`                  |
+| Required   | ❌                             |
+| Helm `tpl` | ❌                             |
+| Default    | unset                          |
 
 ---
 

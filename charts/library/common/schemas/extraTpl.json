@@ -3,9 +3,14 @@
   "type": "array",
   "description": "Define kubernetes resources, 1 per list item, tpl will be resolved",
   "items": {
-    "type": ["object", "string"],
+    "type": [
+      "object",
+      "string"
+    ],
     "properties": {},
-    "additionalProperties": false,
-    "description": "Configuration for `$item`."
+    "description": "Configuration for `$item`.",
+    "additionalProperties": {
+      "description": "A setting passed on as is."
+    }
   }
 }

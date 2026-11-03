@@ -52,6 +52,20 @@ certificate:
 
 ---
 
+### `certificate.$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                               |
+| ---------- | ----------------------------------- |
+| Key        | `certificate.$name.annotationsList` |
+| Type       | `list of map`                       |
+| Required   | ❌                                  |
+| Helm `tpl` | ❌                                  |
+| Default    | unset                               |
+
+---
+
 ### `certificate.$name.certificateIssuer`
 
 Define the certificate issuer for this certificate
@@ -162,6 +176,20 @@ certificate:
     labels:
       {}
 ```
+
+---
+
+### `certificate.$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+| Field      | Value                          |
+| ---------- | ------------------------------ |
+| Key        | `certificate.$name.labelsList` |
+| Type       | `list of map`                  |
+| Required   | ❌                             |
+| Helm `tpl` | ❌                             |
+| Default    | unset                          |
 
 ---
 

@@ -52,6 +52,20 @@ imagePullSecret:
 
 ---
 
+### `imagePullSecret.$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                                   |
+| ---------- | --------------------------------------- |
+| Key        | `imagePullSecret.$name.annotationsList` |
+| Type       | `list of map`                           |
+| Required   | ❌                                      |
+| Helm `tpl` | ❌                                      |
+| Default    | unset                                   |
+
+---
+
 ### `imagePullSecret.$name.data`
 
 Define the data of the image pull secret
@@ -131,6 +145,20 @@ imagePullSecret:
     labels:
       {}
 ```
+
+---
+
+### `imagePullSecret.$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+| Field      | Value                              |
+| ---------- | ---------------------------------- |
+| Key        | `imagePullSecret.$name.labelsList` |
+| Type       | `list of map`                      |
+| Required   | ❌                                 |
+| Helm `tpl` | ❌                                 |
+| Default    | unset                              |
 
 ---
 

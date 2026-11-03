@@ -45,7 +45,7 @@ No description provided.
 
 ### `addons.gluetun.enabled`
 
-No description provided.
+Enable the Gluetun VPN addon.
 
 | Field      | Value                    |
 | ---------- | ------------------------ |
@@ -53,27 +53,21 @@ No description provided.
 | Type       | `boolean, string`        |
 | Required   | ❌                       |
 | Helm `tpl` | ❌                       |
-| Default    | unset                    |
+| Default    | `false`                  |
 
----
+Example
 
-### `addons.gluetun.ingress`
-
-Ingress configuration for the addon.
-
-| Field      | Value                    |
-| ---------- | ------------------------ |
-| Key        | `addons.gluetun.ingress` |
-| Type       | `map`                    |
-| Required   | ❌                       |
-| Helm `tpl` | ❌                       |
-| Default    | unset                    |
+```yaml
+addons:
+  gluetun:
+    enabled: false
+```
 
 ---
 
 ### `addons.gluetun.secret`
 
-No description provided.
+Secrets mounted into the Gluetun container, for example the WireGuard configuration. Each key is a name for the secret.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
@@ -85,39 +79,9 @@ No description provided.
 
 ---
 
-### `addons.gluetun.service`
-
-Service configuration for the addon.
-
-| Field      | Value                    |
-| ---------- | ------------------------ |
-| Key        | `addons.gluetun.service` |
-| Type       | `map`                    |
-| Required   | ❌                       |
-| Helm `tpl` | ❌                       |
-| Default    | unset                    |
-
-See [Service](../../service/) for full configuration.
-
----
-
-### `addons.gluetun.settings`
-
-Addon-specific settings.
-
-| Field      | Value                     |
-| ---------- | ------------------------- |
-| Key        | `addons.gluetun.settings` |
-| Type       | `map`                     |
-| Required   | ❌                        |
-| Helm `tpl` | ❌                        |
-| Default    | unset                     |
-
----
-
 ### `addons.gluetun.targetSelector`
 
-No description provided.
+Workloads to which the Gluetun container is attached.
 
 | Field      | Value                           |
 | ---------- | ------------------------------- |
@@ -125,7 +89,16 @@ No description provided.
 | Type       | `list of string`                |
 | Required   | ❌                              |
 | Helm `tpl` | ❌                              |
-| Default    | unset                           |
+| Default    | `["main"]`                      |
+
+Example
+
+```yaml
+addons:
+  gluetun:
+    targetSelector:
+      - main
+```
 
 ---
 

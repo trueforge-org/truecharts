@@ -76,6 +76,21 @@ workload:
 
 ---
 
+### `workload.podSpec.securityContext.fsgroup`
+
+Legacy misspelling of `fsGroup`, still set by `stable/misskey` as `securityContext.pod.fsgroup`. The pod security context template reads only `fsGroup` and ignores this key. Set `fsGroup` instead.
+
+| Field      | Value                                      |
+| ---------- | ------------------------------------------ |
+| Key        | `workload.podSpec.securityContext.fsgroup` |
+| Type       | `integer`                                  |
+| Required   | ❌                                         |
+| Helm `tpl` | ❌                                         |
+| Default    | unset                                      |
+| Minimum    | `0`                                        |
+
+---
+
 ### `workload.podSpec.securityContext.supplementalGroups`
 
 Additional group IDs applied to containers in the pod.

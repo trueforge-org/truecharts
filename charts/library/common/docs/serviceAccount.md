@@ -52,6 +52,20 @@ serviceAccount:
 
 ---
 
+### `serviceAccount.$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                                  |
+| ---------- | -------------------------------------- |
+| Key        | `serviceAccount.$name.annotationsList` |
+| Type       | `list of map`                          |
+| Required   | ❌                                     |
+| Helm `tpl` | ❌                                     |
+| Default    | unset                                  |
+
+---
+
 ### `serviceAccount.$name.enabled`
 
 Enables or Disables the serviceAccount
@@ -94,6 +108,20 @@ serviceAccount:
     labels:
       {}
 ```
+
+---
+
+### `serviceAccount.$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+| Field      | Value                             |
+| ---------- | --------------------------------- |
+| Key        | `serviceAccount.$name.labelsList` |
+| Type       | `list of map`                     |
+| Required   | ❌                                |
+| Helm `tpl` | ❌                                |
+| Default    | unset                             |
 
 ---
 

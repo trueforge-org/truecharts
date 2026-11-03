@@ -43,6 +43,28 @@ Define the addressType for External IP
 
 ---
 
+### `service.$name.allocateLoadBalancerNodePorts`
+
+Define whether to allocate NodePorts for the service, only applies to `type: LoadBalancer`
+
+| Field      | Value                                         |
+| ---------- | --------------------------------------------- |
+| Key        | `service.$name.allocateLoadBalancerNodePorts` |
+| Type       | `boolean`                                     |
+| Required   | ❌                                            |
+| Helm `tpl` | ❌                                            |
+| Default    | `false`                                       |
+
+Example
+
+```yaml
+service:
+  $name:
+    allocateLoadBalancerNodePorts: false
+```
+
+---
+
 ### `service.$name.annotations`
 
 Additional annotations for service
@@ -63,6 +85,20 @@ service:
     annotations:
       {}
 ```
+
+---
+
+### `service.$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                           |
+| ---------- | ------------------------------- |
+| Key        | `service.$name.annotationsList` |
+| Type       | `list of map`                   |
+| Required   | ❌                              |
+| Helm `tpl` | ❌                              |
+| Default    | unset                           |
 
 ---
 
@@ -312,6 +348,20 @@ service:
 
 ---
 
+### `service.$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+| Field      | Value                      |
+| ---------- | -------------------------- |
+| Key        | `service.$name.labelsList` |
+| Type       | `list of map`              |
+| Required   | ❌                         |
+| Helm `tpl` | ❌                         |
+| Default    | unset                      |
+
+---
+
 ### `service.$name.loadBalancerIP`
 
 Define the load balancer IP, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIPs`
@@ -431,6 +481,29 @@ Example
 service:
   $name:
     publishNotReadyAddresses: false
+```
+
+---
+
+### `service.$name.selectorLabels`
+
+Define the labels used as the selector of the service, replaces the default selector labels
+
+| Field      | Value                          |
+| ---------- | ------------------------------ |
+| Key        | `service.$name.selectorLabels` |
+| Type       | `map`                          |
+| Required   | ❌                             |
+| Helm `tpl` | ❌                             |
+| Default    | `{}`                           |
+
+Example
+
+```yaml
+service:
+  $name:
+    selectorLabels:
+      {}
 ```
 
 ---

@@ -29,6 +29,20 @@ See [DNS Config](/truecharts-common/workload#dnsconfig)
 
 ---
 
+### `podOptions.dnsConfig.nameservers`
+
+Configuration for `podOptions.dnsConfig.nameservers`.
+
+| Field      | Value                              |
+| ---------- | ---------------------------------- |
+| Key        | `podOptions.dnsConfig.nameservers` |
+| Type       | `list of string`                   |
+| Required   | ❌                                 |
+| Helm `tpl` | ❌                                 |
+| Default    | unset                              |
+
+---
+
 ### `podOptions.dnsConfig.options`
 
 Configuration for `podOptions.dnsConfig.options`.
@@ -51,6 +65,20 @@ podOptions:
         name: ndots
         value: 1
 ```
+
+---
+
+### `podOptions.dnsConfig.searches`
+
+Configuration for `podOptions.dnsConfig.searches`.
+
+| Field      | Value                           |
+| ---------- | ------------------------------- |
+| Key        | `podOptions.dnsConfig.searches` |
+| Type       | `list of string`                |
+| Required   | ❌                              |
+| Helm `tpl` | ❌                              |
+| Default    | unset                           |
 
 ---
 

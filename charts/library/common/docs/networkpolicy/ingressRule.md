@@ -43,6 +43,20 @@ Peers allowed to send traffic.
 
 ---
 
+### `networkpolicy.ingressRule.fromEntities`
+
+Cilium only: entities (for example `world`, `cluster`, `host` or `all`) allowed to send traffic. Ignored for Kubernetes NetworkPolicies.
+
+| Field      | Value                                    |
+| ---------- | ---------------------------------------- |
+| Key        | `networkpolicy.ingressRule.fromEntities` |
+| Type       | `list of string`                         |
+| Required   | ❌                                       |
+| Helm `tpl` | ❌                                       |
+| Default    | unset                                    |
+
+---
+
 ### `networkpolicy.ingressRule.ports`
 
 Ports allowed by this rule.

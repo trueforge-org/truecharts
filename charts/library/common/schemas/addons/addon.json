@@ -45,8 +45,10 @@
     },
     "settings": {
       "type": "object",
-      "additionalProperties": false,
-      "description": "Addon-specific settings."
+      "description": "Addon-specific settings.",
+      "additionalProperties": {
+        "description": "A setting passed on as is."
+      }
     }
   },
   "additionalProperties": false,

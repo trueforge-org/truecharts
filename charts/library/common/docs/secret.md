@@ -52,6 +52,20 @@ secret:
 
 ---
 
+### `secret.$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                          |
+| ---------- | ------------------------------ |
+| Key        | `secret.$name.annotationsList` |
+| Type       | `list of map`                  |
+| Required   | ❌                             |
+| Helm `tpl` | ❌                             |
+| Default    | unset                          |
+
+---
+
 ### `secret.$name.data`
 
 Create Secret objects
@@ -108,6 +122,20 @@ secret:
     labels:
       {}
 ```
+
+---
+
+### `secret.$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+| Field      | Value                     |
+| ---------- | ------------------------- |
+| Key        | `secret.$name.labelsList` |
+| Type       | `list of map`             |
+| Required   | ❌                        |
+| Helm `tpl` | ❌                        |
+| Default    | unset                     |
 
 ---
 

@@ -114,7 +114,7 @@ def load_yaml_file(file_path: Path) -> Dict[str, Any]:
 def merge_structures(base: Any, new: Any, path: str = "") -> Any:
     """
     Recursively merge two structures, preserving all keys.
-    
+
     For dicts: merge keys, use placeholder 'objectname' for variable keys.
     For lists: keep first non-empty list found.
     For primitives: keep base value if it exists, else use new.
@@ -122,11 +122,11 @@ def merge_structures(base: Any, new: Any, path: str = "") -> Any:
     # If base is None or empty, return new
     if base is None or (isinstance(base, dict) and not base):
         return new
-    
+
     # If new is None or empty, return base
     if new is None or (isinstance(new, dict) and not new):
         return base
-    
+
     # Both are dicts - merge them
     if isinstance(base, dict) and isinstance(new, dict):
         result = dict(base)
@@ -136,13 +136,13 @@ def merge_structures(base: Any, new: Any, path: str = "") -> Any:
             else:
                 result[key] = value
         return result
-    
+
     # Both are lists - prefer base if non-empty, else new
     if isinstance(base, list) and isinstance(new, list):
         if base:
             return base
         return new
-    
+
     # Different types or primitives - keep base
     return base
 
@@ -157,6 +157,7 @@ PARENT_KEYS_WITH_VARIABLE_CHILDREN = {
     'secret',        # secret.mysecret, secret.credentials, etc.
     'ingress',       # ingress.main, ingress.api, etc.
     'route',         # route.main, route.api, etc.
+    'networkpolicy', # networkpolicy.main, networkpolicy.allow-dns, etc.
     'containers',    # containers.main, containers.sidecar, etc.
     'initContainers',# initContainers.init, initContainers.setup, etc.
     'ports',         # ports.main, ports.http, ports.metrics, etc.
@@ -176,7 +177,7 @@ def normalize_value_to_placeholder(value: Any) -> Any:
     - Booleans stay as-is
     - Lists: keep first element as example (shows structure)
     - Dicts: retain structure with normalized values
-    
+
     Note: List normalization only preserves the first element pattern.
     """
     if value is None:
@@ -214,7 +215,7 @@ def normalize_variable_keys(data: Any, parent_key: str = "", in_operator: bool =
     """
     Replace variable dictionary keys with 'objectname' placeholder for known
     parent keys that contain user-defined object names.
-    
+
     For example:
         workload.main -> workload.objectname
         service.main -> service.objectname
@@ -226,40 +227,41 @@ def normalize_variable_keys(data: Any, parent_key: str = "", in_operator: bool =
     """
     if not isinstance(data, dict):
         return data
-    
+
     if HAS_RUAMEL:
         from ruamel.yaml.comments import CommentedMap
         is_commented = isinstance(data, CommentedMap)
         result = CommentedMap() if is_commented else {}
     else:
         result = {}
-    
+
     # Check if current parent_key is one that contains variable-named children
     if parent_key in PARENT_KEYS_WITH_VARIABLE_CHILDREN and not in_operator:
         # This dict contains variable-named objects
         # Merge all the child objects into a single 'objectname' entry, so keys that only some children set are kept
         if data:
             template = None
-            for child_key, child_value in data.items():
-                normalized_child = normalize_variable_keys(child_value, child_key, in_operator)
+            for child_value in data.values():
+                # The child keys are object names, so a name like `hosts` must not count as a parent key
+                normalized_child = normalize_variable_keys(child_value, "", in_operator)
                 template = merge_into_structure(template, normalized_child)
             result['objectname'] = template
             return result
         else:
             return result
-    
+
     # Not a parent with variable children, process each key normally
     for key, value in data.items():
         # Recursively process, passing the current key as parent_key for next level
         result[key] = normalize_variable_keys(value, key, in_operator or key == "operator")
-    
+
     return result
 
 
 def collect_all_values_files(repo_root: Path) -> List[Path]:
     """Collect all values.yaml files from charts and common-test."""
     values_files = []
-    
+
     # Collect from charts/stable/*
     stable_dir = repo_root / "charts" / "stable"
     if stable_dir.exists():
@@ -268,7 +270,7 @@ def collect_all_values_files(repo_root: Path) -> List[Path]:
                 values_file = chart_dir / "values.yaml"
                 if values_file.exists():
                     values_files.append(values_file)
-    
+
     # Collect from charts/incubator/*
     incubator_dir = repo_root / "charts" / "incubator"
     if incubator_dir.exists():
@@ -277,14 +279,14 @@ def collect_all_values_files(repo_root: Path) -> List[Path]:
                 values_file = chart_dir / "values.yaml"
                 if values_file.exists():
                     values_files.append(values_file)
-    
+
     # Collect from common-test ci-values
     common_test_ci_dir = repo_root / "charts" / "library" / "common-test" / "ci"
     if common_test_ci_dir.exists():
         for values_file in common_test_ci_dir.glob("*values.yaml"):
             if values_file.is_file():
                 values_files.append(values_file)
-    
+
     # Add common-test main values files
     common_test_dir = repo_root / "charts" / "library" / "common-test"
     if common_test_dir.exists():
@@ -292,12 +294,12 @@ def collect_all_values_files(repo_root: Path) -> List[Path]:
             values_file = common_test_dir / name
             if values_file.exists():
                 values_files.append(values_file)
-    
+
     # Add common values.yaml (this should be processed first/last depending on priority)
     common_values = repo_root / "charts" / "library" / "common" / "values.yaml"
     if common_values.exists():
         values_files.insert(0, common_values)  # Add at beginning for base structure
-    
+
     return values_files
 
 
@@ -372,17 +374,17 @@ def merge_preserving_comments(base: Any, new: Any) -> Any:
     """
     if not HAS_RUAMEL:
         return merge_structures(base, new)
-    
+
     from ruamel.yaml.comments import CommentedMap, CommentedSeq
-    
+
     # If base doesn't exist, return new (no comments to preserve)
     if base is None:
         return new
-    
+
     # If new doesn't exist, return base (preserve everything)
     if new is None:
         return base
-    
+
     # Both are dicts - merge keys while preserving comments
     if isinstance(base, (dict, CommentedMap)) and isinstance(new, dict):
         # Work with base to preserve its comments
@@ -394,12 +396,12 @@ def merge_preserving_comments(base: Any, new: Any) -> Any:
                 # Add new key
                 base[key] = new_value
         return base
-    
+
     # Both are lists - use base to preserve comments
     if isinstance(base, (list, CommentedSeq)) and isinstance(new, list):
         # If base has content, keep it; otherwise use new
         return base if base else new
-    
+
     # For primitives, prefer base to keep context, unless it's empty/None
     if base or base == 0 or base is False:
         return base
@@ -417,7 +419,7 @@ def generate_complete_structure(repo_root: Path) -> Dict[str, Any]:
     for i, values_file in enumerate(values_files, 1):
         if i % 100 == 0:
             print(f"Processing {i}/{len(values_files)}...", file=sys.stderr)
-        
+
         values_data = load_yaml_file(values_file)
         if is_chart_values_file(values_file, repo_root):
             values_data = {key: value for key, value in (values_data or {}).items() if key in library_root_keys}
@@ -428,13 +430,13 @@ def generate_complete_structure(repo_root: Path) -> Dict[str, Any]:
     for unittest_file in unittest_files:
         for set_values in load_unittest_set_values(unittest_file):
             complete_structure = merge_into_structure(complete_structure, set_values)
-    
+
     print("Merge complete. Normalizing structure...", file=sys.stderr)
-    
+
     # Apply normalization: replace variable keys with 'objectname' and values with placeholders
     complete_structure = normalize_variable_keys(complete_structure)
     complete_structure = normalize_value_to_placeholder(complete_structure)
-    
+
     print("Structure generated and normalized.", file=sys.stderr)
     return complete_structure
 
@@ -459,14 +461,14 @@ def write_complete_structure(output_path: Path, structure: Dict[str, Any]) -> No
 # =============================================================================
 
 """
-    
+
     if HAS_RUAMEL:
         yaml_writer = YAML()
         yaml_writer.preserve_quotes = True
         yaml_writer.default_flow_style = False
         yaml_writer.width = 120
         yaml_writer.indent(mapping=2, sequence=2, offset=0)
-        
+
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(header)
             yaml_writer.dump(structure, f)
@@ -474,9 +476,9 @@ def write_complete_structure(output_path: Path, structure: Dict[str, Any]) -> No
         import yaml
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(header)
-            yaml.dump(structure, f, default_flow_style=False, 
+            yaml.dump(structure, f, default_flow_style=False,
                       sort_keys=False, allow_unicode=True, width=120, indent=2)
-    
+
     print(f"Complete structure written to: {output_path}", file=sys.stderr)
 
 
@@ -497,9 +499,9 @@ def main() -> int:
         default=None,
         help="Output file path (default: charts/library/common/complete-values-structure.yaml)"
     )
-    
+
     args = parser.parse_args()
-    
+
     # Determine repo root
     if args.repo_root:
         repo_root = args.repo_root.resolve()
@@ -507,21 +509,21 @@ def main() -> int:
         # Script is in charts/library/common/
         script_dir = Path(__file__).resolve().parent
         repo_root = script_dir.parents[2]
-    
+
     # Determine output path
     if args.output:
         output_path = args.output.resolve()
     else:
         output_path = repo_root / "charts" / "library" / "common" / "complete-values-structure.yaml"
-    
+
     print(f"Repository root: {repo_root}", file=sys.stderr)
     print(f"Output file: {output_path}", file=sys.stderr)
-    
+
     if HAS_RUAMEL:
         print("Using ruamel.yaml - comments will be preserved", file=sys.stderr)
     else:
         print("Using PyYAML - comments will NOT be preserved", file=sys.stderr)
-    
+
     # Generate structure
     try:
         structure = generate_complete_structure(repo_root)

@@ -52,6 +52,20 @@ priorityClass:
 
 ---
 
+### `priorityClass.$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                                 |
+| ---------- | ------------------------------------- |
+| Key        | `priorityClass.$name.annotationsList` |
+| Type       | `list of map`                         |
+| Required   | ❌                                    |
+| Helm `tpl` | ❌                                    |
+| Default    | unset                                 |
+
+---
+
 ### `priorityClass.$name.description`
 
 Define the description for this priority class
@@ -141,6 +155,20 @@ priorityClass:
 
 ---
 
+### `priorityClass.$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+| Field      | Value                            |
+| ---------- | -------------------------------- |
+| Key        | `priorityClass.$name.labelsList` |
+| Type       | `list of map`                    |
+| Required   | ❌                               |
+| Helm `tpl` | ❌                               |
+| Default    | unset                            |
+
+---
+
 ### `priorityClass.$name.namespace`
 
 Define the namespace for this object
@@ -183,6 +211,20 @@ priorityClass:
   $name:
     preemptionPolicy: Immediate
 ```
+
+---
+
+### `priorityClass.$name.provisioner`
+
+Provisioner name for the priority class. Set in the common-test priorityclass fixture; the priority class templates ignore it.
+
+| Field      | Value                             |
+| ---------- | --------------------------------- |
+| Key        | `priorityClass.$name.provisioner` |
+| Type       | `string`                          |
+| Required   | ❌                                |
+| Helm `tpl` | ❌                                |
+| Default    | unset                             |
 
 ---
 

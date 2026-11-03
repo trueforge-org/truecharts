@@ -29,79 +29,9 @@ Does **not** apply to `initContainers`. See [lifecycle](/truecharts-common/conta
 
 ---
 
-### `workload.podSpec.containers.lifecycle.$name.host`
-
-Define the host - Only applies when `type: http` or `type: https`
-
-| Field      | Value                                              |
-| ---------- | -------------------------------------------------- |
-| Key        | `workload.podSpec.containers.lifecycle.$name.host` |
-| Type       | `string`                                           |
-| Required   | ❌                                                 |
-| Helm `tpl` | ❌                                                 |
-| Default    | unset                                              |
-
----
-
-### `workload.podSpec.containers.lifecycle.$name.httpHeaders`
-
-Define lifecycle for the container
-
-| Field      | Value                                                     |
-| ---------- | --------------------------------------------------------- |
-| Key        | `workload.podSpec.containers.lifecycle.$name.httpHeaders` |
-| Type       | `map`                                                     |
-| Required   | ❌                                                        |
-| Helm `tpl` | ❌                                                        |
-| Default    | unset                                                     |
-
----
-
-### `workload.podSpec.containers.lifecycle.$name.path`
-
-Define the path - Only applies when `type: http` or `type: https`
-
-| Field      | Value                                              |
-| ---------- | -------------------------------------------------- |
-| Key        | `workload.podSpec.containers.lifecycle.$name.path` |
-| Type       | `string`                                           |
-| Required   | ❌                                                 |
-| Helm `tpl` | ❌                                                 |
-| Default    | unset                                              |
-
----
-
-### `workload.podSpec.containers.lifecycle.$name.port`
-
-Define the port - Only applies when `type: http` or `type: https`
-
-| Field      | Value                                              |
-| ---------- | -------------------------------------------------- |
-| Key        | `workload.podSpec.containers.lifecycle.$name.port` |
-| Type       | `integer, string`                                  |
-| Required   | ❌                                                 |
-| Helm `tpl` | ❌                                                 |
-| Default    | unset                                              |
-
----
-
-### `workload.podSpec.containers.lifecycle.$name.type`
-
-Define hook type
-
-| Field      | Value                                              |
-| ---------- | -------------------------------------------------- |
-| Key        | `workload.podSpec.containers.lifecycle.$name.type` |
-| Type       | `string`                                           |
-| Required   | ❌                                                 |
-| Helm `tpl` | ❌                                                 |
-| Default    | unset                                              |
-
----
-
 ### `workload.podSpec.containers.lifecycle.postStart`
 
-Define preStop lifecycle
+Define the postStart hook
 
 | Field      | Value                                             |
 | ---------- | ------------------------------------------------- |
@@ -115,7 +45,7 @@ Define preStop lifecycle
 
 ### `workload.podSpec.containers.lifecycle.preStop`
 
-Define preStop lifecycle
+Define the preStop hook
 
 | Field      | Value                                           |
 | ---------- | ----------------------------------------------- |

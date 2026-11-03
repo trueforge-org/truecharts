@@ -61,7 +61,10 @@
           "string"
         ],
         "properties": {},
-        "additionalProperties": false,
+        "additionalProperties": {
+          "type": "string",
+          "description": "Value of the annotation"
+        },
         "description": "Additional annotations for storage class",
         "default": {}
       },
@@ -79,7 +82,10 @@
           "string"
         ],
         "properties": {},
-        "additionalProperties": false,
+        "additionalProperties": {
+          "type": "string",
+          "description": "Value of the parameter"
+        },
         "description": "Define the parameters for this storage class",
         "default": {}
       },

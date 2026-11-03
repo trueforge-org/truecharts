@@ -52,6 +52,20 @@ volumeSnapshots:
 
 ---
 
+### `volumeSnapshots.$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                                   |
+| ---------- | --------------------------------------- |
+| Key        | `volumeSnapshots.$name.annotationsList` |
+| Type       | `list of map`                           |
+| Required   | ❌                                      |
+| Helm `tpl` | ❌                                      |
+| Default    | unset                                   |
+
+---
+
 ### `volumeSnapshots.$name.enabled`
 
 Enable volume snapshot
@@ -97,6 +111,20 @@ volumeSnapshots:
 
 ---
 
+### `volumeSnapshots.$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+| Field      | Value                              |
+| ---------- | ---------------------------------- |
+| Key        | `volumeSnapshots.$name.labelsList` |
+| Type       | `list of map`                      |
+| Required   | ❌                                 |
+| Helm `tpl` | ❌                                 |
+| Default    | unset                              |
+
+---
+
 ### `volumeSnapshots.$name.source`
 
 Define the source of the volume snapshot At least one of the following keys must be defined
@@ -117,6 +145,20 @@ volumeSnapshots:
     source:
       {}
 ```
+
+---
+
+### `volumeSnapshots.$name.volumeSnapshotClassName`
+
+Define the name of the volume snapshot class used to create the snapshot
+
+| Field      | Value                                           |
+| ---------- | ----------------------------------------------- |
+| Key        | `volumeSnapshots.$name.volumeSnapshotClassName` |
+| Type       | `string`                                        |
+| Required   | ❌                                              |
+| Helm `tpl` | ❌                                              |
+| Default    | unset                                           |
 
 ---
 

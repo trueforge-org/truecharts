@@ -52,6 +52,20 @@ volumeSnapshotClass:
 
 ---
 
+### `volumeSnapshotClass.$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                                       |
+| ---------- | ------------------------------------------- |
+| Key        | `volumeSnapshotClass.$name.annotationsList` |
+| Type       | `list of map`                               |
+| Required   | ❌                                          |
+| Helm `tpl` | ❌                                          |
+| Default    | unset                                       |
+
+---
+
 ### `volumeSnapshotClass.$name.deletionPolicy`
 
 Define the deletion policy of the volume snapshot class
@@ -162,6 +176,20 @@ volumeSnapshotClass:
     labels:
       {}
 ```
+
+---
+
+### `volumeSnapshotClass.$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+| Field      | Value                                  |
+| ---------- | -------------------------------------- |
+| Key        | `volumeSnapshotClass.$name.labelsList` |
+| Type       | `list of map`                          |
+| Required   | ❌                                     |
+| Helm `tpl` | ❌                                     |
+| Default    | unset                                  |
 
 ---
 

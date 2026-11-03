@@ -99,6 +99,20 @@ workload:
 
 ---
 
+### `workload.$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                            |
+| ---------- | -------------------------------- |
+| Key        | `workload.$name.annotationsList` |
+| Type       | `list of map`                    |
+| Required   | ❌                               |
+| Helm `tpl` | ❌                               |
+| Default    | unset                            |
+
+---
+
 ### `workload.$name.backoffLimit`
 
 Define the backoffLimit
@@ -297,6 +311,20 @@ workload:
     labels:
       {}
 ```
+
+---
+
+### `workload.$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+| Field      | Value                       |
+| ---------- | --------------------------- |
+| Key        | `workload.$name.labelsList` |
+| Type       | `list of map`               |
+| Required   | ❌                          |
+| Helm `tpl` | ❌                          |
+| Default    | unset                       |
 
 ---
 
@@ -501,6 +529,20 @@ Define the successfulJobsHistoryLimit
 | Required   | ❌                                          |
 | Helm `tpl` | ❌                                          |
 | Default    | unset                                       |
+
+---
+
+### `workload.$name.suspend`
+
+Define if the CronJob is suspended. Forced to `true` when `stopAll` is enabled.
+
+| Field      | Value                    |
+| ---------- | ------------------------ |
+| Key        | `workload.$name.suspend` |
+| Type       | `boolean`                |
+| Required   | ❌                       |
+| Helm `tpl` | ❌                       |
+| Default    | unset                    |
 
 ---
 

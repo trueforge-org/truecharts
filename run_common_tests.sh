@@ -128,17 +128,6 @@ if [ -f "$common_schema_test_script" ]; then
   fi
 fi
 
-
-echo "🧪 Running common schema validation..."
-schema_args=()
-if [ -n "${SCHEMA_MAX_FAILURES:-}" ]; then
-  schema_args+=(--max-failures "$SCHEMA_MAX_FAILURES")
-fi
-python3 "$common_schema_test_script" "${schema_args[@]}" || { status=$?; cleanup; exit "$status"; }
-
-echo "📊 Running complete-values schema coverage check..."
-python3 "$common_coverage_script" || { status=$?; cleanup; exit "$status"; }
-
 cleanup
 
 echo "✅ Common tests passed"

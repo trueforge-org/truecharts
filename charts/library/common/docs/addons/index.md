@@ -61,6 +61,22 @@ See [Gluetun](gluetun/) for full configuration.
 
 ---
 
+### `addons.netshoot`
+
+Configuration for the netshoot addon.
+
+| Field      | Value             |
+| ---------- | ----------------- |
+| Key        | `addons.netshoot` |
+| Type       | `map`             |
+| Required   | ❌                |
+| Helm `tpl` | ❌                |
+| Default    | unset             |
+
+See [Netshoot](netshoot.md) for full configuration.
+
+---
+
 ### `addons.tailscale`
 
 Addons to the workloads
@@ -77,12 +93,27 @@ See [Tailscale](tailscale/) for full configuration.
 
 ---
 
+### `addons.vpn`
+
+Removed vpn add-on. Setting `addons.vpn` fails rendering (see `templates/values/_deprecations.tpl`), use `addons.gluetun` or `addons.tailscale` instead.
+
+| Field      | Value        |
+| ---------- | ------------ |
+| Key        | `addons.vpn` |
+| Type       | `map`        |
+| Required   | ❌           |
+| Helm `tpl` | ❌           |
+| Default    | unset        |
+
+---
+
 ## Child Pages
 
 - [Addon](addon.md) - Configuration for a workload addon.
 - [Codeserver](codeserver/) - Configuration for the code-server addon.
 - [Container](container.md) - Container configuration for an addon.
 - [Gluetun](gluetun/) - Configuration for the Gluetun addon.
+- [Netshoot](netshoot.md) - Configuration for the netshoot addon.
 - [Tailscale](tailscale/) - Addons to the workloads
 
 ---

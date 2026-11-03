@@ -243,6 +243,20 @@ route:
 
 ---
 
+### `route.$name.namespace`
+
+Configuration for `route.main.namespace`.
+
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `route.$name.namespace` |
+| Type       | `string`                |
+| Required   | ❌                      |
+| Helm `tpl` | ❌                      |
+| Default    | unset                   |
+
+---
+
 ### `route.$name.parentRefs`
 
 Configuration for `route.main.parentRefs`.

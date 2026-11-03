@@ -92,7 +92,10 @@
           "string"
         ],
         "properties": {},
-        "additionalProperties": false,
+        "additionalProperties": {
+          "type": "string",
+          "description": "Value of the annotation"
+        },
         "description": "Additional annotations for rbac",
         "default": {}
       },
@@ -111,7 +114,9 @@
           {
             "type": "object",
             "properties": {},
-            "additionalProperties": false
+            "additionalProperties": {
+              "description": "A setting passed on as is."
+            }
           }
         ],
         "description": "Define the service account(s) to assign the (Cluster)RoleBinding",

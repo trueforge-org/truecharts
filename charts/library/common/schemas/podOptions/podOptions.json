@@ -30,8 +30,10 @@
     "affinity": {
       "type": "object",
       "properties": {},
-      "additionalProperties": false,
-      "description": "Configuration for `podOptions.affinity`."
+      "description": "Configuration for `podOptions.affinity`.",
+      "additionalProperties": {
+        "description": "A setting passed on as is."
+      }
     },
     "dnsPolicy": {
       "type": "string",

@@ -45,7 +45,7 @@ No description provided.
 
 ### `addons.codeserver.enabled`
 
-No description provided.
+Enable the code-server addon.
 
 | Field      | Value                       |
 | ---------- | --------------------------- |
@@ -53,13 +53,21 @@ No description provided.
 | Type       | `boolean, string`           |
 | Required   | ❌                          |
 | Helm `tpl` | ❌                          |
-| Default    | unset                       |
+| Default    | `false`                     |
+
+Example
+
+```yaml
+addons:
+  codeserver:
+    enabled: false
+```
 
 ---
 
 ### `addons.codeserver.ingress`
 
-No description provided.
+Ingress of the code-server addon. Either one Ingress object, or named Ingress objects next to `enabled`.
 
 | Field      | Value                       |
 | ---------- | --------------------------- |
@@ -71,23 +79,9 @@ No description provided.
 
 ---
 
-### `addons.codeserver.secret`
-
-Secret configuration for the addon.
-
-| Field      | Value                      |
-| ---------- | -------------------------- |
-| Key        | `addons.codeserver.secret` |
-| Type       | `map, null`                |
-| Required   | ❌                         |
-| Helm `tpl` | ❌                         |
-| Default    | unset                      |
-
----
-
 ### `addons.codeserver.service`
 
-Define service objects
+Service of the code-server addon. Either one Service object, or named Service objects next to `enabled`.
 
 | Field      | Value                       |
 | ---------- | --------------------------- |
@@ -97,27 +91,11 @@ Define service objects
 | Helm `tpl` | ❌                          |
 | Default    | unset                       |
 
-See [Service](../../service/) for full configuration.
-
----
-
-### `addons.codeserver.settings`
-
-Addon-specific settings.
-
-| Field      | Value                        |
-| ---------- | ---------------------------- |
-| Key        | `addons.codeserver.settings` |
-| Type       | `map`                        |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
-| Default    | unset                        |
-
 ---
 
 ### `addons.codeserver.targetSelector`
 
-Workloads to which the addon is attached.
+Workloads to which the code-server addon is attached. Defaults to `main`.
 
 | Field      | Value                              |
 | ---------- | ---------------------------------- |

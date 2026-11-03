@@ -74,6 +74,20 @@ storageClass:
 
 ---
 
+### `storageClass.$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                                |
+| ---------- | ------------------------------------ |
+| Key        | `storageClass.$name.annotationsList` |
+| Type       | `list of map`                        |
+| Required   | ❌                                   |
+| Helm `tpl` | ❌                                   |
+| Default    | unset                                |
+
+---
+
 ### `storageClass.$name.enabled`
 
 Enables or Disables the storage class
@@ -93,6 +107,20 @@ storageClass:
   $name:
     enabled: false
 ```
+
+---
+
+### `storageClass.$name.isDefault`
+
+Define whether this storage class is the default storage class
+
+| Field      | Value                          |
+| ---------- | ------------------------------ |
+| Key        | `storageClass.$name.isDefault` |
+| Type       | `boolean`                      |
+| Required   | ❌                             |
+| Helm `tpl` | ❌                             |
+| Default    | unset                          |
 
 ---
 
@@ -116,6 +144,20 @@ storageClass:
     labels:
       {}
 ```
+
+---
+
+### `storageClass.$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+| Field      | Value                           |
+| ---------- | ------------------------------- |
+| Key        | `storageClass.$name.labelsList` |
+| Type       | `list of map`                   |
+| Required   | ❌                              |
+| Helm `tpl` | ❌                              |
+| Default    | unset                           |
 
 ---
 

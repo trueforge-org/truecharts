@@ -52,6 +52,20 @@ webhook:
 
 ---
 
+### `webhook.$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                           |
+| ---------- | ------------------------------- |
+| Key        | `webhook.$name.annotationsList` |
+| Type       | `list of map`                   |
+| Required   | ❌                              |
+| Helm `tpl` | ❌                              |
+| Default    | unset                           |
+
+---
+
 ### `webhook.$name.enabled`
 
 Enables or Disables the webhook
@@ -94,6 +108,20 @@ webhook:
     labels:
       {}
 ```
+
+---
+
+### `webhook.$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+| Field      | Value                      |
+| ---------- | -------------------------- |
+| Key        | `webhook.$name.labelsList` |
+| Type       | `list of map`              |
+| Required   | ❌                         |
+| Helm `tpl` | ❌                         |
+| Default    | unset                      |
 
 ---
 
@@ -149,7 +177,7 @@ Define the webhooks.
 | Field      | Value                    |
 | ---------- | ------------------------ |
 | Key        | `webhook.$name.webhooks` |
-| Type       | `list of unknown`        |
+| Type       | `list of map`            |
 | Required   | ❌                       |
 | Helm `tpl` | ❌                       |
 | Default    | `[]`                     |

@@ -13,9 +13,17 @@ tests:
           enabled: true
           primary: true
           podSpec:
-            my-container:
-              enabled: true
-              primary: true
+            containers:
+              my-container:
+                enabled: true
+                primary: true
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
       dependencies:
         postgresql:
           enabled: true

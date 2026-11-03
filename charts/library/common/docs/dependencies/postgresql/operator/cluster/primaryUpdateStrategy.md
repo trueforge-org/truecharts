@@ -17,7 +17,7 @@ title: Primaryupdatestrategy
 
 ## `dependencies.postgresql.operator.cluster.primaryUpdateStrategy`
 
-TODO ---
+Strategy to upgrade the primary server after all replicas are updated. `unsupervised` switches over automatically, `supervised` requires a manual switchover.
 
 | Field      | Value                                                            |
 | ---------- | ---------------------------------------------------------------- |
@@ -26,6 +26,7 @@ TODO ---
 | Required   | ❌                                                               |
 | Helm `tpl` | ❌                                                               |
 | Default    | unset                                                            |
+| Enum       | `supervised`, `unsupervised`                                     |
 
 ---
 

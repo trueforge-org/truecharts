@@ -105,6 +105,21 @@ Define the capabilities for the container If at least one capability is defined 
 
 ---
 
+### `workload.podSpec.initContainers.securityContext.fsGroup`
+
+Legacy container-level `fsGroup`, set by `stable/chevereto` and `stable/n8n` as `securityContext.container.fsGroup`. The container security context template does not read it, and `fsGroup` is a pod-level field in Kubernetes. Set `fsGroup` under `securityContext.pod` instead.
+
+| Field      | Value                                                     |
+| ---------- | --------------------------------------------------------- |
+| Key        | `workload.podSpec.initContainers.securityContext.fsGroup` |
+| Type       | `integer`                                                 |
+| Required   | ❌                                                        |
+| Helm `tpl` | ❌                                                        |
+| Default    | unset                                                     |
+| Minimum    | `0`                                                       |
+
+---
+
 ### `workload.podSpec.initContainers.securityContext.privileged`
 
 Define the privileged for the container
