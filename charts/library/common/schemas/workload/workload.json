@@ -87,6 +87,10 @@
                     }
                   ],
                   "description": "Define extraArg(s). Those are appended **after** the `args`."
+                },
+                "type": {
+                  "type": "string",
+                  "description": "Legacy container `type`. Only `initContainers` read it, so the container template ignores it here. Set by `stable/multus-cni` on its `cleanup` container."
                 }
               },
               "additionalProperties": false,
@@ -142,6 +146,18 @@
                 "termination": {
                   "$ref": "container/termination.json",
                   "description": "Define termination for the init container"
+                },
+                "image": {
+                  "type": "string",
+                  "description": "Legacy init container `image`, set by `stable/dispatcharr`. The init container template ignores it and reads `imageSelector` instead."
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Ignored. The chart replaces the init container name with a generated name."
+                },
+                "probes": {
+                  "$ref": "podSpec/initContainers/probes.json",
+                  "description": "Accepted for compatibility with the shared container shape. The init container spawner replaces probes with disabled probes."
                 }
               },
               "additionalProperties": false,
