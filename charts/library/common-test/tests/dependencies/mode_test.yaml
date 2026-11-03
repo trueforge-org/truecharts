@@ -405,7 +405,7 @@ tests:
                 enabled: true
                 primary: true
                 env:
-                  OPERATOR_VERSION: "{{ .Values.dependencies.valkey.operator.version }}"
+                  OPERATOR_VERSION: "9.0"
                 probes:
                   liveness:
                     enabled: false
@@ -418,7 +418,7 @@ tests:
           enabled: true
           mode: operator
           operator:
-            version: "9.0"
+            shards: 3
     asserts:
       - hasDocuments:
           count: 3
