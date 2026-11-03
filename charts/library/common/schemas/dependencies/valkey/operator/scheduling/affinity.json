@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "nodeAffinity": {
+      "allOf": [
+        {
+          "$ref": "affinity/nodeAffinity.json"
+        }
+      ],
+      "description": "Node affinity of the pods."
+    },
+    "podAffinity": {
+      "allOf": [
+        {
+          "$ref": "affinity/podAffinity.json"
+        }
+      ],
+      "description": "Pod affinity of the pods."
+    },
+    "podAntiAffinity": {
+      "allOf": [
+        {
+          "$ref": "affinity/podAffinity.json"
+        }
+      ],
+      "description": "Pod anti-affinity of the pods."
+    }
+  },
+  "additionalProperties": false
+}

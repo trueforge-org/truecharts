@@ -1,0 +1,177 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Name of the container. `server` and `metrics-exporter` patch the containers of the chart, any other name adds a sidecar."
+    },
+    "image": {
+      "type": "string",
+      "description": "Image of the container. Required for a sidecar."
+    },
+    "imagePullPolicy": {
+      "type": "string",
+      "enum": [
+        "Always",
+        "Never",
+        "IfNotPresent"
+      ],
+      "description": "When the image is pulled."
+    },
+    "command": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Entrypoint of the container."
+    },
+    "args": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Arguments of the entrypoint of the container."
+    },
+    "workingDir": {
+      "type": "string",
+      "description": "Working directory of the container."
+    },
+    "env": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the environment variable."
+          },
+          "value": {
+            "type": "string",
+            "description": "Value of the environment variable. Not used with `valueFrom`."
+          },
+          "valueFrom": {
+            "type": "object",
+            "properties": {
+              "fieldRef": {
+                "type": "object",
+                "properties": {
+                  "apiVersion": {
+                    "type": "string",
+                    "description": "Version of the schema the field path is written in."
+                  },
+                  "fieldPath": {
+                    "type": "string",
+                    "description": "Path of the field of the pod to read, for example `metadata.name`."
+                  }
+                },
+                "required": [
+                  "fieldPath"
+                ],
+                "additionalProperties": false,
+                "description": "Field of the pod to read."
+              },
+              "resourceFieldRef": {
+                "type": "object",
+                "properties": {
+                  "containerName": {
+                    "type": "string",
+                    "description": "Name of the container the resource belongs to."
+                  },
+                  "resource": {
+                    "type": "string",
+                    "description": "Name of the resource to read, for example `limits.cpu`."
+                  },
+                  "divisor": {
+                    "type": [
+                      "string",
+                      "number"
+                    ],
+                    "description": "Unit of the value the resource is divided by."
+                  }
+                },
+                "required": [
+                  "resource"
+                ],
+                "additionalProperties": false,
+                "description": "Resource of the container to read."
+              },
+              "configMapKeyRef": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the ConfigMap."
+                  },
+                  "key": {
+                    "type": "string",
+                    "description": "Key of the ConfigMap to read."
+                  },
+                  "optional": {
+                    "type": "boolean",
+                    "description": "Whether the ConfigMap or the key may be missing."
+                  }
+                },
+                "required": [
+                  "key"
+                ],
+                "additionalProperties": false,
+                "description": "Key of a ConfigMap to read."
+              },
+              "secretKeyRef": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the Secret."
+                  },
+                  "key": {
+                    "type": "string",
+                    "description": "Key of the Secret to read."
+                  },
+                  "optional": {
+                    "type": "boolean",
+                    "description": "Whether the Secret or the key may be missing."
+                  }
+                },
+                "required": [
+                  "key"
+                ],
+                "additionalProperties": false,
+                "description": "Key of a Secret to read."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Source of the value of the environment variable."
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Environment variables of the container."
+    },
+    "resources": {
+      "allOf": [
+        {
+          "$ref": "resourceRequirements.json"
+        }
+      ],
+      "description": "Resources of the container."
+    },
+    "securityContext": {
+      "allOf": [
+        {
+          "$ref": "securityContext.json"
+        }
+      ],
+      "description": "Security context of the container."
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "additionalProperties": false
+}
