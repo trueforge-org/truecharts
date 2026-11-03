@@ -320,10 +320,11 @@
                   "additionalProperties": {
                     "type": "string"
                   },
+                  "default": {},
                   "description": "Connection details populated by the library, the same keys in both modes (eg `plainhost`, `plainporthost`, `complete`, `urlnossl`, `jdbc`). The read-only endpoint of the operator pooler (`operator.pooler.createRO`) adds the same keys suffixed with `RO` (eg `completeRO`). Read-only."
                 }
               },
-              "additionalProperties": true,
+              "additionalProperties": false,
               "description": "Configuration of the dependency itself, for both modes. Never merged into the chart."
             },
             "operator": {
