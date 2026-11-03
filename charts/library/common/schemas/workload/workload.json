@@ -103,6 +103,45 @@
                 "type": {
                   "type": "string",
                   "description": "Define the type of container - Only applies to `initContainers`"
+                },
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
+                  "description": "Define if the init container is enabled or not"
+                },
+                "imageSelector": {
+                  "type": "string",
+                  "description": "Define the image `map` to use"
+                },
+                "command": {
+                  "$ref": "podSpec/initContainers/command.json",
+                  "description": "Define command(s). If it's single, can be defined as string"
+                },
+                "args": {
+                  "$ref": "podSpec/initContainers/args.json",
+                  "description": "Define arg(s). If it's single, can be defined as string"
+                },
+                "env": {
+                  "$ref": "podSpec/initContainers/env.json",
+                  "description": "Define env(s) for the init container"
+                },
+                "envFrom": {
+                  "$ref": "podSpec/initContainers/envFrom.json",
+                  "description": "Define envFrom for the init container"
+                },
+                "resources": {
+                  "$ref": "podSpec/initContainers/resources.json",
+                  "description": "The resources that the init container can use."
+                },
+                "securityContext": {
+                  "$ref": "podSpec/initContainers/securityContext.json",
+                  "description": "Define securityContext for the init container"
+                },
+                "termination": {
+                  "$ref": "container/termination.json",
+                  "description": "Define termination for the init container"
                 }
               },
               "additionalProperties": false,
@@ -167,6 +206,10 @@
           "hostname": {
             "type": "string",
             "description": "Pod's hostname"
+          },
+          "serviceAccountName": {
+            "type": "string",
+            "description": "Pod's serviceAccountName. If not set, the auto-generated service account name is used."
           },
           "terminationGracePeriodSeconds": {
             "$ref": "terminationGracePeriodSeconds.json",
@@ -418,6 +461,10 @@
         "type": "string",
         "description": "Define the schedule"
       },
+      "suspend": {
+        "type": "boolean",
+        "description": "Define if the CronJob is suspended. Forced to `true` when `stopAll` is enabled."
+      },
       "timezone": {
         "type": "string",
         "description": "Define the timezone"
@@ -469,6 +516,22 @@
             "app.example.com/component": "worker"
           }
         ]
+      },
+      "annotationsList": {
+        "allOf": [
+          {
+            "$ref": "../special/annotationsList.json"
+          }
+        ],
+        "description": "Additional annotations as a list of name and value pairs, merged into the annotations"
+      },
+      "labelsList": {
+        "allOf": [
+          {
+            "$ref": "../special/labelsList.json"
+          }
+        ],
+        "description": "Additional labels as a list of name and value pairs, merged into the labels"
       },
       "labels": {
         "allOf": [
