@@ -182,8 +182,11 @@
           "description": "Configuration for `dependencies.postgresql.operator.recovery.destinationPath`."
         },
         "instanceSidecarConfiguration": {
-          "type": "object",
-          "additionalProperties": true,
+          "allOf": [
+            {
+              "$ref": "instanceSidecarConfiguration.json"
+            }
+          ],
           "description": "Configuration for `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration`."
         }
       },
@@ -295,8 +298,11 @@
           "description": "Configuration for `dependencies.postgresql.operator.backups.manualBackups`."
         },
         "instanceSidecarConfiguration": {
-          "type": "object",
-          "additionalProperties": true,
+          "allOf": [
+            {
+              "$ref": "instanceSidecarConfiguration.json"
+            }
+          ],
           "description": "Configuration for `dependencies.postgresql.operator.backups.instanceSidecarConfiguration`."
         }
       },
