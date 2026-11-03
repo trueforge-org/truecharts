@@ -12,8 +12,8 @@ echo "Chart name: $curr_chart"
 
 # renovate: datasource=helm depName=kube-prometheus-stack repository=oci://ghcr.io/prometheus-community/charts
 KUBE_PROMETHEUS_STACK_CHART_VERSION="82.0.0"
-# renovate: datasource=helm depName=ingress-nginx repository=oci://ghcr.io/home-operations/charts-mirror
-INGRESS_NGINX_CHART_VERSION="4.13.0"
+# renovate: datasource=helm depName=ingress-nginx repository=oci://registry.k8s.io/ingress-nginx/charts
+INGRESS_NGINX_CHART_VERSION="v4.15.1"
 # renovate: datasource=helm depName=snapshot-controller repository=oci://oci.trueforge.org/truecharts
 SNAPSHOT_CONTROLLER_CHART_VERSION="4.15.0"
 # renovate: datasource=helm depName=metallb repository=oci://quay.io/metallb/chart
@@ -38,13 +38,13 @@ helm_install_with_retry() {
 
     for attempt in 1 2 3; do
         echo "Installing ${release} (attempt ${attempt}/3)..."
-        if helm install "${release}" "$@" --wait --timeout "${HELM_WAIT_TIMEOUT}"; then
+        # upgrade --install, as a retry also has to work on a release that failed halfway
+        if helm upgrade --install "${release}" "$@" --wait --timeout "${HELM_WAIT_TIMEOUT}"; then
             return 0
         fi
 
         if [[ "${attempt}" -lt 3 ]]; then
             echo "Retrying ${release} after transient install failure..."
-            helm uninstall "${release}" --ignore-not-found --wait || true
             sleep $((attempt * 15))
         fi
     done
@@ -96,7 +96,7 @@ if [[ "$curr_chart" == "charts/library/common-test" ]] && [[ -n "$dependency_sel
             exit 1
         fi
 
-        if ! helm_install_with_retry ingress-nginx oci://ghcr.io/home-operations/charts-mirror/ingress-nginx --namespace ingress-nginx --create-namespace --version "$INGRESS_NGINX_CHART_VERSION" --set controller.ingressClassResource.default=true --set controller.publishService.enabled=false --set controller.service.type="ClusterIP" --set controller.config.allow-snippet-annotations=true --set controller.config.annotations-risk-level="Critical"; then
+        if ! helm_install_with_retry ingress-nginx oci://registry.k8s.io/ingress-nginx/charts/ingress-nginx --namespace ingress-nginx --create-namespace --version "$INGRESS_NGINX_CHART_VERSION" --set controller.ingressClassResource.default=true --set controller.publishService.enabled=false --set controller.service.type="ClusterIP" --set controller.config.allow-snippet-annotations=true --set controller.config.annotations-risk-level="Critical"; then
             echo "Failed to install ingress-nginx chart"
             exit 1
         fi
@@ -147,7 +147,7 @@ echo "Done installing kube-prometheus-stack chart"
 
 if [[ $nginx_needed == "true" ]]; then
     echo "Installing ingress-nginx chart"
-    if ! helm_install_with_retry ingress-nginx oci://ghcr.io/home-operations/charts-mirror/ingress-nginx --namespace ingress-nginx --create-namespace \
+    if ! helm_install_with_retry ingress-nginx oci://registry.k8s.io/ingress-nginx/charts/ingress-nginx --namespace ingress-nginx --create-namespace \
         --version "$INGRESS_NGINX_CHART_VERSION" --set controller.ingressClassResource.default=true --set controller.publishService.enabled=false --set controller.service.type="ClusterIP" --set controller.config.allow-snippet-annotations=true --set controller.config.annotations-risk-level="Critical"; then
         echo "Failed to install ingress-nginx chart"
         exit 1
