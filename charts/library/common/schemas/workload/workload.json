@@ -342,6 +342,10 @@
           "securityContext": {
             "$ref": "podSpec/securityContext.json",
             "description": "Pod-level security context."
+          },
+          "type": {
+            "type": "string",
+            "description": "Legacy misplacement of the workload-level `type`. `stable/intel-gpu-plugin` sets `podSpec.type: DaemonSet`. The templates read only the workload-level `type` and ignore this key."
           }
         },
         "additionalProperties": false,
