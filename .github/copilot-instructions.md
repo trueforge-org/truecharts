@@ -33,6 +33,7 @@ This is a condensed summary. The full, canonical instructions are in [`AGENTS.md
   - also update the Helm unit tests in `charts/library/common-test/tests`
   - update the JSON schema in `schemas/` for every added, changed or removed key, and fail on removed keys in `templates/values/_deprecations.tpl`
   - set `"additionalProperties": false` on objects with a fixed set of keys; keep it open only at the values root and for arbitrary-named collections (services, workloads, containers, envs, ingresses, spawned objects), see the library instructions
+  - never use a placeholder `"additionalProperties": true` to skip listing the keys of a fixed object; type every key, and type the values of name-keyed maps
   - don't edit the generated `docs/` pages (except `docs/dependencies.md`); change the schema or `examples/` and run `generate_docs.py`, and regenerate `complete-values-structure.yaml` and `template-keys-structure.yaml`
   - change the schema in `values.schema.source.json` and `schemas/`, and regenerate `values.schema.json` with `generate_bundled_schema.py`
   - bump `common`'s version, but never `common-test`'s
