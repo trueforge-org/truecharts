@@ -47,6 +47,14 @@
       ],
       "description": "Additional labels as a list of name and value pairs, merged into the `labels` of all CNPG objects."
     },
+    "namespace": {
+      "type": "string",
+      "description": "Namespace of the CNPG objects. Templated with `tpl`, and overrides `global.namespace` and `namespace`."
+    },
+    "instances": {
+      "type": "integer",
+      "description": "Number of instances. Must be at least 1 when set. Only validated, the CNPG cluster uses `cluster.instances`."
+    },
     "type": {
       "type": "string",
       "enum": [
