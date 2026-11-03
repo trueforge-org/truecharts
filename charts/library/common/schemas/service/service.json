@@ -8,6 +8,42 @@
       "integrations": {
         "type": "object",
         "properties": {
+          "metallb": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "description": "Enables or Disables the MetalLB integration",
+                "default": false
+              },
+              "sharedKey": {
+                "type": "string",
+                "description": "Sets the shared key in `metallb.io/allow-shared-ip` **MetalLB** Annotation. Defaults to the namespace. Mutually exclusive with `externalTrafficPolicy: Local`",
+                "default": ""
+              }
+            },
+            "additionalProperties": false,
+            "description": "Define the MetalLB integration, only applies to `type: LoadBalancer`",
+            "default": {}
+          },
+          "cilium": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "description": "Enables or Disables the Cilium integration",
+                "default": false
+              },
+              "sharedKey": {
+                "type": "string",
+                "description": "Sets the shared key in `lbipam.cilium.io/sharing-key` **Cilium** Annotation. Mutually exclusive with `externalTrafficPolicy: Local`",
+                "default": ""
+              }
+            },
+            "additionalProperties": false,
+            "description": "Define the Cilium integration (LB-IPAM), only applies to `type: LoadBalancer`",
+            "default": {}
+          },
           "traefik": {
             "allOf": [
               {
@@ -55,6 +91,11 @@
       "loadBalancerSourceRanges": {
         "type": "array",
         "description": "Define the load balancer source ranges"
+      },
+      "allocateLoadBalancerNodePorts": {
+        "type": "boolean",
+        "description": "Define whether to allocate NodePorts for the service, only applies to `type: LoadBalancer`",
+        "default": false
       },
       "externalIP": {
         "allOf": [
@@ -108,6 +149,22 @@
           "string"
         ],
         "default": {}
+      },
+      "annotationsList": {
+        "allOf": [
+          {
+            "$ref": "../special/annotationsList.json"
+          }
+        ],
+        "description": "Additional annotations as a list of name and value pairs, merged into the annotations"
+      },
+      "labelsList": {
+        "allOf": [
+          {
+            "$ref": "../special/labelsList.json"
+          }
+        ],
+        "description": "Additional labels as a list of name and value pairs, merged into the labels"
       },
       "annotations": {
         "type": [
@@ -260,6 +317,16 @@
         "type": "string",
         "description": "Define the pod to link the service, by default will use the primary pod",
         "default": ""
+      },
+      "selectorLabels": {
+        "allOf": [
+          {
+            "$ref": "../special/labels.json"
+          }
+        ],
+        "type": "object",
+        "description": "Define the labels used as the selector of the service, replaces the default selector labels",
+        "default": {}
       },
       "primary": {
         "type": "boolean",

@@ -7,6 +7,11 @@
       "description": "Group ID applied to mounted volumes.",
       "default": 568
     },
+    "fsgroup": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Legacy misspelling of `fsGroup`, still set by `stable/misskey` as `securityContext.pod.fsgroup`. The pod security context template reads only `fsGroup` and ignores this key. Set `fsGroup` instead."
+    },
     "fsGroupChangePolicy": {
       "type": "string",
       "enum": [

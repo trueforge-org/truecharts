@@ -87,6 +87,10 @@
                     }
                   ],
                   "description": "Define extraArg(s). Those are appended **after** the `args`."
+                },
+                "type": {
+                  "type": "string",
+                  "description": "Legacy container `type`. Only `initContainers` read it, so the container template ignores it here. Set by `stable/multus-cni` on its `cleanup` container."
                 }
               },
               "additionalProperties": false,
@@ -103,6 +107,57 @@
                 "type": {
                   "type": "string",
                   "description": "Define the type of container - Only applies to `initContainers`"
+                },
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
+                  "description": "Define if the init container is enabled or not"
+                },
+                "imageSelector": {
+                  "type": "string",
+                  "description": "Define the image `map` to use"
+                },
+                "command": {
+                  "$ref": "podSpec/initContainers/command.json",
+                  "description": "Define command(s). If it's single, can be defined as string"
+                },
+                "args": {
+                  "$ref": "podSpec/initContainers/args.json",
+                  "description": "Define arg(s). If it's single, can be defined as string"
+                },
+                "env": {
+                  "$ref": "podSpec/initContainers/env.json",
+                  "description": "Define env(s) for the init container"
+                },
+                "envFrom": {
+                  "$ref": "podSpec/initContainers/envFrom.json",
+                  "description": "Define envFrom for the init container"
+                },
+                "resources": {
+                  "$ref": "podSpec/initContainers/resources.json",
+                  "description": "The resources that the init container can use."
+                },
+                "securityContext": {
+                  "$ref": "podSpec/initContainers/securityContext.json",
+                  "description": "Define securityContext for the init container"
+                },
+                "termination": {
+                  "$ref": "container/termination.json",
+                  "description": "Define termination for the init container"
+                },
+                "image": {
+                  "type": "string",
+                  "description": "Legacy init container `image`, set by `stable/dispatcharr`. The init container template ignores it and reads `imageSelector` instead."
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Ignored. The chart replaces the init container name with a generated name."
+                },
+                "probes": {
+                  "$ref": "podSpec/initContainers/probes.json",
+                  "description": "Accepted for compatibility with the shared container shape. The init container spawner replaces probes with disabled probes."
                 }
               },
               "additionalProperties": false,
@@ -167,6 +222,16 @@
           "hostname": {
             "type": "string",
             "description": "Pod's hostname"
+          },
+          "affinity": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Overrides `podOptions.affinity` for this workload."
+          },
+          "serviceAccountName": {
+            "type": "string",
+            "description": "Pod's serviceAccountName. If not set, the auto-generated service account name is used."
           },
           "terminationGracePeriodSeconds": {
             "$ref": "terminationGracePeriodSeconds.json",
@@ -277,6 +342,10 @@
           "securityContext": {
             "$ref": "podSpec/securityContext.json",
             "description": "Pod-level security context."
+          },
+          "type": {
+            "type": "string",
+            "description": "Legacy misplacement of the workload-level `type`. `stable/intel-gpu-plugin` sets `podSpec.type: DaemonSet`. The templates read only the workload-level `type` and ignore this key."
           }
         },
         "additionalProperties": false,
@@ -418,6 +487,10 @@
         "type": "string",
         "description": "Define the schedule"
       },
+      "suspend": {
+        "type": "boolean",
+        "description": "Define if the CronJob is suspended. Forced to `true` when `stopAll` is enabled."
+      },
       "timezone": {
         "type": "string",
         "description": "Define the timezone"
@@ -469,6 +542,22 @@
             "app.example.com/component": "worker"
           }
         ]
+      },
+      "annotationsList": {
+        "allOf": [
+          {
+            "$ref": "../special/annotationsList.json"
+          }
+        ],
+        "description": "Additional annotations as a list of name and value pairs, merged into the annotations"
+      },
+      "labelsList": {
+        "allOf": [
+          {
+            "$ref": "../special/labelsList.json"
+          }
+        ],
+        "description": "Additional labels as a list of name and value pairs, merged into the labels"
       },
       "labels": {
         "allOf": [

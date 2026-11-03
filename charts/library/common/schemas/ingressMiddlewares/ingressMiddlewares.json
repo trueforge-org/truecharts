@@ -102,6 +102,68 @@
       "additionalProperties": {
         "type": "object",
         "properties": {
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
+            "description": "Enables or Disables the Middleware"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "add-prefix",
+              "basic-auth",
+              "buffering",
+              "chain",
+              "compress",
+              "content-type",
+              "forward-auth",
+              "headers",
+              "ip-allow-list",
+              "plugin-bouncer",
+              "plugin-geoblock",
+              "plugin-mod-security",
+              "plugin-real-ip",
+              "plugin-rewrite-response-headers",
+              "plugin-theme-park",
+              "rate-limit",
+              "redirect-regex",
+              "redirect-scheme",
+              "replace-path-regex",
+              "replace-path",
+              "retry",
+              "strip-prefix-regex",
+              "strip-prefix"
+            ],
+            "description": "Define the type of the Middleware"
+          },
+          "namespace": {
+            "allOf": [
+              {
+                "$ref": "../special/namespaces.json"
+              }
+            ],
+            "description": "Define the namespace for this object"
+          },
+          "labels": {
+            "allOf": [
+              {
+                "$ref": "../special/labels.json"
+              }
+            ],
+            "description": "Additional labels for middleware"
+          },
+          "annotations": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Additional annotations for middleware"
+          },
+          "expandObjectName": {
+            "type": "boolean",
+            "description": "Whether to expand (adding the fullname as prefix) the middleware name."
+          },
           "data": {
             "type": "object",
             "properties": {
@@ -221,6 +283,10 @@
               "memResponseBodyBytes": {
                 "type": "number",
                 "description": "Define the memResponseBodyBytes"
+              },
+              "maxResponseBodySize": {
+                "type": "integer",
+                "description": "Define the maxResponseBodySize"
               },
               "retryExpression": {
                 "type": "string",
@@ -403,6 +469,14 @@
                 "type": "string",
                 "description": "Define the crowdsecLapiHost"
               },
+              "crowdsecMode": {
+                "type": "string",
+                "description": "Define the crowdsecMode"
+              },
+              "crowdsecLapiScheme": {
+                "type": "string",
+                "description": "Define the crowdsecLapiScheme"
+              },
               "crowdsecLapiTLSInsecureVerify": {
                 "type": "boolean",
                 "description": "Define the crowdsecLapiTLSInsecureVerify"
@@ -515,6 +589,13 @@
                 "type": "array",
                 "description": "Define the accessControlAllowOriginList"
               },
+              "accessControlAllowOriginListRegex": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Define the accessControlAllowOriginListRegex"
+              },
               "accessControlExposeHeaders": {
                 "type": "array",
                 "description": "Define the accessControlExposeHeaders"
@@ -581,6 +662,10 @@
                 "type": "string",
                 "description": "Define the contentSecurityPolicy"
               },
+              "contentSecurityPolicyReportOnly": {
+                "type": "string",
+                "description": "Define the contentSecurityPolicyReportOnly"
+              },
               "publicKey": {
                 "type": "string",
                 "description": "Define the publicKey"
@@ -622,6 +707,14 @@
                     "header": {
                       "type": "string",
                       "description": "Define the header"
+                    },
+                    "regex": {
+                      "type": "string",
+                      "description": "Define the regex"
+                    },
+                    "replacement": {
+                      "type": "string",
+                      "description": "Define the replacement"
                     }
                   },
                   "additionalProperties": false
@@ -703,6 +796,10 @@
           "properties": {},
           "additionalProperties": true,
           "description": "Additional annotations for middleware"
+        },
+        "expandObjectName": {
+          "type": "boolean",
+          "description": "Whether to expand (adding the fullname as prefix) the middleware name."
         },
         "data": {
           "type": "object",

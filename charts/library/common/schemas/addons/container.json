@@ -1,12 +1,55 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "allOf": [
-    {
-      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties"
-    }
-  ],
   "properties": {
+    "enabled": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/enabled"
+    },
+    "imageSelector": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/imageSelector"
+    },
+    "primary": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/primary"
+    },
+    "stdin": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/stdin"
+    },
+    "tty": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/tty"
+    },
+    "env": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/env"
+    },
+    "resources": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/resources"
+    },
+    "securityContext": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/securityContext"
+    },
+    "probes": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/probes"
+    },
+    "command": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/command"
+    },
+    "args": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/args"
+    },
+    "extraArgs": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/extraArgs"
+    },
+    "lifecycle": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/lifecycle"
+    },
+    "envFrom": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/envFrom"
+    },
+    "termination": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/termination"
+    },
+    "fixedEnv": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/fixedEnv"
+    },
     "targetSelector": {
       "type": "array",
       "items": {

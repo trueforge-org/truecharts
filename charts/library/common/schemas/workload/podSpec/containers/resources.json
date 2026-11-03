@@ -22,7 +22,13 @@
           "default": "2400Mi"
         }
       },
-      "additionalProperties": false,
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number"
+        ],
+        "description": "Extended resource quantity, keyed by resource name (for example `nvidia.com/gpu`). Rendered as-is."
+      },
       "description": "The maximum amount of resources that the container can use. Limits are **optional**, can be set to \"unlimited\" by setting it's values (`cpu` and `memory`) to `0`.",
       "default": {
         "cpu": "1500m",
@@ -49,7 +55,13 @@
           "default": "200Mi"
         }
       },
-      "additionalProperties": false,
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number"
+        ],
+        "description": "Extended resource quantity, keyed by resource name (for example `ephemeral-storage`). Rendered as-is."
+      },
       "description": "The minimum amount of resources that the container needs. Requests are **required**, because without it, kubernetes uses the `limits` as the `requests`.",
       "default": {
         "cpu": "75m",

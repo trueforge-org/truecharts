@@ -16,27 +16,44 @@
       "default": false
     },
     "labels": {
-      "allOf": [
-        {
-          "$ref": "../../../special/labels.json"
-        }
-      ],
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
       "description": "Additional labels for all CNPG objects.",
-      "type": [
-        "object",
-        "string"
-      ],
       "default": {}
     },
     "annotations": {
-      "type": [
-        "object",
-        "string"
-      ],
-      "properties": {},
-      "additionalProperties": true,
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
       "description": "Additional annotations for all CNPG objects.",
       "default": {}
+    },
+    "annotationsList": {
+      "allOf": [
+        {
+          "$ref": "../../../special/annotationsList.json"
+        }
+      ],
+      "description": "Additional annotations as a list of name and value pairs, merged into the `annotations` of all CNPG objects."
+    },
+    "labelsList": {
+      "allOf": [
+        {
+          "$ref": "../../../special/labelsList.json"
+        }
+      ],
+      "description": "Additional labels as a list of name and value pairs, merged into the `labels` of all CNPG objects."
+    },
+    "namespace": {
+      "type": "string",
+      "description": "Namespace of the CNPG objects. Templated with `tpl`, and overrides `global.namespace` and `namespace`."
+    },
+    "instances": {
+      "type": "integer",
+      "description": "Number of instances. Must be at least 1 when set. Only validated, the CNPG cluster uses `cluster.instances`."
     },
     "type": {
       "type": "string",
@@ -74,11 +91,13 @@
       "properties": {
         "enablePodMonitor": {
           "type": "boolean",
-          "description": "Configuration for `dependencies.postgresql.operator.monitoring.enablePodMonitor`."
+          "description": "Configuration for `dependencies.postgresql.operator.monitoring.enablePodMonitor`.",
+          "default": false
         },
         "disableDefaultQueries": {
           "type": "boolean",
-          "description": "Configuration for `dependencies.postgresql.operator.monitoring.disableDefaultQueries`."
+          "description": "Configuration for `dependencies.postgresql.operator.monitoring.disableDefaultQueries`.",
+          "default": false
         },
         "customQueries": {
           "type": "array",
@@ -101,39 +120,21 @@
                 "type": "array",
                 "items": {
                   "type": "object",
-                  "properties": {
-                    "datname": {
-                      "type": "object",
-                      "properties": {
-                        "description": {
-                          "type": "string",
-                          "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.datname.description`."
-                        },
-                        "usage": {
-                          "type": "string",
-                          "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.datname.usage`."
-                        }
+                  "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                      "usage": {
+                        "type": "string",
+                        "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.$name.usage`."
                       },
-                      "additionalProperties": false,
-                      "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.datname`."
+                      "description": {
+                        "type": "string",
+                        "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.$name.description`."
+                      }
                     },
-                    "size_bytes": {
-                      "type": "object",
-                      "properties": {
-                        "description": {
-                          "type": "string",
-                          "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.size_bytes.description`."
-                        },
-                        "usage": {
-                          "type": "string",
-                          "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.size_bytes.usage`."
-                        }
-                      },
-                      "additionalProperties": false,
-                      "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.size_bytes`."
-                    }
+                    "additionalProperties": false,
+                    "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.$name`."
                   },
-                  "additionalProperties": true,
                   "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item`."
                 },
                 "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics`."
@@ -149,41 +150,69 @@
             "additionalProperties": false,
             "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item`."
           },
-          "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries`."
+          "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries`.",
+          "default": []
         }
       },
       "additionalProperties": false,
-      "description": "Configuration for `dependencies.postgresql.operator.monitoring`."
+      "description": "Configuration for `dependencies.postgresql.operator.monitoring`.",
+      "default": {
+        "enablePodMonitor": false,
+        "disableDefaultQueries": false,
+        "customQueries": []
+      }
     },
     "recovery": {
       "type": "object",
       "properties": {
         "method": {
           "type": "string",
-          "description": "Configuration for `dependencies.postgresql.operator.recovery.method`."
+          "description": "Recovery method of the CNPG cluster, such as `object_store`.",
+          "default": "object_store"
         },
         "serverName": {
           "type": "string",
-          "description": "Configuration for `dependencies.postgresql.operator.recovery.serverName`."
+          "description": "Overrides the `serverName` of the recovery object store.",
+          "default": ""
         },
         "pitrTarget": {
           "type": "object",
           "properties": {
             "time": {
               "type": "string",
-              "description": "Configuration for `dependencies.postgresql.operator.recovery.pitrTarget.time`."
+              "description": "Point in time recovery target time.",
+              "default": ""
             }
           },
           "additionalProperties": false,
-          "description": "Configuration for `dependencies.postgresql.operator.recovery.pitrTarget`."
+          "description": "Point in time recovery target.",
+          "default": {
+            "time": ""
+          }
         },
         "destinationPath": {
           "type": "string",
-          "description": "Configuration for `dependencies.postgresql.operator.recovery.destinationPath`."
+          "description": "Destination path of the object store to recover from.",
+          "default": ""
+        },
+        "credentials": {
+          "type": "string",
+          "description": "Name of the credentials in `.Values.credentials` for the object store to recover from."
+        },
+        "revision": {
+          "type": "string",
+          "description": "Revision appended to the `serverName` of the recovery archive, so restore and backup use different archives. Must be a string."
+        },
+        "retentionPolicy": {
+          "type": "string",
+          "description": "Retention policy of the recovery archive. The chart does not read this key yet, so it has no effect."
         },
         "instanceSidecarConfiguration": {
-          "type": "object",
-          "additionalProperties": true,
+          "allOf": [
+            {
+              "$ref": "instanceSidecarConfiguration.json"
+            }
+          ],
           "description": "Configuration for `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration`."
         }
       },
@@ -198,7 +227,8 @@
             "boolean",
             "string"
           ],
-          "description": "Configuration for `dependencies.postgresql.operator.backups.enabled`."
+          "description": "Enables the backups of the CNPG cluster.",
+          "default": false
         },
         "encryption": {
           "type": "object",
@@ -208,27 +238,35 @@
                 "boolean",
                 "string"
               ],
-              "description": "Configuration for `dependencies.postgresql.operator.backups.encryption.enabled`."
+              "description": "Encrypts the backups with AES256 when enabled.",
+              "default": false
             }
           },
           "additionalProperties": false,
-          "description": "Configuration for `dependencies.postgresql.operator.backups.encryption`."
+          "description": "Encryption of the backups.",
+          "default": {
+            "enabled": false
+          }
         },
         "serverName": {
           "type": "string",
-          "description": "Configuration for `dependencies.postgresql.operator.backups.serverName`."
+          "description": "Overrides the `serverName` in the object store of the backups.",
+          "default": ""
         },
         "destinationPath": {
           "type": "string",
-          "description": "Configuration for `dependencies.postgresql.operator.backups.destinationPath`."
+          "description": "Destination path of the object store for the backups.",
+          "default": ""
         },
         "target": {
           "type": "string",
-          "description": "Configuration for `dependencies.postgresql.operator.backups.target`."
+          "description": "Target of the backups, `prefer-standby` or `primary`. Empty uses the default, `prefer-standby`.",
+          "default": ""
         },
         "credentials": {
           "type": "string",
-          "description": "Configuration for `dependencies.postgresql.operator.backups.credentials`."
+          "description": "Name of the credentials in `.Values.credentials` for the object store of the backups.",
+          "default": ""
         },
         "scheduledBackups": {
           "type": "array",
@@ -259,11 +297,54 @@
             "additionalProperties": false,
             "description": "Configuration for `dependencies.postgresql.operator.backups.scheduledBackups.$item`."
           },
-          "description": "Configuration for `dependencies.postgresql.operator.backups.scheduledBackups`."
+          "description": "Configuration for `dependencies.postgresql.operator.backups.scheduledBackups`.",
+          "default": [
+            {
+              "name": "daily-backup",
+              "schedule": "0 0 0 * * *",
+              "backupOwnerReference": "self",
+              "immediate": true,
+              "suspend": false
+            }
+          ]
         },
         "retentionPolicy": {
           "type": "string",
-          "description": "Configuration for `dependencies.postgresql.operator.backups.retentionPolicy`."
+          "description": "Retention policy of the backups, for example `30d`.",
+          "default": "30d"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Additional labels for the backup objects of the CNPG cluster, merged with the root `labels`."
+        },
+        "annotations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Additional annotations for the backup objects of the CNPG cluster, merged with the root `annotations`."
+        },
+        "compression": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Set to `false` to disable the `bzip2` compression of the backups."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Compression of the backups."
+        },
+        "revision": {
+          "type": "string",
+          "description": "Revision appended to the `serverName` of the backup archive, so restore and backup use different archives. Must be a string. Required when `cluster.skipEmptyWalArchiveCheck` is false and both use the same archive."
+        },
+        "jobs": {
+          "type": "integer",
+          "description": "Number of parallel jobs used to upload the backups. Uses `2` when unset."
         },
         "manualBackups": {
           "type": "array",
@@ -275,28 +356,32 @@
                 "description": "Configuration for `dependencies.postgresql.operator.backups.manualBackups.$item.name`."
               },
               "labels": {
-                "allOf": [
-                  {
-                    "$ref": "../../../special/labels.json"
-                  }
-                ],
-                "description": "Configuration for `dependencies.postgresql.operator.backups.manualBackups.$item.labels`."
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Additional labels for this manual backup, merged with `backups.labels`."
               },
               "annotations": {
                 "type": "object",
-                "properties": {},
-                "additionalProperties": true,
-                "description": "Configuration for `dependencies.postgresql.operator.backups.manualBackups.$item.annotations`."
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Additional annotations for this manual backup, merged with `backups.annotations`."
               }
             },
             "additionalProperties": false,
             "description": "Configuration for `dependencies.postgresql.operator.backups.manualBackups.$item`."
           },
-          "description": "Configuration for `dependencies.postgresql.operator.backups.manualBackups`."
+          "description": "Configuration for `dependencies.postgresql.operator.backups.manualBackups`.",
+          "default": []
         },
         "instanceSidecarConfiguration": {
-          "type": "object",
-          "additionalProperties": true,
+          "allOf": [
+            {
+              "$ref": "instanceSidecarConfiguration.json"
+            }
+          ],
           "description": "Configuration for `dependencies.postgresql.operator.backups.instanceSidecarConfiguration`."
         }
       },
@@ -311,32 +396,45 @@
             "boolean",
             "string"
           ],
+          "default": false,
           "description": "Configuration for `dependencies.postgresql.operator.pooler.enabled`."
         },
         "createRO": {
           "type": "boolean",
+          "default": false,
           "description": "Configuration for `dependencies.postgresql.operator.pooler.createRO`."
         },
         "poolMode": {
           "type": "string",
+          "default": "session",
           "description": "Configuration for `dependencies.postgresql.operator.pooler.poolMode`."
         },
         "instances": {
           "type": "integer",
+          "default": 2,
           "description": "Configuration for `dependencies.postgresql.operator.pooler.instances`."
         },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Configuration for `dependencies.postgresql.operator.pooler.parameters`."
+        },
         "labels": {
-          "allOf": [
-            {
-              "$ref": "../../../special/labels.json"
-            }
-          ],
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {},
           "description": "Configuration for `dependencies.postgresql.operator.pooler.labels`."
         },
         "annotations": {
           "type": "object",
-          "properties": {},
-          "additionalProperties": true,
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {},
           "description": "Configuration for `dependencies.postgresql.operator.pooler.annotations`."
         }
       },

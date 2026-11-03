@@ -1,6 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "string",
-  "description": "TODO ---",
-  "additionalProperties": true
+  "enum": [
+    "supervised",
+    "unsupervised"
+  ],
+  "description": "Strategy to upgrade the primary server after all replicas are updated. `unsupervised` switches over automatically, `supervised` requires a manual switchover."
 }

@@ -3,6 +3,24 @@
   "type": "object",
   "description": "See [DNS Config](/truecharts-common/workload#dnsconfig)",
   "properties": {
+    "nameservers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Configuration for `podOptions.dnsConfig.nameservers.$item`."
+      },
+      "maxItems": 3,
+      "description": "Configuration for `podOptions.dnsConfig.nameservers`."
+    },
+    "searches": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Configuration for `podOptions.dnsConfig.searches.$item`."
+      },
+      "maxItems": 6,
+      "description": "Configuration for `podOptions.dnsConfig.searches`."
+    },
     "options": {
       "type": "array",
       "items": {

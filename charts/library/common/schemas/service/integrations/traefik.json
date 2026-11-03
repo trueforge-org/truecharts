@@ -31,8 +31,7 @@
     },
     "rootCAs": {
       "type": "array",
-      "properties": {},
-      "additionalProperties": {
+      "items": {
         "type": "object",
         "properties": {
           "configMapRef": {
@@ -40,7 +39,7 @@
             "properties": {
               "expandObjectName": {
                 "type": "boolean",
-                "description": "List of kubernetes secrets (in the same namespace) containing certificate authorities to use when performing TLS verification of the backend service.",
+                "description": "Whether to expand (adding the fullname as prefix) the configmap name",
                 "default": true
               },
               "name": {
@@ -75,7 +74,7 @@
           }
         },
         "additionalProperties": false,
-        "description": "Configuration for `$name.integrations.traefik.rootCAs.$name`."
+        "description": "Configuration for an entry of `integrations.traefik.rootCAs`."
       },
       "description": "List of kubernetes secrets (in the same namespace) containing certificate authorities to use when performing TLS verification of the backend service.",
       "default": []

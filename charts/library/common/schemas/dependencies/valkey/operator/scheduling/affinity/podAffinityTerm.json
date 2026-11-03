@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "labelSelector": {
+      "allOf": [
+        {
+          "$ref": "../../../../../networkpolicy/labelSelector.json"
+        }
+      ],
+      "description": "Pods the term matches."
+    },
+    "namespaces": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Namespaces the term matches. Defaults to the namespace of the pod when unset."
+    },
+    "namespaceSelector": {
+      "allOf": [
+        {
+          "$ref": "../../../../../networkpolicy/labelSelector.json"
+        }
+      ],
+      "description": "Namespaces the term matches, by their labels."
+    },
+    "topologyKey": {
+      "type": "string",
+      "description": "Node label key that defines the domain."
+    },
+    "matchLabelKeys": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Pod label keys whose values are combined with `labelSelector`, with the `In` operator."
+    },
+    "mismatchLabelKeys": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Pod label keys whose values are combined with `labelSelector`, with the `NotIn` operator."
+    }
+  },
+  "required": [
+    "topologyKey"
+  ],
+  "additionalProperties": false
+}

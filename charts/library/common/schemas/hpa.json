@@ -17,6 +17,451 @@
         "type": "array",
         "description": "Configuration for `hpa.main.targetSelector`.",
         "default": []
+      },
+      "minReplicas": {
+        "type": "integer",
+        "description": "Configuration for `hpa.main.minReplicas`."
+      },
+      "maxReplicas": {
+        "type": "integer",
+        "description": "Configuration for `hpa.main.maxReplicas`. Must be greater than or equal to `minReplicas`."
+      },
+      "behavior": {
+        "type": "object",
+        "properties": {
+          "scaleUp": {
+            "type": "object",
+            "properties": {
+              "selectPolicy": {
+                "type": "string",
+                "enum": [
+                  "Max",
+                  "Min",
+                  "Disabled"
+                ],
+                "description": "Configuration for `hpa.main.behavior.scaleUp.selectPolicy`."
+              },
+              "stabilizationWindowSeconds": {
+                "type": "integer",
+                "description": "Configuration for `hpa.main.behavior.scaleUp.stabilizationWindowSeconds`."
+              },
+              "policies": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "Pods",
+                        "Percent"
+                      ],
+                      "description": "Configuration for `hpa.main.behavior.scaleUp.policies.$item.type`."
+                    },
+                    "value": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "description": "Configuration for `hpa.main.behavior.scaleUp.policies.$item.value`."
+                    },
+                    "periodSeconds": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 1800,
+                      "description": "Configuration for `hpa.main.behavior.scaleUp.policies.$item.periodSeconds`."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "value",
+                    "periodSeconds"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Configuration for `hpa.main.behavior.scaleUp.policies.$item`."
+                },
+                "description": "Configuration for `hpa.main.behavior.scaleUp.policies`."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Configuration for `hpa.main.behavior.scaleUp`."
+          },
+          "scaleDown": {
+            "type": "object",
+            "properties": {
+              "selectPolicy": {
+                "type": "string",
+                "enum": [
+                  "Max",
+                  "Min",
+                  "Disabled"
+                ],
+                "description": "Configuration for `hpa.main.behavior.scaleDown.selectPolicy`."
+              },
+              "stabilizationWindowSeconds": {
+                "type": "integer",
+                "description": "Configuration for `hpa.main.behavior.scaleDown.stabilizationWindowSeconds`."
+              },
+              "policies": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "Pods",
+                        "Percent"
+                      ],
+                      "description": "Configuration for `hpa.main.behavior.scaleDown.policies.$item.type`."
+                    },
+                    "value": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "description": "Configuration for `hpa.main.behavior.scaleDown.policies.$item.value`."
+                    },
+                    "periodSeconds": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 1800,
+                      "description": "Configuration for `hpa.main.behavior.scaleDown.policies.$item.periodSeconds`."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "value",
+                    "periodSeconds"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Configuration for `hpa.main.behavior.scaleDown.policies.$item`."
+                },
+                "description": "Configuration for `hpa.main.behavior.scaleDown.policies`."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Configuration for `hpa.main.behavior.scaleDown`."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Configuration for `hpa.main.behavior`."
+      },
+      "metrics": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "Resource",
+                "Pods",
+                "Object",
+                "External",
+                "ContainerResource"
+              ],
+              "description": "Configuration for `hpa.main.metrics.$item.type`."
+            },
+            "resource": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "enum": [
+                    "cpu",
+                    "memory"
+                  ],
+                  "description": "Configuration for `hpa.main.metrics.$item.resource.name`."
+                },
+                "target": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "AverageValue",
+                        "Utilization"
+                      ],
+                      "description": "Configuration for `hpa.main.metrics.$item.resource.target.type`."
+                    },
+                    "averageValue": {
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
+                      "description": "Configuration for `hpa.main.metrics.$item.resource.target.averageValue`."
+                    },
+                    "averageUtilization": {
+                      "type": "integer",
+                      "description": "Configuration for `hpa.main.metrics.$item.resource.target.averageUtilization`."
+                    },
+                    "value": {
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
+                      "description": "Configuration for `hpa.main.metrics.$item.resource.target.value`."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Configuration for `hpa.main.metrics.$item.resource.target`."
+                }
+              },
+              "additionalProperties": false,
+              "description": "Configuration for `hpa.main.metrics.$item.resource`."
+            },
+            "containerResource": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "enum": [
+                    "cpu",
+                    "memory"
+                  ],
+                  "description": "Configuration for `hpa.main.metrics.$item.containerResource.name`."
+                },
+                "container": {
+                  "type": "string",
+                  "description": "Configuration for `hpa.main.metrics.$item.containerResource.container`. Must be the name of a container of the workload."
+                },
+                "target": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "AverageValue",
+                        "Utilization"
+                      ],
+                      "description": "Configuration for `hpa.main.metrics.$item.containerResource.target.type`."
+                    },
+                    "averageValue": {
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
+                      "description": "Configuration for `hpa.main.metrics.$item.containerResource.target.averageValue`."
+                    },
+                    "averageUtilization": {
+                      "type": "integer",
+                      "description": "Configuration for `hpa.main.metrics.$item.containerResource.target.averageUtilization`."
+                    },
+                    "value": {
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
+                      "description": "Configuration for `hpa.main.metrics.$item.containerResource.target.value`."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Configuration for `hpa.main.metrics.$item.containerResource.target`."
+                }
+              },
+              "additionalProperties": false,
+              "description": "Configuration for `hpa.main.metrics.$item.containerResource`."
+            },
+            "pods": {
+              "type": "object",
+              "properties": {
+                "metric": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Configuration for `hpa.main.metrics.$item.pods.metric.name`."
+                    },
+                    "selector": {
+                      "type": "object",
+                      "properties": {
+                        "matchLabels": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": true,
+                          "description": "Configuration for `hpa.main.metrics.$item.pods.metric.selector.matchLabels`."
+                        }
+                      },
+                      "additionalProperties": false,
+                      "description": "Configuration for `hpa.main.metrics.$item.pods.metric.selector`."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Configuration for `hpa.main.metrics.$item.pods.metric`."
+                },
+                "target": {
+                  "type": "object",
+                  "properties": {
+                    "averageValue": {
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
+                      "description": "Configuration for `hpa.main.metrics.$item.pods.target.averageValue`."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Configuration for `hpa.main.metrics.$item.pods.target`."
+                }
+              },
+              "additionalProperties": false,
+              "description": "Configuration for `hpa.main.metrics.$item.pods`."
+            },
+            "object": {
+              "type": "object",
+              "properties": {
+                "metric": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Configuration for `hpa.main.metrics.$item.object.metric.name`."
+                    },
+                    "selector": {
+                      "type": "object",
+                      "properties": {
+                        "matchLabels": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": true,
+                          "description": "Configuration for `hpa.main.metrics.$item.object.metric.selector.matchLabels`."
+                        }
+                      },
+                      "additionalProperties": false,
+                      "description": "Configuration for `hpa.main.metrics.$item.object.metric.selector`."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Configuration for `hpa.main.metrics.$item.object.metric`."
+                },
+                "target": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "AverageValue",
+                        "Value"
+                      ],
+                      "description": "Configuration for `hpa.main.metrics.$item.object.target.type`."
+                    },
+                    "averageValue": {
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
+                      "description": "Configuration for `hpa.main.metrics.$item.object.target.averageValue`."
+                    },
+                    "value": {
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
+                      "description": "Configuration for `hpa.main.metrics.$item.object.target.value`."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Configuration for `hpa.main.metrics.$item.object.target`."
+                },
+                "describedObject": {
+                  "type": "object",
+                  "properties": {
+                    "apiVersion": {
+                      "type": "string",
+                      "description": "Configuration for `hpa.main.metrics.$item.object.describedObject.apiVersion`."
+                    },
+                    "kind": {
+                      "type": "string",
+                      "description": "Configuration for `hpa.main.metrics.$item.object.describedObject.kind`."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Configuration for `hpa.main.metrics.$item.object.describedObject.name`."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Configuration for `hpa.main.metrics.$item.object.describedObject`."
+                }
+              },
+              "additionalProperties": false,
+              "description": "Configuration for `hpa.main.metrics.$item.object`."
+            },
+            "external": {
+              "type": "object",
+              "properties": {
+                "metric": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Configuration for `hpa.main.metrics.$item.external.metric.name`."
+                    },
+                    "selector": {
+                      "type": "object",
+                      "properties": {
+                        "matchLabels": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": true,
+                          "description": "Configuration for `hpa.main.metrics.$item.external.metric.selector.matchLabels`."
+                        }
+                      },
+                      "additionalProperties": false,
+                      "description": "Configuration for `hpa.main.metrics.$item.external.metric.selector`."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Configuration for `hpa.main.metrics.$item.external.metric`."
+                },
+                "target": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "AverageValue",
+                        "Value"
+                      ],
+                      "description": "Configuration for `hpa.main.metrics.$item.external.target.type`."
+                    },
+                    "averageValue": {
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
+                      "description": "Configuration for `hpa.main.metrics.$item.external.target.averageValue`."
+                    },
+                    "value": {
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
+                      "description": "Configuration for `hpa.main.metrics.$item.external.target.value`."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Configuration for `hpa.main.metrics.$item.external.target`."
+                }
+              },
+              "additionalProperties": false,
+              "description": "Configuration for `hpa.main.metrics.$item.external`."
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "description": "Configuration for `hpa.main.metrics.$item`."
+        },
+        "description": "Configuration for `hpa.main.metrics`. List of metric specs, each selecting one of Resource, Pods, Object, External or ContainerResource."
+      },
+      "workload": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Kind of the targeted workload."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Set by the library to a copy of the workload this HPA targets. Any value set by the user is overwritten."
       }
     },
     "additionalProperties": false,

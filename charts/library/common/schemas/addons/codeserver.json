@@ -6,7 +6,16 @@
       "type": [
         "boolean",
         "string"
-      ]
+      ],
+      "default": false,
+      "description": "Enable the code-server addon."
+    },
+    "targetSelector": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Workloads to which the code-server addon is attached. Defaults to `main`."
     },
     "container": {
       "allOf": [
@@ -24,21 +33,50 @@
       ]
     },
     "service": {
-      "$ref": "../service/service.json#/additionalProperties"
+      "anyOf": [
+        {
+          "$ref": "../service/service.json#/additionalProperties"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "$ref": "../service/service.json#/additionalProperties/properties/enabled"
+            }
+          },
+          "additionalProperties": {
+            "$ref": "../service/service.json#/additionalProperties"
+          },
+          "description": "Named Service objects of the code-server addon, next to `enabled`."
+        }
+      ],
+      "description": "Service of the code-server addon. Either one Service object, or named Service objects next to `enabled`."
     },
     "ingress": {
-      "allOf": [
+      "anyOf": [
         {
-          "$ref": "../ingress/ingress.json#/additionalProperties"
+          "allOf": [
+            {
+              "$ref": "../ingress/ingress.json#/additionalProperties"
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "$ref": "../ingress/ingress.json#/additionalProperties/properties/enabled"
+            }
+          },
+          "additionalProperties": {
+            "$ref": "../ingress/ingress.json#/additionalProperties"
+          },
+          "description": "Named Ingress objects of the code-server addon, next to `enabled`."
         }
-      ]
+      ],
+      "description": "Ingress of the code-server addon. Either one Ingress object, or named Ingress objects next to `enabled`."
     }
   },
-  "allOf": [
-    {
-      "$ref": "addon.json"
-    }
-  ],
   "additionalProperties": false,
   "description": "Configuration for the code-server addon."
 }

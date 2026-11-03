@@ -13,6 +13,14 @@
     "svcCIDR": {
       "type": "string",
       "description": "Configuration for `chartContext.svcCIDR`."
+    },
+    "internalUrls": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Configuration for `chartContext.internalUrls.$item`."
+      },
+      "description": "Configuration for `chartContext.internalUrls`. Set by the library, which appends the internal URLs of the services."
     }
   },
   "additionalProperties": false,

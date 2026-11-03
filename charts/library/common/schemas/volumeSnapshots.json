@@ -21,6 +21,10 @@
         "description": "Define the source of the volume snapshot At least one of the following keys must be defined",
         "default": {}
       },
+      "volumeSnapshotClassName": {
+        "type": "string",
+        "description": "Define the name of the volume snapshot class used to create the snapshot"
+      },
       "labels": {
         "allOf": [
           {
@@ -33,6 +37,22 @@
           "string"
         ],
         "default": {}
+      },
+      "annotationsList": {
+        "allOf": [
+          {
+            "$ref": "special/annotationsList.json"
+          }
+        ],
+        "description": "Additional annotations as a list of name and value pairs, merged into the annotations"
+      },
+      "labelsList": {
+        "allOf": [
+          {
+            "$ref": "special/labelsList.json"
+          }
+        ],
+        "description": "Additional labels as a list of name and value pairs, merged into the labels"
       },
       "annotations": {
         "type": [

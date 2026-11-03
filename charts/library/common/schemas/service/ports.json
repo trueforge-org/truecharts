@@ -47,6 +47,10 @@
       ],
       "description": "Define the port protocol Used by the container ports and probes, http and https are converted to tcp where needed"
     },
+    "appProtocol": {
+      "type": "string",
+      "description": "Define the appProtocol of the port, used by the `Endpoint` and `EndpointSlice` objects (External IP)"
+    },
     "hostPort": {
       "type": [
         "integer",
@@ -64,6 +68,14 @@
     "primary": {
       "type": "boolean",
       "description": "Configuration for `service.main.ports.main.primary`."
+    },
+    "protcol": {
+      "type": "string",
+      "description": "Legacy misspelling of `protocol` in the protonmail-bridge chart values. The templates ignore this key, use `protocol` instead."
+    },
+    "type": {
+      "type": "string",
+      "description": "Legacy port-level `type` used in some stable chart values (for example `docker`). The templates ignore this key on ports, set `type` on the service instead (`service.<name>.type`)."
     }
   },
   "additionalProperties": false

@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the exporter sidecar runs."
+    },
+    "image": {
+      "type": "string",
+      "default": "",
+      "description": "Overrides the image of the exporter."
+    },
+    "args": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Command-line arguments of the exporter."
+    },
+    "resources": {
+      "allOf": [
+        {
+          "$ref": "resourceRequirements.json"
+        }
+      ],
+      "default": {},
+      "description": "Resources of the exporter container."
+    },
+    "securityContext": {
+      "allOf": [
+        {
+          "$ref": "securityContext.json"
+        }
+      ],
+      "default": {},
+      "description": "Security context of the exporter container."
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the volume to mount."
+    },
+    "mountPath": {
+      "type": "string",
+      "description": "Path in the container the volume is mounted at."
+    },
+    "readOnly": {
+      "type": "boolean",
+      "description": "Whether the volume is mounted read-only."
+    },
+    "recursiveReadOnly": {
+      "type": "string",
+      "enum": [
+        "Disabled",
+        "IfPossible",
+        "Enabled"
+      ],
+      "description": "Whether the read-only mount is applied recursively to submounts."
+    },
+    "subPath": {
+      "type": "string",
+      "description": "Path inside the volume to mount instead of its root."
+    },
+    "subPathExpr": {
+      "type": "string",
+      "description": "Like `subPath`, but expanded from environment variables of the container. Mutually exclusive with `subPath`."
+    },
+    "mountPropagation": {
+      "type": "string",
+      "enum": [
+        "None",
+        "HostToContainer",
+        "Bidirectional"
+      ],
+      "description": "Mount propagation of the mount."
+    },
+    "bindMountOptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Options of the bind mount."
+    }
+  },
+  "required": [
+    "name",
+    "mountPath"
+  ],
+  "additionalProperties": false,
+  "description": "Volume mounted in the container."
+}
