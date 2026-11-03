@@ -47,6 +47,10 @@
       ],
       "description": "Define the port protocol Used by the container ports and probes, http and https are converted to tcp where needed"
     },
+    "appProtocol": {
+      "type": "string",
+      "description": "Define the appProtocol of the port, used by the `Endpoint` and `EndpointSlice` objects (External IP)"
+    },
     "hostPort": {
       "type": [
         "integer",
