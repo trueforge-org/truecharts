@@ -45,7 +45,7 @@
         "object",
         "string"
       ],
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Additional annotations for this NetworkPolicy.",
       "default": {}
     },
@@ -88,7 +88,7 @@
         "string"
       ],
       "properties": {},
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Cilium only. Create a CiliumClusterwideNetworkPolicy instead of a CiliumNetworkPolicy, chart based selectors are pinned to the namespace of the chart",
       "default": false
     },
@@ -121,7 +121,7 @@
         "type": "string"
       },
       "properties": {},
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Target workloads from this chart whose names match one or more regular expressions",
       "default": ""
     },
@@ -142,7 +142,7 @@
         "matchLabels": {
           "type": "object",
           "properties": {},
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Match endpoints by labels"
         },
         "matchExpressions": {
@@ -153,7 +153,7 @@
           "items": {
             "type": "object",
             "properties": {},
-            "additionalProperties": true
+            "additionalProperties": false
           },
           "description": "Match endpoints by label expressions"
         }
@@ -170,7 +170,7 @@
         "matchLabels": {
           "type": "object",
           "properties": {},
-          "additionalProperties": true,
+          "additionalProperties": false,
           "description": "Match nodes by labels"
         },
         "matchExpressions": {
@@ -181,7 +181,7 @@
           "items": {
             "type": "object",
             "properties": {},
-            "additionalProperties": true
+            "additionalProperties": false
           },
           "description": "Match nodes by label expressions"
         }
@@ -237,7 +237,7 @@
       "items": {
         "type": "object",
         "properties": {},
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Configuration for `$name.ingressDeny.$item`."
       },
       "description": "Cilium only. List of ingress deny rules, these take precedence over allow rules, supports Helm `tpl`",
@@ -259,7 +259,7 @@
       "items": {
         "type": "object",
         "properties": {},
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Configuration for `$name.egressDeny.$item`."
       },
       "description": "Cilium only. List of egress deny rules, these take precedence over allow rules, supports Helm `tpl`",

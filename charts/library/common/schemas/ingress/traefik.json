@@ -5,14 +5,14 @@
     "enabled": {
       "type": "boolean",
       "properties": {},
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Enables or Disables the traefik integration",
       "default": false
     },
     "entrypoints": {
       "type": "array",
       "properties": {},
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Define the entrypoints for this traefik integration",
       "items": {
         "type": "string",
@@ -23,7 +23,7 @@
     "forceTLS": {
       "type": "boolean",
       "properties": {},
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Force TLS on this ingress Adds the `traefik.ingress.kubernetes.io/router.tls` annotation.",
       "default": true
     },
@@ -61,7 +61,7 @@
     },
     "chartMiddlewares": {
       "type": "array",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "description": "Same as [middlewares](#middlewares) but meant to be used by the chart developer to define some custom middleware specific to this ingress.",
       "default": []
     }

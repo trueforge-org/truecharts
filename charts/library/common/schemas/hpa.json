@@ -275,7 +275,7 @@
                         "matchLabels": {
                           "type": "object",
                           "properties": {},
-                          "additionalProperties": true,
+                          "additionalProperties": false,
                           "description": "Configuration for `hpa.main.metrics.$item.pods.metric.selector.matchLabels`."
                         }
                       },
@@ -320,7 +320,7 @@
                         "matchLabels": {
                           "type": "object",
                           "properties": {},
-                          "additionalProperties": true,
+                          "additionalProperties": false,
                           "description": "Configuration for `hpa.main.metrics.$item.object.metric.selector.matchLabels`."
                         }
                       },
@@ -399,7 +399,7 @@
                         "matchLabels": {
                           "type": "object",
                           "properties": {},
-                          "additionalProperties": true,
+                          "additionalProperties": false,
                           "description": "Configuration for `hpa.main.metrics.$item.external.metric.selector.matchLabels`."
                         }
                       },
@@ -460,7 +460,7 @@
             "description": "Kind of the targeted workload."
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Set by the library to a copy of the workload this HPA targets. Any value set by the user is overwritten."
       }
     },

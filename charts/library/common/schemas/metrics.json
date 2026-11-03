@@ -32,7 +32,7 @@
           "string"
         ],
         "properties": {},
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Configuration for `metrics.main.selector`.",
         "default": {}
       },
@@ -102,14 +102,14 @@
             "type": "array",
             "items": {
               "type": "object",
-              "additionalProperties": true
+              "additionalProperties": false
             },
             "description": "Configuration for `metrics.main.prometheusRule.rules`. Set by stable charts (blocky, grafana, ntfy), but the common PrometheusRule template ignores it; use `groups` or `additionalgroups` for rules."
           },
           "groups": {
             "type": "object",
             "properties": {},
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Configuration for `metrics.main.prometheusRule.groups`."
           },
           "additionalgroups": {
@@ -141,7 +141,7 @@
                             "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules.$item.for`."
                           }
                         },
-                        "additionalProperties": true,
+                        "additionalProperties": false,
                         "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules.$item`."
                       },
                       "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules`."
@@ -151,7 +151,7 @@
                       "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.additionalrules`."
                     }
                   },
-                  "additionalProperties": true,
+                  "additionalProperties": false,
                   "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item`."
                 }
               },
@@ -196,7 +196,7 @@
       "annotations": {
         "type": "object",
         "properties": {},
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Configuration for `metrics.main.annotations`."
       },
       "nameOverride": {

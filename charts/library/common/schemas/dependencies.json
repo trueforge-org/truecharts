@@ -275,12 +275,12 @@
                 "description": "Connection details populated by the dependency (eg `plainhost`, `url`). Read-only."
               }
             },
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Configuration of the dependency itself. Never merged into the chart values."
           },
           "operator": {
             "type": "object",
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Settings specific to the operator providing the dependency (see `mode`). Never merged into the chart values."
           }
         }

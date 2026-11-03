@@ -43,7 +43,7 @@
       "annotations": {
         "type": "object",
         "properties": {},
-        "additionalProperties": true,
+        "additionalProperties": false,
         "description": "Configuration for `route.main.annotations`."
       },
       "labels": {
@@ -284,7 +284,7 @@
                       "null"
                     ],
                     "description": "Custom settings of the widget.",
-                    "additionalProperties": true
+                    "additionalProperties": false
                   },
                   "customkv": {
                     "type": [
@@ -331,7 +331,7 @@
               },
               "ipStrategy": {
                 "type": "object",
-                "additionalProperties": true,
+                "additionalProperties": false,
                 "description": "How Traefik determines the source IP."
               },
               "auth": {
@@ -535,17 +535,17 @@
               },
               "securityPolicy": {
                 "type": "object",
-                "additionalProperties": true,
+                "additionalProperties": false,
                 "description": "Other `SecurityPolicy` settings, without a target. Merged with `ipWhitelist` and `auth`."
               },
               "backendTrafficPolicy": {
                 "type": "object",
-                "additionalProperties": true,
+                "additionalProperties": false,
                 "description": "`BackendTrafficPolicy` settings, without a target."
               },
               "extensionPolicy": {
                 "type": "object",
-                "additionalProperties": true,
+                "additionalProperties": false,
                 "description": "`EnvoyExtensionPolicy` settings, without a target. Merged with `themePark`."
               }
             },
@@ -613,7 +613,7 @@
                     "type": "array",
                     "items": {
                       "type": "object",
-                      "additionalProperties": true
+                      "additionalProperties": false
                     },
                     "description": "Filters applied only to this backend. Only for `HTTPRoute` and `GRPCRoute`."
                   }
@@ -638,7 +638,7 @@
               "type": "array",
               "items": {
                 "type": "object",
-                "additionalProperties": true
+                "additionalProperties": false
               },
               "description": "Filters applied to requests matching this rule. Only for `HTTPRoute` and `GRPCRoute`. A rule with only filters needs no `backendRefs`, eg a redirect."
             },
@@ -648,12 +648,12 @@
             },
             "retry": {
               "type": "object",
-              "additionalProperties": true,
+              "additionalProperties": false,
               "description": "Retry configuration. Only for `HTTPRoute`."
             },
             "sessionPersistence": {
               "type": "object",
-              "additionalProperties": true,
+              "additionalProperties": false,
               "description": "Session persistence, needs the experimental Gateway API channel. Only for `HTTPRoute` and `GRPCRoute`."
             }
           },
