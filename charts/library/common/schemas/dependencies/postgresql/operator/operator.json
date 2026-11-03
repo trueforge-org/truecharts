@@ -31,6 +31,22 @@
       "description": "Additional annotations for all CNPG objects.",
       "default": {}
     },
+    "annotationsList": {
+      "allOf": [
+        {
+          "$ref": "../../../special/annotationsList.json"
+        }
+      ],
+      "description": "Additional annotations as a list of name and value pairs, merged into the `annotations` of all CNPG objects."
+    },
+    "labelsList": {
+      "allOf": [
+        {
+          "$ref": "../../../special/labelsList.json"
+        }
+      ],
+      "description": "Additional labels as a list of name and value pairs, merged into the `labels` of all CNPG objects."
+    },
     "type": {
       "type": "string",
       "enum": [
