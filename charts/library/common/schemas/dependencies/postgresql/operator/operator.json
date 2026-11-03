@@ -118,39 +118,21 @@
                 "type": "array",
                 "items": {
                   "type": "object",
-                  "properties": {
-                    "datname": {
-                      "type": "object",
-                      "properties": {
-                        "description": {
-                          "type": "string",
-                          "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.datname.description`."
-                        },
-                        "usage": {
-                          "type": "string",
-                          "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.datname.usage`."
-                        }
+                  "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                      "usage": {
+                        "type": "string",
+                        "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.$name.usage`."
                       },
-                      "additionalProperties": false,
-                      "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.datname`."
+                      "description": {
+                        "type": "string",
+                        "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.$name.description`."
+                      }
                     },
-                    "size_bytes": {
-                      "type": "object",
-                      "properties": {
-                        "description": {
-                          "type": "string",
-                          "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.size_bytes.description`."
-                        },
-                        "usage": {
-                          "type": "string",
-                          "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.size_bytes.usage`."
-                        }
-                      },
-                      "additionalProperties": false,
-                      "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.size_bytes`."
-                    }
+                    "additionalProperties": false,
+                    "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.$name`."
                   },
-                  "additionalProperties": true,
                   "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item`."
                 },
                 "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics`."
