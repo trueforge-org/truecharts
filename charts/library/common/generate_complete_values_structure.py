@@ -147,6 +147,9 @@ def merge_structures(base: Any, new: Any, path: str = "") -> Any:
     return base
 
 
+# Addons whose service, ingress and route keys hold a single object, eg addons.codeserver.route
+ADDONS_WITH_SINGLE_OBJECTS = {'codeserver'}
+
 # Parent keys that contain variable-named child objects
 # These are configuration sections where users define their own object names
 PARENT_KEYS_WITH_VARIABLE_CHILDREN = {
@@ -253,7 +256,9 @@ def normalize_variable_keys(data: Any, parent_key: str = "", in_operator: bool =
     # Not a parent with variable children, process each key normally
     for key, value in data.items():
         # Recursively process, passing the current key as parent_key for next level
-        result[key] = normalize_variable_keys(value, key, in_operator or key == "operator")
+        # The service, ingress and route of an addon are single objects, not collections
+        next_parent = "" if parent_key in ADDONS_WITH_SINGLE_OBJECTS else key
+        result[key] = normalize_variable_keys(value, next_parent, in_operator or key == "operator")
 
     return result
 

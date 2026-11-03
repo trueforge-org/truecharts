@@ -65,7 +65,7 @@ The addons of the chart are not inherited, so the same addon can be configured d
   {{- if $enabledAddons -}}
     {{/* The collections the addons add their objects to */}}
     {{- $scope := dict -}}
-    {{- range $collName := (list "workload" "service" "ingress" "persistence" "secret") -}}
+    {{- range $collName := (list "workload" "service" "ingress" "route" "persistence" "secret") -}}
       {{- $objects := get $collections $collName -}}
       {{- if not (kindIs "map" $objects) -}}
         {{- $objects = dict -}}

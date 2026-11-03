@@ -5334,9 +5334,52 @@ addons:
       targetSelector:
       - ''
     service:
-      objectname: true
+      enabled: true
+      type: ''
+      ports:
+        objectname:
+          enabled: true
+          primary: true
+          protocol: ''
+          port: 0
+          targetPort: 0
+          nodePort: 0
     ingress:
-      objectname: false
+      enabled: false
+      annotations: {}
+      labels: {}
+      hosts:
+      - host: ''
+        paths:
+        - path: ''
+          pathType: ''
+      tls: []
+      integrations:
+        traefik:
+          enabled: false
+    route:
+      enabled: false
+      kind: ''
+      annotations: {}
+      labels: {}
+      gateway: ''
+      hostnames:
+      - ''
+      gatewayNamespace: ''
+      integrations:
+        certManager:
+          enabled: true
+          certificateIssuer: ''
+      rules:
+      - matches:
+        - path:
+            type: ''
+            value: ''
+      tls:
+      - hosts:
+        - ''
+        certificateIssuer: ''
+      listenerSet: ''
   netshoot:
     enabled: false
     container:
@@ -5987,6 +6030,11 @@ dependencies:
     addons:
       netshoot:
         enabled: true
+      codeserver:
+        enabled: true
+        route:
+          enabled: true
+          gateway: ''
     serviceAccount:
       main:
         primary: true

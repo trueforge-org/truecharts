@@ -570,8 +570,17 @@ so templates like [.Values.dependencies.$name.service.main.ports.main.port] keep
       {{- $_ := set $obj "listenerSet" (include "tc.v1.common.values.dependencies.ref" (merge (dict "coll" "listenerSet" "name" $obj.listenerSet) $refCtx)) -}}
     {{- end -}}
 
+    {{/* A string selects a gateway, a map selects the default service and port of the rules, the same as an ingress */}}
+    {{- $hasDefaultBackend := false -}}
     {{- if kindIs "string" $obj.targetSelector -}}
       {{- $_ := set $obj "targetSelector" (include "tc.v1.common.values.dependencies.ref" (merge (dict "coll" "gateway" "name" $obj.targetSelector) $refCtx)) -}}
+    {{- else if kindIs "map" $obj.targetSelector -}}
+      {{- $newSelector := dict -}}
+      {{- range $svcName, $port := $obj.targetSelector -}}
+        {{- $_ := set $newSelector (include "tc.v1.common.values.dependencies.ref" (merge (dict "coll" "service" "name" $svcName) $refCtx)) $port -}}
+      {{- end -}}
+      {{- $_ := set $obj "targetSelector" $newSelector -}}
+      {{- $hasDefaultBackend = true -}}
     {{- end -}}
 
     {{- if kindIs "slice" $obj.parentRefs -}}
@@ -583,8 +592,19 @@ so templates like [.Values.dependencies.$name.service.main.ports.main.port] keep
     {{- end -}}
 
     {{/* Backends default to the primary service of the dependency, instead of the primary service of the release */}}
+    {{/* With a targetSelector map, the route already has a default backend within the dependency */}}
     {{- $noPrimaryService := printf "Dependencies - Expected a [targetSelector] or [name] on the backendRefs of [%s] in dependency [%s], as no primary service could be determined" $location $depName -}}
-    {{- if not $obj.rules -}}
+    {{- if $hasDefaultBackend -}}
+      {{- range $rule := ($obj.rules | default list) -}}
+        {{- if and (kindIs "map" $rule) (kindIs "slice" $rule.backendRefs) -}}
+          {{- range $backend := $rule.backendRefs -}}
+            {{- if and (kindIs "map" $backend) (kindIs "string" $backend.targetSelector) -}}
+              {{- $_ := set $backend "targetSelector" (include "tc.v1.common.values.dependencies.ref" (merge (dict "coll" "service" "name" $backend.targetSelector) $refCtx)) -}}
+            {{- end -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- else if not $obj.rules -}}
       {{- if not $defaultService -}}
         {{- fail $noPrimaryService -}}
       {{- end -}}
