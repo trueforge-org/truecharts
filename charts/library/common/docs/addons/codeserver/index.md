@@ -79,6 +79,20 @@ Ingress of the code-server addon. Either one Ingress object, or named Ingress ob
 
 ---
 
+### `addons.codeserver.route`
+
+Gateway API route of the code-server addon, the same as a `route.<name>` of the chart. It defaults to the `codeserver` service and port, and is the primary route when no other route is primary. Select the gateway with `gateway`, `parentRefs` or `listenerSet`.
+
+| Field      | Value                     |
+| ---------- | ------------------------- |
+| Key        | `addons.codeserver.route` |
+| Type       | `map`                     |
+| Required   | ❌                        |
+| Helm `tpl` | ❌                        |
+| Default    | unset                     |
+
+---
+
 ### `addons.codeserver.service`
 
 Service of the code-server addon. Either one Service object, or named Service objects next to `enabled`.

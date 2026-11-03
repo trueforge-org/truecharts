@@ -73,5 +73,32 @@ It will include / inject the required templates based on the given values.
       {{/* Let spawner handle the rest */}}
       {{- $_ := set $.Values.ingress "codeserver" $ingressValues -}}
     {{- end -}}
+
+    {{/* Add the code-server route */}}
+    {{- if $codeSrv.route.enabled -}}
+      {{- $routeValues := $codeSrv.route -}}
+      {{- if not $routeValues.targetSelector -}}
+        {{/* Assumes that both service and port are named codeserver */}}
+        {{- $_ := set $routeValues "targetSelector" (dict "codeserver" "codeserver") -}}
+      {{- end -}}
+
+      {{- $hasPrimaryRoute := kindIs "string" $.dependency -}}
+      {{- range $name, $route := ($.Values.route | default dict) -}}
+        {{- if and (kindIs "map" $route) $route.primary (eq (include "tc.v1.common.lib.gateway.enabled" (dict "rootCtx" $ "objectData" $route "name" $name "key" "route" "caller" "Route")) "true") -}}
+          {{- $hasPrimaryRoute = true -}}
+        {{- end -}}
+      {{- end -}}
+
+      {{- if not $hasPrimaryRoute -}}
+        {{- $_ := set $routeValues "primary" true -}}
+      {{- end -}}
+
+      {{- if not $.Values.route -}}
+        {{- $_ := set $.Values "route" dict -}}
+      {{- end -}}
+
+      {{/* Let spawner handle the rest */}}
+      {{- $_ := set $.Values.route "codeserver" $routeValues -}}
+    {{- end -}}
   {{- end -}}
 {{- end -}}

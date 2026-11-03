@@ -1580,6 +1580,17 @@ addons:
               pathType: Prefix
       tls: []
 
+    route:
+      # -- Enable a Gateway API route for the code-server add-on, the same as a route of the chart.
+      # Select the gateway with [gateway], a [parentRefs] entry or [listenerSet].
+      enabled: false
+      kind: HTTPRoute
+      annotations: {}
+      labels: {}
+      gateway: ""
+      hostnames:
+        - code.chart-example.local
+
   netshoot:
     # -- Enable running a netshoot container in the pod
     enabled: false
