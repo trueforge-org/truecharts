@@ -16,25 +16,18 @@
       "default": false
     },
     "labels": {
-      "allOf": [
-        {
-          "$ref": "../../../special/labels.json"
-        }
-      ],
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
       "description": "Additional labels for all CNPG objects.",
-      "type": [
-        "object",
-        "string"
-      ],
       "default": {}
     },
     "annotations": {
-      "type": [
-        "object",
-        "string"
-      ],
-      "properties": {},
-      "additionalProperties": true,
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
       "description": "Additional annotations for all CNPG objects.",
       "default": {}
     },
