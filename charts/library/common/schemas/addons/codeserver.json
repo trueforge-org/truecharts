@@ -36,11 +36,28 @@
       "$ref": "../service/service.json#/additionalProperties"
     },
     "ingress": {
-      "allOf": [
+      "anyOf": [
         {
-          "$ref": "../ingress/ingress.json#/additionalProperties"
+          "allOf": [
+            {
+              "$ref": "../ingress/ingress.json#/additionalProperties"
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "$ref": "../ingress/ingress.json#/additionalProperties/properties/enabled"
+            }
+          },
+          "additionalProperties": {
+            "$ref": "../ingress/ingress.json#/additionalProperties"
+          },
+          "description": "Named Ingress objects of the code-server addon, next to `enabled`."
         }
-      ]
+      ],
+      "description": "Ingress of the code-server addon. Either one Ingress object, or named Ingress objects next to `enabled`."
     }
   },
   "additionalProperties": false,
