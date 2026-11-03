@@ -12,8 +12,9 @@ This is a condensed summary. The full, canonical instructions are in [`AGENTS.md
 
 ## Rules
 
+- Run every shell command in the background (asynchronous mode) so it does not block the agent's main runner.
 - Keep changes minimal and scoped to the requested chart or library component.
-- When changing chart files (other than files in the chart's `docs/` folder), bump that chart's `version` in its `Chart.yaml`. CI fails without the bump. Use SemVer:
+- When a PR targets `master` and changes chart files (other than files in the chart's `docs/` folder), bump that chart's `version` in its `Chart.yaml`. CI fails without the bump. Don't bump in PRs into other branches. Use SemVer:
   - **major** for breaking changes (`BREAKING CHANGE(<chart>): ...`)
   - **minor** for features or minor app upgrades (`feat(<chart>): ...`)
   - **patch** for fixes, patch upgrades and digests (`fix(<chart>): ...` / `chore(<chart>): ...`)
