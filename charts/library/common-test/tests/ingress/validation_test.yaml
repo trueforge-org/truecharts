@@ -96,7 +96,7 @@ tests:
           labels: "not a dict"
     asserts:
       - failedTemplate:
-          errorMessage: Ingress - Expected [labels] to be a dictionary, but got [string]
+          errorPattern: 'at ''/ingress/my-ingress/labels'': got string, want object'
 
   - it: should fail with annotations not a dict
     set:
@@ -116,7 +116,7 @@ tests:
           enabled:
     asserts:
       - failedTemplate:
-          errorMessage: Ingress - Expected the defined key [enabled] in [ingress.my-ingress] to not be empty
+          errorPattern: 'at ''/ingress/my-ingress/enabled'': got null, want boolean or string'
 
   - it: should fail with targetSelector not a map
     set:
@@ -127,7 +127,7 @@ tests:
           targetSelector: "not a map"
     asserts:
       - failedTemplate:
-          errorMessage: Ingress - Expected [targetSelector] to be a [map], but got [string]
+          errorPattern: 'at ''/ingress/my-ingress/targetSelector'': got string, want object'
 
   - it: should fail with targetSelector having more than one key
     set:
@@ -152,7 +152,7 @@ tests:
             main:
     asserts:
       - failedTemplate:
-          errorMessage: Ingress - Expected [targetSelector.main] to have a value
+          errorPattern: 'at ''/ingress/my-ingress/targetSelector/main'': got null, want string'
 
   - it: should fail with targetSelector key having non-string value
     set:
@@ -165,7 +165,7 @@ tests:
               - not a string
     asserts:
       - failedTemplate:
-          errorMessage: Ingress - Expected [targetSelector.main] to be a [string], but got [slice]
+          errorPattern: 'at ''/ingress/my-ingress/targetSelector/main'': got array, want string'
 
   - it: should fail with no hosts
     set:
@@ -187,7 +187,7 @@ tests:
           hosts: not-a-slice
     asserts:
       - failedTemplate:
-          errorMessage: Ingress - Expected [hosts] to be a [slice], but got [string]
+          errorPattern: 'at ''/ingress/my-ingress/hosts'': got string, want array'
 
   - it: should fail with no hosts.host
     set:
@@ -255,7 +255,7 @@ tests:
               paths: not-a-slice
     asserts:
       - failedTemplate:
-          errorMessage: Ingress - Expected [hosts.paths] to be a [slice], but got [string]
+          errorPattern: 'at ''/ingress/my-ingress/hosts/0/paths'': got string, want array'
 
   - it: should fail with invalid pathType
     set:
@@ -454,7 +454,7 @@ tests:
             - hosts: not-a-slice
     asserts:
       - failedTemplate:
-          errorMessage: Ingress - Expected [tls.hosts] to be a [slice], but got [string]
+          errorPattern: 'at ''/ingress/my-ingress/tls/0/hosts'': got string, want array'
 
   - it: should fail if tls.hosts.host is empty
     set:

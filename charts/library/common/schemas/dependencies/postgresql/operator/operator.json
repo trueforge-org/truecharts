@@ -292,6 +292,20 @@
               "suspend": {
                 "type": "boolean",
                 "description": "Configuration for `dependencies.postgresql.operator.backups.scheduledBackups.$item.suspend`."
+              },
+              "labels": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Additional labels for this manual backup, merged with `backups.labels`."
+              },
+              "annotations": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Additional annotations for this manual backup, merged with `backups.annotations`."
               }
             },
             "additionalProperties": false,

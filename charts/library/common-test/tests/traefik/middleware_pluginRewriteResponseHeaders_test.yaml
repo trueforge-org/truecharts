@@ -112,8 +112,7 @@ tests:
           my-middleware1:
             enabled: true
             type: plugin-rewrite-response-headers
-            data:
-              foo: bar
+            data: {}
     asserts:
       - failedTemplate:
           errorMessage: Middleware (rewrite-response-headers) - Expected [rewrites] to be set
@@ -129,4 +128,4 @@ tests:
               rewrites: some-value
     asserts:
       - failedTemplate:
-          errorMessage: Middleware (rewrite-response-headers) - Expected [rewrites] to be a list, but got [string]
+          errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware1/data/rewrites'': got string, want array'

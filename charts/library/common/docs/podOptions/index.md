@@ -312,14 +312,14 @@ podOptions:
 
 Default restartPolicy for all pods, can be overruled per pod. Jobs and CronJobs default to OnFailure, other workloads default to Always. See [Restart Policy](/truecharts-common/workload#restartpolicy)
 
-| Field      | Value                          |
-| ---------- | ------------------------------ |
-| Key        | `podOptions.restartPolicy`     |
-| Type       | `string`                       |
-| Required   | ❌                             |
-| Helm `tpl` | ❌                             |
-| Default    | unset                          |
-| Enum       | `Never`, `Always`, `OnFailure` |
+| Field      | Value                              |
+| ---------- | ---------------------------------- |
+| Key        | `podOptions.restartPolicy`         |
+| Type       | `string`                           |
+| Required   | ❌                                 |
+| Helm `tpl` | ❌                                 |
+| Default    | unset                              |
+| Enum       | ``, `Never`, `Always`, `OnFailure` |
 
 ---
 

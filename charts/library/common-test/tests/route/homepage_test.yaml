@@ -274,7 +274,7 @@ tests:
               podSelector: not-a-slice
     asserts:
       - failedTemplate:
-          errorMessage: Route - Expected [integrations.homepage.podSelector] to be a [slice], but got [string]
+          errorPattern: 'at ''/route/my-route/integrations/homepage/podSelector'': got string, want array'
 
   - it: should fail with custom widget not a map
     set:
@@ -293,4 +293,4 @@ tests:
                 custom: not-a-map
     asserts:
       - failedTemplate:
-          errorMessage: Route - Expected [integrations.homepage.widget.custom] to be a [map], but got [string]
+          errorPattern: 'at ''/route/my-route/integrations/homepage/widget/custom'': got string, want null or object'

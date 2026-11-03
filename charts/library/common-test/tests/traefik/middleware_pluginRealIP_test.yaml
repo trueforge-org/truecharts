@@ -57,8 +57,7 @@ tests:
           my-middleware1:
             enabled: true
             type: plugin-real-ip
-            data:
-              foo: bar
+            data: {}
     asserts:
       - failedTemplate:
           errorMessage: Middleware (real-ip) - Expected [excludednets] to be set

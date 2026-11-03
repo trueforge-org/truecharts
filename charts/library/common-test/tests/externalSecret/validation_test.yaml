@@ -47,7 +47,7 @@ tests:
                 key: my-app
     asserts:
       - failedTemplate:
-          errorMessage: ExternalSecret - Expected [externalSecret.credentials.secretStoreRef.kind] to be one of [SecretStore, ClusterSecretStore], but got [Vault]
+          errorPattern: 'at ''/externalSecret/credentials/secretStoreRef/kind'': value must be one of ''SecretStore'', ''ClusterSecretStore'''
 
   - it: should fail with an invalid creationPolicy
     set:
@@ -64,7 +64,7 @@ tests:
                 key: my-app
     asserts:
       - failedTemplate:
-          errorMessage: ExternalSecret - Expected [externalSecret.credentials.target.creationPolicy] to be one of [Owner, Orphan, Merge, None], but got [Create]
+          errorPattern: 'at ''/externalSecret/credentials/target/creationPolicy'': value must be one of ''Owner'', ''Orphan'', ''Merge'', ''None'''
 
   - it: should fail with an invalid deletionPolicy
     set:
@@ -81,7 +81,7 @@ tests:
                 key: my-app
     asserts:
       - failedTemplate:
-          errorMessage: ExternalSecret - Expected [externalSecret.credentials.target.deletionPolicy] to be one of [Delete, Merge, Retain], but got [Keep]
+          errorPattern: 'at ''/externalSecret/credentials/target/deletionPolicy'': value must be one of <nil>, '''', ''Delete'', ''Merge'', ''Retain'''
 
   - it: should fail with an invalid refreshPolicy
     set:
@@ -97,7 +97,7 @@ tests:
                 key: my-app
     asserts:
       - failedTemplate:
-          errorMessage: ExternalSecret - Expected [externalSecret.credentials.refreshPolicy] to be one of [CreatedOnce, Periodic, OnChange], but got [Always]
+          errorPattern: 'at ''/externalSecret/credentials/refreshPolicy'': value must be one of <nil>, '''', ''CreatedOnce'', ''Periodic'', ''OnChange'''
 
   - it: should fail without data and dataFrom
     set:
@@ -123,7 +123,7 @@ tests:
                 key: my-app
     asserts:
       - failedTemplate:
-          errorMessage: ExternalSecret - Expected [externalSecret.credentials.data] to be a list, but got [map]
+          errorPattern: 'at ''/externalSecret/credentials/data'': got object, want string or array'
 
   - it: should fail when a data entry has no secretKey
     set:

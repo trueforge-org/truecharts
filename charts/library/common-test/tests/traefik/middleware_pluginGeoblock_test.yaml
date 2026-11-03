@@ -85,8 +85,7 @@ tests:
           my-middleware1:
             enabled: true
             type: plugin-geoblock
-            data:
-              foo: bar
+            data: {}
     asserts:
       - failedTemplate:
           errorMessage: Middleware (plugin-geoblock) - Expected [api] to be set

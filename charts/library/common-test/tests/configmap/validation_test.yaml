@@ -92,4 +92,4 @@ tests:
             foo: bar
     asserts:
       - failedTemplate:
-          errorMessage: ConfigMap - Expected the defined key [enabled] in [configmap.my-configmap] to not be empty
+          errorPattern: 'at ''/configmap/my-configmap/enabled'': got null, want boolean or string'

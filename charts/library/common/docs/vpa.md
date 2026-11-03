@@ -29,6 +29,20 @@ Configuration for `vpa`.
 
 ---
 
+### `vpa.$name.annotations`
+
+Additional annotations of the VerticalPodAutoscaler.
+
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `vpa.$name.annotations` |
+| Type       | `map`                   |
+| Required   | ❌                      |
+| Helm `tpl` | ❌                      |
+| Default    | unset                   |
+
+---
+
 ### `vpa.$name.enabled`
 
 Configuration for `vpa.main.enabled`.
@@ -48,6 +62,20 @@ vpa:
   $name:
     enabled: false
 ```
+
+---
+
+### `vpa.$name.labels`
+
+Additional labels of the VerticalPodAutoscaler.
+
+| Field      | Value              |
+| ---------- | ------------------ |
+| Key        | `vpa.$name.labels` |
+| Type       | `map`              |
+| Required   | ❌                 |
+| Helm `tpl` | ❌                 |
+| Default    | unset              |
 
 ---
 

@@ -143,6 +143,13 @@
             "verbs": {
               "type": "array",
               "description": "Define the `verbs` list for the `rules` for the (Cluster)Role"
+            },
+            "nonResourceURLs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Define the `nonResourceURLs` list for the `rules` for the (Cluster)Role"
             }
           },
           "additionalProperties": false

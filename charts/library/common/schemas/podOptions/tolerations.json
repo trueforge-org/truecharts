@@ -20,6 +20,10 @@
       "effect": {
         "type": "string",
         "description": "Configuration for `tolerations.$item.effect`."
+      },
+      "tolerationSeconds": {
+        "type": "integer",
+        "description": "Seconds the pod stays bound to a node with a `NoExecute` taint, before it is evicted."
       }
     },
     "additionalProperties": false

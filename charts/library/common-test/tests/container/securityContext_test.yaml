@@ -939,7 +939,7 @@ tests:
                   readOnlyRootFilesystem: "true"
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected [securityContext.readOnlyRootFilesystem] to be [bool], but got [true] of type [string]
+          errorPattern: 'at ''/workload/workload-name1/podSpec/containers/container-name1/securityContext/readOnlyRootFilesystem'': got string, want boolean'
 
   - it: should fail with runAsNonRoot not a bool
     set:
@@ -960,7 +960,7 @@ tests:
                   runAsNonRoot: "true"
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected [securityContext.runAsNonRoot] to be [bool], but got [true] of type [string]
+          errorPattern: 'at ''/workload/workload-name1/podSpec/containers/container-name1/securityContext/runAsNonRoot'': got string, want boolean'
 
   - it: should fail with allowPrivilegeEscalation not a bool
     set:
@@ -981,7 +981,7 @@ tests:
                   allowPrivilegeEscalation: "true"
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected [securityContext.allowPrivilegeEscalation] to be [bool], but got [true] of type [string]
+          errorPattern: 'at ''/workload/workload-name1/podSpec/containers/container-name1/securityContext/allowPrivilegeEscalation'': got string, want boolean'
 
   - it: should fail with privileged not a bool
     set:
@@ -1002,7 +1002,7 @@ tests:
                   privileged: "true"
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected [securityContext.privileged] to be [bool], but got [true] of type [string]
+          errorPattern: 'at ''/workload/workload-name1/podSpec/containers/container-name1/securityContext/privileged'': got string, want boolean'
 
   - it: should fail with runAsUser not an int
     set:
@@ -1023,7 +1023,7 @@ tests:
                   runAsUser: "568"
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected [securityContext.runAsUser] to be [int], but got [568] of type [string]
+          errorPattern: 'at ''/workload/workload-name1/podSpec/containers/container-name1/securityContext/runAsUser'': got string, want integer'
 
   - it: should fail with runAsGroup not an int
     set:
@@ -1044,7 +1044,7 @@ tests:
                   runAsGroup: "568"
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected [securityContext.runAsGroup] to be [int], but got [568] of type [string]
+          errorPattern: 'at ''/workload/workload-name1/podSpec/containers/container-name1/securityContext/runAsGroup'': got string, want integer'
 
   - it: should fail without seccompProfile
     set:
@@ -1088,7 +1088,7 @@ tests:
                     type: invalid
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected [securityContext.seccompProfile] to be one of [RuntimeDefault, Localhost, Unconfined], but got [invalid]
+          errorPattern: 'at ''/workload/workload-name1/podSpec/containers/container-name1/securityContext/seccompProfile/type'': value must be one of ''RuntimeDefault'', ''Localhost'', ''Unconfined'''
 
   - it: should fail without profile on seccompProfile Localhost
     set:
@@ -1133,7 +1133,7 @@ tests:
                 probes: *probes
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected [securityContext.capabilities] to be defined
+          errorPattern: 'at ''/securityContext/container/capabilities'': got null, want object'
 
   - it: should fail capabilities.add not a list
     set:
@@ -1155,7 +1155,7 @@ tests:
                     add: invalid
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected [securityContext.capabilities.add] to be [list], but got [string]
+          errorPattern: 'at ''/workload/workload-name1/podSpec/containers/container-name1/securityContext/capabilities/add'': got string, want array'
 
   - it: should fail capabilities.drop not a list
     set:
@@ -1177,7 +1177,7 @@ tests:
                     drop: invalid
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected [securityContext.capabilities.drop] to be [list], but got [string]
+          errorPattern: 'at ''/workload/workload-name1/podSpec/containers/container-name1/securityContext/capabilities/drop'': got string, want array'
 
   - it: should fail capabilities.disableS6Caps not a bool
     set:
@@ -1202,7 +1202,7 @@ tests:
                     disableS6Caps: not-bool
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected [securityContext.capabilities.disableS6Caps] to be [bool], but got [not-bool] of type [string]
+          errorPattern: 'at ''/workload/workload-name1/podSpec/containers/container-name1/securityContext/capabilities/disableS6Caps'': got string, want boolean'
 
   - it: should fail with duplicate capabilities.add
     set:

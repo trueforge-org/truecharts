@@ -57,6 +57,33 @@
         },
         "additionalProperties": false,
         "description": "Configuration for `topologySpreadConstraints.$item.labelSelector`."
+      },
+      "minDomains": {
+        "type": "integer",
+        "description": "Minimum number of eligible domains."
+      },
+      "matchLabelKeys": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Label keys of the pod to select the pods that are counted."
+      },
+      "nodeAffinityPolicy": {
+        "type": "string",
+        "enum": [
+          "Honor",
+          "Ignore"
+        ],
+        "description": "Whether the node affinity of the pod is honored when the skew is calculated."
+      },
+      "nodeTaintsPolicy": {
+        "type": "string",
+        "enum": [
+          "Honor",
+          "Ignore"
+        ],
+        "description": "Whether the node taints are honored when the skew is calculated."
       }
     },
     "additionalProperties": false

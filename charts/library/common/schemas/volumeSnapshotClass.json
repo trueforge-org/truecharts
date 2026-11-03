@@ -12,7 +12,11 @@
         ],
         "properties": {},
         "additionalProperties": {
-          "type": "string",
+          "type": [
+            "string",
+            "number",
+            "boolean"
+          ],
           "description": "Value of the parameter"
         },
         "description": "Define a volume snapshot class",

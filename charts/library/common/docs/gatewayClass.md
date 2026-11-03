@@ -143,6 +143,20 @@ Fields for parametersRef:
 
 ---
 
+### `gatewayClass.$name.primary`
+
+Make this the primary GatewayClass of the chart. Only one can be primary.
+
+| Field      | Value                        |
+| ---------- | ---------------------------- |
+| Key        | `gatewayClass.$name.primary` |
+| Type       | `boolean`                    |
+| Required   | ❌                           |
+| Helm `tpl` | ❌                           |
+| Default    | unset                        |
+
+---
+
 ## Full Examples
 
 ### Basic GatewayClass

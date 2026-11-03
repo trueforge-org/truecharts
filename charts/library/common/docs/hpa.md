@@ -29,6 +29,20 @@ Configuration for `hpa`.
 
 ---
 
+### `hpa.$name.annotations`
+
+Additional annotations of the HorizontalPodAutoscaler.
+
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `hpa.$name.annotations` |
+| Type       | `map`                   |
+| Required   | ❌                      |
+| Helm `tpl` | ❌                      |
+| Default    | unset                   |
+
+---
+
 ### `hpa.$name.behavior`
 
 Configuration for `hpa.main.behavior`.
@@ -62,6 +76,20 @@ hpa:
   $name:
     enabled: false
 ```
+
+---
+
+### `hpa.$name.labels`
+
+Additional labels of the HorizontalPodAutoscaler.
+
+| Field      | Value              |
+| ---------- | ------------------ |
+| Key        | `hpa.$name.labels` |
+| Type       | `map`              |
+| Required   | ❌                 |
+| Helm `tpl` | ❌                 |
+| Default    | unset              |
 
 ---
 

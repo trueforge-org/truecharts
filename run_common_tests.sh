@@ -95,7 +95,6 @@ rm -rf "$common_test_path/charts" "$common_test_path/Chart.lock"
 echo "📦 Checking the bundled schema..."
 python3 charts/library/common/generate_bundled_schema.py --check || fail "values.schema.json is not up to date"
 python3 charts/library/common/generate_docs.py --check || fail "The docs are not up to date"
-.github/scripts/test_chart_schema.sh || fail "The schema is not validated on a chart that depends on common"
 
 echo "🔨 Building common..."
 helm dependency update "$common_test_path" || fail "Failed to build common"

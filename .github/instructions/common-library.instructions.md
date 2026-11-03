@@ -79,7 +79,7 @@ These rules apply to `charts/library/common/` (the `common` library chart that e
 
 - `values.schema.source.json` (JSON Schema draft-07) is the root. Each top-level key has a `$ref` to its own file in `schemas/`, e.g. `schemas/configmap.json` or `schemas/workload/podSpec/containers/env.json`.
 - `generate_bundled_schema.py` bundles these into a single `values.schema.json`, without a `$id` and with only internal `$ref`s, because Helm only has that one file when it validates a packaged chart. CI fails when the file is not up to date.
-- Helm validates a subchart's schema only against that subchart's own values, not against the values of the chart. So `.github/scripts/add_chart_schema.sh` copies the schema of the `common` version a chart depends on into the chart: on release (`cr.sh`) and while linting (`tc-lint.sh`). These copies are not committed. `.github/scripts/test_chart_schema.sh` checks this end to end.
+- Helm validates a subchart's schema only against that subchart's own values, not against the values of the chart. So `.github/scripts/add_chart_schema.sh` copies the schema of the `common` version a chart depends on into the chart: on release (`cr.sh`) and while linting (`tc-lint.sh`). These copies are not committed. `common-test` has the same setup: its `values.schema.json` is a symlink to the one of `common`, so every unit test and install test validates the schema.
 - The source and tooling of `common` are not packaged. They are listed in `templates/helmignore.tpl`, which `forgetool charts genmeta` writes to the `.helmignore` of every chart, so a new file in the root of `common` has to be added there too.
 - Every key in `values.yaml` and every key the templates read must be in the schema. When you add, rename or remove a key, change the schema in the same PR.
 - Set `"additionalProperties": false` on every object with a fixed set of keys, so unknown keys are rejected. A closed object must list every key the chart and the templates use, or `test_schema.py` fails. The number of known keys does not decide this, the nature of the keys does.
@@ -191,7 +191,24 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: ConfigMap - Expected non-empty [data] or [binaryData]
+
+  - it: should fail with data as a list
+    set:
+      configmap:
+        my-configmap:
+          enabled: true
+          data:
+            - item
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/configmap/my-configmap/data'': got array, want string or object'
 ```
+
+The values of every test are validated against the schema of `common` first, as `common-test/values.schema.json` links to it:
+
+- Use valid values in a test, unless the test is about invalid values. Test data with unknown or wrongly typed keys fails on the schema, before the templates run.
+- When the schema rejects the value a test is about, assert the schema error with `errorPattern`, matching the `at '<path>': <reason>` line. When several keys are listed, their order can change, so match them with `.*`.
+- Only values the schema accepts reach the templates, so keep `errorMessage` for the checks the schema can't do, like names, formats and keys that depend on each other.
 
 Run the tests from the repository root:
 
@@ -222,4 +239,4 @@ Never commit `common-test/charts/`, `common-test/Chart.lock` or `__snapshot__/` 
 `./run_common_tests.sh` runs these after the unit tests, the same as the `schema-validation` job in CI. They need Python 3 with PyYAML.
 
 - `test_schema.py` runs `helm lint` on `common` with every `charts/stable/*/values.yaml` and `common-test/ci/*values.yaml`. That is about 850 files and takes a few minutes, and writes the results to `stable_schema_validation.log`. Set `SCHEMA_MAX_FAILURES=<n>` to stop after `n` failures.
-- `check_complete_values_schema_coverage.py` must report 100% coverage of both structure files. 
+- `check_complete_values_schema_coverage.py` must report 100% coverage of both structure files.

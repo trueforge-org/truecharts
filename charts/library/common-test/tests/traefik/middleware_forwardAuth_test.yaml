@@ -105,7 +105,7 @@ tests:
               authResponseHeaders: some-header
     asserts:
       - failedTemplate:
-          errorMessage: Middleware (forward-auth) - Expected [authResponseHeaders] to be a list, but got [string]
+          errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware1/data/authResponseHeaders'': got string, want array'
 
   - it: should fail with invalid authRequestHeaders
     set:
@@ -119,7 +119,7 @@ tests:
               authRequestHeaders: some-header
     asserts:
       - failedTemplate:
-          errorMessage: Middleware (forward-auth) - Expected [authRequestHeaders] to be a list, but got [string]
+          errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware1/data/authRequestHeaders'': got string, want array'
 
   - it: should fail with invalid tls.insecureSkipVerify
     set:
@@ -134,7 +134,7 @@ tests:
                 insecureSkipVerify: some-value
     asserts:
       - failedTemplate:
-          errorMessage: Middleware (forward-auth) - Expected [tls.insecureSkipVerify] to be a boolean, but got [string]
+          errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware1/data/tls/insecureSkipVerify'': got string, want boolean'
 
   - it: should fail with invalid trustForwardHeader
     set:
@@ -148,7 +148,7 @@ tests:
               trustForwardHeader: some-value
     asserts:
       - failedTemplate:
-          errorMessage: Middleware (forward-auth) - Expected [trustForwardHeader] to be a boolean, but got [string]
+          errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware1/data/trustForwardHeader'': got string, want boolean'
 
   - it: should fail with invalid maxResponseBodySize
     set:
@@ -163,4 +163,4 @@ tests:
               maxResponseBodySize: a-string
     asserts:
       - failedTemplate:
-          errorMessage: Middleware (forward-auth) - Expected [maxResponseBodySize] to be an integer, but got [string]
+          errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware1/data/maxResponseBodySize'': got string, want integer'

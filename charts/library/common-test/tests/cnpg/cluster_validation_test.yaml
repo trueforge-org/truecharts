@@ -19,7 +19,7 @@ tests:
             password: test-password
     asserts:
       - failedTemplate:
-          errorMessage: Dependencies - Expected [dependencies.postgresql.depconfig.postgresqlUsername] to not be empty
+          errorPattern: 'at ''/dependencies/postgresql/depconfig/postgresqlUsername'': minLength: got 0, want 1'
 
   - it: should fail without database
     set:
@@ -32,7 +32,7 @@ tests:
             password: test-password
     asserts:
       - failedTemplate:
-          errorMessage: Dependencies - Expected [dependencies.postgresql.depconfig.postgresqlDatabase] to not be empty
+          errorPattern: 'at ''/dependencies/postgresql/depconfig/postgresqlDatabase'': minLength: got 0, want 1'
 
   - it: should fail with invalid pgVersion
     set:
@@ -47,7 +47,7 @@ tests:
             pgVersion: invalid
     asserts:
       - failedTemplate:
-          errorMessage: CNPG - Expected [pgVersion] to be one of [15, 16, 17, 18], but got [invalid]
+          errorPattern: 'at ''/dependencies/postgresql/operator/pgVersion'': got string, want integer'
 
   - it: should fail with vectors on pgVersion 18
     set:
@@ -78,7 +78,7 @@ tests:
             hibernate: invalid
     asserts:
       - failedTemplate:
-          errorMessage: CNPG - Expected [hibernate] to be a boolean, but got [string]
+          errorPattern: 'at ''/dependencies/postgresql/operator/hibernate'': got string, want boolean'
 
   - it: should fail with invalid mode
     set:
@@ -93,7 +93,7 @@ tests:
             mode: invalid
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Cluster - Expected [mode] to be one of [standalone, replica, recovery], but got [invalid]
+          errorPattern: 'at ''/dependencies/postgresql/operator/mode'': value must be one of ''standalone'', ''recovery'''
 
   - it: should fail with invalid type
     set:
@@ -108,7 +108,7 @@ tests:
             type: invalid
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Cluster - Expected [type] to be one of [postgres, postgis, vectors, vectorchord], but got [invalid]
+          errorPattern: 'at ''/dependencies/postgresql/operator/type'': value must be one of ''postgres'', ''postgis'', ''vectors'', ''vectorchord'''
 
   - it: should fail with invalid log level
     set:
@@ -124,7 +124,7 @@ tests:
               logLevel: invalid
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Cluster - Expected [cluster.logLevel] to be one of [error, warning, info, debug, trace], but got [invalid]
+          errorPattern: 'at ''/dependencies/postgresql/operator/cluster/logLevel'': value must be one of ''error'', ''warning'', ''info'', ''debug'', ''trace'''
 
   - it: should fail with invalid primaryUpdateStrategy
     set:
@@ -140,7 +140,7 @@ tests:
               primaryUpdateStrategy: invalid
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Cluster - Expected [cluster.primaryUpdateStrategy] to be one of [supervised, unsupervised], but got [invalid]
+          errorPattern: 'at ''/dependencies/postgresql/operator/cluster/primaryUpdateStrategy'': value must be one of ''supervised'', ''unsupervised'''
 
   - it: should fail with invalid primaryUpdateMethod
     set:
@@ -156,7 +156,7 @@ tests:
               primaryUpdateMethod: invalid
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Cluster - Expected [cluster.primaryUpdateMethod] to be one of [switchover, restart], but got [invalid]
+          errorPattern: 'at ''/dependencies/postgresql/operator/cluster/primaryUpdateMethod'': value must be one of ''switchover'', ''restart'''
 
   - it: should fail with invalid walSegmentSize
     set:
@@ -173,7 +173,7 @@ tests:
                 walSegmentSize: invalid
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Cluster - Expected [cluster.initdb.walSegmentSize] to be an integer, but got [string]
+          errorPattern: 'at ''/dependencies/postgresql/operator/cluster/initdb/walSegmentSize'': got string, want integer'
 
   - it: should fail with too large walSegmentSize
     set:
@@ -190,7 +190,7 @@ tests:
                 walSegmentSize: 1025
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Cluster - Expected [cluster.initdb.walSegmentSize] to be between 1 and 1024, but got [1025]
+          errorPattern: 'at ''/dependencies/postgresql/operator/cluster/initdb/walSegmentSize'': maximum: got 1,025, want 1,024'
 
   - it: should fail without recovery object when mode is recovery
     set:
@@ -206,7 +206,7 @@ tests:
             recovery: null
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Recovery - Expected a non-empty [recovery] key
+          errorPattern: 'at ''/dependencies/postgresql/operator/recovery'': got null, want object'
 
   - it: should fail with revision in recovery not a string
     set:
@@ -224,7 +224,7 @@ tests:
               revision: 5
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Recovery - Expected [recovery.revision] to be a string, got [float64]
+          errorPattern: 'at ''/dependencies/postgresql/operator/recovery/revision'': got number, want string'
 
   - it: should fail with invalid recovery method
     set:
@@ -268,7 +268,7 @@ tests:
               target: primary
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Backup - Expected [backups.revision] to be a string, got [float64]
+          errorPattern: 'at ''/dependencies/postgresql/operator/backups/revision'': got number, want string'
 
   - it: should fail with invalid target when backups are enabled
     set:
@@ -508,7 +508,7 @@ tests:
               servername: some-server-name
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Recovery - [recovery.servername] is not supported, use [recovery.serverName] instead. Note that the previous value was never applied
+          errorPattern: 'at ''/dependencies/postgresql/operator/recovery'': additional properties ''servername'' not allowed'
 
   - it: should fail with servername in backups
     set:
@@ -528,7 +528,7 @@ tests:
               servername: some-server-name
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Backup - [backups.servername] is not supported, use [backups.serverName] instead. Note that the previous value was never applied
+          errorPattern: 'at ''/dependencies/postgresql/operator/backups'': additional properties ''servername'' not allowed'
 
   - it: should not fail when the plugin is installed
     capabilities:
