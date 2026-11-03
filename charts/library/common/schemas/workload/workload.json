@@ -207,6 +207,12 @@
             "type": "string",
             "description": "Pod's hostname"
           },
+          "affinity": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "description": "Overrides `podOptions.affinity` for this workload."
+          },
           "serviceAccountName": {
             "type": "string",
             "description": "Pod's serviceAccountName. If not set, the auto-generated service account name is used."
