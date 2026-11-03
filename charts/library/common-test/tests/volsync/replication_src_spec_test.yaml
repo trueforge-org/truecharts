@@ -82,8 +82,11 @@ tests:
                 memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
-              runAsUser: 568
               runAsGroup: 568
+              runAsNonRoot: true
+              runAsUser: 568
+              seccompProfile:
+                type: RuntimeDefault
       - documentIndex: *replicationDestDoc
         matchRegex:
           path: spec.restic.unlock
@@ -168,8 +171,11 @@ tests:
                 memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
-              runAsUser: 568
               runAsGroup: 568
+              runAsNonRoot: true
+              runAsUser: 568
+              seccompProfile:
+                type: RuntimeDefault
       - documentIndex: *replicationDestDoc
         matchRegex:
           path: spec.restic.unlock
@@ -251,8 +257,11 @@ tests:
                 memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
-              runAsUser: 568
               runAsGroup: 568
+              runAsNonRoot: true
+              runAsUser: 568
+              seccompProfile:
+                type: RuntimeDefault
       - documentIndex: *replicationDestDoc
         matchRegex:
           path: spec.restic.unlock
@@ -335,8 +344,11 @@ tests:
                 memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
-              runAsUser: 568
               runAsGroup: 568
+              runAsNonRoot: true
+              runAsUser: 568
+              seccompProfile:
+                type: RuntimeDefault
       - documentIndex: *replicationDestDoc
         matchRegex:
           path: spec.restic.unlock
@@ -410,8 +422,11 @@ tests:
                 memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
-              runAsUser: 568
               runAsGroup: 568
+              runAsNonRoot: true
+              runAsUser: 568
+              seccompProfile:
+                type: RuntimeDefault
       - documentIndex: *replicationDestDoc
         matchRegex:
           path: spec.restic.unlock
@@ -481,8 +496,11 @@ tests:
                 memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
-              runAsUser: 568
               runAsGroup: 568
+              runAsNonRoot: true
+              runAsUser: 568
+              seccompProfile:
+                type: RuntimeDefault
       - documentIndex: *replicationDestDoc
         matchRegex:
           path: spec.restic.unlock
@@ -552,8 +570,11 @@ tests:
                 memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
-              runAsUser: 568
               runAsGroup: 568
+              runAsNonRoot: true
+              runAsUser: 568
+              seccompProfile:
+                type: RuntimeDefault
       - documentIndex: *replicationDestDoc
         matchRegex:
           path: spec.restic.unlock
@@ -625,8 +646,11 @@ tests:
                 memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
-              runAsUser: 568
               runAsGroup: 568
+              runAsNonRoot: true
+              runAsUser: 568
+              seccompProfile:
+                type: RuntimeDefault
       - documentIndex: *replicationDestDoc
         matchRegex:
           path: spec.restic.unlock
@@ -718,8 +742,11 @@ tests:
                 memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
-              runAsUser: 568
               runAsGroup: 568
+              runAsNonRoot: true
+              runAsUser: 568
+              seccompProfile:
+                type: RuntimeDefault
       - documentIndex: *replicationCaDestDoc
         matchRegex:
           path: spec.restic.unlock
@@ -811,8 +838,11 @@ tests:
                 memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
-              runAsUser: 568
               runAsGroup: 568
+              runAsNonRoot: true
+              runAsUser: 568
+              seccompProfile:
+                type: RuntimeDefault
       - documentIndex: *replicationCaDestDoc
         matchRegex:
           path: spec.restic.unlock
@@ -911,9 +941,169 @@ tests:
                 memory: 200Mi
             moverSecurityContext:
               fsGroup: 568
-              runAsUser: 568
               runAsGroup: 568
+              runAsNonRoot: true
+              runAsUser: 568
+              seccompProfile:
+                type: RuntimeDefault
       - documentIndex: *replicationCaDestDoc
         matchRegex:
           path: spec.restic.unlock
           pattern: "^[0-9]{14}$"
+
+  - it: should generate correct spec with custom moverSecurityContext
+    set:
+      persistence:
+        srcbackup:
+          enabled: true
+          type: pvc
+          mountPath: /backedup
+          volsync:
+            - name: mybackup1
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: false
+              src:
+                enabled: true
+                moverSecurityContext:
+                  runAsUser: 1000
+                  runAsGroup: 1000
+                  fsGroup: 1000
+                  runAsNonRoot: true
+                  seccompProfile:
+                    type: RuntimeDefault
+                  supplementalGroups:
+                    - 568
+      credentials: *credentials
+    asserts:
+      - documentIndex: *replicationDestDoc
+        isKind:
+          of: ReplicationSource
+      - documentIndex: *replicationDestDoc
+        isAPIVersion:
+          of: volsync.backube/v1alpha1
+      - documentIndex: *replicationDestDoc
+        isSubset:
+          path: spec.restic.moverSecurityContext
+          content:
+            fsGroup: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
+            supplementalGroups:
+              - 568
+
+  - it: should default runAsNonRoot to false when runAsUser is 0
+    set:
+      persistence:
+        srcbackup:
+          enabled: true
+          type: pvc
+          mountPath: /backedup
+          volsync:
+            - name: mybackup1
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: false
+              src:
+                enabled: true
+                moverSecurityContext:
+                  runAsUser: 0
+      credentials: *credentials
+    asserts:
+      - documentIndex: *replicationDestDoc
+        isKind:
+          of: ReplicationSource
+      - documentIndex: *replicationDestDoc
+        isAPIVersion:
+          of: volsync.backube/v1alpha1
+      - documentIndex: *replicationDestDoc
+        isSubset:
+          path: spec.restic.moverSecurityContext
+          content:
+            fsGroup: 568
+            runAsGroup: 568
+            runAsNonRoot: false
+            runAsUser: 0
+            seccompProfile:
+              type: RuntimeDefault
+
+  - it: should honor explicit runAsNonRoot true when runAsUser is 0
+    set:
+      persistence:
+        srcbackup:
+          enabled: true
+          type: pvc
+          mountPath: /backedup
+          volsync:
+            - name: mybackup1
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: false
+              src:
+                enabled: true
+                moverSecurityContext:
+                  runAsUser: 0
+                  runAsNonRoot: true
+      credentials: *credentials
+    asserts:
+      - documentIndex: *replicationDestDoc
+        isKind:
+          of: ReplicationSource
+      - documentIndex: *replicationDestDoc
+        isAPIVersion:
+          of: volsync.backube/v1alpha1
+      - documentIndex: *replicationDestDoc
+        isSubset:
+          path: spec.restic.moverSecurityContext
+          content:
+            fsGroup: 568
+            runAsGroup: 568
+            runAsNonRoot: true
+            runAsUser: 0
+            seccompProfile:
+              type: RuntimeDefault
+
+  - it: should support custom seccompProfile
+    set:
+      persistence:
+        srcbackup:
+          enabled: true
+          type: pvc
+          mountPath: /backedup
+          volsync:
+            - name: mybackup1
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: false
+              src:
+                enabled: true
+                moverSecurityContext:
+                  seccompProfile:
+                    type: Localhost
+                    localhostProfile: my-profile.json
+      credentials: *credentials
+    asserts:
+      - documentIndex: *replicationDestDoc
+        isKind:
+          of: ReplicationSource
+      - documentIndex: *replicationDestDoc
+        isAPIVersion:
+          of: volsync.backube/v1alpha1
+      - documentIndex: *replicationDestDoc
+        isSubset:
+          path: spec.restic.moverSecurityContext
+          content:
+            fsGroup: 568
+            runAsGroup: 568
+            runAsNonRoot: true
+            runAsUser: 568
+            seccompProfile:
+              type: Localhost
+              localhostProfile: my-profile.json

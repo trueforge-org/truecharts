@@ -79,8 +79,11 @@ tests:
                   memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
-                runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                runAsUser: 568
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with accessModes as a list
     set:
@@ -158,8 +161,11 @@ tests:
                   memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
-                runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                runAsUser: 568
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with accessModes as a string
     set:
@@ -234,8 +240,11 @@ tests:
                   memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
-                runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                runAsUser: 568
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with overridden region
     set:
@@ -311,8 +320,11 @@ tests:
                   memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
-                runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                runAsUser: 568
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with changed defaults
     set:
@@ -363,8 +375,11 @@ tests:
                   memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
-                runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                runAsUser: 568
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with storageClassName
     set:
@@ -416,8 +431,11 @@ tests:
                   memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
-                runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                runAsUser: 568
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with volumeSnapshotClass
     set:
@@ -469,8 +487,11 @@ tests:
                   memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
-                runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                runAsUser: 568
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with volumeSnapshotClass and StorageClass
     set:
@@ -524,8 +545,11 @@ tests:
                   memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
-                runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                runAsUser: 568
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with cleanup flags
     set:
@@ -576,8 +600,11 @@ tests:
                   memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
-                runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                runAsUser: 568
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with destinationPVC
     set:
@@ -629,8 +656,11 @@ tests:
                   memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
-                runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                runAsUser: 568
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with customCA
     set:
@@ -711,8 +741,11 @@ tests:
                   memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
-                runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                runAsUser: 568
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with customCA and uppercase credentials name
     set:
@@ -793,8 +826,11 @@ tests:
                   memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
-                runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                runAsUser: 568
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with customCASecretRef
     set:
@@ -882,5 +918,165 @@ tests:
                   memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
-                runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                runAsUser: 568
+                seccompProfile:
+                  type: RuntimeDefault
+
+  - it: should generate correct spec with custom moverSecurityContext
+    set:
+      persistence:
+        destbackup:
+          enabled: true
+          type: pvc
+          mountPath: /backedup
+          volsync:
+            - name: mybackup1
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: true
+                moverSecurityContext:
+                  runAsUser: 1000
+                  runAsGroup: 1000
+                  fsGroup: 1000
+                  runAsNonRoot: true
+                  seccompProfile:
+                    type: RuntimeDefault
+                  supplementalGroups:
+                    - 568
+              src:
+                enabled: false
+      credentials: *credentials
+    asserts:
+      - documentIndex: *replicationDestDoc
+        isKind:
+          of: ReplicationDestination
+      - documentIndex: *replicationDestDoc
+        isAPIVersion:
+          of: volsync.backube/v1alpha1
+      - documentIndex: *replicationDestDoc
+        equal:
+          path: spec.restic.moverSecurityContext
+          value:
+            fsGroup: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
+            supplementalGroups:
+              - 568
+
+  - it: should default runAsNonRoot to false when runAsUser is 0
+    set:
+      persistence:
+        destbackup:
+          enabled: true
+          type: pvc
+          mountPath: /backedup
+          volsync:
+            - name: mybackup1
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: true
+                moverSecurityContext:
+                  runAsUser: 0
+              src:
+                enabled: false
+      credentials: *credentials
+    asserts:
+      - documentIndex: *replicationDestDoc
+        isKind:
+          of: ReplicationDestination
+      - documentIndex: *replicationDestDoc
+        isAPIVersion:
+          of: volsync.backube/v1alpha1
+      - documentIndex: *replicationDestDoc
+        equal:
+          path: spec.restic.moverSecurityContext
+          value:
+            fsGroup: 568
+            runAsGroup: 568
+            runAsNonRoot: false
+            runAsUser: 0
+            seccompProfile:
+              type: RuntimeDefault
+
+  - it: should honor explicit runAsNonRoot true when runAsUser is 0
+    set:
+      persistence:
+        destbackup:
+          enabled: true
+          type: pvc
+          mountPath: /backedup
+          volsync:
+            - name: mybackup1
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: true
+                moverSecurityContext:
+                  runAsUser: 0
+                  runAsNonRoot: true
+              src:
+                enabled: false
+      credentials: *credentials
+    asserts:
+      - documentIndex: *replicationDestDoc
+        isKind:
+          of: ReplicationDestination
+      - documentIndex: *replicationDestDoc
+        isAPIVersion:
+          of: volsync.backube/v1alpha1
+      - documentIndex: *replicationDestDoc
+        equal:
+          path: spec.restic.moverSecurityContext
+          value:
+            fsGroup: 568
+            runAsGroup: 568
+            runAsNonRoot: true
+            runAsUser: 0
+            seccompProfile:
+              type: RuntimeDefault
+
+  - it: should support custom seccompProfile
+    set:
+      persistence:
+        destbackup:
+          enabled: true
+          type: pvc
+          mountPath: /backedup
+          volsync:
+            - name: mybackup1
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: true
+                moverSecurityContext:
+                  seccompProfile:
+                    type: Localhost
+                    localhostProfile: my-profile.json
+              src:
+                enabled: false
+      credentials: *credentials
+    asserts:
+      - documentIndex: *replicationDestDoc
+        isKind:
+          of: ReplicationDestination
+      - documentIndex: *replicationDestDoc
+        isAPIVersion:
+          of: volsync.backube/v1alpha1
+      - documentIndex: *replicationDestDoc
+        equal:
+          path: spec.restic.moverSecurityContext
+          value:
+            fsGroup: 568
+            runAsGroup: 568
+            runAsNonRoot: true
+            runAsUser: 568
+            seccompProfile:
+              type: Localhost
+              localhostProfile: my-profile.json
