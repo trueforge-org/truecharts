@@ -1,14 +1,11 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": [
-    "null",
-    "string",
-    "number",
-    "integer",
-    "boolean",
     "object",
-    "array"
+    "null"
   ],
-  "description": "TODO ---",
-  "additionalProperties": true
+  "description": "Parameters of the PostgreSQL server. Each parameter is passed to CNPG as a string, so every value must be a string.",
+  "additionalProperties": {
+    "type": "string"
+  }
 }

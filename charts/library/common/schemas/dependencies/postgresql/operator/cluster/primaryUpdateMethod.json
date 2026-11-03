@@ -1,6 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "string",
-  "description": "TODO ---",
-  "additionalProperties": true
+  "enum": [
+    "switchover",
+    "restart"
+  ],
+  "description": "Method to upgrade the primary server during a rolling update. `switchover` promotes an upgraded replica, `restart` restarts the primary in place."
 }
