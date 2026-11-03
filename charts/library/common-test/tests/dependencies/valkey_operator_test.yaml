@@ -627,7 +627,7 @@ tests:
             workloadType: DaemonSet
     asserts:
       - failedTemplate:
-          errorMessage: "Valkey Operator - Expected [workloadType] to be one of [StatefulSet, Deployment], but got [DaemonSet]"
+          errorPattern: 'at ''/dependencies/valkey/operator/workloadType'': value must be one of ''StatefulSet'', ''Deployment'''
 
   - it: should fail with 0 shards
     template: common.yaml
@@ -640,7 +640,7 @@ tests:
             shards: 0
     asserts:
       - failedTemplate:
-          errorMessage: "Valkey Operator - Expected [shards] to be an integer greater than 0, but got [0]"
+          errorPattern: 'at ''/dependencies/valkey/operator/shards'': minimum: got 0, want 1'
 
   - it: should fail with negative replicas
     template: common.yaml
@@ -653,7 +653,7 @@ tests:
             replicas: -1
     asserts:
       - failedTemplate:
-          errorMessage: "Valkey Operator - Expected [replicas] to be an integer greater than or equal to 0, but got [-1]"
+          errorPattern: 'at ''/dependencies/valkey/operator/replicas'': minimum: got -1, want 0'
 
   - it: should fail with persistence on a Deployment workload type
     template: common.yaml
@@ -680,7 +680,7 @@ tests:
               mode: Always
     asserts:
       - failedTemplate:
-          errorMessage: "Valkey Operator - Expected [podDisruptionBudget.mode] to be one of [Cluster, Disabled], but got [Always]"
+          errorPattern: 'at ''/dependencies/valkey/operator/podDisruptionBudget/mode'': value must be one of ''Cluster'', ''Disabled'''
 
   - it: should fail with TLS
     template: common.yaml
@@ -695,7 +695,7 @@ tests:
                 mode: Required
     asserts:
       - failedTemplate:
-          errorMessage: "Valkey Operator - [networking.tls] is not supported, the credentials and the wait init container connect without TLS"
+          errorPattern: 'at ''/dependencies/valkey/operator/networking'': additional properties ''tls'' not allowed'
 
   - it: should fail with Hostname discovery on a Deployment workload type
     template: common.yaml
@@ -727,7 +727,7 @@ tests:
               - nopass: true
     asserts:
       - failedTemplate:
-          errorMessage: "Valkey Operator - Expected a non-empty [name] in every item of [users]"
+          errorPattern: 'at ''/dependencies/valkey/operator/users/0'': missing property ''name'''
 
   - it: should fail with a reserved user name
     template: common.yaml
@@ -741,7 +741,7 @@ tests:
               - name: _operator
     asserts:
       - failedTemplate:
-          errorMessage: "Valkey Operator - Expected the name of a user to not start with [_], as it is reserved for the operator, but got [_operator]"
+          errorPattern: 'at ''/dependencies/valkey/operator/users/0/name'': ''_operator'' does not match pattern ''\^\[\^_\]'''
 
   - it: should fail with duplicate user names
     template: common.yaml

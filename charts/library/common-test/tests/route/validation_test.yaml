@@ -34,7 +34,7 @@ tests:
                 - targetSelector: main
     asserts:
       - failedTemplate:
-          errorMessage: Not a valid route kind (Invalid)
+          errorPattern: 'at ''/route/my-route/kind'': value must be one of ''GRPCRoute'', ''HTTPRoute'', ''TCPRoute'', ''TLSRoute'', ''UDPRoute'''
 
   - it: should fail with matches on TCPRoute
     set:
@@ -581,7 +581,7 @@ tests:
               matchs: []
     asserts:
       - failedTemplate:
-          errorMessage: Route - [route.my-route.rules.0.matchs] is not supported by kind [HTTPRoute]
+          errorPattern: 'at ''/route/my-route/rules/0'': additional properties ''matchs'' not allowed'
 
   - it: should fail with hostnames on TCPRoute
     set:

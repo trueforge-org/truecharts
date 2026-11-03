@@ -134,7 +134,7 @@ tests:
                       name: invalid-name
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected [envFrom] entry in [containers.container-name1] to have one of [configMapRef, secretRef]
+          errorPattern: 'at ''/workload/workload-name/podSpec/containers/container-name1/envFrom/0'': additional properties ''invalidRef'' not allowed'
 
   - it: it should fail with both refs in the same entry
     set:
@@ -281,4 +281,4 @@ tests:
                       name: '{{ printf "secret-name" }}'
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected the defined key [expandObjectName] in [envFrom.secretRef] to not be empty
+          errorPattern: 'at ''/workload/workload-name/podSpec/containers/container-name1/envFrom/0/secretRef/expandObjectName'': got null, want boolean'

@@ -552,7 +552,7 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorMessage: Pod - Expected non-empty [securityContext.pod]
+          errorPattern: 'at ''/securityContext/pod'': got null, want object'
 
   - it: should fail with empty fsGroup
     set:
@@ -567,7 +567,7 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorMessage: Pod - Expected non-empty [fsGroup]
+          errorPattern: 'at ''/securityContext/pod/fsGroup'': got string, want integer'
 
   - it: should fail with empty fsGroupChangePolicy
     set:
@@ -583,7 +583,7 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorMessage: Pod - Expected non-empty [fsGroupChangePolicy]
+          errorPattern: 'at ''/securityContext/pod/fsGroupChangePolicy'': value must be one of ''Always'', ''OnRootMismatch'''
 
   - it: should fail with invalid fsGroupChangePolicy
     set:
@@ -599,7 +599,7 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorMessage: Pod - Expected [fsGroupChangePolicy] to be one of [Always, OnRootMismatch], but got [invalid]
+          errorPattern: 'at ''/securityContext/pod/fsGroupChangePolicy'': value must be one of ''Always'', ''OnRootMismatch'''
 
   - it: should fail with empty name in sysctls
     set:

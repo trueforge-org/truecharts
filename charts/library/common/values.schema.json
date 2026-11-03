@@ -2747,6 +2747,20 @@
          "suspend": {
           "type": "boolean",
           "description": "Configuration for `dependencies.postgresql.operator.backups.scheduledBackups.$item.suspend`."
+         },
+         "labels": {
+          "type": "object",
+          "additionalProperties": {
+           "type": "string"
+          },
+          "description": "Additional labels for this manual backup, merged with `backups.labels`."
+         },
+         "annotations": {
+          "type": "object",
+          "additionalProperties": {
+           "type": "string"
+          },
+          "description": "Additional annotations for this manual backup, merged with `backups.annotations`."
          }
         },
         "additionalProperties": false,
@@ -5868,6 +5882,10 @@
       "description": "Configuration for `gatewayClass.main.enabled`.",
       "default": false
      },
+     "primary": {
+      "type": "boolean",
+      "description": "Make this the primary GatewayClass of the chart. Only one can be primary."
+     },
      "annotations": {
       "type": "object",
       "properties": {},
@@ -6336,6 +6354,24 @@
       "description": "Configuration for `hpa.main.enabled`.",
       "default": false
      },
+     "labels": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the label"
+      },
+      "description": "Additional labels of the HorizontalPodAutoscaler."
+     },
+     "annotations": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
+      "description": "Additional annotations of the HorizontalPodAutoscaler."
+     },
      "targetSelector": {
       "type": "array",
       "description": "Configuration for `hpa.main.targetSelector`.",
@@ -6615,6 +6651,13 @@
           "target": {
            "type": "object",
            "properties": {
+            "type": {
+             "type": "string",
+             "enum": [
+              "AverageValue"
+             ],
+             "description": "Type of the target, pods metrics only support `AverageValue`."
+            },
             "averageValue": {
              "type": [
               "integer",
@@ -11851,6 +11894,7 @@
       {
        "type": "string",
        "enum": [
+        "",
         "Never",
         "Always",
         "OnFailure"
@@ -11888,6 +11932,10 @@
      "effect": {
       "type": "string",
       "description": "Configuration for `tolerations.$item.effect`."
+     },
+     "tolerationSeconds": {
+      "type": "integer",
+      "description": "Seconds the pod stays bound to a node with a `NoExecute` taint, before it is evicted."
      }
     },
     "additionalProperties": false
@@ -11951,6 +11999,33 @@
       },
       "additionalProperties": false,
       "description": "Configuration for `topologySpreadConstraints.$item.labelSelector`."
+     },
+     "minDomains": {
+      "type": "integer",
+      "description": "Minimum number of eligible domains."
+     },
+     "matchLabelKeys": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "Label keys of the pod to select the pods that are counted."
+     },
+     "nodeAffinityPolicy": {
+      "type": "string",
+      "enum": [
+       "Honor",
+       "Ignore"
+      ],
+      "description": "Whether the node affinity of the pod is honored when the skew is calculated."
+     },
+     "nodeTaintsPolicy": {
+      "type": "string",
+      "enum": [
+       "Honor",
+       "Ignore"
+      ],
+      "description": "Whether the node taints are honored when the skew is calculated."
      }
     },
     "additionalProperties": false
@@ -12202,6 +12277,13 @@
         "verbs": {
          "type": "array",
          "description": "Define the `verbs` list for the `rules` for the (Cluster)Role"
+        },
+        "nonResourceURLs": {
+         "type": "array",
+         "items": {
+          "type": "string"
+         },
+         "description": "Define the `nonResourceURLs` list for the `rules` for the (Cluster)Role"
         }
        },
        "additionalProperties": false
@@ -13886,7 +13968,11 @@
       ],
       "properties": {},
       "additionalProperties": {
-       "type": "string",
+       "type": [
+        "string",
+        "number",
+        "boolean"
+       ],
        "description": "Value of the parameter"
       },
       "description": "Define the parameters for this storage class",
@@ -13935,7 +14021,11 @@
       ],
       "properties": {},
       "additionalProperties": {
-       "type": "string",
+       "type": [
+        "string",
+        "number",
+        "boolean"
+       ],
        "description": "Value of the parameter"
       },
       "description": "Define a volume snapshot class",
@@ -14121,6 +14211,24 @@
       "description": "Configuration for `vpa.main.enabled`.",
       "default": false
      },
+     "labels": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the label"
+      },
+      "description": "Additional labels of the VerticalPodAutoscaler."
+     },
+     "annotations": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": {
+       "type": "string",
+       "description": "Value of the annotation"
+      },
+      "description": "Additional annotations of the VerticalPodAutoscaler."
+     },
      "targetSelector": {
       "type": "array",
       "description": "Configuration for `vpa.main.targetSelector`.",
@@ -14211,11 +14319,17 @@
            "type": "object",
            "properties": {
             "cpu": {
-             "type": "string",
+             "type": [
+              "string",
+              "number"
+             ],
              "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.minAllowed.cpu`."
             },
             "memory": {
-             "type": "string",
+             "type": [
+              "string",
+              "number"
+             ],
              "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.minAllowed.memory`."
             }
            },
@@ -14226,11 +14340,17 @@
            "type": "object",
            "properties": {
             "cpu": {
-             "type": "string",
+             "type": [
+              "string",
+              "number"
+             ],
              "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.maxAllowed.cpu`."
             },
             "memory": {
-             "type": "string",
+             "type": [
+              "string",
+              "number"
+             ],
              "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.maxAllowed.memory`."
             }
            },

@@ -169,7 +169,7 @@ tests:
             enabled: true
     asserts:
       - failedTemplate:
-          errorMessage: Dependencies - Key [cnpg] is not supported in dependency [postgresql]
+          errorPattern: 'at ''/dependencies/postgresql/cnpg'': false schema'
 
   - it: should not fail with the disabled top level solr, clickhouse, mongodb and memcached
     set:

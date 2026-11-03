@@ -57,7 +57,7 @@ tests:
               protocol: TCP
     asserts:
       - failedTemplate:
-          errorMessage: ListenerSet - Expected [listenerSet.main.parentRef] to be a dictionary, but got [string]
+          errorPattern: 'at ''/listenerSet/main/parentRef'': got string, want object'
 
   - it: should fail with targetSelector on an unknown gateway
     set:
@@ -168,7 +168,7 @@ tests:
               protocol: TCP
     asserts:
       - failedTemplate:
-          errorMessage: ListenerSet - Expected [gateway.main.allowedListeners.namespaces.from] to be one of [Same, All, Selector], but got [Invalid]
+          errorPattern: 'at ''/gateway/main/allowedListeners/namespaces/from'': value must be one of ''All'', ''Selector'', ''Same'', ''None'''
 
   - it: should fail without listeners
     set:
@@ -180,7 +180,7 @@ tests:
           listeners: []
     asserts:
       - failedTemplate:
-          errorMessage: ListenerSet - Expected non-empty [listenerSet.main.listeners]
+          errorPattern: 'at ''/listenerSet/main/listeners'': minItems: got 0, want 1'
 
   - it: should fail with duplicate listener names
     set:

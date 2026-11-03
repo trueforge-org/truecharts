@@ -12,8 +12,12 @@ tests:
     set:
       credentials:
         test:
-          type: azure
-          connectionString: some-connection-string
+          type: s3
+          url: http://some-url
+          bucket: some-bucket
+          encrKey: some-encr-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
       dependencies:
         postgresql:
           enabled: true
@@ -25,14 +29,18 @@ tests:
                 - name:
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Backup - Expected non-empty [name] in [backups.manualBackups] entry
+          errorPattern: 'at ''/dependencies/postgresql/operator/backups/manualBackups/0/name'': got null, want string'
 
   - it: should fail with invalid name in manualBackups backup
     set:
       credentials:
         test:
-          type: azure
-          connectionString: some-connection-string
+          type: s3
+          url: http://some-url
+          bucket: some-bucket
+          encrKey: some-encr-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
       dependencies:
         postgresql:
           enabled: true

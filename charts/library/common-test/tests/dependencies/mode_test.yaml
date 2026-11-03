@@ -440,7 +440,7 @@ tests:
           mode: invalid
     asserts:
       - failedTemplate:
-          errorMessage: Dependencies - Expected [dependencies.valkey.mode] to be one of [standalone, operator], but got [invalid]
+          errorPattern: 'at ''/dependencies/valkey/mode'': value must be one of ''standalone'', ''operator'''
 
   - it: should fail with an invalid mode on a disabled dependency
     template: common.yaml
@@ -450,7 +450,7 @@ tests:
           mode: invalid
     asserts:
       - failedTemplate:
-          errorMessage: Dependencies - Expected [dependencies.mariadb.mode] to be one of [standalone, operator], but got [invalid]
+          errorPattern: 'at ''/dependencies/mariadb/mode'': value must be one of ''standalone'', ''operator'''
 
   - it: should fail with a mode that is not a string
     template: common.yaml
@@ -461,7 +461,7 @@ tests:
           mode: 1
     asserts:
       - failedTemplate:
-          errorMessage: Dependencies - Expected [dependencies.valkey.mode] to be one of [standalone, operator], but got [1]
+          errorPattern: 'at ''/dependencies/valkey/mode'': got number, want string'
 
   - it: should fail with an invalid mode for postgresql
     template: common.yaml
@@ -472,4 +472,4 @@ tests:
           mode: invalid
     asserts:
       - failedTemplate:
-          errorMessage: Dependencies - Expected [dependencies.postgresql.mode] to be one of [standalone, operator], but got [invalid]
+          errorPattern: 'at ''/dependencies/postgresql/mode'': value must be one of ''standalone'', ''operator'''

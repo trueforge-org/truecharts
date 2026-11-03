@@ -616,7 +616,7 @@ tests:
                 probes: *probes
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected non-empty [resources.requests]
+          errorPattern: 'at ''/resources/requests'': got null, want object'
 
   - it: should fail with empty requests.cpu
     set:

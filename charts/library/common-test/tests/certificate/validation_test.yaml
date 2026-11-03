@@ -63,7 +63,7 @@ tests:
           enabled:
     asserts:
       - failedTemplate:
-          errorMessage: Cert Manager Certificate - Expected the defined key [enabled] in [certificate.my-certificate] to not be empty
+          errorPattern: 'at ''/certificate/my-certificate/enabled'': got null, want boolean or string'
 
   - it: should fail if certificateIssuer is missing
     set:
@@ -156,7 +156,7 @@ tests:
             some-key: some-value
     asserts:
       - failedTemplate:
-          errorMessage: Cert Manager Certificate - Expected [certificateSecretTemplate] to have at least one of [labels, annotations]
+          errorPattern: 'at ''/certificate/my-cert/certificateSecretTemplate'': additional properties ''some-key'' not allowed'
 
   - it: should fail if certificateSecretTemplate labels are not a map
     set:
@@ -170,7 +170,7 @@ tests:
             labels: "not a map"
     asserts:
       - failedTemplate:
-          errorMessage: Cert Manager Certificate (certificateSecretTemplate) - Expected [labels] to be a dictionary, but got [string]
+          errorPattern: 'at ''/certificate/my-cert/certificateSecretTemplate/labels'': got string, want object'
 
   - it: should fail if certificateSecretTemplate annotations are not a map
     set:
@@ -184,4 +184,4 @@ tests:
             annotations: "not a map"
     asserts:
       - failedTemplate:
-          errorMessage: Cert Manager Certificate (certificateSecretTemplate) - Expected [annotations] to be a dictionary, but got [string]
+          errorPattern: 'at ''/certificate/my-cert/certificateSecretTemplate/annotations'': got string, want object'

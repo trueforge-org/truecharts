@@ -278,7 +278,7 @@ tests:
           type: unknown
     asserts:
       - failedTemplate:
-          errorMessage: NetworkPolicy - Expected [type] to be one of [kubernetes, cilium], but got [unknown]
+          errorPattern: 'at ''/networkpolicy/invalid/type'': value must be one of ''kubernetes'', ''cilium'''
 
   - it: should reject Kubernetes-only podSelector on a Cilium policy
     set:
@@ -349,4 +349,4 @@ tests:
           enableDefaultDeny: false
     asserts:
       - failedTemplate:
-          errorMessage: NetworkPolicy - Expected [enableDefaultDeny] to be a dictionary, but got [bool]
+          errorPattern: 'at ''/networkpolicy/invalid/enableDefaultDeny'': got boolean, want object'

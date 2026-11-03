@@ -83,7 +83,11 @@
         ],
         "properties": {},
         "additionalProperties": {
-          "type": "string",
+          "type": [
+            "string",
+            "number",
+            "boolean"
+          ],
           "description": "Value of the parameter"
         },
         "description": "Define the parameters for this storage class",

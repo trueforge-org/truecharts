@@ -61,8 +61,7 @@ tests:
           my-middleware1:
             enabled: true
             type: basic-auth
-            data:
-              foo: bar
+            data: {}
     asserts:
       - failedTemplate:
           errorMessage: Middleware (basic-auth) - Expected at least one of [users] or [secret] to be set

@@ -13,6 +13,10 @@
         "description": "Configuration for `gatewayClass.main.enabled`.",
         "default": false
       },
+      "primary": {
+        "type": "boolean",
+        "description": "Make this the primary GatewayClass of the chart. Only one can be primary."
+      },
       "annotations": {
         "type": "object",
         "properties": {},

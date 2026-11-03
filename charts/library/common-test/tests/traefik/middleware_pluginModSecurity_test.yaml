@@ -53,8 +53,7 @@ tests:
           my-middleware1:
             enabled: true
             type: plugin-mod-security
-            data:
-              foo: bar
+            data: {}
     asserts:
       - failedTemplate:
           errorMessage: Middleware (modsecurity) - Expected [modSecurityUrl] to be set

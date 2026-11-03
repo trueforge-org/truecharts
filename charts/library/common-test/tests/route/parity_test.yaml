@@ -242,7 +242,7 @@ tests:
                 - 10.0.0.0/8
     asserts:
       - failedTemplate:
-          errorMessage: Route - [route.main.integrations.nginx] is not supported, only [certManager, envoy, homepage, traefik] are
+          errorPattern: 'at ''/route/main/integrations'': additional properties ''nginx'' not allowed'
 
   - it: should fail with certManager without a certificateIssuer
     capabilities:

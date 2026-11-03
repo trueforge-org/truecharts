@@ -287,7 +287,7 @@ tests:
                 - websecure
     asserts:
       - failedTemplate:
-          errorMessage: Route - [route.main.integrations.traefik.entrypoints] is not supported, a route uses the entrypoint of its listener
+          errorPattern: 'at ''/route/main/integrations/traefik'': additional properties ''entrypoints'' not allowed'
 
   - it: should fail with a middleware that is not defined
     set:
@@ -337,7 +337,7 @@ tests:
                 internalHost: a:1
     asserts:
       - failedTemplate:
-          errorMessage: Route - Expected [integrations.traefik.auth.type] to be one of [authentik, authelia], but got [other]
+          errorPattern: 'at ''/route/main/integrations/traefik/auth/type'': value must be one of '''', ''authentik'', ''authelia'''
 
   - it: should fail with both providers on a route
     set:

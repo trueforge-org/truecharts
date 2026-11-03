@@ -344,7 +344,7 @@ tests:
             postgresqlUsername: null
     asserts:
       - failedTemplate:
-          errorMessage: Dependencies - Expected [dependencies.postgresql.depconfig.postgresqlUsername] to not be empty
+          errorPattern: 'at ''/dependencies/postgresql/depconfig/postgresqlUsername'': got null, want string'
 
   - it: should fail without a database for postgresql
     set:
@@ -356,4 +356,4 @@ tests:
             postgresqlDatabase: null
     asserts:
       - failedTemplate:
-          errorMessage: Dependencies - Expected [dependencies.postgresql.depconfig.postgresqlDatabase] to not be empty
+          errorPattern: 'at ''/dependencies/postgresql/depconfig/postgresqlDatabase'': got null, want string'

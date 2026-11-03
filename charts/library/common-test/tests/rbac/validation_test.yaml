@@ -47,7 +47,7 @@ tests:
           labels: "not a dict"
     asserts:
       - failedTemplate:
-          errorMessage: RBAC - Expected [labels] to be a dictionary, but got [string]
+          errorPattern: 'at ''/rbac/my-rbac/labels'': got string, want object'
 
   - it: should fail with annotations not a dict
     set:

@@ -49,7 +49,7 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorMessage: Workload - Expected [type] to be one of [Deployment, StatefulSet, DaemonSet, Job, CronJob], but got [not-valid-type]
+          errorPattern: 'at ''/workload/workload-name/type'': value must be one of ''Deployment'', ''DaemonSet'', ''StatefulSet'', ''CronJob'', ''Job'''
 
   - it: should fail without podSpec
     set:
@@ -107,7 +107,7 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorMessage: Workload - Expected [labels] to be a dictionary, but got [string]
+          errorPattern: 'at ''/workload/workload-name/labels'': got string, want object'
 
   - it: should fail with annotations not a dict
     set:

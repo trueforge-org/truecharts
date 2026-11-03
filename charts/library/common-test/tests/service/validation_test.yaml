@@ -156,7 +156,7 @@ tests:
               primary: true
     asserts:
       - failedTemplate:
-          errorMessage: Service - Expected [labels] to be a dictionary, but got [string]
+          errorPattern: 'at ''/service/service-name1/labels'': got string, want object'
 
   - it: should fail with pod targetSelector not a string
     set:
@@ -172,7 +172,7 @@ tests:
               primary: true
     asserts:
       - failedTemplate:
-          errorMessage: Service - Expected [targetSelector] to be [string], but got [map]
+          errorPattern: 'at ''/service/service-name1/targetSelector'': got object, want string'
 
   - it: should fail with container targetSelector not a string
     set:
@@ -188,7 +188,7 @@ tests:
                 container: not-a-string
     asserts:
       - failedTemplate:
-          errorMessage: Service - Expected [port.targetSelector] to be [string], but got [map]
+          errorPattern: 'at ''/service/service-name1/ports/port-name1/targetSelector'': got object, want string'
 
   - it: should fail with selected pod not defined
     set:
@@ -248,7 +248,7 @@ tests:
               protocol: not-a-protocol
     asserts:
       - failedTemplate:
-          errorMessage: Service - Expected [port.protocol] to be one of [tcp, udp, http, https] but got [not-a-protocol]
+          errorPattern: 'at ''/service/service-name1/ports/port-name1/protocol'': value must be one of ''tcp'', ''udp'', ''http'', ''https'''
 
   - it: should fail without port number
     set:
@@ -263,7 +263,7 @@ tests:
               port:
     asserts:
       - failedTemplate:
-          errorMessage: Service - Expected non-empty [port.port]
+          errorPattern: 'at ''/service/service-name1/ports/port-name1/port'': got null, want integer or string'
 
   - it: should fail with invalid service type
     set:
@@ -278,7 +278,7 @@ tests:
               primary: true
     asserts:
       - failedTemplate:
-          errorMessage: Service - Expected [type] to be one of [ClusterIP, LoadBalancer, NodePort, ExternalName, ExternalIP] but got [not-a-type]
+          errorPattern: 'at ''/service/service-name1/type'': value must be one of ''ClusterIP'', ''LoadBalancer'', ''NodePort'', ''ExternalName'', ''ExternalIP'''
 
   - it: should fail with invalid ipFamilyPolicy
     set:
@@ -301,7 +301,7 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorMessage: Service - Expected [ipFamilyPolicy] to be one of [SingleStack, PreferDualStack, RequireDualStack], but got [not-a-policy]
+          errorPattern: 'at ''/service/service-name1/ipFamilyPolicy'': value must be one of ''SingleStack'', ''PreferDualStack'', ''RequireDualStack'''
 
   - it: should fail with empty externalIP
     set:
@@ -354,7 +354,7 @@ tests:
               port: 12345
     asserts:
       - failedTemplate:
-          errorMessage: EndpointSlice - Expected [externalIP] to be a [string], but got [slice]
+          errorPattern: 'at ''/service/service-name1/externalIP'': got array, want string or object'
 
   - it: should fail with ipFamilies not a list
     set:
@@ -424,7 +424,7 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorMessage: Service - Expected [externalTrafficPolicy] to be one of [Cluster, Local], but got [not-a-policy]
+          errorPattern: 'at ''/service/service-name1/externalTrafficPolicy'': value must be one of ''Cluster'', ''Local'''
 
   - it: should fail with invalid externalName
     set:
@@ -470,7 +470,7 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorMessage: Service - Expected [sessionAffinity] to be one of [ClientIP, None], but got [not-an-affinity]
+          errorPattern: 'at ''/service/service-name1/sessionAffinity'': value must be one of ''ClientIP'', ''None'''
 
   - it: should fail with invalid timeoutSeconds in sessionAffinityConfig
     set:
@@ -519,7 +519,7 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorMessage: Service - Expected non-empty [nodePort] on NodePort service type
+          errorPattern: 'at ''/service/service-name1/ports/port-name1/nodePort'': got null, want integer or string'
 
   - it: should fail with nodePort lower than the minimum on NodePort
     set:
@@ -568,7 +568,7 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorMessage: Service - Expected the defined key [expandObjectName] in [service.service-name1] to not be empty
+          errorPattern: 'at ''/service/service-name1/expandObjectName'': got null, want boolean or string'
 
   - it: should fail with namespace longer than 63 characters
     set:
@@ -602,7 +602,7 @@ tests:
               port: 12345
     asserts:
       - failedTemplate:
-          errorMessage: Service - Expected [loadBalancerIP] to be a string, but got [slice]
+          errorPattern: 'at ''/service/my-service1/loadBalancerIP'': got array, want string'
 
   - it: should fail with if loadBalancerIPs is not a slice
     set:
@@ -619,7 +619,7 @@ tests:
               port: 12345
     asserts:
       - failedTemplate:
-          errorMessage: Service - Expected [loadBalancerIPs] to be a slice, but got [string]
+          errorPattern: 'at ''/service/my-service1/loadBalancerIPs'': got string, want array'
 
   - it: should fail if both loadBalancerIP and loadBalancerIPs is provided
     set:

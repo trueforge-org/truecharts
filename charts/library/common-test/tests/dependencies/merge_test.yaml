@@ -10,7 +10,7 @@ tests:
       dependencies: some-string
     asserts:
       - failedTemplate:
-          errorMessage: Dependencies - Expected [dependencies] to be a [map], but got [string]
+          errorPattern: 'at ''/dependencies'': got string, want object'
 
   - it: should fail with an invalid dependency name
     set:
