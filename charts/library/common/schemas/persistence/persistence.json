@@ -303,6 +303,14 @@
               "username": {
                 "type": "string",
                 "description": "Define the username"
+              },
+              "usernameInitiator": {
+                "type": "string",
+                "description": "Define the usernameInitiator"
+              },
+              "passwordInitiator": {
+                "type": "string",
+                "description": "Define the passwordInitiator"
               }
             },
             "additionalProperties": false,
@@ -330,6 +338,40 @@
             },
             "additionalProperties": false,
             "description": "Define the authDiscovery"
+          },
+          "fsType": {
+            "type": "string",
+            "description": "Define the fsType"
+          },
+          "targetPortal": {
+            "type": "string",
+            "description": "Define the targetPortal"
+          },
+          "iqn": {
+            "type": "string",
+            "description": "Define the iqn"
+          },
+          "lun": {
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "Define the lun"
+          },
+          "initiatorName": {
+            "type": "string",
+            "description": "Define the initiatorName"
+          },
+          "iscsiInterface": {
+            "type": "string",
+            "description": "Define the iscsiInterface"
+          },
+          "portals": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Define the portals"
           }
         },
         "additionalProperties": false,
@@ -397,6 +439,22 @@
         ],
         "description": "Additional labels for persistence"
       },
+      "annotationsList": {
+        "allOf": [
+          {
+            "$ref": "../special/annotationsList.json"
+          }
+        ],
+        "description": "Additional annotations as a list of name and value pairs, merged into the annotations"
+      },
+      "labelsList": {
+        "allOf": [
+          {
+            "$ref": "../special/labelsList.json"
+          }
+        ],
+        "description": "Additional labels as a list of name and value pairs, merged into the labels"
+      },
       "annotations": {
         "type": "object",
         "properties": {},
@@ -463,6 +521,10 @@
           "share": {
             "type": "string",
             "description": "Define the nfs export share path"
+          },
+          "username": {
+            "type": "string",
+            "description": "Define the smb username"
           },
           "user": {
             "type": "string",
@@ -580,6 +642,506 @@
       "portals": {
         "type": "array",
         "description": "Define the portals"
+      },
+      "domain": {
+        "type": "string",
+        "description": "Define the domain of the SMB share, used by the smb CSI driver"
+      },
+      "name": {
+        "type": "string",
+        "description": "Set by the chart, the name of the generated persistence resource. Do not set this manually"
+      },
+      "shortName": {
+        "type": "string",
+        "description": "Set by the chart, the short name of the persistence used in generated resource names. Do not set this manually"
+      },
+      "autoPermissions": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "Enables or Disables setting the permissions of the mount on container start"
+          },
+          "chown": {
+            "type": "boolean",
+            "description": "Define whether to change the owner of the mount to the user and group"
+          },
+          "chmod": {
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "Define the mode to apply to the mount, for example 775"
+          },
+          "recursive": {
+            "type": "boolean",
+            "description": "Define whether the chown and chmod are applied recursively"
+          },
+          "user": {
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "Define the user to change the owner of the mount to"
+          },
+          "group": {
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "Define the group to change the owner of the mount to"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Define automatic permission handling for the mount"
+      },
+      "volsync": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Define the name of the VolSync backup, used in the generated resource names"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "restic"
+              ],
+              "description": "Define the VolSync mover type"
+            },
+            "credentials": {
+              "type": "string",
+              "description": "Define the name of the credentials entry used for the backup repository"
+            },
+            "copyMethod": {
+              "type": "string",
+              "enum": [
+                "Clone",
+                "Direct",
+                "Snapshot"
+              ],
+              "description": "Define the copyMethod VolSync uses to copy the data, defaults to Snapshot"
+            },
+            "cleanupTempPVC": {
+              "type": "boolean",
+              "description": "Define whether the temporary PVC used by the ReplicationDestination is cleaned up"
+            },
+            "cleanupCachePVC": {
+              "type": "boolean",
+              "description": "Define whether the cache PVC used by the ReplicationDestination is cleaned up"
+            },
+            "labels": {
+              "allOf": [
+                {
+                  "$ref": "../special/labels.json"
+                }
+              ],
+              "description": "Additional labels for the VolSync resources"
+            },
+            "annotations": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true,
+              "description": "Additional annotations for the VolSync resources"
+            },
+            "resources": {
+              "allOf": [
+                {
+                  "$ref": "../workload/podSpec/containers/resources.json"
+                }
+              ],
+              "description": "Define the resources of the VolSync mover"
+            },
+            "src": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
+                  "description": "Enables or Disables the VolSync source, which backs up the data"
+                },
+                "trigger": {
+                  "type": "object",
+                  "properties": {
+                    "schedule": {
+                      "type": "string",
+                      "description": "Define the cron schedule of the backup, defaults to 0 0 * * *"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Define when the backup is triggered"
+                },
+                "retain": {
+                  "type": "object",
+                  "properties": {
+                    "hourly": {
+                      "type": "integer",
+                      "description": "Define the number of hourly snapshots to retain, defaults to 6"
+                    },
+                    "daily": {
+                      "type": "integer",
+                      "description": "Define the number of daily snapshots to retain, defaults to 5"
+                    },
+                    "weekly": {
+                      "type": "integer",
+                      "description": "Define the number of weekly snapshots to retain, defaults to 4"
+                    },
+                    "monthly": {
+                      "type": "integer",
+                      "description": "Define the number of monthly snapshots to retain, defaults to 3"
+                    },
+                    "yearly": {
+                      "type": "integer",
+                      "description": "Define the number of yearly snapshots to retain, defaults to 1"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Define how many snapshots to retain"
+                },
+                "pruneIntervalDays": {
+                  "type": "integer",
+                  "description": "Define how often, in days, old snapshots are pruned, defaults to 7"
+                },
+                "accessModes": {
+                  "type": [
+                    "array",
+                    "string"
+                  ],
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Define the accessModes of the source cache and storage"
+                },
+                "storageClassName": {
+                  "type": "string",
+                  "description": "Define the storageClassName of the source storage"
+                },
+                "volumeSnapshotClassName": {
+                  "type": "string",
+                  "description": "Define the volumeSnapshotClassName used for the source snapshots"
+                },
+                "cacheCapacity": {
+                  "type": "string",
+                  "description": "Define the capacity of the cache PVC, defaults to 10Gi"
+                },
+                "cacheStorageClassName": {
+                  "type": "string",
+                  "description": "Define the storageClassName of the cache PVC"
+                },
+                "cacheAccessModes": {
+                  "type": [
+                    "array",
+                    "string"
+                  ],
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Define the accessModes of the cache PVC"
+                },
+                "moverSecurityContext": {
+                  "type": "object",
+                  "properties": {
+                    "runAsUser": {
+                      "type": "integer",
+                      "description": "Define the runAsUser of the VolSync mover"
+                    },
+                    "runAsGroup": {
+                      "type": "integer",
+                      "description": "Define the runAsGroup of the VolSync mover"
+                    },
+                    "fsGroup": {
+                      "type": "integer",
+                      "description": "Define the fsGroup of the VolSync mover"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Define the security context of the VolSync mover"
+                }
+              },
+              "required": [
+                "enabled"
+              ],
+              "additionalProperties": false,
+              "description": "Define the VolSync source"
+            },
+            "dest": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
+                  "description": "Enables or Disables the VolSync destination, which restores the data"
+                },
+                "capacity": {
+                  "type": "string",
+                  "description": "Define the capacity of the restored volume"
+                },
+                "accessModes": {
+                  "type": [
+                    "array",
+                    "string"
+                  ],
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Define the accessModes of the destination storage"
+                },
+                "storageClassName": {
+                  "type": "string",
+                  "description": "Define the storageClassName of the destination storage"
+                },
+                "volumeSnapshotClassName": {
+                  "type": "string",
+                  "description": "Define the volumeSnapshotClassName used for the destination snapshots"
+                },
+                "cacheCapacity": {
+                  "type": "string",
+                  "description": "Define the capacity of the cache PVC, defaults to 10Gi"
+                },
+                "cacheStorageClassName": {
+                  "type": "string",
+                  "description": "Define the storageClassName of the cache PVC"
+                },
+                "cacheAccessModes": {
+                  "type": [
+                    "array",
+                    "string"
+                  ],
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Define the accessModes of the cache PVC"
+                },
+                "moverSecurityContext": {
+                  "type": "object",
+                  "properties": {
+                    "runAsUser": {
+                      "type": "integer",
+                      "description": "Define the runAsUser of the VolSync mover"
+                    },
+                    "runAsGroup": {
+                      "type": "integer",
+                      "description": "Define the runAsGroup of the VolSync mover"
+                    },
+                    "fsGroup": {
+                      "type": "integer",
+                      "description": "Define the fsGroup of the VolSync mover"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Define the security context of the VolSync mover"
+                }
+              },
+              "required": [
+                "enabled"
+              ],
+              "additionalProperties": false,
+              "description": "Define the VolSync destination"
+            }
+          },
+          "required": [
+            "name",
+            "type",
+            "credentials",
+            "src",
+            "dest"
+          ],
+          "additionalProperties": false
+        },
+        "description": "Define VolSync backups and restores for this persistence"
+      },
+      "sources": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "serviceAccountToken": {
+              "type": "object",
+              "properties": {
+                "audience": {
+                  "type": "string",
+                  "description": "Define the audience of the service account token"
+                },
+                "expirationSeconds": {
+                  "type": "integer",
+                  "minimum": 600,
+                  "description": "Define the expiration of the service account token in seconds, must be at least 600"
+                },
+                "path": {
+                  "type": "string",
+                  "description": "Define the path of the token file in the projected volume"
+                }
+              },
+              "required": [
+                "path"
+              ],
+              "additionalProperties": false,
+              "description": "Define a service account token source"
+            },
+            "secret": {
+              "type": "object",
+              "properties": {
+                "objectName": {
+                  "type": "string",
+                  "description": "Define the name of the secret"
+                },
+                "optional": {
+                  "type": "boolean",
+                  "description": "Define whether the secret must exist"
+                },
+                "expandObjectName": {
+                  "type": "boolean",
+                  "description": "Define whether the objectName is expanded as a Helm template"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "key": {
+                        "type": "string",
+                        "description": "Define the key of the secret"
+                      },
+                      "path": {
+                        "type": "string",
+                        "description": "Define the path to project the key to"
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "path"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "description": "Define the keys of the secret to project"
+                }
+              },
+              "required": [
+                "objectName",
+                "items"
+              ],
+              "additionalProperties": false,
+              "description": "Define a secret source"
+            },
+            "configMap": {
+              "type": "object",
+              "properties": {
+                "objectName": {
+                  "type": "string",
+                  "description": "Define the name of the configmap"
+                },
+                "optional": {
+                  "type": "boolean",
+                  "description": "Define whether the configmap must exist"
+                },
+                "expandObjectName": {
+                  "type": "boolean",
+                  "description": "Define whether the objectName is expanded as a Helm template"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "key": {
+                        "type": "string",
+                        "description": "Define the key of the configmap"
+                      },
+                      "path": {
+                        "type": "string",
+                        "description": "Define the path to project the key to"
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "path"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "description": "Define the keys of the configmap to project"
+                }
+              },
+              "required": [
+                "objectName",
+                "items"
+              ],
+              "additionalProperties": false,
+              "description": "Define a configmap source"
+            },
+            "downwardAPI": {
+              "type": "object",
+              "properties": {
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "path": {
+                        "type": "string",
+                        "description": "Define the path of the file in the projected volume"
+                      },
+                      "fieldRef": {
+                        "type": "object",
+                        "properties": {
+                          "apiVersion": {
+                            "type": "string",
+                            "description": "Define the apiVersion of the field"
+                          },
+                          "fieldPath": {
+                            "type": "string",
+                            "description": "Define the path of the pod field to expose"
+                          }
+                        },
+                        "additionalProperties": false,
+                        "description": "Define a pod field to expose"
+                      },
+                      "resourceFieldRef": {
+                        "type": "object",
+                        "properties": {
+                          "containerName": {
+                            "type": "string",
+                            "description": "Define the name of the container for the resource"
+                          },
+                          "resource": {
+                            "type": "string",
+                            "description": "Define the resource to expose"
+                          },
+                          "divisor": {
+                            "type": [
+                              "integer",
+                              "string"
+                            ],
+                            "description": "Define the divisor of the resource"
+                          }
+                        },
+                        "additionalProperties": false,
+                        "description": "Define a container resource to expose"
+                      }
+                    },
+                    "required": [
+                      "path"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "description": "Define the fields to project"
+                }
+              },
+              "required": [
+                "items"
+              ],
+              "additionalProperties": false,
+              "description": "Define a downward API source"
+            }
+          },
+          "additionalProperties": false
+        },
+        "description": "Define projected sources for this persistence"
       },
       "enabled": {
         "type": [
