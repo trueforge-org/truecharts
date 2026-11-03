@@ -128,6 +128,27 @@
       ],
       "description": "See [Termination Grace Period Seconds](/truecharts-common/workload#terminationgraceperiodseconds)",
       "default": 60
+    },
+    "hostUsers": {
+      "type": "boolean",
+      "description": "Override the calculated hostUsers for all pods. If set, takes precedence over the automated calculation. See [Host Users](/truecharts-common/workload#hostusers)"
+    },
+    "restartPolicy": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "Never",
+            "Always",
+            "OnFailure"
+          ]
+        },
+        {
+          "type": "string",
+          "pattern": "^\\{\\{.*\\}\\}$"
+        }
+      ],
+      "description": "Default restartPolicy for all pods, can be overruled per pod. Jobs and CronJobs default to OnFailure, other workloads default to Always. See [Restart Policy](/truecharts-common/workload#restartpolicy)"
     }
   },
   "additionalProperties": false,

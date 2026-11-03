@@ -15,6 +15,13 @@
         "$ref": "port.json"
       },
       "description": "Ports allowed by this rule."
+    },
+    "fromEntities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Cilium only: entities (for example `world`, `cluster`, `host` or `all`) allowed to send traffic. Ignored for Kubernetes NetworkPolicies."
     }
   },
   "additionalProperties": false,

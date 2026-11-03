@@ -54,6 +54,22 @@
         ],
         "default": {}
       },
+      "annotationsList": {
+        "allOf": [
+          {
+            "$ref": "special/annotationsList.json"
+          }
+        ],
+        "description": "Additional annotations as a list of name and value pairs, merged into the annotations"
+      },
+      "labelsList": {
+        "allOf": [
+          {
+            "$ref": "special/labelsList.json"
+          }
+        ],
+        "description": "Additional labels as a list of name and value pairs, merged into the labels"
+      },
       "annotations": {
         "type": [
           "object",
@@ -87,6 +103,14 @@
       "targetSelector": {
         "type": "string",
         "description": "Configuration for `podDisruptionBudget.main.targetSelector`."
+      },
+      "customLabels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Custom labels used to select the pods covered by this Pod Disruption Budget, replacing the automatically selected pod labels"
       }
     },
     "additionalProperties": false,
