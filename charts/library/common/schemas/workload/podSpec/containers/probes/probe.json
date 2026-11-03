@@ -73,6 +73,38 @@
         "failureThreshold": {
           "type": "integer",
           "minimum": 1
+        },
+        "exec": {
+          "type": "object",
+          "properties": {
+            "command": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Command to run."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Legacy exec handler set by `stable/dashy`, `stable/mongodb`, `stable/nginx-proxy-manager`, and `stable/whisparr`. The probe templates ignore it. Use top-level `command` with `type: exec` instead."
+        },
+        "httpGet": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "Request path."
+            },
+            "port": {
+              "type": [
+                "integer",
+                "string"
+              ],
+              "description": "Port number or name."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Legacy HTTP handler set by `stable/miniflux`, `stable/nullserv`, and `stable/nzbhydra`. The probe templates ignore it. Use top-level `type`, `path`, and `port` instead."
         }
       },
       "additionalProperties": false,
@@ -87,6 +119,34 @@
       "items": {
         "type": "string"
       }
+    },
+    "custom": {
+      "type": "boolean",
+      "description": "Legacy probe flag set by `stable/dashy`, `stable/miniflux`, `stable/mongodb`, `stable/nginx-proxy-manager`, `stable/nullserv`, `stable/nzbhydra`, and `stable/whisparr`. The probe templates ignore it. Use `type` with `path`, `port`, or `command` instead."
+    },
+    "exec": {
+      "type": "object",
+      "properties": {
+        "command": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Command to run."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Legacy exec handler set by `stable/rtorrent-rutorrent`. The probe templates ignore it. Use `type: exec` with `command` instead."
+    },
+    "initialDelaySeconds": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Legacy top-level delay set by `stable/docker`. The probe templates ignore it. Use `spec.initialDelaySeconds` instead."
+    },
+    "failureThreshold": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Legacy top-level failure threshold set by the `stable/sdtd` startup probe. The probe templates ignore it. Use `spec.failureThreshold` instead."
     }
   },
   "additionalProperties": false,
