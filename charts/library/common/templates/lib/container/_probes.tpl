@@ -36,6 +36,8 @@ objectData: The object data to be used to render the container.
     {{- $isEnabled := true -}}
     {{- if kindIs "bool" $probe.enabled -}}
       {{- $isEnabled = $probe.enabled -}}
+    {{- else if kindIs "string" $probe.enabled -}}
+      {{- $isEnabled = (eq (tpl $probe.enabled $rootCtx) "true") -}}
     {{- end -}}
 
     {{- if $isEnabled -}}

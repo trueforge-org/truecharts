@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "authSession": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string",
+          "description": "CHAP password of the target.",
+          "x-helm-tpl": true
+        },
+        "username": {
+          "type": "string",
+          "description": "CHAP user name of the target.",
+          "x-helm-tpl": true
+        },
+        "usernameInitiator": {
+          "type": "string",
+          "description": "CHAP user name of the initiator."
+        },
+        "passwordInitiator": {
+          "type": "string",
+          "description": "CHAP password of the initiator."
+        }
+      },
+      "additionalProperties": false,
+      "description": "CHAP authentication of the iSCSI session."
+    },
+    "authDiscovery": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": "CHAP user name of the target.",
+          "x-helm-tpl": true
+        },
+        "password": {
+          "type": "string",
+          "description": "CHAP password of the target.",
+          "x-helm-tpl": true
+        },
+        "usernameInitiator": {
+          "type": "string",
+          "description": "CHAP user name of the initiator.",
+          "x-helm-tpl": true
+        },
+        "passwordInitiator": {
+          "type": "string",
+          "description": "CHAP password of the initiator.",
+          "x-helm-tpl": true
+        }
+      },
+      "additionalProperties": false,
+      "description": "CHAP authentication of the discovery session."
+    },
+    "fsType": {
+      "type": "string",
+      "description": "File system of the volume, eg `ext4`."
+    },
+    "targetPortal": {
+      "type": "string",
+      "description": "Portal of the target, as `host:port`."
+    },
+    "iqn": {
+      "type": "string",
+      "description": "iSCSI qualified name of the target."
+    },
+    "lun": {
+      "type": [
+        "integer",
+        "string"
+      ],
+      "description": "LUN number of the target."
+    },
+    "initiatorName": {
+      "type": "string",
+      "description": "iSCSI initiator name of the node."
+    },
+    "iscsiInterface": {
+      "type": "string",
+      "description": "iSCSI interface of the node, eg `default`."
+    },
+    "portals": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Additional portals of the target, as `host:port`."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Settings of the iSCSI target, for `type: iscsi`.",
+  "x-docs-required": true
+}

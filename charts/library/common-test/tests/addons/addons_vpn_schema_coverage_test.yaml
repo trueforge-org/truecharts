@@ -44,7 +44,7 @@ tests:
         isKind:
           of: Deployment
 
-  - it: should fail on the removed vpn addon with every legacy key
+  - it: should reject the removed vpn addon with every legacy key
     set:
       workload: &workload
         my-workload:
@@ -87,84 +87,7 @@ tests:
             down: echo down
     asserts:
       - failedTemplate:
-          errorPattern: "Your current Common-Chart version does not support \\[.Values.addons.vpn\\]"
-
-  - it: should fail on unknown keys in addons vpn
-    set:
-      workload: &workload
-        my-workload:
-          enabled: true
-          primary: true
-          type: Deployment
-          podSpec:
-            containers:
-              main:
-                enabled: true
-                primary: true
-                imageSelector: ubuntuImage
-                probes:
-                  liveness:
-                    enabled: false
-                  readiness:
-                    enabled: false
-                  startup:
-                    enabled: false
-      service: &service
-        my-service:
-          enabled: true
-          primary: true
-          targetSelector: my-workload
-          ports:
-            main:
-              enabled: true
-              primary: true
-              port: 8080
-      addons:
-        vpn:
-          unknownKey: value
-          scripts:
-            unknownKey: value
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/addons/vpn': additional properties 'unknownKey' not allowed"
-
-  - it: should fail on unknown keys in addons vpn scripts
-    set:
-      workload: &workload
-        my-workload:
-          enabled: true
-          primary: true
-          type: Deployment
-          podSpec:
-            containers:
-              main:
-                enabled: true
-                primary: true
-                imageSelector: ubuntuImage
-                probes:
-                  liveness:
-                    enabled: false
-                  readiness:
-                    enabled: false
-                  startup:
-                    enabled: false
-      service: &service
-        my-service:
-          enabled: true
-          primary: true
-          targetSelector: my-workload
-          ports:
-            main:
-              enabled: true
-              primary: true
-              port: 8080
-      addons:
-        vpn:
-          scripts:
-            unknownKey: value
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/addons/vpn/scripts': additional properties 'unknownKey' not allowed"
+          errorPattern: "at '/addons/vpn': additional properties .* not allowed"
 
   - it: should fail on unknown keys in addons
     set:

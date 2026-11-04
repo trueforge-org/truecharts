@@ -443,13 +443,8 @@
                 "description": "Maximum size of a request body sent to the plugin, in bytes."
               },
               "enabled": {
-                "type": [
-                  "boolean",
-                  "string"
-                ],
-                "properties": {},
-                "additionalProperties": false,
-                "description": "Enable the middleware.",
+                "type": "boolean",
+                "description": "Enable the plugin. Must be a boolean.",
                 "x-docs-required": true
               },
               "logLevel": {

@@ -72,3 +72,58 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "at '/rbac/my-rbac/serviceAccounts'"
+
+  - it: should fail on unknown keys in rbac subjects entries
+    set:
+      rbac:
+        my-rbac:
+          enabled: true
+          subjects:
+            - kind: Group
+              unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/rbac/my-rbac/subjects/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail when rbac serviceAccounts is a map
+    set:
+      rbac:
+        my-rbac:
+          enabled: true
+          serviceAccounts:
+            my-sa: {}
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/rbac/my-rbac/serviceAccounts': "
+
+  - it: should render rbac with a list of serviceAccounts
+    set:
+      serviceAccount:
+        my-sa:
+          enabled: true
+          primary: true
+        other-sa:
+          enabled: true
+      rbac:
+        my-rbac:
+          enabled: true
+          primary: true
+          serviceAccounts:
+            - other-sa
+          rules:
+            - apiGroups:
+                - ""
+              resources:
+                - pods
+              verbs:
+                - get
+    asserts:
+      - documentSelector:
+          path: kind
+          value: RoleBinding
+        contains:
+          path: subjects
+          content:
+            kind: ServiceAccount
+            name: test-release-name-common-test-other-sa
+            namespace: test-release-namespace

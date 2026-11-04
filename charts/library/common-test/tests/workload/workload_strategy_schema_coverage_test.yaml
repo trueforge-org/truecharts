@@ -54,21 +54,51 @@ tests:
           path: spec.updateStrategy.type
           value: OnDelete
 
-  - it: should fail on unknown keys in workload strategy
+  - it: should render a deployment with RollingUpdate and the workload rollingUpdate options
     set:
       workload:
         my-workload:
           enabled: true
           primary: true
           type: Deployment
-          strategy:
-            unknownKey: value
-          podSpec: {}
+          strategy: RollingUpdate
+          rollingUpdate:
+            maxSurge: 1
+            maxUnavailable: 25%
+          podSpec:
+            containers: *containers
     asserts:
-      - failedTemplate:
-          errorPattern: "at '/workload/my-workload/strategy': "
+      - documentIndex: 0
+        equal:
+          path: spec.strategy
+          value:
+            type: RollingUpdate
+            rollingUpdate:
+              maxUnavailable: 25%
+              maxSurge: 1
 
-  - it: should fail on unknown keys in workload strategy rollingUpdate
+  - it: should render a statefulset with RollingUpdate and a partition
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: StatefulSet
+          strategy: RollingUpdate
+          rollingUpdate:
+            partition: 1
+          podSpec:
+            containers: *containers
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: spec.updateStrategy
+          value:
+            type: RollingUpdate
+            rollingUpdate:
+              partition: 1
+
+  - it: should fail when strategy is a map instead of a string
     set:
       workload:
         my-workload:
@@ -77,9 +107,22 @@ tests:
           type: Deployment
           strategy:
             type: RollingUpdate
-            rollingUpdate:
-              unknownKey: value
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorPattern: "at '/workload/my-workload/strategy/rollingUpdate': additional properties 'unknownKey' not allowed"
+          errorPattern: "at '/workload/my-workload/strategy': "
+
+  - it: should fail on unknown keys in workload rollingUpdate
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          strategy: RollingUpdate
+          rollingUpdate:
+            unknownKey: value
+          podSpec: {}
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/rollingUpdate': additional properties 'unknownKey' not allowed"

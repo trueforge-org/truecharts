@@ -1,0 +1,193 @@
+suite: persistence storage fixes
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render an iscsi volume on a fixed-name persistence entry
+    set:
+      persistence:
+        shared:
+          enabled: true
+          type: iscsi
+          mountPath: /mnt/shared
+          targetSelectAll: true
+          iscsi:
+            fsType: ext4
+            targetPortal: 10.0.0.1:3260
+            iqn: iqn.2000-01.com.example:storage
+            lun: 0
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              my-container:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.volumes
+          content:
+            name: shared
+            iscsi:
+              targetPortal: 10.0.0.1:3260
+              iqn: iqn.2000-01.com.example:storage
+              lun: 0
+              fsType: ext4
+              chapAuthDiscovery: false
+              chapAuthSession: false
+
+  - it: should render an iscsi chap secret on a fixed-name persistence entry
+    set:
+      persistence:
+        tmp:
+          enabled: true
+          type: iscsi
+          iscsi:
+            targetPortal: 10.0.0.1:3260
+            iqn: iqn.2000-01.com.example:storage
+            lun: 0
+            authSession:
+              username: some-user
+              password: some-password
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: type
+          value: kubernetes.io/iscsi-chap
+
+  - it: should fail with a message on a fixed-name iscsi entry without iscsi object
+    set:
+      persistence:
+        varlogs:
+          enabled: true
+          type: iscsi
+          mountPath: /var/log
+          targetSelectAll: true
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              my-container:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+    asserts:
+      - failedTemplate:
+          errorMessage: Persistence - Expected non-empty [iscsi] object on [iscsi] type
+
+  - it: should render a volsync source and destination cacheAccessModes as a string
+    set:
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          volsync:
+            - name: my-volsync
+              type: restic
+              credentials: my-creds
+              dest:
+                enabled: true
+                cacheAccessModes: ReadWriteOnce
+              src:
+                enabled: true
+                cacheAccessModes: ReadWriteMany
+      credentials:
+        my-creds:
+          type: s3
+          url: https://s3.example.com
+          bucket: my-bucket
+          accessKey: some-key
+          secretKey: some-secret
+          encrKey: some-encr
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ReplicationDestination
+        equal:
+          path: spec.restic.cacheAccessModes
+          value:
+            - ReadWriteOnce
+      - documentSelector:
+          path: kind
+          value: ReplicationSource
+        equal:
+          path: spec.restic.cacheAccessModes
+          value:
+            - ReadWriteMany
+
+  - it: should render a pvc with static custom mode
+    set:
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          static:
+            mode: custom
+            provisioner: some.provisioner.io
+            driver: some.driver.io
+    asserts:
+      - documentSelector:
+          path: kind
+          value: PersistentVolumeClaim
+        matchRegex:
+          path: metadata.name
+          pattern: ^test-release-name-common-test-my-volume1-[0-9]+$
+
+  - it: should render storage class boolean and number parameters
+    set:
+      storageClass:
+        my-sc:
+          enabled: true
+          provisioner: some.provisioner.io
+          parameters:
+            flag: true
+            count: 5
+            name: value
+    asserts:
+      - isKind:
+          of: StorageClass
+      - equal:
+          path: parameters
+          value:
+            flag: "true"
+            count: "5"
+            name: value
+
+  - it: should fail on a string volumeSnapshotClass parameters
+    set:
+      volumeSnapshotClass:
+        my-vsc:
+          enabled: true
+          driver: some.driver.io
+          parameters: some-string
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/volumeSnapshotClass/my-vsc/parameters'"

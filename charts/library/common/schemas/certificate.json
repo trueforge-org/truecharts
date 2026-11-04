@@ -98,16 +98,16 @@
         "x-docs-required": true
       },
       "hosts": {
-        "type": [
-          "array",
-          "string"
-        ],
-        "properties": {},
-        "additionalProperties": false,
+        "type": "array",
         "description": "Define the hosts for this certificate",
         "default": "false",
         "x-helm-tpl": "On each entry",
-        "x-docs-required": true
+        "x-docs-required": true,
+        "items": {
+          "type": "string",
+          "description": "Host (DNS name) of the certificate",
+          "x-helm-tpl": true
+        }
       }
     },
     "additionalProperties": false,

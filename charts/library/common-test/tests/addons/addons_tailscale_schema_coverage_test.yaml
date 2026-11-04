@@ -443,3 +443,65 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "at '/addons/tailscale/container/securityContext/capabilities': additional properties 'unknownKey' not allowed"
+
+  - it: should evaluate string enabled values of the tailscale addon probes
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          targetSelector: my-workload
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      addons:
+        tailscale:
+          enabled: true
+          targetSelector:
+            - my-workload
+          container:
+            enabled: true
+            imageSelector: tailscaleImage
+            probes:
+              liveness:
+                enabled: "false"
+              readiness:
+                enabled: "{{ false }}"
+              startup:
+                enabled: "false"
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notExists:
+          path: spec.template.spec.containers[1].livenessProbe
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notExists:
+          path: spec.template.spec.containers[1].readinessProbe
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notExists:
+          path: spec.template.spec.containers[1].startupProbe

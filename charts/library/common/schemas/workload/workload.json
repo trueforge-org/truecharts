@@ -349,60 +349,13 @@
         ]
       },
       "strategy": {
-        "oneOf": [
-          {
-            "type": "string",
-            "enum": [
-              "Recreate",
-              "RollingUpdate",
-              "OnDelete"
-            ]
-          },
-          {
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "Recreate",
-                  "RollingUpdate",
-                  "OnDelete"
-                ],
-                "description": "Define the strategy type of the workload"
-              },
-              "rollingUpdate": {
-                "type": "object",
-                "properties": {
-                  "maxUnavailable": {
-                    "type": [
-                      "integer",
-                      "string"
-                    ],
-                    "description": "Pods that can be unavailable during an update, a number or percentage."
-                  },
-                  "partition": {
-                    "type": [
-                      "integer",
-                      "string"
-                    ],
-                    "description": "Pods with a lower ordinal are not updated, for staged rollouts of a StatefulSet."
-                  },
-                  "maxSurge": {
-                    "type": [
-                      "integer",
-                      "string"
-                    ],
-                    "description": "Pods that can be created above the replicas during an update, a number or percentage."
-                  }
-                },
-                "additionalProperties": false,
-                "description": "Define rollingUpdate options under strategy"
-              }
-            },
-            "additionalProperties": false
-          }
+        "type": "string",
+        "enum": [
+          "Recreate",
+          "RollingUpdate",
+          "OnDelete"
         ],
-        "description": "Define the strategy of the workload\n\nA single replica Deployment uses `Recreate` if it mounts a `ReadWriteOnce` or `ReadWriteOncePod` volume. See [`allowRollingUpdateWithRWO`](#workloadnameallowrollingupdatewithrwo) to keep `RollingUpdate` with `ReadWriteOnce`."
+        "description": "Define the strategy type of the workload. Set `maxUnavailable`, `maxSurge` and `partition` under [`rollingUpdate`](#workloadnamerollingupdate)\n\nA single replica Deployment uses `Recreate` if it mounts a `ReadWriteOnce` or `ReadWriteOncePod` volume. See [`allowRollingUpdateWithRWO`](#workloadnameallowrollingupdatewithrwo) to keep `RollingUpdate` with `ReadWriteOnce`."
       },
       "rollingUpdate": {
         "type": "object",

@@ -315,3 +315,49 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: 'at ''/webhook/validating/webhooks/0/namespaceSelector'': '
+
+  - it: should render matchLabels selectors on a named webhook as valid YAML
+    set:
+      webhook:
+        my-webhook:
+          enabled: true
+          type: validating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+                  port: 8443
+              namespaceSelector:
+                matchLabels:
+                  team: "{{ .Release.Name }}"
+              objectSelector:
+                matchExpressions:
+                  - key: skip
+                    operator: DoesNotExist
+              rules:
+                - apiGroups: [""]
+                  apiVersions: [v1]
+                  operations: [CREATE]
+                  resources: [pods]
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ValidatingWebhookConfiguration
+        equal:
+          path: webhooks[0].namespaceSelector.matchLabels.team
+          value: test-release-name
+      - documentSelector:
+          path: kind
+          value: ValidatingWebhookConfiguration
+        equal:
+          path: webhooks[0].objectSelector.matchExpressions[0].key
+          value: skip
+      - documentSelector:
+          path: kind
+          value: ValidatingWebhookConfiguration
+        equal:
+          path: webhooks[0].clientConfig.service.port
+          value: 8443

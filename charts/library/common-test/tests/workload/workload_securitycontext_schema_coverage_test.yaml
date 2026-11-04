@@ -88,3 +88,20 @@ tests:
           errorPattern: "at '/securityContext/pod/sysctls/0': additional properties 'unknownKey' not allowed"
       - failedTemplate:
           errorPattern: "at '/securityContext/pod/sysctls/0': missing properties 'name', 'value'"
+
+  - it: should fail when securityContext.container is null
+    set:
+      securityContext:
+        container: null
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/securityContext/container': "
+
+  - it: should fail when securityContext.container.seccompProfile is null
+    set:
+      securityContext:
+        container:
+          seccompProfile: null
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/securityContext/container/seccompProfile': "

@@ -72,3 +72,93 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "at '/metrics/my-metrics/prometheusRule/additionalgroups"
+
+  - it: should render prometheusRule additionalgroups as a list of groups
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            enabled: true
+            additionalgroups:
+              - name: listed
+                rules:
+                  - alert: ListAlert
+                    expr: up == 0
+                    for: 5m
+    asserts:
+      - documentSelector: *rule
+        equal:
+          path: spec.groups[0].name
+          value: test-release-name-common-test-my-metrics-listed
+      - documentSelector: *rule
+        equal:
+          path: spec.groups[0].rules[0].alert
+          value: ListAlert
+
+  - it: should render prometheusRule additionalgroups as a map keyed by group name
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            enabled: true
+            additionalgroups:
+              mapped:
+                rules:
+                  - alert: MapAlert
+                    expr: up == 0
+                    for: 5m
+                additionalrules:
+                  - alert: ExtraAlert
+                    expr: up == 1
+    asserts:
+      - documentSelector: *rule
+        isKind:
+          of: PrometheusRule
+      - documentSelector: *rule
+        matchRegex:
+          path: spec.groups[0].name
+          pattern: mapped$
+      - documentSelector: *rule
+        equal:
+          path: spec.groups[0].rules[0].alert
+          value: MapAlert
+
+  - it: should fail on additionalgroups set to a string
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            additionalgroups: notalist
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics/prometheusRule/additionalgroups"
+
+  - it: should fail on additionalgroups set to an integer
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            additionalgroups: 5
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics/prometheusRule/additionalgroups"
