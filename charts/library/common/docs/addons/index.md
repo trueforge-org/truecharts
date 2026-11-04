@@ -31,7 +31,7 @@ Addons to the workloads.
 
 ### `addons.codeserver`
 
-Configuration for the code-server addon.
+A code-server container to edit the files of the app.
 
 | Field      | Value               |
 | ---------- | ------------------- |
@@ -47,7 +47,7 @@ See [Codeserver](codeserver/) for full configuration.
 
 ### `addons.gluetun`
 
-Configuration for the Gluetun addon.
+A gluetun VPN container that routes the traffic of the pod.
 
 | Field      | Value            |
 | ---------- | ---------------- |
@@ -63,7 +63,7 @@ See [Gluetun](gluetun/) for full configuration.
 
 ### `addons.netshoot`
 
-Configuration for the netshoot addon.
+A netshoot container to debug the network of the pod.
 
 | Field      | Value             |
 | ---------- | ----------------- |
@@ -79,7 +79,7 @@ See [Netshoot](netshoot.md) for full configuration.
 
 ### `addons.tailscale`
 
-Addons to the workloads
+A tailscale container that connects the pod to a tailnet.
 
 | Field      | Value              |
 | ---------- | ------------------ |
@@ -109,7 +109,6 @@ Removed vpn add-on. Setting `addons.vpn` fails rendering (see `templates/values/
 
 ## Child Pages
 
-- [Addon](addon.md) - Configuration for a workload addon.
 - [Codeserver](codeserver/) - Configuration for the code-server addon.
 - [Container](container.md) - Container configuration for an addon.
 - [Gluetun](gluetun/) - Configuration for the Gluetun addon.

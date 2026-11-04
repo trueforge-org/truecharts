@@ -31,7 +31,7 @@ Configuration for the code-server addon.
 
 ### `addons.codeserver.container`
 
-No description provided.
+Container of the code-server add-on.
 
 | Field      | Value                         |
 | ---------- | ----------------------------- |
@@ -150,6 +150,6 @@ Workloads to which the code-server addon is attached. Defaults to `main`.
 
 ## Child Pages
 
-- [Container](container/)
+- [Container](container/) - Container of the code-server add-on.
 
 ---

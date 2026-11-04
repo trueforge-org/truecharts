@@ -31,7 +31,7 @@ Options that apply to all pods, unless overridden at the pod level See more info
 
 ### `podOptions.affinity`
 
-Configuration for `podOptions.affinity`.
+Affinity of the pods, passed on as is.
 
 | Field      | Value                 |
 | ---------- | --------------------- |
@@ -66,7 +66,7 @@ podOptions:
 
 ### `podOptions.defaultAffinity`
 
-Configuration for `podOptions.defaultAffinity`.
+Add the default affinity of common.
 
 | Field      | Value                        |
 | ---------- | ---------------------------- |

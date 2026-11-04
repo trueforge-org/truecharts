@@ -26,7 +26,9 @@
         "properties": {},
         "additionalProperties": false,
         "description": "Enables or Disables the priority class",
-        "default": false
+        "default": false,
+        "x-helm-tpl": true,
+        "x-docs-required": true
       },
       "namespace": {
         "allOf": [
@@ -35,7 +37,8 @@
           }
         ],
         "description": "Define the namespace for this object",
-        "default": ""
+        "default": "",
+        "x-helm-tpl": "On value only"
       },
       "labels": {
         "allOf": [
@@ -44,11 +47,8 @@
           }
         ],
         "description": "Additional labels for priority class",
-        "type": [
-          "object",
-          "string"
-        ],
-        "default": {}
+        "default": {},
+        "x-helm-tpl": "On value only"
       },
       "annotationsList": {
         "allOf": [
@@ -67,17 +67,14 @@
         "description": "Additional labels as a list of name and value pairs, merged into the labels"
       },
       "annotations": {
-        "type": [
-          "object",
-          "string"
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
         ],
-        "properties": {},
-        "additionalProperties": {
-          "type": "string",
-          "description": "Value of the annotation"
-        },
         "description": "Additional annotations for priority class",
-        "default": {}
+        "default": {},
+        "x-helm-tpl": "On value only"
       },
       "value": {
         "type": "integer",
@@ -97,7 +94,8 @@
     },
     "additionalProperties": false,
     "description": "Define priority class",
-    "default": {}
+    "default": {},
+    "x-docs-required": true
   },
   "description": "Define priority classes"
 }

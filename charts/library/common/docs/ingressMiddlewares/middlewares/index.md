@@ -31,6 +31,6 @@ Configuration for `ingressMiddlewares.middlewares`.
 
 ## Child Pages
 
-- [Traefik](traefik/) - Configuration for Traefik middlewares.
+- [Traefik](traefik.md) - Configuration for `ingressMiddlewares.middlewares.traefik`.
 
 ---

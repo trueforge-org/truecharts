@@ -7,49 +7,56 @@
         "string",
         "null"
       ],
-      "description": "Configuration for `global.fallbackDefaults.storageClass`.",
+      "description": "Storage class of a pvc that sets none. `-` leaves it unset.",
       "default": null
     },
     "probeType": {
       "type": "string",
-      "description": "Configuration for `global.fallbackDefaults.probeType`.",
+      "description": "Type of a probe that sets none.",
       "default": "http",
-      "minLength": 1
+      "minLength": 1,
+      "x-docs-required": true
     },
     "serviceProtocol": {
       "type": "string",
-      "description": "Configuration for `global.fallbackDefaults.serviceProtocol`.",
+      "description": "Protocol of a service port that sets none.",
       "default": "tcp",
-      "minLength": 1
+      "minLength": 1,
+      "x-docs-required": true
     },
     "serviceType": {
       "type": "string",
-      "description": "Configuration for `global.fallbackDefaults.serviceType`.",
+      "description": "Type of a service that sets none.",
       "default": "ClusterIP",
-      "minLength": 1
+      "minLength": 1,
+      "x-docs-required": true
     },
     "persistenceType": {
       "type": "string",
-      "description": "Configuration for `global.fallbackDefaults.persistenceType`.",
+      "description": "Type of a persistence entry that sets none.",
       "default": "pvc",
-      "minLength": 1
+      "minLength": 1,
+      "x-docs-required": true
     },
     "pvcRetain": {
       "type": "boolean",
-      "description": "Configuration for `global.fallbackDefaults.pvcRetain`.",
-      "default": false
+      "description": "Keep the pvcs when the release is deleted, for persistence that sets no `retain`.",
+      "default": false,
+      "x-docs-required": true
     },
     "pvcSize": {
       "type": "string",
-      "description": "Configuration for `global.fallbackDefaults.pvcSize`.",
+      "description": "Size of a pvc that sets none.",
       "default": "100Gi",
-      "minLength": 1
+      "minLength": 1,
+      "x-docs-required": true
     },
     "vctSize": {
       "type": "string",
-      "description": "Configuration for `global.fallbackDefaults.vctSize`.",
+      "description": "Size of a volume claim template that sets none.",
       "default": "100Gi",
-      "minLength": 1
+      "minLength": 1,
+      "x-docs-required": true
     },
     "accessModes": {
       "type": "array",
@@ -57,10 +64,11 @@
         "type": "string",
         "description": "Configuration for `global.fallbackDefaults.accessModes.$item`."
       },
-      "description": "Configuration for `global.fallbackDefaults.accessModes`.",
+      "description": "Access modes of a pvc that sets none.",
       "default": [
         "ReadWriteOnce"
-      ]
+      ],
+      "x-docs-required": true
     },
     "vctAccessModes": {
       "type": "array",
@@ -68,7 +76,7 @@
         "type": "string",
         "description": "Configuration for `global.fallbackDefaults.vctAccessModes.$item`."
       },
-      "description": "Configuration for `global.fallbackDefaults.vctAccessModes`.",
+      "description": "Access modes of a volume claim template that sets none.",
       "default": [
         "ReadWriteOnce"
       ]
@@ -81,136 +89,154 @@
           "properties": {
             "initialDelaySeconds": {
               "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.initialDelaySeconds`.",
+              "description": "Seconds before the first probe.",
               "default": 12,
-              "minimum": 1
+              "minimum": 1,
+              "x-docs-required": true
             },
             "periodSeconds": {
               "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.periodSeconds`.",
+              "description": "Seconds between probes.",
               "default": 15,
-              "minimum": 1
+              "minimum": 1,
+              "x-docs-required": true
             },
             "timeoutSeconds": {
               "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.timeoutSeconds`.",
+              "description": "Seconds before a probe times out.",
               "default": 5,
-              "minimum": 1
+              "minimum": 1,
+              "x-docs-required": true
             },
             "failureThreshold": {
               "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.failureThreshold`.",
+              "description": "Failed probes in a row before the probe fails.",
               "default": 5,
-              "minimum": 1
+              "minimum": 1,
+              "x-docs-required": true
             },
             "successThreshold": {
               "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness.successThreshold`.",
+              "description": "Successful probes in a row before the probe succeeds.",
               "default": 1,
-              "minimum": 1
+              "minimum": 1,
+              "x-docs-required": true
             }
           },
           "additionalProperties": false,
-          "description": "Configuration for `global.fallbackDefaults.probeTimeouts.liveness`.",
+          "description": "Timings of liveness probes.",
           "default": {
             "initialDelaySeconds": 12,
             "periodSeconds": 15,
             "timeoutSeconds": 5,
             "failureThreshold": 5,
             "successThreshold": 1
-          }
+          },
+          "x-docs-required": true
         },
         "readiness": {
           "type": "object",
           "properties": {
             "initialDelaySeconds": {
               "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.initialDelaySeconds`.",
+              "description": "Seconds before the first probe.",
               "default": 10,
-              "minimum": 1
+              "minimum": 1,
+              "x-docs-required": true
             },
             "periodSeconds": {
               "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.periodSeconds`.",
+              "description": "Seconds between probes.",
               "default": 12,
-              "minimum": 1
+              "minimum": 1,
+              "x-docs-required": true
             },
             "timeoutSeconds": {
               "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.timeoutSeconds`.",
+              "description": "Seconds before a probe times out.",
               "default": 5,
-              "minimum": 1
+              "minimum": 1,
+              "x-docs-required": true
             },
             "failureThreshold": {
               "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.failureThreshold`.",
+              "description": "Failed probes in a row before the probe fails.",
               "default": 4,
-              "minimum": 1
+              "minimum": 1,
+              "x-docs-required": true
             },
             "successThreshold": {
               "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness.successThreshold`.",
+              "description": "Successful probes in a row before the probe succeeds.",
               "default": 2,
-              "minimum": 1
+              "minimum": 1,
+              "x-docs-required": true
             }
           },
           "additionalProperties": false,
-          "description": "Configuration for `global.fallbackDefaults.probeTimeouts.readiness`.",
+          "description": "Timings of readiness probes.",
           "default": {
             "initialDelaySeconds": 10,
             "periodSeconds": 12,
             "timeoutSeconds": 5,
             "failureThreshold": 4,
             "successThreshold": 2
-          }
+          },
+          "x-docs-required": true
         },
         "startup": {
           "type": "object",
           "properties": {
             "initialDelaySeconds": {
               "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.initialDelaySeconds`.",
+              "description": "Seconds before the first probe.",
               "default": 10,
-              "minimum": 1
+              "minimum": 1,
+              "x-docs-required": true
             },
             "periodSeconds": {
               "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.periodSeconds`.",
+              "description": "Seconds between probes.",
               "default": 5,
-              "minimum": 1
+              "minimum": 1,
+              "x-docs-required": true
             },
             "timeoutSeconds": {
               "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.timeoutSeconds`.",
+              "description": "Seconds before a probe times out.",
               "default": 3,
-              "minimum": 1
+              "minimum": 1,
+              "x-docs-required": true
             },
             "failureThreshold": {
               "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.failureThreshold`.",
+              "description": "Failed probes in a row before the probe fails.",
               "default": 60,
-              "minimum": 1
+              "minimum": 1,
+              "x-docs-required": true
             },
             "successThreshold": {
               "type": "integer",
-              "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup.successThreshold`.",
+              "description": "Successful probes in a row before the probe succeeds.",
               "default": 1,
-              "minimum": 1
+              "minimum": 1,
+              "x-docs-required": true
             }
           },
           "additionalProperties": false,
-          "description": "Configuration for `global.fallbackDefaults.probeTimeouts.startup`.",
+          "description": "Timings of startup probes.",
           "default": {
             "initialDelaySeconds": 10,
             "periodSeconds": 5,
             "timeoutSeconds": 3,
             "failureThreshold": 60,
             "successThreshold": 1
-          }
+          },
+          "x-docs-required": true
         }
       },
       "additionalProperties": false,
-      "description": "Configuration for `global.fallbackDefaults.probeTimeouts`.",
+      "description": "Timings of the probes that set none.",
       "default": {
         "liveness": {
           "initialDelaySeconds": 10,
@@ -233,11 +259,12 @@
           "failureThreshold": 60,
           "successThreshold": 1
         }
-      }
+      },
+      "x-docs-required": true
     },
     "topologyKey": {
       "type": "string",
-      "description": "Configuration for `global.fallbackDefaults.topologyKey`.",
+      "description": "Topology key of the default topology spread constraints.",
       "default": "kubernetes.io/hostname"
     },
     "allowRollingUpdateWithRWO": {
@@ -257,17 +284,17 @@
       "properties": {
         "pgVersion": {
           "type": "integer",
-          "description": "Configuration for `global.fallbackDefaults.cnpg.pgVersion`.",
+          "description": "Major PostgreSQL version of a cluster that sets no `pgVersion`.",
           "default": 18
         },
         "skipEmptyWalArchiveCheck": {
           "type": "boolean",
-          "description": "Configuration for `global.fallbackDefaults.cnpg.skipEmptyWalArchiveCheck`.",
+          "description": "Skip the check that the WAL archive of a new cluster is empty.",
           "default": true
         }
       },
       "additionalProperties": false,
-      "description": "Configuration for `global.fallbackDefaults.cnpg`."
+      "description": "Defaults of the postgresql dependency in `operator` mode."
     }
   },
   "additionalProperties": false,

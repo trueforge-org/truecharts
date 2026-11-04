@@ -62,7 +62,7 @@ Valkey configuration directives (valkey.conf), eg `maxmemory-policy: allkeys-lru
 | Key        | `dependencies.valkey.operator.config` |
 | Type       | `map`                                 |
 | Required   | ❌                                    |
-| Helm `tpl` | ❌                                    |
+| Helm `tpl` | ✅                                    |
 | Default    | `{}`                                  |
 
 Example

@@ -17,7 +17,7 @@ title: Probes
 
 ## `workload.podSpec.containers.probes`
 
-Does **not** apply to `initContainers` See [probes](/truecharts-common/container/probes)
+Does **not** apply to `initContainers` See [probes](/truecharts-common/workload/podSpec/containers/probes)
 
 | Field      | Value                                |
 | ---------- | ------------------------------------ |
@@ -37,7 +37,7 @@ Define the liveness probe.
 | ---------- | --------------------------------------------- |
 | Key        | `workload.podSpec.containers.probes.liveness` |
 | Type       | `map`                                         |
-| Required   | ❌                                            |
+| Required   | ✅                                            |
 | Helm `tpl` | ❌                                            |
 | Default    | unset                                         |
 
@@ -53,7 +53,7 @@ Define the readiness probe.
 | ---------- | ---------------------------------------------- |
 | Key        | `workload.podSpec.containers.probes.readiness` |
 | Type       | `map`                                          |
-| Required   | ❌                                             |
+| Required   | ✅                                             |
 | Helm `tpl` | ❌                                             |
 | Default    | unset                                          |
 
@@ -69,7 +69,7 @@ Define the startup probe.
 | ---------- | -------------------------------------------- |
 | Key        | `workload.podSpec.containers.probes.startup` |
 | Type       | `map`                                        |
-| Required   | ❌                                           |
+| Required   | ✅                                           |
 | Helm `tpl` | ❌                                           |
 | Default    | unset                                        |
 

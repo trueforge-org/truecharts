@@ -40,7 +40,7 @@ Configuration for `workload.podSpec`.
 - [Hostnetwork](hostNetwork.md) - See [Host Network](/truecharts-common/workload#hostnetwork)
 - [Hostpid](hostPID.md) - See [Host PID](/truecharts-common/workload#hostpid)
 - [Hostusers](hostUsers.md) - See [Host Users](/truecharts-common/workload#hostusers)
-- [Initcontainers](initContainers/) - Configuration for `workload.podSpec.initContainers`.
+- [Initcontainers](initContainers.md) - Configuration for `$name.podSpec.initContainers`.
 - [Priorityclassname](priorityClassName.md) - See [Priority Class Name](/truecharts-common/workload#priorityclassname)
 - [Restartpolicy](restartPolicy.md) - See [Restart Policy](/truecharts-common/workload#restartpolicy)
 - [Runtimeclassname](runtimeClassName.md) - See [Runtime Class Name](/truecharts-common/workload#runtimeclassname)

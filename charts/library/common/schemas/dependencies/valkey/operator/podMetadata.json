@@ -3,20 +3,22 @@
   "type": "object",
   "properties": {
     "labels": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "string"
-      },
-      "default": {},
-      "description": "Labels of the pods."
+      "allOf": [
+        {
+          "$ref": "../../../special/labels.json"
+        }
+      ],
+      "description": "Labels of the pods.",
+      "default": {}
     },
     "annotations": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "string"
-      },
-      "default": {},
-      "description": "Annotations of the pods."
+      "allOf": [
+        {
+          "$ref": "../../../special/annotations.json"
+        }
+      ],
+      "description": "Annotations of the pods.",
+      "default": {}
     }
   },
   "additionalProperties": false

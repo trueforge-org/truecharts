@@ -31,7 +31,7 @@ A match condition for an HTTP or gRPC route.
 
 ### `route.match.headers`
 
-No description provided.
+Headers the request has to match.
 
 | Field      | Value                 |
 | ---------- | --------------------- |
@@ -45,7 +45,7 @@ No description provided.
 
 ### `route.match.method`
 
-No description provided.
+HTTP method of the request, or the gRPC service and method.
 
 | Field      | Value                |
 | ---------- | -------------------- |
@@ -73,7 +73,7 @@ Path condition for the match.
 
 ### `route.match.queryParams`
 
-No description provided.
+Query parameters the request has to match.
 
 | Field      | Value                     |
 | ---------- | ------------------------- |

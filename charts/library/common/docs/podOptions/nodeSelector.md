@@ -31,7 +31,7 @@ See [Node Selector](/truecharts-common/workload#nodeselector)
 
 ### `podOptions.nodeSelector.kubernetes.io/arch`
 
-Configuration for `podOptions.nodeSelector.kubernetes.io/arch`.
+CPU architecture of the node, eg `amd64` or `arm64`.
 
 | Field      | Value                                        |
 | ---------- | -------------------------------------------- |

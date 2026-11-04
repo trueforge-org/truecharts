@@ -14,12 +14,12 @@ ingressMiddlewares:
         key: value
         keytpl: "{{ .Values.some.value }}"
       data:
-        key: value
+        maxRequestBodyBytes: 1024
 
     other-middleware-name:
       enabled: true
       type: buffering
       namespace: some-namespace
       data:
-        key: value
+        maxRequestBodyBytes: 1024
 ```

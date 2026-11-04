@@ -135,6 +135,9 @@ INTERNAL_TEMPLATE_PATHS = {
     "$/ingress/objectName/name",
     "$/service/objectName/ports/objectName/containerPort",
     "$/service/objectName/ports/objectName/serviceName",
+    "$/rbac/objectName/dependency",
+    "$/serviceAccount/objectName/dependency",
+    "$/workload/objectName/dependency",
 }
 
 STRUCTURE_KEYWORDS = ("type", "properties", "additionalProperties", "patternProperties", "items", "$ref", "allOf", "oneOf", "anyOf")

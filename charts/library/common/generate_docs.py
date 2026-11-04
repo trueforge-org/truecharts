@@ -581,6 +581,8 @@ def helm_tpl_flag(node: dict[str, Any]) -> str:
         if "x-helm-tpl" in node
         else node.get("helmTpl", node.get("x-tpl", False))
     )
+    if isinstance(value, str) and value:
+        return f"✅ ({value})"
     return "✅" if value else "❌"
 
 
@@ -721,7 +723,8 @@ def iter_child_properties(
             for key in sorted(properties.keys()):
                 child = properties[key]
                 if isinstance(child, dict):
-                    add_child(key, child, key in variant_required, variant_source)
+                    # x-docs-required marks keys a chart has to set, without the schema enforcing it, as common has a default
+                    add_child(key, child, key in variant_required or child.get("x-docs-required") is True, variant_source)
                 elif child is False:
                     forbidden.add(key)
 
@@ -737,7 +740,7 @@ def iter_child_properties(
                 for key in sorted(entry_properties.keys()):
                     child = entry_properties[key]
                     if isinstance(child, dict):
-                        add_child(f"$name.{key}", child, key in entry_required, variant_source)
+                        add_child(f"$name.{key}", child, key in entry_required or child.get("x-docs-required") is True, variant_source)
 
     for key in sorted(grouped_children.keys()):
         if key in forbidden:

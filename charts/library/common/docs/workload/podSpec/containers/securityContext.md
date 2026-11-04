@@ -85,7 +85,7 @@ Define the allowPrivilegeEscalation for the container
 | ---------- | ---------------------------------------------------------------------- |
 | Key        | `workload.podSpec.containers.securityContext.allowPrivilegeEscalation` |
 | Type       | `boolean`                                                              |
-| Required   | ❌                                                                     |
+| Required   | ✅                                                                     |
 | Helm `tpl` | ❌                                                                     |
 | Default    | unset                                                                  |
 
@@ -93,13 +93,13 @@ Define the allowPrivilegeEscalation for the container
 
 ### `workload.podSpec.containers.securityContext.capabilities`
 
-Define the capabilities for the container If at least one capability is defined in either [`add`](/truecharts-common/container/securitycontext/#securitycontextcapabilitiesadd) or [`drop`](/truecharts-common/container/securitycontext/#securitycontextcapabilitiesdrop)
+Define the capabilities for the container If at least one capability is defined in either [`add`](/truecharts-common/workload/podSpec/containers/securityContext#securitycontextcapabilitiesadd) or [`drop`](/truecharts-common/workload/podSpec/containers/securityContext#securitycontextcapabilitiesdrop)
 
 | Field      | Value                                                      |
 | ---------- | ---------------------------------------------------------- |
 | Key        | `workload.podSpec.containers.securityContext.capabilities` |
 | Type       | `map`                                                      |
-| Required   | ❌                                                         |
+| Required   | ✅                                                         |
 | Helm `tpl` | ❌                                                         |
 | Default    | unset                                                      |
 
@@ -128,7 +128,7 @@ Define the privileged for the container
 | ---------- | -------------------------------------------------------- |
 | Key        | `workload.podSpec.containers.securityContext.privileged` |
 | Type       | `boolean`                                                |
-| Required   | ❌                                                       |
+| Required   | ✅                                                       |
 | Helm `tpl` | ❌                                                       |
 | Default    | unset                                                    |
 
@@ -142,7 +142,7 @@ Define the readOnlyRootFilesystem for the container
 | ---------- | -------------------------------------------------------------------- |
 | Key        | `workload.podSpec.containers.securityContext.readOnlyRootFilesystem` |
 | Type       | `boolean`                                                            |
-| Required   | ❌                                                                   |
+| Required   | ✅                                                                   |
 | Helm `tpl` | ❌                                                                   |
 | Default    | unset                                                                |
 
@@ -156,7 +156,7 @@ Define the runAsGroup for the container
 | ---------- | -------------------------------------------------------- |
 | Key        | `workload.podSpec.containers.securityContext.runAsGroup` |
 | Type       | `integer`                                                |
-| Required   | ❌                                                       |
+| Required   | ✅                                                       |
 | Helm `tpl` | ❌                                                       |
 | Default    | unset                                                    |
 
@@ -170,7 +170,7 @@ Define the runAsNonRoot for the container
 | ---------- | ---------------------------------------------------------- |
 | Key        | `workload.podSpec.containers.securityContext.runAsNonRoot` |
 | Type       | `boolean`                                                  |
-| Required   | ❌                                                         |
+| Required   | ✅                                                         |
 | Helm `tpl` | ❌                                                         |
 | Default    | unset                                                      |
 
@@ -184,7 +184,7 @@ Define the runAsUser for the container
 | ---------- | ------------------------------------------------------- |
 | Key        | `workload.podSpec.containers.securityContext.runAsUser` |
 | Type       | `integer`                                               |
-| Required   | ❌                                                      |
+| Required   | ✅                                                      |
 | Helm `tpl` | ❌                                                      |
 | Default    | unset                                                   |
 
@@ -198,7 +198,7 @@ Define the seccompProfile for the container.
 | ---------- | ------------------------------------------------------------ |
 | Key        | `workload.podSpec.containers.securityContext.seccompProfile` |
 | Type       | `map, null`                                                  |
-| Required   | ❌                                                           |
+| Required   | ✅                                                           |
 | Helm `tpl` | ❌                                                           |
 | Default    | `{"type": "RuntimeDefault"}`                                 |
 

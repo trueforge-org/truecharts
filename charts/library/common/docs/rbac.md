@@ -50,9 +50,9 @@ Additional annotations for rbac
 | Field      | Value                    |
 | ---------- | ------------------------ |
 | Key        | `rbac.$name.annotations` |
-| Type       | `map, string`            |
+| Type       | `map`                    |
 | Required   | ❌                       |
-| Helm `tpl` | ❌                       |
+| Helm `tpl` | ✅ (On value only)        |
 | Default    | `{}`                     |
 
 Example
@@ -110,8 +110,8 @@ Enables or Disables the rbac
 | ---------- | -------------------- |
 | Key        | `rbac.$name.enabled` |
 | Type       | `boolean, string`    |
-| Required   | ❌                   |
-| Helm `tpl` | ❌                   |
+| Required   | ✅                   |
+| Helm `tpl` | ✅                   |
 | Default    | `false`              |
 
 Example
@@ -131,9 +131,9 @@ Additional labels for rbac
 | Field      | Value               |
 | ---------- | ------------------- |
 | Key        | `rbac.$name.labels` |
-| Type       | `map, string`       |
+| Type       | `map`               |
 | Required   | ❌                  |
-| Helm `tpl` | ❌                  |
+| Helm `tpl` | ✅ (On value only)   |
 | Default    | `{}`                |
 
 Example
@@ -170,7 +170,7 @@ Define the namespace for this object (Only when clusterWide is false)
 | Key        | `rbac.$name.namespace` |
 | Type       | `string`               |
 | Required   | ❌                     |
-| Helm `tpl` | ❌                     |
+| Helm `tpl` | ✅                     |
 | Default    | `""`                   |
 
 Example
@@ -213,7 +213,7 @@ Define the `rules` for the (Cluster)Role
 | ---------- | ------------------ |
 | Key        | `rbac.$name.rules` |
 | Type       | `list of map`      |
-| Required   | ❌                 |
+| Required   | ✅                 |
 | Helm `tpl` | ❌                 |
 | Default    | `[]`               |
 

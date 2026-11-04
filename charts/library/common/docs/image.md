@@ -37,7 +37,7 @@ Defines the image pull policy
 | ---------- | ------------------ |
 | Key        | `image.pullPolicy` |
 | Type       | `string`           |
-| Required   | ❌                 |
+| Required   | ✅                 |
 | Helm `tpl` | ❌                 |
 | Default    | `"IfNotPresent"`   |
 
@@ -58,7 +58,7 @@ Defines the image repository
 | ---------- | ------------------ |
 | Key        | `image.repository` |
 | Type       | `string`           |
-| Required   | ❌                 |
+| Required   | ✅                 |
 | Helm `tpl` | ❌                 |
 | Default    | `""`               |
 
@@ -79,7 +79,7 @@ Defines the image tag
 | ---------- | ----------- |
 | Key        | `image.tag` |
 | Type       | `string`    |
-| Required   | ❌          |
+| Required   | ✅          |
 | Helm `tpl` | ❌          |
 | Default    | `""`        |
 

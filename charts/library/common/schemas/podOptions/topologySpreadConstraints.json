@@ -7,56 +7,23 @@
     "properties": {
       "maxSkew": {
         "type": "integer",
-        "description": "Configuration for `topologySpreadConstraints.$item.maxSkew`."
+        "description": "Maximum difference in pods between two topology domains."
       },
       "topologyKey": {
         "type": "string",
-        "description": "Configuration for `topologySpreadConstraints.$item.topologyKey`."
+        "description": "Node label of the topology domain, eg `kubernetes.io/hostname`."
       },
       "whenUnsatisfiable": {
         "type": "string",
-        "description": "Configuration for `topologySpreadConstraints.$item.whenUnsatisfiable`."
+        "description": "What happens when the constraint can not be met: `DoNotSchedule` or `ScheduleAnyway`."
       },
       "labelSelector": {
-        "type": "object",
-        "properties": {
-          "matchLabels": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": {
-              "type": "string",
-              "description": "Value of the label"
-            },
-            "description": "Match by labels."
-          },
-          "matchExpressions": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "key": {
-                  "type": "string",
-                  "description": "Label key the selector applies to."
-                },
-                "operator": {
-                  "type": "string",
-                  "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
-                },
-                "values": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
-                }
-              },
-              "additionalProperties": false
-            },
-            "description": "Match by label expressions."
+        "allOf": [
+          {
+            "$ref": "../special/labelSelector.json"
           }
-        },
-        "additionalProperties": false,
-        "description": "Configuration for `topologySpreadConstraints.$item.labelSelector`."
+        ],
+        "description": "Pods that are counted, by labels."
       },
       "minDomains": {
         "type": "integer",

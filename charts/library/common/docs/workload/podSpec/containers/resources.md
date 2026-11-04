@@ -77,7 +77,7 @@ The minimum amount of resources that the container needs. Requests are **require
 | ---------- | ------------------------------------------------ |
 | Key        | `workload.podSpec.containers.resources.requests` |
 | Type       | `map`                                            |
-| Required   | ❌                                               |
+| Required   | ✅                                               |
 | Helm `tpl` | ❌                                               |
 | Default    | `{"cpu": "75m", "memory": "200Mi"}`              |
 

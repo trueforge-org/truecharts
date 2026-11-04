@@ -37,7 +37,7 @@ Timezone that is used everywhere applicable, unless overridden at the container 
 | ---------- | ----------- |
 | Key        | `common.TZ` |
 | Type       | `map`       |
-| Required   | ❌          |
+| Required   | ✅          |
 | Helm `tpl` | ❌          |
 | Default    | `"UTC"`     |
 
@@ -70,7 +70,7 @@ See [Addons](addons/) for full configuration.
 
 ### `common.args`
 
-See [args](/truecharts-common/container/args#args)
+See [args](/truecharts-common/workload/podSpec/containers/args#args)
 
 | Field      | Value                         |
 | ---------- | ----------------------------- |
@@ -118,7 +118,7 @@ See [Certificate](certificate.md) for full configuration.
 
 ### `common.chartContext`
 
-Configuration for `chartContext`.
+Details about the release that common works out on every render.
 
 | Field      | Value                 |
 | ---------- | --------------------- |
@@ -150,7 +150,7 @@ See [Clickhouseimage](images.md) for full configuration.
 
 ### `common.codeserverImage`
 
-Configuration for `codeserverImage`.
+Image `codeserverImage`, selected by containers with `imageSelector: codeserverImage`.
 
 | Field      | Value                    |
 | ---------- | ------------------------ |
@@ -166,7 +166,7 @@ See [Codeserverimage](images.md) for full configuration.
 
 ### `common.command`
 
-See [command](/truecharts-common/container/command)
+See [command](/truecharts-common/workload/podSpec/containers/command)
 
 | Field      | Value                         |
 | ---------- | ----------------------------- |
@@ -214,7 +214,7 @@ See [Configmapsfromfolder](configMapsFromFolder.md) for full configuration.
 
 ### `common.configmap`
 
-Create Configmap objects
+Create Configmap objects.
 
 | Field      | Value              |
 | ---------- | ------------------ |
@@ -246,7 +246,7 @@ See [Containeroptions](containerOptions.md) for full configuration.
 
 ### `common.credentials`
 
-Create credentials objects
+Create credentials objects.
 
 | Field      | Value                |
 | ---------- | -------------------- |
@@ -278,7 +278,7 @@ See [Defaultspread](workload/podSpec/defaultSpread.md) for full configuration.
 
 ### `common.dependencies`
 
-Configuration for `dependencies`.
+Services the app needs, like a database or cache, deployed with the chart. See [Dependencies](/truecharts-common/dependencies).
 
 | Field      | Value                 |
 | ---------- | --------------------- |
@@ -294,7 +294,7 @@ See [Dependencies](dependencies/) for full configuration.
 
 ### `common.diagnosticMode`
 
-Configuration for `diagnosticMode`.
+Run the containers with a sleep command instead of the app, to debug them.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
@@ -358,7 +358,7 @@ See [Enableservicelinks](workload/podSpec/enableServiceLinks.md) for full config
 
 ### `common.env`
 
-See [env](/truecharts-common/container/env)
+See [env](/truecharts-common/workload/podSpec/containers/env)
 
 | Field      | Value        |
 | ---------- | ------------ |
@@ -374,7 +374,7 @@ See [Env](workload/podSpec/containers/env.md) for full configuration.
 
 ### `common.envFrom`
 
-See [envFrom](/truecharts-common/container/envfrom)
+See [envFrom](/truecharts-common/workload/podSpec/containers/envFrom)
 
 | Field      | Value            |
 | ---------- | ---------------- |
@@ -390,7 +390,7 @@ See [Envfrom](workload/podSpec/containers/envFrom.md) for full configuration.
 
 ### `common.externalSecret`
 
-Create ExternalSecret objects
+ExternalSecrets that load secrets from an external store, keyed by name.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
@@ -413,7 +413,7 @@ Define kubernetes resources, 1 per list item, tpl will be resolved
 | Key        | `common.extraTpl`     |
 | Type       | `list of map, string` |
 | Required   | ❌                    |
-| Helm `tpl` | ❌                    |
+| Helm `tpl` | ✅                    |
 | Default    | `[]`                  |
 
 See [Extratpl](extraTpl.md) for full configuration.
@@ -430,7 +430,7 @@ common:
 
 ### `common.fallbackDefaults`
 
-The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [documentation](/truecharts-common/fallbackdefaults)
+The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [documentation](/truecharts-common/global/fallbackDefaults)
 
 | Field      | Value                     |
 | ---------- | ------------------------- |
@@ -446,7 +446,7 @@ See [Fallbackdefaults](global/fallbackDefaults.md) for full configuration.
 
 ### `common.fixedEnv`
 
-See [fixedEnv](/truecharts-common/container/fixedenv)
+See [fixedEnv](/truecharts-common/workload/podSpec/containers/fixedEnv)
 
 | Field      | Value             |
 | ---------- | ----------------- |
@@ -510,7 +510,7 @@ See [Global](global/) for full configuration.
 
 ### `common.gluetunImage`
 
-Configuration for `gluetunImage`.
+Image `gluetunImage`, selected by containers with `imageSelector: gluetunImage`.
 
 | Field      | Value                 |
 | ---------- | --------------------- |
@@ -606,7 +606,7 @@ See [Hostusers](workload/podSpec/hostUsers.md) for full configuration.
 
 ### `common.hpa`
 
-Configuration for `hpa`.
+HorizontalPodAutoscalers, keyed by name.
 
 | Field      | Value        |
 | ---------- | ------------ |
@@ -628,7 +628,7 @@ Defines the image details
 | ---------- | -------------- |
 | Key        | `common.image` |
 | Type       | `map`          |
-| Required   | ❌             |
+| Required   | ✅             |
 | Helm `tpl` | ❌             |
 | Default    | unset          |
 
@@ -654,7 +654,7 @@ See [Imagepullsecret](imagePullSecret.md) for full configuration.
 
 ### `common.ingress`
 
-Create Ingress objects
+Create Ingress objects.
 
 | Field      | Value            |
 | ---------- | ---------------- |
@@ -670,7 +670,7 @@ See [Ingress](ingress/) for full configuration.
 
 ### `common.ingressMiddlewares`
 
-Create Middleware objects
+Create Middleware objects.
 
 | Field      | Value                       |
 | ---------- | --------------------------- |
@@ -686,7 +686,7 @@ See [Ingressmiddlewares](ingressMiddlewares/) for full configuration.
 
 ### `common.kubectlImage`
 
-Configuration for `kubectlImage`.
+Image `kubectlImage`, selected by containers with `imageSelector: kubectlImage`.
 
 | Field      | Value                 |
 | ---------- | --------------------- |
@@ -732,7 +732,7 @@ See [Listenerset](listenerSet.md) for full configuration.
 
 ### `common.mariadbClientImage`
 
-Configuration for `mariadbClientImage`.
+Image `mariadbClientImage`, selected by containers with `imageSelector: mariadbClientImage`.
 
 | Field      | Value                       |
 | ---------- | --------------------------- |
@@ -780,7 +780,7 @@ See [Memcachedimage](images.md) for full configuration.
 
 ### `common.metrics`
 
-Configuration for `metrics`.
+ServiceMonitors, PodMonitors and PrometheusRules, keyed by name.
 
 | Field      | Value            |
 | ---------- | ---------------- |
@@ -796,7 +796,7 @@ See [Metrics](metrics.md) for full configuration.
 
 ### `common.mongodbClientImage`
 
-Configuration for `mongodbClientImage`.
+Image `mongodbClientImage`, selected by containers with `imageSelector: mongodbClientImage`.
 
 | Field      | Value                       |
 | ---------- | --------------------------- |
@@ -844,7 +844,7 @@ See [Namespace](namespace.md) for full configuration.
 
 ### `common.netshootImage`
 
-Configuration for `netshootImage`.
+Image `netshootImage`, selected by containers with `imageSelector: netshootImage`.
 
 | Field      | Value                  |
 | ---------- | ---------------------- |
@@ -964,7 +964,7 @@ See [Podoptions](podOptions/) for full configuration.
 
 ### `common.postgres15Image`
 
-Configuration for `postgres15Image`.
+Image `postgres15Image`, selected by containers with `imageSelector: postgres15Image`.
 
 | Field      | Value                    |
 | ---------- | ------------------------ |
@@ -980,7 +980,7 @@ See [Postgres15image](images.md) for full configuration.
 
 ### `common.postgres16Image`
 
-Configuration for `postgres16Image`.
+Image `postgres16Image`, selected by containers with `imageSelector: postgres16Image`.
 
 | Field      | Value                    |
 | ---------- | ------------------------ |
@@ -996,7 +996,7 @@ See [Postgres16image](images.md) for full configuration.
 
 ### `common.postgres17Image`
 
-Configuration for `postgres17Image`.
+Image `postgres17Image`, selected by containers with `imageSelector: postgres17Image`.
 
 | Field      | Value                    |
 | ---------- | ------------------------ |
@@ -1012,7 +1012,7 @@ See [Postgres17image](images.md) for full configuration.
 
 ### `common.postgres18Image`
 
-Configuration for `postgres18Image`.
+Image `postgres18Image`, selected by containers with `imageSelector: postgres18Image`.
 
 | Field      | Value                    |
 | ---------- | ------------------------ |
@@ -1028,7 +1028,7 @@ See [Postgres18image](images.md) for full configuration.
 
 ### `common.postgresClientImage`
 
-Configuration for `postgresClientImage`.
+Image `postgresClientImage`, selected by containers with `imageSelector: postgresClientImage`.
 
 | Field      | Value                        |
 | ---------- | ---------------------------- |
@@ -1044,7 +1044,7 @@ See [Postgresclientimage](images.md) for full configuration.
 
 ### `common.postgresPostgis15Image`
 
-Configuration for `postgresPostgis15Image`.
+Image `postgresPostgis15Image`, selected by containers with `imageSelector: postgresPostgis15Image`.
 
 | Field      | Value                           |
 | ---------- | ------------------------------- |
@@ -1060,7 +1060,7 @@ See [Postgrespostgis15image](images.md) for full configuration.
 
 ### `common.postgresPostgis16Image`
 
-Configuration for `postgresPostgis16Image`.
+Image `postgresPostgis16Image`, selected by containers with `imageSelector: postgresPostgis16Image`.
 
 | Field      | Value                           |
 | ---------- | ------------------------------- |
@@ -1076,7 +1076,7 @@ See [Postgrespostgis16image](images.md) for full configuration.
 
 ### `common.postgresPostgis17Image`
 
-Configuration for `postgresPostgis17Image`.
+Image `postgresPostgis17Image`, selected by containers with `imageSelector: postgresPostgis17Image`.
 
 | Field      | Value                           |
 | ---------- | ------------------------------- |
@@ -1092,7 +1092,7 @@ See [Postgrespostgis17image](images.md) for full configuration.
 
 ### `common.postgresPostgis18Image`
 
-Configuration for `postgresPostgis18Image`.
+Image `postgresPostgis18Image`, selected by containers with `imageSelector: postgresPostgis18Image`.
 
 | Field      | Value                           |
 | ---------- | ------------------------------- |
@@ -1108,7 +1108,7 @@ See [Postgrespostgis18image](images.md) for full configuration.
 
 ### `common.postgresVectorchord15Image`
 
-Configuration for `postgresVectorchord15Image`.
+Image `postgresVectorchord15Image`, selected by containers with `imageSelector: postgresVectorchord15Image`.
 
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
@@ -1124,7 +1124,7 @@ See [Postgresvectorchord15image](images.md) for full configuration.
 
 ### `common.postgresVectorchord16Image`
 
-Configuration for `postgresVectorchord16Image`.
+Image `postgresVectorchord16Image`, selected by containers with `imageSelector: postgresVectorchord16Image`.
 
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
@@ -1140,7 +1140,7 @@ See [Postgresvectorchord16image](images.md) for full configuration.
 
 ### `common.postgresVectorchord17Image`
 
-Configuration for `postgresVectorchord17Image`.
+Image `postgresVectorchord17Image`, selected by containers with `imageSelector: postgresVectorchord17Image`.
 
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
@@ -1156,7 +1156,7 @@ See [Postgresvectorchord17image](images.md) for full configuration.
 
 ### `common.postgresVectorchord18Image`
 
-Configuration for `postgresVectorchord18Image`.
+Image `postgresVectorchord18Image`, selected by containers with `imageSelector: postgresVectorchord18Image`.
 
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
@@ -1172,7 +1172,7 @@ See [Postgresvectorchord18image](images.md) for full configuration.
 
 ### `common.postgresVectors15Image`
 
-Configuration for `postgresVectors15Image`.
+Image `postgresVectors15Image`, selected by containers with `imageSelector: postgresVectors15Image`.
 
 | Field      | Value                           |
 | ---------- | ------------------------------- |
@@ -1188,7 +1188,7 @@ See [Postgresvectors15image](images.md) for full configuration.
 
 ### `common.postgresVectors16Image`
 
-Configuration for `postgresVectors16Image`.
+Image `postgresVectors16Image`, selected by containers with `imageSelector: postgresVectors16Image`.
 
 | Field      | Value                           |
 | ---------- | ------------------------------- |
@@ -1204,7 +1204,7 @@ See [Postgresvectors16image](images.md) for full configuration.
 
 ### `common.postgresVectors17Image`
 
-Configuration for `postgresVectors17Image`.
+Image `postgresVectors17Image`, selected by containers with `imageSelector: postgresVectors17Image`.
 
 | Field      | Value                           |
 | ---------- | ------------------------------- |
@@ -1220,7 +1220,7 @@ See [Postgresvectors17image](images.md) for full configuration.
 
 ### `common.postgresql18Image`
 
-Configuration for `postgresql18Image`.
+Image `postgresql18Image`, selected by containers with `imageSelector: postgresql18Image`.
 
 | Field      | Value                      |
 | ---------- | -------------------------- |
@@ -1268,7 +1268,7 @@ See [Priorityclassname](workload/podSpec/priorityClassName.md) for full configur
 
 ### `common.probes`
 
-Does **not** apply to `initContainers` See [probes](/truecharts-common/container/probes)
+Does **not** apply to `initContainers` See [probes](/truecharts-common/workload/podSpec/containers/probes)
 
 | Field      | Value           |
 | ---------- | --------------- |
@@ -1284,7 +1284,7 @@ See [Probes](workload/podSpec/containers/probes/) for full configuration.
 
 ### `common.rbac`
 
-Create rbac objects
+Create rbac objects.
 
 | Field      | Value         |
 | ---------- | ------------- |
@@ -1306,7 +1306,7 @@ Define resources for all containers, unless overridden at the container level Re
 | ---------- | ------------------ |
 | Key        | `common.resources` |
 | Type       | `map`              |
-| Required   | ❌                 |
+| Required   | ✅                 |
 | Helm `tpl` | ❌                 |
 | Default    | unset              |
 
@@ -1332,7 +1332,7 @@ See [Restartpolicy](workload/podSpec/restartPolicy.md) for full configuration.
 
 ### `common.route`
 
-Configuration for `route`.
+Gateway API routes, keyed by name.
 
 | Field      | Value          |
 | ---------- | -------------- |
@@ -1380,7 +1380,7 @@ See [Schedulername](workload/podSpec/schedulerName.md) for full configuration.
 
 ### `common.secret`
 
-Create Secret objects
+Define the secret If this is set, the `users` key must not be set.
 
 | Field      | Value           |
 | ---------- | --------------- |
@@ -1402,7 +1402,7 @@ Define security context for all containers and pods, unless overridden at the co
 | ---------- | ------------------------ |
 | Key        | `common.securityContext` |
 | Type       | `map`                    |
-| Required   | ❌                       |
+| Required   | ✅                       |
 | Helm `tpl` | ❌                       |
 | Default    | unset                    |
 
@@ -1428,7 +1428,7 @@ See [Service](service/) for full configuration.
 
 ### `common.serviceAccount`
 
-Create serviceAccount objects
+Create serviceAccount objects.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
@@ -1476,7 +1476,7 @@ See [Storageclass](storageClass.md) for full configuration.
 
 ### `common.tailscaleImage`
 
-Configuration for `tailscaleImage`.
+Image `tailscaleImage`, selected by containers with `imageSelector: tailscaleImage`.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
@@ -1492,7 +1492,7 @@ See [Tailscaleimage](images.md) for full configuration.
 
 ### `common.termination`
 
-See [termination](/truecharts-common/container/termination)
+See [termination](/truecharts-common/workload/container/termination)
 
 | Field      | Value                |
 | ---------- | -------------------- |
@@ -1556,7 +1556,7 @@ See [Topologyspreadconstraints](podOptions/topologySpreadConstraints.md) for ful
 
 ### `common.ubuntuImage`
 
-Configuration for `ubuntuImage`.
+Image `ubuntuImage`, selected by containers with `imageSelector: ubuntuImage`.
 
 | Field      | Value                |
 | ---------- | -------------------- |
@@ -1572,7 +1572,7 @@ See [Ubuntuimage](images.md) for full configuration.
 
 ### `common.valkeyClientImage`
 
-Configuration for `valkeyClientImage`.
+Image `valkeyClientImage`, selected by containers with `imageSelector: valkeyClientImage`.
 
 | Field      | Value                      |
 | ---------- | -------------------------- |
@@ -1652,7 +1652,7 @@ See [Volumesnapshots](volumeSnapshots.md) for full configuration.
 
 ### `common.vpa`
 
-Configuration for `vpa`.
+VerticalPodAutoscalers, keyed by name.
 
 | Field      | Value        |
 | ---------- | ------------ |
@@ -1668,7 +1668,7 @@ See [Vpa](vpa.md) for full configuration.
 
 ### `common.webhook`
 
-Create webhook objects
+Create webhook objects.
 
 | Field      | Value            |
 | ---------- | ---------------- |
@@ -1684,7 +1684,7 @@ See [Webhook](webhook.md) for full configuration.
 
 ### `common.workload`
 
-Define workload objects
+Define workload objects.
 
 | Field      | Value             |
 | ---------- | ----------------- |

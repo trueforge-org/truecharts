@@ -45,7 +45,7 @@ Image of the clickhouse dependency, selected by its container.
 
 ### `images.codeserverImage`
 
-Configuration for `codeserverImage`.
+Image of `codeserverImage`.
 
 | Field      | Value                    |
 | ---------- | ------------------------ |
@@ -59,7 +59,7 @@ Configuration for `codeserverImage`.
 
 ### `images.gluetunImage`
 
-Configuration for `gluetunImage`.
+Image of `gluetunImage`.
 
 | Field      | Value                 |
 | ---------- | --------------------- |
@@ -73,7 +73,7 @@ Configuration for `gluetunImage`.
 
 ### `images.kubectlImage`
 
-Configuration for `kubectlImage`.
+Image of `kubectlImage`.
 
 | Field      | Value                 |
 | ---------- | --------------------- |
@@ -87,7 +87,7 @@ Configuration for `kubectlImage`.
 
 ### `images.mariadbClientImage`
 
-Configuration for `mariadbClientImage`.
+Image of `mariadbClientImage`.
 
 | Field      | Value                       |
 | ---------- | --------------------------- |
@@ -129,7 +129,7 @@ Image of the memcached dependency, selected by its container.
 
 ### `images.mongodbClientImage`
 
-Configuration for `mongodbClientImage`.
+Image of `mongodbClientImage`.
 
 | Field      | Value                       |
 | ---------- | --------------------------- |
@@ -157,7 +157,7 @@ Image of the mongodb dependency, selected by its container.
 
 ### `images.netshootImage`
 
-Configuration for `netshootImage`.
+Image of `netshootImage`.
 
 | Field      | Value                  |
 | ---------- | ---------------------- |
@@ -171,7 +171,7 @@ Configuration for `netshootImage`.
 
 ### `images.postgres15Image`
 
-Configuration for `postgres15Image`.
+Image of `postgres15Image`.
 
 | Field      | Value                    |
 | ---------- | ------------------------ |
@@ -185,7 +185,7 @@ Configuration for `postgres15Image`.
 
 ### `images.postgres16Image`
 
-Configuration for `postgres16Image`.
+Image of `postgres16Image`.
 
 | Field      | Value                    |
 | ---------- | ------------------------ |
@@ -199,7 +199,7 @@ Configuration for `postgres16Image`.
 
 ### `images.postgres17Image`
 
-Configuration for `postgres17Image`.
+Image of `postgres17Image`.
 
 | Field      | Value                    |
 | ---------- | ------------------------ |
@@ -213,7 +213,7 @@ Configuration for `postgres17Image`.
 
 ### `images.postgres18Image`
 
-Configuration for `postgres18Image`.
+Image of `postgres18Image`.
 
 | Field      | Value                    |
 | ---------- | ------------------------ |
@@ -227,7 +227,7 @@ Configuration for `postgres18Image`.
 
 ### `images.postgresClientImage`
 
-Configuration for `postgresClientImage`.
+Image of `postgresClientImage`.
 
 | Field      | Value                        |
 | ---------- | ---------------------------- |
@@ -241,7 +241,7 @@ Configuration for `postgresClientImage`.
 
 ### `images.postgresPostgis15Image`
 
-Configuration for `postgresPostgis15Image`.
+Image of `postgresPostgis15Image`.
 
 | Field      | Value                           |
 | ---------- | ------------------------------- |
@@ -255,7 +255,7 @@ Configuration for `postgresPostgis15Image`.
 
 ### `images.postgresPostgis16Image`
 
-Configuration for `postgresPostgis16Image`.
+Image of `postgresPostgis16Image`.
 
 | Field      | Value                           |
 | ---------- | ------------------------------- |
@@ -269,7 +269,7 @@ Configuration for `postgresPostgis16Image`.
 
 ### `images.postgresPostgis17Image`
 
-Configuration for `postgresPostgis17Image`.
+Image of `postgresPostgis17Image`.
 
 | Field      | Value                           |
 | ---------- | ------------------------------- |
@@ -283,7 +283,7 @@ Configuration for `postgresPostgis17Image`.
 
 ### `images.postgresPostgis18Image`
 
-Configuration for `postgresPostgis18Image`.
+Image of `postgresPostgis18Image`.
 
 | Field      | Value                           |
 | ---------- | ------------------------------- |
@@ -297,7 +297,7 @@ Configuration for `postgresPostgis18Image`.
 
 ### `images.postgresVectorchord15Image`
 
-Configuration for `postgresVectorchord15Image`.
+Image of `postgresVectorchord15Image`.
 
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
@@ -311,7 +311,7 @@ Configuration for `postgresVectorchord15Image`.
 
 ### `images.postgresVectorchord16Image`
 
-Configuration for `postgresVectorchord16Image`.
+Image of `postgresVectorchord16Image`.
 
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
@@ -325,7 +325,7 @@ Configuration for `postgresVectorchord16Image`.
 
 ### `images.postgresVectorchord17Image`
 
-Configuration for `postgresVectorchord17Image`.
+Image of `postgresVectorchord17Image`.
 
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
@@ -339,7 +339,7 @@ Configuration for `postgresVectorchord17Image`.
 
 ### `images.postgresVectorchord18Image`
 
-Configuration for `postgresVectorchord18Image`.
+Image of `postgresVectorchord18Image`.
 
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
@@ -353,7 +353,7 @@ Configuration for `postgresVectorchord18Image`.
 
 ### `images.postgresVectors15Image`
 
-Configuration for `postgresVectors15Image`.
+Image of `postgresVectors15Image`.
 
 | Field      | Value                           |
 | ---------- | ------------------------------- |
@@ -367,7 +367,7 @@ Configuration for `postgresVectors15Image`.
 
 ### `images.postgresVectors16Image`
 
-Configuration for `postgresVectors16Image`.
+Image of `postgresVectors16Image`.
 
 | Field      | Value                           |
 | ---------- | ------------------------------- |
@@ -381,7 +381,7 @@ Configuration for `postgresVectors16Image`.
 
 ### `images.postgresVectors17Image`
 
-Configuration for `postgresVectors17Image`.
+Image of `postgresVectors17Image`.
 
 | Field      | Value                           |
 | ---------- | ------------------------------- |
@@ -395,7 +395,7 @@ Configuration for `postgresVectors17Image`.
 
 ### `images.postgresql18Image`
 
-Configuration for `postgresql18Image`.
+Image of `postgresql18Image`.
 
 | Field      | Value                      |
 | ---------- | -------------------------- |
@@ -409,7 +409,7 @@ Configuration for `postgresql18Image`.
 
 ### `images.tailscaleImage`
 
-Configuration for `tailscaleImage`.
+Image of `tailscaleImage`.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
@@ -423,7 +423,7 @@ Configuration for `tailscaleImage`.
 
 ### `images.ubuntuImage`
 
-Configuration for `ubuntuImage`.
+Image of `ubuntuImage`.
 
 | Field      | Value                |
 | ---------- | -------------------- |
@@ -437,7 +437,7 @@ Configuration for `ubuntuImage`.
 
 ### `images.valkeyClientImage`
 
-Configuration for `valkeyClientImage`.
+Image of `valkeyClientImage`.
 
 | Field      | Value                      |
 | ---------- | -------------------------- |

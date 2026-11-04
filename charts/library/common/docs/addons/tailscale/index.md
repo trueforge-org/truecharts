@@ -31,7 +31,7 @@ Addons to the workloads
 
 ### `addons.tailscale.annotations`
 
-Configuration for `addons.tailscale.annotations`.
+Additional annotations, keyed by name.
 
 | Field      | Value                          |
 | ---------- | ------------------------------ |

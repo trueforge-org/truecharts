@@ -117,11 +117,6 @@ objectData: The object data to be used to render the container.
     {{- fail "Container - Expected [securityContext.seccompProfile] to be defined" -}}
   {{- end -}}
 
-  {{- $profiles := (list "RuntimeDefault" "Localhost" "Unconfined") -}}
-  {{- if not (mustHas $secContext.seccompProfile.type $profiles) -}}
-    {{- fail (printf "Container - Expected [securityContext.seccompProfile] to be one of [%s], but got [%s]" (join ", " $profiles) $secContext.seccompProfile.type) -}}
-  {{- end -}}
-
   {{- if eq $secContext.seccompProfile.type "Localhost" -}}
     {{- if not $secContext.seccompProfile.profile -}}
       {{- fail "Container - Expected [securityContext.seccompProfile.profile] to be defined on type [Localhost]" -}}

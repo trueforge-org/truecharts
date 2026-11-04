@@ -31,6 +31,6 @@ Configuration for `workload.container`.
 
 ## Child Pages
 
-- [Termination](termination.md) - See [termination](/truecharts-common/container/termination) ---
+- [Termination](termination.md) - See [termination](/truecharts-common/workload/container/termination) ---
 
 ---

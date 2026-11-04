@@ -31,13 +31,13 @@ Configuration for `workload.podSpec.containers`.
 
 ## Child Pages
 
-- [Args](args.md) - See [args](/truecharts-common/container/args#args) ---
-- [Command](command.md) - See [command](/truecharts-common/container/command) ---
+- [Args](args.md) - See [args](/truecharts-common/workload/podSpec/containers/args#args) ---
+- [Command](command.md) - See [command](/truecharts-common/workload/podSpec/containers/command) ---
 - [Env](env.md) - Shared schema for environment variable maps used across common templates.
 - [Envfrom](envFrom.md) - Define envFrom for the container
-- [Fixedenv](fixedEnv.md) - See [fixedEnv](/truecharts-common/container/fixedenv).
-- [Lifecycle](lifecycle.md) - Does **not** apply to `initContainers`. See [lifecycle](/truecharts-common/container/lifecycle).
-- [Probes](probes/) - Does **not** apply to `initContainers` See [probes](/truecharts-common/container/probes)
+- [Fixedenv](fixedEnv.md) - See [fixedEnv](/truecharts-common/workload/podSpec/containers/fixedEnv).
+- [Lifecycle](lifecycle.md) - Does **not** apply to `initContainers`. See [lifecycle](/truecharts-common/workload/podSpec/containers/lifecycle).
+- [Probes](probes/) - Does **not** apply to `initContainers` See [probes](/truecharts-common/workload/podSpec/containers/probes)
 - [Resources](resources.md) - The resources that the container can use.
 - [Securitycontext](securityContext.md) - Define securityContext for the container
 

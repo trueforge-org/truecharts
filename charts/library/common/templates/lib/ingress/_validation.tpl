@@ -11,9 +11,6 @@ objectData:
   {{- $objectData := .objectData -}}
 
   {{- if $objectData.targetSelector -}}
-    {{- if not (kindIs "map" $objectData.targetSelector) -}}
-      {{- fail (printf "Ingress - Expected [targetSelector] to be a [map], but got [%s]" (kindOf $objectData.targetSelector)) -}}
-    {{- end -}}
 
     {{- $selectors := $objectData.targetSelector | keys | len -}}
     {{- if (gt $selectors 1) -}}
@@ -25,9 +22,6 @@ objectData:
         {{- fail (printf "Ingress - Expected [targetSelector.%s] to have a value" $k) -}}
       {{- end -}}
 
-      {{- if not (kindIs "string" $v) -}}
-        {{- fail (printf "Ingress - Expected [targetSelector.%s] to be a [string], but got [%s]" $k (kindOf $v)) -}}
-      {{- end -}}
     {{- end -}}
   {{- end -}}
 
@@ -42,9 +36,6 @@ objectData:
     {{- fail "Ingress - Expected non-empty [hosts]" -}}
   {{- end -}}
 
-  {{- if not (kindIs "slice" $objectData.hosts) -}}
-    {{- fail (printf "Ingress - Expected [hosts] to be a [slice], but got [%s]" (kindOf $objectData.hosts)) -}}
-  {{- end -}}
 
   {{- range $h := $objectData.hosts -}}
     {{- if not $h.host -}}
@@ -62,9 +53,6 @@ objectData:
       {{- fail (printf "Ingress - Expected [hosts.host] to not contain [:], but got [%s]" $host) -}}
     {{- end -}}
 
-    {{- if and $h.paths (not (kindIs "slice" $h.paths)) -}}
-      {{- fail (printf "Ingress - Expected [hosts.paths] to be a [slice], but got [%s]" (kindOf $h.paths)) -}}
-    {{- end -}}
 
     {{- range $p := $h.paths -}}
       {{- $pathType := "Prefix" -}}
@@ -103,9 +91,6 @@ objectData:
       {{- fail "Ingress - Expected non-empty [tls.hosts]" -}}
     {{- end -}}
 
-    {{- if not (kindIs "slice" $t.hosts) -}}
-      {{- fail (printf "Ingress - Expected [tls.hosts] to be a [slice], but got [%s]" (kindOf $t.hosts)) -}}
-    {{- end -}}
 
     {{- range $h := $t.hosts -}}
       {{- if not $h -}}

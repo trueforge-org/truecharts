@@ -36,7 +36,7 @@ Additional annotations for this NetworkPolicy.
 | Field      | Value                              |
 | ---------- | ---------------------------------- |
 | Key        | `networkpolicy.policy.annotations` |
-| Type       | `map, string`                      |
+| Type       | `map`                              |
 | Required   | ❌                                 |
 | Helm `tpl` | ❌                                 |
 | Default    | `{}`                               |
@@ -73,7 +73,7 @@ Cilium only. Create a CiliumClusterwideNetworkPolicy instead of a CiliumNetworkP
 | Field      | Value                              |
 | ---------- | ---------------------------------- |
 | Key        | `networkpolicy.policy.clusterwide` |
-| Type       | `boolean, string`                  |
+| Type       | `boolean`                          |
 | Required   | ❌                                 |
 | Helm `tpl` | ❌                                 |
 | Default    | `false`                            |
@@ -140,7 +140,7 @@ Cilium only. List of egress deny rules, these take precedence over allow rules, 
 | Field      | Value                             |
 | ---------- | --------------------------------- |
 | Key        | `networkpolicy.policy.egressDeny` |
-| Type       | `list, string`                    |
+| Type       | `list of map`                     |
 | Required   | ❌                                |
 | Helm `tpl` | ❌                                |
 | Default    | `[]`                              |
@@ -201,7 +201,7 @@ Cilium only. Select the endpoints to which this policy applies, supports Helm `t
 | Key        | `networkpolicy.policy.endpointSelector` |
 | Type       | `map, string`                           |
 | Required   | ❌                                      |
-| Helm `tpl` | ❌                                      |
+| Helm `tpl` | ✅                                      |
 | Default    | unset                                   |
 
 ---
@@ -258,7 +258,7 @@ Cilium only. List of ingress deny rules, these take precedence over allow rules,
 | Field      | Value                              |
 | ---------- | ---------------------------------- |
 | Key        | `networkpolicy.policy.ingressDeny` |
-| Type       | `list, string`                     |
+| Type       | `list of map`                      |
 | Required   | ❌                                 |
 | Helm `tpl` | ❌                                 |
 | Default    | `[]`                               |
@@ -344,7 +344,7 @@ Cilium only. Host policy, select the nodes to which this policy applies instead 
 | Key        | `networkpolicy.policy.nodeSelector` |
 | Type       | `map, string`                       |
 | Required   | ❌                                  |
-| Helm `tpl` | ❌                                  |
+| Helm `tpl` | ✅                                  |
 | Default    | unset                               |
 
 ---
@@ -358,7 +358,7 @@ Custom Kubernetes label selector for pods to which this policy applies.
 | Key        | `networkpolicy.policy.podSelector` |
 | Type       | `map, string`                      |
 | Required   | ❌                                 |
-| Helm `tpl` | ❌                                 |
+| Helm `tpl` | ✅                                 |
 | Default    | unset                              |
 
 See [Podselector](podSelector.md) for full configuration.
@@ -408,7 +408,7 @@ Target all pods in the namespace.
 | Field      | Value                                |
 | ---------- | ------------------------------------ |
 | Key        | `networkpolicy.policy.targetAllPods` |
-| Type       | `boolean, string`                    |
+| Type       | `boolean`                            |
 | Required   | ❌                                   |
 | Helm `tpl` | ❌                                   |
 | Default    | `false`                              |

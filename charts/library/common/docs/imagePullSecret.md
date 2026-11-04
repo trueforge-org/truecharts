@@ -36,9 +36,9 @@ Additional annotations for image pull secret
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
 | Key        | `imagePullSecret.$name.annotations` |
-| Type       | `map, string`                       |
+| Type       | `map`                               |
 | Required   | ❌                                  |
-| Helm `tpl` | ❌                                  |
+| Helm `tpl` | ✅ (On value only)                   |
 | Default    | `{}`                                |
 
 Example
@@ -74,7 +74,7 @@ Define the data of the image pull secret
 | ---------- | ---------------------------- |
 | Key        | `imagePullSecret.$name.data` |
 | Type       | `map`                        |
-| Required   | ❌                           |
+| Required   | ✅                           |
 | Helm `tpl` | ❌                           |
 | Default    | `{}`                         |
 
@@ -97,8 +97,8 @@ Enables or Disables the image pull secret
 | ---------- | ------------------------------- |
 | Key        | `imagePullSecret.$name.enabled` |
 | Type       | `boolean, string`               |
-| Required   | ❌                              |
-| Helm `tpl` | ❌                              |
+| Required   | ✅                              |
+| Helm `tpl` | ✅                              |
 | Default    | `false`                         |
 
 Example
@@ -132,9 +132,9 @@ Additional labels for image pull secret
 | Field      | Value                          |
 | ---------- | ------------------------------ |
 | Key        | `imagePullSecret.$name.labels` |
-| Type       | `map, string`                  |
+| Type       | `map`                          |
 | Required   | ❌                             |
-| Helm `tpl` | ❌                             |
+| Helm `tpl` | ✅ (On value only)              |
 | Default    | `{}`                           |
 
 Example
@@ -171,7 +171,7 @@ Define the namespace for this object
 | Key        | `imagePullSecret.$name.namespace` |
 | Type       | `string`                          |
 | Required   | ❌                                |
-| Helm `tpl` | ❌                                |
+| Helm `tpl` | ✅ (On value only)                 |
 | Default    | `""`                              |
 
 Example

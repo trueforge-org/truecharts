@@ -37,7 +37,7 @@ Defines the NVIDIA_CAPS to be passed as an environment variable to the container
 | ---------- | ------------------------------ |
 | Key        | `containerOptions.NVIDIA_CAPS` |
 | Type       | `list of string`               |
-| Required   | ❌                             |
+| Required   | ✅                             |
 | Helm `tpl` | ❌                             |
 | Default    | `["all"]`                      |
 

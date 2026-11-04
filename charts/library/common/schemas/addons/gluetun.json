@@ -29,11 +29,13 @@
           "type": "object",
           "properties": {
             "env": {
-              "$ref": "gluetun/container/env.json"
+              "$ref": "gluetun/container/env.json",
+              "description": "Environment variables of the gluetun container, for the VPN settings."
             }
           }
         }
-      ]
+      ],
+      "description": "Container of the gluetun add-on."
     },
     "secret": {
       "type": [

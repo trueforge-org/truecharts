@@ -17,7 +17,7 @@ title: Termination
 
 ## `workload.container.termination`
 
-See [termination](/truecharts-common/container/termination) ---
+See [termination](/truecharts-common/workload/container/termination) ---
 
 | Field      | Value                            |
 | ---------- | -------------------------------- |
@@ -38,7 +38,7 @@ Define termination message path for the container
 | Key        | `workload.container.termination.messagePath` |
 | Type       | `string`                                     |
 | Required   | ❌                                           |
-| Helm `tpl` | ❌                                           |
+| Helm `tpl` | ✅                                           |
 | Default    | unset                                        |
 
 ---
@@ -52,7 +52,7 @@ Define termination for the container
 | Key        | `workload.container.termination.messagePolicy` |
 | Type       | `string`                                       |
 | Required   | ❌                                             |
-| Helm `tpl` | ❌                                             |
+| Helm `tpl` | ✅                                             |
 | Default    | unset                                          |
 
 ---

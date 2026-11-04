@@ -31,7 +31,7 @@ Configuration for the Gluetun addon.
 
 ### `addons.gluetun.container`
 
-No description provided.
+Container of the gluetun add-on.
 
 | Field      | Value                      |
 | ---------- | -------------------------- |
@@ -104,6 +104,6 @@ addons:
 
 ## Child Pages
 
-- [Container](container/)
+- [Container](container/) - Container of the gluetun add-on.
 
 ---

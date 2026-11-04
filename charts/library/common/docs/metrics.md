@@ -31,7 +31,7 @@ Configuration for `metrics`.
 
 ### `metrics.$name.annotations`
 
-Configuration for `metrics.main.annotations`.
+Additional annotations, keyed by name.
 
 | Field      | Value                       |
 | ---------- | --------------------------- |
@@ -45,7 +45,7 @@ Configuration for `metrics.main.annotations`.
 
 ### `metrics.$name.apiKey`
 
-Configuration for `metrics.main.apiKey`. Read by stable charts (sabnzbd, bazarr) through their own metrics values, not by the common templates.
+API key the exporter needs.
 
 | Field      | Value                  |
 | ---------- | ---------------------- |
@@ -59,7 +59,7 @@ Configuration for `metrics.main.apiKey`. Read by stable charts (sabnzbd, bazarr)
 
 ### `metrics.$name.enabled`
 
-Configuration for `metrics.main.enabled`.
+Enable the metrics object.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
@@ -81,7 +81,7 @@ metrics:
 
 ### `metrics.$name.endpoints`
 
-Configuration for `metrics.main.endpoints`.
+Endpoints that are scraped.
 
 | Field      | Value                     |
 | ---------- | ------------------------- |
@@ -95,7 +95,7 @@ Configuration for `metrics.main.endpoints`.
 
 ### `metrics.$name.labels`
 
-Configuration for `metrics.main.labels`.
+Additional labels, keyed by name.
 
 | Field      | Value                  |
 | ---------- | ---------------------- |
@@ -109,7 +109,7 @@ Configuration for `metrics.main.labels`.
 
 ### `metrics.$name.matchLabels`
 
-Configuration for `metrics.main.matchLabels`. Set in common-test fixtures and ignored by the common ServiceMonitor and PodMonitor templates, which build their own matchLabels; use `selector` to set matchers.
+Labels that select the service or pods.
 
 | Field      | Value                       |
 | ---------- | --------------------------- |
@@ -123,7 +123,7 @@ Configuration for `metrics.main.matchLabels`. Set in common-test fixtures and ig
 
 ### `metrics.$name.nameOverride`
 
-Configuration for `metrics.main.nameOverride`.
+Suffix of the name, instead of the name of the object.
 
 | Field      | Value                        |
 | ---------- | ---------------------------- |
@@ -137,7 +137,7 @@ Configuration for `metrics.main.nameOverride`.
 
 ### `metrics.$name.primary`
 
-Configuration for `metrics.main.primary`.
+Make this the primary metrics object.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
@@ -151,7 +151,7 @@ Configuration for `metrics.main.primary`.
 
 ### `metrics.$name.prometheusRule`
 
-Configuration for `metrics.main.prometheusRule`.
+A PrometheusRule with alerting and recording rules.
 
 | Field      | Value                          |
 | ---------- | ------------------------------ |
@@ -173,7 +173,7 @@ metrics:
 
 ### `metrics.$name.selector`
 
-Configuration for `metrics.main.selector`.
+Labels that select the service or pods, instead of `targetSelector`.
 
 | Field      | Value                    |
 | ---------- | ------------------------ |
@@ -196,7 +196,7 @@ metrics:
 
 ### `metrics.$name.targetSelector`
 
-Configuration for `metrics.main.targetSelector`.
+Service or workload the monitor selects. Defaults to the primary one.
 
 | Field      | Value                          |
 | ---------- | ------------------------------ |
@@ -210,7 +210,7 @@ Configuration for `metrics.main.targetSelector`.
 
 ### `metrics.$name.type`
 
-Configuration for `metrics.main.type`.
+Type of the monitor, `servicemonitor` or `podmonitor`.
 
 | Field      | Value                          |
 | ---------- | ------------------------------ |

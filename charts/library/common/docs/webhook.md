@@ -36,9 +36,9 @@ Additional annotations for webhook
 | Field      | Value                       |
 | ---------- | --------------------------- |
 | Key        | `webhook.$name.annotations` |
-| Type       | `map, string`               |
+| Type       | `map`                       |
 | Required   | ❌                          |
-| Helm `tpl` | ❌                          |
+| Helm `tpl` | ✅ (On value only)           |
 | Default    | `{}`                        |
 
 Example
@@ -74,8 +74,8 @@ Enables or Disables the webhook
 | ---------- | ----------------------- |
 | Key        | `webhook.$name.enabled` |
 | Type       | `boolean, string`       |
-| Required   | ❌                      |
-| Helm `tpl` | ❌                      |
+| Required   | ✅                      |
+| Helm `tpl` | ✅                      |
 | Default    | `false`                 |
 
 Example
@@ -95,9 +95,9 @@ Additional labels for webhook
 | Field      | Value                  |
 | ---------- | ---------------------- |
 | Key        | `webhook.$name.labels` |
-| Type       | `map, string`          |
+| Type       | `map`                  |
 | Required   | ❌                     |
-| Helm `tpl` | ❌                     |
+| Helm `tpl` | ✅ (On value only)      |
 | Default    | `{}`                   |
 
 Example
@@ -134,7 +134,7 @@ Define the namespace for this object
 | Key        | `webhook.$name.namespace` |
 | Type       | `string`                  |
 | Required   | ❌                        |
-| Helm `tpl` | ❌                        |
+| Helm `tpl` | ✅ (On value only)         |
 | Default    | `""`                      |
 
 Example
@@ -155,8 +155,8 @@ Define the type of the webhook.
 | ---------- | ------------------------ |
 | Key        | `webhook.$name.type`     |
 | Type       | `string`                 |
-| Required   | ❌                       |
-| Helm `tpl` | ❌                       |
+| Required   | ✅                       |
+| Helm `tpl` | ✅                       |
 | Default    | `""`                     |
 | Enum       | `mutating`, `validating` |
 
@@ -178,7 +178,7 @@ Define the webhooks.
 | ---------- | ------------------------ |
 | Key        | `webhook.$name.webhooks` |
 | Type       | `list of map`            |
-| Required   | ❌                       |
+| Required   | ✅                       |
 | Helm `tpl` | ❌                       |
 | Default    | `[]`                     |
 
@@ -195,7 +195,7 @@ webhook:
 
 ### `webhook.mutating`
 
-Create webhook objects
+A MutatingWebhookConfiguration.
 
 | Field      | Value              |
 | ---------- | ------------------ |
@@ -209,7 +209,7 @@ Create webhook objects
 
 ### `webhook.validating`
 
-Create webhook objects
+A ValidatingWebhookConfiguration.
 
 | Field      | Value                |
 | ---------- | -------------------- |
@@ -276,8 +276,8 @@ webhook:
         clientConfig:
           caBundle: ""
           service:
-            name: ""
-            namespace: ""
+            name: my-webhook-service
+            namespace: my-namespace
             path: ""
             port: 443
         rules:

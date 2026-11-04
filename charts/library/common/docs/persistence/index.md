@@ -52,7 +52,7 @@ Define the accessModes of the PVC, if it's single can be defined as a string, mu
 | Key        | `persistence.$name.accessModes` |
 | Type       | `list, string`                  |
 | Required   | ❌                              |
-| Helm `tpl` | ❌                              |
+| Helm `tpl` | ✅                              |
 | Default    | unset                           |
 
 ---
@@ -66,7 +66,7 @@ Additional annotations for persistence
 | Key        | `persistence.$name.annotations` |
 | Type       | `map`                           |
 | Required   | ❌                              |
-| Helm `tpl` | ❌                              |
+| Helm `tpl` | ✅ (On value only)               |
 | Default    | unset                           |
 
 ---
@@ -137,7 +137,7 @@ Define the defaultMode (must be a string in format of "0777").
 | Key        | `persistence.$name.defaultMode` |
 | Type       | `string`                        |
 | Required   | ❌                              |
-| Helm `tpl` | ❌                              |
+| Helm `tpl` | ✅                              |
 | Default    | unset                           |
 
 ---
@@ -164,8 +164,8 @@ Enables or Disables the persistence
 | ---------- | --------------------------- |
 | Key        | `persistence.$name.enabled` |
 | Type       | `boolean, string`           |
-| Required   | ❌                          |
-| Helm `tpl` | ❌                          |
+| Required   | ✅                          |
+| Helm `tpl` | ✅                          |
 | Default    | `false`                     |
 
 Example
@@ -187,7 +187,7 @@ Define an existing claim to use
 | Key        | `persistence.$name.existingClaim` |
 | Type       | `string`                          |
 | Required   | ❌                                |
-| Helm `tpl` | ❌                                |
+| Helm `tpl` | ✅                                |
 | Default    | unset                             |
 
 ---
@@ -201,90 +201,90 @@ Whether to expand (adding the fullname as prefix) the secret name.
 | Key        | `persistence.$name.expandObjectName` |
 | Type       | `boolean`                            |
 | Required   | ❌                                   |
-| Helm `tpl` | ❌                                   |
+| Helm `tpl` | ✅                                   |
 | Default    | unset                                |
 
 ---
 
 ### `persistence.$name.fsType`
 
-Define the fsType
+File system of the volume, eg `ext4`.
 
 | Field      | Value                      |
 | ---------- | -------------------------- |
 | Key        | `persistence.$name.fsType` |
 | Type       | `string`                   |
 | Required   | ❌                         |
-| Helm `tpl` | ❌                         |
+| Helm `tpl` | ✅                         |
 | Default    | unset                      |
 
 ---
 
 ### `persistence.$name.hostPath`
 
-Define the hostPath
+Path on the node, for `type: hostPath`.
 
 | Field      | Value                        |
 | ---------- | ---------------------------- |
 | Key        | `persistence.$name.hostPath` |
 | Type       | `string`                     |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
+| Required   | ✅                           |
+| Helm `tpl` | ✅                           |
 | Default    | unset                        |
 
 ---
 
 ### `persistence.$name.hostPathType`
 
-Define the hostPathType
+Type of the host path, eg `Directory` or `DirectoryOrCreate`.
 
 | Field      | Value                            |
 | ---------- | -------------------------------- |
 | Key        | `persistence.$name.hostPathType` |
 | Type       | `string`                         |
 | Required   | ❌                               |
-| Helm `tpl` | ❌                               |
+| Helm `tpl` | ✅                               |
 | Default    | unset                            |
 
 ---
 
 ### `persistence.$name.initiatorName`
 
-Define the initiatorName
+iSCSI initiator name of the node.
 
 | Field      | Value                             |
 | ---------- | --------------------------------- |
 | Key        | `persistence.$name.initiatorName` |
 | Type       | `string`                          |
 | Required   | ❌                                |
-| Helm `tpl` | ❌                                |
+| Helm `tpl` | ✅                                |
 | Default    | unset                             |
 
 ---
 
 ### `persistence.$name.iqn`
 
-Define the iqn
+iSCSI qualified name of the target.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
 | Key        | `persistence.$name.iqn` |
 | Type       | `string`                |
-| Required   | ❌                      |
-| Helm `tpl` | ❌                      |
+| Required   | ✅                      |
+| Helm `tpl` | ✅                      |
 | Default    | unset                   |
 
 ---
 
 ### `persistence.$name.iscsi`
 
-Define the iSCSI
+Settings of the iSCSI target, for `type: iscsi`.
 
 | Field      | Value                     |
 | ---------- | ------------------------- |
 | Key        | `persistence.$name.iscsi` |
 | Type       | `map`                     |
-| Required   | ❌                        |
+| Required   | ✅                        |
 | Helm `tpl` | ❌                        |
 | Default    | unset                     |
 
@@ -292,14 +292,14 @@ Define the iSCSI
 
 ### `persistence.$name.iscsiInterface`
 
-Define the iscsiInterface
+iSCSI interface of the node, eg `default`.
 
 | Field      | Value                              |
 | ---------- | ---------------------------------- |
 | Key        | `persistence.$name.iscsiInterface` |
 | Type       | `string`                           |
 | Required   | ❌                                 |
-| Helm `tpl` | ❌                                 |
+| Helm `tpl` | ✅                                 |
 | Default    | unset                              |
 
 ---
@@ -327,7 +327,7 @@ Additional labels for persistence
 | Key        | `persistence.$name.labels` |
 | Type       | `map`                      |
 | Required   | ❌                         |
-| Helm `tpl` | ❌                         |
+| Helm `tpl` | ✅ (On value only)          |
 | Default    | unset                      |
 
 ---
@@ -348,14 +348,14 @@ Additional labels as a list of name and value pairs, merged into the labels
 
 ### `persistence.$name.lun`
 
-Define the lun
+LUN number of the target.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
 | Key        | `persistence.$name.lun` |
 | Type       | `integer, string`       |
-| Required   | ❌                      |
-| Helm `tpl` | ❌                      |
+| Required   | ✅                      |
+| Helm `tpl` | ✅                      |
 | Default    | unset                   |
 
 ---
@@ -369,7 +369,7 @@ Define the medium of emptyDir (Memory, "")
 | Key        | `persistence.$name.medium` |
 | Type       | `string`                   |
 | Required   | ❌                         |
-| Helm `tpl` | ❌                         |
+| Helm `tpl` | ✅                         |
 | Default    | unset                      |
 
 ---
@@ -396,8 +396,8 @@ Define the mountPath for the persistence, applies to all containers that are sel
 | ---------- | ----------------------------- |
 | Key        | `persistence.$name.mountPath` |
 | Type       | `string`                      |
-| Required   | ❌                            |
-| Helm `tpl` | ❌                            |
+| Required   | ✅                            |
+| Helm `tpl` | ✅                            |
 | Default    | `""`                          |
 | Min Length | `1`                           |
 
@@ -420,7 +420,7 @@ Define the mountPropagation for the persistence, applies to all containers that 
 | Key        | `persistence.$name.mountPropagation`       |
 | Type       | `string`                                   |
 | Required   | ❌                                         |
-| Helm `tpl` | ❌                                         |
+| Helm `tpl` | ✅                                         |
 | Default    | `""`                                       |
 | Enum       | `None`, `HostToContainer`, `Bidirectional` |
 
@@ -457,7 +457,7 @@ Define the namespace for this object
 | Key        | `persistence.$name.namespace` |
 | Type       | `string`                      |
 | Required   | ❌                            |
-| Helm `tpl` | ❌                            |
+| Helm `tpl` | ✅                            |
 | Default    | unset                         |
 
 ---
@@ -470,8 +470,8 @@ Define the secret name.
 | ---------- | ------------------------------ |
 | Key        | `persistence.$name.objectName` |
 | Type       | `string`                       |
-| Required   | ❌                             |
-| Helm `tpl` | ❌                             |
+| Required   | ✅                             |
+| Helm `tpl` | ✅                             |
 | Default    | unset                          |
 
 ---
@@ -498,22 +498,22 @@ Define the nfs export share path
 | ---------- | ------------------------ |
 | Key        | `persistence.$name.path` |
 | Type       | `string`                 |
-| Required   | ❌                       |
-| Helm `tpl` | ❌                       |
+| Required   | ✅                       |
+| Helm `tpl` | ✅                       |
 | Default    | unset                    |
 
 ---
 
 ### `persistence.$name.portals`
 
-Define the portals
+Additional portals of the target, as `host:port`.
 
 | Field      | Value                       |
 | ---------- | --------------------------- |
 | Key        | `persistence.$name.portals` |
 | Type       | `list of unknown`           |
 | Required   | ❌                          |
-| Helm `tpl` | ❌                          |
+| Helm `tpl` | ✅ (On entries only)         |
 | Default    | unset                       |
 
 ---
@@ -562,8 +562,8 @@ Define the nfs server
 | ---------- | -------------------------- |
 | Key        | `persistence.$name.server` |
 | Type       | `string`                   |
-| Required   | ❌                         |
-| Helm `tpl` | ❌                         |
+| Required   | ✅                         |
+| Helm `tpl` | ✅                         |
 | Default    | unset                      |
 
 ---
@@ -591,7 +591,7 @@ Define the sizeLimit of the emptyDir
 | Key        | `persistence.$name.size` |
 | Type       | `string`                 |
 | Required   | ❌                       |
-| Helm `tpl` | ❌                       |
+| Helm `tpl` | ✅                       |
 | Default    | unset                    |
 
 ---
@@ -633,7 +633,7 @@ Define the storageClass to use - If storageClass is defined on the `persistence`
 | Key        | `persistence.$name.storageClass` |
 | Type       | `string`                         |
 | Required   | ❌                               |
-| Helm `tpl` | ❌                               |
+| Helm `tpl` | ✅                               |
 | Default    | unset                            |
 
 ---
@@ -647,7 +647,7 @@ Define the subPath for the persistence, applies to all containers that are selec
 | Key        | `persistence.$name.subPath` |
 | Type       | `string`                    |
 | Required   | ❌                          |
-| Helm `tpl` | ❌                          |
+| Helm `tpl` | ✅                          |
 | Default    | `""`                        |
 
 Example
@@ -662,14 +662,14 @@ persistence:
 
 ### `persistence.$name.targetPortal`
 
-Define the targetPortal
+Portal of the target, as `host:port`.
 
 | Field      | Value                            |
 | ---------- | -------------------------------- |
 | Key        | `persistence.$name.targetPortal` |
 | Type       | `string`                         |
-| Required   | ❌                               |
-| Helm `tpl` | ❌                               |
+| Required   | ✅                               |
+| Helm `tpl` | ✅                               |
 | Default    | unset                            |
 
 ---
@@ -757,7 +757,7 @@ Define the volumeName of a PV, backing the claim
 | Key        | `persistence.$name.volumeName` |
 | Type       | `string`                       |
 | Required   | ❌                             |
-| Helm `tpl` | ❌                             |
+| Helm `tpl` | ✅                             |
 | Default    | unset                          |
 
 ---
@@ -862,27 +862,214 @@ Define persistence objects
 
 ## Child Pages
 
-- [Configmap](configmap.md) - Create Configmap objects
-- [Device](device.md) - Configuration for `persistence` entries with `type: device`.
-- [Emptydir](emptyDir.md) - Configuration for `persistence` entries with `type: emptyDir`.
-- [Hostpath](hostPath.md) - Configuration for `persistence` entries with `type: hostPath`.
-- [Iscsi](iscsi.md) - Configuration for `persistence` entries with `type: iscsi`.
-- [Nfs](nfs.md) - Configuration for `persistence` entries with `type: nfs`.
-- [Pvc Vct](pvc-vct/) - Configuration for `persistence` entries with `type: pvc` or `type: vct`.
-- [Secret](secret.md) - Create Secret objects
+- [Pvc Vct](pvc-vct.md) - Configuration for `persistence.pvc-vct`.
 
 ---
 
 ## Full Examples
 
-Full examples can be found under each persistence type
+### hostPath
 
-- [hostPath](/truecharts-common/persistence/hostpath)
-- [configmap](/truecharts-common/persistence/configmap)
-- [secret](/truecharts-common/persistence/secret)
-- [device](/truecharts-common/persistence/device)
-- [pvc](/truecharts-common/persistence/pvc-vct)
-- [vct](/truecharts-common/persistence/pvc-vct)
-- [nfs](/truecharts-common/persistence/nfs)
-- [emptyDir](/truecharts-common/persistence/emptydir)
-- [iscsi](/truecharts-common/persistence/iscsi)
+```yaml
+persistence:
+  hostpath-vol:
+    enabled: true
+    type: hostPath
+    mountPath: /path
+    hostPath: /path/to/host
+    hostPathType: DirectoryOrCreate
+```
+
+### configmap
+
+```yaml
+persistence:
+  configmap-vol:
+    enabled: true
+    type: configmap
+    objectName: configmap-name
+    expandObjectName: false
+    optional: false
+    defaultMode: "0777"
+    items:
+      - key: key1
+        path: path1
+      - key: key2
+        path: path2
+```
+
+### secret
+
+```yaml
+persistence:
+  secret-vol:
+    enabled: true
+    type: secret
+    objectName: secret-name
+    expandObjectName: false
+    optional: false
+    defaultMode: "0777"
+    items:
+      - key: key1
+        path: path1
+      - key: key2
+        path: path2
+```
+
+### device
+
+```yaml
+persistence:
+  dev-vol:
+    enabled: true
+    type: device
+    hostPath: /path/to/host
+    hostPathType: BlockDevice
+```
+
+### pvc and vct
+
+```yaml
+persistence:
+  pvc-vol:
+    enabled: true
+    type: pvc
+    namespace: some-namespace
+    labels:
+      label1: value1
+    annotations:
+      annotation1: value1
+    dataSource:
+      kind: "PersistentVolumeClaim"
+      name: "existingPVC"
+    accessModes: ReadWriteOnce
+    volumeName: volume-name-backing-the-pvc
+    existingClaim: existing-claim-name
+    retain: true
+    size: 2Gi
+    mountOptions:
+      - key: some-key
+        value: some-value
+    # static:
+    #   mode: custom
+    #   provisioner: provisioner
+    #   driver: driver
+    #   csi:
+    #     key: value
+    volumeSnapshots:
+      - name: example1
+        enabled: true
+        labels:
+          label1: value1
+        annotations:
+          annotation1: value1
+        volumeSnapshotClassName: some-name
+    # targetSelectAll: true
+    targetSelector:
+      pod-name:
+        container-name:
+          mountPath: /path/to/mount
+```
+
+### pvc with a static nfs share
+
+```yaml
+persistence:
+  nfs-vol:
+    type: pvc
+    static:
+      mode: nfs
+      server: /server
+      share: share
+```
+
+### pvc with a static smb share
+
+```yaml
+persistence:
+  smb-vol:
+    type: pvc
+    static:
+      mode: smb
+      user: user
+      password: password
+      domain: domain
+      share: share
+      server: /server
+```
+
+### pvc with a custom static volume
+
+```yaml
+persistence:
+  smb-vol:
+    type: pvc
+    static:
+      mode: custom
+      driver: some-driver
+      provisioner: some-provisioner
+```
+
+### nfs
+
+```yaml
+persistence:
+  nfs-vol:
+    enabled: true
+    type: nfs
+    path: /path/of/nfs/share
+    server: nfs-server
+```
+
+### emptyDir
+
+```yaml
+persistence:
+  emptyDir-vol:
+    enabled: true
+    type: emptyDir
+    medium: Memory
+    size: 2Gi
+```
+
+### iscsi
+
+```yaml
+persistence:
+  iscsi-vol:
+    enabled: true
+    type: iscsi
+    iscsi:
+      fsType: "{{ .Values.some_fsType }}"
+      targetPortal: "{{ .Values.some_targetPortal }}"
+      iqn: "{{ .Values.some_iqn }}"
+      lun: "{{ .Values.some_lun }}"
+      initiatorName: "{{ .Values.some_initiatorName }}"
+      iscsiInterface: "{{ .Values.some_interface }}"
+      portals:
+        - "{{ index .Values.some_portals 0 }}"
+        - "{{ index .Values.some_portals 1 }}"
+      authSession:
+        username: "{{ .Values.username }}"
+        password: "{{ .Values.password }}"
+        usernameInitiator: '{{ printf "%s%s" .Values.username "Initiator" }}'
+        passwordInitiator: '{{ printf "%s%s" .Values.password "Initiator" }}'
+  iscsi-vol2:
+    enabled: true
+    type: iscsi
+    iscsi:
+      fsType: ext4
+      targetPortal: some.target.portal
+      iqn: some.iqn
+      lun: 0
+      initiatorName: some.initiator.name
+      iscsiInterface: some.interface
+      portals:
+        - some.portal.1
+        - some.portal.2
+      authDiscovery:
+        username: some.username
+        password: some.password
+        usernameInitiator: some.usernameInitiator
+        passwordInitiator: some.passwordInitiator
+```

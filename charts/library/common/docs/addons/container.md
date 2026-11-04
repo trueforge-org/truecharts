@@ -31,14 +31,14 @@ Container configuration for an addon.
 
 ### `addons.container.args`
 
-Define arg(s). If it's single, can be defined as string
+Arguments of the container.
 
 | Field      | Value                         |
 | ---------- | ----------------------------- |
 | Key        | `addons.container.args`       |
 | Type       | `map, string, list of string` |
 | Required   | ❌                            |
-| Helm `tpl` | ❌                            |
+| Helm `tpl` | ✅                            |
 | Default    | unset                         |
 
 See [Args](../workload/) for full configuration.
@@ -47,14 +47,14 @@ See [Args](../workload/) for full configuration.
 
 ### `addons.container.command`
 
-Define command(s). If it's single, can be defined as string
+Command of the container.
 
 | Field      | Value                         |
 | ---------- | ----------------------------- |
 | Key        | `addons.container.command`    |
 | Type       | `map, string, list of string` |
 | Required   | ❌                            |
-| Helm `tpl` | ❌                            |
+| Helm `tpl` | ✅                            |
 | Default    | unset                         |
 
 See [Command](../workload/) for full configuration.
@@ -63,14 +63,14 @@ See [Command](../workload/) for full configuration.
 
 ### `addons.container.enabled`
 
-Define if the container is enabled or not
+Enable the container of the add-on.
 
 | Field      | Value                      |
 | ---------- | -------------------------- |
 | Key        | `addons.container.enabled` |
 | Type       | `boolean, string`          |
 | Required   | ❌                         |
-| Helm `tpl` | ❌                         |
+| Helm `tpl` | ✅                         |
 | Default    | unset                      |
 
 See [Enabled](../workload/) for full configuration.
@@ -79,14 +79,14 @@ See [Enabled](../workload/) for full configuration.
 
 ### `addons.container.env`
 
-Define env(s) for the container
+Environment variables of the container, keyed by name.
 
 | Field      | Value                  |
 | ---------- | ---------------------- |
 | Key        | `addons.container.env` |
 | Type       | `map, null`            |
 | Required   | ❌                     |
-| Helm `tpl` | ❌                     |
+| Helm `tpl` | ✅ (Only value)         |
 | Default    | unset                  |
 
 See [Env](../workload/) for full configuration.
@@ -95,7 +95,7 @@ See [Env](../workload/) for full configuration.
 
 ### `addons.container.envFrom`
 
-Define envFrom for the container
+ConfigMaps and Secrets whose keys become environment variables.
 
 | Field      | Value                      |
 | ---------- | -------------------------- |
@@ -111,14 +111,14 @@ See [Envfrom](../workload/) for full configuration.
 
 ### `addons.container.extraArgs`
 
-Define extraArg(s). Those are appended **after** the `args`.
+Arguments added after `args`.
 
 | Field      | Value                        |
 | ---------- | ---------------------------- |
 | Key        | `addons.container.extraArgs` |
 | Type       | `string, list of unknown`    |
 | Required   | ❌                           |
-| Helm `tpl` | ❌                           |
+| Helm `tpl` | ✅                           |
 | Default    | unset                        |
 
 See [Extraargs](../workload/) for full configuration.
@@ -127,7 +127,7 @@ See [Extraargs](../workload/) for full configuration.
 
 ### `addons.container.fixedEnv`
 
-Override fixedEnv for the container By default it will set the following environment variables:
+Settings of the environment variables that common sets.
 
 | Field      | Value                       |
 | ---------- | --------------------------- |
@@ -143,14 +143,14 @@ See [Fixedenv](../workload/) for full configuration.
 
 ### `addons.container.imageSelector`
 
-Define the image `map` to use
+Name of the image on the root of the values.
 
 | Field      | Value                            |
 | ---------- | -------------------------------- |
 | Key        | `addons.container.imageSelector` |
 | Type       | `string`                         |
 | Required   | ❌                               |
-| Helm `tpl` | ❌                               |
+| Helm `tpl` | ✅                               |
 | Default    | unset                            |
 
 See [Imageselector](../workload/) for full configuration.
@@ -159,7 +159,7 @@ See [Imageselector](../workload/) for full configuration.
 
 ### `addons.container.lifecycle`
 
-Define lifecycle for the container
+Lifecycle hooks of the container.
 
 | Field      | Value                        |
 | ---------- | ---------------------------- |
@@ -175,7 +175,7 @@ See [Lifecycle](../workload/) for full configuration.
 
 ### `addons.container.primary`
 
-Define if the container is primary or not Does **not** apply to `initContainers`
+Make this the primary container of the workload.
 
 | Field      | Value                      |
 | ---------- | -------------------------- |
@@ -191,7 +191,7 @@ See [Primary](../workload/) for full configuration.
 
 ### `addons.container.probes`
 
-Define probes for the container
+Probes of the container.
 
 | Field      | Value                     |
 | ---------- | ------------------------- |
@@ -207,7 +207,7 @@ See [Probes](../workload/) for full configuration.
 
 ### `addons.container.resources`
 
-The resources that the container can use.
+Resources of the container.
 
 | Field      | Value                        |
 | ---------- | ---------------------------- |
@@ -223,7 +223,7 @@ See [Resources](../workload/) for full configuration.
 
 ### `addons.container.securityContext`
 
-Define securityContext for the container
+Security context of the container.
 
 | Field      | Value                              |
 | ---------- | ---------------------------------- |
@@ -239,7 +239,7 @@ See [Securitycontext](../workload/) for full configuration.
 
 ### `addons.container.stdin`
 
-Define if the container should have stdin enabled or not
+Keep stdin open.
 
 | Field      | Value                    |
 | ---------- | ------------------------ |
@@ -269,7 +269,7 @@ Workloads to which this container is attached.
 
 ### `addons.container.termination`
 
-Define termination for the container
+Termination settings of the container.
 
 | Field      | Value                          |
 | ---------- | ------------------------------ |
@@ -285,7 +285,7 @@ See [Termination](../workload/) for full configuration.
 
 ### `addons.container.tty`
 
-Define if the container should have tty enabled or not
+Allocate a TTY.
 
 | Field      | Value                  |
 | ---------- | ---------------------- |

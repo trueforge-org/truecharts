@@ -65,7 +65,7 @@ Enable or disable the probe.
 | ---------- | -------------------------------------------------- |
 | Key        | `workload.podSpec.containers.probes.probe.enabled` |
 | Type       | `boolean, string`                                  |
-| Required   | ❌                                                 |
+| Required   | ✅                                                 |
 | Helm `tpl` | ❌                                                 |
 | Default    | unset                                              |
 
@@ -109,7 +109,7 @@ HTTP headers sent with HTTP and HTTPS probes.
 | Key        | `workload.podSpec.containers.probes.probe.httpHeaders` |
 | Type       | `map`                                                  |
 | Required   | ❌                                                     |
-| Helm `tpl` | ❌                                                     |
+| Helm `tpl` | ✅ (On value only)                                      |
 | Default    | `{}`                                                   |
 
 Example
@@ -150,7 +150,7 @@ Request path used by HTTP and HTTPS probes.
 | Key        | `workload.podSpec.containers.probes.probe.path` |
 | Type       | `string`                                        |
 | Required   | ❌                                              |
-| Helm `tpl` | ❌                                              |
+| Helm `tpl` | ✅                                              |
 | Default    | unset                                           |
 
 ---
@@ -163,8 +163,8 @@ Probe port. Used by HTTP, HTTPS, TCP, and gRPC probes.
 | ---------- | ----------------------------------------------- |
 | Key        | `workload.podSpec.containers.probes.probe.port` |
 | Type       | `integer, string`                               |
-| Required   | ❌                                              |
-| Helm `tpl` | ❌                                              |
+| Required   | ✅                                              |
+| Helm `tpl` | ✅                                              |
 | Default    | unset                                           |
 
 ---
@@ -192,7 +192,7 @@ Probe handler type.
 | Key        | `workload.podSpec.containers.probes.probe.type` |
 | Type       | `string`                                        |
 | Required   | ❌                                              |
-| Helm `tpl` | ❌                                              |
+| Helm `tpl` | ✅                                              |
 | Default    | unset                                           |
 | Enum       | `exec`, `http`, `https`, `tcp`, `grpc`          |
 

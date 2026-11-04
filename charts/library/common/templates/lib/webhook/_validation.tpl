@@ -16,73 +16,11 @@
     {{- fail (printf "Webhook - Expected [webhooks] in [webhook.%v] to not be empty" $objectData.shortName) -}}
   {{- end -}}
 
-  {{- if not (kindIs "slice" $objectData.webhooks) -}}
-    {{- fail (printf "Webhook - Expected [webhooks] in [webhook.%v] to be a list, but got [%v]" $objectData.shortName (kindOf $objectData.webhooks)) -}}
-  {{- end -}}
-
   {{- range $webhook := $objectData.webhooks -}}
-    {{- if not $webhook.name -}}
-      {{- fail (printf "Webhook - Expected [name] in [webhook.%v] to not be empty" $objectData.shortName) -}}
-    {{- end -}}
 
     {{- $webhookName := tpl $webhook.name $rootCtx -}}
 
-    {{- if not $webhook.admissionReviewVersions -}}
-      {{- fail (printf "Webhook - Expected [admissionReviewVersions] in [webhook.%v.%v] to not be empty" $objectData.shortName $webhookName) -}}
-    {{- end -}}
-
-    {{- range $adm := $webhook.admissionReviewVersions -}}
-      {{- if not (kindIs "string" $adm) -}}
-        {{- fail (printf "Webhook - Expected [admissionReviewVersions] in [webhook.%v.%v] to be a string" $objectData.shortName $webhookName) -}}
-      {{- end -}}
-    {{- end -}}
-
-    {{- if not $webhook.clientConfig -}}
-      {{- fail (printf "Webhook - Expected [clientConfig] in [webhook.%v.%v] to not be empty" $objectData.shortName $webhookName) -}}
-    {{- end -}}
-
-    {{- with $webhook.clientConfig -}}
-      {{- if and .url .service -}}
-        {{- fail (printf "Webhook - Expected either [url] or [service] in [webhook.%v.%v] to be defined, but got both" $objectData.shortName $webhookName) -}}
-      {{- end -}}
-
-      {{- $service := .service -}}
-
-      {{- if $service -}}
-        {{- if not $service.name -}}
-          {{- fail (printf "Webhook - Expected [service.name] in [webhook.%v.%v] to not be empty" $objectData.shortName $webhookName) -}}
-        {{- end -}}
-
-        {{- if not $service.namespace -}}
-          {{- fail (printf "Webhook - Expected [service.namespace] in [webhook.%v.%v] to not be empty" $objectData.shortName $webhookName) -}}
-        {{- end -}}
-      {{- end -}}
-    {{- end -}}
-
-    {{- if not $webhook.rules -}}
-      {{- fail (printf "Webhook - Expected [rules] in [webhook.%v.%v] to not be empty" $objectData.shortName $webhookName) -}}
-    {{- end -}}
-
-    {{- if not (kindIs "slice" $webhook.rules) -}}
-      {{- fail (printf "Webhook - Expected [rules] in [webhook.%v.%v] to be a list, but got [%v]" $objectData.shortName $webhookName (kindOf $webhook.rules)) -}}
-    {{- end -}}
-
     {{- range $rule := $webhook.rules -}}
-      {{- if not $rule.apiGroups -}}
-        {{- fail (printf "Webhook - Expected [apiGroups] in [webhook.%v.%v] to not be empty" $objectData.shortName $webhookName) -}}
-      {{- end -}}
-
-      {{- if not $rule.apiVersions -}}
-        {{- fail (printf "Webhook - Expected [apiVersions] in [webhook.%v.%v] to not be empty" $objectData.shortName $webhookName) -}}
-      {{- end -}}
-
-      {{- if not $rule.operations -}}
-        {{- fail (printf "Webhook - Expected [operations] in [webhook.%v.%v] to not be empty" $objectData.shortName $webhookName) -}}
-      {{- end -}}
-
-      {{- if not $rule.resources -}}
-        {{- fail (printf "Webhook - Expected [resources] in [webhook.%v.%v] to not be empty" $objectData.shortName $webhookName) -}}
-      {{- end -}}
 
       {{- $scopes := (list "Cluster" "Namespaced" "*") -}}
       {{- with $rule.scope -}}
@@ -132,10 +70,6 @@
     {{- if (hasKey $webhook "timeoutSeconds") -}}
       {{- if (kindIs "invalid" $webhook.timeoutSeconds) -}}
         {{- fail (printf "Webhook - Expected the defined key [timeoutSeconds] in [webhook.%v.%v] to not be empty" $objectData.shortName $webhookName) -}}
-      {{- end -}}
-
-      {{- if not (mustHas (kindOf $webhook.timeoutSeconds) (list "int" "int64" "float64")) -}}
-        {{- fail (printf "Webhook - Expected [timeoutSeconds] in [webhook.%v.%v] to be an integer, but got [%v]" $objectData.shortName $webhookName (kindOf $webhook.timeoutSeconds)) -}}
       {{- end -}}
 
       {{- if (lt (int $webhook.timeoutSeconds) 1) -}}

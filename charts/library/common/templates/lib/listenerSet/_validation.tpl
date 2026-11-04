@@ -13,9 +13,6 @@ name: The short name of the listener set.
   {{- $objectData := .objectData -}}
   {{- $name := .name -}}
 
-  {{- if and (hasKey $objectData "parentRef") (not (kindIs "map" $objectData.parentRef)) -}}
-    {{- fail (printf "ListenerSet - Expected [listenerSet.%s.parentRef] to be a dictionary, but got [%s]" $name (kindOf $objectData.parentRef)) -}}
-  {{- end -}}
 
   {{- $parentRef := $objectData.parentRef | default dict -}}
 

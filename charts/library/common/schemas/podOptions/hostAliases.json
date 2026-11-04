@@ -10,14 +10,14 @@
     "properties": {
       "ip": {
         "type": "string",
-        "description": "Configuration for `hostAliases.$item.ip`."
+        "description": "IP of the host entry."
       },
       "hostnames": {
         "type": "array",
         "items": {
           "type": "string"
         },
-        "description": "Configuration for `hostAliases.$item.hostnames`."
+        "description": "Host names of the IP."
       }
     },
     "additionalProperties": false

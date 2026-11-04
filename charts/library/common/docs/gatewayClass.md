@@ -31,7 +31,7 @@ Configuration for `gatewayClass`.
 
 ### `gatewayClass.$name.annotations`
 
-Configuration for `gatewayClass.main.annotations`.
+Additional annotations, keyed by name.
 
 | Field      | Value                            |
 | ---------- | -------------------------------- |
@@ -89,7 +89,7 @@ gatewayClass:
 
 ### `gatewayClass.$name.enabled`
 
-Configuration for `gatewayClass.main.enabled`.
+Enable the GatewayClass.
 
 | Field      | Value                        |
 | ---------- | ---------------------------- |
@@ -111,7 +111,7 @@ gatewayClass:
 
 ### `gatewayClass.$name.labels`
 
-Configuration for `gatewayClass.main.labels`.
+Additional labels, keyed by name.
 
 | Field      | Value                       |
 | ---------- | --------------------------- |

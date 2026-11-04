@@ -44,7 +44,8 @@
             "number"
           ],
           "description": "The minimum amount of CPU that the container can use.",
-          "default": "75m"
+          "default": "75m",
+          "x-docs-required": true
         },
         "memory": {
           "type": [
@@ -52,7 +53,8 @@
             "number"
           ],
           "description": "The minimum amount of memory that the container can use.",
-          "default": "200Mi"
+          "default": "200Mi",
+          "x-docs-required": true
         }
       },
       "additionalProperties": {
@@ -66,7 +68,8 @@
       "default": {
         "cpu": "75m",
         "memory": "200Mi"
-      }
+      },
+      "x-docs-required": true
     },
     "excludeExtra": {
       "type": "boolean",

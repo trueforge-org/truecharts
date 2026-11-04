@@ -12,7 +12,6 @@
   {{/* Naming */}}
   {{- $storeName := include "tc.v1.common.lib.cnpg.barman.objectStoreName" (dict "objectData" $objectData "type" $type) -}}
   {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $storeName "length" 253) -}}
-  {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" "CNPG ObjectStore") -}}
 
   {{/* Metadata */}}
   {{- $objLabels := $objectData.labels | default dict -}}

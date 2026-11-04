@@ -67,7 +67,7 @@ tests:
           deletionPolicy: Invalid
     asserts:
       - failedTemplate:
-          errorPattern: 'at ''/volumeSnapshotClass/class1/deletionPolicy'': value must be one of ''Delete'', ''Retain'', ''delete'', ''retain'''
+          errorPattern: 'at ''/volumeSnapshotClass/class1/deletionPolicy'': value must be one of ''Retain'', ''Delete'''
 
   - it: should fail without driver
     set:

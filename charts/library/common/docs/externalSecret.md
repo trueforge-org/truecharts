@@ -36,7 +36,7 @@ Additional annotations for ExternalSecret
 | Field      | Value                              |
 | ---------- | ---------------------------------- |
 | Key        | `externalSecret.$name.annotations` |
-| Type       | `map, string`                      |
+| Type       | `map`                              |
 | Required   | ❌                                 |
 | Helm `tpl` | ❌                                 |
 | Default    | `{}`                               |
@@ -96,7 +96,7 @@ Fetch multiple keys from the provider at once, passed as is. External Secrets Op
 | Field      | Value                           |
 | ---------- | ------------------------------- |
 | Key        | `externalSecret.$name.dataFrom` |
-| Type       | `list, string`                  |
+| Type       | `list of map`                   |
 | Required   | ❌                              |
 | Helm `tpl` | ❌                              |
 | Default    | `[]`                            |
@@ -163,7 +163,7 @@ Additional labels for ExternalSecret
 | Field      | Value                         |
 | ---------- | ----------------------------- |
 | Key        | `externalSecret.$name.labels` |
-| Type       | `map, string`                 |
+| Type       | `map`                         |
 | Required   | ❌                            |
 | Helm `tpl` | ❌                            |
 | Default    | `{}`                          |

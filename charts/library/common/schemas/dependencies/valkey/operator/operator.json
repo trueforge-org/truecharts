@@ -38,7 +38,8 @@
         ]
       },
       "default": {},
-      "description": "Valkey configuration directives (valkey.conf), eg `maxmemory-policy: allkeys-lru`. Booleans are written as `yes` and `no`."
+      "description": "Valkey configuration directives (valkey.conf), eg `maxmemory-policy: allkeys-lru`. Booleans are written as `yes` and `no`.",
+      "x-helm-tpl": true
     },
     "resources": {
       "allOf": [
@@ -189,20 +190,22 @@
       "description": "Additional users of the cluster, see the [valkey-operator docs](https://github.com/valkey-io/valkey-operator/blob/main/docs/valkeycluster.md#users). The `default` user always exists with the password of the credentials, an item named `default` overrides its settings."
     },
     "labels": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "string"
-      },
-      "default": {},
-      "description": "Additional labels of the `ValkeyCluster`."
+      "allOf": [
+        {
+          "$ref": "../../../special/labels.json"
+        }
+      ],
+      "description": "Additional labels of the `ValkeyCluster`.",
+      "default": {}
     },
     "annotations": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "string"
-      },
-      "default": {},
-      "description": "Additional annotations of the `ValkeyCluster`."
+      "allOf": [
+        {
+          "$ref": "../../../special/annotations.json"
+        }
+      ],
+      "description": "Additional annotations of the `ValkeyCluster`.",
+      "default": {}
     }
   },
   "additionalProperties": false

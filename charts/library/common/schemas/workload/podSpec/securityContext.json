@@ -35,10 +35,16 @@
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "x-helm-tpl": true,
+            "x-docs-required": true,
+            "description": "Name of the sysctl."
           },
           "value": {
-            "type": "string"
+            "type": "string",
+            "x-helm-tpl": true,
+            "x-docs-required": true,
+            "description": "Value of the sysctl."
           }
         },
         "required": [

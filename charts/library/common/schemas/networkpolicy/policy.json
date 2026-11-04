@@ -41,17 +41,13 @@
       "default": {}
     },
     "annotations": {
-      "type": [
-        "object",
-        "string"
+      "allOf": [
+        {
+          "$ref": "../special/annotations.json"
+        }
       ],
-      "additionalProperties": {
-        "type": "string",
-        "description": "Value of the annotation"
-      },
       "description": "Additional annotations for this NetworkPolicy.",
-      "default": {},
-      "properties": {}
+      "default": {}
     },
     "annotationsList": {
       "allOf": [
@@ -87,10 +83,7 @@
       "default": "kubernetes"
     },
     "clusterwide": {
-      "type": [
-        "boolean",
-        "string"
-      ],
+      "type": "boolean",
       "properties": {},
       "additionalProperties": false,
       "description": "Cilium only. Create a CiliumClusterwideNetworkPolicy instead of a CiliumNetworkPolicy, chart based selectors are pinned to the namespace of the chart",
@@ -103,7 +96,8 @@
     },
     "podSelector": {
       "$ref": "podSelector.json",
-      "description": "Custom Kubernetes label selector for pods to which this policy applies."
+      "description": "Custom Kubernetes label selector for pods to which this policy applies.",
+      "x-helm-tpl": true
     },
     "targetSelector": {
       "type": [
@@ -130,10 +124,7 @@
       "default": ""
     },
     "targetAllPods": {
-      "type": [
-        "boolean",
-        "string"
-      ],
+      "type": "boolean",
       "description": "Target all pods in the namespace.",
       "default": false
     },
@@ -182,7 +173,8 @@
         }
       },
       "additionalProperties": false,
-      "description": "Cilium only. Select the endpoints to which this policy applies, supports Helm `tpl`"
+      "description": "Cilium only. Select the endpoints to which this policy applies, supports Helm `tpl`",
+      "x-helm-tpl": true
     },
     "nodeSelector": {
       "type": [
@@ -229,7 +221,8 @@
         }
       },
       "additionalProperties": false,
-      "description": "Cilium only. Host policy, select the nodes to which this policy applies instead of pods. Requires `clusterwide: true`, supports Helm `tpl`"
+      "description": "Cilium only. Host policy, select the nodes to which this policy applies instead of pods. Requires `clusterwide: true`, supports Helm `tpl`",
+      "x-helm-tpl": true
     },
     "policyTypes": {
       "type": "array",
@@ -246,17 +239,11 @@
       "type": "object",
       "properties": {
         "ingress": {
-          "type": [
-            "boolean",
-            "string"
-          ],
+          "type": "boolean",
           "description": "Put the selected endpoints in ingress default deny mode"
         },
         "egress": {
-          "type": [
-            "boolean",
-            "string"
-          ],
+          "type": "boolean",
           "description": "Put the selected endpoints in egress default deny mode"
         }
       },
@@ -272,10 +259,7 @@
       "default": []
     },
     "ingressDeny": {
-      "type": [
-        "array",
-        "string"
-      ],
+      "type": "array",
       "items": {
         "type": "object",
         "properties": {
@@ -337,10 +321,7 @@
       "default": []
     },
     "egressDeny": {
-      "type": [
-        "array",
-        "string"
-      ],
+      "type": "array",
       "items": {
         "type": "object",
         "properties": {

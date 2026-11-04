@@ -4,7 +4,6 @@
 
   {{- $fullname := include "tc.v1.common.lib.chart.names.fullname" $rootCtx -}}
   {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $objectData.clusterName "length" 253) -}}
-  {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" "CNPG Cluster") -}}
 
   {{/* Initialize variables */}}
   {{- $hibernation := "off" -}}

@@ -55,7 +55,7 @@ tests:
           annotations: "not a dict"
     asserts:
       - failedTemplate:
-          errorMessage: Pod Disruption Budget - Expected [annotations] to be a dictionary, but got [string]
+          errorPattern: 'at ''/podDisruptionBudget/my-poddisruptionbudget/annotations'': got string, want object'
 
   - it: should fail with not valid unhealthyPodEvictionPolicy
     set:

@@ -10,12 +10,12 @@
           "boolean",
           "string"
         ],
-        "description": "Configuration for `metrics.main.enabled`.",
+        "description": "Enable the metrics object.",
         "default": false
       },
       "primary": {
         "type": "boolean",
-        "description": "Configuration for `metrics.main.primary`."
+        "description": "Make this the primary metrics object."
       },
       "type": {
         "type": "string",
@@ -23,7 +23,7 @@
           "servicemonitor",
           "podmonitor"
         ],
-        "description": "Configuration for `metrics.main.type`.",
+        "description": "Type of the monitor, `servicemonitor` or `podmonitor`.",
         "default": "servicemonitor"
       },
       "selector": {
@@ -68,7 +68,7 @@
           }
         },
         "additionalProperties": false,
-        "description": "Configuration for `metrics.main.selector`.",
+        "description": "Labels that select the service or pods, instead of `targetSelector`.",
         "default": {}
       },
       "matchLabels": {
@@ -79,7 +79,7 @@
         "additionalProperties": {
           "type": "string"
         },
-        "description": "Configuration for `metrics.main.matchLabels`. Set in common-test fixtures and ignored by the common ServiceMonitor and PodMonitor templates, which build their own matchLabels; use `selector` to set matchers."
+        "description": "Labels that select the service or pods."
       },
       "endpoints": {
         "type": [
@@ -91,23 +91,23 @@
           "properties": {
             "port": {
               "type": "string",
-              "description": "Configuration for `metrics.main.endpoints.$item.port`."
+              "description": "Name of the port that is scraped."
             },
             "interval": {
               "type": "string",
-              "description": "Configuration for `metrics.main.endpoints.$item.interval`."
+              "description": "Interval between scrapes, eg `30s`."
             },
             "scrapeTimeout": {
               "type": "string",
-              "description": "Configuration for `metrics.main.endpoints.$item.scrapeTimeout`."
+              "description": "Timeout of a scrape, eg `10s`."
             },
             "path": {
               "type": "string",
-              "description": "Configuration for `metrics.main.endpoints.$item.path`."
+              "description": "HTTP path that is scraped."
             },
             "honorLabels": {
               "type": "boolean",
-              "description": "Configuration for `metrics.main.endpoints.$item.honorLabels`."
+              "description": "Keep the labels of the scraped metrics when they conflict with the labels of the target."
             },
             "scheme": {
               "type": "string",
@@ -161,7 +161,7 @@
           "additionalProperties": false,
           "description": "Configuration for `metrics.main.endpoints.$item`."
         },
-        "description": "Configuration for `metrics.main.endpoints`."
+        "description": "Endpoints that are scraped."
       },
       "prometheusRule": {
         "type": "object",
@@ -182,12 +182,11 @@
             "description": "Labels of the PrometheusRule. They take precedence over the `labels` of the metrics object."
           },
           "annotations": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": {
-              "type": "string",
-              "description": "Value of the annotation"
-            },
+            "allOf": [
+              {
+                "$ref": "special/annotations.json"
+              }
+            ],
             "description": "Annotations of the PrometheusRule. They take precedence over the `annotations` of the metrics object."
           },
           "rules": {
@@ -205,7 +204,7 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "description": "Configuration for `metrics.main.prometheusRule.groups.$name.name`. Overrides the group name, which defaults to the key."
+                  "description": "Name of the group. Defaults to the key."
                 },
                 "rules": {
                   "type": "array",
@@ -233,32 +232,30 @@
                         "description": "Duration the alert keeps firing after the expression is no longer true."
                       },
                       "labels": {
-                        "type": "object",
-                        "properties": {},
-                        "additionalProperties": {
-                          "type": "string",
-                          "description": "Value of the label"
-                        },
+                        "allOf": [
+                          {
+                            "$ref": "special/labels.json"
+                          }
+                        ],
                         "description": "Labels added to the alert or recording rule."
                       },
                       "annotations": {
-                        "type": "object",
-                        "properties": {},
-                        "additionalProperties": {
-                          "type": "string",
-                          "description": "Value of the annotation"
-                        },
+                        "allOf": [
+                          {
+                            "$ref": "special/annotations.json"
+                          }
+                        ],
                         "description": "Annotations added to the alert or recording rule."
                       }
                     },
                     "additionalProperties": false,
                     "description": "Configuration for `metrics.main.prometheusRule.groups.$name.rules.$item`."
                   },
-                  "description": "Configuration for `metrics.main.prometheusRule.groups.$name.rules`."
+                  "description": "Rules of the group."
                 },
                 "additionalrules": {
                   "type": "array",
-                  "description": "Configuration for `metrics.main.prometheusRule.groups.$name.additionalrules`. Rules added via the SCALE GUI without overwriting `rules`.",
+                  "description": "Additional rules of the group, next to `rules`.",
                   "items": {
                     "$ref": "#/additionalProperties/properties/prometheusRule/properties/groups/additionalProperties/properties/rules/items"
                   }
@@ -267,7 +264,7 @@
               "additionalProperties": false,
               "description": "Configuration for `metrics.main.prometheusRule.groups.$name`."
             },
-            "description": "Configuration for `metrics.main.prometheusRule.groups`. Each key is the name of a group.",
+            "description": "Groups of rules, keyed by name.",
             "default": {}
           },
           "additionalgroups": {
@@ -279,7 +276,7 @@
                   "properties": {
                     "name": {
                       "type": "string",
-                      "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.name`."
+                      "description": "Name of the group. Defaults to the key."
                     },
                     "rules": {
                       "type": "array",
@@ -288,25 +285,25 @@
                         "properties": {
                           "alert": {
                             "type": "string",
-                            "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules.$item.alert`."
+                            "description": "Name of the alert."
                           },
                           "expr": {
                             "type": "string",
-                            "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules.$item.expr`."
+                            "description": "PromQL expression."
                           },
                           "for": {
                             "type": "string",
-                            "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules.$item.for`."
+                            "description": "How long the expression has to be true before the alert fires."
                           }
                         },
                         "additionalProperties": false,
                         "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules.$item`."
                       },
-                      "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules`."
+                      "description": "Rules of the group."
                     },
                     "additionalrules": {
                       "type": "array",
-                      "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.additionalrules`."
+                      "description": "Additional rules of the group, next to `rules`."
                     }
                   },
                   "additionalProperties": false,
@@ -332,16 +329,16 @@
                 "type": "object"
               }
             ],
-            "description": "Configuration for `metrics.main.prometheusRule.additionalgroups`."
+            "description": "Additional groups of rules, as a list."
           }
         },
         "additionalProperties": false,
-        "description": "Configuration for `metrics.main.prometheusRule`.",
+        "description": "A PrometheusRule with alerting and recording rules.",
         "default": "{ enabled: false }"
       },
       "targetSelector": {
         "type": "string",
-        "description": "Configuration for `metrics.main.targetSelector`."
+        "description": "Service or workload the monitor selects. Defaults to the primary one."
       },
       "labels": {
         "allOf": [
@@ -349,24 +346,23 @@
             "$ref": "special/labels.json"
           }
         ],
-        "description": "Configuration for `metrics.main.labels`."
+        "description": "Additional labels, keyed by name."
       },
       "annotations": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": {
-          "type": "string",
-          "description": "Value of the annotation"
-        },
-        "description": "Configuration for `metrics.main.annotations`."
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
+        "description": "Additional annotations, keyed by name."
       },
       "nameOverride": {
         "type": "string",
-        "description": "Configuration for `metrics.main.nameOverride`."
+        "description": "Suffix of the name, instead of the name of the object."
       },
       "apiKey": {
         "type": "string",
-        "description": "Configuration for `metrics.main.apiKey`. Read by stable charts (sabnzbd, bazarr) through their own metrics values, not by the common templates."
+        "description": "API key the exporter needs."
       }
     },
     "additionalProperties": false,

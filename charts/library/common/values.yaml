@@ -1902,10 +1902,6 @@ dependencies:
         # The instances' log level, one of the following values: error, warning, info (default), debug, trace
         logLevel: info
 
-        # The configuration for the CA and related certificates
-        # See: https://cloudnative-pg.io/documentation/current/api_reference/#CertificatesConfiguration
-        certificates:
-
         # When this option is enabled, the operator will use the SuperuserSecret to update the postgres user password.
         # If the secret is not present, the operator will automatically create one.
         # When this option is disabled, the operator will ignore the SuperuserSecret content, delete it when automatically created,

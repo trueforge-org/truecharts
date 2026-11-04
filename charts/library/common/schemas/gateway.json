@@ -10,29 +10,28 @@
           "boolean",
           "string"
         ],
-        "description": "Configuration for `gateway.main.enabled`.",
+        "description": "Enable the Gateway.",
         "default": false
       },
       "primary": {
         "type": "boolean",
-        "description": "Configuration for `gateway.main.primary`."
+        "description": "Make this the primary Gateway."
       },
       "namespace": {
         "type": "string",
-        "description": "Configuration for `gateway.main.namespace`."
+        "description": "Namespace of the Gateway."
       },
       "nameOverride": {
         "type": "string",
-        "description": "Configuration for `gateway.main.nameOverride`."
+        "description": "Suffix of the name, instead of the name of the object."
       },
       "annotations": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": {
-          "type": "string",
-          "description": "Value of the annotation"
-        },
-        "description": "Configuration for `gateway.main.annotations`."
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
+        "description": "Additional annotations, keyed by name."
       },
       "labels": {
         "allOf": [
@@ -40,7 +39,7 @@
             "$ref": "special/labels.json"
           }
         ],
-        "description": "Configuration for `gateway.main.labels`."
+        "description": "Additional labels, keyed by name."
       },
       "gatewayClassName": {
         "type": "string",
@@ -83,21 +82,19 @@
         "description": "Infrastructure settings of the gateway. Passed as is.",
         "properties": {
           "annotations": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": {
-              "type": "string",
-              "description": "Value of the annotation"
-            },
+            "allOf": [
+              {
+                "$ref": "special/annotations.json"
+              }
+            ],
             "description": "Annotations for the resources created for the gateway."
           },
           "labels": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": {
-              "type": "string",
-              "description": "Value of the label"
-            },
+            "allOf": [
+              {
+                "$ref": "special/labels.json"
+              }
+            ],
             "description": "Labels for the resources created for the gateway."
           },
           "parametersRef": {
@@ -140,44 +137,11 @@
                 "default": "None"
               },
               "selector": {
-                "type": "object",
-                "properties": {
-                  "matchLabels": {
-                    "type": "object",
-                    "properties": {},
-                    "additionalProperties": {
-                      "type": "string",
-                      "description": "Value of the label"
-                    },
-                    "description": "Match namespaces by labels."
-                  },
-                  "matchExpressions": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "key": {
-                          "type": "string",
-                          "description": "Label key the selector applies to."
-                        },
-                        "operator": {
-                          "type": "string",
-                          "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
-                        },
-                        "values": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          },
-                          "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
-                        }
-                      },
-                      "additionalProperties": false
-                    },
-                    "description": "Match namespaces by label expressions."
+                "allOf": [
+                  {
+                    "$ref": "special/labelSelector.json"
                   }
-                },
-                "additionalProperties": false,
+                ],
                 "description": "Namespace selector used when `from` is `Selector`."
               }
             },
@@ -212,177 +176,7 @@
       "listeners": {
         "type": "array",
         "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Configuration for `gateway.main.listeners.$item.name`.",
-              "minLength": 1
-            },
-            "hostname": {
-              "type": [
-                "null",
-                "string"
-              ],
-              "description": "Hostname of the listener, supports Helm `tpl`."
-            },
-            "port": {
-              "type": "integer",
-              "description": "Configuration for `gateway.main.listeners.$item.port`.",
-              "minimum": 1
-            },
-            "protocol": {
-              "type": "string",
-              "enum": [
-                "HTTP",
-                "HTTPS",
-                "TCP",
-                "TLS",
-                "UDP"
-              ],
-              "description": "Configuration for `gateway.main.listeners.$item.protocol`."
-            },
-            "tls": {
-              "type": "object",
-              "properties": {
-                "mode": {
-                  "type": "string",
-                  "enum": [
-                    "Terminate",
-                    "Passthrough"
-                  ],
-                  "description": "Configuration for `gateway.main.listeners.$item.tls.mode`."
-                },
-                "certificateRefs": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "group": {
-                        "type": "string",
-                        "description": "Configuration for `gateway.main.listeners.$item.tls.certificateRefs.$item.group`."
-                      },
-                      "kind": {
-                        "type": "string",
-                        "description": "Configuration for `gateway.main.listeners.$item.tls.certificateRefs.$item.kind`."
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "Configuration for `gateway.main.listeners.$item.tls.certificateRefs.$item.name`.",
-                        "minLength": 1
-                      },
-                      "namespace": {
-                        "type": [
-                          "null",
-                          "string"
-                        ],
-                        "description": "Configuration for `gateway.main.listeners.$item.tls.certificateRefs.$item.namespace`."
-                      }
-                    },
-                    "additionalProperties": false,
-                    "description": "Configuration for `gateway.main.listeners.$item.tls.certificateRefs.$item`."
-                  },
-                  "description": "Configuration for `gateway.main.listeners.$item.tls.certificateRefs`."
-                },
-                "options": {
-                  "type": "object",
-                  "description": "Implementation specific TLS options. Passed as is.",
-                  "additionalProperties": {
-                    "description": "A setting passed on as is."
-                  }
-                }
-              },
-              "additionalProperties": false,
-              "description": "Configuration for `gateway.main.listeners.$item.tls`."
-            },
-            "allowedRoutes": {
-              "type": "object",
-              "properties": {
-                "namespaces": {
-                  "type": "object",
-                  "properties": {
-                    "from": {
-                      "type": "string",
-                      "enum": [
-                        "All",
-                        "Same",
-                        "Selector"
-                      ],
-                      "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes.namespaces.from`.",
-                      "default": "Same"
-                    },
-                    "selector": {
-                      "type": "object",
-                      "properties": {
-                        "matchLabels": {
-                          "type": "object",
-                          "properties": {},
-                          "additionalProperties": {
-                            "type": "string",
-                            "description": "Value of the label"
-                          },
-                          "description": "Match by labels."
-                        },
-                        "matchExpressions": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "key": {
-                                "type": "string",
-                                "description": "Label key the selector applies to."
-                              },
-                              "operator": {
-                                "type": "string",
-                                "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
-                              },
-                              "values": {
-                                "type": "array",
-                                "items": {
-                                  "type": "string"
-                                },
-                                "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
-                              }
-                            },
-                            "additionalProperties": false
-                          },
-                          "description": "Match by label expressions."
-                        }
-                      },
-                      "additionalProperties": false,
-                      "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes.namespaces.selector`."
-                    }
-                  },
-                  "additionalProperties": false,
-                  "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes.namespaces`."
-                },
-                "kinds": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "group": {
-                        "type": "string",
-                        "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes.kinds.$item.group`."
-                      },
-                      "kind": {
-                        "type": "string",
-                        "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes.kinds.$item.kind`.",
-                        "minLength": 1
-                      }
-                    },
-                    "additionalProperties": false,
-                    "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes.kinds.$item`."
-                  },
-                  "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes.kinds`."
-                }
-              },
-              "additionalProperties": false,
-              "description": "Configuration for `gateway.main.listeners.$item.allowedRoutes`."
-            }
-          },
-          "additionalProperties": false,
-          "description": "Configuration for `gateway.main.listeners.$item`."
+          "$ref": "listener.json"
         },
         "description": "Array of listener definitions that define the network ports and protocols the Gateway listens on.\n\nEach listener must specify:\n- `name`: Unique name for the listener\n- `port`: Network port to listen on\n- `protocol`: Protocol (HTTP, HTTPS, TCP, TLS, UDP)\n- `hostname`: Optional hostname filter\n- `tls`: Optional TLS configuration\n- `allowedRoutes`: Optional configuration for which routes can attach"
       }

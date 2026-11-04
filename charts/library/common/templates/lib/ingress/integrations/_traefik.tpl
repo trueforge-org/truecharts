@@ -91,22 +91,7 @@
 
   {{- $traefik := $objectData.integrations.traefik -}}
 
-  {{- if $traefik.entrypoints -}}
-    {{- if not (kindIs "slice" $traefik.entrypoints) -}}
-      {{- fail (printf "Ingress - Expected [integrations.traefik.entrypoints] to be a [slice], but got [%s]" (kindOf $traefik.entrypoints)) -}}
-    {{- end -}}
-  {{- end -}}
 
-  {{- if $traefik.middlewares -}}
-    {{- if not (kindIs "slice" $traefik.middlewares) -}}
-      {{- fail (printf "Ingress - Expected [integrations.traefik.middlewares] to be a [slice], but got [%s]" (kindOf $traefik.middlewares)) -}}
-    {{- end -}}
-  {{- end -}}
 
-  {{- if $traefik.chartMiddlewares -}}
-    {{- if not (kindIs "slice" $traefik.chartMiddlewares) -}}
-      {{- fail (printf "Ingress - Expected [integrations.traefik.chartMiddlewares] to be a [slice], but got [%s]" (kindOf $traefik.chartMiddlewares)) -}}
-    {{- end -}}
-  {{- end -}}
 
 {{- end -}}

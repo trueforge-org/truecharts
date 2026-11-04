@@ -47,7 +47,7 @@ Custom text for NOTES.txt. Rendered after header, before connection information.
 | Key        | `notes.custom` |
 | Type       | `string`       |
 | Required   | ❌             |
-| Helm `tpl` | ❌             |
+| Helm `tpl` | ✅             |
 | Default    | See schema     |
 
 Example
@@ -68,7 +68,7 @@ Footer text for NOTES.txt. Rendered after connection information, before warning
 | Key        | `notes.footer` |
 | Type       | `string`       |
 | Required   | ❌             |
-| Helm `tpl` | ❌             |
+| Helm `tpl` | ✅             |
 | Default    | See schema     |
 
 Example
@@ -89,7 +89,7 @@ Header text for NOTES.txt. Rendered first in the output.
 | Key        | `notes.header`                                                    |
 | Type       | `string`                                                          |
 | Required   | ❌                                                                |
-| Helm `tpl` | ❌                                                                |
+| Helm `tpl` | ✅                                                                |
 | Default    | `"# Thank you for installing {{ .Chart.Name }} by TrueCharts.\n"` |
 
 Example

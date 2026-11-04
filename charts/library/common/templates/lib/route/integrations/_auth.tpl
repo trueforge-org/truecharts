@@ -5,10 +5,6 @@
 
   {{- if $integration.auth -}}
     {{- if $integration.auth.type -}}
-      {{- $validAuthTypes := (list "authentik" "authelia") -}}
-      {{- if not (mustHas $integration.auth.type $validAuthTypes) -}}
-        {{- fail (printf "Route - Expected [integrations.%s.auth.type] to be one of [%s], but got [%s]" $key (join ", " $validAuthTypes) $integration.auth.type) -}}
-      {{- end -}}
       {{- if not $integration.auth.internalHost -}}
         {{- fail (printf "Route - Expected [integrations.%s.auth.internalHost] to be set" $key) -}}
       {{- end -}}

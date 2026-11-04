@@ -36,9 +36,9 @@ Define the annotations for this certificate
 | Field      | Value                           |
 | ---------- | ------------------------------- |
 | Key        | `certificate.$name.annotations` |
-| Type       | `map, string`                   |
+| Type       | `map`                           |
 | Required   | ❌                              |
-| Helm `tpl` | ❌                              |
+| Helm `tpl` | ✅ (On value only)               |
 | Default    | `{}`                            |
 
 Example
@@ -74,8 +74,8 @@ Define the certificate issuer for this certificate
 | ---------- | ------------------------------------- |
 | Key        | `certificate.$name.certificateIssuer` |
 | Type       | `string`                              |
-| Required   | ❌                                    |
-| Helm `tpl` | ❌                                    |
+| Required   | ✅                                    |
+| Helm `tpl` | ✅                                    |
 | Default    | `""`                                  |
 | Min Length | `1`                                   |
 
@@ -120,8 +120,8 @@ Enables or Disables the certificate
 | ---------- | --------------------------- |
 | Key        | `certificate.$name.enabled` |
 | Type       | `boolean, string`           |
-| Required   | ❌                          |
-| Helm `tpl` | ❌                          |
+| Required   | ✅                          |
+| Helm `tpl` | ✅                          |
 | Default    | `false`                     |
 
 Example
@@ -142,8 +142,8 @@ Define the hosts for this certificate
 | ---------- | ------------------------- |
 | Key        | `certificate.$name.hosts` |
 | Type       | `list, string`            |
-| Required   | ❌                        |
-| Helm `tpl` | ❌                        |
+| Required   | ✅                        |
+| Helm `tpl` | ✅ (On each entry)         |
 | Default    | `"false"`                 |
 
 Example
@@ -163,9 +163,9 @@ Define the labels for this certificate
 | Field      | Value                      |
 | ---------- | -------------------------- |
 | Key        | `certificate.$name.labels` |
-| Type       | `map, string`              |
+| Type       | `map`                      |
 | Required   | ❌                         |
-| Helm `tpl` | ❌                         |
+| Helm `tpl` | ✅ (On value only)          |
 | Default    | `{}`                       |
 
 Example
@@ -202,7 +202,7 @@ Define the namespace for this object
 | Key        | `certificate.$name.namespace` |
 | Type       | `string`                      |
 | Required   | ❌                            |
-| Helm `tpl` | ❌                            |
+| Helm `tpl` | ✅ (On value only)             |
 | Default    | `""`                          |
 
 Example

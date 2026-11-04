@@ -58,7 +58,7 @@ tests:
           annotations: "not a dict"
     asserts:
       - failedTemplate:
-          errorMessage: RBAC - Expected [annotations] to be a dictionary, but got [string]
+          errorPattern: 'at ''/rbac/my-rbac/annotations'': got string, want object'
 
   - it: should fail with more than 1 primary rbac
     set:

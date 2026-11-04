@@ -5,17 +5,20 @@
     "repository": {
       "type": "string",
       "description": "Defines the image repository",
-      "default": ""
+      "default": "",
+      "x-docs-required": true
     },
     "pullPolicy": {
       "type": "string",
       "description": "Defines the image pull policy",
-      "default": "IfNotPresent"
+      "default": "IfNotPresent",
+      "x-docs-required": true
     },
     "tag": {
       "type": "string",
       "description": "Defines the image tag",
-      "default": ""
+      "default": "",
+      "x-docs-required": true
     }
   },
   "additionalProperties": false,

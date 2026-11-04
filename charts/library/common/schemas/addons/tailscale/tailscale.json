@@ -25,11 +25,11 @@
             "boolean",
             "string"
           ],
-          "description": "Configuration for `addons.tailscale.container.enabled`."
+          "description": "Enable the container of the add-on."
         },
         "imageSelector": {
           "type": "string",
-          "description": "Configuration for `addons.tailscale.container.imageSelector`."
+          "description": "Name of the image on the root of the values."
         },
         "probes": {
           "type": "object",
@@ -42,11 +42,11 @@
                     "boolean",
                     "string"
                   ],
-                  "description": "Configuration for `addons.tailscale.container.probes.liveness.enabled`."
+                  "description": "Enable the container of the add-on."
                 }
               },
               "additionalProperties": false,
-              "description": "Configuration for `addons.tailscale.container.probes.liveness`."
+              "description": "The liveness probe."
             },
             "readiness": {
               "type": "object",
@@ -56,11 +56,11 @@
                     "boolean",
                     "string"
                   ],
-                  "description": "Configuration for `addons.tailscale.container.probes.readiness.enabled`."
+                  "description": "Enable the container of the add-on."
                 }
               },
               "additionalProperties": false,
-              "description": "Configuration for `addons.tailscale.container.probes.readiness`."
+              "description": "The readiness probe."
             },
             "startup": {
               "type": "object",
@@ -70,15 +70,15 @@
                     "boolean",
                     "string"
                   ],
-                  "description": "Configuration for `addons.tailscale.container.probes.startup.enabled`."
+                  "description": "Enable the container of the add-on."
                 }
               },
               "additionalProperties": false,
-              "description": "Configuration for `addons.tailscale.container.probes.startup`."
+              "description": "The startup probe."
             }
           },
           "additionalProperties": false,
-          "description": "Configuration for `addons.tailscale.container.probes`."
+          "description": "Probes of the container."
         },
         "command": {
           "type": "array",
@@ -86,22 +86,22 @@
             "type": "string",
             "description": "Configuration for `addons.tailscale.container.command.$item`."
           },
-          "description": "Configuration for `addons.tailscale.container.command`."
+          "description": "Command of the container."
         },
         "resources": {
           "type": "object",
           "properties": {
             "excludeExtra": {
               "type": "boolean",
-              "description": "Configuration for `addons.tailscale.container.resources.excludeExtra`."
+              "description": "Leave out the extra resources, like GPUs, of the chart."
             }
           },
           "additionalProperties": false,
-          "description": "Configuration for `addons.tailscale.container.resources`."
+          "description": "Resources of the container."
         },
         "env": {
           "$ref": "container/env.json",
-          "description": "Configuration for `addons.tailscale.container.env`."
+          "description": "Environment variables of the container, keyed by name."
         },
         "securityContext": {
           "type": "object",
@@ -115,15 +115,15 @@
                     "type": "string",
                     "description": "Configuration for `addons.tailscale.container.securityContext.capabilities.add.$item`."
                   },
-                  "description": "Configuration for `addons.tailscale.container.securityContext.capabilities.add`."
+                  "description": "Capabilities that are added."
                 }
               },
               "additionalProperties": false,
-              "description": "Configuration for `addons.tailscale.container.securityContext.capabilities`."
+              "description": "Linux capabilities of the container."
             }
           },
           "additionalProperties": false,
-          "description": "Configuration for `addons.tailscale.container.securityContext`."
+          "description": "Security context of the container."
         }
       },
       "additionalProperties": false,
@@ -134,7 +134,7 @@
       "properties": {
         "config": {
           "type": "string",
-          "description": "Configuration for `addons.tailscale.settings.config`."
+          "description": "Path of a tailscaled config file."
         },
         "authkey": {
           "type": "string",
@@ -142,52 +142,51 @@
         },
         "userspace": {
           "type": "boolean",
-          "description": "Configuration for `addons.tailscale.settings.userspace`."
+          "description": "Run tailscale in userspace networking mode."
         },
         "auth_once": {
           "type": "boolean",
-          "description": "Configuration for `addons.tailscale.settings.auth_once`."
+          "description": "Only log in when the node is not logged in yet."
         },
         "accept_dns": {
           "type": "boolean",
-          "description": "Configuration for `addons.tailscale.settings.accept_dns`."
+          "description": "Accept the DNS settings of the tailnet."
         },
         "routes": {
           "type": "string",
-          "description": "Configuration for `addons.tailscale.settings.routes`."
+          "description": "Subnet routes that are advertised, comma separated."
         },
         "dest_ip": {
           "type": "string",
-          "description": "Configuration for `addons.tailscale.settings.dest_ip`."
+          "description": "IP that the traffic is forwarded to."
         },
         "sock5_server": {
           "type": "string",
-          "description": "Configuration for `addons.tailscale.settings.sock5_server`."
+          "description": "Address of a SOCKS5 proxy, eg `:1080`."
         },
         "extra_args": {
           "type": "string",
-          "description": "Configuration for `addons.tailscale.settings.extra_args`."
+          "description": "Extra arguments of `tailscale up`."
         },
         "daemon_extra_args": {
           "type": "string",
-          "description": "Configuration for `addons.tailscale.settings.daemon_extra_args`."
+          "description": "Extra arguments of `tailscaled`."
         },
         "outbound_http_proxy_listen": {
           "type": "string",
-          "description": "Configuration for `addons.tailscale.settings.outbound_http_proxy_listen`."
+          "description": "Address of an outbound HTTP proxy, eg `:1055`."
         }
       },
       "additionalProperties": false,
       "description": "Tailscale settings"
     },
     "annotations": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": {
-        "type": "string",
-        "description": "Value of the annotation"
-      },
-      "description": "Configuration for `addons.tailscale.annotations`."
+      "allOf": [
+        {
+          "$ref": "../../special/annotations.json"
+        }
+      ],
+      "description": "Additional annotations, keyed by name."
     }
   },
   "additionalProperties": false,

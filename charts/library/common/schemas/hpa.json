@@ -10,39 +10,37 @@
           "boolean",
           "string"
         ],
-        "description": "Configuration for `hpa.main.enabled`.",
+        "description": "Enable the HorizontalPodAutoscaler.",
         "default": false
       },
       "labels": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": {
-          "type": "string",
-          "description": "Value of the label"
-        },
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
         "description": "Additional labels of the HorizontalPodAutoscaler."
       },
       "annotations": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": {
-          "type": "string",
-          "description": "Value of the annotation"
-        },
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
         "description": "Additional annotations of the HorizontalPodAutoscaler."
       },
       "targetSelector": {
         "type": "array",
-        "description": "Configuration for `hpa.main.targetSelector`.",
+        "description": "Workloads the HorizontalPodAutoscaler scales. Defaults to the primary workload.",
         "default": []
       },
       "minReplicas": {
         "type": "integer",
-        "description": "Configuration for `hpa.main.minReplicas`."
+        "description": "Minimum number of replicas."
       },
       "maxReplicas": {
         "type": "integer",
-        "description": "Configuration for `hpa.main.maxReplicas`. Must be greater than or equal to `minReplicas`."
+        "description": "Maximum number of replicas."
       },
       "behavior": {
         "type": "object",
@@ -57,11 +55,11 @@
                   "Min",
                   "Disabled"
                 ],
-                "description": "Configuration for `hpa.main.behavior.scaleUp.selectPolicy`."
+                "description": "Which policy wins: `Max`, `Min` or `Disabled`."
               },
               "stabilizationWindowSeconds": {
                 "type": "integer",
-                "description": "Configuration for `hpa.main.behavior.scaleUp.stabilizationWindowSeconds`."
+                "description": "Seconds of past recommendations considered, to avoid flapping."
               },
               "policies": {
                 "type": "array",
@@ -74,18 +72,18 @@
                         "Pods",
                         "Percent"
                       ],
-                      "description": "Configuration for `hpa.main.behavior.scaleUp.policies.$item.type`."
+                      "description": "Type of the policy, `Pods` or `Percent`."
                     },
                     "value": {
                       "type": "integer",
                       "minimum": 1,
-                      "description": "Configuration for `hpa.main.behavior.scaleUp.policies.$item.value`."
+                      "description": "Number of pods or percentage the policy allows within `periodSeconds`."
                     },
                     "periodSeconds": {
                       "type": "integer",
                       "minimum": 1,
                       "maximum": 1800,
-                      "description": "Configuration for `hpa.main.behavior.scaleUp.policies.$item.periodSeconds`."
+                      "description": "Seconds the policy looks back."
                     }
                   },
                   "required": [
@@ -96,11 +94,11 @@
                   "additionalProperties": false,
                   "description": "Configuration for `hpa.main.behavior.scaleUp.policies.$item`."
                 },
-                "description": "Configuration for `hpa.main.behavior.scaleUp.policies`."
+                "description": "Policies that limit how fast the replicas change."
               }
             },
             "additionalProperties": false,
-            "description": "Configuration for `hpa.main.behavior.scaleUp`."
+            "description": "Scaling behavior when scaling up."
           },
           "scaleDown": {
             "type": "object",
@@ -112,11 +110,11 @@
                   "Min",
                   "Disabled"
                 ],
-                "description": "Configuration for `hpa.main.behavior.scaleDown.selectPolicy`."
+                "description": "Which policy wins: `Max`, `Min` or `Disabled`."
               },
               "stabilizationWindowSeconds": {
                 "type": "integer",
-                "description": "Configuration for `hpa.main.behavior.scaleDown.stabilizationWindowSeconds`."
+                "description": "Seconds of past recommendations considered, to avoid flapping."
               },
               "policies": {
                 "type": "array",
@@ -129,18 +127,18 @@
                         "Pods",
                         "Percent"
                       ],
-                      "description": "Configuration for `hpa.main.behavior.scaleDown.policies.$item.type`."
+                      "description": "Type of the policy, `Pods` or `Percent`."
                     },
                     "value": {
                       "type": "integer",
                       "minimum": 1,
-                      "description": "Configuration for `hpa.main.behavior.scaleDown.policies.$item.value`."
+                      "description": "Number of pods or percentage the policy allows within `periodSeconds`."
                     },
                     "periodSeconds": {
                       "type": "integer",
                       "minimum": 1,
                       "maximum": 1800,
-                      "description": "Configuration for `hpa.main.behavior.scaleDown.policies.$item.periodSeconds`."
+                      "description": "Seconds the policy looks back."
                     }
                   },
                   "required": [
@@ -151,15 +149,15 @@
                   "additionalProperties": false,
                   "description": "Configuration for `hpa.main.behavior.scaleDown.policies.$item`."
                 },
-                "description": "Configuration for `hpa.main.behavior.scaleDown.policies`."
+                "description": "Policies that limit how fast the replicas change."
               }
             },
             "additionalProperties": false,
-            "description": "Configuration for `hpa.main.behavior.scaleDown`."
+            "description": "Scaling behavior when scaling down."
           }
         },
         "additionalProperties": false,
-        "description": "Configuration for `hpa.main.behavior`."
+        "description": "Scaling behavior, for scaling up and down."
       },
       "metrics": {
         "type": "array",
@@ -175,7 +173,7 @@
                 "External",
                 "ContainerResource"
               ],
-              "description": "Configuration for `hpa.main.metrics.$item.type`."
+              "description": "Type of the metric: `Resource`, `ContainerResource`, `Pods`, `Object` or `External`."
             },
             "resource": {
               "type": "object",
@@ -186,7 +184,7 @@
                     "cpu",
                     "memory"
                   ],
-                  "description": "Configuration for `hpa.main.metrics.$item.resource.name`."
+                  "description": "Name of the resource, `cpu` or `memory`."
                 },
                 "target": {
                   "type": "object",
@@ -197,33 +195,33 @@
                         "AverageValue",
                         "Utilization"
                       ],
-                      "description": "Configuration for `hpa.main.metrics.$item.resource.target.type`."
+                      "description": "Type of the target, `Utilization`, `AverageValue` or `Value`."
                     },
                     "averageValue": {
                       "type": [
                         "integer",
                         "string"
                       ],
-                      "description": "Configuration for `hpa.main.metrics.$item.resource.target.averageValue`."
+                      "description": "Target average value, as a quantity."
                     },
                     "averageUtilization": {
                       "type": "integer",
-                      "description": "Configuration for `hpa.main.metrics.$item.resource.target.averageUtilization`."
+                      "description": "Target average utilization, in percent of the requests."
                     },
                     "value": {
                       "type": [
                         "integer",
                         "string"
                       ],
-                      "description": "Configuration for `hpa.main.metrics.$item.resource.target.value`."
+                      "description": "Target value, as a quantity."
                     }
                   },
                   "additionalProperties": false,
-                  "description": "Configuration for `hpa.main.metrics.$item.resource.target`."
+                  "description": "Target value of the metric."
                 }
               },
               "additionalProperties": false,
-              "description": "Configuration for `hpa.main.metrics.$item.resource`."
+              "description": "A resource metric of the pods, like `cpu` or `memory`."
             },
             "containerResource": {
               "type": "object",
@@ -234,11 +232,11 @@
                     "cpu",
                     "memory"
                   ],
-                  "description": "Configuration for `hpa.main.metrics.$item.containerResource.name`."
+                  "description": "Name of the resource, `cpu` or `memory`."
                 },
                 "container": {
                   "type": "string",
-                  "description": "Configuration for `hpa.main.metrics.$item.containerResource.container`. Must be the name of a container of the workload."
+                  "description": "Name of the container."
                 },
                 "target": {
                   "type": "object",
@@ -249,33 +247,33 @@
                         "AverageValue",
                         "Utilization"
                       ],
-                      "description": "Configuration for `hpa.main.metrics.$item.containerResource.target.type`."
+                      "description": "Type of the target, `Utilization`, `AverageValue` or `Value`."
                     },
                     "averageValue": {
                       "type": [
                         "integer",
                         "string"
                       ],
-                      "description": "Configuration for `hpa.main.metrics.$item.containerResource.target.averageValue`."
+                      "description": "Target average value, as a quantity."
                     },
                     "averageUtilization": {
                       "type": "integer",
-                      "description": "Configuration for `hpa.main.metrics.$item.containerResource.target.averageUtilization`."
+                      "description": "Target average utilization, in percent of the requests."
                     },
                     "value": {
                       "type": [
                         "integer",
                         "string"
                       ],
-                      "description": "Configuration for `hpa.main.metrics.$item.containerResource.target.value`."
+                      "description": "Target value, as a quantity."
                     }
                   },
                   "additionalProperties": false,
-                  "description": "Configuration for `hpa.main.metrics.$item.containerResource.target`."
+                  "description": "Target value of the metric."
                 }
               },
               "additionalProperties": false,
-              "description": "Configuration for `hpa.main.metrics.$item.containerResource`."
+              "description": "A resource metric of a single container of the pods."
             },
             "pods": {
               "type": "object",
@@ -285,7 +283,7 @@
                   "properties": {
                     "name": {
                       "type": "string",
-                      "description": "Configuration for `hpa.main.metrics.$item.pods.metric.name`."
+                      "description": "Name of the metric."
                     },
                     "selector": {
                       "type": "object",
@@ -297,15 +295,15 @@
                             "type": "string",
                             "description": "Value of the label"
                           },
-                          "description": "Configuration for `hpa.main.metrics.$item.pods.metric.selector.matchLabels`."
+                          "description": "Labels of the metric, keyed by name."
                         }
                       },
                       "additionalProperties": false,
-                      "description": "Configuration for `hpa.main.metrics.$item.pods.metric.selector`."
+                      "description": "Labels that select the metric."
                     }
                   },
                   "additionalProperties": false,
-                  "description": "Configuration for `hpa.main.metrics.$item.pods.metric`."
+                  "description": "The metric, by name and labels."
                 },
                 "target": {
                   "type": "object",
@@ -322,15 +320,15 @@
                         "integer",
                         "string"
                       ],
-                      "description": "Configuration for `hpa.main.metrics.$item.pods.target.averageValue`."
+                      "description": "Target average value, as a quantity."
                     }
                   },
                   "additionalProperties": false,
-                  "description": "Configuration for `hpa.main.metrics.$item.pods.target`."
+                  "description": "Target value of the metric."
                 }
               },
               "additionalProperties": false,
-              "description": "Configuration for `hpa.main.metrics.$item.pods`."
+              "description": "A metric of the pods, averaged over them."
             },
             "object": {
               "type": "object",
@@ -340,7 +338,7 @@
                   "properties": {
                     "name": {
                       "type": "string",
-                      "description": "Configuration for `hpa.main.metrics.$item.object.metric.name`."
+                      "description": "Name of the metric."
                     },
                     "selector": {
                       "type": "object",
@@ -352,15 +350,15 @@
                             "type": "string",
                             "description": "Value of the label"
                           },
-                          "description": "Configuration for `hpa.main.metrics.$item.object.metric.selector.matchLabels`."
+                          "description": "Labels of the metric, keyed by name."
                         }
                       },
                       "additionalProperties": false,
-                      "description": "Configuration for `hpa.main.metrics.$item.object.metric.selector`."
+                      "description": "Labels that select the metric."
                     }
                   },
                   "additionalProperties": false,
-                  "description": "Configuration for `hpa.main.metrics.$item.object.metric`."
+                  "description": "The metric, by name and labels."
                 },
                 "target": {
                   "type": "object",
@@ -371,48 +369,48 @@
                         "AverageValue",
                         "Value"
                       ],
-                      "description": "Configuration for `hpa.main.metrics.$item.object.target.type`."
+                      "description": "Type of the target, `Utilization`, `AverageValue` or `Value`."
                     },
                     "averageValue": {
                       "type": [
                         "integer",
                         "string"
                       ],
-                      "description": "Configuration for `hpa.main.metrics.$item.object.target.averageValue`."
+                      "description": "Target average value, as a quantity."
                     },
                     "value": {
                       "type": [
                         "integer",
                         "string"
                       ],
-                      "description": "Configuration for `hpa.main.metrics.$item.object.target.value`."
+                      "description": "Target value, as a quantity."
                     }
                   },
                   "additionalProperties": false,
-                  "description": "Configuration for `hpa.main.metrics.$item.object.target`."
+                  "description": "Target value of the metric."
                 },
                 "describedObject": {
                   "type": "object",
                   "properties": {
                     "apiVersion": {
                       "type": "string",
-                      "description": "Configuration for `hpa.main.metrics.$item.object.describedObject.apiVersion`."
+                      "description": "API version of the object."
                     },
                     "kind": {
                       "type": "string",
-                      "description": "Configuration for `hpa.main.metrics.$item.object.describedObject.kind`."
+                      "description": "Kind of the object."
                     },
                     "name": {
                       "type": "string",
-                      "description": "Configuration for `hpa.main.metrics.$item.object.describedObject.name`."
+                      "description": "Name of the object."
                     }
                   },
                   "additionalProperties": false,
-                  "description": "Configuration for `hpa.main.metrics.$item.object.describedObject`."
+                  "description": "The object the metric describes."
                 }
               },
               "additionalProperties": false,
-              "description": "Configuration for `hpa.main.metrics.$item.object`."
+              "description": "A metric of another Kubernetes object."
             },
             "external": {
               "type": "object",
@@ -422,7 +420,7 @@
                   "properties": {
                     "name": {
                       "type": "string",
-                      "description": "Configuration for `hpa.main.metrics.$item.external.metric.name`."
+                      "description": "Name of the metric."
                     },
                     "selector": {
                       "type": "object",
@@ -434,15 +432,15 @@
                             "type": "string",
                             "description": "Value of the label"
                           },
-                          "description": "Configuration for `hpa.main.metrics.$item.external.metric.selector.matchLabels`."
+                          "description": "Labels of the metric, keyed by name."
                         }
                       },
                       "additionalProperties": false,
-                      "description": "Configuration for `hpa.main.metrics.$item.external.metric.selector`."
+                      "description": "Labels that select the metric."
                     }
                   },
                   "additionalProperties": false,
-                  "description": "Configuration for `hpa.main.metrics.$item.external.metric`."
+                  "description": "The metric, by name and labels."
                 },
                 "target": {
                   "type": "object",
@@ -453,29 +451,29 @@
                         "AverageValue",
                         "Value"
                       ],
-                      "description": "Configuration for `hpa.main.metrics.$item.external.target.type`."
+                      "description": "Type of the target, `Utilization`, `AverageValue` or `Value`."
                     },
                     "averageValue": {
                       "type": [
                         "integer",
                         "string"
                       ],
-                      "description": "Configuration for `hpa.main.metrics.$item.external.target.averageValue`."
+                      "description": "Target average value, as a quantity."
                     },
                     "value": {
                       "type": [
                         "integer",
                         "string"
                       ],
-                      "description": "Configuration for `hpa.main.metrics.$item.external.target.value`."
+                      "description": "Target value, as a quantity."
                     }
                   },
                   "additionalProperties": false,
-                  "description": "Configuration for `hpa.main.metrics.$item.external.target`."
+                  "description": "Target value of the metric."
                 }
               },
               "additionalProperties": false,
-              "description": "Configuration for `hpa.main.metrics.$item.external`."
+              "description": "A metric from outside of the cluster."
             }
           },
           "required": [
@@ -484,7 +482,7 @@
           "additionalProperties": false,
           "description": "Configuration for `hpa.main.metrics.$item`."
         },
-        "description": "Configuration for `hpa.main.metrics`. List of metric specs, each selecting one of Resource, Pods, Object, External or ContainerResource."
+        "description": "Metrics the number of replicas is calculated from."
       },
       "workload": {
         "type": "object",

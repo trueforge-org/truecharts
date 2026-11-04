@@ -51,7 +51,7 @@ Enables or Disables the homepage integration
 | ---------- | --------------------------------------- |
 | Key        | `ingress.integrations.homepage.enabled` |
 | Type       | `boolean`                               |
-| Required   | ❌                                      |
+| Required   | ✅                                      |
 | Helm `tpl` | ❌                                      |
 | Default    | `false`                                 |
 

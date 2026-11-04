@@ -31,14 +31,14 @@ Create Ingress objects
 
 ### `ingress.$name.annotations`
 
-Create Ingress objects
+Additional annotations, keyed by name.
 
 | Field      | Value                       |
 | ---------- | --------------------------- |
 | Key        | `ingress.$name.annotations` |
-| Type       | `map, string`               |
+| Type       | `map`                       |
 | Required   | ❌                          |
-| Helm `tpl` | ❌                          |
+| Helm `tpl` | ✅ (On value only)           |
 | Default    | `{}`                        |
 
 Example
@@ -96,14 +96,14 @@ Certificate issuer for this ingress. The templates read `certificateIssuer` per 
 
 ### `ingress.$name.enabled`
 
-Create Ingress objects
+Enable the Ingress.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
 | Key        | `ingress.$name.enabled` |
 | Type       | `boolean, string`       |
-| Required   | ❌                      |
-| Helm `tpl` | ❌                      |
+| Required   | ✅                      |
+| Helm `tpl` | ✅                      |
 | Default    | `false`                 |
 
 Example
@@ -146,7 +146,7 @@ Define the hosts for this ingress
 | ---------- | --------------------- |
 | Key        | `ingress.$name.hosts` |
 | Type       | `list of map`         |
-| Required   | ❌                    |
+| Required   | ✅                    |
 | Helm `tpl` | ❌                    |
 | Default    | `[]`                  |
 
@@ -163,14 +163,14 @@ ingress:
 
 ### `ingress.$name.ingressClassName`
 
-Create Ingress objects
+Ingress class, eg `traefik` or `nginx`.
 
 | Field      | Value                            |
 | ---------- | -------------------------------- |
 | Key        | `ingress.$name.ingressClassName` |
 | Type       | `string`                         |
 | Required   | ❌                               |
-| Helm `tpl` | ❌                               |
+| Helm `tpl` | ✅                               |
 | Default    | `""`                             |
 
 Example
@@ -185,7 +185,7 @@ ingress:
 
 ### `ingress.$name.integrations`
 
-Create Ingress objects
+Integrations with Traefik, nginx, cert-manager and homepage.
 
 | Field      | Value                        |
 | ---------- | ---------------------------- |
@@ -208,14 +208,14 @@ ingress:
 
 ### `ingress.$name.labels`
 
-Create Ingress objects
+Additional labels, keyed by name.
 
 | Field      | Value                  |
 | ---------- | ---------------------- |
 | Key        | `ingress.$name.labels` |
-| Type       | `map, string`          |
+| Type       | `map`                  |
 | Required   | ❌                     |
-| Helm `tpl` | ❌                     |
+| Helm `tpl` | ✅ (On value only)      |
 | Default    | `{}`                   |
 
 Example
@@ -252,7 +252,7 @@ Define the namespace for this object
 | Key        | `ingress.$name.namespace` |
 | Type       | `string`                  |
 | Required   | ❌                        |
-| Helm `tpl` | ❌                        |
+| Helm `tpl` | ✅                        |
 | Default    | `""`                      |
 
 Example
@@ -267,13 +267,13 @@ ingress:
 
 ### `ingress.$name.primary`
 
-Create Ingress objects
+Make this the primary Ingress.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
 | Key        | `ingress.$name.primary` |
 | Type       | `boolean`               |
-| Required   | ❌                      |
+| Required   | ✅                      |
 | Helm `tpl` | ❌                      |
 | Default    | `false`                 |
 
@@ -289,7 +289,7 @@ ingress:
 
 ### `ingress.$name.required`
 
-Create Ingress objects
+Fail when the Ingress is disabled, for charts that need one.
 
 | Field      | Value                    |
 | ---------- | ------------------------ |
@@ -339,7 +339,7 @@ Define TLS for this ingress
 | ---------- | ------------------- |
 | Key        | `ingress.$name.tls` |
 | Type       | `list of map`       |
-| Required   | ❌                  |
+| Required   | ✅                  |
 | Helm `tpl` | ❌                  |
 | Default    | `[]`                |
 

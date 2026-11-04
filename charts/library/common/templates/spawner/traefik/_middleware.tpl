@@ -119,7 +119,6 @@
       {{/* Perform validations */}} {{/* Middleware have a max name length of 253 */}}
       {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $objectName "length" 253) -}}
       {{- include "tc.v1.common.lib.traefik.middleware.validation" (dict "objectData" $objectData) -}}
-      {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" "Middleware") -}}
 
       {{/* Set the name of the middleware */}}
       {{- $_ := set $objectData "name" $objectName -}}

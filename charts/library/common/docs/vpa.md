@@ -45,7 +45,7 @@ Additional annotations of the VerticalPodAutoscaler.
 
 ### `vpa.$name.enabled`
 
-Configuration for `vpa.main.enabled`.
+Enable the VerticalPodAutoscaler.
 
 | Field      | Value               |
 | ---------- | ------------------- |
@@ -81,7 +81,7 @@ Additional labels of the VerticalPodAutoscaler.
 
 ### `vpa.$name.resourcePolicy`
 
-Configuration for `vpa.main.resourcePolicy`.
+Limits of the recommendations, per container.
 
 | Field      | Value                      |
 | ---------- | -------------------------- |
@@ -104,7 +104,7 @@ vpa:
 
 ### `vpa.$name.targetSelector`
 
-Configuration for `vpa.main.targetSelector`.
+Workloads the VerticalPodAutoscaler applies to. Defaults to the primary workload.
 
 | Field      | Value                      |
 | ---------- | -------------------------- |
@@ -127,7 +127,7 @@ vpa:
 
 ### `vpa.$name.updatePolicy`
 
-Configuration for `vpa.main.updatePolicy`.
+How the recommendations are applied.
 
 | Field      | Value                    |
 | ---------- | ------------------------ |

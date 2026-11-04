@@ -21,9 +21,6 @@ so templates like [.Values.dependencies.$name.service.main.ports.main.port] keep
     {{- $dependencies = dict -}}
   {{- end -}}
 
-  {{- if not (kindIs "map" $dependencies) -}}
-    {{- fail (printf "Dependencies - Expected [dependencies] to be a [map], but got [%s]" (kindOf $dependencies)) -}}
-  {{- end -}}
 
   {{- range $depName, $depValues := $dependencies -}}
     {{- if not (kindIs "map" $depValues) -}}

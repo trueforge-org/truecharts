@@ -10,30 +10,28 @@
           "boolean",
           "string"
         ],
-        "description": "Configuration for `vpa.main.enabled`.",
+        "description": "Enable the VerticalPodAutoscaler.",
         "default": false
       },
       "labels": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": {
-          "type": "string",
-          "description": "Value of the label"
-        },
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
         "description": "Additional labels of the VerticalPodAutoscaler."
       },
       "annotations": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": {
-          "type": "string",
-          "description": "Value of the annotation"
-        },
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
         "description": "Additional annotations of the VerticalPodAutoscaler."
       },
       "targetSelector": {
         "type": "array",
-        "description": "Configuration for `vpa.main.targetSelector`.",
+        "description": "Workloads the VerticalPodAutoscaler applies to. Defaults to the primary workload.",
         "default": []
       },
       "updatePolicy": {
@@ -47,12 +45,12 @@
               "Initial",
               "Recreate"
             ],
-            "description": "Configuration for `vpa.main.updatePolicy.updateMode`."
+            "description": "How recommendations are applied: `Off`, `Initial`, `Recreate` or `Auto`."
           },
           "minReplicas": {
             "type": "integer",
             "minimum": 1,
-            "description": "Configuration for `vpa.main.updatePolicy.minReplicas`."
+            "description": "Minimum number of replicas that have to be running before pods are evicted."
           },
           "evictionRequirements": {
             "type": "array",
@@ -69,7 +67,7 @@
                     ],
                     "description": "Configuration for `vpa.main.updatePolicy.evictionRequirements.$item.resources.$item`."
                   },
-                  "description": "Configuration for `vpa.main.updatePolicy.evictionRequirements.$item.resources`."
+                  "description": "Resources the requirement applies to."
                 },
                 "changeRequirement": {
                   "type": "string",
@@ -77,17 +75,17 @@
                     "TargetHigherThanRequests",
                     "TargetLowerThanRequests"
                   ],
-                  "description": "Configuration for `vpa.main.updatePolicy.evictionRequirements.$item.changeRequirement`."
+                  "description": "Which change allows an eviction: `TargetHigherThanRequests` or `TargetLowerThanRequests`."
                 }
               },
               "additionalProperties": false,
               "description": "Configuration for `vpa.main.updatePolicy.evictionRequirements.$item`."
             },
-            "description": "Configuration for `vpa.main.updatePolicy.evictionRequirements`."
+            "description": "Conditions for evicting a pod to apply a recommendation."
           }
         },
         "additionalProperties": false,
-        "description": "Configuration for `vpa.main.updatePolicy`."
+        "description": "How the recommendations are applied."
       },
       "resourcePolicy": {
         "type": "object",
@@ -99,7 +97,7 @@
               "properties": {
                 "containerName": {
                   "type": "string",
-                  "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.containerName`."
+                  "description": "Name of the container, `*` for all."
                 },
                 "mode": {
                   "type": "string",
@@ -107,7 +105,7 @@
                     "Auto",
                     "Off"
                   ],
-                  "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.mode`. `Off` skips rendering the container policy."
+                  "description": "Recommendations for the container, `Auto` or `Off`."
                 },
                 "controlledValues": {
                   "type": "string",
@@ -115,7 +113,7 @@
                     "RequestsAndLimits",
                     "RequestsOnly"
                   ],
-                  "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.controlledValues`."
+                  "description": "Which values are set: `RequestsAndLimits` or `RequestsOnly`."
                 },
                 "minAllowed": {
                   "type": "object",
@@ -125,18 +123,18 @@
                         "string",
                         "number"
                       ],
-                      "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.minAllowed.cpu`."
+                      "description": "CPU, as a quantity."
                     },
                     "memory": {
                       "type": [
                         "string",
                         "number"
                       ],
-                      "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.minAllowed.memory`."
+                      "description": "Memory, as a quantity."
                     }
                   },
                   "additionalProperties": false,
-                  "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.minAllowed`."
+                  "description": "Minimum recommendation."
                 },
                 "maxAllowed": {
                   "type": "object",
@@ -146,18 +144,18 @@
                         "string",
                         "number"
                       ],
-                      "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.maxAllowed.cpu`."
+                      "description": "CPU, as a quantity."
                     },
                     "memory": {
                       "type": [
                         "string",
                         "number"
                       ],
-                      "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.maxAllowed.memory`."
+                      "description": "Memory, as a quantity."
                     }
                   },
                   "additionalProperties": false,
-                  "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.maxAllowed`."
+                  "description": "Maximum recommendation."
                 },
                 "controlledResources": {
                   "type": "array",
@@ -165,17 +163,17 @@
                     "type": "string",
                     "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.controlledResources.$item`."
                   },
-                  "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.controlledResources`."
+                  "description": "Resources that are recommended, `cpu` and `memory`."
                 }
               },
               "additionalProperties": false,
               "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item`."
             },
-            "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies`."
+            "description": "Policies per container."
           }
         },
         "additionalProperties": false,
-        "description": "Configuration for `vpa.main.resourcePolicy`.",
+        "description": "Limits of the recommendations, per container.",
         "default": {}
       },
       "workload": {

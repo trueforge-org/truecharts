@@ -95,22 +95,9 @@
 
   {{- $homepage := $objectData.integrations.homepage -}}
 
-  {{- with $homepage.podSelector -}}
-    {{- if not (kindIs "slice" .) -}}
-      {{- fail (printf "%s - Expected [integrations.homepage.podSelector] to be a [slice], but got [%s]" $caller (kindOf .)) -}}
-    {{- end -}}
-  {{- end -}}
 
-  {{- if $homepage.widget.custom -}}
-    {{- if not (kindIs "map" $homepage.widget.custom) -}}
-      {{- fail (printf "%s - Expected [integrations.homepage.widget.custom] to be a [map], but got [%s]" $caller (kindOf $homepage.widget.custom)) -}}
-    {{- end -}}
-  {{- end -}}
 
   {{- if $homepage.widget.customkv -}}
-    {{- if not (kindIs "slice" $homepage.widget.customkv) -}}
-      {{- fail (printf "%s - Expected [integrations.homepage.widget.customkv] to be a [slice], but got [%s]" $caller (kindOf $homepage.widget.customkv)) -}}
-    {{- end -}}
     {{- range $item := $homepage.widget.customkv -}}
       {{- if not $item.key -}}
         {{- fail (printf "%s - Expected non-empty [key] in [integrations.homepage.widget.customkv]" $caller) -}}

@@ -37,10 +37,6 @@
           }
         ],
         "description": "Additional labels for ListenerSet",
-        "type": [
-          "object",
-          "string"
-        ],
         "default": {}
       },
       "annotationsList": {
@@ -60,15 +56,11 @@
         "description": "Additional labels as a list of name and value pairs, merged into the labels"
       },
       "annotations": {
-        "type": [
-          "object",
-          "string"
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
         ],
-        "properties": {},
-        "additionalProperties": {
-          "type": "string",
-          "description": "Value of the annotation"
-        },
         "description": "Additional annotations for ListenerSet",
         "default": {}
       },
@@ -113,177 +105,7 @@
       "listeners": {
         "type": "array",
         "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Configuration for `listenerSet.main.listeners.$item.name`.",
-              "minLength": 1
-            },
-            "hostname": {
-              "type": [
-                "null",
-                "string"
-              ],
-              "description": "Hostname of the listener, supports Helm `tpl`."
-            },
-            "port": {
-              "type": "integer",
-              "description": "Configuration for `listenerSet.main.listeners.$item.port`.",
-              "minimum": 1
-            },
-            "protocol": {
-              "type": "string",
-              "enum": [
-                "HTTP",
-                "HTTPS",
-                "TCP",
-                "TLS",
-                "UDP"
-              ],
-              "description": "Configuration for `listenerSet.main.listeners.$item.protocol`."
-            },
-            "tls": {
-              "type": "object",
-              "properties": {
-                "mode": {
-                  "type": "string",
-                  "enum": [
-                    "Terminate",
-                    "Passthrough"
-                  ],
-                  "description": "Configuration for `listenerSet.main.listeners.$item.tls.mode`."
-                },
-                "certificateRefs": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "group": {
-                        "type": "string",
-                        "description": "Configuration for `listenerSet.main.listeners.$item.tls.certificateRefs.$item.group`."
-                      },
-                      "kind": {
-                        "type": "string",
-                        "description": "Configuration for `listenerSet.main.listeners.$item.tls.certificateRefs.$item.kind`."
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "Configuration for `listenerSet.main.listeners.$item.tls.certificateRefs.$item.name`.",
-                        "minLength": 1
-                      },
-                      "namespace": {
-                        "type": [
-                          "null",
-                          "string"
-                        ],
-                        "description": "Configuration for `listenerSet.main.listeners.$item.tls.certificateRefs.$item.namespace`."
-                      }
-                    },
-                    "additionalProperties": false,
-                    "description": "Configuration for `listenerSet.main.listeners.$item.tls.certificateRefs.$item`."
-                  },
-                  "description": "Configuration for `listenerSet.main.listeners.$item.tls.certificateRefs`."
-                },
-                "options": {
-                  "type": "object",
-                  "description": "Implementation specific TLS options. Passed as is.",
-                  "additionalProperties": {
-                    "description": "A setting passed on as is."
-                  }
-                }
-              },
-              "additionalProperties": false,
-              "description": "Configuration for `listenerSet.main.listeners.$item.tls`."
-            },
-            "allowedRoutes": {
-              "type": "object",
-              "properties": {
-                "namespaces": {
-                  "type": "object",
-                  "properties": {
-                    "from": {
-                      "type": "string",
-                      "enum": [
-                        "All",
-                        "Same",
-                        "Selector"
-                      ],
-                      "description": "Configuration for `listenerSet.main.listeners.$item.allowedRoutes.namespaces.from`.",
-                      "default": "Same"
-                    },
-                    "selector": {
-                      "type": "object",
-                      "properties": {
-                        "matchLabels": {
-                          "type": "object",
-                          "properties": {},
-                          "additionalProperties": {
-                            "type": "string",
-                            "description": "Value of the label"
-                          },
-                          "description": "Match by labels."
-                        },
-                        "matchExpressions": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "key": {
-                                "type": "string",
-                                "description": "Label key the selector applies to."
-                              },
-                              "operator": {
-                                "type": "string",
-                                "description": "Relationship of the key to the values, e.g. `In`, `NotIn`, `Exists` or `DoesNotExist`."
-                              },
-                              "values": {
-                                "type": "array",
-                                "items": {
-                                  "type": "string"
-                                },
-                                "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
-                              }
-                            },
-                            "additionalProperties": false
-                          },
-                          "description": "Match by label expressions."
-                        }
-                      },
-                      "additionalProperties": false,
-                      "description": "Configuration for `listenerSet.main.listeners.$item.allowedRoutes.namespaces.selector`."
-                    }
-                  },
-                  "additionalProperties": false,
-                  "description": "Configuration for `listenerSet.main.listeners.$item.allowedRoutes.namespaces`."
-                },
-                "kinds": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "group": {
-                        "type": "string",
-                        "description": "Configuration for `listenerSet.main.listeners.$item.allowedRoutes.kinds.$item.group`."
-                      },
-                      "kind": {
-                        "type": "string",
-                        "description": "Configuration for `listenerSet.main.listeners.$item.allowedRoutes.kinds.$item.kind`.",
-                        "minLength": 1
-                      }
-                    },
-                    "additionalProperties": false,
-                    "description": "Configuration for `listenerSet.main.listeners.$item.allowedRoutes.kinds.$item`."
-                  },
-                  "description": "Configuration for `listenerSet.main.listeners.$item.allowedRoutes.kinds`."
-                }
-              },
-              "additionalProperties": false,
-              "description": "Configuration for `listenerSet.main.listeners.$item.allowedRoutes`."
-            }
-          },
-          "additionalProperties": false,
-          "description": "Configuration for `listenerSet.main.listeners.$item`."
+          "$ref": "listener.json"
         },
         "description": "Listeners that are added to the Gateway, same format as `gateway.$name.listeners`.",
         "minItems": 1

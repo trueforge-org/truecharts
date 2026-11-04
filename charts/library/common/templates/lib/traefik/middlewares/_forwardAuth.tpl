@@ -4,36 +4,13 @@
 
   {{- $mw := $objectData.data -}}
 
-  {{- if hasKey $mw "trustForwardHeader" -}}
-    {{- if not (kindIs "bool" $mw.trustForwardHeader) -}}
-      {{- fail (printf "Middleware (forward-auth) - Expected [trustForwardHeader] to be a boolean, but got [%s]" (kindOf $mw.trustForwardHeader)) -}}
-    {{- end -}}
-  {{- end -}}
 
   {{- if hasKey $mw "maxResponseBodySize" -}}
     {{- $sizeKind := kindOf $mw.maxResponseBodySize -}}
-    {{- if not (or (eq $sizeKind "int") (eq $sizeKind "float64")) -}}
-      {{- fail (printf "Middleware (forward-auth) - Expected [maxResponseBodySize] to be an integer, but got [%s]" $sizeKind) -}}
-    {{- end -}}
   {{- end -}}
 
-  {{- if and $mw.tls (hasKey $mw.tls "insecureSkipVerify") -}}
-    {{- if not (kindIs "bool" $mw.tls.insecureSkipVerify) -}}
-      {{- fail (printf "Middleware (forward-auth) - Expected [tls.insecureSkipVerify] to be a boolean, but got [%s]" (kindOf $mw.tls.insecureSkipVerify)) -}}
-    {{- end -}}
-  {{- end -}}
 
-  {{- if $mw.authResponseHeaders -}}
-    {{- if not (kindIs "slice" $mw.authResponseHeaders) -}}
-      {{- fail (printf "Middleware (forward-auth) - Expected [authResponseHeaders] to be a list, but got [%s]" (kindOf $mw.authResponseHeaders)) -}}
-    {{- end -}}
-  {{- end -}}
 
-  {{- with $mw.authRequestHeaders -}}
-    {{- if not (kindIs "slice" $mw.authRequestHeaders) -}}
-      {{- fail (printf "Middleware (forward-auth) - Expected [authRequestHeaders] to be a list, but got [%s]" (kindOf $mw.authRequestHeaders)) -}}
-    {{- end -}}
-  {{- end -}}
 
   {{- if not $mw.address -}}
     {{- fail "Middleware (forward-auth) - Expected [address] to be set" -}}

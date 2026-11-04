@@ -59,7 +59,6 @@
 
       {{/* Perform validations */}}
       {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $objectName "length" 253) -}}
-      {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" "Ingress") -}}
       {{- include "tc.v1.common.lib.ingress.validation" (dict "rootCtx" $ "objectData" $objectData) -}}
 
       {{/* Set the name of the ingress */}}
@@ -88,7 +87,6 @@
             ) -}}
 
             {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $certName) -}}
-            {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $certObjData "caller" "Ingress (certificateIssuer)") -}}
             {{- include "tc.v1.common.lib.certificate.validation" (dict "rootCtx" $ "objectData" $certObjData) -}}
 
             {{/* Create the certificate with the certData */}}

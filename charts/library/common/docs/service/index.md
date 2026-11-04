@@ -38,7 +38,7 @@ Define the addressType for External IP
 | Key        | `service.$name.addressType` |
 | Type       | `string`                    |
 | Required   | ❌                          |
-| Helm `tpl` | ❌                          |
+| Helm `tpl` | ✅                          |
 | Default    | unset                       |
 
 ---
@@ -72,9 +72,9 @@ Additional annotations for service
 | Field      | Value                       |
 | ---------- | --------------------------- |
 | Key        | `service.$name.annotations` |
-| Type       | `map, string`               |
+| Type       | `map`                       |
 | Required   | ❌                          |
-| Helm `tpl` | ❌                          |
+| Helm `tpl` | ✅ (On value only)           |
 | Default    | `{}`                        |
 
 Example
@@ -111,7 +111,7 @@ Define the appProtocol for External IP
 | Key        | `service.$name.appProtocol` |
 | Type       | `string`                    |
 | Required   | ❌                          |
-| Helm `tpl` | ❌                          |
+| Helm `tpl` | ✅                          |
 | Default    | unset                       |
 
 ---
@@ -125,7 +125,7 @@ Configure Cluster IP type
 | Key        | `service.$name.clusterIP` |
 | Type       | `string`                  |
 | Required   | ❌                        |
-| Helm `tpl` | ❌                        |
+| Helm `tpl` | ✅                        |
 | Default    | `""`                      |
 
 Example
@@ -146,8 +146,8 @@ Enables or Disables the service
 | ---------- | ----------------------- |
 | Key        | `service.$name.enabled` |
 | Type       | `boolean, string`       |
-| Required   | ❌                      |
-| Helm `tpl` | ❌                      |
+| Required   | ✅                      |
+| Helm `tpl` | ✅                      |
 | Default    | `false`                 |
 
 Example
@@ -169,7 +169,7 @@ Whether to expand the object name (based on the [naming scheme](/truecharts-comm
 | Key        | `service.$name.expandObjectName` |
 | Type       | `boolean, string`                |
 | Required   | ❌                               |
-| Helm `tpl` | ❌                               |
+| Helm `tpl` | ✅                               |
 | Default    | `true`                           |
 
 Example
@@ -189,9 +189,9 @@ Configure External IP type
 | Field      | Value                      |
 | ---------- | -------------------------- |
 | Key        | `service.$name.externalIP` |
-| Type       | `string, map`              |
-| Required   | ❌                         |
-| Helm `tpl` | ❌                         |
+| Type       | `string`                   |
+| Required   | ✅                         |
+| Helm `tpl` | ✅                         |
 | Default    | unset                      |
 
 ---
@@ -205,7 +205,7 @@ Define externalIPs
 | Key        | `service.$name.externalIPs` |
 | Type       | `list, string`              |
 | Required   | ❌                          |
-| Helm `tpl` | ❌                          |
+| Helm `tpl` | ✅ (On entries only)         |
 | Default    | `[]`                        |
 
 Example
@@ -227,8 +227,8 @@ Configure ExternalName type
 | ---------- | ---------------------------- |
 | Key        | `service.$name.externalName` |
 | Type       | `string`                     |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
+| Required   | ✅                           |
+| Helm `tpl` | ✅                           |
 | Default    | unset                        |
 
 ---
@@ -242,7 +242,7 @@ Define the external traffic policy (Cluster, Local) Does **not** apply to `type`
 | Key        | `service.$name.externalTrafficPolicy` |
 | Type       | `string`                              |
 | Required   | ❌                                    |
-| Helm `tpl` | ❌                                    |
+| Helm `tpl` | ✅                                    |
 | Default    | `""`                                  |
 | Enum       | `Cluster`, `Local`                    |
 
@@ -286,9 +286,9 @@ Define the ipFamilies Does **not** apply to `type` of `ExternalName` or `Externa
 | Field      | Value                      |
 | ---------- | -------------------------- |
 | Key        | `service.$name.ipFamilies` |
-| Type       | `list, string`             |
+| Type       | `list of string`           |
 | Required   | ❌                         |
-| Helm `tpl` | ❌                         |
+| Helm `tpl` | ✅ (On entries only)        |
 | Default    | `[]`                       |
 
 Example
@@ -311,7 +311,7 @@ Define the ipFamilyPolicy Does **not** apply to `type` of `ExternalName` or `Ext
 | Key        | `service.$name.ipFamilyPolicy`                       |
 | Type       | `string`                                             |
 | Required   | ❌                                                   |
-| Helm `tpl` | ❌                                                   |
+| Helm `tpl` | ✅                                                   |
 | Default    | `""`                                                 |
 | Enum       | `SingleStack`, `PreferDualStack`, `RequireDualStack` |
 
@@ -332,9 +332,9 @@ Additional labels for service
 | Field      | Value                  |
 | ---------- | ---------------------- |
 | Key        | `service.$name.labels` |
-| Type       | `map, string`          |
+| Type       | `map`                  |
 | Required   | ❌                     |
-| Helm `tpl` | ❌                     |
+| Helm `tpl` | ✅ (On value only)      |
 | Default    | `{}`                   |
 
 Example
@@ -371,7 +371,7 @@ Define the load balancer IP, sets the `metallb.io/loadBalancerIPs` **MetalLB** a
 | Key        | `service.$name.loadBalancerIP` |
 | Type       | `string`                       |
 | Required   | ❌                             |
-| Helm `tpl` | ❌                             |
+| Helm `tpl` | ✅                             |
 | Default    | unset                          |
 
 ---
@@ -385,7 +385,7 @@ Define the load balancer IPs, sets the `metallb.io/loadBalancerIPs` **MetalLB** 
 | Key        | `service.$name.loadBalancerIPs` |
 | Type       | `list of unknown`               |
 | Required   | ❌                              |
-| Helm `tpl` | ❌                              |
+| Helm `tpl` | ✅ (On entries only)             |
 | Default    | unset                           |
 
 ---
@@ -399,7 +399,7 @@ Define the load balancer source ranges
 | Key        | `service.$name.loadBalancerSourceRanges` |
 | Type       | `list of unknown`                        |
 | Required   | ❌                                       |
-| Helm `tpl` | ❌                                       |
+| Helm `tpl` | ✅ (On entries only)                      |
 | Default    | unset                                    |
 
 ---
@@ -413,7 +413,7 @@ Define the namespace for this object
 | Key        | `service.$name.namespace` |
 | Type       | `string`                  |
 | Required   | ❌                        |
-| Helm `tpl` | ❌                        |
+| Helm `tpl` | ✅ (On value only)         |
 | Default    | `""`                      |
 
 Example
@@ -434,7 +434,7 @@ Define the ports of the service See [Ports](/truecharts-common/service/ports)
 | ---------- | --------------------- |
 | Key        | `service.$name.ports` |
 | Type       | `map`                 |
-| Required   | ❌                    |
+| Required   | ✅                    |
 | Helm `tpl` | ❌                    |
 | Default    | `{}`                  |
 
@@ -451,7 +451,7 @@ service:
 
 ### `service.$name.primary`
 
-Configuration for `service.main.primary`.
+Make this the primary service.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
@@ -517,7 +517,7 @@ Define the session affinity (ClientIP, None)
 | Key        | `service.$name.sessionAffinity` |
 | Type       | `string`                        |
 | Required   | ❌                              |
-| Helm `tpl` | ❌                              |
+| Helm `tpl` | ✅                              |
 | Default    | `""`                            |
 | Enum       | `ClientIP`, `None`              |
 
@@ -533,7 +533,7 @@ service:
 
 ### `service.$name.sessionAffinityConfig`
 
-Configuration for `$name.sessionAffinityConfig`.
+Settings of the session affinity.
 
 | Field      | Value                                 |
 | ---------- | ------------------------------------- |
@@ -554,7 +554,7 @@ Sets the shared key in `metallb.io/allow-shared-ip` **MetalLB** Annotation
 | Key        | `service.$name.sharedKey` |
 | Type       | `string`                  |
 | Required   | ❌                        |
-| Helm `tpl` | ❌                        |
+| Helm `tpl` | ✅                        |
 | Default    | unset                     |
 
 ---
@@ -590,7 +590,7 @@ Define the service type
 | Key        | `service.$name.type`                                                  |
 | Type       | `string`                                                              |
 | Required   | ❌                                                                    |
-| Helm `tpl` | ❌                                                                    |
+| Helm `tpl` | ✅                                                                    |
 | Default    | unset                                                                 |
 | Enum       | `ClusterIP`, `LoadBalancer`, `NodePort`, `ExternalName`, `ExternalIP` |
 
@@ -613,10 +613,8 @@ Define whether to use `EndpointSlice` or `Endpoint`
 ## Child Pages
 
 - [Clusterip](ClusterIP.md) - Configure Cluster IP type
-- [Externalip](ExternalIP.md) - Configure External IP type
+- [Externalip](ExternalIP.md) - A single external IP of the service. Supports Helm `tpl`.
 - [Externalname](ExternalName.md) - Configure ExternalName type
-- [Loadbalancer](LoadBalancer.md) - Configuration for service entries with `type: LoadBalancer`.
-- [Nodeport](NodePort.md) - Configuration for service entries with `type: NodePort`.
 - [Integrations](integrations/) - Configuration for `service.integrations`.
 - [Ports](ports.md) - Define the port dict
 
@@ -627,7 +625,69 @@ Define whether to use `EndpointSlice` or `Endpoint`
 Full examples can be found under each service type
 
 - [ClusterIP](/truecharts-common/service/clusterip)
-- [LoadBalancer](/truecharts-common/service/loadbalancer)
-- [NodePort](/truecharts-common/service/nodeport)
 - [ExternalName](/truecharts-common/service/externalname)
 - [ExternalIP](/truecharts-common/service/externalip)
+
+### LoadBalancer
+
+```yaml
+service:
+  service-lb:
+    enabled: true
+    primary: true
+    type: LoadBalancer
+    loadBalancerIP: 10.100.100.2
+    loadBalancerSourceRanges:
+      - 10.100.100.0/24
+    clusterIP: 172.16.20.233
+    sharedKey: custom-shared-key
+    publishNotReadyAddresses: true
+    ipFamilyPolicy: SingleStack
+    ipFamilies:
+      - IPv4
+    externalIPs:
+      - 10.200.230.34
+    sessionAffinity: ClientIP
+    sessionAffinityConfig:
+      clientIP:
+        timeoutSeconds: 86400
+    externalTrafficPolicy: Cluster
+    targetSelector: pod-name
+    ports:
+      port-name:
+        enabled: true
+        primary: true
+        targetSelector: container-name
+        port: 80
+        protocol: http
+        targetPort: 8080
+```
+
+### NodePort
+
+```yaml
+service:
+  service-nodeport:
+    enabled: true
+    primary: true
+    type: NodePort
+    clusterIP: 172.16.20.233
+    publishNotReadyAddresses: true
+    externalIPs:
+      - 10.200.230.34
+    sessionAffinity: ClientIP
+    sessionAffinityConfig:
+      clientIP:
+        timeoutSeconds: 86400
+    externalTrafficPolicy: Cluster
+    targetSelector: pod-name
+    ports:
+      port-name:
+        enabled: true
+        primary: true
+        targetSelector: container-name
+        port: 80
+        protocol: http
+        targetPort: 8080
+        nodePort: 30080
+```
