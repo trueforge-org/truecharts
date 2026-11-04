@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "appUrl": {
+      "type": "string",
+      "description": "URL of the app, from the primary ingress or route, eg `https://app.example.com/`. Without either, it points to `127.0.0.1`."
+    },
+    "podCIDR": {
+      "type": "string",
+      "description": "CIDR of the pods, from `global.podCIDR`, defaults to `172.16.0.0/16`."
+    },
+    "svcCIDR": {
+      "type": "string",
+      "description": "CIDR of the services, from `global.svcCIDR`, defaults to `172.17.0.0/16`."
+    },
+    "internalUrls": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Host and port of a service, eg `release-app.namespace.svc.cluster.local:8080`."
+      },
+      "description": "Internal URLs of the services of the chart."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Details about the release that common works out on every render, to use in Helm `tpl` strings such as `{{ .Values.chartContext.appUrl }}`. Common sets these keys itself and replaces values set here."
+}

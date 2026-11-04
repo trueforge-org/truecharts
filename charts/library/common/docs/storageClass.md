@@ -1,11 +1,11 @@
 ---
-title: Storage Class
+title: Storageclass
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/storageclass#full-examples) section for complete examples.
+- This page is generated from JSON schema.
+- See the [Full Examples](/truecharts-common/storageClass#full-examples) section for complete examples.
 
 :::
 
@@ -13,205 +13,30 @@ title: Storage Class
 
 - `.Values.storageClass`
 
-## Naming scheme
-
-- `$FullName-$StorageClassName` (release-name-chart-name-storageClassName)
-
-:::tip
-
-- Replace references to `$name` with the actual name you want to use.
-
-:::
-
 ---
 
 ## `storageClass`
 
 Define storage classes
 
-|            |                |
+| Field      | Value          |
 | ---------- | -------------- |
 | Key        | `storageClass` |
 | Type       | `map`          |
 | Required   | ❌             |
 | Helm `tpl` | ❌             |
-| Default    | `{}`           |
-
-Example
-
-```yaml
-storageClass: {}
-```
+| Default    | unset          |
 
 ---
 
-### `$name`
-
-Define storage class
-
-|            |                      |
-| ---------- | -------------------- |
-| Key        | `storageClass.$name` |
-| Type       | `map`                |
-| Required   | ✅                   |
-| Helm `tpl` | ❌                   |
-| Default    | `{}`                 |
-
-Example
-
-```yaml
-storageClass:
-  storage-class-name: {}
-```
-
----
-
-#### `enabled`
-
-Enables or Disables the storage class
-
-|            |                              |
-| ---------- | ---------------------------- |
-| Key        | `storageClass.$name.enabled` |
-| Type       | `bool`                       |
-| Required   | ✅                           |
-| Helm `tpl` | ✅                           |
-| Default    | `false`                      |
-
-Example
-
-```yaml
-storageClass:
-  storage-class-name:
-    enabled: true
-```
-
----
-
-#### `labels`
-
-Additional labels for storage class
-
-|            |                             |
-| ---------- | --------------------------- |
-| Key        | `storageClass.$name.labels` |
-| Type       | `map`                       |
-| Required   | ❌                          |
-| Helm `tpl` | ✅ (On value only)          |
-| Default    | `{}`                        |
-
-Example
-
-```yaml
-storageClass:
-  storage-class-name:
-    labels:
-      key: value
-```
-
----
-
-#### `annotations`
-
-Additional annotations for storage class
-
-|            |                                  |
-| ---------- | -------------------------------- |
-| Key        | `storageClass.$name.annotations` |
-| Type       | `map`                            |
-| Required   | ❌                               |
-| Helm `tpl` | ✅ (On value only)               |
-| Default    | `{}`                             |
-
-Example
-
-```yaml
-storageClass:
-  storage-class-name:
-    annotations:
-      key: value
-```
-
-#### `provisioner`
-
-Define the provisioner for this storage class
-
-|            |                                  |
-| ---------- | -------------------------------- |
-| Key        | `storageClass.$name.provisioner` |
-| Type       | `string`                         |
-| Required   | ✅                               |
-| Helm `tpl` | ❌                               |
-| Default    | `""`                             |
-
-Example
-
-```yaml
-storageClass:
-  storage-class-name:
-    provisioner: some.provisioner.io
-```
-
----
-
-#### `parameters`
-
-Define the parameters for this storage class
-
-|            |                                 |
-| ---------- | ------------------------------- |
-| Key        | `storageClass.$name.parameters` |
-| Type       | `map`                           |
-| Required   | ❌                              |
-| Helm `tpl` | ✅ (On value only)              |
-| Default    | `{}`                            |
-
-Example
-
-```yaml
-storageClass:
-  storage-class-name:
-    parameters:
-      key: value
-```
-
----
-
-#### `reclaimPolicy`
-
-Define the reclaim policy for this storage class
-
-|            |                                    |
-| ---------- | ---------------------------------- |
-| Key        | `storageClass.$name.reclaimPolicy` |
-| Type       | `string`                           |
-| Required   | ❌                                 |
-| Helm `tpl` | ❌                                 |
-| Default    | `Retain`                           |
-
-Valid values are:
-
-- `Delete`
-- `Retain`
-
-Example
-
-```yaml
-storageClass:
-  storage-class-name:
-    reclaimPolicy: retain
-```
-
----
-
-#### `allowVolumeExpansion`
+### `storageClass.$name.allowVolumeExpansion`
 
 Define if volume expansion is allowed for this storage class
 
-|            |                                           |
+| Field      | Value                                     |
 | ---------- | ----------------------------------------- |
 | Key        | `storageClass.$name.allowVolumeExpansion` |
-| Type       | `bool`                                    |
+| Type       | `boolean`                                 |
 | Required   | ❌                                        |
 | Helm `tpl` | ❌                                        |
 | Default    | `false`                                   |
@@ -220,59 +45,224 @@ Example
 
 ```yaml
 storageClass:
-  storage-class-name:
-    allowVolumeExpansion: true
+  $name:
+    allowVolumeExpansion: false
 ```
 
 ---
 
-#### `volumeBindingMode`
+### `storageClass.$name.annotations`
 
-Define the volume binding mode for this storage class
+Additional annotations for storage class
 
-|            |                                        |
-| ---------- | -------------------------------------- |
-| Key        | `storageClass.$name.volumeBindingMode` |
-| Type       | `string`                               |
-| Required   | ❌                                     |
-| Helm `tpl` | ❌                                     |
-| Default    | `Immediate`                            |
-
-Valid values are:
-
-- `Immediate`
-- `WaitForFirstConsumer`
+| Field      | Value                            |
+| ---------- | -------------------------------- |
+| Key        | `storageClass.$name.annotations` |
+| Type       | `map`                            |
+| Required   | ❌                               |
+| Helm `tpl` | ✅ (On value only)                |
+| Default    | `{}`                             |
 
 Example
 
 ```yaml
 storageClass:
-  storage-class-name:
-    volumeBindingMode: Immediate
+  $name:
+    annotations:
+      {}
 ```
 
 ---
 
-#### `mountOptions`
+### `storageClass.$name.annotationsList`
 
-Define the mount options for this storage class
+Additional annotations as a list of name and value pairs, merged into the annotations
 
-|            |                                   |
+| Field      | Value                                |
+| ---------- | ------------------------------------ |
+| Key        | `storageClass.$name.annotationsList` |
+| Type       | `list of map`                        |
+| Required   | ❌                                   |
+| Helm `tpl` | ❌                                   |
+| Default    | unset                                |
+
+---
+
+### `storageClass.$name.enabled`
+
+Enables or Disables the storage class
+
+| Field      | Value                        |
+| ---------- | ---------------------------- |
+| Key        | `storageClass.$name.enabled` |
+| Type       | `boolean, string`            |
+| Required   | ✅                           |
+| Helm `tpl` | ✅                           |
+| Default    | `false`                      |
+
+Example
+
+```yaml
+storageClass:
+  $name:
+    enabled: false
+```
+
+---
+
+### `storageClass.$name.isDefault`
+
+Define whether this storage class is the default storage class
+
+| Field      | Value                          |
+| ---------- | ------------------------------ |
+| Key        | `storageClass.$name.isDefault` |
+| Type       | `boolean`                      |
+| Required   | ❌                             |
+| Helm `tpl` | ❌                             |
+| Default    | unset                          |
+
+---
+
+### `storageClass.$name.labels`
+
+Additional labels for storage class
+
+| Field      | Value                       |
+| ---------- | --------------------------- |
+| Key        | `storageClass.$name.labels` |
+| Type       | `map`                       |
+| Required   | ❌                          |
+| Helm `tpl` | ✅ (On value only)           |
+| Default    | `{}`                        |
+
+Example
+
+```yaml
+storageClass:
+  $name:
+    labels:
+      {}
+```
+
+---
+
+### `storageClass.$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+| Field      | Value                           |
+| ---------- | ------------------------------- |
+| Key        | `storageClass.$name.labelsList` |
+| Type       | `list of map`                   |
+| Required   | ❌                              |
+| Helm `tpl` | ❌                              |
+| Default    | unset                           |
+
+---
+
+### `storageClass.$name.mountOptions`
+
+Define storage classes
+
+| Field      | Value                             |
 | ---------- | --------------------------------- |
 | Key        | `storageClass.$name.mountOptions` |
-| Type       | `list` of `string`                |
+| Type       | `list of string`                  |
 | Required   | ❌                                |
-| Helm `tpl` | ✅ (On each entry only)           |
+| Helm `tpl` | ✅ (On each entry only)            |
 | Default    | `[]`                              |
 
 Example
 
 ```yaml
 storageClass:
-  storage-class-name:
+  $name:
     mountOptions:
-      - option1
-      - option2=value
+      []
+```
+
+---
+
+### `storageClass.$name.parameters`
+
+Define the parameters for this storage class
+
+| Field      | Value                           |
+| ---------- | ------------------------------- |
+| Key        | `storageClass.$name.parameters` |
+| Type       | `map`                           |
+| Required   | ❌                              |
+| Helm `tpl` | ✅ (On value only)               |
+| Default    | `{}`                            |
+
+Example
+
+```yaml
+storageClass:
+  $name:
+    parameters:
+      {}
+```
+
+---
+
+### `storageClass.$name.provisioner`
+
+Define the provisioner for this storage class
+
+| Field      | Value                            |
+| ---------- | -------------------------------- |
+| Key        | `storageClass.$name.provisioner` |
+| Type       | `string`                         |
+| Required   | ✅                               |
+| Helm `tpl` | ❌                               |
+| Default    | unset                            |
+
+---
+
+### `storageClass.$name.reclaimPolicy`
+
+Define the reclaim policy for this storage class
+
+| Field      | Value                              |
+| ---------- | ---------------------------------- |
+| Key        | `storageClass.$name.reclaimPolicy` |
+| Type       | `string`                           |
+| Required   | ❌                                 |
+| Helm `tpl` | ❌                                 |
+| Default    | `"Retain"`                         |
+| Enum       | `Delete`, `Retain`                 |
+
+Example
+
+```yaml
+storageClass:
+  $name:
+    reclaimPolicy: Retain
+```
+
+---
+
+### `storageClass.$name.volumeBindingMode`
+
+Define the volume binding mode for this storage class
+
+| Field      | Value                                  |
+| ---------- | -------------------------------------- |
+| Key        | `storageClass.$name.volumeBindingMode` |
+| Type       | `string`                               |
+| Required   | ❌                                     |
+| Helm `tpl` | ❌                                     |
+| Default    | `"Immediate"`                          |
+| Enum       | `Immediate`, `WaitForFirstConsumer`    |
+
+Example
+
+```yaml
+storageClass:
+  $name:
+    volumeBindingMode: Immediate
 ```
 
 ---
@@ -287,7 +277,7 @@ storageClass:
     parameters:
       param1: value1
       param2: value2
-    reclaimPolicy: retain
+    reclaimPolicy: Retain
     allowVolumeExpansion: true
     volumeBindingMode: Immediate
     mountOptions:

@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "description": "See [Topology Spread Constraints](/truecharts-common/workload#topologyspreadconstraints)",
+  "items": {
+    "type": "object",
+    "properties": {
+      "maxSkew": {
+        "type": "integer",
+        "description": "Maximum difference in pods between two topology domains."
+      },
+      "topologyKey": {
+        "type": "string",
+        "description": "Node label of the topology domain, eg `kubernetes.io/hostname`."
+      },
+      "whenUnsatisfiable": {
+        "type": "string",
+        "description": "What happens when the constraint can not be met: `DoNotSchedule` or `ScheduleAnyway`."
+      },
+      "labelSelector": {
+        "allOf": [
+          {
+            "$ref": "../special/labelSelector.json"
+          }
+        ],
+        "description": "Pods that are counted, by labels."
+      },
+      "minDomains": {
+        "type": "integer",
+        "description": "Minimum number of eligible domains."
+      },
+      "matchLabelKeys": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Label keys of the pod to select the pods that are counted."
+      },
+      "nodeAffinityPolicy": {
+        "type": "string",
+        "enum": [
+          "Honor",
+          "Ignore"
+        ],
+        "description": "Whether the node affinity of the pod is honored when the skew is calculated."
+      },
+      "nodeTaintsPolicy": {
+        "type": "string",
+        "enum": [
+          "Honor",
+          "Ignore"
+        ],
+        "description": "Whether the node taints are honored when the skew is calculated."
+      }
+    },
+    "additionalProperties": false
+  }
+}

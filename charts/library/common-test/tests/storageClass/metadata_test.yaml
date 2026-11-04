@@ -98,4 +98,4 @@ tests:
           isDefault: invalid
     asserts:
       - failedTemplate:
-          errorMessage: Storage Class - Expected [isDefault] to be [boolean], but got [string]
+          errorPattern: 'at ''/storageClass/example1/isDefault'': got string, want boolean'

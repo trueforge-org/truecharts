@@ -1,0 +1,114 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "labels": {
+      "allOf": [
+        {
+          "$ref": "../special/labels.json"
+        }
+      ],
+      "description": "Additional Labels that apply to all objects",
+      "default": {},
+      "x-helm-tpl": "On value only"
+    },
+    "annotations": {
+      "allOf": [
+        {
+          "$ref": "../special/annotations.json"
+        }
+      ],
+      "description": "Additional Annotations that apply to all objects",
+      "default": {},
+      "x-helm-tpl": "On value only"
+    },
+    "namespace": {
+      "type": "string",
+      "description": "Namespace to apply to all objects, unless overridden at the object level Does not apply to chart deps, use global.namespace for that",
+      "default": "",
+      "x-helm-tpl": true
+    },
+    "podCIDR": {
+      "type": "string",
+      "description": "CIDR of the pods of the cluster."
+    },
+    "svcCIDR": {
+      "type": "string",
+      "description": "CIDR of the services of the cluster."
+    },
+    "diagnosticMode": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Run the containers of all charts with a sleep command, to debug them."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Diagnostic mode for all charts."
+    },
+    "fallbackDefaults": {
+      "$ref": "fallbackDefaults.json",
+      "description": "The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [here](/truecharts-common/global/fallbackDefaults)",
+      "type": "object",
+      "x-docs-required": false,
+      "x-docs-helmTpl": false,
+      "x-docs-defaultRaw": "See here"
+    },
+    "traefik": {
+      "type": "object",
+      "properties": {
+        "commonMiddlewares": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the middleware."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Configuration for `global.traefik.commonMiddlewares.$item`."
+          },
+          "description": "Settings for traefik integration",
+          "default": [
+            {
+              "name": "tc-basic-secure-headers"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "description": "Settings for traefik integration",
+      "default": {
+        "commonMiddlewares": [
+          {
+            "name": "tc-basic-secure-headers"
+          }
+        ]
+      }
+    },
+    "minNodePort": {
+      "type": "integer",
+      "description": "Minimum Node Port Allowed",
+      "minimum": 1,
+      "default": 9000,
+      "x-docs-required": true
+    },
+    "stopAll": {
+      "type": "boolean",
+      "description": "Applies different techniques to stop all objects in the chart and its dependencies",
+      "default": false
+    },
+    "ignoreIsStopped": {
+      "type": "boolean",
+      "description": "Ignore isStopped when applying global stop behaviour. Set by the stable external-service chart; no common template reads it."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Global values that apply to all charts See more info about global values [here](/truecharts-common/global)"
+}

@@ -31,9 +31,6 @@ objectData:
   {{/* TODO: Allow only specific opts? / set specific opts by default?
   {{- $validOpts := list -}} */}}
   {{- range $opt := $objectData.mountOptions -}}
-    {{- if not (kindIs "map" $opt) -}}
-      {{- fail (printf "SMB CSI - Expected [mountOption] item to be a dict, but got [%s]" (kindOf $opt)) -}}
-    {{- end -}}
     {{- if not $opt.key -}}
       {{- fail "SMB CSI - Expected key in [mountOptions] to be non-empty" -}}
     {{- end -}}

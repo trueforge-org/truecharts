@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "See [termination](/truecharts-common/workload/container/termination) ---",
+  "properties": {
+    "messagePolicy": {
+      "type": "string",
+      "description": "Define termination for the container",
+      "x-helm-tpl": true
+    },
+    "messagePath": {
+      "type": "string",
+      "description": "Define termination message path for the container",
+      "x-helm-tpl": true
+    }
+  },
+  "additionalProperties": false
+}

@@ -13,18 +13,18 @@ tests:
             enabled: true
             type: buffering
             data:
-              foo: bar
+              maxRequestBodyBytes: 1024
           my-middleware2:
             enabled: true
             type: buffering
             data:
-              foo: bar
+              maxRequestBodyBytes: 1024
           my-middleware3:
             enabled: true
             type: buffering
             expandObjectName: false
             data:
-              foo: bar
+              maxRequestBodyBytes: 1024
     asserts:
       - documentIndex: &middlewareDoc 0
         isKind:

@@ -260,7 +260,7 @@ tests:
           hosts: *hosts
     asserts:
       - failedTemplate:
-          errorMessage: Ingress - Expected [integrations.homepage.podSelector] to be a [slice], but got [string]
+          errorPattern: 'at ''/ingress/my-ingress1/integrations/homepage/podSelector'': got string, want array'
 
   - it: should fail with custom widget not a map
     set:
@@ -279,7 +279,7 @@ tests:
           hosts: *hosts
     asserts:
       - failedTemplate:
-          errorMessage: Ingress - Expected [integrations.homepage.widget.custom] to be a [map], but got [string]
+          errorPattern: 'at ''/ingress/my-ingress1/integrations/homepage/widget/custom'': got string, want null or object'
 
   - it: should fail with customkv widget not a slice
     set:
@@ -298,7 +298,7 @@ tests:
           hosts: *hosts
     asserts:
       - failedTemplate:
-          errorMessage: Ingress - Expected [integrations.homepage.widget.customkv] to be a [slice], but got [string]
+          errorPattern: 'at ''/ingress/my-ingress1/integrations/homepage/widget/customkv'': got string, want null or array'
 
   - it: should fail with customkv having empty key
     set:

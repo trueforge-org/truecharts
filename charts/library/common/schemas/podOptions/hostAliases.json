@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": [
+    "array",
+    "string"
+  ],
+  "description": "See [Host Aliases](/truecharts-common/workload#hostaliases)",
+  "items": {
+    "type": "object",
+    "properties": {
+      "ip": {
+        "type": "string",
+        "description": "IP of the host entry."
+      },
+      "hostnames": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Host names of the IP."
+      }
+    },
+    "additionalProperties": false
+  }
+}

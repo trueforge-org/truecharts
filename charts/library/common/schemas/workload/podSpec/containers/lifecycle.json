@@ -1,0 +1,128 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Does **not** apply to `initContainers`. See [lifecycle](/truecharts-common/workload/podSpec/containers/lifecycle).",
+  "properties": {
+    "preStop": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "exec",
+            "http",
+            "https"
+          ],
+          "description": "Type of the hook. `exec` runs `command`, `http` and `https` send a GET request."
+        },
+        "command": {
+          "type": [
+            "array",
+            "string"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "Command to run, for `type: exec`. Supports Helm `tpl`.",
+          "x-helm-tpl": true
+        },
+        "port": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Port of the request, for `type: http` and `https`. Supports Helm `tpl`.",
+          "x-helm-tpl": true,
+          "x-docs-required": true
+        },
+        "path": {
+          "type": "string",
+          "description": "Path of the request, for `type: http` and `https`. Supports Helm `tpl`.",
+          "x-helm-tpl": true
+        },
+        "host": {
+          "type": "string",
+          "description": "Host of the request, for `type: http` and `https`. Supports Helm `tpl`.",
+          "x-helm-tpl": true
+        },
+        "httpHeaders": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean"
+            ],
+            "description": "Value of the header"
+          },
+          "description": "Headers of the request, keyed by name, for `type: http` and `https`. Supports Helm `tpl`.",
+          "x-helm-tpl": "On value only"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Define the preStop hook"
+    },
+    "postStart": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "exec",
+            "http",
+            "https"
+          ],
+          "description": "Type of the hook. `exec` runs `command`, `http` and `https` send a GET request."
+        },
+        "command": {
+          "type": [
+            "array",
+            "string"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "Command to run, for `type: exec`. Supports Helm `tpl`.",
+          "x-helm-tpl": true
+        },
+        "port": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Port of the request, for `type: http` and `https`. Supports Helm `tpl`.",
+          "x-helm-tpl": true,
+          "x-docs-required": true
+        },
+        "path": {
+          "type": "string",
+          "description": "Path of the request, for `type: http` and `https`. Supports Helm `tpl`.",
+          "x-helm-tpl": true
+        },
+        "host": {
+          "type": "string",
+          "description": "Host of the request, for `type: http` and `https`. Supports Helm `tpl`.",
+          "x-helm-tpl": true
+        },
+        "httpHeaders": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean"
+            ],
+            "description": "Value of the header"
+          },
+          "description": "Headers of the request, keyed by name, for `type: http` and `https`. Supports Helm `tpl`.",
+          "x-helm-tpl": "On value only"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Define the postStart hook"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "mode": {
+      "type": "string",
+      "enum": [
+        "Cluster",
+        "Disabled"
+      ],
+      "default": "Cluster",
+      "description": "`Cluster` creates one budget (`maxUnavailable: 1`) for all pods, `Disabled` creates none."
+    }
+  },
+  "additionalProperties": false
+}

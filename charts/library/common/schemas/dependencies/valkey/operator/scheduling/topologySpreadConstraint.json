@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "maxSkew": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Maximum difference in the number of matching pods between two domains."
+    },
+    "topologyKey": {
+      "type": "string",
+      "description": "Node label key that defines a domain."
+    },
+    "whenUnsatisfiable": {
+      "type": "string",
+      "enum": [
+        "DoNotSchedule",
+        "ScheduleAnyway"
+      ],
+      "description": "What to do when the constraint can not be satisfied: keep the pod `Pending`, or schedule it anyway."
+    },
+    "labelSelector": {
+      "allOf": [
+        {
+          "$ref": "../../../../networkpolicy/labelSelector.json"
+        }
+      ],
+      "description": "Pods the constraint counts."
+    },
+    "minDomains": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Minimum number of eligible domains."
+    },
+    "nodeAffinityPolicy": {
+      "type": "string",
+      "enum": [
+        "Honor",
+        "Ignore"
+      ],
+      "description": "Whether the node affinity of the pod is honored when counting the domains."
+    },
+    "nodeTaintsPolicy": {
+      "type": "string",
+      "enum": [
+        "Honor",
+        "Ignore"
+      ],
+      "description": "Whether the taints of the nodes are honored when counting the domains."
+    },
+    "matchLabelKeys": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Pod label keys whose values are combined with `labelSelector`."
+    }
+  },
+  "required": [
+    "maxSkew",
+    "topologyKey",
+    "whenUnsatisfiable"
+  ],
+  "additionalProperties": false
+}

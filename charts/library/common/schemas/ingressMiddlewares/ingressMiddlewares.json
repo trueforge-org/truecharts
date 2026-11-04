@@ -1,0 +1,871 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "traefik": {
+      "type": "object",
+      "properties": {
+        "tc-basic-secure-headers": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": [
+                "boolean",
+                "string"
+              ],
+              "description": "Enable the middleware."
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "add-prefix",
+                "basic-auth",
+                "buffering",
+                "chain",
+                "compress",
+                "content-type",
+                "forward-auth",
+                "headers",
+                "ip-allow-list",
+                "plugin-bouncer",
+                "plugin-geoblock",
+                "plugin-mod-security",
+                "plugin-real-ip",
+                "plugin-rewrite-response-headers",
+                "plugin-theme-park",
+                "rate-limit",
+                "redirect-regex",
+                "redirect-scheme",
+                "replace-path-regex",
+                "replace-path",
+                "retry",
+                "strip-prefix-regex",
+                "strip-prefix"
+              ],
+              "description": "Type of the middleware."
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "accessControlAllowMethods": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Configuration for `ingressMiddlewares.traefik.tc-basic-secure-headers.data.accessControlAllowMethods.$item`."
+                  },
+                  "description": "Request methods allowed by CORS, for `Access-Control-Allow-Methods`."
+                },
+                "accessControlMaxAge": {
+                  "type": "integer",
+                  "description": "Seconds a CORS preflight request can be cached, for `Access-Control-Max-Age`."
+                },
+                "stsSeconds": {
+                  "type": "integer",
+                  "description": "`max-age` of the `Strict-Transport-Security` header, in seconds. `0` disables it."
+                },
+                "forceSTSHeader": {
+                  "type": "boolean",
+                  "description": "Also add the `Strict-Transport-Security` header on plain HTTP requests."
+                },
+                "contentTypeNosniff": {
+                  "type": "boolean",
+                  "description": "Set `X-Content-Type-Options: nosniff`."
+                },
+                "browserXssFilter": {
+                  "type": "boolean",
+                  "description": "Set `X-XSS-Protection: 1; mode=block`."
+                },
+                "referrerPolicy": {
+                  "type": "string",
+                  "description": "Value of the `Referrer-Policy` header."
+                },
+                "customRequestHeaders": {
+                  "type": "object",
+                  "properties": {
+                    "X-Forwarded-Proto": {
+                      "type": "string",
+                      "description": "Value of the `X-Forwarded-Proto` header."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Headers added to the request, keyed by name. An empty value removes the header."
+                }
+              },
+              "additionalProperties": false,
+              "description": "Settings of the middleware, depending on its `type`."
+            }
+          },
+          "additionalProperties": false,
+          "description": "A middleware with basic security headers, shipped by common."
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
+            "description": "Enables or Disables the Middleware"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "add-prefix",
+              "basic-auth",
+              "buffering",
+              "chain",
+              "compress",
+              "content-type",
+              "forward-auth",
+              "headers",
+              "ip-allow-list",
+              "plugin-bouncer",
+              "plugin-geoblock",
+              "plugin-mod-security",
+              "plugin-real-ip",
+              "plugin-rewrite-response-headers",
+              "plugin-theme-park",
+              "rate-limit",
+              "redirect-regex",
+              "redirect-scheme",
+              "replace-path-regex",
+              "replace-path",
+              "retry",
+              "strip-prefix-regex",
+              "strip-prefix"
+            ],
+            "description": "Define the type of the Middleware"
+          },
+          "namespace": {
+            "allOf": [
+              {
+                "$ref": "../special/namespaces.json"
+              }
+            ],
+            "description": "Define the namespace for this object"
+          },
+          "labels": {
+            "allOf": [
+              {
+                "$ref": "../special/labels.json"
+              }
+            ],
+            "description": "Additional labels for middleware"
+          },
+          "annotations": {
+            "allOf": [
+              {
+                "$ref": "../special/annotations.json"
+              }
+            ],
+            "description": "Additional annotations for middleware"
+          },
+          "expandObjectName": {
+            "type": "boolean",
+            "description": "Whether to expand (adding the fullname as prefix) the middleware name.",
+            "x-helm-tpl": true,
+            "x-docs-required": true
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "pluginName": {
+                "type": "string",
+                "description": "Name of the plugin, as registered in Traefik."
+              },
+              "api": {
+                "type": "string",
+                "description": "URL of the geolocation API, with `{ip}` as the placeholder of the client IP.",
+                "x-docs-required": true
+              },
+              "allowLocalRequests": {
+                "type": "boolean",
+                "description": "Allow requests from private networks without a lookup."
+              },
+              "logLocalRequests": {
+                "type": "boolean",
+                "description": "Log the requests from private networks."
+              },
+              "logAllowedRequests": {
+                "type": "boolean",
+                "description": "Log the requests that are allowed."
+              },
+              "logApiRequests": {
+                "type": "boolean",
+                "description": "Log the requests to the geolocation API."
+              },
+              "apiTimeoutMs": {
+                "type": "number",
+                "description": "Timeout of a geolocation API request, in milliseconds."
+              },
+              "cacheSize": {
+                "type": "number",
+                "description": "Number of IP lookups that are cached."
+              },
+              "forceMonthlyUpdate": {
+                "type": "boolean",
+                "description": "Update the geolocation database at least once a month."
+              },
+              "allowUnknownCountries": {
+                "type": "boolean",
+                "description": "Allow requests whose country can not be determined."
+              },
+              "unknownCountryApiResponse": {
+                "type": "string",
+                "description": "Response of the geolocation API for an unknown country."
+              },
+              "blackListMode": {
+                "type": "boolean",
+                "description": "Block the listed countries, instead of allowing only them."
+              },
+              "silentStartUp": {
+                "type": "boolean",
+                "description": "Do not log the start of the plugin."
+              },
+              "addCountryHeader": {
+                "type": "boolean",
+                "description": "Add the country of the client as a request header."
+              },
+              "countries": {
+                "type": "array",
+                "description": "Country codes that are allowed, or blocked with `blackListMode`.",
+                "x-docs-required": true
+              },
+              "scheme": {
+                "type": "string",
+                "description": "Scheme to redirect to, eg `https`.",
+                "x-docs-required": true
+              },
+              "permanent": {
+                "type": "boolean",
+                "description": "Redirect permanently (308) instead of temporarily (307)."
+              },
+              "sourceRange": {
+                "type": "array",
+                "description": "CIDRs that are allowed. Everything else is rejected.",
+                "x-docs-required": true
+              },
+              "ipStrategy": {
+                "type": "object",
+                "properties": {
+                  "excludedIPs": {
+                    "type": "array",
+                    "description": "IPs to skip in `X-Forwarded-For`.",
+                    "x-docs-required": true
+                  },
+                  "depth": {
+                    "type": "number",
+                    "description": "Define the ipStrategy.depth",
+                    "x-docs-required": true
+                  }
+                },
+                "additionalProperties": false,
+                "description": "How the client IP is taken from the request.",
+                "x-docs-required": true
+              },
+              "regex": {
+                "type": [
+                  "array",
+                  "string"
+                ],
+                "description": "Regular expression that is matched against the request URL.",
+                "x-docs-required": true
+              },
+              "replacement": {
+                "type": "string",
+                "description": "Replacement of the matched URL, can use the groups of `regex`.",
+                "x-docs-required": true
+              },
+              "maxRequestBodyBytes": {
+                "type": "number",
+                "description": "Maximum size of a request body, in bytes."
+              },
+              "memRequestBodyBytes": {
+                "type": [
+                  "null",
+                  "number"
+                ],
+                "description": "Size of a request body kept in memory before it is buffered to disk, in bytes."
+              },
+              "maxResponseBodyBytes": {
+                "type": "number",
+                "description": "Maximum size of a response body, in bytes."
+              },
+              "memResponseBodyBytes": {
+                "type": "number",
+                "description": "Size of a response body kept in memory before it is buffered to disk, in bytes."
+              },
+              "maxResponseBodySize": {
+                "type": "integer",
+                "description": "Maximum size of the response body of the authentication service, in bytes."
+              },
+              "retryExpression": {
+                "type": "string",
+                "description": "Retry when the expression matches the response, eg `IsNetworkError() && Attempts() < 2`."
+              },
+              "address": {
+                "type": "string",
+                "description": "URL of the authentication service the request is forwarded to.",
+                "x-docs-required": true
+              },
+              "authResponseHeadersRegex": {
+                "type": "string",
+                "description": "Regular expression of the authentication response headers that are copied to the request.",
+                "x-docs-required": true
+              },
+              "trustForwardHeader": {
+                "type": "boolean",
+                "description": "Trust the `X-Forwarded-*` headers of the request.",
+                "x-docs-required": true
+              },
+              "authResponseHeaders": {
+                "type": "array",
+                "description": "Headers of the authentication response that are copied to the request.",
+                "x-docs-required": true
+              },
+              "authRequestHeaders": {
+                "type": "array",
+                "description": "Request headers sent to the authentication service. Empty sends all.",
+                "x-docs-required": true
+              },
+              "tls": {
+                "type": "object",
+                "properties": {
+                  "insecureSkipVerify": {
+                    "type": "boolean",
+                    "description": "Skip the verification of the certificate of the authentication service.",
+                    "x-docs-required": true
+                  }
+                },
+                "additionalProperties": false,
+                "description": "TLS settings of the connection to the authentication service.",
+                "x-docs-required": true
+              },
+              "attempts": {
+                "type": "number",
+                "description": "Define retry attempts",
+                "x-docs-required": true
+              },
+              "initialInterval": {
+                "type": "number",
+                "description": "Wait before the first retry, eg `100ms`."
+              },
+              "excludednets": {
+                "type": "array",
+                "description": "CIDRs that are skipped when the real IP is taken from `X-Forwarded-For`.",
+                "x-docs-required": true
+              },
+              "middlewares": {
+                "type": "array",
+                "description": "Middlewares applied in order.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "expandObjectName": {
+                      "type": "boolean",
+                      "description": "Expand the name of the middleware with the name of the release.",
+                      "x-docs-required": true
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Define the middleware name",
+                      "x-docs-required": true
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "x-docs-required": true
+              },
+              "prefix": {
+                "type": [
+                  "array",
+                  "string"
+                ],
+                "description": "Prefix added to the path of the request.",
+                "x-docs-required": true
+              },
+              "forceSlash": {
+                "type": "boolean",
+                "description": "Make sure the path starts with a `/` after stripping."
+              },
+              "users": {
+                "type": "array",
+                "description": "Define the users If this is set, the `secret` key must not be set.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "password": {
+                      "type": "string",
+                      "description": "Define the users If this is set, the `secret` key must not be set.",
+                      "x-docs-required": true
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "User name.",
+                      "x-docs-required": true
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "x-docs-required": true
+              },
+              "secret": {
+                "type": "string",
+                "description": "Define the secret If this is set, the `users` key must not be set.",
+                "x-docs-required": true
+              },
+              "average": {
+                "type": "number",
+                "description": "Define the average rate limit"
+              },
+              "burst": {
+                "type": "number",
+                "description": "Define the burst rate limit"
+              },
+              "path": {
+                "type": "string",
+                "description": "Path that replaces the path of the request.",
+                "x-docs-required": true
+              },
+              "modSecurityUrl": {
+                "type": "string",
+                "description": "URL of the ModSecurity service the request is checked with.",
+                "x-docs-required": true
+              },
+              "timeoutMillis": {
+                "type": "number",
+                "description": "Timeout of the requests to the ModSecurity service, in milliseconds."
+              },
+              "maxBodySize": {
+                "type": "number",
+                "description": "Maximum size of a request body sent to the plugin, in bytes."
+              },
+              "enabled": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "properties": {},
+                "additionalProperties": false,
+                "description": "Enable the middleware.",
+                "x-docs-required": true
+              },
+              "logLevel": {
+                "type": "string",
+                "description": "Log level of the plugin."
+              },
+              "updateIntervalSeconds": {
+                "type": "number",
+                "description": "Seconds between the updates of the decisions in `stream` mode."
+              },
+              "updateMaxFailure": {
+                "type": "number",
+                "description": "Number of failed updates before all requests are blocked. `-1` never blocks."
+              },
+              "defaultDecisionSeconds": {
+                "type": "number",
+                "description": "Seconds a decision is cached when it has no duration."
+              },
+              "httpTimeoutSeconds": {
+                "type": "number",
+                "description": "Timeout of the requests to CrowdSec, in seconds."
+              },
+              "crowdsecAppsecEnabled": {
+                "type": "boolean",
+                "description": "Check requests with the CrowdSec AppSec component."
+              },
+              "crowdsecAppsecHost": {
+                "type": "string",
+                "description": "Host and port of the CrowdSec AppSec component."
+              },
+              "crowdsecAppsecFailureBlock": {
+                "type": "boolean",
+                "description": "Block requests when the AppSec component returns an error."
+              },
+              "crowdsecAppsecUnreachableBlock": {
+                "type": "boolean",
+                "description": "Block requests when the AppSec component can not be reached."
+              },
+              "crowdsecLapiKey": {
+                "type": "string",
+                "description": "Bouncer key for the CrowdSec Local API."
+              },
+              "crowdsecLapiHost": {
+                "type": "string",
+                "description": "Host and port of the CrowdSec Local API."
+              },
+              "crowdsecMode": {
+                "type": "string",
+                "description": "How decisions are fetched: `none`, `live`, `stream`, `alone` or `appsec`."
+              },
+              "crowdsecLapiScheme": {
+                "type": "string",
+                "description": "Scheme of the CrowdSec Local API, `http` or `https`."
+              },
+              "crowdsecLapiTLSInsecureVerify": {
+                "type": "boolean",
+                "description": "Skip the verification of the certificate of the CrowdSec Local API."
+              },
+              "crowdsecCapiMachineId": {
+                "type": "string",
+                "description": "Machine ID for the CrowdSec Central API."
+              },
+              "crowdsecCapiPassword": {
+                "type": "string",
+                "description": "Password for the CrowdSec Central API."
+              },
+              "crowdsecCapiScenarios": {
+                "type": "array",
+                "description": "Scenarios reported to the CrowdSec Central API."
+              },
+              "forwardedHeadersTrustedIPs": {
+                "type": "array",
+                "description": "IPs and CIDRs of trusted proxies, whose forwarded headers are used."
+              },
+              "clientTrustedIPs": {
+                "type": "array",
+                "description": "IPs and CIDRs that are never checked."
+              },
+              "forwardedHeadersCustomName": {
+                "type": "string",
+                "description": "Name of the header the client IP is read from."
+              },
+              "remediationHeadersCustomName": {
+                "type": "string",
+                "description": "Name of the header that carries the remediation of a request."
+              },
+              "redisCacheEnabled": {
+                "type": "boolean",
+                "description": "Cache the decisions in Redis, shared between Traefik instances."
+              },
+              "redisCacheHost": {
+                "type": "string",
+                "description": "Host and port of the Redis cache."
+              },
+              "redisCachePassword": {
+                "type": "string",
+                "description": "Password of the Redis cache."
+              },
+              "redisCacheDatabase": {
+                "type": "string",
+                "description": "Database number of the Redis cache."
+              },
+              "crowdsecLapiTLSCertificateAuthority": {
+                "type": "string",
+                "description": "CA certificate to verify the CrowdSec Local API."
+              },
+              "crowdsecLapiTLSCertificateBouncer": {
+                "type": "string",
+                "description": "Client certificate of the bouncer for the CrowdSec Local API."
+              },
+              "crowdsecLapiTLSCertificateBouncerKey": {
+                "type": "string",
+                "description": "Client key of the bouncer for the CrowdSec Local API."
+              },
+              "captchaProvider": {
+                "type": "string",
+                "description": "Captcha provider, eg `hcaptcha`, `recaptcha` or `turnstile`."
+              },
+              "captchaSiteKey": {
+                "type": "string",
+                "description": "Site key of the captcha provider."
+              },
+              "captchaSecretKey": {
+                "type": "string",
+                "description": "Secret key of the captcha provider."
+              },
+              "captchaGracePeriodSeconds": {
+                "type": "number",
+                "description": "Seconds a solved captcha stays valid."
+              },
+              "captchaHTMLFilePath": {
+                "type": "string",
+                "description": "Path of the HTML page with the captcha."
+              },
+              "banHTMLFilePath": {
+                "type": "string",
+                "description": "Path of the HTML page shown to banned clients."
+              },
+              "customRequestHeaders": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": {
+                  "type": "string",
+                  "description": "Value of the header"
+                },
+                "description": "Headers added to the request, keyed by name. An empty value removes the header."
+              },
+              "customResponseHeaders": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": {
+                  "type": "string",
+                  "description": "Value of the header"
+                },
+                "description": "Headers added to the response, keyed by name. An empty value removes the header."
+              },
+              "accessControlAllowCredentials": {
+                "type": "boolean",
+                "description": "Sets the `Access-Control-Allow-Credentials` CORS header."
+              },
+              "accessControlAllowHeaders": {
+                "type": "array",
+                "description": "Request headers allowed by CORS, for `Access-Control-Allow-Headers`."
+              },
+              "accessControlAllowMethods": {
+                "type": "array",
+                "description": "Request methods allowed by CORS, for `Access-Control-Allow-Methods`."
+              },
+              "accessControlAllowOriginList": {
+                "type": "array",
+                "description": "Origins allowed by CORS, for `Access-Control-Allow-Origin`."
+              },
+              "accessControlAllowOriginListRegex": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Regular expressions of the origins allowed by CORS."
+              },
+              "accessControlExposeHeaders": {
+                "type": "array",
+                "description": "Response headers exposed to the browser, for `Access-Control-Expose-Headers`."
+              },
+              "accessControlMaxAge": {
+                "type": "number",
+                "description": "Seconds a CORS preflight request can be cached, for `Access-Control-Max-Age`."
+              },
+              "addVaryHeader": {
+                "type": "boolean",
+                "description": "Add the `Vary` header to CORS responses."
+              },
+              "allowedHosts": {
+                "type": "array",
+                "description": "Host names that are allowed. Empty allows all."
+              },
+              "hostsProxyHeaders": {
+                "type": "array",
+                "description": "Headers that can hold the original host name."
+              },
+              "sslProxyHeaders": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": {
+                  "type": "string",
+                  "description": "Value of the header"
+                },
+                "description": "Headers, with their values, that tell the request was made over HTTPS."
+              },
+              "stsSeconds": {
+                "type": "number",
+                "description": "`max-age` of the `Strict-Transport-Security` header, in seconds. `0` disables it."
+              },
+              "stsIncludeSubdomains": {
+                "type": "boolean",
+                "description": "Add `includeSubDomains` to the `Strict-Transport-Security` header."
+              },
+              "stsPreload": {
+                "type": "boolean",
+                "description": "Add `preload` to the `Strict-Transport-Security` header."
+              },
+              "forceSTSHeader": {
+                "type": "boolean",
+                "description": "Also add the `Strict-Transport-Security` header on plain HTTP requests."
+              },
+              "frameDeny": {
+                "type": "boolean",
+                "description": "Set `X-Frame-Options: DENY`."
+              },
+              "customFrameOptionsValue": {
+                "type": "string",
+                "description": "Custom value of the `X-Frame-Options` header."
+              },
+              "contentTypeNosniff": {
+                "type": "boolean",
+                "description": "Set `X-Content-Type-Options: nosniff`."
+              },
+              "browserXssFilter": {
+                "type": "boolean",
+                "description": "Set `X-XSS-Protection: 1; mode=block`."
+              },
+              "customBrowserXSSValue": {
+                "type": "string",
+                "description": "Custom value of the `X-XSS-Protection` header."
+              },
+              "contentSecurityPolicy": {
+                "type": "string",
+                "description": "Value of the `Content-Security-Policy` header."
+              },
+              "contentSecurityPolicyReportOnly": {
+                "type": "string",
+                "description": "Value of the `Content-Security-Policy-Report-Only` header."
+              },
+              "publicKey": {
+                "type": "string",
+                "description": "Value of the `Public-Key-Pins` header."
+              },
+              "referrerPolicy": {
+                "type": "string",
+                "description": "Value of the `Referrer-Policy` header."
+              },
+              "permissionsPolicy": {
+                "type": "string",
+                "description": "Value of the `Permissions-Policy` header."
+              },
+              "isDevelopment": {
+                "type": "boolean",
+                "description": "Allow the headers settings to be ignored for development hosts."
+              },
+              "app": {
+                "type": "string",
+                "description": "Name of the app the Theme Park theme is applied to.",
+                "x-docs-required": true
+              },
+              "theme": {
+                "type": "string",
+                "description": "Theme Park theme, eg `dark`.",
+                "x-docs-required": true
+              },
+              "baseUrl": {
+                "type": "string",
+                "description": "Base URL the Theme Park CSS is loaded from."
+              },
+              "addons": {
+                "type": "array",
+                "description": "Settings of the add-ons of the Theme Park plugin."
+              },
+              "rewrites": {
+                "type": "array",
+                "description": "Rewrites of the response headers.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "string",
+                      "description": "Name of the response header that is rewritten.",
+                      "x-docs-required": true
+                    },
+                    "regex": {
+                      "type": "string",
+                      "description": "Regular expression that is matched against the request URL."
+                    },
+                    "replacement": {
+                      "type": "string",
+                      "description": "Replacement of the matched URL, can use the groups of `regex`."
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "x-docs-required": true
+              }
+            },
+            "additionalProperties": false,
+            "description": "Settings of the middleware, depending on its `type`."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Configuration for `traefik.$name`."
+      },
+      "description": "Traefik middlewares, keyed by name."
+    }
+  },
+  "additionalProperties": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "add-prefix",
+            "basic-auth",
+            "buffering",
+            "chain",
+            "compress",
+            "content-type",
+            "forward-auth",
+            "headers",
+            "ip-allow-list",
+            "plugin-bouncer",
+            "plugin-geoblock",
+            "plugin-mod-security",
+            "plugin-real-ip",
+            "plugin-rewrite-response-headers",
+            "plugin-theme-park",
+            "rate-limit",
+            "redirect-regex",
+            "redirect-scheme",
+            "replace-path-regex",
+            "replace-path",
+            "retry",
+            "strip-prefix-regex",
+            "strip-prefix"
+          ],
+          "description": "Type of the middleware."
+        },
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "properties": {},
+          "additionalProperties": false,
+          "description": "Enables or Disables the Middleware",
+          "x-helm-tpl": true,
+          "x-docs-required": true
+        },
+        "namespace": {
+          "allOf": [
+            {
+              "$ref": "../special/namespaces.json"
+            }
+          ],
+          "description": "Define the namespace for this object",
+          "x-helm-tpl": true
+        },
+        "labels": {
+          "allOf": [
+            {
+              "$ref": "../special/labels.json"
+            }
+          ],
+          "description": "Additional labels for middleware",
+          "x-helm-tpl": "On value only"
+        },
+        "annotations": {
+          "allOf": [
+            {
+              "$ref": "../special/annotations.json"
+            }
+          ],
+          "description": "Additional annotations for middleware",
+          "x-helm-tpl": "On value only"
+        },
+        "expandObjectName": {
+          "type": "boolean",
+          "description": "Whether to expand (adding the fullname as prefix) the middleware name."
+        },
+        "data": {
+          "type": "object",
+          "properties": {},
+          "description": "Define the data of the middleware",
+          "additionalProperties": {
+            "description": "A setting of the middleware, passed on as is."
+          },
+          "x-helm-tpl": true,
+          "x-docs-required": true
+        }
+      },
+      "additionalProperties": false,
+      "description": "Define Middleware",
+      "x-docs-required": true
+    },
+    "description": "Define Middleware - Available providers are:",
+    "default": {},
+    "x-docs-required": true
+  },
+  "description": "Create Middleware objects"
+}

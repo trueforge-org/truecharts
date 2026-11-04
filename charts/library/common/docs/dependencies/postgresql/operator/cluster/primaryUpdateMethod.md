@@ -1,0 +1,42 @@
+---
+title: Primaryupdatemethod
+---
+
+:::note
+
+- This page is generated from JSON schema.
+- See the [Full Examples](/truecharts-common/dependencies/postgresql/operator/cluster/primaryUpdateMethod#full-examples) section for complete examples.
+
+:::
+
+## Appears in
+
+- `.Values.dependencies.postgresql.operator.cluster.primaryUpdateMethod`
+
+---
+
+## `dependencies.postgresql.operator.cluster.primaryUpdateMethod`
+
+Method to upgrade the primary server during a rolling update. `switchover` promotes an upgraded replica, `restart` restarts the primary in place.
+
+| Field      | Value                                                          |
+| ---------- | -------------------------------------------------------------- |
+| Key        | `dependencies.postgresql.operator.cluster.primaryUpdateMethod` |
+| Type       | `string`                                                       |
+| Required   | ❌                                                             |
+| Helm `tpl` | ❌                                                             |
+| Default    | unset                                                          |
+| Enum       | `switchover`, `restart`                                        |
+
+---
+
+## Full Examples
+
+```yaml
+dependencies:
+  postgresql:
+    operator:
+      cluster:
+        # Promote a replica during an update, instead of restarting the primary
+        primaryUpdateMethod: switchover
+```

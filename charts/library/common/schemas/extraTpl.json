@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "description": "Define kubernetes resources, 1 per list item, tpl will be resolved",
+  "items": {
+    "type": [
+      "object",
+      "string"
+    ],
+    "properties": {},
+    "description": "Configuration for `$item`.",
+    "additionalProperties": {
+      "description": "A setting passed on as is."
+    }
+  }
+}

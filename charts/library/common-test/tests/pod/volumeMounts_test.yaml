@@ -643,7 +643,7 @@ tests:
                 readOnly: invalid
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Expected [readOnly] to be [boolean], but got [string]
+          errorPattern: 'at ''/persistence/vol-name/targetSelector/workload-name/container-name1/readOnly'': got string, want boolean'
 
   - it: should fail with empty readOnly
     set:
@@ -661,7 +661,7 @@ tests:
                 readOnly:
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Expected [readOnly] to be [boolean], but got [invalid]
+          errorPattern: 'at ''/persistence/vol-name/targetSelector/workload-name/container-name1/readOnly'': got null, want boolean'
 
   - it: should fail with empty mountPath
     set:
@@ -678,7 +678,7 @@ tests:
               container-name1: {}
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Expected non-empty [mountPath]
+          errorPattern: 'at ''/persistence/vol-name/mountPath'': minLength: got 0, want 1'
 
   - it: should fail with mountPath not starting with /
     set:
@@ -710,7 +710,7 @@ tests:
             workload-name: string
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Expected [targetSelector.workload-name] to be a [dict], but got [string]
+          errorPattern: 'at ''/persistence/vol-name/targetSelector/workload-name'': got string, want null or object'
 
   - it: should fail with empty targetSelect.workloadName
     set:

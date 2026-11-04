@@ -1,0 +1,228 @@
+suite: clickhouse dependency wait test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should wait for clickhouse in the workloads of the chart only
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        my-app: &appWorkload
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              my-container:
+                enabled: true
+                primary: true
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      dependencies:
+        clickhouse: &clickhouse
+          enabled: true
+    asserts:
+      - documentSelector: &appDoc
+          path: kind
+          value: Deployment
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentSelector: *appDoc
+        equal:
+          path: spec.template.spec.initContainers[0].name
+          value: test-release-name-common-test-system-clickhouse-wait
+      - documentSelector: *appDoc
+        matchRegex:
+          path: spec.template.spec.initContainers[0].image
+          pattern: "^oci.trueforge.org/containerforge/ubuntu:"
+      - documentSelector: *appDoc
+        contains:
+          path: spec.template.spec.initContainers[0].env
+          content:
+            name: CLICKHOUSE_HOST
+            value: test-release-name-common-test-clickhouse-main
+      - documentSelector: *appDoc
+        contains:
+          path: spec.template.spec.initContainers[0].env
+          content:
+            name: CLICKHOUSE_PORT
+            value: "8123"
+      - documentSelector: *appDoc
+        matchRegex:
+          path: spec.template.spec.initContainers[0].command[2]
+          pattern: wget --quiet --tries=1 --timeout=5 --spider "http://\$\{CLICKHOUSE_HOST\}:\$\{CLICKHOUSE_PORT\}/ping"
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-clickhouse-main
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        notExists:
+          path: spec.template.spec.initContainers
+
+  - it: should wait on the port of the primary service of clickhouse
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        my-app: *appWorkload
+      dependencies:
+        clickhouse:
+          enabled: true
+          service:
+            main:
+              ports:
+                main:
+                  port: 18123
+                  targetPort: 8123
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.initContainers[0].env
+          content:
+            name: CLICKHOUSE_PORT
+            value: "18123"
+
+  - it: should not store the password of clickhouse in the wait
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        my-app: *appWorkload
+      dependencies:
+        clickhouse:
+          enabled: true
+          depconfig:
+            password: test-password
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notMatchRegex:
+          path: spec.template.spec.initContainers[0].command[2]
+          pattern: test-password
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notContains:
+          path: spec.template.spec.initContainers[0].env
+          content:
+            name: CLICKHOUSE_PASSWORD
+            value: test-password
+
+  - it: should not wait for clickhouse in workloads of the chart with dbWait disabled
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        my-app:
+          enabled: true
+          primary: true
+          type: Deployment
+          dbWait: false
+          podSpec:
+            containers:
+              my-container:
+                enabled: true
+                primary: true
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      dependencies:
+        clickhouse: *clickhouse
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notExists:
+          path: spec.template.spec.initContainers
+
+  - it: should not add the wait with the clickhouse dependency disabled
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        my-app: *appWorkload
+      dependencies:
+        clickhouse:
+          enabled: false
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notExists:
+          path: spec.template.spec.initContainers
+
+  - it: should wait for clickhouse next to the other dependencies
+    set:
+      image:
+        repository: ghcr.io/traefik/whoami
+        tag: v1.0.0
+      workload:
+        my-app: *appWorkload
+      dependencies:
+        clickhouse: *clickhouse
+        mariadb:
+          enabled: true
+        valkey:
+          enabled: true
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.initContainers
+          content:
+            name: test-release-name-common-test-system-clickhouse-wait
+          any: true
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.initContainers
+          content:
+            name: test-release-name-common-test-system-mariadb-wait
+          any: true
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.initContainers
+          content:
+            name: test-release-name-common-test-system-valkey-wait
+          any: true
+      - documentSelector:
+          path: kind
+          value: Secret
+          matchMany: true
+        isNotNull:
+          path: metadata.name
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-clickhousecreds
+        equal:
+          path: kind
+          value: Secret

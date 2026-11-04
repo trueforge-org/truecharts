@@ -1,11 +1,11 @@
 ---
-title: Priority Class
+title: Priorityclass
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/priorityclass#full-examples) section for complete examples.
+- This page is generated from JSON schema.
+- See the [Full Examples](/truecharts-common/priorityClass#full-examples) section for complete examples.
 
 :::
 
@@ -13,67 +13,89 @@ title: Priority Class
 
 - `.Values.priorityClass`
 
-## Naming scheme
-
-- `$FullName-$PriorityClassName` (release-name-chart-name-priorityClassName)
-
-:::tip
-
-- Replace references to `$name` with the actual name you want to use.
-
-:::
-
 ---
 
 ## `priorityClass`
 
 Define priority classes
 
-|            |                 |
+| Field      | Value           |
 | ---------- | --------------- |
 | Key        | `priorityClass` |
 | Type       | `map`           |
 | Required   | ❌              |
 | Helm `tpl` | ❌              |
-| Default    | `{}`            |
-
-Example
-
-```yaml
-priorityClass: {}
-```
+| Default    | unset           |
 
 ---
 
-### `$name`
+### `priorityClass.$name.annotations`
 
-Define priority class
+Additional annotations for priority class
 
-|            |                       |
-| ---------- | --------------------- |
-| Key        | `priorityClass.$name` |
-| Type       | `map`                 |
-| Required   | ✅                    |
-| Helm `tpl` | ❌                    |
-| Default    | `{}`                  |
+| Field      | Value                             |
+| ---------- | --------------------------------- |
+| Key        | `priorityClass.$name.annotations` |
+| Type       | `map`                             |
+| Required   | ❌                                |
+| Helm `tpl` | ✅ (On value only)                 |
+| Default    | `{}`                              |
 
 Example
 
 ```yaml
 priorityClass:
-  priority-class-name: {}
+  $name:
+    annotations:
+      {}
 ```
 
 ---
 
-#### `enabled`
+### `priorityClass.$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                                 |
+| ---------- | ------------------------------------- |
+| Key        | `priorityClass.$name.annotationsList` |
+| Type       | `list of map`                         |
+| Required   | ❌                                    |
+| Helm `tpl` | ❌                                    |
+| Default    | unset                                 |
+
+---
+
+### `priorityClass.$name.description`
+
+Define the description for this priority class
+
+| Field      | Value                             |
+| ---------- | --------------------------------- |
+| Key        | `priorityClass.$name.description` |
+| Type       | `string`                          |
+| Required   | ❌                                |
+| Helm `tpl` | ❌                                |
+| Default    | `"No description given"`          |
+
+Example
+
+```yaml
+priorityClass:
+  $name:
+    description: No description given
+```
+
+---
+
+### `priorityClass.$name.enabled`
 
 Enables or Disables the priority class
 
-|            |                               |
+| Field      | Value                         |
 | ---------- | ----------------------------- |
 | Key        | `priorityClass.$name.enabled` |
-| Type       | `bool`                        |
+| Type       | `boolean, string`             |
 | Required   | ✅                            |
 | Helm `tpl` | ✅                            |
 | Default    | `false`                       |
@@ -82,110 +104,20 @@ Example
 
 ```yaml
 priorityClass:
-  priority-class-name:
-    enabled: true
+  $name:
+    enabled: false
 ```
 
 ---
 
-#### `namespace`
-
-Define the namespace for this object
-
-|            |                                 |
-| ---------- | ------------------------------- |
-| Key        | `priorityClass.$name.namespace` |
-| Type       | `string`                        |
-| Required   | ❌                              |
-| Helm `tpl` | ✅ (On value only)              |
-| Default    | `""`                            |
-
-Example
-
-```yaml
-priorityClass:
-  priority-class-name:
-    namespace: some-namespace
-```
-
----
-
-#### `labels`
-
-Additional labels for priority class
-
-|            |                              |
-| ---------- | ---------------------------- |
-| Key        | `priorityClass.$name.labels` |
-| Type       | `map`                        |
-| Required   | ❌                           |
-| Helm `tpl` | ✅ (On value only)           |
-| Default    | `{}`                         |
-
-Example
-
-```yaml
-priorityClass:
-  priority-class-name:
-    labels:
-      key: value
-```
-
----
-
-#### `annotations`
-
-Additional annotations for priority class
-
-|            |                                   |
-| ---------- | --------------------------------- |
-| Key        | `priorityClass.$name.annotations` |
-| Type       | `map`                             |
-| Required   | ❌                                |
-| Helm `tpl` | ✅ (On value only)                |
-| Default    | `{}`                              |
-
-Example
-
-```yaml
-priorityClass:
-  priority-class-name:
-    annotations:
-      key: value
-```
-
----
-
-#### `value`
-
-Define the value for this priority class
-
-|            |                             |
-| ---------- | --------------------------- |
-| Key        | `priorityClass.$name.value` |
-| Type       | `int`                       |
-| Required   | ❌                          |
-| Helm `tpl` | ❌                          |
-| Default    | `1000000`                   |
-
-Example
-
-```yaml
-priorityClass:
-  priority-class-name:
-    value: 1000000
-```
-
----
-
-#### `globalDefault`
+### `priorityClass.$name.globalDefault`
 
 Define if this priority class is the global default
 
-|            |                                     |
+| Field      | Value                               |
 | ---------- | ----------------------------------- |
 | Key        | `priorityClass.$name.globalDefault` |
-| Type       | `bool`                              |
+| Type       | `boolean`                           |
 | Required   | ❌                                  |
 | Helm `tpl` | ❌                                  |
 | Default    | `false`                             |
@@ -194,57 +126,126 @@ Example
 
 ```yaml
 priorityClass:
-  priority-class-name:
-    globalDefault: true
+  $name:
+    globalDefault: false
 ```
 
 ---
 
-#### `description`
+### `priorityClass.$name.labels`
 
-Define the description for this priority class
+Additional labels for priority class
 
-|            |                                   |
-| ---------- | --------------------------------- |
-| Key        | `priorityClass.$name.description` |
-| Type       | `string`                          |
-| Required   | ❌                                |
-| Helm `tpl` | ❌                                |
-| Default    | `No description given`            |
+| Field      | Value                        |
+| ---------- | ---------------------------- |
+| Key        | `priorityClass.$name.labels` |
+| Type       | `map`                        |
+| Required   | ❌                           |
+| Helm `tpl` | ✅ (On value only)            |
+| Default    | `{}`                         |
 
 Example
 
 ```yaml
 priorityClass:
-  priority-class-name:
-    description: "some description"
+  $name:
+    labels:
+      {}
 ```
 
 ---
 
-#### `preemptionPolicy`
+### `priorityClass.$name.labelsList`
 
-Define the preemption policy for this priority class
+Additional labels as a list of name and value pairs, merged into the labels
 
-|            |                                        |
+| Field      | Value                            |
+| ---------- | -------------------------------- |
+| Key        | `priorityClass.$name.labelsList` |
+| Type       | `list of map`                    |
+| Required   | ❌                               |
+| Helm `tpl` | ❌                               |
+| Default    | unset                            |
+
+---
+
+### `priorityClass.$name.namespace`
+
+Define the namespace for this object
+
+| Field      | Value                           |
+| ---------- | ------------------------------- |
+| Key        | `priorityClass.$name.namespace` |
+| Type       | `string`                        |
+| Required   | ❌                              |
+| Helm `tpl` | ✅ (On value only)               |
+| Default    | `""`                            |
+
+Example
+
+```yaml
+priorityClass:
+  $name:
+    namespace: ""
+```
+
+---
+
+### `priorityClass.$name.preemptionPolicy`
+
+Define priority classes
+
+| Field      | Value                                  |
 | ---------- | -------------------------------------- |
 | Key        | `priorityClass.$name.preemptionPolicy` |
 | Type       | `string`                               |
 | Required   | ❌                                     |
 | Helm `tpl` | ❌                                     |
-| Default    | `Immediate`                            |
-
-Valid values are:
-
-- `PreemptLowerPriority`
-- `Never`
+| Default    | `"Immediate"`                          |
+| Enum       | `PreemptLowerPriority`, `Never`        |
 
 Example
 
 ```yaml
 priorityClass:
-  priority-class-name:
-    preemptionPolicy: PreemptLowerPriority
+  $name:
+    preemptionPolicy: Immediate
+```
+
+---
+
+### `priorityClass.$name.provisioner`
+
+Provisioner name for the priority class. Set in the common-test priorityclass fixture; the priority class templates ignore it.
+
+| Field      | Value                             |
+| ---------- | --------------------------------- |
+| Key        | `priorityClass.$name.provisioner` |
+| Type       | `string`                          |
+| Required   | ❌                                |
+| Helm `tpl` | ❌                                |
+| Default    | unset                             |
+
+---
+
+### `priorityClass.$name.value`
+
+Define the value for this priority class
+
+| Field      | Value                       |
+| ---------- | --------------------------- |
+| Key        | `priorityClass.$name.value` |
+| Type       | `integer`                   |
+| Required   | ❌                          |
+| Helm `tpl` | ❌                          |
+| Default    | `1000000`                   |
+
+Example
+
+```yaml
+priorityClass:
+  $name:
+    value: 1000000
 ```
 
 ---

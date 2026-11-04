@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "codeserver": {
+      "$ref": "codeserver.json",
+      "description": "A code-server container to edit the files of the app."
+    },
+    "gluetun": {
+      "$ref": "gluetun.json",
+      "description": "A gluetun VPN container that routes the traffic of the pod."
+    },
+    "netshoot": {
+      "$ref": "netshoot.json",
+      "description": "A netshoot container to debug the network of the pod."
+    },
+    "tailscale": {
+      "$ref": "tailscale/tailscale.json",
+      "description": "A tailscale container that connects the pod to a tailnet."
+    },
+    "vpn": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Legacy vpn add-on type. Not used, rendering fails when `addons.vpn` is set."
+        },
+        "env": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Legacy environment variables for the vpn add-on. Not used, rendering fails when `addons.vpn` is set."
+        },
+        "targetSelector": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Legacy workloads for the vpn add-on. Not used, rendering fails when `addons.vpn` is set."
+        },
+        "config": {
+          "type": "string",
+          "description": "Legacy configuration for the vpn add-on. Not used, rendering fails when `addons.vpn` is set."
+        },
+        "scripts": {
+          "type": "object",
+          "properties": {
+            "up": {
+              "type": "string",
+              "description": "Legacy script run when the vpn connects. Not used, rendering fails when `addons.vpn` is set."
+            },
+            "down": {
+              "type": "string",
+              "description": "Legacy script run when the vpn disconnects. Not used, rendering fails when `addons.vpn` is set."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Legacy scripts for the vpn add-on. Not used, rendering fails when `addons.vpn` is set."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Removed vpn add-on. Setting `addons.vpn` fails rendering (see `templates/values/_deprecations.tpl`), use `addons.gluetun` or `addons.tailscale` instead."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Addons to the workloads."
+}

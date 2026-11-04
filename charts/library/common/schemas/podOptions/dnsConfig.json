@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "See [DNS Config](/truecharts-common/workload#dnsconfig)",
+  "properties": {
+    "nameservers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Configuration for `podOptions.dnsConfig.nameservers.$item`."
+      },
+      "maxItems": 3,
+      "description": "Additional DNS servers."
+    },
+    "searches": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Configuration for `podOptions.dnsConfig.searches.$item`."
+      },
+      "maxItems": 6,
+      "description": "Additional DNS search domains."
+    },
+    "options": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the resolver option, eg `ndots`."
+          },
+          "value": {
+            "type": "string",
+            "description": "Value of the resolver option."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Configuration for `podOptions.dnsConfig.options.$item`."
+      },
+      "description": "DNS resolver options.",
+      "default": [
+        {
+          "name": "ndots",
+          "value": "1"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

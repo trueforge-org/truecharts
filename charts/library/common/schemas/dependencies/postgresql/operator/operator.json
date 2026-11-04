@@ -1,0 +1,471 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "cluster": {
+      "allOf": [
+        {
+          "$ref": "cluster.json"
+        }
+      ],
+      "description": "Configuration of the CNPG cluster.",
+      "x-docs-required": true
+    },
+    "hibernate": {
+      "type": "boolean",
+      "description": "Puts the CNPG cluster in hibernation mode.",
+      "default": false
+    },
+    "labels": {
+      "allOf": [
+        {
+          "$ref": "../../../special/labels.json"
+        }
+      ],
+      "description": "Additional labels for all CNPG objects.",
+      "default": {},
+      "x-helm-tpl": "On value only"
+    },
+    "annotations": {
+      "allOf": [
+        {
+          "$ref": "../../../special/annotations.json"
+        }
+      ],
+      "description": "Additional annotations for all CNPG objects.",
+      "default": {},
+      "x-helm-tpl": "On value only"
+    },
+    "annotationsList": {
+      "allOf": [
+        {
+          "$ref": "../../../special/annotationsList.json"
+        }
+      ],
+      "description": "Additional annotations as a list of name and value pairs, merged into the `annotations` of all CNPG objects."
+    },
+    "labelsList": {
+      "allOf": [
+        {
+          "$ref": "../../../special/labelsList.json"
+        }
+      ],
+      "description": "Additional labels as a list of name and value pairs, merged into the `labels` of all CNPG objects."
+    },
+    "namespace": {
+      "type": "string",
+      "description": "Namespace of the CNPG objects. Templated with `tpl`, and overrides `global.namespace` and `namespace`."
+    },
+    "instances": {
+      "type": "integer",
+      "description": "Number of instances. Must be at least 1 when set. Only validated, the CNPG cluster uses `cluster.instances`."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "postgres",
+        "postgis",
+        "vectors",
+        "vectorchord"
+      ],
+      "description": "Type of the CNPG database.",
+      "default": "postgres"
+    },
+    "pgVersion": {
+      "type": "integer",
+      "enum": [
+        15,
+        16,
+        17,
+        18
+      ],
+      "description": "Version of PostgreSQL to use, changes the cluster naming scheme. Without a value, `global.fallbackDefaults.cnpg.pgVersion` is used, and `type: vectors` uses `16` as it has no image for PostgreSQL 18. It only applies to `operator` mode, and is ignored in `standalone` mode.\n\nIt only applies to `operator` mode, and is ignored in `standalone` mode.\n\nWithout a value, `global.fallbackDefaults.cnpg.pgVersion` is used. `type: vectors` has no image for PostgreSQL 18, so without a value it uses `16`.\n\n:::caution[Changing the version of an existing cluster]\n\nCloudNativePG upgrades an existing cluster in place when its major version changes, with `pg_upgrade`. This also happens when a cluster has no `pgVersion` set and the default changes, so **set `pgVersion` to keep a cluster on its current version**.\n\n- Take a full backup first, and a new one afterwards. Older backups can't be used for point-in-time recovery across major versions.\n- All instances are stopped during the upgrade, and replicas are cloned again afterwards.\n- It needs CloudNativePG 1.26 or newer.\n- CloudNativePG only supports this between images on the same OS distribution. The images of this version of common moved to Debian 13, so a cluster on an older image should stay on its major version through that change, and upgrade afterwards.\n- Check that the extensions of the cluster can be upgraded, such as PostGIS or VectorChord.\n- If the upgrade fails, set `pgVersion` back to the previous version. CloudNativePG then starts the cluster on that version again.\n- Run `ANALYZE` afterwards, as `pg_upgrade` does not keep the statistics.\n\n:::",
+      "default": 18,
+      "x-docs-required": true
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "standalone",
+        "recovery"
+      ],
+      "description": "Cluster mode of operation. `standalone` creates a new or updates an existing CNPG cluster, `recovery` creates a cluster from a backup or object store. Not to be confused with `dependencies.postgresql.mode`.",
+      "default": "standalone"
+    },
+    "monitoring": {
+      "type": "object",
+      "properties": {
+        "enablePodMonitor": {
+          "type": "boolean",
+          "description": "Create a PodMonitor for the cluster.",
+          "default": false
+        },
+        "disableDefaultQueries": {
+          "type": "boolean",
+          "description": "Do not run the default queries of the metrics exporter.",
+          "default": false
+        },
+        "customQueries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the query."
+              },
+              "key": {
+                "type": "string",
+                "description": "Key of the ConfigMap or Secret with the queries."
+              },
+              "query": {
+                "type": "string",
+                "description": "SQL query."
+              },
+              "metrics": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                      "usage": {
+                        "type": "string",
+                        "description": "Usage of the column, eg `LABEL`, `GAUGE` or `COUNTER`."
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Description of the metric."
+                      }
+                    },
+                    "additionalProperties": false,
+                    "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.$name`."
+                  },
+                  "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item`."
+                },
+                "description": "Metrics the query returns, by column."
+              },
+              "expandObjectName": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "description": "Expand the name of the ConfigMap or Secret with the name of the release."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item`."
+          },
+          "description": "Additional queries for the metrics exporter.",
+          "default": []
+        }
+      },
+      "additionalProperties": false,
+      "description": "Monitoring of the cluster.",
+      "default": {
+        "enablePodMonitor": false,
+        "disableDefaultQueries": false,
+        "customQueries": []
+      }
+    },
+    "recovery": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "description": "Recovery method of the CNPG cluster, such as `object_store`.",
+          "default": "object_store"
+        },
+        "serverName": {
+          "type": "string",
+          "description": "Overrides the `serverName` of the recovery object store.",
+          "default": ""
+        },
+        "pitrTarget": {
+          "type": "object",
+          "properties": {
+            "time": {
+              "type": "string",
+              "description": "Point in time recovery target time.",
+              "default": ""
+            }
+          },
+          "additionalProperties": false,
+          "description": "Point in time recovery target.",
+          "default": {
+            "time": ""
+          }
+        },
+        "destinationPath": {
+          "type": "string",
+          "description": "Destination path of the object store to recover from.",
+          "default": ""
+        },
+        "credentials": {
+          "type": "string",
+          "description": "Name of the credentials in `.Values.credentials` for the object store to recover from."
+        },
+        "revision": {
+          "type": "string",
+          "description": "Revision appended to the `serverName` of the recovery archive, so restore and backup use different archives. Must be a string."
+        },
+        "instanceSidecarConfiguration": {
+          "allOf": [
+            {
+              "$ref": "instanceSidecarConfiguration.json"
+            }
+          ],
+          "description": "Settings of the Barman Cloud plugin sidecar."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Create the cluster from a backup or an object store."
+    },
+    "backups": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Enables the backups of the CNPG cluster.",
+          "default": false
+        },
+        "encryption": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": [
+                "boolean",
+                "string"
+              ],
+              "description": "Encrypts the backups with AES256 when enabled.",
+              "default": false
+            }
+          },
+          "additionalProperties": false,
+          "description": "Encryption of the backups.",
+          "default": {
+            "enabled": false
+          }
+        },
+        "serverName": {
+          "type": "string",
+          "description": "Overrides the `serverName` in the object store of the backups.",
+          "default": ""
+        },
+        "destinationPath": {
+          "type": "string",
+          "description": "Destination path of the object store for the backups.",
+          "default": ""
+        },
+        "target": {
+          "type": "string",
+          "description": "Target of the backups, `prefer-standby` or `primary`. Empty uses the default, `prefer-standby`.",
+          "default": ""
+        },
+        "credentials": {
+          "type": "string",
+          "description": "Name of the credentials in `.Values.credentials` for the object store of the backups.",
+          "default": ""
+        },
+        "scheduledBackups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the backup."
+              },
+              "schedule": {
+                "type": "string",
+                "description": "Cron schedule of the backup, with seconds, eg `0 0 0 * * *`."
+              },
+              "backupOwnerReference": {
+                "type": "string",
+                "description": "Owner of the created backups: `none`, `self` or `cluster`."
+              },
+              "immediate": {
+                "type": "boolean",
+                "description": "Also take a backup right away."
+              },
+              "suspend": {
+                "type": "boolean",
+                "description": "Pause the schedule."
+              },
+              "labels": {
+                "allOf": [
+                  {
+                    "$ref": "../../../special/labels.json"
+                  }
+                ],
+                "description": "Additional labels for this manual backup, merged with `backups.labels`."
+              },
+              "annotations": {
+                "allOf": [
+                  {
+                    "$ref": "../../../special/annotations.json"
+                  }
+                ],
+                "description": "Additional annotations for this manual backup, merged with `backups.annotations`."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Configuration for `dependencies.postgresql.operator.backups.scheduledBackups.$item`."
+          },
+          "description": "Backups that are taken on a schedule.",
+          "default": [
+            {
+              "name": "daily-backup",
+              "schedule": "0 0 0 * * *",
+              "backupOwnerReference": "self",
+              "immediate": true,
+              "suspend": false
+            }
+          ]
+        },
+        "retentionPolicy": {
+          "type": "string",
+          "description": "Retention policy of the backups, for example `30d`.",
+          "default": "30d"
+        },
+        "labels": {
+          "allOf": [
+            {
+              "$ref": "../../../special/labels.json"
+            }
+          ],
+          "description": "Additional labels for the backup objects of the CNPG cluster, merged with the root `labels`."
+        },
+        "annotations": {
+          "allOf": [
+            {
+              "$ref": "../../../special/annotations.json"
+            }
+          ],
+          "description": "Additional annotations for the backup objects of the CNPG cluster, merged with the root `annotations`."
+        },
+        "compression": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Set to `false` to disable the `bzip2` compression of the backups."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Compression of the backups."
+        },
+        "revision": {
+          "type": "string",
+          "description": "Revision appended to the `serverName` of the backup archive, so restore and backup use different archives. Must be a string. Required when `cluster.skipEmptyWalArchiveCheck` is false and both use the same archive."
+        },
+        "jobs": {
+          "type": "integer",
+          "description": "Number of parallel jobs used to upload the backups. Uses `2` when unset."
+        },
+        "manualBackups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the backup."
+              },
+              "labels": {
+                "allOf": [
+                  {
+                    "$ref": "../../../special/labels.json"
+                  }
+                ],
+                "description": "Additional labels for this manual backup, merged with `backups.labels`."
+              },
+              "annotations": {
+                "allOf": [
+                  {
+                    "$ref": "../../../special/annotations.json"
+                  }
+                ],
+                "description": "Additional annotations for this manual backup, merged with `backups.annotations`."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Configuration for `dependencies.postgresql.operator.backups.manualBackups.$item`."
+          },
+          "description": "Backups that are taken once, when they are added.",
+          "default": []
+        },
+        "instanceSidecarConfiguration": {
+          "allOf": [
+            {
+              "$ref": "instanceSidecarConfiguration.json"
+            }
+          ],
+          "description": "Settings of the Barman Cloud plugin sidecar."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Backups of the cluster, through the Barman Cloud plugin."
+    },
+    "pooler": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "default": false,
+          "description": "Enable the pooler."
+        },
+        "createRO": {
+          "type": "boolean",
+          "default": false,
+          "description": "Also create a pooler for the read-only instances."
+        },
+        "poolMode": {
+          "type": "string",
+          "default": "session",
+          "description": "Pool mode of PgBouncer, `session` or `transaction`."
+        },
+        "instances": {
+          "type": "integer",
+          "default": 2,
+          "description": "Number of pooler instances."
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "PgBouncer settings, keyed by name."
+        },
+        "labels": {
+          "allOf": [
+            {
+              "$ref": "../../../special/labels.json"
+            }
+          ],
+          "description": "Labels of the pooler.",
+          "default": {}
+        },
+        "annotations": {
+          "allOf": [
+            {
+              "$ref": "../../../special/annotations.json"
+            }
+          ],
+          "description": "Annotations of the pooler.",
+          "default": {}
+        }
+      },
+      "additionalProperties": false,
+      "description": "PgBouncer pooler in front of the cluster."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Settings of the CloudNativePG cluster that provides the `postgresql` dependency in `operator` mode. Never merged into the chart values."
+}

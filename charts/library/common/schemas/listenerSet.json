@@ -1,0 +1,119 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Enables or Disables the ListenerSet",
+        "default": false
+      },
+      "expandObjectName": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Prefix the object name with the chart fullname",
+        "default": true
+      },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "special/namespaces.json"
+          }
+        ],
+        "description": "Define the namespace for this object",
+        "default": ""
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Additional labels for ListenerSet",
+        "default": {}
+      },
+      "annotationsList": {
+        "allOf": [
+          {
+            "$ref": "special/annotationsList.json"
+          }
+        ],
+        "description": "Additional annotations as a list of name and value pairs, merged into the annotations"
+      },
+      "labelsList": {
+        "allOf": [
+          {
+            "$ref": "special/labelsList.json"
+          }
+        ],
+        "description": "Additional labels as a list of name and value pairs, merged into the labels"
+      },
+      "annotations": {
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
+        "description": "Additional annotations for ListenerSet",
+        "default": {}
+      },
+      "targetSelector": {
+        "type": [
+          "null",
+          "string"
+        ],
+        "description": "Name of a gateway in this chart to attach to. Takes the place of `parentRef`, the gateway must set `allowedListeners.namespaces.from`."
+      },
+      "parentRef": {
+        "type": "object",
+        "properties": {
+          "group": {
+            "type": "string",
+            "description": "API group of the parent Gateway.",
+            "default": "gateway.networking.k8s.io"
+          },
+          "kind": {
+            "type": "string",
+            "description": "Kind of the parent.",
+            "default": "Gateway"
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "description": "Name of the parent Gateway, supports Helm `tpl`. Required unless `targetSelector` is set."
+          },
+          "namespace": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "description": "Namespace of the parent Gateway, supports Helm `tpl`. Defaults to the namespace of the listener set."
+          }
+        },
+        "additionalProperties": false,
+        "description": "The Gateway to attach to, when `targetSelector` is not used."
+      },
+      "listeners": {
+        "type": "array",
+        "items": {
+          "$ref": "listener.json"
+        },
+        "description": "Listeners that are added to the Gateway, same format as `gateway.$name.listeners`.",
+        "minItems": 1
+      }
+    },
+    "additionalProperties": false,
+    "description": "Define ListenerSet",
+    "default": {}
+  },
+  "description": "Create Gateway API ListenerSet objects"
+}

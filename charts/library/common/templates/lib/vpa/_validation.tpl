@@ -4,14 +4,8 @@
 
   {{- $updPolicy := $objectData.updatePolicy -}}
   {{- if $updPolicy -}}
-    {{- if not (kindIs "map" $updPolicy) -}}
-      {{- fail (printf "Vertical Pod Autoscaler - Expected [vpa.%s.updatePolicy] to be a dictionary, but got [%s]" $objectData.vpaName (kindOf $updPolicy)) -}}
-    {{- end -}}
 
     {{- $validModes := list "Auto" "Off" "Initial" "Recreate" -}}
-    {{- if and $updPolicy.updateMode (not (mustHas $updPolicy.updateMode $validModes)) -}}
-      {{- fail (printf "Vertical Pod Autoscaler - Value [%s] on [vpa.%s.updatePolicy.updateMode] is not valid. Must be one of [%s]" $updPolicy.updateMode $objectData.vpaName (join ", " $validModes)) -}}
-    {{- end -}}
 
     {{- if and $updPolicy.minReplicas (le ($updPolicy.minReplicas | int) 0) -}}
       {{- fail (printf "Vertical Pod Autoscaler - Value [%v] on [vpa.%s.updatePolicy.minReplicas] must be greater than 0." $updPolicy.minReplicas $objectData.vpaName) -}}
@@ -33,17 +27,7 @@
         {{- if not (kindIs "slice" $req.resources) -}}
           {{- fail (printf "Vertical Pod Autoscaler - Value on [vpa.%s.updatePolicy.evictionRequirements.%d.resources] must be a list, but got [%s]" $objectData.vpaName $idx (kindOf $req.resources)) -}}
         {{- end -}}
-
-        {{- $validResources := (list "cpu" "memory") -}}
         {{- range $x, $r := $req.resources -}}
-          {{- if not (mustHas $r $validResources) -}}
-            {{- fail (printf "Vertical Pod Autoscaler - Value [%s] on [vpa.%s.updatePolicy.evictionRequirements.%d.resources.%d] is not valid. Must be one of [%s]" $r $objectData.vpaName $idx $x (join ", " $validResources)) -}}
-          {{- end -}}
-        {{- end -}}
-
-        {{- $validReq := (list "TargetHigherThanRequests" "TargetLowerThanRequests") -}}
-        {{- if not (mustHas $req.changeRequirement $validReq) -}}
-          {{- fail (printf "Vertical Pod Autoscaler - Value [%s] on [vpa.%s.updatePolicy.evictionRequirements.%d.changeRequirement] is not valid. Must be one of [%s]" $req.changeRequirement $objectData.vpaName $idx (join ", " $validReq)) -}}
         {{- end -}}
 
       {{- end -}}
@@ -58,23 +42,14 @@
 
     {{- $validModes := (list "Auto" "Off") -}}
     {{- range $idx, $cPol := $resPolicy.containerPolicies -}}
-      {{- if not (kindIs "map" $cPol) -}}
-        {{- fail (printf "Vertical Pod Autoscaler - Expected [vpa.%s.resourcePolicy.containerPolicies.%d] to be a dictionary, but got [%s]" $objectData.vpaName $idx (kindOf $cPol)) -}}
-      {{- end -}}
 
       {{- $validContainers := mustAppend $objectData.containerNames "*" -}}
       {{- if not (mustHas $cPol.containerName $validContainers) -}}
         {{- fail (printf "Vertical Pod Autoscaler - Value [%s] on [vpa.%s.resourcePolicy.containerPolicies.%d.containerName] is not valid. Must be one of [%s]" $cPol.containerName $objectData.vpaName $idx (join ", " $validContainers)) -}}
       {{- end -}}
 
-      {{- if and $cPol.mode (not (mustHas $cPol.mode $validModes)) -}}
-        {{- fail (printf "Vertical Pod Autoscaler - Value [%s] on [vpa.%s.resourcePolicy.containerPolicies.%d.mode] is not valid. Must be one of [%s]" $cPol.mode $objectData.vpaName $idx (join ", " $validModes)) -}}
-      {{- end -}}
 
       {{- if $cPol.controlledResources -}}
-        {{- if not (kindIs "slice" $cPol.controlledResources) -}}
-          {{- fail (printf "Vertical Pod Autoscaler - Expected [vpa.%s.resourcePolicy.containerPolicies.%d.controlledResources] to be a list, but got [%s]" $objectData.vpaName $idx (kindOf $cPol.controlledResources)) -}}
-        {{- end -}}
 
         {{- $validRes := (list "cpu" "memory") -}}
         {{- range $x, $r := $cPol.controlledResources -}}
@@ -84,12 +59,6 @@
         {{- end -}}
       {{- end -}}
 
-      {{- if $cPol.controlledValues -}}
-        {{- $validVals := (list "RequestsAndLimits" "RequestsOnly") -}}
-        {{- if not (mustHas $cPol.controlledValues $validVals) -}}
-          {{- fail (printf "Vertical Pod Autoscaler - Value [%s] on [vpa.%s.resourcePolicy.containerPolicies.%d.controlledValues] is not valid. Must be one of [%s]" $cPol.controlledValues $objectData.vpaName $idx (join ", " $validVals)) -}}
-        {{- end -}}
-      {{- end -}}
 
       {{- $data := (include "tc.v1.common.lib.resources.validation.data" .) | fromJson -}}
       {{- $regex := $data.regex -}}

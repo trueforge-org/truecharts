@@ -46,7 +46,7 @@ tests:
               sourceRange: some-source-range
     asserts:
       - failedTemplate:
-          errorMessage: Middleware (ip-allow-list) - Expected [sourceRange] to be a list, but got [string]
+          errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware1/data/sourceRange'': got string, want array'
 
   - it: should fail with invalid ipStrategy.excludedIPs
     set:
@@ -62,4 +62,4 @@ tests:
                 excludedIPs: some-excluded-ip
     asserts:
       - failedTemplate:
-          errorMessage: Middleware (ip-allow-list) - Expected [ipStrategy.excludedIPs] to be a list, but got [string]
+          errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware1/data/ipStrategy/excludedIPs'': got string, want array'

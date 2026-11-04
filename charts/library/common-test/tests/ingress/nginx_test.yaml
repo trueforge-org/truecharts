@@ -160,7 +160,7 @@ tests:
           hosts: *hosts
     asserts:
       - failedTemplate:
-          errorMessage: Ingress - Expected [integrations.nginx.ipWhitelist] to be a [slice], but got [string]
+          errorPattern: 'at ''/ingress/my-ingress1/integrations/nginx/ipWhitelist'': got string, want array'
 
   - it: should fail with auth.type not a valid type
     set:

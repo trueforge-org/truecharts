@@ -1,0 +1,165 @@
+suite: metrics prometheusrule test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render the groups and additional groups
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      metrics:
+        main:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            enabled: true
+            groups:
+              somegroup:
+                rules:
+                  - alert: SomeAlert
+                    expr: up == 0
+                additionalrules:
+                  - alert: OtherAlert
+                    expr: up == 1
+            additionalgroups:
+              - name: anothergroup
+                rules:
+                  - alert: ThirdAlert
+                    expr: up == 2
+    asserts:
+      - documentSelector: &rule
+          path: kind
+          value: PrometheusRule
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentSelector: *rule
+        isAPIVersion:
+          of: monitoring.coreos.com/v1
+      - documentSelector: *rule
+        equal:
+          path: spec.groups
+          value:
+            - name: test-release-name-common-test-somegroup
+              rules:
+                - alert: SomeAlert
+                  expr: up == 0
+                - alert: OtherAlert
+                  expr: up == 1
+            - name: test-release-name-common-test-anothergroup
+              rules:
+                - alert: ThirdAlert
+                  expr: up == 2
+
+  - it: should render the rules directly under prometheusRule as a group
+    set:
+      service: *service
+      metrics:
+        main:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            enabled: true
+            rules:
+              - alert: SomeAlert
+                expr: up == 0
+                for: 5m
+            groups:
+              somegroup:
+                rules:
+                  - alert: OtherAlert
+                    expr: up == 1
+    asserts:
+      - documentSelector: *rule
+        equal:
+          path: spec.groups
+          value:
+            - name: test-release-name-common-test
+              rules:
+                - alert: SomeAlert
+                  expr: up == 0
+                  for: 5m
+            - name: test-release-name-common-test-somegroup
+              rules:
+                - alert: OtherAlert
+                  expr: up == 1
+
+  - it: should apply the labels and annotations of prometheusRule on top of the ones of the metrics
+    set:
+      service: *service
+      metrics:
+        main:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          labels:
+            shared: from-metrics
+            metrics-only: metrics
+          annotations:
+            metrics-annotation: metrics
+          prometheusRule:
+            enabled: true
+            labels:
+              shared: from-rule
+              release: prometheus
+            annotations:
+              rule-annotation: rule
+            rules:
+              - alert: SomeAlert
+                expr: up == 0
+    asserts:
+      - documentSelector: *rule
+        equal:
+          path: metadata.labels.shared
+          value: from-rule
+      - documentSelector: *rule
+        equal:
+          path: metadata.labels.release
+          value: prometheus
+      - documentSelector: *rule
+        equal:
+          path: metadata.labels.metrics-only
+          value: metrics
+      - documentSelector: *rule
+        equal:
+          path: metadata.annotations.rule-annotation
+          value: rule
+      - documentSelector: *rule
+        equal:
+          path: metadata.annotations.metrics-annotation
+          value: metrics
+
+  - it: should not render a PrometheusRule without rules
+    set:
+      service: *service
+      metrics:
+        main:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            enabled: true
+            rules: []
+            groups:
+              somegroup:
+                rules: []
+    asserts:
+      - containsDocument:
+          kind: PrometheusRule
+          apiVersion: monitoring.coreos.com/v1
+        not: true
