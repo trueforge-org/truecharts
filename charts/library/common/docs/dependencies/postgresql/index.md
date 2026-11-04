@@ -905,7 +905,7 @@ Define persistence objects
 | Helm `tpl` | ❌                                    |
 | Default    | unset                                 |
 
-See [Persistence](../../persistence/) for full configuration.
+See [Persistence](../../persistence.md) for full configuration.
 
 ---
 

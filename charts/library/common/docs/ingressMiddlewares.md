@@ -1,31 +1,45 @@
 ---
-title: Traefik
+title: Ingressmiddlewares
 ---
 
 :::note
 
 - This page is generated from JSON schema.
-- See the [Full Examples](/truecharts-common/ingressMiddlewares/middlewares/traefik#full-examples) section for complete examples.
+- See the [Full Examples](/truecharts-common/ingressMiddlewares#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.ingressMiddlewares.middlewares.traefik`
+- `.Values.ingressMiddlewares`
 
 ---
 
-## `ingressMiddlewares.middlewares.traefik`
+## `ingressMiddlewares`
 
-Configuration for `ingressMiddlewares.middlewares.traefik`.
+Create Middleware objects
 
-| Field      | Value                                    |
-| ---------- | ---------------------------------------- |
-| Key        | `ingressMiddlewares.middlewares.traefik` |
-| Type       | `map`                                    |
-| Required   | ❌                                       |
-| Helm `tpl` | ❌                                       |
-| Default    | unset                                    |
+| Field      | Value                |
+| ---------- | -------------------- |
+| Key        | `ingressMiddlewares` |
+| Type       | `map`                |
+| Required   | ❌                   |
+| Helm `tpl` | ❌                   |
+| Default    | unset                |
+
+---
+
+### `ingressMiddlewares.traefik`
+
+Traefik middlewares, keyed by name.
+
+| Field      | Value                        |
+| ---------- | ---------------------------- |
+| Key        | `ingressMiddlewares.traefik` |
+| Type       | `map`                        |
+| Required   | ❌                           |
+| Helm `tpl` | ❌                           |
+| Default    | unset                        |
 
 ---
 
@@ -55,7 +69,33 @@ ingressMiddlewares:
         maxRequestBodyBytes: 1024
 ```
 
-### add-prefix
+### Traefik middlewares
+
+```yaml
+ingressMiddlewares:
+  traefik:
+    middleware-name:
+      enabled: true
+      type: buffering
+      expandObjectName: false
+      labels:
+        key: value
+        keytpl: "{{ .Values.some.value }}"
+      annotations:
+        key: value
+        keytpl: "{{ .Values.some.value }}"
+      data:
+        maxRequestBodyBytes: 1024
+
+    other-middleware-name:
+      enabled: true
+      type: buffering
+      namespace: some-namespace
+      data:
+        maxRequestBodyBytes: 1024
+```
+
+#### add-prefix
 
 ```yaml
 ingressMiddlewares:
@@ -67,7 +107,7 @@ ingressMiddlewares:
         prefix: some-prefix
 ```
 
-### basic-auth
+#### basic-auth
 
 ```yaml
 ingressMiddlewares:
@@ -86,7 +126,7 @@ ingressMiddlewares:
         secret: some-secret
 ```
 
-### buffering
+#### buffering
 
 ```yaml
 ingressMiddlewares:
@@ -102,7 +142,7 @@ ingressMiddlewares:
         retryExpression: "some-expression"
 ```
 
-### chain
+#### chain
 
 ```yaml
 ingressMiddlewares:
@@ -117,7 +157,7 @@ ingressMiddlewares:
             expandObjectName: false
 ```
 
-### compress
+#### compress
 
 ```yaml
 ingressMiddlewares:
@@ -127,7 +167,7 @@ ingressMiddlewares:
       type: compress
 ```
 
-### content-type
+#### content-type
 
 ```yaml
 ingressMiddlewares:
@@ -137,7 +177,7 @@ ingressMiddlewares:
       type: content-type
 ```
 
-### forward-auth
+#### forward-auth
 
 ```yaml
 ingressMiddlewares:
@@ -157,7 +197,7 @@ ingressMiddlewares:
           insecureSkipVerify: true
 ```
 
-### headers
+#### headers
 
 ```yaml
 ingressMiddlewares:
@@ -216,7 +256,7 @@ ingressMiddlewares:
         isDevelopment: true
 ```
 
-### ip-allow-list
+#### ip-allow-list
 
 ```yaml
 ingressMiddlewares:
@@ -233,7 +273,7 @@ ingressMiddlewares:
             - some-excluded-ip
 ```
 
-### plugin-bouncer
+#### plugin-bouncer
 
 ```yaml
 ingressMiddlewares:
@@ -295,7 +335,7 @@ ingressMiddlewares:
         banHTMLFilePath: /ban.html
 ```
 
-### plugin-geoblock
+#### plugin-geoblock
 
 ```yaml
 ingressMiddlewares:
@@ -322,7 +362,7 @@ ingressMiddlewares:
           - some-other-country
 ```
 
-### plugin-mod-security
+#### plugin-mod-security
 
 ```yaml
 ingressMiddlewares:
@@ -337,7 +377,7 @@ ingressMiddlewares:
         maxBodySize: 1024
 ```
 
-### plugin-real-ip
+#### plugin-real-ip
 
 ```yaml
 ingressMiddlewares:
@@ -352,7 +392,7 @@ ingressMiddlewares:
           - some-other-excluded-net
 ```
 
-### plugin-rewrite-response-headers
+#### plugin-rewrite-response-headers
 
 ```yaml
 ingressMiddlewares:
@@ -371,7 +411,7 @@ ingressMiddlewares:
             replacement: some-other-replacement
 ```
 
-### plugin-theme-park
+#### plugin-theme-park
 
 ```yaml
 ingressMiddlewares:
@@ -389,7 +429,7 @@ ingressMiddlewares:
           - some-other-addon
 ```
 
-### rate-limit
+#### rate-limit
 
 ```yaml
 ingressMiddlewares:
@@ -402,7 +442,7 @@ ingressMiddlewares:
         burst: 1000
 ```
 
-### redirect-regex
+#### redirect-regex
 
 ```yaml
 ingressMiddlewares:
@@ -416,7 +456,7 @@ ingressMiddlewares:
         permanent: true
 ```
 
-### redirect-scheme
+#### redirect-scheme
 
 ```yaml
 ingressMiddlewares:
@@ -429,7 +469,7 @@ ingressMiddlewares:
         permanent: true
 ```
 
-### replace-path-regex
+#### replace-path-regex
 
 ```yaml
 ingressMiddlewares:
@@ -442,7 +482,7 @@ ingressMiddlewares:
         replacement: /some-replacement
 ```
 
-### replace-path
+#### replace-path
 
 ```yaml
 ingressMiddlewares:
@@ -454,7 +494,7 @@ ingressMiddlewares:
         path: /some-path
 ```
 
-### retry
+#### retry
 
 ```yaml
 ingressMiddlewares:
@@ -467,7 +507,7 @@ ingressMiddlewares:
         initialInterval: 1000
 ```
 
-### strip-prefix-regex
+#### strip-prefix-regex
 
 ```yaml
 ingressMiddlewares:
@@ -481,7 +521,7 @@ ingressMiddlewares:
           - some-other-regex
 ```
 
-### strip-prefix
+#### strip-prefix
 
 ```yaml
 ingressMiddlewares:

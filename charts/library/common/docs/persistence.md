@@ -860,12 +860,6 @@ Define persistence objects
 
 ---
 
-## Child Pages
-
-- [Pvc Vct](pvc-vct.md) - Configuration for `persistence.pvc-vct`.
-
----
-
 ## Full Examples
 
 ### hostPath

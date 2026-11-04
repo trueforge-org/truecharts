@@ -680,7 +680,7 @@ Create Middleware objects.
 | Helm `tpl` | ❌                          |
 | Default    | unset                       |
 
-See [Ingressmiddlewares](ingressMiddlewares/) for full configuration.
+See [Ingressmiddlewares](ingressMiddlewares.md) for full configuration.
 
 ---
 
@@ -926,7 +926,7 @@ Define persistence objects
 | Helm `tpl` | ❌                   |
 | Default    | unset                |
 
-See [Persistence](persistence/) for full configuration.
+See [Persistence](persistence.md) for full configuration.
 
 ---
 
