@@ -44,7 +44,7 @@ tests:
           labels: "not a dict"
     asserts:
       - failedTemplate:
-          errorMessage: Pod Disruption Budget - Expected [labels] to be a dictionary, but got [string]
+          errorPattern: 'at ''/podDisruptionBudget/my-poddisruptionbudget/labels'': got string, want object'
 
   - it: should fail with annotations not a dict
     set:
@@ -55,7 +55,7 @@ tests:
           annotations: "not a dict"
     asserts:
       - failedTemplate:
-          errorMessage: Pod Disruption Budget - Expected [annotations] to be a dictionary, but got [string]
+          errorPattern: 'at ''/podDisruptionBudget/my-poddisruptionbudget/annotations'': got string, want object'
 
   - it: should fail with not valid unhealthyPodEvictionPolicy
     set:
@@ -67,7 +67,7 @@ tests:
           unhealthyPodEvictionPolicy: "not valid"
     asserts:
       - failedTemplate:
-          errorMessage: Pod Disruption Budget - Expected [unhealthyPodEvictionPolicy] to be one of [IfHealthyBudget, AlwaysAllow], but got [not valid]
+          errorPattern: 'at ''/podDisruptionBudget/my-poddisruptionbudget/unhealthyPodEvictionPolicy'': value must be one of ''IfHealthyBudget'', ''AlwaysAllow'''
 
   - it: should fail with empty minAvailable
     set:
@@ -78,7 +78,7 @@ tests:
           minAvailable:
     asserts:
       - failedTemplate:
-          errorMessage: Pod Disruption Budget - Expected the defined key [minAvailable] in [podDisruptionBudget.my-poddisruptionbudget] to not be empty
+          errorPattern: 'at ''/podDisruptionBudget/my-poddisruptionbudget/minAvailable'': got null, want integer or string'
 
   - it: should fail with empty maxUnavailable
     set:
@@ -89,7 +89,7 @@ tests:
           maxUnavailable:
     asserts:
       - failedTemplate:
-          errorMessage: Pod Disruption Budget - Expected the defined key [maxUnavailable] in [podDisruptionBudget.my-poddisruptionbudget] to not be empty
+          errorPattern: 'at ''/podDisruptionBudget/my-poddisruptionbudget/maxUnavailable'': got null, want integer or string'
 
   - it: should fail without at least one key defined
     set:
@@ -109,7 +109,7 @@ tests:
           targetSelector: my-pod
     asserts:
       - failedTemplate:
-          errorMessage: Pod Disruption Budget - Expected the defined key [enabled] in [podDisruptionBudget.my-poddisruptionbudget] to not be empty
+          errorPattern: 'at ''/podDisruptionBudget/my-poddisruptionbudget/enabled'': got null, want boolean or string'
 
   - it: should fail with pod targetSelector not a string
     set:
@@ -120,7 +120,7 @@ tests:
             pod: "not a string"
     asserts:
       - failedTemplate:
-          errorMessage: Pod Disruption Budget - Expected [targetSelector] to be [string], but got [map]
+          errorPattern: 'at ''/podDisruptionBudget/my-poddisruptionbudget/targetSelector'': got object, want string'
 
   - it: should fail without either targetSelector or customLabels
     set:

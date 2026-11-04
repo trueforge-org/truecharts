@@ -178,7 +178,7 @@ tests:
           reclaimPolicy: invalid
     asserts:
       - failedTemplate:
-          errorMessage: Storage Class - Expected [reclaimPolicy] to be one of [Retain, Delete], but got [invalid]
+          errorPattern: 'at ''/storageClass/example1/reclaimPolicy'': value must be one of ''Delete'', ''Retain'''
 
   - it: should fail with invalid volumeBindingMode
     set:
@@ -189,4 +189,4 @@ tests:
           volumeBindingMode: invalid
     asserts:
       - failedTemplate:
-          errorMessage: Storage Class - Expected [volumeBindingMode] to be one of [WaitForFirstConsumer, Immediate], but got [invalid]
+          errorPattern: 'at ''/storageClass/example1/volumeBindingMode'': value must be one of ''Immediate'', ''WaitForFirstConsumer'''

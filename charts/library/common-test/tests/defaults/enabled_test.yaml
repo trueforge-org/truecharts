@@ -75,4 +75,4 @@ tests:
           primary: true
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Expected the key [enabled] in [persistence.persistence-name] to exist
+          errorPattern: 'at ''/persistence/persistence-name'': additional properties ''primary'' not allowed'

@@ -54,6 +54,20 @@
 
   {{- end -}}
 
+  {{/* Same for routes */}}
+  {{- range $routeName, $route := $.Values.route -}}
+    {{- if ne (include "tc.v1.common.lib.gateway.enabled" (dict "rootCtx" $ "objectData" $route "name" $routeName "key" "route" "caller" "Route")) "true" -}}{{- continue -}}{{- end -}}
+    {{- $integrations := $route.integrations | default dict -}}
+    {{- $traefik := $integrations.traefik | default dict -}}
+    {{- if not $traefik.enabled -}}{{- continue -}}{{- end -}}
+
+    {{- $hasIngressEnabled = true -}}
+    {{- range $mw := (concat ($traefik.middlewares | default list) ($traefik.chartMiddlewares | default list)) -}}
+      {{- if $mw.namespace -}}{{- continue -}}{{- end -}}
+      {{- $_ := set $filteredMiddlewares $mw.name "user-mw" -}}
+    {{- end -}}
+  {{- end -}}
+
   {{- if $hasIngressEnabled -}}
     {{/* Global Middlewares */}}
     {{- range $mw := $.Values.global.traefik.commonMiddlewares -}}
@@ -105,7 +119,6 @@
       {{/* Perform validations */}} {{/* Middleware have a max name length of 253 */}}
       {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $objectName "length" 253) -}}
       {{- include "tc.v1.common.lib.traefik.middleware.validation" (dict "objectData" $objectData) -}}
-      {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" "Middleware") -}}
 
       {{/* Set the name of the middleware */}}
       {{- $_ := set $objectData "name" $objectName -}}

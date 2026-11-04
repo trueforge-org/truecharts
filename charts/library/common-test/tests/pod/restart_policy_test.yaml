@@ -150,7 +150,7 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorMessage: Expected [restartPolicy] to be one of [Never, Always, OnFailure] but got [invalid]
+          errorPattern: 'at ''/podOptions/restartPolicy'': value must be one of '''', ''Never'', ''Always'', ''OnFailure'''
 
   - it: should fail with restartPolicy to invalid-policy on pod
     set:
@@ -165,4 +165,4 @@ tests:
             restartPolicy: invalid-policy
     asserts:
       - failedTemplate:
-          errorMessage: Expected [restartPolicy] to be one of [Never, Always, OnFailure] but got [invalid-policy]
+          errorPattern: 'at ''/podOptions/restartPolicy'': value must be one of '''', ''Never'', ''Always'', ''OnFailure'''

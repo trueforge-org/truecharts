@@ -1,11 +1,11 @@
 ---
-title: Volume Snapshot Class
+title: Volumesnapshotclass
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/volumesnapshotclass#full-examples) section for complete examples.
+- This page is generated from JSON schema.
+- See the [Full Examples](/truecharts-common/volumeSnapshotClass#full-examples) section for complete examples.
 
 :::
 
@@ -19,97 +19,107 @@ title: Volume Snapshot Class
 
 Define a volume snapshot class
 
-|            |                       |
+| Field      | Value                 |
 | ---------- | --------------------- |
 | Key        | `volumeSnapshotClass` |
 | Type       | `map`                 |
 | Required   | ❌                    |
 | Helm `tpl` | ❌                    |
-| Default    | `{}`                  |
-
-Example
-
-```yaml
-volumeSnapshotClass: {}
-```
+| Default    | unset                 |
 
 ---
 
-### `$name`
-
-Define a volume snapshot class
-
-|            |                             |
-| ---------- | --------------------------- |
-| Key        | `volumeSnapshotClass.$name` |
-| Type       | `map`                       |
-| Required   | ❌                          |
-| Helm `tpl` | ❌                          |
-| Default    | `{}`                        |
-
-Example
-
-```yaml
-volumeSnapshotClass:
-  example1: {}
-```
-
----
-
-#### `labels`
-
-Define the labels of the volume snapshot class
-
-|            |                                    |
-| ---------- | ---------------------------------- |
-| Key        | `volumeSnapshotClass.$name.labels` |
-| Type       | `map`                              |
-| Required   | ❌                                 |
-| Helm `tpl` | ✅ (On value only)                 |
-| Default    | `{}`                               |
-
-Example
-
-```yaml
-volumeSnapshotClass:
-  example1:
-    labels:
-      key: value
-```
-
----
-
-#### `annotations`
+### `volumeSnapshotClass.$name.annotations`
 
 Define the annotations of the volume snapshot class
 
-|            |                                         |
+| Field      | Value                                   |
 | ---------- | --------------------------------------- |
 | Key        | `volumeSnapshotClass.$name.annotations` |
 | Type       | `map`                                   |
 | Required   | ❌                                      |
-| Helm `tpl` | ✅ (On value only)                      |
+| Helm `tpl` | ✅ (On value only)                       |
 | Default    | `{}`                                    |
 
 Example
 
 ```yaml
 volumeSnapshotClass:
-  example1:
+  $name:
     annotations:
-      key: value
+      {}
 ```
 
 ---
 
-#### `enabled`
+### `volumeSnapshotClass.$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                                       |
+| ---------- | ------------------------------------------- |
+| Key        | `volumeSnapshotClass.$name.annotationsList` |
+| Type       | `list of map`                               |
+| Required   | ❌                                          |
+| Helm `tpl` | ❌                                          |
+| Default    | unset                                       |
+
+---
+
+### `volumeSnapshotClass.$name.deletionPolicy`
+
+Define the deletion policy of the volume snapshot class
+
+| Field      | Value                                      |
+| ---------- | ------------------------------------------ |
+| Key        | `volumeSnapshotClass.$name.deletionPolicy` |
+| Type       | `string`                                   |
+| Required   | ❌                                         |
+| Helm `tpl` | ❌                                         |
+| Default    | `"Retain"`                                 |
+| Enum       | `Retain`, `Delete`                         |
+
+Example
+
+```yaml
+volumeSnapshotClass:
+  $name:
+    deletionPolicy: Retain
+```
+
+---
+
+### `volumeSnapshotClass.$name.driver`
+
+Define the driver of the volume snapshot class
+
+| Field      | Value                              |
+| ---------- | ---------------------------------- |
+| Key        | `volumeSnapshotClass.$name.driver` |
+| Type       | `string`                           |
+| Required   | ✅                                 |
+| Helm `tpl` | ✅                                 |
+| Default    | `""`                               |
+| Min Length | `1`                                |
+
+Example
+
+```yaml
+volumeSnapshotClass:
+  $name:
+    driver: ""
+```
+
+---
+
+### `volumeSnapshotClass.$name.enabled`
 
 Enable volume snapshot class
 
-|            |                                     |
+| Field      | Value                               |
 | ---------- | ----------------------------------- |
 | Key        | `volumeSnapshotClass.$name.enabled` |
-| Type       | `bool`                              |
+| Type       | `boolean, string`                   |
 | Required   | ✅                                  |
 | Helm `tpl` | ✅                                  |
 | Default    | `false`                             |
@@ -118,20 +128,20 @@ Example
 
 ```yaml
 volumeSnapshotClass:
-  example1:
-    enabled: true
+  $name:
+    enabled: false
 ```
 
 ---
 
-#### `isDefault`
+### `volumeSnapshotClass.$name.isDefault`
 
 Sets the annotation `snapshot.storage.kubernetes.io/is-default-class` to `"true"` or `"false"`
 
-|            |                                       |
+| Field      | Value                                 |
 | ---------- | ------------------------------------- |
 | Key        | `volumeSnapshotClass.$name.isDefault` |
-| Type       | `bool`                                |
+| Type       | `boolean`                             |
 | Required   | ❌                                    |
 | Helm `tpl` | ❌                                    |
 | Default    | `false`                               |
@@ -140,75 +150,68 @@ Example
 
 ```yaml
 volumeSnapshotClass:
-  example1:
-    isDefault: true
+  $name:
+    isDefault: false
 ```
 
 ---
 
-#### `driver`
+### `volumeSnapshotClass.$name.labels`
 
-Define the driver of the volume snapshot class
+Define the labels of the volume snapshot class
 
-|            |                                    |
+| Field      | Value                              |
 | ---------- | ---------------------------------- |
-| Key        | `volumeSnapshotClass.$name.driver` |
-| Type       | `string`                           |
-| Required   | ✅                                 |
-| Helm `tpl` | ✅                                 |
-| Default    | `""`                               |
+| Key        | `volumeSnapshotClass.$name.labels` |
+| Type       | `map`                              |
+| Required   | ❌                                 |
+| Helm `tpl` | ✅ (On value only)                  |
+| Default    | `{}`                               |
 
 Example
 
 ```yaml
 volumeSnapshotClass:
-  example1:
-    driver: csi-hostpath-snapshots
+  $name:
+    labels:
+      {}
 ```
 
 ---
 
-#### `deletionPolicy`
+### `volumeSnapshotClass.$name.labelsList`
 
-Define the deletion policy of the volume snapshot class
+Additional labels as a list of name and value pairs, merged into the labels
 
-|            |                                            |
-| ---------- | ------------------------------------------ |
-| Key        | `volumeSnapshotClass.$name.deletionPolicy` |
-| Type       | `string`                                   |
-| Required   | ❌                                         |
-| Helm `tpl` | ❌                                         |
-| Default    | `Retain`                                   |
-
-Example
-
-```yaml
-volumeSnapshotClass:
-  example1:
-    deletionPolicy: Delete
-```
+| Field      | Value                                  |
+| ---------- | -------------------------------------- |
+| Key        | `volumeSnapshotClass.$name.labelsList` |
+| Type       | `list of map`                          |
+| Required   | ❌                                     |
+| Helm `tpl` | ❌                                     |
+| Default    | unset                                  |
 
 ---
 
-#### `parameters`
+### `volumeSnapshotClass.$name.parameters`
 
-Define the parameters of the volume snapshot class
+Define a volume snapshot class
 
-|            |                                        |
+| Field      | Value                                  |
 | ---------- | -------------------------------------- |
 | Key        | `volumeSnapshotClass.$name.parameters` |
-| Type       | `map`                                  |
+| Type       | `map, string`                          |
 | Required   | ❌                                     |
-| Helm `tpl` | ✅ (On both key and value)             |
+| Helm `tpl` | ✅ (On both key and value)              |
 | Default    | `{}`                                   |
 
 Example
 
 ```yaml
 volumeSnapshotClass:
-  example1:
+  $name:
     parameters:
-      key: value
+      {}
 ```
 
 ---

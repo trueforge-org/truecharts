@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "default": false,
+      "description": "Enable the code-server addon."
+    },
+    "targetSelector": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Workloads to which the code-server addon is attached. Defaults to `main`."
+    },
+    "container": {
+      "allOf": [
+        {
+          "$ref": "container.json"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "env": {
+              "$ref": "codeserver/container/env.json",
+              "description": "Environment variables of the code-server container."
+            }
+          }
+        }
+      ],
+      "description": "Container of the code-server add-on."
+    },
+    "service": {
+      "anyOf": [
+        {
+          "$ref": "../service/service.json#/additionalProperties"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "$ref": "../service/service.json#/additionalProperties/properties/enabled",
+              "description": "Enable the object of the add-on."
+            }
+          },
+          "additionalProperties": {
+            "$ref": "../service/service.json#/additionalProperties"
+          },
+          "description": "Named Service objects of the code-server addon, next to `enabled`."
+        }
+      ],
+      "description": "Service of the code-server addon. Either one Service object, or named Service objects next to `enabled`."
+    },
+    "ingress": {
+      "anyOf": [
+        {
+          "allOf": [
+            {
+              "$ref": "../ingress/ingress.json#/additionalProperties"
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "$ref": "../ingress/ingress.json#/additionalProperties/properties/enabled",
+              "description": "Enable the object of the add-on."
+            }
+          },
+          "additionalProperties": {
+            "$ref": "../ingress/ingress.json#/additionalProperties"
+          },
+          "description": "Named Ingress objects of the code-server addon, next to `enabled`."
+        }
+      ],
+      "description": "Ingress of the code-server addon. Either one Ingress object, or named Ingress objects next to `enabled`."
+    },
+    "route": {
+      "allOf": [
+        {
+          "$ref": "../route.json#/additionalProperties"
+        }
+      ],
+      "description": "Gateway API route of the code-server addon, the same as a `route.<name>` of the chart. It defaults to the `codeserver` service and port, and is the primary route when no other route is primary. Select the gateway with `gateway`, `parentRefs` or `listenerSet`."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Configuration for the code-server addon."
+}

@@ -1,0 +1,233 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "additionalContainerArgs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Extra command-line arguments appended to the sidecar container. Do not set `--log-level` here, use `logLevel`."
+    },
+    "env": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the environment variable."
+          },
+          "value": {
+            "type": "string",
+            "description": "Value of the environment variable. Cannot be used together with `valueFrom`."
+          },
+          "valueFrom": {
+            "type": "object",
+            "properties": {
+              "configMapKeyRef": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "description": "The key to select from the ConfigMap."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the ConfigMap."
+                  },
+                  "optional": {
+                    "type": "boolean",
+                    "description": "Whether the ConfigMap or its key must exist."
+                  }
+                },
+                "required": [
+                  "key"
+                ],
+                "additionalProperties": false,
+                "description": "Selects a key of a ConfigMap."
+              },
+              "fieldRef": {
+                "type": "object",
+                "properties": {
+                  "apiVersion": {
+                    "type": "string",
+                    "description": "Version of the schema the field path is written in, defaults to `v1`."
+                  },
+                  "fieldPath": {
+                    "type": "string",
+                    "description": "Path of the Pod field to select."
+                  }
+                },
+                "required": [
+                  "fieldPath"
+                ],
+                "additionalProperties": false,
+                "description": "Selects a field of the Pod."
+              },
+              "fileKeyRef": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "description": "The key within the env file."
+                  },
+                  "optional": {
+                    "type": "boolean",
+                    "description": "Whether the file or its key must exist."
+                  },
+                  "path": {
+                    "type": "string",
+                    "description": "Path within the volume to select the file from. Must be relative."
+                  },
+                  "volumeName": {
+                    "type": "string",
+                    "description": "Name of the volume mount containing the env file."
+                  }
+                },
+                "required": [
+                  "key",
+                  "path",
+                  "volumeName"
+                ],
+                "additionalProperties": false,
+                "description": "Selects a key of an env file."
+              },
+              "resourceFieldRef": {
+                "type": "object",
+                "properties": {
+                  "containerName": {
+                    "type": "string",
+                    "description": "Container name, optional for env vars."
+                  },
+                  "divisor": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ],
+                    "description": "Output format of the exposed resource, defaults to `1`."
+                  },
+                  "resource": {
+                    "type": "string",
+                    "description": "Resource to select, such as `limits.cpu` or `requests.memory`."
+                  }
+                },
+                "required": [
+                  "resource"
+                ],
+                "additionalProperties": false,
+                "description": "Selects a resource of the container."
+              },
+              "secretKeyRef": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "description": "The key of the Secret to select from."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the Secret."
+                  },
+                  "optional": {
+                    "type": "boolean",
+                    "description": "Whether the Secret or its key must exist."
+                  }
+                },
+                "required": [
+                  "key"
+                ],
+                "additionalProperties": false,
+                "description": "Selects a key of a Secret."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Source for the environment variable's value. Cannot be used if `value` is set."
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Environment variables passed to the sidecar container."
+    },
+    "logLevel": {
+      "type": "string",
+      "enum": [
+        "error",
+        "warning",
+        "info",
+        "debug",
+        "trace"
+      ],
+      "description": "Log level of the PostgreSQL instance sidecar."
+    },
+    "resources": {
+      "type": "object",
+      "properties": {
+        "claims": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of a resource from `spec.resourceClaims` used by the sidecar container."
+              },
+              "request": {
+                "type": "string",
+                "description": "Name of the request in the referenced claim."
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false
+          },
+          "description": "Resource claims used by the sidecar container."
+        },
+        "limits": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "description": "Maximum compute resources allowed for the sidecar container, such as `cpu` or `memory`."
+        },
+        "requests": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "description": "Minimum compute resources required by the sidecar container, such as `cpu` or `memory`."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Compute resources of the sidecar container that runs in the instance pods."
+    },
+    "retentionPolicyIntervalSeconds": {
+      "type": "integer",
+      "description": "Interval in seconds at which the sidecar checks and enforces retention policies."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Configuration of the sidecar that runs in the CNPG instance pods. Passed verbatim to the `instanceSidecarConfiguration` of the CNPG ObjectStore."
+}

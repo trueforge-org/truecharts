@@ -22,7 +22,7 @@ tests:
             enabled: false
             type: buffering
             data:
-              foo: bar
+              maxRequestBodyBytes: 1024
       service:
         my-service:
           enabled: true
@@ -71,7 +71,7 @@ tests:
             enabled: false
             type: buffering
             data:
-              foo: bar
+              maxRequestBodyBytes: 1024
     asserts:
       - hasDocuments:
           count: 0
@@ -87,7 +87,7 @@ tests:
             enabled: false
             type: buffering
             data:
-              foo: bar
+              maxRequestBodyBytes: 1024
       service:
         my-service:
           enabled: true
@@ -134,7 +134,7 @@ tests:
             enabled: false
             type: buffering
             data:
-              foo: bar
+              maxRequestBodyBytes: 1024
       service:
         my-service:
           enabled: true

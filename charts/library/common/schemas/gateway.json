@@ -1,0 +1,189 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Enable the Gateway.",
+        "default": false
+      },
+      "primary": {
+        "type": "boolean",
+        "description": "Make this the primary Gateway."
+      },
+      "namespace": {
+        "type": "string",
+        "description": "Namespace of the Gateway."
+      },
+      "nameOverride": {
+        "type": "string",
+        "description": "Suffix of the name, instead of the name of the object."
+      },
+      "annotations": {
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
+        "description": "Additional annotations, keyed by name."
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Additional labels, keyed by name."
+      },
+      "gatewayClassName": {
+        "type": "string",
+        "description": "The name of the GatewayClass resource that this Gateway references.",
+        "examples": [
+          "traefik"
+        ]
+      },
+      "targetSelector": {
+        "type": "string",
+        "description": "Name-based selector for automatic GatewayClass linking. When set, automatically references the specified `gatewayClass.$name`.",
+        "examples": [
+          "main"
+        ]
+      },
+      "addresses": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "Type of the address, like `IPAddress` or `Hostname`. Defaults to `IPAddress` in Gateway API."
+            },
+            "value": {
+              "type": "string",
+              "description": "The address value, like an IP address or a hostname."
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "additionalProperties": false,
+          "description": "A requested address for the gateway."
+        },
+        "description": "Requested addresses for the gateway. Passed as is."
+      },
+      "infrastructure": {
+        "type": "object",
+        "description": "Infrastructure settings of the gateway. Passed as is.",
+        "properties": {
+          "annotations": {
+            "allOf": [
+              {
+                "$ref": "special/annotations.json"
+              }
+            ],
+            "description": "Annotations for the resources created for the gateway."
+          },
+          "labels": {
+            "allOf": [
+              {
+                "$ref": "special/labels.json"
+              }
+            ],
+            "description": "Labels for the resources created for the gateway."
+          },
+          "parametersRef": {
+            "type": "object",
+            "properties": {
+              "group": {
+                "type": "string",
+                "description": "API group of the parameters resource."
+              },
+              "kind": {
+                "type": "string",
+                "description": "Kind of the parameters resource."
+              },
+              "name": {
+                "type": "string",
+                "description": "Name of the parameters resource."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Implementation specific parameters of the gateway."
+          }
+        },
+        "additionalProperties": false
+      },
+      "allowedListeners": {
+        "type": "object",
+        "properties": {
+          "namespaces": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "type": "string",
+                "enum": [
+                  "All",
+                  "Selector",
+                  "Same",
+                  "None"
+                ],
+                "description": "Namespaces from which ListenerSets may attach. Valid options are All, Selector, Same, and None.",
+                "default": "None"
+              },
+              "selector": {
+                "allOf": [
+                  {
+                    "$ref": "special/labelSelector.json"
+                  }
+                ],
+                "description": "Namespace selector used when `from` is `Selector`."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Namespaces from which ListenerSets may attach."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Configure `namespaces.from` as `Same`, `All`, `Selector`, or `None` to control which ListenerSets may attach. Set `namespaces.selector` when `from` is `Selector`."
+      },
+      "tls": {
+        "type": "object",
+        "description": "Gateway wide TLS settings. Passed as is.",
+        "properties": {
+          "frontend": {
+            "type": "object",
+            "description": "TLS settings for connections from clients, passed on as is.",
+            "additionalProperties": {
+              "description": "A setting passed on as is."
+            }
+          },
+          "backend": {
+            "type": "object",
+            "description": "TLS settings for connections to backends, passed on as is.",
+            "additionalProperties": {
+              "description": "A setting passed on as is."
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "listeners": {
+        "type": "array",
+        "items": {
+          "$ref": "listener.json"
+        },
+        "description": "Array of listener definitions that define the network ports and protocols the Gateway listens on.\n\nEach listener must specify:\n- `name`: Unique name for the listener\n- `port`: Network port to listen on\n- `protocol`: Protocol (HTTP, HTTPS, TCP, TLS, UDP)\n- `hostname`: Optional hostname filter\n- `tls`: Optional TLS configuration\n- `allowedRoutes`: Optional configuration for which routes can attach"
+      }
+    },
+    "additionalProperties": false,
+    "description": "Configuration for `gateway.main`.",
+    "default": {}
+  },
+  "description": "Configuration for `gateway`."
+}

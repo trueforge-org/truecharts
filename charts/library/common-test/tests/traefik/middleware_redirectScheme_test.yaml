@@ -52,4 +52,4 @@ tests:
               permanent: some-value
     asserts:
       - failedTemplate:
-          errorMessage: Middleware (redirect-scheme) - Expected [permanent] to be a boolean, but got [string]
+          errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware1/data/permanent'': got string, want boolean'

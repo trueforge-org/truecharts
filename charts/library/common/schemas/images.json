@@ -1,0 +1,264 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "codeserverImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `codeserverImage`."
+    },
+    "gluetunImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `gluetunImage`."
+    },
+    "kubectlImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `kubectlImage`."
+    },
+    "mariadbClientImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `mariadbClientImage`."
+    },
+    "mongodbClientImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `mongodbClientImage`."
+    },
+    "netshootImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `netshootImage`."
+    },
+    "postgres15Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `postgres15Image`."
+    },
+    "postgres16Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `postgres16Image`."
+    },
+    "postgres17Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `postgres17Image`."
+    },
+    "postgres18Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `postgres18Image`."
+    },
+    "postgresClientImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `postgresClientImage`."
+    },
+    "postgresql18Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `postgresql18Image`."
+    },
+    "postgresPostgis15Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `postgresPostgis15Image`."
+    },
+    "postgresPostgis16Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `postgresPostgis16Image`."
+    },
+    "postgresPostgis17Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `postgresPostgis17Image`."
+    },
+    "postgresPostgis18Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `postgresPostgis18Image`."
+    },
+    "postgresVectorchord15Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `postgresVectorchord15Image`."
+    },
+    "postgresVectorchord16Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `postgresVectorchord16Image`."
+    },
+    "postgresVectorchord17Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `postgresVectorchord17Image`."
+    },
+    "postgresVectorchord18Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `postgresVectorchord18Image`."
+    },
+    "postgresVectors15Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `postgresVectors15Image`."
+    },
+    "postgresVectors16Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `postgresVectors16Image`."
+    },
+    "postgresVectors17Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `postgresVectors17Image`."
+    },
+    "tailscaleImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `tailscaleImage`."
+    },
+    "ubuntuImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `ubuntuImage`."
+    },
+    "valkeyClientImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of `valkeyClientImage`."
+    },
+    "clickhouseImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of the clickhouse dependency, selected by its container."
+    },
+    "mariadbImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of the mariadb dependency, selected by its container."
+    },
+    "memcachedImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of the memcached dependency, selected by its container."
+    },
+    "mongodbImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of the mongodb dependency, selected by its container."
+    },
+    "valkeyImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of the valkey dependency, selected by its container in `standalone` mode and by `dependencies.valkey.operator.imageSelector` in `operator` mode."
+    },
+    "valkeyExporterImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of the metrics exporter of the valkey dependency in `operator` mode, selected by `dependencies.valkey.operator.exporter.imageSelector`."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Bundled image schemas."
+}

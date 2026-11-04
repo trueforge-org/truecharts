@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": [
+    "object",
+    "null"
+  ],
+  "properties": {
+    "seccompProfile": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "profile": {
+          "type": "string",
+          "description": "Localhost seccomp profile path. Required when the profile type is `Localhost`.",
+          "x-docs-required": true
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "RuntimeDefault",
+            "Localhost",
+            "Unconfined"
+          ],
+          "description": "Seccomp profile type used by the container.",
+          "default": "RuntimeDefault",
+          "x-docs-required": true
+        }
+      },
+      "additionalProperties": false,
+      "description": "Define the seccompProfile for the container.",
+      "default": {
+        "type": "RuntimeDefault"
+      },
+      "x-docs-required": true
+    },
+    "runAsUser": {
+      "type": "integer",
+      "description": "Define the runAsUser for the container",
+      "x-docs-required": true
+    },
+    "runAsGroup": {
+      "type": "integer",
+      "description": "Define the runAsGroup for the container",
+      "x-docs-required": true
+    },
+    "fsGroup": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Legacy container-level `fsGroup`, set by `stable/chevereto` and `stable/n8n` as `securityContext.container.fsGroup`. The container security context template does not read it, and `fsGroup` is a pod-level field in Kubernetes. Set `fsGroup` under `securityContext.pod` instead."
+    },
+    "readOnlyRootFilesystem": {
+      "type": "boolean",
+      "description": "Define the readOnlyRootFilesystem for the container",
+      "x-docs-required": true
+    },
+    "allowPrivilegeEscalation": {
+      "type": "boolean",
+      "description": "Define the allowPrivilegeEscalation for the container",
+      "x-docs-required": true
+    },
+    "privileged": {
+      "type": "boolean",
+      "description": "Define the privileged for the container",
+      "x-docs-required": true
+    },
+    "runAsNonRoot": {
+      "type": "boolean",
+      "description": "Define the runAsNonRoot for the container",
+      "x-docs-required": true
+    },
+    "capabilities": {
+      "type": "object",
+      "properties": {
+        "add": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Define the capabilities.add for the container",
+          "x-docs-required": true
+        },
+        "drop": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Define the capabilities.drop for the container",
+          "x-docs-required": true
+        },
+        "disableS6Caps": {
+          "type": "boolean",
+          "description": "Disable automatic S6 capabilities when the container runs as root.",
+          "default": false
+        }
+      },
+      "additionalProperties": false,
+      "description": "Define the capabilities for the container If at least one capability is defined in either [`add`](/truecharts-common/workload/podSpec/containers/securityContext#securitycontextcapabilitiesadd) or [`drop`](/truecharts-common/workload/podSpec/containers/securityContext#securitycontextcapabilitiesdrop)",
+      "x-docs-required": true
+    },
+    "PUID": {
+      "type": "integer",
+      "description": "Default user ID used for container environment variables.",
+      "default": 568
+    },
+    "UMASK": {
+      "type": "string",
+      "description": "Default file creation mask used for container environment variables.",
+      "default": "0022"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Define securityContext for the container"
+}

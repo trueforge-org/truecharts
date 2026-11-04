@@ -104,4 +104,4 @@ tests:
           preemptionPolicy: invalid
     asserts:
       - failedTemplate:
-          errorMessage: Priority Class - Expected [preemptionPolicy] to be one of [PreemptLowerPriority, Never], but got [invalid]
+          errorPattern: 'at ''/priorityClass/example1/preemptionPolicy'': value must be one of ''PreemptLowerPriority'', ''Never'''

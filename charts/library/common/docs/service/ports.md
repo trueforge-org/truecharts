@@ -4,179 +4,193 @@ title: Ports
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
+- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/service/ports#full-examples) section for complete examples.
-- See the [Service](/truecharts-common/service) documentation for more information
 
 :::
 
 ## Appears in
 
-- `.Values.service.$name.ports`
+- `.Values.service.ports`
 
 ---
 
-## Target Selector
-
-- `targetSelector` (string): Define the container to link the port
-- `targetSelector` (empty): Assign the service to the primary container
-
----
-
-## `$port-name`
+## `service.ports`
 
 Define the port dict
 
-|            |                                  |
-| ---------- | -------------------------------- |
-| Key        | `service.$name.ports.$port-name` |
-| Type       | `map`                            |
-| Required   | ✅                               |
-| Helm `tpl` | ❌                               |
-| Default    | `{}`                             |
-
-Example
-
-```yaml
-service:
-  service-name:
-    ports:
-      port-name: {}
-```
+| Field      | Value           |
+| ---------- | --------------- |
+| Key        | `service.ports` |
+| Type       | `map`           |
+| Required   | ❌              |
+| Helm `tpl` | ❌              |
+| Default    | unset           |
 
 ---
 
-### `port`
+### `service.ports.appProtocol`
 
-Define the port that will be exposed by the service
+Define the appProtocol of the port, used by the `Endpoint` and `EndpointSlice` objects (External IP)
 
-|            |                                       |
-| ---------- | ------------------------------------- |
-| Key        | `service.$name.ports.$port-name.port` |
-| Type       | `int`                                 |
-| Required   | ✅                                    |
-| Helm `tpl` | ✅                                    |
-| Default    | unset                                 |
-
-Example
-
-```yaml
-service:
-  service-name:
-    ports:
-      port-name:
-        port: 80
-```
+| Field      | Value                       |
+| ---------- | --------------------------- |
+| Key        | `service.ports.appProtocol` |
+| Type       | `string`                    |
+| Required   | ❌                          |
+| Helm `tpl` | ❌                          |
+| Default    | unset                       |
 
 ---
 
-### `targetPort`
+### `service.ports.enabled`
 
-Define the target port (No named ports)
+Enable the port.
 
-|            |                                             |
-| ---------- | ------------------------------------------- |
-| Key        | `service.$name.ports.$port-name.targetPort` |
-| Type       | `int`                                       |
-| Required   | ❌                                          |
-| Helm `tpl` | ✅                                          |
-| Default    | (Defaults to `port` if not set)             |
-
-Example
-
-```yaml
-service:
-  service-name:
-    ports:
-      port-name:
-        targetPort: 80
-```
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `service.ports.enabled` |
+| Type       | `boolean, string`       |
+| Required   | ❌                      |
+| Helm `tpl` | ❌                      |
+| Default    | unset                   |
 
 ---
 
-### `protocol`
-
-Define the port protocol Used by the container ports and probes, http and https are converted to tcp where needed
-
-|            |                                                                      |
-| ---------- | -------------------------------------------------------------------- |
-| Key        | `service.$name.ports.$port-name.protocol`                            |
-| Type       | `string`                                                             |
-| Required   | ❌                                                                   |
-| Helm `tpl` | ✅                                                                   |
-| Default    | See default [here](/truecharts-common/fallbackdefaults#serviceprotocol) |
-
-Valid Values:
-
-- `tcp`
-- `udp`
-- `http`
-- `https`
-
-Example
-
-```yaml
-service:
-  service-name:
-    ports:
-      port-name:
-        protocol: tcp
-```
-
----
-
-### `hostPort`
+### `service.ports.hostPort`
 
 Define the hostPort, should be **avoided**, unless **ABSOLUTELY** necessary
 
-|            |                                           |
-| ---------- | ----------------------------------------- |
-| Key        | `service.$name.ports.$port-name.hostPort` |
-| Type       | `int`                                     |
-| Required   | ❌                                        |
-| Helm `tpl` | ✅                                        |
-| Default    | unset                                     |
-
-Example
-
-```yaml
-service:
-  service-name:
-    ports:
-      port-name:
-        hostPort: 30000
-```
+| Field      | Value                    |
+| ---------- | ------------------------ |
+| Key        | `service.ports.hostPort` |
+| Type       | `integer, string`        |
+| Required   | ❌                       |
+| Helm `tpl` | ✅                       |
+| Default    | unset                    |
 
 ---
 
-### `targetSelector`
+### `service.ports.nodePort`
 
-Define the container to link this port (Must be on under the pod linked above)
+Define the node port that will be exposed on the node
 
-|            |                                                 |
-| ---------- | ----------------------------------------------- |
-| Key        | `service.$name.ports.$port-name.targetSelector` |
-| Type       | `string`                                        |
-| Required   | ❌                                              |
-| Helm `tpl` | ✅                                              |
-| Default    | unset                                           |
+| Field      | Value                    |
+| ---------- | ------------------------ |
+| Key        | `service.ports.nodePort` |
+| Type       | `integer, string`        |
+| Required   | ✅                       |
+| Helm `tpl` | ✅                       |
+| Default    | unset                    |
 
-Example
+---
 
-```yaml
-service:
-  service-name:
-    ports:
-      port-name:
-        targetSelector: some-container
-```
+### `service.ports.port`
+
+Define the port that will be exposed by the service
+
+| Field      | Value                |
+| ---------- | -------------------- |
+| Key        | `service.ports.port` |
+| Type       | `integer, string`    |
+| Required   | ✅                   |
+| Helm `tpl` | ✅                   |
+| Default    | unset                |
+| Minimum    | `1`                  |
+
+---
+
+### `service.ports.primary`
+
+Make this the primary port of the service.
+
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `service.ports.primary` |
+| Type       | `boolean`               |
+| Required   | ❌                      |
+| Helm `tpl` | ❌                      |
+| Default    | unset                   |
+
+---
+
+### `service.ports.protcol`
+
+Legacy misspelling of `protocol` in the protonmail-bridge chart values. The templates ignore this key, use `protocol` instead.
+
+| Field      | Value                   |
+| ---------- | ----------------------- |
+| Key        | `service.ports.protcol` |
+| Type       | `string`                |
+| Required   | ❌                      |
+| Helm `tpl` | ❌                      |
+| Default    | unset                   |
+
+---
+
+### `service.ports.protocol`
+
+Define the port protocol Used by the container ports and probes, http and https are converted to tcp where needed
+
+| Field      | Value                         |
+| ---------- | ----------------------------- |
+| Key        | `service.ports.protocol`      |
+| Type       | `string`                      |
+| Required   | ❌                            |
+| Helm `tpl` | ✅                            |
+| Default    | unset                         |
+| Enum       | `tcp`, `udp`, `http`, `https` |
+
+---
+
+### `service.ports.targetPort`
+
+Define the target port (No named ports)
+
+| Field      | Value                      |
+| ---------- | -------------------------- |
+| Key        | `service.ports.targetPort` |
+| Type       | `integer, string`          |
+| Required   | ❌                         |
+| Helm `tpl` | ✅                         |
+| Default    | unset                      |
+
+---
+
+### `service.ports.targetSelector`
+
+Define the port dict
+
+| Field      | Value                          |
+| ---------- | ------------------------------ |
+| Key        | `service.ports.targetSelector` |
+| Type       | `string`                       |
+| Required   | ❌                             |
+| Helm `tpl` | ✅                             |
+| Default    | unset                          |
+
+---
+
+### `service.ports.type`
+
+Legacy port-level `type` used in some stable chart values (for example `docker`). The templates ignore this key on ports, set `type` on the service instead (`service.<name>.type`).
+
+| Field      | Value                |
+| ---------- | -------------------- |
+| Key        | `service.ports.type` |
+| Type       | `string`             |
+| Required   | ❌                   |
+| Helm `tpl` | ❌                   |
+| Default    | unset                |
+
+---
 
 ## Full Examples
 
 Full examples can be found under each service type
 
 - [ClusterIP](/truecharts-common/service/clusterip)
-- [LoadBalancer](/truecharts-common/service/loadbalancer)
-- [NodePort](/truecharts-common/service/nodeport)
+- [LoadBalancer](/truecharts-common/service#loadbalancer)
+- [NodePort](/truecharts-common/service#nodeport)
 - [ExternalName](/truecharts-common/service/externalname)
 - [ExternalIP](/truecharts-common/service/externalip)

@@ -10,13 +10,9 @@
     {{- fail "Middleware (redirect-regex) - Expected [replacement] to be set" -}}
   {{- end -}}
 
-  {{- if hasKey $mw "permanent" -}}
-    {{- if not (kindIs "bool" $mw.permanent) -}}
-      {{- fail (printf "Middleware (redirect-regex) - Expected [permanent] to be a boolean, but got [%s]" (kindOf $mw.permanent)) -}}
-    {{- end -}}
-  {{- end }}
+  {{- /* Keeps the newline before the next line */}}
   redirectRegex:
-    regex: {{ $mw.regex }}
-    replacement: {{ $mw.replacement }}
+    regex: {{ $mw.regex | quote }}
+    replacement: {{ $mw.replacement | quote }}
     {{- include "tc.v1.common.class.traefik.middleware.helper.bool" (dict "key" "permanent" "value" $mw.permanent) | nindent 4 }}
 {{- end -}}

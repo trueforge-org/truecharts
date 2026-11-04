@@ -116,4 +116,4 @@ tests:
           hosts: *hosts
     asserts:
       - failedTemplate:
-          errorMessage: Ingress - Expected [integrations.certManager.certificateIssuer] to be a [string], but got [slice]
+          errorPattern: 'at ''/ingress/my-ingress1/integrations/certManager/certificateIssuer'': got array, want string'

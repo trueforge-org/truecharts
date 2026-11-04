@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "source": {
+        "type": "object",
+        "properties": {
+          "persistentVolumeClaimName": {
+            "type": "string",
+            "description": "Define a volume snapshot"
+          },
+          "volumeSnapshotContentName": {
+            "type": "string",
+            "description": "Define the volume snapshot content name"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Define the source of the volume snapshot At least one of the following keys must be defined",
+        "default": {},
+        "x-docs-required": true
+      },
+      "volumeSnapshotClassName": {
+        "type": "string",
+        "description": "Define the name of the volume snapshot class used to create the snapshot"
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Define the labels of the volume snapshot",
+        "default": {},
+        "x-helm-tpl": "On value only"
+      },
+      "annotationsList": {
+        "allOf": [
+          {
+            "$ref": "special/annotationsList.json"
+          }
+        ],
+        "description": "Additional annotations as a list of name and value pairs, merged into the annotations"
+      },
+      "labelsList": {
+        "allOf": [
+          {
+            "$ref": "special/labelsList.json"
+          }
+        ],
+        "description": "Additional labels as a list of name and value pairs, merged into the labels"
+      },
+      "annotations": {
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
+        "description": "Define the annotations of the volume snapshot class",
+        "default": {},
+        "x-helm-tpl": "On value only"
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": false,
+        "description": "Enable volume snapshot",
+        "default": false,
+        "x-helm-tpl": true,
+        "x-docs-required": true
+      }
+    },
+    "additionalProperties": false,
+    "description": "Define a volume snapshot",
+    "default": {}
+  },
+  "description": "Define a volume snapshot"
+}

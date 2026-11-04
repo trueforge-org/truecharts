@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the nodes have a volume."
+    },
+    "size": {
+      "type": "string",
+      "default": "",
+      "description": "Size of the volume of every node. Defaults to `global.fallbackDefaults.vctSize`."
+    },
+    "storageClass": {
+      "type": "string",
+      "default": "",
+      "description": "Storage class of the volumes. Defaults to `global.fallbackDefaults.storageClass`."
+    },
+    "retain": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the volumes are retained when a node is deleted. Defaults to `global.fallbackDefaults.pvcRetain`."
+    }
+  },
+  "additionalProperties": false
+}

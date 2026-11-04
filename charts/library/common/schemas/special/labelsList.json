@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "Name of the label"
+      },
+      "value": {
+        "type": "string",
+        "description": "Value of the label"
+      }
+    },
+    "required": [
+      "name",
+      "value"
+    ],
+    "additionalProperties": false
+  },
+  "description": "Additional labels as a list of name and value pairs. Merged into the `labels` of the object."
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Does **not** apply to `initContainers` See [probes](/truecharts-common/workload/podSpec/containers/probes)",
+  "properties": {
+    "liveness": {
+      "$ref": "probes/probe.json",
+      "description": "Define the liveness probe.",
+      "x-docs-required": true
+    },
+    "readiness": {
+      "$ref": "probes/probe.json",
+      "description": "Define the readiness probe.",
+      "x-docs-required": true
+    },
+    "startup": {
+      "$ref": "probes/probe.json",
+      "description": "Define the startup probe.",
+      "x-docs-required": true
+    }
+  },
+  "additionalProperties": false
+}

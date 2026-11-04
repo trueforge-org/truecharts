@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "from": {
+      "type": "array",
+      "items": {
+        "$ref": "peer.json"
+      },
+      "description": "Peers allowed to send traffic."
+    },
+    "ports": {
+      "type": "array",
+      "items": {
+        "$ref": "port.json"
+      },
+      "description": "Ports allowed by this rule."
+    },
+    "fromEntities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Cilium only: entities (for example `world`, `cluster`, `host` or `all`) allowed to send traffic. Ignored for Kubernetes NetworkPolicies."
+    },
+    "fromEndpoints": {
+      "type": "array",
+      "items": {
+        "description": "An endpoint selector, passed on as is."
+      },
+      "description": "Cilium only: endpoints, by labels, the rule allows."
+    },
+    "fromCIDR": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Cilium only: CIDRs the rule allows."
+    },
+    "fromCIDRSet": {
+      "type": "array",
+      "items": {
+        "description": "A CIDR with exceptions, passed on as is."
+      },
+      "description": "Cilium only: CIDRs with exceptions the rule allows."
+    },
+    "toPorts": {
+      "type": "array",
+      "items": {
+        "description": "A port rule, passed on as is."
+      },
+      "description": "Cilium only: ports, with optional L7 rules, the rule allows."
+    },
+    "icmps": {
+      "type": "array",
+      "items": {
+        "description": "An ICMP rule, passed on as is."
+      },
+      "description": "Cilium only: ICMP types the rule allows."
+    }
+  },
+  "additionalProperties": false,
+  "description": "An ingress rule."
+}

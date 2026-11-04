@@ -7,11 +7,7 @@
     {{- fail "Middleware (strip-prefix) - Expected [prefix] to be set" -}}
   {{- end -}}
 
-  {{- if hasKey $mw "forceSlash" -}}
-    {{- if not (kindIs "bool" $mw.forceSlash) -}}
-      {{- fail (printf "Middleware (strip-prefix) - Expected [forceSlash] to be a boolean, but got [%s]" (kindOf $mw.forceSlash)) -}}
-    {{- end -}}
-  {{- end }}
+  {{- /* Keeps the newline before the next line */}}
   stripPrefix:
     prefix:
       {{- range $mw.prefix }}

@@ -138,7 +138,7 @@ tests:
                   invalid: {}
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected [lifecycle] [hook] to be one of [preStop, postStart], but got [invalid]
+          errorPattern: 'at ''/workload/workload-name/podSpec/containers/container-name1/lifecycle'': additional properties ''invalid'' not allowed'
 
   - it: should fail with empty lifecycle type
     set:
@@ -181,7 +181,7 @@ tests:
                     command: []
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected [lifecycle] [type] to be one of [exec, http, https], but got [invalid]
+          errorPattern: 'at ''/workload/workload-name/podSpec/containers/container-name1/lifecycle/preStop/type'': value must be one of ''exec'', ''http'', ''https'''
 
   - it: should fail with empty command on exec lifecycle type
     set:

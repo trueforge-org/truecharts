@@ -67,7 +67,7 @@ tests:
           deletionPolicy: Invalid
     asserts:
       - failedTemplate:
-          errorMessage: Volume Snapshot Class - Expected [deletionPolicy] to be one of [Retain, Delete], but got [Invalid]
+          errorPattern: 'at ''/volumeSnapshotClass/class1/deletionPolicy'': value must be one of ''Retain'', ''Delete'''
 
   - it: should fail without driver
     set:
@@ -85,4 +85,4 @@ tests:
           enabled:
     asserts:
       - failedTemplate:
-          errorMessage: Volume Snapshot Class - Expected the defined key [enabled] in [volumeSnapshotClass.class1] to not be empty
+          errorPattern: 'at ''/volumeSnapshotClass/class1/enabled'': got null, want boolean or string'

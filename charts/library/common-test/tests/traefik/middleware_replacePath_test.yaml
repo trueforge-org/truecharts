@@ -32,8 +32,7 @@ tests:
           my-middleware1:
             enabled: true
             type: replace-path
-            data:
-              foo: bar
+            data: {}
     asserts:
       - failedTemplate:
           errorMessage: Middleware (replace-path) - Expected [path] to be set

@@ -30,8 +30,7 @@ tests:
           my-middleware1:
             enabled: true
             type: rate-limit
-            data:
-              foo: bar
+            data: {}
     asserts:
       - failedTemplate:
           errorMessage: Middleware (rate-limit) - Expected either [average] or [burst] to be set

@@ -16,7 +16,7 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorMessage: Job - Expected [completionMode] to be one of [Indexed, NonIndexed], but got [not-a-mode]
+          errorPattern: 'at ''/workload/workload-name/completionMode'': value must be one of ''Indexed'', ''NonIndexed'''
 
   - it: should fail with completionMode to Indexed and no completions
     set:
@@ -30,7 +30,7 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorMessage: Job - Expected [completions] to be set when [completionMode] is set to [Indexed]
+          errorPattern: 'at ''/workload/workload-name/completions'': got null, want number'
 
   - it: should fail with completionMode to Indexed and no parallelism
     set:
@@ -45,7 +45,7 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorMessage: Job - Expected [parallelism] to be set when [completionMode] is set to [Indexed]
+          errorPattern: 'at ''/workload/workload-name/parallelism'': got null, want integer'
 
   - it: should fail with namespace longer than 63 characters
     set:

@@ -253,7 +253,7 @@ tests:
           hosts: *hosts
     asserts:
       - failedTemplate:
-          errorMessage: Ingress - Expected [integrations.traefik.entrypoints] to be a [slice], but got [string]
+          errorPattern: 'at ''/ingress/my-ingress1/integrations/traefik/entrypoints'': got string, want array'
 
   - it: should fail with middlewares not a slice
     set:
@@ -269,7 +269,7 @@ tests:
           hosts: *hosts
     asserts:
       - failedTemplate:
-          errorMessage: Ingress - Expected [integrations.traefik.middlewares] to be a [slice], but got [string]
+          errorPattern: 'at ''/ingress/my-ingress1/integrations/traefik/middlewares'': got string, want array'
 
   - it: should fail with chartMiddlewares not a slice
     set:
@@ -285,7 +285,7 @@ tests:
           hosts: *hosts
     asserts:
       - failedTemplate:
-          errorMessage: Ingress - Expected [integrations.traefik.chartMiddlewares] to be a [slice], but got [string]
+          errorPattern: 'at ''/ingress/my-ingress1/integrations/traefik/chartMiddlewares'': got string, want array'
 
   - it: should fail with duplicate middlewares
     set:

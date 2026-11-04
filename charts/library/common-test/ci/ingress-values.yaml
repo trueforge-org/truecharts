@@ -53,9 +53,6 @@ ingress:
         paths:
           - path: /
             pathType: Prefix
-            service:
-              name:
-              port:
     tls:
       - hosts:
           - ci.chart-example.local
@@ -67,9 +64,6 @@ ingress:
         paths:
           - path: /
             pathType: Prefix
-            service:
-              name:
-              port:
     tls:
       - certificateIssuer: sometlsissuer
         hosts:
@@ -84,21 +78,15 @@ ingress:
         paths:
           - path: /
             pathType: Prefix
-            service:
-              name:
-              port:
     tls: []
 
   autolink:
     enabled: true
     hosts:
-      - host: label.chart-example.local
+      - host: autolink.chart-example.local
         paths:
           - path: /
             pathType: Prefix
-            service:
-              name:
-              port:
     tls: []
     autoLink: true
 
@@ -109,6 +97,3 @@ ingress:
         paths:
           - path: /
             pathType: Prefix
-            service:
-              name:
-              port:

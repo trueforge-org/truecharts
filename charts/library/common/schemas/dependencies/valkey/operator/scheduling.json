@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "tolerations": {
+      "type": "array",
+      "items": {
+        "$ref": "scheduling/toleration.json"
+      },
+      "description": "Tolerations of the pods."
+    },
+    "nodeSelector": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Labels the nodes of the pods must have."
+    },
+    "affinity": {
+      "allOf": [
+        {
+          "$ref": "scheduling/affinity.json"
+        }
+      ],
+      "description": "Node and pod affinity of the pods."
+    },
+    "topologySpreadConstraints": {
+      "type": "array",
+      "items": {
+        "$ref": "scheduling/topologySpreadConstraint.json"
+      },
+      "description": "Topology spread constraints of the pods, for topology keys other than the hostname and the zone (use `node.spread` and `zone.spread` for those)."
+    },
+    "priorityClassName": {
+      "type": "string",
+      "description": "Name of the PriorityClass of the pods."
+    },
+    "node": {
+      "type": "object",
+      "properties": {
+        "spread": {
+          "allOf": [
+            {
+              "$ref": "scheduling/spread.json"
+            }
+          ],
+          "description": "Spread of the pods across the nodes."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Distribution of the pods across the nodes."
+    },
+    "zone": {
+      "type": "object",
+      "properties": {
+        "spread": {
+          "allOf": [
+            {
+              "$ref": "scheduling/spread.json"
+            }
+          ],
+          "description": "Spread of the pods across the zones."
+        },
+        "pinning": {
+          "type": "object",
+          "properties": {
+            "zones": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 32,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 63,
+                "pattern": "^[A-Za-z0-9]([-A-Za-z0-9_.]*[A-Za-z0-9])?$"
+              },
+              "description": "Zones the pods are pinned to. Unique, at most 32 zones."
+            }
+          },
+          "required": [
+            "zones"
+          ],
+          "additionalProperties": false,
+          "description": "Pins the pods to zones."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Distribution and pinning of the pods across the zones."
+    }
+  },
+  "additionalProperties": false
+}
