@@ -1,0 +1,1 @@
+../../.github/instructions/charts-values.instructions.md

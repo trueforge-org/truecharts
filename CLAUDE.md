@@ -1,7 +1,5 @@
 # CLAUDE.md
 
-Claude Code instructions for TrueCharts. The canonical, tool-agnostic instructions live in `AGENTS.md`; the area-specific rules live in `.github/instructions/`. All of them are imported below, so update those files rather than this one.
+Claude Code instructions for TrueCharts. The canonical, tool-agnostic instructions live in `AGENTS.md`, imported below. The area-specific rules live in `.github/instructions/` and are symlinked into `.claude/rules/`, so Claude Code loads each one only when it works on files matching its `paths:` frontmatter. Update those files rather than this one.
 
 @AGENTS.md
-@.github/instructions/charts.instructions.md
-@.github/instructions/common-library.instructions.md

@@ -1,6 +1,6 @@
 # Copilot instructions for TrueCharts
 
-This is a condensed summary. The full, canonical instructions are in [`AGENTS.md`](../AGENTS.md). Area-specific rules are in [`.github/instructions/charts.instructions.md`](instructions/charts.instructions.md) for app charts and [`.github/instructions/common-library.instructions.md`](instructions/common-library.instructions.md) for the `common` library. Keep this file in sync with them.
+This is a condensed summary. The full, canonical instructions are in [`AGENTS.md`](../AGENTS.md). Area-specific rules are in [`.github/instructions/charts*.instructions.md`](instructions/) for app charts and [`.github/instructions/common-library*.instructions.md`](instructions/) for the `common` library and `common-test` (one file per area). Keep this file in sync with them.
 
 ## Repository
 
@@ -21,7 +21,7 @@ This is a condensed summary. The full, canonical instructions are in [`AGENTS.md
 - Don't manually alter chart READMEs, changelogs, `.helmignore` or icons; they are generated.
 - Don't hand-edit the `Chart.yaml` fields managed by `forgetool`: helm/kube version annotations, `kubeVersion`, `maintainers`, `home`, `icon`, `sources` and `appVersion`.
 - Pin images as `tag: <version>@sha256:<digest>`. Renovate handles image, digest and `common` dependency updates.
-- `common` (`oci://oci.trueforge.org/truecharts`) is the only chart dependency. Databases and caches use `cnpg` (PostgreSQL) or `dependencies.valkey` / `dependencies.mariadb` in `values.yaml`, not Helm subcharts. Don't commit `charts/` dependency folders, `Chart.lock` or `__snapshot__/`.
+- `common` (`oci://oci.trueforge.org/truecharts`) is the only chart dependency. Databases and caches use `dependencies.postgresql` (CloudNativePG by default), `dependencies.valkey` or `dependencies.mariadb` in `values.yaml`, not Helm subcharts. Don't commit `charts/` dependency folders, `Chart.lock` or `__snapshot__/`.
 - Chart values must be valid for the `common` values schema (`charts/library/common/values.schema.json`).
 - No default passwords; user data must be stored on persistent volumes.
 - Security:
@@ -32,8 +32,11 @@ This is a condensed summary. The full, canonical instructions are in [`AGENTS.md
 - When editing `charts/library/common`:
   - also update the Helm unit tests in `charts/library/common-test/tests`
   - update the JSON schema in `schemas/` for every added, changed or removed key, and fail on removed keys in `templates/values/_deprecations.tpl`
+  - set `"additionalProperties": false` on objects with a fixed set of keys; `"additionalProperties": true` is ONLY allowed on the values root
+  - arbitrary keys (services, workloads, ingresses, envs, anything with an `objectName` or a spawner) use `"properties": {}` with the typed object schema in `additionalProperties`, see the library schema instructions
+  - never use a placeholder `"additionalProperties": true` to skip listing the keys of a fixed object; type every key, and type the values of name-keyed maps
   - don't edit the generated `docs/` pages (except `docs/dependencies.md`); change the schema or `examples/` and run `generate_docs.py`, and regenerate `complete-values-structure.yaml` and `template-keys-structure.yaml`
-  - keep the CI path in the `$id` of `values.schema.json`
+  - change the schema in `values.schema.source.json` and `schemas/`, and regenerate `values.schema.json` with `generate_bundled_schema.py`
   - bump `common`'s version, but never `common-test`'s
   - keep it compatible with Helm 3.14+ and Kubernetes 1.33+
 

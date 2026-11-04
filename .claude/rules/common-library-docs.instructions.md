@@ -1,0 +1,1 @@
+../../.github/instructions/common-library-docs.instructions.md
