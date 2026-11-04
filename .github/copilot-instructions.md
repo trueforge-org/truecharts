@@ -47,7 +47,7 @@ This is a condensed summary. The full, canonical instructions are in [`AGENTS.md
 - For app charts:
   - `helm dependency build`, `helm lint --strict` and `helm template` on the chart
   - `result_file=/tmp/lint_result.txt .github/scripts/tc-lint.sh '["charts/stable/<chart>"]' origin/master`
-- For common library changes, run `./run_common_tests.sh`. It installs Helm and helm-unittest when missing (always the latest), runs the unit tests in a scratch copy, then runs the schema checks. `UNITTEST_FILES='tests/<area>/*.yaml' SKIP_SCHEMA_TESTS=1` runs a single area.
+- For common library changes, run `./run_common_tests.sh`. It installs Helm and helm-unittest when missing (always the latest), runs the unit tests in a scratch copy, then runs the schema checks, including `check_unittest_schema_coverage.py`, which needs a unittest for every schema key, type, enum value, pattern and other rule. `UNITTEST_FILES='tests/<area>/*.yaml' SKIP_SCHEMA_TESTS=1` runs a single area.
 - Use conventional-commit PR titles with the chart name as the scope, e.g. `fix(plex): ...`, and target `master`.
 - Tell the user that contributions need a signed [Contributor License Agreement](https://cla-assistant.io/trueforge-org/truecharts), which only they can sign. The `license/cla` check on the PR shows the status.
 - Fill in the [organization's PR template](https://github.com/trueforge-org/.github/blob/main/.github/PULL_REQUEST_TEMPLATE.md), and add the notice `🤖 This PR is AI generated.` to its Notes section when an AI agent wrote the PR. Use it instead of a "Generated with ..." line.

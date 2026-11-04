@@ -62,3 +62,4 @@ These rules apply to `charts/library/common/schemas/`, `values.schema.source.jso
 
 - `test_schema.py` runs `helm lint` on `common` with every `charts/stable/*/values.yaml` and `common-test/ci/*values.yaml`. That is about 850 files and takes a few minutes, and writes the results to `stable_schema_validation.log`. Set `SCHEMA_MAX_FAILURES=<n>` to stop after `n` failures.
 - `check_complete_values_schema_coverage.py` must report 100% coverage of both structure files. See [`common-library-docs.instructions.md`](common-library-docs.instructions.md) for regenerating them.
+- `check_unittest_schema_coverage.py` must report 100% unittest coverage of the schema, see [Schema coverage by unittests](common-library-tests.instructions.md#schema-coverage-by-unittests).
