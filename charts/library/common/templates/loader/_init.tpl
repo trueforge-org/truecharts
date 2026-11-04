@@ -6,26 +6,32 @@
   {{/* Merge chart values and the common chart defaults */}}
   {{- include "tc.v1.common.values.init" . -}}
 
+  {{/* Fail on removed and deprecated keys, instead of silently ignoring them */}}
+  {{- include "tc.v1.common.values.deprecations" . -}}
+
   {{/* Ensure TrueCharts chart context information is available */}}
   {{- include "tc.v1.common.lib.util.chartcontext" . -}}
 
-  {{/* Autogenerate postgresql passwords if needed */}}
-  {{- include "tc.v1.common.spawner.cnpg" . }}
+  {{/* Autogenerate valkey passwords and credentials if needed */}}
+  {{- include "tc.v1.common.dependencies.valkey.injector" . }}
 
-  {{/* Autogenerate redis passwords if needed */}}
-  {{- include "tc.v1.common.dependencies.redis.injector" . }}
+  {{/* Render the ValkeyCluster of the valkey dependency, when it is provided by the valkey-operator */}}
+  {{- include "tc.v1.common.spawner.valkey" . }}
 
   {{/* Autogenerate mariadb passwords if needed */}}
   {{- include "tc.v1.common.dependencies.mariadb.injector" . }}
+
+  {{/* Autogenerate postgresql passwords and credentials if needed */}}
+  {{- include "tc.v1.common.dependencies.postgresql.injector" . }}
+
+  {{/* Render the CNPG cluster of the postgresql dependency, when it is provided by the cloudnative-pg operator */}}
+  {{- include "tc.v1.common.spawner.cnpg" . }}
 
   {{/* Autogenerate mongodb passwords if needed */}}
   {{- include "tc.v1.common.dependencies.mongodb.injector" . }}
 
   {{/* Autogenerate clickhouse passwords if needed */}}
   {{- include "tc.v1.common.dependencies.clickhouse.injector" . }}
-
-  {{/* Autogenerate solr passwords if needed */}}
-  {{- include "tc.v1.common.dependencies.solr.injector" . }}
 
   {{/* Enable code-server add-on if required */}}
   {{- if .Values.addons.codeserver.enabled }}

@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Storage of the PostgreSQL data or WAL volumes. Follows the same spec as `persistence` with type `pvc`.",
+  "properties": {
+    "size": {
+      "type": "string",
+      "description": "Size of the PVC, for example `256Gi`."
+    },
+    "accessModes": {
+      "type": [
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "description": "Access modes of the PVC, as a list or as a single string."
+    },
+    "volumeName": {
+      "type": "string",
+      "description": "Name of the PersistentVolume to bind the PVC to."
+    },
+    "storageClass": {
+      "type": "string",
+      "description": "Name of the StorageClass to use for the PVC."
+    },
+    "dataSource": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "description": "Kind of the data source."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the data source."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Data source to populate the PVC from."
+    },
+    "dataSourceRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "description": "Kind of the data source reference."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the data source reference."
+        },
+        "apiGroup": {
+          "type": "string",
+          "description": "API group of the data source reference."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Data source reference to populate the PVC from."
+    }
+  },
+  "additionalProperties": false
+}

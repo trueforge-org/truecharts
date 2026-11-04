@@ -151,3 +151,208 @@ tests:
           value:
             - ReadWriteMany
             - ReadWriteOnce
+
+  - it: should leave strategy as defined on a workload that does not mount the RWO volume
+    set:
+      workload:
+        some-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+        other-workload:
+          enabled: true
+          type: Deployment
+          strategy: RollingUpdate
+          podSpec: {}
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          accessModes:
+            - ReadWriteOnce
+    asserts:
+      - documentSelector: &otherWorkload
+          path: metadata.name
+          value: test-release-name-common-test-other-workload
+        equal:
+          path: spec.strategy.type
+          value: RollingUpdate
+
+  - it: should leave strategy as defined on a workload not in the targetSelector of the RWO volume
+    set:
+      workload:
+        some-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          strategy: RollingUpdate
+          podSpec: {}
+        other-workload:
+          enabled: true
+          type: Deployment
+          podSpec: {}
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          accessModes:
+            - ReadWriteOnce
+          targetSelector:
+            other-workload:
+              other-container: {}
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test
+        equal:
+          path: spec.strategy.type
+          value: RollingUpdate
+
+  - it: should set strategy to Recreate on a workload in the targetSelector of the RWO volume
+    set:
+      workload:
+        some-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+        other-workload:
+          enabled: true
+          type: Deployment
+          strategy: RollingUpdate
+          podSpec: {}
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          accessModes:
+            - ReadWriteOnce
+          targetSelector:
+            other-workload:
+              other-container: {}
+    asserts:
+      - documentSelector: *otherWorkload
+        equal:
+          path: spec.strategy.type
+          value: Recreate
+
+  - it: should set strategy to Recreate on all workloads with targetSelectAll on the RWO volume
+    set:
+      workload:
+        some-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+        other-workload:
+          enabled: true
+          type: Deployment
+          strategy: RollingUpdate
+          podSpec: {}
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          targetSelectAll: true
+          accessModes:
+            - ReadWriteOnce
+    asserts:
+      - documentSelector: *otherWorkload
+        equal:
+          path: spec.strategy.type
+          value: Recreate
+
+  - it: should keep RollingUpdate with RWO when the workload opts in
+    set: &optIn
+      workload:
+        some-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          strategy: RollingUpdate
+          allowRollingUpdateWithRWO: true
+          podSpec: {}
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          accessModes:
+            - ReadWriteOnce
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: spec.strategy.type
+          value: RollingUpdate
+
+  - it: should keep RollingUpdate with RWO when the global default opts in
+    set:
+      global:
+        fallbackDefaults:
+          allowRollingUpdateWithRWO: true
+      workload:
+        some-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          strategy: RollingUpdate
+          podSpec: {}
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          accessModes:
+            - ReadWriteOnce
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: spec.strategy.type
+          value: RollingUpdate
+
+  - it: should let the workload overrule the global opt in
+    set:
+      global:
+        fallbackDefaults:
+          allowRollingUpdateWithRWO: true
+      workload:
+        some-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          strategy: RollingUpdate
+          allowRollingUpdateWithRWO: false
+          podSpec: {}
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          accessModes:
+            - ReadWriteOnce
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: spec.strategy.type
+          value: Recreate
+
+  - it: should set strategy to Recreate with RWOP accessModes even with the opt in
+    set:
+      workload:
+        some-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          strategy: RollingUpdate
+          allowRollingUpdateWithRWO: true
+          podSpec: {}
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          accessModes:
+            - ReadWriteOncePod
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: spec.strategy.type
+          value: Recreate
+

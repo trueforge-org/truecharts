@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Enable the GatewayClass.",
+        "default": false
+      },
+      "primary": {
+        "type": "boolean",
+        "description": "Make this the primary GatewayClass of the chart. Only one can be primary."
+      },
+      "annotations": {
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
+        "description": "Additional annotations, keyed by name."
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Additional labels, keyed by name."
+      },
+      "controllerName": {
+        "type": "string",
+        "description": "The name of the controller that will manage Gateways of this class.",
+        "examples": [
+          "traefik.io/gateway-controller"
+        ]
+      },
+      "description": {
+        "type": "string",
+        "description": "Description helps describe a GatewayClass with more details.",
+        "examples": [
+          "Traefik-based gateway class"
+        ]
+      },
+      "parametersRef": {
+        "type": "object",
+        "properties": {
+          "group": {
+            "type": "string",
+            "description": "API group of the parameters resource.",
+            "minLength": 1
+          },
+          "kind": {
+            "type": "string",
+            "description": "Kind of the parameters resource.",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the parameters resource.",
+            "minLength": 1
+          },
+          "namespace": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "description": "Namespace of the parameters resource."
+          }
+        },
+        "additionalProperties": false,
+        "description": "ParametersRef is a reference to a resource that contains the configuration parameters corresponding to the GatewayClass.\n\nFields for parametersRef:\n- `group`: API group of the referenced resource (required)\n- `kind`: Kind of the referenced resource (required)\n- `name`: Name of the referenced resource (required)\n- `namespace`: Optional namespace of the referenced resource"
+      }
+    },
+    "additionalProperties": false,
+    "description": "Configuration for `gatewayClass.main`.",
+    "default": {}
+  },
+  "description": "Configuration for `gatewayClass`."
+}

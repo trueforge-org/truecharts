@@ -1,0 +1,137 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Create Ingress objects",
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "properties": {},
+      "additionalProperties": false,
+      "description": "Enables or Disables the homepage integration",
+      "default": false,
+      "x-docs-required": true
+    },
+    "name": {
+      "type": "string",
+      "properties": {},
+      "additionalProperties": false,
+      "description": "Define the name for the application Sets the `gethomepage.dev/name` annotation"
+    },
+    "description": {
+      "type": "string",
+      "properties": {},
+      "additionalProperties": false,
+      "description": "Define the description for the application Sets the `gethomepage.dev/description` annotation"
+    },
+    "group": {
+      "type": "string",
+      "properties": {},
+      "additionalProperties": false,
+      "description": "Define the group for the application Sets the `gethomepage.dev/group` annotation",
+      "default": ""
+    },
+    "icon": {
+      "type": "string",
+      "properties": {},
+      "additionalProperties": false,
+      "description": "Define the icon for the application Sets the `gethomepage.dev/icon` annotation"
+    },
+    "href": {
+      "type": "string",
+      "properties": {},
+      "additionalProperties": false,
+      "description": "Define the href for the application Sets the `gethomepage.dev/href` annotation"
+    },
+    "weight": {
+      "type": "integer",
+      "properties": {},
+      "additionalProperties": false,
+      "description": "Define the weight for the application Sets the `gethomepage.dev/weight` annotation"
+    },
+    "podSelector": {
+      "type": "array",
+      "properties": {},
+      "additionalProperties": false,
+      "description": "Define the pods to select Sets the `gethomepage.dev/pod-selector` annotation",
+      "default": []
+    },
+    "widget": {
+      "type": "object",
+      "properties": {
+        "customkv": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "Define the key for the custom annotation Sets the `gethomepage.dev/widget.$key` annotation",
+                "x-docs-required": true
+              },
+              "value": {
+                "type": "string",
+                "description": "Define the value for the custom annotation",
+                "x-docs-required": true
+              }
+            },
+            "additionalProperties": false,
+            "description": "Configuration for `$name.integrations.homepage.widget.customkv.$name`."
+          },
+          "description": "Define configuration for the widget",
+          "default": null
+        },
+        "enabled": {
+          "type": "boolean",
+          "properties": {},
+          "additionalProperties": false,
+          "description": "Enables or Disables the widget",
+          "default": true
+        },
+        "type": {
+          "type": "string",
+          "properties": {},
+          "additionalProperties": false,
+          "description": "Define configuration for the widget"
+        },
+        "version": {
+          "type": "integer",
+          "additionalProperties": false,
+          "description": "Define the version of the widget Sets the `gethomepage.dev/widget.version` annotation",
+          "default": 1
+        },
+        "url": {
+          "type": "string",
+          "properties": {},
+          "additionalProperties": false,
+          "description": "Define configuration for the widget"
+        },
+        "custom": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {},
+          "description": "Define configuration for the widget",
+          "default": null,
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ],
+            "description": "Value of the widget setting. Supports Helm `tpl`, empty values are skipped.",
+            "x-helm-tpl": true
+          }
+        }
+      },
+      "additionalProperties": false,
+      "description": "Define configuration for the widget",
+      "default": {}
+    }
+  },
+  "additionalProperties": false
+}

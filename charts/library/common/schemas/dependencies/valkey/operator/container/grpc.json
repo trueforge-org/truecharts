@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "port": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 65535,
+      "description": "Port of the gRPC server."
+    },
+    "service": {
+      "type": "string",
+      "description": "Name of the service to check."
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "Plaintext",
+        "TLS"
+      ],
+      "description": "Whether the connection uses TLS."
+    }
+  },
+  "required": [
+    "port"
+  ],
+  "additionalProperties": false,
+  "description": "gRPC health check of the container."
+}

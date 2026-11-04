@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "exec": {
+      "allOf": [
+        {
+          "$ref": "exec.json"
+        }
+      ],
+      "description": "Run a command in the container."
+    },
+    "httpGet": {
+      "allOf": [
+        {
+          "$ref": "httpGet.json"
+        }
+      ],
+      "description": "Request to an HTTP endpoint of the container."
+    },
+    "tcpSocket": {
+      "allOf": [
+        {
+          "$ref": "tcpSocket.json"
+        }
+      ],
+      "description": "Connection to a TCP port of the container."
+    },
+    "sleep": {
+      "type": "object",
+      "properties": {
+        "seconds": {
+          "type": "integer",
+          "description": "Seconds to sleep."
+        }
+      },
+      "required": [
+        "seconds"
+      ],
+      "additionalProperties": false,
+      "description": "Sleep for a number of seconds."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Handler of a lifecycle hook of the container."
+}

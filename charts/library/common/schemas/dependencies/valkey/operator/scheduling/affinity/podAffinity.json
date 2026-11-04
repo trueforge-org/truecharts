@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "requiredDuringSchedulingIgnoredDuringExecution": {
+      "type": "array",
+      "items": {
+        "$ref": "podAffinityTerm.json"
+      },
+      "description": "Terms the pod must match."
+    },
+    "preferredDuringSchedulingIgnoredDuringExecution": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "weight": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "description": "Weight of the term, from 1 to 100."
+          },
+          "podAffinityTerm": {
+            "allOf": [
+              {
+                "$ref": "podAffinityTerm.json"
+              }
+            ],
+            "description": "Term the pod should match."
+          }
+        },
+        "required": [
+          "weight",
+          "podAffinityTerm"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Terms the pod should match."
+    }
+  },
+  "additionalProperties": false
+}

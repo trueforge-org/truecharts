@@ -1,0 +1,152 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "allowPrivilegeEscalation": {
+      "type": "boolean",
+      "description": "Whether the process can gain more privileges than its parent process."
+    },
+    "appArmorProfile": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "Unconfined",
+            "RuntimeDefault",
+            "Localhost"
+          ],
+          "description": "Type of the AppArmor profile."
+        },
+        "localhostProfile": {
+          "type": "string",
+          "description": "Name of the profile loaded on the node, with the `Localhost` type."
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false,
+      "description": "AppArmor profile of the container."
+    },
+    "capabilities": {
+      "type": "object",
+      "properties": {
+        "add": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Linux capabilities added to the container (for example `NET_ADMIN`)."
+        },
+        "drop": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Linux capabilities dropped from the container (for example `ALL`)."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Linux capabilities added to or dropped from the container."
+    },
+    "privileged": {
+      "type": "boolean",
+      "description": "Whether the container runs in privileged mode."
+    },
+    "procMount": {
+      "type": "string",
+      "enum": [
+        "Default",
+        "Unmasked"
+      ],
+      "description": "Type of the proc mount of the container."
+    },
+    "readOnlyRootFilesystem": {
+      "type": "boolean",
+      "description": "Whether the root filesystem of the container is read-only."
+    },
+    "runAsGroup": {
+      "type": "integer",
+      "description": "Group ID of the first process of the container."
+    },
+    "runAsNonRoot": {
+      "type": "boolean",
+      "description": "Whether the container must run as a non-root user."
+    },
+    "runAsUser": {
+      "type": "integer",
+      "description": "User ID of the first process of the container."
+    },
+    "seLinuxOptions": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "type": "string",
+          "description": "SELinux level label."
+        },
+        "role": {
+          "type": "string",
+          "description": "SELinux role label."
+        },
+        "type": {
+          "type": "string",
+          "description": "SELinux type label."
+        },
+        "user": {
+          "type": "string",
+          "description": "SELinux user label."
+        }
+      },
+      "additionalProperties": false,
+      "description": "SELinux options of the container."
+    },
+    "seccompProfile": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "Unconfined",
+            "RuntimeDefault",
+            "Localhost"
+          ],
+          "description": "Type of the seccomp profile."
+        },
+        "localhostProfile": {
+          "type": "string",
+          "description": "Path of the profile on the node, relative to the kubelet seccomp directory, with the `Localhost` type."
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false,
+      "description": "Seccomp profile of the container."
+    },
+    "windowsOptions": {
+      "type": "object",
+      "properties": {
+        "gmsaCredentialSpec": {
+          "type": "string",
+          "description": "Contents of the GMSA credential spec, Windows only."
+        },
+        "gmsaCredentialSpecName": {
+          "type": "string",
+          "description": "Name of the GMSA credential spec, Windows only."
+        },
+        "hostProcess": {
+          "type": "boolean",
+          "description": "Whether the container runs as a HostProcess container, Windows only."
+        },
+        "runAsUserName": {
+          "type": "string",
+          "description": "User name the first process of the container runs as, Windows only."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Windows specific options of the container."
+    }
+  },
+  "additionalProperties": false
+}

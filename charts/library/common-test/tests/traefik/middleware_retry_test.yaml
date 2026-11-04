@@ -34,8 +34,7 @@ tests:
           my-middleware1:
             enabled: true
             type: retry
-            data:
-              foo: bar
+            data: {}
     asserts:
       - failedTemplate:
           errorMessage: Middleware (retry) - Expected [attempts] to be set

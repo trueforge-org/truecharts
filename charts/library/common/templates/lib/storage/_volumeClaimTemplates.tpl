@@ -22,7 +22,6 @@ objectData: The object data to be used to render the Pod.
 
       {{- include "tc.v1.common.lib.persistence.validation" (dict "objectData" $vct) -}}
       {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $vct.shortName) -}}
-      {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $vct "caller" "Volume Claim Templates") -}}
 
       {{/* If targetSelector is set, check if pod is selected */}}
       {{- if $vct.targetSelector -}}

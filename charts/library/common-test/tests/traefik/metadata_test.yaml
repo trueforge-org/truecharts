@@ -32,7 +32,7 @@ tests:
               annotation1: "{{ .Values.annotation1 }}"
               annotation2: annotation2
             data:
-              foo: bar
+              maxRequestBodyBytes: 1024
     asserts:
       - documentIndex: &middlewareDoc 0
         isKind:
@@ -75,7 +75,7 @@ tests:
             type: buffering
             namespace: some-namespace
             data:
-              foo: bar
+              maxRequestBodyBytes: 1024
     asserts:
       - documentIndex: *middlewareDoc
         equal:
@@ -92,7 +92,7 @@ tests:
             type: buffering
             namespace: "{{ .Values.key }}"
             data:
-              foo: bar
+              maxRequestBodyBytes: 1024
     asserts:
       - documentIndex: *middlewareDoc
         equal:
@@ -110,7 +110,7 @@ tests:
             enabled: true
             type: buffering
             data:
-              foo: bar
+              maxRequestBodyBytes: 1024
     asserts:
       - documentIndex: *middlewareDoc
         equal:
@@ -129,7 +129,7 @@ tests:
             enabled: true
             type: buffering
             data:
-              foo: bar
+              maxRequestBodyBytes: 1024
     asserts:
       - documentIndex: *middlewareDoc
         equal:

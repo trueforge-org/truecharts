@@ -39,7 +39,7 @@ tests:
           labels: "not a dict"
     asserts:
       - failedTemplate:
-          errorMessage: Vertical Pod Autoscaler - Expected [labels] to be a dictionary, but got [string]
+          errorPattern: 'at ''/vpa/vpa-name/labels'': got string, want object'
 
   - it: should fail with annotations not a dict
     set:
@@ -50,7 +50,7 @@ tests:
           annotations: "not a dict"
     asserts:
       - failedTemplate:
-          errorMessage: Vertical Pod Autoscaler - Expected [annotations] to be a dictionary, but got [string]
+          errorPattern: 'at ''/vpa/vpa-name/annotations'': got string, want object'
 
   - it: should fail with updatePolicy not a dict
     set:
@@ -61,7 +61,7 @@ tests:
           updatePolicy: "not a dict"
     asserts:
       - failedTemplate:
-          errorMessage: Vertical Pod Autoscaler - Expected [vpa.vpa-name.updatePolicy] to be a dictionary, but got [string]
+          errorPattern: 'at ''/vpa/vpa-name/updatePolicy'': got string, want object'
 
   - it: should fail with updatePolicy.updateMode not valid
     set:
@@ -73,7 +73,7 @@ tests:
             updateMode: invalid
     asserts:
       - failedTemplate:
-          errorMessage: Vertical Pod Autoscaler - Value [invalid] on [vpa.vpa-name.updatePolicy.updateMode] is not valid. Must be one of [Auto, Off, Initial, Recreate]
+          errorPattern: 'at ''/vpa/vpa-name/updatePolicy/updateMode'': value must be one of ''Auto'', ''Off'', ''Initial'', ''Recreate'''
 
   - it: should fail with updatePolicy.minReplicas not a number
     set:
@@ -85,7 +85,7 @@ tests:
             minReplicas: "some-number"
     asserts:
       - failedTemplate:
-          errorMessage: Vertical Pod Autoscaler - Value [some-number] on [vpa.vpa-name.updatePolicy.minReplicas] must be greater than 0.
+          errorPattern: 'at ''/vpa/vpa-name/updatePolicy/minReplicas'': got string, want integer'
 
   - it: should fail with updatePolicy.minReplicas not a positive number
     set:
@@ -97,7 +97,7 @@ tests:
             minReplicas: -1
     asserts:
       - failedTemplate:
-          errorMessage: Vertical Pod Autoscaler - Value [-1] on [vpa.vpa-name.updatePolicy.minReplicas] must be greater than 0.
+          errorPattern: 'at ''/vpa/vpa-name/updatePolicy/minReplicas'': minimum: got -1, want 1'
 
   - it: should fail with evictionRequirements not a list
     set:
@@ -109,7 +109,7 @@ tests:
             evictionRequirements: "not a list"
     asserts:
       - failedTemplate:
-          errorMessage: Vertical Pod Autoscaler - Value on [vpa.vpa-name.updatePolicy.evictionRequirements] must be a list, but got [string]
+          errorPattern: 'at ''/vpa/vpa-name/updatePolicy/evictionRequirements'': got string, want array'
 
   - it: should fail with evictionRequirements.resources not a list
     set:
@@ -122,7 +122,7 @@ tests:
               - resources: "not a list"
     asserts:
       - failedTemplate:
-          errorMessage: Vertical Pod Autoscaler - Value on [vpa.vpa-name.updatePolicy.evictionRequirements.0.resources] must be a list, but got [string]
+          errorPattern: 'at ''/vpa/vpa-name/updatePolicy/evictionRequirements/0/resources'': got string, want array'
 
   - it: should fail with evictionRequirements.resources.0 not a valid resource
     set:
@@ -138,7 +138,7 @@ tests:
                   - some-resource
     asserts:
       - failedTemplate:
-          errorMessage: Vertical Pod Autoscaler - Value [some-resource] on [vpa.vpa-name.updatePolicy.evictionRequirements.0.resources.2] is not valid. Must be one of [cpu, memory]
+          errorPattern: 'at ''/vpa/vpa-name/updatePolicy/evictionRequirements/0/resources/2'': value must be one of ''cpu'', ''memory'''
 
   - it: should fail with evictionRequirements.changeRequirement not a valid change requirement
     set:
@@ -153,7 +153,7 @@ tests:
                 changeRequirement: some-change-requirement
     asserts:
       - failedTemplate:
-          errorMessage: Vertical Pod Autoscaler - Value [some-change-requirement] on [vpa.vpa-name.updatePolicy.evictionRequirements.0.changeRequirement] is not valid. Must be one of [TargetHigherThanRequests, TargetLowerThanRequests]
+          errorPattern: 'at ''/vpa/vpa-name/updatePolicy/evictionRequirements/0/changeRequirement'': value must be one of ''TargetHigherThanRequests'', ''TargetLowerThanRequests'''
 
   - it: should fail with resourcePolicy.containerPolicies not a list
     set:
@@ -165,7 +165,7 @@ tests:
             containerPolicies: not-a-list
     asserts:
       - failedTemplate:
-          errorMessage: Vertical Pod Autoscaler - Value on [vpa.vpa-name.resourcePolicy.containerPolicies] must be a list, but got [string]
+          errorPattern: 'at ''/vpa/vpa-name/resourcePolicy/containerPolicies'': got string, want array'
 
   - it: should fail with resourcePolicy.containerPolicies item not a dict
     set:
@@ -178,7 +178,7 @@ tests:
               - item
     asserts:
       - failedTemplate:
-          errorMessage: Vertical Pod Autoscaler - Expected [vpa.vpa-name.resourcePolicy.containerPolicies.0] to be a dictionary, but got [string]
+          errorPattern: 'at ''/vpa/vpa-name/resourcePolicy/containerPolicies/0'': got string, want object'
 
   - it: should fail with invalid resourcePolicy.containerPolicies.#.containerName
     set:
@@ -224,7 +224,7 @@ tests:
                 mode: invalid
     asserts:
       - failedTemplate:
-          errorMessage: Vertical Pod Autoscaler - Value [invalid] on [vpa.vpa-name.resourcePolicy.containerPolicies.0.mode] is not valid. Must be one of [Auto, Off]
+          errorPattern: 'at ''/vpa/vpa-name/resourcePolicy/containerPolicies/0/mode'': value must be one of ''Auto'', ''Off'''
 
   - it: should fail with resourcePolicy.containerPolicies.controlledResources not a list
     set:
@@ -239,7 +239,7 @@ tests:
                 controlledResources: not-a-list
     asserts:
       - failedTemplate:
-          errorMessage: Vertical Pod Autoscaler - Expected [vpa.vpa-name.resourcePolicy.containerPolicies.0.controlledResources] to be a list, but got [string]
+          errorPattern: 'at ''/vpa/vpa-name/resourcePolicy/containerPolicies/0/controlledResources'': got string, want array'
 
   - it: should fail with invalid item in resourcePolicy.containerPolicies.#.controlledResources
     set:
@@ -270,7 +270,7 @@ tests:
                 controlledValues: invalid
     asserts:
       - failedTemplate:
-          errorMessage: Vertical Pod Autoscaler - Value [invalid] on [vpa.vpa-name.resourcePolicy.containerPolicies.0.controlledValues] is not valid. Must be one of [RequestsAndLimits, RequestsOnly]
+          errorPattern: 'at ''/vpa/vpa-name/resourcePolicy/containerPolicies/0/controlledValues'': value must be one of ''RequestsAndLimits'', ''RequestsOnly'''
 
   - it: should fail with invalid cpu in minAllowed
     set:

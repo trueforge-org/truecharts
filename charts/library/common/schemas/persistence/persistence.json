@@ -1,0 +1,1601 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "shared": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Define persistence objects"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "pvc",
+            "hostPath",
+            "emptyDir",
+            "nfs",
+            "iscsi",
+            "device",
+            "configmap",
+            "secret",
+            "vct"
+          ],
+          "description": "Define persistence objects"
+        },
+        "mountPath": {
+          "type": "string",
+          "description": "Define persistence objects"
+        },
+        "targetSelectAll": {
+          "type": "boolean",
+          "description": "Define persistence objects"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Define persistence objects"
+    },
+    "varlogs": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Define persistence objects"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "pvc",
+            "hostPath",
+            "emptyDir",
+            "nfs",
+            "iscsi",
+            "device",
+            "configmap",
+            "secret",
+            "vct"
+          ],
+          "description": "Define persistence objects"
+        },
+        "mountPath": {
+          "type": "string",
+          "description": "Define persistence objects"
+        },
+        "medium": {
+          "type": "string",
+          "description": "Define the medium of emptyDir (Memory, \"\")"
+        },
+        "targetSelectAll": {
+          "type": "boolean",
+          "description": "Define persistence objects"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Define persistence objects"
+    },
+    "varrun": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Define persistence objects"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "pvc",
+            "hostPath",
+            "emptyDir",
+            "nfs",
+            "iscsi",
+            "device",
+            "configmap",
+            "secret",
+            "vct"
+          ],
+          "description": "Define persistence objects"
+        },
+        "mountPath": {
+          "type": "string",
+          "description": "Define persistence objects"
+        },
+        "medium": {
+          "type": "string",
+          "description": "Define the medium of emptyDir (Memory, \"\")"
+        },
+        "targetSelectAll": {
+          "type": "boolean",
+          "description": "Define persistence objects"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Define persistence objects"
+    },
+    "tmp": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Define persistence objects"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "pvc",
+            "hostPath",
+            "emptyDir",
+            "nfs",
+            "iscsi",
+            "device",
+            "configmap",
+            "secret",
+            "vct"
+          ],
+          "description": "Define persistence objects"
+        },
+        "mountPath": {
+          "type": "string",
+          "description": "Define persistence objects"
+        },
+        "medium": {
+          "type": "string",
+          "description": "Define the medium of emptyDir (Memory, \"\")"
+        },
+        "targetSelectAll": {
+          "type": "boolean",
+          "description": "Define persistence objects"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Define persistence objects"
+    },
+    "devshm": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Define persistence objects"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "pvc",
+            "hostPath",
+            "emptyDir",
+            "nfs",
+            "iscsi",
+            "device",
+            "configmap",
+            "secret",
+            "vct"
+          ],
+          "description": "Define persistence objects"
+        },
+        "mountPath": {
+          "type": "string",
+          "description": "Define persistence objects"
+        },
+        "medium": {
+          "type": "string",
+          "description": "Define the medium of emptyDir (Memory, \"\")"
+        },
+        "targetSelectAll": {
+          "type": "boolean",
+          "description": "Define persistence objects"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Define persistence objects"
+    },
+    "crontab": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Define persistence objects"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "pvc",
+            "hostPath",
+            "emptyDir",
+            "nfs",
+            "iscsi",
+            "device",
+            "configmap",
+            "secret",
+            "vct"
+          ],
+          "description": "Define persistence objects"
+        },
+        "mountPath": {
+          "type": "string",
+          "description": "Define persistence objects"
+        },
+        "medium": {
+          "type": "string",
+          "description": "Define the medium of emptyDir (Memory, \"\")"
+        },
+        "targetSelectAll": {
+          "type": "boolean",
+          "description": "Define persistence objects"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Define persistence objects"
+    }
+  },
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "size": {
+        "type": "string",
+        "description": "Define the sizeLimit of the emptyDir",
+        "x-helm-tpl": true
+      },
+      "medium": {
+        "type": "string",
+        "description": "Define the medium of emptyDir (Memory, \"\")",
+        "x-helm-tpl": true
+      },
+      "objectName": {
+        "type": "string",
+        "description": "Define the secret name.",
+        "x-helm-tpl": true,
+        "x-docs-required": true
+      },
+      "expandObjectName": {
+        "type": "boolean",
+        "description": "Whether to expand (adding the fullname as prefix) the secret name.",
+        "x-helm-tpl": true
+      },
+      "optional": {
+        "type": "boolean",
+        "description": "Whether the secret should be required or not."
+      },
+      "defaultMode": {
+        "type": "string",
+        "description": "Define the defaultMode (must be a string in format of \"0777\").",
+        "x-helm-tpl": true
+      },
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "Define a list of items for secret.",
+              "x-helm-tpl": true,
+              "x-docs-required": true
+            },
+            "key": {
+              "type": "string",
+              "description": "Define the key of the secret.",
+              "x-helm-tpl": true,
+              "x-docs-required": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "description": "Define a list of items for secret."
+      },
+      "iscsi": {
+        "type": "object",
+        "properties": {
+          "authSession": {
+            "type": "object",
+            "properties": {
+              "password": {
+                "type": "string",
+                "description": "CHAP password of the target.",
+                "x-helm-tpl": true
+              },
+              "username": {
+                "type": "string",
+                "description": "CHAP user name of the target.",
+                "x-helm-tpl": true
+              },
+              "usernameInitiator": {
+                "type": "string",
+                "description": "CHAP user name of the initiator."
+              },
+              "passwordInitiator": {
+                "type": "string",
+                "description": "CHAP password of the initiator."
+              }
+            },
+            "additionalProperties": false,
+            "description": "CHAP authentication of the iSCSI session."
+          },
+          "authDiscovery": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string",
+                "description": "CHAP user name of the target.",
+                "x-helm-tpl": true
+              },
+              "password": {
+                "type": "string",
+                "description": "CHAP password of the target.",
+                "x-helm-tpl": true
+              },
+              "usernameInitiator": {
+                "type": "string",
+                "description": "CHAP user name of the initiator.",
+                "x-helm-tpl": true
+              },
+              "passwordInitiator": {
+                "type": "string",
+                "description": "CHAP password of the initiator.",
+                "x-helm-tpl": true
+              }
+            },
+            "additionalProperties": false,
+            "description": "CHAP authentication of the discovery session."
+          },
+          "fsType": {
+            "type": "string",
+            "description": "File system of the volume, eg `ext4`."
+          },
+          "targetPortal": {
+            "type": "string",
+            "description": "Portal of the target, as `host:port`."
+          },
+          "iqn": {
+            "type": "string",
+            "description": "iSCSI qualified name of the target."
+          },
+          "lun": {
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "LUN number of the target."
+          },
+          "initiatorName": {
+            "type": "string",
+            "description": "iSCSI initiator name of the node."
+          },
+          "iscsiInterface": {
+            "type": "string",
+            "description": "iSCSI interface of the node, eg `default`."
+          },
+          "portals": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Additional portals of the target, as `host:port`."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Settings of the iSCSI target, for `type: iscsi`.",
+        "x-docs-required": true
+      },
+      "path": {
+        "type": "string",
+        "description": "Define the nfs export share path",
+        "x-helm-tpl": true,
+        "x-docs-required": true
+      },
+      "server": {
+        "type": "string",
+        "description": "Define the nfs server",
+        "x-helm-tpl": true,
+        "x-docs-required": true
+      },
+      "targetSelector": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {},
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "readOnly": {
+                "type": "boolean",
+                "description": "Define persistence objects"
+              },
+              "mountPath": {
+                "type": "string",
+                "description": "Define the mountPath for the container",
+                "x-helm-tpl": true
+              },
+              "mountPropagation": {
+                "type": "string",
+                "description": "Define the mountPropagation for the container",
+                "x-helm-tpl": true
+              },
+              "subPath": {
+                "type": "string",
+                "description": "Define the subPath for the container",
+                "x-helm-tpl": true
+              }
+            },
+            "additionalProperties": false,
+            "description": "Define a map named after the container to mount the volume"
+          },
+          "description": "Define a map named after the pod to define the volume",
+          "default": {}
+        },
+        "description": "Define a map with pod and containers to mount",
+        "default": {}
+      },
+      "hostPath": {
+        "type": "string",
+        "description": "Path on the node, for `type: hostPath`.",
+        "x-helm-tpl": true,
+        "x-docs-required": true
+      },
+      "hostPathType": {
+        "type": "string",
+        "description": "Type of the host path, eg `Directory` or `DirectoryOrCreate`.",
+        "x-helm-tpl": true
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "../special/labels.json"
+          }
+        ],
+        "description": "Additional labels for persistence",
+        "x-helm-tpl": "On value only"
+      },
+      "annotationsList": {
+        "allOf": [
+          {
+            "$ref": "../special/annotationsList.json"
+          }
+        ],
+        "description": "Additional annotations as a list of name and value pairs, merged into the annotations"
+      },
+      "labelsList": {
+        "allOf": [
+          {
+            "$ref": "../special/labelsList.json"
+          }
+        ],
+        "description": "Additional labels as a list of name and value pairs, merged into the labels"
+      },
+      "annotations": {
+        "allOf": [
+          {
+            "$ref": "../special/annotations.json"
+          }
+        ],
+        "description": "Additional annotations for persistence",
+        "x-helm-tpl": "On value only"
+      },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "../special/namespaces.json"
+          }
+        ],
+        "description": "Define the namespace for this object",
+        "x-helm-tpl": true
+      },
+      "retain": {
+        "type": "boolean",
+        "description": "Define wether the to add helm annotation to retain resource on uninstall. This does not **guarantee** that the resource will be retained."
+      },
+      "accessModes": {
+        "type": [
+          "array",
+          "string"
+        ],
+        "description": "Define the accessModes of the PVC, if it's single can be defined as a string, multiple as a list",
+        "x-helm-tpl": true
+      },
+      "accessMode": {
+        "type": "string",
+        "description": "Legacy singular spelling of `accessModes`. Set by common-test fixtures (statefulset) but ignored by the templates, which read `accessModes`."
+      },
+      "copyMethod": {
+        "type": "string",
+        "enum": [
+          "Clone",
+          "Direct",
+          "Snapshot"
+        ],
+        "description": "Define the VolSync copyMethod at item level. Set by common-test volsync fixtures, but the templates only read `copyMethod` inside `volsync` entries, so it is ignored here."
+      },
+      "volumeName": {
+        "type": "string",
+        "description": "Define the volumeName of a PV, backing the claim",
+        "x-helm-tpl": true
+      },
+      "existingClaim": {
+        "type": "string",
+        "description": "Define an existing claim to use",
+        "x-helm-tpl": true
+      },
+      "storageClass": {
+        "type": "string",
+        "description": "Define the storageClass to use - If storageClass is defined on the `persistence`",
+        "x-helm-tpl": true
+      },
+      "dataSource": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Define dataSource for the pvc",
+            "x-docs-required": true
+          },
+          "kind": {
+            "type": "string",
+            "description": "Define the kind of the dataSource",
+            "x-docs-required": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Define dataSource for the pvc"
+      },
+      "static": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "description": "Define static provisioning for the pvc",
+            "x-docs-required": true
+          },
+          "server": {
+            "type": "string",
+            "description": "Define the nfs server",
+            "x-helm-tpl": true,
+            "x-docs-required": true
+          },
+          "share": {
+            "type": "string",
+            "description": "Define the nfs export share path",
+            "x-helm-tpl": true,
+            "x-docs-required": true
+          },
+          "username": {
+            "type": "string",
+            "description": "Define the smb username"
+          },
+          "user": {
+            "type": "string",
+            "description": "Define the smb user",
+            "x-docs-required": true
+          },
+          "password": {
+            "type": "string",
+            "description": "Define the smb password",
+            "x-docs-required": true
+          },
+          "domain": {
+            "type": "string",
+            "description": "Define the smb domain"
+          },
+          "driver": {
+            "type": "string",
+            "description": "Define the custom driver",
+            "x-docs-required": true
+          },
+          "provisioner": {
+            "type": "string",
+            "description": "Define the custom provisioner",
+            "x-docs-required": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Define static provisioning for the pvc"
+      },
+      "mountOptions": {
+        "type": "array",
+        "description": "Define mountOptions for the pvc. Available only for `static.mode: nfs|smb`",
+        "items": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": [
+                "number",
+                "string"
+              ],
+              "description": "Define mountOptions for the pvc. Available only for `static.mode: nfs|smb`",
+              "x-helm-tpl": true
+            },
+            "key": {
+              "type": "string",
+              "description": "Define the key of the mountOption",
+              "x-helm-tpl": true,
+              "x-docs-required": true
+            }
+          },
+          "additionalProperties": false,
+          "description": "Configuration for `$name.mountOptions.$name`."
+        }
+      },
+      "volumeSnapshots": {
+        "type": "array",
+        "description": "Define volumeSnapshots for the pvc",
+        "items": {
+          "type": "object",
+          "properties": {
+            "volumeSnapshotClassName": {
+              "type": "string",
+              "description": "Define volumeSnapshots for the pvc"
+            },
+            "name": {
+              "type": "string",
+              "description": "Define the name of the volumeSnapshot"
+            },
+            "enabled": {
+              "type": [
+                "boolean",
+                "string"
+              ],
+              "properties": {},
+              "additionalProperties": false,
+              "description": "Define if the volumeSnapshot is enabled"
+            },
+            "labels": {
+              "allOf": [
+                {
+                  "$ref": "../special/labels.json"
+                }
+              ],
+              "description": "Define the labels of the volumeSnapshot",
+              "x-helm-tpl": "On value only"
+            },
+            "annotations": {
+              "allOf": [
+                {
+                  "$ref": "../special/annotations.json"
+                }
+              ],
+              "description": "Define the annotations of the volumeSnapshot",
+              "x-helm-tpl": "On value only"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Configuration for `$name.volumeSnapshots.$name`."
+        }
+      },
+      "fsType": {
+        "type": "string",
+        "description": "File system of the volume, eg `ext4`.",
+        "x-helm-tpl": true
+      },
+      "targetPortal": {
+        "type": "string",
+        "description": "Portal of the target, as `host:port`.",
+        "x-helm-tpl": true,
+        "x-docs-required": true
+      },
+      "iqn": {
+        "type": "string",
+        "description": "iSCSI qualified name of the target.",
+        "x-helm-tpl": true,
+        "x-docs-required": true
+      },
+      "lun": {
+        "type": [
+          "integer",
+          "string"
+        ],
+        "description": "LUN number of the target.",
+        "x-helm-tpl": true,
+        "x-docs-required": true
+      },
+      "initiatorName": {
+        "type": "string",
+        "description": "iSCSI initiator name of the node.",
+        "x-helm-tpl": true
+      },
+      "iscsiInterface": {
+        "type": "string",
+        "description": "iSCSI interface of the node, eg `default`.",
+        "x-helm-tpl": true
+      },
+      "portals": {
+        "type": "array",
+        "description": "Additional portals of the target, as `host:port`.",
+        "x-helm-tpl": "On entries only"
+      },
+      "domain": {
+        "type": "string",
+        "description": "Define the domain of the SMB share, used by the smb CSI driver"
+      },
+      "name": {
+        "type": "string",
+        "description": "Set by the chart, the name of the generated persistence resource. Do not set this manually"
+      },
+      "shortName": {
+        "type": "string",
+        "description": "Set by the chart, the short name of the persistence used in generated resource names. Do not set this manually"
+      },
+      "autoPermissions": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "Enables or Disables setting the permissions of the mount on container start"
+          },
+          "chown": {
+            "type": "boolean",
+            "description": "Define whether to change the owner of the mount to the user and group"
+          },
+          "chmod": {
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "Define the mode to apply to the mount, for example 775"
+          },
+          "recursive": {
+            "type": "boolean",
+            "description": "Define whether the chown and chmod are applied recursively"
+          },
+          "user": {
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "Define the user to change the owner of the mount to"
+          },
+          "group": {
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "Define the group to change the owner of the mount to"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Define automatic permission handling for the mount"
+      },
+      "volsync": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Define the name of the VolSync backup, used in the generated resource names"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "restic"
+              ],
+              "description": "Define the VolSync mover type"
+            },
+            "credentials": {
+              "type": "string",
+              "description": "Define the name of the credentials entry used for the backup repository"
+            },
+            "copyMethod": {
+              "type": "string",
+              "enum": [
+                "Clone",
+                "Direct",
+                "Snapshot"
+              ],
+              "description": "Define the copyMethod VolSync uses to copy the data, defaults to Snapshot"
+            },
+            "cleanupTempPVC": {
+              "type": "boolean",
+              "description": "Define whether the temporary PVC used by the ReplicationDestination is cleaned up"
+            },
+            "cleanupCachePVC": {
+              "type": "boolean",
+              "description": "Define whether the cache PVC used by the ReplicationDestination is cleaned up"
+            },
+            "labels": {
+              "allOf": [
+                {
+                  "$ref": "../special/labels.json"
+                }
+              ],
+              "description": "Additional labels for the VolSync resources"
+            },
+            "annotations": {
+              "allOf": [
+                {
+                  "$ref": "../special/annotations.json"
+                }
+              ],
+              "description": "Additional annotations for the VolSync resources"
+            },
+            "resources": {
+              "allOf": [
+                {
+                  "$ref": "../workload/podSpec/containers/resources.json"
+                }
+              ],
+              "description": "Define the resources of the VolSync mover"
+            },
+            "src": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
+                  "description": "Enables or Disables the VolSync source, which backs up the data"
+                },
+                "trigger": {
+                  "type": "object",
+                  "properties": {
+                    "schedule": {
+                      "type": "string",
+                      "description": "Define the cron schedule of the backup, defaults to 0 0 * * *"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Define when the backup is triggered"
+                },
+                "retain": {
+                  "type": "object",
+                  "properties": {
+                    "hourly": {
+                      "type": "integer",
+                      "description": "Define the number of hourly snapshots to retain, defaults to 6"
+                    },
+                    "daily": {
+                      "type": "integer",
+                      "description": "Define the number of daily snapshots to retain, defaults to 5"
+                    },
+                    "weekly": {
+                      "type": "integer",
+                      "description": "Define the number of weekly snapshots to retain, defaults to 4"
+                    },
+                    "monthly": {
+                      "type": "integer",
+                      "description": "Define the number of monthly snapshots to retain, defaults to 3"
+                    },
+                    "yearly": {
+                      "type": "integer",
+                      "description": "Define the number of yearly snapshots to retain, defaults to 1"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Define how many snapshots to retain"
+                },
+                "pruneIntervalDays": {
+                  "type": "integer",
+                  "description": "Define how often, in days, old snapshots are pruned, defaults to 7"
+                },
+                "accessModes": {
+                  "type": [
+                    "array",
+                    "string"
+                  ],
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Define the accessModes of the source cache and storage"
+                },
+                "storageClassName": {
+                  "type": "string",
+                  "description": "Define the storageClassName of the source storage"
+                },
+                "volumeSnapshotClassName": {
+                  "type": "string",
+                  "description": "Define the volumeSnapshotClassName used for the source snapshots"
+                },
+                "cacheCapacity": {
+                  "type": "string",
+                  "description": "Define the capacity of the cache PVC, defaults to 10Gi"
+                },
+                "cacheStorageClassName": {
+                  "type": "string",
+                  "description": "Define the storageClassName of the cache PVC"
+                },
+                "cacheAccessModes": {
+                  "type": [
+                    "array",
+                    "string"
+                  ],
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Define the accessModes of the cache PVC"
+                },
+                "moverSecurityContext": {
+                  "type": "object",
+                  "properties": {
+                    "appArmorProfile": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "Unconfined",
+                            "RuntimeDefault",
+                            "Localhost"
+                          ],
+                          "description": "Type of the AppArmor profile."
+                        },
+                        "localhostProfile": {
+                          "type": "string",
+                          "description": "Name of the profile loaded on the node, with the `Localhost` type."
+                        }
+                      },
+                      "required": [
+                        "type"
+                      ],
+                      "additionalProperties": false,
+                      "description": "AppArmor profile of the containers of the pod."
+                    },
+                    "fsGroup": {
+                      "type": "integer",
+                      "description": "Group ID owning the volumes of the pod, and the files created in them."
+                    },
+                    "fsGroupChangePolicy": {
+                      "type": "string",
+                      "enum": [
+                        "OnRootMismatch",
+                        "Always"
+                      ],
+                      "description": "Whether the ownership of the volumes is changed on mount."
+                    },
+                    "runAsGroup": {
+                      "type": "integer",
+                      "description": "Group ID of the first process of the containers of the pod."
+                    },
+                    "runAsNonRoot": {
+                      "type": "boolean",
+                      "description": "Whether the containers of the pod must run as a non-root user."
+                    },
+                    "runAsUser": {
+                      "type": "integer",
+                      "description": "User ID of the first process of the containers of the pod."
+                    },
+                    "seLinuxChangePolicy": {
+                      "type": "string",
+                      "enum": [
+                        "Recursive",
+                        "MountOption"
+                      ],
+                      "description": "How the SELinux labels of the volumes are changed."
+                    },
+                    "seLinuxOptions": {
+                      "type": "object",
+                      "properties": {
+                        "level": {
+                          "type": "string",
+                          "description": "SELinux level label."
+                        },
+                        "role": {
+                          "type": "string",
+                          "description": "SELinux role label."
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "SELinux type label."
+                        },
+                        "user": {
+                          "type": "string",
+                          "description": "SELinux user label."
+                        }
+                      },
+                      "additionalProperties": false,
+                      "description": "SELinux options of the containers of the pod."
+                    },
+                    "seccompProfile": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "Unconfined",
+                            "RuntimeDefault",
+                            "Localhost"
+                          ],
+                          "description": "Type of the seccomp profile."
+                        },
+                        "localhostProfile": {
+                          "type": "string",
+                          "description": "Path of the profile on the node, relative to the kubelet seccomp directory, with the `Localhost` type."
+                        }
+                      },
+                      "required": [
+                        "type"
+                      ],
+                      "additionalProperties": false,
+                      "description": "Seccomp profile of the containers of the pod."
+                    },
+                    "supplementalGroups": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      },
+                      "description": "Additional group IDs of the containers of the pod."
+                    },
+                    "supplementalGroupsPolicy": {
+                      "type": "string",
+                      "enum": [
+                        "Merge",
+                        "Strict"
+                      ],
+                      "description": "How the supplemental groups are computed, with the groups of the image."
+                    },
+                    "sysctls": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "Name of the sysctl."
+                          },
+                          "value": {
+                            "type": "string",
+                            "description": "Value of the sysctl."
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "description": "Namespaced sysctls set for the pod."
+                    },
+                    "windowsOptions": {
+                      "type": "object",
+                      "properties": {
+                        "gmsaCredentialSpec": {
+                          "type": "string",
+                          "description": "Contents of the GMSA credential spec, Windows only."
+                        },
+                        "gmsaCredentialSpecName": {
+                          "type": "string",
+                          "description": "Name of the GMSA credential spec, Windows only."
+                        },
+                        "hostProcess": {
+                          "type": "boolean",
+                          "description": "Whether the containers run as HostProcess containers, Windows only."
+                        },
+                        "runAsUserName": {
+                          "type": "string",
+                          "description": "User name the first process of the containers runs as, Windows only."
+                        }
+                      },
+                      "additionalProperties": false,
+                      "description": "Windows specific options of the pod."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Define the security context of the VolSync mover"
+                }
+              },
+              "required": [
+                "enabled"
+              ],
+              "additionalProperties": false,
+              "description": "Define the VolSync source"
+            },
+            "dest": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
+                  "description": "Enables or Disables the VolSync destination, which restores the data"
+                },
+                "capacity": {
+                  "type": "string",
+                  "description": "Define the capacity of the restored volume"
+                },
+                "accessModes": {
+                  "type": [
+                    "array",
+                    "string"
+                  ],
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Define the accessModes of the destination storage"
+                },
+                "storageClassName": {
+                  "type": "string",
+                  "description": "Define the storageClassName of the destination storage"
+                },
+                "volumeSnapshotClassName": {
+                  "type": "string",
+                  "description": "Define the volumeSnapshotClassName used for the destination snapshots"
+                },
+                "cacheCapacity": {
+                  "type": "string",
+                  "description": "Define the capacity of the cache PVC, defaults to 10Gi"
+                },
+                "cacheStorageClassName": {
+                  "type": "string",
+                  "description": "Define the storageClassName of the cache PVC"
+                },
+                "cacheAccessModes": {
+                  "type": [
+                    "array",
+                    "string"
+                  ],
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Define the accessModes of the cache PVC"
+                },
+                "moverSecurityContext": {
+                  "type": "object",
+                  "properties": {
+                    "appArmorProfile": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "Unconfined",
+                            "RuntimeDefault",
+                            "Localhost"
+                          ],
+                          "description": "Type of the AppArmor profile."
+                        },
+                        "localhostProfile": {
+                          "type": "string",
+                          "description": "Name of the profile loaded on the node, with the `Localhost` type."
+                        }
+                      },
+                      "required": [
+                        "type"
+                      ],
+                      "additionalProperties": false,
+                      "description": "AppArmor profile of the containers of the pod."
+                    },
+                    "fsGroup": {
+                      "type": "integer",
+                      "description": "Group ID owning the volumes of the pod, and the files created in them."
+                    },
+                    "fsGroupChangePolicy": {
+                      "type": "string",
+                      "enum": [
+                        "OnRootMismatch",
+                        "Always"
+                      ],
+                      "description": "Whether the ownership of the volumes is changed on mount."
+                    },
+                    "runAsGroup": {
+                      "type": "integer",
+                      "description": "Group ID of the first process of the containers of the pod."
+                    },
+                    "runAsNonRoot": {
+                      "type": "boolean",
+                      "description": "Whether the containers of the pod must run as a non-root user."
+                    },
+                    "runAsUser": {
+                      "type": "integer",
+                      "description": "User ID of the first process of the containers of the pod."
+                    },
+                    "seLinuxChangePolicy": {
+                      "type": "string",
+                      "enum": [
+                        "Recursive",
+                        "MountOption"
+                      ],
+                      "description": "How the SELinux labels of the volumes are changed."
+                    },
+                    "seLinuxOptions": {
+                      "type": "object",
+                      "properties": {
+                        "level": {
+                          "type": "string",
+                          "description": "SELinux level label."
+                        },
+                        "role": {
+                          "type": "string",
+                          "description": "SELinux role label."
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "SELinux type label."
+                        },
+                        "user": {
+                          "type": "string",
+                          "description": "SELinux user label."
+                        }
+                      },
+                      "additionalProperties": false,
+                      "description": "SELinux options of the containers of the pod."
+                    },
+                    "seccompProfile": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "Unconfined",
+                            "RuntimeDefault",
+                            "Localhost"
+                          ],
+                          "description": "Type of the seccomp profile."
+                        },
+                        "localhostProfile": {
+                          "type": "string",
+                          "description": "Path of the profile on the node, relative to the kubelet seccomp directory, with the `Localhost` type."
+                        }
+                      },
+                      "required": [
+                        "type"
+                      ],
+                      "additionalProperties": false,
+                      "description": "Seccomp profile of the containers of the pod."
+                    },
+                    "supplementalGroups": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      },
+                      "description": "Additional group IDs of the containers of the pod."
+                    },
+                    "supplementalGroupsPolicy": {
+                      "type": "string",
+                      "enum": [
+                        "Merge",
+                        "Strict"
+                      ],
+                      "description": "How the supplemental groups are computed, with the groups of the image."
+                    },
+                    "sysctls": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "Name of the sysctl."
+                          },
+                          "value": {
+                            "type": "string",
+                            "description": "Value of the sysctl."
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "description": "Namespaced sysctls set for the pod."
+                    },
+                    "windowsOptions": {
+                      "type": "object",
+                      "properties": {
+                        "gmsaCredentialSpec": {
+                          "type": "string",
+                          "description": "Contents of the GMSA credential spec, Windows only."
+                        },
+                        "gmsaCredentialSpecName": {
+                          "type": "string",
+                          "description": "Name of the GMSA credential spec, Windows only."
+                        },
+                        "hostProcess": {
+                          "type": "boolean",
+                          "description": "Whether the containers run as HostProcess containers, Windows only."
+                        },
+                        "runAsUserName": {
+                          "type": "string",
+                          "description": "User name the first process of the containers runs as, Windows only."
+                        }
+                      },
+                      "additionalProperties": false,
+                      "description": "Windows specific options of the pod."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Define the security context of the VolSync mover"
+                }
+              },
+              "required": [
+                "enabled"
+              ],
+              "additionalProperties": false,
+              "description": "Define the VolSync destination"
+            }
+          },
+          "required": [
+            "name",
+            "type",
+            "credentials",
+            "src",
+            "dest"
+          ],
+          "additionalProperties": false
+        },
+        "description": "Define VolSync backups and restores for this persistence"
+      },
+      "sources": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "serviceAccountToken": {
+              "type": "object",
+              "properties": {
+                "audience": {
+                  "type": "string",
+                  "description": "Define the audience of the service account token"
+                },
+                "expirationSeconds": {
+                  "type": "integer",
+                  "minimum": 600,
+                  "description": "Define the expiration of the service account token in seconds, must be at least 600"
+                },
+                "path": {
+                  "type": "string",
+                  "description": "Define the path of the token file in the projected volume"
+                }
+              },
+              "required": [
+                "path"
+              ],
+              "additionalProperties": false,
+              "description": "Define a service account token source"
+            },
+            "secret": {
+              "type": "object",
+              "properties": {
+                "objectName": {
+                  "type": "string",
+                  "description": "Define the name of the secret"
+                },
+                "optional": {
+                  "type": "boolean",
+                  "description": "Define whether the secret must exist"
+                },
+                "expandObjectName": {
+                  "type": "boolean",
+                  "description": "Define whether the objectName is expanded as a Helm template"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "key": {
+                        "type": "string",
+                        "description": "Define the key of the secret"
+                      },
+                      "path": {
+                        "type": "string",
+                        "description": "Define the path to project the key to"
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "path"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "description": "Define the keys of the secret to project"
+                }
+              },
+              "required": [
+                "objectName",
+                "items"
+              ],
+              "additionalProperties": false,
+              "description": "Define a secret source"
+            },
+            "configMap": {
+              "type": "object",
+              "properties": {
+                "objectName": {
+                  "type": "string",
+                  "description": "Define the name of the configmap"
+                },
+                "optional": {
+                  "type": "boolean",
+                  "description": "Define whether the configmap must exist"
+                },
+                "expandObjectName": {
+                  "type": "boolean",
+                  "description": "Define whether the objectName is expanded as a Helm template"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "key": {
+                        "type": "string",
+                        "description": "Define the key of the configmap"
+                      },
+                      "path": {
+                        "type": "string",
+                        "description": "Define the path to project the key to"
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "path"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "description": "Define the keys of the configmap to project"
+                }
+              },
+              "required": [
+                "objectName",
+                "items"
+              ],
+              "additionalProperties": false,
+              "description": "Define a configmap source"
+            },
+            "downwardAPI": {
+              "type": "object",
+              "properties": {
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "path": {
+                        "type": "string",
+                        "description": "Define the path of the file in the projected volume"
+                      },
+                      "fieldRef": {
+                        "type": "object",
+                        "properties": {
+                          "apiVersion": {
+                            "type": "string",
+                            "description": "Define the apiVersion of the field"
+                          },
+                          "fieldPath": {
+                            "type": "string",
+                            "description": "Define the path of the pod field to expose"
+                          }
+                        },
+                        "additionalProperties": false,
+                        "description": "Define a pod field to expose"
+                      },
+                      "resourceFieldRef": {
+                        "type": "object",
+                        "properties": {
+                          "containerName": {
+                            "type": "string",
+                            "description": "Define the name of the container for the resource"
+                          },
+                          "resource": {
+                            "type": "string",
+                            "description": "Define the resource to expose"
+                          },
+                          "divisor": {
+                            "type": [
+                              "integer",
+                              "string"
+                            ],
+                            "description": "Define the divisor of the resource"
+                          }
+                        },
+                        "additionalProperties": false,
+                        "description": "Define a container resource to expose"
+                      }
+                    },
+                    "required": [
+                      "path"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "description": "Define the fields to project"
+                }
+              },
+              "required": [
+                "items"
+              ],
+              "additionalProperties": false,
+              "description": "Define a downward API source"
+            }
+          },
+          "additionalProperties": false
+        },
+        "description": "Define projected sources for this persistence"
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Enables or Disables the persistence",
+        "default": false,
+        "x-helm-tpl": true,
+        "x-docs-required": true
+      },
+      "type": {
+        "type": "string",
+        "description": "Define the persistence type",
+        "enum": [
+          "pvc",
+          "hostPath",
+          "emptyDir",
+          "nfs",
+          "iscsi",
+          "device",
+          "configmap",
+          "secret",
+          "vct",
+          "projected"
+        ]
+      },
+      "mountPath": {
+        "type": "string",
+        "description": "Define the mountPath for the persistence, applies to all containers that are selected",
+        "default": "",
+        "minLength": 1,
+        "x-helm-tpl": true,
+        "x-docs-required": true
+      },
+      "mountPropagation": {
+        "type": "string",
+        "description": "Define the mountPropagation for the persistence, applies to all containers that are selected",
+        "oneOf": [
+          {
+            "enum": [
+              "None",
+              "HostToContainer",
+              "Bidirectional"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ],
+        "default": "",
+        "x-helm-tpl": true
+      },
+      "subPath": {
+        "type": "string",
+        "description": "Define the subPath for the persistence, applies to all containers that are selected",
+        "default": "",
+        "x-helm-tpl": true
+      },
+      "readOnly": {
+        "type": "boolean",
+        "description": "Define the readOnly for the persistence, applies to all containers that are selected",
+        "default": false
+      },
+      "targetSelectAll": {
+        "type": "boolean",
+        "description": "Define wether to define this volume to all workloads and mount it on all containers",
+        "default": false
+      }
+    },
+    "additionalProperties": false,
+    "description": "Define persistence",
+    "default": {},
+    "x-docs-required": true
+  },
+  "description": "Define persistence objects"
+}

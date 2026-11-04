@@ -4,7 +4,7 @@ title: Secret
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
+- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/secret#full-examples) section for complete examples.
 
 :::
@@ -13,67 +13,81 @@ title: Secret
 
 - `.Values.secret`
 
-## Naming scheme
-
-- `$FullName-$SecretName` (release-name-chart-name-secret-name)
-
-:::tip
-
-- Replace references to `$name` with the actual name you want to use.
-
-:::
-
 ---
 
 ## `secret`
 
 Create Secret objects
 
-|            |          |
+| Field      | Value    |
 | ---------- | -------- |
 | Key        | `secret` |
 | Type       | `map`    |
 | Required   | ❌       |
 | Helm `tpl` | ❌       |
-| Default    | `{}`     |
-
-Example
-
-```yaml
-secret: {}
-```
+| Default    | unset    |
 
 ---
 
-### `$name`
+### `secret.$name.annotations`
 
-Define Secret
+Additional annotations for secret
 
-|            |                |
-| ---------- | -------------- |
-| Key        | `secret.$name` |
-| Type       | `map`          |
-| Required   | ✅             |
-| Helm `tpl` | ❌             |
-| Default    | `{}`           |
+| Field      | Value                      |
+| ---------- | -------------------------- |
+| Key        | `secret.$name.annotations` |
+| Type       | `map`                      |
+| Required   | ❌                         |
+| Helm `tpl` | ✅ (On value only)          |
+| Default    | `{}`                       |
 
 Example
 
 ```yaml
 secret:
-  secret-name: {}
+  $name:
+    annotations:
+      {}
 ```
 
 ---
 
-#### `enabled`
+### `secret.$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+| Field      | Value                          |
+| ---------- | ------------------------------ |
+| Key        | `secret.$name.annotationsList` |
+| Type       | `list of map`                  |
+| Required   | ❌                             |
+| Helm `tpl` | ❌                             |
+| Default    | unset                          |
+
+---
+
+### `secret.$name.data`
+
+Data of the Secret, keyed by name.
+
+| Field      | Value               |
+| ---------- | ------------------- |
+| Key        | `secret.$name.data` |
+| Type       | `map, string`       |
+| Required   | ✅                  |
+| Helm `tpl` | ✅                  |
+| Default    | unset               |
+
+---
+
+### `secret.$name.enabled`
 
 Enables or Disables the Secret
 
-|            |                        |
+| Field      | Value                  |
 | ---------- | ---------------------- |
 | Key        | `secret.$name.enabled` |
-| Type       | `bool`                 |
+| Type       | `boolean, string`      |
 | Required   | ✅                     |
 | Helm `tpl` | ✅                     |
 | Default    | `false`                |
@@ -82,17 +96,54 @@ Example
 
 ```yaml
 secret:
-  secret-name:
-    enabled: true
+  $name:
+    enabled: false
 ```
 
 ---
 
-#### `namespace`
+### `secret.$name.labels`
+
+Additional labels for secret
+
+| Field      | Value                 |
+| ---------- | --------------------- |
+| Key        | `secret.$name.labels` |
+| Type       | `map`                 |
+| Required   | ❌                    |
+| Helm `tpl` | ✅ (On value only)     |
+| Default    | `{}`                  |
+
+Example
+
+```yaml
+secret:
+  $name:
+    labels:
+      {}
+```
+
+---
+
+### `secret.$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+| Field      | Value                     |
+| ---------- | ------------------------- |
+| Key        | `secret.$name.labelsList` |
+| Type       | `list of map`             |
+| Required   | ❌                        |
+| Helm `tpl` | ❌                        |
+| Default    | unset                     |
+
+---
+
+### `secret.$name.namespace`
 
 Define the namespace for this object
 
-|            |                          |
+| Field      | Value                    |
 | ---------- | ------------------------ |
 | Key        | `secret.$name.namespace` |
 | Type       | `string`                 |
@@ -104,97 +155,30 @@ Example
 
 ```yaml
 secret:
-  secret-name:
-    namespace: some-namespace
+  $name:
+    namespace: ""
 ```
 
 ---
 
-#### `labels`
-
-Additional labels for secret
-
-|            |                       |
-| ---------- | --------------------- |
-| Key        | `secret.$name.labels` |
-| Type       | `map`                 |
-| Required   | ❌                    |
-| Helm `tpl` | ✅ (On value only)    |
-| Default    | `{}`                  |
-
-Example
-
-```yaml
-secret:
-  secret-name:
-    labels:
-      key: value
-```
-
----
-
-#### `annotations`
-
-Additional annotations for secret
-
-|            |                            |
-| ---------- | -------------------------- |
-| Key        | `secret.$name.annotations` |
-| Type       | `map`                      |
-| Required   | ❌                         |
-| Helm `tpl` | ✅ (On value only)         |
-| Default    | `{}`                       |
-
-Example
-
-```yaml
-secret:
-  secret-name:
-    annotations:
-      key: value
-```
-
----
-
-#### `type`
+### `secret.$name.type`
 
 Define the type of the secret
 
-|            |                     |
+| Field      | Value               |
 | ---------- | ------------------- |
 | Key        | `secret.$name.type` |
 | Type       | `string`            |
 | Required   | ❌                  |
 | Helm `tpl` | ✅                  |
-| Default    | `Opaque`            |
+| Default    | `"Opaque"`          |
 
 Example
 
 ```yaml
 secret:
-  secret-name:
-    type: some-custom-type
-```
-
----
-
-#### `data`
-
-Define the data of the secret
-
-|            |                     |
-| ---------- | ------------------- |
-| Key        | `secret.$name.data` |
-| Type       | `map`               |
-| Required   | ✅                  |
-| Helm `tpl` | ✅                  |
-| Example    | `{}`                |
-
-```yaml
-secret:
-  secret-name:
-    data:
-      key: value
+  $name:
+    type: Opaque
 ```
 
 ---

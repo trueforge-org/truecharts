@@ -35,6 +35,15 @@
     {{- end -}}
   {{- end -}}
 
+  {{/* Falls back to the provider specific default path */}}
+  {{- if not $destinationPath -}}
+    {{- if $creds.path -}}
+      {{- $destinationPath = (printf "s3://%s/%s/%s/cnpg" $creds.bucket ($creds.path | trimSuffix "/") $rootCtx.Release.Name) -}}
+    {{- else -}}
+      {{- $destinationPath = (printf "s3://%s/%s/cnpg" $creds.bucket $rootCtx.Release.Name) -}}
+    {{- end -}}
+  {{- end -}}
+
   {{- $data := (dict
     "serverName" $serverName
     "destinationPath" $destinationPath

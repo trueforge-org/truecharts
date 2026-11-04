@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/enabled",
+      "description": "Enable the container of the add-on."
+    },
+    "imageSelector": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/imageSelector",
+      "description": "Name of the image on the root of the values."
+    },
+    "primary": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/primary",
+      "description": "Make this the primary container of the workload."
+    },
+    "stdin": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/stdin",
+      "description": "Keep stdin open."
+    },
+    "tty": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/tty",
+      "description": "Allocate a TTY."
+    },
+    "env": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/env",
+      "description": "Environment variables of the container, keyed by name."
+    },
+    "resources": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/resources",
+      "description": "Resources of the container."
+    },
+    "securityContext": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/securityContext",
+      "description": "Security context of the container."
+    },
+    "probes": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/probes",
+      "description": "Probes of the container."
+    },
+    "command": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/command",
+      "description": "Command of the container."
+    },
+    "args": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/args",
+      "description": "Arguments of the container."
+    },
+    "extraArgs": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/extraArgs",
+      "description": "Arguments added after `args`."
+    },
+    "lifecycle": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/lifecycle",
+      "description": "Lifecycle hooks of the container."
+    },
+    "envFrom": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/envFrom",
+      "description": "ConfigMaps and Secrets whose keys become environment variables."
+    },
+    "termination": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/termination",
+      "description": "Termination settings of the container."
+    },
+    "fixedEnv": {
+      "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/fixedEnv",
+      "description": "Settings of the environment variables that common sets."
+    },
+    "targetSelector": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Workloads to which this container is attached."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Container configuration for an addon."
+}

@@ -1,0 +1,706 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "validating": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Enable the webhook configuration."
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of the webhook configuration, `validating` or `mutating`."
+        },
+        "webhooks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the webhook, a fully qualified name like `check.example.com`.",
+                "minLength": 1
+              },
+              "rules": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "apiGroups": {
+                      "type": "array",
+                      "description": "API groups of the resources, `\"\"` for the core group.",
+                      "minItems": 1,
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "apiVersions": {
+                      "type": "array",
+                      "description": "API versions of the resources.",
+                      "minItems": 1,
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "operations": {
+                      "type": "array",
+                      "description": "Operations, eg `CREATE`, `UPDATE`, `DELETE` or `*`.",
+                      "minItems": 1,
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "resources": {
+                      "type": "array",
+                      "description": "Resources, eg `pods` or `deployments/scale`.",
+                      "minItems": 1,
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "scope": {
+                      "type": "string",
+                      "description": "Define the scope of the rule for the webhook"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Create webhook objects",
+                  "required": [
+                    "apiGroups",
+                    "apiVersions",
+                    "operations",
+                    "resources"
+                  ]
+                },
+                "description": "Operations and resources the webhook applies to.",
+                "minItems": 1
+              },
+              "failurePolicy": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "Ignore",
+                      "Fail"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
+                "description": "What happens when the webhook fails: `Ignore` or `Fail`."
+              },
+              "matchPolicy": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "Exact",
+                      "Equivalent"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
+                "description": "How requests are matched to `rules`: `Exact` or `Equivalent`."
+              },
+              "sideEffects": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "None",
+                      "NoneOnDryRun"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
+                "description": "Side effects of the webhook: `None` or `NoneOnDryRun`."
+              },
+              "timeoutSeconds": {
+                "type": "integer",
+                "description": "Timeout of a call to the webhook, in seconds."
+              },
+              "admissionReviewVersions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "AdmissionReview versions the webhook accepts, eg `v1`.",
+                "minItems": 1
+              },
+              "clientConfig": {
+                "type": "object",
+                "properties": {},
+                "description": "How the API server reaches the webhook, by `url` or `service`.",
+                "additionalProperties": {
+                  "description": "A setting passed on as is."
+                },
+                "minProperties": 1
+              },
+              "namespaceSelector": {
+                "allOf": [
+                  {
+                    "$ref": "special/labelSelector.json"
+                  }
+                ],
+                "description": "Namespaces the webhook applies to, by labels."
+              },
+              "objectSelector": {
+                "allOf": [
+                  {
+                    "$ref": "special/labelSelector.json"
+                  }
+                ],
+                "description": "Objects the webhook applies to, by labels."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Create webhook objects",
+            "required": [
+              "name",
+              "admissionReviewVersions",
+              "clientConfig",
+              "rules"
+            ]
+          },
+          "description": "Webhooks of the configuration."
+        }
+      },
+      "additionalProperties": false,
+      "description": "A ValidatingWebhookConfiguration."
+    },
+    "mutating": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Enable the webhook configuration."
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of the webhook configuration, `validating` or `mutating`."
+        },
+        "webhooks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the webhook, a fully qualified name like `check.example.com`.",
+                "minLength": 1
+              },
+              "rules": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "apiGroups": {
+                      "type": "array",
+                      "description": "API groups of the resources, `\"\"` for the core group.",
+                      "minItems": 1,
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "apiVersions": {
+                      "type": "array",
+                      "description": "API versions of the resources.",
+                      "minItems": 1,
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "operations": {
+                      "type": "array",
+                      "description": "Operations, eg `CREATE`, `UPDATE`, `DELETE` or `*`.",
+                      "minItems": 1,
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "resources": {
+                      "type": "array",
+                      "description": "Resources, eg `pods` or `deployments/scale`.",
+                      "minItems": 1,
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "scope": {
+                      "type": "string",
+                      "description": "Define the scope of the rule for the webhook"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Create webhook objects",
+                  "required": [
+                    "apiGroups",
+                    "apiVersions",
+                    "operations",
+                    "resources"
+                  ]
+                },
+                "description": "Operations and resources the webhook applies to.",
+                "minItems": 1
+              },
+              "failurePolicy": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "Ignore",
+                      "Fail"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
+                "description": "What happens when the webhook fails: `Ignore` or `Fail`."
+              },
+              "matchPolicy": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "Exact",
+                      "Equivalent"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
+                "description": "How requests are matched to `rules`: `Exact` or `Equivalent`."
+              },
+              "sideEffects": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "None",
+                      "NoneOnDryRun"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
+                "description": "Side effects of the webhook: `None` or `NoneOnDryRun`."
+              },
+              "reinvocationPolicy": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "Never",
+                      "IfNeeded"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\{\\{.*\\}\\}$"
+                  }
+                ],
+                "description": "Call the webhook again after other mutations: `Never` or `IfNeeded`."
+              },
+              "timeoutSeconds": {
+                "type": "integer",
+                "description": "Timeout of a call to the webhook, in seconds."
+              },
+              "admissionReviewVersions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "AdmissionReview versions the webhook accepts, eg `v1`.",
+                "minItems": 1
+              },
+              "clientConfig": {
+                "type": "object",
+                "properties": {},
+                "description": "How the API server reaches the webhook, by `url` or `service`.",
+                "additionalProperties": {
+                  "description": "A setting passed on as is."
+                },
+                "minProperties": 1
+              },
+              "namespaceSelector": {
+                "allOf": [
+                  {
+                    "$ref": "special/labelSelector.json"
+                  }
+                ],
+                "description": "Namespaces the webhook applies to, by labels."
+              },
+              "objectSelector": {
+                "allOf": [
+                  {
+                    "$ref": "special/labelSelector.json"
+                  }
+                ],
+                "description": "Objects the webhook applies to, by labels."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Create webhook objects",
+            "required": [
+              "name",
+              "admissionReviewVersions",
+              "clientConfig",
+              "rules"
+            ]
+          },
+          "description": "Webhooks of the configuration."
+        }
+      },
+      "additionalProperties": false,
+      "description": "A MutatingWebhookConfiguration."
+    }
+  },
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "webhooks": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "resources": {
+                    "type": "array",
+                    "description": "Resources, eg `pods` or `deployments/scale`.",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string"
+                    },
+                    "x-helm-tpl": "On entries only",
+                    "x-docs-required": true
+                  },
+                  "scope": {
+                    "type": "string",
+                    "description": "Define the scope of the rule for the webhook",
+                    "x-helm-tpl": true
+                  },
+                  "apiGroups": {
+                    "type": "array",
+                    "description": "Define the apiGroups of the rule for the webhook",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string"
+                    },
+                    "x-helm-tpl": "On entries only",
+                    "x-docs-required": true
+                  },
+                  "apiVersions": {
+                    "type": "array",
+                    "description": "Define the apiVersions of the rule for the webhook",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string"
+                    },
+                    "x-helm-tpl": "On entries only",
+                    "x-docs-required": true
+                  },
+                  "operations": {
+                    "type": "array",
+                    "description": "Define the operations of the rule for the webhook",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string"
+                    },
+                    "x-helm-tpl": "On entries only",
+                    "x-docs-required": true
+                  }
+                },
+                "additionalProperties": false,
+                "description": "Configuration for `$name.webhooks.$name.rules[]`.",
+                "required": [
+                  "apiGroups",
+                  "apiVersions",
+                  "operations",
+                  "resources"
+                ]
+              },
+              "description": "Define the rules for the webhook",
+              "minItems": 1,
+              "x-docs-required": true
+            },
+            "name": {
+              "type": "string",
+              "description": "Define the webhook name",
+              "minLength": 1,
+              "x-helm-tpl": true,
+              "x-docs-required": true
+            },
+            "failurePolicy": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "Ignore",
+                    "Fail"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\{\\{.*\\}\\}$"
+                }
+              ],
+              "description": "Define the failurePolicy for the webhook",
+              "x-helm-tpl": true
+            },
+            "matchPolicy": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "Exact",
+                    "Equivalent"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\{\\{.*\\}\\}$"
+                }
+              ],
+              "description": "Define the matchPolicy for the webhook",
+              "x-helm-tpl": true
+            },
+            "sideEffects": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "None",
+                    "NoneOnDryRun"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\{\\{.*\\}\\}$"
+                }
+              ],
+              "description": "Define the sideEffects for the webhook",
+              "x-helm-tpl": true
+            },
+            "reinvocationPolicy": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "Never",
+                    "IfNeeded"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\{\\{.*\\}\\}$"
+                }
+              ],
+              "description": "Define the reinvocationPolicy for the webhook",
+              "x-helm-tpl": true
+            },
+            "timeoutSeconds": {
+              "type": "integer",
+              "description": "Define the timeoutSeconds for the webhook",
+              "x-helm-tpl": true
+            },
+            "admissionReviewVersions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Define the admissionReviewVersions for the webhook",
+              "minItems": 1,
+              "x-helm-tpl": true,
+              "x-docs-required": true
+            },
+            "clientConfig": {
+              "type": "object",
+              "properties": {
+                "caBundle": {
+                  "type": "string",
+                  "description": "Define the caBundle in clientConfig for the webhook",
+                  "x-helm-tpl": true
+                },
+                "url": {
+                  "type": "string",
+                  "description": "Define the url in clientConfig for the webhook, required if service is not defined in clientConfig",
+                  "x-helm-tpl": true
+                },
+                "service": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Define the service name in clientConfig for the webhook",
+                      "minLength": 1,
+                      "x-helm-tpl": true,
+                      "x-docs-required": true
+                    },
+                    "namespace": {
+                      "allOf": [
+                        {
+                          "$ref": "special/namespaces.json"
+                        }
+                      ],
+                      "description": "Define the service namespace in clientConfig for the webhook",
+                      "x-helm-tpl": true,
+                      "x-docs-required": true
+                    },
+                    "path": {
+                      "type": "string",
+                      "description": "Define the service path in clientConfig for the webhook",
+                      "x-helm-tpl": true
+                    },
+                    "port": {
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
+                      "description": "Define the service port in clientConfig for the webhook",
+                      "x-helm-tpl": true
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Define the service in clientConfig for the webhook, required if url is not defined in clientConfig",
+                  "required": [
+                    "name",
+                    "namespace"
+                  ]
+                }
+              },
+              "additionalProperties": false,
+              "description": "Define the clientConfig for the webhook",
+              "minProperties": 1,
+              "not": {
+                "required": [
+                  "url",
+                  "service"
+                ]
+              },
+              "x-docs-required": true
+            }
+          },
+          "additionalProperties": false,
+          "description": "Configuration for `$name.webhooks.$name`.",
+          "required": [
+            "name",
+            "admissionReviewVersions",
+            "clientConfig",
+            "rules"
+          ]
+        },
+        "description": "Define the webhooks.",
+        "default": [],
+        "x-docs-required": true
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "properties": {},
+        "additionalProperties": false,
+        "description": "Enables or Disables the webhook",
+        "default": false,
+        "x-helm-tpl": true,
+        "x-docs-required": true
+      },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "special/namespaces.json"
+          }
+        ],
+        "description": "Define the namespace for this object",
+        "default": "",
+        "x-helm-tpl": "On value only"
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Additional labels for webhook",
+        "default": {},
+        "x-helm-tpl": "On value only"
+      },
+      "annotationsList": {
+        "allOf": [
+          {
+            "$ref": "special/annotationsList.json"
+          }
+        ],
+        "description": "Additional annotations as a list of name and value pairs, merged into the annotations"
+      },
+      "labelsList": {
+        "allOf": [
+          {
+            "$ref": "special/labelsList.json"
+          }
+        ],
+        "description": "Additional labels as a list of name and value pairs, merged into the labels"
+      },
+      "annotations": {
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
+        "description": "Additional annotations for webhook",
+        "default": {},
+        "x-helm-tpl": "On value only"
+      },
+      "type": {
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "mutating",
+              "validating"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ],
+        "description": "Define the type of the webhook.",
+        "default": "",
+        "x-helm-tpl": true,
+        "x-docs-required": true
+      }
+    },
+    "additionalProperties": false,
+    "description": "Define a webhook object with the given name",
+    "default": {},
+    "x-docs-required": true
+  },
+  "description": "Create webhook objects"
+}

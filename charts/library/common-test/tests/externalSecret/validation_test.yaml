@@ -1,0 +1,155 @@
+suite: externalSecret validation test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should fail without a secretStoreRef
+    set:
+      externalSecret:
+        credentials:
+          enabled: true
+          data:
+            - secretKey: password
+              remoteRef:
+                key: my-app
+    asserts:
+      - failedTemplate:
+          errorMessage: ExternalSecret - Expected [externalSecret.credentials.secretStoreRef] to be a dictionary, but got [invalid]
+
+  - it: should fail without a secretStoreRef name
+    set:
+      externalSecret:
+        credentials:
+          enabled: true
+          secretStoreRef:
+            kind: ClusterSecretStore
+          data:
+            - secretKey: password
+              remoteRef:
+                key: my-app
+    asserts:
+      - failedTemplate:
+          errorMessage: ExternalSecret - Expected non-empty [externalSecret.credentials.secretStoreRef.name]
+
+  - it: should fail with an invalid secretStoreRef kind
+    set:
+      externalSecret:
+        credentials:
+          enabled: true
+          secretStoreRef:
+            name: vault
+            kind: Vault
+          data:
+            - secretKey: password
+              remoteRef:
+                key: my-app
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/externalSecret/credentials/secretStoreRef/kind'': value must be one of ''SecretStore'', ''ClusterSecretStore'''
+
+  - it: should fail with an invalid creationPolicy
+    set:
+      externalSecret:
+        credentials:
+          enabled: true
+          secretStoreRef:
+            name: vault
+          target:
+            creationPolicy: Create
+          data:
+            - secretKey: password
+              remoteRef:
+                key: my-app
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/externalSecret/credentials/target/creationPolicy'': value must be one of ''Owner'', ''Orphan'', ''Merge'', ''None'''
+
+  - it: should fail with an invalid deletionPolicy
+    set:
+      externalSecret:
+        credentials:
+          enabled: true
+          secretStoreRef:
+            name: vault
+          target:
+            deletionPolicy: Keep
+          data:
+            - secretKey: password
+              remoteRef:
+                key: my-app
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/externalSecret/credentials/target/deletionPolicy'': value must be one of <nil>, '''', ''Delete'', ''Merge'', ''Retain'''
+
+  - it: should fail with an invalid refreshPolicy
+    set:
+      externalSecret:
+        credentials:
+          enabled: true
+          refreshPolicy: Always
+          secretStoreRef:
+            name: vault
+          data:
+            - secretKey: password
+              remoteRef:
+                key: my-app
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/externalSecret/credentials/refreshPolicy'': value must be one of <nil>, '''', ''CreatedOnce'', ''Periodic'', ''OnChange'''
+
+  - it: should fail without data and dataFrom
+    set:
+      externalSecret:
+        credentials:
+          enabled: true
+          secretStoreRef:
+            name: vault
+    asserts:
+      - failedTemplate:
+          errorMessage: ExternalSecret - Expected at least one of [data, dataFrom] in [externalSecret.credentials] to be non-empty
+
+  - it: should fail when data is not a list
+    set:
+      externalSecret:
+        credentials:
+          enabled: true
+          secretStoreRef:
+            name: vault
+          data:
+            password:
+              remoteRef:
+                key: my-app
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/externalSecret/credentials/data'': got object, want string or array'
+
+  - it: should fail when a data entry has no secretKey
+    set:
+      externalSecret:
+        credentials:
+          enabled: true
+          secretStoreRef:
+            name: vault
+          data:
+            - remoteRef:
+                key: my-app
+    asserts:
+      - failedTemplate:
+          errorMessage: ExternalSecret - Expected non-empty [secretKey] on all entries of [externalSecret.credentials.data]
+
+  - it: should fail when a data entry has no remoteRef key
+    set:
+      externalSecret:
+        credentials:
+          enabled: true
+          secretStoreRef:
+            name: vault
+          data:
+            - secretKey: password
+              remoteRef:
+                property: password
+    asserts:
+      - failedTemplate:
+          errorMessage: ExternalSecret - Expected non-empty [remoteRef.key] on entry [password] of [externalSecret.credentials.data]
