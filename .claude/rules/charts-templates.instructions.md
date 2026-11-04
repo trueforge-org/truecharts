@@ -1,0 +1,1 @@
+../../.github/instructions/charts-templates.instructions.md
