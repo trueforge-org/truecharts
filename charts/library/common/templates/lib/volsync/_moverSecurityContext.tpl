@@ -16,14 +16,23 @@
     {{- $_ := set $sec "runAsNonRoot" $rootCtx.Values.securityContext.container.runAsNonRoot -}}
   {{- end -}}
 
-  {{- if and $rootCtx.Values.securityContext.container $rootCtx.Values.securityContext.container.seccompProfile -}}
-    {{- $_ := set $sec "seccompProfile" (mustDeepCopy $rootCtx.Values.securityContext.container.seccompProfile) -}}
-  {{- else -}}
-    {{- $_ := set $sec "seccompProfile" (dict "type" "RuntimeDefault") -}}
+  {{/* Translate the common seccompProfile format ("profile") to the Kubernetes one ("localhostProfile") */}}
+  {{- $seccomp := dict "type" "RuntimeDefault" -}}
+  {{- with $rootCtx.Values.securityContext.container.seccompProfile -}}
+    {{- with .type -}}
+      {{- $_ := set $seccomp "type" . -}}
+    {{- end -}}
+    {{- if and (eq $seccomp.type "Localhost") .profile -}}
+      {{- $_ := set $seccomp "localhostProfile" .profile -}}
+    {{- end -}}
   {{- end -}}
+  {{- $_ := set $sec "seccompProfile" $seccomp -}}
 
+  {{/* Top-level keys of the mover context replace the defaults, so nested objects (e.g. seccompProfile) are not merged */}}
   {{- with $target.moverSecurityContext -}}
-    {{- $sec = mustMergeOverwrite $sec . -}}
+    {{- range $key, $value := (mustDeepCopy .) -}}
+      {{- $_ := set $sec $key $value -}}
+    {{- end -}}
   {{- end -}}
 
   {{- if or (not (hasKey $sec "runAsNonRoot")) (kindIs "invalid" (get $sec "runAsNonRoot")) -}}

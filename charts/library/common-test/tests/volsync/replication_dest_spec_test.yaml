@@ -1080,3 +1080,69 @@ tests:
             seccompProfile:
               type: Localhost
               localhostProfile: my-profile.json
+
+  - it: should translate a global Localhost seccompProfile to localhostProfile
+    set:
+      securityContext:
+        container:
+          seccompProfile:
+            type: Localhost
+            profile: my-profile.json
+      persistence:
+        destbackup:
+          enabled: true
+          type: pvc
+          mountPath: /backedup
+          volsync:
+            - name: mybackup1
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: true
+              src:
+                enabled: false
+      credentials: *credentials
+    asserts:
+      - documentIndex: *replicationDestDoc
+        isKind:
+          of: ReplicationDestination
+      - documentIndex: *replicationDestDoc
+        equal:
+          path: spec.restic.moverSecurityContext.seccompProfile
+          value:
+            type: Localhost
+            localhostProfile: my-profile.json
+
+  - it: should replace a global Localhost seccompProfile with the mover seccompProfile
+    set:
+      securityContext:
+        container:
+          seccompProfile:
+            type: Localhost
+            profile: my-profile.json
+      persistence:
+        destbackup:
+          enabled: true
+          type: pvc
+          mountPath: /backedup
+          volsync:
+            - name: mybackup1
+              type: restic
+              credentials: mys3
+              src:
+                enabled: false
+              dest:
+                enabled: true
+                moverSecurityContext:
+                  seccompProfile:
+                    type: RuntimeDefault
+      credentials: *credentials
+    asserts:
+      - documentIndex: *replicationDestDoc
+        isKind:
+          of: ReplicationDestination
+      - documentIndex: *replicationDestDoc
+        equal:
+          path: spec.restic.moverSecurityContext.seccompProfile
+          value:
+            type: RuntimeDefault
