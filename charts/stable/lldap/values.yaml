@@ -47,9 +47,9 @@ workload:
             LLDAP_SMTP_OPTIONS__FROM: "LLDAP Admin <sender@gmail.com>"
             LLDAP_SMTP_OPTIONS__REPLY_TO: "Do not reply <noreply@localhost>"
             LLDAP_JWT_SECRET:
-              - secretRef:
-                  name: secrets
-                  key: LLDAP_JWT_SECRET
+              secretRef:
+                name: secrets
+                key: LLDAP_JWT_SECRET
             LLDAP_key_file: "/data/private_key"
             LLDAP_database_url:
               secretKeyRef:
