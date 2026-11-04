@@ -94,7 +94,7 @@ tests:
       - documentSelector: *rule
         equal:
           path: spec.groups[0].name
-          value: test-release-name-common-test-my-metrics-listed
+          value: test-release-name-common-test-listed
       - documentSelector: *rule
         equal:
           path: spec.groups[0].rules[0].alert
@@ -162,3 +162,45 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "at '/metrics/my-metrics/prometheusRule/additionalgroups"
+
+  - it: should render a map group with an explicit name
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            enabled: true
+            additionalgroups:
+              mapped:
+                name: custom
+                rules:
+                  - alert: MapAlert
+                    expr: up == 0
+    asserts:
+      - documentSelector: *rule
+        equal:
+          path: spec.groups[0].name
+          value: test-release-name-common-test-custom
+
+  - it: should fail on unknown keys in a map group and its rules
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            additionalgroups:
+              mapped:
+                unknown: x
+                rules:
+                  - unknown: x
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics/prometheusRule/additionalgroups/mapped"

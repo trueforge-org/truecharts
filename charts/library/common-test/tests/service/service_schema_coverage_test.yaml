@@ -41,7 +41,7 @@ tests:
           type: ClusterIP
           ipFamilyPolicy: RequireDualStack
           sessionAffinity: "None"
-          externalIPs: ""
+          externalIPs: []
           ports:
             port-name:
               enabled: true
@@ -163,3 +163,20 @@ tests:
           errorPattern: "at '/service/my-service/ipFamilyPolicy': 'oneOf' failed, none matched"
       - failedTemplate:
           errorPattern: "at '/service/my-service/sessionAffinity': 'oneOf' failed, none matched"
+
+  - it: should fail on externalIPs set to a string
+    set:
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          type: ClusterIP
+          externalIPs: 10.0.0.1
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 80
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/service/my-service/externalIPs'"

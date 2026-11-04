@@ -20,7 +20,19 @@ tests:
       - equal:
           path: metadata.name
           value: test-release-name-common-test-my-middleware
-  - it: should accept a string for enabled in traefik middleware plugin data
+  - it: should accept a boolean for enabled in traefik middleware plugin data
+    set:
+      ingressMiddlewares:
+        traefik:
+          my-middleware:
+            enabled: false
+            type: plugin-bouncer
+            data:
+              enabled: true
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should fail on a string for enabled in traefik middleware plugin data
     set:
       ingressMiddlewares:
         traefik:
@@ -30,8 +42,8 @@ tests:
             data:
               enabled: "true"
     asserts:
-      - hasDocuments:
-          count: 0
+      - failedTemplate:
+          errorPattern: "at '/ingressMiddlewares/traefik/my-middleware/data/enabled'"
   - it: should fail on unknown keys in a traefik middleware
     set:
       ingressMiddlewares:

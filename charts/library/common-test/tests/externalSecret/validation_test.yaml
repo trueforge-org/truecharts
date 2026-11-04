@@ -123,7 +123,7 @@ tests:
                 key: my-app
     asserts:
       - failedTemplate:
-          errorPattern: 'at ''/externalSecret/credentials/data'': got object, want string or array'
+          errorPattern: 'at ''/externalSecret/credentials/data'': got object, want array'
 
   - it: should fail when a data entry has no secretKey
     set:

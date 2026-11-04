@@ -94,7 +94,7 @@ tests:
           hosts: not-a-slice
     asserts:
       - failedTemplate:
-          errorMessage: Cert Manager Certificate - Expected [hosts] to be a [slice], but got [string]
+          errorPattern: "at '/certificate/my-cert/hosts': got string, want array"
 
   - it: should fail if hosts entry is empty
     set:

@@ -124,3 +124,13 @@ tests:
   asserts:
   - failedTemplate:
       errorPattern: 'at ''/dependencies/mydep/depconfig'': additional properties ''bogus'' not allowed'
+
+- it: should fail on a dependency without the enabled key
+  template: common.yaml
+  set:
+    dependencies:
+      mydep:
+        mode: standalone
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/mydep'': missing property ''enabled'''

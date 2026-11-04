@@ -73,6 +73,60 @@ tests:
           path: type
           value: kubernetes.io/iscsi-chap
 
+  - it: should render iscsi chap secrets on the varrun, devshm and crontab fixed-name entries
+    set:
+      persistence:
+        varrun:
+          enabled: true
+          type: iscsi
+          iscsi:
+            targetPortal: 10.0.0.1:3260
+            iqn: iqn.2000-01.com.example:varrun
+            lun: 0
+            authDiscovery:
+              username: some-user
+              password: some-password
+        devshm:
+          enabled: true
+          type: iscsi
+          iscsi:
+            targetPortal: 10.0.0.1:3260
+            iqn: iqn.2000-01.com.example:devshm
+            lun: 0
+            authDiscovery:
+              username: some-user
+              password: some-password
+        crontab:
+          enabled: true
+          type: iscsi
+          iscsi:
+            targetPortal: 10.0.0.1:3260
+            iqn: iqn.2000-01.com.example:crontab
+            lun: 0
+            authDiscovery:
+              username: some-user
+              password: some-password
+        varlogs:
+          enabled: true
+          type: iscsi
+          iscsi:
+            targetPortal: 10.0.0.1:3260
+            iqn: iqn.2000-01.com.example:varlogs
+            lun: 0
+            authDiscovery:
+              username: some-user
+              password: some-password
+    asserts:
+      - hasDocuments:
+          count: 4
+      - isKind:
+          of: Secret
+        documentIndex: 0
+      - equal:
+          path: type
+          value: kubernetes.io/iscsi-chap
+        documentIndex: 3
+
   - it: should fail with a message on a fixed-name iscsi entry without iscsi object
     set:
       persistence:

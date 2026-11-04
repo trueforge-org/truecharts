@@ -71,7 +71,7 @@ tests:
           data: "not a dict"
     asserts:
       - failedTemplate:
-          errorMessage: ConfigMap - Expected [data] to be a dictionary, but got [string]
+          errorPattern: "at '/configmap/my-configmap/data': got string, want object"
 
   - it: should fail with empty data
     set:
