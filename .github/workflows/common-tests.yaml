@@ -138,10 +138,10 @@ jobs:
           helm dependency update
           helm unittest -f "tests/**/*.yaml" . -v ./unit-values.yaml
 
-  schema-validation:
+  coverage-validation:
     needs:
       - lint
-    name: Schema Validation
+    name: Coverage Validation
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
@@ -165,12 +165,111 @@ jobs:
         run: |
           python3 charts/library/common/generate_complete_values_structure.py
 
+      # Each check also writes its output to coverage-report/, for the PR comment on failure
       - name: Run schema validation
+        id: schema
+        shell: bash
         run: |
-          python3 charts/library/common/generate_bundled_schema.py --check
-          python3 charts/library/common/test_schema.py --max-failures 0 --output-file stable_schema_validation.log
-          python3 charts/library/common/check_complete_values_schema_coverage.py
-          python3 charts/library/common/generate_docs.py --check
+          mkdir -p coverage-report
+          (
+            set -e
+            python3 charts/library/common/generate_bundled_schema.py --check
+            python3 charts/library/common/test_schema.py --max-failures 0 --output-file stable_schema_validation.log
+            python3 charts/library/common/check_complete_values_schema_coverage.py
+          ) 2>&1 | tee coverage-report/schema.log
+
+      # The checks below also run when an earlier one failed, so each reports its own result
+      - name: Run unittest schema coverage check
+        id: unittest
+        if: ${{ !cancelled() }}
+        shell: bash
+        run: |
+          mkdir -p coverage-report
+          python3 charts/library/common/check_unittest_schema_coverage.py --summary-md coverage-report/unittest-summary.md 2>&1 |
+            tee coverage-report/unittest.log
+
+      - name: Check docs
+        id: docs
+        if: ${{ !cancelled() }}
+        shell: bash
+        run: |
+          mkdir -p coverage-report
+          python3 charts/library/common/generate_docs.py --check 2>&1 | tee coverage-report/docs.log
+
+      # On a pull request, the "Pull Request: Coverage Comment" workflow posts this report as a comment.
+      # It runs from workflow_run, because the token of a pull_request from a fork can't comment.
+      - name: Build PR comment report
+        if: ${{ !cancelled() && github.event_name == 'pull_request' }}
+        shell: bash
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          SCHEMA_OUTCOME: ${{ steps.schema.outcome }}
+          UNITTEST_OUTCOME: ${{ steps.unittest.outcome }}
+          DOCS_OUTCOME: ${{ steps.docs.outcome }}
+        run: |
+          cd coverage-report
+          echo "$PR_NUMBER" > pr-number
+          echo "$HEAD_SHA" > head-sha
+          failed=0
+          {
+            for check in "schema|Schema validation|$SCHEMA_OUTCOME" \
+                         "unittest|Unittest schema coverage|$UNITTEST_OUTCOME" \
+                         "docs|Docs|$DOCS_OUTCOME"; do
+              IFS='|' read -r id title outcome <<< "$check"
+              [ "$outcome" = "failure" ] || continue
+              failed=1
+              echo "### ❌ $title"
+              echo
+              if [ -f "$id-summary.md" ]; then
+                cat "$id-summary.md"
+                echo
+              fi
+              echo "<details><summary>Output</summary>"
+              echo
+              echo '```text'
+              # A PR comment holds at most 65536 characters, so long output is cut in the middle
+              if [ "$(wc -c < "$id.log")" -gt 16000 ]; then
+                head -c 12000 "$id.log"
+                printf '\n\n... output cut, see the full log in the workflow run ...\n\n'
+                tail -c 4000 "$id.log"
+              else
+                cat "$id.log"
+              fi
+              echo '```'
+              echo
+              echo "</details>"
+              echo
+            done
+          } > failures.md
+          echo "$failed" > failed
+          {
+            if [ "$failed" = "1" ]; then
+              echo "## ❌ Common coverage validation failed"
+              echo
+              echo "Commit \`$HEAD_SHA\`, [workflow run]($RUN_URL)."
+              echo
+              cat failures.md
+            else
+              echo "## ✅ Common coverage validation passed"
+              echo
+              echo "Commit \`$HEAD_SHA\`, [workflow run]($RUN_URL)."
+            fi
+          } > comment.md
+          rm failures.md
+
+      - name: Upload PR comment report
+        if: ${{ !cancelled() && github.event_name == 'pull_request' }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: common-coverage-report
+          path: |
+            coverage-report/comment.md
+            coverage-report/failed
+            coverage-report/pr-number
+            coverage-report/head-sha
+          retention-days: 7
 
       - name: Upload schema validation log
         if: always()
@@ -184,7 +283,7 @@ jobs:
     needs:
       - lint
       - unittest
-      - schema-validation
+      - coverage-validation
     name: Install Charts (${{ matrix.versions.k3s }}, ${{ matrix.versions.helm }}, ${{ matrix.values }})
     runs-on: ubuntu-latest
     strategy:
@@ -336,7 +435,7 @@ jobs:
 
   # Summarize matrix https://github.community/t/status-check-for-a-matrix-jobs/127354/7
   common-tests-complete:
-    needs: [check_changes, lint, unittest, schema-validation, install]
+    needs: [check_changes, lint, unittest, coverage-validation, install]
     if: ${{ always() }}
     name: Common Tests Completed
     runs-on:
@@ -346,10 +445,10 @@ jobs:
         run: |
           if [[ "${{ needs.check_changes.outputs.changes_detected }}" == 'true' && ( "${{ needs.lint.result }}" != "success" || \
                 "${{ needs.unittest.result }}" != "success" || \
-                "${{ needs.schema-validation.result }}" != "success" || \
+                "${{ needs.coverage-validation.result }}" != "success" || \
                 "${{ needs.install.result }}" != "success") ]]; then
             echo "One or more jobs failed!"
             exit 1
           else
-            echo "Common Lint, Tests and unittests Completed Successfully"
+            echo "Common Lint, Tests, Coverage Validation and unittests Completed Successfully"
           fi

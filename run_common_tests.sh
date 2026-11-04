@@ -1,7 +1,8 @@
 #!/bin/bash
 # Runs the common library tests the same way CI does (.github/workflows/common-tests.yaml):
 #   1. helm-unittest suites of charts/library/common-test
-#   2. common JSON schema validation and coverage check (only when the schema tooling exists)
+#   2. common JSON schema validation and coverage checks, including the unittest coverage of the schema
+#      (only when the schema tooling exists)
 #
 # Missing tools are installed automatically, always the latest release:
 #   - Helm:          https://github.com/helm/helm (official get-helm-4 script)
@@ -19,6 +20,7 @@ cd "$(dirname "$0")" || exit 1
 common_test_path="charts/library/common-test"
 common_schema_test_script="charts/library/common/test_schema.py"
 common_coverage_script="charts/library/common/check_complete_values_schema_coverage.py"
+common_unittest_coverage_script="charts/library/common/check_unittest_schema_coverage.py"
 helm_install_script="https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4"
 helm_unittest_repo="https://github.com/helm-unittest/helm-unittest"
 scratch_dir=""
@@ -124,6 +126,11 @@ if [ -f "$common_schema_test_script" ]; then
     python3 "$common_coverage_script"
     result=$?
     [ "$result" -eq 0 ] || fail "Schema coverage check failed" "$result"
+
+    echo "📊 Running unittest schema coverage check..."
+    python3 "$common_unittest_coverage_script"
+    result=$?
+    [ "$result" -eq 0 ] || fail "Unittest schema coverage check failed" "$result"
   fi
 fi
 

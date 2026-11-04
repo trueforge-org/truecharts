@@ -35,6 +35,7 @@ icon-small.webp
 /schemas
 /README.txt
 /check_complete_values_schema_coverage.py
+/check_unittest_schema_coverage.py
 /complete-values-structure.yaml
 /docs-schema-mapping.yaml
 /docs-structure.txt
@@ -48,3 +49,4 @@ icon-small.webp
 /quick-reference.txt
 /template-keys-structure.yaml
 /test_schema.py
+/unittest-coverage-ignore.yaml

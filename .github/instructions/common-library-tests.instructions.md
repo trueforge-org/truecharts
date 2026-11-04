@@ -96,3 +96,16 @@ helm template test . -f ci/<feature>-values.yaml >/dev/null
 ```
 
 The schema checks that run after the unit tests are described in [Schema checks](common-library-schema.instructions.md#schema-checks).
+
+## Schema coverage by unittests
+
+`charts/library/common/check_unittest_schema_coverage.py` reads the schema files and the `set:` values of the suites in `tests/`, and fails when part of the schema has no unittest. The base values files and `ci/` values do not count. `./run_common_tests.sh` and CI run it.
+
+- Every key must be set in a test.
+- Every allowed `type`, every `enum` value, every `oneOf`/`anyOf` branch (including the `{{ tpl }}` branch of `x-helm-tpl` keys) and every `pattern` must be used in a passing test.
+- Every `pattern`, bound (`minimum`, `maximum`, `minLength`, `minItems`, ...), `required` key, closed object (`additionalProperties: false`) and `oneOf`/`anyOf` must be broken by a `failedTemplate` test. The test only counts when its values really break that rule, a test that fails on template logic does not.
+- A shared schema part (`$ref`) only needs to be tested once.
+- So add a passing test and a `failedTemplate` test for every schema key or rule you add.
+- Use `--category <name>` to report one category, `--all` to list every gap, `--json <file>` for a report and `--summary-md <file>` for a Markdown table of the totals.
+- In CI, on a pull request, a failure of this or the other checks of the `coverage-validation` job is posted as a comment on the PR by `.github/workflows/common-coverage-comment.yaml`. The comment is updated on later runs, and marked as passed when the checks pass again.
+- An item that a unittest cannot reach can go in `charts/library/common/unittest-coverage-ignore.yaml`, with its id as printed by the script and a reason. Entries that are unknown or already covered fail the check.
