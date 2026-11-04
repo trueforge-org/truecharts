@@ -1,0 +1,76 @@
+name: "Pull Request: Coverage Comment"
+
+# Posts the result of the common coverage validation (common-tests.yaml) as a comment on the PR.
+# This runs from workflow_run, so it can comment on PRs from forks too. It never checks out or runs
+# code from the PR: the report is only read as text, and the PR number is checked against the run.
+on:
+  workflow_run:
+    workflows: ["Pull Request: Validate"]
+    types:
+      - completed
+
+permissions: {}
+
+jobs:
+  comment:
+    name: Comment coverage validation result
+    if: github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-24.04
+    permissions:
+      actions: read
+      pull-requests: write
+    steps:
+      - name: Download report
+        id: download
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          # No report when the common tests were skipped (no common changes) or cancelled
+          if gh run download "$RUN_ID" -R "$REPO" -n common-coverage-report -D report; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No coverage report in this run, nothing to comment"
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Post or update comment
+        if: steps.download.outputs.found == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          marker='<!-- common-coverage-validation -->'
+          pr_number="$(head -n1 report/pr-number)"
+          report_sha="$(head -n1 report/head-sha)"
+          failed="$(head -n1 report/failed)"
+
+          # The artifact comes from PR code, so only trust it for the PR that this run was for
+          if ! [[ "$pr_number" =~ ^[0-9]+$ ]]; then
+            echo "Invalid PR number in the report"
+            exit 1
+          fi
+          pr_sha="$(gh api "repos/$REPO/pulls/$pr_number" --jq .head.sha)"
+          if [ "$report_sha" != "$RUN_HEAD_SHA" ] || [ "$pr_sha" != "$RUN_HEAD_SHA" ]; then
+            echo "The report does not belong to the head of PR #$pr_number (it moved on, or the report is wrong), skipping"
+            exit 0
+          fi
+
+          comment_id="$(gh api --paginate "repos/$REPO/issues/$pr_number/comments" \
+            --jq "[.[] | select(.user.login == \"github-actions[bot]\" and (.body | contains(\"$marker\")))][0].id // empty" | head -n1)"
+
+          if [ "$failed" != "1" ] && [ -z "$comment_id" ]; then
+            echo "Coverage validation passed and there is no earlier comment, nothing to post"
+            exit 0
+          fi
+
+          { echo "$marker"; cat report/comment.md; } > body.md
+          if [ -n "$comment_id" ]; then
+            gh api -X PATCH "repos/$REPO/issues/comments/$comment_id" -F body=@body.md > /dev/null
+            echo "Updated comment $comment_id on PR #$pr_number"
+          else
+            gh api -X POST "repos/$REPO/issues/$pr_number/comments" -F body=@body.md > /dev/null
+            echo "Commented on PR #$pr_number"
+          fi
