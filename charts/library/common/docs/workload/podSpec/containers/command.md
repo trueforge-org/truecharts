@@ -17,7 +17,7 @@ title: Command
 
 ## `workload.podSpec.containers.command`
 
-See [command](/truecharts-common/container/command) ---
+See [command](/truecharts-common/workload/podSpec/containers/command) ---
 
 | Field      | Value                                 |
 | ---------- | ------------------------------------- |

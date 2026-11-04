@@ -19,7 +19,8 @@
         },
         "additionalProperties": false,
         "description": "Define the source of the volume snapshot At least one of the following keys must be defined",
-        "default": {}
+        "default": {},
+        "x-docs-required": true
       },
       "volumeSnapshotClassName": {
         "type": "string",
@@ -32,11 +33,8 @@
           }
         ],
         "description": "Define the labels of the volume snapshot",
-        "type": [
-          "object",
-          "string"
-        ],
-        "default": {}
+        "default": {},
+        "x-helm-tpl": "On value only"
       },
       "annotationsList": {
         "allOf": [
@@ -55,17 +53,14 @@
         "description": "Additional labels as a list of name and value pairs, merged into the labels"
       },
       "annotations": {
-        "type": [
-          "object",
-          "string"
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
         ],
-        "properties": {},
-        "additionalProperties": {
-          "type": "string",
-          "description": "Value of the annotation"
-        },
         "description": "Define the annotations of the volume snapshot class",
-        "default": {}
+        "default": {},
+        "x-helm-tpl": "On value only"
       },
       "enabled": {
         "type": [
@@ -75,7 +70,9 @@
         "properties": {},
         "additionalProperties": false,
         "description": "Enable volume snapshot",
-        "default": false
+        "default": false,
+        "x-helm-tpl": true,
+        "x-docs-required": true
       }
     },
     "additionalProperties": false,

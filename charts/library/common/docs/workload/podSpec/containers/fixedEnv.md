@@ -17,7 +17,7 @@ title: Fixedenv
 
 ## `workload.podSpec.containers.fixedEnv`
 
-See [fixedEnv](/truecharts-common/container/fixedenv).
+See [fixedEnv](/truecharts-common/workload/podSpec/containers/fixedEnv).
 
 | Field      | Value                                  |
 | ---------- | -------------------------------------- |

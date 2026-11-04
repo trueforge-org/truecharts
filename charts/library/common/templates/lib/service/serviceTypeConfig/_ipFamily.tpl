@@ -19,10 +19,6 @@ objectData: The service object data
 ipFamilyPolicy: {{ $famPolicy }}
   {{- end -}}
 
-  {{- if and $objectData.ipFamilies (not (kindIs "slice" $objectData.ipFamilies)) -}}
-    {{- fail (printf "Service - Expected [ipFamilies] to be a list, but got a [%s]" (kindOf $objectData.ipFamilies)) -}}
-  {{- end -}}
-
   {{- with $objectData.ipFamilies }}
 ipFamilies:
     {{- range . }}

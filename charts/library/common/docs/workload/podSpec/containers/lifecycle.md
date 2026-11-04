@@ -17,7 +17,7 @@ title: Lifecycle
 
 ## `workload.podSpec.containers.lifecycle`
 
-Does **not** apply to `initContainers`. See [lifecycle](/truecharts-common/container/lifecycle).
+Does **not** apply to `initContainers`. See [lifecycle](/truecharts-common/workload/podSpec/containers/lifecycle).
 
 | Field      | Value                                   |
 | ---------- | --------------------------------------- |

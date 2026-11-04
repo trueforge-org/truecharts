@@ -22,7 +22,6 @@ objectData:
   {{- $rootCtx := .rootCtx -}}
   {{- $objectData := .objectData -}}
 
-  {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" "Valkey Operator") -}}
 
   {{/* Metadata */}}
   {{- $labels := mustMerge (mustDeepCopy ($objectData.labels | default dict)) (include "tc.v1.common.lib.metadata.allLabels" $rootCtx | fromYaml) -}}

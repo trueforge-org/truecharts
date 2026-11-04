@@ -2,12 +2,12 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "properties": {
-      "enabled": {
-        "type": [
-          "boolean",
-          "string"
-        ],
-      "description": "Configuration for `diagnosticMode.enabled`."
+    "enabled": {
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "description": "Run the containers with a sleep command instead of the app, to debug them."
     }
   },
   "additionalProperties": false,

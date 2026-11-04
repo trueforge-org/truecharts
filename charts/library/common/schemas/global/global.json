@@ -10,35 +10,31 @@
       ],
       "description": "Additional Labels that apply to all objects",
       "default": {},
-      "type": [
-        "object",
-        "string"
-      ]
+      "x-helm-tpl": "On value only"
     },
     "annotations": {
-      "type": [
-        "object",
-        "string"
+      "allOf": [
+        {
+          "$ref": "../special/annotations.json"
+        }
       ],
-      "properties": {},
-      "additionalProperties": {
-        "type": "string"
-      },
       "description": "Additional Annotations that apply to all objects",
-      "default": {}
+      "default": {},
+      "x-helm-tpl": "On value only"
     },
     "namespace": {
       "type": "string",
       "description": "Namespace to apply to all objects, unless overridden at the object level Does not apply to chart deps, use global.namespace for that",
-      "default": ""
+      "default": "",
+      "x-helm-tpl": true
     },
     "podCIDR": {
       "type": "string",
-      "description": "Configuration for `global.podCIDR`."
+      "description": "CIDR of the pods of the cluster."
     },
     "svcCIDR": {
       "type": "string",
-      "description": "Configuration for `global.svcCIDR`."
+      "description": "CIDR of the services of the cluster."
     },
     "diagnosticMode": {
       "type": "object",
@@ -48,15 +44,15 @@
             "boolean",
             "string"
           ],
-          "description": "Configuration for `global.diagnosticMode.enabled`."
+          "description": "Run the containers of all charts with a sleep command, to debug them."
         }
       },
       "additionalProperties": false,
-      "description": "Configuration for `global.diagnosticMode`."
+      "description": "Diagnostic mode for all charts."
     },
     "fallbackDefaults": {
       "$ref": "fallbackDefaults.json",
-      "description": "The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [here](/truecharts-common/fallbackdefaults)",
+      "description": "The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [here](/truecharts-common/global/fallbackDefaults)",
       "type": "object",
       "x-docs-required": false,
       "x-docs-helmTpl": false,
@@ -72,7 +68,7 @@
             "properties": {
               "name": {
                 "type": "string",
-                "description": "Configuration for `global.traefik.commonMiddlewares.$item.name`."
+                "description": "Name of the middleware."
               }
             },
             "additionalProperties": false,
@@ -100,7 +96,8 @@
       "type": "integer",
       "description": "Minimum Node Port Allowed",
       "minimum": 1,
-      "default": 9000
+      "default": 9000,
+      "x-docs-required": true
     },
     "stopAll": {
       "type": "boolean",

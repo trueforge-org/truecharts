@@ -36,9 +36,9 @@ Define the annotations of the volume snapshot class
 | Field      | Value                                   |
 | ---------- | --------------------------------------- |
 | Key        | `volumeSnapshotClass.$name.annotations` |
-| Type       | `map, string`                           |
+| Type       | `map`                                   |
 | Required   | ❌                                      |
-| Helm `tpl` | ❌                                      |
+| Helm `tpl` | ✅ (On value only)                       |
 | Default    | `{}`                                    |
 
 Example
@@ -77,7 +77,7 @@ Define the deletion policy of the volume snapshot class
 | Required   | ❌                                         |
 | Helm `tpl` | ❌                                         |
 | Default    | `"Retain"`                                 |
-| Enum       | `Delete`, `Retain`, `delete`, `retain`     |
+| Enum       | `Retain`, `Delete`                         |
 
 Example
 
@@ -97,8 +97,8 @@ Define the driver of the volume snapshot class
 | ---------- | ---------------------------------- |
 | Key        | `volumeSnapshotClass.$name.driver` |
 | Type       | `string`                           |
-| Required   | ❌                                 |
-| Helm `tpl` | ❌                                 |
+| Required   | ✅                                 |
+| Helm `tpl` | ✅                                 |
 | Default    | `""`                               |
 | Min Length | `1`                                |
 
@@ -120,8 +120,8 @@ Enable volume snapshot class
 | ---------- | ----------------------------------- |
 | Key        | `volumeSnapshotClass.$name.enabled` |
 | Type       | `boolean, string`                   |
-| Required   | ❌                                  |
-| Helm `tpl` | ❌                                  |
+| Required   | ✅                                  |
+| Helm `tpl` | ✅                                  |
 | Default    | `false`                             |
 
 Example
@@ -163,9 +163,9 @@ Define the labels of the volume snapshot class
 | Field      | Value                              |
 | ---------- | ---------------------------------- |
 | Key        | `volumeSnapshotClass.$name.labels` |
-| Type       | `map, string`                      |
+| Type       | `map`                              |
 | Required   | ❌                                 |
-| Helm `tpl` | ❌                                 |
+| Helm `tpl` | ✅ (On value only)                  |
 | Default    | `{}`                               |
 
 Example
@@ -202,7 +202,7 @@ Define a volume snapshot class
 | Key        | `volumeSnapshotClass.$name.parameters` |
 | Type       | `map, string`                          |
 | Required   | ❌                                     |
-| Helm `tpl` | ❌                                     |
+| Helm `tpl` | ✅ (On both key and value)              |
 | Default    | `{}`                                   |
 
 Example

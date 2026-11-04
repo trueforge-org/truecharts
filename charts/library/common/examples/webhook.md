@@ -53,8 +53,8 @@ webhook:
         clientConfig:
           caBundle: ""
           service:
-            name: ""
-            namespace: ""
+            name: my-webhook-service
+            namespace: my-namespace
             path: ""
             port: 443
         rules:

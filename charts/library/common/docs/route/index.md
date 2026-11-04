@@ -31,7 +31,7 @@ Configuration for `route`.
 
 ### `route.$name.annotations`
 
-Configuration for `route.main.annotations`.
+Additional annotations, keyed by name.
 
 | Field      | Value                     |
 | ---------- | ------------------------- |
@@ -45,7 +45,7 @@ Configuration for `route.main.annotations`.
 
 ### `route.$name.enabled`
 
-Configuration for `route.main.enabled`.
+Enable the route.
 
 | Field      | Value                 |
 | ---------- | --------------------- |
@@ -96,7 +96,7 @@ Name of a gateway outside of this chart. Replaces `parentRefs`. Cannot be used w
 | Key        | `route.$name.gateway` |
 | Type       | `string`              |
 | Required   | ❌                    |
-| Helm `tpl` | ❌                    |
+| Helm `tpl` | ✅                    |
 | Default    | `""`                  |
 
 Example
@@ -118,7 +118,7 @@ Namespace of `gateway`. Defaults to the namespace of the route.
 | Key        | `route.$name.gatewayNamespace` |
 | Type       | `string`                       |
 | Required   | ❌                             |
-| Helm `tpl` | ❌                             |
+| Helm `tpl` | ✅                             |
 | Default    | `""`                           |
 
 Example
@@ -140,7 +140,7 @@ Host addresses, supports Helm `tpl`. Required for `TLSRoute`, not supported by `
 | Key        | `route.$name.hostnames` |
 | Type       | `list of string`        |
 | Required   | ❌                      |
-| Helm `tpl` | ❌                      |
+| Helm `tpl` | ✅                      |
 | Default    | `[]`                    |
 
 Example
@@ -170,7 +170,7 @@ Integrations of this route. `certManager`, `envoy`, `homepage` and `traefik` are
 
 ### `route.$name.kind`
 
-Configuration for `route.main.kind`.
+Kind of the route: `HTTPRoute`, `GRPCRoute`, `TCPRoute`, `TLSRoute` or `UDPRoute`.
 
 | Field      | Value                                                        |
 | ---------- | ------------------------------------------------------------ |
@@ -193,7 +193,7 @@ route:
 
 ### `route.$name.labels`
 
-Configuration for `route.main.labels`.
+Additional labels, keyed by name.
 
 | Field      | Value                |
 | ---------- | -------------------- |
@@ -245,7 +245,7 @@ route:
 
 ### `route.$name.namespace`
 
-Configuration for `route.main.namespace`.
+Namespace of the route.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
@@ -259,7 +259,7 @@ Configuration for `route.main.namespace`.
 
 ### `route.$name.parentRefs`
 
-Configuration for `route.main.parentRefs`.
+Gateways or ListenerSets the route attaches to.
 
 | Field      | Value                    |
 | ---------- | ------------------------ |

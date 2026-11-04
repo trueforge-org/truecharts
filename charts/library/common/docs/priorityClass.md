@@ -36,9 +36,9 @@ Additional annotations for priority class
 | Field      | Value                             |
 | ---------- | --------------------------------- |
 | Key        | `priorityClass.$name.annotations` |
-| Type       | `map, string`                     |
+| Type       | `map`                             |
 | Required   | ❌                                |
-| Helm `tpl` | ❌                                |
+| Helm `tpl` | ✅ (On value only)                 |
 | Default    | `{}`                              |
 
 Example
@@ -96,8 +96,8 @@ Enables or Disables the priority class
 | ---------- | ----------------------------- |
 | Key        | `priorityClass.$name.enabled` |
 | Type       | `boolean, string`             |
-| Required   | ❌                            |
-| Helm `tpl` | ❌                            |
+| Required   | ✅                            |
+| Helm `tpl` | ✅                            |
 | Default    | `false`                       |
 
 Example
@@ -139,9 +139,9 @@ Additional labels for priority class
 | Field      | Value                        |
 | ---------- | ---------------------------- |
 | Key        | `priorityClass.$name.labels` |
-| Type       | `map, string`                |
+| Type       | `map`                        |
 | Required   | ❌                           |
-| Helm `tpl` | ❌                           |
+| Helm `tpl` | ✅ (On value only)            |
 | Default    | `{}`                         |
 
 Example
@@ -178,7 +178,7 @@ Define the namespace for this object
 | Key        | `priorityClass.$name.namespace` |
 | Type       | `string`                        |
 | Required   | ❌                              |
-| Helm `tpl` | ❌                              |
+| Helm `tpl` | ✅ (On value only)               |
 | Default    | `""`                            |
 
 Example

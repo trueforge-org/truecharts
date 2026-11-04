@@ -29,6 +29,7 @@ certificate:
   objectName:
     certificateSecretTemplate: variableName
 chartContext:
+  appUrl: variableName
   internalUrls: variableName
   podCIDR: variableName
   svcCIDR: variableName
@@ -39,18 +40,20 @@ containerOptions:
   NVIDIA_CAPS: variableName
 createChartContextConfigmap: variableName
 credentials: variableName
-dependencies: {}
+dependencies:
+  objectName:
+    depconfig:
+      mongodbDatabase: variableName
+    securityContext: variableName
 externalSecret: variableName
 extraTpl: variableName
-gateway:
-  enabled: variableName
-gatewayClass:
-  enabled: variableName
-  primary: variableName
+gateway: variableName
+gatewayClass: variableName
 global:
   annotations: variableName
   fallbackDefaults:
     accessModes: variableName
+    allowRollingUpdateWithRWO: variableName
     cnpg:
       objectName: {}
     persistenceType: variableName
@@ -58,6 +61,7 @@ global:
     probeType: variableName
     pvcRetain: variableName
     pvcSize: variableName
+    routeListenerPort: variableName
     serviceProtocol: variableName
     serviceType: variableName
     storageClass: {}
@@ -67,9 +71,7 @@ global:
   labels: variableName
   minNodePort: variableName
   namespace: variableName
-  podCIDR: variableName
   stopAll: variableName
-  svcCIDR: variableName
   traefik:
     commonMiddlewares: variableName
 hpa:
@@ -108,7 +110,6 @@ notes:
   custom: variableName
   footer: variableName
   header: variableName
-  showCredentials: variableName
   warnings: variableName
 persistence:
   objectName:
@@ -171,26 +172,19 @@ podOptions:
   topologySpreadConstraints: variableName
 podmonitor: variableName
 priorityClass: {}
-prometheusrule: variableName
+prometheusRule: variableName
 rbac:
   objectName:
+    dependency: variableName
     enabled: variableName
     primary: variableName
-redis:
-  creds:
-    plainhost: variableName
-    plainporthost: variableName
-    url: variableName
-  enabled: variableName
-  password: variableName
-  redisDatabase: variableName
-  redisUsername: variableName
 resources:
   objectName:
     memory: variableName
 route:
   objectName:
-    enabled: variableName
+    kind: variableName
+    required: variableName
 secret: {}
 securityContext:
   container:
@@ -221,6 +215,7 @@ service:
     targetSelector: variableName
 serviceAccount:
   objectName:
+    dependency: variableName
     enabled: variableName
     primary: variableName
     targetSelectAll: variableName
@@ -239,6 +234,10 @@ webhook:
     type: variableName
 workload:
   objectName:
+    dbWait: variableName
+    dependency: variableName
     enabled: variableName
+    podSpec:
+      initContainers: variableName
     primary: variableName
     type: variableName

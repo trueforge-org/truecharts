@@ -45,7 +45,7 @@ Additional annotations of the HorizontalPodAutoscaler.
 
 ### `hpa.$name.behavior`
 
-Configuration for `hpa.main.behavior`.
+Scaling behavior, for scaling up and down.
 
 | Field      | Value                |
 | ---------- | -------------------- |
@@ -59,7 +59,7 @@ Configuration for `hpa.main.behavior`.
 
 ### `hpa.$name.enabled`
 
-Configuration for `hpa.main.enabled`.
+Enable the HorizontalPodAutoscaler.
 
 | Field      | Value               |
 | ---------- | ------------------- |
@@ -95,7 +95,7 @@ Additional labels of the HorizontalPodAutoscaler.
 
 ### `hpa.$name.maxReplicas`
 
-Configuration for `hpa.main.maxReplicas`. Must be greater than or equal to `minReplicas`.
+Maximum number of replicas.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
@@ -109,7 +109,7 @@ Configuration for `hpa.main.maxReplicas`. Must be greater than or equal to `minR
 
 ### `hpa.$name.metrics`
 
-Configuration for `hpa.main.metrics`. List of metric specs, each selecting one of Resource, Pods, Object, External or ContainerResource.
+Metrics the number of replicas is calculated from.
 
 | Field      | Value               |
 | ---------- | ------------------- |
@@ -123,7 +123,7 @@ Configuration for `hpa.main.metrics`. List of metric specs, each selecting one o
 
 ### `hpa.$name.minReplicas`
 
-Configuration for `hpa.main.minReplicas`.
+Minimum number of replicas.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
@@ -137,7 +137,7 @@ Configuration for `hpa.main.minReplicas`.
 
 ### `hpa.$name.targetSelector`
 
-Configuration for `hpa.main.targetSelector`.
+Workloads the HorizontalPodAutoscaler scales. Defaults to the primary workload.
 
 | Field      | Value                      |
 | ---------- | -------------------------- |

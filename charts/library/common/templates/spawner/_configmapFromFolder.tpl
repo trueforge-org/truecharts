@@ -52,8 +52,6 @@
         {{- $_ := set $objectData "binaryData" $entry.binary -}}
       {{- end -}}
 
-      {{/* Include metadata validation */}}
-      {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" "ConfigMap") -}}
 
       {{/* Call class to create the object */}}
       {{- include "tc.v1.common.class.configmap" (dict "rootCtx" $ "objectData" $objectData) -}}

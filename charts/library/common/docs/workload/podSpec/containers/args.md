@@ -17,7 +17,7 @@ title: Args
 
 ## `workload.podSpec.containers.args`
 
-See [args](/truecharts-common/container/args#args) ---
+See [args](/truecharts-common/workload/podSpec/containers/args#args) ---
 
 | Field      | Value                              |
 | ---------- | ---------------------------------- |

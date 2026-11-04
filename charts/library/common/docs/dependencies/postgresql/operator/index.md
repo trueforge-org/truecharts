@@ -38,7 +38,7 @@ Additional annotations for all CNPG objects.
 | Key        | `dependencies.postgresql.operator.annotations` |
 | Type       | `map`                                          |
 | Required   | ❌                                             |
-| Helm `tpl` | ❌                                             |
+| Helm `tpl` | ✅ (On value only)                              |
 | Default    | `{}`                                           |
 
 Example
@@ -69,7 +69,7 @@ Additional annotations as a list of name and value pairs, merged into the `annot
 
 ### `dependencies.postgresql.operator.backups`
 
-Configuration for `dependencies.postgresql.operator.backups`.
+Backups of the cluster, through the Barman Cloud plugin.
 
 | Field      | Value                                      |
 | ---------- | ------------------------------------------ |
@@ -89,7 +89,7 @@ Configuration of the CNPG cluster.
 | ---------- | ------------------------------------------ |
 | Key        | `dependencies.postgresql.operator.cluster` |
 | Type       | `map`                                      |
-| Required   | ❌                                         |
+| Required   | ✅                                         |
 | Helm `tpl` | ❌                                         |
 | Default    | unset                                      |
 
@@ -141,7 +141,7 @@ Additional labels for all CNPG objects.
 | Key        | `dependencies.postgresql.operator.labels` |
 | Type       | `map`                                     |
 | Required   | ❌                                        |
-| Helm `tpl` | ❌                                        |
+| Helm `tpl` | ✅ (On value only)                         |
 | Default    | `{}`                                      |
 
 Example
@@ -196,7 +196,7 @@ dependencies:
 
 ### `dependencies.postgresql.operator.monitoring`
 
-Configuration for `dependencies.postgresql.operator.monitoring`.
+Monitoring of the cluster.
 
 | Field      | Value                                                                              |
 | ---------- | ---------------------------------------------------------------------------------- |
@@ -261,7 +261,7 @@ CloudNativePG upgrades an existing cluster in place when its major version chang
 | ---------- | -------------------------------------------- |
 | Key        | `dependencies.postgresql.operator.pgVersion` |
 | Type       | `integer`                                    |
-| Required   | ❌                                           |
+| Required   | ✅                                           |
 | Helm `tpl` | ❌                                           |
 | Default    | `18`                                         |
 | Enum       | `15`, `16`, `17`, `18`                       |
@@ -279,7 +279,7 @@ dependencies:
 
 ### `dependencies.postgresql.operator.pooler`
 
-Configuration for `dependencies.postgresql.operator.pooler`.
+PgBouncer pooler in front of the cluster.
 
 | Field      | Value                                     |
 | ---------- | ----------------------------------------- |
@@ -293,7 +293,7 @@ Configuration for `dependencies.postgresql.operator.pooler`.
 
 ### `dependencies.postgresql.operator.recovery`
 
-Configuration for `dependencies.postgresql.operator.recovery`.
+Create the cluster from a backup or an object store.
 
 | Field      | Value                                       |
 | ---------- | ------------------------------------------- |
@@ -331,7 +331,7 @@ dependencies:
 
 ## Child Pages
 
-- [Cluster](cluster/)
+- [Cluster](cluster/) - Define a CNPG cluster
 - [Instancesidecarconfiguration](instanceSidecarConfiguration.md) - Configuration of the sidecar that runs in the CNPG instance pods. Passed verbatim to the `instanceSidecarConfiguration` of the CNPG ObjectStore.
 
 ---

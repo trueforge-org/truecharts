@@ -107,7 +107,7 @@ tests:
           annotations: "not a dict"
     asserts:
       - failedTemplate:
-          errorMessage: Ingress - Expected [annotations] to be a dictionary, but got [string]
+          errorPattern: 'at ''/ingress/my-ingress/annotations'': got string, want object'
 
   - it: should fail with empty enabled
     set:

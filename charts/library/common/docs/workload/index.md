@@ -31,7 +31,7 @@ Define workload objects
 
 ### `workload.$name.activeDeadlineSeconds`
 
-Define the activeDeadlineSeconds
+Seconds a Job can run before it is stopped.
 
 | Field      | Value                                  |
 | ---------- | -------------------------------------- |
@@ -83,9 +83,9 @@ Define annotations for workload
 | Field      | Value                        |
 | ---------- | ---------------------------- |
 | Key        | `workload.$name.annotations` |
-| Type       | `map, string`                |
+| Type       | `map`                        |
 | Required   | ❌                           |
-| Helm `tpl` | ❌                           |
+| Helm `tpl` | ✅ (On value only)            |
 | Default    | `{}`                         |
 
 Example
@@ -115,7 +115,7 @@ Additional annotations as a list of name and value pairs, merged into the annota
 
 ### `workload.$name.backoffLimit`
 
-Define the backoffLimit
+Retries before a Job fails.
 
 | Field      | Value                         |
 | ---------- | ----------------------------- |
@@ -129,7 +129,7 @@ Define the backoffLimit
 
 ### `workload.$name.completionMode`
 
-Define the completionMode
+Completion mode of a Job, `NonIndexed` or `Indexed`.
 
 | Field      | Value                           |
 | ---------- | ------------------------------- |
@@ -144,7 +144,7 @@ Define the completionMode
 
 ### `workload.$name.completions`
 
-Define the completions
+Successful pods a Job needs.
 
 | Field      | Value                        |
 | ---------- | ---------------------------- |
@@ -158,14 +158,14 @@ Define the completions
 
 ### `workload.$name.concurrencyPolicy`
 
-Define the concurrencyPolicy
+What a CronJob does when the previous run is still running: `Allow`, `Forbid` or `Replace`.
 
 | Field      | Value                              |
 | ---------- | ---------------------------------- |
 | Key        | `workload.$name.concurrencyPolicy` |
 | Type       | `string`                           |
 | Required   | ❌                                 |
-| Helm `tpl` | ❌                                 |
+| Helm `tpl` | ✅                                 |
 | Default    | unset                              |
 | Enum       | `Allow`, `Replace`, `Forbid`       |
 
@@ -173,7 +173,7 @@ Define the concurrencyPolicy
 
 ### `workload.$name.containers`
 
-Define container(s) for the workload See [Container](/truecharts-common/container/) for more information
+Define container(s) for the workload See [Container](/truecharts-common/workload/podSpec/containers) for more information
 
 | Field      | Value                       |
 | ---------- | --------------------------- |
@@ -202,7 +202,7 @@ The workloads of [dependencies](/truecharts-common/dependencies) default to `fal
 | Field      | Value                   |
 | ---------- | ----------------------- |
 | Key        | `workload.$name.dbWait` |
-| Type       | `boolean, string`       |
+| Type       | `boolean`               |
 | Required   | ❌                      |
 | Helm `tpl` | ❌                      |
 | Default    | unset                   |
@@ -217,8 +217,8 @@ Enable or disable workload
 | ---------- | ------------------------ |
 | Key        | `workload.$name.enabled` |
 | Type       | `boolean, string`        |
-| Required   | ❌                       |
-| Helm `tpl` | ❌                       |
+| Required   | ✅                       |
+| Helm `tpl` | ✅                       |
 | Default    | `false`                  |
 
 Example
@@ -256,21 +256,21 @@ workload:
 
 ### `workload.$name.failedJobsHistoryLimit`
 
-Define the failedJobsHistoryLimit
+Failed Jobs of a CronJob that are kept.
 
 | Field      | Value                                   |
 | ---------- | --------------------------------------- |
 | Key        | `workload.$name.failedJobsHistoryLimit` |
 | Type       | `integer`                               |
 | Required   | ❌                                      |
-| Helm `tpl` | ❌                                      |
+| Helm `tpl` | ✅                                      |
 | Default    | unset                                   |
 
 ---
 
 ### `workload.$name.initContainers`
 
-Define workload objects
+Not used. Init containers go under `podSpec.initContainers`.
 
 | Field      | Value                           |
 | ---------- | ------------------------------- |
@@ -298,9 +298,9 @@ Define labels for workload
 | Field      | Value                   |
 | ---------- | ----------------------- |
 | Key        | `workload.$name.labels` |
-| Type       | `map, string`           |
+| Type       | `map`                   |
 | Required   | ❌                      |
-| Helm `tpl` | ❌                      |
+| Helm `tpl` | ✅ (On value only)       |
 | Default    | `{}`                    |
 
 Example
@@ -337,7 +337,7 @@ Define the namespace for this object
 | Key        | `workload.$name.namespace` |
 | Type       | `string`                   |
 | Required   | ❌                         |
-| Helm `tpl` | ❌                         |
+| Helm `tpl` | ✅ (On value only)          |
 | Default    | `""`                       |
 
 Example
@@ -352,7 +352,7 @@ workload:
 
 ### `workload.$name.parallelism`
 
-Define the parallelism
+Pods of a Job that run at the same time.
 
 | Field      | Value                        |
 | ---------- | ---------------------------- |
@@ -372,7 +372,7 @@ Define the podSpec for the workload
 | ---------- | ------------------------ |
 | Key        | `workload.$name.podSpec` |
 | Type       | `map`                    |
-| Required   | ❌                       |
+| Required   | ✅                       |
 | Helm `tpl` | ❌                       |
 | Default    | `{}`                     |
 
@@ -395,7 +395,7 @@ Set workload as primary
 | ---------- | ------------------------ |
 | Key        | `workload.$name.primary` |
 | Type       | `boolean`                |
-| Required   | ❌                       |
+| Required   | ✅                       |
 | Helm `tpl` | ❌                       |
 | Default    | `false`                  |
 
@@ -453,14 +453,14 @@ Define the rollingUpdate options Can only be used when `workload.$name.strategy`
 
 ### `workload.$name.schedule`
 
-Define the schedule
+Cron schedule of a CronJob.
 
 | Field      | Value                     |
 | ---------- | ------------------------- |
 | Key        | `workload.$name.schedule` |
 | Type       | `string`                  |
-| Required   | ❌                        |
-| Helm `tpl` | ❌                        |
+| Required   | ✅                        |
+| Helm `tpl` | ✅                        |
 | Default    | unset                     |
 
 ---
@@ -474,7 +474,7 @@ Suggested is to use the top-level [serviceAccount](/truecharts-common/serviceacc
 | Key        | `workload.$name.serviceAccountName` |
 | Type       | `string`                            |
 | Required   | ❌                                  |
-| Helm `tpl` | ❌                                  |
+| Helm `tpl` | ✅ (On value only)                   |
 | Default    | `""`                                |
 
 Example
@@ -489,7 +489,7 @@ workload:
 
 ### `workload.$name.startingDeadlineSeconds`
 
-Define the startingDeadlineSeconds
+Seconds a CronJob can start late.
 
 | Field      | Value                                    |
 | ---------- | ---------------------------------------- |
@@ -520,7 +520,7 @@ A single replica Deployment uses `Recreate` if it mounts a `ReadWriteOnce` or `R
 
 ### `workload.$name.successfulJobsHistoryLimit`
 
-Define the successfulJobsHistoryLimit
+Successful Jobs of a CronJob that are kept.
 
 | Field      | Value                                       |
 | ---------- | ------------------------------------------- |
@@ -548,21 +548,21 @@ Define if the CronJob is suspended. Forced to `true` when `stopAll` is enabled.
 
 ### `workload.$name.timezone`
 
-Define the timezone
+Time zone of the schedule of a CronJob. Defaults to `TZ`.
 
 | Field      | Value                     |
 | ---------- | ------------------------- |
 | Key        | `workload.$name.timezone` |
 | Type       | `string`                  |
 | Required   | ❌                        |
-| Helm `tpl` | ❌                        |
+| Helm `tpl` | ✅                        |
 | Default    | unset                     |
 
 ---
 
 ### `workload.$name.ttlSecondsAfterFinished`
 
-Define the ttlSecondsAfterFinished
+Seconds before a finished Job is deleted.
 
 | Field      | Value                                    |
 | ---------- | ---------------------------------------- |
@@ -582,7 +582,7 @@ Define the kind of the workload
 | ---------- | ---------------------------------------------------------- |
 | Key        | `workload.$name.type`                                      |
 | Type       | `string`                                                   |
-| Required   | ❌                                                         |
+| Required   | ✅                                                         |
 | Helm `tpl` | ❌                                                         |
 | Default    | `""`                                                       |
 | Enum       | `Deployment`, `DaemonSet`, `StatefulSet`, `CronJob`, `Job` |
@@ -600,12 +600,7 @@ workload:
 ## Child Pages
 
 - [Container](container/) - Configuration for `workload.container`.
-- [Cronjob](cronjob.md) - Configuration for workload entries with `type: CronJob`.
-- [Daemonset](daemonset.md) - Configuration for workload entries with `type: DaemonSet`.
-- [Deployment](deployment.md) - Configuration for workload entries with `type: Deployment`.
-- [Job](job.md) - Configuration for workload entries with `type: Job`.
 - [Podspec](podSpec/) - Configuration for `workload.podSpec`.
-- [Statefulset](statefulset.md) - Configuration for workload entries with `type: StatefulSet`.
 - [Terminationgraceperiodseconds](terminationGracePeriodSeconds.md) - See [Termination Grace Period Seconds](/truecharts-common/workload#terminationgraceperiodseconds)
 
 ---
@@ -676,8 +671,153 @@ workload:
 
 Full examples for each workload type can be found here
 
-- [`Deployment`](/truecharts-common/workload/deployment)
-- [`DaemonSet`](/truecharts-common/workload/daemonset)
-- [`StatefulSet`](/truecharts-common/workload/statefulset)
-- [`CronJob`](/truecharts-common/workload/cronjob)
-- [`Job`](/truecharts-common/workload/job)
+- [`Deployment`](/truecharts-common/workload#deployment)
+- [`DaemonSet`](/truecharts-common/workload#daemonset)
+- [`StatefulSet`](/truecharts-common/workload#statefulset)
+- [`CronJob`](/truecharts-common/workload#cronjob)
+- [`Job`](/truecharts-common/workload#job)
+
+### Deployment
+
+```yaml
+workload:
+  workload-name:
+    enabled: true
+    primary: true
+    type: Deployment
+    replicas: 1
+    revisionHistoryLimit: 3
+    strategy: Recreate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+    podSpec: {}
+
+  other-workload-name:
+    enabled: true
+    primary: false
+    type: Deployment
+    labels: {}
+    annotations: {}
+    replicas: 1
+    revisionHistoryLimit: 3
+    strategy: Recreate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+    podSpec: {}
+```
+
+### StatefulSet
+
+```yaml
+workload:
+  workload-name:
+    enabled: true
+    primary: true
+    type: StatefulSet
+    replicas: 1
+    revisionHistoryLimit: 3
+    strategy: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      partition: 1
+    podSpec: {}
+
+  other-workload-name:
+    enabled: true
+    primary: false
+    type: StatefulSet
+    replicas: 1
+    revisionHistoryLimit: 3
+    strategy: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      partition: 1
+    podSpec: {}
+```
+
+### DaemonSet
+
+```yaml
+workload:
+  workload-name:
+    enabled: true
+    primary: true
+    type: DaemonSet
+    revisionHistoryLimit: 3
+    strategy: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+    podSpec: {}
+
+  other-workload-name:
+    enabled: true
+    primary: false
+    type: DaemonSet
+    labels: {}
+    annotations: {}
+    replicas: 1
+    revisionHistoryLimit: 3
+    strategy: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+    podSpec: {}
+```
+
+### Job
+
+```yaml
+workload:
+  workload-name:
+    enabled: true
+    primary: true
+    type: Job
+    backoffLimit: 5
+    completionMode: Indexed
+    completions: 5
+    parallelism: 5
+    ttlSecondsAfterFinished: 100
+    activeDeadlineSeconds: 100
+    podSpec:
+      restartPolicy: Never
+
+  other-workload-name:
+    enabled: true
+    primary: false
+    type: Job
+    podSpec: {}
+```
+
+### CronJob
+
+```yaml
+workload:
+  workload-name:
+    enabled: true
+    primary: true
+    type: CronJob
+    schedule: "{{ .Values.cron }}"
+    timezone: "{{ .Values.someTimezone }}"
+    concurrencyPolicy: Allow
+    failedJobsHistoryLimit: 2
+    successfulJobsHistoryLimit: 4
+    startingDeadlineSeconds: 100
+    backoffLimit: 5
+    completionMode: Indexed
+    completions: 5
+    parallelism: 5
+    ttlSecondsAfterFinished: 100
+    activeDeadlineSeconds: 100
+    podSpec:
+      restartPolicy: OnFailure
+
+  other-workload-name:
+    enabled: true
+    primary: false
+    type: CronJob
+    schedule: "* * * * *"
+    podSpec: {}
+```

@@ -7,9 +7,6 @@
 
   {{- range $item := $itemsToCheck -}}
     {{- if hasKey $item "diagnosticMode" -}}
-      {{- if not (kindIs "map" $item.diagnosticMode) -}}
-        {{- fail (printf "Diagnostic Mode - Expected [diagnosticMode] to be a map, but got [%s]" (kindOf $item.diagnosticMode)) -}}
-      {{- end -}}
       {{- if hasKey $item.diagnosticMode "enabled" -}}
         {{- if not (kindIs "bool" $item.diagnosticMode.enabled) -}}
           {{- fail (printf "Diagnostic Mode - Expected [diagnosticMode.enabled] to be a bool, but got [%s]" (kindOf $item.diagnosticMode.enabled)) -}}

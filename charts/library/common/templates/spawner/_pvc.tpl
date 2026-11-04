@@ -23,7 +23,6 @@
 
       {{/* Perform general validations */}}
       {{- include "tc.v1.common.lib.persistence.validation" (dict "rootCtx" $ "objectData" $objectData) -}}
-      {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" "Persistence") -}}
 
       {{/* Only spawn PVC if its enabled and any type of "pvc" */}}
       {{- $types := (list "pvc") -}}
@@ -94,7 +93,6 @@
             {{- $volsyncData := (mustDeepCopy $volsync) -}}
 
             {{- include "tc.v1.common.lib.volsync.validation" (dict "objectData" $volsyncData "rootCtx" $) -}}
-            {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $volsyncData "caller" "PVC - VolSync") -}}
 
             {{/* Create Secret for VolSync */}}
             {{- $volsyncSecretName := printf "%s-volsync-%s" $objectData.name $volsyncData.name -}}
@@ -200,7 +198,6 @@
 
           {{/* Perform validations */}} {{/* volumesnapshots have a max name length of 253 */}}
           {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $snapshotName "length" 253) -}}
-          {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $volSnapData "caller" "PVC - Volume Snapshot") -}}
 
           {{/* Set the name of the volumesnapshot */}}
           {{- $_ := set $volSnapData "name" $snapshotName -}}

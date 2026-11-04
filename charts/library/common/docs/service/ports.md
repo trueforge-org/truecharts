@@ -45,7 +45,7 @@ Define the appProtocol of the port, used by the `Endpoint` and `EndpointSlice` o
 
 ### `service.ports.enabled`
 
-Configuration for `service.main.ports.main.enabled`.
+Enable the port.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
@@ -66,7 +66,7 @@ Define the hostPort, should be **avoided**, unless **ABSOLUTELY** necessary
 | Key        | `service.ports.hostPort` |
 | Type       | `integer, string`        |
 | Required   | ❌                       |
-| Helm `tpl` | ❌                       |
+| Helm `tpl` | ✅                       |
 | Default    | unset                    |
 
 ---
@@ -79,8 +79,8 @@ Define the node port that will be exposed on the node
 | ---------- | ------------------------ |
 | Key        | `service.ports.nodePort` |
 | Type       | `integer, string`        |
-| Required   | ❌                       |
-| Helm `tpl` | ❌                       |
+| Required   | ✅                       |
+| Helm `tpl` | ✅                       |
 | Default    | unset                    |
 
 ---
@@ -93,8 +93,8 @@ Define the port that will be exposed by the service
 | ---------- | -------------------- |
 | Key        | `service.ports.port` |
 | Type       | `integer, string`    |
-| Required   | ❌                   |
-| Helm `tpl` | ❌                   |
+| Required   | ✅                   |
+| Helm `tpl` | ✅                   |
 | Default    | unset                |
 | Minimum    | `1`                  |
 
@@ -102,7 +102,7 @@ Define the port that will be exposed by the service
 
 ### `service.ports.primary`
 
-Configuration for `service.main.ports.main.primary`.
+Make this the primary port of the service.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
@@ -137,7 +137,7 @@ Define the port protocol Used by the container ports and probes, http and https 
 | Key        | `service.ports.protocol`      |
 | Type       | `string`                      |
 | Required   | ❌                            |
-| Helm `tpl` | ❌                            |
+| Helm `tpl` | ✅                            |
 | Default    | unset                         |
 | Enum       | `tcp`, `udp`, `http`, `https` |
 
@@ -152,7 +152,7 @@ Define the target port (No named ports)
 | Key        | `service.ports.targetPort` |
 | Type       | `integer, string`          |
 | Required   | ❌                         |
-| Helm `tpl` | ❌                         |
+| Helm `tpl` | ✅                         |
 | Default    | unset                      |
 
 ---
@@ -166,7 +166,7 @@ Define the port dict
 | Key        | `service.ports.targetSelector` |
 | Type       | `string`                       |
 | Required   | ❌                             |
-| Helm `tpl` | ❌                             |
+| Helm `tpl` | ✅                             |
 | Default    | unset                          |
 
 ---
@@ -190,7 +190,7 @@ Legacy port-level `type` used in some stable chart values (for example `docker`)
 Full examples can be found under each service type
 
 - [ClusterIP](/truecharts-common/service/clusterip)
-- [LoadBalancer](/truecharts-common/service/loadbalancer)
-- [NodePort](/truecharts-common/service/nodeport)
+- [LoadBalancer](/truecharts-common/service#loadbalancer)
+- [NodePort](/truecharts-common/service#nodeport)
 - [ExternalName](/truecharts-common/service/externalname)
 - [ExternalIP](/truecharts-common/service/externalip)

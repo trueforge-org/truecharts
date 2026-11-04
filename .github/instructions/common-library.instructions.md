@@ -104,9 +104,12 @@ These rules apply to `charts/library/common/` (the `common` library chart that e
 - Follow the patterns of the existing schema files:
   - Collections of named objects (`configmap.<name>`, `workload.<name>`, ...) use `"properties": {}`, with the object schema in `additionalProperties`.
   - Use relative `$ref`s for shared parts, wrapped in `allOf`, e.g. `"allOf": [{ "$ref": "special/labels.json" }]`. A file must not `$ref` itself, which `test_schema.py` rejects.
+  - Reuse the shared schemas instead of copying them: `special/labels.json` and `special/annotations.json` for labels and annotations, `special/labelSelector.json` for label selectors, `image.json` for images, `listener.json` for the listeners of gateways and listener sets, and `workload/podSpec/containers/*.json` for containers (also for init containers and addons).
+  - Every schema file must be reachable from `values.schema.source.json`. Do not add files that only exist for the docs.
   - Keys that take a Helm `tpl` string instead of a boolean or number allow both, e.g. `"type": ["boolean", "string"]`.
   - Give every property a `description`, and a `default` that matches `values.yaml`.
-- The docs are built from the schema. They use `description`, `default`, `examples` (or `default` when there are none), `x-helm-tpl: true` for the Helm `tpl` column, and on top-level keys the `x-docs-required`, `x-docs-helmTpl` and `x-docs-defaultRaw` fields.
+- The docs are built from the schema. They use `description`, `default`, `examples` (or `default` when there are none), `x-helm-tpl` for the Helm `tpl` column (`true`, or a string like `On value only` that is shown next to it), `x-docs-required: true` for the Required column of keys a chart has to set but that common gives a default, and on top-level keys the `x-docs-helmTpl` and `x-docs-defaultRaw` fields.
+- Validate in the schema what the schema can express (types, enums, required keys without a default) instead of in the templates. Keep template checks for values rendered with `tpl`, checks across keys, and anything the schema can not express. `required` only works for keys without a default in `values.yaml`, as the schema also checks disabled objects and sees the values of a chart before the defaults of common are merged.
 - The schema of a chart sees its values before the defaults of `common` are merged. So only use `required` for keys without a default, like the items of a list. A `required` key with a default rejects any partial override of its parent.
 - A change to the schema can break the values of app charts. Keep the schema accepting all existing chart values unless the change is meant to be breaking. `test_schema.py` checks this, see [Schema checks](#schema-checks).
 

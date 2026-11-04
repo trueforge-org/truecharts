@@ -43,7 +43,6 @@ objectData:
         {{- fail "Cert Manager Certificate - Expected [certificateSecretTemplate] to have at least one of [labels, annotations]" -}}
       {{- end -}}
 
-      {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData.certificateSecretTemplate "caller" "Cert Manager Certificate (certificateSecretTemplate)") -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}

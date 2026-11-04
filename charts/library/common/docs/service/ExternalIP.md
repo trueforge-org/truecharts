@@ -17,14 +17,14 @@ title: Externalip
 
 ## `service.ExternalIP`
 
-Configure External IP type
+A single external IP of the service. Supports Helm `tpl`.
 
 | Field      | Value                |
 | ---------- | -------------------- |
 | Key        | `service.ExternalIP` |
-| Type       | `string, map`        |
+| Type       | `string`             |
 | Required   | ❌                   |
-| Helm `tpl` | ❌                   |
+| Helm `tpl` | ✅                   |
 | Default    | unset                |
 
 ---
@@ -54,5 +54,5 @@ service:
         targetSelector: container-name
         port: 80
         targetPort: 8080
-        protocol: HTTP
+        protocol: http
 ```

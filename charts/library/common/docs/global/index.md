@@ -36,9 +36,9 @@ Additional Annotations that apply to all objects
 | Field      | Value                |
 | ---------- | -------------------- |
 | Key        | `global.annotations` |
-| Type       | `map, string`        |
+| Type       | `map`                |
 | Required   | ❌                   |
-| Helm `tpl` | ❌                   |
+| Helm `tpl` | ✅ (On value only)    |
 | Default    | `{}`                 |
 
 Example
@@ -53,7 +53,7 @@ global:
 
 ### `global.diagnosticMode`
 
-Configuration for `global.diagnosticMode`.
+Diagnostic mode for all charts.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
@@ -67,7 +67,7 @@ Configuration for `global.diagnosticMode`.
 
 ### `global.fallbackDefaults`
 
-The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [documentation](/truecharts-common/fallbackdefaults)
+The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [documentation](/truecharts-common/global/fallbackDefaults)
 
 | Field      | Value                     |
 | ---------- | ------------------------- |
@@ -99,13 +99,13 @@ Ignore isStopped when applying global stop behaviour. Set by the stable external
 
 Additional Labels that apply to all objects
 
-| Field      | Value           |
-| ---------- | --------------- |
-| Key        | `global.labels` |
-| Type       | `map, string`   |
-| Required   | ❌              |
-| Helm `tpl` | ❌              |
-| Default    | `{}`            |
+| Field      | Value             |
+| ---------- | ----------------- |
+| Key        | `global.labels`   |
+| Type       | `map`             |
+| Required   | ❌                |
+| Helm `tpl` | ✅ (On value only) |
+| Default    | `{}`              |
 
 Example
 
@@ -125,7 +125,7 @@ Minimum Node Port Allowed
 | ---------- | -------------------- |
 | Key        | `global.minNodePort` |
 | Type       | `integer`            |
-| Required   | ❌                   |
+| Required   | ✅                   |
 | Helm `tpl` | ❌                   |
 | Default    | `9000`               |
 | Minimum    | `1`                  |
@@ -148,7 +148,7 @@ Namespace to apply to all objects, unless overridden at the object level Does no
 | Key        | `global.namespace` |
 | Type       | `string`           |
 | Required   | ❌                 |
-| Helm `tpl` | ❌                 |
+| Helm `tpl` | ✅                 |
 | Default    | `""`               |
 
 Example
@@ -162,7 +162,7 @@ global:
 
 ### `global.podCIDR`
 
-Configuration for `global.podCIDR`.
+CIDR of the pods of the cluster.
 
 | Field      | Value            |
 | ---------- | ---------------- |
@@ -197,7 +197,7 @@ global:
 
 ### `global.svcCIDR`
 
-Configuration for `global.svcCIDR`.
+CIDR of the services of the cluster.
 
 | Field      | Value            |
 | ---------- | ---------------- |
@@ -250,10 +250,7 @@ global:
   namespace: ""
   minNodePort: 9000
   stopAll: false
-  metallb:
-    addServiceAnnotations: true
   traefik:
-    addServiceAnnotations: true
     commonMiddlewares:
       - name: tc-basic-secure-headers
 ```

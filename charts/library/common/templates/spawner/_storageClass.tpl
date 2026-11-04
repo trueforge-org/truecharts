@@ -33,7 +33,6 @@
 
       {{/* Perform validations */}} {{/* Configmaps have a max name length of 253 */}}
       {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $objectName "length" 253) -}}
-      {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" "StorageClass") -}}
 
       {{/* Set the name of the storageclass */}}
       {{- $_ := set $objectData "name" $objectName -}}

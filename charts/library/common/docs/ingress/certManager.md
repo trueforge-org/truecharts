@@ -59,7 +59,7 @@ Enables or Disables the cert-manager integration
 | ---------- | ----------------------------- |
 | Key        | `ingress.certManager.enabled` |
 | Type       | `boolean`                     |
-| Required   | ❌                            |
+| Required   | ✅                            |
 | Helm `tpl` | ❌                            |
 | Default    | `false`                       |
 

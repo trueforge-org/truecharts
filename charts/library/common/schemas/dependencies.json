@@ -130,12 +130,14 @@
                   "description": "Connection details populated by the library (eg `plainhost`, `complete`). Read-only."
                 }
               },
-              "additionalProperties": false
+              "additionalProperties": false,
+              "description": "Settings of the dependency itself. Never merged into the chart."
             },
             "image": false
           }
         }
-      ]
+      ],
+      "description": "The mariadb dependency."
     },
     "mongodb": {
       "allOf": [
@@ -182,12 +184,14 @@
                   "description": "Connection details populated by the library (eg `plainhost`, `complete`). Read-only."
                 }
               },
-              "additionalProperties": false
+              "additionalProperties": false,
+              "description": "Settings of the dependency itself. Never merged into the chart."
             },
             "image": false
           }
         }
-      ]
+      ],
+      "description": "The mongodb dependency."
     },
     "clickhouse": {
       "allOf": [
@@ -233,12 +237,14 @@
                   "description": "Connection details populated by the library (eg `plainhost`, `complete`). Read-only."
                 }
               },
-              "additionalProperties": false
+              "additionalProperties": false,
+              "description": "Settings of the dependency itself. Never merged into the chart."
             },
             "image": false
           }
         }
-      ]
+      ],
+      "description": "The clickhouse dependency."
     },
     "memcached": {
       "allOf": [
@@ -324,15 +330,21 @@
         "properties": {
           "depconfig": {
             "properties": {
-              "password": {},
-              "creds": {}
+              "password": {
+                "description": "Password of the dependency."
+              },
+              "creds": {
+                "description": "Connection details set by the dependency, eg `plainhost` and `url`. Read only."
+              }
             },
-            "additionalProperties": false
+            "additionalProperties": false,
+            "description": "Settings of the dependency itself. Never merged into the chart."
           },
           "operator": {
             "additionalProperties": {
               "description": "A setting for the operator. Never merged into the chart values."
-            }
+            },
+            "description": "Settings for the operator that provides the dependency. Never merged into the chart."
           }
         }
       }

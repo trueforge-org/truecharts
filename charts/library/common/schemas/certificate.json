@@ -9,22 +9,22 @@
         "type": "object",
         "properties": {
           "annotations": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": {
-              "type": "string",
-              "description": "Value of the annotation"
-            },
-            "description": "Define the annotations for this certificate secret template"
+            "allOf": [
+              {
+                "$ref": "special/annotations.json"
+              }
+            ],
+            "description": "Define the annotations for this certificate secret template",
+            "x-helm-tpl": "On value only"
           },
           "labels": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": {
-              "type": "string",
-              "description": "Value of the label"
-            },
-            "description": "Define the labels for this certificate secret template"
+            "allOf": [
+              {
+                "$ref": "special/labels.json"
+              }
+            ],
+            "description": "Define the labels for this certificate secret template",
+            "x-helm-tpl": "On value only"
           }
         },
         "additionalProperties": false,
@@ -39,7 +39,9 @@
         "properties": {},
         "additionalProperties": false,
         "description": "Enables or Disables the certificate",
-        "default": false
+        "default": false,
+        "x-helm-tpl": true,
+        "x-docs-required": true
       },
       "namespace": {
         "allOf": [
@@ -48,20 +50,18 @@
           }
         ],
         "description": "Define the namespace for this object",
-        "default": ""
+        "default": "",
+        "x-helm-tpl": "On value only"
       },
       "labels": {
-        "type": [
-          "object",
-          "string"
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
         ],
-        "properties": {},
-        "additionalProperties": {
-          "type": "string",
-          "description": "Value of the label"
-        },
         "description": "Define the labels for this certificate",
-        "default": {}
+        "default": {},
+        "x-helm-tpl": "On value only"
       },
       "annotationsList": {
         "allOf": [
@@ -80,23 +80,22 @@
         "description": "Additional labels as a list of name and value pairs, merged into the labels"
       },
       "annotations": {
-        "type": [
-          "object",
-          "string"
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
         ],
-        "properties": {},
-        "additionalProperties": {
-          "type": "string",
-          "description": "Value of the annotation"
-        },
         "description": "Define the annotations for this certificate",
-        "default": {}
+        "default": {},
+        "x-helm-tpl": "On value only"
       },
       "certificateIssuer": {
         "type": "string",
         "description": "Define the certificate issuer for this certificate",
         "default": "",
-        "minLength": 1
+        "minLength": 1,
+        "x-helm-tpl": true,
+        "x-docs-required": true
       },
       "hosts": {
         "type": [
@@ -106,12 +105,15 @@
         "properties": {},
         "additionalProperties": false,
         "description": "Define the hosts for this certificate",
-        "default": "false"
+        "default": "false",
+        "x-helm-tpl": "On each entry",
+        "x-docs-required": true
       }
     },
     "additionalProperties": false,
     "description": "Define certificate",
-    "default": {}
+    "default": {},
+    "x-docs-required": true
   },
   "description": "Define certificates"
 }

@@ -22,9 +22,6 @@
 
   {{/* Validate the policy type */}}
   {{- $type := include "tc.v1.common.lib.networkpolicy.type" (dict "rootCtx" $rootCtx "objectData" $objectData) -}}
-  {{- if not (mustHas $type (list "kubernetes" "cilium")) -}}
-    {{- fail (printf "NetworkPolicy - Expected [type] to be one of [kubernetes, cilium], but got [%s]" $type) -}}
-  {{- end -}}
 
   {{- $clusterwide := include "tc.v1.common.lib.networkpolicy.clusterwide" (dict "rootCtx" $rootCtx "objectData" $objectData) -}}
   {{- if not (mustHas $clusterwide (list "true" "false")) -}}
@@ -50,9 +47,6 @@
     {{- end -}}
     {{- if and (hasKey $objectData "nodeSelector") (ne $clusterwide "true") -}}
       {{- fail "NetworkPolicy - Key [nodeSelector] requires [clusterwide: true]" -}}
-    {{- end -}}
-    {{- if and (hasKey $objectData "enableDefaultDeny") (not (kindIs "map" $objectData.enableDefaultDeny)) -}}
-      {{- fail (printf "NetworkPolicy - Expected [enableDefaultDeny] to be a dictionary, but got [%s]" (kindOf $objectData.enableDefaultDeny)) -}}
     {{- end -}}
   {{- end -}}
 

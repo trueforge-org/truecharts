@@ -120,4 +120,4 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorMessage: Workload - Expected [annotations] to be a dictionary, but got [string]
+          errorPattern: 'at ''/workload/workload-name/annotations'': got string, want object'

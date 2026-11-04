@@ -8,7 +8,8 @@
       "properties": {},
       "additionalProperties": false,
       "description": "Enables or Disables the homepage integration",
-      "default": false
+      "default": false,
+      "x-docs-required": true
     },
     "name": {
       "type": "string",
@@ -67,11 +68,13 @@
             "properties": {
               "key": {
                 "type": "string",
-                "description": "Define the key for the custom annotation Sets the `gethomepage.dev/widget.$key` annotation"
+                "description": "Define the key for the custom annotation Sets the `gethomepage.dev/widget.$key` annotation",
+                "x-docs-required": true
               },
               "value": {
                 "type": "string",
-                "description": "Define the value for the custom annotation"
+                "description": "Define the value for the custom annotation",
+                "x-docs-required": true
               }
             },
             "additionalProperties": false,

@@ -7,7 +7,8 @@
         "boolean",
         "string"
       ],
-      "description": "Enable or disable the probe."
+      "description": "Enable or disable the probe.",
+      "x-docs-required": true
     },
     "type": {
       "oneOf": [
@@ -26,18 +27,22 @@
           "pattern": "^\\{\\{.*\\}\\}$"
         }
       ],
-      "description": "Probe handler type."
+      "description": "Probe handler type.",
+      "x-helm-tpl": true
     },
     "port": {
       "type": [
         "integer",
         "string"
       ],
-      "description": "Probe port. Used by HTTP, HTTPS, TCP, and gRPC probes."
+      "description": "Probe port. Used by HTTP, HTTPS, TCP, and gRPC probes.",
+      "x-helm-tpl": true,
+      "x-docs-required": true
     },
     "path": {
       "type": "string",
-      "description": "Request path used by HTTP and HTTPS probes."
+      "description": "Request path used by HTTP and HTTPS probes.",
+      "x-helm-tpl": true
     },
     "httpHeaders": {
       "type": "object",
@@ -49,30 +54,36 @@
         ]
       },
       "description": "HTTP headers sent with HTTP and HTTPS probes.",
-      "default": {}
+      "default": {},
+      "x-helm-tpl": "On value only"
     },
     "spec": {
       "type": "object",
       "properties": {
         "successThreshold": {
           "type": "integer",
-          "minimum": 1
+          "minimum": 1,
+          "description": "Successful probes in a row before the probe succeeds."
         },
         "initialDelaySeconds": {
           "type": "integer",
-          "minimum": 0
+          "minimum": 0,
+          "description": "Seconds before the first probe."
         },
         "periodSeconds": {
           "type": "integer",
-          "minimum": 1
+          "minimum": 1,
+          "description": "Seconds between probes."
         },
         "timeoutSeconds": {
           "type": "integer",
-          "minimum": 1
+          "minimum": 1,
+          "description": "Seconds before a probe times out."
         },
         "failureThreshold": {
           "type": "integer",
-          "minimum": 1
+          "minimum": 1,
+          "description": "Failed probes in a row before the probe fails."
         },
         "exec": {
           "type": "object",

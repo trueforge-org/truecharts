@@ -7,19 +7,19 @@
     "properties": {
       "operator": {
         "type": "string",
-        "description": "Configuration for `tolerations.$item.operator`."
+        "description": "Operator: `Exists` or `Equal`."
       },
       "key": {
         "type": "string",
-        "description": "Configuration for `tolerations.$item.key`."
+        "description": "Key of the taint."
       },
       "value": {
         "type": "string",
-        "description": "Configuration for `tolerations.$item.value`."
+        "description": "Value of the taint, with `operator: Equal`."
       },
       "effect": {
         "type": "string",
-        "description": "Configuration for `tolerations.$item.effect`."
+        "description": "Effect of the taint: `NoSchedule`, `PreferNoSchedule` or `NoExecute`."
       },
       "tolerationSeconds": {
         "type": "integer",

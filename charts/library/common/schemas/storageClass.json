@@ -6,15 +6,13 @@
     "type": "object",
     "properties": {
       "mountOptions": {
-        "type": [
-          "array",
-          "string"
-        ],
+        "type": "array",
         "items": {
           "type": "string"
         },
         "description": "Define storage classes",
-        "default": []
+        "default": [],
+        "x-helm-tpl": "On each entry only"
       },
       "enabled": {
         "type": [
@@ -24,7 +22,9 @@
         "properties": {},
         "additionalProperties": false,
         "description": "Enables or Disables the storage class",
-        "default": false
+        "default": false,
+        "x-helm-tpl": true,
+        "x-docs-required": true
       },
       "labels": {
         "allOf": [
@@ -33,11 +33,8 @@
           }
         ],
         "description": "Additional labels for storage class",
-        "type": [
-          "object",
-          "string"
-        ],
-        "default": {}
+        "default": {},
+        "x-helm-tpl": "On value only"
       },
       "annotationsList": {
         "allOf": [
@@ -56,31 +53,26 @@
         "description": "Additional labels as a list of name and value pairs, merged into the labels"
       },
       "annotations": {
-        "type": [
-          "object",
-          "string"
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
         ],
-        "properties": {},
-        "additionalProperties": {
-          "type": "string",
-          "description": "Value of the annotation"
-        },
         "description": "Additional annotations for storage class",
-        "default": {}
+        "default": {},
+        "x-helm-tpl": "On value only"
       },
       "provisioner": {
         "type": "string",
-        "description": "Define the provisioner for this storage class"
+        "description": "Define the provisioner for this storage class",
+        "x-docs-required": true
       },
       "isDefault": {
         "type": "boolean",
         "description": "Define whether this storage class is the default storage class"
       },
       "parameters": {
-        "type": [
-          "object",
-          "string"
-        ],
+        "type": "object",
         "properties": {},
         "additionalProperties": {
           "type": [
@@ -91,7 +83,8 @@
           "description": "Value of the parameter"
         },
         "description": "Define the parameters for this storage class",
-        "default": {}
+        "default": {},
+        "x-helm-tpl": "On value only"
       },
       "reclaimPolicy": {
         "type": "string",
@@ -119,7 +112,8 @@
     },
     "additionalProperties": false,
     "description": "Define storage class",
-    "default": {}
+    "default": {},
+    "x-docs-required": true
   },
   "description": "Define storage classes"
 }

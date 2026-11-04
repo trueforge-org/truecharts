@@ -3,20 +3,24 @@
   "type": "object",
   "properties": {
     "labels": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "string"
-      },
+      "allOf": [
+        {
+          "$ref": "../../../special/labels.json"
+        }
+      ],
       "description": "Additional labels for CNPG cluster",
-      "default": {}
+      "default": {},
+      "x-helm-tpl": "On value only"
     },
     "annotations": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "string"
-      },
+      "allOf": [
+        {
+          "$ref": "../../../special/annotations.json"
+        }
+      ],
       "description": "Additional annotations for CNPG cluster",
-      "default": {}
+      "default": {},
+      "x-helm-tpl": "On value only"
     },
     "env": {
       "allOf": [
@@ -24,7 +28,7 @@
           "$ref": "../../../workload/podSpec/containers/env.json"
         }
       ],
-      "description": "See [env](/truecharts-common/container/env)",
+      "description": "See [env](/truecharts-common/workload/podSpec/containers/env)",
       "default": {}
     },
     "envFrom": {
@@ -33,42 +37,42 @@
         "object"
       ],
       "items": {
-          "type": "object",
-          "properties": {
-            "configMapRef": {
-              "type": "object",
-              "properties": {
-                "expandObjectName": {
-                  "type": "boolean",
-                  "description": "Whether to expand (adding the fullname as prefix) the configmap name"
-                },
-                "name": {
-                  "type": "string",
-                  "description": "Define the configmap name. This will be automatically expanded to `fullname-configmap-name`."
-                }
+        "type": "object",
+        "properties": {
+          "configMapRef": {
+            "type": "object",
+            "properties": {
+              "expandObjectName": {
+                "type": "boolean",
+                "description": "Whether to expand (adding the fullname as prefix) the configmap name"
               },
-              "additionalProperties": false,
-              "description": "Define the configMapRef"
+              "name": {
+                "type": "string",
+                "description": "Define the configmap name. This will be automatically expanded to `fullname-configmap-name`."
+              }
             },
-            "secretRef": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "description": "Define the secret name. This will be automatically expanded to `fullname-secret-name`."
-                },
-                "expandObjectName": {
-                  "type": "boolean",
-                  "description": "Whether to expand (adding the fullname as prefix) the secret name"
-                }
-              },
-              "additionalProperties": false,
-              "description": "Define the secretRef"
-            }
+            "additionalProperties": false,
+            "description": "A ConfigMap whose keys become environment variables."
           },
-          "additionalProperties": false
+          "secretRef": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Define the secret name. This will be automatically expanded to `fullname-secret-name`."
+              },
+              "expandObjectName": {
+                "type": "boolean",
+                "description": "Whether to expand (adding the fullname as prefix) the secret name"
+              }
+            },
+            "additionalProperties": false,
+            "description": "A Secret whose keys become environment variables."
+          }
         },
-        "description": "See [envFrom](/truecharts-common/container/envfrom)",
+        "additionalProperties": false
+      },
+      "description": "See [envFrom](/truecharts-common/workload/podSpec/containers/envFrom)",
       "default": {}
     },
     "instances": {
@@ -110,15 +114,6 @@
         "trace"
       ],
       "default": "info"
-    },
-    "certificates": {
-      "allOf": [
-        {
-          "$ref": "cluster/certificates.json"
-        }
-      ],
-      "description": "The CA and TLS certificates of the CNPG cluster. The chart does not render this key yet, so it currently has no effect.",
-      "default": null
     },
     "postgresql": {
       "allOf": [

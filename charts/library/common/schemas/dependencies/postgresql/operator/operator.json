@@ -8,7 +8,8 @@
           "$ref": "cluster.json"
         }
       ],
-      "description": "Configuration of the CNPG cluster."
+      "description": "Configuration of the CNPG cluster.",
+      "x-docs-required": true
     },
     "hibernate": {
       "type": "boolean",
@@ -16,20 +17,24 @@
       "default": false
     },
     "labels": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "string"
-      },
+      "allOf": [
+        {
+          "$ref": "../../../special/labels.json"
+        }
+      ],
       "description": "Additional labels for all CNPG objects.",
-      "default": {}
+      "default": {},
+      "x-helm-tpl": "On value only"
     },
     "annotations": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "string"
-      },
+      "allOf": [
+        {
+          "$ref": "../../../special/annotations.json"
+        }
+      ],
       "description": "Additional annotations for all CNPG objects.",
-      "default": {}
+      "default": {},
+      "x-helm-tpl": "On value only"
     },
     "annotationsList": {
       "allOf": [
@@ -75,7 +80,8 @@
         18
       ],
       "description": "Version of PostgreSQL to use, changes the cluster naming scheme. Without a value, `global.fallbackDefaults.cnpg.pgVersion` is used, and `type: vectors` uses `16` as it has no image for PostgreSQL 18. It only applies to `operator` mode, and is ignored in `standalone` mode.\n\nIt only applies to `operator` mode, and is ignored in `standalone` mode.\n\nWithout a value, `global.fallbackDefaults.cnpg.pgVersion` is used. `type: vectors` has no image for PostgreSQL 18, so without a value it uses `16`.\n\n:::caution[Changing the version of an existing cluster]\n\nCloudNativePG upgrades an existing cluster in place when its major version changes, with `pg_upgrade`. This also happens when a cluster has no `pgVersion` set and the default changes, so **set `pgVersion` to keep a cluster on its current version**.\n\n- Take a full backup first, and a new one afterwards. Older backups can't be used for point-in-time recovery across major versions.\n- All instances are stopped during the upgrade, and replicas are cloned again afterwards.\n- It needs CloudNativePG 1.26 or newer.\n- CloudNativePG only supports this between images on the same OS distribution. The images of this version of common moved to Debian 13, so a cluster on an older image should stay on its major version through that change, and upgrade afterwards.\n- Check that the extensions of the cluster can be upgraded, such as PostGIS or VectorChord.\n- If the upgrade fails, set `pgVersion` back to the previous version. CloudNativePG then starts the cluster on that version again.\n- Run `ANALYZE` afterwards, as `pg_upgrade` does not keep the statistics.\n\n:::",
-      "default": 18
+      "default": 18,
+      "x-docs-required": true
     },
     "mode": {
       "type": "string",
@@ -91,12 +97,12 @@
       "properties": {
         "enablePodMonitor": {
           "type": "boolean",
-          "description": "Configuration for `dependencies.postgresql.operator.monitoring.enablePodMonitor`.",
+          "description": "Create a PodMonitor for the cluster.",
           "default": false
         },
         "disableDefaultQueries": {
           "type": "boolean",
-          "description": "Configuration for `dependencies.postgresql.operator.monitoring.disableDefaultQueries`.",
+          "description": "Do not run the default queries of the metrics exporter.",
           "default": false
         },
         "customQueries": {
@@ -106,15 +112,15 @@
             "properties": {
               "name": {
                 "type": "string",
-                "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.name`."
+                "description": "Name of the query."
               },
               "key": {
                 "type": "string",
-                "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.key`."
+                "description": "Key of the ConfigMap or Secret with the queries."
               },
               "query": {
                 "type": "string",
-                "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.query`."
+                "description": "SQL query."
               },
               "metrics": {
                 "type": "array",
@@ -125,11 +131,11 @@
                     "properties": {
                       "usage": {
                         "type": "string",
-                        "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.$name.usage`."
+                        "description": "Usage of the column, eg `LABEL`, `GAUGE` or `COUNTER`."
                       },
                       "description": {
                         "type": "string",
-                        "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.$name.description`."
+                        "description": "Description of the metric."
                       }
                     },
                     "additionalProperties": false,
@@ -137,25 +143,25 @@
                   },
                   "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item`."
                 },
-                "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics`."
+                "description": "Metrics the query returns, by column."
               },
               "expandObjectName": {
                 "type": [
                   "boolean",
                   "string"
                 ],
-                "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.expandObjectName`."
+                "description": "Expand the name of the ConfigMap or Secret with the name of the release."
               }
             },
             "additionalProperties": false,
             "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item`."
           },
-          "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries`.",
+          "description": "Additional queries for the metrics exporter.",
           "default": []
         }
       },
       "additionalProperties": false,
-      "description": "Configuration for `dependencies.postgresql.operator.monitoring`.",
+      "description": "Monitoring of the cluster.",
       "default": {
         "enablePodMonitor": false,
         "disableDefaultQueries": false,
@@ -203,21 +209,17 @@
           "type": "string",
           "description": "Revision appended to the `serverName` of the recovery archive, so restore and backup use different archives. Must be a string."
         },
-        "retentionPolicy": {
-          "type": "string",
-          "description": "Retention policy of the recovery archive. The chart does not read this key yet, so it has no effect."
-        },
         "instanceSidecarConfiguration": {
           "allOf": [
             {
               "$ref": "instanceSidecarConfiguration.json"
             }
           ],
-          "description": "Configuration for `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration`."
+          "description": "Settings of the Barman Cloud plugin sidecar."
         }
       },
       "additionalProperties": false,
-      "description": "Configuration for `dependencies.postgresql.operator.recovery`."
+      "description": "Create the cluster from a backup or an object store."
     },
     "backups": {
       "type": "object",
@@ -275,43 +277,45 @@
             "properties": {
               "name": {
                 "type": "string",
-                "description": "Configuration for `dependencies.postgresql.operator.backups.scheduledBackups.$item.name`."
+                "description": "Name of the backup."
               },
               "schedule": {
                 "type": "string",
-                "description": "Configuration for `dependencies.postgresql.operator.backups.scheduledBackups.$item.schedule`."
+                "description": "Cron schedule of the backup, with seconds, eg `0 0 0 * * *`."
               },
               "backupOwnerReference": {
                 "type": "string",
-                "description": "Configuration for `dependencies.postgresql.operator.backups.scheduledBackups.$item.backupOwnerReference`."
+                "description": "Owner of the created backups: `none`, `self` or `cluster`."
               },
               "immediate": {
                 "type": "boolean",
-                "description": "Configuration for `dependencies.postgresql.operator.backups.scheduledBackups.$item.immediate`."
+                "description": "Also take a backup right away."
               },
               "suspend": {
                 "type": "boolean",
-                "description": "Configuration for `dependencies.postgresql.operator.backups.scheduledBackups.$item.suspend`."
+                "description": "Pause the schedule."
               },
               "labels": {
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                },
+                "allOf": [
+                  {
+                    "$ref": "../../../special/labels.json"
+                  }
+                ],
                 "description": "Additional labels for this manual backup, merged with `backups.labels`."
               },
               "annotations": {
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                },
+                "allOf": [
+                  {
+                    "$ref": "../../../special/annotations.json"
+                  }
+                ],
                 "description": "Additional annotations for this manual backup, merged with `backups.annotations`."
               }
             },
             "additionalProperties": false,
             "description": "Configuration for `dependencies.postgresql.operator.backups.scheduledBackups.$item`."
           },
-          "description": "Configuration for `dependencies.postgresql.operator.backups.scheduledBackups`.",
+          "description": "Backups that are taken on a schedule.",
           "default": [
             {
               "name": "daily-backup",
@@ -328,17 +332,19 @@
           "default": "30d"
         },
         "labels": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
+          "allOf": [
+            {
+              "$ref": "../../../special/labels.json"
+            }
+          ],
           "description": "Additional labels for the backup objects of the CNPG cluster, merged with the root `labels`."
         },
         "annotations": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
+          "allOf": [
+            {
+              "$ref": "../../../special/annotations.json"
+            }
+          ],
           "description": "Additional annotations for the backup objects of the CNPG cluster, merged with the root `annotations`."
         },
         "compression": {
@@ -367,27 +373,29 @@
             "properties": {
               "name": {
                 "type": "string",
-                "description": "Configuration for `dependencies.postgresql.operator.backups.manualBackups.$item.name`."
+                "description": "Name of the backup."
               },
               "labels": {
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                },
+                "allOf": [
+                  {
+                    "$ref": "../../../special/labels.json"
+                  }
+                ],
                 "description": "Additional labels for this manual backup, merged with `backups.labels`."
               },
               "annotations": {
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                },
+                "allOf": [
+                  {
+                    "$ref": "../../../special/annotations.json"
+                  }
+                ],
                 "description": "Additional annotations for this manual backup, merged with `backups.annotations`."
               }
             },
             "additionalProperties": false,
             "description": "Configuration for `dependencies.postgresql.operator.backups.manualBackups.$item`."
           },
-          "description": "Configuration for `dependencies.postgresql.operator.backups.manualBackups`.",
+          "description": "Backups that are taken once, when they are added.",
           "default": []
         },
         "instanceSidecarConfiguration": {
@@ -396,11 +404,11 @@
               "$ref": "instanceSidecarConfiguration.json"
             }
           ],
-          "description": "Configuration for `dependencies.postgresql.operator.backups.instanceSidecarConfiguration`."
+          "description": "Settings of the Barman Cloud plugin sidecar."
         }
       },
       "additionalProperties": false,
-      "description": "Configuration for `dependencies.postgresql.operator.backups`."
+      "description": "Backups of the cluster, through the Barman Cloud plugin."
     },
     "pooler": {
       "type": "object",
@@ -411,49 +419,51 @@
             "string"
           ],
           "default": false,
-          "description": "Configuration for `dependencies.postgresql.operator.pooler.enabled`."
+          "description": "Enable the pooler."
         },
         "createRO": {
           "type": "boolean",
           "default": false,
-          "description": "Configuration for `dependencies.postgresql.operator.pooler.createRO`."
+          "description": "Also create a pooler for the read-only instances."
         },
         "poolMode": {
           "type": "string",
           "default": "session",
-          "description": "Configuration for `dependencies.postgresql.operator.pooler.poolMode`."
+          "description": "Pool mode of PgBouncer, `session` or `transaction`."
         },
         "instances": {
           "type": "integer",
           "default": 2,
-          "description": "Configuration for `dependencies.postgresql.operator.pooler.instances`."
+          "description": "Number of pooler instances."
         },
         "parameters": {
           "type": "object",
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Configuration for `dependencies.postgresql.operator.pooler.parameters`."
+          "description": "PgBouncer settings, keyed by name."
         },
         "labels": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "default": {},
-          "description": "Configuration for `dependencies.postgresql.operator.pooler.labels`."
+          "allOf": [
+            {
+              "$ref": "../../../special/labels.json"
+            }
+          ],
+          "description": "Labels of the pooler.",
+          "default": {}
         },
         "annotations": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "default": {},
-          "description": "Configuration for `dependencies.postgresql.operator.pooler.annotations`."
+          "allOf": [
+            {
+              "$ref": "../../../special/annotations.json"
+            }
+          ],
+          "description": "Annotations of the pooler.",
+          "default": {}
         }
       },
       "additionalProperties": false,
-      "description": "Configuration for `dependencies.postgresql.operator.pooler`."
+      "description": "PgBouncer pooler in front of the cluster."
     }
   },
   "additionalProperties": false,

@@ -141,7 +141,7 @@ tests:
               primary: true
     asserts:
       - failedTemplate:
-          errorMessage: Service - Expected [annotations] to be a dictionary, but got [string]
+          errorPattern: 'at ''/service/service-name1/annotations'': got string, want object'
 
   - it: should fail with labels not a dict
     set:
@@ -354,7 +354,7 @@ tests:
               port: 12345
     asserts:
       - failedTemplate:
-          errorPattern: 'at ''/service/service-name1/externalIP'': got array, want string or object'
+          errorPattern: 'at ''/service/service-name1/externalIP'': got array, want string'
 
   - it: should fail with ipFamilies not a list
     set:
@@ -377,7 +377,7 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorMessage: Service - Expected [ipFamilies] to be a list, but got a [string]
+          errorPattern: 'at ''/service/service-name1/ipFamilies'': got string, want array'
 
   - it: should fail with invalid ipFamilies
     set:

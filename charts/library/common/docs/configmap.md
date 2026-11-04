@@ -36,9 +36,9 @@ Additional annotations for configmap
 | Field      | Value                         |
 | ---------- | ----------------------------- |
 | Key        | `configmap.$name.annotations` |
-| Type       | `map, string`                 |
+| Type       | `map`                         |
 | Required   | ❌                            |
-| Helm `tpl` | ❌                            |
+| Helm `tpl` | ✅ (On value only)             |
 | Default    | `{}`                          |
 
 Example
@@ -74,8 +74,8 @@ Data entries of the ConfigMap, keyed by file or variable name
 | ---------- | ---------------------- |
 | Key        | `configmap.$name.data` |
 | Type       | `map, string`          |
-| Required   | ❌                     |
-| Helm `tpl` | ❌                     |
+| Required   | ✅                     |
+| Helm `tpl` | ✅                     |
 | Default    | unset                  |
 
 ---
@@ -88,8 +88,8 @@ Enables or Disables the Configmap
 | ---------- | ------------------------- |
 | Key        | `configmap.$name.enabled` |
 | Type       | `boolean, string`         |
-| Required   | ❌                        |
-| Helm `tpl` | ❌                        |
+| Required   | ✅                        |
+| Helm `tpl` | ✅                        |
 | Default    | `false`                   |
 
 Example
@@ -131,9 +131,9 @@ Additional labels for configmap
 | Field      | Value                    |
 | ---------- | ------------------------ |
 | Key        | `configmap.$name.labels` |
-| Type       | `map, string`            |
+| Type       | `map`                    |
 | Required   | ❌                       |
-| Helm `tpl` | ❌                       |
+| Helm `tpl` | ✅ (On value only)        |
 | Default    | `{}`                     |
 
 Example
@@ -170,7 +170,7 @@ Define the namespace for this object
 | Key        | `configmap.$name.namespace` |
 | Type       | `string`                    |
 | Required   | ❌                          |
-| Helm `tpl` | ❌                          |
+| Helm `tpl` | ✅                          |
 | Default    | `""`                        |
 
 Example

@@ -13,18 +13,22 @@
           },
           "name": {
             "type": "string",
-            "description": "Define the configmap name This will be automatically expanded to `fullname-configmap-name`."
+            "description": "Define the configmap name This will be automatically expanded to `fullname-configmap-name`.",
+            "x-helm-tpl": true,
+            "x-docs-required": true
           }
         },
         "additionalProperties": false,
-        "description": "Define the configMapRef"
+        "description": "A ConfigMap whose keys become environment variables."
       },
       "secretRef": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string",
-            "description": "Define the secret name This will be automatically expanded to `fullname-secret-name`."
+            "description": "Define the secret name This will be automatically expanded to `fullname-secret-name`.",
+            "x-helm-tpl": true,
+            "x-docs-required": true
           },
           "expandObjectName": {
             "type": "boolean",
@@ -32,7 +36,7 @@
           }
         },
         "additionalProperties": false,
-        "description": "Define the secretRef"
+        "description": "A Secret whose keys become environment variables."
       }
     },
     "additionalProperties": false

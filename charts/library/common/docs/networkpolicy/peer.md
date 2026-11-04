@@ -31,7 +31,7 @@ A peer allowed by a NetworkPolicy rule.
 
 ### `networkpolicy.peer.ipBlock`
 
-No description provided.
+A CIDR, with exceptions.
 
 | Field      | Value                        |
 | ---------- | ---------------------------- |

@@ -46,7 +46,6 @@
 
     {{/* Perform validations */}}
     {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $objectName) -}}
-    {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" "Service") -}}
     {{- include "tc.v1.common.lib.service.validation" (dict "rootCtx" $ "objectData" $objectData) -}}
 
     {{/* Set the name of the service */}}

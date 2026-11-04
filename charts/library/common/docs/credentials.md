@@ -37,7 +37,7 @@ Define the accessKey of the credentials
 | ---------- | ----------------------------- |
 | Key        | `credentials.$name.accessKey` |
 | Type       | `string`                      |
-| Required   | ❌                            |
+| Required   | ✅                            |
 | Helm `tpl` | ❌                            |
 | Default    | unset                         |
 | Min Length | `1`                           |
@@ -52,7 +52,7 @@ Define the bucket of the credentials
 | ---------- | -------------------------- |
 | Key        | `credentials.$name.bucket` |
 | Type       | `string`                   |
-| Required   | ❌                         |
+| Required   | ✅                         |
 | Helm `tpl` | ❌                         |
 | Default    | unset                      |
 | Min Length | `1`                        |
@@ -89,13 +89,13 @@ Reference a secret containing a custom CA to be used when connecting to the endp
 
 ### `credentials.$name.encrKey`
 
-Create credentials objects
+Key that encrypts the backups.
 
 | Field      | Value                       |
 | ---------- | --------------------------- |
 | Key        | `credentials.$name.encrKey` |
 | Type       | `string`                    |
-| Required   | ❌                          |
+| Required   | ✅                          |
 | Helm `tpl` | ❌                          |
 | Default    | unset                       |
 | Min Length | `1`                         |
@@ -138,7 +138,7 @@ Define the secretKey of the credentials
 | ---------- | ----------------------------- |
 | Key        | `credentials.$name.secretKey` |
 | Type       | `string`                      |
-| Required   | ❌                            |
+| Required   | ✅                            |
 | Helm `tpl` | ❌                            |
 | Default    | unset                         |
 | Min Length | `1`                           |
@@ -153,7 +153,7 @@ Define the type of the credentials
 | ---------- | ------------------------ |
 | Key        | `credentials.$name.type` |
 | Type       | `string`                 |
-| Required   | ❌                       |
+| Required   | ✅                       |
 | Helm `tpl` | ❌                       |
 | Default    | unset                    |
 | Min Length | `1`                      |
@@ -168,7 +168,7 @@ Define the url of the credentials In some cases, such as when using an IP instea
 | ---------- | ----------------------- |
 | Key        | `credentials.$name.url` |
 | Type       | `string`                |
-| Required   | ❌                      |
+| Required   | ✅                      |
 | Helm `tpl` | ❌                      |
 | Default    | unset                   |
 | Min Length | `1`                     |

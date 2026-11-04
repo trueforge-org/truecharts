@@ -17,7 +17,7 @@ title: Cluster
 
 ## `dependencies.postgresql.operator.cluster`
 
-No description provided.
+Define a CNPG cluster
 
 | Field      | Value                                      |
 | ---------- | ------------------------------------------ |
@@ -38,7 +38,7 @@ Additional annotations for CNPG cluster
 | Key        | `dependencies.postgresql.operator.cluster.annotations` |
 | Type       | `map`                                                  |
 | Required   | ❌                                                     |
-| Helm `tpl` | ❌                                                     |
+| Helm `tpl` | ✅ (On value only)                                      |
 | Default    | `{}`                                                   |
 
 Example
@@ -51,20 +51,6 @@ dependencies:
         annotations:
           {}
 ```
-
----
-
-### `dependencies.postgresql.operator.cluster.certificates`
-
-The CA and TLS certificates of the CNPG cluster. The chart does not render this key yet, so it currently has no effect.
-
-| Field      | Value                                                   |
-| ---------- | ------------------------------------------------------- |
-| Key        | `dependencies.postgresql.operator.cluster.certificates` |
-| Type       | `map, null`                                             |
-| Required   | ❌                                                      |
-| Helm `tpl` | ❌                                                      |
-| Default    | unset                                                   |
 
 ---
 
@@ -84,7 +70,7 @@ When enabled, the operator uses the superuser secret to set the password of the 
 
 ### `dependencies.postgresql.operator.cluster.env`
 
-See [env](/truecharts-common/container/env)
+See [env](/truecharts-common/workload/podSpec/containers/env)
 
 | Field      | Value                                          |
 | ---------- | ---------------------------------------------- |
@@ -109,7 +95,7 @@ dependencies:
 
 ### `dependencies.postgresql.operator.cluster.envFrom`
 
-See [envFrom](/truecharts-common/container/envfrom)
+See [envFrom](/truecharts-common/workload/podSpec/containers/envFrom)
 
 | Field      | Value                                              |
 | ---------- | -------------------------------------------------- |
@@ -204,7 +190,7 @@ Additional labels for CNPG cluster
 | Key        | `dependencies.postgresql.operator.cluster.labels` |
 | Type       | `map`                                             |
 | Required   | ❌                                                |
-| Helm `tpl` | ❌                                                |
+| Helm `tpl` | ✅ (On value only)                                 |
 | Default    | `{}`                                              |
 
 Example
@@ -447,7 +433,6 @@ Storage of the WAL volumes of the PostgreSQL instances. Follows the same spec as
 
 ## Child Pages
 
-- [Certificates](certificates.md) - The CA and TLS certificates of the CNPG cluster. The chart does not render this key yet, so it currently has no effect.
 - [Initdb](initdb.md) - Bootstrap settings of the database, used when the CNPG cluster is initialized with `initdb`.
 - [Postgresql](postgresql.md) - Parameters of the PostgreSQL server. Each parameter is passed to CNPG as a string, so every value must be a string.
 - [Primaryupdatemethod](primaryUpdateMethod.md) - Method to upgrade the primary server during a rolling update. `switchover` promotes an upgraded replica, `restart` restarts the primary in place.
@@ -465,26 +450,24 @@ dependencies:
       cluster:
         labels:
           label1: label1
-          label2: label2
         annotations:
           annotation1: annotation1
-          annotation2: annotation2
         env:
           key: value
         envFrom:
           - secretRef:
-            name: my-secret
-            expandObjectName: true
+              name: my-secret
+              expandObjectName: true
           - configMapRef:
-            name: my-configmap
-            expandObjectName: false
+              name: my-configmap
+              expandObjectName: false
         instances: 2
         singleNode: false
         logLevel: info
-        primaryUpdateMethod: # TODO
-        primaryUpdateStrategy: # TODO
-        certificates: # TODO
-        postgresql: # TODO
-        initdb: # TODO
-        primaryUpdateStrategy: # TODO
+        primaryUpdateMethod: switchover
+        primaryUpdateStrategy: unsupervised
+        postgresql:
+          max_connections: "200"
+        initdb:
+          encoding: UTF8
 ```

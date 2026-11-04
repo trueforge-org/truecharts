@@ -23,5 +23,5 @@ service:
         targetSelector: container-name
         port: 80
         targetPort: 8080
-        protocol: HTTP
+        protocol: http
 ```

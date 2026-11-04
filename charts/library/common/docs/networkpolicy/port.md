@@ -60,7 +60,7 @@ Port number or named port. Omit to match all ports.
 
 ### `networkpolicy.port.protocol`
 
-No description provided.
+Protocol of the port, `TCP`, `UDP` or `SCTP`.
 
 | Field      | Value                         |
 | ---------- | ----------------------------- |

@@ -10,7 +10,7 @@
           "boolean",
           "string"
         ],
-        "description": "Configuration for `gatewayClass.main.enabled`.",
+        "description": "Enable the GatewayClass.",
         "default": false
       },
       "primary": {
@@ -18,13 +18,12 @@
         "description": "Make this the primary GatewayClass of the chart. Only one can be primary."
       },
       "annotations": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": {
-          "type": "string",
-          "description": "Value of the annotation"
-        },
-        "description": "Configuration for `gatewayClass.main.annotations`."
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
+        "description": "Additional annotations, keyed by name."
       },
       "labels": {
         "allOf": [
@@ -32,7 +31,7 @@
             "$ref": "special/labels.json"
           }
         ],
-        "description": "Configuration for `gatewayClass.main.labels`."
+        "description": "Additional labels, keyed by name."
       },
       "controllerName": {
         "type": "string",
@@ -53,17 +52,17 @@
         "properties": {
           "group": {
             "type": "string",
-            "description": "Configuration for `gatewayClass.main.parametersRef.group`.",
+            "description": "API group of the parameters resource.",
             "minLength": 1
           },
           "kind": {
             "type": "string",
-            "description": "Configuration for `gatewayClass.main.parametersRef.kind`.",
+            "description": "Kind of the parameters resource.",
             "minLength": 1
           },
           "name": {
             "type": "string",
-            "description": "Configuration for `gatewayClass.main.parametersRef.name`.",
+            "description": "Name of the parameters resource.",
             "minLength": 1
           },
           "namespace": {
@@ -71,7 +70,7 @@
               "null",
               "string"
             ],
-            "description": "Configuration for `gatewayClass.main.parametersRef.namespace`."
+            "description": "Namespace of the parameters resource."
           }
         },
         "additionalProperties": false,

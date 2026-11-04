@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "description": "Does **not** apply to `initContainers`. See [lifecycle](/truecharts-common/container/lifecycle).",
+  "description": "Does **not** apply to `initContainers`. See [lifecycle](/truecharts-common/workload/podSpec/containers/lifecycle).",
   "properties": {
     "preStop": {
       "type": "object",
@@ -32,7 +32,8 @@
             "string"
           ],
           "description": "Port of the request, for `type: http` and `https`. Supports Helm `tpl`.",
-          "x-helm-tpl": true
+          "x-helm-tpl": true,
+          "x-docs-required": true
         },
         "path": {
           "type": "string",
@@ -56,7 +57,7 @@
             "description": "Value of the header"
           },
           "description": "Headers of the request, keyed by name, for `type: http` and `https`. Supports Helm `tpl`.",
-          "x-helm-tpl": true
+          "x-helm-tpl": "On value only"
         }
       },
       "additionalProperties": false,
@@ -91,7 +92,8 @@
             "string"
           ],
           "description": "Port of the request, for `type: http` and `https`. Supports Helm `tpl`.",
-          "x-helm-tpl": true
+          "x-helm-tpl": true,
+          "x-docs-required": true
         },
         "path": {
           "type": "string",
@@ -115,7 +117,7 @@
             "description": "Value of the header"
           },
           "description": "Headers of the request, keyed by name, for `type: http` and `https`. Supports Helm `tpl`.",
-          "x-helm-tpl": true
+          "x-helm-tpl": "On value only"
         }
       },
       "additionalProperties": false,

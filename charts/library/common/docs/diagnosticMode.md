@@ -31,7 +31,7 @@ Configuration for `diagnosticMode`.
 
 ### `diagnosticMode.enabled`
 
-Configuration for `diagnosticMode.enabled`.
+Run the containers with a sleep command instead of the app, to debug them.
 
 | Field      | Value                    |
 | ---------- | ------------------------ |

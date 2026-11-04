@@ -36,9 +36,9 @@ Define the annotations of the volume snapshot class
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
 | Key        | `volumeSnapshots.$name.annotations` |
-| Type       | `map, string`                       |
+| Type       | `map`                               |
 | Required   | ❌                                  |
-| Helm `tpl` | ❌                                  |
+| Helm `tpl` | ✅ (On value only)                   |
 | Default    | `{}`                                |
 
 Example
@@ -74,8 +74,8 @@ Enable volume snapshot
 | ---------- | ------------------------------- |
 | Key        | `volumeSnapshots.$name.enabled` |
 | Type       | `boolean, string`               |
-| Required   | ❌                              |
-| Helm `tpl` | ❌                              |
+| Required   | ✅                              |
+| Helm `tpl` | ✅                              |
 | Default    | `false`                         |
 
 Example
@@ -95,9 +95,9 @@ Define the labels of the volume snapshot
 | Field      | Value                          |
 | ---------- | ------------------------------ |
 | Key        | `volumeSnapshots.$name.labels` |
-| Type       | `map, string`                  |
+| Type       | `map`                          |
 | Required   | ❌                             |
-| Helm `tpl` | ❌                             |
+| Helm `tpl` | ✅ (On value only)              |
 | Default    | `{}`                           |
 
 Example
@@ -133,7 +133,7 @@ Define the source of the volume snapshot At least one of the following keys must
 | ---------- | ------------------------------ |
 | Key        | `volumeSnapshots.$name.source` |
 | Type       | `map`                          |
-| Required   | ❌                             |
+| Required   | ✅                             |
 | Helm `tpl` | ❌                             |
 | Default    | `{}`                           |
 

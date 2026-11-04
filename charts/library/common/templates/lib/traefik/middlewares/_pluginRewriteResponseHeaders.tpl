@@ -14,9 +14,7 @@
     {{- fail "Middleware (rewrite-response-headers) - Expected [rewrites] to be set" -}}
   {{- end }}
 
-  {{- if not (kindIs "slice" $mw.rewrites) -}}
-    {{- fail (printf "Middleware (rewrite-response-headers) - Expected [rewrites] to be a list, but got [%s]" (kindOf $mw.rewrites)) -}}
-  {{- end }}
+  {{- /* Keeps the newline before the next line */}}
 
   {{- range $index, $config := $mw.rewrites -}}
     {{- if not $config.header -}}

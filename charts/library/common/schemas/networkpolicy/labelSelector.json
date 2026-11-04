@@ -15,7 +15,8 @@
         "type": "object",
         "properties": {
           "key": {
-            "type": "string"
+            "type": "string",
+            "description": "Label key the expression applies to."
           },
           "operator": {
             "type": "string",
@@ -24,13 +25,15 @@
               "NotIn",
               "Exists",
               "DoesNotExist"
-            ]
+            ],
+            "description": "Operator: `In`, `NotIn`, `Exists` or `DoesNotExist`."
           },
           "values": {
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "description": "Values of the label."
           }
         },
         "required": [

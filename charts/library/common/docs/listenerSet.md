@@ -36,7 +36,7 @@ Additional annotations for ListenerSet
 | Field      | Value                           |
 | ---------- | ------------------------------- |
 | Key        | `listenerSet.$name.annotations` |
-| Type       | `map, string`                   |
+| Type       | `map`                           |
 | Required   | ❌                              |
 | Helm `tpl` | ❌                              |
 | Default    | `{}`                            |
@@ -117,7 +117,7 @@ Additional labels for ListenerSet
 | Field      | Value                      |
 | ---------- | -------------------------- |
 | Key        | `listenerSet.$name.labels` |
-| Type       | `map, string`              |
+| Type       | `map`                      |
 | Required   | ❌                         |
 | Helm `tpl` | ❌                         |
 | Default    | `{}`                       |
@@ -154,7 +154,7 @@ Listeners that are added to the Gateway, same format as `gateway.$name.listeners
 | Field      | Value                         |
 | ---------- | ----------------------------- |
 | Key        | `listenerSet.$name.listeners` |
-| Type       | `list of map`                 |
+| Type       | `list of unknown`             |
 | Required   | ❌                            |
 | Helm `tpl` | ❌                            |
 | Default    | unset                         |

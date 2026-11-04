@@ -22,10 +22,66 @@ Environment variables for gluetun addon.
 | Field      | Value                          |
 | ---------- | ------------------------------ |
 | Key        | `addons.gluetun.container.env` |
-| Type       | `map`                          |
+| Type       | `map, null`                    |
 | Required   | ❌                             |
 | Helm `tpl` | ❌                             |
 | Default    | unset                          |
+
+---
+
+### `addons.gluetun.container.env.$name.configMapKeyRef`
+
+Reference an entry from a ConfigMap.
+
+| Field      | Value                                                |
+| ---------- | ---------------------------------------------------- |
+| Key        | `addons.gluetun.container.env.$name.configMapKeyRef` |
+| Type       | `map`                                                |
+| Required   | ❌                                                   |
+| Helm `tpl` | ❌                                                   |
+| Default    | unset                                                |
+
+---
+
+### `addons.gluetun.container.env.$name.fieldRef`
+
+Reference a field from the Pod metadata/spec.
+
+| Field      | Value                                         |
+| ---------- | --------------------------------------------- |
+| Key        | `addons.gluetun.container.env.$name.fieldRef` |
+| Type       | `map`                                         |
+| Required   | ❌                                            |
+| Helm `tpl` | ❌                                            |
+| Default    | unset                                         |
+
+---
+
+### `addons.gluetun.container.env.$name.secretKeyRef`
+
+Reference an entry from a Secret.
+
+| Field      | Value                                             |
+| ---------- | ------------------------------------------------- |
+| Key        | `addons.gluetun.container.env.$name.secretKeyRef` |
+| Type       | `map`                                             |
+| Required   | ❌                                                |
+| Helm `tpl` | ❌                                                |
+| Default    | unset                                             |
+
+---
+
+### `addons.gluetun.container.env.$name.value`
+
+Direct value for the environment variable.
+
+| Field      | Value                                      |
+| ---------- | ------------------------------------------ |
+| Key        | `addons.gluetun.container.env.$name.value` |
+| Type       | `string`                                   |
+| Required   | ❌                                         |
+| Helm `tpl` | ❌                                         |
+| Default    | unset                                      |
 
 ---
 

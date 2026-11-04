@@ -3,643 +3,259 @@
   "type": "object",
   "properties": {
     "codeserverImage": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `codeserverImage.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `codeserverImage.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `codeserverImage.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `codeserverImage`."
+      ],
+      "description": "Image of `codeserverImage`."
     },
     "gluetunImage": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `gluetunImage.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `gluetunImage.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `gluetunImage.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `gluetunImage`."
+      ],
+      "description": "Image of `gluetunImage`."
     },
     "kubectlImage": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `kubectlImage.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `kubectlImage.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `kubectlImage.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `kubectlImage`."
+      ],
+      "description": "Image of `kubectlImage`."
     },
     "mariadbClientImage": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `mariadbClientImage.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `mariadbClientImage.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `mariadbClientImage.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `mariadbClientImage`."
+      ],
+      "description": "Image of `mariadbClientImage`."
     },
     "mongodbClientImage": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `mongodbClientImage.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `mongodbClientImage.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `mongodbClientImage.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `mongodbClientImage`."
+      ],
+      "description": "Image of `mongodbClientImage`."
     },
     "netshootImage": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `netshootImage.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `netshootImage.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `netshootImage.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `netshootImage`."
+      ],
+      "description": "Image of `netshootImage`."
     },
     "postgres15Image": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `postgres15Image.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `postgres15Image.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `postgres15Image.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `postgres15Image`."
+      ],
+      "description": "Image of `postgres15Image`."
     },
     "postgres16Image": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `postgres16Image.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `postgres16Image.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `postgres16Image.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `postgres16Image`."
+      ],
+      "description": "Image of `postgres16Image`."
     },
     "postgres17Image": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `postgres17Image.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `postgres17Image.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `postgres17Image.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `postgres17Image`."
+      ],
+      "description": "Image of `postgres17Image`."
     },
     "postgres18Image": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `postgres18Image.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `postgres18Image.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `postgres18Image.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `postgres18Image`."
+      ],
+      "description": "Image of `postgres18Image`."
     },
     "postgresClientImage": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `postgresClientImage.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `postgresClientImage.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `postgresClientImage.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `postgresClientImage`."
+      ],
+      "description": "Image of `postgresClientImage`."
     },
     "postgresql18Image": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `postgresql18Image.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `postgresql18Image.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `postgresql18Image.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `postgresql18Image`."
+      ],
+      "description": "Image of `postgresql18Image`."
     },
     "postgresPostgis15Image": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `postgresPostgis15Image.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `postgresPostgis15Image.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `postgresPostgis15Image.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `postgresPostgis15Image`."
+      ],
+      "description": "Image of `postgresPostgis15Image`."
     },
     "postgresPostgis16Image": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `postgresPostgis16Image.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `postgresPostgis16Image.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `postgresPostgis16Image.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `postgresPostgis16Image`."
+      ],
+      "description": "Image of `postgresPostgis16Image`."
     },
     "postgresPostgis17Image": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `postgresPostgis17Image.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `postgresPostgis17Image.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `postgresPostgis17Image.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `postgresPostgis17Image`."
+      ],
+      "description": "Image of `postgresPostgis17Image`."
     },
     "postgresPostgis18Image": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `postgresPostgis18Image.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `postgresPostgis18Image.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `postgresPostgis18Image.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `postgresPostgis18Image`."
+      ],
+      "description": "Image of `postgresPostgis18Image`."
     },
     "postgresVectorchord15Image": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `postgresVectorchord15Image.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `postgresVectorchord15Image.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `postgresVectorchord15Image.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `postgresVectorchord15Image`."
+      ],
+      "description": "Image of `postgresVectorchord15Image`."
     },
     "postgresVectorchord16Image": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `postgresVectorchord16Image.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `postgresVectorchord16Image.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `postgresVectorchord16Image.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `postgresVectorchord16Image`."
+      ],
+      "description": "Image of `postgresVectorchord16Image`."
     },
     "postgresVectorchord17Image": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `postgresVectorchord17Image.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `postgresVectorchord17Image.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `postgresVectorchord17Image.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `postgresVectorchord17Image`."
+      ],
+      "description": "Image of `postgresVectorchord17Image`."
     },
     "postgresVectorchord18Image": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `postgresVectorchord18Image.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `postgresVectorchord18Image.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `postgresVectorchord18Image.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `postgresVectorchord18Image`."
+      ],
+      "description": "Image of `postgresVectorchord18Image`."
     },
     "postgresVectors15Image": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `postgresVectors15Image.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `postgresVectors15Image.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `postgresVectors15Image.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `postgresVectors15Image`."
+      ],
+      "description": "Image of `postgresVectors15Image`."
     },
     "postgresVectors16Image": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `postgresVectors16Image.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `postgresVectors16Image.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `postgresVectors16Image.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `postgresVectors16Image`."
+      ],
+      "description": "Image of `postgresVectors16Image`."
     },
     "postgresVectors17Image": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `postgresVectors17Image.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `postgresVectors17Image.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `postgresVectors17Image.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `postgresVectors17Image`."
+      ],
+      "description": "Image of `postgresVectors17Image`."
     },
     "tailscaleImage": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `tailscaleImage.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `tailscaleImage.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `tailscaleImage.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `tailscaleImage`."
+      ],
+      "description": "Image of `tailscaleImage`."
     },
     "ubuntuImage": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `ubuntuImage.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `ubuntuImage.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `ubuntuImage.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `ubuntuImage`."
+      ],
+      "description": "Image of `ubuntuImage`."
     },
     "valkeyClientImage": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Configuration for `valkeyClientImage.repository`."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Configuration for `valkeyClientImage.tag`."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Configuration for `valkeyClientImage.pullPolicy`."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
-      "description": "Configuration for `valkeyClientImage`."
+      ],
+      "description": "Image of `valkeyClientImage`."
     },
     "clickhouseImage": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Repository of the image."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Tag of the image, pinned by digest."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Pull policy of the image."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
+      ],
       "description": "Image of the clickhouse dependency, selected by its container."
     },
     "mariadbImage": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Repository of the image."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Tag of the image, pinned by digest."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Pull policy of the image."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
+      ],
       "description": "Image of the mariadb dependency, selected by its container."
     },
     "memcachedImage": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Repository of the image."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Tag of the image, pinned by digest."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Pull policy of the image."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
+      ],
       "description": "Image of the memcached dependency, selected by its container."
     },
     "mongodbImage": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Repository of the image."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Tag of the image, pinned by digest."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Pull policy of the image."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
+      ],
       "description": "Image of the mongodb dependency, selected by its container."
     },
     "valkeyImage": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Repository of the image."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Tag of the image, pinned by digest."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Pull policy of the image."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
+      ],
       "description": "Image of the valkey dependency, selected by its container in `standalone` mode and by `dependencies.valkey.operator.imageSelector` in `operator` mode."
     },
     "valkeyExporterImage": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "string",
-          "description": "Repository of the image."
-        },
-        "tag": {
-          "type": "string",
-          "description": "Tag of the image, pinned by digest."
-        },
-        "pullPolicy": {
-          "type": "string",
-          "description": "Pull policy of the image."
+      "allOf": [
+        {
+          "$ref": "image.json"
         }
-      },
-      "additionalProperties": false,
+      ],
       "description": "Image of the metrics exporter of the valkey dependency in `operator` mode, selected by `dependencies.valkey.operator.exporter.imageSelector`."
     }
   },

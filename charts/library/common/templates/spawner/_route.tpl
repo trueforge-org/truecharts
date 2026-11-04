@@ -109,7 +109,6 @@
 
   {{- range $certName, $certObjData := $plan.certificates -}}
     {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $certName) -}}
-    {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $certObjData "caller" "Route (certificateIssuer)") -}}
     {{- include "tc.v1.common.lib.certificate.validation" (dict "rootCtx" $ "objectData" $certObjData) -}}
 
     {{/* Create the certificate with the certData */}}

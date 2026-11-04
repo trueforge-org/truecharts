@@ -1,9 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": [
-    "string",
-    "object"
-  ],
-  "description": "Configure External IP type",
-  "additionalProperties": false
+  "type": "string",
+  "description": "A single external IP of the service. Supports Helm `tpl`.",
+  "x-helm-tpl": true
 }

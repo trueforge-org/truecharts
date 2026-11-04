@@ -31,13 +31,13 @@ Configuration for `global.fallbackDefaults`.
 
 ### `global.fallbackDefaults.accessModes`
 
-Configuration for `global.fallbackDefaults.accessModes`.
+Access modes of a pvc that sets none.
 
 | Field      | Value                                 |
 | ---------- | ------------------------------------- |
 | Key        | `global.fallbackDefaults.accessModes` |
 | Type       | `list of string`                      |
-| Required   | ❌                                    |
+| Required   | ✅                                    |
 | Helm `tpl` | ❌                                    |
 | Default    | `["ReadWriteOnce"]`                   |
 
@@ -82,7 +82,7 @@ global:
 
 ### `global.fallbackDefaults.cnpg`
 
-Configuration for `global.fallbackDefaults.cnpg`.
+Defaults of the postgresql dependency in `operator` mode.
 
 | Field      | Value                          |
 | ---------- | ------------------------------ |
@@ -96,13 +96,13 @@ Configuration for `global.fallbackDefaults.cnpg`.
 
 ### `global.fallbackDefaults.persistenceType`
 
-Configuration for `global.fallbackDefaults.persistenceType`.
+Type of a persistence entry that sets none.
 
 | Field      | Value                                     |
 | ---------- | ----------------------------------------- |
 | Key        | `global.fallbackDefaults.persistenceType` |
 | Type       | `string`                                  |
-| Required   | ❌                                        |
+| Required   | ✅                                        |
 | Helm `tpl` | ❌                                        |
 | Default    | `"pvc"`                                   |
 | Min Length | `1`                                       |
@@ -119,13 +119,13 @@ global:
 
 ### `global.fallbackDefaults.probeTimeouts`
 
-Configuration for `global.fallbackDefaults.probeTimeouts`.
+Timings of the probes that set none.
 
 | Field      | Value                                   |
 | ---------- | --------------------------------------- |
 | Key        | `global.fallbackDefaults.probeTimeouts` |
 | Type       | `map`                                   |
-| Required   | ❌                                      |
+| Required   | ✅                                      |
 | Helm `tpl` | ❌                                      |
 | Default    | See schema                              |
 
@@ -159,13 +159,13 @@ global:
 
 ### `global.fallbackDefaults.probeType`
 
-Configuration for `global.fallbackDefaults.probeType`.
+Type of a probe that sets none.
 
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
 | Key        | `global.fallbackDefaults.probeType` |
 | Type       | `string`                            |
-| Required   | ❌                                  |
+| Required   | ✅                                  |
 | Helm `tpl` | ❌                                  |
 | Default    | `"http"`                            |
 | Min Length | `1`                                 |
@@ -182,13 +182,13 @@ global:
 
 ### `global.fallbackDefaults.pvcRetain`
 
-Configuration for `global.fallbackDefaults.pvcRetain`.
+Keep the pvcs when the release is deleted, for persistence that sets no `retain`.
 
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
 | Key        | `global.fallbackDefaults.pvcRetain` |
 | Type       | `boolean`                           |
-| Required   | ❌                                  |
+| Required   | ✅                                  |
 | Helm `tpl` | ❌                                  |
 | Default    | `false`                             |
 
@@ -204,13 +204,13 @@ global:
 
 ### `global.fallbackDefaults.pvcSize`
 
-Configuration for `global.fallbackDefaults.pvcSize`.
+Size of a pvc that sets none.
 
 | Field      | Value                             |
 | ---------- | --------------------------------- |
 | Key        | `global.fallbackDefaults.pvcSize` |
 | Type       | `string`                          |
-| Required   | ❌                                |
+| Required   | ✅                                |
 | Helm `tpl` | ❌                                |
 | Default    | `"100Gi"`                         |
 | Min Length | `1`                               |
@@ -251,13 +251,13 @@ global:
 
 ### `global.fallbackDefaults.serviceProtocol`
 
-Configuration for `global.fallbackDefaults.serviceProtocol`.
+Protocol of a service port that sets none.
 
 | Field      | Value                                     |
 | ---------- | ----------------------------------------- |
 | Key        | `global.fallbackDefaults.serviceProtocol` |
 | Type       | `string`                                  |
-| Required   | ❌                                        |
+| Required   | ✅                                        |
 | Helm `tpl` | ❌                                        |
 | Default    | `"tcp"`                                   |
 | Min Length | `1`                                       |
@@ -274,13 +274,13 @@ global:
 
 ### `global.fallbackDefaults.serviceType`
 
-Configuration for `global.fallbackDefaults.serviceType`.
+Type of a service that sets none.
 
 | Field      | Value                                 |
 | ---------- | ------------------------------------- |
 | Key        | `global.fallbackDefaults.serviceType` |
 | Type       | `string`                              |
-| Required   | ❌                                    |
+| Required   | ✅                                    |
 | Helm `tpl` | ❌                                    |
 | Default    | `"ClusterIP"`                         |
 | Min Length | `1`                                   |
@@ -297,7 +297,7 @@ global:
 
 ### `global.fallbackDefaults.storageClass`
 
-Configuration for `global.fallbackDefaults.storageClass`.
+Storage class of a pvc that sets none. `-` leaves it unset.
 
 | Field      | Value                                  |
 | ---------- | -------------------------------------- |
@@ -311,7 +311,7 @@ Configuration for `global.fallbackDefaults.storageClass`.
 
 ### `global.fallbackDefaults.topologyKey`
 
-Configuration for `global.fallbackDefaults.topologyKey`.
+Topology key of the default topology spread constraints.
 
 | Field      | Value                                 |
 | ---------- | ------------------------------------- |
@@ -333,7 +333,7 @@ global:
 
 ### `global.fallbackDefaults.vctAccessModes`
 
-Configuration for `global.fallbackDefaults.vctAccessModes`.
+Access modes of a volume claim template that sets none.
 
 | Field      | Value                                    |
 | ---------- | ---------------------------------------- |
@@ -356,13 +356,13 @@ global:
 
 ### `global.fallbackDefaults.vctSize`
 
-Configuration for `global.fallbackDefaults.vctSize`.
+Size of a volume claim template that sets none.
 
 | Field      | Value                             |
 | ---------- | --------------------------------- |
 | Key        | `global.fallbackDefaults.vctSize` |
 | Type       | `string`                          |
-| Required   | ❌                                |
+| Required   | ✅                                |
 | Helm `tpl` | ❌                                |
 | Default    | `"100Gi"`                         |
 | Min Length | `1`                               |

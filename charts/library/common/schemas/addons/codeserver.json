@@ -26,11 +26,13 @@
           "type": "object",
           "properties": {
             "env": {
-              "$ref": "codeserver/container/env.json"
+              "$ref": "codeserver/container/env.json",
+              "description": "Environment variables of the code-server container."
             }
           }
         }
-      ]
+      ],
+      "description": "Container of the code-server add-on."
     },
     "service": {
       "anyOf": [
@@ -41,7 +43,8 @@
           "type": "object",
           "properties": {
             "enabled": {
-              "$ref": "../service/service.json#/additionalProperties/properties/enabled"
+              "$ref": "../service/service.json#/additionalProperties/properties/enabled",
+              "description": "Enable the object of the add-on."
             }
           },
           "additionalProperties": {
@@ -65,7 +68,8 @@
           "type": "object",
           "properties": {
             "enabled": {
-              "$ref": "../ingress/ingress.json#/additionalProperties/properties/enabled"
+              "$ref": "../ingress/ingress.json#/additionalProperties/properties/enabled",
+              "description": "Enable the object of the add-on."
             }
           },
           "additionalProperties": {

@@ -31,7 +31,7 @@ See [DNS Config](/truecharts-common/workload#dnsconfig)
 
 ### `podOptions.dnsConfig.nameservers`
 
-Configuration for `podOptions.dnsConfig.nameservers`.
+Additional DNS servers.
 
 | Field      | Value                              |
 | ---------- | ---------------------------------- |
@@ -45,7 +45,7 @@ Configuration for `podOptions.dnsConfig.nameservers`.
 
 ### `podOptions.dnsConfig.options`
 
-Configuration for `podOptions.dnsConfig.options`.
+DNS resolver options.
 
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
@@ -70,7 +70,7 @@ podOptions:
 
 ### `podOptions.dnsConfig.searches`
 
-Configuration for `podOptions.dnsConfig.searches`.
+Additional DNS search domains.
 
 | Field      | Value                           |
 | ---------- | ------------------------------- |

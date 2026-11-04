@@ -64,8 +64,153 @@ workload:
 
 Full examples for each workload type can be found here
 
-- [`Deployment`](/truecharts-common/workload/deployment)
-- [`DaemonSet`](/truecharts-common/workload/daemonset)
-- [`StatefulSet`](/truecharts-common/workload/statefulset)
-- [`CronJob`](/truecharts-common/workload/cronjob)
-- [`Job`](/truecharts-common/workload/job)
+- [`Deployment`](/truecharts-common/workload#deployment)
+- [`DaemonSet`](/truecharts-common/workload#daemonset)
+- [`StatefulSet`](/truecharts-common/workload#statefulset)
+- [`CronJob`](/truecharts-common/workload#cronjob)
+- [`Job`](/truecharts-common/workload#job)
+
+### Deployment
+
+```yaml
+workload:
+  workload-name:
+    enabled: true
+    primary: true
+    type: Deployment
+    replicas: 1
+    revisionHistoryLimit: 3
+    strategy: Recreate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+    podSpec: {}
+
+  other-workload-name:
+    enabled: true
+    primary: false
+    type: Deployment
+    labels: {}
+    annotations: {}
+    replicas: 1
+    revisionHistoryLimit: 3
+    strategy: Recreate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+    podSpec: {}
+```
+
+### StatefulSet
+
+```yaml
+workload:
+  workload-name:
+    enabled: true
+    primary: true
+    type: StatefulSet
+    replicas: 1
+    revisionHistoryLimit: 3
+    strategy: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      partition: 1
+    podSpec: {}
+
+  other-workload-name:
+    enabled: true
+    primary: false
+    type: StatefulSet
+    replicas: 1
+    revisionHistoryLimit: 3
+    strategy: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      partition: 1
+    podSpec: {}
+```
+
+### DaemonSet
+
+```yaml
+workload:
+  workload-name:
+    enabled: true
+    primary: true
+    type: DaemonSet
+    revisionHistoryLimit: 3
+    strategy: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+    podSpec: {}
+
+  other-workload-name:
+    enabled: true
+    primary: false
+    type: DaemonSet
+    labels: {}
+    annotations: {}
+    replicas: 1
+    revisionHistoryLimit: 3
+    strategy: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+    podSpec: {}
+```
+
+### Job
+
+```yaml
+workload:
+  workload-name:
+    enabled: true
+    primary: true
+    type: Job
+    backoffLimit: 5
+    completionMode: Indexed
+    completions: 5
+    parallelism: 5
+    ttlSecondsAfterFinished: 100
+    activeDeadlineSeconds: 100
+    podSpec:
+      restartPolicy: Never
+
+  other-workload-name:
+    enabled: true
+    primary: false
+    type: Job
+    podSpec: {}
+```
+
+### CronJob
+
+```yaml
+workload:
+  workload-name:
+    enabled: true
+    primary: true
+    type: CronJob
+    schedule: "{{ .Values.cron }}"
+    timezone: "{{ .Values.someTimezone }}"
+    concurrencyPolicy: Allow
+    failedJobsHistoryLimit: 2
+    successfulJobsHistoryLimit: 4
+    startingDeadlineSeconds: 100
+    backoffLimit: 5
+    completionMode: Indexed
+    completions: 5
+    parallelism: 5
+    ttlSecondsAfterFinished: 100
+    activeDeadlineSeconds: 100
+    podSpec:
+      restartPolicy: OnFailure
+
+  other-workload-name:
+    enabled: true
+    primary: false
+    type: CronJob
+    schedule: "* * * * *"
+    podSpec: {}
+```

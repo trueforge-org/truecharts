@@ -16,30 +16,38 @@
               "properties": {
                 "env": {
                   "$ref": "podSpec/containers/env.json",
-                  "description": "Define env(s) for the container"
+                  "description": "Define env(s) for the container",
+                  "x-helm-tpl": "Only value"
                 },
                 "resources": {
                   "$ref": "podSpec/containers/resources.json",
-                  "description": "The resources that the container can use."
+                  "description": "The resources that the container can use.",
+                  "x-docs-required": true
                 },
                 "securityContext": {
                   "$ref": "podSpec/containers/securityContext.json",
-                  "description": "Define securityContext for the container"
+                  "description": "Define securityContext for the container",
+                  "x-docs-required": true
                 },
                 "enabled": {
                   "type": [
                     "boolean",
                     "string"
                   ],
-                  "description": "Define if the container is enabled or not"
+                  "description": "Define if the container is enabled or not",
+                  "x-helm-tpl": true,
+                  "x-docs-required": true
                 },
                 "imageSelector": {
                   "type": "string",
-                  "description": "Define the image `map` to use"
+                  "description": "Define the image `map` to use",
+                  "x-helm-tpl": true,
+                  "x-docs-required": true
                 },
                 "primary": {
                   "type": "boolean",
-                  "description": "Define if the container is primary or not Does **not** apply to `initContainers`"
+                  "description": "Define if the container is primary or not Does **not** apply to `initContainers`",
+                  "x-docs-required": true
                 },
                 "stdin": {
                   "type": "boolean",
@@ -51,11 +59,13 @@
                 },
                 "probes": {
                   "$ref": "podSpec/containers/probes.json",
-                  "description": "Define probes for the container"
+                  "description": "Define probes for the container",
+                  "x-docs-required": true
                 },
                 "command": {
                   "$ref": "podSpec/containers/command.json",
-                  "description": "Define command(s). If it's single, can be defined as string"
+                  "description": "Define command(s). If it's single, can be defined as string",
+                  "x-helm-tpl": true
                 },
                 "lifecycle": {
                   "$ref": "podSpec/containers/lifecycle.json",
@@ -75,7 +85,8 @@
                 },
                 "args": {
                   "$ref": "podSpec/containers/args.json",
-                  "description": "Define arg(s). If it's single, can be defined as string"
+                  "description": "Define arg(s). If it's single, can be defined as string",
+                  "x-helm-tpl": true
                 },
                 "extraArgs": {
                   "oneOf": [
@@ -86,7 +97,8 @@
                       "type": "array"
                     }
                   ],
-                  "description": "Define extraArg(s). Those are appended **after** the `args`."
+                  "description": "Define extraArg(s). Those are appended **after** the `args`.",
+                  "x-helm-tpl": true
                 },
                 "type": {
                   "type": "string",
@@ -96,74 +108,11 @@
               "additionalProperties": false,
               "description": "Configuration for `$name.podSpec.containers.$name`."
             },
-            "description": "Configuration for `$name.podSpec.containers`."
+            "description": "Containers of the pod, keyed by name."
           },
           "initContainers": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "description": "Define the type of container - Only applies to `initContainers`"
-                },
-                "enabled": {
-                  "type": [
-                    "boolean",
-                    "string"
-                  ],
-                  "description": "Define if the init container is enabled or not"
-                },
-                "imageSelector": {
-                  "type": "string",
-                  "description": "Define the image `map` to use"
-                },
-                "command": {
-                  "$ref": "podSpec/initContainers/command.json",
-                  "description": "Define command(s). If it's single, can be defined as string"
-                },
-                "args": {
-                  "$ref": "podSpec/initContainers/args.json",
-                  "description": "Define arg(s). If it's single, can be defined as string"
-                },
-                "env": {
-                  "$ref": "podSpec/initContainers/env.json",
-                  "description": "Define env(s) for the init container"
-                },
-                "envFrom": {
-                  "$ref": "podSpec/initContainers/envFrom.json",
-                  "description": "Define envFrom for the init container"
-                },
-                "resources": {
-                  "$ref": "podSpec/initContainers/resources.json",
-                  "description": "The resources that the init container can use."
-                },
-                "securityContext": {
-                  "$ref": "podSpec/initContainers/securityContext.json",
-                  "description": "Define securityContext for the init container"
-                },
-                "termination": {
-                  "$ref": "container/termination.json",
-                  "description": "Define termination for the init container"
-                },
-                "image": {
-                  "type": "string",
-                  "description": "Legacy init container `image`, set by `stable/dispatcharr`. The init container template ignores it and reads `imageSelector` instead."
-                },
-                "name": {
-                  "type": "string",
-                  "description": "Ignored. The chart replaces the init container name with a generated name."
-                },
-                "probes": {
-                  "$ref": "podSpec/initContainers/probes.json",
-                  "description": "Accepted for compatibility with the shared container shape. The init container spawner replaces probes with disabled probes."
-                }
-              },
-              "additionalProperties": false,
-              "description": "Configuration for `$name.podSpec.initContainers.$name`."
-            },
-            "description": "Configuration for `$name.podSpec.initContainers`."
+            "$ref": "podSpec/initContainers.json",
+            "description": "Init containers of the pod, keyed by name."
           },
           "labels": {
             "allOf": [
@@ -171,16 +120,17 @@
                 "$ref": "../special/labels.json"
               }
             ],
-            "description": "Define labels for podSpec"
+            "description": "Define labels for podSpec",
+            "x-helm-tpl": "On value only"
           },
           "annotations": {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": {
-              "type": "string",
-              "description": "Value of the annotation"
-            },
-            "description": "Define annotations for podSpec"
+            "allOf": [
+              {
+                "$ref": "../special/annotations.json"
+              }
+            ],
+            "description": "Define annotations for podSpec",
+            "x-helm-tpl": "On value only"
           },
           "automountServiceAccountToken": {
             "$ref": "podSpec/automountServiceAccountToken.json",
@@ -212,19 +162,23 @@
           },
           "restartPolicy": {
             "$ref": "podSpec/restartPolicy.json",
-            "description": "Pod's restartPolicy"
+            "description": "Pod's restartPolicy",
+            "x-helm-tpl": true
           },
           "schedulerName": {
             "$ref": "podSpec/schedulerName.json",
-            "description": "Pod's schedulerName"
+            "description": "Pod's schedulerName",
+            "x-helm-tpl": true
           },
           "priorityClassName": {
             "$ref": "podSpec/priorityClassName.json",
-            "description": "Pod's priorityClassName"
+            "description": "Pod's priorityClassName",
+            "x-helm-tpl": true
           },
           "hostname": {
             "type": "string",
-            "description": "Pod's hostname"
+            "description": "Pod's hostname",
+            "x-helm-tpl": true
           },
           "affinity": {
             "type": "object",
@@ -240,7 +194,8 @@
           },
           "terminationGracePeriodSeconds": {
             "$ref": "terminationGracePeriodSeconds.json",
-            "description": "Pod's terminationGracePeriodSeconds"
+            "description": "Pod's terminationGracePeriodSeconds",
+            "x-helm-tpl": true
           },
           "nodeSelector": {
             "type": "object",
@@ -249,28 +204,30 @@
               "type": "string",
               "description": "Value of the node label"
             },
-            "description": "Pod's nodeSelector"
+            "description": "Pod's nodeSelector",
+            "x-helm-tpl": "On value only"
           },
           "topologySpreadConstraints": {
             "type": "array",
             "description": "Pod's topologySpreadConstraints"
           },
           "hostAliases": {
-            "type": [
-              "array",
-              "string"
-            ],
+            "type": "array",
             "description": "Pod's hostAliases",
             "items": {
               "type": "object",
               "properties": {
                 "ip": {
                   "type": "string",
-                  "description": "Pod's hostAliases ip"
+                  "description": "Pod's hostAliases ip",
+                  "x-helm-tpl": true,
+                  "x-docs-required": true
                 },
                 "hostnames": {
                   "type": "array",
-                  "description": "Pod's hostAliases hostnames"
+                  "description": "Pod's hostAliases hostnames",
+                  "x-helm-tpl": "On each entry",
+                  "x-docs-required": true
                 }
               },
               "additionalProperties": false
@@ -278,18 +235,21 @@
           },
           "dnsPolicy": {
             "$ref": "podSpec/dnsPolicy.json",
-            "description": "Pod's dnsPolicy `dnsPolicy` is set automatically to `ClusterFirstWithHostNet` when `hostNetwork` is `true`"
+            "description": "Pod's dnsPolicy `dnsPolicy` is set automatically to `ClusterFirstWithHostNet` when `hostNetwork` is `true`",
+            "x-helm-tpl": true
           },
           "dnsConfig": {
             "type": "object",
             "properties": {
               "nameservers": {
                 "type": "array",
-                "description": "Pod's dnsConfig nameservers"
+                "description": "Pod's dnsConfig nameservers",
+                "x-helm-tpl": "On each entry"
               },
               "searches": {
                 "type": "array",
-                "description": "Pod's dnsConfig searches"
+                "description": "Pod's dnsConfig searches",
+                "x-helm-tpl": "On each entry"
               },
               "options": {
                 "type": "array",
@@ -299,11 +259,14 @@
                   "properties": {
                     "name": {
                       "type": "string",
-                      "description": "Pod's dnsConfig options name"
+                      "description": "Pod's dnsConfig options name",
+                      "x-helm-tpl": true,
+                      "x-docs-required": true
                     },
                     "value": {
                       "type": "string",
-                      "description": "Pod's dnsConfig options value"
+                      "description": "Pod's dnsConfig options value",
+                      "x-helm-tpl": true
                     }
                   },
                   "additionalProperties": false
@@ -321,19 +284,24 @@
               "properties": {
                 "operator": {
                   "type": "string",
-                  "description": "Pod's tolerations operator"
+                  "description": "Pod's tolerations operator",
+                  "x-helm-tpl": true,
+                  "x-docs-required": true
                 },
                 "key": {
                   "type": "string",
-                  "description": "Pod's tolerations key Required only when `operator` = `Equal`"
+                  "description": "Pod's tolerations key Required only when `operator` = `Equal`",
+                  "x-helm-tpl": true
                 },
                 "value": {
                   "type": "string",
-                  "description": "Pod's tolerations value Required only when `operator` = `Equal`"
+                  "description": "Pod's tolerations value Required only when `operator` = `Equal`",
+                  "x-helm-tpl": true
                 },
                 "effect": {
                   "type": "string",
-                  "description": "Pod's tolerations effect"
+                  "description": "Pod's tolerations effect",
+                  "x-helm-tpl": true
                 },
                 "tolerationSeconds": {
                   "type": "number",
@@ -345,7 +313,8 @@
           },
           "runtimeClassName": {
             "$ref": "podSpec/runtimeClassName.json",
-            "description": "Pod's runtimeClassName > Note that it will only set the `runtimeClassName` on the pod that this container belongs to."
+            "description": "Pod's runtimeClassName > Note that it will only set the `runtimeClassName` on the pod that this container belongs to.",
+            "x-helm-tpl": true
           },
           "securityContext": {
             "$ref": "podSpec/securityContext.json",
@@ -358,7 +327,8 @@
         },
         "additionalProperties": false,
         "description": "Define the podSpec for the workload",
-        "default": {}
+        "default": {},
+        "x-docs-required": true
       },
       "replicas": {
         "type": [
@@ -407,19 +377,22 @@
                     "type": [
                       "integer",
                       "string"
-                    ]
+                    ],
+                    "description": "Pods that can be unavailable during an update, a number or percentage."
                   },
                   "partition": {
                     "type": [
                       "integer",
                       "string"
-                    ]
+                    ],
+                    "description": "Pods with a lower ordinal are not updated, for staged rollouts of a StatefulSet."
                   },
                   "maxSurge": {
                     "type": [
                       "integer",
                       "string"
-                    ]
+                    ],
+                    "description": "Pods that can be created above the replicas during an update, a number or percentage."
                   }
                 },
                 "additionalProperties": false,
@@ -460,7 +433,7 @@
         "type": "object",
         "properties": {},
         "additionalProperties": false,
-        "description": "Define workload objects",
+        "description": "Not used. Init containers go under `podSpec.initContainers`.",
         "default": {}
       },
       "completionMode": {
@@ -469,31 +442,33 @@
           "Indexed",
           "NonIndexed"
         ],
-        "description": "Define the completionMode"
+        "description": "Completion mode of a Job, `NonIndexed` or `Indexed`."
       },
       "backoffLimit": {
         "type": "number",
-        "description": "Define the backoffLimit"
+        "description": "Retries before a Job fails."
       },
       "completions": {
         "type": "number",
-        "description": "Define the completions"
+        "description": "Successful pods a Job needs."
       },
       "parallelism": {
         "type": "integer",
-        "description": "Define the parallelism"
+        "description": "Pods of a Job that run at the same time."
       },
       "ttlSecondsAfterFinished": {
         "type": "number",
-        "description": "Define the ttlSecondsAfterFinished"
+        "description": "Seconds before a finished Job is deleted."
       },
       "activeDeadlineSeconds": {
         "type": "integer",
-        "description": "Define the activeDeadlineSeconds"
+        "description": "Seconds a Job can run before it is stopped."
       },
       "schedule": {
         "type": "string",
-        "description": "Define the schedule"
+        "description": "Cron schedule of a CronJob.",
+        "x-helm-tpl": true,
+        "x-docs-required": true
       },
       "suspend": {
         "type": "boolean",
@@ -501,7 +476,8 @@
       },
       "timezone": {
         "type": "string",
-        "description": "Define the timezone"
+        "description": "Time zone of the schedule of a CronJob. Defaults to `TZ`.",
+        "x-helm-tpl": true
       },
       "concurrencyPolicy": {
         "type": "string",
@@ -510,19 +486,21 @@
           "Replace",
           "Forbid"
         ],
-        "description": "Define the concurrencyPolicy"
+        "description": "What a CronJob does when the previous run is still running: `Allow`, `Forbid` or `Replace`.",
+        "x-helm-tpl": true
       },
       "failedJobsHistoryLimit": {
         "type": "integer",
-        "description": "Define the failedJobsHistoryLimit"
+        "description": "Failed Jobs of a CronJob that are kept.",
+        "x-helm-tpl": true
       },
       "successfulJobsHistoryLimit": {
         "type": "integer",
-        "description": "Define the successfulJobsHistoryLimit"
+        "description": "Successful Jobs of a CronJob that are kept."
       },
       "startingDeadlineSeconds": {
         "type": "integer",
-        "description": "Define the startingDeadlineSeconds"
+        "description": "Seconds a CronJob can start late."
       },
       "enabled": {
         "type": [
@@ -530,12 +508,15 @@
           "string"
         ],
         "description": "Enable or disable workload",
-        "default": false
+        "default": false,
+        "x-helm-tpl": true,
+        "x-docs-required": true
       },
       "primary": {
         "type": "boolean",
         "description": "Set workload as primary",
-        "default": false
+        "default": false,
+        "x-docs-required": true
       },
       "extraSelectorLabels": {
         "type": "object",
@@ -574,29 +555,24 @@
           }
         ],
         "description": "Define labels for workload",
-        "type": [
-          "object",
-          "string"
-        ],
-        "default": {}
+        "default": {},
+        "x-helm-tpl": "On value only"
       },
       "annotations": {
-        "type": [
-          "object",
-          "string"
+        "allOf": [
+          {
+            "$ref": "../special/annotations.json"
+          }
         ],
-        "properties": {},
-        "additionalProperties": {
-          "type": "string",
-          "description": "Value of the annotation"
-        },
         "description": "Define annotations for workload",
-        "default": {}
+        "default": {},
+        "x-helm-tpl": "On value only"
       },
       "namespace": {
         "type": "string",
         "description": "Define the namespace for this object",
-        "default": ""
+        "default": "",
+        "x-helm-tpl": "On value only"
       },
       "type": {
         "type": "string",
@@ -608,31 +584,31 @@
           "Job"
         ],
         "description": "Define the kind of the workload",
-        "default": ""
+        "default": "",
+        "x-docs-required": true
       },
       "serviceAccountName": {
         "type": "string",
         "description": "Suggested is to use the top-level [serviceAccount](/truecharts-common/serviceaccount/) key to define the service account with `targetSelector`.",
-        "default": ""
+        "default": "",
+        "x-helm-tpl": "On value only"
       },
       "containers": {
         "type": "object",
         "properties": {},
         "additionalProperties": false,
-        "description": "Define container(s) for the workload See [Container](/truecharts-common/container/) for more information",
+        "description": "Define container(s) for the workload See [Container](/truecharts-common/workload/podSpec/containers) for more information",
         "default": {}
       },
       "dbWait": {
-        "type": [
-          "boolean",
-          "string"
-        ],
+        "type": "boolean",
         "description": "Whether init containers waiting for the enabled dependencies (mariadb, postgresql, mongodb, clickhouse, valkey) are added to the workload.\nThe workloads of [dependencies](/truecharts-common/dependencies) default to `false`, so they do not wait for themselves."
       }
     },
     "additionalProperties": false,
     "description": "Define workload",
-    "default": {}
+    "default": {},
+    "x-docs-required": true
   },
   "description": "Define workload objects"
 }

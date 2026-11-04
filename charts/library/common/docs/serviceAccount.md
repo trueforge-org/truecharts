@@ -36,9 +36,9 @@ Additional annotations for service account
 | Field      | Value                              |
 | ---------- | ---------------------------------- |
 | Key        | `serviceAccount.$name.annotations` |
-| Type       | `map, string`                      |
+| Type       | `map`                              |
 | Required   | ❌                                 |
-| Helm `tpl` | ❌                                 |
+| Helm `tpl` | ✅ (On value only)                  |
 | Default    | `{}`                               |
 
 Example
@@ -74,8 +74,8 @@ Enables or Disables the serviceAccount
 | ---------- | ------------------------------ |
 | Key        | `serviceAccount.$name.enabled` |
 | Type       | `boolean, string`              |
-| Required   | ❌                             |
-| Helm `tpl` | ❌                             |
+| Required   | ✅                             |
+| Helm `tpl` | ✅                             |
 | Default    | `false`                        |
 
 Example
@@ -95,9 +95,9 @@ Additional labels for service account
 | Field      | Value                         |
 | ---------- | ----------------------------- |
 | Key        | `serviceAccount.$name.labels` |
-| Type       | `map, string`                 |
+| Type       | `map`                         |
 | Required   | ❌                            |
-| Helm `tpl` | ❌                            |
+| Helm `tpl` | ✅ (On value only)             |
 | Default    | `{}`                          |
 
 Example
@@ -134,7 +134,7 @@ Define the namespace for this object
 | Key        | `serviceAccount.$name.namespace` |
 | Type       | `string`                         |
 | Required   | ❌                               |
-| Helm `tpl` | ❌                               |
+| Helm `tpl` | ✅                               |
 | Default    | `""`                             |
 
 Example
@@ -185,7 +185,7 @@ Whether to assign the serviceAccount to all pods or not
 
 ### `serviceAccount.$name.targetSelector`
 
-Create serviceAccount objects
+Workloads that use the service account.
 
 | Field      | Value                                 |
 | ---------- | ------------------------------------- |

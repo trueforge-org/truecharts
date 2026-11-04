@@ -20,7 +20,8 @@
           "description": "Value of the parameter"
         },
         "description": "Define a volume snapshot class",
-        "default": {}
+        "default": {},
+        "x-helm-tpl": "On both key and value"
       },
       "labels": {
         "allOf": [
@@ -29,11 +30,8 @@
           }
         ],
         "description": "Define the labels of the volume snapshot class",
-        "type": [
-          "object",
-          "string"
-        ],
-        "default": {}
+        "default": {},
+        "x-helm-tpl": "On value only"
       },
       "annotationsList": {
         "allOf": [
@@ -52,17 +50,14 @@
         "description": "Additional labels as a list of name and value pairs, merged into the labels"
       },
       "annotations": {
-        "type": [
-          "object",
-          "string"
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
         ],
-        "properties": {},
-        "additionalProperties": {
-          "type": "string",
-          "description": "Value of the annotation"
-        },
         "description": "Define the annotations of the volume snapshot class",
-        "default": {}
+        "default": {},
+        "x-helm-tpl": "On value only"
       },
       "enabled": {
         "type": [
@@ -72,7 +67,9 @@
         "properties": {},
         "additionalProperties": false,
         "description": "Enable volume snapshot class",
-        "default": false
+        "default": false,
+        "x-helm-tpl": true,
+        "x-docs-required": true
       },
       "isDefault": {
         "type": "boolean",
@@ -83,15 +80,15 @@
         "type": "string",
         "description": "Define the driver of the volume snapshot class",
         "default": "",
-        "minLength": 1
+        "minLength": 1,
+        "x-helm-tpl": true,
+        "x-docs-required": true
       },
       "deletionPolicy": {
         "type": "string",
         "enum": [
-          "Delete",
           "Retain",
-          "delete",
-          "retain"
+          "Delete"
         ],
         "description": "Define the deletion policy of the volume snapshot class",
         "default": "Retain"

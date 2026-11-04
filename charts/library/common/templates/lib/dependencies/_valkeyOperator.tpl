@@ -37,13 +37,7 @@ objectData: The [operator] settings of the valkey dependency.
   {{- $objectData := .objectData -}}
   {{- $caller := "Valkey Operator" -}}
 
-  {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" $caller) -}}
-
-  {{- $validWorkloadTypes := (list "StatefulSet" "Deployment") -}}
   {{- $workloadType := $objectData.workloadType | default "StatefulSet" -}}
-  {{- if not (mustHas $workloadType $validWorkloadTypes) -}}
-    {{- fail (printf "%s - Expected [workloadType] to be one of [%s], but got [%v]" $caller (join ", " $validWorkloadTypes) $workloadType) -}}
-  {{- end -}}
 
   {{- $shards := $objectData.shards -}}
   {{- if kindIs "invalid" $shards -}}
@@ -91,10 +85,6 @@ objectData: The [operator] settings of the valkey dependency.
     {{- $pdb := $objectData.podDisruptionBudget -}}
     {{- if not (kindIs "map" $pdb) -}}
       {{- fail (printf "%s - Expected [podDisruptionBudget] to be a [map], but got [%s]" $caller (kindOf $pdb)) -}}
-    {{- end -}}
-    {{- $validPdbModes := (list "Cluster" "Disabled") -}}
-    {{- if and $pdb.mode (not (mustHas $pdb.mode $validPdbModes)) -}}
-      {{- fail (printf "%s - Expected [podDisruptionBudget.mode] to be one of [%s], but got [%v]" $caller (join ", " $validPdbModes) $pdb.mode) -}}
     {{- end -}}
   {{- end -}}
 

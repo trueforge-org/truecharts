@@ -36,9 +36,9 @@ Additional annotations for secret
 | Field      | Value                      |
 | ---------- | -------------------------- |
 | Key        | `secret.$name.annotations` |
-| Type       | `map, string`              |
+| Type       | `map`                      |
 | Required   | ❌                         |
-| Helm `tpl` | ❌                         |
+| Helm `tpl` | ✅ (On value only)          |
 | Default    | `{}`                       |
 
 Example
@@ -68,14 +68,14 @@ Additional annotations as a list of name and value pairs, merged into the annota
 
 ### `secret.$name.data`
 
-Create Secret objects
+Data of the Secret, keyed by name.
 
 | Field      | Value               |
 | ---------- | ------------------- |
 | Key        | `secret.$name.data` |
 | Type       | `map, string`       |
-| Required   | ❌                  |
-| Helm `tpl` | ❌                  |
+| Required   | ✅                  |
+| Helm `tpl` | ✅                  |
 | Default    | unset               |
 
 ---
@@ -88,8 +88,8 @@ Enables or Disables the Secret
 | ---------- | ---------------------- |
 | Key        | `secret.$name.enabled` |
 | Type       | `boolean, string`      |
-| Required   | ❌                     |
-| Helm `tpl` | ❌                     |
+| Required   | ✅                     |
+| Helm `tpl` | ✅                     |
 | Default    | `false`                |
 
 Example
@@ -109,9 +109,9 @@ Additional labels for secret
 | Field      | Value                 |
 | ---------- | --------------------- |
 | Key        | `secret.$name.labels` |
-| Type       | `map, string`         |
+| Type       | `map`                 |
 | Required   | ❌                    |
-| Helm `tpl` | ❌                    |
+| Helm `tpl` | ✅ (On value only)     |
 | Default    | `{}`                  |
 
 Example
@@ -148,7 +148,7 @@ Define the namespace for this object
 | Key        | `secret.$name.namespace` |
 | Type       | `string`                 |
 | Required   | ❌                       |
-| Helm `tpl` | ❌                       |
+| Helm `tpl` | ✅                       |
 | Default    | `""`                     |
 
 Example
@@ -170,7 +170,7 @@ Define the type of the secret
 | Key        | `secret.$name.type` |
 | Type       | `string`            |
 | Required   | ❌                  |
-| Helm `tpl` | ❌                  |
+| Helm `tpl` | ✅                  |
 | Default    | `"Opaque"`          |
 
 Example

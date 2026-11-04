@@ -22,16 +22,72 @@ Configuration for `addons.tailscale.container.env`.
 | Field      | Value                            |
 | ---------- | -------------------------------- |
 | Key        | `addons.tailscale.container.env` |
-| Type       | `map`                            |
+| Type       | `map, null`                      |
 | Required   | ❌                               |
 | Helm `tpl` | ❌                               |
 | Default    | unset                            |
 
 ---
 
+### `addons.tailscale.container.env.$name.configMapKeyRef`
+
+Reference an entry from a ConfigMap.
+
+| Field      | Value                                                  |
+| ---------- | ------------------------------------------------------ |
+| Key        | `addons.tailscale.container.env.$name.configMapKeyRef` |
+| Type       | `map`                                                  |
+| Required   | ❌                                                     |
+| Helm `tpl` | ❌                                                     |
+| Default    | unset                                                  |
+
+---
+
+### `addons.tailscale.container.env.$name.fieldRef`
+
+Reference a field from the Pod metadata/spec.
+
+| Field      | Value                                           |
+| ---------- | ----------------------------------------------- |
+| Key        | `addons.tailscale.container.env.$name.fieldRef` |
+| Type       | `map`                                           |
+| Required   | ❌                                              |
+| Helm `tpl` | ❌                                              |
+| Default    | unset                                           |
+
+---
+
+### `addons.tailscale.container.env.$name.secretKeyRef`
+
+Reference an entry from a Secret.
+
+| Field      | Value                                               |
+| ---------- | --------------------------------------------------- |
+| Key        | `addons.tailscale.container.env.$name.secretKeyRef` |
+| Type       | `map`                                               |
+| Required   | ❌                                                  |
+| Helm `tpl` | ❌                                                  |
+| Default    | unset                                               |
+
+---
+
+### `addons.tailscale.container.env.$name.value`
+
+Direct value for the environment variable.
+
+| Field      | Value                                        |
+| ---------- | -------------------------------------------- |
+| Key        | `addons.tailscale.container.env.$name.value` |
+| Type       | `string`                                     |
+| Required   | ❌                                           |
+| Helm `tpl` | ❌                                           |
+| Default    | unset                                        |
+
+---
+
 ### `addons.tailscale.container.env.TS_ACCEPT_DNS`
 
-Configuration for `addons.tailscale.container.env.TS_ACCEPT_DNS`.
+Accept the DNS settings of the tailnet.
 
 | Field      | Value                                          |
 | ---------- | ---------------------------------------------- |
@@ -59,7 +115,7 @@ The Tailscale auth key. Use `addons.tailscale.settings.authkey` instead, which s
 
 ### `addons.tailscale.container.env.TS_AUTH_ONCE`
 
-Configuration for `addons.tailscale.container.env.TS_AUTH_ONCE`.
+Only log in when the node is not logged in yet.
 
 | Field      | Value                                         |
 | ---------- | --------------------------------------------- |
@@ -73,7 +129,7 @@ Configuration for `addons.tailscale.container.env.TS_AUTH_ONCE`.
 
 ### `addons.tailscale.container.env.TS_DEST_IP`
 
-Configuration for `addons.tailscale.container.env.TS_DEST_IP`.
+IP that the traffic is forwarded to.
 
 | Field      | Value                                       |
 | ---------- | ------------------------------------------- |
@@ -87,7 +143,7 @@ Configuration for `addons.tailscale.container.env.TS_DEST_IP`.
 
 ### `addons.tailscale.container.env.TS_EXTRA_ARGS`
 
-Configuration for `addons.tailscale.container.env.TS_EXTRA_ARGS`.
+Extra arguments of `tailscale up`.
 
 | Field      | Value                                          |
 | ---------- | ---------------------------------------------- |
@@ -101,7 +157,7 @@ Configuration for `addons.tailscale.container.env.TS_EXTRA_ARGS`.
 
 ### `addons.tailscale.container.env.TS_KUBE_SECRET`
 
-Configuration for `addons.tailscale.container.env.TS_KUBE_SECRET`.
+Secret the state of tailscale is stored in.
 
 | Field      | Value                                           |
 | ---------- | ----------------------------------------------- |
@@ -115,7 +171,7 @@ Configuration for `addons.tailscale.container.env.TS_KUBE_SECRET`.
 
 ### `addons.tailscale.container.env.TS_OUTBOUND_HTTP_PROXY_LISTEN`
 
-Configuration for `addons.tailscale.container.env.TS_OUTBOUND_HTTP_PROXY_LISTEN`.
+Address of an outbound HTTP proxy.
 
 | Field      | Value                                                          |
 | ---------- | -------------------------------------------------------------- |
@@ -129,7 +185,7 @@ Configuration for `addons.tailscale.container.env.TS_OUTBOUND_HTTP_PROXY_LISTEN`
 
 ### `addons.tailscale.container.env.TS_ROUTES`
 
-Configuration for `addons.tailscale.container.env.TS_ROUTES`.
+Subnet routes that are advertised.
 
 | Field      | Value                                      |
 | ---------- | ------------------------------------------ |
@@ -143,7 +199,7 @@ Configuration for `addons.tailscale.container.env.TS_ROUTES`.
 
 ### `addons.tailscale.container.env.TS_SOCKET`
 
-Configuration for `addons.tailscale.container.env.TS_SOCKET`.
+Path of the tailscaled socket.
 
 | Field      | Value                                      |
 | ---------- | ------------------------------------------ |
@@ -157,7 +213,7 @@ Configuration for `addons.tailscale.container.env.TS_SOCKET`.
 
 ### `addons.tailscale.container.env.TS_SOCKS5_SERVER`
 
-Configuration for `addons.tailscale.container.env.TS_SOCKS5_SERVER`.
+Address of a SOCKS5 proxy.
 
 | Field      | Value                                             |
 | ---------- | ------------------------------------------------- |
@@ -171,7 +227,7 @@ Configuration for `addons.tailscale.container.env.TS_SOCKS5_SERVER`.
 
 ### `addons.tailscale.container.env.TS_STATE_DIR`
 
-Configuration for `addons.tailscale.container.env.TS_STATE_DIR`.
+Directory the state of tailscale is stored in.
 
 | Field      | Value                                         |
 | ---------- | --------------------------------------------- |
@@ -185,7 +241,7 @@ Configuration for `addons.tailscale.container.env.TS_STATE_DIR`.
 
 ### `addons.tailscale.container.env.TS_TAILSCALED_EXTRA_ARGS`
 
-Configuration for `addons.tailscale.container.env.TS_TAILSCALED_EXTRA_ARGS`.
+Extra arguments of `tailscaled`.
 
 | Field      | Value                                                     |
 | ---------- | --------------------------------------------------------- |
@@ -199,7 +255,7 @@ Configuration for `addons.tailscale.container.env.TS_TAILSCALED_EXTRA_ARGS`.
 
 ### `addons.tailscale.container.env.TS_USERSPACE`
 
-Configuration for `addons.tailscale.container.env.TS_USERSPACE`.
+Run tailscale in userspace networking mode.
 
 | Field      | Value                                         |
 | ---------- | --------------------------------------------- |

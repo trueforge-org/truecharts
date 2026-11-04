@@ -13,7 +13,7 @@
           "properties": {
             "apiGroup": {
               "type": "string",
-              "description": "Create rbac objects"
+              "description": "API group of the subject, eg `rbac.authorization.k8s.io`."
             },
             "kind": {
               "type": "string",
@@ -36,7 +36,9 @@
           "string"
         ],
         "description": "Enables or Disables the rbac",
-        "default": false
+        "default": false,
+        "x-helm-tpl": true,
+        "x-docs-required": true
       },
       "primary": {
         "type": "boolean",
@@ -50,7 +52,8 @@
           }
         ],
         "description": "Define the namespace for this object (Only when clusterWide is false)",
-        "default": ""
+        "default": "",
+        "x-helm-tpl": true
       },
       "clusterWide": {
         "type": "boolean",
@@ -64,11 +67,8 @@
           }
         ],
         "description": "Additional labels for rbac",
-        "type": [
-          "object",
-          "string"
-        ],
-        "default": {}
+        "default": {},
+        "x-helm-tpl": "On value only"
       },
       "annotationsList": {
         "allOf": [
@@ -87,17 +87,14 @@
         "description": "Additional labels as a list of name and value pairs, merged into the labels"
       },
       "annotations": {
-        "type": [
-          "object",
-          "string"
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
         ],
-        "properties": {},
-        "additionalProperties": {
-          "type": "string",
-          "description": "Value of the annotation"
-        },
         "description": "Additional annotations for rbac",
-        "default": {}
+        "default": {},
+        "x-helm-tpl": "On value only"
       },
       "allServiceAccounts": {
         "type": "boolean",
@@ -130,19 +127,26 @@
           "properties": {
             "apiGroups": {
               "type": "array",
-              "description": "Define the `apiGroups` list for the `rules` for the (Cluster)Role"
+              "description": "Define the `apiGroups` list for the `rules` for the (Cluster)Role",
+              "x-helm-tpl": "On entries only",
+              "x-docs-required": true
             },
             "resources": {
               "type": "array",
-              "description": "Define the `resources` list for the `rules` for the (Cluster)Role"
+              "description": "Define the `resources` list for the `rules` for the (Cluster)Role",
+              "x-helm-tpl": "On entries only",
+              "x-docs-required": true
             },
             "resourceNames": {
               "type": "array",
-              "description": "Define the `resourceNames` list for the `rules` for the (Cluster)Role"
+              "description": "Define the `resourceNames` list for the `rules` for the (Cluster)Role",
+              "x-helm-tpl": "On entries only"
             },
             "verbs": {
               "type": "array",
-              "description": "Define the `verbs` list for the `rules` for the (Cluster)Role"
+              "description": "Define the `verbs` list for the `rules` for the (Cluster)Role",
+              "x-helm-tpl": "On entries only",
+              "x-docs-required": true
             },
             "nonResourceURLs": {
               "type": "array",
@@ -155,12 +159,14 @@
           "additionalProperties": false
         },
         "description": "Define the `rules` for the (Cluster)Role",
-        "default": []
+        "default": [],
+        "x-docs-required": true
       }
     },
     "additionalProperties": false,
     "description": "Define rbac",
-    "default": {}
+    "default": {},
+    "x-docs-required": true
   },
   "description": "Create rbac objects"
 }

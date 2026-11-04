@@ -23,7 +23,7 @@
     },
     "chartContext": {
       "$ref": "schemas/chartContext.json",
-      "description": "Configuration for `chartContext`."
+      "description": "Details about the release that common works out on every render."
     },
     "common": {
       "$ref": "schemas/common.json",
@@ -61,7 +61,7 @@
     },
     "workload": {
       "$ref": "schemas/workload/workload.json",
-      "description": "Define workload objects"
+      "description": "Define workload objects."
     },
     "TZ": {
       "$ref": "schemas/TZ.json",
@@ -74,15 +74,15 @@
     },
     "diagnosticMode": {
       "$ref": "schemas/diagnosticMode.json",
-      "description": "Configuration for `diagnosticMode`."
+      "description": "Run the containers with a sleep command instead of the app, to debug them."
     },
     "vpa": {
       "$ref": "schemas/vpa.json",
-      "description": "Configuration for `vpa`."
+      "description": "VerticalPodAutoscalers, keyed by name."
     },
     "hpa": {
       "$ref": "schemas/hpa.json",
-      "description": "Configuration for `hpa`."
+      "description": "HorizontalPodAutoscalers, keyed by name."
     },
     "service": {
       "$ref": "schemas/service/service.json",
@@ -90,11 +90,11 @@
     },
     "credentials": {
       "$ref": "schemas/credentials.json",
-      "description": "Create credentials objects"
+      "description": "Create credentials objects."
     },
     "ingressMiddlewares": {
       "$ref": "schemas/ingressMiddlewares/ingressMiddlewares.json",
-      "description": "Create Middleware objects"
+      "description": "Create Middleware objects."
     },
     "persistence": {
       "$ref": "schemas/persistence/persistence.json",
@@ -114,7 +114,7 @@
     },
     "configmap": {
       "$ref": "schemas/configmap.json",
-      "description": "Create Configmap objects"
+      "description": "Create Configmap objects."
     },
     "configMapsFromFolder": {
       "$ref": "schemas/configMapsFromFolder.json",
@@ -122,19 +122,19 @@
     },
     "secret": {
       "$ref": "schemas/secret.json",
-      "description": "Create Secret objects"
+      "description": "Define the secret If this is set, the `users` key must not be set."
     },
     "externalSecret": {
       "$ref": "schemas/externalSecret.json",
-      "description": "Create ExternalSecret objects"
+      "description": "ExternalSecrets that load secrets from an external store, keyed by name."
     },
     "serviceAccount": {
       "$ref": "schemas/serviceAccount.json",
-      "description": "Create serviceAccount objects"
+      "description": "Create serviceAccount objects."
     },
     "rbac": {
       "$ref": "schemas/rbac.json",
-      "description": "Create rbac objects"
+      "description": "Create rbac objects."
     },
     "notes": {
       "$ref": "schemas/notes.json",
@@ -142,35 +142,35 @@
     },
     "gluetunImage": {
       "$ref": "schemas/images.json#/properties/gluetunImage",
-      "description": "Configuration for `gluetunImage`."
+      "description": "Image `gluetunImage`, selected by containers with `imageSelector: gluetunImage`."
     },
     "netshootImage": {
       "$ref": "schemas/images.json#/properties/netshootImage",
-      "description": "Configuration for `netshootImage`."
+      "description": "Image `netshootImage`, selected by containers with `imageSelector: netshootImage`."
     },
     "tailscaleImage": {
       "$ref": "schemas/images.json#/properties/tailscaleImage",
-      "description": "Configuration for `tailscaleImage`."
+      "description": "Image `tailscaleImage`, selected by containers with `imageSelector: tailscaleImage`."
     },
     "codeserverImage": {
       "$ref": "schemas/images.json#/properties/codeserverImage",
-      "description": "Configuration for `codeserverImage`."
+      "description": "Image `codeserverImage`, selected by containers with `imageSelector: codeserverImage`."
     },
     "ubuntuImage": {
       "$ref": "schemas/images.json#/properties/ubuntuImage",
-      "description": "Configuration for `ubuntuImage`."
+      "description": "Image `ubuntuImage`, selected by containers with `imageSelector: ubuntuImage`."
     },
     "kubectlImage": {
       "$ref": "schemas/images.json#/properties/kubectlImage",
-      "description": "Configuration for `kubectlImage`."
+      "description": "Image `kubectlImage`, selected by containers with `imageSelector: kubectlImage`."
     },
     "postgresClientImage": {
       "$ref": "schemas/images.json#/properties/postgresClientImage",
-      "description": "Configuration for `postgresClientImage`."
+      "description": "Image `postgresClientImage`, selected by containers with `imageSelector: postgresClientImage`."
     },
     "postgresql18Image": {
       "$ref": "schemas/images.json#/properties/postgresql18Image",
-      "description": "Configuration for `postgresql18Image`."
+      "description": "Image `postgresql18Image`, selected by containers with `imageSelector: postgresql18Image`."
     },
     "clickhouseImage": {
       "$ref": "schemas/images.json#/properties/clickhouseImage",
@@ -198,79 +198,79 @@
     },
     "mariadbClientImage": {
       "$ref": "schemas/images.json#/properties/mariadbClientImage",
-      "description": "Configuration for `mariadbClientImage`."
+      "description": "Image `mariadbClientImage`, selected by containers with `imageSelector: mariadbClientImage`."
     },
     "valkeyClientImage": {
       "$ref": "schemas/images.json#/properties/valkeyClientImage",
-      "description": "Configuration for `valkeyClientImage`."
+      "description": "Image `valkeyClientImage`, selected by containers with `imageSelector: valkeyClientImage`."
     },
     "mongodbClientImage": {
       "$ref": "schemas/images.json#/properties/mongodbClientImage",
-      "description": "Configuration for `mongodbClientImage`."
+      "description": "Image `mongodbClientImage`, selected by containers with `imageSelector: mongodbClientImage`."
     },
     "postgres15Image": {
       "$ref": "schemas/images.json#/properties/postgres15Image",
-      "description": "Configuration for `postgres15Image`."
+      "description": "Image `postgres15Image`, selected by containers with `imageSelector: postgres15Image`."
     },
     "postgres16Image": {
       "$ref": "schemas/images.json#/properties/postgres16Image",
-      "description": "Configuration for `postgres16Image`."
+      "description": "Image `postgres16Image`, selected by containers with `imageSelector: postgres16Image`."
     },
     "postgres17Image": {
       "$ref": "schemas/images.json#/properties/postgres17Image",
-      "description": "Configuration for `postgres17Image`."
+      "description": "Image `postgres17Image`, selected by containers with `imageSelector: postgres17Image`."
     },
     "postgres18Image": {
       "$ref": "schemas/images.json#/properties/postgres18Image",
-      "description": "Configuration for `postgres18Image`."
+      "description": "Image `postgres18Image`, selected by containers with `imageSelector: postgres18Image`."
     },
     "postgresPostgis15Image": {
       "$ref": "schemas/images.json#/properties/postgresPostgis15Image",
-      "description": "Configuration for `postgresPostgis15Image`."
+      "description": "Image `postgresPostgis15Image`, selected by containers with `imageSelector: postgresPostgis15Image`."
     },
     "postgresPostgis16Image": {
       "$ref": "schemas/images.json#/properties/postgresPostgis16Image",
-      "description": "Configuration for `postgresPostgis16Image`."
+      "description": "Image `postgresPostgis16Image`, selected by containers with `imageSelector: postgresPostgis16Image`."
     },
     "postgresPostgis17Image": {
       "$ref": "schemas/images.json#/properties/postgresPostgis17Image",
-      "description": "Configuration for `postgresPostgis17Image`."
+      "description": "Image `postgresPostgis17Image`, selected by containers with `imageSelector: postgresPostgis17Image`."
     },
     "postgresPostgis18Image": {
       "$ref": "schemas/images.json#/properties/postgresPostgis18Image",
-      "description": "Configuration for `postgresPostgis18Image`."
+      "description": "Image `postgresPostgis18Image`, selected by containers with `imageSelector: postgresPostgis18Image`."
     },
     "postgresVectors15Image": {
       "$ref": "schemas/images.json#/properties/postgresVectors15Image",
-      "description": "Configuration for `postgresVectors15Image`."
+      "description": "Image `postgresVectors15Image`, selected by containers with `imageSelector: postgresVectors15Image`."
     },
     "postgresVectors16Image": {
       "$ref": "schemas/images.json#/properties/postgresVectors16Image",
-      "description": "Configuration for `postgresVectors16Image`."
+      "description": "Image `postgresVectors16Image`, selected by containers with `imageSelector: postgresVectors16Image`."
     },
     "postgresVectors17Image": {
       "$ref": "schemas/images.json#/properties/postgresVectors17Image",
-      "description": "Configuration for `postgresVectors17Image`."
+      "description": "Image `postgresVectors17Image`, selected by containers with `imageSelector: postgresVectors17Image`."
     },
     "postgresVectorchord15Image": {
       "$ref": "schemas/images.json#/properties/postgresVectorchord15Image",
-      "description": "Configuration for `postgresVectorchord15Image`."
+      "description": "Image `postgresVectorchord15Image`, selected by containers with `imageSelector: postgresVectorchord15Image`."
     },
     "postgresVectorchord16Image": {
       "$ref": "schemas/images.json#/properties/postgresVectorchord16Image",
-      "description": "Configuration for `postgresVectorchord16Image`."
+      "description": "Image `postgresVectorchord16Image`, selected by containers with `imageSelector: postgresVectorchord16Image`."
     },
     "postgresVectorchord17Image": {
       "$ref": "schemas/images.json#/properties/postgresVectorchord17Image",
-      "description": "Configuration for `postgresVectorchord17Image`."
+      "description": "Image `postgresVectorchord17Image`, selected by containers with `imageSelector: postgresVectorchord17Image`."
     },
     "postgresVectorchord18Image": {
       "$ref": "schemas/images.json#/properties/postgresVectorchord18Image",
-      "description": "Configuration for `postgresVectorchord18Image`."
+      "description": "Image `postgresVectorchord18Image`, selected by containers with `imageSelector: postgresVectorchord18Image`."
     },
     "ingress": {
       "$ref": "schemas/ingress/ingress.json",
-      "description": "Create Ingress objects"
+      "description": "Create Ingress objects."
     },
     "certificate": {
       "$ref": "schemas/certificate.json",
@@ -290,7 +290,7 @@
     },
     "route": {
       "$ref": "schemas/route.json",
-      "description": "Configuration for `route`."
+      "description": "Gateway API routes, keyed by name."
     },
     "networkpolicy": {
       "$ref": "schemas/networkpolicy.json",
@@ -302,7 +302,7 @@
     },
     "webhook": {
       "$ref": "schemas/webhook.json",
-      "description": "Create webhook objects"
+      "description": "Create webhook objects."
     },
     "priorityClass": {
       "$ref": "schemas/priorityClass.json",
@@ -314,7 +314,7 @@
     },
     "metrics": {
       "$ref": "schemas/metrics.json",
-      "description": "Configuration for `metrics`."
+      "description": "ServiceMonitors, PodMonitors and PrometheusRules, keyed by name."
     },
     "addons": {
       "$ref": "schemas/addons/addons.json",
@@ -322,7 +322,7 @@
     },
     "dependencies": {
       "$ref": "schemas/dependencies.json",
-      "description": "Configuration for `dependencies`."
+      "description": "Services the app needs, like a database or cache, deployed with the chart. See [Dependencies](/truecharts-common/dependencies)."
     },
     "extraTpl": {
       "$ref": "schemas/extraTpl.json",
@@ -331,11 +331,12 @@
       "default": [],
       "x-docs-required": false,
       "x-docs-helmTpl": true,
-      "x-docs-defaultRaw": "`[]`"
+      "x-docs-defaultRaw": "`[]`",
+      "x-helm-tpl": true
     },
     "fallbackDefaults": {
       "$ref": "schemas/global/fallbackDefaults.json",
-      "description": "The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [here](/truecharts-common/fallbackdefaults)",
+      "description": "The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [here](/truecharts-common/global/fallbackDefaults)",
       "type": "object",
       "x-docs-required": false,
       "x-docs-helmTpl": false,
@@ -419,15 +420,15 @@
     },
     "command": {
       "$ref": "schemas/workload/podSpec/containers/command.json",
-      "description": "See [command](/truecharts-common/container/command)"
+      "description": "See [command](/truecharts-common/workload/podSpec/containers/command)"
     },
     "args": {
       "$ref": "schemas/workload/podSpec/containers/args.json",
-      "description": "See [args](/truecharts-common/container/args#args)"
+      "description": "See [args](/truecharts-common/workload/podSpec/containers/args#args)"
     },
     "termination": {
       "$ref": "schemas/workload/container/termination.json",
-      "description": "See [termination](/truecharts-common/container/termination)"
+      "description": "See [termination](/truecharts-common/workload/container/termination)"
     },
     "lifecycle": {
       "type": "object",
@@ -435,19 +436,19 @@
     },
     "probes": {
       "$ref": "schemas/workload/podSpec/containers/probes.json",
-      "description": "Does **not** apply to `initContainers` See [probes](/truecharts-common/container/probes)"
+      "description": "Does **not** apply to `initContainers` See [probes](/truecharts-common/workload/podSpec/containers/probes)"
     },
     "envFrom": {
       "$ref": "schemas/workload/podSpec/containers/envFrom.json",
-      "description": "See [envFrom](/truecharts-common/container/envfrom)"
+      "description": "See [envFrom](/truecharts-common/workload/podSpec/containers/envFrom)"
     },
     "fixedEnv": {
       "$ref": "schemas/workload/podSpec/containers/fixedEnv.json",
-      "description": "See [fixedEnv](/truecharts-common/container/fixedenv)"
+      "description": "See [fixedEnv](/truecharts-common/workload/podSpec/containers/fixedEnv)"
     },
     "env": {
       "$ref": "schemas/workload/podSpec/containers/env.json",
-      "description": "See [env](/truecharts-common/container/env)"
+      "description": "See [env](/truecharts-common/workload/podSpec/containers/env)"
     }
   },
   "additionalProperties": true

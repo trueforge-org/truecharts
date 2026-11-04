@@ -24,7 +24,6 @@
       {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $objectName) -}}
       {{- include "tc.v1.common.lib.gateway.validation" (dict "objectData" $objectData "name" $name "caller" "ListenerSet" "key" "listenerSet") -}}
       {{- include "tc.v1.common.lib.listenerSet.validation" (dict "rootCtx" $ "objectData" $objectData "name" $name) -}}
-      {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" "ListenerSet") -}}
 
       {{/* Set the name of the listener set */}}
       {{- $_ := set $objectData "name" $objectName -}}

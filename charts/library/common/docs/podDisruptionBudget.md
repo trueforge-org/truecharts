@@ -36,9 +36,9 @@ Additional annotations for Pod Disruption Budget
 | Field      | Value                                   |
 | ---------- | --------------------------------------- |
 | Key        | `podDisruptionBudget.$name.annotations` |
-| Type       | `map, string`                           |
+| Type       | `map`                                   |
 | Required   | ❌                                      |
-| Helm `tpl` | ❌                                      |
+| Helm `tpl` | ✅ (On value only)                       |
 | Default    | `{}`                                    |
 
 Example
@@ -88,8 +88,8 @@ Create Pod Disruption Budget objects
 | ---------- | ----------------------------------- |
 | Key        | `podDisruptionBudget.$name.enabled` |
 | Type       | `boolean, string`                   |
-| Required   | ❌                                  |
-| Helm `tpl` | ❌                                  |
+| Required   | ✅                                  |
+| Helm `tpl` | ✅                                  |
 | Default    | `false`                             |
 
 Example
@@ -109,9 +109,9 @@ Additional labels for Pod Disruption Budget
 | Field      | Value                              |
 | ---------- | ---------------------------------- |
 | Key        | `podDisruptionBudget.$name.labels` |
-| Type       | `map, string`                      |
+| Type       | `map`                              |
 | Required   | ❌                                 |
-| Helm `tpl` | ❌                                 |
+| Helm `tpl` | ✅ (On value only)                  |
 | Default    | `{}`                               |
 
 Example
@@ -148,7 +148,7 @@ Define the maxUnavailable.
 | Key        | `podDisruptionBudget.$name.maxUnavailable` |
 | Type       | `integer, string`                          |
 | Required   | ❌                                         |
-| Helm `tpl` | ❌                                         |
+| Helm `tpl` | ✅                                         |
 | Default    | `""`                                       |
 
 Example
@@ -170,7 +170,7 @@ Define the minAvailable.
 | Key        | `podDisruptionBudget.$name.minAvailable` |
 | Type       | `integer, string`                        |
 | Required   | ❌                                       |
-| Helm `tpl` | ❌                                       |
+| Helm `tpl` | ✅                                       |
 | Default    | `""`                                     |
 
 Example
@@ -192,7 +192,7 @@ Define the namespace for this object
 | Key        | `podDisruptionBudget.$name.namespace` |
 | Type       | `string`                              |
 | Required   | ❌                                    |
-| Helm `tpl` | ❌                                    |
+| Helm `tpl` | ✅                                    |
 | Default    | `""`                                  |
 
 Example
@@ -207,7 +207,7 @@ podDisruptionBudget:
 
 ### `podDisruptionBudget.$name.targetSelector`
 
-Configuration for `podDisruptionBudget.main.targetSelector`.
+Workloads the budget applies to. Defaults to the primary workload.
 
 | Field      | Value                                      |
 | ---------- | ------------------------------------------ |
@@ -228,7 +228,7 @@ Create Pod Disruption Budget objects
 | Key        | `podDisruptionBudget.$name.unhealthyPodEvictionPolicy` |
 | Type       | `string`                                               |
 | Required   | ❌                                                     |
-| Helm `tpl` | ❌                                                     |
+| Helm `tpl` | ✅                                                     |
 | Default    | `""`                                                   |
 | Enum       | `IfHealthyBudget`, `AlwaysAllow`                       |
 

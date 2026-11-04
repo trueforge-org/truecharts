@@ -37,7 +37,7 @@ Timezone that is used everywhere applicable, unless overridden at the container 
 | ---------- | ---------------------------- |
 | Key        | `dependencies.postgresql.TZ` |
 | Type       | `map`                        |
-| Required   | ❌                           |
+| Required   | ✅                           |
 | Helm `tpl` | ❌                           |
 | Default    | `"UTC"`                      |
 
@@ -71,7 +71,7 @@ See [Addons](../../addons/) for full configuration.
 
 ### `dependencies.postgresql.args`
 
-See [args](/truecharts-common/container/args#args)
+See [args](/truecharts-common/workload/podSpec/containers/args#args)
 
 | Field      | Value                          |
 | ---------- | ------------------------------ |
@@ -119,7 +119,7 @@ See [Certificate](../../certificate.md) for full configuration.
 
 ### `dependencies.postgresql.chartContext`
 
-Configuration for `chartContext`.
+Details about the release that common works out on every render.
 
 | Field      | Value                                  |
 | ---------- | -------------------------------------- |
@@ -151,7 +151,7 @@ See [Clickhouseimage](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.codeserverImage`
 
-Configuration for `codeserverImage`.
+Image `codeserverImage`, selected by containers with `imageSelector: codeserverImage`.
 
 | Field      | Value                                     |
 | ---------- | ----------------------------------------- |
@@ -167,7 +167,7 @@ See [Codeserverimage](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.command`
 
-See [command](/truecharts-common/container/command)
+See [command](/truecharts-common/workload/podSpec/containers/command)
 
 | Field      | Value                             |
 | ---------- | --------------------------------- |
@@ -199,7 +199,7 @@ See [Common](../../common.md) for full configuration.
 
 ### `dependencies.postgresql.configmap`
 
-Create Configmap objects
+Create Configmap objects.
 
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
@@ -231,7 +231,7 @@ See [Containeroptions](../../containerOptions.md) for full configuration.
 
 ### `dependencies.postgresql.credentials`
 
-Create credentials objects
+Create credentials objects.
 
 | Field      | Value                                 |
 | ---------- | ------------------------------------- |
@@ -277,7 +277,7 @@ No description provided.
 
 ### `dependencies.postgresql.diagnosticMode`
 
-Configuration for `diagnosticMode`.
+Run the containers with a sleep command instead of the app, to debug them.
 
 | Field      | Value                                    |
 | ---------- | ---------------------------------------- |
@@ -355,7 +355,7 @@ Whether the dependency is enabled. Objects of disabled dependencies are not merg
 
 ### `dependencies.postgresql.env`
 
-See [env](/truecharts-common/container/env)
+See [env](/truecharts-common/workload/podSpec/containers/env)
 
 | Field      | Value                         |
 | ---------- | ----------------------------- |
@@ -371,7 +371,7 @@ See [Env](../../workload/podSpec/containers/env.md) for full configuration.
 
 ### `dependencies.postgresql.envFrom`
 
-See [envFrom](/truecharts-common/container/envfrom)
+See [envFrom](/truecharts-common/workload/podSpec/containers/envFrom)
 
 | Field      | Value                             |
 | ---------- | --------------------------------- |
@@ -387,7 +387,7 @@ See [Envfrom](../../workload/podSpec/containers/envFrom.md) for full configurati
 
 ### `dependencies.postgresql.externalSecret`
 
-Create ExternalSecret objects
+ExternalSecrets that load secrets from an external store, keyed by name.
 
 | Field      | Value                                    |
 | ---------- | ---------------------------------------- |
@@ -403,7 +403,7 @@ See [Externalsecret](../../externalSecret.md) for full configuration.
 
 ### `dependencies.postgresql.fallbackDefaults`
 
-The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [documentation](/truecharts-common/fallbackdefaults)
+The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [documentation](/truecharts-common/global/fallbackDefaults)
 
 | Field      | Value                                      |
 | ---------- | ------------------------------------------ |
@@ -419,7 +419,7 @@ See [Fallbackdefaults](../../global/fallbackDefaults.md) for full configuration.
 
 ### `dependencies.postgresql.fixedEnv`
 
-See [fixedEnv](/truecharts-common/container/fixedenv)
+See [fixedEnv](/truecharts-common/workload/podSpec/containers/fixedEnv)
 
 | Field      | Value                              |
 | ---------- | ---------------------------------- |
@@ -483,7 +483,7 @@ See [Global](../../global/) for full configuration.
 
 ### `dependencies.postgresql.gluetunImage`
 
-Configuration for `gluetunImage`.
+Image `gluetunImage`, selected by containers with `imageSelector: gluetunImage`.
 
 | Field      | Value                                  |
 | ---------- | -------------------------------------- |
@@ -579,7 +579,7 @@ See [Hostusers](../../workload/podSpec/hostUsers.md) for full configuration.
 
 ### `dependencies.postgresql.hpa`
 
-Configuration for `hpa`.
+HorizontalPodAutoscalers, keyed by name.
 
 | Field      | Value                         |
 | ---------- | ----------------------------- |
@@ -611,7 +611,7 @@ See [Imagepullsecret](../../imagePullSecret.md) for full configuration.
 
 ### `dependencies.postgresql.ingress`
 
-Create Ingress objects
+Create Ingress objects.
 
 | Field      | Value                             |
 | ---------- | --------------------------------- |
@@ -627,7 +627,7 @@ See [Ingress](../../ingress/) for full configuration.
 
 ### `dependencies.postgresql.kubectlImage`
 
-Configuration for `kubectlImage`.
+Image `kubectlImage`, selected by containers with `imageSelector: kubectlImage`.
 
 | Field      | Value                                  |
 | ---------- | -------------------------------------- |
@@ -673,7 +673,7 @@ See [Listenerset](../../listenerSet.md) for full configuration.
 
 ### `dependencies.postgresql.mariadbClientImage`
 
-Configuration for `mariadbClientImage`.
+Image `mariadbClientImage`, selected by containers with `imageSelector: mariadbClientImage`.
 
 | Field      | Value                                        |
 | ---------- | -------------------------------------------- |
@@ -721,7 +721,7 @@ See [Memcachedimage](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.metrics`
 
-Configuration for `metrics`.
+ServiceMonitors, PodMonitors and PrometheusRules, keyed by name.
 
 | Field      | Value                             |
 | ---------- | --------------------------------- |
@@ -760,7 +760,7 @@ dependencies:
 
 ### `dependencies.postgresql.mongodbClientImage`
 
-Configuration for `mongodbClientImage`.
+Image `mongodbClientImage`, selected by containers with `imageSelector: mongodbClientImage`.
 
 | Field      | Value                                        |
 | ---------- | -------------------------------------------- |
@@ -808,7 +808,7 @@ See [Namespace](../../namespace.md) for full configuration.
 
 ### `dependencies.postgresql.netshootImage`
 
-Configuration for `netshootImage`.
+Image `netshootImage`, selected by containers with `imageSelector: netshootImage`.
 
 | Field      | Value                                   |
 | ---------- | --------------------------------------- |
@@ -905,7 +905,7 @@ Define persistence objects
 | Helm `tpl` | ❌                                    |
 | Default    | unset                                 |
 
-See [Persistence](../../persistence/) for full configuration.
+See [Persistence](../../persistence.md) for full configuration.
 
 ---
 
@@ -943,7 +943,7 @@ See [Podoptions](../../podOptions/) for full configuration.
 
 ### `dependencies.postgresql.postgres15Image`
 
-Configuration for `postgres15Image`.
+Image `postgres15Image`, selected by containers with `imageSelector: postgres15Image`.
 
 | Field      | Value                                     |
 | ---------- | ----------------------------------------- |
@@ -959,7 +959,7 @@ See [Postgres15image](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.postgres16Image`
 
-Configuration for `postgres16Image`.
+Image `postgres16Image`, selected by containers with `imageSelector: postgres16Image`.
 
 | Field      | Value                                     |
 | ---------- | ----------------------------------------- |
@@ -975,7 +975,7 @@ See [Postgres16image](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.postgres17Image`
 
-Configuration for `postgres17Image`.
+Image `postgres17Image`, selected by containers with `imageSelector: postgres17Image`.
 
 | Field      | Value                                     |
 | ---------- | ----------------------------------------- |
@@ -991,7 +991,7 @@ See [Postgres17image](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.postgres18Image`
 
-Configuration for `postgres18Image`.
+Image `postgres18Image`, selected by containers with `imageSelector: postgres18Image`.
 
 | Field      | Value                                     |
 | ---------- | ----------------------------------------- |
@@ -1007,7 +1007,7 @@ See [Postgres18image](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.postgresClientImage`
 
-Configuration for `postgresClientImage`.
+Image `postgresClientImage`, selected by containers with `imageSelector: postgresClientImage`.
 
 | Field      | Value                                         |
 | ---------- | --------------------------------------------- |
@@ -1023,7 +1023,7 @@ See [Postgresclientimage](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.postgresPostgis15Image`
 
-Configuration for `postgresPostgis15Image`.
+Image `postgresPostgis15Image`, selected by containers with `imageSelector: postgresPostgis15Image`.
 
 | Field      | Value                                            |
 | ---------- | ------------------------------------------------ |
@@ -1039,7 +1039,7 @@ See [Postgrespostgis15image](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.postgresPostgis16Image`
 
-Configuration for `postgresPostgis16Image`.
+Image `postgresPostgis16Image`, selected by containers with `imageSelector: postgresPostgis16Image`.
 
 | Field      | Value                                            |
 | ---------- | ------------------------------------------------ |
@@ -1055,7 +1055,7 @@ See [Postgrespostgis16image](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.postgresPostgis17Image`
 
-Configuration for `postgresPostgis17Image`.
+Image `postgresPostgis17Image`, selected by containers with `imageSelector: postgresPostgis17Image`.
 
 | Field      | Value                                            |
 | ---------- | ------------------------------------------------ |
@@ -1071,7 +1071,7 @@ See [Postgrespostgis17image](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.postgresPostgis18Image`
 
-Configuration for `postgresPostgis18Image`.
+Image `postgresPostgis18Image`, selected by containers with `imageSelector: postgresPostgis18Image`.
 
 | Field      | Value                                            |
 | ---------- | ------------------------------------------------ |
@@ -1087,7 +1087,7 @@ See [Postgrespostgis18image](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.postgresVectorchord15Image`
 
-Configuration for `postgresVectorchord15Image`.
+Image `postgresVectorchord15Image`, selected by containers with `imageSelector: postgresVectorchord15Image`.
 
 | Field      | Value                                                |
 | ---------- | ---------------------------------------------------- |
@@ -1103,7 +1103,7 @@ See [Postgresvectorchord15image](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.postgresVectorchord16Image`
 
-Configuration for `postgresVectorchord16Image`.
+Image `postgresVectorchord16Image`, selected by containers with `imageSelector: postgresVectorchord16Image`.
 
 | Field      | Value                                                |
 | ---------- | ---------------------------------------------------- |
@@ -1119,7 +1119,7 @@ See [Postgresvectorchord16image](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.postgresVectorchord17Image`
 
-Configuration for `postgresVectorchord17Image`.
+Image `postgresVectorchord17Image`, selected by containers with `imageSelector: postgresVectorchord17Image`.
 
 | Field      | Value                                                |
 | ---------- | ---------------------------------------------------- |
@@ -1135,7 +1135,7 @@ See [Postgresvectorchord17image](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.postgresVectorchord18Image`
 
-Configuration for `postgresVectorchord18Image`.
+Image `postgresVectorchord18Image`, selected by containers with `imageSelector: postgresVectorchord18Image`.
 
 | Field      | Value                                                |
 | ---------- | ---------------------------------------------------- |
@@ -1151,7 +1151,7 @@ See [Postgresvectorchord18image](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.postgresVectors15Image`
 
-Configuration for `postgresVectors15Image`.
+Image `postgresVectors15Image`, selected by containers with `imageSelector: postgresVectors15Image`.
 
 | Field      | Value                                            |
 | ---------- | ------------------------------------------------ |
@@ -1167,7 +1167,7 @@ See [Postgresvectors15image](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.postgresVectors16Image`
 
-Configuration for `postgresVectors16Image`.
+Image `postgresVectors16Image`, selected by containers with `imageSelector: postgresVectors16Image`.
 
 | Field      | Value                                            |
 | ---------- | ------------------------------------------------ |
@@ -1183,7 +1183,7 @@ See [Postgresvectors16image](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.postgresVectors17Image`
 
-Configuration for `postgresVectors17Image`.
+Image `postgresVectors17Image`, selected by containers with `imageSelector: postgresVectors17Image`.
 
 | Field      | Value                                            |
 | ---------- | ------------------------------------------------ |
@@ -1199,7 +1199,7 @@ See [Postgresvectors17image](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.postgresql18Image`
 
-Configuration for `postgresql18Image`.
+Image `postgresql18Image`, selected by containers with `imageSelector: postgresql18Image`.
 
 | Field      | Value                                       |
 | ---------- | ------------------------------------------- |
@@ -1247,7 +1247,7 @@ See [Priorityclassname](../../workload/podSpec/priorityClassName.md) for full co
 
 ### `dependencies.postgresql.probes`
 
-Does **not** apply to `initContainers` See [probes](/truecharts-common/container/probes)
+Does **not** apply to `initContainers` See [probes](/truecharts-common/workload/podSpec/containers/probes)
 
 | Field      | Value                            |
 | ---------- | -------------------------------- |
@@ -1263,7 +1263,7 @@ See [Probes](../../workload/podSpec/containers/probes/) for full configuration.
 
 ### `dependencies.postgresql.rbac`
 
-Create rbac objects
+Create rbac objects.
 
 | Field      | Value                          |
 | ---------- | ------------------------------ |
@@ -1285,7 +1285,7 @@ Define resources for all containers, unless overridden at the container level Re
 | ---------- | ----------------------------------- |
 | Key        | `dependencies.postgresql.resources` |
 | Type       | `map`                               |
-| Required   | ❌                                  |
+| Required   | ✅                                  |
 | Helm `tpl` | ❌                                  |
 | Default    | unset                               |
 
@@ -1311,7 +1311,7 @@ See [Restartpolicy](../../workload/podSpec/restartPolicy.md) for full configurat
 
 ### `dependencies.postgresql.route`
 
-Configuration for `route`.
+Gateway API routes, keyed by name.
 
 | Field      | Value                           |
 | ---------- | ------------------------------- |
@@ -1359,7 +1359,7 @@ See [Schedulername](../../workload/podSpec/schedulerName.md) for full configurat
 
 ### `dependencies.postgresql.secret`
 
-Create Secret objects
+Define the secret If this is set, the `users` key must not be set.
 
 | Field      | Value                            |
 | ---------- | -------------------------------- |
@@ -1381,7 +1381,7 @@ Define security context for all containers and pods, unless overridden at the co
 | ---------- | ----------------------------------------- |
 | Key        | `dependencies.postgresql.securityContext` |
 | Type       | `map`                                     |
-| Required   | ❌                                        |
+| Required   | ✅                                        |
 | Helm `tpl` | ❌                                        |
 | Default    | unset                                     |
 
@@ -1407,7 +1407,7 @@ See [Service](../../service/) for full configuration.
 
 ### `dependencies.postgresql.serviceAccount`
 
-Create serviceAccount objects
+Create serviceAccount objects.
 
 | Field      | Value                                    |
 | ---------- | ---------------------------------------- |
@@ -1455,7 +1455,7 @@ See [Storageclass](../../storageClass.md) for full configuration.
 
 ### `dependencies.postgresql.tailscaleImage`
 
-Configuration for `tailscaleImage`.
+Image `tailscaleImage`, selected by containers with `imageSelector: tailscaleImage`.
 
 | Field      | Value                                    |
 | ---------- | ---------------------------------------- |
@@ -1471,7 +1471,7 @@ See [Tailscaleimage](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.termination`
 
-See [termination](/truecharts-common/container/termination)
+See [termination](/truecharts-common/workload/container/termination)
 
 | Field      | Value                                 |
 | ---------- | ------------------------------------- |
@@ -1535,7 +1535,7 @@ See [Topologyspreadconstraints](../../podOptions/topologySpreadConstraints.md) f
 
 ### `dependencies.postgresql.ubuntuImage`
 
-Configuration for `ubuntuImage`.
+Image `ubuntuImage`, selected by containers with `imageSelector: ubuntuImage`.
 
 | Field      | Value                                 |
 | ---------- | ------------------------------------- |
@@ -1551,7 +1551,7 @@ See [Ubuntuimage](../../images.md) for full configuration.
 
 ### `dependencies.postgresql.valkeyClientImage`
 
-Configuration for `valkeyClientImage`.
+Image `valkeyClientImage`, selected by containers with `imageSelector: valkeyClientImage`.
 
 | Field      | Value                                       |
 | ---------- | ------------------------------------------- |
@@ -1631,7 +1631,7 @@ See [Volumesnapshots](../../volumeSnapshots.md) for full configuration.
 
 ### `dependencies.postgresql.vpa`
 
-Configuration for `vpa`.
+VerticalPodAutoscalers, keyed by name.
 
 | Field      | Value                         |
 | ---------- | ----------------------------- |
@@ -1647,7 +1647,7 @@ See [Vpa](../../vpa.md) for full configuration.
 
 ### `dependencies.postgresql.webhook`
 
-Create webhook objects
+Create webhook objects.
 
 | Field      | Value                             |
 | ---------- | --------------------------------- |
@@ -1663,7 +1663,7 @@ See [Webhook](../../webhook.md) for full configuration.
 
 ### `dependencies.postgresql.workload`
 
-Define workload objects
+Define workload objects.
 
 | Field      | Value                              |
 | ---------- | ---------------------------------- |

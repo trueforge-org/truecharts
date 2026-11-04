@@ -10,7 +10,7 @@
           "boolean",
           "string"
         ],
-        "description": "Configuration for `route.main.enabled`.",
+        "description": "Enable the route.",
         "default": false
       },
       "primary": {
@@ -37,17 +37,16 @@
           "TLSRoute",
           "UDPRoute"
         ],
-        "description": "Configuration for `route.main.kind`.",
+        "description": "Kind of the route: `HTTPRoute`, `GRPCRoute`, `TCPRoute`, `TLSRoute` or `UDPRoute`.",
         "default": "HTTPRoute"
       },
       "annotations": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": {
-          "type": "string",
-          "description": "Value of the annotation"
-        },
-        "description": "Configuration for `route.main.annotations`."
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
+        "description": "Additional annotations, keyed by name."
       },
       "labels": {
         "allOf": [
@@ -55,7 +54,7 @@
             "$ref": "special/labels.json"
           }
         ],
-        "description": "Configuration for `route.main.labels`."
+        "description": "Additional labels, keyed by name."
       },
       "namespace": {
         "allOf": [
@@ -63,12 +62,13 @@
             "$ref": "special/namespaces.json"
           }
         ],
-        "description": "Configuration for `route.main.namespace`."
+        "description": "Namespace of the route."
       },
       "gateway": {
         "type": "string",
         "description": "Name of a gateway outside of this chart. Replaces `parentRefs`. Cannot be used with a `targetSelector` string.",
-        "default": ""
+        "default": "",
+        "x-helm-tpl": true
       },
       "listenerSet": {
         "type": "string",
@@ -78,7 +78,8 @@
       "gatewayNamespace": {
         "type": "string",
         "description": "Namespace of `gateway`. Defaults to the namespace of the route.",
-        "default": ""
+        "default": "",
+        "x-helm-tpl": true
       },
       "targetSelector": {
         "type": [
@@ -98,32 +99,35 @@
           "properties": {
             "group": {
               "type": "string",
-              "description": "Configuration for `route.main.parentRefs.$item.group`."
+              "description": "API group of the parent or backend."
             },
             "kind": {
               "type": "string",
-              "description": "Configuration for `route.main.parentRefs.$item.kind`."
+              "description": "Kind of the parent or backend."
             },
             "name": {
               "type": [
                 "null",
                 "string"
               ],
-              "description": "Configuration for `route.main.parentRefs.$item.name`."
+              "description": "Name of the parent.",
+              "x-helm-tpl": true
             },
             "namespace": {
               "type": [
                 "null",
                 "string"
               ],
-              "description": "Namespace of the parent. Defaults to the namespace of the route."
+              "description": "Namespace of the parent. Defaults to the namespace of the route.",
+              "x-helm-tpl": true
             },
             "sectionName": {
               "type": [
                 "null",
                 "string"
               ],
-              "description": "Attach to a single listener of the gateway. With `targetSelector` it must be a listener of that gateway."
+              "description": "Attach to a single listener of the gateway. With `targetSelector` it must be a listener of that gateway.",
+              "x-helm-tpl": true
             },
             "targetSelector": {
               "type": [
@@ -138,13 +142,14 @@
                 "integer",
                 "string"
               ],
-              "description": "Attach to the listeners of the gateway on this port."
+              "description": "Attach to the listeners of the gateway on this port.",
+              "x-helm-tpl": true
             }
           },
           "additionalProperties": false,
           "description": "Configuration for `route.main.parentRefs.$item`."
         },
-        "description": "Configuration for `route.main.parentRefs`."
+        "description": "Gateways or ListenerSets the route attaches to."
       },
       "hostnames": {
         "type": "array",
@@ -152,7 +157,8 @@
           "type": "string"
         },
         "description": "Host addresses, supports Helm `tpl`. Required for `TLSRoute`, not supported by `TCPRoute` and `UDPRoute`.",
-        "default": []
+        "default": [],
+        "x-helm-tpl": true
       },
       "tls": {
         "type": "array",
@@ -165,11 +171,13 @@
               "items": {
                 "type": "string"
               },
-              "description": "Hostnames of this certificate. Supports Helm `tpl`."
+              "description": "Hostnames of this certificate. Supports Helm `tpl`.",
+              "x-helm-tpl": true
             },
             "secretName": {
               "type": "string",
-              "description": "Existing secret to use. Supports Helm `tpl`. Exactly one of `secretName`, `certificateIssuer` and `clusterCertificate`."
+              "description": "Existing secret to use. Supports Helm `tpl`. Exactly one of `secretName`, `certificateIssuer` and `clusterCertificate`.",
+              "x-helm-tpl": true
             },
             "certificateIssuer": {
               "type": "string",
@@ -177,7 +185,8 @@
             },
             "clusterCertificate": {
               "type": "string",
-              "description": "Name of a cluster certificate to use."
+              "description": "Name of a cluster certificate to use.",
+              "x-helm-tpl": true
             }
           },
           "additionalProperties": false
@@ -274,7 +283,8 @@
                     "description": "Version of the widget."
                   },
                   "type": {
-                    "default": ""
+                    "default": "",
+                    "description": "Type of the homepage widget."
                   },
                   "url": {
                     "type": "string",
@@ -385,7 +395,8 @@
                   },
                   "internalHost": {
                     "type": "string",
-                    "description": "Internal domain name and port of the auth provider, excluding http(s)."
+                    "description": "Internal domain name and port of the auth provider, excluding http(s).",
+                    "x-helm-tpl": true
                   },
                   "responseHeaders": {
                     "type": "array",
@@ -513,7 +524,8 @@
                   },
                   "internalHost": {
                     "type": "string",
-                    "description": "`service:port` or `service.namespace.svc.cluster.local:port`. A service in another namespace needs a `ReferenceGrant` in that namespace."
+                    "description": "`service:port` or `service.namespace.svc.cluster.local:port`. A service in another namespace needs a `ReferenceGrant` in that namespace.",
+                    "x-helm-tpl": true
                   },
                   "responseHeaders": {
                     "type": "array",
@@ -538,7 +550,8 @@
                   "css": {
                     "type": "string",
                     "description": "URL of the CSS file added to HTML responses.",
-                    "default": ""
+                    "default": "",
+                    "x-helm-tpl": true
                   }
                 }
               },
@@ -608,11 +621,11 @@
                 "properties": {
                   "group": {
                     "type": "string",
-                    "description": "Configuration for `route.main.rules.$item.backendRefs.$item.group`."
+                    "description": "API group of the parent or backend."
                   },
                   "kind": {
                     "type": "string",
-                    "description": "Configuration for `route.main.rules.$item.backendRefs.$item.kind`."
+                    "description": "Kind of the parent or backend."
                   },
                   "name": {
                     "type": [

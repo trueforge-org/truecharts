@@ -20,11 +20,6 @@
     {{- fail (printf "CNPG - Expected [pgVersion] to be one of [%s], but got [%s]" (join ", " $validVersions) $objectData.pgVersion) -}}
   {{- end -}}
 
-  {{- if (hasKey $objectData "hibernate") -}}
-    {{- if not (kindIs "bool" $objectData.hibernate) -}}
-      {{- fail (printf "CNPG - Expected [hibernate] to be a boolean, but got [%s]" (kindOf $objectData.hibernate)) -}}
-    {{- end -}}
-  {{- end -}}
 
   {{- if (hasKey $objectData "instances") -}}
     {{- if lt ($objectData.instances | int) 1 -}}
@@ -32,19 +27,7 @@
     {{- end -}}
   {{- end -}}
 
-  {{- if (hasKey $objectData "mode") -}}
-    {{- $validModes := (list "standalone" "replica" "recovery") -}}
-    {{- if not (mustHas $objectData.mode $validModes) -}}
-      {{- fail (printf "CNPG Cluster - Expected [mode] to be one of [%s], but got [%s]" (join ", " $validModes) $objectData.mode) -}}
-    {{- end -}}
-  {{- end -}}
 
-  {{- if (hasKey $objectData "type") -}}
-    {{- $validTypes := (list "postgres" "postgis" "vectors" "vectorchord") -}}
-    {{- if not (mustHas $objectData.type $validTypes) -}}
-      {{- fail (printf "CNPG Cluster - Expected [type] to be one of [%s], but got [%s]" (join ", " $validTypes) $objectData.type) -}}
-    {{- end -}}
-  {{- end -}}
 
   {{/* pgvecto.rs (type vectors) publishes no PostgreSQL 18 image; it is superseded by VectorChord */}}
   {{- if and (eq ($objectData.type | default "postgres") "vectors") (eq ($objectData.pgVersion | toString) "18") -}}
@@ -52,32 +35,14 @@
   {{- end -}}
 
   {{- if (hasKey $objectData "cluster") -}}
-    {{- if (hasKey $objectData.cluster "logLevel") -}}
-      {{- $validLevels := (list "error" "warning" "info" "debug" "trace") -}}
-      {{- if not (mustHas $objectData.cluster.logLevel $validLevels) -}}
-        {{- fail (printf "CNPG Cluster - Expected [cluster.logLevel] to be one of [%s], but got [%s]" (join ", " $validLevels) $objectData.cluster.logLevel) -}}
-      {{- end -}}
-    {{- end -}}
 
-    {{- if (hasKey $objectData.cluster "primaryUpdateStrategy") -}}
-      {{- $validStrategies := (list "supervised" "unsupervised") -}}
-      {{- if not (mustHas $objectData.cluster.primaryUpdateStrategy $validStrategies) -}}
-        {{- fail (printf "CNPG Cluster - Expected [cluster.primaryUpdateStrategy] to be one of [%s], but got [%s]" (join ", " $validStrategies) $objectData.cluster.primaryUpdateStrategy) -}}
-      {{- end -}}
-    {{- end -}}
 
     {{- if (hasKey $objectData.cluster "primaryUpdateMethod") -}}
       {{- $validMethods := (list "switchover" "restart") -}}
-      {{- if not (mustHas $objectData.cluster.primaryUpdateMethod $validMethods) -}}
-        {{- fail (printf "CNPG Cluster - Expected [cluster.primaryUpdateMethod] to be one of [%s], but got [%s]" (join ", " $validMethods) $objectData.cluster.primaryUpdateMethod) -}}
-      {{- end -}}
     {{- end -}}
 
     {{- if (hasKey $objectData.cluster "initdb") -}}
       {{- with $objectData.cluster.initdb.walSegmentSize -}}
-        {{- if not (mustHas (kindOf .) (list "int" "int64" "float64")) -}}
-          {{- fail (printf "CNPG Cluster - Expected [cluster.initdb.walSegmentSize] to be an integer, but got [%s]" (kindOf .)) -}}
-        {{- end -}}
         {{- if or (lt (. | int) 1) (gt (. | int) 1024) -}}
           {{- fail (printf "CNPG Cluster - Expected [cluster.initdb.walSegmentSize] to be between 1 and 1024, but got [%d]" (. | int)) -}}
         {{- end -}}
@@ -96,17 +61,7 @@
     {{- end -}}
   {{- end -}}
 
-  {{- if and $objectData.recovery $objectData.recovery.revision -}}
-    {{- if not (kindIs "string" $objectData.recovery.revision) -}}
-      {{- fail (printf "CNPG Recovery - Expected [recovery.revision] to be a string, got [%s]" (kindOf $objectData.recovery.revision)) -}}
-    {{- end -}}
-  {{- end -}}
 
-  {{- if and $objectData.backups $objectData.backups.revision -}}
-    {{- if not (kindIs "string" $objectData.backups.revision) -}}
-      {{- fail (printf "CNPG Backup - Expected [backups.revision] to be a string, got [%s]" (kindOf $objectData.backups.revision)) -}}
-    {{- end -}}
-  {{- end -}}
 
   {{/* [servername] used to be documented but never read. Do not start honoring it, as that would silently change the archive path */}}
   {{- if and $objectData.recovery $objectData.recovery.servername -}}

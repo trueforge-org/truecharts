@@ -58,9 +58,9 @@ Additional annotations for storage class
 | Field      | Value                            |
 | ---------- | -------------------------------- |
 | Key        | `storageClass.$name.annotations` |
-| Type       | `map, string`                    |
+| Type       | `map`                            |
 | Required   | ❌                               |
-| Helm `tpl` | ❌                               |
+| Helm `tpl` | ✅ (On value only)                |
 | Default    | `{}`                             |
 
 Example
@@ -96,8 +96,8 @@ Enables or Disables the storage class
 | ---------- | ---------------------------- |
 | Key        | `storageClass.$name.enabled` |
 | Type       | `boolean, string`            |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
+| Required   | ✅                           |
+| Helm `tpl` | ✅                           |
 | Default    | `false`                      |
 
 Example
@@ -131,9 +131,9 @@ Additional labels for storage class
 | Field      | Value                       |
 | ---------- | --------------------------- |
 | Key        | `storageClass.$name.labels` |
-| Type       | `map, string`               |
+| Type       | `map`                       |
 | Required   | ❌                          |
-| Helm `tpl` | ❌                          |
+| Helm `tpl` | ✅ (On value only)           |
 | Default    | `{}`                        |
 
 Example
@@ -168,9 +168,9 @@ Define storage classes
 | Field      | Value                             |
 | ---------- | --------------------------------- |
 | Key        | `storageClass.$name.mountOptions` |
-| Type       | `list, string`                    |
+| Type       | `list of string`                  |
 | Required   | ❌                                |
-| Helm `tpl` | ❌                                |
+| Helm `tpl` | ✅ (On each entry only)            |
 | Default    | `[]`                              |
 
 Example
@@ -191,9 +191,9 @@ Define the parameters for this storage class
 | Field      | Value                           |
 | ---------- | ------------------------------- |
 | Key        | `storageClass.$name.parameters` |
-| Type       | `map, string`                   |
+| Type       | `map`                           |
 | Required   | ❌                              |
-| Helm `tpl` | ❌                              |
+| Helm `tpl` | ✅ (On value only)               |
 | Default    | `{}`                            |
 
 Example
@@ -215,7 +215,7 @@ Define the provisioner for this storage class
 | ---------- | -------------------------------- |
 | Key        | `storageClass.$name.provisioner` |
 | Type       | `string`                         |
-| Required   | ❌                               |
+| Required   | ✅                               |
 | Helm `tpl` | ❌                               |
 | Default    | unset                            |
 

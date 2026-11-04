@@ -11,10 +11,12 @@
             "Exact",
             "PathPrefix",
             "RegularExpression"
-          ]
+          ],
+          "description": "How the path is matched: `PathPrefix`, `Exact` or `RegularExpression`."
         },
         "value": {
-          "type": "string"
+          "type": "string",
+          "description": "Path that is matched. Supports Helm `tpl`."
         }
       },
       "additionalProperties": false,
@@ -26,21 +28,25 @@
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the header or query parameter."
           },
           "value": {
-            "type": "string"
+            "type": "string",
+            "description": "Value that is matched."
           },
           "type": {
             "type": "string",
             "enum": [
               "Exact",
               "RegularExpression"
-            ]
+            ],
+            "description": "How the value is matched: `Exact` or `RegularExpression`."
           }
         },
         "additionalProperties": false
-      }
+      },
+      "description": "Headers the request has to match."
     },
     "queryParams": {
       "type": "array",
@@ -48,27 +54,32 @@
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the header or query parameter."
           },
           "value": {
-            "type": "string"
+            "type": "string",
+            "description": "Value that is matched."
           },
           "type": {
             "type": "string",
             "enum": [
               "Exact",
               "RegularExpression"
-            ]
+            ],
+            "description": "How the value is matched: `Exact` or `RegularExpression`."
           }
         },
         "additionalProperties": false
-      }
+      },
+      "description": "Query parameters the request has to match."
     },
     "method": {
       "type": [
         "object",
         "string"
-      ]
+      ],
+      "description": "HTTP method of the request, or the gRPC service and method."
     }
   },
   "additionalProperties": false,

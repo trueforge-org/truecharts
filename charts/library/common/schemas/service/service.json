@@ -65,32 +65,40 @@
             "$ref": "ExternalName.json"
           }
         ],
-        "description": "Configure ExternalName type"
+        "description": "Configure ExternalName type",
+        "x-helm-tpl": true,
+        "x-docs-required": true
       },
       "ports": {
         "type": "object",
         "properties": {},
         "additionalProperties": {
-          "$ref": "ports.json"
+          "$ref": "ports.json",
+          "x-docs-required": true
         },
         "description": "Define the ports of the service See [Ports](/truecharts-common/service/ports)",
-        "default": {}
+        "default": {},
+        "x-docs-required": true
       },
       "sharedKey": {
         "type": "string",
-        "description": "Sets the shared key in `metallb.io/allow-shared-ip` **MetalLB** Annotation"
+        "description": "Sets the shared key in `metallb.io/allow-shared-ip` **MetalLB** Annotation",
+        "x-helm-tpl": true
       },
       "loadBalancerIP": {
         "type": "string",
-        "description": "Define the load balancer IP, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIPs`"
+        "description": "Define the load balancer IP, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIPs`",
+        "x-helm-tpl": true
       },
       "loadBalancerIPs": {
         "type": "array",
-        "description": "Define the load balancer IPs, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIP`"
+        "description": "Define the load balancer IPs, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIP`",
+        "x-helm-tpl": "On entries only"
       },
       "loadBalancerSourceRanges": {
         "type": "array",
-        "description": "Define the load balancer source ranges"
+        "description": "Define the load balancer source ranges",
+        "x-helm-tpl": "On entries only"
       },
       "allocateLoadBalancerNodePorts": {
         "type": "boolean",
@@ -103,7 +111,9 @@
             "$ref": "ExternalIP.json"
           }
         ],
-        "description": "Configure External IP type"
+        "description": "Configure External IP type",
+        "x-helm-tpl": true,
+        "x-docs-required": true
       },
       "useSlice": {
         "type": [
@@ -114,11 +124,13 @@
       },
       "addressType": {
         "type": "string",
-        "description": "Define the addressType for External IP"
+        "description": "Define the addressType for External IP",
+        "x-helm-tpl": true
       },
       "appProtocol": {
         "type": "string",
-        "description": "Define the appProtocol for External IP"
+        "description": "Define the appProtocol for External IP",
+        "x-helm-tpl": true
       },
       "enabled": {
         "type": [
@@ -126,7 +138,9 @@
           "string"
         ],
         "description": "Enables or Disables the service",
-        "default": false
+        "default": false,
+        "x-helm-tpl": true,
+        "x-docs-required": true
       },
       "namespace": {
         "allOf": [
@@ -135,7 +149,8 @@
           }
         ],
         "description": "Define the namespace for this object",
-        "default": ""
+        "default": "",
+        "x-helm-tpl": "On value only"
       },
       "labels": {
         "allOf": [
@@ -144,11 +159,8 @@
           }
         ],
         "description": "Additional labels for service",
-        "type": [
-          "object",
-          "string"
-        ],
-        "default": {}
+        "default": {},
+        "x-helm-tpl": "On value only"
       },
       "annotationsList": {
         "allOf": [
@@ -167,17 +179,14 @@
         "description": "Additional labels as a list of name and value pairs, merged into the labels"
       },
       "annotations": {
-        "type": [
-          "object",
-          "string"
+        "allOf": [
+          {
+            "$ref": "../special/annotations.json"
+          }
         ],
-        "properties": {},
-        "additionalProperties": {
-          "type": "string",
-          "description": "Value of the annotation"
-        },
         "description": "Additional annotations for service",
-        "default": {}
+        "default": {},
+        "x-helm-tpl": "On value only"
       },
       "type": {
         "oneOf": [
@@ -196,7 +205,8 @@
             "pattern": "^\\{\\{.*\\}\\}$"
           }
         ],
-        "description": "Define the service type"
+        "description": "Define the service type",
+        "x-helm-tpl": true
       },
       "expandObjectName": {
         "type": [
@@ -204,7 +214,8 @@
           "string"
         ],
         "description": "Whether to expand the object name (based on the [naming scheme](/truecharts-common/service#naming-scheme)) or not",
-        "default": true
+        "default": true,
+        "x-helm-tpl": true
       },
       "clusterIP": {
         "allOf": [
@@ -213,7 +224,8 @@
           }
         ],
         "description": "Configure Cluster IP type",
-        "default": ""
+        "default": "",
+        "x-helm-tpl": true
       },
       "ipFamilyPolicy": {
         "oneOf": [
@@ -231,18 +243,17 @@
           }
         ],
         "description": "Define the ipFamilyPolicy Does **not** apply to `type` of `ExternalName` or `ExternalIP`",
-        "default": ""
+        "default": "",
+        "x-helm-tpl": true
       },
       "ipFamilies": {
-        "type": [
-          "array",
-          "string"
-        ],
+        "type": "array",
         "items": {
           "type": "string"
         },
         "description": "Define the ipFamilies Does **not** apply to `type` of `ExternalName` or `ExternalIP`",
-        "default": []
+        "default": [],
+        "x-helm-tpl": "On entries only"
       },
       "sessionAffinity": {
         "oneOf": [
@@ -259,7 +270,8 @@
           }
         ],
         "description": "Define the session affinity (ClientIP, None)",
-        "default": ""
+        "default": "",
+        "x-helm-tpl": true
       },
       "sessionAffinityConfig": {
         "type": "object",
@@ -273,15 +285,16 @@
                   "string"
                 ],
                 "description": "Define the timeout for ClientIP session affinity (0-86400)",
-                "default": ""
+                "default": "",
+                "x-helm-tpl": true
               }
             },
             "additionalProperties": false,
-            "description": "Configuration for `$name.sessionAffinityConfig.clientIP`."
+            "description": "Session affinity by client IP."
           }
         },
         "additionalProperties": false,
-        "description": "Configuration for `$name.sessionAffinityConfig`."
+        "description": "Settings of the session affinity."
       },
       "externalIPs": {
         "type": [
@@ -292,7 +305,8 @@
           "type": "string"
         },
         "description": "Define externalIPs",
-        "default": []
+        "default": [],
+        "x-helm-tpl": "On entries only"
       },
       "externalTrafficPolicy": {
         "oneOf": [
@@ -309,7 +323,8 @@
           }
         ],
         "description": "Define the external traffic policy (Cluster, Local) Does **not** apply to `type` of `ClusterIP`",
-        "default": ""
+        "default": "",
+        "x-helm-tpl": true
       },
       "publishNotReadyAddresses": {
         "type": "boolean",
@@ -333,12 +348,13 @@
       },
       "primary": {
         "type": "boolean",
-        "description": "Configuration for `service.main.primary`."
+        "description": "Make this the primary service."
       }
     },
     "additionalProperties": false,
     "description": "Define service",
-    "default": {}
+    "default": {},
+    "x-docs-required": true
   },
   "description": "Define service objects"
 }

@@ -31,7 +31,7 @@ Addons to the workloads
 
 ### `addons.tailscale.container.command`
 
-Configuration for `addons.tailscale.container.command`.
+Command of the container.
 
 | Field      | Value                                |
 | ---------- | ------------------------------------ |
@@ -45,7 +45,7 @@ Configuration for `addons.tailscale.container.command`.
 
 ### `addons.tailscale.container.enabled`
 
-Configuration for `addons.tailscale.container.enabled`.
+Enable the container of the add-on.
 
 | Field      | Value                                |
 | ---------- | ------------------------------------ |
@@ -59,12 +59,12 @@ Configuration for `addons.tailscale.container.enabled`.
 
 ### `addons.tailscale.container.env`
 
-Configuration for `addons.tailscale.container.env`.
+Environment variables of the container, keyed by name.
 
 | Field      | Value                            |
 | ---------- | -------------------------------- |
 | Key        | `addons.tailscale.container.env` |
-| Type       | `map`                            |
+| Type       | `map, null`                      |
 | Required   | ❌                               |
 | Helm `tpl` | ❌                               |
 | Default    | unset                            |
@@ -75,7 +75,7 @@ See [Env](env.md) for full configuration.
 
 ### `addons.tailscale.container.imageSelector`
 
-Configuration for `addons.tailscale.container.imageSelector`.
+Name of the image on the root of the values.
 
 | Field      | Value                                      |
 | ---------- | ------------------------------------------ |
@@ -89,7 +89,7 @@ Configuration for `addons.tailscale.container.imageSelector`.
 
 ### `addons.tailscale.container.probes`
 
-Configuration for `addons.tailscale.container.probes`.
+Probes of the container.
 
 | Field      | Value                               |
 | ---------- | ----------------------------------- |
@@ -103,7 +103,7 @@ Configuration for `addons.tailscale.container.probes`.
 
 ### `addons.tailscale.container.resources`
 
-Configuration for `addons.tailscale.container.resources`.
+Resources of the container.
 
 | Field      | Value                                  |
 | ---------- | -------------------------------------- |
@@ -117,7 +117,7 @@ Configuration for `addons.tailscale.container.resources`.
 
 ### `addons.tailscale.container.securityContext`
 
-Configuration for `addons.tailscale.container.securityContext`.
+Security context of the container.
 
 | Field      | Value                                        |
 | ---------- | -------------------------------------------- |

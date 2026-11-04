@@ -3,16 +3,20 @@
   "type": "object",
   "properties": {
     "codeserver": {
-      "$ref": "codeserver.json"
+      "$ref": "codeserver.json",
+      "description": "A code-server container to edit the files of the app."
     },
     "gluetun": {
-      "$ref": "gluetun.json"
+      "$ref": "gluetun.json",
+      "description": "A gluetun VPN container that routes the traffic of the pod."
     },
     "netshoot": {
-      "$ref": "netshoot.json"
+      "$ref": "netshoot.json",
+      "description": "A netshoot container to debug the network of the pod."
     },
     "tailscale": {
-      "$ref": "tailscale/tailscale.json"
+      "$ref": "tailscale/tailscale.json",
+      "description": "A tailscale container that connects the pod to a tailnet."
     },
     "vpn": {
       "type": "object",

@@ -46,11 +46,13 @@
                 "type": "string",
                 "description": "Define the configmap name This will be automatically expanded to `fullname-configmap-name`.",
                 "default": "",
-                "minLength": 1
+                "minLength": 1,
+                "x-helm-tpl": true,
+                "x-docs-required": true
               }
             },
             "additionalProperties": false,
-            "description": "Define the configMapRef",
+            "description": "A ConfigMap with the CA certificate.",
             "default": {}
           },
           "secretRef": {
@@ -60,7 +62,9 @@
                 "type": "string",
                 "description": "Define the secret name This will be automatically expanded to `fullname-secret-name`.",
                 "default": "",
-                "minLength": 1
+                "minLength": 1,
+                "x-helm-tpl": true,
+                "x-docs-required": true
               },
               "expandObjectName": {
                 "type": "boolean",
@@ -69,7 +73,7 @@
               }
             },
             "additionalProperties": false,
-            "description": "Define the secretRef",
+            "description": "A Secret with the CA certificate.",
             "default": {}
           }
         },

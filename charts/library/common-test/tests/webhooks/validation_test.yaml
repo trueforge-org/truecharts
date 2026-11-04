@@ -73,7 +73,7 @@ tests:
           annotations: "not a dict"
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [annotations] to be a dictionary, but got [string]
+          errorPattern: 'at ''/webhook/my-webhook/annotations'': got string, want object'
 
   - it: should fail with invalid type
     set:
@@ -139,7 +139,7 @@ tests:
               rules: *rules
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [name] in [webhook.my-webhook] to not be empty
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0'': missing property ''name'''
 
   - it: should fail with invalid failurePolicy
     set:
@@ -307,7 +307,7 @@ tests:
                 - v1
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [clientConfig] in [webhook.my-webhook.webhook1] to not be empty
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0'': missing property ''clientConfig'''
 
   - it: should fail with both service and url defined
     set:
@@ -327,7 +327,7 @@ tests:
               rules: *rules
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected either [url] or [service] in [webhook.my-webhook.webhook1] to be defined, but got both
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0/clientConfig'': ''not'' failed'
 
   - it: should fail without service name
     set:
@@ -345,7 +345,7 @@ tests:
               rules: *rules
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [service.name] in [webhook.my-webhook.webhook1] to not be empty
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0/clientConfig/service'': missing property ''name'''
 
   - it: should fail without service namespace
     set:
@@ -363,7 +363,7 @@ tests:
               rules: *rules
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [service.namespace] in [webhook.my-webhook.webhook1] to not be empty
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0/clientConfig/service'': missing property ''namespace'''
 
   - it: should fail without rules
     set:
@@ -378,7 +378,7 @@ tests:
               clientConfig: *clientConfig
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [rules] in [webhook.my-webhook.webhook1] to not be empty
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0'': missing property ''rules'''
 
   - it: should fail with rules not a list
     set:
@@ -414,7 +414,7 @@ tests:
                     - pods
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [apiGroups] in [webhook.my-webhook.webhook1] to not be empty
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0/rules/0'': missing properties ''apiGroups'', ''operations'''
 
   - it: should fail with empty apiVersions in rule
     set:
@@ -434,7 +434,7 @@ tests:
                     - pods
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [apiGroups] in [webhook.my-webhook.webhook1] to not be empty
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0/rules/0'': missing properties ''apiGroups'', ''operations'''
 
   - it: should fail with empty operations in rule
     set:
@@ -456,7 +456,7 @@ tests:
                     - pods
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [operations] in [webhook.my-webhook.webhook1] to not be empty
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0/rules/0'': missing property ''operations'''
 
   - it: should fail with invalid scope
     set:

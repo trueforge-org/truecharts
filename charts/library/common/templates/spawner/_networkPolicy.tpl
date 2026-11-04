@@ -40,7 +40,6 @@
 
     {{/* Perform validations */}}
     {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $objectName) -}}
-    {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" "networkpolicy") -}}
     {{- include "tc.v1.common.lib.networkpolicy.validation" (dict "rootCtx" $ "objectData" $objectData) -}}
 
     {{/* Set the name of the networkpolicy */}}

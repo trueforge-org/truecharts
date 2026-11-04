@@ -59,7 +59,7 @@ Configure `namespaces.from` as `Same`, `All`, `Selector`, or `None` to control w
 
 ### `gateway.$name.annotations`
 
-Configuration for `gateway.main.annotations`.
+Additional annotations, keyed by name.
 
 | Field      | Value                       |
 | ---------- | --------------------------- |
@@ -73,7 +73,7 @@ Configuration for `gateway.main.annotations`.
 
 ### `gateway.$name.enabled`
 
-Configuration for `gateway.main.enabled`.
+Enable the Gateway.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |
@@ -131,7 +131,7 @@ Infrastructure settings of the gateway. Passed as is.
 
 ### `gateway.$name.labels`
 
-Configuration for `gateway.main.labels`.
+Additional labels, keyed by name.
 
 | Field      | Value                  |
 | ---------- | ---------------------- |
@@ -158,7 +158,7 @@ Each listener must specify:
 | Field      | Value                     |
 | ---------- | ------------------------- |
 | Key        | `gateway.$name.listeners` |
-| Type       | `list of map`             |
+| Type       | `list of unknown`         |
 | Required   | ❌                        |
 | Helm `tpl` | ❌                        |
 | Default    | unset                     |
@@ -167,7 +167,7 @@ Each listener must specify:
 
 ### `gateway.$name.nameOverride`
 
-Configuration for `gateway.main.nameOverride`.
+Suffix of the name, instead of the name of the object.
 
 | Field      | Value                        |
 | ---------- | ---------------------------- |
@@ -181,7 +181,7 @@ Configuration for `gateway.main.nameOverride`.
 
 ### `gateway.$name.namespace`
 
-Configuration for `gateway.main.namespace`.
+Namespace of the Gateway.
 
 | Field      | Value                     |
 | ---------- | ------------------------- |
@@ -195,7 +195,7 @@ Configuration for `gateway.main.namespace`.
 
 ### `gateway.$name.primary`
 
-Configuration for `gateway.main.primary`.
+Make this the primary Gateway.
 
 | Field      | Value                   |
 | ---------- | ----------------------- |

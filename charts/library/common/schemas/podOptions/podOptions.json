@@ -30,7 +30,7 @@
     "affinity": {
       "type": "object",
       "properties": {},
-      "description": "Configuration for `podOptions.affinity`.",
+      "description": "Affinity of the pods, passed on as is.",
       "additionalProperties": {
         "description": "A setting passed on as is."
       }
@@ -83,7 +83,7 @@
     },
     "defaultAffinity": {
       "type": "boolean",
-      "description": "Configuration for `podOptions.defaultAffinity`."
+      "description": "Add the default affinity of common."
     },
     "topologySpreadConstraints": {
       "allOf": [
