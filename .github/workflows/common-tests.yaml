@@ -138,10 +138,10 @@ jobs:
           helm dependency update
           helm unittest -f "tests/**/*.yaml" . -v ./unit-values.yaml
 
-  schema-validation:
+  coverage-validation:
     needs:
       - lint
-    name: Schema Validation
+    name: Coverage Validation
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
@@ -194,7 +194,7 @@ jobs:
     needs:
       - lint
       - unittest
-      - schema-validation
+      - coverage-validation
     name: Install Charts (${{ matrix.versions.k3s }}, ${{ matrix.versions.helm }}, ${{ matrix.values }})
     runs-on: ubuntu-latest
     strategy:
@@ -346,7 +346,7 @@ jobs:
 
   # Summarize matrix https://github.community/t/status-check-for-a-matrix-jobs/127354/7
   common-tests-complete:
-    needs: [check_changes, lint, unittest, schema-validation, install]
+    needs: [check_changes, lint, unittest, coverage-validation, install]
     if: ${{ always() }}
     name: Common Tests Completed
     runs-on:
@@ -356,10 +356,10 @@ jobs:
         run: |
           if [[ "${{ needs.check_changes.outputs.changes_detected }}" == 'true' && ( "${{ needs.lint.result }}" != "success" || \
                 "${{ needs.unittest.result }}" != "success" || \
-                "${{ needs.schema-validation.result }}" != "success" || \
+                "${{ needs.coverage-validation.result }}" != "success" || \
                 "${{ needs.install.result }}" != "success") ]]; then
             echo "One or more jobs failed!"
             exit 1
           else
-            echo "Common Lint, Tests and unittests Completed Successfully"
+            echo "Common Lint, Tests, Coverage Validation and unittests Completed Successfully"
           fi
