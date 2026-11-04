@@ -1,0 +1,75 @@
+suite: ingress traefik schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render ingress traefik middlewares and chartMiddlewares with expandObjectName and namespace
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 80
+      ingress:
+        my-ingress:
+          enabled: true
+          primary: true
+          hosts: &hosts
+            - host: test-host
+              paths:
+                - path: /test-path
+          integrations:
+            traefik:
+              enabled: true
+              middlewares:
+                - name: first-middleware
+                  expandObjectName: "false"
+                - name: second-middleware
+                  namespace: some-namespace
+                  expandObjectName: false
+              chartMiddlewares:
+                - name: third-middleware
+                  expandObjectName: false
+                - name: fourth-middleware
+                  namespace: other-namespace
+                  expandObjectName: "false"
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: Ingress
+      - documentIndex: 1
+        equal:
+          path: metadata.annotations["traefik.ingress.kubernetes.io/router.middlewares"]
+          value: test-release-namespace-third-middleware@kubernetescrd,other-namespace-fourth-middleware@kubernetescrd,test-release-namespace-first-middleware@kubernetescrd,some-namespace-second-middleware@kubernetescrd
+
+  - it: should fail on unknown keys and wrong types in ingress traefik middlewares and chartMiddlewares
+    set:
+      service: *service
+      ingress:
+        my-ingress:
+          enabled: true
+          primary: true
+          hosts: *hosts
+          integrations:
+            traefik:
+              enabled: true
+              unknownKey: value
+              middlewares:
+                - unknownKey: value
+                  expandObjectName: []
+              chartMiddlewares:
+                - unknownKey: value
+                  expandObjectName: []
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/ingress/my-ingress/integrations/traefik': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/ingress/my-ingress/integrations/traefik/middlewares/0': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/ingress/my-ingress/integrations/traefik/chartMiddlewares/0': additional properties 'unknownKey' not allowed"

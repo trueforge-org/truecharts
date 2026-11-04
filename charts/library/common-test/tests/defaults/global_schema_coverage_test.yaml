@@ -1,0 +1,88 @@
+suite: global values schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render with global podCIDR, svcCIDR, ignoreIsStopped and minNodePort set
+    set:
+      global:
+        podCIDR: 172.16.0.0/16
+        svcCIDR: 172.17.0.0/16
+        ignoreIsStopped: true
+        minNodePort: 9000
+        diagnosticMode:
+          enabled: "true"
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - isKind:
+          of: Service
+        documentIndex: 0
+
+  - it: should fail on unknown keys, wrong types and bounds in global
+    set:
+      global:
+        unknown: value
+        minNodePort: 0
+        diagnosticMode:
+          unknown: value
+        traefik:
+          unknown: value
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/global': (additional properties|additionalProperties)"
+
+  - it: should fail on unknown keys in global traefik commonMiddlewares
+    set:
+      global:
+        traefik:
+          commonMiddlewares:
+            - name: my-middleware
+              unknown: value
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/global/traefik/commonMiddlewares/0': (additional properties|additionalProperties)"
+
+  - it: should fail on minNodePort below the minimum in global
+    set:
+      global:
+        minNodePort: 0
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/global/minNodePort': "

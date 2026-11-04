@@ -1,0 +1,210 @@
+suite: workload container probes schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render container probes with the exec and grpc types
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: "true"
+                    type: exec
+                    command: echo
+                    custom: true
+                    failureThreshold: 3
+                    initialDelaySeconds: 1
+                    exec:
+                      command:
+                        - echo
+                    spec:
+                      exec:
+                        command:
+                          - echo
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: true
+                    type: grpc
+                    port: 50051
+    asserts:
+      - documentIndex: &deploymentDoc 0
+        isKind:
+          of: Deployment
+      - documentIndex: *deploymentDoc
+        equal:
+          path: spec.template.spec.containers[0].livenessProbe.exec.command
+          value:
+            - echo
+      - documentIndex: *deploymentDoc
+        equal:
+          path: spec.template.spec.containers[0].startupProbe.grpc.port
+          value: 50051
+
+  - it: should render container probes with http headers and spec httpGet
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: true
+                    type: http
+                    port: 8080
+                    path: /healthz
+                    httpHeaders:
+                      X-String: value
+                      X-Number: 2
+                      X-Bool: true
+                    spec:
+                      httpGet:
+                        path: /healthz
+                        port: 8080
+                  readiness:
+                    enabled: true
+                    type: http
+                    port: 8080
+                    spec:
+                      httpGet:
+                        path: /ready
+                        port: "8080"
+                  startup:
+                    enabled: false
+    asserts:
+      - documentIndex: *deploymentDoc
+        isKind:
+          of: Deployment
+      - documentIndex: *deploymentDoc
+        equal:
+          path: spec.template.spec.containers[0].livenessProbe.httpGet.path
+          value: /healthz
+
+  - it: should fail on unknown keys in container probe, probe exec and probe spec
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    unknownKey: value
+                    exec:
+                      unknownKey: value
+                    spec:
+                      unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/probes/liveness': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/probes/liveness/exec': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/probes/liveness/spec': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in container probe spec exec and spec httpGet
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    spec:
+                      exec:
+                        unknownKey: value
+                      httpGet:
+                        unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/probes/liveness/spec/exec': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/probes/liveness/spec/httpGet': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on probe failureThreshold and initialDelaySeconds below the minimum
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    failureThreshold: 0
+                    initialDelaySeconds: -1
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/probes/liveness/failureThreshold': minimum: got 0, want 1"
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/probes/liveness/initialDelaySeconds': minimum: got -1, want 0"
+
+  - it: should fail on probe spec timings below the minimum
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    spec:
+                      failureThreshold: 0
+                      initialDelaySeconds: -1
+                      periodSeconds: 0
+                      successThreshold: 0
+                      timeoutSeconds: 0
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/probes/liveness/spec/failureThreshold': minimum: got 0, want 1"
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/probes/liveness/spec/initialDelaySeconds': minimum: got -1, want 0"
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/probes/liveness/spec/periodSeconds': minimum: got 0, want 1"
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/probes/liveness/spec/successThreshold': minimum: got 0, want 1"
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/probes/liveness/spec/timeoutSeconds': minimum: got 0, want 1"

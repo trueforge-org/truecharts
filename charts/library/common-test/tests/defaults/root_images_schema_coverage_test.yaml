@@ -1,0 +1,78 @@
+suite: root image keys schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render with root image keys set
+    set:
+      codeserverImage:
+        repository: oci.trueforge.org/containerforge/codeserver
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      gluetunImage:
+        repository: oci.trueforge.org/containerforge/gluetun
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      kubectlImage:
+        repository: oci.trueforge.org/containerforge/kubectl
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      mariadbClientImage:
+        repository: oci.trueforge.org/containerforge/mariadbclient
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      mongodbClientImage:
+        repository: oci.trueforge.org/containerforge/mongodbclient
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      netshootImage:
+        repository: oci.trueforge.org/containerforge/netshoot
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      postgresClientImage:
+        repository: oci.trueforge.org/containerforge/postgresclient
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      postgresPostgis15Image:
+        repository: oci.trueforge.org/containerforge/postgrespostgis15
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      postgresVectorchord15Image:
+        repository: oci.trueforge.org/containerforge/postgresvectorchord15
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      tailscaleImage:
+        repository: oci.trueforge.org/containerforge/tailscale
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      ubuntuImage:
+        repository: oci.trueforge.org/containerforge/ubuntu
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      valkeyClientImage:
+        repository: oci.trueforge.org/containerforge/valkeyclient
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      mariadbImage:
+        repository: oci.trueforge.org/containerforge/mariadb
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      mongodbImage:
+        repository: oci.trueforge.org/containerforge/mongodb
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - isKind:
+          of: Service
+        documentIndex: 0

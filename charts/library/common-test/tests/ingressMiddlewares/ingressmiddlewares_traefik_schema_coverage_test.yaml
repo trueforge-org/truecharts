@@ -1,0 +1,126 @@
+suite: ingress middlewares traefik schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should accept a string for enabled in a traefik middleware
+    set:
+      ingressMiddlewares:
+        traefik:
+          my-middleware:
+            enabled: "true"
+            type: buffering
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Middleware
+      - equal:
+          path: metadata.name
+          value: test-release-name-common-test-my-middleware
+  - it: should accept a string for enabled in traefik middleware plugin data
+    set:
+      ingressMiddlewares:
+        traefik:
+          my-middleware:
+            enabled: false
+            type: plugin-bouncer
+            data:
+              enabled: "true"
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should fail on unknown keys in a traefik middleware
+    set:
+      ingressMiddlewares:
+        traefik:
+          my-middleware:
+            enabled: true
+            type: headers
+            unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/ingressMiddlewares/traefik/my-middleware': "
+  - it: should fail on unknown keys in traefik middleware data
+    set:
+      ingressMiddlewares:
+        traefik:
+          my-middleware:
+            enabled: true
+            type: buffering
+            data:
+              unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/ingressMiddlewares/traefik/my-middleware/data': "
+  - it: should fail on unknown keys in traefik middleware ipStrategy
+    set:
+      ingressMiddlewares:
+        traefik:
+          my-middleware:
+            enabled: true
+            type: ip-allow-list
+            data:
+              ipStrategy:
+                unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/ingressMiddlewares/traefik/my-middleware/data/ipStrategy': "
+  - it: should fail on unknown keys in traefik middleware chain items
+    set:
+      ingressMiddlewares:
+        traefik:
+          my-middleware:
+            enabled: true
+            type: chain
+            data:
+              middlewares:
+                - name: some-middleware
+                  unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/ingressMiddlewares/traefik/my-middleware/data/middlewares/0': "
+  - it: should fail on unknown keys in traefik middleware rewrites items
+    set:
+      ingressMiddlewares:
+        traefik:
+          my-middleware:
+            enabled: true
+            type: plugin-rewrite-response-headers
+            data:
+              rewrites:
+                - header: some-header
+                  unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/ingressMiddlewares/traefik/my-middleware/data/rewrites/0': "
+  - it: should fail on unknown keys in traefik middleware tls
+    set:
+      ingressMiddlewares:
+        traefik:
+          my-middleware:
+            enabled: true
+            type: forward-auth
+            data:
+              tls:
+                unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/ingressMiddlewares/traefik/my-middleware/data/tls': "
+  - it: should fail on unknown keys in traefik middleware users items
+    set:
+      ingressMiddlewares:
+        traefik:
+          my-middleware:
+            enabled: true
+            type: basic-auth
+            data:
+              users:
+                - username: some-user
+                  password: some-pass
+                  unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/ingressMiddlewares/traefik/my-middleware/data/users/0': "

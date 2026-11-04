@@ -1,0 +1,87 @@
+suite: persistence iscsi schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render iscsi volume options in persistence iscsi
+    set:
+      persistence:
+        iscsi-vol1:
+          enabled: true
+          type: iscsi
+          mountPath: /mnt/iscsi1
+          targetSelectAll: true
+          fsType: ext4
+          targetPortal: 10.0.0.1:3260
+          iqn: iqn.2000-01.com.example:storage
+          lun: 0
+          initiatorName: some-initiator
+          iscsiInterface: default
+          portals:
+            - 10.0.0.2:3260
+          iscsi:
+            fsType: ext4
+            targetPortal: 10.0.0.1:3260
+            iqn: iqn.2000-01.com.example:storage
+            lun: 0
+            authSession:
+              username: some-user
+              password: some-password
+              usernameInitiator: some-user-initiator
+              passwordInitiator: some-password-initiator
+            authDiscovery:
+              username: some-user
+              password: some-password
+              usernameInitiator: some-user-initiator
+              passwordInitiator: some-password-initiator
+        iscsi-vol2:
+          enabled: true
+          type: iscsi
+          mountPath: /mnt/iscsi2
+          targetSelectAll: true
+          lun: "1"
+          iscsi:
+            fsType: ext4
+            targetPortal: 10.0.0.1:3260
+            iqn: iqn.2000-01.com.example:storage
+            lun: 1
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              my-container:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        isKind:
+          of: Deployment
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.volumes
+          content:
+            name: iscsi-vol2
+            iscsi:
+              targetPortal: 10.0.0.1:3260
+              iqn: iqn.2000-01.com.example:storage
+              lun: 1
+              fsType: ext4
+              chapAuthDiscovery: false
+              chapAuthSession: false

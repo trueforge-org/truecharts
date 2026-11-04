@@ -1,0 +1,65 @@
+suite: persistence volume mounts schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render mountPropagation and subPath in persistence volume mounts
+    set:
+      some_propagation: Bidirectional
+      persistence:
+        my-volume1:
+          enabled: true
+          type: emptyDir
+          mountPath: /mnt/volume1
+          targetSelectAll: true
+          subPath: some-sub-path
+          mountPropagation: None
+        my-volume2:
+          enabled: true
+          type: emptyDir
+          mountPath: /mnt/volume2
+          targetSelectAll: true
+          mountPropagation: "{{ .Values.some_propagation }}"
+        my-volume3:
+          enabled: true
+          type: emptyDir
+          mountPath: /mnt/volume3
+          targetSelectAll: true
+          mountPropagation: HostToContainer
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              my-container:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        isKind:
+          of: Deployment
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: my-volume1
+            mountPath: /mnt/volume1
+            subPath: some-sub-path
+            mountPropagation: None
+            readOnly: false

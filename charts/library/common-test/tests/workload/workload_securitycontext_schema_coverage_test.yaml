@@ -1,0 +1,90 @@
+suite: workload securityContext schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render the securityContext container and pod defaults with the legacy keys
+    set:
+      securityContext:
+        container:
+          PUID: 1000
+          UMASK: "0027"
+          fsGroup: 1000
+          seccompProfile:
+            type: RuntimeDefault
+        pod:
+          fsgroup: 1000
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: Deployment
+      - documentIndex: 0
+        equal:
+          path: spec.template.spec.containers[0].securityContext.seccompProfile.type
+          value: RuntimeDefault
+
+  - it: should fail on unknown keys in securityContext
+    set:
+      securityContext:
+        unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/securityContext': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys, capabilities, seccompProfile and fsGroup below the minimum in securityContext container
+    set:
+      securityContext:
+        container:
+          unknownKey: value
+          fsGroup: -1
+          capabilities:
+            unknownKey: value
+          seccompProfile:
+            unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/securityContext/container': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/securityContext/container/fsGroup': minimum: got -1, want 0"
+      - failedTemplate:
+          errorPattern: "at '/securityContext/container/capabilities': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/securityContext/container/seccompProfile': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys, fsgroup below the minimum and incomplete sysctls in securityContext pod
+    set:
+      securityContext:
+        pod:
+          unknownKey: value
+          fsgroup: -1
+          sysctls:
+            - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/securityContext/pod': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/securityContext/pod/fsgroup': minimum: got -1, want 0"
+      - failedTemplate:
+          errorPattern: "at '/securityContext/pod/sysctls/0': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/securityContext/pod/sysctls/0': missing properties 'name', 'value'"

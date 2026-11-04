@@ -1,0 +1,29 @@
+suite: podDisruptionBudget schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render pod disruption budget with string typed enabled
+    set:
+      podDisruptionBudget:
+        my-pdb:
+          enabled: "true"
+          minAvailable: 1
+          customLabels:
+            label1: value1
+    asserts:
+      - isKind:
+          of: PodDisruptionBudget
+        documentIndex: 0
+
+  - it: should fail on unknown keys in pod disruption budget
+    set:
+      podDisruptionBudget:
+        my-pdb:
+          enabled: true
+          unknown: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/podDisruptionBudget/my-pdb': (additional properties|additionalProperties)"

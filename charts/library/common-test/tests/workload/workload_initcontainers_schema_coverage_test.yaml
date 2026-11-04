@@ -1,0 +1,72 @@
+suite: workload initContainers schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render an init container with the optional keys of the initContainers schema
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+            initContainers:
+              my-init:
+                enabled: true
+                type: init
+                imageSelector: ubuntuImage
+                name: my-init
+                image: ubuntu
+                args:
+                  - --flag
+                envFrom:
+                  - secretRef:
+                      name: my-secret
+                      expandObjectName: false
+                termination:
+                  messagePath: /dev/termination-log
+                  messagePolicy: File
+                resources:
+                  requests:
+                    cpu: 10m
+                securityContext:
+                  readOnlyRootFilesystem: true
+    asserts:
+      - documentIndex: &deploymentDoc 0
+        isKind:
+          of: Deployment
+      - documentIndex: *deploymentDoc
+        equal:
+          path: spec.template.spec.initContainers[0].args
+          value:
+            - --flag
+
+  - it: should fail on unknown keys in an init container
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            initContainers:
+              my-init:
+                unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/initContainers/my-init': additional properties 'unknownKey' not allowed"

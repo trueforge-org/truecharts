@@ -1,0 +1,141 @@
+suite: route core schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render a route with string enabled, required, labels and listenerPort
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: "true"
+          primary: false
+          required: true
+          gateway: some-gateway
+          labels:
+            my-label: my-value
+          listenerPort: 8443
+    asserts:
+      - documentSelector: &route
+          path: kind
+          value: HTTPRoute
+        isKind:
+          of: HTTPRoute
+      - documentSelector: *route
+        equal:
+          path: metadata.labels.my-label
+          value: my-value
+
+  - it: should render a route with a null targetSelector and parentRefs
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          targetSelector: null
+          parentRefs:
+            - name: some-gateway
+    asserts:
+      - documentSelector: *route
+        isKind:
+          of: HTTPRoute
+
+  - it: should fail on unknown keys in route
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on listenerPort below the minimum in route
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          listenerPort: 0
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/listenerPort'"
+
+  - it: should fail on listenerPort above the maximum in route
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          listenerPort: 65536
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/listenerPort'"
+
+  - it: should fail on unknown keys in route tls
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          tls:
+            - secretName: my-secret
+              unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/tls/0': additional properties 'unknownKey' not allowed"

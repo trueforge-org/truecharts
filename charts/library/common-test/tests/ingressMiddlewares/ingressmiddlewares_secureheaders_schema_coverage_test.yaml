@@ -1,0 +1,312 @@
+suite: ingress middlewares tc-basic-secure-headers schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render the tc-basic-secure-headers middleware with all keys set
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: true
+            type: headers
+            data:
+              accessControlAllowMethods:
+                - GET
+                - OPTIONS
+              accessControlMaxAge: 100
+              stsSeconds: 63072000
+              forceSTSHeader: true
+              contentTypeNosniff: true
+              browserXssFilter: true
+              referrerPolicy: same-origin
+              customRequestHeaders:
+                X-Forwarded-Proto: https
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Middleware
+      - equal:
+          path: metadata.name
+          value: test-release-name-common-test-tc-basic-secure-headers
+  - it: should accept a string for enabled in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: "true"
+            type: headers
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Middleware
+  - it: should accept type add-prefix in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: add-prefix
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type basic-auth in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: basic-auth
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type buffering in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: buffering
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type chain in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: chain
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type compress in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: compress
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type content-type in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: content-type
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type forward-auth in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: forward-auth
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type headers in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: headers
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type ip-allow-list in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: ip-allow-list
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type plugin-bouncer in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: plugin-bouncer
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type plugin-geoblock in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: plugin-geoblock
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type plugin-mod-security in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: plugin-mod-security
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type plugin-real-ip in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: plugin-real-ip
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type plugin-rewrite-response-headers in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: plugin-rewrite-response-headers
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type plugin-theme-park in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: plugin-theme-park
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type rate-limit in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: rate-limit
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type redirect-regex in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: redirect-regex
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type redirect-scheme in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: redirect-scheme
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type replace-path in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: replace-path
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type replace-path-regex in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: replace-path-regex
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type retry in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: retry
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type strip-prefix in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: strip-prefix
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should accept type strip-prefix-regex in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: false
+            type: strip-prefix-regex
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should fail on unknown keys in tc-basic-secure-headers
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: true
+            type: headers
+            unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/ingressMiddlewares/traefik/tc-basic-secure-headers': "
+  - it: should fail on unknown keys in tc-basic-secure-headers data
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: true
+            type: headers
+            data:
+              unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/ingressMiddlewares/traefik/tc-basic-secure-headers/data': "
+  - it: should fail on unknown keys in tc-basic-secure-headers customRequestHeaders
+    set:
+      ingressMiddlewares:
+        traefik:
+          tc-basic-secure-headers:
+            enabled: true
+            type: headers
+            data:
+              customRequestHeaders:
+                unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/ingressMiddlewares/traefik/tc-basic-secure-headers/data/customRequestHeaders': "

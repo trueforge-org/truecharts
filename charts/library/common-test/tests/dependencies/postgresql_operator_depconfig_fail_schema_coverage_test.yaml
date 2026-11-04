@@ -1,0 +1,46 @@
+suite: postgresql operator depconfig schema coverage failures
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+- it: should fail on unknown keys in postgresql depconfig
+  template: common.yaml
+  set:
+    dependencies:
+      postgresql:
+        enabled: true
+        mode: operator
+        depconfig:
+          bogus: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/depconfig'': additional properties ''bogus'' not allowed'
+
+- it: should fail on a non object creds in postgresql depconfig
+  template: common.yaml
+  set:
+    dependencies:
+      postgresql:
+        enabled: true
+        mode: operator
+        depconfig:
+          creds: x
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/depconfig/creds'': got string, want object'
+
+- it: should fail on a non string value in postgresql depconfig creds
+  template: common.yaml
+  set:
+    dependencies:
+      postgresql:
+        enabled: true
+        mode: operator
+        depconfig:
+          creds:
+            a: []
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/depconfig/creds/a'': got array, want string'

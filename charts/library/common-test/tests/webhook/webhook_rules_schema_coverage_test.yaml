@@ -1,0 +1,277 @@
+suite: webhook rules schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render webhook rules with a scope in webhook rules
+    set:
+      webhook:
+        validating:
+          enabled: true
+          type: validating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: ['', apps]
+                  apiVersions: [v1]
+                  operations: [CREATE, UPDATE]
+                  resources: [pods, deployments/scale]
+                  scope: Namespaced
+        mutating:
+          enabled: true
+          type: mutating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: ['', apps]
+                  apiVersions: [v1]
+                  operations: [CREATE, UPDATE]
+                  resources: [pods, deployments/scale]
+                  scope: Namespaced
+        my-webhook:
+          enabled: true
+          type: mutating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: ['', apps]
+                  apiVersions: [v1]
+                  operations: [CREATE, UPDATE]
+                  resources: [pods, deployments/scale]
+                  scope: Namespaced
+    asserts:
+      - documentIndex: 2
+        isKind:
+          of: ValidatingWebhookConfiguration
+      - documentIndex: 2
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-validating
+      - documentIndex: 0
+        isKind:
+          of: MutatingWebhookConfiguration
+      - documentIndex: 0
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mutating
+      - documentIndex: 1
+        isKind:
+          of: MutatingWebhookConfiguration
+      - documentIndex: 1
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-my-webhook
+      - documentIndex: 0
+        equal:
+          path: webhooks[0].rules[0].scope
+          value: Namespaced
+
+  - it: should fail on unknown keys and missing required keys in webhook rules
+    set:
+      webhook:
+        validating:
+          enabled: true
+          type: validating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - unknown: x
+                - scope: Namespaced
+        mutating:
+          enabled: true
+          type: mutating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - unknown: x
+                - scope: Namespaced
+        my-webhook:
+          enabled: true
+          type: mutating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - unknown: x
+                - scope: Namespaced
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/webhook/validating/webhooks/0/rules/0'': '
+
+  - it: should fail on empty lists in webhook rules entries
+    set:
+      webhook:
+        validating:
+          enabled: true
+          type: validating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: []
+                  apiVersions: []
+                  operations: []
+                  resources: []
+        mutating:
+          enabled: true
+          type: mutating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: []
+                  apiVersions: []
+                  operations: []
+                  resources: []
+        my-webhook:
+          enabled: true
+          type: mutating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: []
+                  apiVersions: []
+                  operations: []
+                  resources: []
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/webhook/validating/webhooks/0/rules/0/apiGroups'': '
+
+  - it: should fail on wrong types in webhook rules entries
+    set:
+      webhook:
+        validating:
+          enabled: true
+          type: validating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: [1]
+                  apiVersions: x
+                  operations: [2]
+                  resources: [3]
+                  scope: 4
+        mutating:
+          enabled: true
+          type: mutating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: [1]
+                  apiVersions: x
+                  operations: [2]
+                  resources: [3]
+                  scope: 4
+        my-webhook:
+          enabled: true
+          type: mutating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: [1]
+                  apiVersions: x
+                  operations: [2]
+                  resources: [3]
+                  scope: 4
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/webhook/validating/webhooks/0/rules/0/apiGroups/0'': '
+
+  - it: should fail on an empty rules list in webhook rules
+    set:
+      webhook:
+        validating:
+          enabled: true
+          type: validating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules: []
+        mutating:
+          enabled: true
+          type: mutating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules: []
+        my-webhook:
+          enabled: true
+          type: mutating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules: []
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/webhook/validating/webhooks/0/rules'': '

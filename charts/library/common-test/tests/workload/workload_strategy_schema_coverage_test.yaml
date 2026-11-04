@@ -1,0 +1,85 @@
+suite: workload strategy schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render a deployment with the Recreate strategy
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          strategy: Recreate
+          podSpec:
+            containers: &containers
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes: &probes
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: Deployment
+      - documentIndex: 0
+        equal:
+          path: spec.strategy.type
+          value: Recreate
+
+  - it: should render a statefulset with the OnDelete strategy
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: StatefulSet
+          strategy: OnDelete
+          podSpec:
+            containers: *containers
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: StatefulSet
+      - documentIndex: 0
+        equal:
+          path: spec.updateStrategy.type
+          value: OnDelete
+
+  - it: should fail on unknown keys in workload strategy
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          strategy:
+            unknownKey: value
+          podSpec: {}
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/strategy': "
+
+  - it: should fail on unknown keys in workload strategy rollingUpdate
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          strategy:
+            type: RollingUpdate
+            rollingUpdate:
+              unknownKey: value
+          podSpec: {}
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/strategy/rollingUpdate': additional properties 'unknownKey' not allowed"

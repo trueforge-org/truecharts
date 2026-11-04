@@ -1,0 +1,277 @@
+suite: addon codeserver schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render the codeserver addon with service and ingress on a selected workload
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          targetSelector: my-workload
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      addons:
+        codeserver:
+          enabled: "true"
+          targetSelector:
+            - my-workload
+          service:
+            enabled: true
+            ports:
+              codeserver:
+                enabled: true
+                primary: true
+                port: 12321
+          ingress:
+            enabled: true
+            hosts:
+              - host: code.chart-example.local
+                paths:
+                  - path: /
+            integrations:
+              traefik:
+                enabled: false
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Ingress
+        equal:
+          path: spec.rules[0].host
+          value: code.chart-example.local
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.spec.containers[0].name
+          value: test-release-name-common-test-codeserver
+
+  - it: should accept named ingress objects next to a disabled addons codeserver ingress
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          targetSelector: my-workload
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      addons:
+        codeserver:
+          enabled: true
+          targetSelector:
+            - my-workload
+          ingress:
+            enabled: false
+            my-ingress:
+              enabled: true
+              hosts:
+                - host: code.chart-example.local
+                  paths:
+                    - path: /
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        isKind:
+          of: Deployment
+
+  - it: should fail on unknown keys in addons codeserver
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          targetSelector: my-workload
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      addons:
+        codeserver:
+          enabled: true
+          unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/addons/codeserver': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on a wrong type in addons codeserver targetSelector
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          targetSelector: my-workload
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      addons:
+        codeserver:
+          enabled: true
+          targetSelector: my-workload
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/addons/codeserver/targetSelector'"
+
+  - it: should fail on an addons codeserver ingress that matches no variant
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          targetSelector: my-workload
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      addons:
+        codeserver:
+          enabled: true
+          ingress:
+            enabled: true
+            unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/addons/codeserver/ingress'"
+
+  - it: should fail on an addons codeserver service that matches no variant
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          targetSelector: my-workload
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      addons:
+        codeserver:
+          enabled: true
+          service:
+            enabled: true
+            unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/addons/codeserver/service'"

@@ -1,0 +1,367 @@
+suite: addon gluetun schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render the gluetun addon container with vpn env settings
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          targetSelector: my-workload
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      addons:
+        gluetun:
+          enabled: true
+          targetSelector:
+            - my-workload
+          container:
+            env:
+              DOT: "off"
+              DNS_KEEP_NAMESERVER: true
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.spec.containers[0].name
+          value: test-release-name-common-test-gluetun
+
+  - it: should render the gluetun addon container with a string DNS_KEEP_NAMESERVER
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          targetSelector: my-workload
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      addons:
+        gluetun:
+          enabled: "true"
+          container:
+            env:
+              DNS_KEEP_NAMESERVER: "on"
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        isKind:
+          of: Deployment
+
+  - it: should render the gluetun addon secret with metadata options
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          targetSelector: my-workload
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      addons:
+        gluetun:
+          enabled: true
+          secret:
+            my-conf:
+              basePath: /gluetun/wireguard
+              defaultMode: "0777"
+              namespace: some-namespace
+              type: Opaque
+              labels:
+                label1: value1
+              annotations:
+                annotation1: value1
+              labelsList:
+                - name: label2
+                  value: value2
+              annotationsList:
+                - name: annotation2
+                  value: value2
+              data:
+                wg0.conf: placeholder config
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-gluetun-my-conf
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: metadata.labels.label1
+          value: value1
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: metadata.annotations.annotation1
+          value: value1
+
+  - it: should render the gluetun addon with a null secret
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          targetSelector: my-workload
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      addons:
+        gluetun:
+          enabled: true
+          targetSelector:
+            - my-workload
+          secret: null
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        isKind:
+          of: Deployment
+
+  - it: should fail on unknown keys in addons gluetun
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          targetSelector: my-workload
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      addons:
+        gluetun:
+          enabled: true
+          unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/addons/gluetun': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on a wrong type in addons gluetun targetSelector
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          targetSelector: my-workload
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      addons:
+        gluetun:
+          enabled: true
+          targetSelector: main
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/addons/gluetun/targetSelector'"
+
+  - it: should fail on unknown keys and a missing basePath in an addons gluetun secret
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          targetSelector: my-workload
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      addons:
+        gluetun:
+          enabled: true
+          secret:
+            my-conf:
+              unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/addons/gluetun/secret/my-conf': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on a missing basePath in an addons gluetun secret
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          targetSelector: my-workload
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      addons:
+        gluetun:
+          enabled: true
+          secret:
+            my-conf:
+              data:
+                wg0.conf: placeholder config
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/addons/gluetun/secret/my-conf': missing property 'basePath'"

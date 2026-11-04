@@ -1,0 +1,161 @@
+suite: workload container env schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render container env refs with the expandObjectName and apiVersion keys
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes: &probes
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+                env:
+                  CM_ENV:
+                    configMapKeyRef:
+                      name: my-configmap
+                      key: my-key
+                      expandObjectName: "false"
+                  SECRET_ENV:
+                    secretKeyRef:
+                      name: my-secret
+                      key: my-key
+                      expandObjectName: "false"
+                  FIELD_ENV:
+                    fieldRef:
+                      fieldPath: metadata.name
+                      apiVersion: v1
+    asserts:
+      - documentIndex: &deploymentDoc 0
+        isKind:
+          of: Deployment
+      - documentIndex: *deploymentDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: FIELD_ENV
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+      - documentIndex: *deploymentDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SECRET_ENV
+            valueFrom:
+              secretKeyRef:
+                key: my-key
+                name: my-secret
+
+  - it: should render container env with an empty value and a list value
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes: *probes
+                env:
+                  EMPTY_ENV: null
+                  LIST_ENV:
+                    - secretRef:
+                        name: my-secret
+                        key: my-key
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: Deployment
+
+  - it: should render a container with a null env
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes: *probes
+                env: null
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: Deployment
+
+  - it: should fail on unknown keys in container env refs
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                env:
+                  CM_ENV:
+                    configMapKeyRef:
+                      unknownKey: value
+                  SECRET_ENV:
+                    secretKeyRef:
+                      unknownKey: value
+                  FIELD_ENV:
+                    fieldRef:
+                      unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/env/CM_ENV/configMapKeyRef': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/env/SECRET_ENV/secretKeyRef': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/env/FIELD_ENV/fieldRef': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in container env list value secretRef
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                env:
+                  LIST_ENV:
+                    - secretRef:
+                        unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/env/LIST_ENV/0/secretRef': additional properties 'unknownKey' not allowed"

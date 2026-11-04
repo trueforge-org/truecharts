@@ -1,0 +1,136 @@
+suite: root container option keys schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render with root container option keys set
+    set:
+      TZ: Europe/Amsterdam
+      args:
+        - --port
+        - "8080"
+      command:
+        - /bin/app
+      env:
+        MY_VAR: my-value
+      envFrom:
+        - configMapRef:
+            name: my-configmap
+      fixedEnv:
+        TZ: Europe/Amsterdam
+      probes:
+        liveness:
+          enabled: false
+      termination:
+        messagePath: /dev/termination-log
+        messagePolicy: File
+      containerOptions:
+        NVIDIA_CAPS:
+          - all
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - isKind:
+          of: Service
+        documentIndex: 0
+      - equal:
+          path: metadata.name
+          value: test-release-name-common-test
+        documentIndex: 0
+
+  - it: should render with root common key set
+    set:
+      common:
+        TZ: Europe/Amsterdam
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - isKind:
+          of: Service
+        documentIndex: 0
+      - equal:
+          path: metadata.name
+          value: test-release-name-common-test
+        documentIndex: 0
+
+  - it: should fail on unknown keys in containerOptions
+    set:
+      containerOptions:
+        unknown: value
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/containerOptions': (additional properties|additionalProperties)"
+
+  - it: should fail on unknown keys in image
+    set:
+      image:
+        repository: oci.trueforge.org/containerforge/ubuntu
+        unknown: value
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/image': (additional properties|additionalProperties)"
+
+  - it: should render with an object entry in extraTpl
+    set:
+      extraTpl:
+        - apiVersion: v1
+          kind: ConfigMap
+          metadata:
+            name: my-extra-configmap
+          data:
+            foo: bar
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - isKind:
+          of: ConfigMap
+        documentSelector:
+          path: metadata.name
+          value: my-extra-configmap
+      - equal:
+          path: data.foo
+          value: bar
+        documentSelector:
+          path: metadata.name
+          value: my-extra-configmap

@@ -1,0 +1,61 @@
+suite: persistence iscsi schema coverage fail test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should fail on unknown keys in persistence iscsi
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: iscsi
+          iscsi:
+            unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/iscsi': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in persistence iscsi authSession
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: iscsi
+          iscsi:
+            authSession:
+              unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/iscsi/authSession': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in persistence iscsi authDiscovery
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: iscsi
+          iscsi:
+            authDiscovery:
+              unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/iscsi/authDiscovery': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on a wrong type in persistence iscsi flat options
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: iscsi
+          fsType: 1
+          targetPortal: 1
+          iqn: 1
+          lun: true
+          initiatorName: 1
+          iscsiInterface: 1
+          portals: not-a-list
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/fsType': got number, want string"

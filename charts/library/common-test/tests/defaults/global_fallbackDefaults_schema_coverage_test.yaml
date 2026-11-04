@@ -1,0 +1,185 @@
+suite: global fallbackDefaults schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render with all global fallbackDefaults keys set
+    set:
+      global:
+        fallbackDefaults:
+          storageClass: null
+          probeType: http
+          serviceProtocol: tcp
+          serviceType: ClusterIP
+          persistenceType: pvc
+          pvcRetain: false
+          pvcSize: 100Gi
+          vctSize: 100Gi
+          accessModes:
+            - ReadWriteOnce
+          vctAccessModes:
+            - ReadWriteOnce
+          topologyKey: kubernetes.io/hostname
+          allowRollingUpdateWithRWO: false
+          routeListenerPort: 443
+          cnpg:
+            pgVersion: 18
+            skipEmptyWalArchiveCheck: true
+          probeTimeouts:
+            liveness: &probe
+              initialDelaySeconds: 12
+              periodSeconds: 15
+              timeoutSeconds: 5
+              failureThreshold: 5
+              successThreshold: 1
+            readiness: *probe
+            startup: *probe
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - isKind:
+          of: Service
+        documentIndex: 0
+      - equal:
+          path: spec.type
+          value: ClusterIP
+        documentIndex: 0
+
+  - it: should fail on unknown keys in global fallbackDefaults
+    set:
+      global:
+        fallbackDefaults:
+          unknown: value
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/global/fallbackDefaults': (additional properties|additionalProperties)"
+
+  - it: should fail on unknown keys in global fallbackDefaults cnpg
+    set:
+      global:
+        fallbackDefaults:
+          cnpg:
+            unknown: value
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/global/fallbackDefaults/cnpg': (additional properties|additionalProperties)"
+
+  - it: should fail on unknown keys in global fallbackDefaults probeTimeouts
+    set:
+      global:
+        fallbackDefaults:
+          probeTimeouts:
+            unknown: value
+            liveness:
+              unknown: value
+            readiness:
+              unknown: value
+            startup:
+              unknown: value
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/global/fallbackDefaults/probeTimeouts': (additional properties|additionalProperties)"
+
+  - it: should fail on empty strings and out of range numbers in global fallbackDefaults
+    set:
+      global:
+        fallbackDefaults:
+          persistenceType: ""
+          probeType: ""
+          pvcSize: ""
+          serviceProtocol: ""
+          serviceType: ""
+          vctSize: ""
+          routeListenerPort: 0
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/global/fallbackDefaults/routeListenerPort': "
+
+  - it: should fail on a too high routeListenerPort in global fallbackDefaults
+    set:
+      global:
+        fallbackDefaults:
+          routeListenerPort: 65536
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/global/fallbackDefaults/routeListenerPort': "
+
+  - it: should fail on probeTimeouts below the minimum in global fallbackDefaults
+    set:
+      global:
+        fallbackDefaults:
+          probeTimeouts:
+            liveness: &zero
+              initialDelaySeconds: 0
+              periodSeconds: 0
+              timeoutSeconds: 0
+              failureThreshold: 0
+              successThreshold: 0
+            readiness: *zero
+            startup: *zero
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/global/fallbackDefaults/probeTimeouts/liveness/periodSeconds': "

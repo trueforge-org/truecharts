@@ -1,0 +1,74 @@
+suite: metrics prometheusRule additionalgroups schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render prometheusRule additionalgroups set to null
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            enabled: true
+            rules:
+              - alert: SomeAlert
+                expr: up == 0
+            additionalgroups: null
+    asserts:
+      - documentSelector: &rule
+          path: kind
+          value: PrometheusRule
+        isKind:
+          of: PrometheusRule
+
+  - it: should render prometheusRule additionalgroups set to an empty object
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            enabled: true
+            rules:
+              - alert: SomeAlert
+                expr: up == 0
+            additionalgroups: {}
+    asserts:
+      - documentSelector: *rule
+        isKind:
+          of: PrometheusRule
+
+  - it: should fail on additionalgroups that match no allowed type
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            additionalgroups:
+              - name: [a]
+                rules: notalist
+                additionalrules: notalist
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics/prometheusRule/additionalgroups"

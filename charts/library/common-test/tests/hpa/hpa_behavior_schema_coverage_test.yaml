@@ -1,0 +1,104 @@
+suite: hpa behavior schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render hpa behavior with every select policy and policy type
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+      hpa:
+        hpa-a:
+          enabled: "true"
+          behavior:
+            scaleUp:
+              selectPolicy: Max
+              stabilizationWindowSeconds: 30
+              policies:
+                - type: Percent
+                  value: 50
+                  periodSeconds: 60
+            scaleDown:
+              selectPolicy: Disabled
+              stabilizationWindowSeconds: 300
+              policies:
+                - type: Pods
+                  value: 2
+                  periodSeconds: 120
+        hpa-b:
+          enabled: true
+          behavior:
+            scaleUp:
+              selectPolicy: Disabled
+            scaleDown:
+              selectPolicy: Max
+        hpa-c:
+          enabled: true
+          behavior:
+            scaleUp:
+              selectPolicy: Min
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: HorizontalPodAutoscaler
+      - documentIndex: 1
+        equal:
+          path: spec.behavior.scaleUp.selectPolicy
+          value: Max
+      - documentIndex: 2
+        equal:
+          path: spec.behavior.scaleDown.selectPolicy
+          value: Max
+      - documentIndex: 3
+        equal:
+          path: spec.behavior.scaleUp.selectPolicy
+          value: Min
+
+  - it: should render hpa with the library managed workload key
+    set:
+      workload: *workload
+      hpa:
+        my-hpa:
+          enabled: true
+          workload:
+            type: Deployment
+    asserts:
+      - isKind:
+          of: HorizontalPodAutoscaler
+        documentIndex: 1
+
+  - it: should fail on unknown keys and missing required keys in hpa behavior
+    set:
+      workload: *workload
+      hpa:
+        my-hpa:
+          enabled: true
+          unknownKey: value
+          behavior:
+            unknownKey: value
+            scaleUp:
+              unknownKey: value
+              selectPolicy: Sometimes
+              policies:
+                - unknownKey: value
+            scaleDown:
+              unknownKey: value
+              policies:
+                - unknownKey: value
+          workload:
+            unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/behavior/scaleUp/policies/0': missing properties 'type'"
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/behavior/scaleDown/policies/0': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/behavior/scaleUp/selectPolicy': value must be one of 'Max', 'Min', 'Disabled'"
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/workload': additional properties 'unknownKey' not allowed"
