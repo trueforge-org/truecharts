@@ -106,5 +106,6 @@ The schema checks that run after the unit tests are described in [Schema checks]
 - Every `pattern`, bound (`minimum`, `maximum`, `minLength`, `minItems`, ...), `required` key, closed object (`additionalProperties: false`) and `oneOf`/`anyOf` must be broken by a `failedTemplate` test. The test only counts when its values really break that rule, a test that fails on template logic does not.
 - A shared schema part (`$ref`) only needs to be tested once.
 - So add a passing test and a `failedTemplate` test for every schema key or rule you add.
-- Use `--category <name>` to report one category, `--all` to list every gap and `--json <file>` for a report.
+- Use `--category <name>` to report one category, `--all` to list every gap, `--json <file>` for a report and `--summary-md <file>` for a Markdown table of the totals.
+- In CI, on a pull request, a failure of this or the other checks of the `coverage-validation` job is posted as a comment on the PR by `.github/workflows/common-coverage-comment.yaml`. The comment is updated on later runs, and marked as passed when the checks pass again.
 - An item that a unittest cannot reach can go in `charts/library/common/unittest-coverage-ignore.yaml`, with its id as printed by the script and a reason. Entries that are unknown or already covered fail the check.

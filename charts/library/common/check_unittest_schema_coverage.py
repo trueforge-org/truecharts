@@ -575,6 +575,7 @@ def main() -> int:
     parser.add_argument("--all", action="store_true", help="List every uncovered item (default: 50 per category)")
     parser.add_argument("--category", choices=sorted(CATEGORIES), action="append", help="Only report these categories")
     parser.add_argument("--json", type=Path, help="Write a machine-readable report to this file")
+    parser.add_argument("--summary-md", type=Path, help="Write a Markdown table with the totals per category to this file")
     args = parser.parse_args()
 
     root = Node(load_json(ROOT_SCHEMA_FILE), ROOT_SCHEMA_FILE.resolve(), "")
@@ -636,6 +637,20 @@ def main() -> int:
 
     if args.json:
         args.json.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+
+    if args.summary_md:
+        lines = ["| Category | Covered | Ignored | Missing | Total | Coverage |", "| --- | --- | --- | --- | --- | --- |"]
+        for category, data in report["categories"].items():
+            missing = len(data["missing"])
+            percent = (data["total"] - missing) / data["total"] * 100.0 if data["total"] else 100.0
+            mark = "✅" if not missing else "❌"
+            lines.append(
+                f"| {mark} {CATEGORIES[category]} | {data['covered']} | {data['ignored']} | {missing} | {data['total']} | {percent:.2f}% |"
+            )
+        if stale:
+            lines.append("")
+            lines.append(f"❌ {len(stale)} stale entries in `unittest-coverage-ignore.yaml`.")
+        args.summary_md.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     return 1 if failed else 0
 
