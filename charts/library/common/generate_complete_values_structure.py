@@ -16,6 +16,7 @@ The file is rebuilt from these sources on every run, so keys removed from the so
 
 import argparse
 import copy
+import json
 import sys
 from pathlib import Path
 from typing import Any, Dict, List
@@ -532,6 +533,12 @@ def main() -> int:
         help="Output file path (default: charts/library/common/complete-values-structure.yaml)"
     )
 
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="Fail when the output file does not have the generated content, write nothing",
+    )
+
     args = parser.parse_args()
 
     # Determine repo root
@@ -559,6 +566,14 @@ def main() -> int:
     # Generate structure
     try:
         structure = generate_complete_structure(repo_root)
+        if args.check:
+            # Compare the content and not the text, as the formatting depends on whether ruamel.yaml is installed
+            current = yaml.safe_load(output_path.read_text(encoding="utf-8")) if output_path.is_file() else None
+            if json.loads(json.dumps(current, default=str)) != json.loads(json.dumps(structure, default=str)):
+                print(f"{output_path.name} is not up to date, run generate_complete_values_structure.py", file=sys.stderr)
+                return 1
+            print(f"{output_path.name} is up to date", file=sys.stderr)
+            return 0
         write_complete_structure(output_path, structure)
         print("Success!", file=sys.stderr)
         return 0

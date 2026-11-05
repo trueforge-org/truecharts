@@ -35,7 +35,12 @@ chartContext:
   svcCIDR: variableName
 common: variableName
 configMapsFromFolder: variableName
-configmap: {}
+configmap:
+  objectName:
+    annotations: variableName
+    binaryData: variableName
+    data: variableName
+    labels: variableName
 containerOptions:
   NVIDIA_CAPS: variableName
 createChartContextConfigmap: variableName
@@ -45,9 +50,22 @@ dependencies:
     depconfig:
       mongodbDatabase: variableName
     securityContext: variableName
-externalSecret: variableName
+externalSecret:
+  objectName:
+    annotations: variableName
+    data: variableName
+    dataFrom: variableName
+    labels: variableName
+    refreshInterval: variableName
+    refreshPolicy: variableName
+    secretStoreRef:
+      kind: variableName
+      name: variableName
+    target: variableName
 extraTpl: variableName
-gateway: variableName
+gateway:
+  objectName:
+    listeners: variableName
 gatewayClass: variableName
 global:
   annotations: variableName
@@ -77,6 +95,14 @@ global:
     commonMiddlewares: variableName
 hpa:
   objectName:
+    annotations: variableName
+    behavior:
+      scaleDown: variableName
+      scaleUp: variableName
+    labels: variableName
+    maxReplicas: variableName
+    metrics: variableName
+    minReplicas: variableName
     targetSelector: variableName
 imagePullSecret:
   objectName:
@@ -86,24 +112,47 @@ imagePullSecret:
     targetSelector: variableName
 ingress:
   objectName:
+    annotations: variableName
     enabled: variableName
+    hosts: variableName
+    ingressClassName: variableName
     integrations:
       certManager:
         enabled: variableName
+      homepage: variableName
+      nginx: variableName
+      traefik: variableName
+    labels: variableName
     primary: variableName
     required: variableName
+    targetSelector: variableName
     tls: variableName
 ingressMiddlewares:
   traefik: variableName
-listenerSet: variableName
+listenerSet:
+  objectName:
+    annotations: variableName
+    labels: variableName
+    listeners: variableName
+    parentRef: variableName
+    targetSelector: variableName
 metrics:
   objectName:
     enabled: variableName
 namespace: variableName
 networkpolicy:
   objectName:
+    annotations: variableName
+    egress: variableName
     enabled: variableName
+    ingress: variableName
+    labels: variableName
+    podSelector: variableName
+    policyTypes: variableName
     primary: variableName
+    targetAllPods: variableName
+    targetSelector: variableName
+    targetSelectorRegex: variableName
 notes:
   custom: variableName
   footer: variableName
@@ -117,6 +166,9 @@ persistence:
       chmod: variableName
       chown: variableName
       enabled: variableName
+    dataSource:
+      kind: variableName
+      name: variableName
     domain: variableName
     enabled: variableName
     existingClaim: variableName
@@ -128,6 +180,7 @@ persistence:
     mountPath: variableName
     mountPropagation: variableName
     readOnly: variableName
+    retain: variableName
     size: variableName
     static:
       driver: variableName
@@ -142,7 +195,15 @@ persistence:
     type: variableName
     volsync: variableName
     volumeSnapshots: variableName
-podDisruptionBudget: {}
+podDisruptionBudget:
+  objectName:
+    annotations: variableName
+    customLabels: variableName
+    labels: variableName
+    maxUnavailable: variableName
+    minAvailable: variableName
+    targetSelector: variableName
+    unhealthyPodEvictionPolicy: variableName
 podOptions:
   affinity: variableName
   automountServiceAccountToken: variableName
@@ -166,21 +227,56 @@ podOptions:
   tolerations: variableName
   topologySpreadConstraints: variableName
 podmonitor: variableName
-priorityClass: {}
+priorityClass:
+  objectName:
+    annotations: variableName
+    description: variableName
+    globalDefault: variableName
+    labels: variableName
+    preemptionPolicy: variableName
+    value: variableName
 prometheusRule: variableName
 rbac:
   objectName:
+    allServiceAccounts: variableName
+    annotations: variableName
+    clusterWide: variableName
     dependency: variableName
     enabled: variableName
+    labels: variableName
     primary: variableName
+    rules: variableName
+    serviceAccounts: variableName
+    subjects: variableName
 resources:
   limits:
     memory: variableName
 route:
   objectName:
+    gateway: variableName
+    gatewayNamespace: variableName
+    hostnames: variableName
+    integrations:
+      certManager:
+        certificateIssuer: variableName
+      envoy: variableName
+      traefik: variableName
     kind: variableName
+    listenerSet: variableName
+    nameOverride: variableName
+    parentRefs: variableName
     required: variableName
-secret: {}
+    rules: variableName
+    targetSelector: variableName
+    tls: variableName
+secret:
+  objectName:
+    annotations: variableName
+    data:
+      certificate: variableName
+      privatekey: variableName
+    labels: variableName
+    type: variableName
 securityContext:
   container:
     PUID: variableName
@@ -193,9 +289,23 @@ securityContext:
     fsGroup: variableName
 service:
   objectName:
+    allocateLoadBalancerNodePorts: variableName
+    annotations: variableName
+    clusterIP: variableName
     enabled: variableName
+    externalIPs: variableName
+    externalName: variableName
+    externalTrafficPolicy: variableName
     integrations:
+      cilium: variableName
+      metallb: variableName
       traefik: variableName
+    ipFamilies: variableName
+    ipFamilyPolicy: variableName
+    labels: variableName
+    loadBalancerIP: variableName
+    loadBalancerIPs: variableName
+    loadBalancerSourceRanges: variableName
     ports:
       main:
         port: variableName
@@ -209,30 +319,106 @@ service:
         targetPort: variableName
         targetSelector: variableName
     primary: variableName
+    publishNotReadyAddresses: variableName
+    selectorLabels: variableName
+    sessionAffinity: variableName
+    sessionAffinityConfig: variableName
     targetSelector: variableName
+    type: variableName
+    useSlice: variableName
 serviceAccount:
   objectName:
+    annotations: variableName
+    automountServiceAccountToken: variableName
     dependency: variableName
     enabled: variableName
+    labels: variableName
     primary: variableName
     targetSelectAll: variableName
     targetSelector: variableName
 servicemonitor: variableName
-storageClass: {}
-volumeSnapshotClass: {}
-volumeSnapshots: {}
+storageClass:
+  objectName:
+    allowVolumeExpansion: variableName
+    annotations: variableName
+    isDefault: variableName
+    labels: variableName
+    mountOptions: variableName
+    parameters: variableName
+    provisioner: variableName
+    reclaimPolicy: variableName
+    volumeBindingMode: variableName
+volumeSnapshotClass:
+  objectName:
+    driver: variableName
+volumeSnapshots:
+  objectName:
+    annotations: variableName
+    labels: variableName
+    source:
+      persistentVolumeClaimName: variableName
+      volumeSnapshotContentName: variableName
+    volumeSnapshotClassName: variableName
 vpa:
   objectName:
+    annotations: variableName
+    labels: variableName
+    resourcePolicy:
+      containerPolicies: variableName
     targetSelector: variableName
+    updatePolicy:
+      evictionRequirements: variableName
+      minReplicas: variableName
+      updateMode: variableName
 webhook:
   objectName:
     type: variableName
 workload:
   objectName:
+    activeDeadlineSeconds: variableName
+    allowRollingUpdateWithRWO: variableName
+    backoffLimit: variableName
+    completionMode: variableName
+    completions: variableName
+    concurrencyPolicy: variableName
     dbWait: variableName
     dependency: variableName
     enabled: variableName
+    failedJobsHistoryLimit: variableName
+    parallelism: variableName
     podSpec:
+      containers:
+        objectName:
+          command: variableName
+          env: variableName
+          envFrom: variableName
+          fixedEnv:
+            NVIDIA_CAPS: variableName
+            PUID: variableName
+            TZ: variableName
+            UMASK: variableName
+          imageSelector: variableName
+          lifecycle: variableName
+          primary: variableName
+          probes: variableName
+          resources:
+            excludeExtra: variableName
+            limits: variableName
+          securityContext: variableName
+          termination: variableName
       initContainers: variableName
     primary: variableName
+    replicas: variableName
+    revisionHistoryLimit: variableName
+    rollingUpdate:
+      maxSurge: variableName
+      maxUnavailable: variableName
+      partition: variableName
+    schedule: variableName
+    startingDeadlineSeconds: variableName
+    strategy: variableName
+    successfulJobsHistoryLimit: variableName
+    suspend: variableName
+    timezone: variableName
+    ttlSecondsAfterFinished: variableName
     type: variableName

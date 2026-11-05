@@ -12440,6 +12440,11 @@
        "description": "Configuration for `route.main.rules.$item`."
       },
       "description": "Routing rules. Without rules everything goes to the primary service. Fields the route kind does not support fail rendering."
+     },
+     "nameOverride": {
+      "type": "string",
+      "description": "Name appended to the chart fullname for this route instead of the object name. Only applies when `expandObjectName` is enabled.",
+      "default": ""
      }
     },
     "additionalProperties": false,

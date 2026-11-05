@@ -55,6 +55,95 @@ PARENT_KEYS_WITH_VARIABLE_CHILDREN = {
 TEMPLATE_COMMENT = re.compile(r"\{\{-?\s*/\*.*?\*/\s*-?\}\}", re.DOTALL)
 
 
+# The templates in class/ and lib/ get the object they render as `$objectData`, and have no range over
+# .Values to tell which object that is. So the object follows from the place of the file (relative to templates/).
+# A path ending in `/` is a directory.
+OBJECT_DATA_OWNERS = {
+    "class/_service.tpl": "service.objectName",
+    "lib/service/": "service.objectName",
+    "class/_route.tpl": "route.objectName",
+    "lib/route/": "route.objectName",
+    "class/_ingress.tpl": "ingress.objectName",
+    "lib/ingress/": "ingress.objectName",
+    "class/_configmap.tpl": "configmap.objectName",
+    "lib/configmap/": "configmap.objectName",
+    "class/_secret.tpl": "secret.objectName",
+    "lib/secret/": "secret.objectName",
+    "class/_rbac.tpl": "rbac.objectName",
+    "lib/rbac/": "rbac.objectName",
+    "class/_serviceAccount.tpl": "serviceAccount.objectName",
+    "lib/serviceAccount/": "serviceAccount.objectName",
+    "class/_horizontalPodAutoscaler.tpl": "hpa.objectName",
+    "lib/hpa/": "hpa.objectName",
+    "class/_verticalPodAutoscaler.tpl": "vpa.objectName",
+    "lib/vpa/": "vpa.objectName",
+    "class/_pvc.tpl": "persistence.objectName",
+    # lib/storage/ serves several kinds of objects, so only the files of one kind are listed
+    "lib/storage/_validation.tpl": "persistence.objectName",
+    "lib/storage/_accessModes.tpl": "persistence.objectName",
+    # Here `$objectData` is the workload the volume claim templates are rendered for ($vct is the persistence item)
+    "lib/storage/_volumeClaimTemplates.tpl": "workload.objectName",
+    "lib/storage/_storageClassValidation.tpl": "storageClass.objectName",
+    "lib/storage/_validationVolumeSnapshot.tpl": "volumeSnapshots.objectName",
+    "lib/storage/_validationVolumeSnapshotClass.tpl": "volumeSnapshotClass.objectName",
+    "class/_volumeSnapshot.tpl": "volumeSnapshots.objectName",
+    "class/_networkPolicy.tpl": "networkpolicy.objectName",
+    "lib/networkpolicy/": "networkpolicy.objectName",
+    "class/_podDisruptionBudget.tpl": "podDisruptionBudget.objectName",
+    "lib/podDistruptionBudget/": "podDisruptionBudget.objectName",
+    "class/_priorityClass.tpl": "priorityClass.objectName",
+    "lib/priorityClass/": "priorityClass.objectName",
+    "class/_storageClass.tpl": "storageClass.objectName",
+    "class/_gateway.tpl": "gateway.objectName",
+    "lib/gateway/": "gateway.objectName",
+    "class/_gatewayclass.tpl": "gatewayClass.objectName",
+    "class/_listenerSet.tpl": "listenerSet.objectName",
+    "lib/listenerSet/": "listenerSet.objectName",
+    "class/_externalSecret.tpl": "externalSecret.objectName",
+    "lib/externalSecret/": "externalSecret.objectName",
+    # The probe and lifecycle actions get the probe or hook, not the container
+    "lib/container/probe-lifecycle-actions/": "",
+    "lib/container/": "workload.objectName.podSpec.containers.objectName",
+    "lib/workload/": "workload.objectName",
+}
+
+
+def object_data_owner(rel_path: str) -> str:
+    """The Values path of the object that `$objectData` is in this template, or an empty string when unknown."""
+    for prefix, owner in OBJECT_DATA_OWNERS.items():
+        if rel_path == prefix or (prefix.endswith("/") and rel_path.startswith(prefix)):
+            return owner
+    return ""
+
+
+# Keys of `$objectData` that the spawners compute themselves (set $objectData "key" ...), so they are not user input
+INTERNAL_OBJECT_KEYS = {
+    "name",
+    "shortName",
+    "workload",
+    "containerNames",
+    "hpaName",
+    "vpaName",
+    "selectedService",
+    "podPrimary",
+    "podType",
+    "podShortName",
+    "calculatedFSGroup",
+    "podSpec",
+}
+
+# Files where a function gets another object than the owner as `$objectData`, with the keys it reads from it
+# (lib/container/_probes.tpl: probeTimeouts gets the probe, so its `spec` is not a key of the container)
+INTERNAL_OBJECT_KEYS_BY_FILE = {
+    "lib/container/_probes.tpl": {"spec"},
+}
+
+# Keys that a template reads only to fail when they are set, so they are not accepted by the schema
+REJECTED_PATHS = {
+    "secret.objectName.stringData",
+}
+
+
 def find_template_files(directory: Path) -> list[Path]:
     """Find all .tpl and .yaml files in the templates directory."""
     templates = []
@@ -140,7 +229,12 @@ def extract_variable_assignments(content: str) -> Dict[str, str]:
     return var_map
 
 
-def extract_variable_property_accesses(content: str, var_map: Dict[str, str]) -> Set[str]:
+def extract_variable_property_accesses(
+    content: str,
+    var_map: Dict[str, str],
+    seeded_vars: Set[str] = frozenset(),
+    skip_keys: Set[str] = frozenset(),
+) -> Set[str]:
     """
     Extract property accesses on variables that have known origins.
     
@@ -158,6 +252,8 @@ def extract_variable_property_accesses(content: str, var_map: Dict[str, str]) ->
         property_path = match.group(2)
         
         if var_name in var_map:
+            if var_name in seeded_vars and property_path.split(".")[0] in (INTERNAL_OBJECT_KEYS | skip_keys):
+                continue
             # A key the template sets itself (set $var "prop" <value>) is internal, not user input,
             # unless the value defaults to/derives from the same user key or is just an empty dict
             first_segment = property_path.split(".")[0]
@@ -209,7 +305,7 @@ def extract_values_paths(content: str) -> Set[str]:
     return paths
 
 
-def extract_all_paths_from_content(content: str) -> Set[str]:
+def extract_all_paths_from_content(content: str, rel_path: str = "") -> Set[str]:
     """
     Extract all paths from template content, including:
     1. Direct .Values.* references
@@ -224,9 +320,18 @@ def extract_all_paths_from_content(content: str) -> Set[str]:
     
     # Track variable assignments to understand what each variable represents
     var_map = extract_variable_assignments(content)
-    
+
+    # In class/ and lib/ the object follows from the place of the file
+    owner = object_data_owner(rel_path)
+    seeded_vars: Set[str] = set()
+    if owner and "objectData" not in var_map:
+        var_map["objectData"] = owner
+        seeded_vars.add("objectData")
+
     # Extract property accesses on variables
-    variable_paths = extract_variable_property_accesses(content, var_map)
+    variable_paths = extract_variable_property_accesses(
+        content, var_map, seeded_vars, INTERNAL_OBJECT_KEYS_BY_FILE.get(rel_path, set())
+    )
     
     # Combine all paths
     all_paths = direct_paths | variable_paths
@@ -351,7 +456,7 @@ def main() -> int:
     for template_file in template_files:
         try:
             content = template_file.read_text(encoding="utf-8")
-            paths = extract_all_paths_from_content(content)
+            paths = extract_all_paths_from_content(content, template_file.relative_to(TEMPLATES_DIR).as_posix())
             
             if paths:
                 print(f"  {template_file.relative_to(BASE_DIR)}: {len(paths)} paths")
@@ -362,7 +467,7 @@ def main() -> int:
     print(f"\nTotal unique paths found: {len(all_paths)}")
     
     # Normalize paths with placeholders
-    normalized_paths = {normalize_path_with_placeholders(p) for p in all_paths}
+    normalized_paths = {normalize_path_with_placeholders(p) for p in all_paths} - REJECTED_PATHS
     print(f"After normalization: {len(normalized_paths)} unique paths")
     
     # Build nested structure
