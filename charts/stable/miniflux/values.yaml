@@ -35,13 +35,12 @@ workload:
             ADMIN_USERNAME: admin
           probes:
             liveness:
-              custom: true
               enabled: true
+              type: http
+              path: /healthcheck
+              port: 8080
               spec:
                 failureThreshold: 3
-                httpGet:
-                  path: /healthcheck
-                  port: 8080
                 initialDelaySeconds: 30
                 periodSeconds: 10
                 timeoutSeconds: 1
