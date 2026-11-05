@@ -10,8 +10,9 @@
           "boolean",
           "string"
         ],
-        "description": "Enable the VerticalPodAutoscaler.",
-        "default": false
+        "description": "Create this VerticalPodAutoscaler. Supports Helm `tpl`.",
+        "default": false,
+        "x-helm-tpl": true
       },
       "labels": {
         "allOf": [
@@ -65,7 +66,7 @@
                       "cpu",
                       "memory"
                     ],
-                    "description": "Configuration for `vpa.main.updatePolicy.evictionRequirements.$item.resources.$item`."
+                    "description": "A resource, `cpu` or `memory`."
                   },
                   "description": "Resources the requirement applies to."
                 },
@@ -79,7 +80,7 @@
                 }
               },
               "additionalProperties": false,
-              "description": "Configuration for `vpa.main.updatePolicy.evictionRequirements.$item`."
+              "description": "A condition for evicting a pod."
             },
             "description": "Conditions for evicting a pod to apply a recommendation."
           }
@@ -161,13 +162,13 @@
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item.controlledResources.$item`."
+                    "description": "A resource, `cpu` or `memory`."
                   },
                   "description": "Resources that are recommended, `cpu` and `memory`."
                 }
               },
               "additionalProperties": false,
-              "description": "Configuration for `vpa.main.resourcePolicy.containerPolicies.$item`."
+              "description": "The policy for one container."
             },
             "description": "Policies per container."
           }
@@ -182,14 +183,14 @@
             "$ref": "special/namespaces.json"
           }
         ],
-        "description": "Define the namespace for this object",
+        "description": "Namespace of the VerticalPodAutoscaler. Defaults to the release namespace.",
         "default": "",
         "x-helm-tpl": true
       }
     },
     "additionalProperties": false,
-    "description": "Configuration for `vpa.main`.",
+    "description": "A VerticalPodAutoscaler, keyed by name.",
     "default": {}
   },
-  "description": "Configuration for `vpa`."
+  "description": "VerticalPodAutoscalers, keyed by name. Every enabled entry renders a VPA, see [VPA](/truecharts-common/vpa)."
 }

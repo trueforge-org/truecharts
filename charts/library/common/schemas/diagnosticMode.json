@@ -7,9 +7,13 @@
         "boolean",
         "string"
       ],
-      "description": "Run the containers with a sleep command instead of the app, to debug them."
+      "description": "Run the containers with a sleep command instead of the app, so you can exec into them to debug. Probes are disabled while it is on.",
+      "default": false
     }
   },
   "additionalProperties": false,
-  "description": "Configuration for `diagnosticMode`."
+  "description": "Debug the chart by running its containers with a sleep command. See also `global.diagnosticMode`.",
+  "default": {
+    "enabled": false
+  }
 }

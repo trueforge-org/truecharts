@@ -50,7 +50,12 @@ These rules apply to `charts/library/common/schemas/`, `values.schema.source.jso
 - Every schema file must be reachable from `values.schema.source.json`. Do not add files that only exist for the docs.
 - Keys that take a Helm `tpl` string instead of a boolean or number allow both, e.g. `"type": ["boolean", "string"]`.
 - Give every property a `description`, and a `default` that matches `values.yaml`.
-- The docs are built from the schema. They use `description`, `default`, `examples` (or `default` when there are none), `x-helm-tpl` for the Helm `tpl` column (`true`, or a string like `On value only` that is shown next to it), `x-docs-required: true` for the Required column of keys a chart has to set but that common gives a default, and on top-level keys the `x-docs-helmTpl` and `x-docs-defaultRaw` fields. See [`common-library-docs.instructions.md`](common-library-docs.instructions.md).
+- The docs are built from the schema. They use `description`, `default`, `enum`, `pattern`, `minimum`/`maximum`, `minLength`/`maxLength`, `minItems`/`maxItems`, `examples` (the first one is shown as the example of the key), and these custom keywords:
+  - `x-helm-tpl` for the Helm `tpl` column: `true`, or one of `On value only`, `On entries only`, `On keys and values`. A key typed `[boolean, string]` or with a `oneOf` of an enum and the `^\{\{.*\}\}$` pattern is shown as templated.
+  - `x-docs-required: true` for the Required column of keys a chart has to set but that common gives a default.
+  - `x-docs-appliesTo: ["<type>"]` on keys that only apply to some values of `type` (workload, persistence, service and middleware types). They get documented on the page of that type.
+
+  Write descriptions as plain sentences that start with a capital and end with a full stop. Link to other docs pages as `/truecharts-common/<page path>` with the exact case, see [`common-library-docs.instructions.md`](common-library-docs.instructions.md). The generator checks the links, and markdownlint rejects `[here](...)` and bare `*`.
 
 ## `required` and existing charts
 

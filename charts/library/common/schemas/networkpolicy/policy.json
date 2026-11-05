@@ -8,7 +8,8 @@
         "string"
       ],
       "description": "Create this NetworkPolicy.",
-      "default": false
+      "default": false,
+      "x-helm-tpl": true
     },
     "primary": {
       "type": [
@@ -23,12 +24,16 @@
         "boolean",
         "string"
       ],
-      "description": "Expand the object name.",
+      "description": "Prefix the name of the policy with the release fullname.",
       "default": false
     },
     "namespace": {
-      "$ref": "../special/namespaces.json",
-      "description": "Namespace for this NetworkPolicy.",
+      "allOf": [
+        {
+          "$ref": "../special/namespaces.json"
+        }
+      ],
+      "description": "Namespace of the policy. Defaults to the release namespace.",
       "default": ""
     },
     "labels": {
@@ -76,11 +81,13 @@
         },
         {
           "type": "string",
+          "description": "A Helm template that renders the type.",
           "pattern": "^\\{\\{.*\\}\\}$"
         }
       ],
       "description": "Type of policy to create. `kubernetes` creates a NetworkPolicy, `cilium` creates a CiliumNetworkPolicy and requires the Cilium CRDs",
-      "default": "kubernetes"
+      "default": "kubernetes",
+      "x-helm-tpl": true
     },
     "clusterwide": {
       "type": "boolean",
@@ -105,7 +112,8 @@
         "array"
       ],
       "items": {
-        "type": "string"
+        "type": "string",
+        "description": "Name of a workload of this chart."
       },
       "description": "Target one or more workloads from this chart by name.",
       "default": ""
@@ -116,7 +124,8 @@
         "array"
       ],
       "items": {
-        "type": "string"
+        "type": "string",
+        "description": "A regular expression matched against the workload names."
       },
       "properties": {},
       "additionalProperties": false,
@@ -150,6 +159,7 @@
           ],
           "items": {
             "type": "object",
+            "description": "A label expression.",
             "properties": {
               "key": {
                 "type": "string",
@@ -162,7 +172,8 @@
               "values": {
                 "type": "array",
                 "items": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "A label value."
                 },
                 "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
               }
@@ -198,6 +209,7 @@
           ],
           "items": {
             "type": "object",
+            "description": "A label expression.",
             "properties": {
               "key": {
                 "type": "string",
@@ -210,7 +222,8 @@
               "values": {
                 "type": "array",
                 "items": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "A label value."
                 },
                 "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
               }
@@ -228,6 +241,7 @@
       "type": "array",
       "items": {
         "type": "string",
+        "description": "A policy type, `Ingress` or `Egress`.",
         "enum": [
           "Ingress",
           "Egress"
@@ -253,7 +267,12 @@
     "ingress": {
       "type": "array",
       "items": {
-        "$ref": "ingressRule.json"
+        "allOf": [
+          {
+            "$ref": "ingressRule.json"
+          }
+        ],
+        "description": "An ingress rule."
       },
       "description": "Ingress rules.",
       "default": []
@@ -273,14 +292,16 @@
           "fromEntities": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "description": "An entity, eg `world`, `cluster` or `host`."
             },
             "description": "Entities the rule applies to, e.g. `world` or `cluster`."
           },
           "fromCIDR": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "description": "A CIDR, eg `10.0.0.0/8`."
             },
             "description": "CIDRs the rule applies to."
           },
@@ -306,7 +327,7 @@
             "description": "ICMP types the rule applies to."
           }
         },
-        "description": "Configuration for `$name.ingressDeny.$item`.",
+        "description": "An ingress deny rule.",
         "additionalProperties": false
       },
       "description": "Cilium only. List of ingress deny rules, these take precedence over allow rules, supports Helm `tpl`",
@@ -315,7 +336,12 @@
     "egress": {
       "type": "array",
       "items": {
-        "$ref": "egressRule.json"
+        "allOf": [
+          {
+            "$ref": "egressRule.json"
+          }
+        ],
+        "description": "An egress rule."
       },
       "description": "Egress rules.",
       "default": []
@@ -335,14 +361,16 @@
           "toEntities": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "description": "An entity, eg `world`, `cluster` or `host`."
             },
             "description": "Entities the rule applies to, e.g. `world` or `cluster`."
           },
           "toCIDR": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "description": "A CIDR, eg `10.0.0.0/8`."
             },
             "description": "CIDRs the rule applies to."
           },
@@ -368,7 +396,7 @@
             "description": "ICMP types the rule applies to."
           }
         },
-        "description": "Configuration for `$name.egressDeny.$item`.",
+        "description": "An egress deny rule.",
         "additionalProperties": false
       },
       "description": "Cilium only. List of egress deny rules, these take precedence over allow rules, supports Helm `tpl`",
@@ -376,5 +404,5 @@
     }
   },
   "additionalProperties": false,
-  "description": "Configuration for a NetworkPolicy."
+  "description": "A NetworkPolicy, or a CiliumNetworkPolicy with `type: cilium`."
 }

@@ -433,6 +433,8 @@ class Generator:
         depth_limit = root.get("depth")
 
         def rel_of(path: str) -> str:
+            if len(page.roots) > 1:
+                return path  # several roots on one page: full paths keep the headings unique
             if path == base_path:
                 return re.split(r"\.", path)[-1]
             if path.startswith(base_path + ".") or path.startswith(base_path + "["):
@@ -445,7 +447,7 @@ class Generator:
         def walk(node, path, parent, key, stack, depth, top, typed_ok=False):
             if depth > MAX_DEPTH:
                 return
-            emit = not top
+            emit = not top or (page.applies is None and not page.overview_only)
             child_typed = typed_ok
             if not top:
                 if page.applies is None:
@@ -464,15 +466,15 @@ class Generator:
                     node=node,
                     required=bool(parent and key in parent.required) or node.docs_required,
                 )
-                other = self._other_page(page, path, node, root_idx)
-                target = page.collapse.get(entry.rel)
+                other = None if top else self._other_page(page, path, node, root_idx)
+                target = None if top else page.collapse.get(entry.rel)
                 if target:
                     other = next(p for p in self.pages if p.file == target)
                 if other is not None:
                     entry.link = other
                     out.append(entry)
                     return
-                if node.identity and node.identity in stack:
+                if not top and node.identity and node.identity in stack:
                     entry.recursive = True
                     out.append(entry)
                     return
@@ -485,10 +487,6 @@ class Generator:
                 walk(c, join(path, k), node, k, stack, depth + 1, False, child_typed)
 
         walk(n, base_path, None, "", (), 0, True)
-        has_children = any(True for _ in self.schemas.children(n))
-        if not has_children and page.applies is None:
-            entry = Entry(path=base_path, rel=rel_of(base_path), node=n, required=n.docs_required)
-            out.insert(0, entry)
         return n, label, ident, out
 
     def _other_page(self, page: Page, path: str, node: Node, root_idx: int) -> Page | None:
@@ -604,8 +602,7 @@ class Generator:
                 continue
             n, label, ident, entries = self.entries(page, i)
             if i == 0:
-                has_kids = any(True for _ in self.schemas.children(n))
-                intro_desc = n.description if has_kids and page.applies is None else ""
+                intro_desc = n.description
                 if "ref" in root:
                     appears += self.appears_in(ident, [])
                 else:
@@ -644,7 +641,7 @@ class Generator:
             bullets.append(f"See the [Full Examples]({self.url(page, 'full-examples')}) section for complete examples.")
         if bullets:
             out += [":::note", ""] + [f"- {b}" for b in bullets] + ["", ":::", ""]
-        if intro_desc and not page.overview_only:
+        if intro_desc and page.overview_only:
             out += [intro_desc, ""]
         if page.applies and page.parent:
             parent = next((p for p in self.pages if p.file == page.parent), None)
@@ -873,6 +870,103 @@ def find_markdownlint_config(start: Path) -> Path | None:
     return None
 
 
+
+# --------------------------------------------------------------------------
+# Example validation
+# --------------------------------------------------------------------------
+
+FENCE_RE = re.compile(r"```ya?ml\n(.*?)```", re.S)
+PARTIAL_MARK = "docs-example: partial"
+PY_TYPES = {
+    "string": (str,),
+    "boolean": (bool,),
+    "integer": (int,),
+    "number": (int, float),
+    "object": (dict,),
+    "array": (list,),
+    "null": (type(None),),
+}
+
+
+class _UniqueKeyLoader(yaml.SafeLoader):
+    def construct_mapping(self, node, deep=False):
+        seen = set()
+        for key_node, _ in node.value:
+            key = self.construct_object(key_node, deep=deep)
+            if key in seen:
+                raise yaml.constructor.ConstructorError(
+                    None, None, f"duplicate key '{key}'", key_node.start_mark
+                )
+            seen.add(key)
+        return super().construct_mapping(node, deep)
+
+
+def _type_ok(value: Any, types: list[str]) -> bool:
+    for t in types:
+        if t == "integer" and isinstance(value, bool):
+            continue
+        if t == "number" and isinstance(value, bool):
+            continue
+        if isinstance(value, PY_TYPES[t]):
+            return True
+    return False
+
+
+def validate_value(schemas: Schemas, root: Node, n: Node, value: Any, path: str, errs: list[str], depth: int = 0) -> None:
+    if depth > MAX_DEPTH or value is None:
+        return
+    if isinstance(value, str) and "{{" in value:
+        return
+    if n.types and not _type_ok(value, n.types) and not (n.tpl and isinstance(value, str)):
+        errs.append(f"{path}: expected {' or '.join(n.types)}, got {type(value).__name__}")
+        return
+    if n.enum and not isinstance(value, (dict, list)) and value not in n.enum:
+        errs.append(f"{path}: {value!r} is not one of {n.enum}")
+    if isinstance(value, dict):
+        for k, v in value.items():
+            child = None
+            if k in n.props:
+                child = schemas.node(*n.props[k])
+            elif n.root_values and k in root.props:
+                child = schemas.node(*root.props[k])
+            elif n.addl is not None:
+                child = schemas.node(*n.addl)
+            elif n.closed or (n.props and not n.root_values):
+                if n.closed:
+                    errs.append(f"{path}.{k}: unknown key" if path else f"{k}: unknown key")
+                continue
+            if child is not None:
+                validate_value(schemas, root, child, v, join(path, str(k)), errs, depth + 1)
+    elif isinstance(value, list) and n.items is not None:
+        item = schemas.node(*n.items)
+        for i, v in enumerate(value):
+            validate_value(schemas, root, item, v, f"{path}[{i}]", errs, depth + 1)
+
+
+def check_examples(gen: Generator, examples_dir: Path) -> list[str]:
+    problems = []
+    if not examples_dir.exists():
+        return problems
+    root = gen.root_node
+    for f in sorted(examples_dir.rglob("*.md")):
+        rel = f.relative_to(examples_dir).as_posix()
+        for i, block in enumerate(FENCE_RE.findall(f.read_text()), 1):
+            where = f"examples/{rel} block {i}"
+            try:
+                data = yaml.load(block, Loader=_UniqueKeyLoader)
+            except yaml.YAMLError as e:
+                problems.append(f"{where}: invalid yaml: {str(e).splitlines()[0]}")
+                continue
+            if PARTIAL_MARK in block or not isinstance(data, dict) or not data:
+                continue
+            if not all(k in root.props for k in data):
+                continue  # a fragment of a values file, not a full one
+            errs: list[str] = []
+            validate_value(gen.schemas, root, root, data, "", errs)
+            problems += [f"{where}: {e}" for e in errs]
+    return problems
+
+
 # --------------------------------------------------------------------------
 # Main
 # --------------------------------------------------------------------------
@@ -914,6 +1008,7 @@ def main() -> int:
         else:
             problems.append(f"handwritten page docs/{f} is missing")
     problems += check_links(gen, texts)
+    problems += check_examples(gen, args.examples)
 
     known = {p.file for p in gen.pages}
     for ex in sorted(existing_files(args.examples)):

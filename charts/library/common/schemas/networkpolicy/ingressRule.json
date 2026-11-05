@@ -5,21 +5,32 @@
     "from": {
       "type": "array",
       "items": {
-        "$ref": "peer.json"
+        "allOf": [
+          {
+            "$ref": "peer.json"
+          }
+        ],
+        "description": "A peer that may send traffic."
       },
       "description": "Peers allowed to send traffic."
     },
     "ports": {
       "type": "array",
       "items": {
-        "$ref": "port.json"
+        "allOf": [
+          {
+            "$ref": "port.json"
+          }
+        ],
+        "description": "A port that traffic is allowed to."
       },
       "description": "Ports allowed by this rule."
     },
     "fromEntities": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "string",
+        "description": "An entity, eg `world`, `cluster`, `host` or `all`."
       },
       "description": "Cilium only: entities (for example `world`, `cluster`, `host` or `all`) allowed to send traffic. Ignored for Kubernetes NetworkPolicies."
     },
@@ -33,7 +44,8 @@
     "fromCIDR": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "string",
+        "description": "A CIDR, eg `10.0.0.0/8`."
       },
       "description": "Cilium only: CIDRs the rule allows."
     },

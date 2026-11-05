@@ -26,10 +26,11 @@
       "type": "array",
       "items": {
         "type": "object",
+        "description": "A header the request has to match.",
         "properties": {
           "name": {
             "type": "string",
-            "description": "Name of the header or query parameter."
+            "description": "Name of the header."
           },
           "value": {
             "type": "string",
@@ -52,10 +53,11 @@
       "type": "array",
       "items": {
         "type": "object",
+        "description": "A query parameter the request has to match.",
         "properties": {
           "name": {
             "type": "string",
-            "description": "Name of the header or query parameter."
+            "description": "Name of the query parameter."
           },
           "value": {
             "type": "string",

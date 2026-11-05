@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "string",
-  "description": "See [Priority Class Name](/truecharts-common/workload#priorityclassname)",
-  "additionalProperties": false
+  "description": "Name of the PriorityClass of the pods (`priorityClassName`), which sets their scheduling priority. Overrides `podOptions.priorityClassName` for this workload."
 }

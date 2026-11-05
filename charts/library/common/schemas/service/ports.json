@@ -1,23 +1,26 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "description": "Define the port dict",
+  "description": "A port of the Service, keyed by name.",
   "properties": {
     "nodePort": {
       "type": [
         "integer",
         "string"
       ],
-      "description": "Define the node port that will be exposed on the node",
+      "description": "Port opened on every node. Only for `type: NodePort`.",
       "x-helm-tpl": true,
       "x-docs-required": true,
       "x-docs-appliesTo": [
         "NodePort"
+      ],
+      "examples": [
+        30080
       ]
     },
     "targetSelector": {
       "type": "string",
-      "description": "Define the port dict",
+      "description": "Name of the container port or workload the port points to. Defaults to the primary workload.",
       "x-helm-tpl": true
     },
     "port": {
@@ -25,18 +28,24 @@
         "integer",
         "string"
       ],
-      "description": "Define the port that will be exposed by the service",
+      "description": "Port the Service listens on.",
       "minimum": 1,
       "x-helm-tpl": true,
-      "x-docs-required": true
+      "x-docs-required": true,
+      "examples": [
+        8080
+      ]
     },
     "targetPort": {
       "type": [
         "integer",
         "string"
       ],
-      "description": "Define the target port (No named ports)",
-      "x-helm-tpl": true
+      "description": "Port on the pod the traffic is sent to, a number only. Defaults to `port`.",
+      "x-helm-tpl": true,
+      "examples": [
+        8080
+      ]
     },
     "protocol": {
       "oneOf": [
@@ -54,19 +63,19 @@
           "pattern": "^\\{\\{.*\\}\\}$"
         }
       ],
-      "description": "Define the port protocol Used by the container ports and probes, http and https are converted to tcp where needed",
+      "description": "Protocol of the port: `tcp`, `udp`, `sctp`, `http` or `https`. `http` and `https` are used as `TCP` where needed. Also used by container ports and probes.",
       "x-helm-tpl": true
     },
     "appProtocol": {
       "type": "string",
-      "description": "Define the appProtocol of the port, used by the `Endpoint` and `EndpointSlice` objects (External IP)"
+      "description": "Application protocol of the port, eg `https`. Also used by the `Endpoints` and `EndpointSlice` objects of `type: ExternalIP`."
     },
     "hostPort": {
       "type": [
         "integer",
         "string"
       ],
-      "description": "Define the hostPort, should be **avoided**, unless **ABSOLUTELY** necessary",
+      "description": "Port opened on the node by the container. Avoid this unless the app cannot work without it.",
       "x-helm-tpl": true
     },
     "enabled": {
@@ -74,11 +83,12 @@
         "boolean",
         "string"
       ],
-      "description": "Enable the port."
+      "description": "Create this port. Supports Helm `tpl`.",
+      "x-helm-tpl": true
     },
     "primary": {
       "type": "boolean",
-      "description": "Make this the primary port of the service."
+      "description": "Make this the primary port of the Service. Only 1 port can be primary."
     }
   },
   "additionalProperties": false

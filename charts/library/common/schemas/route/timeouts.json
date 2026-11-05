@@ -4,11 +4,17 @@
   "properties": {
     "request": {
       "type": "string",
-      "description": "Timeout for the complete request, expressed as a duration such as `10s`."
+      "description": "Timeout for the complete request, expressed as a duration such as `10s`.",
+      "examples": [
+        "30s"
+      ]
     },
     "backendRequest": {
       "type": "string",
-      "description": "Timeout for a backend request, expressed as a duration such as `5s`."
+      "description": "Timeout for a backend request, expressed as a duration such as `5s`.",
+      "examples": [
+        "10s"
+      ]
     }
   },
   "additionalProperties": false,

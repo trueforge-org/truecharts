@@ -10,8 +10,9 @@
           "boolean",
           "string"
         ],
-        "description": "Enable the HorizontalPodAutoscaler.",
-        "default": false
+        "description": "Create this HorizontalPodAutoscaler. Supports Helm `tpl`.",
+        "default": false,
+        "x-helm-tpl": true
       },
       "labels": {
         "allOf": [
@@ -92,7 +93,7 @@
                     "periodSeconds"
                   ],
                   "additionalProperties": false,
-                  "description": "Configuration for `hpa.main.behavior.scaleUp.policies.$item`."
+                  "description": "A scaling policy."
                 },
                 "description": "Policies that limit how fast the replicas change."
               }
@@ -147,7 +148,7 @@
                     "periodSeconds"
                   ],
                   "additionalProperties": false,
-                  "description": "Configuration for `hpa.main.behavior.scaleDown.policies.$item`."
+                  "description": "A scaling policy."
                 },
                 "description": "Policies that limit how fast the replicas change."
               }
@@ -202,7 +203,10 @@
                         "integer",
                         "string"
                       ],
-                      "description": "Target average value, as a quantity."
+                      "description": "Target average value, as a quantity.",
+                      "examples": [
+                        "500m"
+                      ]
                     },
                     "averageUtilization": {
                       "type": "integer",
@@ -293,7 +297,7 @@
                           "properties": {},
                           "additionalProperties": {
                             "type": "string",
-                            "description": "Value of the label"
+                            "description": "Value of the label."
                           },
                           "description": "Labels of the metric, keyed by name."
                         }
@@ -348,7 +352,7 @@
                           "properties": {},
                           "additionalProperties": {
                             "type": "string",
-                            "description": "Value of the label"
+                            "description": "Value of the label."
                           },
                           "description": "Labels of the metric, keyed by name."
                         }
@@ -430,7 +434,7 @@
                           "properties": {},
                           "additionalProperties": {
                             "type": "string",
-                            "description": "Value of the label"
+                            "description": "Value of the label."
                           },
                           "description": "Labels of the metric, keyed by name."
                         }
@@ -480,7 +484,7 @@
             "type"
           ],
           "additionalProperties": false,
-          "description": "Configuration for `hpa.main.metrics.$item`."
+          "description": "A metric the number of replicas is calculated from. Set the block that matches `type`."
         },
         "description": "Metrics the number of replicas is calculated from."
       },
@@ -490,14 +494,14 @@
             "$ref": "special/namespaces.json"
           }
         ],
-        "description": "Define the namespace for this object",
+        "description": "Namespace of the HorizontalPodAutoscaler. Defaults to the release namespace.",
         "default": "",
         "x-helm-tpl": true
       }
     },
     "additionalProperties": false,
-    "description": "Configuration for `hpa.main`.",
+    "description": "A HorizontalPodAutoscaler, keyed by name.",
     "default": {}
   },
-  "description": "Configuration for `hpa`."
+  "description": "HorizontalPodAutoscalers, keyed by name. Every enabled entry renders an HPA, see [HPA](/truecharts-common/hpa)."
 }

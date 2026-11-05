@@ -6,9 +6,12 @@
       "type": "array",
       "items": {
         "type": "string",
-        "description": "Configuration for `containerOptions.NVIDIA_CAPS.$item`."
+        "description": "An NVIDIA driver capability, eg `compute`, `utility` or `all`.",
+        "examples": [
+          "all"
+        ]
       },
-      "description": "Defines the NVIDIA_CAPS to be passed as an environment variable to the container.",
+      "description": "Driver capabilities passed to the NVIDIA runtime as the `NVIDIA_DRIVER_CAPABILITIES` environment variable of a container that uses an NVIDIA GPU.",
       "default": [
         "all"
       ],
@@ -16,5 +19,5 @@
     }
   },
   "additionalProperties": false,
-  "description": "Options that apply to all containers, unless overridden at the container level See more info about containerOptions [here](/truecharts-common/containeroptions)"
+  "description": "Options that apply to all containers, unless overridden at the container level. See [containerOptions](/truecharts-common/containerOptions)."
 }

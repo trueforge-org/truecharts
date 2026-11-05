@@ -10,21 +10,21 @@
         "properties": {
           "persistentVolumeClaimName": {
             "type": "string",
-            "description": "Define a volume snapshot"
+            "description": "Name of the PersistentVolumeClaim to snapshot."
           },
           "volumeSnapshotContentName": {
             "type": "string",
-            "description": "Define the volume snapshot content name"
+            "description": "Name of an existing VolumeSnapshotContent to use."
           }
         },
         "additionalProperties": false,
-        "description": "Define the source of the volume snapshot At least one of the following keys must be defined",
+        "description": "Source of the snapshot. Set one of `persistentVolumeClaimName` or `volumeSnapshotContentName`.",
         "default": {},
         "x-docs-required": true
       },
       "volumeSnapshotClassName": {
         "type": "string",
-        "description": "Define the name of the volume snapshot class used to create the snapshot"
+        "description": "Name of the VolumeSnapshotClass used to create the snapshot."
       },
       "labels": {
         "allOf": [
@@ -32,7 +32,7 @@
             "$ref": "special/labels.json"
           }
         ],
-        "description": "Define the labels of the volume snapshot",
+        "description": "Labels of the VolumeSnapshot.",
         "default": {},
         "x-helm-tpl": "On value only"
       },
@@ -58,7 +58,7 @@
             "$ref": "special/annotations.json"
           }
         ],
-        "description": "Define the annotations of the volume snapshot class",
+        "description": "Annotations of the VolumeSnapshot.",
         "default": {},
         "x-helm-tpl": "On value only"
       },
@@ -67,9 +67,7 @@
           "boolean",
           "string"
         ],
-        "properties": {},
-        "additionalProperties": false,
-        "description": "Enable volume snapshot",
+        "description": "Create this volume snapshot when true. Accepts a Helm `tpl` string that renders to `true` or `false`.",
         "default": false,
         "x-helm-tpl": true,
         "x-docs-required": true
@@ -80,14 +78,14 @@
             "$ref": "special/namespaces.json"
           }
         ],
-        "description": "Define the namespace for this object",
+        "description": "Namespace to create this object in. Overrides the chart-wide `namespace` and `global.namespace`.",
         "default": "",
         "x-helm-tpl": true
       }
     },
     "additionalProperties": false,
-    "description": "Define a volume snapshot",
+    "description": "A VolumeSnapshot.",
     "default": {}
   },
-  "description": "Define a volume snapshot"
+  "description": "VolumeSnapshots, keyed by name."
 }

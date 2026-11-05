@@ -5,7 +5,8 @@
     "matchLabels": {
       "type": "object",
       "additionalProperties": {
-        "type": "string"
+        "type": "string",
+        "description": "Value of the label."
       },
       "description": "Match pods with all of these labels."
     },
@@ -13,6 +14,7 @@
       "type": "array",
       "items": {
         "type": "object",
+        "description": "A label expression.",
         "properties": {
           "key": {
             "type": "string",
@@ -31,7 +33,8 @@
           "values": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "description": "A label value."
             },
             "description": "Values of the label."
           }

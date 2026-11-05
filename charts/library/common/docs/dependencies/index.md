@@ -22,13 +22,13 @@ title: Dependencies
 Configuration for chart dependencies. Each key is the name of a dependency and contains a chart values structure, which is merged on top of the defaults of the same name in the common library.
 The `valkey`, `mariadb`, `postgresql`, `memcached`, `mongodb` and `clickhouse` dependencies are predefined in common with `enabled: false` and their full specification, so a chart only needs to enable them and set its overrides.
 
-| Field      | Value          |
-| ---------- | -------------- |
-| Key        | `dependencies` |
-| Type       | `map`          |
-| Required   | ❌             |
-| Helm `tpl` | ❌             |
-| Default    | `{clickhouse: {enabled: false, ...}, mariadb: {enabled: false, ...}, memcached: {enabled: false, ...}, mongodb: {enabled: false, ...}, postgresql: {enabled: false, ...}, valkey: {enabled: false, ...}}` (see `dependencies.clickhouse`, `dependencies.mariadb`, `dependencies.memcached`, `dependencies.mongodb`, `dependencies.postgresql` and `dependencies.valkey` in `values.yaml`) |
+| Field | Value |
+| --- | --- |
+| Key | `dependencies` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{clickhouse: {enabled: false, ...}, mariadb: {enabled: false, ...}, memcached: {enabled: false, ...}, mongodb: {enabled: false, ...}, postgresql: {enabled: false, ...}, valkey: {enabled: false, ...}}` (see `dependencies.clickhouse`, `dependencies.mariadb`, `dependencies.memcached`, `dependencies.mongodb`, `dependencies.postgresql` and `dependencies.valkey` in `values.yaml`) |
 
 Example:
 
@@ -71,16 +71,16 @@ The name of the dependency is used as the prefix of its objects, so it must be a
 
 Besides `enabled`, `mode`, `operator` and `depconfig`, the dependency accepts the same keys as the chart values. They are handled as follows:
 
-| Keys                                                                                                                                           | Handling                                                                                                                                                     |
-| ---------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `workload`, `service`, `persistence`, `configmap`, `secret`, `serviceAccount`, `rbac`, `ingress`, `route`, `hpa`, `metrics`, ... (any object collection) | Each object is added to the chart as `$name-$object` (eg `workload.valkey-main`). Fails if an object with that name already exists in the chart.            |
-| `image`, `*Image`                                                                                                                              | Added to the chart as `$nameImage` and `$name<Foo>Image` (eg `valkeyImage`, `valkeyClientImage` for `clientImage`). Containers are pointed to them. A container selecting `image` fails if the dependency defines none, a dependency never falls back to the main image of the chart. Other images of the chart can be selected explicitly (eg `imageSelector: someImage`). |
-| `securityContext`, `podOptions`, `resources`                                                                                                   | Applied as defaults to the pods and containers of the dependency only, the same way the chart-level keys apply to the chart.                                  |
-| `global`, `chartContext`, `notes`, `fallbackDefaults`, `TZ`, `namespace`, `diagnosticMode`, `containerOptions`                                 | Ignored. These apply to the whole release and are taken from the chart.                                                                                      |
-| `enabled`, `mode`, `depconfig`, `operator`                                                                                                     | Settings of the dependency itself, never merged into the chart. See [`mode`](#dependenciesnamemode), [`depconfig`](#dependenciesnamedepconfig) and [`operator`](#dependenciesnameoperator). |
-| `addons`                                                                                                                                       | Applied to the workloads of the dependency, see [Addons](#addons).                                                                                           |
-| `dependencies`, `configMapsFromFolder`, `extraTpl`, `ingressMiddlewares`, `mariadb`, `mongodb`, `clickhouse`, `solr`, `cnpg`          | Not supported, rendering fails.                                                                                                                              |
-| Any other key                                                                                                                                  | Kept as is and available to templates under `.Values.dependencies.$name.$key`.                                                                               |
+| Keys | Handling |
+| --- | --- |
+| `workload`, `service`, `persistence`, `configmap`, `secret`, `serviceAccount`, `rbac`, `ingress`, `route`, `hpa`, `metrics`, ... (any object collection) | Each object is added to the chart as `$name-$object` (eg `workload.valkey-main`). Fails if an object with that name already exists in the chart. |
+| `image`, `*Image` | Added to the chart as `$nameImage` and `$name<Foo>Image` (eg `valkeyImage`, `valkeyClientImage` for `clientImage`). Containers are pointed to them. A container selecting `image` fails if the dependency defines none, a dependency never falls back to the main image of the chart. Other images of the chart can be selected explicitly (eg `imageSelector: someImage`). |
+| `securityContext`, `podOptions`, `resources` | Applied as defaults to the pods and containers of the dependency only, the same way the chart-level keys apply to the chart. |
+| `global`, `chartContext`, `notes`, `fallbackDefaults`, `TZ`, `namespace`, `diagnosticMode`, `containerOptions` | Ignored. These apply to the whole release and are taken from the chart. |
+| `enabled`, `mode`, `depconfig`, `operator` | Settings of the dependency itself, never merged into the chart. See [`mode`](#dependenciesnamemode), [`depconfig`](#dependenciesnamedepconfig) and [`operator`](#dependenciesnameoperator). |
+| `addons` | Applied to the workloads of the dependency, see [Addons](#addons). |
+| `dependencies`, `configMapsFromFolder`, `extraTpl`, `ingressMiddlewares`, `mariadb`, `mongodb`, `clickhouse`, `solr`, `cnpg` | Not supported, rendering fails. |
+| Any other key | Kept as is and available to templates under `.Values.dependencies.$name.$key`. |
 
 ---
 
@@ -88,13 +88,13 @@ Besides `enabled`, `mode`, `operator` and `depconfig`, the dependency accepts th
 
 Enable or disable the dependency. Objects of disabled dependencies are not merged, nor is anything else created for them.
 
-| Field      | Value                        |
-| ---------- | ---------------------------- |
-| Key        | `dependencies.$name.enabled` |
-| Type       | `boolean`                    |
-| Required   | ✅                           |
-| Helm `tpl` | ✅                           |
-| Default    | unset                        |
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.$name.enabled` |
+| Type | `boolean` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
 
 ---
 
@@ -102,13 +102,13 @@ Enable or disable the dependency. Objects of disabled dependencies are not merge
 
 How the dependency is provided. See [Modes](#modes).
 
-| Field      | Value                                     |
-| ---------- | ----------------------------------------- |
-| Key        | `dependencies.$name.mode`                 |
-| Type       | `string`                                  |
-| Required   | ❌                                        |
-| Helm `tpl` | ❌                                        |
-| Default    | `standalone`, `operator` for `postgresql` |
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.$name.mode` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `standalone`, `operator` for `postgresql` |
 
 Valid values:
 
@@ -134,13 +134,13 @@ Settings specific to the operator that provides the dependency, used with `mode:
 It is never merged into the chart values, the same as `depconfig`, and can be referenced by templates under `.Values.dependencies.$name.operator`.
 Common does not interpret its content, unless the dependency has operator support. Currently `valkey` and `postgresql` do, see [Valkey Operator](#valkey-operator) and [PostgreSQL Operator](#postgresql-operator).
 
-| Field      | Value                          |
-| ---------- | ------------------------------ |
-| Key        | `dependencies.$name.operator`  |
-| Type       | `map`                          |
-| Required   | ❌                             |
-| Helm `tpl` | ❌                             |
-| Default    | `{}`                           |
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.$name.operator` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 Example:
 
@@ -160,13 +160,13 @@ dependencies:
 
 Configuration of the dependency itself. It is never merged into the chart values and can be referenced by templates under `.Values.dependencies.$name.depconfig`.
 
-| Field      | Value                          |
-| ---------- | ------------------------------ |
-| Key        | `dependencies.$name.depconfig` |
-| Type       | `map`                          |
-| Required   | ❌                             |
-| Helm `tpl` | ❌                             |
-| Default    | `{}`                           |
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.$name.depconfig` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
@@ -174,13 +174,13 @@ Configuration of the dependency itself. It is never merged into the chart values
 
 Password of the dependency, used by the dependencies with additional handling (see [ClickHouse](#clickhouse), [MariaDB](#mariadb), [PostgreSQL](#postgresql), [MongoDB](#mongodb) and [Valkey](#valkey)).
 
-| Field      | Value                                   |
-| ---------- | --------------------------------------- |
-| Key        | `dependencies.$name.depconfig.password` |
-| Type       | `string`                                |
-| Required   | ❌                                      |
-| Helm `tpl` | ❌                                      |
-| Default    | `PLACEHOLDERPASSWORD`                   |
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.$name.depconfig.password` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `PLACEHOLDERPASSWORD` |
 
 ---
 
@@ -188,13 +188,13 @@ Password of the dependency, used by the dependencies with additional handling (s
 
 Connection details, populated by the dependencies with additional handling (see [ClickHouse](#clickhouse), [MariaDB](#mariadb), [PostgreSQL](#postgresql), [MongoDB](#mongodb) and [Valkey](#valkey)). Read-only.
 
-| Field      | Value                                |
-| ---------- | ------------------------------------ |
-| Key        | `dependencies.$name.depconfig.creds` |
-| Type       | `map`                                |
-| Required   | ❌                                   |
-| Helm `tpl` | ❌                                   |
-| Default    | `{}`                                 |
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.$name.depconfig.creds` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
@@ -204,10 +204,10 @@ Connection details, populated by the dependencies with additional handling (see 
 
 Every dependency has a `mode`, which defaults to `standalone`, except for `postgresql`, which defaults to `operator`. This applies to all dependencies, the ones predefined in common and the ones a chart defines itself.
 
-| Mode         | Objects merged into the chart | Credentials secret, wait init container and notes |
-| ------------ | ----------------------------- | ------------------------------------------------- |
-| `standalone` | ✅                            | ✅ (for the dependencies that have them)          |
-| `operator`   | ❌                            | ✅ (for the dependencies that have them)          |
+| Mode | Objects merged into the chart | Credentials secret, wait init container and notes |
+| --- | --- | --- |
+| `standalone` | ✅ | ✅ (for the dependencies that have them) |
+| `operator` | ❌ | ✅ (for the dependencies that have them) |
 
 In `operator` mode the dependency is expected to be provided by an operator, so the workloads, services, persistence, images, addons, etc. of the dependency are not added to the chart.
 Everything else keeps working, so a chart can switch between the modes without changing how the app connects to the dependency:
@@ -245,7 +245,6 @@ A dependency that a chart defines itself has no such defaults and inherits the `
 
 Within a dependency, the primary objects are resolved as follows: the object with `primary: true`, otherwise the only object of the collection, otherwise the object named `main`.
 This applies to workloads, their containers, services, their ports and serviceAccounts.
-
 
 In the chart, the objects of a dependency are marked with the name of their dependency (`dependency: valkey`) and are **not** primary (`primary: false`), unless they explicitly set `primary: true`.
 Marked objects that are not primary do not take part in the primary validation of the chart, so a chart does not need a primary object of its own in a collection that only has objects of dependencies.
@@ -299,23 +298,23 @@ These keys are not prefixed: `global`, `securityContext`, `podOptions`, `enabled
 All references to other objects are rewritten to the prefixed names, when the referenced object is defined within the dependency.
 A reference to an object that is not defined in the dependency is kept as is, which means it points to the object of the chart.
 
-| Object                                   | Reference                                                    | Default                                                         |
-| ---------------------------------------- | ------------------------------------------------------------ | --------------------------------------------------------------- |
-| `service`                                | `targetSelector` → workload                                  | primary workload of the dependency                              |
-| `persistence`                            | `targetSelector` → workloads and containers                  | primary workload and container of the dependency                |
-| `persistence` (`configmap`, `secret`)    | `objectName` → configmap or secret                           | -                                                               |
-| `persistence` (`volsync`)                | `credentials` → credentials                                  | -                                                               |
-| `serviceAccount`, `imagePullSecret`      | `targetSelector` → workloads                                 | primary workload of the dependency                              |
-| `rbac`                                   | `serviceAccounts` → serviceAccounts                          | primary serviceAccount of the dependency                        |
-| `ingress`                                | `targetSelector` → service and port                          | primary service and port of the dependency                      |
-| `route`                                  | `targetSelector`, `parentRefs[].targetSelector` → gateway    | -                                                               |
-| `route`                                  | `rules[].backendRefs[].targetSelector` → service             | primary service of the dependency                               |
-| `gateway`                                | `targetSelector` → gatewayClass                              | -                                                               |
-| `hpa`, `vpa`                             | `targetSelector` → workloads                                 | all workloads of the dependency                                 |
-| `podDisruptionBudget`, `networkpolicy`   | `targetSelector` → workload                                  | primary workload of the dependency                              |
-| `metrics`                                | `targetSelector` → service (or workload for `podmonitor`)    | primary service (or workload) of the dependency                 |
-| containers                               | `imageSelector` → image                                      | `image` of the dependency (required, unless another image is selected)  |
-| containers                               | `env.*.configMapKeyRef`, `env.*.secretKeyRef`, `envFrom[]`   | -                                                               |
+| Object | Reference | Default |
+| --- | --- | --- |
+| `service` | `targetSelector` → workload | primary workload of the dependency |
+| `persistence` | `targetSelector` → workloads and containers | primary workload and container of the dependency |
+| `persistence` (`configmap`, `secret`) | `objectName` → configmap or secret | - |
+| `persistence` (`volsync`) | `credentials` → credentials | - |
+| `serviceAccount`, `imagePullSecret` | `targetSelector` → workloads | primary workload of the dependency |
+| `rbac` | `serviceAccounts` → serviceAccounts | primary serviceAccount of the dependency |
+| `ingress` | `targetSelector` → service and port | primary service and port of the dependency |
+| `route` | `targetSelector`, `parentRefs[].targetSelector` → gateway | - |
+| `route` | `rules[].backendRefs[].targetSelector` → service | primary service of the dependency |
+| `gateway` | `targetSelector` → gatewayClass | - |
+| `hpa`, `vpa` | `targetSelector` → workloads | all workloads of the dependency |
+| `podDisruptionBudget`, `networkpolicy` | `targetSelector` → workload | primary workload of the dependency |
+| `metrics` | `targetSelector` → service (or workload for `podmonitor`) | primary service (or workload) of the dependency |
+| containers | `imageSelector` → image | `image` of the dependency (required, unless another image is selected) |
+| containers | `env.*.configMapKeyRef`, `env.*.secretKeyRef`, `envFrom[]` | - |
 
 The `targetSelector` of service ports points to a container name and is not rewritten.
 
@@ -361,15 +360,15 @@ The `clickhouse` dependency has additional handling:
 
 - A secret named `$releaseName-clickhousecreds` is created with the connection details, and the same details are available under `.Values.dependencies.clickhouse.depconfig.creds`:
 
-  | Key                   | `creds` key          | Example                                           |
-  | --------------------- | -------------------- | ------------------------------------------------- |
-  | `clickhouse-password` | `clickhousePassword` | `my-password`                                     |
-  | `plainhost`           | `plain`, `plainhost` | `myapp-clickhouse-main`                           |
-  | -                     | `plainport`          | `8123`                                            |
-  | `plainporthost`       | `plainporthost`      | `myapp-clickhouse-main:8123`                      |
-  | `ping`                | `ping`               | `http://myapp-clickhouse-main:8123/ping`          |
-  | `url`                 | `complete`           | `http://test:my-password@myapp-clickhouse-main:8123/test` |
-  | `jdbc`                | `jdbc`               | `jdbc:ch://myapp-clickhouse-main:8123/test`       |
+  | Key | `creds` key | Example |
+  | --- | --- | --- |
+  | `clickhouse-password` | `clickhousePassword` | `my-password` |
+  | `plainhost` | `plain`, `plainhost` | `myapp-clickhouse-main` |
+  | - | `plainport` | `8123` |
+  | `plainporthost` | `plainporthost` | `myapp-clickhouse-main:8123` |
+  | `ping` | `ping` | `http://myapp-clickhouse-main:8123/ping` |
+  | `url` | `complete` | `http://test:my-password@myapp-clickhouse-main:8123/test` |
+  | `jdbc` | `jdbc` | `jdbc:ch://myapp-clickhouse-main:8123/test` |
 
   The host and port are the ones of the primary service and port of the dependency, and the URLs use the HTTP interface.
   Like the `creds` of the other dependencies, the values are quoted strings, use `| trimAll "\""` when templating them.
@@ -378,12 +377,12 @@ The `clickhouse` dependency has additional handling:
 
 The `depconfig` of the dependency accepts:
 
-| Key                                 | Default               | Description                                                       |
-| ----------------------------------- | --------------------- | ----------------------------------------------------------------- |
-| `password`                          | `PLACEHOLDERPASSWORD` | Password of the database user                                     |
-| `clickhouseUsername`                | `test`                | Name of the database user                                         |
-| `clickhouseDatabase`                | `test`                | Name of the database                                              |
-| `clickhouseDefaultAccessManagement` | `0`                   | Set to `1` to allow the user to manage users and grants with SQL  |
+| Key | Default | Description |
+| --- | --- | --- |
+| `password` | `PLACEHOLDERPASSWORD` | Password of the database user |
+| `clickhouseUsername` | `test` | Name of the database user |
+| `clickhouseDatabase` | `test` | Name of the database |
+| `clickhouseDefaultAccessManagement` | `0` | Set to `1` to allow the user to manage users and grants with SQL |
 
 The password is applied again on every start, so it can be changed later.
 The database is created on every start if it does not exist, so changing `clickhouseDatabase` later creates a new, empty database.
@@ -458,18 +457,18 @@ The `mariadb` dependency has additional handling:
 
 - A secret named `$releaseName-mariadbcreds` is created with the connection details, and the same details are available under `.Values.dependencies.mariadb.depconfig.creds`:
 
-  | Key                     | `creds` key        | Example                                                              |
-  | ----------------------- | ------------------ | -------------------------------------------------------------------- |
-  | `mariadb-password`      | `mariadbPassword`  | `my-password`                                                        |
-  | `mariadb-root-password` | `mariadbRootPassword` | `my-root-password`                                                |
-  | `plainhost`             | `plain`, `plainhost` | `myapp-mariadb-main`                                               |
-  | -                       | `plainport`        | `3306`                                                               |
-  | `plainporthost`         | `plainporthost`    | `myapp-mariadb-main:3306`                                            |
-  | `url`                   | `complete`         | `mysql://test:my-password@myapp-mariadb-main:3306/test`              |
-  | `urlnossl`              | `urlnossl`         | `mysql://test:my-password@myapp-mariadb-main:3306/test?sslmode=disable` |
-  | `jdbc`                  | `jdbc`             | `jdbc:mariadb://myapp-mariadb-main:3306/test`                        |
-  | `jdbc-mysql`            | `jdbcmysql`        | `jdbc:mysql://myapp-mariadb-main:3306/test`                          |
-  | `jdbc-mariadb`          | `jdbcmariadb`      | `jdbc:mariadb://myapp-mariadb-main:3306/test`                        |
+  | Key | `creds` key | Example |
+  | --- | --- | --- |
+  | `mariadb-password` | `mariadbPassword` | `my-password` |
+  | `mariadb-root-password` | `mariadbRootPassword` | `my-root-password` |
+  | `plainhost` | `plain`, `plainhost` | `myapp-mariadb-main` |
+  | - | `plainport` | `3306` |
+  | `plainporthost` | `plainporthost` | `myapp-mariadb-main:3306` |
+  | `url` | `complete` | `mysql://test:my-password@myapp-mariadb-main:3306/test` |
+  | `urlnossl` | `urlnossl` | `mysql://test:my-password@myapp-mariadb-main:3306/test?sslmode=disable` |
+  | `jdbc` | `jdbc` | `jdbc:mariadb://myapp-mariadb-main:3306/test` |
+  | `jdbc-mysql` | `jdbcmysql` | `jdbc:mysql://myapp-mariadb-main:3306/test` |
+  | `jdbc-mariadb` | `jdbcmariadb` | `jdbc:mariadb://myapp-mariadb-main:3306/test` |
 
   The host and port are the ones of the primary service and port of the dependency.
   Like the `creds` of the other dependencies, the values are quoted strings, use `| trimAll "\""` when templating them.
@@ -478,12 +477,12 @@ The `mariadb` dependency has additional handling:
 
 The `depconfig` of the dependency accepts:
 
-| Key               | Default                   | Description                         |
-| ----------------- | ------------------------- | ----------------------------------- |
-| `password`        | `PLACEHOLDERPASSWORD`     | Password of the database user       |
-| `rootPassword`    | `PLACEHOLDERROOTPASSWORD` | Password of the `root` user         |
-| `mariadbUsername` | `test`                    | Name of the database user           |
-| `mariadbDatabase` | `test`                    | Name of the database                |
+| Key | Default | Description |
+| --- | --- | --- |
+| `password` | `PLACEHOLDERPASSWORD` | Password of the database user |
+| `rootPassword` | `PLACEHOLDERROOTPASSWORD` | Password of the `root` user |
+| `mariadbUsername` | `test` | Name of the database user |
+| `mariadbDatabase` | `test` | Name of the database |
 
 Both passwords need at least 4 characters, and are applied again on every start, so they can be changed later.
 The `url` and `urlnossl` values do not escape the password, so avoid characters like `@`, `:` and `/` when an app uses those.
@@ -561,15 +560,15 @@ Both modes share the same handling:
 
 - A secret named `$releaseName-postgresqlcreds` is created with the connection details, and the same details are available under `.Values.dependencies.postgresql.depconfig.creds`:
 
-  | Key                   | `creds` key          | Example                                                                      |
-  | --------------------- | -------------------- | ---------------------------------------------------------------------------- |
-  | `postgresql-password` | `postgresqlPassword` | `my-password`                                                                |
-  | `plainhost`           | `plain`, `plainhost` | `myapp-postgresql-main`                                                      |
-  | -                     | `plainport`          | `5432`                                                                       |
-  | `plainporthost`       | `plainporthost`      | `myapp-postgresql-main:5432`                                                 |
-  | `url`                 | `complete`           | `postgresql://app:my-password@myapp-postgresql-main:5432/app`                |
-  | `urlnossl`            | `urlnossl`           | `postgresql://app:my-password@myapp-postgresql-main:5432/app?sslmode=disable`   |
-  | `jdbc`                | `jdbc`               | `jdbc:postgresql://myapp-postgresql-main:5432/app`                            |
+  | Key | `creds` key | Example |
+  | --- | --- | --- |
+  | `postgresql-password` | `postgresqlPassword` | `my-password` |
+  | `plainhost` | `plain`, `plainhost` | `myapp-postgresql-main` |
+  | - | `plainport` | `5432` |
+  | `plainporthost` | `plainporthost` | `myapp-postgresql-main:5432` |
+  | `url` | `complete` | `postgresql://app:my-password@myapp-postgresql-main:5432/app` |
+  | `urlnossl` | `urlnossl` | `postgresql://app:my-password@myapp-postgresql-main:5432/app?sslmode=disable` |
+  | `jdbc` | `jdbc` | `jdbc:postgresql://myapp-postgresql-main:5432/app` |
 
   The host and port are the ones of the primary service and port of the dependency in `standalone` mode, and the ones of the CNPG service in `operator` mode (see [PostgreSQL Operator](#postgresql-operator)). The keys are the same in both modes.
   Like the `creds` of the other dependencies, the values are quoted strings, use `| trimAll "\""` when templating them.
@@ -579,11 +578,11 @@ Both modes share the same handling:
 
 The `depconfig` of the dependency accepts:
 
-| Key                  | Default               | Description                                               |
-| -------------------- | --------------------- | --------------------------------------------------------- |
-| `password`           | `PLACEHOLDERPASSWORD` | Password of the database user                             |
-| `postgresqlUsername` | `app`                 | Name of the database user. The superuser of the server in `standalone` mode, the owner of the database in `operator` mode |
-| `postgresqlDatabase` | `app`                 | Name of the database, created on the first start          |
+| Key | Default | Description |
+| --- | --- | --- |
+| `password` | `PLACEHOLDERPASSWORD` | Password of the database user |
+| `postgresqlUsername` | `app` | Name of the database user. The superuser of the server in `standalone` mode, the owner of the database in `operator` mode |
+| `postgresqlDatabase` | `app` | Name of the database, created on the first start |
 
 The `url` and `urlnossl` values do not escape the password, so avoid characters like `@`, `:` and `/` when an app uses those.
 
@@ -663,31 +662,31 @@ All settings of the cluster go under `dependencies.postgresql.operator`. Only th
 - The `postgresqlUsername`, `postgresqlDatabase` and `password` of `depconfig` bootstrap the cluster, a `kubernetes.io/basic-auth` `Secret` named `$fullname-cnpg-main-user` holds the user and password of the owner of the database.
 - The CNPG services are the single source of truth for the host and port: the `plainhost`, `plainport`, `plainporthost`, `url`, `urlnossl` and `jdbc` of `postgresqlcreds`, the `postgresql-wait` init container and the notes all read them from the same helper, and the `service` of the dependency is ignored. The port is always `5432`.
 
-  | Settings                                         | Host (`plainhost`)                | Read-only host (`plainhostRO`)  |
-  | ------------------------------------------------ | --------------------------------- | ------------------------------- |
-  | default                                          | `$fullname-cnpg-main-rw`          | -                               |
-  | `operator.pooler.enabled`                        | `$fullname-cnpg-main-pooler-rw`   | -                               |
-  | `operator.pooler.enabled` and `createRO`         | `$fullname-cnpg-main-pooler-rw`   | `$fullname-cnpg-main-pooler-ro` |
+  | Settings | Host (`plainhost`) | Read-only host (`plainhostRO`) |
+  | --- | --- | --- |
+  | default | `$fullname-cnpg-main-rw` | - |
+  | `operator.pooler.enabled` | `$fullname-cnpg-main-pooler-rw` | - |
+  | `operator.pooler.enabled` and `createRO` | `$fullname-cnpg-main-pooler-rw` | `$fullname-cnpg-main-pooler-ro` |
 
   With `createRO`, the `plainRO`, `plainhostRO`, `plainportRO`, `plainporthostRO`, `completeRO`, `urlnosslRO` and `jdbcRO` keys are added to `depconfig.creds`, and `urlRO`, `urlnosslRO`, `plainhostRO`, `plainporthostRO` and `jdbcRO` to the secret.
 - The `postgresql-wait` init container is the same as in `standalone` mode. It waits for the cluster, then for the pooler and the read-only pooler when those are enabled.
 - The `Cluster`, `Pooler`, `ObjectStore`, `ScheduledBackup` and `Backup` resources follow the CNPG and barman-cloud CRDs, their structure did not change from the former top-level `cnpg` key.
 - `backups.credentials` and `recovery.credentials` reference the top-level `credentials` of the chart.
 
-| Key                                                      | Type     | Default                  | Description                                                                                                  |
-| -------------------------------------------------------- | -------- | ------------------------ | ------------------------------------------------------------------------------------------------------------ |
-| `operator.type`                                          | `string` | `postgres`               | `postgres`, `postgis`, `vectors` or `vectorchord`.                                                           |
-| `operator.pgVersion`                                     | `int`    | `18`                     | Major version of PostgreSQL, `15` to `18`. Selects the image of the chart. Defaults to the PostgreSQL 18 fallback.      |
-| `operator.mode`                                          | `string` | `standalone`             | `standalone` creates the cluster, `recovery` creates it from a backup or object store.                       |
-| `operator.hibernate`                                     | `bool`   | `false`                  | Puts the cluster in hibernation. The poolers are scaled to `0`.                                              |
-| `operator.labels` / `operator.annotations`               | `map`    | `{}`                     | Extra labels and annotations of all CNPG objects.                                                            |
-| `operator.cluster`                                       | `map`    | `{instances: 2, ...}`    | Settings of the `Cluster` (`instances`, `storage`, `walStorage`, `resources`, `postgresql`, `initdb`, `certificates`, ...). See [cluster](dependencies/postgresql/operator/cluster/index.md). |
-| `operator.pooler`                                        | `map`    | `{enabled: false, ...}`  | PgBouncer `Pooler` (`enabled`, `createRO`, `poolMode`, `instances`, `parameters`).                           |
-| `operator.monitoring`                                    | `map`    | `{enablePodMonitor: false, ...}` | Metrics (`enablePodMonitor`, `disableDefaultQueries`, `customQueries`).                              |
-| `operator.recovery`                                      | `map`    | `{method: object_store}` | Recovery source, used when `operator.mode` is `recovery`.                                                    |
-| `operator.backups`                                       | `map`    | `{enabled: false, ...}`  | Barman Cloud backups (`credentials`, `scheduledBackups`, `manualBackups`, `retentionPolicy`, ...).           |
+| Key | Type | Default | Description |
+| --- | --- | --- | --- |
+| `operator.type` | `string` | `postgres` | `postgres`, `postgis`, `vectors` or `vectorchord`. |
+| `operator.pgVersion` | `int` | `18` | Major version of PostgreSQL, `15` to `18`. Selects the image of the chart. Defaults to the PostgreSQL 18 fallback. |
+| `operator.mode` | `string` | `standalone` | `standalone` creates the cluster, `recovery` creates it from a backup or object store. |
+| `operator.hibernate` | `bool` | `false` | Puts the cluster in hibernation. The poolers are scaled to `0`. |
+| `operator.labels` / `operator.annotations` | `map` | `{}` | Extra labels and annotations of all CNPG objects. |
+| `operator.cluster` | `map` | `{instances: 2, ...}` | Settings of the `Cluster` (`instances`, `storage`, `walStorage`, `resources`, `postgresql`, `initdb`, `certificates`, ...). See [cluster](/truecharts-common/dependencies/postgresql). |
+| `operator.pooler` | `map` | `{enabled: false, ...}` | PgBouncer `Pooler` (`enabled`, `createRO`, `poolMode`, `instances`, `parameters`). |
+| `operator.monitoring` | `map` | `{enablePodMonitor: false, ...}` | Metrics (`enablePodMonitor`, `disableDefaultQueries`, `customQueries`). |
+| `operator.recovery` | `map` | `{method: object_store}` | Recovery source, used when `operator.mode` is `recovery`. |
+| `operator.backups` | `map` | `{enabled: false, ...}` | Barman Cloud backups (`credentials`, `scheduledBackups`, `manualBackups`, `retentionPolicy`, ...). |
 
-See [Operator](dependencies/postgresql/operator/index.md) for all the settings.
+See [Operator](/truecharts-common/dependencies/postgresql) for all the settings.
 
 ### Moving from the `cnpg` key
 
@@ -697,7 +696,7 @@ Changes to be aware of:
 - Only a single cluster per release. The object names (`$fullname-cnpg-main`, `$fullname-cnpg-main-user`, ...) are the ones of the former `cnpg.main`, so a chart that only used `main` upgrades in place.
 - The `cnpg-main-urls` secret and the `cnpg.main.creds` values are replaced by the `postgresqlcreds` secret and `depconfig.creds`. The keys are named as in the table above (eg `plainporthost`, `url`, `jdbc`, and `urlRO` etc for the read-only pooler).
 - The `checksum/cnpg` annotation is no longer added to the pods, as the credentials are in `postgresqlcreds`.
-- Without `operator.pgVersion`, `global.fallbackDefaults.cnpg.pgVersion` (`18`) is used, and `16` for `type: vectors`. CloudNativePG upgrades an existing cluster in place with `pg_upgrade`, so set `operator.pgVersion` to keep a cluster on its current version. See [pgVersion](dependencies/postgresql/operator/index.md#dependenciespostgresqloperatorpgversion).
+- Without `operator.pgVersion`, `global.fallbackDefaults.cnpg.pgVersion` (`18`) is used, and `16` for `type: vectors`. CloudNativePG upgrades an existing cluster in place with `pg_upgrade`, so set `operator.pgVersion` to keep a cluster on its current version. See [pgVersion](/truecharts-common/dependencies/postgresql).
 
 ### Example
 
@@ -786,17 +785,17 @@ The `mongodb` dependency has additional handling:
 
 - A secret named `$releaseName-mongodbcreds` is created with the connection details, and the same details are available under `.Values.dependencies.mongodb.depconfig.creds`:
 
-  | Key                     | `creds` key           | Example                                                    |
-  | ----------------------- | --------------------- | ---------------------------------------------------------- |
-  | `mongodb-password`      | `mongodbPassword`     | `my-password`                                              |
-  | `mongodb-root-password` | `mongodbRootPassword` | `my-root-password`                                         |
-  | `plainhost`             | `plain`, `plainhost`  | `myapp-mongodb-main`                                       |
-  | -                       | `plainport`           | `27017`                                                    |
-  | `plainporthost`         | `plainporthost`       | `myapp-mongodb-main:27017`                                 |
-  | `url`                   | `complete`            | `mongodb://test:my-password@myapp-mongodb-main:27017/test` |
-  | `urlssl`                | `urlssl`              | the `url` followed by `?ssl=true`                          |
-  | `urltls`                | `urltls`              | the `url` followed by `?tls=true`                          |
-  | `jdbc`                  | `jdbc`                | `jdbc:mongodb://myapp-mongodb-main:27017/test`             |
+  | Key | `creds` key | Example |
+  | --- | --- | --- |
+  | `mongodb-password` | `mongodbPassword` | `my-password` |
+  | `mongodb-root-password` | `mongodbRootPassword` | `my-root-password` |
+  | `plainhost` | `plain`, `plainhost` | `myapp-mongodb-main` |
+  | - | `plainport` | `27017` |
+  | `plainporthost` | `plainporthost` | `myapp-mongodb-main:27017` |
+  | `url` | `complete` | `mongodb://test:my-password@myapp-mongodb-main:27017/test` |
+  | `urlssl` | `urlssl` | the `url` followed by `?ssl=true` |
+  | `urltls` | `urltls` | the `url` followed by `?tls=true` |
+  | `jdbc` | `jdbc` | `jdbc:mongodb://myapp-mongodb-main:27017/test` |
 
   The host and port are the ones of the primary service and port of the dependency.
   Like the `creds` of the other dependencies, the values are quoted strings, use `| trimAll "\""` when templating them.
@@ -807,12 +806,12 @@ The `mongodb` dependency has additional handling:
 
 The `depconfig` of the dependency accepts:
 
-| Key               | Default                   | Description                         |
-| ----------------- | ------------------------- | ----------------------------------- |
-| `password`        | `PLACEHOLDERPASSWORD`     | Password of the database user       |
-| `rootPassword`    | `PLACEHOLDERROOTPASSWORD` | Password of the `root` user         |
-| `mongodbUsername` | `test`                    | Name of the database user           |
-| `mongodbDatabase` | `test`                    | Name of the database                |
+| Key | Default | Description |
+| --- | --- | --- |
+| `password` | `PLACEHOLDERPASSWORD` | Password of the database user |
+| `rootPassword` | `PLACEHOLDERROOTPASSWORD` | Password of the `root` user |
+| `mongodbUsername` | `test` | Name of the database user |
+| `mongodbDatabase` | `test` | Name of the database |
 
 Both passwords are applied again on every start, so they can be changed later.
 The `url`, `urlssl` and `urltls` values do not escape the password, so avoid characters like `@`, `:` and `/` when an app uses those.
@@ -886,15 +885,15 @@ The `valkey` dependency has additional handling:
 
 - A secret named `$releaseName-valkeycreds` is created with the connection details, and the same details are available under `.Values.dependencies.valkey.depconfig.creds`:
 
-  | Key               | Example                                            |
-  | ----------------- | -------------------------------------------------- |
-  | `valkey-password` | `my-password`                                      |
-  | `plain`           | `myapp-valkey-main`                                |
-  | `plainhost`       | `myapp-valkey-main`                                |
-  | `plainport`       | `6379`                                             |
-  | `plainporthost`   | `myapp-valkey-main:6379`                           |
-  | `plainhostpass`   | `myapp-valkey-main:my-password`                    |
-  | `url`             | `redis://default:my-password@myapp-valkey-main:6379/0`    |
+  | Key | Example |
+  | --- | --- |
+  | `valkey-password` | `my-password` |
+  | `plain` | `myapp-valkey-main` |
+  | `plainhost` | `myapp-valkey-main` |
+  | `plainport` | `6379` |
+  | `plainporthost` | `myapp-valkey-main:6379` |
+  | `plainhostpass` | `myapp-valkey-main:my-password` |
+  | `url` | `redis://default:my-password@myapp-valkey-main:6379/0` |
 
   The host and port are the ones of the primary service and port of the dependency.
   Like the `creds` of the other dependencies, the values are quoted strings, use `| trimAll "\""` when templating them.
@@ -966,31 +965,31 @@ All settings of the cluster go under `dependencies.valkey.operator`. Only the cr
 - `networking.tls` is not supported, as the credentials and the wait init container connect without TLS. Rendering fails when it is set.
 - `global.stopAll` can not be honoured, as the operator requires at least one shard.
 
-| Key                                                      | Type     | Default                  | Description                                                                                                  |
-| -------------------------------------------------------- | -------- | ------------------------ | ------------------------------------------------------------------------------------------------------------ |
-| `operator.shards`                                        | `int`    | `1`                      | Number of shards, at least `1`.                                                                              |
-| `operator.replicas`                                      | `int`    | `0`                      | Replicas per shard, at least `0`.                                                                            |
-| `operator.imageSelector`                                 | `string` | `valkeyImage`            | Image of the nodes, on the root of the values.                                                               |
-| `operator.workloadType`                                  | `string` | `StatefulSet`            | `StatefulSet` or `Deployment`. Immutable.                                                                    |
-| `operator.config`                                        | `map`    | `{}`                     | Valkey configuration. Booleans become `yes`/`no`, values are templated.                                      |
-| `operator.resources`                                     | `map`    | `{}`                     | Resources of the Valkey containers. Defaults to the resources of the chart.                                  |
-| `operator.persistence.enabled`                           | `bool`   | `true`                   | Persist the data, requires `StatefulSet`.                                                                    |
-| `operator.persistence.size`                              | `string` | `""`                     | Size of the volume. Defaults to the fallback size of the chart. It can only grow.                            |
-| `operator.persistence.storageClass`                      | `string` | `""`                     | Storage class. Defaults to the one of the chart, `-` leaves it unset.                                        |
-| `operator.persistence.retain`                            | `bool`   | `false`                  | Retain the volumes when the cluster is deleted. Defaults to `global.fallbackDefaults.pvcRetain`.             |
-| `operator.exporter`                                      | `map`    | `{enabled: true, ...}`   | Metrics exporter (`enabled`, `imageSelector`, `args`, `resources`, `securityContext`).                       |
-| `operator.scheduling`                                    | `map`    | `{}`                     | Scheduling settings of the cluster, passed through.                                                          |
-| `operator.podDisruptionBudget.mode`                      | `string` | `Cluster`                | `Cluster` or `Disabled`.                                                                                     |
-| `operator.podMetadata`                                   | `map`    | `{labels: {}, annotations: {}}` | Extra labels and annotations of the pods.                                                             |
-| `operator.imagePullSecrets`                              | `list`   | `[]`                     | Names, or objects with a `name`.                                                                             |
-| `operator.podSecurityContext`                            | `map`    | `{}`                     | Overrides the security context derived from the chart.                                                       |
-| `operator.serviceAccountName`                            | `string` | `""`                     | Service account of the pods.                                                                                 |
-| `operator.terminationGracePeriodSeconds`                 | `int`    | unset                    | Termination grace period of the pods.                                                                        |
-| `operator.containers`                                    | `list`   | `[]`                     | Extra containers, passed through.                                                                            |
-| `operator.networking.clusterDomain`                      | `string` | `""`                     | Cluster domain used for the node addresses.                                                                  |
-| `operator.networking.discovery.preferredEndpointType`    | `string` | `""`                     | `IP` or `Hostname`. `Hostname` requires `StatefulSet`.                                                       |
-| `operator.users`                                         | `list`   | `[]`                     | Additional users, see the [valkey-operator docs](https://github.com/valkey-io/valkey-operator/blob/main/docs/valkeycluster.md#users). |
-| `operator.labels` / `operator.annotations`               | `map`    | `{}`                     | Extra labels and annotations of the `ValkeyCluster`.                                                         |
+| Key | Type | Default | Description |
+| --- | --- | --- | --- |
+| `operator.shards` | `int` | `1` | Number of shards, at least `1`. |
+| `operator.replicas` | `int` | `0` | Replicas per shard, at least `0`. |
+| `operator.imageSelector` | `string` | `valkeyImage` | Image of the nodes, on the root of the values. |
+| `operator.workloadType` | `string` | `StatefulSet` | `StatefulSet` or `Deployment`. Immutable. |
+| `operator.config` | `map` | `{}` | Valkey configuration. Booleans become `yes`/`no`, values are templated. |
+| `operator.resources` | `map` | `{}` | Resources of the Valkey containers. Defaults to the resources of the chart. |
+| `operator.persistence.enabled` | `bool` | `true` | Persist the data, requires `StatefulSet`. |
+| `operator.persistence.size` | `string` | `""` | Size of the volume. Defaults to the fallback size of the chart. It can only grow. |
+| `operator.persistence.storageClass` | `string` | `""` | Storage class. Defaults to the one of the chart, `-` leaves it unset. |
+| `operator.persistence.retain` | `bool` | `false` | Retain the volumes when the cluster is deleted. Defaults to `global.fallbackDefaults.pvcRetain`. |
+| `operator.exporter` | `map` | `{enabled: true, ...}` | Metrics exporter (`enabled`, `imageSelector`, `args`, `resources`, `securityContext`). |
+| `operator.scheduling` | `map` | `{}` | Scheduling settings of the cluster, passed through. |
+| `operator.podDisruptionBudget.mode` | `string` | `Cluster` | `Cluster` or `Disabled`. |
+| `operator.podMetadata` | `map` | `{labels: {}, annotations: {}}` | Extra labels and annotations of the pods. |
+| `operator.imagePullSecrets` | `list` | `[]` | Names, or objects with a `name`. |
+| `operator.podSecurityContext` | `map` | `{}` | Overrides the security context derived from the chart. |
+| `operator.serviceAccountName` | `string` | `""` | Service account of the pods. |
+| `operator.terminationGracePeriodSeconds` | `int` | unset | Termination grace period of the pods. |
+| `operator.containers` | `list` | `[]` | Extra containers, passed through. |
+| `operator.networking.clusterDomain` | `string` | `""` | Cluster domain used for the node addresses. |
+| `operator.networking.discovery.preferredEndpointType` | `string` | `""` | `IP` or `Hostname`. `Hostname` requires `StatefulSet`. |
+| `operator.users` | `list` | `[]` | Additional users, see the [valkey-operator docs](https://github.com/valkey-io/valkey-operator/blob/main/docs/valkeycluster.md#users). |
+| `operator.labels` / `operator.annotations` | `map` | `{}` | Extra labels and annotations of the `ValkeyCluster`. |
 
 ### Example
 
@@ -1033,26 +1032,26 @@ The `clickhouse` key on the root level of the values is replaced by `dependencie
 Rendering fails when one of them has `enabled: true` (also when set using a template), as it would otherwise be silently ignored.
 A disabled key, or one without `enabled`, never rendered anything and does not fail.
 
-| Old key                             | New key                                  |
-| ----------------------------------- | ---------------------------------------- |
-| `redis.enabled`, `valkey.enabled`   | `dependencies.valkey.enabled`            |
+| Old key | New key |
+| --- | --- |
+| `redis.enabled`, `valkey.enabled` | `dependencies.valkey.enabled` |
 | `redis.password`, `valkey.password` | `dependencies.valkey.depconfig.password` |
-| `redis.creds`, `valkey.creds`       | `dependencies.valkey.depconfig.creds`    |
+| `redis.creds`, `valkey.creds` | `dependencies.valkey.depconfig.creds` |
 
-| Old key                                                 | New key                                                                                                         |
-| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `cnpg.enabled`, `cnpg.<name>.enabled`                   | `dependencies.postgresql.enabled`                                                                               |
-| `cnpg.<name>.user`, `cnpg.<name>.database`              | `dependencies.postgresql.depconfig.postgresqlUsername`, `dependencies.postgresql.depconfig.postgresqlDatabase`  |
-| `cnpg.<name>.password`                                  | `dependencies.postgresql.depconfig.password`                                                                    |
-| `cnpg.<name>.creds`                                     | `dependencies.postgresql.depconfig.creds`                                                                       |
-| `cnpg.<name>.<setting>` (eg `pgVersion`, `cluster`, `pooler`, `backups`, `recovery`) | `dependencies.postgresql.operator.<setting>`                                       |
+| Old key | New key |
+| --- | --- |
+| `cnpg.enabled`, `cnpg.<name>.enabled` | `dependencies.postgresql.enabled` |
+| `cnpg.<name>.user`, `cnpg.<name>.database` | `dependencies.postgresql.depconfig.postgresqlUsername`, `dependencies.postgresql.depconfig.postgresqlDatabase` |
+| `cnpg.<name>.password` | `dependencies.postgresql.depconfig.password` |
+| `cnpg.<name>.creds` | `dependencies.postgresql.depconfig.creds` |
+| `cnpg.<name>.<setting>` (eg `pgVersion`, `cluster`, `pooler`, `backups`, `recovery`) | `dependencies.postgresql.operator.<setting>` |
 
-| Old key                                                            | New key                                                          |
-| ------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| `clickhouse.enabled`                                               | `dependencies.clickhouse.enabled`                                |
-| `clickhouse.password`                                              | `dependencies.clickhouse.depconfig.password`                     |
-| `clickhouse.clickhouseUsername`, `clickhouse.clickhouseDatabase`   | `dependencies.clickhouse.depconfig.clickhouseUsername`, `dependencies.clickhouse.depconfig.clickhouseDatabase` |
-| `clickhouse.creds`                                                 | `dependencies.clickhouse.depconfig.creds`                        |
+| Old key | New key |
+| --- | --- |
+| `clickhouse.enabled` | `dependencies.clickhouse.enabled` |
+| `clickhouse.password` | `dependencies.clickhouse.depconfig.password` |
+| `clickhouse.clickhouseUsername`, `clickhouse.clickhouseDatabase` | `dependencies.clickhouse.depconfig.clickhouseUsername`, `dependencies.clickhouse.depconfig.clickhouseDatabase` |
+| `clickhouse.creds` | `dependencies.clickhouse.depconfig.creds` |
 
 The `solr` key on the root level of the values is no longer supported and has no replacement.
 Rendering fails when it has `enabled: true` (also when set using a template). A disabled key, or one without `enabled`, does not fail.

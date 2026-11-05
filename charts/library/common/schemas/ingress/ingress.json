@@ -14,7 +14,7 @@
                 "$ref": "traefik.json"
               }
             ],
-            "description": "Traefik middlewares and entrypoints.",
+            "description": "Traefik integration, see [Traefik](/truecharts-common/ingress/traefik).",
             "type": "object",
             "default": {}
           },
@@ -24,7 +24,7 @@
                 "$ref": "integrations/homepage.json"
               }
             ],
-            "description": "Annotations for the homepage dashboard.",
+            "description": "Homepage dashboard integration, see [Homepage](/truecharts-common/ingress/homepage).",
             "type": "object",
             "default": {}
           },
@@ -34,7 +34,7 @@
                 "$ref": "certManager.json"
               }
             ],
-            "description": "Certificates from cert-manager.",
+            "description": "cert-manager integration, see [cert-manager](/truecharts-common/ingress/certManager).",
             "type": "object",
             "default": {}
           },
@@ -46,7 +46,8 @@
                   "boolean",
                   "string"
                 ],
-                "description": "Enable the Ingress."
+                "description": "Add the ingress-nginx annotations of this integration to the Ingress.",
+                "x-helm-tpl": true
               },
               "themepark": {
                 "type": "object",
@@ -56,7 +57,8 @@
                       "boolean",
                       "string"
                     ],
-                    "description": "Enable the Ingress."
+                    "description": "Inject the Theme Park CSS into the responses of the app.",
+                    "x-helm-tpl": true
                   },
                   "css": {
                     "type": "string",
@@ -74,7 +76,8 @@
                       "boolean",
                       "string"
                     ],
-                    "description": "Enable the Ingress."
+                    "description": "Inject the Theme Park CSS into the responses of the app.",
+                    "x-helm-tpl": true
                   },
                   "css": {
                     "type": "string",
@@ -86,14 +89,19 @@
               },
               "ipWhitelist": {
                 "type": "array",
-                "description": "CIDRs that are allowed. Everything else is rejected."
+                "description": "CIDRs that are allowed. Everything else is rejected.",
+                "examples": [
+                  [
+                    "192.168.1.0/24"
+                  ]
+                ]
               },
               "auth": {
                 "type": "object",
                 "properties": {
                   "type": {
                     "type": "string",
-                    "description": "Authentication service, `authelia` or `authentik`."
+                    "description": "Authentication service: `authelia` or `authentik`. Leave empty to disable."
                   },
                   "internalHost": {
                     "type": "string",
@@ -105,7 +113,7 @@
                   },
                   "responseHeaders": {
                     "type": "array",
-                    "description": "Headers of the authentication response that are copied to the request."
+                    "description": "Headers of the authentication response that are copied to the request to the app."
                   }
                 },
                 "additionalProperties": false,
@@ -113,11 +121,11 @@
               }
             },
             "additionalProperties": false,
-            "description": "Settings for ingress-nginx."
+            "description": "ingress-nginx integration, see [nginx](/truecharts-common/ingress/nginx)."
           }
         },
         "additionalProperties": false,
-        "description": "Integrations with Traefik, nginx, cert-manager and homepage.",
+        "description": "Integrations that add annotations, middlewares or certificates to the Ingress.",
         "default": {}
       },
       "enabled": {
@@ -136,7 +144,7 @@
         "type": "boolean",
         "properties": {},
         "additionalProperties": false,
-        "description": "Make this the primary Ingress.",
+        "description": "Make this the primary Ingress, used in notes and the chart context. Only 1 Ingress can be primary.",
         "default": false,
         "x-docs-required": true
       },
@@ -144,7 +152,7 @@
         "type": "boolean",
         "properties": {},
         "additionalProperties": false,
-        "description": "Define if the object name should be expanded",
+        "description": "Prefix the name of the Ingress with the release fullname.",
         "default": false
       },
       "required": {
@@ -160,7 +168,7 @@
             "$ref": "../special/namespaces.json"
           }
         ],
-        "description": "Define the namespace for this object",
+        "description": "Namespace of the Ingress. Defaults to the release namespace.",
         "default": "",
         "x-helm-tpl": true
       },
@@ -204,7 +212,7 @@
         "type": "string",
         "properties": {},
         "additionalProperties": false,
-        "description": "Ingress class, eg `traefik` or `nginx`.",
+        "description": "Ingress class, eg `traefik` or `nginx`. When empty, `global.fallbackDefaults.ingressClassName` is used.",
         "default": "",
         "x-helm-tpl": true
       },
@@ -213,10 +221,10 @@
         "properties": {},
         "additionalProperties": {
           "type": "string",
-          "description": "Name of the port in the service"
+          "description": "Name of the port of the Service."
         },
-        "description": "Define the `service: port` to assign the ingress",
-        "default": "{}"
+        "description": "Backend of the Ingress, as a map of `service: port` where `port` is the name of a port of the Service. Defaults to the primary service and port.",
+        "default": {}
       },
       "hosts": {
         "type": "array",
@@ -225,9 +233,12 @@
           "properties": {
             "host": {
               "type": "string",
-              "description": "Define the host for this ingress",
+              "description": "Hostname the rules apply to, eg `app.example.com`.",
               "x-helm-tpl": true,
-              "x-docs-required": true
+              "x-docs-required": true,
+              "examples": [
+                "app.example.com"
+              ]
             },
             "paths": {
               "type": "array",
@@ -236,13 +247,16 @@
                 "properties": {
                   "path": {
                     "type": "string",
-                    "description": "Define the path for this ingress",
+                    "description": "Path of the rule, eg `/`.",
                     "x-helm-tpl": true,
-                    "x-docs-required": true
+                    "x-docs-required": true,
+                    "examples": [
+                      "/"
+                    ]
                   },
                   "pathType": {
                     "type": "string",
-                    "description": "Define the path type for this ingress (Prefix, Exact, ImplementationSpecific)",
+                    "description": "How the path is matched: `Prefix`, `Exact` or `ImplementationSpecific`.",
                     "x-helm-tpl": true
                   },
                   "overrideService": {
@@ -250,7 +264,7 @@
                     "properties": {
                       "name": {
                         "type": "string",
-                        "description": "Define the service name for this path",
+                        "description": "Name of the Service.",
                         "x-docs-required": true
                       },
                       "expandObjectName": {
@@ -258,7 +272,7 @@
                           "boolean",
                           "string"
                         ],
-                        "description": "Define if the override service object name should be expanded",
+                        "description": "Prefix `name` with the release fullname. Set to `false` for a Service that is not created by this chart.",
                         "x-helm-tpl": true
                       },
                       "port": {
@@ -266,25 +280,25 @@
                           "integer",
                           "string"
                         ],
-                        "description": "Define the service port for this path",
+                        "description": "Port number of the Service.",
                         "x-docs-required": true
                       }
                     },
                     "additionalProperties": false,
-                    "description": "Overrides the selected service for this path"
+                    "description": "Send this path to another Service than the one in `targetSelector`."
                   }
                 },
                 "additionalProperties": false,
-                "description": "Configuration for `ingress.main.hosts.$item.paths.$item`."
+                "description": "A path of the host."
               },
-              "description": "Define the paths for this ingress",
+              "description": "Paths of the host. Defaults to `/` with `Prefix`.",
               "x-docs-required": true
             }
           },
           "additionalProperties": false,
-          "description": "Configuration for `ingress.main.hosts.$item`."
+          "description": "A host of the Ingress."
         },
-        "description": "Define the hosts for this ingress",
+        "description": "Hosts of the Ingress and the paths for each.",
         "default": [],
         "x-docs-required": true
       },
@@ -296,41 +310,42 @@
             "hosts": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "description": "A hostname, eg `app.example.com`."
               },
-              "description": "Define the hosts for this TLS"
+              "description": "Hostnames the certificate is for."
             },
             "secretName": {
               "type": "string",
-              "description": "Define the secret name for this TLS",
+              "description": "Name of an existing TLS Secret to use.",
               "x-helm-tpl": true
             },
             "certificateIssuer": {
               "type": "string",
-              "description": "Define the certificate issuer for this TLS"
+              "description": "Name of the cert-manager ClusterIssuer that issues the certificate."
             },
             "clusterCertificate": {
               "type": "string",
-              "description": "Define the cluster certificate for this TLS",
+              "description": "Name of a cluster certificate (see `certificate`) whose Secret is used.",
               "x-helm-tpl": true
             }
           },
           "additionalProperties": false,
-          "description": "Configuration for `ingress.main.tls.$item`."
+          "description": "A TLS entry of the Ingress. Set one of `secretName`, `certificateIssuer` or `clusterCertificate`."
         },
-        "description": "Define TLS for this ingress",
+        "description": "TLS settings of the Ingress, one entry per certificate.",
         "default": [],
         "x-docs-required": true
       },
       "certificateIssuer": {
         "type": "string",
-        "description": "Certificate issuer for this ingress. The templates read `certificateIssuer` per TLS entry (`tls.$item.certificateIssuer`), so this key has no effect."
+        "description": "Has no effect. The templates read `certificateIssuer` per TLS entry (`tls.$item.certificateIssuer`)."
       }
     },
     "additionalProperties": false,
-    "description": "Create Ingress objects",
+    "description": "An Ingress, keyed by name.",
     "default": {},
     "x-docs-required": true
   },
-  "description": "Create Ingress objects"
+  "description": "Ingresses, keyed by name. Every enabled entry renders an Ingress, see [Ingress](/truecharts-common/ingress)."
 }

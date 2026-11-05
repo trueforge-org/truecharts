@@ -10,20 +10,21 @@
           "boolean",
           "string"
         ],
-        "description": "Enable the Gateway.",
-        "default": false
+        "description": "Create this Gateway. Supports Helm `tpl`.",
+        "default": false,
+        "x-helm-tpl": true
       },
       "primary": {
         "type": "boolean",
-        "description": "Make this the primary Gateway."
+        "description": "Make this the primary Gateway, used in the chart context. Only 1 Gateway can be primary."
       },
       "namespace": {
         "type": "string",
-        "description": "Namespace of the Gateway."
+        "description": "Namespace of the Gateway. Defaults to the release namespace."
       },
       "nameOverride": {
         "type": "string",
-        "description": "Suffix of the name, instead of the name of the object."
+        "description": "Suffix of the Gateway name, instead of the key of the object."
       },
       "annotations": {
         "allOf": [
@@ -31,7 +32,7 @@
             "$ref": "special/annotations.json"
           }
         ],
-        "description": "Additional annotations, keyed by name."
+        "description": "Additional annotations of the Gateway."
       },
       "labels": {
         "allOf": [
@@ -39,18 +40,18 @@
             "$ref": "special/labels.json"
           }
         ],
-        "description": "Additional labels, keyed by name."
+        "description": "Additional labels of the Gateway."
       },
       "gatewayClassName": {
         "type": "string",
-        "description": "The name of the GatewayClass resource that this Gateway references.",
+        "description": "Name of the GatewayClass the Gateway uses.",
         "examples": [
           "traefik"
         ]
       },
       "targetSelector": {
         "type": "string",
-        "description": "Name-based selector for automatic GatewayClass linking. When set, automatically references the specified `gatewayClass.$name`.",
+        "description": "Key of a `gatewayClass` object of this chart. Its name is used as `gatewayClassName`.",
         "examples": [
           "main"
         ]
@@ -75,11 +76,11 @@
           "additionalProperties": false,
           "description": "A requested address for the gateway."
         },
-        "description": "Requested addresses for the gateway. Passed as is."
+        "description": "Requested addresses of the Gateway, passed on as is."
       },
       "infrastructure": {
         "type": "object",
-        "description": "Infrastructure settings of the gateway. Passed as is.",
+        "description": "Infrastructure settings of the Gateway, passed on as is.",
         "properties": {
           "annotations": {
             "allOf": [
@@ -87,7 +88,7 @@
                 "$ref": "special/annotations.json"
               }
             ],
-            "description": "Annotations for the resources created for the gateway."
+            "description": "Annotations for the resources created for the Gateway."
           },
           "labels": {
             "allOf": [
@@ -95,7 +96,7 @@
                 "$ref": "special/labels.json"
               }
             ],
-            "description": "Labels for the resources created for the gateway."
+            "description": "Labels for the resources created for the Gateway."
           },
           "parametersRef": {
             "type": "object",
@@ -133,7 +134,7 @@
                   "Same",
                   "None"
                 ],
-                "description": "Namespaces from which ListenerSets may attach. Valid options are All, Selector, Same, and None.",
+                "description": "Where ListenerSets can attach from: `All`, `Same`, `Selector` or `None`.",
                 "default": "None"
               },
               "selector": {
@@ -142,19 +143,19 @@
                     "$ref": "special/labelSelector.json"
                   }
                 ],
-                "description": "Namespace selector used when `from` is `Selector`."
+                "description": "Label selector of the namespaces, used with `from: Selector`."
               }
             },
             "additionalProperties": false,
-            "description": "Namespaces from which ListenerSets may attach."
+            "description": "Namespaces from which ListenerSets can attach."
           }
         },
         "additionalProperties": false,
-        "description": "Configure `namespaces.from` as `Same`, `All`, `Selector`, or `None` to control which ListenerSets may attach. Set `namespaces.selector` when `from` is `Selector`."
+        "description": "Which ListenerSets can attach to the Gateway."
       },
       "tls": {
         "type": "object",
-        "description": "Gateway wide TLS settings. Passed as is.",
+        "description": "TLS settings that apply to the whole Gateway, passed on as is.",
         "properties": {
           "frontend": {
             "type": "object",
@@ -176,14 +177,19 @@
       "listeners": {
         "type": "array",
         "items": {
-          "$ref": "listener.json"
+          "allOf": [
+            {
+              "$ref": "listener.json"
+            }
+          ],
+          "description": "A listener of the Gateway, see [Gateway](/truecharts-common/gateway)."
         },
-        "description": "Array of listener definitions that define the network ports and protocols the Gateway listens on.\n\nEach listener must specify:\n- `name`: Unique name for the listener\n- `port`: Network port to listen on\n- `protocol`: Protocol (HTTP, HTTPS, TCP, TLS, UDP)\n- `hostname`: Optional hostname filter\n- `tls`: Optional TLS configuration\n- `allowedRoutes`: Optional configuration for which routes can attach"
+        "description": "Listeners of the Gateway. Each one needs a `name`, `port` and `protocol`, see [listener](/truecharts-common/gateway)."
       }
     },
     "additionalProperties": false,
-    "description": "Configuration for `gateway.main`.",
+    "description": "A Gateway, keyed by name.",
     "default": {}
   },
-  "description": "Configuration for `gateway`."
+  "description": "Gateways, keyed by name. Every enabled entry renders a Gateway API `Gateway`, see [Gateway](/truecharts-common/gateway)."
 }

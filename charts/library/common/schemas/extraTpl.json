@@ -1,16 +1,17 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "array",
-  "description": "Define kubernetes resources, 1 per list item, tpl will be resolved",
+  "description": "Extra Kubernetes resources to render, one per list item, as a YAML object or as a string. Helm `tpl` is resolved in each item.",
   "items": {
     "type": [
       "object",
       "string"
     ],
-    "properties": {},
-    "description": "Configuration for `$item`.",
+    "description": "A Kubernetes resource, as a YAML object or as a string with its manifest.",
     "additionalProperties": {
-      "description": "A setting passed on as is."
+      "description": "A field of the resource, passed on as is."
     }
-  }
+  },
+  "default": [],
+  "x-helm-tpl": true
 }

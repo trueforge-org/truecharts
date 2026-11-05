@@ -4,25 +4,46 @@
   "properties": {
     "appUrl": {
       "type": "string",
-      "description": "URL of the app, from the primary ingress or route, eg `https://app.example.com/`. Without either, it points to `127.0.0.1`."
+      "description": "URL of the app, taken from the primary ingress or route, eg `https://app.example.com/`. Points to `127.0.0.1` when there is neither.",
+      "default": "",
+      "examples": [
+        "https://app.example.com/"
+      ]
     },
     "podCIDR": {
       "type": "string",
-      "description": "CIDR of the pods, from `global.podCIDR`, defaults to `172.16.0.0/16`."
+      "description": "CIDR of the pods, taken from `global.podCIDR`. Falls back to `172.16.0.0/16`.",
+      "default": "",
+      "examples": [
+        "172.16.0.0/16"
+      ]
     },
     "svcCIDR": {
       "type": "string",
-      "description": "CIDR of the services, from `global.svcCIDR`, defaults to `172.17.0.0/16`."
+      "description": "CIDR of the services, taken from `global.svcCIDR`. Falls back to `172.17.0.0/16`.",
+      "default": "",
+      "examples": [
+        "172.17.0.0/16"
+      ]
     },
     "internalUrls": {
       "type": "array",
       "items": {
         "type": "string",
-        "description": "Host and port of a service, eg `release-app.namespace.svc.cluster.local:8080`."
+        "description": "Host and port of a service.",
+        "examples": [
+          "release-app.namespace.svc.cluster.local:8080"
+        ]
       },
-      "description": "Internal URLs of the services of the chart."
+      "description": "Internal URLs of the services of the chart, filled in by common and shown in the notes.",
+      "default": []
     }
   },
   "additionalProperties": false,
-  "description": "Details about the release that common works out on every render, to use in Helm `tpl` strings such as `{{ .Values.chartContext.appUrl }}`. Common sets these keys itself and replaces values set here."
+  "description": "Details about the release that common works out on every render, for use in Helm `tpl` strings such as `{{ .Values.chartContext.appUrl }}`. Common sets these keys itself and replaces values set here.",
+  "default": {
+    "appUrl": "",
+    "podCIDR": "",
+    "svcCIDR": ""
+  }
 }

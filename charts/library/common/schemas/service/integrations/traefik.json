@@ -6,28 +6,28 @@
       "type": "boolean",
       "properties": {},
       "additionalProperties": false,
-      "description": "Enables or Disables the traefik integration",
+      "description": "Add the Traefik annotations to the Service.",
       "default": false
     },
     "forceTLS": {
       "type": "boolean",
       "properties": {},
       "additionalProperties": false,
-      "description": "Force TLS when talking to the backend service Adds the `traefik.ingress.kubernetes.io/service.serversscheme: \"https\"` annotation.",
+      "description": "Talk to the backend over HTTPS. Adds the `traefik.ingress.kubernetes.io/service.serversscheme: \"https\"` annotation.",
       "default": false
     },
     "insecureSkipVerify": {
       "type": "boolean",
       "properties": {},
       "additionalProperties": false,
-      "description": "Skip TLS verification when talking to an HTTPS backend service Allows talking to HTTPS backend services which use self-signed certs.",
+      "description": "Skip TLS verification of the backend. Allows HTTPS backends with self-signed certificates.",
       "default": false
     },
     "serverName": {
       "type": "string",
       "properties": {},
       "additionalProperties": false,
-      "description": "Set the hostname to use when talking to a backend service"
+      "description": "Server name (SNI) Traefik uses when talking to the backend."
     },
     "rootCAs": {
       "type": "array",
@@ -39,13 +39,12 @@
             "properties": {
               "expandObjectName": {
                 "type": "boolean",
-                "description": "Whether to expand (adding the fullname as prefix) the configmap name",
+                "description": "Prefix the name with the release fullname.",
                 "default": true
               },
               "name": {
                 "type": "string",
-                "description": "Define the configmap name This will be automatically expanded to `fullname-configmap-name`.",
-                "default": "",
+                "description": "Name of the ConfigMap. Expanded to `fullname-name` unless `expandObjectName` is `false`.",
                 "minLength": 1,
                 "x-helm-tpl": true,
                 "x-docs-required": true
@@ -60,15 +59,14 @@
             "properties": {
               "name": {
                 "type": "string",
-                "description": "Define the secret name This will be automatically expanded to `fullname-secret-name`.",
-                "default": "",
+                "description": "Name of the Secret. Expanded to `fullname-name` unless `expandObjectName` is `false`.",
                 "minLength": 1,
                 "x-helm-tpl": true,
                 "x-docs-required": true
               },
               "expandObjectName": {
                 "type": "boolean",
-                "description": "Whether to expand (adding the fullname as prefix) the secret name",
+                "description": "Prefix the name with the release fullname.",
                 "default": true
               }
             },
@@ -78,12 +76,12 @@
           }
         },
         "additionalProperties": false,
-        "description": "Configuration for an entry of `integrations.traefik.rootCAs`."
+        "description": "A ConfigMap or Secret with a certificate authority. Set `configMapRef` or `secretRef`."
       },
-      "description": "List of kubernetes secrets (in the same namespace) containing certificate authorities to use when performing TLS verification of the backend service.",
+      "description": "ConfigMaps or Secrets, in the same namespace, with certificate authorities Traefik uses to verify the backend.",
       "default": []
     }
   },
-  "description": "Define service objects",
+  "description": "Traefik settings for the backend of the Service, set as annotations on the Service.",
   "additionalProperties": false
 }

@@ -10,12 +10,13 @@
           "boolean",
           "string"
         ],
-        "description": "Enable the GatewayClass.",
-        "default": false
+        "description": "Create this GatewayClass. Supports Helm `tpl`.",
+        "default": false,
+        "x-helm-tpl": true
       },
       "primary": {
         "type": "boolean",
-        "description": "Make this the primary GatewayClass of the chart. Only one can be primary."
+        "description": "Make this the primary GatewayClass of the chart. Only 1 can be primary."
       },
       "annotations": {
         "allOf": [
@@ -23,7 +24,7 @@
             "$ref": "special/annotations.json"
           }
         ],
-        "description": "Additional annotations, keyed by name."
+        "description": "Additional annotations of the GatewayClass."
       },
       "labels": {
         "allOf": [
@@ -31,7 +32,7 @@
             "$ref": "special/labels.json"
           }
         ],
-        "description": "Additional labels, keyed by name."
+        "description": "Additional labels of the GatewayClass."
       },
       "controllerName": {
         "type": "string",
@@ -42,7 +43,7 @@
       },
       "description": {
         "type": "string",
-        "description": "Description helps describe a GatewayClass with more details.",
+        "description": "Human readable description of the GatewayClass.",
         "examples": [
           "Traefik-based gateway class"
         ]
@@ -74,12 +75,12 @@
           }
         },
         "additionalProperties": false,
-        "description": "ParametersRef is a reference to a resource that contains the configuration parameters corresponding to the GatewayClass.\n\nFields for parametersRef:\n- `group`: API group of the referenced resource (required)\n- `kind`: Kind of the referenced resource (required)\n- `name`: Name of the referenced resource (required)\n- `namespace`: Optional namespace of the referenced resource"
+        "description": "Reference to a resource with implementation specific parameters of the GatewayClass."
       }
     },
     "additionalProperties": false,
-    "description": "Configuration for `gatewayClass.main`.",
+    "description": "A GatewayClass, keyed by name.",
     "default": {}
   },
-  "description": "Configuration for `gatewayClass`."
+  "description": "GatewayClasses, keyed by name. Every enabled entry renders a Gateway API `GatewayClass`, see [GatewayClass](/truecharts-common/gatewayClass)."
 }

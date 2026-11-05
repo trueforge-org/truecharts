@@ -1,13 +1,13 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "description": "Create Ingress objects",
+  "description": "Homepage (gethomepage.dev) integration. Adds the service discovery annotations to the Ingress.",
   "properties": {
     "enabled": {
       "type": "boolean",
       "properties": {},
       "additionalProperties": false,
-      "description": "Enables or Disables the homepage integration",
+      "description": "Add the Homepage annotations to the Ingress.",
       "default": false,
       "x-docs-required": true
     },
@@ -15,44 +15,44 @@
       "type": "string",
       "properties": {},
       "additionalProperties": false,
-      "description": "Define the name for the application Sets the `gethomepage.dev/name` annotation"
+      "description": "Name of the entry on the homepage. Sets the `gethomepage.dev/name` annotation."
     },
     "description": {
       "type": "string",
       "properties": {},
       "additionalProperties": false,
-      "description": "Define the description for the application Sets the `gethomepage.dev/description` annotation"
+      "description": "Description of the entry on the homepage. Sets the `gethomepage.dev/description` annotation."
     },
     "group": {
       "type": "string",
       "properties": {},
       "additionalProperties": false,
-      "description": "Define the group for the application Sets the `gethomepage.dev/group` annotation",
+      "description": "Group of the entry on the homepage. Sets the `gethomepage.dev/group` annotation.",
       "default": ""
     },
     "icon": {
       "type": "string",
       "properties": {},
       "additionalProperties": false,
-      "description": "Define the icon for the application Sets the `gethomepage.dev/icon` annotation"
+      "description": "Icon of the entry on the homepage. Sets the `gethomepage.dev/icon` annotation."
     },
     "href": {
       "type": "string",
       "properties": {},
       "additionalProperties": false,
-      "description": "Define the href for the application Sets the `gethomepage.dev/href` annotation"
+      "description": "Link of the entry on the homepage. Sets the `gethomepage.dev/href` annotation."
     },
     "weight": {
       "type": "integer",
       "properties": {},
       "additionalProperties": false,
-      "description": "Define the weight for the application Sets the `gethomepage.dev/weight` annotation"
+      "description": "Sort weight of the entry within its group. Sets the `gethomepage.dev/weight` annotation."
     },
     "podSelector": {
       "type": "array",
       "properties": {},
       "additionalProperties": false,
-      "description": "Define the pods to select Sets the `gethomepage.dev/pod-selector` annotation",
+      "description": "Selectors of the pods used for the status of the entry. Sets the `gethomepage.dev/pod-selector` annotation.",
       "default": []
     },
     "widget": {
@@ -68,45 +68,45 @@
             "properties": {
               "key": {
                 "type": "string",
-                "description": "Define the key for the custom annotation Sets the `gethomepage.dev/widget.$key` annotation",
+                "description": "Name of the setting. Sets the `gethomepage.dev/widget.$key` annotation.",
                 "x-docs-required": true
               },
               "value": {
                 "type": "string",
-                "description": "Define the value for the custom annotation",
+                "description": "Value of the setting.",
                 "x-docs-required": true
               }
             },
             "additionalProperties": false,
-            "description": "Configuration for `$name.integrations.homepage.widget.customkv.$name`."
+            "description": "A custom widget setting."
           },
-          "description": "Define configuration for the widget",
+          "description": "Custom widget settings as a list of `key` and `value`. Each item sets a `gethomepage.dev/widget.$key` annotation.",
           "default": null
         },
         "enabled": {
           "type": "boolean",
           "properties": {},
           "additionalProperties": false,
-          "description": "Enables or Disables the widget",
+          "description": "Add the widget annotations to the Ingress.",
           "default": true
         },
         "type": {
           "type": "string",
           "properties": {},
           "additionalProperties": false,
-          "description": "Define configuration for the widget"
+          "description": "Type of the widget. Sets the `gethomepage.dev/widget.type` annotation."
         },
         "version": {
           "type": "integer",
           "additionalProperties": false,
-          "description": "Define the version of the widget Sets the `gethomepage.dev/widget.version` annotation",
+          "description": "Version of the widget. Sets the `gethomepage.dev/widget.version` annotation.",
           "default": 1
         },
         "url": {
           "type": "string",
           "properties": {},
           "additionalProperties": false,
-          "description": "Define configuration for the widget"
+          "description": "URL the widget talks to. Sets the `gethomepage.dev/widget.url` annotation."
         },
         "custom": {
           "type": [
@@ -114,7 +114,7 @@
             "null"
           ],
           "properties": {},
-          "description": "Define configuration for the widget",
+          "description": "Custom widget settings as a map of `key: value`. Each entry sets a `gethomepage.dev/widget.$key` annotation.",
           "default": null,
           "additionalProperties": {
             "type": [
@@ -129,7 +129,7 @@
         }
       },
       "additionalProperties": false,
-      "description": "Define configuration for the widget",
+      "description": "Widget shown with the entry on the homepage.",
       "default": {}
     }
   },

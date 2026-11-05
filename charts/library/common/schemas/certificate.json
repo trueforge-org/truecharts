@@ -14,7 +14,7 @@
                 "$ref": "special/annotations.json"
               }
             ],
-            "description": "Define the annotations for this certificate secret template",
+            "description": "Annotations of the created Secret.",
             "x-helm-tpl": "On value only"
           },
           "labels": {
@@ -23,12 +23,12 @@
                 "$ref": "special/labels.json"
               }
             ],
-            "description": "Define the labels for this certificate secret template",
+            "description": "Labels of the created Secret.",
             "x-helm-tpl": "On value only"
           }
         },
         "additionalProperties": false,
-        "description": "Define the certificate secret template for this certificate At least one of the following keys must be defined",
+        "description": "Labels and annotations to put on the Secret that cert-manager creates. Set at least one of them.",
         "default": {}
       },
       "enabled": {
@@ -36,9 +36,7 @@
           "boolean",
           "string"
         ],
-        "properties": {},
-        "additionalProperties": false,
-        "description": "Enables or Disables the certificate",
+        "description": "Create this certificate when true. Accepts a Helm `tpl` string that renders to `true` or `false`.",
         "default": false,
         "x-helm-tpl": true,
         "x-docs-required": true
@@ -49,7 +47,7 @@
             "$ref": "special/namespaces.json"
           }
         ],
-        "description": "Define the namespace for this object",
+        "description": "Namespace to create this object in. Overrides the chart-wide `namespace` and `global.namespace`.",
         "default": "",
         "x-helm-tpl": "On value only"
       },
@@ -59,7 +57,7 @@
             "$ref": "special/labels.json"
           }
         ],
-        "description": "Define the labels for this certificate",
+        "description": "Labels of the Certificate.",
         "default": {},
         "x-helm-tpl": "On value only"
       },
@@ -85,23 +83,22 @@
             "$ref": "special/annotations.json"
           }
         ],
-        "description": "Define the annotations for this certificate",
+        "description": "Annotations of the Certificate.",
         "default": {},
         "x-helm-tpl": "On value only"
       },
       "certificateIssuer": {
         "type": "string",
-        "description": "Define the certificate issuer for this certificate",
-        "default": "",
+        "description": "Name of the cert-manager (Cluster)Issuer that signs the certificate.",
         "minLength": 1,
         "x-helm-tpl": true,
         "x-docs-required": true
       },
       "hosts": {
         "type": "array",
-        "description": "Define the hosts for this certificate",
+        "description": "Hosts (DNS names) the certificate is valid for.",
         "default": "false",
-        "x-helm-tpl": "On each entry",
+        "x-helm-tpl": "On entries only",
         "x-docs-required": true,
         "items": {
           "type": "string",
@@ -111,9 +108,9 @@
       }
     },
     "additionalProperties": false,
-    "description": "Define certificate",
+    "description": "A Certificate.",
     "default": {},
     "x-docs-required": true
   },
-  "description": "Define certificates"
+  "description": "cert-manager Certificates, keyed by name."
 }

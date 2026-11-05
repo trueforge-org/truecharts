@@ -4,41 +4,42 @@
   "properties": {
     "enableServiceLinks": {
       "type": "boolean",
-      "description": "See [Enable Service Links](/truecharts-common/workload#enableservicelinks)",
+      "description": "Whether Kubernetes injects environment variables for the Services of the namespace into the containers (`enableServiceLinks`). Can be overridden per workload in `workload.<name>.podSpec`.",
       "default": false
     },
     "hostNetwork": {
       "type": "boolean",
-      "description": "See [Host Network](/truecharts-common/workload#hostnetwork)",
+      "description": "Whether the pods use the network namespace of the node (`hostNetwork`). `dnsPolicy` is set to `ClusterFirstWithHostNet` automatically when this is `true`. Can be overridden per workload in `workload.<name>.podSpec`.",
       "default": false
     },
     "hostPID": {
       "type": "boolean",
-      "description": "See [Host PID](/truecharts-common/workload#hostpid)",
+      "description": "Whether the containers can see the processes of the node (`hostPID`). Can be overridden per workload in `workload.<name>.podSpec`.",
       "default": false
     },
     "hostIPC": {
       "type": "boolean",
-      "description": "See [Host IPC](/truecharts-common/workload#hostipc)",
+      "description": "Whether the containers share the IPC namespace of the node (`hostIPC`). Can be overridden per workload in `workload.<name>.podSpec`.",
       "default": false
     },
     "shareProcessNamespace": {
       "type": "boolean",
-      "description": "See [Share Process Namespace](/truecharts-common/workload#shareprocessnamespace)",
+      "description": "Whether all containers of a pod share one process namespace (`shareProcessNamespace`), so they can see and signal each other's processes. Can be overridden per workload in `workload.<name>.podSpec`.",
       "default": false
     },
     "affinity": {
       "type": "object",
       "properties": {},
-      "description": "Affinity of the pods, passed on as is.",
+      "description": "Affinity rules of the pods (`podAffinity` and `podAntiAffinity`), passed on as is. Merged over the default affinity when `defaultAffinity` is enabled. Can be overridden per workload in `workload.<name>.podSpec`.",
       "additionalProperties": {
         "description": "A setting passed on as is."
       }
     },
     "dnsPolicy": {
       "type": "string",
-      "description": "See [DNS Policy](/truecharts-common/workload#dnspolicy)",
-      "default": "ClusterFirst"
+      "description": "DNS policy of the pods (`dnsPolicy`): `ClusterFirst`, `ClusterFirstWithHostNet`, `Default` or `None`. It is forced to `ClusterFirstWithHostNet` when `hostNetwork` is `true`. Can be overridden per workload in `workload.<name>.podSpec`.",
+      "default": "ClusterFirst",
+      "x-helm-tpl": true
     },
     "dnsConfig": {
       "allOf": [
@@ -46,7 +47,7 @@
           "$ref": "dnsConfig.json"
         }
       ],
-      "description": "See [DNS Config](/truecharts-common/workload#dnsconfig)",
+      "description": "Extra DNS settings of the pods (`dnsConfig`): nameservers, search domains and resolver options. Can be overridden per workload in `workload.<name>.podSpec`.",
       "default": {
         "options": [
           {
@@ -62,7 +63,7 @@
           "$ref": "hostAliases.json"
         }
       ],
-      "description": "See [Host Aliases](/truecharts-common/workload#hostaliases)",
+      "description": "Extra entries for the `/etc/hosts` file of the pods (`hostAliases`), each with an IP and its host names. Can be overridden per workload in `workload.<name>.podSpec`.",
       "default": []
     },
     "nodeSelector": {
@@ -71,19 +72,21 @@
           "$ref": "nodeSelector.json"
         }
       ],
-      "description": "See [Node Selector](/truecharts-common/workload#nodeselector)",
+      "description": "Labels a node must have for the pods to be scheduled on it (`nodeSelector`). Can be overridden per workload in `workload.<name>.podSpec`.",
       "default": {
         "kubernetes.io/arch": "amd64"
-      }
+      },
+      "x-helm-tpl": "On value only"
     },
     "defaultSpread": {
       "type": "boolean",
-      "description": "Sets some default topology spread constraints for good spread of pods across nodes.",
+      "description": "Adds a default topology spread constraint to Deployments and StatefulSets, so their pods are spread across nodes on a best-effort basis.",
       "default": true
     },
     "defaultAffinity": {
       "type": "boolean",
-      "description": "Add the default affinity of common."
+      "description": "Adds a default pod affinity to Deployments and StatefulSets, so pods that mount the same PVCs are scheduled on the same node.",
+      "default": true
     },
     "topologySpreadConstraints": {
       "allOf": [
@@ -91,7 +94,7 @@
           "$ref": "topologySpreadConstraints.json"
         }
       ],
-      "description": "See [Topology Spread Constraints](/truecharts-common/workload#topologyspreadconstraints)",
+      "description": "How the pods are spread across topology domains such as nodes or zones (`topologySpreadConstraints`). Added after the constraints of `defaultSpread`. Can be overridden per workload in `workload.<name>.podSpec`.",
       "default": []
     },
     "tolerations": {
@@ -100,27 +103,30 @@
           "$ref": "tolerations.json"
         }
       ],
-      "description": "See [Tolerations](/truecharts-common/workload#tolerations)",
+      "description": "Taints the pods tolerate (`tolerations`), so they can be scheduled on tainted nodes. Can be overridden per workload in `workload.<name>.podSpec`.",
       "default": []
     },
     "schedulerName": {
       "type": "string",
-      "description": "See [Scheduler Name](/truecharts-common/workload#schedulername)",
-      "default": ""
+      "description": "Name of the scheduler that schedules the pods (`schedulerName`). The default scheduler is used when empty. Can be overridden per workload in `workload.<name>.podSpec`.",
+      "default": "",
+      "x-helm-tpl": true
     },
     "priorityClassName": {
       "type": "string",
-      "description": "See [Priority Class Name](/truecharts-common/workload#priorityclassname)",
-      "default": ""
+      "description": "Name of the PriorityClass of the pods (`priorityClassName`), which sets their scheduling priority. Can be overridden per workload in `workload.<name>.podSpec`.",
+      "default": "",
+      "x-helm-tpl": true
     },
     "runtimeClassName": {
       "type": "string",
-      "description": "See [Runtime Class Name](/truecharts-common/workload#runtimeclassname)",
-      "default": ""
+      "description": "Name of the RuntimeClass of the pods (`runtimeClassName`), to run them with another container runtime. Can be overridden per workload in `workload.<name>.podSpec`.",
+      "default": "",
+      "x-helm-tpl": true
     },
     "automountServiceAccountToken": {
       "type": "boolean",
-      "description": "See [Automount Service Account Token](/truecharts-common/workload#automountserviceaccounttoken)",
+      "description": "Whether the service account token is mounted into the pods (`automountServiceAccountToken`). Can be overridden per workload in `workload.<name>.podSpec`.",
       "default": false
     },
     "terminationGracePeriodSeconds": {
@@ -128,12 +134,16 @@
         "integer",
         "string"
       ],
-      "description": "See [Termination Grace Period Seconds](/truecharts-common/workload#terminationgraceperiodseconds)",
-      "default": 60
+      "description": "Seconds Kubernetes waits for the containers to stop after they receive SIGTERM, before it kills them (`terminationGracePeriodSeconds`). Can be overridden per workload in `workload.<name>.podSpec`.",
+      "default": 60,
+      "x-helm-tpl": true,
+      "examples": [
+        60
+      ]
     },
     "hostUsers": {
       "type": "boolean",
-      "description": "Override the calculated hostUsers for all pods. If set, takes precedence over the automated calculation. See [Host Users](/truecharts-common/workload#hostusers)"
+      "description": "Whether the pods use the user namespace of the node (`hostUsers`). When `false`, the pod gets its own user namespace. When not set, common calculates it. Can be overridden per workload in `workload.<name>.podSpec`."
     },
     "restartPolicy": {
       "oneOf": [
@@ -151,9 +161,10 @@
           "pattern": "^\\{\\{.*\\}\\}$"
         }
       ],
-      "description": "Default restartPolicy for all pods, can be overruled per pod. Jobs and CronJobs default to OnFailure, other workloads default to Always. See [Restart Policy](/truecharts-common/workload#restartpolicy)"
+      "description": "Restart policy of the pods (`restartPolicy`): `Always`, `OnFailure` or `Never`. Deployments, StatefulSets and DaemonSets only allow `Always`. Jobs and CronJobs default to `OnFailure` and do not allow `Always`. Can be overridden per workload in `workload.<name>.podSpec`.",
+      "x-helm-tpl": true
     }
   },
   "additionalProperties": false,
-  "description": "Options that apply to all pods, unless overridden at the pod level See more info about podOptions [here](/truecharts-common/podoptions)"
+  "description": "Options that apply to all pods, unless a workload overrides them in `workload.<name>.podSpec`. See [podOptions](/truecharts-common/podOptions)."
 }

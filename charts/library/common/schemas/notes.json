@@ -22,10 +22,12 @@
     },
     "warnings": {
       "type": "array",
-      "description": "List of warning messages to display. Rendered last in the output.",
+      "description": "Warning messages to show at the end of `NOTES.txt`.",
       "items": {
-        "type": "string"
-      }
+        "type": "string",
+        "description": "A warning message."
+      },
+      "default": []
     },
     "showCredentials": {
       "type": "boolean",
@@ -34,6 +36,6 @@
     }
   },
   "additionalProperties": false,
-  "description": "Configuration for NOTES.txt output. Automatically includes connection information for enabled dependencies (mariadb, postgresql, valkey, mongodb, clickhouse) and addons (tailscale, codeserver, netshoot). Rendering order: header → custom → connections (auto) → footer → warnings.\n\nThe notes system automatically includes connection information for enabled dependencies (databases) and addons when the chart is installed or upgraded. This provides users with immediate access to connection strings and configuration details.",
+  "description": "Output of `NOTES.txt`. Common adds connection information for enabled dependencies (mariadb, postgresql, valkey, mongodb, clickhouse) and addons (tailscale, codeserver, netshoot) between `custom` and `footer`.\n\nRendering order: `header`, `custom`, connections (automatic), `footer`, `warnings`.",
   "default": {}
 }

@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "boolean",
-  "description": "See [Enable Service Links](/truecharts-common/workload#enableservicelinks)",
-  "additionalProperties": false
+  "description": "Whether Kubernetes injects environment variables for the Services of the namespace into the containers (`enableServiceLinks`). Overrides `podOptions.enableServiceLinks` for this workload."
 }

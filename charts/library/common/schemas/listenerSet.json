@@ -10,15 +10,16 @@
           "boolean",
           "string"
         ],
-        "description": "Enables or Disables the ListenerSet",
-        "default": false
+        "description": "Create this ListenerSet. Supports Helm `tpl`.",
+        "default": false,
+        "x-helm-tpl": true
       },
       "expandObjectName": {
         "type": [
           "boolean",
           "string"
         ],
-        "description": "Prefix the object name with the chart fullname",
+        "description": "Prefix the name of the ListenerSet with the release fullname.",
         "default": true
       },
       "namespace": {
@@ -27,7 +28,7 @@
             "$ref": "special/namespaces.json"
           }
         ],
-        "description": "Define the namespace for this object",
+        "description": "Namespace of the ListenerSet. Defaults to the release namespace.",
         "default": ""
       },
       "labels": {
@@ -36,7 +37,7 @@
             "$ref": "special/labels.json"
           }
         ],
-        "description": "Additional labels for ListenerSet",
+        "description": "Additional labels of the ListenerSet.",
         "default": {}
       },
       "annotationsList": {
@@ -61,7 +62,7 @@
             "$ref": "special/annotations.json"
           }
         ],
-        "description": "Additional annotations for ListenerSet",
+        "description": "Additional annotations of the ListenerSet.",
         "default": {}
       },
       "targetSelector": {
@@ -105,15 +106,20 @@
       "listeners": {
         "type": "array",
         "items": {
-          "$ref": "listener.json"
+          "allOf": [
+            {
+              "$ref": "listener.json"
+            }
+          ],
+          "description": "A listener added to the Gateway, same format as a listener of a Gateway."
         },
         "description": "Listeners that are added to the Gateway, same format as `gateway.$name.listeners`.",
         "minItems": 1
       }
     },
     "additionalProperties": false,
-    "description": "Define ListenerSet",
+    "description": "A ListenerSet, keyed by name.",
     "default": {}
   },
-  "description": "Create Gateway API ListenerSet objects"
+  "description": "ListenerSets, keyed by name. Every enabled entry renders a Gateway API `ListenerSet`, see [ListenerSet](/truecharts-common/listenerSet)."
 }

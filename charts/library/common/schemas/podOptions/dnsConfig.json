@@ -1,25 +1,37 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "description": "See [DNS Config](/truecharts-common/workload#dnsconfig)",
+  "description": "Extra DNS settings of the pods (`dnsConfig`): nameservers, search domains and resolver options.",
   "properties": {
     "nameservers": {
       "type": "array",
       "items": {
         "type": "string",
-        "description": "Configuration for `podOptions.dnsConfig.nameservers.$item`."
+        "description": "IP address of a DNS server."
       },
       "maxItems": 3,
-      "description": "Additional DNS servers."
+      "description": "IP addresses of extra DNS servers, at most 3. Added to the servers of `dnsPolicy`.",
+      "x-helm-tpl": "On entries only",
+      "examples": [
+        [
+          "1.1.1.1"
+        ]
+      ]
     },
     "searches": {
       "type": "array",
       "items": {
         "type": "string",
-        "description": "Configuration for `podOptions.dnsConfig.searches.$item`."
+        "description": "A DNS search domain."
       },
       "maxItems": 6,
-      "description": "Additional DNS search domains."
+      "description": "Extra DNS search domains, at most 6. Added to the search domains of `dnsPolicy`.",
+      "x-helm-tpl": "On entries only",
+      "examples": [
+        [
+          "example.com"
+        ]
+      ]
     },
     "options": {
       "type": "array",
@@ -28,23 +40,26 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "Name of the resolver option, eg `ndots`."
+            "description": "Name of the resolver option, eg `ndots`.",
+            "x-helm-tpl": true,
+            "x-docs-required": true,
+            "examples": [
+              "ndots"
+            ]
           },
           "value": {
             "type": "string",
-            "description": "Value of the resolver option."
+            "description": "Value of the resolver option.",
+            "x-helm-tpl": true,
+            "examples": [
+              "2"
+            ]
           }
         },
         "additionalProperties": false,
-        "description": "Configuration for `podOptions.dnsConfig.options.$item`."
+        "description": "A resolver option, with a name and an optional value."
       },
-      "description": "DNS resolver options.",
-      "default": [
-        {
-          "name": "ndots",
-          "value": "1"
-        }
-      ]
+      "description": "Resolver options of the pods, eg `ndots`."
     }
   },
   "additionalProperties": false

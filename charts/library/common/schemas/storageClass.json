@@ -8,20 +8,24 @@
       "mountOptions": {
         "type": "array",
         "items": {
-          "type": "string"
+          "type": "string",
+          "description": "A mount option."
         },
-        "description": "Define storage classes",
+        "description": "Mount options of volumes of this class. Supports Helm `tpl` on each entry.",
         "default": [],
-        "x-helm-tpl": "On each entry only"
+        "x-helm-tpl": "On entries only",
+        "examples": [
+          [
+            "nfsvers=4.1"
+          ]
+        ]
       },
       "enabled": {
         "type": [
           "boolean",
           "string"
         ],
-        "properties": {},
-        "additionalProperties": false,
-        "description": "Enables or Disables the storage class",
+        "description": "Create this storage class when true. Accepts a Helm `tpl` string that renders to `true` or `false`.",
         "default": false,
         "x-helm-tpl": true,
         "x-docs-required": true
@@ -64,12 +68,15 @@
       },
       "provisioner": {
         "type": "string",
-        "description": "Define the provisioner for this storage class",
-        "x-docs-required": true
+        "description": "Provisioner (CSI driver) that provisions volumes of this class.",
+        "x-docs-required": true,
+        "examples": [
+          "nfs.csi.k8s.io"
+        ]
       },
       "isDefault": {
         "type": "boolean",
-        "description": "Define whether this storage class is the default storage class"
+        "description": "Make this the default StorageClass of the cluster."
       },
       "parameters": {
         "type": "object",
@@ -80,9 +87,9 @@
             "number",
             "boolean"
           ],
-          "description": "Value of the parameter"
+          "description": "Value of the parameter."
         },
-        "description": "Define the parameters for this storage class",
+        "description": "Parameters passed to the provisioner. Supports Helm `tpl` on values.",
         "default": {},
         "x-helm-tpl": "On value only"
       },
@@ -92,12 +99,12 @@
           "Delete",
           "Retain"
         ],
-        "description": "Define the reclaim policy for this storage class",
+        "description": "What happens to a volume when its claim is deleted.",
         "default": "Retain"
       },
       "allowVolumeExpansion": {
         "type": "boolean",
-        "description": "Define if volume expansion is allowed for this storage class",
+        "description": "Allow claims of this class to be resized.",
         "default": false
       },
       "volumeBindingMode": {
@@ -106,14 +113,14 @@
           "Immediate",
           "WaitForFirstConsumer"
         ],
-        "description": "Define the volume binding mode for this storage class",
+        "description": "When volumes are bound and provisioned. `WaitForFirstConsumer` waits until a pod uses the claim.",
         "default": "Immediate"
       }
     },
     "additionalProperties": false,
-    "description": "Define storage class",
+    "description": "A StorageClass.",
     "default": {},
     "x-docs-required": true
   },
-  "description": "Define storage classes"
+  "description": "StorageClasses, keyed by name."
 }
