@@ -4,29 +4,21 @@
   "properties": {
     "enabled": {
       "type": "boolean",
-      "properties": {},
-      "additionalProperties": false,
       "description": "Add the Traefik annotations to the Service.",
       "default": false
     },
     "forceTLS": {
       "type": "boolean",
-      "properties": {},
-      "additionalProperties": false,
       "description": "Talk to the backend over HTTPS. Adds the `traefik.ingress.kubernetes.io/service.serversscheme: \"https\"` annotation.",
       "default": false
     },
     "insecureSkipVerify": {
       "type": "boolean",
-      "properties": {},
-      "additionalProperties": false,
       "description": "Skip TLS verification of the backend. Allows HTTPS backends with self-signed certificates.",
       "default": false
     },
     "serverName": {
       "type": "string",
-      "properties": {},
-      "additionalProperties": false,
       "description": "Server name (SNI) Traefik uses when talking to the backend."
     },
     "rootCAs": {

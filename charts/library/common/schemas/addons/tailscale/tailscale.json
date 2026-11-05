@@ -7,15 +7,20 @@
         "boolean",
         "string"
       ],
-      "description": "Addons to the workloads"
+      "description": "Enable the tailscale addon."
     },
     "targetSelector": {
       "type": "array",
       "items": {
         "type": "string",
-        "description": "Configuration for `addons.tailscale.targetSelector.$item`."
+        "description": "Name of a workload."
       },
-      "description": "Addons to the workloads"
+      "description": "Workloads to which the tailscale container is added. Defaults to the primary workload.",
+      "examples": [
+        [
+          "main"
+        ]
+      ]
     },
     "container": {
       "type": "object",
@@ -25,11 +30,12 @@
             "boolean",
             "string"
           ],
-          "description": "Enable the container of the add-on."
+          "description": "Whether the tailscale container is created.",
+          "x-helm-tpl": true
         },
         "imageSelector": {
           "type": "string",
-          "description": "Name of the image on the root of the values."
+          "description": "Name of the image to use, a key on the root of the values. Defaults to `tailscaleImage`."
         },
         "probes": {
           "type": "object",
@@ -42,7 +48,8 @@
                     "boolean",
                     "string"
                   ],
-                  "description": "Enable the container of the add-on."
+                  "description": "Whether the liveness probe is added to the tailscale container.",
+                  "x-helm-tpl": true
                 }
               },
               "additionalProperties": false,
@@ -56,7 +63,8 @@
                     "boolean",
                     "string"
                   ],
-                  "description": "Enable the container of the add-on."
+                  "description": "Whether the readiness probe is added to the tailscale container.",
+                  "x-helm-tpl": true
                 }
               },
               "additionalProperties": false,
@@ -70,7 +78,8 @@
                     "boolean",
                     "string"
                   ],
-                  "description": "Enable the container of the add-on."
+                  "description": "Whether the startup probe is added to the tailscale container.",
+                  "x-helm-tpl": true
                 }
               },
               "additionalProperties": false,
@@ -84,7 +93,7 @@
           "type": "array",
           "items": {
             "type": "string",
-            "description": "Configuration for `addons.tailscale.container.command.$item`."
+            "description": "One entry of the command."
           },
           "description": "Command of the container."
         },
@@ -113,7 +122,7 @@
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "description": "Configuration for `addons.tailscale.container.securityContext.capabilities.add.$item`."
+                    "description": "Name of a Linux capability, eg `NET_ADMIN`."
                   },
                   "description": "Capabilities that are added."
                 }
@@ -127,7 +136,7 @@
         }
       },
       "additionalProperties": false,
-      "description": "Addons to the workloads"
+      "description": "Container of the tailscale addon. It supports the same settings as a container of a workload."
     },
     "settings": {
       "type": "object",
@@ -178,7 +187,7 @@
         }
       },
       "additionalProperties": false,
-      "description": "Tailscale settings"
+      "description": "Tailscale settings. Each key sets the matching `TS_*` environment variable of the container."
     },
     "annotations": {
       "allOf": [
@@ -190,5 +199,5 @@
     }
   },
   "additionalProperties": false,
-  "description": "Addons to the workloads"
+  "description": "Configuration for the tailscale addon, which adds a tailscale container that connects the pod to a tailnet."
 }

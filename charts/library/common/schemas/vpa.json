@@ -33,7 +33,11 @@
       "targetSelector": {
         "type": "array",
         "description": "Workloads the VerticalPodAutoscaler applies to. Defaults to the primary workload.",
-        "default": []
+        "default": [],
+        "items": {
+          "type": "string",
+          "description": "Name of a workload."
+        }
       },
       "updatePolicy": {
         "type": "object",

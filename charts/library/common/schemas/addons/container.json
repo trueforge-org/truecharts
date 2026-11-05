@@ -4,15 +4,18 @@
   "properties": {
     "enabled": {
       "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/enabled",
-      "description": "Enable the container of the add-on."
+      "description": "Enable the container of the add-on.",
+      "x-docs-required": false
     },
     "imageSelector": {
       "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/imageSelector",
-      "description": "Name of the image on the root of the values."
+      "description": "Name of the image on the root of the values.",
+      "x-docs-required": false
     },
     "primary": {
       "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/primary",
-      "description": "Make this the primary container of the workload."
+      "description": "Make this the primary container of the workload.",
+      "x-docs-required": false
     },
     "stdin": {
       "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/stdin",
@@ -28,15 +31,18 @@
     },
     "resources": {
       "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/resources",
-      "description": "Resources of the container."
+      "description": "Resources of the container.",
+      "x-docs-required": false
     },
     "securityContext": {
       "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/securityContext",
-      "description": "Security context of the container."
+      "description": "Security context of the container.",
+      "x-docs-required": false
     },
     "probes": {
       "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/probes",
-      "description": "Probes of the container."
+      "description": "Probes of the container.",
+      "x-docs-required": false
     },
     "command": {
       "$ref": "../workload/workload.json#/additionalProperties/properties/podSpec/properties/containers/additionalProperties/properties/command",

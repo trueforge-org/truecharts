@@ -4,7 +4,6 @@ title: Certificate
 
 :::note
 
-- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/certificate#full-examples) section for complete examples.
 
 :::
@@ -17,205 +16,206 @@ title: Certificate
 
 ## `certificate`
 
-Define certificates
+cert-manager Certificates, keyed by name.
 
-| Field      | Value         |
-| ---------- | ------------- |
-| Key        | `certificate` |
-| Type       | `map`         |
-| Required   | ❌            |
-| Helm `tpl` | ❌            |
-| Default    | unset         |
-
----
-
-### `certificate.$name.annotations`
-
-Define the annotations for this certificate
-
-| Field      | Value                           |
-| ---------- | ------------------------------- |
-| Key        | `certificate.$name.annotations` |
-| Type       | `map`                           |
-| Required   | ❌                              |
-| Helm `tpl` | ✅ (On value only)               |
-| Default    | `{}`                            |
-
-Example
-
-```yaml
-certificate:
-  $name:
-    annotations:
-      {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `certificate` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-### `certificate.$name.annotationsList`
+## `$name`
+
+A Certificate.
+
+| Field | Value |
+| --- | --- |
+| Key | `certificate.$name` |
+| Type | `map` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
+## `$name.certificateSecretTemplate`
+
+Labels and annotations to put on the Secret that cert-manager creates. Set at least one of them.
+
+| Field | Value |
+| --- | --- |
+| Key | `certificate.$name.certificateSecretTemplate` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
+## `$name.certificateSecretTemplate.annotations`
+
+Annotations of the created Secret.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `certificate.$name.certificateSecretTemplate.annotations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | unset |
+
+---
+
+## `$name.certificateSecretTemplate.labels`
+
+Labels of the created Secret.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `certificate.$name.certificateSecretTemplate.labels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | unset |
+
+---
+
+## `$name.enabled`
+
+Create this certificate when true. Accepts a Helm `tpl` string that renders to `true` or `false`.
+
+| Field | Value |
+| --- | --- |
+| Key | `certificate.$name.enabled` |
+| Type | `bool` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | `false` |
+
+---
+
+## `$name.namespace`
+
+Namespace to create this object in. Overrides the chart-wide `namespace` and `global.namespace`.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `certificate.$name.namespace` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `""` |
+
+---
+
+## `$name.labels`
+
+Labels of the Certificate.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `certificate.$name.labels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
+
+---
+
+## `$name.annotationsList`
 
 Additional annotations as a list of name and value pairs, merged into the annotations
 
-| Field      | Value                               |
-| ---------- | ----------------------------------- |
-| Key        | `certificate.$name.annotationsList` |
-| Type       | `list of map`                       |
-| Required   | ❌                                  |
-| Helm `tpl` | ❌                                  |
-| Default    | unset                               |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `certificate.$name.annotationsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `certificate.$name.certificateIssuer`
-
-Define the certificate issuer for this certificate
-
-| Field      | Value                                 |
-| ---------- | ------------------------------------- |
-| Key        | `certificate.$name.certificateIssuer` |
-| Type       | `string`                              |
-| Required   | ✅                                    |
-| Helm `tpl` | ✅                                    |
-| Default    | `""`                                  |
-| Min Length | `1`                                   |
-
-Example
-
-```yaml
-certificate:
-  $name:
-    certificateIssuer: ""
-```
-
----
-
-### `certificate.$name.certificateSecretTemplate`
-
-Define the certificate secret template for this certificate At least one of the following keys must be defined
-
-| Field      | Value                                         |
-| ---------- | --------------------------------------------- |
-| Key        | `certificate.$name.certificateSecretTemplate` |
-| Type       | `map`                                         |
-| Required   | ❌                                            |
-| Helm `tpl` | ❌                                            |
-| Default    | `{}`                                          |
-
-Example
-
-```yaml
-certificate:
-  $name:
-    certificateSecretTemplate:
-      {}
-```
-
----
-
-### `certificate.$name.enabled`
-
-Enables or Disables the certificate
-
-| Field      | Value                       |
-| ---------- | --------------------------- |
-| Key        | `certificate.$name.enabled` |
-| Type       | `boolean, string`           |
-| Required   | ✅                          |
-| Helm `tpl` | ✅                          |
-| Default    | `false`                     |
-
-Example
-
-```yaml
-certificate:
-  $name:
-    enabled: false
-```
-
----
-
-### `certificate.$name.hosts`
-
-Define the hosts for this certificate
-
-| Field      | Value                     |
-| ---------- | ------------------------- |
-| Key        | `certificate.$name.hosts` |
-| Type       | `list of string`          |
-| Required   | ✅                        |
-| Helm `tpl` | ✅ (On each entry)         |
-| Default    | `"false"`                 |
-
-Example
-
-```yaml
-certificate:
-  $name:
-    hosts: false
-```
-
----
-
-### `certificate.$name.labels`
-
-Define the labels for this certificate
-
-| Field      | Value                      |
-| ---------- | -------------------------- |
-| Key        | `certificate.$name.labels` |
-| Type       | `map`                      |
-| Required   | ❌                         |
-| Helm `tpl` | ✅ (On value only)          |
-| Default    | `{}`                       |
-
-Example
-
-```yaml
-certificate:
-  $name:
-    labels:
-      {}
-```
-
----
-
-### `certificate.$name.labelsList`
+## `$name.labelsList`
 
 Additional labels as a list of name and value pairs, merged into the labels
 
-| Field      | Value                          |
-| ---------- | ------------------------------ |
-| Key        | `certificate.$name.labelsList` |
-| Type       | `list of map`                  |
-| Required   | ❌                             |
-| Helm `tpl` | ❌                             |
-| Default    | unset                          |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `certificate.$name.labelsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `certificate.$name.namespace`
+## `$name.annotations`
 
-Define the namespace for this object
+Annotations of the Certificate.
 
-| Field      | Value                         |
-| ---------- | ----------------------------- |
-| Key        | `certificate.$name.namespace` |
-| Type       | `string`                      |
-| Required   | ❌                            |
-| Helm `tpl` | ✅ (On value only)             |
-| Default    | `""`                          |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
-Example
+| Field | Value |
+| --- | --- |
+| Key | `certificate.$name.annotations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
 
-```yaml
-certificate:
-  $name:
-    namespace: ""
-```
+---
+
+## `$name.certificateIssuer`
+
+Name of the cert-manager (Cluster)Issuer that signs the certificate.
+
+| Field | Value |
+| --- | --- |
+| Key | `certificate.$name.certificateIssuer` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Length | 1 to … |
+
+---
+
+## `$name.hosts`
+
+Hosts (DNS names) the certificate is valid for.
+
+| Field | Value |
+| --- | --- |
+| Key | `certificate.$name.hosts` |
+| Type | `list of string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ (On entries only) |
+| Default | `"false"` |
 
 ---
 
 ## Full Examples
+
+### Basic certificate
+
+A cert-manager `Certificate` for one or more hosts, signed by an issuer. Both can be read from other values with Helm `tpl`:
 
 ```yaml
 certificate:
@@ -224,10 +224,19 @@ certificate:
     hosts:
       - "{{ .Values.host }}"
     certificateIssuer: "{{ .Values.issuer }}"
+```
+
+### Multiple hosts and a secret template
+
+`certificateSecretTemplate` sets the labels and annotations of the Secret that cert-manager creates:
+
+```yaml
+certificate:
   my-certificate2:
     enabled: true
     hosts:
-      - host2
+      - host1.example.com
+      - host2.example.com
     certificateIssuer: some-other-issuer
     certificateSecretTemplate:
       labels:
@@ -236,4 +245,27 @@ certificate:
       annotations:
         annotation1: annotation1
         annotation2: annotation2
+```
+
+### Namespace, labels and annotations
+
+```yaml
+certificate:
+  my-certificate3:
+    enabled: true
+    namespace: some-namespace
+    hosts:
+      - app.example.com
+    certificateIssuer: letsencrypt-prod
+    labels:
+      key: value
+      keytpl: "{{ .Values.some.value }}"
+    annotations:
+      key: value
+    labelsList:
+      - name: other-key
+        value: other-value
+    annotationsList:
+      - name: other-annotation
+        value: other-value
 ```

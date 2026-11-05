@@ -1,10 +1,9 @@
 ---
-title: Configmap
+title: ConfigMap
 ---
 
 :::note
 
-- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/configmap#full-examples) section for complete examples.
 
 :::
@@ -17,187 +16,201 @@ title: Configmap
 
 ## `configmap`
 
-Create Configmap objects
+ConfigMaps, keyed by name.
 
-| Field      | Value       |
-| ---------- | ----------- |
-| Key        | `configmap` |
-| Type       | `map`       |
-| Required   | ❌          |
-| Helm `tpl` | ❌          |
-| Default    | unset       |
-
----
-
-### `configmap.$name.annotations`
-
-Additional annotations for configmap
-
-| Field      | Value                         |
-| ---------- | ----------------------------- |
-| Key        | `configmap.$name.annotations` |
-| Type       | `map`                         |
-| Required   | ❌                            |
-| Helm `tpl` | ✅ (On value only)             |
-| Default    | `{}`                          |
-
-Example
-
-```yaml
-configmap:
-  $name:
-    annotations:
-      {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `configmap` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-### `configmap.$name.annotationsList`
+## `$name`
 
-Additional annotations as a list of name and value pairs, merged into the annotations
+A ConfigMap.
 
-| Field      | Value                             |
-| ---------- | --------------------------------- |
-| Key        | `configmap.$name.annotationsList` |
-| Type       | `list of map`                     |
-| Required   | ❌                                |
-| Helm `tpl` | ❌                                |
-| Default    | unset                             |
-
----
-
-### `configmap.$name.binaryData`
-
-Binary data entries of the ConfigMap, keyed by file name. Values must be base64 encoded
-
-| Field      | Value                        |
-| ---------- | ---------------------------- |
-| Key        | `configmap.$name.binaryData` |
-| Type       | `map`                        |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
-| Default    | unset                        |
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name` |
+| Type | `map` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-### `configmap.$name.data`
+## `$name.expandObjectName`
 
-Data entries of the ConfigMap, keyed by file or variable name
+Prefix the name of the ConfigMap with the chart fullname.
 
-| Field      | Value                  |
-| ---------- | ---------------------- |
-| Key        | `configmap.$name.data` |
-| Type       | `map`                  |
-| Required   | ✅                     |
-| Helm `tpl` | ✅                     |
-| Default    | unset                  |
-
----
-
-### `configmap.$name.enabled`
-
-Enables or Disables the Configmap
-
-| Field      | Value                     |
-| ---------- | ------------------------- |
-| Key        | `configmap.$name.enabled` |
-| Type       | `boolean, string`         |
-| Required   | ✅                        |
-| Helm `tpl` | ✅                        |
-| Default    | `false`                   |
-
-Example
-
-```yaml
-configmap:
-  $name:
-    enabled: false
-```
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.expandObjectName` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `true` |
 
 ---
 
-### `configmap.$name.expandObjectName`
+## `$name.data`
 
-Prefix the object name with the chart fullname
+Data entries of the ConfigMap, keyed by file or variable name. Values are Helm `tpl` strings.
 
-| Field      | Value                              |
-| ---------- | ---------------------------------- |
-| Key        | `configmap.$name.expandObjectName` |
-| Type       | `boolean, string`                  |
-| Required   | ❌                                 |
-| Helm `tpl` | ❌                                 |
-| Default    | `true`                             |
-
-Example
-
-```yaml
-configmap:
-  $name:
-    expandObjectName: true
-```
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.data` |
+| Type | `map` |
+| Required | ✅ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | unset |
 
 ---
 
-### `configmap.$name.labels`
+## `$name.data.$name`
+
+Content of the entry.
+
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.data.$name` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.enabled`
+
+Create this ConfigMap when true. Accepts a Helm `tpl` string that renders to `true` or `false`.
+
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.enabled` |
+| Type | `bool` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | `false` |
+
+---
+
+## `$name.namespace`
+
+Namespace to create this object in. Overrides the chart-wide `namespace` and `global.namespace`.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.namespace` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `""` |
+
+---
+
+## `$name.labels`
 
 Additional labels for configmap
 
-| Field      | Value                    |
-| ---------- | ------------------------ |
-| Key        | `configmap.$name.labels` |
-| Type       | `map`                    |
-| Required   | ❌                       |
-| Helm `tpl` | ✅ (On value only)        |
-| Default    | `{}`                     |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
-Example
-
-```yaml
-configmap:
-  $name:
-    labels:
-      {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.labels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
 
 ---
 
-### `configmap.$name.labelsList`
+## `$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.annotationsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.labelsList`
 
 Additional labels as a list of name and value pairs, merged into the labels
 
-| Field      | Value                        |
-| ---------- | ---------------------------- |
-| Key        | `configmap.$name.labelsList` |
-| Type       | `list of map`                |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
-| Default    | unset                        |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.labelsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `configmap.$name.namespace`
+## `$name.annotations`
 
-Define the namespace for this object
+Additional annotations for configmap
 
-| Field      | Value                       |
-| ---------- | --------------------------- |
-| Key        | `configmap.$name.namespace` |
-| Type       | `string`                    |
-| Required   | ❌                          |
-| Helm `tpl` | ✅                          |
-| Default    | `""`                        |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
-Example
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.annotations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
 
-```yaml
-configmap:
-  $name:
-    namespace: ""
-```
+---
+
+## `$name.binaryData`
+
+Binary entries of the ConfigMap, keyed by file name. Values must be base64 encoded.
+
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.binaryData` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.binaryData.$name`
+
+Base64 encoded content of the ConfigMap entry
+
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.binaryData.$name` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
 ## Full Examples
+
+### Basic ConfigMap
+
+The name of the ConfigMap is prefixed with the fullname of the chart:
 
 ```yaml
 configmap:
@@ -211,7 +224,12 @@ configmap:
       keytpl: "{{ .Values.some.value }}"
     data:
       key: value
+```
 
+### Multi line values and a namespace
+
+```yaml
+configmap:
   other-configmap-name:
     enabled: true
     namespace: some-namespace
@@ -219,4 +237,54 @@ configmap:
       key: |
         multi line
         text value
+      config.yaml: |
+        server:
+          port: 8080
+```
+
+### Exact name
+
+With `expandObjectName: false`, the name is not prefixed with the fullname of the chart:
+
+```yaml
+configmap:
+  exact-name:
+    enabled: true
+    expandObjectName: false
+    data:
+      key: value
+```
+
+### Binary data
+
+`binaryData` takes base64 encoded values:
+
+```yaml
+configmap:
+  binary-configmap:
+    enabled: true
+    data:
+      text: some text
+    binaryData:
+      logo.png: aGVsbG8gd29ybGQ=
+```
+
+### Use it in a volume
+
+```yaml
+configmap:
+  app-config:
+    enabled: true
+    data:
+      config.ini: |
+        [app]
+        debug = false
+
+persistence:
+  config:
+    enabled: true
+    type: configmap
+    objectName: app-config
+    mountPath: /etc/app
+    readOnly: true
 ```

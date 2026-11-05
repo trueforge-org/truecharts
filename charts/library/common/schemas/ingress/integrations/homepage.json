@@ -5,55 +5,43 @@
   "properties": {
     "enabled": {
       "type": "boolean",
-      "properties": {},
-      "additionalProperties": false,
       "description": "Add the Homepage annotations to the Ingress.",
       "default": false,
       "x-docs-required": true
     },
     "name": {
       "type": "string",
-      "properties": {},
-      "additionalProperties": false,
       "description": "Name of the entry on the homepage. Sets the `gethomepage.dev/name` annotation."
     },
     "description": {
       "type": "string",
-      "properties": {},
-      "additionalProperties": false,
       "description": "Description of the entry on the homepage. Sets the `gethomepage.dev/description` annotation."
     },
     "group": {
       "type": "string",
-      "properties": {},
-      "additionalProperties": false,
       "description": "Group of the entry on the homepage. Sets the `gethomepage.dev/group` annotation.",
       "default": ""
     },
     "icon": {
       "type": "string",
-      "properties": {},
-      "additionalProperties": false,
       "description": "Icon of the entry on the homepage. Sets the `gethomepage.dev/icon` annotation."
     },
     "href": {
       "type": "string",
-      "properties": {},
-      "additionalProperties": false,
       "description": "Link of the entry on the homepage. Sets the `gethomepage.dev/href` annotation."
     },
     "weight": {
       "type": "integer",
-      "properties": {},
-      "additionalProperties": false,
       "description": "Sort weight of the entry within its group. Sets the `gethomepage.dev/weight` annotation."
     },
     "podSelector": {
       "type": "array",
-      "properties": {},
-      "additionalProperties": false,
       "description": "Selectors of the pods used for the status of the entry. Sets the `gethomepage.dev/pod-selector` annotation.",
-      "default": []
+      "default": [],
+      "items": {
+        "type": "string",
+        "description": "A pod label selector."
+      }
     },
     "widget": {
       "type": "object",
@@ -85,27 +73,20 @@
         },
         "enabled": {
           "type": "boolean",
-          "properties": {},
-          "additionalProperties": false,
           "description": "Add the widget annotations to the Ingress.",
           "default": true
         },
         "type": {
           "type": "string",
-          "properties": {},
-          "additionalProperties": false,
           "description": "Type of the widget. Sets the `gethomepage.dev/widget.type` annotation."
         },
         "version": {
           "type": "integer",
-          "additionalProperties": false,
           "description": "Version of the widget. Sets the `gethomepage.dev/widget.version` annotation.",
           "default": 1
         },
         "url": {
           "type": "string",
-          "properties": {},
-          "additionalProperties": false,
           "description": "URL the widget talks to. Sets the `gethomepage.dev/widget.url` annotation."
         },
         "custom": {

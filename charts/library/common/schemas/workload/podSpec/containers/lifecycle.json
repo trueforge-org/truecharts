@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "description": "Does **not** apply to `initContainers`. See [lifecycle](/truecharts-common/workload/podSpec/containers/lifecycle).",
+  "description": "Hooks that run when the container starts or before it stops. Does **not** apply to `initContainers`. See [lifecycle](/truecharts-common/container/lifecycle).",
   "properties": {
     "preStop": {
       "type": "object",
@@ -61,7 +61,7 @@
         }
       },
       "additionalProperties": false,
-      "description": "Define the preStop hook"
+      "description": "Hook that runs before the container is stopped, before it receives SIGTERM."
     },
     "postStart": {
       "type": "object",
@@ -121,7 +121,7 @@
         }
       },
       "additionalProperties": false,
-      "description": "Define the postStart hook"
+      "description": "Hook that runs right after the container is created. The container is not marked as running until it completes."
     }
   },
   "additionalProperties": false

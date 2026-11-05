@@ -7,48 +7,53 @@
     "properties": {
       "type": {
         "type": "string",
-        "description": "Define the type of container - Only applies to `initContainers`",
+        "description": "When the init container runs: `install` only on install, `upgrade` only on upgrade, `system` and `init` on every start. They are run in this order: `install`, `upgrade`, `system`, then `init`.",
         "x-helm-tpl": true,
-        "x-docs-required": true
+        "x-docs-required": true,
+        "examples": [
+          "init"
+        ]
       },
       "enabled": {
         "type": [
           "boolean",
           "string"
         ],
-        "description": "Define if the init container is enabled or not"
+        "description": "Whether the init container is created.",
+        "x-helm-tpl": true
       },
       "imageSelector": {
         "type": "string",
-        "description": "Define the image `map` to use"
+        "description": "Name of the image to use. It is a key on the root of the values that holds `repository`, `tag` and `pullPolicy`, eg `image`.",
+        "x-helm-tpl": true
       },
       "command": {
         "$ref": "containers/command.json",
-        "description": "Define command(s). If it's single, can be defined as string"
+        "description": "Entrypoint of the init container (`command`). A single command can be given as a string."
       },
       "args": {
         "$ref": "containers/args.json",
-        "description": "Define arg(s). If it's single, can be defined as string"
+        "description": "Arguments of the init container (`args`). A single argument can be given as a string."
       },
       "env": {
         "$ref": "containers/env.json",
-        "description": "Define env(s) for the init container"
+        "description": "Environment variables of the init container, keyed by name."
       },
       "envFrom": {
         "$ref": "containers/envFrom.json",
-        "description": "Define envFrom for the init container"
+        "description": "ConfigMaps and Secrets whose keys all become environment variables of the init container."
       },
       "resources": {
         "$ref": "containers/resources.json",
-        "description": "The resources that the init container can use."
+        "description": "CPU, memory and extended resources the init container requests and may use."
       },
       "securityContext": {
         "$ref": "containers/securityContext.json",
-        "description": "Define securityContext for the init container"
+        "description": "Security context of the init container. Overrides `securityContext.container`."
       },
       "termination": {
         "$ref": "../container/termination.json",
-        "description": "Define termination for the init container"
+        "description": "Where the termination message of the init container is read from."
       },
       "probes": {
         "$ref": "containers/probes.json",
@@ -56,7 +61,7 @@
       }
     },
     "additionalProperties": false,
-    "description": "Configuration for `$name.podSpec.initContainers.$name`."
+    "description": "An init container of the pod. It supports the settings of a container, except `lifecycle`, `primary` and working probes."
   },
-  "description": "Configuration for `$name.podSpec.initContainers`."
+  "description": "Init containers of the pod, keyed by name. They run before the other containers start. See [initContainers](/truecharts-common/container/initContainers)."
 }

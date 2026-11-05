@@ -1,39 +1,47 @@
 ---
-title: Externalname
+title: ExternalName
 ---
 
 :::note
 
-- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/service/ExternalName#full-examples) section for complete examples.
+
+:::
+
+:::tip
+
+- See all available keys of this object on the [Service](/truecharts-common/service) page.
+- These options apply only when `type: ExternalName`.
 
 :::
 
 ## Appears in
 
-- `.Values.service.ExternalName`
+- `.Values.service.$name`
 
 ---
 
-## `service.ExternalName`
+## `externalName`
 
-Configure ExternalName type
+External hostname the Service resolves to. Only for `type: ExternalName`.
 
-| Field      | Value                  |
-| ---------- | ---------------------- |
-| Key        | `service.ExternalName` |
-| Type       | `string`               |
-| Required   | ❌                     |
-| Helm `tpl` | ❌                     |
-| Default    | unset                  |
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.externalName` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Applies to | `ExternalName` |
 
 ---
 
 ## Full Examples
 
+### Every option
+
 ```yaml
 service:
-  # Special type
   service-external-name:
     enabled: true
     primary: true
@@ -55,4 +63,21 @@ service:
         targetSelector: container-name
         port: 80
         protocol: http
+```
+
+### External host
+
+```yaml
+service:
+  database:
+    enabled: true
+    primary: true
+    type: ExternalName
+    externalName: db.example.com
+    ports:
+      db:
+        enabled: true
+        primary: true
+        port: 5432
+        protocol: tcp
 ```

@@ -1,16 +1,27 @@
 ## Full Examples
 
+### Users in the values
+
+The password is stored in a generated Secret. Use placeholders only in documentation, and set a real password in your own values.
+
 ```yaml
 ingressMiddlewares:
   traefik:
-    middleware-name1:
+    middleware-name:
       enabled: true
       type: basic-auth
       data:
         users:
           - username: some-username
-            password: some-password
-    middleware-name2:
+            password: <password>
+```
+
+### Existing secret
+
+```yaml
+ingressMiddlewares:
+  traefik:
+    middleware-name:
       enabled: true
       type: basic-auth
       data:

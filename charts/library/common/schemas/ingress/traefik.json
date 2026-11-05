@@ -4,15 +4,11 @@
   "properties": {
     "enabled": {
       "type": "boolean",
-      "properties": {},
-      "additionalProperties": false,
       "description": "Add the Traefik annotations and middlewares to the Ingress.",
       "default": false
     },
     "entrypoints": {
       "type": "array",
-      "properties": {},
-      "additionalProperties": false,
       "description": "Traefik entrypoints the Ingress is exposed on, set in the `traefik.ingress.kubernetes.io/router.entrypoints` annotation.",
       "items": {
         "type": "string",
@@ -29,8 +25,6 @@
     },
     "forceTLS": {
       "type": "boolean",
-      "properties": {},
-      "additionalProperties": false,
       "description": "Only accept TLS connections on the router. Adds the `traefik.ingress.kubernetes.io/router.tls` annotation.",
       "default": true
     },

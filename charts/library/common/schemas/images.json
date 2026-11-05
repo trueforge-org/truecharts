@@ -8,7 +8,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `codeserverImage`."
+      "description": "Image of the code-server container of the `addons.codeserver` addon."
     },
     "gluetunImage": {
       "allOf": [
@@ -16,7 +16,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `gluetunImage`."
+      "description": "Image of the Gluetun VPN container of the `addons.gluetun` addon."
     },
     "kubectlImage": {
       "allOf": [
@@ -24,7 +24,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `kubectlImage`."
+      "description": "Image with `kubectl`, available to charts that need it in a container or init container through `imageSelector: kubectlImage`."
     },
     "mariadbClientImage": {
       "allOf": [
@@ -32,7 +32,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `mariadbClientImage`."
+      "description": "Image of the mariadb client in the init container that waits for the `mariadb` dependency."
     },
     "mongodbClientImage": {
       "allOf": [
@@ -40,7 +40,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `mongodbClientImage`."
+      "description": "Image of the mongodb client in the init container that waits for the `mongodb` dependency."
     },
     "netshootImage": {
       "allOf": [
@@ -48,7 +48,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `netshootImage`."
+      "description": "Image of the netshoot container of the `addons.netshoot` addon."
     },
     "postgres15Image": {
       "allOf": [
@@ -56,7 +56,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `postgres15Image`."
+      "description": "PostgreSQL 15 image for the CloudNativePG cluster of the `postgresql` dependency. Selected with `dependencies.postgresql.operator.type: postgres` and `pgVersion: 15`."
     },
     "postgres16Image": {
       "allOf": [
@@ -64,7 +64,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `postgres16Image`."
+      "description": "PostgreSQL 16 image for the CloudNativePG cluster of the `postgresql` dependency. Selected with `dependencies.postgresql.operator.type: postgres` and `pgVersion: 16`."
     },
     "postgres17Image": {
       "allOf": [
@@ -72,7 +72,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `postgres17Image`."
+      "description": "PostgreSQL 17 image for the CloudNativePG cluster of the `postgresql` dependency. Selected with `dependencies.postgresql.operator.type: postgres` and `pgVersion: 17`."
     },
     "postgres18Image": {
       "allOf": [
@@ -80,7 +80,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `postgres18Image`."
+      "description": "PostgreSQL 18 image for the CloudNativePG cluster of the `postgresql` dependency. Selected with `dependencies.postgresql.operator.type: postgres` and `pgVersion: 18`."
     },
     "postgresClientImage": {
       "allOf": [
@@ -88,7 +88,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `postgresClientImage`."
+      "description": "Image of the postgresql client in the init container that waits for the `postgresql` dependency."
     },
     "postgresql18Image": {
       "allOf": [
@@ -96,7 +96,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `postgresql18Image`."
+      "description": "Image of the `postgresql` dependency in `standalone` mode, a PostgreSQL 18 image."
     },
     "postgresPostgis15Image": {
       "allOf": [
@@ -104,7 +104,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `postgresPostgis15Image`."
+      "description": "PostgreSQL 15 image with PostGIS for the CloudNativePG cluster of the `postgresql` dependency. Selected with `dependencies.postgresql.operator.type: postgis` and `pgVersion: 15`."
     },
     "postgresPostgis16Image": {
       "allOf": [
@@ -112,7 +112,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `postgresPostgis16Image`."
+      "description": "PostgreSQL 16 image with PostGIS for the CloudNativePG cluster of the `postgresql` dependency. Selected with `dependencies.postgresql.operator.type: postgis` and `pgVersion: 16`."
     },
     "postgresPostgis17Image": {
       "allOf": [
@@ -120,7 +120,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `postgresPostgis17Image`."
+      "description": "PostgreSQL 17 image with PostGIS for the CloudNativePG cluster of the `postgresql` dependency. Selected with `dependencies.postgresql.operator.type: postgis` and `pgVersion: 17`."
     },
     "postgresPostgis18Image": {
       "allOf": [
@@ -128,7 +128,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `postgresPostgis18Image`."
+      "description": "PostgreSQL 18 image with PostGIS for the CloudNativePG cluster of the `postgresql` dependency. Selected with `dependencies.postgresql.operator.type: postgis` and `pgVersion: 18`."
     },
     "postgresVectorchord15Image": {
       "allOf": [
@@ -136,7 +136,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `postgresVectorchord15Image`."
+      "description": "PostgreSQL 15 image with VectorChord for the CloudNativePG cluster of the `postgresql` dependency. Selected with `dependencies.postgresql.operator.type: vectorchord` and `pgVersion: 15`."
     },
     "postgresVectorchord16Image": {
       "allOf": [
@@ -144,7 +144,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `postgresVectorchord16Image`."
+      "description": "PostgreSQL 16 image with VectorChord for the CloudNativePG cluster of the `postgresql` dependency. Selected with `dependencies.postgresql.operator.type: vectorchord` and `pgVersion: 16`."
     },
     "postgresVectorchord17Image": {
       "allOf": [
@@ -152,7 +152,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `postgresVectorchord17Image`."
+      "description": "PostgreSQL 17 image with VectorChord for the CloudNativePG cluster of the `postgresql` dependency. Selected with `dependencies.postgresql.operator.type: vectorchord` and `pgVersion: 17`."
     },
     "postgresVectorchord18Image": {
       "allOf": [
@@ -160,7 +160,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `postgresVectorchord18Image`."
+      "description": "PostgreSQL 18 image with VectorChord for the CloudNativePG cluster of the `postgresql` dependency. Selected with `dependencies.postgresql.operator.type: vectorchord` and `pgVersion: 18`."
     },
     "postgresVectors15Image": {
       "allOf": [
@@ -168,7 +168,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `postgresVectors15Image`."
+      "description": "PostgreSQL 15 image with pgvecto.rs for the CloudNativePG cluster of the `postgresql` dependency. Selected with `dependencies.postgresql.operator.type: vectors` and `pgVersion: 15`."
     },
     "postgresVectors16Image": {
       "allOf": [
@@ -176,7 +176,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `postgresVectors16Image`."
+      "description": "PostgreSQL 16 image with pgvecto.rs for the CloudNativePG cluster of the `postgresql` dependency. Selected with `dependencies.postgresql.operator.type: vectors` and `pgVersion: 16`."
     },
     "postgresVectors17Image": {
       "allOf": [
@@ -184,7 +184,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `postgresVectors17Image`."
+      "description": "PostgreSQL 17 image with pgvecto.rs for the CloudNativePG cluster of the `postgresql` dependency. Selected with `dependencies.postgresql.operator.type: vectors` and `pgVersion: 17`."
     },
     "tailscaleImage": {
       "allOf": [
@@ -192,7 +192,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `tailscaleImage`."
+      "description": "Image of the tailscale container of the `addons.tailscale` addon."
     },
     "ubuntuImage": {
       "allOf": [
@@ -200,7 +200,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `ubuntuImage`."
+      "description": "Image of the init containers that set permissions (`autoperms`) and of the dbWait init containers that need a shell."
     },
     "valkeyClientImage": {
       "allOf": [
@@ -208,7 +208,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of `valkeyClientImage`."
+      "description": "Image of the valkey client in the init container that waits for the `valkey` dependency."
     },
     "clickhouseImage": {
       "allOf": [
@@ -216,7 +216,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of the clickhouse dependency, selected by its container."
+      "description": "Image of the `clickhouse` dependency in `standalone` mode."
     },
     "mariadbImage": {
       "allOf": [
@@ -224,7 +224,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of the mariadb dependency, selected by its container."
+      "description": "Image of the `mariadb` dependency in `standalone` mode."
     },
     "memcachedImage": {
       "allOf": [
@@ -232,7 +232,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of the memcached dependency, selected by its container."
+      "description": "Image of the `memcached` dependency in `standalone` mode."
     },
     "mongodbImage": {
       "allOf": [
@@ -240,7 +240,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of the mongodb dependency, selected by its container."
+      "description": "Image of the `mongodb` dependency in `standalone` mode."
     },
     "valkeyImage": {
       "allOf": [
@@ -248,7 +248,7 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of the valkey dependency, selected by its container in `standalone` mode and by `dependencies.valkey.operator.imageSelector` in `operator` mode."
+      "description": "Image of the `valkey` dependency, in `standalone` mode and for the nodes in `operator` mode."
     },
     "valkeyExporterImage": {
       "allOf": [
@@ -256,9 +256,9 @@
           "$ref": "image.json"
         }
       ],
-      "description": "Image of the metrics exporter of the valkey dependency in `operator` mode, selected by `dependencies.valkey.operator.exporter.imageSelector`."
+      "description": "Image of the metrics exporter of the `valkey` dependency in `operator` mode (`dependencies.valkey.operator.exporter.imageSelector`)."
     }
   },
   "additionalProperties": false,
-  "description": "Bundled image schemas."
+  "description": "Images of the addons, the dependencies and the helper containers of common. A container selects one with its `imageSelector`, the name of the image key."
 }

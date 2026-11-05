@@ -55,13 +55,13 @@ class Node:
     max_items: Any = None
     examples: list[Any] = field(default_factory=list)
     required: set[str] = field(default_factory=set)
-    props: dict[str, tuple[Any, str]] = field(default_factory=dict)
+    props: dict[str, list[tuple[Any, str]]] = field(default_factory=dict)
     items: tuple[Any, str] | None = None
     addl: tuple[Any, str] | None = None
     closed: bool = False
     tpl: bool = False
     helm_tpl: Any = None
-    docs_required: bool = False
+    docs_required: bool | None = None
     applies: list[str] = field(default_factory=list)
     identity: str | None = None
     root_values: bool = False
@@ -74,6 +74,7 @@ class Schemas:
         self._files: dict[Path, Any] = {}
         # The raw object is kept next to the node so its id() can not be reused.
         self._cache: dict[tuple[int, Path], tuple[Any, Node]] = {}
+        self._multi: dict[tuple, tuple[Any, Node]] = {}
 
     def load(self, path: Path) -> Any:
         path = path.resolve()
@@ -109,13 +110,26 @@ class Schemas:
             self._cache[key] = (raw, n)
         return self._cache[key][1]
 
+    def node_multi(self, sources: list[tuple[Any, str]]) -> Node:
+        """A node built from several definitions of the same key; the first one wins."""
+        if len(sources) == 1:
+            return self.node(*sources[0])
+        key = tuple((id(r), f) for r, f in sources)
+        if key not in self._multi:
+            n = Node()
+            for raw, file in sources:
+                self._absorb(n, raw, file, "base")
+            self._multi[key] = (sources, n)
+        return self._multi[key][1]
+
     def _absorb(self, n: Node, raw: Any, file: Path, mode: str) -> None:
         """Merge raw into n; the first value found for a keyword wins."""
         if not isinstance(raw, dict):
             return
         # Keywords next to the $ref win over the referenced schema.
         self._own(n, raw, file, mode)
-        for sub in raw.get("allOf", []):
+        # Later allOf entries are overrides of earlier ones, so they are read first.
+        for sub in reversed(raw.get("allOf", [])):
             self._absorb(n, sub, file, "all" if mode == "base" else mode)
         if "$ref" in raw:
             target, tfile, ident = self.follow(raw["$ref"], file)
@@ -151,10 +165,10 @@ class Schemas:
         if isinstance(types, str):
             types = [types]
         if isinstance(types, list):
-            if mode != "alt" and "string" in types and len(
+            if mode != "alt" and raw.get("x-helm-tpl") and "string" in types and len(
                 [t for t in types if t not in ("string", "null")]
             ) >= 1:
-                # [T, "string"] means the value may also be a template string.
+                # [T, "string"] with x-helm-tpl: the string form is a template.
                 n.tpl = True
                 types = [t for t in types if t != "string"]
             for t in types:
@@ -184,7 +198,7 @@ class Schemas:
         for k, v in (raw.get("properties") or {}).items():
             if v is False:
                 continue
-            n.props.setdefault(k, (v, file))
+            n.props.setdefault(k, []).append((v, file))
         if n.items is None and isinstance(raw.get("items"), dict):
             n.items = (raw["items"], file)
         ap = raw.get("additionalProperties")
@@ -194,16 +208,16 @@ class Schemas:
             n.closed = True
         if n.helm_tpl is None and raw.get("x-helm-tpl") is not None:
             n.helm_tpl = raw["x-helm-tpl"]
-        if raw.get("x-docs-required"):
-            n.docs_required = True
+        if n.docs_required is None and "x-docs-required" in raw:
+            n.docs_required = bool(raw["x-docs-required"])
         for a in raw.get("x-docs-appliesTo", []):
             if a not in n.applies:
                 n.applies.append(a)
 
     def children(self, n: Node):
         """Yield (key, Node) for the documented children of n."""
-        for k, (raw, f) in n.props.items():
-            yield k, self.node(raw, f)
+        for k, sources in n.props.items():
+            yield k, self.node_multi(sources)
         if n.addl is not None:
             yield "$name", self.node(*n.addl)
         if n.items is not None:
@@ -464,7 +478,8 @@ class Generator:
                     path=path,
                     rel=rel_of(path),
                     node=node,
-                    required=bool(parent and key in parent.required) or node.docs_required,
+                    required=node.docs_required is True
+                    or (node.docs_required is None and bool(parent and key in parent.required)),
                 )
                 other = None if top else self._other_page(page, path, node, root_idx)
                 target = None if top else page.collapse.get(entry.rel)
@@ -571,8 +586,13 @@ class Generator:
         if enum:
             rows.append(("Allowed values", ", ".join(f"`{json.dumps(v, ensure_ascii=False)}`" for v in enum)))
         pattern = n.pattern or (item.pattern if item else None)
+        long_pattern = None
         if pattern:
-            rows.append(("Pattern", f"`{pattern}`"))
+            if "|" in pattern:
+                rows.append(("Pattern", "See below"))
+                long_pattern = pattern
+            else:
+                rows.append(("Pattern", f"`{pattern}`"))
         if n.minimum is not None or n.maximum is not None:
             rows.append(("Range", f"{n.minimum if n.minimum is not None else '…'} to {n.maximum if n.maximum is not None else '…'}"))
         if n.min_length is not None or n.max_length is not None:
@@ -584,6 +604,8 @@ class Generator:
         lines += [md_table(rows), ""]
         if long_default:
             lines += ["Default value:", "", "```yaml", long_default, "```", ""]
+        if long_pattern:
+            lines += ["Pattern:", "", "```text", long_pattern, "```", ""]
         if n.examples:
             lines += ["Example", "", "```yaml", to_yaml(nest(e.path, n.examples[0])), "```", ""]
         lines.append("---")
@@ -649,7 +671,7 @@ class Generator:
                 out += [
                     ":::tip",
                     "",
-                    f"- See all available keys of this object [here]({self.url(parent)}).",
+                    f"- See all available keys of this object on the [{parent.title}]({self.url(parent)}) page.",
                     f"- These options apply only when `type: {page.applies}`.",
                     "",
                     ":::",
@@ -704,7 +726,8 @@ class Generator:
             if target is None or target is page:
                 name = f"`{k}`"
             else:
-                anchor = "" if target.compact_links or self.is_root_of(target, path, c) else slug(path)
+                multi = len(target.roots) > 1 and path in [r.get("path") for r in target.roots]
+                anchor = slug(path) if multi and not target.compact_links else ""
                 name = f"[`{k}`]({self.url(target, anchor)})"
             desc = c.description.split("\n")[0] if c.description else ""
             lines.append(f"| {name} | `{self.type_str(c)}` | {esc_cell(desc)} |")
@@ -926,9 +949,9 @@ def validate_value(schemas: Schemas, root: Node, n: Node, value: Any, path: str,
         for k, v in value.items():
             child = None
             if k in n.props:
-                child = schemas.node(*n.props[k])
+                child = schemas.node_multi(n.props[k])
             elif n.root_values and k in root.props:
-                child = schemas.node(*root.props[k])
+                child = schemas.node_multi(root.props[k])
             elif n.addl is not None:
                 child = schemas.node(*n.addl)
             elif n.closed or (n.props and not n.root_values):

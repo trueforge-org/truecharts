@@ -4,165 +4,249 @@ title: Ports
 
 :::note
 
-- This page is generated from JSON schema.
+- Examples under each key are only to be used as a placement guide
 - See the [Full Examples](/truecharts-common/service/ports#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.service.ports`
+- `.Values.service.$name.ports.$name`
+- `.Values.addons.codeserver.service.ports.$name`
+- `.Values.addons.codeserver.service.$name.ports.$name`
 
 ---
 
-## `service.ports`
+## `$name`
 
-Define the port dict
+A port of the Service, keyed by name.
 
-| Field      | Value           |
-| ---------- | --------------- |
-| Key        | `service.ports` |
-| Type       | `map`           |
-| Required   | ❌              |
-| Helm `tpl` | ❌              |
-| Default    | unset           |
-
----
-
-### `service.ports.appProtocol`
-
-Define the appProtocol of the port, used by the `Endpoint` and `EndpointSlice` objects (External IP)
-
-| Field      | Value                       |
-| ---------- | --------------------------- |
-| Key        | `service.ports.appProtocol` |
-| Type       | `string`                    |
-| Required   | ❌                          |
-| Helm `tpl` | ❌                          |
-| Default    | unset                       |
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.ports.$name` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `service.ports.enabled`
+## `targetSelector`
 
-Enable the port.
+Name of the container port or workload the port points to. Defaults to the primary workload.
 
-| Field      | Value                   |
-| ---------- | ----------------------- |
-| Key        | `service.ports.enabled` |
-| Type       | `boolean, string`       |
-| Required   | ❌                      |
-| Helm `tpl` | ❌                      |
-| Default    | unset                   |
-
----
-
-### `service.ports.hostPort`
-
-Define the hostPort, should be **avoided**, unless **ABSOLUTELY** necessary
-
-| Field      | Value                    |
-| ---------- | ------------------------ |
-| Key        | `service.ports.hostPort` |
-| Type       | `integer, string`        |
-| Required   | ❌                       |
-| Helm `tpl` | ✅                       |
-| Default    | unset                    |
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.ports.$name.targetSelector` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
 
 ---
 
-### `service.ports.nodePort`
+## `port`
 
-Define the node port that will be exposed on the node
+Port the Service listens on.
 
-| Field      | Value                    |
-| ---------- | ------------------------ |
-| Key        | `service.ports.nodePort` |
-| Type       | `integer, string`        |
-| Required   | ✅                       |
-| Helm `tpl` | ✅                       |
-| Default    | unset                    |
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.ports.$name.port` |
+| Type | `int` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Range | 1 to … |
 
----
+Example
 
-### `service.ports.port`
-
-Define the port that will be exposed by the service
-
-| Field      | Value                |
-| ---------- | -------------------- |
-| Key        | `service.ports.port` |
-| Type       | `integer, string`    |
-| Required   | ✅                   |
-| Helm `tpl` | ✅                   |
-| Default    | unset                |
-| Minimum    | `1`                  |
+```yaml
+service:
+  example:
+    ports:
+      example:
+        port: 8080
+```
 
 ---
 
-### `service.ports.primary`
+## `targetPort`
 
-Make this the primary port of the service.
+Port on the pod the traffic is sent to, a number only. Defaults to `port`.
 
-| Field      | Value                   |
-| ---------- | ----------------------- |
-| Key        | `service.ports.primary` |
-| Type       | `boolean`               |
-| Required   | ❌                      |
-| Helm `tpl` | ❌                      |
-| Default    | unset                   |
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.ports.$name.targetPort` |
+| Type | `int` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
 
----
+Example
 
-### `service.ports.protocol`
-
-Define the port protocol Used by the container ports and probes, http and https are converted to tcp where needed
-
-| Field      | Value                         |
-| ---------- | ----------------------------- |
-| Key        | `service.ports.protocol`      |
-| Type       | `string`                      |
-| Required   | ❌                            |
-| Helm `tpl` | ✅                            |
-| Default    | unset                         |
-| Enum       | `tcp`, `udp`, `http`, `https` |
+```yaml
+service:
+  example:
+    ports:
+      example:
+        targetPort: 8080
+```
 
 ---
 
-### `service.ports.targetPort`
+## `protocol`
 
-Define the target port (No named ports)
+Protocol of the port: `tcp`, `udp`, `sctp`, `http` or `https`. `http` and `https` are used as `TCP` where needed. Also used by container ports and probes.
 
-| Field      | Value                      |
-| ---------- | -------------------------- |
-| Key        | `service.ports.targetPort` |
-| Type       | `integer, string`          |
-| Required   | ❌                         |
-| Helm `tpl` | ✅                         |
-| Default    | unset                      |
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.ports.$name.protocol` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Allowed values | `"tcp"`, `"udp"`, `"http"`, `"https"` |
+| Pattern | `^\{\{.*\}\}$` |
 
 ---
 
-### `service.ports.targetSelector`
+## `appProtocol`
 
-Define the port dict
+Application protocol of the port, eg `https`. Also used by the `Endpoints` and `EndpointSlice` objects of `type: ExternalIP`.
 
-| Field      | Value                          |
-| ---------- | ------------------------------ |
-| Key        | `service.ports.targetSelector` |
-| Type       | `string`                       |
-| Required   | ❌                             |
-| Helm `tpl` | ✅                             |
-| Default    | unset                          |
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.ports.$name.appProtocol` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `hostPort`
+
+Port opened on the node by the container. Avoid this unless the app cannot work without it.
+
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.ports.$name.hostPort` |
+| Type | `int` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+
+---
+
+## `enabled`
+
+Create this port. Supports Helm `tpl`.
+
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.ports.$name.enabled` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+
+---
+
+## `primary`
+
+Make this the primary port of the Service. Only 1 port can be primary.
+
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.ports.$name.primary` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
 ## Full Examples
 
-Full examples can be found under each service type
+The `protocol` of a port is one of `tcp`, `udp`, `http` and `https`. `http` and `https` are converted to `tcp` where Kubernetes needs it, and set the `appProtocol`.
 
-- [ClusterIP](/truecharts-common/service/clusterip)
-- [LoadBalancer](/truecharts-common/service#loadbalancer)
-- [NodePort](/truecharts-common/service#nodeport)
-- [ExternalName](/truecharts-common/service/externalname)
-- [ExternalIP](/truecharts-common/service/externalip)
+### http
+
+```yaml
+service:
+  service-name:
+    enabled: true
+    primary: true
+    ports:
+      port-name:
+        enabled: true
+        primary: true
+        targetSelector: container-name
+        port: 80
+        targetPort: 8080
+        protocol: http
+```
+
+### https
+
+```yaml
+service:
+  service-name:
+    enabled: true
+    primary: true
+    ports:
+      port-name:
+        enabled: true
+        primary: true
+        port: 443
+        targetPort: 8443
+        protocol: https
+```
+
+### tcp and udp
+
+```yaml
+service:
+  service-name:
+    enabled: true
+    primary: true
+    ports:
+      tcp-port:
+        enabled: true
+        primary: true
+        port: 5432
+        protocol: tcp
+      udp-port:
+        enabled: true
+        port: 53
+        protocol: udp
+```
+
+### appProtocol, hostPort and templates
+
+```yaml
+service:
+  service-name:
+    enabled: true
+    primary: true
+    ports:
+      port-name:
+        enabled: true
+        primary: true
+        port: "{{ .Values.port }}"
+        targetPort: "{{ .Values.targetPort }}"
+        protocol: "{{ .Values.protocol }}"
+        appProtocol: kubernetes.io/h2c
+        hostPort: 8080
+
+  service-nodeport:
+    enabled: true
+    type: NodePort
+    ports:
+      port-name:
+        enabled: true
+        primary: true
+        port: 80
+        protocol: tcp
+        nodePort: 30080
+```

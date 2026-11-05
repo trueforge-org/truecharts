@@ -118,7 +118,11 @@
           [
             "192.168.1.240"
           ]
-        ]
+        ],
+        "items": {
+          "type": "string",
+          "description": "An IP address."
+        }
       },
       "loadBalancerSourceRanges": {
         "type": "array",
@@ -131,7 +135,11 @@
           [
             "192.168.1.0/24"
           ]
-        ]
+        ],
+        "items": {
+          "type": "string",
+          "description": "An allowed CIDR, eg `192.168.1.0/24`."
+        }
       },
       "allocateLoadBalancerNodePorts": {
         "type": "boolean",

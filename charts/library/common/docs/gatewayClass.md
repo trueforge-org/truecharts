@@ -1,10 +1,10 @@
 ---
-title: Gatewayclass
+title: Gateway Class
 ---
 
 :::note
 
-- This page is generated from JSON schema.
+- Examples under each key are only to be used as a placement guide
 - See the [Full Examples](/truecharts-common/gatewayClass#full-examples) section for complete examples.
 
 :::
@@ -17,143 +17,206 @@ title: Gatewayclass
 
 ## `gatewayClass`
 
-Configuration for `gatewayClass`.
+Gateway API GatewayClasses, keyed by name.
 
-| Field      | Value          |
-| ---------- | -------------- |
-| Key        | `gatewayClass` |
-| Type       | `map`          |
-| Required   | ❌             |
-| Helm `tpl` | ❌             |
-| Default    | unset          |
-
----
-
-### `gatewayClass.$name.annotations`
-
-Additional annotations, keyed by name.
-
-| Field      | Value                            |
-| ---------- | -------------------------------- |
-| Key        | `gatewayClass.$name.annotations` |
-| Type       | `map`                            |
-| Required   | ❌                               |
-| Helm `tpl` | ❌                               |
-| Default    | unset                            |
+| Field | Value |
+| --- | --- |
+| Key | `gatewayClass` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `gatewayClass.$name.controllerName`
+## `$name`
+
+A GatewayClass, keyed by name.
+
+| Field | Value |
+| --- | --- |
+| Key | `gatewayClass.$name` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
+## `$name.enabled`
+
+Create this GatewayClass. Supports Helm `tpl`.
+
+| Field | Value |
+| --- | --- |
+| Key | `gatewayClass.$name.enabled` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `false` |
+
+---
+
+## `$name.primary`
+
+Make this the primary GatewayClass of the chart. Only 1 can be primary.
+
+| Field | Value |
+| --- | --- |
+| Key | `gatewayClass.$name.primary` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.annotations`
+
+Additional annotations of the GatewayClass.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `gatewayClass.$name.annotations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.labels`
+
+Additional labels of the GatewayClass.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `gatewayClass.$name.labels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.controllerName`
 
 The name of the controller that will manage Gateways of this class.
 
-| Field      | Value                               |
-| ---------- | ----------------------------------- |
-| Key        | `gatewayClass.$name.controllerName` |
-| Type       | `string`                            |
-| Required   | ❌                                  |
-| Helm `tpl` | ❌                                  |
-| Default    | unset                               |
+| Field | Value |
+| --- | --- |
+| Key | `gatewayClass.$name.controllerName` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 Example
 
 ```yaml
 gatewayClass:
-  $name:
-    controllerName: "traefik.io/gateway-controller"
+  example:
+    controllerName: traefik.io/gateway-controller
 ```
 
 ---
 
-### `gatewayClass.$name.description`
+## `$name.description`
 
-Description helps describe a GatewayClass with more details.
+Human readable description of the GatewayClass.
 
-| Field      | Value                            |
-| ---------- | -------------------------------- |
-| Key        | `gatewayClass.$name.description` |
-| Type       | `string`                         |
-| Required   | ❌                               |
-| Helm `tpl` | ❌                               |
-| Default    | unset                            |
+| Field | Value |
+| --- | --- |
+| Key | `gatewayClass.$name.description` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 Example
 
 ```yaml
 gatewayClass:
-  $name:
-    description: "Traefik-based gateway class"
+  example:
+    description: Traefik-based gateway class
 ```
 
 ---
 
-### `gatewayClass.$name.enabled`
+## `$name.parametersRef`
 
-Enable the GatewayClass.
+Reference to a resource with implementation specific parameters of the GatewayClass.
 
-| Field      | Value                        |
-| ---------- | ---------------------------- |
-| Key        | `gatewayClass.$name.enabled` |
-| Type       | `boolean, string`            |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
-| Default    | `false`                      |
-
-Example
-
-```yaml
-gatewayClass:
-  $name:
-    enabled: false
-```
+| Field | Value |
+| --- | --- |
+| Key | `gatewayClass.$name.parametersRef` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `gatewayClass.$name.labels`
+## `$name.parametersRef.group`
 
-Additional labels, keyed by name.
+API group of the parameters resource.
 
-| Field      | Value                       |
-| ---------- | --------------------------- |
-| Key        | `gatewayClass.$name.labels` |
-| Type       | `map`                       |
-| Required   | ❌                          |
-| Helm `tpl` | ❌                          |
-| Default    | unset                       |
-
----
-
-### `gatewayClass.$name.parametersRef`
-
-ParametersRef is a reference to a resource that contains the configuration parameters corresponding to the GatewayClass.
-
-Fields for parametersRef:
-- `group`: API group of the referenced resource (required)
-- `kind`: Kind of the referenced resource (required)
-- `name`: Name of the referenced resource (required)
-- `namespace`: Optional namespace of the referenced resource
-
-| Field      | Value                              |
-| ---------- | ---------------------------------- |
-| Key        | `gatewayClass.$name.parametersRef` |
-| Type       | `map`                              |
-| Required   | ❌                                 |
-| Helm `tpl` | ❌                                 |
-| Default    | unset                              |
+| Field | Value |
+| --- | --- |
+| Key | `gatewayClass.$name.parametersRef.group` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Length | 1 to … |
 
 ---
 
-### `gatewayClass.$name.primary`
+## `$name.parametersRef.kind`
 
-Make this the primary GatewayClass of the chart. Only one can be primary.
+Kind of the parameters resource.
 
-| Field      | Value                        |
-| ---------- | ---------------------------- |
-| Key        | `gatewayClass.$name.primary` |
-| Type       | `boolean`                    |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
-| Default    | unset                        |
+| Field | Value |
+| --- | --- |
+| Key | `gatewayClass.$name.parametersRef.kind` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Length | 1 to … |
+
+---
+
+## `$name.parametersRef.name`
+
+Name of the parameters resource.
+
+| Field | Value |
+| --- | --- |
+| Key | `gatewayClass.$name.parametersRef.name` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Length | 1 to … |
+
+---
+
+## `$name.parametersRef.namespace`
+
+Namespace of the parameters resource.
+
+| Field | Value |
+| --- | --- |
+| Key | `gatewayClass.$name.parametersRef.namespace` |
+| Type | `null or string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 

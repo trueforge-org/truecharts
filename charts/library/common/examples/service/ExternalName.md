@@ -1,8 +1,9 @@
 ## Full Examples
 
+### Every option
+
 ```yaml
 service:
-  # Special type
   service-external-name:
     enabled: true
     primary: true
@@ -24,4 +25,21 @@ service:
         targetSelector: container-name
         port: 80
         protocol: http
+```
+
+### External host
+
+```yaml
+service:
+  database:
+    enabled: true
+    primary: true
+    type: ExternalName
+    externalName: db.example.com
+    ports:
+      db:
+        enabled: true
+        primary: true
+        port: 5432
+        protocol: tcp
 ```

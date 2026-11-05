@@ -283,7 +283,11 @@
                 "x-docs-required": true,
                 "x-docs-appliesTo": [
                   "plugin-geoblock"
-                ]
+                ],
+                "items": {
+                  "type": "string",
+                  "description": "A country code, eg `NL`."
+                }
               },
               "scheme": {
                 "type": "string",
@@ -307,7 +311,11 @@
                 "x-docs-required": true,
                 "x-docs-appliesTo": [
                   "ip-allow-list"
-                ]
+                ],
+                "items": {
+                  "type": "string",
+                  "description": "An allowed CIDR."
+                }
               },
               "ipStrategy": {
                 "type": "object",
@@ -315,7 +323,11 @@
                   "excludedIPs": {
                     "type": "array",
                     "description": "IPs to skip in `X-Forwarded-For`.",
-                    "x-docs-required": true
+                    "x-docs-required": true,
+                    "items": {
+                      "type": "string",
+                      "description": "An IP or CIDR."
+                    }
                   },
                   "depth": {
                     "type": "number",
@@ -387,7 +399,10 @@
               },
               "maxResponseBodySize": {
                 "type": "integer",
-                "description": "Maximum size of the response body of the authentication service, in bytes."
+                "description": "Maximum size of the response body of the authentication service, in bytes.",
+                "x-docs-appliesTo": [
+                  "forward-auth"
+                ]
               },
               "retryExpression": {
                 "type": "string",
@@ -426,7 +441,11 @@
                 "x-docs-required": true,
                 "x-docs-appliesTo": [
                   "forward-auth"
-                ]
+                ],
+                "items": {
+                  "type": "string",
+                  "description": "Name of a response header."
+                }
               },
               "authRequestHeaders": {
                 "type": "array",
@@ -434,7 +453,11 @@
                 "x-docs-required": true,
                 "x-docs-appliesTo": [
                   "forward-auth"
-                ]
+                ],
+                "items": {
+                  "type": "string",
+                  "description": "Name of a request header."
+                }
               },
               "tls": {
                 "type": "object",
@@ -473,7 +496,11 @@
                 "x-docs-required": true,
                 "x-docs-appliesTo": [
                   "plugin-real-ip"
-                ]
+                ],
+                "items": {
+                  "type": "string",
+                  "description": "A CIDR."
+                }
               },
               "middlewares": {
                 "type": "array",
@@ -683,11 +710,17 @@
               },
               "crowdsecMode": {
                 "type": "string",
-                "description": "How decisions are fetched: `none`, `live`, `stream`, `alone` or `appsec`."
+                "description": "How decisions are fetched: `none`, `live`, `stream`, `alone` or `appsec`.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "crowdsecLapiScheme": {
                 "type": "string",
-                "description": "Scheme of the CrowdSec Local API, `http` or `https`."
+                "description": "Scheme of the CrowdSec Local API, `http` or `https`.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "crowdsecLapiTLSInsecureVerify": {
                 "type": "boolean",
@@ -715,21 +748,33 @@
                 "description": "Scenarios reported to the CrowdSec Central API.",
                 "x-docs-appliesTo": [
                   "plugin-bouncer"
-                ]
+                ],
+                "items": {
+                  "type": "string",
+                  "description": "A scenario name."
+                }
               },
               "forwardedHeadersTrustedIPs": {
                 "type": "array",
                 "description": "IPs and CIDRs of trusted proxies, whose forwarded headers are used.",
                 "x-docs-appliesTo": [
                   "plugin-bouncer"
-                ]
+                ],
+                "items": {
+                  "type": "string",
+                  "description": "An IP or CIDR."
+                }
               },
               "clientTrustedIPs": {
                 "type": "array",
                 "description": "IPs and CIDRs that are never checked.",
                 "x-docs-appliesTo": [
                   "plugin-bouncer"
-                ]
+                ],
+                "items": {
+                  "type": "string",
+                  "description": "An IP or CIDR."
+                }
               },
               "forwardedHeadersCustomName": {
                 "type": "string",
@@ -872,21 +917,33 @@
                 "description": "Request headers allowed by CORS, for `Access-Control-Allow-Headers`.",
                 "x-docs-appliesTo": [
                   "headers"
-                ]
+                ],
+                "items": {
+                  "type": "string",
+                  "description": "Name of a request header."
+                }
               },
               "accessControlAllowMethods": {
                 "type": "array",
                 "description": "Request methods allowed by CORS, for `Access-Control-Allow-Methods`.",
                 "x-docs-appliesTo": [
                   "headers"
-                ]
+                ],
+                "items": {
+                  "type": "string",
+                  "description": "An HTTP method, eg `GET`."
+                }
               },
               "accessControlAllowOriginList": {
                 "type": "array",
                 "description": "Origins allowed by CORS, for `Access-Control-Allow-Origin`.",
                 "x-docs-appliesTo": [
                   "headers"
-                ]
+                ],
+                "items": {
+                  "type": "string",
+                  "description": "An allowed origin, eg `https://example.com`."
+                }
               },
               "accessControlAllowOriginListRegex": {
                 "type": "array",
@@ -894,14 +951,21 @@
                   "type": "string",
                   "description": "A regular expression for an allowed origin."
                 },
-                "description": "Regular expressions of the origins allowed by CORS."
+                "description": "Regular expressions of the origins allowed by CORS.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "accessControlExposeHeaders": {
                 "type": "array",
                 "description": "Response headers exposed to the browser, for `Access-Control-Expose-Headers`.",
                 "x-docs-appliesTo": [
                   "headers"
-                ]
+                ],
+                "items": {
+                  "type": "string",
+                  "description": "Name of a response header."
+                }
               },
               "accessControlMaxAge": {
                 "type": "number",
@@ -922,14 +986,22 @@
                 "description": "Host names that are allowed. Empty allows all.",
                 "x-docs-appliesTo": [
                   "headers"
-                ]
+                ],
+                "items": {
+                  "type": "string",
+                  "description": "A host name."
+                }
               },
               "hostsProxyHeaders": {
                 "type": "array",
                 "description": "Headers that can hold the original host name.",
                 "x-docs-appliesTo": [
                   "headers"
-                ]
+                ],
+                "items": {
+                  "type": "string",
+                  "description": "Name of a header."
+                }
               },
               "sslProxyHeaders": {
                 "type": "object",
@@ -1015,7 +1087,10 @@
               },
               "contentSecurityPolicyReportOnly": {
                 "type": "string",
-                "description": "Value of the `Content-Security-Policy-Report-Only` header."
+                "description": "Value of the `Content-Security-Policy-Report-Only` header.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "publicKey": {
                 "type": "string",

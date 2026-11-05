@@ -1,10 +1,9 @@
 ---
-title: Serviceaccount
+title: Service Account
 ---
 
 :::note
 
-- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/serviceAccount#full-examples) section for complete examples.
 
 :::
@@ -17,218 +16,185 @@ title: Serviceaccount
 
 ## `serviceAccount`
 
-Create serviceAccount objects
+ServiceAccounts, keyed by name.
 
-| Field      | Value            |
-| ---------- | ---------------- |
-| Key        | `serviceAccount` |
-| Type       | `map`            |
-| Required   | ❌               |
-| Helm `tpl` | ❌               |
-| Default    | unset            |
-
----
-
-### `serviceAccount.$name.annotations`
-
-Additional annotations for service account
-
-| Field      | Value                              |
-| ---------- | ---------------------------------- |
-| Key        | `serviceAccount.$name.annotations` |
-| Type       | `map`                              |
-| Required   | ❌                                 |
-| Helm `tpl` | ✅ (On value only)                  |
-| Default    | `{}`                               |
-
-Example
-
-```yaml
-serviceAccount:
-  $name:
-    annotations:
-      {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `serviceAccount` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-### `serviceAccount.$name.annotationsList`
+## `$name`
 
-Additional annotations as a list of name and value pairs, merged into the annotations
+A ServiceAccount.
 
-| Field      | Value                                  |
-| ---------- | -------------------------------------- |
-| Key        | `serviceAccount.$name.annotationsList` |
-| Type       | `list of map`                          |
-| Required   | ❌                                     |
-| Helm `tpl` | ❌                                     |
-| Default    | unset                                  |
-
----
-
-### `serviceAccount.$name.automountServiceAccountToken`
-
-Sets automountServiceAccountToken on the ServiceAccount
-
-| Field      | Value                                               |
-| ---------- | --------------------------------------------------- |
-| Key        | `serviceAccount.$name.automountServiceAccountToken` |
-| Type       | `boolean`                                           |
-| Required   | ❌                                                  |
-| Helm `tpl` | ❌                                                  |
-| Default    | `false`                                             |
-
-Example
-
-```yaml
-serviceAccount:
-  $name:
-    automountServiceAccountToken: false
-```
+| Field | Value |
+| --- | --- |
+| Key | `serviceAccount.$name` |
+| Type | `map` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `serviceAccount.$name.enabled`
+## `$name.targetSelector`
 
-Enables or Disables the serviceAccount
+Names of the workloads that use this service account.
 
-| Field      | Value                          |
-| ---------- | ------------------------------ |
-| Key        | `serviceAccount.$name.enabled` |
-| Type       | `boolean, string`              |
-| Required   | ✅                             |
-| Helm `tpl` | ✅                             |
-| Default    | `false`                        |
-
-Example
-
-```yaml
-serviceAccount:
-  $name:
-    enabled: false
-```
+| Field | Value |
+| --- | --- |
+| Key | `serviceAccount.$name.targetSelector` |
+| Type | `list of string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `[]` |
 
 ---
 
-### `serviceAccount.$name.labels`
+## `$name.enabled`
+
+Create this ServiceAccount when true. Accepts a Helm `tpl` string that renders to `true` or `false`.
+
+| Field | Value |
+| --- | --- |
+| Key | `serviceAccount.$name.enabled` |
+| Type | `bool` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | `false` |
+
+---
+
+## `$name.primary`
+
+Mark this service account as the primary one, used by workloads that select none.
+
+| Field | Value |
+| --- | --- |
+| Key | `serviceAccount.$name.primary` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
+
+---
+
+## `$name.namespace`
+
+Namespace to create this object in. Overrides the chart-wide `namespace` and `global.namespace`.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `serviceAccount.$name.namespace` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `""` |
+
+---
+
+## `$name.labels`
 
 Additional labels for service account
 
-| Field      | Value                         |
-| ---------- | ----------------------------- |
-| Key        | `serviceAccount.$name.labels` |
-| Type       | `map`                         |
-| Required   | ❌                            |
-| Helm `tpl` | ✅ (On value only)             |
-| Default    | `{}`                          |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
-Example
-
-```yaml
-serviceAccount:
-  $name:
-    labels:
-      {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `serviceAccount.$name.labels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
 
 ---
 
-### `serviceAccount.$name.labelsList`
+## `$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `serviceAccount.$name.annotationsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.labelsList`
 
 Additional labels as a list of name and value pairs, merged into the labels
 
-| Field      | Value                             |
-| ---------- | --------------------------------- |
-| Key        | `serviceAccount.$name.labelsList` |
-| Type       | `list of map`                     |
-| Required   | ❌                                |
-| Helm `tpl` | ❌                                |
-| Default    | unset                             |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `serviceAccount.$name.labelsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `serviceAccount.$name.namespace`
+## `$name.annotations`
 
-Define the namespace for this object
+Additional annotations for service account
 
-| Field      | Value                            |
-| ---------- | -------------------------------- |
-| Key        | `serviceAccount.$name.namespace` |
-| Type       | `string`                         |
-| Required   | ❌                               |
-| Helm `tpl` | ✅                               |
-| Default    | `""`                             |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
-Example
-
-```yaml
-serviceAccount:
-  $name:
-    namespace: ""
-```
+| Field | Value |
+| --- | --- |
+| Key | `serviceAccount.$name.annotations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
 
 ---
 
-### `serviceAccount.$name.primary`
+## `$name.targetSelectAll`
 
-Sets the serviceAccount as primary
+Use this service account for all workloads.
 
-| Field      | Value                          |
-| ---------- | ------------------------------ |
-| Key        | `serviceAccount.$name.primary` |
-| Type       | `boolean`                      |
-| Required   | ❌                             |
-| Helm `tpl` | ❌                             |
-| Default    | `false`                        |
-
-Example
-
-```yaml
-serviceAccount:
-  $name:
-    primary: false
-```
+| Field | Value |
+| --- | --- |
+| Key | `serviceAccount.$name.targetSelectAll` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `serviceAccount.$name.targetSelectAll`
+## `$name.automountServiceAccountToken`
 
-Whether to assign the serviceAccount to all pods or not
+Whether pods automatically mount the API token of this service account.
 
-| Field      | Value                                  |
-| ---------- | -------------------------------------- |
-| Key        | `serviceAccount.$name.targetSelectAll` |
-| Type       | `boolean`                              |
-| Required   | ❌                                     |
-| Helm `tpl` | ❌                                     |
-| Default    | unset                                  |
-
----
-
-### `serviceAccount.$name.targetSelector`
-
-Workloads that use the service account.
-
-| Field      | Value                                 |
-| ---------- | ------------------------------------- |
-| Key        | `serviceAccount.$name.targetSelector` |
-| Type       | `list of string`                      |
-| Required   | ❌                                    |
-| Helm `tpl` | ❌                                    |
-| Default    | `[]`                                  |
-
-Example
-
-```yaml
-serviceAccount:
-  $name:
-    targetSelector:
-      []
-```
+| Field | Value |
+| --- | --- |
+| Key | `serviceAccount.$name.automountServiceAccountToken` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
 
 ---
 
 ## Full Examples
+
+### Primary service account for all workloads
 
 ```yaml
 serviceAccount:
@@ -243,11 +209,30 @@ serviceAccount:
       key: value
       keytpl: "{{ .Values.some.value }}"
     targetSelectAll: true
+```
 
+### Selected workloads
+
+```yaml
+serviceAccount:
   other-sa-name:
     enabled: true
     namespace: some-namespace
     targetSelector:
       - pod-name
       - other-pod-name
+```
+
+### Mount the token
+
+The token of the service account is only mounted when the app needs to talk to the Kubernetes API:
+
+```yaml
+serviceAccount:
+  api-access:
+    enabled: true
+    primary: true
+    automountServiceAccountToken: true
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::123456789012:role/my-role
 ```

@@ -1,8 +1,9 @@
 ## Full Examples
 
+### Every option
+
 ```yaml
 service:
-  # Special type
   service-externalip:
     enabled: true
     primary: true
@@ -24,4 +25,22 @@ service:
         port: 80
         targetPort: 8080
         protocol: http
+```
+
+### IPv6
+
+```yaml
+service:
+  service-externalip:
+    enabled: true
+    primary: true
+    type: ExternalIP
+    externalIP: "2001:db8::1"
+    addressType: IPv6
+    ports:
+      port-name:
+        enabled: true
+        primary: true
+        port: 443
+        protocol: https
 ```

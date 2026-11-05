@@ -18,7 +18,7 @@
       "default": [
         "main"
       ],
-      "description": "Workloads to which the Gluetun container is attached."
+      "description": "Workloads to which the Gluetun container is added. Defaults to the primary workload."
     },
     "container": {
       "allOf": [
@@ -64,7 +64,7 @@
           },
           "namespace": {
             "$ref": "../secret.json#/additionalProperties/properties/namespace",
-            "description": "Define the namespace for this object."
+            "description": "Namespace of the secret. Defaults to the namespace of the release."
           },
           "labels": {
             "$ref": "../secret.json#/additionalProperties/properties/labels",
@@ -84,7 +84,7 @@
           },
           "type": {
             "$ref": "../secret.json#/additionalProperties/properties/type",
-            "description": "Define the type of the secret."
+            "description": "Kubernetes type of the secret, eg `Opaque`."
           }
         },
         "required": [

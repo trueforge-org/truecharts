@@ -1,71 +1,91 @@
 ## Full Examples
 
-Full examples can be found under each service type
+Each service type has its own page with all of its options:
 
-- [ClusterIP](/truecharts-common/service/clusterip)
-- [ExternalName](/truecharts-common/service/externalname)
-- [ExternalIP](/truecharts-common/service/externalip)
+- [ClusterIP](/truecharts-common/service/ClusterIP)
+- [LoadBalancer](/truecharts-common/service/LoadBalancer)
+- [NodePort](/truecharts-common/service/NodePort)
+- [ExternalIP](/truecharts-common/service/ExternalIP)
+- [ExternalName](/truecharts-common/service/ExternalName)
 
-### LoadBalancer
+### Minimal
+
+The `type` defaults to `ClusterIP`.
 
 ```yaml
 service:
-  service-lb:
+  main:
+    enabled: true
+    primary: true
+    ports:
+      main:
+        enabled: true
+        primary: true
+        port: 8080
+```
+
+### Metadata and selection
+
+```yaml
+service:
+  service-name:
+    enabled: true
+    primary: true
+    namespace: some-namespace
+    labels:
+      key: value
+    annotations:
+      key: value
+    targetSelector: workload-name
+    selectorLabels:
+      key: value
+    ports:
+      port-name:
+        enabled: true
+        primary: true
+        targetSelector: container-name
+        port: 80
+        targetPort: 8080
+
+  other-service-name:
+    enabled: true
+    primary: false
+    type: "{{ .Values.serviceType }}"
+    ports:
+      port-name:
+        enabled: true
+        port: 443
+        protocol: https
+```
+
+### Integrations
+
+```yaml
+service:
+  service-name:
     enabled: true
     primary: true
     type: LoadBalancer
-    loadBalancerIP: 10.100.100.2
-    loadBalancerSourceRanges:
-      - 10.100.100.0/24
-    clusterIP: 172.16.20.233
-    sharedKey: custom-shared-key
-    publishNotReadyAddresses: true
-    ipFamilyPolicy: SingleStack
-    ipFamilies:
-      - IPv4
-    externalIPs:
-      - 10.200.230.34
-    sessionAffinity: ClientIP
-    sessionAffinityConfig:
-      clientIP:
-        timeoutSeconds: 86400
-    externalTrafficPolicy: Cluster
-    targetSelector: pod-name
+    integrations:
+      metallb:
+        enabled: true
+        sharedKey: shared-key
     ports:
       port-name:
         enabled: true
         primary: true
-        targetSelector: container-name
         port: 80
-        protocol: http
-        targetPort: 8080
-```
 
-### NodePort
-
-```yaml
-service:
-  service-nodeport:
+  other-service-name:
     enabled: true
-    primary: true
-    type: NodePort
-    clusterIP: 172.16.20.233
-    publishNotReadyAddresses: true
-    externalIPs:
-      - 10.200.230.34
-    sessionAffinity: ClientIP
-    sessionAffinityConfig:
-      clientIP:
-        timeoutSeconds: 86400
-    externalTrafficPolicy: Cluster
-    targetSelector: pod-name
+    type: LoadBalancer
+    integrations:
+      cilium:
+        enabled: true
+        sharedKey: shared-key
     ports:
       port-name:
         enabled: true
         primary: true
-        targetSelector: container-name
         port: 80
-        protocol: http
-        targetPort: 8080
-        nodePort: 30080
 ```

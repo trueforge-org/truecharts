@@ -68,7 +68,7 @@
         "vectors",
         "vectorchord"
       ],
-      "description": "Type of the CNPG database.",
+      "description": "Flavor of the CloudNativePG cluster, which selects the image: `postgres` for plain PostgreSQL, `postgis` with PostGIS, `vectors` with pgvecto.rs or `vectorchord` with VectorChord.",
       "default": "postgres"
     },
     "pgVersion": {
@@ -79,7 +79,7 @@
         17,
         18
       ],
-      "description": "Version of PostgreSQL to use, changes the cluster naming scheme. Without a value, `global.fallbackDefaults.cnpg.pgVersion` is used, and `type: vectors` uses `16` as it has no image for PostgreSQL 18. It only applies to `operator` mode, and is ignored in `standalone` mode.\n\nIt only applies to `operator` mode, and is ignored in `standalone` mode.\n\nWithout a value, `global.fallbackDefaults.cnpg.pgVersion` is used. `type: vectors` has no image for PostgreSQL 18, so without a value it uses `16`.\n\n:::caution[Changing the version of an existing cluster]\n\nCloudNativePG upgrades an existing cluster in place when its major version changes, with `pg_upgrade`. This also happens when a cluster has no `pgVersion` set and the default changes, so **set `pgVersion` to keep a cluster on its current version**.\n\n- Take a full backup first, and a new one afterwards. Older backups can't be used for point-in-time recovery across major versions.\n- All instances are stopped during the upgrade, and replicas are cloned again afterwards.\n- It needs CloudNativePG 1.26 or newer.\n- CloudNativePG only supports this between images on the same OS distribution. The images of this version of common moved to Debian 13, so a cluster on an older image should stay on its major version through that change, and upgrade afterwards.\n- Check that the extensions of the cluster can be upgraded, such as PostGIS or VectorChord.\n- If the upgrade fails, set `pgVersion` back to the previous version. CloudNativePG then starts the cluster on that version again.\n- Run `ANALYZE` afterwards, as `pg_upgrade` does not keep the statistics.\n\n:::",
+      "description": "Major version of PostgreSQL to use. It selects the image (`postgres<type><version>Image`, eg `postgres18Image`) and changes the cluster naming scheme. Without a value, `global.fallbackDefaults.cnpg.pgVersion` is used, except for `type: vectors`, which has no image for PostgreSQL 18 and uses `16`. It only applies to `operator` mode, and is ignored in `standalone` mode.\n\n:::caution[Changing the version of an existing cluster]\n\nCloudNativePG upgrades an existing cluster in place when its major version changes, with `pg_upgrade`. This also happens when a cluster has no `pgVersion` set and the default changes, so **set `pgVersion` to keep a cluster on its current version**.\n\n- Take a full backup first, and a new one afterwards. Older backups can't be used for point-in-time recovery across major versions.\n- All instances are stopped during the upgrade, and replicas are cloned again afterwards.\n- It needs CloudNativePG 1.26 or newer.\n- CloudNativePG only supports this between images on the same OS distribution. The images of this version of common moved to Debian 13, so a cluster on an older image should stay on its major version through that change, and upgrade afterwards.\n- Check that the extensions of the cluster can be upgraded, such as PostGIS or VectorChord.\n- If the upgrade fails, set `pgVersion` back to the previous version. CloudNativePG then starts the cluster on that version again.\n- Run `ANALYZE` afterwards, as `pg_upgrade` does not keep the statistics.\n\n:::",
       "default": 18,
       "x-docs-required": true
     },
@@ -139,9 +139,9 @@
                       }
                     },
                     "additionalProperties": false,
-                    "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item.$name`."
+                    "description": "How the column with this name is exported as a metric."
                   },
-                  "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item.metrics.$item`."
+                  "description": "Describes the columns the query returns, keyed by column name."
                 },
                 "description": "Metrics the query returns, by column."
               },
@@ -154,7 +154,7 @@
               }
             },
             "additionalProperties": false,
-            "description": "Configuration for `dependencies.postgresql.operator.monitoring.customQueries.$item`."
+            "description": "A custom query of the metrics exporter, read from a ConfigMap or Secret with `name` and `key`."
           },
           "description": "Additional queries for the metrics exporter.",
           "default": []
@@ -281,7 +281,10 @@
               },
               "schedule": {
                 "type": "string",
-                "description": "Cron schedule of the backup, with seconds, eg `0 0 0 * * *`."
+                "description": "Cron schedule of the backup, with seconds, eg `0 0 0 * * *`.",
+                "examples": [
+                  "0 0 0 * * *"
+                ]
               },
               "backupOwnerReference": {
                 "type": "string",
@@ -301,7 +304,7 @@
                     "$ref": "../../../special/labels.json"
                   }
                 ],
-                "description": "Additional labels for this manual backup, merged with `backups.labels`."
+                "description": "Additional labels for this scheduled backup, merged with `backups.labels`."
               },
               "annotations": {
                 "allOf": [
@@ -309,11 +312,11 @@
                     "$ref": "../../../special/annotations.json"
                   }
                 ],
-                "description": "Additional annotations for this manual backup, merged with `backups.annotations`."
+                "description": "Additional annotations for this scheduled backup, merged with `backups.annotations`."
               }
             },
             "additionalProperties": false,
-            "description": "Configuration for `dependencies.postgresql.operator.backups.scheduledBackups.$item`."
+            "description": "A recurring backup of the cluster, created as a CNPG `ScheduledBackup`."
           },
           "description": "Backups that are taken on a schedule.",
           "default": [
@@ -393,7 +396,7 @@
               }
             },
             "additionalProperties": false,
-            "description": "Configuration for `dependencies.postgresql.operator.backups.manualBackups.$item`."
+            "description": "A backup of the cluster that is taken once, created as a CNPG `Backup`."
           },
           "description": "Backups that are taken once, when they are added.",
           "default": []

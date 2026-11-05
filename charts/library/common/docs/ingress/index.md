@@ -4,7 +4,7 @@ title: Ingress
 
 :::note
 
-- This page is generated from JSON schema.
+- Examples under each key are only to be used as a placement guide
 - See the [Full Examples](/truecharts-common/ingress#full-examples) section for complete examples.
 
 :::
@@ -15,393 +15,729 @@ title: Ingress
 
 ---
 
+## Child Pages
+
+- [Cert Manager Integration](/truecharts-common/ingress/certManager)
+- [Traefik Integration](/truecharts-common/ingress/traefik)
+- [Homepage Integration](/truecharts-common/ingress/homepage)
+- [Nginx Integration](/truecharts-common/ingress/nginx)
+
+---
+
 ## `ingress`
 
-Create Ingress objects
+Ingresses, keyed by name. Each one routes external traffic to a service. See [ingress](/truecharts-common/ingress).
 
-| Field      | Value     |
-| ---------- | --------- |
-| Key        | `ingress` |
-| Type       | `map`     |
-| Required   | ❌        |
-| Helm `tpl` | ❌        |
-| Default    | unset     |
-
----
-
-### `ingress.$name.annotations`
-
-Additional annotations, keyed by name.
-
-| Field      | Value                       |
-| ---------- | --------------------------- |
-| Key        | `ingress.$name.annotations` |
-| Type       | `map`                       |
-| Required   | ❌                          |
-| Helm `tpl` | ✅ (On value only)           |
-| Default    | `{}`                        |
-
-Example
-
-```yaml
-ingress:
-  $name:
-    annotations:
-      {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `ingress` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `ingress.$name.annotationsList`
+## `$name`
 
-Additional annotations as a list of name and value pairs, merged into the annotations
+An Ingress, keyed by name.
 
-| Field      | Value                           |
-| ---------- | ------------------------------- |
-| Key        | `ingress.$name.annotationsList` |
-| Type       | `list of map`                   |
-| Required   | ❌                              |
-| Helm `tpl` | ❌                              |
-| Default    | unset                           |
-
----
-
-### `ingress.$name.certificateIssuer`
-
-Certificate issuer for this ingress. The templates read `certificateIssuer` per TLS entry (`tls.$item.certificateIssuer`), so this key has no effect.
-
-| Field      | Value                             |
-| ---------- | --------------------------------- |
-| Key        | `ingress.$name.certificateIssuer` |
-| Type       | `string`                          |
-| Required   | ❌                                |
-| Helm `tpl` | ❌                                |
-| Default    | unset                             |
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name` |
+| Type | `map` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-### `ingress.$name.enabled`
+## `$name.integrations`
+
+Integrations that add annotations, middlewares or certificates to the Ingress.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.integrations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
+## `$name.integrations.traefik`
+
+Traefik integration, see [Traefik](/truecharts-common/ingress/traefik).
+
+See [Traefik Integration](/truecharts-common/ingress/traefik) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.integrations.traefik` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
+## `$name.integrations.homepage`
+
+Homepage dashboard integration, see [Homepage](/truecharts-common/ingress/homepage).
+
+See [Homepage Integration](/truecharts-common/ingress/homepage) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.integrations.homepage` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
+## `$name.integrations.certManager`
+
+cert-manager integration, see [cert-manager](/truecharts-common/ingress/certManager).
+
+See [Cert Manager Integration](/truecharts-common/ingress/certManager) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.integrations.certManager` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
+## `$name.integrations.nginx`
+
+ingress-nginx integration, see [nginx](/truecharts-common/ingress/nginx).
+
+See [Nginx Integration](/truecharts-common/ingress/nginx) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.integrations.nginx` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.enabled`
 
 Enable the Ingress.
 
-| Field      | Value                   |
-| ---------- | ----------------------- |
-| Key        | `ingress.$name.enabled` |
-| Type       | `boolean, string`       |
-| Required   | ✅                      |
-| Helm `tpl` | ✅                      |
-| Default    | `false`                 |
-
-Example
-
-```yaml
-ingress:
-  $name:
-    enabled: false
-```
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.enabled` |
+| Type | `bool` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | `false` |
 
 ---
 
-### `ingress.$name.expandObjectName`
+## `$name.primary`
 
-Define if the object name should be expanded
+Make this the primary Ingress, used in notes and the chart context. Only 1 Ingress can be primary.
 
-| Field      | Value                            |
-| ---------- | -------------------------------- |
-| Key        | `ingress.$name.expandObjectName` |
-| Type       | `boolean`                        |
-| Required   | ❌                               |
-| Helm `tpl` | ❌                               |
-| Default    | `false`                          |
-
-Example
-
-```yaml
-ingress:
-  $name:
-    expandObjectName: false
-```
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.primary` |
+| Type | `bool` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
 
 ---
 
-### `ingress.$name.hosts`
+## `$name.expandObjectName`
 
-Define the hosts for this ingress
+Prefix the name of the Ingress with the release fullname.
 
-| Field      | Value                 |
-| ---------- | --------------------- |
-| Key        | `ingress.$name.hosts` |
-| Type       | `list of map`         |
-| Required   | ✅                    |
-| Helm `tpl` | ❌                    |
-| Default    | `[]`                  |
-
-Example
-
-```yaml
-ingress:
-  $name:
-    hosts:
-      []
-```
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.expandObjectName` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
 
 ---
 
-### `ingress.$name.ingressClassName`
-
-Ingress class, eg `traefik` or `nginx`.
-
-| Field      | Value                            |
-| ---------- | -------------------------------- |
-| Key        | `ingress.$name.ingressClassName` |
-| Type       | `string`                         |
-| Required   | ❌                               |
-| Helm `tpl` | ✅                               |
-| Default    | `""`                             |
-
-Example
-
-```yaml
-ingress:
-  $name:
-    ingressClassName: ""
-```
-
----
-
-### `ingress.$name.integrations`
-
-Integrations with Traefik, nginx, cert-manager and homepage.
-
-| Field      | Value                        |
-| ---------- | ---------------------------- |
-| Key        | `ingress.$name.integrations` |
-| Type       | `map`                        |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
-| Default    | `{}`                         |
-
-Example
-
-```yaml
-ingress:
-  $name:
-    integrations:
-      {}
-```
-
----
-
-### `ingress.$name.labels`
-
-Additional labels, keyed by name.
-
-| Field      | Value                  |
-| ---------- | ---------------------- |
-| Key        | `ingress.$name.labels` |
-| Type       | `map`                  |
-| Required   | ❌                     |
-| Helm `tpl` | ✅ (On value only)      |
-| Default    | `{}`                   |
-
-Example
-
-```yaml
-ingress:
-  $name:
-    labels:
-      {}
-```
-
----
-
-### `ingress.$name.labelsList`
-
-Additional labels as a list of name and value pairs, merged into the labels
-
-| Field      | Value                      |
-| ---------- | -------------------------- |
-| Key        | `ingress.$name.labelsList` |
-| Type       | `list of map`              |
-| Required   | ❌                         |
-| Helm `tpl` | ❌                         |
-| Default    | unset                      |
-
----
-
-### `ingress.$name.namespace`
-
-Define the namespace for this object
-
-| Field      | Value                     |
-| ---------- | ------------------------- |
-| Key        | `ingress.$name.namespace` |
-| Type       | `string`                  |
-| Required   | ❌                        |
-| Helm `tpl` | ✅                        |
-| Default    | `""`                      |
-
-Example
-
-```yaml
-ingress:
-  $name:
-    namespace: ""
-```
-
----
-
-### `ingress.$name.primary`
-
-Make this the primary Ingress.
-
-| Field      | Value                   |
-| ---------- | ----------------------- |
-| Key        | `ingress.$name.primary` |
-| Type       | `boolean`               |
-| Required   | ✅                      |
-| Helm `tpl` | ❌                      |
-| Default    | `false`                 |
-
-Example
-
-```yaml
-ingress:
-  $name:
-    primary: false
-```
-
----
-
-### `ingress.$name.required`
+## `$name.required`
 
 Fail when the Ingress is disabled, for charts that need one.
 
-| Field      | Value                    |
-| ---------- | ------------------------ |
-| Key        | `ingress.$name.required` |
-| Type       | `boolean`                |
-| Required   | ❌                       |
-| Helm `tpl` | ❌                       |
-| Default    | `false`                  |
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.required` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
+
+---
+
+## `$name.namespace`
+
+Namespace of the Ingress. Defaults to the release namespace.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.namespace` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `""` |
+
+---
+
+## `$name.labels`
+
+Additional labels, keyed by name.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.labels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
+
+---
+
+## `$name.annotations`
+
+Additional annotations, keyed by name.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.annotations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
+
+---
+
+## `$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.annotationsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.labelsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.ingressClassName`
+
+Ingress class, eg `traefik` or `nginx`. When empty, `global.fallbackDefaults.ingressClassName` is used.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.ingressClassName` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `""` |
+
+---
+
+## `$name.targetSelector`
+
+Backend of the Ingress, as a map of `service: port` where `port` is the name of a port of the Service. Defaults to the primary service and port.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.targetSelector` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
+## `$name.targetSelector.$name`
+
+Name of the port of the Service.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.targetSelector.$name` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.hosts`
+
+Hosts of the Ingress and the paths for each.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.hosts` |
+| Type | `list of map` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | `[]` |
+
+---
+
+## `$name.hosts[]`
+
+A host of the Ingress.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.hosts[]` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.hosts[].host`
+
+Hostname the rules apply to, eg `app.example.com`.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.hosts[].host` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
 
 Example
 
 ```yaml
 ingress:
-  $name:
-    required: false
+  example:
+    hosts:
+      - host: app.example.com
 ```
 
 ---
 
-### `ingress.$name.targetSelector`
+## `$name.hosts[].paths`
 
-Define the `service: port` to assign the ingress
+Paths of the host. Defaults to `/` with `Prefix`.
 
-| Field      | Value                          |
-| ---------- | ------------------------------ |
-| Key        | `ingress.$name.targetSelector` |
-| Type       | `map`                          |
-| Required   | ❌                             |
-| Helm `tpl` | ❌                             |
-| Default    | `"{}"`                         |
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.hosts[].paths` |
+| Type | `list of map` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.hosts[].paths[]`
+
+A path of the host.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.hosts[].paths[]` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.hosts[].paths[].path`
+
+Path of the rule, eg `/`.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.hosts[].paths[].path` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
 
 Example
 
 ```yaml
 ingress:
-  $name:
-    targetSelector: {}
+  example:
+    hosts:
+      - paths:
+          - path: /
 ```
 
 ---
 
-### `ingress.$name.tls`
+## `$name.hosts[].paths[].pathType`
 
-Define TLS for this ingress
+How the path is matched: `Prefix`, `Exact` or `ImplementationSpecific`.
 
-| Field      | Value               |
-| ---------- | ------------------- |
-| Key        | `ingress.$name.tls` |
-| Type       | `list of map`       |
-| Required   | ✅                  |
-| Helm `tpl` | ❌                  |
-| Default    | `[]`                |
-
-Example
-
-```yaml
-ingress:
-  $name:
-    tls:
-      []
-```
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.hosts[].paths[].pathType` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
 
 ---
 
-## Child Pages
+## `$name.hosts[].paths[].overrideService`
 
-- [Certmanager](certManager.md) - Create Ingress objects
-- [Integrations](integrations/) - Configuration for `ingress.integrations`.
-- [Traefik](traefik.md) - Create Ingress objects
+Send this path to another Service than the one in `targetSelector`.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.hosts[].paths[].overrideService` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.hosts[].paths[].overrideService.name`
+
+Name of the Service.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.hosts[].paths[].overrideService.name` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.hosts[].paths[].overrideService.expandObjectName`
+
+Prefix `name` with the release fullname. Set to `false` for a Service that is not created by this chart.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.hosts[].paths[].overrideService.expandObjectName` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+
+---
+
+## `$name.hosts[].paths[].overrideService.port`
+
+Port number of the Service.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.hosts[].paths[].overrideService.port` |
+| Type | `int or string` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.tls`
+
+TLS settings of the Ingress, one entry per certificate.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.tls` |
+| Type | `list of map` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | `[]` |
+
+---
+
+## `$name.tls[]`
+
+A TLS entry of the Ingress. Set one of `secretName`, `certificateIssuer` or `clusterCertificate`.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.tls[]` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.tls[].hosts`
+
+Hostnames the certificate is for.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.tls[].hosts` |
+| Type | `list of string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.tls[].secretName`
+
+Name of an existing TLS Secret to use.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.tls[].secretName` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+
+---
+
+## `$name.tls[].certificateIssuer`
+
+Name of the cert-manager ClusterIssuer that issues the certificate.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.tls[].certificateIssuer` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.tls[].clusterCertificate`
+
+Name of a cluster certificate (see `certificate`) whose Secret is used.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.tls[].clusterCertificate` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+
+---
+
+## `$name.certificateIssuer`
+
+Has no effect. The templates read `certificateIssuer` per TLS entry (`tls.$item.certificateIssuer`).
+
+| Field | Value |
+| --- | --- |
+| Key | `ingress.$name.certificateIssuer` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
 ## Full Examples
 
+### Basic ingress
+
 ```yaml
 ingress:
   main:
-    enabled: false
+    enabled: true
+    primary: true
+    ingressClassName: nginx
+    targetSelector:
+      main: main
+    hosts:
+      - host: app.example.com
+        paths:
+          - path: /
+            pathType: Prefix
+```
+
+### Multiple hosts, paths and a service override
+
+```yaml
+ingress:
+  main:
+    enabled: true
     primary: true
     required: false
-    expandObjectName: false
+    expandObjectName: true
     labels:
       key: value
     annotations:
       key: value
-    ingressClassName: ""
+      keytpl: "{{ .Values.some.value }}"
+    ingressClassName: traefik
     targetSelector:
       main: main
     hosts:
-      - host: chart-example.local
+      - host: app.example.com
         paths:
           - path: /
             pathType: Prefix
+          - path: /api
+            pathType: Prefix
             overrideService:
-              name: main
-              port: 80
+              name: api
+              port: 8080
+      - host: "{{ .Release.Name }}.example.com"
+        paths:
+          - path: /
+            pathType: Prefix
+```
+
+### TLS with an existing secret
+
+```yaml
+ingress:
+  main:
+    enabled: true
+    ingressClassName: nginx
+    targetSelector:
+      main: main
+    hosts:
+      - host: app.example.com
+        paths:
+          - path: /
+            pathType: Prefix
     tls:
       - hosts:
-          - chart-example.local
-        secretName: chart-example-tls
-        # OR
-        certificateIssuer: ""
+          - app.example.com
+        secretName: app-example-com-tls
+```
+
+### TLS from a cert-manager issuer
+
+```yaml
+ingress:
+  main:
+    enabled: true
+    ingressClassName: nginx
+    targetSelector:
+      main: main
+    hosts:
+      - host: app.example.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - hosts:
+          - app.example.com
+        certificateIssuer: my-issuer
+```
+
+### TLS from a cluster certificate
+
+```yaml
+ingress:
+  main:
+    enabled: true
+    ingressClassName: nginx
+    targetSelector:
+      main: main
+    hosts:
+      - host: app.example.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - hosts:
+          - app.example.com
+        clusterCertificate: wildcard-example-com
+```
+
+### With integrations
+
+```yaml
+ingress:
+  main:
+    enabled: true
+    ingressClassName: traefik
+    targetSelector:
+      main: main
+    hosts:
+      - host: app.example.com
+        paths:
+          - path: /
+            pathType: Prefix
     integrations:
       certManager:
-        enabled: false
-        certificateIssuer: ""
+        enabled: true
+        certificateIssuer: my-issuer
       traefik:
         enabled: true
         entrypoints:
           - websecure
         forceTLS: true
-        middlewares:
-          - name: my-middleware
-            namespace: ""
       homepage:
-        enabled: false
-        name: ""
-        description: ""
-        group: ""
-        icon: ""
-        widget:
-          type: ""
-          url: ""
-          custom:
-            key: value
-          customkv:
-            - key: some key
-              value: some value
+        enabled: true
+        name: My App
+        group: Apps
+        icon: mdi-application
+```
+
+### Annotations and labels as lists
+
+```yaml
+ingress:
+  main:
+    enabled: true
+    targetSelector:
+      main: main
+    annotationsList:
+      - name: nginx.ingress.kubernetes.io/proxy-body-size
+        value: 50m
+    labelsList:
+      - name: team
+        value: apps
+    hosts:
+      - host: app.example.com
+        paths:
+          - path: /
+            pathType: Prefix
 ```

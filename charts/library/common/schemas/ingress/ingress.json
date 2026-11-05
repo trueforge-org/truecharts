@@ -94,7 +94,11 @@
                   [
                     "192.168.1.0/24"
                   ]
-                ]
+                ],
+                "items": {
+                  "type": "string",
+                  "description": "An allowed CIDR, eg `192.168.1.0/24`."
+                }
               },
               "auth": {
                 "type": "object",
@@ -113,7 +117,11 @@
                   },
                   "responseHeaders": {
                     "type": "array",
-                    "description": "Headers of the authentication response that are copied to the request to the app."
+                    "description": "Headers of the authentication response that are copied to the request to the app.",
+                    "items": {
+                      "type": "string",
+                      "description": "Name of a response header."
+                    }
                   }
                 },
                 "additionalProperties": false,
@@ -142,23 +150,17 @@
       },
       "primary": {
         "type": "boolean",
-        "properties": {},
-        "additionalProperties": false,
         "description": "Make this the primary Ingress, used in notes and the chart context. Only 1 Ingress can be primary.",
         "default": false,
         "x-docs-required": true
       },
       "expandObjectName": {
         "type": "boolean",
-        "properties": {},
-        "additionalProperties": false,
         "description": "Prefix the name of the Ingress with the release fullname.",
         "default": false
       },
       "required": {
         "type": "boolean",
-        "properties": {},
-        "additionalProperties": false,
         "description": "Fail when the Ingress is disabled, for charts that need one.",
         "default": false
       },
@@ -210,8 +212,6 @@
       },
       "ingressClassName": {
         "type": "string",
-        "properties": {},
-        "additionalProperties": false,
         "description": "Ingress class, eg `traefik` or `nginx`. When empty, `global.fallbackDefaults.ingressClassName` is used.",
         "default": "",
         "x-helm-tpl": true

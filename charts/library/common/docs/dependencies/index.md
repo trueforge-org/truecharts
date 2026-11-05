@@ -1055,3 +1055,11 @@ A disabled key, or one without `enabled`, never rendered anything and does not f
 
 The `solr` key on the root level of the values is no longer supported and has no replacement.
 Rendering fails when it has `enabled: true` (also when set using a template). A disabled key, or one without `enabled`, does not fail.
+
+## Reference Pages
+
+The keys of the predefined dependencies are generated from the schema:
+
+- [PostgreSQL](/truecharts-common/dependencies/postgresql), with the [operator](/truecharts-common/dependencies/postgresql-operator), [cluster](/truecharts-common/dependencies/postgresql-cluster), [backups](/truecharts-common/dependencies/postgresql-backups) and [recovery](/truecharts-common/dependencies/postgresql-recovery) options
+- [Valkey](/truecharts-common/dependencies/valkey), with the [operator](/truecharts-common/dependencies/valkey-operator), [containers](/truecharts-common/dependencies/valkey-containers) and [scheduling](/truecharts-common/dependencies/valkey-scheduling) options
+- [MariaDB, MongoDB, ClickHouse, Memcached and custom dependencies](/truecharts-common/dependencies/other)

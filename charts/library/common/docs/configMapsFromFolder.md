@@ -1,10 +1,10 @@
 ---
-title: Configmapsfromfolder
+title: ConfigMaps From Folder
 ---
 
 :::note
 
-- This page is generated from JSON schema.
+- Examples under each key are only to be used as a placement guide
 - See the [Full Examples](/truecharts-common/configMapsFromFolder#full-examples) section for complete examples.
 
 :::
@@ -17,40 +17,54 @@ title: Configmapsfromfolder
 
 ## `configMapsFromFolder`
 
-Generate ConfigMaps from a folder structure in the Helm chart's filesystem
+Generate ConfigMaps from the folders in a directory of the parent chart.
 
-| Field      | Value                  |
-| ---------- | ---------------------- |
-| Key        | `configMapsFromFolder` |
-| Type       | `map`                  |
-| Required   | ❌                     |
-| Helm `tpl` | ❌                     |
-| Default    | unset                  |
+| Field | Value |
+| --- | --- |
+| Key | `configMapsFromFolder` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `configMapsFromFolder.basePath`
+## `enabled`
 
-The path in your parent chart's filesystem where you can add files to be converted into individual ConfigMaps. Files should be organized two levels deep (basePath/configMapName/file)
+Generate ConfigMaps from the folders in `basePath` when true.
 
-| Field      | Value                           |
-| ---------- | ------------------------------- |
-| Key        | `configMapsFromFolder.basePath` |
-| Type       | `string`                        |
-| Required   | ❌                              |
-| Helm `tpl` | ❌                              |
-| Default    | `""`                            |
+| Field | Value |
+| --- | --- |
+| Key | `configMapsFromFolder.enabled` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
+
+---
+
+## `basePath`
+
+Path in the filesystem of the parent chart that holds the files to convert into ConfigMaps. Files are organised two levels deep: `basePath/configMapName/file`.
+
+| Field | Value |
+| --- | --- |
+| Key | `configMapsFromFolder.basePath` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `""` |
 
 Example
 
 ```yaml
 configMapsFromFolder:
-  basePath: ""
+  basePath: configmaps
 ```
 
 ---
 
-### `configMapsFromFolder.configMapsOverrides`
+## `configMapsOverrides`
 
 Define overrides for the generated ConfigMaps, each key is the name of a folder in basePath.
 
@@ -64,51 +78,149 @@ Each override accepts:
   - `binary`: If your file is a binary file like an image, set this to true. Takes precedence over escaped
   - `escaped`: If your file contains gotpl syntax that you don't want templated by Helm, set this to true
 
-| Field      | Value                                      |
-| ---------- | ------------------------------------------ |
-| Key        | `configMapsFromFolder.configMapsOverrides` |
-| Type       | `map`                                      |
-| Required   | ❌                                         |
-| Helm `tpl` | ❌                                         |
-| Default    | `{}`                                       |
-
-Example
-
-```yaml
-configMapsFromFolder:
-  configMapsOverrides:
-    {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `configMapsFromFolder.configMapsOverrides` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-### `configMapsFromFolder.enabled`
+## `configMapsOverrides.$name`
 
-Enables or Disables the ConfigMaps from folder feature
+| Field | Value |
+| --- | --- |
+| Key | `configMapsFromFolder.configMapsOverrides.$name` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
-| Field      | Value                          |
-| ---------- | ------------------------------ |
-| Key        | `configMapsFromFolder.enabled` |
-| Type       | `boolean`                      |
-| Required   | ❌                             |
-| Helm `tpl` | ❌                             |
-| Default    | `false`                        |
+---
 
-Example
+## `configMapsOverrides.$name.forceRename`
 
-```yaml
-configMapsFromFolder:
-  enabled: false
-```
+Force a specific name for the ConfigMap instead of the auto-generated name
+
+| Field | Value |
+| --- | --- |
+| Key | `configMapsFromFolder.configMapsOverrides.$name.forceRename` |
+| Type | `string or null` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `configMapsOverrides.$name.annotations`
+
+Additional annotations for the ConfigMap
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `configMapsFromFolder.configMapsOverrides.$name.annotations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
+## `configMapsOverrides.$name.labels`
+
+Additional labels for the ConfigMap
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `configMapsFromFolder.configMapsOverrides.$name.labels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
+## `configMapsOverrides.$name.fileAttributeOverrides`
+
+Configure how individual files are added to the ConfigMap
+
+| Field | Value |
+| --- | --- |
+| Key | `configMapsFromFolder.configMapsOverrides.$name.fileAttributeOverrides` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `configMapsOverrides.$name.fileAttributeOverrides.$name`
+
+| Field | Value |
+| --- | --- |
+| Key | `configMapsFromFolder.configMapsOverrides.$name.fileAttributeOverrides.$name` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `configMapsOverrides.$name.fileAttributeOverrides.$name.exclude`
+
+If true the file won't be added to the ConfigMap
+
+| Field | Value |
+| --- | --- |
+| Key | `configMapsFromFolder.configMapsOverrides.$name.fileAttributeOverrides.$name.exclude` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
+
+---
+
+## `configMapsOverrides.$name.fileAttributeOverrides.$name.binary`
+
+If your file is a binary file like an image, set this to true. Takes precedence over escaped
+
+| Field | Value |
+| --- | --- |
+| Key | `configMapsFromFolder.configMapsOverrides.$name.fileAttributeOverrides.$name.binary` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
+
+---
+
+## `configMapsOverrides.$name.fileAttributeOverrides.$name.escaped`
+
+If your file contains gotpl syntax that you don't want templated by Helm, set this to true
+
+| Field | Value |
+| --- | --- |
+| Key | `configMapsFromFolder.configMapsOverrides.$name.fileAttributeOverrides.$name.escaped` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
 
 ---
 
 ## Full Examples
 
-### Basic Example
+### Basic example
 
-Your file structure:
-```
+Every folder below `basePath` becomes a ConfigMap, and every file in it a key. Your file structure:
+
+```text
 myapp/
 ├── Chart.yaml
 ├── values.yaml
@@ -121,57 +233,65 @@ myapp/
             └── startup.sh
 ```
 
-Your values.yaml:
+Your `values.yaml`:
+
 ```yaml
 configMapsFromFolder:
   enabled: true
-  basePath: "files/configMaps"
+  basePath: files/configMaps
 ```
 
-This will create two ConfigMaps:
-- `myapp-app-config` with keys: `config.json`, `settings.yaml`
-- `myapp-scripts` with key: `startup.sh`
+This creates two ConfigMaps:
 
-### Advanced Example with Overrides
+- `myapp-app-config` with the keys `config.json` and `settings.yaml`.
+- `myapp-scripts` with the key `startup.sh`.
+
+### Advanced example with overrides
+
+Rename a ConfigMap, add labels and annotations, and change how single files are handled:
 
 ```yaml
 configMapsFromFolder:
   enabled: true
-  basePath: "files/configMaps"
+  basePath: files/configMaps
   configMapsOverrides:
     app-config:
-      forceRename: "my-custom-config-name"
+      forceRename: my-custom-config-name
       labels:
         environment: production
         team: platform
       annotations:
-        description: "Application configuration files"
+        description: Application configuration files
       fileAttributeOverrides:
         config.json:
           exclude: false
         template.tpl:
-          escaped: true  # Don't process Helm templates in this file
+          # Do not process Helm templates in this file
+          escaped: true
+        draft.yaml:
+          exclude: true
     scripts:
       fileAttributeOverrides:
         startup.sh:
           exclude: false
-        logo.png:
-          binary: true  # Treat as binary, will be base64 encoded
 ```
 
-### Example with Binary Files
+### Example with binary files
+
+Files marked as `binary` are base64 encoded and stored as `binaryData`:
 
 ```yaml
 configMapsFromFolder:
   enabled: true
-  basePath: "files/assets"
+  basePath: files/assets
   configMapsOverrides:
     images:
       fileAttributeOverrides:
         logo.png:
           binary: true
         icon.svg:
-          binary: false  # SVG can be stored as text
+          # SVG can be stored as text
+          binary: false
         favicon.ico:
           binary: true
 ```

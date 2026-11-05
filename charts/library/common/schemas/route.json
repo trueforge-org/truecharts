@@ -359,7 +359,11 @@
               },
               "ipWhitelist": {
                 "type": "array",
-                "description": "Allowed source IPs, everything else is rejected."
+                "description": "Allowed source IPs, everything else is rejected.",
+                "items": {
+                  "type": "string",
+                  "description": "An allowed CIDR, eg `192.168.1.0/24`."
+                }
               },
               "ipStrategy": {
                 "type": "object",
@@ -410,7 +414,11 @@
                   },
                   "responseHeaders": {
                     "type": "array",
-                    "description": "Override the default response headers passed on to the app."
+                    "description": "Override the default response headers passed on to the app.",
+                    "items": {
+                      "type": "string",
+                      "description": "Name of a response header."
+                    }
                   }
                 },
                 "additionalProperties": false
@@ -519,7 +527,11 @@
               },
               "ipWhitelist": {
                 "type": "array",
-                "description": "Allowed source IPs, everything else is rejected."
+                "description": "Allowed source IPs, everything else is rejected.",
+                "items": {
+                  "type": "string",
+                  "description": "An allowed CIDR, eg `192.168.1.0/24`."
+                }
               },
               "auth": {
                 "type": "object",
@@ -541,7 +553,11 @@
                   },
                   "responseHeaders": {
                     "type": "array",
-                    "description": "Override the default response headers passed on to the app."
+                    "description": "Override the default response headers passed on to the app.",
+                    "items": {
+                      "type": "string",
+                      "description": "Name of a response header."
+                    }
                   }
                 },
                 "additionalProperties": false

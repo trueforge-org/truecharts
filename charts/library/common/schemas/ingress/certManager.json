@@ -5,16 +5,12 @@
   "properties": {
     "enabled": {
       "type": "boolean",
-      "properties": {},
-      "additionalProperties": false,
       "description": "Add the cert-manager annotations to the Ingress, so cert-manager issues a certificate.",
       "default": false,
       "x-docs-required": true
     },
     "certificateIssuer": {
       "type": "string",
-      "properties": {},
-      "additionalProperties": false,
       "description": "Name of the ClusterIssuer cert-manager uses to issue the certificate.",
       "default": ""
     }

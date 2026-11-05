@@ -277,7 +277,8 @@
               "boolean",
               "string"
             ],
-            "description": "Whether the dependency is enabled. Objects of disabled dependencies are not merged into the chart."
+            "description": "Whether the dependency is enabled. Objects of disabled dependencies are not merged into the chart. Supports Helm `tpl`.",
+            "x-helm-tpl": true
           },
           "mode": {
             "type": "string",
@@ -350,5 +351,5 @@
       }
     ]
   },
-  "description": "Configuration for `dependencies`. Each dependency contains a complete chart values structure. Its objects are merged into the chart under the name `<dependency>-<object>`."
+  "description": "Dependencies of the chart: databases and caches that common deploys with the chart. Each dependency contains a complete chart values structure, and its objects are merged into the chart under the name `<dependency>-<object>`. See [dependencies](/truecharts-common/dependencies)."
 }

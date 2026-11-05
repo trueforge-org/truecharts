@@ -1,10 +1,9 @@
 ---
-title: Priorityclass
+title: Priority Class
 ---
 
 :::note
 
-- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/priorityClass#full-examples) section for complete examples.
 
 :::
@@ -17,240 +16,200 @@ title: Priorityclass
 
 ## `priorityClass`
 
-Define priority classes
+PriorityClasses, keyed by name.
 
-| Field      | Value           |
-| ---------- | --------------- |
-| Key        | `priorityClass` |
-| Type       | `map`           |
-| Required   | ❌              |
-| Helm `tpl` | ❌              |
-| Default    | unset           |
-
----
-
-### `priorityClass.$name.annotations`
-
-Additional annotations for priority class
-
-| Field      | Value                             |
-| ---------- | --------------------------------- |
-| Key        | `priorityClass.$name.annotations` |
-| Type       | `map`                             |
-| Required   | ❌                                |
-| Helm `tpl` | ✅ (On value only)                 |
-| Default    | `{}`                              |
-
-Example
-
-```yaml
-priorityClass:
-  $name:
-    annotations:
-      {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `priorityClass` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-### `priorityClass.$name.annotationsList`
+## `$name`
 
-Additional annotations as a list of name and value pairs, merged into the annotations
+A priority class.
 
-| Field      | Value                                 |
-| ---------- | ------------------------------------- |
-| Key        | `priorityClass.$name.annotationsList` |
-| Type       | `list of map`                         |
-| Required   | ❌                                    |
-| Helm `tpl` | ❌                                    |
-| Default    | unset                                 |
-
----
-
-### `priorityClass.$name.description`
-
-Define the description for this priority class
-
-| Field      | Value                             |
-| ---------- | --------------------------------- |
-| Key        | `priorityClass.$name.description` |
-| Type       | `string`                          |
-| Required   | ❌                                |
-| Helm `tpl` | ❌                                |
-| Default    | `"No description given"`          |
-
-Example
-
-```yaml
-priorityClass:
-  $name:
-    description: No description given
-```
+| Field | Value |
+| --- | --- |
+| Key | `priorityClass.$name` |
+| Type | `map` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-### `priorityClass.$name.enabled`
+## `$name.provisioner`
 
-Enables or Disables the priority class
+Not used by the priority class templates. Only set in the priority class fixture of common-test.
 
-| Field      | Value                         |
-| ---------- | ----------------------------- |
-| Key        | `priorityClass.$name.enabled` |
-| Type       | `boolean, string`             |
-| Required   | ✅                            |
-| Helm `tpl` | ✅                            |
-| Default    | `false`                       |
-
-Example
-
-```yaml
-priorityClass:
-  $name:
-    enabled: false
-```
+| Field | Value |
+| --- | --- |
+| Key | `priorityClass.$name.provisioner` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `priorityClass.$name.globalDefault`
+## `$name.preemptionPolicy`
 
-Define if this priority class is the global default
+Whether pods of this class may preempt lower priority pods.
 
-| Field      | Value                               |
-| ---------- | ----------------------------------- |
-| Key        | `priorityClass.$name.globalDefault` |
-| Type       | `boolean`                           |
-| Required   | ❌                                  |
-| Helm `tpl` | ❌                                  |
-| Default    | `false`                             |
-
-Example
-
-```yaml
-priorityClass:
-  $name:
-    globalDefault: false
-```
+| Field | Value |
+| --- | --- |
+| Key | `priorityClass.$name.preemptionPolicy` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `"PreemptLowerPriority"` |
+| Allowed values | `"PreemptLowerPriority"`, `"Never"` |
 
 ---
 
-### `priorityClass.$name.labels`
+## `$name.enabled`
+
+Create this priority class when true. Accepts a Helm `tpl` string that renders to `true` or `false`.
+
+| Field | Value |
+| --- | --- |
+| Key | `priorityClass.$name.enabled` |
+| Type | `bool` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | `false` |
+
+---
+
+## `$name.namespace`
+
+Namespace to create this object in. Overrides the chart-wide `namespace` and `global.namespace`.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `priorityClass.$name.namespace` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `""` |
+
+---
+
+## `$name.labels`
 
 Additional labels for priority class
 
-| Field      | Value                        |
-| ---------- | ---------------------------- |
-| Key        | `priorityClass.$name.labels` |
-| Type       | `map`                        |
-| Required   | ❌                           |
-| Helm `tpl` | ✅ (On value only)            |
-| Default    | `{}`                         |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
-Example
-
-```yaml
-priorityClass:
-  $name:
-    labels:
-      {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `priorityClass.$name.labels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
 
 ---
 
-### `priorityClass.$name.labelsList`
+## `$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `priorityClass.$name.annotationsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.labelsList`
 
 Additional labels as a list of name and value pairs, merged into the labels
 
-| Field      | Value                            |
-| ---------- | -------------------------------- |
-| Key        | `priorityClass.$name.labelsList` |
-| Type       | `list of map`                    |
-| Required   | ❌                               |
-| Helm `tpl` | ❌                               |
-| Default    | unset                            |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `priorityClass.$name.labelsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `priorityClass.$name.namespace`
+## `$name.annotations`
 
-Define the namespace for this object
+Additional annotations for priority class
 
-| Field      | Value                           |
-| ---------- | ------------------------------- |
-| Key        | `priorityClass.$name.namespace` |
-| Type       | `string`                        |
-| Required   | ❌                              |
-| Helm `tpl` | ✅ (On value only)               |
-| Default    | `""`                            |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
-Example
-
-```yaml
-priorityClass:
-  $name:
-    namespace: ""
-```
+| Field | Value |
+| --- | --- |
+| Key | `priorityClass.$name.annotations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
 
 ---
 
-### `priorityClass.$name.preemptionPolicy`
+## `$name.value`
 
-Define priority classes
+Priority value of the class. A higher value means a higher priority.
 
-| Field      | Value                                  |
-| ---------- | -------------------------------------- |
-| Key        | `priorityClass.$name.preemptionPolicy` |
-| Type       | `string`                               |
-| Required   | ❌                                     |
-| Helm `tpl` | ❌                                     |
-| Default    | `"Immediate"`                          |
-| Enum       | `PreemptLowerPriority`, `Never`        |
-
-Example
-
-```yaml
-priorityClass:
-  $name:
-    preemptionPolicy: Immediate
-```
+| Field | Value |
+| --- | --- |
+| Key | `priorityClass.$name.value` |
+| Type | `int` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `1000000` |
 
 ---
 
-### `priorityClass.$name.provisioner`
+## `$name.globalDefault`
 
-Provisioner name for the priority class. Set in the common-test priorityclass fixture; the priority class templates ignore it.
+Use this class for pods that set no priority class. Only one class in the cluster can be the default.
 
-| Field      | Value                             |
-| ---------- | --------------------------------- |
-| Key        | `priorityClass.$name.provisioner` |
-| Type       | `string`                          |
-| Required   | ❌                                |
-| Helm `tpl` | ❌                                |
-| Default    | unset                             |
+| Field | Value |
+| --- | --- |
+| Key | `priorityClass.$name.globalDefault` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
 
 ---
 
-### `priorityClass.$name.value`
+## `$name.description`
 
-Define the value for this priority class
+Description of the priority class.
 
-| Field      | Value                       |
-| ---------- | --------------------------- |
-| Key        | `priorityClass.$name.value` |
-| Type       | `integer`                   |
-| Required   | ❌                          |
-| Helm `tpl` | ❌                          |
-| Default    | `1000000`                   |
-
-Example
-
-```yaml
-priorityClass:
-  $name:
-    value: 1000000
-```
+| Field | Value |
+| --- | --- |
+| Key | `priorityClass.$name.description` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `"No description given"` |
 
 ---
 
 ## Full Examples
+
+### Basic PriorityClass
 
 ```yaml
 priorityClass:
@@ -259,5 +218,50 @@ priorityClass:
     value: 1000000
     preemptionPolicy: PreemptLowerPriority
     globalDefault: false
-    description: "some description"
+    description: some description
+```
+
+### Never preempt
+
+Pods of this class are placed before lower priority pods in the queue, but never evict running pods:
+
+```yaml
+priorityClass:
+  non-preempting:
+    enabled: true
+    value: 500000
+    preemptionPolicy: Never
+    description: High priority without preemption
+```
+
+### Default class and use
+
+A class that is used by every pod without a `priorityClassName`, and a workload that selects another one:
+
+```yaml
+priorityClass:
+  default-class:
+    enabled: true
+    value: 1000
+    globalDefault: true
+    description: Default priority of the pods
+    labels:
+      key: value
+    annotations:
+      key: value
+
+podOptions:
+  priorityClassName: example
+
+workload:
+  main:
+    enabled: true
+    primary: true
+    podSpec:
+      priorityClassName: non-preempting
+      containers:
+        main:
+          enabled: true
+          primary: true
+          imageSelector: image
 ```

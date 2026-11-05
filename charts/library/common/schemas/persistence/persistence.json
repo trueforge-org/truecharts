@@ -890,7 +890,11 @@
         "x-helm-tpl": "On entries only",
         "x-docs-appliesTo": [
           "iscsi"
-        ]
+        ],
+        "items": {
+          "type": "string",
+          "description": "A portal, as `host:port`."
+        }
       },
       "domain": {
         "type": "string",

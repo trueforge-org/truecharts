@@ -264,14 +264,14 @@ route:
 
 Fields a kind does not support fail rendering, because dropping them would change what the route matches.
 
-| Field                                       | HTTPRoute | GRPCRoute | TLSRoute | TCPRoute | UDPRoute |
-| ------------------------------------------- | --------- | --------- | -------- | -------- | -------- |
-| `hostnames`                                 | ✅        | ✅        | Required | ❌       | ❌       |
-| `rules[].backendRefs`, `rules[].name`       | ✅        | ✅        | ✅       | ✅       | ✅       |
-| `rules[].matches`, `rules[].filters`        | ✅        | ✅        | ❌       | ❌       | ❌       |
-| `rules[].backendRefs[].filters`             | ✅        | ✅        | ❌       | ❌       | ❌       |
-| `rules[].sessionPersistence` (experimental) | ✅        | ✅        | ❌       | ❌       | ❌       |
-| `rules[].timeouts`, `rules[].retry`         | ✅        | ❌        | ❌       | ❌       | ❌       |
+| Field | HTTPRoute | GRPCRoute | TLSRoute | TCPRoute | UDPRoute |
+| --- | --- | --- | --- | --- | --- |
+| `hostnames` | ✅ | ✅ | Required | ❌ | ❌ |
+| `rules[].backendRefs`, `rules[].name` | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `rules[].matches`, `rules[].filters` | ✅ | ✅ | ❌ | ❌ | ❌ |
+| `rules[].backendRefs[].filters` | ✅ | ✅ | ❌ | ❌ | ❌ |
+| `rules[].sessionPersistence` (experimental) | ✅ | ✅ | ❌ | ❌ | ❌ |
+| `rules[].timeouts`, `rules[].retry` | ✅ | ❌ | ❌ | ❌ | ❌ |
 
 ## API version
 
@@ -373,19 +373,19 @@ route:
 
 ## Migrating from an ingress
 
-| Ingress                                  | Route                                                       |
-| ---------------------------------------- | ----------------------------------------------------------- |
-| `ingressClassName`                       | `gateway` and `gatewayNamespace`                            |
-| `targetSelector` (`service: port`)       | `targetSelector`, in the same form                          |
-| `hosts[].host`                           | `hostnames`                                                 |
-| `hosts[].paths[]`                        | `rules[].matches[].path`                                    |
-| `hosts[].paths[].overrideService`        | `rules[].backendRefs[]`                                     |
-| `tls`                                    | `tls`, in the same form                                     |
-| `integrations.certManager`               | `integrations.certManager`, in the same form                |
-| `integrations.homepage`                  | `integrations.homepage`, in the same form. Only `HTTPRoute` |
-| `integrations.traefik`                   | `integrations.traefik`, see [Integrations](#integrations)   |
-| `integrations.nginx`                     | `integrations.traefik` or `integrations.envoy`. `nginx` fails rendering. |
-| `primary`, `required`, `expandObjectName`, `labels`, `annotations` | Same                              |
+| Ingress | Route |
+| --- | --- |
+| `ingressClassName` | `gateway` and `gatewayNamespace` |
+| `targetSelector` (`service: port`) | `targetSelector`, in the same form |
+| `hosts[].host` | `hostnames` |
+| `hosts[].paths[]` | `rules[].matches[].path` |
+| `hosts[].paths[].overrideService` | `rules[].backendRefs[]` |
+| `tls` | `tls`, in the same form |
+| `integrations.certManager` | `integrations.certManager`, in the same form |
+| `integrations.homepage` | `integrations.homepage`, in the same form. Only `HTTPRoute` |
+| `integrations.traefik` | `integrations.traefik`, see [Integrations](#integrations) |
+| `integrations.nginx` | `integrations.traefik` or `integrations.envoy`. `nginx` fails rendering. |
+| `primary`, `required`, `expandObjectName`, `labels`, `annotations` | Same |
 
 An ingress also gets an HTTP to HTTPS redirect from some controllers. A route does not, add it on the gateway.
 
@@ -393,13 +393,13 @@ An ingress also gets an HTTP to HTTPS redirect from some controllers. A route do
 
 An ingress configures its controller with annotations. Gateway API has no equivalent for those: a route uses filters, and policies that target it. So each provider has its own integration, and a route can only use one.
 
-| Feature          | `integrations.traefik`                   | `integrations.envoy`                         |
-| ---------------- | ---------------------------------------- | -------------------------------------------- |
-| `auth` Authelia  | `Middleware`, `/api/authz/forward-auth`  | `SecurityPolicy`, `/api/authz/ext-authz/`    |
+| Feature | `integrations.traefik` | `integrations.envoy` |
+| --- | --- | --- |
+| `auth` Authelia | `Middleware`, `/api/authz/forward-auth` | `SecurityPolicy`, `/api/authz/ext-authz/` |
 | `auth` Authentik | `Middleware`, `/outpost.goauthentik.io/auth/traefik` | `SecurityPolicy`, `/outpost.goauthentik.io/auth/envoy` |
-| `ipWhitelist`    | `Middleware`                             | `SecurityPolicy`                             |
-| `themePark`      | `Middleware`, with `app` and `theme`     | `EnvoyExtensionPolicy`, with `css`           |
-| `redirectRegex`  | A route rule and `Middleware`, with capture groups | A route rule, **without capture groups** |
+| `ipWhitelist` | `Middleware` | `SecurityPolicy` |
+| `themePark` | `Middleware`, with `app` and `theme` | `EnvoyExtensionPolicy`, with `css` |
+| `redirectRegex` | A route rule and `Middleware`, with capture groups | A route rule, **without capture groups** |
 
 These apply to the whole route. To protect one path, give it its own route, as shown under [TLS](#tls).
 

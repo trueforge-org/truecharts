@@ -4,7 +4,6 @@ title: Netshoot
 
 :::note
 
-- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/addons/netshoot#full-examples) section for complete examples.
 
 :::
@@ -15,68 +14,109 @@ title: Netshoot
 
 ---
 
-## `addons.netshoot`
+## `netshoot`
 
-Configuration for the netshoot addon.
+A netshoot container to debug the network of the pod.
 
-| Field      | Value             |
-| ---------- | ----------------- |
-| Key        | `addons.netshoot` |
-| Type       | `map`             |
-| Required   | ❌                |
-| Helm `tpl` | ❌                |
-| Default    | unset             |
-
----
-
-### `addons.netshoot.container`
-
-Container configuration for the netshoot addon.
-
-| Field      | Value                       |
-| ---------- | --------------------------- |
-| Key        | `addons.netshoot.container` |
-| Type       | `map`                       |
-| Required   | ❌                          |
-| Helm `tpl` | ❌                          |
-| Default    | unset                       |
-
-See [Container](container.md) for full configuration.
+| Field | Value |
+| --- | --- |
+| Key | `addons.netshoot` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `addons.netshoot.enabled`
+## `enabled`
 
 Enable running a netshoot container in the pod.
 
-| Field      | Value                     |
-| ---------- | ------------------------- |
-| Key        | `addons.netshoot.enabled` |
-| Type       | `boolean, string`         |
-| Required   | ❌                        |
-| Helm `tpl` | ❌                        |
-| Default    | `false`                   |
+| Field | Value |
+| --- | --- |
+| Key | `addons.netshoot.enabled` |
+| Type | `bool or string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
 
-Example
+---
+
+## `targetSelector`
+
+Workloads to which the netshoot container is attached. Defaults to `main`.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.netshoot.targetSelector` |
+| Type | `list of string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `container`
+
+Container configuration for the netshoot addon.
+
+See [Addon Container](/truecharts-common/addons/container) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.netshoot.container` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## Full Examples
+
+Netshoot adds a container with network troubleshooting tools to the pod, so you can `exec` into it to debug the network of the app.
+
+### Enable
 
 ```yaml
 addons:
   netshoot:
-    enabled: false
+    enabled: true
 ```
 
----
+### Other workloads
 
-### `addons.netshoot.targetSelector`
+```yaml
+addons:
+  netshoot:
+    enabled: true
+    targetSelector:
+      - main
+      - worker
+```
 
-Workloads to which the netshoot container is attached. Defaults to `main`.
+### Container options
 
-| Field      | Value                            |
-| ---------- | -------------------------------- |
-| Key        | `addons.netshoot.targetSelector` |
-| Type       | `list of string`                 |
-| Required   | ❌                               |
-| Helm `tpl` | ❌                               |
-| Default    | unset                            |
+```yaml
+addons:
+  netshoot:
+    enabled: true
+    container:
+      resources:
+        limits:
+          cpu: 500m
+          memory: 512Mi
+      env:
+        MY_VAR: my-value
+```
 
----
+### Image
+
+The image is `netshootImage`:
+
+```yaml
+netshootImage:
+  repository: oci.trueforge.org/containerforge/netshoot
+  pullPolicy: IfNotPresent
+  tag: 0.14.0@sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+```

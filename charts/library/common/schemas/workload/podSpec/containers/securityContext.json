@@ -7,7 +7,7 @@
       "properties": {
         "profile": {
           "type": "string",
-          "description": "Localhost seccomp profile path. Required when the profile type is `Localhost`.",
+          "description": "Path of the profile on the node, relative to the kubelet seccomp directory. Required when `type` is `Localhost`.",
           "x-docs-required": true
         },
         "type": {
@@ -17,13 +17,13 @@
             "Localhost",
             "Unconfined"
           ],
-          "description": "Seccomp profile type used by the container.",
+          "description": "Kind of seccomp profile: `RuntimeDefault` for the profile of the container runtime, `Localhost` for a profile on the node or `Unconfined` for none.",
           "default": "RuntimeDefault",
           "x-docs-required": true
         }
       },
       "additionalProperties": false,
-      "description": "Define the seccompProfile for the container.",
+      "description": "Seccomp profile of the container (`seccompProfile`), which restricts the system calls it can make.",
       "default": {
         "type": "RuntimeDefault"
       },
@@ -31,32 +31,37 @@
     },
     "runAsUser": {
       "type": "integer",
-      "description": "Define the runAsUser for the container",
-      "x-docs-required": true
+      "description": "User ID the container process runs as (`runAsUser`).",
+      "x-docs-required": true,
+      "default": 568
     },
     "runAsGroup": {
       "type": "integer",
-      "description": "Define the runAsGroup for the container",
-      "x-docs-required": true
+      "description": "Group ID the container process runs as (`runAsGroup`).",
+      "x-docs-required": true,
+      "default": 568
     },
     "readOnlyRootFilesystem": {
       "type": "boolean",
-      "description": "Define the readOnlyRootFilesystem for the container",
-      "x-docs-required": true
+      "description": "Whether the root filesystem of the container is read-only (`readOnlyRootFilesystem`). Mount a `persistence` volume where the app needs to write.",
+      "x-docs-required": true,
+      "default": true
     },
     "allowPrivilegeEscalation": {
       "type": "boolean",
-      "description": "Define the allowPrivilegeEscalation for the container",
-      "x-docs-required": true
+      "description": "Whether a process can gain more privileges than its parent (`allowPrivilegeEscalation`).",
+      "x-docs-required": true,
+      "default": false
     },
     "privileged": {
       "type": "boolean",
-      "description": "Define the privileged for the container",
-      "x-docs-required": true
+      "description": "Whether the container runs in privileged mode, with almost all the capabilities of the node (`privileged`). Prefer adding single `capabilities`.",
+      "x-docs-required": true,
+      "default": false
     },
     "runAsNonRoot": {
       "type": "boolean",
-      "description": "Define the runAsNonRoot for the container",
+      "description": "Whether the container must run as a non-root user (`runAsNonRoot`). Calculated from `runAsUser` and `runAsGroup` when not set.",
       "x-docs-required": true
     },
     "capabilities": {
@@ -67,38 +72,47 @@
           "items": {
             "type": "string"
           },
-          "description": "Define the capabilities.add for the container",
-          "x-docs-required": true
+          "description": "Capabilities that are added to the container, eg `NET_ADMIN`. Names are without the `CAP_` prefix.",
+          "x-docs-required": true,
+          "examples": [
+            [
+              "NET_ADMIN"
+            ]
+          ],
+          "default": []
         },
         "drop": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "Define the capabilities.drop for the container",
-          "x-docs-required": true
+          "description": "Capabilities that are dropped from the container. `ALL` drops every capability.",
+          "x-docs-required": true,
+          "default": [
+            "ALL"
+          ]
         },
         "disableS6Caps": {
           "type": "boolean",
-          "description": "Disable automatic S6 capabilities when the container runs as root.",
+          "description": "Disable the capabilities that common adds automatically for S6 based images (`CHOWN`, `SETUID`, `SETGID`, `FOWNER` and `DAC_OVERRIDE`) when the container runs as root.",
           "default": false
         }
       },
       "additionalProperties": false,
-      "description": "Define the capabilities for the container If at least one capability is defined in either [`add`](/truecharts-common/workload/podSpec/containers/securityContext#securitycontextcapabilitiesadd) or [`drop`](/truecharts-common/workload/podSpec/containers/securityContext#securitycontextcapabilitiesdrop)",
+      "description": "Linux capabilities of the container (`capabilities`). Only rendered when at least one capability is set in `add` or `drop`.",
       "x-docs-required": true
     },
     "PUID": {
       "type": "integer",
-      "description": "Default user ID used for container environment variables.",
+      "description": "User ID that is passed to the container as the `PUID` environment variable. Overridable with `fixedEnv.PUID`.",
       "default": 568
     },
     "UMASK": {
       "type": "string",
-      "description": "Default file creation mask used for container environment variables.",
+      "description": "File creation mask that is passed to the container as the `UMASK` environment variable. Overridable with `fixedEnv.UMASK`.",
       "default": "0022"
     }
   },
   "additionalProperties": false,
-  "description": "Define securityContext for the container"
+  "description": "Security context of the container. Overrides `securityContext.container` for this container. See [securityContext](/truecharts-common/container/securityContext)."
 }
