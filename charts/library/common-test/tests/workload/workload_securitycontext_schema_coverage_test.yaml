@@ -5,13 +5,12 @@ release:
   name: test-release-name
   namespace: test-release-namespace
 tests:
-  - it: should render the securityContext container and pod defaults with the legacy keys
+  - it: should render the securityContext container and pod defaults
     set:
       securityContext:
         container:
           PUID: 1000
           UMASK: "0027"
-          fsGroup: 1000
           seccompProfile:
             type: RuntimeDefault
       workload:
@@ -49,12 +48,11 @@ tests:
       - failedTemplate:
           errorPattern: "at '/securityContext': additional properties 'unknownKey' not allowed"
 
-  - it: should fail on unknown keys, capabilities, seccompProfile and fsGroup below the minimum in securityContext container
+  - it: should fail on unknown keys, capabilities and seccompProfile in securityContext container
     set:
       securityContext:
         container:
           unknownKey: value
-          fsGroup: -1
           capabilities:
             unknownKey: value
           seccompProfile:
@@ -62,8 +60,6 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "at '/securityContext/container': additional properties 'unknownKey' not allowed"
-      - failedTemplate:
-          errorPattern: "at '/securityContext/container/fsGroup': minimum: got -1, want 0"
       - failedTemplate:
           errorPattern: "at '/securityContext/container/capabilities': additional properties 'unknownKey' not allowed"
       - failedTemplate:

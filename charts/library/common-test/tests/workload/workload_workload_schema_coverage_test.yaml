@@ -26,13 +26,11 @@ tests:
           containers: {}
           initContainers: {}
           podSpec:
-            type: Deployment
             containers:
               main:
                 enabled: true
                 primary: true
                 imageSelector: ubuntuImage
-                type: main
                 probes: &probes
                   liveness:
                     enabled: false
