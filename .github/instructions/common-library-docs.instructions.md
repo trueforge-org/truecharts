@@ -21,6 +21,7 @@ These rules apply to `charts/library/common/docs/`, `examples/`, `docs-schema-ma
 | `examples/**/*.md` | The `## Full Examples` sections of the generated docs pages. |
 | `docs-schema-mapping.yaml` | Maps each docs page to its schema files. |
 | `complete-values-structure.yaml`, `template-keys-structure.yaml` | Generated lists of the keys used in values files and templates, for the schema coverage check. |
+| `stable-legacy-keys.yaml`, `legacy_keys.py` | Keys that charts still set but no template reads, and the helper that leaves them out in `test_schema.py` and `generate_complete_values_structure.py`. |
 | `*.py` | Generators and checks for the docs, structure files and schema. |
 
 ## Generated docs
@@ -34,7 +35,7 @@ These rules apply to `charts/library/common/docs/`, `examples/`, `docs-schema-ma
 ## Generated structure files
 
 - `complete-values-structure.yaml` is rebuilt on every run from the `common` and `common-test` values files, the `set:` blocks of the `common-test` unittests, and the values files of charts under `charts/stable` and `charts/incubator`. Charts only add keys under root-level keys defined by the library, never new root-level keys.
-- `template-keys-structure.yaml` lists the keys the templates read.
+- `template-keys-structure.yaml` lists the keys the templates read. `generate_template_keys_structure.py` maps `$objectData` in `class/` and `lib/` through `OBJECT_DATA_OWNERS`, by the place of the file; add a file or directory there when you add a template that renders an object. Keys that spawners compute themselves are in `INTERNAL_OBJECT_KEYS`. `generate_template_keys_structure.py --check` fails when the file is not up to date, `./run_common_tests.sh` runs it.
 - Regenerate them after changing values or templates:
 
   ```bash
