@@ -5,12 +5,11 @@ release:
   name: test-release-name
   namespace: test-release-namespace
 tests:
-  - it: should render with global podCIDR, svcCIDR, ignoreIsStopped and minNodePort set
+  - it: should render with global podCIDR, svcCIDR and minNodePort set
     set:
       global:
         podCIDR: 172.16.0.0/16
         svcCIDR: 172.17.0.0/16
-        ignoreIsStopped: true
         minNodePort: 9000
         diagnosticMode:
           enabled: "true"

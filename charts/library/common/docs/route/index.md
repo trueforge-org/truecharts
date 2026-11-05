@@ -243,6 +243,28 @@ route:
 
 ---
 
+### `route.$name.nameOverride`
+
+Name appended to the chart fullname for this route instead of the object name. Only applies when `expandObjectName` is enabled.
+
+| Field      | Value                      |
+| ---------- | -------------------------- |
+| Key        | `route.$name.nameOverride` |
+| Type       | `string`                   |
+| Required   | ❌                         |
+| Helm `tpl` | ❌                         |
+| Default    | `""`                       |
+
+Example
+
+```yaml
+route:
+  $name:
+    nameOverride: ""
+```
+
+---
+
 ### `route.$name.namespace`
 
 Namespace of the route.

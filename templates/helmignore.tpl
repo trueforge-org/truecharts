@@ -46,7 +46,9 @@ icon-small.webp
 /generate_docs.py
 /generate_template_keys_structure.py
 /improve_schemas.py
+/legacy_keys.py
 /quick-reference.txt
+/stable-legacy-keys.yaml
 /template-keys-structure.yaml
 /test_schema.py
 /unittest-coverage-ignore.yaml

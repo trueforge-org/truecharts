@@ -7,7 +7,7 @@ release:
   name: test-release-name
   namespace: test-release-namespace
 tests:
-  - it: should render ingress with autoLink, required, certificateIssuer and overrideService
+  - it: should render ingress with required, certificateIssuer and overrideService
     set:
       service: &service
         my-service:
@@ -22,7 +22,6 @@ tests:
         my-ingress:
           enabled: true
           primary: true
-          autoLink: true
           required: true
           certificateIssuer: some-issuer
           hosts: &hosts

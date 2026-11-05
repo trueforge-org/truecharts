@@ -114,20 +114,6 @@ Make this the primary port of the service.
 
 ---
 
-### `service.ports.protcol`
-
-Legacy misspelling of `protocol` in the protonmail-bridge chart values. The templates ignore this key, use `protocol` instead.
-
-| Field      | Value                   |
-| ---------- | ----------------------- |
-| Key        | `service.ports.protcol` |
-| Type       | `string`                |
-| Required   | ❌                      |
-| Helm `tpl` | ❌                      |
-| Default    | unset                   |
-
----
-
 ### `service.ports.protocol`
 
 Define the port protocol Used by the container ports and probes, http and https are converted to tcp where needed
@@ -168,20 +154,6 @@ Define the port dict
 | Required   | ❌                             |
 | Helm `tpl` | ✅                             |
 | Default    | unset                          |
-
----
-
-### `service.ports.type`
-
-Legacy port-level `type` used in some stable chart values (for example `docker`). The templates ignore this key on ports, set `type` on the service instead (`service.<name>.type`).
-
-| Field      | Value                |
-| ---------- | -------------------- |
-| Key        | `service.ports.type` |
-| Type       | `string`             |
-| Required   | ❌                   |
-| Helm `tpl` | ❌                   |
-| Default    | unset                |
 
 ---
 

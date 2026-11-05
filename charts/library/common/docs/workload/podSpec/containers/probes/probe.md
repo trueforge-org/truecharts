@@ -43,20 +43,6 @@ Define the command to run. Only applies when `type: exec`
 
 ---
 
-### `workload.podSpec.containers.probes.probe.custom`
-
-Legacy probe flag set by `stable/dashy`, `stable/miniflux`, `stable/mongodb`, `stable/nginx-proxy-manager`, `stable/nullserv`, `stable/nzbhydra`, and `stable/whisparr`. The probe templates ignore it. Use `type` with `path`, `port`, or `command` instead.
-
-| Field      | Value                                             |
-| ---------- | ------------------------------------------------- |
-| Key        | `workload.podSpec.containers.probes.probe.custom` |
-| Type       | `boolean`                                         |
-| Required   | ❌                                                |
-| Helm `tpl` | ❌                                                |
-| Default    | unset                                             |
-
----
-
 ### `workload.podSpec.containers.probes.probe.enabled`
 
 Enable or disable the probe.
@@ -68,35 +54,6 @@ Enable or disable the probe.
 | Required   | ✅                                                 |
 | Helm `tpl` | ❌                                                 |
 | Default    | unset                                              |
-
----
-
-### `workload.podSpec.containers.probes.probe.exec`
-
-Legacy exec handler set by `stable/rtorrent-rutorrent`. The probe templates ignore it. Use `type: exec` with `command` instead.
-
-| Field      | Value                                           |
-| ---------- | ----------------------------------------------- |
-| Key        | `workload.podSpec.containers.probes.probe.exec` |
-| Type       | `map`                                           |
-| Required   | ❌                                              |
-| Helm `tpl` | ❌                                              |
-| Default    | unset                                           |
-
----
-
-### `workload.podSpec.containers.probes.probe.failureThreshold`
-
-Legacy top-level failure threshold set by the `stable/sdtd` startup probe. The probe templates ignore it. Use `spec.failureThreshold` instead.
-
-| Field      | Value                                                       |
-| ---------- | ----------------------------------------------------------- |
-| Key        | `workload.podSpec.containers.probes.probe.failureThreshold` |
-| Type       | `integer`                                                   |
-| Required   | ❌                                                          |
-| Helm `tpl` | ❌                                                          |
-| Default    | unset                                                       |
-| Minimum    | `1`                                                         |
 
 ---
 
@@ -123,21 +80,6 @@ workload:
           httpHeaders:
             {}
 ```
-
----
-
-### `workload.podSpec.containers.probes.probe.initialDelaySeconds`
-
-Legacy top-level delay set by `stable/docker`. The probe templates ignore it. Use `spec.initialDelaySeconds` instead.
-
-| Field      | Value                                                          |
-| ---------- | -------------------------------------------------------------- |
-| Key        | `workload.podSpec.containers.probes.probe.initialDelaySeconds` |
-| Type       | `integer`                                                      |
-| Required   | ❌                                                             |
-| Helm `tpl` | ❌                                                             |
-| Default    | unset                                                          |
-| Minimum    | `0`                                                            |
 
 ---
 

@@ -66,6 +66,20 @@ Additional annotations as a list of name and value pairs, merged into the annota
 
 ---
 
+### `configmap.$name.binaryData`
+
+Binary data entries of the ConfigMap, keyed by file name. Values must be base64 encoded
+
+| Field      | Value                        |
+| ---------- | ---------------------------- |
+| Key        | `configmap.$name.binaryData` |
+| Type       | `map`                        |
+| Required   | ❌                           |
+| Helm `tpl` | ❌                           |
+| Default    | unset                        |
+
+---
+
 ### `configmap.$name.data`
 
 Data entries of the ConfigMap, keyed by file or variable name

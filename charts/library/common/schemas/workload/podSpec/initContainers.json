@@ -50,14 +50,6 @@
         "$ref": "../container/termination.json",
         "description": "Define termination for the init container"
       },
-      "image": {
-        "type": "string",
-        "description": "Legacy init container `image`, set by `stable/dispatcharr`. The init container template ignores it and reads `imageSelector` instead."
-      },
-      "name": {
-        "type": "string",
-        "description": "Ignored. The chart replaces the init container name with a generated name."
-      },
       "probes": {
         "$ref": "containers/probes.json",
         "description": "Accepted for compatibility with the shared container shape. The init container spawner replaces probes with disabled probes."

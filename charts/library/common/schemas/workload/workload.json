@@ -99,10 +99,6 @@
                   ],
                   "description": "Define extraArg(s). Those are appended **after** the `args`.",
                   "x-helm-tpl": true
-                },
-                "type": {
-                  "type": "string",
-                  "description": "Legacy container `type`. Only `initContainers` read it, so the container template ignores it here. Set by `stable/multus-cni` on its `cleanup` container."
                 }
               },
               "additionalProperties": false,
@@ -319,10 +315,6 @@
           "securityContext": {
             "$ref": "podSpec/securityContext.json",
             "description": "Pod-level security context."
-          },
-          "type": {
-            "type": "string",
-            "description": "Legacy misplacement of the workload-level `type`. `stable/intel-gpu-plugin` sets `podSpec.type: DaemonSet`. The templates read only the workload-level `type` and ignore this key."
           }
         },
         "additionalProperties": false,

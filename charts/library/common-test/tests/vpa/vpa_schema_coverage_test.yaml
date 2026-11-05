@@ -140,3 +140,19 @@ tests:
           errorPattern: "at '/vpa/my-vpa/resourcePolicy/containerPolicies/0/minAllowed': additional properties 'unknownKey' not allowed"
       - failedTemplate:
           errorPattern: "at '/vpa/my-vpa/resourcePolicy/containerPolicies/0/maxAllowed': additional properties 'unknownKey' not allowed"
+
+  - it: should render vpa in the namespace it is given when namespace is set
+    set:
+      workload: *workload
+      vpa:
+        vpa-ns:
+          enabled: true
+          namespace: vpa-ns
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: VerticalPodAutoscaler
+      - documentIndex: 1
+        equal:
+          path: metadata.namespace
+          value: vpa-ns

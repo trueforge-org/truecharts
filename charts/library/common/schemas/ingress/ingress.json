@@ -322,10 +322,6 @@
         "default": [],
         "x-docs-required": true
       },
-      "autoLink": {
-        "type": "boolean",
-        "description": "Auto-link flag for this ingress. The templates do not read this key, so it has no effect."
-      },
       "certificateIssuer": {
         "type": "string",
         "description": "Certificate issuer for this ingress. The templates read `certificateIssuer` per TLS entry (`tls.$item.certificateIssuer`), so this key has no effect."

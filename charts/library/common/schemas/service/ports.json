@@ -76,14 +76,6 @@
     "primary": {
       "type": "boolean",
       "description": "Make this the primary port of the service."
-    },
-    "protcol": {
-      "type": "string",
-      "description": "Legacy misspelling of `protocol` in the protonmail-bridge chart values. The templates ignore this key, use `protocol` instead."
-    },
-    "type": {
-      "type": "string",
-      "description": "Legacy port-level `type` used in some stable chart values (for example `docker`). The templates ignore this key on ports, set `type` on the service instead (`service.<name>.type`)."
     }
   },
   "additionalProperties": false

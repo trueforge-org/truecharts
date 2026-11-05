@@ -135,6 +135,28 @@ Minimum number of replicas.
 
 ---
 
+### `hpa.$name.namespace`
+
+Define the namespace for this object
+
+| Field      | Value                 |
+| ---------- | --------------------- |
+| Key        | `hpa.$name.namespace` |
+| Type       | `string`              |
+| Required   | ❌                    |
+| Helm `tpl` | ✅                    |
+| Default    | `""`                  |
+
+Example
+
+```yaml
+hpa:
+  $name:
+    namespace: ""
+```
+
+---
+
 ### `hpa.$name.targetSelector`
 
 Workloads the HorizontalPodAutoscaler scales. Defaults to the primary workload.

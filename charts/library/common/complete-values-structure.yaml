@@ -70,7 +70,6 @@ global:
     - name: ''
   minNodePort: 0
   stopAll: false
-  ignoreIsStopped: true
   podCIDR: ''
   svcCIDR: ''
 namespace: ''
@@ -107,7 +106,6 @@ securityContext:
     PUID: 0
     UMASK: ''
     runAsNonRoot: false
-    fsGroup: 0
   pod:
     fsGroup: 0
     fsGroupChangePolicy: ''
@@ -115,7 +113,6 @@ securityContext:
     sysctls:
     - name: ''
       value: ''
-    fsgroup: 33
 resources:
   limits:
     cpu: ''
@@ -210,14 +207,8 @@ workload:
               spec:
                 periodSeconds: 60
                 failureThreshold: 5
-                httpGet:
-                  path: ''
-                  port: ''
                 initialDelaySeconds: 30
                 timeoutSeconds: 10
-                exec:
-                  command:
-                  - ''
                 successThreshold: 1
               httpHeaders:
                 Host: ''
@@ -226,12 +217,6 @@ workload:
                 X-String: ''
                 X-Number: 2
                 X-Bool: true
-              custom: true
-              initialDelaySeconds: 30
-              exec:
-                command:
-                - ''
-              failureThreshold: 3
             readiness:
               enabled: true
               type: ''
@@ -241,24 +226,13 @@ workload:
               spec:
                 periodSeconds: 60
                 failureThreshold: 5
-                httpGet:
-                  path: ''
-                  port: ''
                 initialDelaySeconds: 30
                 timeoutSeconds: 10
-                exec:
-                  command:
-                  - ''
                 successThreshold: 5
               httpHeaders:
                 Host: ''
                 Accept: ''
                 Authorization: ''
-              custom: true
-              initialDelaySeconds: 30
-              exec:
-                command:
-                - ''
             startup:
               enabled: true
               type: ''
@@ -269,25 +243,13 @@ workload:
               spec:
                 periodSeconds: 60
                 failureThreshold: 5
-                httpGet:
-                  path: ''
-                  port: ''
                 initialDelaySeconds: 30
                 timeoutSeconds: 10
-                exec:
-                  command:
-                  - ''
                 successThreshold: 1
-              custom: true
-              initialDelaySeconds: 30
               httpHeaders:
                 Host: ''
                 Accept: ''
                 Authorization: ''
-              exec:
-                command:
-                - ''
-              failureThreshold: 0
           env:
             MYSQL_USERNAME: ''
             MYSQL_HOST:
@@ -1092,7 +1054,7 @@ workload:
             LLDAP_SMTP_OPTIONS__FROM: ''
             LLDAP_SMTP_OPTIONS__REPLY_TO: ''
             LLDAP_JWT_SECRET:
-              secretRef:
+              secretKeyRef:
                 name: ''
                 key: ''
             LLDAP_key_file: ''
@@ -3038,7 +3000,6 @@ workload:
                 X-Bool: true
           extraArgs:
           - ''
-          type: ''
           fixedEnv:
             TZ: ''
             UMASK: ''
@@ -3118,8 +3079,6 @@ workload:
           envFrom:
           - configMapRef:
               name: ''
-          name: ''
-          image: ''
           probes:
             liveness:
               enabled: true
@@ -3129,7 +3088,6 @@ workload:
               enabled: true
       automountServiceAccountToken: true
       hostname: ''
-      type: ''
       restartPolicy: ''
       hostNetwork: true
       terminationGracePeriodSeconds: 3
@@ -3287,6 +3245,9 @@ vpa:
           memory: 0
         controlledResources:
         - ''
+  vpa-ns:
+    enabled: true
+    namespace: ''
 hpa:
   main:
     enabled: false
@@ -3348,6 +3309,16 @@ hpa:
           type: ''
           value: 30
           averageValue: 30
+  hpa-ns:
+    enabled: true
+    namespace: ''
+    metrics:
+    - type: ''
+      resource:
+        name: ''
+        target:
+          type: ''
+          averageUtilization: 80
   vpa-name:
     enabled: true
   hpa-name:
@@ -3389,10 +3360,8 @@ service:
         port: 0
         targetPort: 0
         targetSelector: ''
-        type: ''
         hostPort: 0
         nodePort: 0
-        protcol: ''
         appProtocol: ''
     targetSelector: ''
     clusterIP: ''
@@ -4128,6 +4097,7 @@ volumeSnapshots:
     enabled: ''
     source:
       persistentVolumeClaimName: ''
+    namespace: ''
 imagePullSecret:
   image-secret-name:
     enabled: true
@@ -4355,6 +4325,8 @@ configmap:
     - name: ''
       value: ''
     namespace: ''
+    binaryData:
+      file.bin: ''
 configMapsFromFolder:
   enabled: false
   basePath: ''
@@ -4546,6 +4518,7 @@ serviceAccount:
   my-sa:
     enabled: true
     primary: true
+    automountServiceAccountToken: true
   my-other-sa:
     enabled: true
     primary: false
@@ -4982,7 +4955,6 @@ ingress:
       comm: ''
       my-service2: ''
     certificateIssuer: ''
-    autoLink: true
     annotationsList:
     - name: ''
       value: ''
@@ -5362,6 +5334,7 @@ route:
     - backendRefs:
       - targetSelector: ''
     targetSelector: ''
+    nameOverride: ''
     expandObjectName: false
     listenerPort: 0
     namespace: ''
@@ -7100,7 +7073,6 @@ redis:
   username: ''
   redisUsername: ''
   password: ''
-hostNetwork: true
 mongodb:
   enabled: true
   mongodbUsername: ''
@@ -7112,10 +7084,6 @@ clickhouse:
   clickhouseDatabase: ''
   password: ''
 password: ''
-env:
-  DBNAME: ''
-  DBTYPE: ''
-  MY_VAR: ''
 memcached:
   enabled: true
   password: ''
@@ -7267,6 +7235,8 @@ cron: ''
 someTimezone: ''
 command:
 - ''
+env:
+  MY_VAR: ''
 fixedEnv:
   TZ: ''
 probes:
@@ -7291,6 +7261,7 @@ hostAliases:
   hostnames:
   - ''
 hostIPC: false
+hostNetwork: false
 hostPID: false
 hostUsers: false
 nodeSelector:

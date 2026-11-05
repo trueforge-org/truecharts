@@ -79,6 +79,28 @@ Additional labels of the VerticalPodAutoscaler.
 
 ---
 
+### `vpa.$name.namespace`
+
+Define the namespace for this object
+
+| Field      | Value                 |
+| ---------- | --------------------- |
+| Key        | `vpa.$name.namespace` |
+| Type       | `string`              |
+| Required   | ❌                    |
+| Helm `tpl` | ✅                    |
+| Default    | `""`                  |
+
+Example
+
+```yaml
+vpa:
+  $name:
+    namespace: ""
+```
+
+---
+
 ### `vpa.$name.resourcePolicy`
 
 Limits of the recommendations, per container.

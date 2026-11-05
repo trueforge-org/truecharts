@@ -97,6 +97,7 @@ rm -rf "$common_test_path/charts" "$common_test_path/Chart.lock"
 echo "📦 Checking the bundled schema..."
 python3 charts/library/common/generate_bundled_schema.py --check || fail "values.schema.json is not up to date"
 python3 charts/library/common/generate_docs.py --check || fail "The docs are not up to date"
+python3 charts/library/common/generate_template_keys_structure.py --check || fail "template-keys-structure.yaml is not up to date, run generate_template_keys_structure.py"
 
 echo "🔨 Building common..."
 helm dependency update "$common_test_path" || fail "Failed to build common"

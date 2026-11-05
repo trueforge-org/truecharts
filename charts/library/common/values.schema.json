@@ -310,119 +310,6 @@
    "description": "Define kubernetes resources, 1 per list item, tpl will be resolved",
    "type": "array",
    "default": []
-  },
-  "fallbackDefaults": {
-   "$ref": "#/definitions/global.fallbackDefaults",
-   "description": "The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [here](/truecharts-common/global/fallbackDefaults)",
-   "type": "object"
-  },
-  "enableServiceLinks": {
-   "$ref": "#/definitions/workload.podSpec.enableServiceLinks",
-   "description": "See [Enable Service Links](/truecharts-common/workload#enableservicelinks)"
-  },
-  "hostNetwork": {
-   "$ref": "#/definitions/workload.podSpec.hostNetwork",
-   "description": "See [Host Network](/truecharts-common/workload#hostnetwork)"
-  },
-  "hostPID": {
-   "$ref": "#/definitions/workload.podSpec.hostPID",
-   "description": "See [Host PID](/truecharts-common/workload#hostpid)"
-  },
-  "hostIPC": {
-   "$ref": "#/definitions/workload.podSpec.hostIPC",
-   "description": "See [Host IPC](/truecharts-common/workload#hostipc)"
-  },
-  "hostUsers": {
-   "$ref": "#/definitions/workload.podSpec.hostUsers",
-   "description": "See [Host Users](/truecharts-common/workload#hostusers)"
-  },
-  "shareProcessNamespace": {
-   "$ref": "#/definitions/workload.podSpec.shareProcessNamespace",
-   "description": "See [Share Process Namespace](/truecharts-common/workload#shareprocessnamespace)"
-  },
-  "restartPolicy": {
-   "$ref": "#/definitions/workload.podSpec.restartPolicy",
-   "description": "See [Restart Policy](/truecharts-common/workload#restartpolicy)"
-  },
-  "dnsPolicy": {
-   "$ref": "#/definitions/workload.podSpec.dnsPolicy",
-   "description": "See [DNS Policy](/truecharts-common/workload#dnspolicy)"
-  },
-  "dnsConfig": {
-   "$ref": "#/definitions/podOptions.dnsConfig",
-   "description": "See [DNS Config](/truecharts-common/workload#dnsconfig)"
-  },
-  "hostAliases": {
-   "$ref": "#/definitions/podOptions.hostAliases",
-   "description": "See [Host Aliases](/truecharts-common/workload#hostaliases)"
-  },
-  "nodeSelector": {
-   "$ref": "#/definitions/podOptions.nodeSelector",
-   "description": "See [Node Selector](/truecharts-common/workload#nodeselector)"
-  },
-  "defaultSpread": {
-   "$ref": "#/definitions/workload.podSpec.defaultSpread",
-   "description": "Sets some default topology spread constraints for good spread of pods across nodes."
-  },
-  "topologySpreadConstraints": {
-   "$ref": "#/definitions/podOptions.topologySpreadConstraints",
-   "description": "See [Topology Spread Constraints](/truecharts-common/workload#topologyspreadconstraints)"
-  },
-  "tolerations": {
-   "$ref": "#/definitions/podOptions.tolerations",
-   "description": "See [Tolerations](/truecharts-common/workload#tolerations)"
-  },
-  "schedulerName": {
-   "$ref": "#/definitions/workload.podSpec.schedulerName",
-   "description": "See [Scheduler Name](/truecharts-common/workload#schedulername)"
-  },
-  "priorityClassName": {
-   "$ref": "#/definitions/workload.podSpec.priorityClassName",
-   "description": "See [Priority Class Name](/truecharts-common/workload#priorityclassname)"
-  },
-  "runtimeClassName": {
-   "$ref": "#/definitions/workload.podSpec.runtimeClassName",
-   "description": "See [Runtime Class Name](/truecharts-common/workload#runtimeclassname)"
-  },
-  "automountServiceAccountToken": {
-   "$ref": "#/definitions/workload.podSpec.automountServiceAccountToken",
-   "description": "See [Automount Service Account Token](/truecharts-common/workload#automountserviceaccounttoken)"
-  },
-  "terminationGracePeriodSeconds": {
-   "$ref": "#/definitions/workload.terminationGracePeriodSeconds",
-   "description": "See [Termination Grace Period Seconds](/truecharts-common/workload#terminationgraceperiodseconds)"
-  },
-  "command": {
-   "$ref": "#/definitions/workload.podSpec.containers.command",
-   "description": "See [command](/truecharts-common/workload/podSpec/containers/command)"
-  },
-  "args": {
-   "$ref": "#/definitions/workload.podSpec.containers.args",
-   "description": "See [args](/truecharts-common/workload/podSpec/containers/args#args)"
-  },
-  "termination": {
-   "$ref": "#/definitions/workload.container.termination",
-   "description": "See [termination](/truecharts-common/workload/container/termination)"
-  },
-  "lifecycle": {
-   "type": "object",
-   "description": "Not read by common. Set the lifecycle of a container in `workload.<name>.podSpec.containers.<name>.lifecycle`."
-  },
-  "probes": {
-   "$ref": "#/definitions/workload.podSpec.containers.probes",
-   "description": "Does **not** apply to `initContainers` See [probes](/truecharts-common/workload/podSpec/containers/probes)"
-  },
-  "envFrom": {
-   "$ref": "#/definitions/workload.podSpec.containers.envFrom",
-   "description": "See [envFrom](/truecharts-common/workload/podSpec/containers/envFrom)"
-  },
-  "fixedEnv": {
-   "$ref": "#/definitions/workload.podSpec.containers.fixedEnv",
-   "description": "See [fixedEnv](/truecharts-common/workload/podSpec/containers/fixedEnv)"
-  },
-  "env": {
-   "$ref": "#/definitions/workload.podSpec.containers.env",
-   "description": "See [env](/truecharts-common/workload/podSpec/containers/env)"
   }
  },
  "additionalProperties": true,
@@ -1353,6 +1240,15 @@
       ],
       "description": "Additional annotations for configmap",
       "default": {}
+     },
+     "binaryData": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": {
+       "type": "string",
+       "description": "Base64 encoded content of the ConfigMap entry"
+      },
+      "description": "Binary data entries of the ConfigMap, keyed by file name. Values must be base64 encoded"
      }
     },
     "additionalProperties": false,
@@ -6048,10 +5944,6 @@
      "type": "boolean",
      "description": "Applies different techniques to stop all objects in the chart and its dependencies",
      "default": false
-    },
-    "ignoreIsStopped": {
-     "type": "boolean",
-     "description": "Ignore isStopped when applying global stop behaviour. Set by the stable external-service chart; no common template reads it."
     }
    },
    "additionalProperties": false,
@@ -6541,6 +6433,15 @@
        "description": "Configuration for `hpa.main.metrics.$item`."
       },
       "description": "Metrics the number of replicas is calculated from."
+     },
+     "namespace": {
+      "allOf": [
+       {
+        "$ref": "#/definitions/special.namespaces"
+       }
+      ],
+      "description": "Define the namespace for this object",
+      "default": ""
      }
     },
     "additionalProperties": false,
@@ -7272,10 +7173,6 @@
       },
       "description": "Define TLS for this ingress",
       "default": []
-     },
-     "autoLink": {
-      "type": "boolean",
-      "description": "Auto-link flag for this ingress. The templates do not read this key, so it has no effect."
      },
      "certificateIssuer": {
       "type": "string",
@@ -12543,6 +12440,11 @@
        "description": "Configuration for `route.main.rules.$item`."
       },
       "description": "Routing rules. Without rules everything goes to the primary service. Fields the route kind does not support fail rendering."
+     },
+     "nameOverride": {
+      "type": "string",
+      "description": "Name appended to the chart fullname for this route instead of the object name. Only applies when `expandObjectName` is enabled.",
+      "default": ""
      }
     },
     "additionalProperties": false,
@@ -12913,14 +12815,6 @@
     "primary": {
      "type": "boolean",
      "description": "Make this the primary port of the service."
-    },
-    "protcol": {
-     "type": "string",
-     "description": "Legacy misspelling of `protocol` in the protonmail-bridge chart values. The templates ignore this key, use `protocol` instead."
-    },
-    "type": {
-     "type": "string",
-     "description": "Legacy port-level `type` used in some stable chart values (for example `docker`). The templates ignore this key on ports, set `type` on the service instead (`service.<name>.type`)."
     }
    },
    "additionalProperties": false
@@ -13327,6 +13221,11 @@
      "targetSelectAll": {
       "type": "boolean",
       "description": "Whether to assign the serviceAccount to all pods or not"
+     },
+     "automountServiceAccountToken": {
+      "type": "boolean",
+      "description": "Sets automountServiceAccountToken on the ServiceAccount",
+      "default": false
      }
     },
     "additionalProperties": false,
@@ -13800,6 +13699,15 @@
       "additionalProperties": false,
       "description": "Enable volume snapshot",
       "default": false
+     },
+     "namespace": {
+      "allOf": [
+       {
+        "$ref": "#/definitions/special.namespaces"
+       }
+      ],
+      "description": "Define the namespace for this object",
+      "default": ""
      }
     },
     "additionalProperties": false,
@@ -13984,6 +13892,15 @@
       "additionalProperties": false,
       "description": "Limits of the recommendations, per container.",
       "default": {}
+     },
+     "namespace": {
+      "allOf": [
+       {
+        "$ref": "#/definitions/special.namespaces"
+       }
+      ],
+      "description": "Define the namespace for this object",
+      "default": ""
      }
     },
     "additionalProperties": false,
@@ -15090,38 +15007,6 @@
        "type": "integer",
        "minimum": 1,
        "description": "Failed probes in a row before the probe fails."
-      },
-      "exec": {
-       "type": "object",
-       "properties": {
-        "command": {
-         "type": "array",
-         "items": {
-          "type": "string"
-         },
-         "description": "Command to run."
-        }
-       },
-       "additionalProperties": false,
-       "description": "Legacy exec handler set by `stable/dashy`, `stable/mongodb`, `stable/nginx-proxy-manager`, and `stable/whisparr`. The probe templates ignore it. Use top-level `command` with `type: exec` instead."
-      },
-      "httpGet": {
-       "type": "object",
-       "properties": {
-        "path": {
-         "type": "string",
-         "description": "Request path."
-        },
-        "port": {
-         "type": [
-          "integer",
-          "string"
-         ],
-         "description": "Port number or name."
-        }
-       },
-       "additionalProperties": false,
-       "description": "Legacy HTTP handler set by `stable/miniflux`, `stable/nullserv`, and `stable/nzbhydra`. The probe templates ignore it. Use top-level `type`, `path`, and `port` instead."
       }
      },
      "additionalProperties": false,
@@ -15136,34 +15021,6 @@
      "items": {
       "type": "string"
      }
-    },
-    "custom": {
-     "type": "boolean",
-     "description": "Legacy probe flag set by `stable/dashy`, `stable/miniflux`, `stable/mongodb`, `stable/nginx-proxy-manager`, `stable/nullserv`, `stable/nzbhydra`, and `stable/whisparr`. The probe templates ignore it. Use `type` with `path`, `port`, or `command` instead."
-    },
-    "exec": {
-     "type": "object",
-     "properties": {
-      "command": {
-       "type": "array",
-       "items": {
-        "type": "string"
-       },
-       "description": "Command to run."
-      }
-     },
-     "additionalProperties": false,
-     "description": "Legacy exec handler set by `stable/rtorrent-rutorrent`. The probe templates ignore it. Use `type: exec` with `command` instead."
-    },
-    "initialDelaySeconds": {
-     "type": "integer",
-     "minimum": 0,
-     "description": "Legacy top-level delay set by `stable/docker`. The probe templates ignore it. Use `spec.initialDelaySeconds` instead."
-    },
-    "failureThreshold": {
-     "type": "integer",
-     "minimum": 1,
-     "description": "Legacy top-level failure threshold set by the `stable/sdtd` startup probe. The probe templates ignore it. Use `spec.failureThreshold` instead."
     }
    },
    "additionalProperties": false,
@@ -15281,11 +15138,6 @@
      "type": "integer",
      "description": "Define the runAsGroup for the container"
     },
-    "fsGroup": {
-     "type": "integer",
-     "minimum": 0,
-     "description": "Legacy container-level `fsGroup`, set by `stable/chevereto` and `stable/n8n` as `securityContext.container.fsGroup`. The container security context template does not read it, and `fsGroup` is a pod-level field in Kubernetes. Set `fsGroup` under `securityContext.pod` instead."
-    },
     "readOnlyRootFilesystem": {
      "type": "boolean",
      "description": "Define the readOnlyRootFilesystem for the container"
@@ -15341,11 +15193,6 @@
    },
    "additionalProperties": false,
    "description": "Define securityContext for the container"
-  },
-  "workload.podSpec.defaultSpread": {
-   "type": "boolean",
-   "description": "Sets some default topology spread constraints for good spread of pods across nodes.",
-   "additionalProperties": false
   },
   "workload.podSpec.dnsPolicy": {
    "type": "string",
@@ -15425,14 +15272,6 @@
       "$ref": "#/definitions/workload.container.termination",
       "description": "Define termination for the init container"
      },
-     "image": {
-      "type": "string",
-      "description": "Legacy init container `image`, set by `stable/dispatcharr`. The init container template ignores it and reads `imageSelector` instead."
-     },
-     "name": {
-      "type": "string",
-      "description": "Ignored. The chart replaces the init container name with a generated name."
-     },
      "probes": {
       "$ref": "#/definitions/workload.podSpec.containers.probes",
       "description": "Accepted for compatibility with the shared container shape. The init container spawner replaces probes with disabled probes."
@@ -15471,11 +15310,6 @@
      "type": "integer",
      "description": "Group ID applied to mounted volumes.",
      "default": 568
-    },
-    "fsgroup": {
-     "type": "integer",
-     "minimum": 0,
-     "description": "Legacy misspelling of `fsGroup`, still set by `stable/misskey` as `securityContext.pod.fsgroup`. The pod security context template reads only `fsGroup` and ignores this key. Set `fsGroup` instead."
     },
     "fsGroupChangePolicy": {
      "type": "string",
@@ -15622,10 +15456,6 @@
             }
            ],
            "description": "Define extraArg(s). Those are appended **after** the `args`."
-          },
-          "type": {
-           "type": "string",
-           "description": "Legacy container `type`. Only `initContainers` read it, so the container template ignores it here. Set by `stable/multus-cni` on its `cleanup` container."
           }
          },
          "additionalProperties": false,
@@ -15818,10 +15648,6 @@
        "securityContext": {
         "$ref": "#/definitions/workload.podSpec.securityContext",
         "description": "Pod-level security context."
-       },
-       "type": {
-        "type": "string",
-        "description": "Legacy misplacement of the workload-level `type`. `stable/intel-gpu-plugin` sets `podSpec.type: DaemonSet`. The templates read only the workload-level `type` and ignore this key."
        }
       },
       "additionalProperties": false,

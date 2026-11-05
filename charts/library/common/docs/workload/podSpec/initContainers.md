@@ -107,20 +107,6 @@ See [$name.envfrom](containers/envFrom.md) for full configuration.
 
 ---
 
-### `workload.podSpec.initContainers.$name.image`
-
-Legacy init container `image`, set by `stable/dispatcharr`. The init container template ignores it and reads `imageSelector` instead.
-
-| Field      | Value                                         |
-| ---------- | --------------------------------------------- |
-| Key        | `workload.podSpec.initContainers.$name.image` |
-| Type       | `string`                                      |
-| Required   | ❌                                            |
-| Helm `tpl` | ❌                                            |
-| Default    | unset                                         |
-
----
-
 ### `workload.podSpec.initContainers.$name.imageSelector`
 
 Define the image `map` to use
@@ -132,20 +118,6 @@ Define the image `map` to use
 | Required   | ❌                                                    |
 | Helm `tpl` | ❌                                                    |
 | Default    | unset                                                 |
-
----
-
-### `workload.podSpec.initContainers.$name.name`
-
-Ignored. The chart replaces the init container name with a generated name.
-
-| Field      | Value                                        |
-| ---------- | -------------------------------------------- |
-| Key        | `workload.podSpec.initContainers.$name.name` |
-| Type       | `string`                                     |
-| Required   | ❌                                           |
-| Helm `tpl` | ❌                                           |
-| Default    | unset                                        |
 
 ---
 

@@ -17,6 +17,7 @@ These rules apply to `charts/library/common/schemas/`, `values.schema.source.jso
 - Helm validates a subchart's schema only against that subchart's own values, not against the values of the chart. So `.github/scripts/add_chart_schema.sh` copies the schema of the `common` version a chart depends on into the chart: on release (`cr.sh`) and while linting (`tc-lint.sh`). These copies are not committed. `common-test` has the same setup: its `values.schema.json` is a symlink to the one of `common`, so every unit test and install test validates the schema.
 - The source and tooling of `common` are not packaged. They are listed in `templates/helmignore.tpl`, which `forgetool charts genmeta` writes to the `.helmignore` of every chart, so a new file in the root of `common` has to be added there too.
 - Every key in `values.yaml` and every key the templates read must be in the schema. When you add, rename or remove a key, change the schema in the same PR.
+- Only put a key in the schema when `common` itself uses it: a template reads it, or `values.yaml` defines it. Never add a key because a chart in `charts/stable` or `charts/incubator` sets it. A chart value that no common template reads is a mistake in that chart (a dead key, a misspelling, or a key in the wrong place). Fix the chart in a separate PR that targets `master`, move the value to the key that works if it was meant to do something, and keep the key out of the schema. If such a key is already in the schema, remove it once no chart sets it anymore. While charts still set it, list it in `charts/library/common/stable-legacy-keys.yaml` (path with `*` for any key, a reason, and the charts): `test_schema.py` leaves these keys out of a chart before it validates it, and `generate_complete_values_structure.py` ignores them. Remove an entry when no chart sets the key anymore, the scripts warn about stale entries.
 - Validate in the schema what the schema can express (types, enums, required keys without a default) instead of in the templates. Keep template checks for values rendered with `tpl`, checks across keys, and anything the schema can not express.
 
 ## No open objects
@@ -54,7 +55,7 @@ These rules apply to `charts/library/common/schemas/`, `values.schema.source.jso
 ## `required` and existing charts
 
 - The schema of a chart sees its values before the defaults of `common` are merged. So only use `required` for keys without a default in `values.yaml`, like the items of a list. `required` also checks disabled objects. A `required` key with a default rejects any partial override of its parent.
-- A change to the schema can break the values of app charts. Keep the schema accepting all existing chart values unless the change is meant to be breaking. `test_schema.py` checks this, see [Schema checks](#schema-checks).
+- A change to the schema can break the values of app charts. Keep the schema accepting all existing chart values unless the change is meant to be breaking, except for keys that no common template reads, see above: those are fixed in the chart. `test_schema.py` checks this, see [Schema checks](#schema-checks).
 
 ## Schema checks
 

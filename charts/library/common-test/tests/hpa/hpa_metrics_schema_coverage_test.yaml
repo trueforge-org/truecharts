@@ -284,3 +284,26 @@ tests:
           errorPattern: "at '/hpa/my-hpa/metrics/1/external/metric/selector': additional properties 'unknownKey' not allowed"
       - failedTemplate:
           errorPattern: "at '/hpa/my-hpa/metrics/1/external/target': additional properties 'unknownKey' not allowed"
+
+  - it: should render hpa in the namespace it is given when namespace is set
+    set:
+      workload: *workload
+      hpa:
+        hpa-ns:
+          enabled: true
+          namespace: hpa-ns
+          metrics:
+            - type: Resource
+              resource:
+                name: cpu
+                target:
+                  type: Utilization
+                  averageUtilization: 80
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: HorizontalPodAutoscaler
+      - documentIndex: 1
+        equal:
+          path: metadata.namespace
+          value: hpa-ns

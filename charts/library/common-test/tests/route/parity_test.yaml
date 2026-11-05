@@ -138,6 +138,20 @@ tests:
         isKind:
           of: HTTPRoute
 
+  - it: should append nameOverride to the chart fullname of the route
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          nameOverride: custom
+          gateway: external
+    asserts:
+      - documentSelector: *route
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-custom
+
   - it: should not expand the name with expandObjectName false
     set:
       service: *service

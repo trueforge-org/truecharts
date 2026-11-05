@@ -580,6 +580,53 @@ def load_ignores() -> dict[str, str]:
     return ignores
 
 
+# Validation keywords the validator above cannot evaluate. A schema that uses one of them would be
+# treated as always valid here, so coverage would look complete while the keyword is never tested.
+UNSUPPORTED_KEYWORDS = (
+    "if",
+    "then",
+    "else",
+    "propertyNames",
+    "dependencies",
+    "dependentRequired",
+    "dependentSchemas",
+    "contains",
+    "additionalItems",
+    "multipleOf",
+    "format",
+)
+
+
+def find_unsupported_keywords() -> list[str]:
+    """Every use of a validation keyword that own_valid does not evaluate, as `file#pointer keyword`."""
+    found: list[str] = []
+
+    def walk(node: Any, file: Path, pointer: str, names_are_keys: bool = False) -> None:
+        if isinstance(node, list):
+            for index, child in enumerate(node):
+                walk(child, file, f"{pointer}/{index}")
+            return
+        if not isinstance(node, dict):
+            return
+        for key, child in node.items():
+            if names_are_keys:
+                # The keys of properties and patternProperties are names, not keywords
+                walk(child, file, f"{pointer}/{key}")
+                continue
+            if key in UNSUPPORTED_KEYWORDS:
+                found.append(f"{file.relative_to(BASE_DIR)}#{pointer} {key}")
+            if key in ("default", "examples", "enum", "const") or key.startswith("x-"):
+                continue  # Plain data, not schemas
+            if key == "items" and isinstance(child, list):
+                found.append(f"{file.relative_to(BASE_DIR)}#{pointer} items (tuple form)")
+            walk(child, file, f"{pointer}/{key}", key in ("properties", "patternProperties", "definitions"))
+
+    files = sorted((BASE_DIR / "schemas").rglob("*.json")) + [ROOT_SCHEMA_FILE]
+    for file in files:
+        walk(load_json(file), file, "")
+    return found
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Check that the common-test unittests cover the common values schema")
     parser.add_argument("--all", action="store_true", help="List every uncovered item (default: 50 per category)")
@@ -587,6 +634,14 @@ def main() -> int:
     parser.add_argument("--json", type=Path, help="Write a machine-readable report to this file")
     parser.add_argument("--summary-md", type=Path, help="Write a Markdown table with the totals per category to this file")
     args = parser.parse_args()
+
+    unsupported = find_unsupported_keywords()
+    if unsupported:
+        print("The schema uses validation keywords this check cannot evaluate, so its coverage would be wrong:")
+        for entry in unsupported:
+            print(f"  {entry}")
+        print("Support the keyword in own_valid and the coverage items, or remove it from the schema.")
+        return 1
 
     root = Node(load_json(ROOT_SCHEMA_FILE), ROOT_SCHEMA_FILE.resolve(), "")
     coverage = Coverage()
