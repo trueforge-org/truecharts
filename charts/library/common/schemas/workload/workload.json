@@ -327,11 +327,20 @@
           "integer",
           "string"
         ],
-        "description": "Define the number of replicas"
+        "description": "Define the number of replicas",
+        "x-docs-appliesTo": [
+          "Deployment",
+          "StatefulSet"
+        ]
       },
       "revisionHistoryLimit": {
         "type": "number",
-        "description": "Define the number of history revisions"
+        "description": "Define the number of history revisions",
+        "x-docs-appliesTo": [
+          "Deployment",
+          "StatefulSet",
+          "DaemonSet"
+        ]
       },
       "allowRollingUpdateWithRWO": {
         "type": "boolean",
@@ -347,7 +356,12 @@
           "RollingUpdate",
           "OnDelete"
         ],
-        "description": "Define the strategy type of the workload. Set `maxUnavailable`, `maxSurge` and `partition` under [`rollingUpdate`](#workloadnamerollingupdate)\n\nA single replica Deployment uses `Recreate` if it mounts a `ReadWriteOnce` or `ReadWriteOncePod` volume. See [`allowRollingUpdateWithRWO`](#workloadnameallowrollingupdatewithrwo) to keep `RollingUpdate` with `ReadWriteOnce`."
+        "description": "Define the strategy type of the workload. Set `maxUnavailable`, `maxSurge` and `partition` under [`rollingUpdate`](#workloadnamerollingupdate)\n\nA single replica Deployment uses `Recreate` if it mounts a `ReadWriteOnce` or `ReadWriteOncePod` volume. See [`allowRollingUpdateWithRWO`](#workloadnameallowrollingupdatewithrwo) to keep `RollingUpdate` with `ReadWriteOnce`.",
+        "x-docs-appliesTo": [
+          "Deployment",
+          "StatefulSet",
+          "DaemonSet"
+        ]
       },
       "rollingUpdate": {
         "type": "object",
@@ -361,18 +375,30 @@
           },
           "partition": {
             "type": "number",
-            "description": "Define the partition Can only be used when `workload.$name.strategy` is `RollingUpdate`"
+            "description": "Define the partition Can only be used when `workload.$name.strategy` is `RollingUpdate`",
+            "x-docs-appliesTo": [
+              "StatefulSet"
+            ]
           },
           "maxSurge": {
             "type": [
               "integer",
               "string"
             ],
-            "description": "Define the maxSurge Can only be used when `workload.$name.strategy` is `RollingUpdate`"
+            "description": "Define the maxSurge Can only be used when `workload.$name.strategy` is `RollingUpdate`",
+            "x-docs-appliesTo": [
+              "Deployment",
+              "DaemonSet"
+            ]
           }
         },
         "additionalProperties": false,
-        "description": "Define the rollingUpdate options Can only be used when `workload.$name.strategy` is `RollingUpdate`"
+        "description": "Define the rollingUpdate options Can only be used when `workload.$name.strategy` is `RollingUpdate`",
+        "x-docs-appliesTo": [
+          "Deployment",
+          "StatefulSet",
+          "DaemonSet"
+        ]
       },
       "initContainers": {
         "type": "object",
@@ -387,33 +413,60 @@
           "Indexed",
           "NonIndexed"
         ],
-        "description": "Completion mode of a Job, `NonIndexed` or `Indexed`."
+        "description": "Completion mode of a Job, `NonIndexed` or `Indexed`.",
+        "x-docs-appliesTo": [
+          "CronJob",
+          "Job"
+        ]
       },
       "backoffLimit": {
         "type": "number",
-        "description": "Retries before a Job fails."
+        "description": "Retries before a Job fails.",
+        "x-docs-appliesTo": [
+          "CronJob",
+          "Job"
+        ]
       },
       "completions": {
         "type": "number",
-        "description": "Successful pods a Job needs."
+        "description": "Successful pods a Job needs.",
+        "x-docs-appliesTo": [
+          "CronJob",
+          "Job"
+        ]
       },
       "parallelism": {
         "type": "integer",
-        "description": "Pods of a Job that run at the same time."
+        "description": "Pods of a Job that run at the same time.",
+        "x-docs-appliesTo": [
+          "CronJob",
+          "Job"
+        ]
       },
       "ttlSecondsAfterFinished": {
         "type": "number",
-        "description": "Seconds before a finished Job is deleted."
+        "description": "Seconds before a finished Job is deleted.",
+        "x-docs-appliesTo": [
+          "CronJob",
+          "Job"
+        ]
       },
       "activeDeadlineSeconds": {
         "type": "integer",
-        "description": "Seconds a Job can run before it is stopped."
+        "description": "Seconds a Job can run before it is stopped.",
+        "x-docs-appliesTo": [
+          "CronJob",
+          "Job"
+        ]
       },
       "schedule": {
         "type": "string",
         "description": "Cron schedule of a CronJob.",
         "x-helm-tpl": true,
-        "x-docs-required": true
+        "x-docs-required": true,
+        "x-docs-appliesTo": [
+          "CronJob"
+        ]
       },
       "suspend": {
         "type": "boolean",
@@ -422,7 +475,10 @@
       "timezone": {
         "type": "string",
         "description": "Time zone of the schedule of a CronJob. Defaults to `TZ`.",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "CronJob"
+        ]
       },
       "concurrencyPolicy": {
         "type": "string",
@@ -432,20 +488,32 @@
           "Forbid"
         ],
         "description": "What a CronJob does when the previous run is still running: `Allow`, `Forbid` or `Replace`.",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "CronJob"
+        ]
       },
       "failedJobsHistoryLimit": {
         "type": "integer",
         "description": "Failed Jobs of a CronJob that are kept.",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "CronJob"
+        ]
       },
       "successfulJobsHistoryLimit": {
         "type": "integer",
-        "description": "Successful Jobs of a CronJob that are kept."
+        "description": "Successful Jobs of a CronJob that are kept.",
+        "x-docs-appliesTo": [
+          "CronJob"
+        ]
       },
       "startingDeadlineSeconds": {
         "type": "integer",
-        "description": "Seconds a CronJob can start late."
+        "description": "Seconds a CronJob can start late.",
+        "x-docs-appliesTo": [
+          "CronJob"
+        ]
       },
       "enabled": {
         "type": [

@@ -269,32 +269,56 @@
       "size": {
         "type": "string",
         "description": "Define the sizeLimit of the emptyDir",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "emptyDir",
+          "pvc",
+          "vct"
+        ]
       },
       "medium": {
         "type": "string",
         "description": "Define the medium of emptyDir (Memory, \"\")",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "emptyDir"
+        ]
       },
       "objectName": {
         "type": "string",
         "description": "Define the secret name.",
         "x-helm-tpl": true,
-        "x-docs-required": true
+        "x-docs-required": true,
+        "x-docs-appliesTo": [
+          "configmap",
+          "secret"
+        ]
       },
       "expandObjectName": {
         "type": "boolean",
         "description": "Whether to expand (adding the fullname as prefix) the secret name.",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "configmap",
+          "secret"
+        ]
       },
       "optional": {
         "type": "boolean",
-        "description": "Whether the secret should be required or not."
+        "description": "Whether the secret should be required or not.",
+        "x-docs-appliesTo": [
+          "configmap",
+          "secret"
+        ]
       },
       "defaultMode": {
         "type": "string",
         "description": "Define the defaultMode (must be a string in format of \"0777\").",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "configmap",
+          "secret"
+        ]
       },
       "items": {
         "type": "array",
@@ -305,33 +329,54 @@
               "type": "string",
               "description": "Define a list of items for secret.",
               "x-helm-tpl": true,
-              "x-docs-required": true
+              "x-docs-required": true,
+              "x-docs-appliesTo": [
+                "configmap",
+                "secret"
+              ]
             },
             "key": {
               "type": "string",
               "description": "Define the key of the secret.",
               "x-helm-tpl": true,
-              "x-docs-required": true
+              "x-docs-required": true,
+              "x-docs-appliesTo": [
+                "configmap",
+                "secret"
+              ]
             }
           },
           "additionalProperties": false
         },
-        "description": "Define a list of items for secret."
+        "description": "Define a list of items for secret.",
+        "x-docs-appliesTo": [
+          "configmap",
+          "secret"
+        ]
       },
       "iscsi": {
-        "$ref": "../special/iscsi.json"
+        "$ref": "../special/iscsi.json",
+        "x-docs-appliesTo": [
+          "iscsi"
+        ]
       },
       "path": {
         "type": "string",
         "description": "Define the nfs export share path",
         "x-helm-tpl": true,
-        "x-docs-required": true
+        "x-docs-required": true,
+        "x-docs-appliesTo": [
+          "nfs"
+        ]
       },
       "server": {
         "type": "string",
         "description": "Define the nfs server",
         "x-helm-tpl": true,
-        "x-docs-required": true
+        "x-docs-required": true,
+        "x-docs-appliesTo": [
+          "nfs"
+        ]
       },
       "targetSelector": {
         "type": "object",
@@ -378,12 +423,20 @@
         "type": "string",
         "description": "Path on the node, for `type: hostPath`.",
         "x-helm-tpl": true,
-        "x-docs-required": true
+        "x-docs-required": true,
+        "x-docs-appliesTo": [
+          "device",
+          "hostPath"
+        ]
       },
       "hostPathType": {
         "type": "string",
         "description": "Type of the host path, eg `Directory` or `DirectoryOrCreate`.",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "device",
+          "hostPath"
+        ]
       },
       "labels": {
         "allOf": [
@@ -392,7 +445,11 @@
           }
         ],
         "description": "Additional labels for persistence",
-        "x-helm-tpl": "On value only"
+        "x-helm-tpl": "On value only",
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
       },
       "annotationsList": {
         "allOf": [
@@ -417,7 +474,11 @@
           }
         ],
         "description": "Additional annotations for persistence",
-        "x-helm-tpl": "On value only"
+        "x-helm-tpl": "On value only",
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
       },
       "namespace": {
         "allOf": [
@@ -426,11 +487,19 @@
           }
         ],
         "description": "Define the namespace for this object",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
       },
       "retain": {
         "type": "boolean",
-        "description": "Define wether the to add helm annotation to retain resource on uninstall. This does not **guarantee** that the resource will be retained."
+        "description": "Define wether the to add helm annotation to retain resource on uninstall. This does not **guarantee** that the resource will be retained.",
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
       },
       "accessModes": {
         "type": [
@@ -438,7 +507,11 @@
           "string"
         ],
         "description": "Define the accessModes of the PVC, if it's single can be defined as a string, multiple as a list",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
       },
       "accessMode": {
         "type": "string",
@@ -456,17 +529,29 @@
       "volumeName": {
         "type": "string",
         "description": "Define the volumeName of a PV, backing the claim",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
       },
       "existingClaim": {
         "type": "string",
         "description": "Define an existing claim to use",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
       },
       "storageClass": {
         "type": "string",
         "description": "Define the storageClass to use - If storageClass is defined on the `persistence`",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
       },
       "dataSource": {
         "type": "object",
@@ -483,7 +568,11 @@
           }
         },
         "additionalProperties": false,
-        "description": "Define dataSource for the pvc"
+        "description": "Define dataSource for the pvc",
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
       },
       "static": {
         "type": "object",
@@ -535,7 +624,11 @@
           }
         },
         "additionalProperties": false,
-        "description": "Define static provisioning for the pvc"
+        "description": "Define static provisioning for the pvc",
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
       },
       "mountOptions": {
         "type": "array",
@@ -549,18 +642,30 @@
                 "string"
               ],
               "description": "Define mountOptions for the pvc. Available only for `static.mode: nfs|smb`",
-              "x-helm-tpl": true
+              "x-helm-tpl": true,
+              "x-docs-appliesTo": [
+                "pvc",
+                "vct"
+              ]
             },
             "key": {
               "type": "string",
               "description": "Define the key of the mountOption",
               "x-helm-tpl": true,
-              "x-docs-required": true
+              "x-docs-required": true,
+              "x-docs-appliesTo": [
+                "pvc",
+                "vct"
+              ]
             }
           },
           "additionalProperties": false,
           "description": "Configuration for `$name.mountOptions.$name`."
-        }
+        },
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
       },
       "volumeSnapshots": {
         "type": "array",
@@ -570,11 +675,19 @@
           "properties": {
             "volumeSnapshotClassName": {
               "type": "string",
-              "description": "Define volumeSnapshots for the pvc"
+              "description": "Define volumeSnapshots for the pvc",
+              "x-docs-appliesTo": [
+                "pvc",
+                "vct"
+              ]
             },
             "name": {
               "type": "string",
-              "description": "Define the name of the volumeSnapshot"
+              "description": "Define the name of the volumeSnapshot",
+              "x-docs-appliesTo": [
+                "pvc",
+                "vct"
+              ]
             },
             "enabled": {
               "type": [
@@ -583,7 +696,11 @@
               ],
               "properties": {},
               "additionalProperties": false,
-              "description": "Define if the volumeSnapshot is enabled"
+              "description": "Define if the volumeSnapshot is enabled",
+              "x-docs-appliesTo": [
+                "pvc",
+                "vct"
+              ]
             },
             "labels": {
               "allOf": [
@@ -592,7 +709,11 @@
                 }
               ],
               "description": "Define the labels of the volumeSnapshot",
-              "x-helm-tpl": "On value only"
+              "x-helm-tpl": "On value only",
+              "x-docs-appliesTo": [
+                "pvc",
+                "vct"
+              ]
             },
             "annotations": {
               "allOf": [
@@ -601,29 +722,46 @@
                 }
               ],
               "description": "Define the annotations of the volumeSnapshot",
-              "x-helm-tpl": "On value only"
+              "x-helm-tpl": "On value only",
+              "x-docs-appliesTo": [
+                "pvc",
+                "vct"
+              ]
             }
           },
           "additionalProperties": false,
           "description": "Configuration for `$name.volumeSnapshots.$name`."
-        }
+        },
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
       },
       "fsType": {
         "type": "string",
         "description": "File system of the volume, eg `ext4`.",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "iscsi"
+        ]
       },
       "targetPortal": {
         "type": "string",
         "description": "Portal of the target, as `host:port`.",
         "x-helm-tpl": true,
-        "x-docs-required": true
+        "x-docs-required": true,
+        "x-docs-appliesTo": [
+          "iscsi"
+        ]
       },
       "iqn": {
         "type": "string",
         "description": "iSCSI qualified name of the target.",
         "x-helm-tpl": true,
-        "x-docs-required": true
+        "x-docs-required": true,
+        "x-docs-appliesTo": [
+          "iscsi"
+        ]
       },
       "lun": {
         "type": [
@@ -632,22 +770,34 @@
         ],
         "description": "LUN number of the target.",
         "x-helm-tpl": true,
-        "x-docs-required": true
+        "x-docs-required": true,
+        "x-docs-appliesTo": [
+          "iscsi"
+        ]
       },
       "initiatorName": {
         "type": "string",
         "description": "iSCSI initiator name of the node.",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "iscsi"
+        ]
       },
       "iscsiInterface": {
         "type": "string",
         "description": "iSCSI interface of the node, eg `default`.",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "iscsi"
+        ]
       },
       "portals": {
         "type": "array",
         "description": "Additional portals of the target, as `host:port`.",
-        "x-helm-tpl": "On entries only"
+        "x-helm-tpl": "On entries only",
+        "x-docs-appliesTo": [
+          "iscsi"
+        ]
       },
       "domain": {
         "type": "string",

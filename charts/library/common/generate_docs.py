@@ -72,7 +72,8 @@ class Schemas:
         self.root_file = root_file.resolve()
         self.base = self.root_file.parent
         self._files: dict[Path, Any] = {}
-        self._cache: dict[tuple[int, Path], Node] = {}
+        # The raw object is kept next to the node so its id() can not be reused.
+        self._cache: dict[tuple[int, Path], tuple[Any, Node]] = {}
 
     def load(self, path: Path) -> Any:
         path = path.resolve()
@@ -105,8 +106,8 @@ class Schemas:
         if key not in self._cache:
             n = Node()
             self._absorb(n, raw, file, "base")
-            self._cache[key] = n
-        return self._cache[key]
+            self._cache[key] = (raw, n)
+        return self._cache[key][1]
 
     def _absorb(self, n: Node, raw: Any, file: Path, mode: str) -> None:
         """Merge raw into n; the first value found for a keyword wins."""
@@ -234,6 +235,7 @@ class Page:
     overview_only: bool = False
     handwritten: bool = False
     description: str = ""
+    collapse: dict[str, str] = field(default_factory=dict)
 
     @property
     def url_path(self) -> str:
@@ -264,6 +266,7 @@ def load_pages(path: Path) -> tuple[list[Page], list[str]]:
                 overview_only=bool(entry.get("overview_only")),
                 handwritten=bool(entry.get("handwritten")),
                 description=entry.get("description", ""),
+                collapse=entry.get("collapse") or {},
             )
         )
     return pages, list(data.get("removed", []))
@@ -379,7 +382,8 @@ class Generator:
         if "ref" in root:
             ref = root["ref"]
             n = self.schemas.node({"$ref": ref}, self.schemas.base / "_root.json")
-            label = root.get("key") or Path(ref.split("#")[0]).stem
+            where = self.appears_in(n.identity, [])
+            label = root.get("key") or (where[0] if where else Path(ref.split("#")[0]).stem)
             return n, label, n.identity
         path = root.get("path", "")
         n = self.root_node
@@ -407,7 +411,7 @@ class Generator:
                 self.resolved[(page.file, i)] = (n, label, ident)
                 if "ref" in root:
                     self.root_by_ident.setdefault(ident, page)
-                else:
+                elif page.applies is None:
                     self.root_by_path.setdefault(root.get("path", ""), page)
                     if root.get("link", True) and ident and page.applies is None and i == 0 and not page.overview_only:
                         self.root_by_ident.setdefault(ident, page)
@@ -430,7 +434,7 @@ class Generator:
 
         def rel_of(path: str) -> str:
             if path == base_path:
-                return path.split(".")[-1] if not is_ref else label
+                return re.split(r"\.", path)[-1]
             if path.startswith(base_path + ".") or path.startswith(base_path + "["):
                 rest = path[len(base_path):]
                 return rest[1:] if rest.startswith(".") else rest
@@ -438,23 +442,32 @@ class Generator:
 
         out: list[Entry] = []
 
-        def walk(node: Node, path: str, parent: Node | None, key: str, stack: tuple, depth: int, top: bool):
+        def walk(node, path, parent, key, stack, depth, top, typed_ok=False):
             if depth > MAX_DEPTH:
                 return
+            emit = not top
+            child_typed = typed_ok
             if not top:
+                if page.applies is None:
+                    # Typed keys are documented on the page of their type.
+                    if node.applies:
+                        return
+                else:
+                    if node.applies and page.applies not in node.applies:
+                        return
+                    child_typed = typed_ok or page.applies in node.applies
+                    emit = child_typed
+            if emit:
                 entry = Entry(
                     path=path,
                     rel=rel_of(path),
                     node=node,
                     required=bool(parent and key in parent.required) or node.docs_required,
                 )
-                # Typed keys are documented on the page of their type only.
-                if depth == 1:
-                    if page.applies is None and node.applies:
-                        return
-                    if page.applies is not None and page.applies not in node.applies:
-                        return
                 other = self._other_page(page, path, node, root_idx)
+                target = page.collapse.get(entry.rel)
+                if target:
+                    other = next(p for p in self.pages if p.file == target)
                 if other is not None:
                     entry.link = other
                     out.append(entry)
@@ -469,11 +482,11 @@ class Generator:
             if depth_limit is not None and depth >= depth_limit:
                 return
             for k, c in self.schemas.children(node):
-                walk(c, join(path, k), node, k, stack, depth + 1, False)
+                walk(c, join(path, k), node, k, stack, depth + 1, False, child_typed)
 
         walk(n, base_path, None, "", (), 0, True)
         has_children = any(True for _ in self.schemas.children(n))
-        if not has_children:
+        if not has_children and page.applies is None:
             entry = Entry(path=base_path, rel=rel_of(base_path), node=n, required=n.docs_required)
             out.insert(0, entry)
         return n, label, ident, out
@@ -591,7 +604,8 @@ class Generator:
                 continue
             n, label, ident, entries = self.entries(page, i)
             if i == 0:
-                intro_desc = n.description
+                has_kids = any(True for _ in self.schemas.children(n))
+                intro_desc = n.description if has_kids and page.applies is None else ""
                 if "ref" in root:
                     appears += self.appears_in(ident, [])
                 else:
@@ -685,17 +699,31 @@ class Generator:
         return out
 
     def render_overview(self, page: Page) -> str:
+        n, label, _ = self.resolved[(page.file, 0)][0:3]
         lines = ["## Keys", "", "| Key | Type | Description |", "| --- | --- | --- |"]
-        n = self.root_node
         for k, c in self.schemas.children(n):
-            target = self.root_by_path.get(k) or (self.root_by_ident.get(c.identity) if c.identity else None)
-            if target is None:
-                target = self.page_containing(k)
-            anchor = "" if target is None or target.compact_links or target.roots[0].get("path") == k else slug(k)
-            name = f"[`{k}`]({self.url(target, anchor)})" if target else f"`{k}`"
+            path = join(label, k)
+            target = self.page_for(path, c)
+            if target is None or target is page:
+                name = f"`{k}`"
+            else:
+                anchor = "" if target.compact_links or self.is_root_of(target, path, c) else slug(path)
+                name = f"[`{k}`]({self.url(target, anchor)})"
             desc = c.description.split("\n")[0] if c.description else ""
             lines.append(f"| {name} | `{self.type_str(c)}` | {esc_cell(desc)} |")
         return "\n".join(lines) + "\n\n---"
+
+    def is_root_of(self, page: Page, path: str, node: Node) -> bool:
+        return self.root_by_path.get(path) is page or (
+            node.identity is not None and self.root_by_ident.get(node.identity) is page
+        )
+
+    def page_for(self, path: str, node: Node) -> Page | None:
+        """The page that documents the key at path."""
+        p = self.root_by_path.get(path) or (self.root_by_ident.get(node.identity) if node.identity else None)
+        if p is not None:
+            return p
+        return self.page_containing(path)
 
     def render_link_table(self, links: list[Entry]) -> str:
         lines = ["## Linked objects", "", "| Key | Type | Description |", "| --- | --- | --- |"]
@@ -705,10 +733,16 @@ class Generator:
         return "\n".join(lines) + "\n\n---"
 
     def page_containing(self, path: str) -> Page | None:
+        """The page whose root is path, an ancestor of path or, as a fallback, a descendant."""
         for page in self.pages:
             for root in page.roots:
                 p = root.get("path")
                 if p is not None and (p == path or path.startswith(p + ".") and p):
+                    return page
+        for page in self.pages:
+            for root in page.roots:
+                p = root.get("path")
+                if p and p.startswith(path + "."):
                     return page
         return None
 
@@ -716,8 +750,8 @@ class Generator:
 
     def check_coverage(self) -> list[str]:
         problems = []
-        for k, _ in self.schemas.children(self.root_node):
-            if self.page_containing(k) is None and k not in self.root_by_path:
+        for k, c in self.schemas.children(self.root_node):
+            if self.page_for(k, c) is None:
                 problems.append(f"root key '{k}' is not covered by any page in docs-pages.yaml")
         files = [p.file for p in self.pages]
         for f in {f for f in files if files.count(f) > 1}:

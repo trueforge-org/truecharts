@@ -173,79 +173,139 @@
             "properties": {
               "pluginName": {
                 "type": "string",
-                "description": "Name of the plugin, as registered in Traefik."
+                "description": "Name of the plugin, as registered in Traefik.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer",
+                  "plugin-geoblock",
+                  "plugin-mod-security",
+                  "plugin-real-ip",
+                  "plugin-rewrite-response-headers",
+                  "plugin-theme-park"
+                ]
               },
               "api": {
                 "type": "string",
                 "description": "URL of the geolocation API, with `{ip}` as the placeholder of the client IP.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "plugin-geoblock"
+                ]
               },
               "allowLocalRequests": {
                 "type": "boolean",
-                "description": "Allow requests from private networks without a lookup."
+                "description": "Allow requests from private networks without a lookup.",
+                "x-docs-appliesTo": [
+                  "plugin-geoblock"
+                ]
               },
               "logLocalRequests": {
                 "type": "boolean",
-                "description": "Log the requests from private networks."
+                "description": "Log the requests from private networks.",
+                "x-docs-appliesTo": [
+                  "plugin-geoblock"
+                ]
               },
               "logAllowedRequests": {
                 "type": "boolean",
-                "description": "Log the requests that are allowed."
+                "description": "Log the requests that are allowed.",
+                "x-docs-appliesTo": [
+                  "plugin-geoblock"
+                ]
               },
               "logApiRequests": {
                 "type": "boolean",
-                "description": "Log the requests to the geolocation API."
+                "description": "Log the requests to the geolocation API.",
+                "x-docs-appliesTo": [
+                  "plugin-geoblock"
+                ]
               },
               "apiTimeoutMs": {
                 "type": "number",
-                "description": "Timeout of a geolocation API request, in milliseconds."
+                "description": "Timeout of a geolocation API request, in milliseconds.",
+                "x-docs-appliesTo": [
+                  "plugin-geoblock"
+                ]
               },
               "cacheSize": {
                 "type": "number",
-                "description": "Number of IP lookups that are cached."
+                "description": "Number of IP lookups that are cached.",
+                "x-docs-appliesTo": [
+                  "plugin-geoblock"
+                ]
               },
               "forceMonthlyUpdate": {
                 "type": "boolean",
-                "description": "Update the geolocation database at least once a month."
+                "description": "Update the geolocation database at least once a month.",
+                "x-docs-appliesTo": [
+                  "plugin-geoblock"
+                ]
               },
               "allowUnknownCountries": {
                 "type": "boolean",
-                "description": "Allow requests whose country can not be determined."
+                "description": "Allow requests whose country can not be determined.",
+                "x-docs-appliesTo": [
+                  "plugin-geoblock"
+                ]
               },
               "unknownCountryApiResponse": {
                 "type": "string",
-                "description": "Response of the geolocation API for an unknown country."
+                "description": "Response of the geolocation API for an unknown country.",
+                "x-docs-appliesTo": [
+                  "plugin-geoblock"
+                ]
               },
               "blackListMode": {
                 "type": "boolean",
-                "description": "Block the listed countries, instead of allowing only them."
+                "description": "Block the listed countries, instead of allowing only them.",
+                "x-docs-appliesTo": [
+                  "plugin-geoblock"
+                ]
               },
               "silentStartUp": {
                 "type": "boolean",
-                "description": "Do not log the start of the plugin."
+                "description": "Do not log the start of the plugin.",
+                "x-docs-appliesTo": [
+                  "plugin-geoblock"
+                ]
               },
               "addCountryHeader": {
                 "type": "boolean",
-                "description": "Add the country of the client as a request header."
+                "description": "Add the country of the client as a request header.",
+                "x-docs-appliesTo": [
+                  "plugin-geoblock"
+                ]
               },
               "countries": {
                 "type": "array",
                 "description": "Country codes that are allowed, or blocked with `blackListMode`.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "plugin-geoblock"
+                ]
               },
               "scheme": {
                 "type": "string",
                 "description": "Scheme to redirect to, eg `https`.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "redirect-scheme"
+                ]
               },
               "permanent": {
                 "type": "boolean",
-                "description": "Redirect permanently (308) instead of temporarily (307)."
+                "description": "Redirect permanently (308) instead of temporarily (307).",
+                "x-docs-appliesTo": [
+                  "redirect-regex",
+                  "redirect-scheme"
+                ]
               },
               "sourceRange": {
                 "type": "array",
                 "description": "CIDRs that are allowed. Everything else is rejected.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "ip-allow-list"
+                ]
               },
               "ipStrategy": {
                 "type": "object",
@@ -263,7 +323,10 @@
                 },
                 "additionalProperties": false,
                 "description": "How the client IP is taken from the request.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "ip-allow-list"
+                ]
               },
               "regex": {
                 "type": [
@@ -271,31 +334,54 @@
                   "string"
                 ],
                 "description": "Regular expression that is matched against the request URL.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "plugin-rewrite-response-headers",
+                  "redirect-regex",
+                  "replace-path-regex",
+                  "strip-prefix-regex"
+                ]
               },
               "replacement": {
                 "type": "string",
                 "description": "Replacement of the matched URL, can use the groups of `regex`.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "plugin-rewrite-response-headers",
+                  "redirect-regex",
+                  "replace-path-regex"
+                ]
               },
               "maxRequestBodyBytes": {
                 "type": "number",
-                "description": "Maximum size of a request body, in bytes."
+                "description": "Maximum size of a request body, in bytes.",
+                "x-docs-appliesTo": [
+                  "buffering"
+                ]
               },
               "memRequestBodyBytes": {
                 "type": [
                   "null",
                   "number"
                 ],
-                "description": "Size of a request body kept in memory before it is buffered to disk, in bytes."
+                "description": "Size of a request body kept in memory before it is buffered to disk, in bytes.",
+                "x-docs-appliesTo": [
+                  "buffering"
+                ]
               },
               "maxResponseBodyBytes": {
                 "type": "number",
-                "description": "Maximum size of a response body, in bytes."
+                "description": "Maximum size of a response body, in bytes.",
+                "x-docs-appliesTo": [
+                  "buffering"
+                ]
               },
               "memResponseBodyBytes": {
                 "type": "number",
-                "description": "Size of a response body kept in memory before it is buffered to disk, in bytes."
+                "description": "Size of a response body kept in memory before it is buffered to disk, in bytes.",
+                "x-docs-appliesTo": [
+                  "buffering"
+                ]
               },
               "maxResponseBodySize": {
                 "type": "integer",
@@ -303,32 +389,50 @@
               },
               "retryExpression": {
                 "type": "string",
-                "description": "Retry when the expression matches the response, eg `IsNetworkError() && Attempts() < 2`."
+                "description": "Retry when the expression matches the response, eg `IsNetworkError() && Attempts() < 2`.",
+                "x-docs-appliesTo": [
+                  "buffering"
+                ]
               },
               "address": {
                 "type": "string",
                 "description": "URL of the authentication service the request is forwarded to.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "forward-auth"
+                ]
               },
               "authResponseHeadersRegex": {
                 "type": "string",
                 "description": "Regular expression of the authentication response headers that are copied to the request.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "forward-auth"
+                ]
               },
               "trustForwardHeader": {
                 "type": "boolean",
                 "description": "Trust the `X-Forwarded-*` headers of the request.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "forward-auth"
+                ]
               },
               "authResponseHeaders": {
                 "type": "array",
                 "description": "Headers of the authentication response that are copied to the request.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "forward-auth"
+                ]
               },
               "authRequestHeaders": {
                 "type": "array",
                 "description": "Request headers sent to the authentication service. Empty sends all.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "forward-auth"
+                ]
               },
               "tls": {
                 "type": "object",
@@ -341,21 +445,33 @@
                 },
                 "additionalProperties": false,
                 "description": "TLS settings of the connection to the authentication service.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "forward-auth"
+                ]
               },
               "attempts": {
                 "type": "number",
                 "description": "Define retry attempts",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "retry"
+                ]
               },
               "initialInterval": {
                 "type": "number",
-                "description": "Wait before the first retry, eg `100ms`."
+                "description": "Wait before the first retry, eg `100ms`.",
+                "x-docs-appliesTo": [
+                  "retry"
+                ]
               },
               "excludednets": {
                 "type": "array",
                 "description": "CIDRs that are skipped when the real IP is taken from `X-Forwarded-For`.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "plugin-real-ip"
+                ]
               },
               "middlewares": {
                 "type": "array",
@@ -376,7 +492,10 @@
                   },
                   "additionalProperties": false
                 },
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "chain"
+                ]
               },
               "prefix": {
                 "type": [
@@ -384,11 +503,18 @@
                   "string"
                 ],
                 "description": "Prefix added to the path of the request.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "add-prefix",
+                  "strip-prefix"
+                ]
               },
               "forceSlash": {
                 "type": "boolean",
-                "description": "Make sure the path starts with a `/` after stripping."
+                "description": "Make sure the path starts with a `/` after stripping.",
+                "x-docs-appliesTo": [
+                  "strip-prefix"
+                ]
               },
               "users": {
                 "type": "array",
@@ -409,87 +535,147 @@
                   },
                   "additionalProperties": false
                 },
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "basic-auth"
+                ]
               },
               "secret": {
                 "type": "string",
                 "description": "Define the secret If this is set, the `users` key must not be set.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "basic-auth"
+                ]
               },
               "average": {
                 "type": "number",
-                "description": "Define the average rate limit"
+                "description": "Define the average rate limit",
+                "x-docs-appliesTo": [
+                  "rate-limit"
+                ]
               },
               "burst": {
                 "type": "number",
-                "description": "Define the burst rate limit"
+                "description": "Define the burst rate limit",
+                "x-docs-appliesTo": [
+                  "rate-limit"
+                ]
               },
               "path": {
                 "type": "string",
                 "description": "Path that replaces the path of the request.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "replace-path"
+                ]
               },
               "modSecurityUrl": {
                 "type": "string",
                 "description": "URL of the ModSecurity service the request is checked with.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "plugin-mod-security"
+                ]
               },
               "timeoutMillis": {
                 "type": "number",
-                "description": "Timeout of the requests to the ModSecurity service, in milliseconds."
+                "description": "Timeout of the requests to the ModSecurity service, in milliseconds.",
+                "x-docs-appliesTo": [
+                  "plugin-mod-security"
+                ]
               },
               "maxBodySize": {
                 "type": "number",
-                "description": "Maximum size of a request body sent to the plugin, in bytes."
+                "description": "Maximum size of a request body sent to the plugin, in bytes.",
+                "x-docs-appliesTo": [
+                  "plugin-mod-security"
+                ]
               },
               "enabled": {
                 "type": "boolean",
                 "description": "Enable the plugin. Must be a boolean.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "logLevel": {
                 "type": "string",
-                "description": "Log level of the plugin."
+                "description": "Log level of the plugin.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "updateIntervalSeconds": {
                 "type": "number",
-                "description": "Seconds between the updates of the decisions in `stream` mode."
+                "description": "Seconds between the updates of the decisions in `stream` mode.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "updateMaxFailure": {
                 "type": "number",
-                "description": "Number of failed updates before all requests are blocked. `-1` never blocks."
+                "description": "Number of failed updates before all requests are blocked. `-1` never blocks.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "defaultDecisionSeconds": {
                 "type": "number",
-                "description": "Seconds a decision is cached when it has no duration."
+                "description": "Seconds a decision is cached when it has no duration.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "httpTimeoutSeconds": {
                 "type": "number",
-                "description": "Timeout of the requests to CrowdSec, in seconds."
+                "description": "Timeout of the requests to CrowdSec, in seconds.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "crowdsecAppsecEnabled": {
                 "type": "boolean",
-                "description": "Check requests with the CrowdSec AppSec component."
+                "description": "Check requests with the CrowdSec AppSec component.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "crowdsecAppsecHost": {
                 "type": "string",
-                "description": "Host and port of the CrowdSec AppSec component."
+                "description": "Host and port of the CrowdSec AppSec component.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "crowdsecAppsecFailureBlock": {
                 "type": "boolean",
-                "description": "Block requests when the AppSec component returns an error."
+                "description": "Block requests when the AppSec component returns an error.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "crowdsecAppsecUnreachableBlock": {
                 "type": "boolean",
-                "description": "Block requests when the AppSec component can not be reached."
+                "description": "Block requests when the AppSec component can not be reached.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "crowdsecLapiKey": {
                 "type": "string",
-                "description": "Bouncer key for the CrowdSec Local API."
+                "description": "Bouncer key for the CrowdSec Local API.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "crowdsecLapiHost": {
                 "type": "string",
-                "description": "Host and port of the CrowdSec Local API."
+                "description": "Host and port of the CrowdSec Local API.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "crowdsecMode": {
                 "type": "string",
@@ -501,87 +687,150 @@
               },
               "crowdsecLapiTLSInsecureVerify": {
                 "type": "boolean",
-                "description": "Skip the verification of the certificate of the CrowdSec Local API."
+                "description": "Skip the verification of the certificate of the CrowdSec Local API.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "crowdsecCapiMachineId": {
                 "type": "string",
-                "description": "Machine ID for the CrowdSec Central API."
+                "description": "Machine ID for the CrowdSec Central API.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "crowdsecCapiPassword": {
                 "type": "string",
-                "description": "Password for the CrowdSec Central API."
+                "description": "Password for the CrowdSec Central API.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "crowdsecCapiScenarios": {
                 "type": "array",
-                "description": "Scenarios reported to the CrowdSec Central API."
+                "description": "Scenarios reported to the CrowdSec Central API.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "forwardedHeadersTrustedIPs": {
                 "type": "array",
-                "description": "IPs and CIDRs of trusted proxies, whose forwarded headers are used."
+                "description": "IPs and CIDRs of trusted proxies, whose forwarded headers are used.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "clientTrustedIPs": {
                 "type": "array",
-                "description": "IPs and CIDRs that are never checked."
+                "description": "IPs and CIDRs that are never checked.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "forwardedHeadersCustomName": {
                 "type": "string",
-                "description": "Name of the header the client IP is read from."
+                "description": "Name of the header the client IP is read from.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "remediationHeadersCustomName": {
                 "type": "string",
-                "description": "Name of the header that carries the remediation of a request."
+                "description": "Name of the header that carries the remediation of a request.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "redisCacheEnabled": {
                 "type": "boolean",
-                "description": "Cache the decisions in Redis, shared between Traefik instances."
+                "description": "Cache the decisions in Redis, shared between Traefik instances.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "redisCacheHost": {
                 "type": "string",
-                "description": "Host and port of the Redis cache."
+                "description": "Host and port of the Redis cache.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "redisCachePassword": {
                 "type": "string",
-                "description": "Password of the Redis cache."
+                "description": "Password of the Redis cache.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "redisCacheDatabase": {
                 "type": "string",
-                "description": "Database number of the Redis cache."
+                "description": "Database number of the Redis cache.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "crowdsecLapiTLSCertificateAuthority": {
                 "type": "string",
-                "description": "CA certificate to verify the CrowdSec Local API."
+                "description": "CA certificate to verify the CrowdSec Local API.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "crowdsecLapiTLSCertificateBouncer": {
                 "type": "string",
-                "description": "Client certificate of the bouncer for the CrowdSec Local API."
+                "description": "Client certificate of the bouncer for the CrowdSec Local API.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "crowdsecLapiTLSCertificateBouncerKey": {
                 "type": "string",
-                "description": "Client key of the bouncer for the CrowdSec Local API."
+                "description": "Client key of the bouncer for the CrowdSec Local API.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "captchaProvider": {
                 "type": "string",
-                "description": "Captcha provider, eg `hcaptcha`, `recaptcha` or `turnstile`."
+                "description": "Captcha provider, eg `hcaptcha`, `recaptcha` or `turnstile`.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "captchaSiteKey": {
                 "type": "string",
-                "description": "Site key of the captcha provider."
+                "description": "Site key of the captcha provider.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "captchaSecretKey": {
                 "type": "string",
-                "description": "Secret key of the captcha provider."
+                "description": "Secret key of the captcha provider.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "captchaGracePeriodSeconds": {
                 "type": "number",
-                "description": "Seconds a solved captcha stays valid."
+                "description": "Seconds a solved captcha stays valid.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "captchaHTMLFilePath": {
                 "type": "string",
-                "description": "Path of the HTML page with the captcha."
+                "description": "Path of the HTML page with the captcha.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "banHTMLFilePath": {
                 "type": "string",
-                "description": "Path of the HTML page shown to banned clients."
+                "description": "Path of the HTML page shown to banned clients.",
+                "x-docs-appliesTo": [
+                  "plugin-bouncer"
+                ]
               },
               "customRequestHeaders": {
                 "type": "object",
@@ -590,7 +839,10 @@
                   "type": "string",
                   "description": "Value of the header"
                 },
-                "description": "Headers added to the request, keyed by name. An empty value removes the header."
+                "description": "Headers added to the request, keyed by name. An empty value removes the header.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "customResponseHeaders": {
                 "type": "object",
@@ -599,23 +851,38 @@
                   "type": "string",
                   "description": "Value of the header"
                 },
-                "description": "Headers added to the response, keyed by name. An empty value removes the header."
+                "description": "Headers added to the response, keyed by name. An empty value removes the header.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "accessControlAllowCredentials": {
                 "type": "boolean",
-                "description": "Sets the `Access-Control-Allow-Credentials` CORS header."
+                "description": "Sets the `Access-Control-Allow-Credentials` CORS header.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "accessControlAllowHeaders": {
                 "type": "array",
-                "description": "Request headers allowed by CORS, for `Access-Control-Allow-Headers`."
+                "description": "Request headers allowed by CORS, for `Access-Control-Allow-Headers`.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "accessControlAllowMethods": {
                 "type": "array",
-                "description": "Request methods allowed by CORS, for `Access-Control-Allow-Methods`."
+                "description": "Request methods allowed by CORS, for `Access-Control-Allow-Methods`.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "accessControlAllowOriginList": {
                 "type": "array",
-                "description": "Origins allowed by CORS, for `Access-Control-Allow-Origin`."
+                "description": "Origins allowed by CORS, for `Access-Control-Allow-Origin`.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "accessControlAllowOriginListRegex": {
                 "type": "array",
@@ -626,23 +893,38 @@
               },
               "accessControlExposeHeaders": {
                 "type": "array",
-                "description": "Response headers exposed to the browser, for `Access-Control-Expose-Headers`."
+                "description": "Response headers exposed to the browser, for `Access-Control-Expose-Headers`.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "accessControlMaxAge": {
                 "type": "number",
-                "description": "Seconds a CORS preflight request can be cached, for `Access-Control-Max-Age`."
+                "description": "Seconds a CORS preflight request can be cached, for `Access-Control-Max-Age`.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "addVaryHeader": {
                 "type": "boolean",
-                "description": "Add the `Vary` header to CORS responses."
+                "description": "Add the `Vary` header to CORS responses.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "allowedHosts": {
                 "type": "array",
-                "description": "Host names that are allowed. Empty allows all."
+                "description": "Host names that are allowed. Empty allows all.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "hostsProxyHeaders": {
                 "type": "array",
-                "description": "Headers that can hold the original host name."
+                "description": "Headers that can hold the original host name.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "sslProxyHeaders": {
                 "type": "object",
@@ -651,47 +933,80 @@
                   "type": "string",
                   "description": "Value of the header"
                 },
-                "description": "Headers, with their values, that tell the request was made over HTTPS."
+                "description": "Headers, with their values, that tell the request was made over HTTPS.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "stsSeconds": {
                 "type": "number",
-                "description": "`max-age` of the `Strict-Transport-Security` header, in seconds. `0` disables it."
+                "description": "`max-age` of the `Strict-Transport-Security` header, in seconds. `0` disables it.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "stsIncludeSubdomains": {
                 "type": "boolean",
-                "description": "Add `includeSubDomains` to the `Strict-Transport-Security` header."
+                "description": "Add `includeSubDomains` to the `Strict-Transport-Security` header.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "stsPreload": {
                 "type": "boolean",
-                "description": "Add `preload` to the `Strict-Transport-Security` header."
+                "description": "Add `preload` to the `Strict-Transport-Security` header.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "forceSTSHeader": {
                 "type": "boolean",
-                "description": "Also add the `Strict-Transport-Security` header on plain HTTP requests."
+                "description": "Also add the `Strict-Transport-Security` header on plain HTTP requests.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "frameDeny": {
                 "type": "boolean",
-                "description": "Set `X-Frame-Options: DENY`."
+                "description": "Set `X-Frame-Options: DENY`.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "customFrameOptionsValue": {
                 "type": "string",
-                "description": "Custom value of the `X-Frame-Options` header."
+                "description": "Custom value of the `X-Frame-Options` header.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "contentTypeNosniff": {
                 "type": "boolean",
-                "description": "Set `X-Content-Type-Options: nosniff`."
+                "description": "Set `X-Content-Type-Options: nosniff`.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "browserXssFilter": {
                 "type": "boolean",
-                "description": "Set `X-XSS-Protection: 1; mode=block`."
+                "description": "Set `X-XSS-Protection: 1; mode=block`.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "customBrowserXSSValue": {
                 "type": "string",
-                "description": "Custom value of the `X-XSS-Protection` header."
+                "description": "Custom value of the `X-XSS-Protection` header.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "contentSecurityPolicy": {
                 "type": "string",
-                "description": "Value of the `Content-Security-Policy` header."
+                "description": "Value of the `Content-Security-Policy` header.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "contentSecurityPolicyReportOnly": {
                 "type": "string",
@@ -699,37 +1014,61 @@
               },
               "publicKey": {
                 "type": "string",
-                "description": "Value of the `Public-Key-Pins` header."
+                "description": "Value of the `Public-Key-Pins` header.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "referrerPolicy": {
                 "type": "string",
-                "description": "Value of the `Referrer-Policy` header."
+                "description": "Value of the `Referrer-Policy` header.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "permissionsPolicy": {
                 "type": "string",
-                "description": "Value of the `Permissions-Policy` header."
+                "description": "Value of the `Permissions-Policy` header.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "isDevelopment": {
                 "type": "boolean",
-                "description": "Allow the headers settings to be ignored for development hosts."
+                "description": "Allow the headers settings to be ignored for development hosts.",
+                "x-docs-appliesTo": [
+                  "headers"
+                ]
               },
               "app": {
                 "type": "string",
                 "description": "Name of the app the Theme Park theme is applied to.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "plugin-theme-park"
+                ]
               },
               "theme": {
                 "type": "string",
                 "description": "Theme Park theme, eg `dark`.",
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "plugin-theme-park"
+                ]
               },
               "baseUrl": {
                 "type": "string",
-                "description": "Base URL the Theme Park CSS is loaded from."
+                "description": "Base URL the Theme Park CSS is loaded from.",
+                "x-docs-appliesTo": [
+                  "plugin-theme-park"
+                ]
               },
               "addons": {
                 "type": "array",
-                "description": "Settings of the add-ons of the Theme Park plugin."
+                "description": "Settings of the add-ons of the Theme Park plugin.",
+                "x-docs-appliesTo": [
+                  "plugin-theme-park"
+                ]
               },
               "rewrites": {
                 "type": "array",
@@ -753,7 +1092,10 @@
                   },
                   "additionalProperties": false
                 },
-                "x-docs-required": true
+                "x-docs-required": true,
+                "x-docs-appliesTo": [
+                  "plugin-rewrite-response-headers"
+                ]
               }
             },
             "additionalProperties": false,

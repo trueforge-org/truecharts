@@ -67,7 +67,10 @@
         ],
         "description": "Configure ExternalName type",
         "x-helm-tpl": true,
-        "x-docs-required": true
+        "x-docs-required": true,
+        "x-docs-appliesTo": [
+          "ExternalName"
+        ]
       },
       "ports": {
         "type": "object",
@@ -83,22 +86,34 @@
       "sharedKey": {
         "type": "string",
         "description": "Sets the shared key in `metallb.io/allow-shared-ip` **MetalLB** Annotation",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "LoadBalancer"
+        ]
       },
       "loadBalancerIP": {
         "type": "string",
         "description": "Define the load balancer IP, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIPs`",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "LoadBalancer"
+        ]
       },
       "loadBalancerIPs": {
         "type": "array",
         "description": "Define the load balancer IPs, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIP`",
-        "x-helm-tpl": "On entries only"
+        "x-helm-tpl": "On entries only",
+        "x-docs-appliesTo": [
+          "LoadBalancer"
+        ]
       },
       "loadBalancerSourceRanges": {
         "type": "array",
         "description": "Define the load balancer source ranges",
-        "x-helm-tpl": "On entries only"
+        "x-helm-tpl": "On entries only",
+        "x-docs-appliesTo": [
+          "LoadBalancer"
+        ]
       },
       "allocateLoadBalancerNodePorts": {
         "type": "boolean",
@@ -113,24 +128,36 @@
         ],
         "description": "Configure External IP type",
         "x-helm-tpl": true,
-        "x-docs-required": true
+        "x-docs-required": true,
+        "x-docs-appliesTo": [
+          "ExternalIP"
+        ]
       },
       "useSlice": {
         "type": [
           "boolean",
           "object"
         ],
-        "description": "Define whether to use `EndpointSlice` or `Endpoint`"
+        "description": "Define whether to use `EndpointSlice` or `Endpoint`",
+        "x-docs-appliesTo": [
+          "ExternalIP"
+        ]
       },
       "addressType": {
         "type": "string",
         "description": "Define the addressType for External IP",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "ExternalIP"
+        ]
       },
       "appProtocol": {
         "type": "string",
         "description": "Define the appProtocol for External IP",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "ExternalIP"
+        ]
       },
       "enabled": {
         "type": [

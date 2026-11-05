@@ -5,10 +5,24 @@ pages:
   overview_only: true
   intro: "This applies across all the documentation:\n\n- Helm `tpl`:\n  - ❌ means that the value is not templated\n  - ✅ means that the value is templated, for example instead of a hardcoded value, you\
     \ can set it to `{{ .Values.some.value }}` and it will be replaced by the value contained in `.Values.some.value` at the installation/upgrade time."
+- file: general.md
+  title: General Options
+  roots:
+  - path: TZ
+  - path: namespace
+  - path: extraTpl
+  - path: diagnosticMode
+  - path: chartContext
+  - path: common
+- file: global.md
+  title: Global
+  path: global
+- file: fallbackDefaults.md
+  title: Fallback Defaults
+  ref: schemas/global/fallbackDefaults.json
 - file: image.md
   title: Image
   path: image
-  compact_links: true
   include:
   - gluetunImage
   - netshootImage
@@ -42,130 +56,430 @@ pages:
   - postgresVectorchord16Image
   - postgresVectorchord17Image
   - postgresVectorchord18Image
-- file: global.md
-  title: global
-  path: global
-- file: namespace.md
-  title: namespace
-  path: namespace
-- file: chartContext.md
-  title: chartContext
-  path: chartContext
-- file: common.md
-  title: common
-  path: common
+  compact_links: true
+- file: imagePullSecret.md
+  title: Image Pull Secret
+  path: imagePullSecret
 - file: securityContext.md
-  title: securityContext
+  title: Security Context
   path: securityContext
 - file: resources.md
-  title: resources
-  path: resources
+  title: Resources
+  ref: schemas/workload/podSpec/containers/resources.json
 - file: containerOptions.md
-  title: containerOptions
+  title: Container Options
   path: containerOptions
 - file: podOptions.md
-  title: podOptions
+  title: Pod Options
   path: podOptions
-- file: workload.md
-  title: workload
-  path: workload
-- file: TZ.md
-  title: TZ
-  path: TZ
-- file: diagnosticMode.md
-  title: diagnosticMode
-  path: diagnosticMode
-- file: vpa.md
-  title: vpa
-  path: vpa
-- file: hpa.md
-  title: hpa
-  path: hpa
-- file: service.md
-  title: service
-  path: service
-- file: credentials.md
-  title: credentials
-  path: credentials
-- file: ingressMiddlewares.md
-  title: ingressMiddlewares
-  path: ingressMiddlewares
-- file: persistence.md
-  title: persistence
+- file: workload/index.md
+  title: Workload
+  path: workload.$name
+- file: workload/deployment.md
+  title: Deployment
+  path: workload.$name
+  applies: Deployment
+  parent: workload/index.md
+- file: workload/statefulset.md
+  title: StatefulSet
+  path: workload.$name
+  applies: StatefulSet
+  parent: workload/index.md
+- file: workload/daemonset.md
+  title: DaemonSet
+  path: workload.$name
+  applies: DaemonSet
+  parent: workload/index.md
+- file: workload/cronjob.md
+  title: CronJob
+  path: workload.$name
+  applies: CronJob
+  parent: workload/index.md
+- file: workload/job.md
+  title: Job
+  path: workload.$name
+  applies: Job
+  parent: workload/index.md
+- file: workload/podSpec.md
+  title: Pod Spec
+  path: workload.$name.podSpec
+- file: container/index.md
+  title: Container
+  path: workload.$name.podSpec.containers.$name
+- file: container/initContainers.md
+  title: Init Containers
+  path: workload.$name.podSpec.initContainers.$name
+- file: container/env.md
+  title: Env
+  ref: schemas/workload/podSpec/containers/env.json
+- file: container/envFrom.md
+  title: Env From
+  ref: schemas/workload/podSpec/containers/envFrom.json
+- file: container/fixedEnv.md
+  title: Fixed Env
+  ref: schemas/workload/podSpec/containers/fixedEnv.json
+- file: container/lifecycle.md
+  title: Lifecycle
+  ref: schemas/workload/podSpec/containers/lifecycle.json
+- file: container/probes.md
+  title: Probes
+  ref: schemas/workload/podSpec/containers/probes.json
+- file: container/probe.md
+  title: Probe
+  ref: schemas/workload/podSpec/containers/probes/probe.json
+- file: container/args.md
+  title: Args
+  ref: schemas/workload/podSpec/containers/args.json
+- file: container/command.md
+  title: Command
+  ref: schemas/workload/podSpec/containers/command.json
+- file: container/securityContext.md
+  title: Container Security Context
+  ref: schemas/workload/podSpec/containers/securityContext.json
+- file: container/termination.md
+  title: Termination
+  ref: schemas/workload/container/termination.json
+- file: persistence/index.md
+  title: Persistence
   path: persistence
-- file: volumeSnapshotClass.md
-  title: volumeSnapshotClass
-  path: volumeSnapshotClass
-- file: volumeSnapshots.md
-  title: volumeSnapshots
-  path: volumeSnapshots
-- file: imagePullSecret.md
-  title: imagePullSecret
-  path: imagePullSecret
+- file: persistence/configmap.md
+  title: ConfigMap
+  path: persistence.$name
+  applies: configmap
+  parent: persistence/index.md
+- file: persistence/device.md
+  title: Device
+  path: persistence.$name
+  applies: device
+  parent: persistence/index.md
+- file: persistence/emptyDir.md
+  title: EmptyDir
+  path: persistence.$name
+  applies: emptyDir
+  parent: persistence/index.md
+- file: persistence/hostPath.md
+  title: HostPath
+  path: persistence.$name
+  applies: hostPath
+  parent: persistence/index.md
+- file: persistence/iscsi.md
+  title: iSCSI
+  path: persistence.$name
+  applies: iscsi
+  parent: persistence/index.md
+- file: persistence/nfs.md
+  title: NFS
+  path: persistence.$name
+  applies: nfs
+  parent: persistence/index.md
+- file: persistence/secret.md
+  title: Secret
+  path: persistence.$name
+  applies: secret
+  parent: persistence/index.md
+- file: persistence/pvc-vct/index.md
+  title: PVC and VCT
+  path: persistence.$name
+  applies: pvc
+  parent: persistence/index.md
+- file: service/index.md
+  title: Service
+  path: service
+- file: service/ClusterIP.md
+  title: ClusterIP
+  path: service.$name
+  applies: ClusterIP
+  parent: service/index.md
+- file: service/LoadBalancer.md
+  title: LoadBalancer
+  path: service.$name
+  applies: LoadBalancer
+  parent: service/index.md
+- file: service/NodePort.md
+  title: NodePort
+  path: service.$name
+  applies: NodePort
+  parent: service/index.md
+- file: service/ExternalIP.md
+  title: ExternalIP
+  path: service.$name
+  applies: ExternalIP
+  parent: service/index.md
+- file: service/ExternalName.md
+  title: ExternalName
+  path: service.$name
+  applies: ExternalName
+  parent: service/index.md
+- file: service/ports.md
+  title: Ports
+  ref: schemas/service/ports.json
+- file: service/integrations/traefik.md
+  title: Service Traefik Integration
+  ref: schemas/service/integrations/traefik.json
+- file: ingress/index.md
+  title: Ingress
+  path: ingress
+- file: ingress/certManager.md
+  title: Cert Manager Integration
+  ref: schemas/ingress/certManager.json
+- file: ingress/traefik.md
+  title: Traefik Integration
+  ref: schemas/ingress/traefik.json
+- file: ingress/homepage.md
+  title: Homepage Integration
+  ref: schemas/ingress/integrations/homepage.json
+- file: ingress/nginx.md
+  title: Nginx Integration
+  path: ingress.$name.integrations.nginx
+- file: middlewares/index.md
+  title: Middlewares
+  path: ingressMiddlewares
+- file: middlewares/traefik/index.md
+  title: Traefik Middlewares
+  path: ingressMiddlewares.traefik
+- file: middlewares/traefik/add-prefix.md
+  title: add-prefix
+  path: ingressMiddlewares.traefik.$name
+  applies: add-prefix
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/basic-auth.md
+  title: basic-auth
+  path: ingressMiddlewares.traefik.$name
+  applies: basic-auth
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/buffering.md
+  title: buffering
+  path: ingressMiddlewares.traefik.$name
+  applies: buffering
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/chain.md
+  title: chain
+  path: ingressMiddlewares.traefik.$name
+  applies: chain
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/compress.md
+  title: compress
+  path: ingressMiddlewares.traefik.$name
+  applies: compress
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/content-type.md
+  title: content-type
+  path: ingressMiddlewares.traefik.$name
+  applies: content-type
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/forward-auth.md
+  title: forward-auth
+  path: ingressMiddlewares.traefik.$name
+  applies: forward-auth
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/headers.md
+  title: headers
+  path: ingressMiddlewares.traefik.$name
+  applies: headers
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/ip-allow-list.md
+  title: ip-allow-list
+  path: ingressMiddlewares.traefik.$name
+  applies: ip-allow-list
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/plugin-bouncer.md
+  title: plugin-bouncer
+  path: ingressMiddlewares.traefik.$name
+  applies: plugin-bouncer
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/plugin-geoblock.md
+  title: plugin-geoblock
+  path: ingressMiddlewares.traefik.$name
+  applies: plugin-geoblock
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/plugin-mod-security.md
+  title: plugin-mod-security
+  path: ingressMiddlewares.traefik.$name
+  applies: plugin-mod-security
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/plugin-real-ip.md
+  title: plugin-real-ip
+  path: ingressMiddlewares.traefik.$name
+  applies: plugin-real-ip
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/plugin-rewrite-response-headers.md
+  title: plugin-rewrite-response-headers
+  path: ingressMiddlewares.traefik.$name
+  applies: plugin-rewrite-response-headers
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/plugin-theme-park.md
+  title: plugin-theme-park
+  path: ingressMiddlewares.traefik.$name
+  applies: plugin-theme-park
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/rate-limit.md
+  title: rate-limit
+  path: ingressMiddlewares.traefik.$name
+  applies: rate-limit
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/redirect-regex.md
+  title: redirect-regex
+  path: ingressMiddlewares.traefik.$name
+  applies: redirect-regex
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/redirect-scheme.md
+  title: redirect-scheme
+  path: ingressMiddlewares.traefik.$name
+  applies: redirect-scheme
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/replace-path-regex.md
+  title: replace-path-regex
+  path: ingressMiddlewares.traefik.$name
+  applies: replace-path-regex
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/replace-path.md
+  title: replace-path
+  path: ingressMiddlewares.traefik.$name
+  applies: replace-path
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/retry.md
+  title: retry
+  path: ingressMiddlewares.traefik.$name
+  applies: retry
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/strip-prefix-regex.md
+  title: strip-prefix-regex
+  path: ingressMiddlewares.traefik.$name
+  applies: strip-prefix-regex
+  parent: middlewares/traefik/index.md
+- file: middlewares/traefik/strip-prefix.md
+  title: strip-prefix
+  path: ingressMiddlewares.traefik.$name
+  applies: strip-prefix
+  parent: middlewares/traefik/index.md
+- file: route/index.md
+  title: Route
+  path: route
+- file: gateway.md
+  title: Gateway
+  path: gateway
+- file: gatewayClass.md
+  title: Gateway Class
+  path: gatewayClass
+- file: listenerSet.md
+  title: Listener Set
+  path: listenerSet
+- file: networkpolicy.md
+  title: Network Policy
+  path: networkpolicy
+- file: metrics.md
+  title: Metrics
+  path: metrics
+- file: hpa.md
+  title: HPA
+  path: hpa
+- file: vpa.md
+  title: VPA
+  path: vpa
+- file: webhook.md
+  title: Webhook
+  path: webhook
+- file: certificate.md
+  title: Certificate
+  path: certificate
 - file: configmap.md
-  title: configmap
+  title: ConfigMap
   path: configmap
 - file: configMapsFromFolder.md
-  title: configMapsFromFolder
+  title: ConfigMaps From Folder
   path: configMapsFromFolder
-- file: secret.md
-  title: secret
-  path: secret
+- file: credentials.md
+  title: Credentials
+  path: credentials
 - file: externalSecret.md
-  title: externalSecret
+  title: External Secret
   path: externalSecret
-- file: serviceAccount.md
-  title: serviceAccount
-  path: serviceAccount
-- file: rbac.md
-  title: rbac
-  path: rbac
 - file: notes.md
-  title: notes
+  title: Notes
   path: notes
-- file: ingress.md
-  title: ingress
-  path: ingress
-- file: certificate.md
-  title: certificate
-  path: certificate
-- file: gatewayClass.md
-  title: gatewayClass
-  path: gatewayClass
-- file: gateway.md
-  title: gateway
-  path: gateway
-- file: listenerSet.md
-  title: listenerSet
-  path: listenerSet
-- file: route.md
-  title: route
-  path: route
-- file: networkpolicy.md
-  title: networkpolicy
-  path: networkpolicy
 - file: podDisruptionBudget.md
-  title: podDisruptionBudget
+  title: Pod Disruption Budget
   path: podDisruptionBudget
-- file: webhook.md
-  title: webhook
-  path: webhook
 - file: priorityClass.md
-  title: priorityClass
+  title: Priority Class
   path: priorityClass
+- file: rbac.md
+  title: RBAC
+  path: rbac
+- file: secret.md
+  title: Secret
+  path: secret
+- file: serviceAccount.md
+  title: Service Account
+  path: serviceAccount
 - file: storageClass.md
-  title: storageClass
+  title: Storage Class
   path: storageClass
-- file: metrics.md
-  title: metrics
-  path: metrics
-- file: addons.md
-  title: addons
+- file: volumeSnapshotClass.md
+  title: Volume Snapshot Class
+  path: volumeSnapshotClass
+- file: volumeSnapshot.md
+  title: Volume Snapshot
+  path: volumeSnapshots
+- file: addons/index.md
+  title: Addons
   path: addons
-- file: dependencies.md
-  title: dependencies
+  overview_only: true
+- file: addons/container.md
+  title: Addon Container
+  ref: schemas/addons/container.json
+- file: addons/codeserver.md
+  title: Code Server
+  path: addons.codeserver
+  collapse:
+    service: service/index.md
+    ingress: ingress/index.md
+    route: route/index.md
+- file: addons/gluetun.md
+  title: Gluetun
+  path: addons.gluetun
+  collapse:
+    service: service/index.md
+    ingress: ingress/index.md
+    route: route/index.md
+- file: addons/netshoot.md
+  title: Netshoot
+  path: addons.netshoot
+  collapse:
+    service: service/index.md
+    ingress: ingress/index.md
+    route: route/index.md
+- file: addons/tailscale.md
+  title: Tailscale
+  path: addons.tailscale
+- file: dependencies/index.md
+  title: Dependencies
   path: dependencies
-- file: extraTpl.md
-  title: extraTpl
-  path: extraTpl
-removed: []
+  handwritten: true
+- file: dependencies/postgresql.md
+  title: PostgreSQL
+  path: dependencies.postgresql
+- file: dependencies/valkey.md
+  title: Valkey
+  path: dependencies.valkey
+- file: dependencies/other.md
+  title: Other Dependencies
+  roots:
+  - path: dependencies.mariadb
+  - path: dependencies.mongodb
+  - path: dependencies.clickhouse
+  - path: dependencies.memcached
+  - path: dependencies.$name
+- file: metadata.md
+  title: Labels, Annotations and Namespace
+  roots:
+  - ref: schemas/special/labels.json
+  - ref: schemas/special/annotations.json
+  - ref: schemas/special/labelsList.json
+  - ref: schemas/special/annotationsList.json
+  - ref: schemas/special/namespaces.json
+- file: persistence/iscsiConfig.md
+  title: iSCSI Authentication
+  ref: schemas/special/iscsi.json
+removed:
+- cnpg/*

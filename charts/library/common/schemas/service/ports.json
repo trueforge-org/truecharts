@@ -10,7 +10,10 @@
       ],
       "description": "Define the node port that will be exposed on the node",
       "x-helm-tpl": true,
-      "x-docs-required": true
+      "x-docs-required": true,
+      "x-docs-appliesTo": [
+        "NodePort"
+      ]
     },
     "targetSelector": {
       "type": "string",
