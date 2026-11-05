@@ -13,6 +13,7 @@ securityContext:
     runAsNonRoot: false
     runAsUser: 0
     runAsGroup: 0
+  pod:
     fsGroup: 0
 service:
   main:
@@ -21,7 +22,6 @@ service:
     ports:
       main:
         port: 2376
-        type: https
 workload:
   main:
     podSpec:
@@ -29,14 +29,17 @@ workload:
         main:
           probes:
             liveness:
-              initialDelaySeconds: 30
               type: tcp
+              spec:
+                initialDelaySeconds: 30
             readiness:
-              initialDelaySeconds: 30
               type: tcp
+              spec:
+                initialDelaySeconds: 30
             startup:
-              initialDelaySeconds: 30
               type: tcp
+              spec:
+                initialDelaySeconds: 30
           env:
             DOCKER_TLS_CERTDIR: /certs
     type: StatefulSet
