@@ -1,0 +1,243 @@
+---
+title: egress
+---
+
+## Appears in
+
+- `.Values.networkpolicy.$name.egress`
+
+---
+
+## Child Pages
+
+- [to](/truecharts-common/networkpolicy/egress/to)
+
+---
+
+## `egress`
+
+Egress rules.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.egress` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `[]` |
+
+---
+
+## `[]`
+
+An egress rule.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.egress[]` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].to`
+
+Peers that may receive traffic.
+
+See [to](/truecharts-common/networkpolicy/egress/to) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.egress[].to` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].ports`
+
+Ports allowed by this rule.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.egress[].ports` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].ports[]`
+
+A port that traffic is allowed to.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.egress[].ports[]` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].ports[].protocol`
+
+Protocol of the port, `TCP`, `UDP` or `SCTP`.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.egress[].ports[].protocol` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Allowed values | `"TCP"`, `"UDP"`, `"SCTP"` |
+
+---
+
+## `[].ports[].port`
+
+Port number or named port. Omit to match all ports.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.egress[].ports[].port` |
+| Type | `int or string or null` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].ports[].endPort`
+
+End of an inclusive port range.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.egress[].ports[].endPort` |
+| Type | `int` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Range | 1 to … |
+
+---
+
+## `[].toEntities`
+
+Cilium only: entities (for example `world`, `cluster`, `host` or `all`) allowed to receive traffic. Ignored for Kubernetes NetworkPolicies.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.egress[].toEntities` |
+| Type | `list of string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].toEndpoints`
+
+Cilium only: endpoints, by labels, the rule allows.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.egress[].toEndpoints` |
+| Type | `list of any` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].toCIDR`
+
+Cilium only: CIDRs the rule allows.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.egress[].toCIDR` |
+| Type | `list of string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].toCIDRSet`
+
+Cilium only: CIDRs with exceptions the rule allows.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.egress[].toCIDRSet` |
+| Type | `list of any` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].toPorts`
+
+Cilium only: ports, with optional L7 rules, the rule allows.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.egress[].toPorts` |
+| Type | `list of any` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].icmps`
+
+Cilium only: ICMP types the rule allows.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.egress[].icmps` |
+| Type | `list of any` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].toFQDNs`
+
+Cilium only: domain names the rule allows, eg `matchName` or `matchPattern`.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.egress[].toFQDNs` |
+| Type | `list of any` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].toServices`
+
+Cilium only: kubernetes services the rule allows.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.egress[].toServices` |
+| Type | `list of any` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---

@@ -28,6 +28,8 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 TPL_PATTERN_MARKER = "{{"
 MAX_DEPTH = 14
 MAX_APPEARS_IN = 8
+PAGE_LIMIT = 450  # lines of keys per page, bigger subtrees get a page of their own
+SPLIT_MIN = 60  # smallest subtree (in lines) that is worth a page
 LONG_DEFAULT = 100
 LINK_RE = re.compile(r"(?<!!)\[[^\]]*\]\(([^)\s]+)\)")
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.*?)\s*#*\s*$")
@@ -251,6 +253,13 @@ class Page:
     description: str = ""
     collapse: dict[str, str] = field(default_factory=dict)
 
+    def example_files(self) -> list[str]:
+        """Paths of the example file of the page: x/index.md may also be examples/x.md."""
+        alts = [self.file]
+        if self.file.endswith("/index.md"):
+            alts.append(self.file[: -len("/index.md")] + ".md")
+        return alts
+
     @property
     def url_path(self) -> str:
         p = self.file[:-3]
@@ -417,18 +426,78 @@ class Generator:
         self.root_by_ident: dict[str, Page] = {}
         self.resolved: dict[tuple[str, int], tuple[Node, str, str | None]] = {}
         for page in self.pages:
-            for i, root in enumerate(page.roots):
-                n, label, ident = self._resolve_root(root)
-                if n is None:
-                    self.errors.append(f"{page.file}: path '{label}' does not exist in the schema")
-                    continue
-                self.resolved[(page.file, i)] = (n, label, ident)
-                if "ref" in root:
+            self._register(page)
+        self._auto_split()
+
+    def _register(self, page: Page) -> None:
+        for i, root in enumerate(page.roots):
+            n, label, ident = self._resolve_root(root)
+            if n is None:
+                self.errors.append(f"{page.file}: path '{label}' does not exist in the schema")
+                continue
+            self.resolved[(page.file, i)] = (n, label, ident)
+            if "ref" in root:
+                self.root_by_ident.setdefault(ident, page)
+            elif page.applies is None:
+                self.root_by_path.setdefault(root.get("path", ""), page)
+                if root.get("link", True) and ident and i == 0 and not page.overview_only:
                     self.root_by_ident.setdefault(ident, page)
-                elif page.applies is None:
-                    self.root_by_path.setdefault(root.get("path", ""), page)
-                    if root.get("link", True) and ident and page.applies is None and i == 0 and not page.overview_only:
-                        self.root_by_ident.setdefault(ident, page)
+
+    def _auto_split(self) -> None:
+        """Give subtrees that make a page too big a page of their own, in the folder of the page."""
+        queue = list(self.pages)
+        while queue:
+            page = queue.pop(0)
+            if page.handwritten or page.overview_only or page.applies or len(page.roots) != 1:
+                continue
+            if (page.file, 0) not in self.resolved:
+                continue
+            for _ in range(100):
+                n, label, ident, entries = self.entries(page, 0)
+                height = {e.path: self.render_entry(page, e, label).count("\n") + 1 for e in entries}
+                if sum(height.values()) <= PAGE_LIMIT:
+                    break
+                sizes = {
+                    e.path: sum(h for q, h in height.items() if q == e.path or q.startswith((e.path + ".", e.path + "[")))
+                    for e in entries
+                    if e.link is None
+                }
+                cands = [
+                    (size, path)
+                    for path, size in sizes.items()
+                    if path != label and size >= SPLIT_MIN and not path.endswith(("$name", "[]"))
+                ]
+                if not cands:
+                    break
+                cands.sort(key=lambda c: (-c[0], c[1]))
+                child = self._split_page(page, label, cands[0][1])
+                if child is None:
+                    break
+                self._register(child)
+                self.pages.append(child)
+                queue.append(child)
+
+    def _split_page(self, parent: Page, label: str, path: str) -> Page | None:
+        keys = [k for k in re.findall(r"\[\]|[^.\[\]]+", path[len(label):]) if k not in ("$name", "[]")]
+        if not keys:
+            return None
+        f = parent.file
+        if f == "index.md" or f.endswith("/index.md"):
+            folder = f[: -len("index.md")]
+        else:
+            folder = f[:-3] + "/"
+            old = f
+            parent.file = folder + "index.md"
+            for p in self.pages:
+                if p.parent == old:
+                    p.parent = parent.file
+                p.collapse = {k: (parent.file if v == old else v) for k, v in p.collapse.items()}
+            for key in [k for k in self.resolved if k[0] == old]:
+                self.resolved[(parent.file, key[1])] = self.resolved.pop(key)
+        file = folder + "/".join(keys) + ".md"
+        if any(p.file == file for p in self.pages):
+            file = folder + "-".join(keys) + ".md"
+        return Page(file=file, title=keys[-1], roots=[{"path": path}])
 
     # ---- urls -----------------------------------------------------------
 
@@ -633,10 +702,10 @@ class Generator:
                 appears += self.appears_in(ident, [] if "ref" in root else [label])
             if page.overview_only:
                 continue
+            if page.compact_links and i > 0:
+                links.append(entries[0])  # one row for the whole root
+                continue
             for e in entries:
-                if e.link is not None and page.compact_links:
-                    links.append(e)
-                    continue
                 text = self.render_entry(page, e, label)
                 if any(k in text for k in ("\x00",)):
                     problems.append(f"{page.file}: bad character in {e.path}")
@@ -648,10 +717,11 @@ class Generator:
         if links:
             sections.append(self.render_link_table(links))
 
-        example_file = examples_dir / page.file
         examples_text = ""
-        if example_file.exists():
-            examples_text = example_file.read_text().strip("\n")
+        for alt in page.example_files():
+            if (examples_dir / alt).exists():
+                examples_text = (examples_dir / alt).read_text().strip("\n")
+                break
 
         title = page.title
         fm_title = title if re.fullmatch(r"[\w .()/&+-]+", title) else json.dumps(title)
@@ -1034,8 +1104,9 @@ def main() -> int:
     problems += check_examples(gen, args.examples)
 
     known = {p.file for p in gen.pages}
+    known_examples = {a for p in gen.pages for a in p.example_files()}
     for ex in sorted(existing_files(args.examples)):
-        if ex not in known:
+        if ex not in known_examples:
             problems.append(f"examples/{ex} has no page in docs-pages.yaml")
 
     if args.check:

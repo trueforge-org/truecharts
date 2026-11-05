@@ -16,7 +16,7 @@
               "properties": {
                 "env": {
                   "$ref": "podSpec/containers/env.json",
-                  "description": "Environment variables of the container, keyed by name. See [env](/truecharts-common/container/env).",
+                  "description": "Environment variables of the container, keyed by name. See [env](/truecharts-common/workload/podSpec/containers/env).",
                   "x-helm-tpl": "On value only"
                 },
                 "resources": {
@@ -26,7 +26,7 @@
                 },
                 "securityContext": {
                   "$ref": "podSpec/containers/securityContext.json",
-                  "description": "Security context of the container. Overrides `securityContext.container` for this container. See [securityContext](/truecharts-common/container/securityContext).",
+                  "description": "Security context of the container. Overrides `securityContext.container` for this container. See [securityContext](/truecharts-common/workload/podSpec/containers/securityContext).",
                   "x-docs-required": true
                 },
                 "enabled": {
@@ -59,33 +59,33 @@
                 },
                 "probes": {
                   "$ref": "podSpec/containers/probes.json",
-                  "description": "Liveness, readiness and startup probes of the container. Does **not** apply to `initContainers`. See [probes](/truecharts-common/container/probes).",
+                  "description": "Liveness, readiness and startup probes of the container. Does **not** apply to `initContainers`. See [probes](/truecharts-common/workload/podSpec/containers/probes).",
                   "x-docs-required": true
                 },
                 "command": {
                   "$ref": "podSpec/containers/command.json",
-                  "description": "Entrypoint of the container (`command`), which replaces the entrypoint of the image. A single command can be given as a string. See [command](/truecharts-common/container/command).",
+                  "description": "Entrypoint of the container (`command`), which replaces the entrypoint of the image. A single command can be given as a string. See [command](/truecharts-common/workload/podSpec/containers/command).",
                   "x-helm-tpl": true
                 },
                 "lifecycle": {
                   "$ref": "podSpec/containers/lifecycle.json",
-                  "description": "`postStart` and `preStop` hooks of the container. See [lifecycle](/truecharts-common/container/lifecycle)."
+                  "description": "`postStart` and `preStop` hooks of the container. See [lifecycle](/truecharts-common/workload/podSpec/containers/lifecycle)."
                 },
                 "envFrom": {
                   "$ref": "podSpec/containers/envFrom.json",
-                  "description": "ConfigMaps and Secrets whose keys all become environment variables of the container. See [envFrom](/truecharts-common/container/envFrom)."
+                  "description": "ConfigMaps and Secrets whose keys all become environment variables of the container. See [envFrom](/truecharts-common/workload/podSpec/containers/envFrom)."
                 },
                 "termination": {
                   "$ref": "container/termination.json",
-                  "description": "Where the termination message of the container is read from. See [termination](/truecharts-common/container/termination)."
+                  "description": "Where the termination message of the container is read from. See [termination](/truecharts-common/workload/podSpec/containers/termination)."
                 },
                 "fixedEnv": {
                   "$ref": "podSpec/containers/fixedEnv.json",
-                  "description": "Overrides of the environment variables that common sets on every container: `TZ`, `UMASK`, `PUID` and `NVIDIA_CAPS`. See [fixedEnv](/truecharts-common/container/fixedEnv)."
+                  "description": "Overrides of the environment variables that common sets on every container: `TZ`, `UMASK`, `PUID` and `NVIDIA_CAPS`. See [fixedEnv](/truecharts-common/workload/podSpec/containers/fixedEnv)."
                 },
                 "args": {
                   "$ref": "podSpec/containers/args.json",
-                  "description": "Arguments of the container (`args`), which replace the `CMD` of the image. A single argument can be given as a string. See [args](/truecharts-common/container/args).",
+                  "description": "Arguments of the container (`args`), which replace the `CMD` of the image. A single argument can be given as a string. See [args](/truecharts-common/workload/podSpec/containers/args).",
                   "x-helm-tpl": true
                 },
                 "extraArgs": {
@@ -105,13 +105,13 @@
                 }
               },
               "additionalProperties": false,
-              "description": "A container of the pod. The shared container settings are in [container](/truecharts-common/container)."
+              "description": "A container of the pod. The shared container settings are in [container](/truecharts-common/workload/podSpec/containers)."
             },
             "description": "Containers of the pod, keyed by name."
           },
           "initContainers": {
             "$ref": "podSpec/initContainers.json",
-            "description": "Init containers of the pod, keyed by name. See [initContainers](/truecharts-common/container/initContainers)."
+            "description": "Init containers of the pod, keyed by name. See [initContainers](/truecharts-common/workload/podSpec/initContainers)."
           },
           "labels": {
             "allOf": [

@@ -14,7 +14,7 @@
                 "$ref": "traefik.json"
               }
             ],
-            "description": "Traefik integration, see [Traefik](/truecharts-common/ingress/traefik).",
+            "description": "Traefik integration, see [Traefik](/truecharts-common/ingress/integrations/traefik).",
             "type": "object",
             "default": {}
           },
@@ -24,7 +24,7 @@
                 "$ref": "integrations/homepage.json"
               }
             ],
-            "description": "Homepage dashboard integration, see [Homepage](/truecharts-common/ingress/homepage).",
+            "description": "Homepage dashboard integration, see [Homepage](/truecharts-common/ingress/integrations/homepage).",
             "type": "object",
             "default": {}
           },
@@ -34,7 +34,7 @@
                 "$ref": "certManager.json"
               }
             ],
-            "description": "cert-manager integration, see [cert-manager](/truecharts-common/ingress/certManager).",
+            "description": "cert-manager integration, see [cert-manager](/truecharts-common/ingress/integrations/certManager).",
             "type": "object",
             "default": {}
           },
@@ -129,7 +129,7 @@
               }
             },
             "additionalProperties": false,
-            "description": "ingress-nginx integration, see [nginx](/truecharts-common/ingress/nginx)."
+            "description": "ingress-nginx integration, see [nginx](/truecharts-common/ingress/integrations/nginx)."
           }
         },
         "additionalProperties": false,

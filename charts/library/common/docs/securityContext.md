@@ -57,7 +57,7 @@ pod:
 
 Security context applied to all containers, unless overridden at the container level. See [securityContext](/truecharts-common/securityContext).
 
-See [Container Security Context](/truecharts-common/container/securityContext) for all keys of this object.
+See [Container Security Context](/truecharts-common/workload/podSpec/containers/securityContext) for all keys of this object.
 
 | Field | Value |
 | --- | --- |
@@ -92,6 +92,8 @@ UMASK: '0022'
 
 Security context applied to all pods, unless overridden at the pod level. See [securityContext](/truecharts-common/securityContext).
 
+See [securityContext](/truecharts-common/workload/podSpec/securityContext) for all keys of this object.
+
 | Field | Value |
 | --- | --- |
 | Key | `securityContext.pod` |
@@ -99,103 +101,6 @@ Security context applied to all pods, unless overridden at the pod level. See [s
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | `{"fsGroup": 568, "fsGroupChangePolicy": "OnRootMismatch", "supplementalGroups": [], "sysctls": []}` |
-
----
-
-## `pod.fsGroup`
-
-Group ID applied to mounted volumes.
-
-| Field | Value |
-| --- | --- |
-| Key | `securityContext.pod.fsGroup` |
-| Type | `int` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | `568` |
-
----
-
-## `pod.fsGroupChangePolicy`
-
-Policy controlling when ownership and permissions of volume contents are changed.
-
-| Field | Value |
-| --- | --- |
-| Key | `securityContext.pod.fsGroupChangePolicy` |
-| Type | `string` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | `"OnRootMismatch"` |
-| Allowed values | `"Always"`, `"OnRootMismatch"` |
-
----
-
-## `pod.supplementalGroups`
-
-Additional group IDs applied to containers in the pod.
-
-| Field | Value |
-| --- | --- |
-| Key | `securityContext.pod.supplementalGroups` |
-| Type | `list of int` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | `[]` |
-
----
-
-## `pod.sysctls`
-
-Kernel parameters to set in the pod's network namespace.
-
-| Field | Value |
-| --- | --- |
-| Key | `securityContext.pod.sysctls` |
-| Type | `list of map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | `[]` |
-
----
-
-## `pod.sysctls[]`
-
-| Field | Value |
-| --- | --- |
-| Key | `securityContext.pod.sysctls[]` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `pod.sysctls[].name`
-
-Name of the sysctl.
-
-| Field | Value |
-| --- | --- |
-| Key | `securityContext.pod.sysctls[].name` |
-| Type | `string` |
-| Required | ✅ |
-| Helm `tpl` | ✅ |
-| Default | unset |
-
----
-
-## `pod.sysctls[].value`
-
-Value of the sysctl.
-
-| Field | Value |
-| --- | --- |
-| Key | `securityContext.pod.sysctls[].value` |
-| Type | `string` |
-| Required | ✅ |
-| Helm `tpl` | ✅ |
-| Default | unset |
 
 ---
 

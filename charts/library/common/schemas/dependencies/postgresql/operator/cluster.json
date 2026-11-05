@@ -28,7 +28,7 @@
           "$ref": "../../../workload/podSpec/containers/env.json"
         }
       ],
-      "description": "Environment variables of the PostgreSQL instances, keyed by name. See [env](/truecharts-common/container/env).",
+      "description": "Environment variables of the PostgreSQL instances, keyed by name. See [env](/truecharts-common/workload/podSpec/containers/env).",
       "default": {}
     },
     "envFrom": {
@@ -72,7 +72,7 @@
         },
         "additionalProperties": false
       },
-      "description": "ConfigMaps and Secrets whose keys become environment variables of the PostgreSQL instances. See [envFrom](/truecharts-common/container/envFrom).",
+      "description": "ConfigMaps and Secrets whose keys become environment variables of the PostgreSQL instances. See [envFrom](/truecharts-common/workload/podSpec/containers/envFrom).",
       "default": {}
     },
     "instances": {

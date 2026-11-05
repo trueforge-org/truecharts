@@ -23,6 +23,7 @@ title: Service
 - [ExternalIP](/truecharts-common/service/ExternalIP)
 - [ExternalName](/truecharts-common/service/ExternalName)
 - [Ports](/truecharts-common/service/ports)
+- [Service Integrations](/truecharts-common/service/integrations)
 
 ---
 
@@ -58,109 +59,11 @@ A Service, keyed by name.
 
 Integrations that add annotations to the Service.
 
+See [Service Integrations](/truecharts-common/service/integrations) for all keys of this object.
+
 | Field | Value |
 | --- | --- |
 | Key | `service.$name.integrations` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | `{}` |
-
----
-
-## `$name.integrations.metallb`
-
-Define the MetalLB integration, only applies to `type: LoadBalancer`
-
-| Field | Value |
-| --- | --- |
-| Key | `service.$name.integrations.metallb` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | `{}` |
-
----
-
-## `$name.integrations.metallb.enabled`
-
-Enables or Disables the MetalLB integration
-
-| Field | Value |
-| --- | --- |
-| Key | `service.$name.integrations.metallb.enabled` |
-| Type | `bool` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | `false` |
-
----
-
-## `$name.integrations.metallb.sharedKey`
-
-Sets the shared key in `metallb.io/allow-shared-ip` **MetalLB** Annotation. Defaults to the namespace. Mutually exclusive with `externalTrafficPolicy: Local`
-
-| Field | Value |
-| --- | --- |
-| Key | `service.$name.integrations.metallb.sharedKey` |
-| Type | `string` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | `""` |
-
----
-
-## `$name.integrations.cilium`
-
-Define the Cilium integration (LB-IPAM), only applies to `type: LoadBalancer`
-
-| Field | Value |
-| --- | --- |
-| Key | `service.$name.integrations.cilium` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | `{}` |
-
----
-
-## `$name.integrations.cilium.enabled`
-
-Enables or Disables the Cilium integration
-
-| Field | Value |
-| --- | --- |
-| Key | `service.$name.integrations.cilium.enabled` |
-| Type | `bool` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | `false` |
-
----
-
-## `$name.integrations.cilium.sharedKey`
-
-Sets the shared key in `lbipam.cilium.io/sharing-key` **Cilium** Annotation. Mutually exclusive with `externalTrafficPolicy: Local`
-
-| Field | Value |
-| --- | --- |
-| Key | `service.$name.integrations.cilium.sharedKey` |
-| Type | `string` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | `""` |
-
----
-
-## `$name.integrations.traefik`
-
-Traefik settings for the backend of this Service, see [Traefik](/truecharts-common/service/integrations/traefik).
-
-See [Service Traefik Integration](/truecharts-common/service/integrations/traefik) for all keys of this object.
-
-| Field | Value |
-| --- | --- |
-| Key | `service.$name.integrations.traefik` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |

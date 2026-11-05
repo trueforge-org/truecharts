@@ -138,7 +138,7 @@
               "strip-prefix-regex",
               "strip-prefix"
             ],
-            "description": "Type of the Middleware, for example `basicAuth` or `redirectScheme`. It decides which `data` keys are used, see [Traefik middlewares](/truecharts-common/middlewares/traefik)."
+            "description": "Type of the Middleware, for example `basicAuth` or `redirectScheme`. It decides which `data` keys are used, see [Traefik middlewares](/truecharts-common/ingressMiddlewares/traefik)."
           },
           "namespace": {
             "allOf": [
@@ -1285,5 +1285,5 @@
     "default": {},
     "x-docs-required": true
   },
-  "description": "Traefik Middleware objects, keyed by provider and name. See [Middlewares](/truecharts-common/middlewares)."
+  "description": "Traefik Middleware objects, keyed by provider and name. See [Middlewares](/truecharts-common/ingressMiddlewares)."
 }

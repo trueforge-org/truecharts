@@ -4,7 +4,6 @@ title: Ingress
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
 - See the [Full Examples](/truecharts-common/ingress#full-examples) section for complete examples.
 
 :::
@@ -17,10 +16,8 @@ title: Ingress
 
 ## Child Pages
 
-- [Cert Manager Integration](/truecharts-common/ingress/certManager)
-- [Traefik Integration](/truecharts-common/ingress/traefik)
-- [Homepage Integration](/truecharts-common/ingress/homepage)
-- [Nginx Integration](/truecharts-common/ingress/nginx)
+- [Ingress Integrations](/truecharts-common/ingress/integrations)
+- [hosts](/truecharts-common/ingress/hosts)
 
 ---
 
@@ -56,6 +53,8 @@ An Ingress, keyed by name.
 
 Integrations that add annotations, middlewares or certificates to the Ingress.
 
+See [Ingress Integrations](/truecharts-common/ingress/integrations) for all keys of this object.
+
 | Field | Value |
 | --- | --- |
 | Key | `ingress.$name.integrations` |
@@ -63,70 +62,6 @@ Integrations that add annotations, middlewares or certificates to the Ingress.
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | `{}` |
-
----
-
-## `$name.integrations.traefik`
-
-Traefik integration, see [Traefik](/truecharts-common/ingress/traefik).
-
-See [Traefik Integration](/truecharts-common/ingress/traefik) for all keys of this object.
-
-| Field | Value |
-| --- | --- |
-| Key | `ingress.$name.integrations.traefik` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | `{}` |
-
----
-
-## `$name.integrations.homepage`
-
-Homepage dashboard integration, see [Homepage](/truecharts-common/ingress/homepage).
-
-See [Homepage Integration](/truecharts-common/ingress/homepage) for all keys of this object.
-
-| Field | Value |
-| --- | --- |
-| Key | `ingress.$name.integrations.homepage` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | `{}` |
-
----
-
-## `$name.integrations.certManager`
-
-cert-manager integration, see [cert-manager](/truecharts-common/ingress/certManager).
-
-See [Cert Manager Integration](/truecharts-common/ingress/certManager) for all keys of this object.
-
-| Field | Value |
-| --- | --- |
-| Key | `ingress.$name.integrations.certManager` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | `{}` |
-
----
-
-## `$name.integrations.nginx`
-
-ingress-nginx integration, see [nginx](/truecharts-common/ingress/nginx).
-
-See [Nginx Integration](/truecharts-common/ingress/nginx) for all keys of this object.
-
-| Field | Value |
-| --- | --- |
-| Key | `ingress.$name.integrations.nginx` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
 
 ---
 
@@ -312,6 +247,8 @@ Name of the port of the Service.
 
 Hosts of the Ingress and the paths for each.
 
+See [hosts](/truecharts-common/ingress/hosts) for all keys of this object.
+
 | Field | Value |
 | --- | --- |
 | Key | `ingress.$name.hosts` |
@@ -319,165 +256,6 @@ Hosts of the Ingress and the paths for each.
 | Required | ✅ |
 | Helm `tpl` | ❌ |
 | Default | `[]` |
-
----
-
-## `$name.hosts[]`
-
-A host of the Ingress.
-
-| Field | Value |
-| --- | --- |
-| Key | `ingress.$name.hosts[]` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `$name.hosts[].host`
-
-Hostname the rules apply to, eg `app.example.com`.
-
-| Field | Value |
-| --- | --- |
-| Key | `ingress.$name.hosts[].host` |
-| Type | `string` |
-| Required | ✅ |
-| Helm `tpl` | ✅ |
-| Default | unset |
-
-Example
-
-```yaml
-ingress:
-  example:
-    hosts:
-      - host: app.example.com
-```
-
----
-
-## `$name.hosts[].paths`
-
-Paths of the host. Defaults to `/` with `Prefix`.
-
-| Field | Value |
-| --- | --- |
-| Key | `ingress.$name.hosts[].paths` |
-| Type | `list of map` |
-| Required | ✅ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `$name.hosts[].paths[]`
-
-A path of the host.
-
-| Field | Value |
-| --- | --- |
-| Key | `ingress.$name.hosts[].paths[]` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `$name.hosts[].paths[].path`
-
-Path of the rule, eg `/`.
-
-| Field | Value |
-| --- | --- |
-| Key | `ingress.$name.hosts[].paths[].path` |
-| Type | `string` |
-| Required | ✅ |
-| Helm `tpl` | ✅ |
-| Default | unset |
-
-Example
-
-```yaml
-ingress:
-  example:
-    hosts:
-      - paths:
-          - path: /
-```
-
----
-
-## `$name.hosts[].paths[].pathType`
-
-How the path is matched: `Prefix`, `Exact` or `ImplementationSpecific`.
-
-| Field | Value |
-| --- | --- |
-| Key | `ingress.$name.hosts[].paths[].pathType` |
-| Type | `string` |
-| Required | ❌ |
-| Helm `tpl` | ✅ |
-| Default | unset |
-
----
-
-## `$name.hosts[].paths[].overrideService`
-
-Send this path to another Service than the one in `targetSelector`.
-
-| Field | Value |
-| --- | --- |
-| Key | `ingress.$name.hosts[].paths[].overrideService` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `$name.hosts[].paths[].overrideService.name`
-
-Name of the Service.
-
-| Field | Value |
-| --- | --- |
-| Key | `ingress.$name.hosts[].paths[].overrideService.name` |
-| Type | `string` |
-| Required | ✅ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `$name.hosts[].paths[].overrideService.expandObjectName`
-
-Prefix `name` with the release fullname. Set to `false` for a Service that is not created by this chart.
-
-| Field | Value |
-| --- | --- |
-| Key | `ingress.$name.hosts[].paths[].overrideService.expandObjectName` |
-| Type | `bool` |
-| Required | ❌ |
-| Helm `tpl` | ✅ |
-| Default | unset |
-
----
-
-## `$name.hosts[].paths[].overrideService.port`
-
-Port number of the Service.
-
-| Field | Value |
-| --- | --- |
-| Key | `ingress.$name.hosts[].paths[].overrideService.port` |
-| Type | `int or string` |
-| Required | ✅ |
-| Helm `tpl` | ❌ |
-| Default | unset |
 
 ---
 

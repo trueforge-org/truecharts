@@ -1,21 +1,21 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "description": "Liveness, readiness and startup probes of the container. Does **not** apply to `initContainers`. See [probes](/truecharts-common/container/probes).",
+  "description": "Liveness, readiness and startup probes of the container. Does **not** apply to `initContainers`. See [probes](/truecharts-common/workload/podSpec/containers/probes).",
   "properties": {
     "liveness": {
       "$ref": "probes/probe.json",
-      "description": "Liveness probe. When it fails, Kubernetes restarts the container. See [probe](/truecharts-common/container/probe).",
+      "description": "Liveness probe. When it fails, Kubernetes restarts the container. See [probe](/truecharts-common/workload/podSpec/containers/probe).",
       "x-docs-required": true
     },
     "readiness": {
       "$ref": "probes/probe.json",
-      "description": "Readiness probe. While it fails, the pod is removed from the endpoints of Services. See [probe](/truecharts-common/container/probe).",
+      "description": "Readiness probe. While it fails, the pod is removed from the endpoints of Services. See [probe](/truecharts-common/workload/podSpec/containers/probe).",
       "x-docs-required": true
     },
     "startup": {
       "$ref": "probes/probe.json",
-      "description": "Startup probe. The other probes wait until it succeeds, which is useful for slow starting apps. See [probe](/truecharts-common/container/probe).",
+      "description": "Startup probe. The other probes wait until it succeeds, which is useful for slow starting apps. See [probe](/truecharts-common/workload/podSpec/containers/probe).",
       "x-docs-required": true
     }
   },

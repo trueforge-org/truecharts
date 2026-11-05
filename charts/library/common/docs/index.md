@@ -19,25 +19,25 @@ This applies across all the documentation:
 | Key | Type | Description |
 | --- | --- | --- |
 | [`global`](/truecharts-common/global) | `map` | Global values that apply to the chart and its dependencies. See [global](/truecharts-common/global). |
-| [`namespace`](/truecharts-common/general#namespace) | `string` | Namespace to create all objects in, unless overridden at the object level. Does not apply to chart dependencies, use `global.namespace` for that. |
+| [`namespace`](/truecharts-common/namespace) | `string` | Namespace to create all objects in, unless overridden at the object level. Does not apply to chart dependencies, use `global.namespace` for that. |
 | [`image`](/truecharts-common/image) | `map` | The main image of the chart, used by containers that do not select another image with `imageSelector`. See [image](/truecharts-common/image). |
-| [`chartContext`](/truecharts-common/general#chartcontext) | `map` | Details about the release that common works out on every render, such as the URL of the app. Common sets these itself. |
-| [`common`](/truecharts-common/general#common) | `any` | Values merged into the common defaults before the values of the chart. Takes the same values as the chart itself. |
+| [`chartContext`](/truecharts-common/chartContext) | `map` | Details about the release that common works out on every render, such as the URL of the app. Common sets these itself. |
+| [`common`](/truecharts-common/common) | `any` | Values merged into the common defaults before the values of the chart. Takes the same values as the chart itself. |
 | [`securityContext`](/truecharts-common/securityContext) | `map` | Default security contexts for all containers and pods, unless overridden at the container or pod level. See [securityContext](/truecharts-common/securityContext). |
 | [`resources`](/truecharts-common/resources) | `map` | Default CPU and memory resources of each container, unless overridden at the container level. They apply to every container, not to the pod as a whole. See [resources](/truecharts-common/resources). |
 | [`containerOptions`](/truecharts-common/containerOptions) | `map` | Options that apply to all containers, unless overridden at the container level. See [containerOptions](/truecharts-common/containerOptions). |
 | [`podOptions`](/truecharts-common/podOptions) | `map` | Options that apply to all pods, unless overridden at the pod level. See [podOptions](/truecharts-common/podOptions). |
 | [`workload`](/truecharts-common/workload) | `map` | Workloads (Deployment, StatefulSet, DaemonSet, Job, CronJob), keyed by name. Each one holds a pod spec and its containers. See [workload](/truecharts-common/workload). |
-| [`TZ`](/truecharts-common/general#tz) | `string` | Timezone set as the `TZ` environment variable of the containers, unless overridden at the container level. |
-| [`diagnosticMode`](/truecharts-common/general#diagnosticmode) | `map` | Run the containers with a sleep command instead of the app, so you can exec into them to debug. |
+| [`TZ`](/truecharts-common/TZ) | `string` | Timezone set as the `TZ` environment variable of the containers, unless overridden at the container level. |
+| [`diagnosticMode`](/truecharts-common/diagnosticMode) | `map` | Run the containers with a sleep command instead of the app, so you can exec into them to debug. |
 | [`vpa`](/truecharts-common/vpa) | `map` | VerticalPodAutoscalers, keyed by name. Each one scales the resources of a workload. |
 | [`hpa`](/truecharts-common/hpa) | `map` | HorizontalPodAutoscalers, keyed by name. Each one scales the replicas of a workload. |
 | [`service`](/truecharts-common/service) | `map` | Services, keyed by name. Each one exposes a workload on one or more ports. See [service](/truecharts-common/service). |
 | [`credentials`](/truecharts-common/credentials) | `map` | Credentials for S3 compatible backup targets, keyed by name. |
-| [`ingressMiddlewares`](/truecharts-common/middlewares) | `map` | Ingress middlewares (Traefik Middleware objects), keyed by ingress controller and then by name. See [middlewares](/truecharts-common/middlewares). |
+| [`ingressMiddlewares`](/truecharts-common/ingressMiddlewares) | `map` | Ingress middlewares (Traefik Middleware objects), keyed by ingress controller and then by name. See [middlewares](/truecharts-common/ingressMiddlewares). |
 | [`persistence`](/truecharts-common/persistence) | `map` | Volumes, keyed by name. Each one is a PVC, emptyDir, hostPath, secret, configmap or other volume type, mounted into containers. See [persistence](/truecharts-common/persistence). |
 | [`volumeSnapshotClass`](/truecharts-common/volumeSnapshotClass) | `map` | VolumeSnapshotClasses, keyed by name. |
-| [`volumeSnapshots`](/truecharts-common/volumeSnapshot) | `map` | VolumeSnapshots, keyed by name. |
+| [`volumeSnapshots`](/truecharts-common/volumeSnapshots) | `map` | VolumeSnapshots, keyed by name. |
 | [`imagePullSecret`](/truecharts-common/imagePullSecret) | `map` | Image pull secrets, keyed by name, for pulling images from a private registry. |
 | [`configmap`](/truecharts-common/configmap) | `map` | ConfigMaps, keyed by name. |
 | [`configMapsFromFolder`](/truecharts-common/configMapsFromFolder) | `map` | Generate ConfigMaps from the folders in a directory of the parent chart. |
@@ -92,7 +92,7 @@ This applies across all the documentation:
 | [`metrics`](/truecharts-common/metrics) | `map` | ServiceMonitors, PodMonitors and PrometheusRules, keyed by name. See [metrics](/truecharts-common/metrics). |
 | [`addons`](/truecharts-common/addons) | `map` | Addons that add containers or objects to the workloads, such as a VPN, Tailscale or code-server. See [addons](/truecharts-common/addons). |
 | [`dependencies`](/truecharts-common/dependencies) | `map` | Services the app needs, such as a database or cache, deployed with the chart. See [dependencies](/truecharts-common/dependencies). |
-| [`extraTpl`](/truecharts-common/general#extratpl) | `list of map or string` | Extra Kubernetes resources to render, one per list item, as a YAML object or as a string. Helm `tpl` is resolved in each item. |
+| [`extraTpl`](/truecharts-common/extraTpl) | `list of map or string` | Extra Kubernetes resources to render, one per list item, as a YAML object or as a string. Helm `tpl` is resolved in each item. |
 
 ---
 
@@ -172,7 +172,7 @@ ingress:
 The main keys and where to read more about them:
 
 - `image` and the other `*Image` keys define the images, see [Image](/truecharts-common/image).
-- `workload` defines the pods and their containers, see [Workload](/truecharts-common/workload) and [Container](/truecharts-common/container).
+- `workload` defines the pods and their containers, see [Workload](/truecharts-common/workload) and [Container](/truecharts-common/workload/podSpec/containers).
 - `service`, `ingress` and `route` expose the workload, see [Service](/truecharts-common/service), [Ingress](/truecharts-common/ingress) and [Route](/truecharts-common/route).
 - `persistence` defines the volumes, see [Persistence](/truecharts-common/persistence).
 - `securityContext`, `containerOptions`, `podOptions` and `resources` set the defaults for all pods and containers, see [Security Context](/truecharts-common/securityContext), [Container Options](/truecharts-common/containerOptions), [Pod Options](/truecharts-common/podOptions) and [Resources](/truecharts-common/resources).

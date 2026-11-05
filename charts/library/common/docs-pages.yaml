@@ -5,19 +5,28 @@ pages:
   overview_only: true
   intro: "This applies across all the documentation:\n\n- Helm `tpl`:\n  - ❌ means that the value is not templated\n  - ✅ means that the value is templated, for example instead of a hardcoded value, you\
     \ can set it to `{{ .Values.some.value }}` and it will be replaced by the value contained in `.Values.some.value` at the installation/upgrade time."
-- file: general.md
-  title: General Options
-  roots:
-  - path: TZ
-  - path: namespace
-  - path: extraTpl
-  - path: diagnosticMode
-  - path: chartContext
-  - path: common
-- file: global.md
+- file: TZ.md
+  title: Time Zone
+  path: TZ
+- file: namespace.md
+  title: Namespace
+  path: namespace
+- file: extraTpl.md
+  title: Extra Templates
+  path: extraTpl
+- file: diagnosticMode.md
+  title: Diagnostic Mode
+  path: diagnosticMode
+- file: chartContext.md
+  title: Chart Context
+  path: chartContext
+- file: common.md
+  title: Common
+  path: common
+- file: global/index.md
   title: Global
   path: global
-- file: fallbackDefaults.md
+- file: global/fallbackDefaults.md
   title: Fallback Defaults
   ref: schemas/global/fallbackDefaults.json
 - file: image.md
@@ -100,43 +109,43 @@ pages:
   path: workload.$name
   applies: Job
   parent: workload/index.md
-- file: workload/podSpec.md
+- file: workload/podSpec/index.md
   title: Pod Spec
   path: workload.$name.podSpec
-- file: container/index.md
+- file: workload/podSpec/containers/index.md
   title: Container
   path: workload.$name.podSpec.containers.$name
-- file: container/initContainers.md
+- file: workload/podSpec/initContainers.md
   title: Init Containers
   path: workload.$name.podSpec.initContainers.$name
-- file: container/env.md
+- file: workload/podSpec/containers/env.md
   title: Env
   ref: schemas/workload/podSpec/containers/env.json
-- file: container/envFrom.md
+- file: workload/podSpec/containers/envFrom.md
   title: Env From
   ref: schemas/workload/podSpec/containers/envFrom.json
-- file: container/fixedEnv.md
+- file: workload/podSpec/containers/fixedEnv.md
   title: Fixed Env
   ref: schemas/workload/podSpec/containers/fixedEnv.json
-- file: container/lifecycle.md
+- file: workload/podSpec/containers/lifecycle.md
   title: Lifecycle
   ref: schemas/workload/podSpec/containers/lifecycle.json
-- file: container/probes.md
+- file: workload/podSpec/containers/probes.md
   title: Probes
   ref: schemas/workload/podSpec/containers/probes.json
-- file: container/probe.md
+- file: workload/podSpec/containers/probe.md
   title: Probe
   ref: schemas/workload/podSpec/containers/probes/probe.json
-- file: container/args.md
+- file: workload/podSpec/containers/args.md
   title: Args
   ref: schemas/workload/podSpec/containers/args.json
-- file: container/command.md
+- file: workload/podSpec/containers/command.md
   title: Command
   ref: schemas/workload/podSpec/containers/command.json
-- file: container/securityContext.md
+- file: workload/podSpec/containers/securityContext.md
   title: Container Security Context
   ref: schemas/workload/podSpec/containers/securityContext.json
-- file: container/termination.md
+- file: workload/podSpec/containers/termination.md
   title: Termination
   ref: schemas/workload/container/termination.json
 - file: persistence/index.md
@@ -219,139 +228,139 @@ pages:
 - file: ingress/index.md
   title: Ingress
   path: ingress
-- file: ingress/certManager.md
+- file: ingress/integrations/certManager.md
   title: Cert Manager Integration
   ref: schemas/ingress/certManager.json
-- file: ingress/traefik.md
+- file: ingress/integrations/traefik.md
   title: Traefik Integration
   ref: schemas/ingress/traefik.json
-- file: ingress/homepage.md
+- file: ingress/integrations/homepage.md
   title: Homepage Integration
   ref: schemas/ingress/integrations/homepage.json
-- file: ingress/nginx.md
+- file: ingress/integrations/nginx.md
   title: Nginx Integration
   path: ingress.$name.integrations.nginx
-- file: middlewares/index.md
+- file: ingressMiddlewares/index.md
   title: Middlewares
   path: ingressMiddlewares
-- file: middlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/index.md
   title: Traefik Middlewares
   path: ingressMiddlewares.traefik
-- file: middlewares/traefik/add-prefix.md
+- file: ingressMiddlewares/traefik/add-prefix.md
   title: add-prefix
   path: ingressMiddlewares.traefik.$name
   applies: add-prefix
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/basic-auth.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/basic-auth.md
   title: basic-auth
   path: ingressMiddlewares.traefik.$name
   applies: basic-auth
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/buffering.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/buffering.md
   title: buffering
   path: ingressMiddlewares.traefik.$name
   applies: buffering
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/chain.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/chain.md
   title: chain
   path: ingressMiddlewares.traefik.$name
   applies: chain
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/compress.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/compress.md
   title: compress
   path: ingressMiddlewares.traefik.$name
   applies: compress
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/content-type.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/content-type.md
   title: content-type
   path: ingressMiddlewares.traefik.$name
   applies: content-type
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/forward-auth.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/forward-auth.md
   title: forward-auth
   path: ingressMiddlewares.traefik.$name
   applies: forward-auth
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/headers.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/headers.md
   title: headers
   path: ingressMiddlewares.traefik.$name
   applies: headers
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/ip-allow-list.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/ip-allow-list.md
   title: ip-allow-list
   path: ingressMiddlewares.traefik.$name
   applies: ip-allow-list
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/plugin-bouncer.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/plugin-bouncer.md
   title: plugin-bouncer
   path: ingressMiddlewares.traefik.$name
   applies: plugin-bouncer
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/plugin-geoblock.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/plugin-geoblock.md
   title: plugin-geoblock
   path: ingressMiddlewares.traefik.$name
   applies: plugin-geoblock
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/plugin-mod-security.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/plugin-mod-security.md
   title: plugin-mod-security
   path: ingressMiddlewares.traefik.$name
   applies: plugin-mod-security
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/plugin-real-ip.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/plugin-real-ip.md
   title: plugin-real-ip
   path: ingressMiddlewares.traefik.$name
   applies: plugin-real-ip
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/plugin-rewrite-response-headers.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/plugin-rewrite-response-headers.md
   title: plugin-rewrite-response-headers
   path: ingressMiddlewares.traefik.$name
   applies: plugin-rewrite-response-headers
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/plugin-theme-park.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/plugin-theme-park.md
   title: plugin-theme-park
   path: ingressMiddlewares.traefik.$name
   applies: plugin-theme-park
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/rate-limit.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/rate-limit.md
   title: rate-limit
   path: ingressMiddlewares.traefik.$name
   applies: rate-limit
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/redirect-regex.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/redirect-regex.md
   title: redirect-regex
   path: ingressMiddlewares.traefik.$name
   applies: redirect-regex
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/redirect-scheme.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/redirect-scheme.md
   title: redirect-scheme
   path: ingressMiddlewares.traefik.$name
   applies: redirect-scheme
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/replace-path-regex.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/replace-path-regex.md
   title: replace-path-regex
   path: ingressMiddlewares.traefik.$name
   applies: replace-path-regex
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/replace-path.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/replace-path.md
   title: replace-path
   path: ingressMiddlewares.traefik.$name
   applies: replace-path
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/retry.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/retry.md
   title: retry
   path: ingressMiddlewares.traefik.$name
   applies: retry
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/strip-prefix-regex.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/strip-prefix-regex.md
   title: strip-prefix-regex
   path: ingressMiddlewares.traefik.$name
   applies: strip-prefix-regex
-  parent: middlewares/traefik/index.md
-- file: middlewares/traefik/strip-prefix.md
+  parent: ingressMiddlewares/traefik/index.md
+- file: ingressMiddlewares/traefik/strip-prefix.md
   title: strip-prefix
   path: ingressMiddlewares.traefik.$name
   applies: strip-prefix
-  parent: middlewares/traefik/index.md
+  parent: ingressMiddlewares/traefik/index.md
 - file: route/index.md
   title: Route
   path: route
@@ -418,7 +427,7 @@ pages:
 - file: volumeSnapshotClass.md
   title: Volume Snapshot Class
   path: volumeSnapshotClass
-- file: volumeSnapshot.md
+- file: volumeSnapshots.md
   title: Volume Snapshot
   path: volumeSnapshots
 - file: addons/index.md
@@ -456,41 +465,48 @@ pages:
   title: Dependencies
   path: dependencies
   handwritten: true
-- file: dependencies/postgresql.md
+- file: dependencies/postgresql/index.md
   title: PostgreSQL
   path: dependencies.postgresql
-- file: dependencies/valkey-operator.md
+- file: dependencies/valkey/operator/index.md
   title: Valkey Operator
   path: dependencies.valkey.operator
-- file: dependencies/valkey-containers.md
+- file: dependencies/valkey/operator/containers.md
   title: Valkey Operator Containers
   path: dependencies.valkey.operator.containers
-- file: dependencies/valkey-scheduling.md
+- file: dependencies/valkey/operator/scheduling.md
   title: Valkey Operator Scheduling
   path: dependencies.valkey.operator.scheduling
-- file: dependencies/postgresql-operator.md
+- file: dependencies/postgresql/operator/index.md
   title: PostgreSQL Operator
   path: dependencies.postgresql.operator
-- file: dependencies/postgresql-cluster.md
+- file: dependencies/postgresql/operator/cluster.md
   title: PostgreSQL Cluster
   path: dependencies.postgresql.operator.cluster
-- file: dependencies/postgresql-backups.md
+- file: dependencies/postgresql/operator/backups.md
   title: PostgreSQL Backups
   path: dependencies.postgresql.operator.backups
-- file: dependencies/postgresql-recovery.md
+- file: dependencies/postgresql/operator/recovery.md
   title: PostgreSQL Recovery
   path: dependencies.postgresql.operator.recovery
-- file: dependencies/valkey.md
+- file: dependencies/valkey/index.md
   title: Valkey
   path: dependencies.valkey
-- file: dependencies/other.md
-  title: Other Dependencies
-  roots:
-  - path: dependencies.mariadb
-  - path: dependencies.mongodb
-  - path: dependencies.clickhouse
-  - path: dependencies.memcached
-  - path: dependencies.$name
+- file: dependencies/mariadb.md
+  title: MariaDB
+  path: dependencies.mariadb
+- file: dependencies/mongodb.md
+  title: MongoDB
+  path: dependencies.mongodb
+- file: dependencies/clickhouse.md
+  title: ClickHouse
+  path: dependencies.clickhouse
+- file: dependencies/memcached.md
+  title: Memcached
+  path: dependencies.memcached
+- file: dependencies/custom.md
+  title: Custom Dependencies
+  path: dependencies.$name
 - file: metadata.md
   title: Labels, Annotations and Namespace
   roots:
@@ -502,5 +518,13 @@ pages:
 - file: persistence/iscsiConfig.md
   title: iSCSI Authentication
   ref: schemas/special/iscsi.json
+- file: ingress/integrations/index.md
+  title: Ingress Integrations
+  path: ingress.$name.integrations
+  overview_only: true
+- file: service/integrations/index.md
+  title: Service Integrations
+  path: service.$name.integrations
+  overview_only: true
 removed:
 - cnpg/*

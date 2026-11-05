@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "description": "Hooks that run when the container starts or before it stops. Does **not** apply to `initContainers`. See [lifecycle](/truecharts-common/container/lifecycle).",
+  "description": "Hooks that run when the container starts or before it stops. Does **not** apply to `initContainers`. See [lifecycle](/truecharts-common/workload/podSpec/containers/lifecycle).",
   "properties": {
     "preStop": {
       "type": "object",
