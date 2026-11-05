@@ -69,38 +69,6 @@ See [Addons](../../addons/) for full configuration.
 
 ---
 
-### `dependencies.valkey.args`
-
-See [args](/truecharts-common/workload/podSpec/containers/args#args)
-
-| Field      | Value                         |
-| ---------- | ----------------------------- |
-| Key        | `dependencies.valkey.args`    |
-| Type       | `map, string, list of string` |
-| Required   | ❌                            |
-| Helm `tpl` | ❌                            |
-| Default    | unset                         |
-
-See [Args](../../workload/podSpec/containers/args.md) for full configuration.
-
----
-
-### `dependencies.valkey.automountServiceAccountToken`
-
-See [Automount Service Account Token](/truecharts-common/workload#automountserviceaccounttoken)
-
-| Field      | Value                                              |
-| ---------- | -------------------------------------------------- |
-| Key        | `dependencies.valkey.automountServiceAccountToken` |
-| Type       | `boolean`                                          |
-| Required   | ❌                                                 |
-| Helm `tpl` | ❌                                                 |
-| Default    | unset                                              |
-
-See [Automountserviceaccounttoken](../../workload/podSpec/automountServiceAccountToken.md) for full configuration.
-
----
-
 ### `dependencies.valkey.certificate`
 
 Define certificates
@@ -162,22 +130,6 @@ Image `codeserverImage`, selected by containers with `imageSelector: codeserverI
 | Default    | unset                                 |
 
 See [Codeserverimage](../../images.md) for full configuration.
-
----
-
-### `dependencies.valkey.command`
-
-See [command](/truecharts-common/workload/podSpec/containers/command)
-
-| Field      | Value                         |
-| ---------- | ----------------------------- |
-| Key        | `dependencies.valkey.command` |
-| Type       | `map, string, list of string` |
-| Required   | ❌                            |
-| Helm `tpl` | ❌                            |
-| Default    | unset                         |
-
-See [Command](../../workload/podSpec/containers/command.md) for full configuration.
 
 ---
 
@@ -245,22 +197,6 @@ See [Credentials](../../credentials.md) for full configuration.
 
 ---
 
-### `dependencies.valkey.defaultSpread`
-
-Sets some default topology spread constraints for good spread of pods across nodes.
-
-| Field      | Value                               |
-| ---------- | ----------------------------------- |
-| Key        | `dependencies.valkey.defaultSpread` |
-| Type       | `boolean`                           |
-| Required   | ❌                                  |
-| Helm `tpl` | ❌                                  |
-| Default    | unset                               |
-
-See [Defaultspread](../../workload/podSpec/defaultSpread.md) for full configuration.
-
----
-
 ### `dependencies.valkey.depconfig`
 
 Configuration of the dependency itself. Never merged into the chart values.
@@ -291,54 +227,6 @@ See [Diagnosticmode](../../diagnosticMode.md) for full configuration.
 
 ---
 
-### `dependencies.valkey.dnsConfig`
-
-See [DNS Config](/truecharts-common/workload#dnsconfig)
-
-| Field      | Value                           |
-| ---------- | ------------------------------- |
-| Key        | `dependencies.valkey.dnsConfig` |
-| Type       | `map`                           |
-| Required   | ❌                              |
-| Helm `tpl` | ❌                              |
-| Default    | unset                           |
-
-See [Dnsconfig](../../podOptions/dnsConfig.md) for full configuration.
-
----
-
-### `dependencies.valkey.dnsPolicy`
-
-See [DNS Policy](/truecharts-common/workload#dnspolicy)
-
-| Field      | Value                           |
-| ---------- | ------------------------------- |
-| Key        | `dependencies.valkey.dnsPolicy` |
-| Type       | `string`                        |
-| Required   | ❌                              |
-| Helm `tpl` | ❌                              |
-| Default    | unset                           |
-
-See [Dnspolicy](../../workload/podSpec/dnsPolicy.md) for full configuration.
-
----
-
-### `dependencies.valkey.enableServiceLinks`
-
-See [Enable Service Links](/truecharts-common/workload#enableservicelinks)
-
-| Field      | Value                                    |
-| ---------- | ---------------------------------------- |
-| Key        | `dependencies.valkey.enableServiceLinks` |
-| Type       | `boolean`                                |
-| Required   | ❌                                       |
-| Helm `tpl` | ❌                                       |
-| Default    | unset                                    |
-
-See [Enableservicelinks](../../workload/podSpec/enableServiceLinks.md) for full configuration.
-
----
-
 ### `dependencies.valkey.enabled`
 
 Whether the dependency is enabled. Objects of disabled dependencies are not merged into the chart.
@@ -350,38 +238,6 @@ Whether the dependency is enabled. Objects of disabled dependencies are not merg
 | Required   | ❌                            |
 | Helm `tpl` | ❌                            |
 | Default    | unset                         |
-
----
-
-### `dependencies.valkey.env`
-
-See [env](/truecharts-common/workload/podSpec/containers/env)
-
-| Field      | Value                     |
-| ---------- | ------------------------- |
-| Key        | `dependencies.valkey.env` |
-| Type       | `map, null`               |
-| Required   | ❌                        |
-| Helm `tpl` | ❌                        |
-| Default    | unset                     |
-
-See [Env](../../workload/podSpec/containers/env.md) for full configuration.
-
----
-
-### `dependencies.valkey.envFrom`
-
-See [envFrom](/truecharts-common/workload/podSpec/containers/envFrom)
-
-| Field      | Value                         |
-| ---------- | ----------------------------- |
-| Key        | `dependencies.valkey.envFrom` |
-| Type       | `list of map`                 |
-| Required   | ❌                            |
-| Helm `tpl` | ❌                            |
-| Default    | unset                         |
-
-See [Envfrom](../../workload/podSpec/containers/envFrom.md) for full configuration.
 
 ---
 
@@ -398,38 +254,6 @@ ExternalSecrets that load secrets from an external store, keyed by name.
 | Default    | unset                                |
 
 See [Externalsecret](../../externalSecret.md) for full configuration.
-
----
-
-### `dependencies.valkey.fallbackDefaults`
-
-The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [documentation](/truecharts-common/global/fallbackDefaults)
-
-| Field      | Value                                  |
-| ---------- | -------------------------------------- |
-| Key        | `dependencies.valkey.fallbackDefaults` |
-| Type       | `map`                                  |
-| Required   | ❌                                     |
-| Helm `tpl` | ❌                                     |
-| Default    | unset                                  |
-
-See [Fallbackdefaults](../../global/fallbackDefaults.md) for full configuration.
-
----
-
-### `dependencies.valkey.fixedEnv`
-
-See [fixedEnv](/truecharts-common/workload/podSpec/containers/fixedEnv)
-
-| Field      | Value                          |
-| ---------- | ------------------------------ |
-| Key        | `dependencies.valkey.fixedEnv` |
-| Type       | `map`                          |
-| Required   | ❌                             |
-| Helm `tpl` | ❌                             |
-| Default    | unset                          |
-
-See [Fixedenv](../../workload/podSpec/containers/fixedEnv.md) for full configuration.
 
 ---
 
@@ -497,86 +321,6 @@ See [Gluetunimage](../../images.md) for full configuration.
 
 ---
 
-### `dependencies.valkey.hostAliases`
-
-See [Host Aliases](/truecharts-common/workload#hostaliases)
-
-| Field      | Value                             |
-| ---------- | --------------------------------- |
-| Key        | `dependencies.valkey.hostAliases` |
-| Type       | `list, string`                    |
-| Required   | ❌                                |
-| Helm `tpl` | ❌                                |
-| Default    | unset                             |
-
-See [Hostaliases](../../podOptions/hostAliases.md) for full configuration.
-
----
-
-### `dependencies.valkey.hostIPC`
-
-See [Host IPC](/truecharts-common/workload#hostipc)
-
-| Field      | Value                         |
-| ---------- | ----------------------------- |
-| Key        | `dependencies.valkey.hostIPC` |
-| Type       | `boolean`                     |
-| Required   | ❌                            |
-| Helm `tpl` | ❌                            |
-| Default    | unset                         |
-
-See [Hostipc](../../workload/podSpec/hostIPC.md) for full configuration.
-
----
-
-### `dependencies.valkey.hostNetwork`
-
-See [Host Network](/truecharts-common/workload#hostnetwork)
-
-| Field      | Value                             |
-| ---------- | --------------------------------- |
-| Key        | `dependencies.valkey.hostNetwork` |
-| Type       | `boolean`                         |
-| Required   | ❌                                |
-| Helm `tpl` | ❌                                |
-| Default    | unset                             |
-
-See [Hostnetwork](../../workload/podSpec/hostNetwork.md) for full configuration.
-
----
-
-### `dependencies.valkey.hostPID`
-
-See [Host PID](/truecharts-common/workload#hostpid)
-
-| Field      | Value                         |
-| ---------- | ----------------------------- |
-| Key        | `dependencies.valkey.hostPID` |
-| Type       | `boolean`                     |
-| Required   | ❌                            |
-| Helm `tpl` | ❌                            |
-| Default    | unset                         |
-
-See [Hostpid](../../workload/podSpec/hostPID.md) for full configuration.
-
----
-
-### `dependencies.valkey.hostUsers`
-
-See [Host Users](/truecharts-common/workload#hostusers)
-
-| Field      | Value                           |
-| ---------- | ------------------------------- |
-| Key        | `dependencies.valkey.hostUsers` |
-| Type       | `boolean`                       |
-| Required   | ❌                              |
-| Helm `tpl` | ❌                              |
-| Default    | unset                           |
-
-See [Hostusers](../../workload/podSpec/hostUsers.md) for full configuration.
-
----
-
 ### `dependencies.valkey.hpa`
 
 HorizontalPodAutoscalers, keyed by name.
@@ -638,20 +382,6 @@ Image `kubectlImage`, selected by containers with `imageSelector: kubectlImage`.
 | Default    | unset                              |
 
 See [Kubectlimage](../../images.md) for full configuration.
-
----
-
-### `dependencies.valkey.lifecycle`
-
-Not read by common. Set the lifecycle of a container in `workload.<name>.podSpec.containers.<name>.lifecycle`.
-
-| Field      | Value                           |
-| ---------- | ------------------------------- |
-| Key        | `dependencies.valkey.lifecycle` |
-| Type       | `map`                           |
-| Required   | ❌                              |
-| Helm `tpl` | ❌                              |
-| Default    | unset                           |
 
 ---
 
@@ -835,22 +565,6 @@ Create Network Policy objects
 | Default    | unset                               |
 
 See [Networkpolicy](../../networkpolicy/) for full configuration.
-
----
-
-### `dependencies.valkey.nodeSelector`
-
-See [Node Selector](/truecharts-common/workload#nodeselector)
-
-| Field      | Value                              |
-| ---------- | ---------------------------------- |
-| Key        | `dependencies.valkey.nodeSelector` |
-| Type       | `map`                              |
-| Required   | ❌                                 |
-| Helm `tpl` | ❌                                 |
-| Default    | unset                              |
-
-See [Nodeselector](../../podOptions/nodeSelector.md) for full configuration.
 
 ---
 
@@ -1229,38 +943,6 @@ See [Priorityclass](../../priorityClass.md) for full configuration.
 
 ---
 
-### `dependencies.valkey.priorityClassName`
-
-See [Priority Class Name](/truecharts-common/workload#priorityclassname)
-
-| Field      | Value                                   |
-| ---------- | --------------------------------------- |
-| Key        | `dependencies.valkey.priorityClassName` |
-| Type       | `string`                                |
-| Required   | ❌                                      |
-| Helm `tpl` | ❌                                      |
-| Default    | unset                                   |
-
-See [Priorityclassname](../../workload/podSpec/priorityClassName.md) for full configuration.
-
----
-
-### `dependencies.valkey.probes`
-
-Does **not** apply to `initContainers` See [probes](/truecharts-common/workload/podSpec/containers/probes)
-
-| Field      | Value                        |
-| ---------- | ---------------------------- |
-| Key        | `dependencies.valkey.probes` |
-| Type       | `map`                        |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
-| Default    | unset                        |
-
-See [Probes](../../workload/podSpec/containers/probes/) for full configuration.
-
----
-
 ### `dependencies.valkey.rbac`
 
 Create rbac objects.
@@ -1293,22 +975,6 @@ See [Resources](../../workload/podSpec/containers/resources.md) for full configu
 
 ---
 
-### `dependencies.valkey.restartPolicy`
-
-See [Restart Policy](/truecharts-common/workload#restartpolicy)
-
-| Field      | Value                               |
-| ---------- | ----------------------------------- |
-| Key        | `dependencies.valkey.restartPolicy` |
-| Type       | `string`                            |
-| Required   | ❌                                  |
-| Helm `tpl` | ❌                                  |
-| Default    | unset                               |
-
-See [Restartpolicy](../../workload/podSpec/restartPolicy.md) for full configuration.
-
----
-
 ### `dependencies.valkey.route`
 
 Gateway API routes, keyed by name.
@@ -1322,38 +988,6 @@ Gateway API routes, keyed by name.
 | Default    | unset                       |
 
 See [Route](../../route/) for full configuration.
-
----
-
-### `dependencies.valkey.runtimeClassName`
-
-See [Runtime Class Name](/truecharts-common/workload#runtimeclassname)
-
-| Field      | Value                                  |
-| ---------- | -------------------------------------- |
-| Key        | `dependencies.valkey.runtimeClassName` |
-| Type       | `string`                               |
-| Required   | ❌                                     |
-| Helm `tpl` | ❌                                     |
-| Default    | unset                                  |
-
-See [Runtimeclassname](../../workload/podSpec/runtimeClassName.md) for full configuration.
-
----
-
-### `dependencies.valkey.schedulerName`
-
-See [Scheduler Name](/truecharts-common/workload#schedulername)
-
-| Field      | Value                               |
-| ---------- | ----------------------------------- |
-| Key        | `dependencies.valkey.schedulerName` |
-| Type       | `string`                            |
-| Required   | ❌                                  |
-| Helm `tpl` | ❌                                  |
-| Default    | unset                               |
-
-See [Schedulername](../../workload/podSpec/schedulerName.md) for full configuration.
 
 ---
 
@@ -1421,22 +1055,6 @@ See [Serviceaccount](../../serviceAccount.md) for full configuration.
 
 ---
 
-### `dependencies.valkey.shareProcessNamespace`
-
-See [Share Process Namespace](/truecharts-common/workload#shareprocessnamespace)
-
-| Field      | Value                                       |
-| ---------- | ------------------------------------------- |
-| Key        | `dependencies.valkey.shareProcessNamespace` |
-| Type       | `boolean`                                   |
-| Required   | ❌                                          |
-| Helm `tpl` | ❌                                          |
-| Default    | unset                                       |
-
-See [Shareprocessnamespace](../../workload/podSpec/shareProcessNamespace.md) for full configuration.
-
----
-
 ### `dependencies.valkey.storageClass`
 
 Define storage classes
@@ -1466,70 +1084,6 @@ Image `tailscaleImage`, selected by containers with `imageSelector: tailscaleIma
 | Default    | unset                                |
 
 See [Tailscaleimage](../../images.md) for full configuration.
-
----
-
-### `dependencies.valkey.termination`
-
-See [termination](/truecharts-common/workload/container/termination)
-
-| Field      | Value                             |
-| ---------- | --------------------------------- |
-| Key        | `dependencies.valkey.termination` |
-| Type       | `map`                             |
-| Required   | ❌                                |
-| Helm `tpl` | ❌                                |
-| Default    | unset                             |
-
-See [Termination](../../workload/container/termination.md) for full configuration.
-
----
-
-### `dependencies.valkey.terminationGracePeriodSeconds`
-
-See [Termination Grace Period Seconds](/truecharts-common/workload#terminationgraceperiodseconds)
-
-| Field      | Value                                               |
-| ---------- | --------------------------------------------------- |
-| Key        | `dependencies.valkey.terminationGracePeriodSeconds` |
-| Type       | `integer, string`                                   |
-| Required   | ❌                                                  |
-| Helm `tpl` | ❌                                                  |
-| Default    | unset                                               |
-
-See [Terminationgraceperiodseconds](../../workload/terminationGracePeriodSeconds.md) for full configuration.
-
----
-
-### `dependencies.valkey.tolerations`
-
-See [Tolerations](/truecharts-common/workload#tolerations)
-
-| Field      | Value                             |
-| ---------- | --------------------------------- |
-| Key        | `dependencies.valkey.tolerations` |
-| Type       | `list of map`                     |
-| Required   | ❌                                |
-| Helm `tpl` | ❌                                |
-| Default    | unset                             |
-
-See [Tolerations](../../podOptions/tolerations.md) for full configuration.
-
----
-
-### `dependencies.valkey.topologySpreadConstraints`
-
-See [Topology Spread Constraints](/truecharts-common/workload#topologyspreadconstraints)
-
-| Field      | Value                                           |
-| ---------- | ----------------------------------------------- |
-| Key        | `dependencies.valkey.topologySpreadConstraints` |
-| Type       | `list of map`                                   |
-| Required   | ❌                                              |
-| Helm `tpl` | ❌                                              |
-| Default    | unset                                           |
-
-See [Topologyspreadconstraints](../../podOptions/topologySpreadConstraints.md) for full configuration.
 
 ---
 

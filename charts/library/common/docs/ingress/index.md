@@ -66,20 +66,6 @@ Additional annotations as a list of name and value pairs, merged into the annota
 
 ---
 
-### `ingress.$name.autoLink`
-
-Auto-link flag for this ingress. The templates do not read this key, so it has no effect.
-
-| Field      | Value                    |
-| ---------- | ------------------------ |
-| Key        | `ingress.$name.autoLink` |
-| Type       | `boolean`                |
-| Required   | ❌                       |
-| Helm `tpl` | ❌                       |
-| Default    | unset                    |
-
----
-
 ### `ingress.$name.certificateIssuer`
 
 Certificate issuer for this ingress. The templates read `certificateIssuer` per TLS entry (`tls.$item.certificateIssuer`), so this key has no effect.

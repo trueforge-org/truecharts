@@ -68,38 +68,6 @@ See [Addons](addons/) for full configuration.
 
 ---
 
-### `common.args`
-
-See [args](/truecharts-common/workload/podSpec/containers/args#args)
-
-| Field      | Value                         |
-| ---------- | ----------------------------- |
-| Key        | `common.args`                 |
-| Type       | `map, string, list of string` |
-| Required   | ❌                            |
-| Helm `tpl` | ❌                            |
-| Default    | unset                         |
-
-See [Args](workload/podSpec/containers/args.md) for full configuration.
-
----
-
-### `common.automountServiceAccountToken`
-
-See [Automount Service Account Token](/truecharts-common/workload#automountserviceaccounttoken)
-
-| Field      | Value                                 |
-| ---------- | ------------------------------------- |
-| Key        | `common.automountServiceAccountToken` |
-| Type       | `boolean`                             |
-| Required   | ❌                                    |
-| Helm `tpl` | ❌                                    |
-| Default    | unset                                 |
-
-See [Automountserviceaccounttoken](workload/podSpec/automountServiceAccountToken.md) for full configuration.
-
----
-
 ### `common.certificate`
 
 Define certificates
@@ -161,22 +129,6 @@ Image `codeserverImage`, selected by containers with `imageSelector: codeserverI
 | Default    | unset                    |
 
 See [Codeserverimage](images.md) for full configuration.
-
----
-
-### `common.command`
-
-See [command](/truecharts-common/workload/podSpec/containers/command)
-
-| Field      | Value                         |
-| ---------- | ----------------------------- |
-| Key        | `common.command`              |
-| Type       | `map, string, list of string` |
-| Required   | ❌                            |
-| Helm `tpl` | ❌                            |
-| Default    | unset                         |
-
-See [Command](workload/podSpec/containers/command.md) for full configuration.
 
 ---
 
@@ -260,22 +212,6 @@ See [Credentials](credentials.md) for full configuration.
 
 ---
 
-### `common.defaultSpread`
-
-Sets some default topology spread constraints for good spread of pods across nodes.
-
-| Field      | Value                  |
-| ---------- | ---------------------- |
-| Key        | `common.defaultSpread` |
-| Type       | `boolean`              |
-| Required   | ❌                     |
-| Helm `tpl` | ❌                     |
-| Default    | unset                  |
-
-See [Defaultspread](workload/podSpec/defaultSpread.md) for full configuration.
-
----
-
 ### `common.dependencies`
 
 Services the app needs, like a database or cache, deployed with the chart. See [Dependencies](/truecharts-common/dependencies).
@@ -305,86 +241,6 @@ Run the containers with a sleep command instead of the app, to debug them.
 | Default    | unset                   |
 
 See [Diagnosticmode](diagnosticMode.md) for full configuration.
-
----
-
-### `common.dnsConfig`
-
-See [DNS Config](/truecharts-common/workload#dnsconfig)
-
-| Field      | Value              |
-| ---------- | ------------------ |
-| Key        | `common.dnsConfig` |
-| Type       | `map`              |
-| Required   | ❌                 |
-| Helm `tpl` | ❌                 |
-| Default    | unset              |
-
-See [Dnsconfig](podOptions/dnsConfig.md) for full configuration.
-
----
-
-### `common.dnsPolicy`
-
-See [DNS Policy](/truecharts-common/workload#dnspolicy)
-
-| Field      | Value              |
-| ---------- | ------------------ |
-| Key        | `common.dnsPolicy` |
-| Type       | `string`           |
-| Required   | ❌                 |
-| Helm `tpl` | ❌                 |
-| Default    | unset              |
-
-See [Dnspolicy](workload/podSpec/dnsPolicy.md) for full configuration.
-
----
-
-### `common.enableServiceLinks`
-
-See [Enable Service Links](/truecharts-common/workload#enableservicelinks)
-
-| Field      | Value                       |
-| ---------- | --------------------------- |
-| Key        | `common.enableServiceLinks` |
-| Type       | `boolean`                   |
-| Required   | ❌                          |
-| Helm `tpl` | ❌                          |
-| Default    | unset                       |
-
-See [Enableservicelinks](workload/podSpec/enableServiceLinks.md) for full configuration.
-
----
-
-### `common.env`
-
-See [env](/truecharts-common/workload/podSpec/containers/env)
-
-| Field      | Value        |
-| ---------- | ------------ |
-| Key        | `common.env` |
-| Type       | `map, null`  |
-| Required   | ❌           |
-| Helm `tpl` | ❌           |
-| Default    | unset        |
-
-See [Env](workload/podSpec/containers/env.md) for full configuration.
-
----
-
-### `common.envFrom`
-
-See [envFrom](/truecharts-common/workload/podSpec/containers/envFrom)
-
-| Field      | Value            |
-| ---------- | ---------------- |
-| Key        | `common.envFrom` |
-| Type       | `list of map`    |
-| Required   | ❌               |
-| Helm `tpl` | ❌               |
-| Default    | unset            |
-
-See [Envfrom](workload/podSpec/containers/envFrom.md) for full configuration.
 
 ---
 
@@ -425,38 +281,6 @@ common:
   extraTpl:
     []
 ```
-
----
-
-### `common.fallbackDefaults`
-
-The fallback defaults are used when a value is not defined in the chart. - See more info about fallbackDefaults [documentation](/truecharts-common/global/fallbackDefaults)
-
-| Field      | Value                     |
-| ---------- | ------------------------- |
-| Key        | `common.fallbackDefaults` |
-| Type       | `map`                     |
-| Required   | ❌                        |
-| Helm `tpl` | ❌                        |
-| Default    | unset                     |
-
-See [Fallbackdefaults](global/fallbackDefaults.md) for full configuration.
-
----
-
-### `common.fixedEnv`
-
-See [fixedEnv](/truecharts-common/workload/podSpec/containers/fixedEnv)
-
-| Field      | Value             |
-| ---------- | ----------------- |
-| Key        | `common.fixedEnv` |
-| Type       | `map`             |
-| Required   | ❌                |
-| Helm `tpl` | ❌                |
-| Default    | unset             |
-
-See [Fixedenv](workload/podSpec/containers/fixedEnv.md) for full configuration.
 
 ---
 
@@ -521,86 +345,6 @@ Image `gluetunImage`, selected by containers with `imageSelector: gluetunImage`.
 | Default    | unset                 |
 
 See [Gluetunimage](images.md) for full configuration.
-
----
-
-### `common.hostAliases`
-
-See [Host Aliases](/truecharts-common/workload#hostaliases)
-
-| Field      | Value                |
-| ---------- | -------------------- |
-| Key        | `common.hostAliases` |
-| Type       | `list, string`       |
-| Required   | ❌                   |
-| Helm `tpl` | ❌                   |
-| Default    | unset                |
-
-See [Hostaliases](podOptions/hostAliases.md) for full configuration.
-
----
-
-### `common.hostIPC`
-
-See [Host IPC](/truecharts-common/workload#hostipc)
-
-| Field      | Value            |
-| ---------- | ---------------- |
-| Key        | `common.hostIPC` |
-| Type       | `boolean`        |
-| Required   | ❌               |
-| Helm `tpl` | ❌               |
-| Default    | unset            |
-
-See [Hostipc](workload/podSpec/hostIPC.md) for full configuration.
-
----
-
-### `common.hostNetwork`
-
-See [Host Network](/truecharts-common/workload#hostnetwork)
-
-| Field      | Value                |
-| ---------- | -------------------- |
-| Key        | `common.hostNetwork` |
-| Type       | `boolean`            |
-| Required   | ❌                   |
-| Helm `tpl` | ❌                   |
-| Default    | unset                |
-
-See [Hostnetwork](workload/podSpec/hostNetwork.md) for full configuration.
-
----
-
-### `common.hostPID`
-
-See [Host PID](/truecharts-common/workload#hostpid)
-
-| Field      | Value            |
-| ---------- | ---------------- |
-| Key        | `common.hostPID` |
-| Type       | `boolean`        |
-| Required   | ❌               |
-| Helm `tpl` | ❌               |
-| Default    | unset            |
-
-See [Hostpid](workload/podSpec/hostPID.md) for full configuration.
-
----
-
-### `common.hostUsers`
-
-See [Host Users](/truecharts-common/workload#hostusers)
-
-| Field      | Value              |
-| ---------- | ------------------ |
-| Key        | `common.hostUsers` |
-| Type       | `boolean`          |
-| Required   | ❌                 |
-| Helm `tpl` | ❌                 |
-| Default    | unset              |
-
-See [Hostusers](workload/podSpec/hostUsers.md) for full configuration.
 
 ---
 
@@ -697,20 +441,6 @@ Image `kubectlImage`, selected by containers with `imageSelector: kubectlImage`.
 | Default    | unset                 |
 
 See [Kubectlimage](images.md) for full configuration.
-
----
-
-### `common.lifecycle`
-
-Not read by common. Set the lifecycle of a container in `workload.<name>.podSpec.containers.<name>.lifecycle`.
-
-| Field      | Value              |
-| ---------- | ------------------ |
-| Key        | `common.lifecycle` |
-| Type       | `map`              |
-| Required   | ❌                 |
-| Helm `tpl` | ❌                 |
-| Default    | unset              |
 
 ---
 
@@ -871,22 +601,6 @@ Create Network Policy objects
 | Default    | unset                  |
 
 See [Networkpolicy](networkpolicy/) for full configuration.
-
----
-
-### `common.nodeSelector`
-
-See [Node Selector](/truecharts-common/workload#nodeselector)
-
-| Field      | Value                 |
-| ---------- | --------------------- |
-| Key        | `common.nodeSelector` |
-| Type       | `map`                 |
-| Required   | ❌                    |
-| Helm `tpl` | ❌                    |
-| Default    | unset                 |
-
-See [Nodeselector](podOptions/nodeSelector.md) for full configuration.
 
 ---
 
@@ -1250,38 +964,6 @@ See [Priorityclass](priorityClass.md) for full configuration.
 
 ---
 
-### `common.priorityClassName`
-
-See [Priority Class Name](/truecharts-common/workload#priorityclassname)
-
-| Field      | Value                      |
-| ---------- | -------------------------- |
-| Key        | `common.priorityClassName` |
-| Type       | `string`                   |
-| Required   | ❌                         |
-| Helm `tpl` | ❌                         |
-| Default    | unset                      |
-
-See [Priorityclassname](workload/podSpec/priorityClassName.md) for full configuration.
-
----
-
-### `common.probes`
-
-Does **not** apply to `initContainers` See [probes](/truecharts-common/workload/podSpec/containers/probes)
-
-| Field      | Value           |
-| ---------- | --------------- |
-| Key        | `common.probes` |
-| Type       | `map`           |
-| Required   | ❌              |
-| Helm `tpl` | ❌              |
-| Default    | unset           |
-
-See [Probes](workload/podSpec/containers/probes/) for full configuration.
-
----
-
 ### `common.rbac`
 
 Create rbac objects.
@@ -1314,22 +996,6 @@ See [Resources](workload/podSpec/containers/resources.md) for full configuration
 
 ---
 
-### `common.restartPolicy`
-
-See [Restart Policy](/truecharts-common/workload#restartpolicy)
-
-| Field      | Value                  |
-| ---------- | ---------------------- |
-| Key        | `common.restartPolicy` |
-| Type       | `string`               |
-| Required   | ❌                     |
-| Helm `tpl` | ❌                     |
-| Default    | unset                  |
-
-See [Restartpolicy](workload/podSpec/restartPolicy.md) for full configuration.
-
----
-
 ### `common.route`
 
 Gateway API routes, keyed by name.
@@ -1343,38 +1009,6 @@ Gateway API routes, keyed by name.
 | Default    | unset          |
 
 See [Route](route/) for full configuration.
-
----
-
-### `common.runtimeClassName`
-
-See [Runtime Class Name](/truecharts-common/workload#runtimeclassname)
-
-| Field      | Value                     |
-| ---------- | ------------------------- |
-| Key        | `common.runtimeClassName` |
-| Type       | `string`                  |
-| Required   | ❌                        |
-| Helm `tpl` | ❌                        |
-| Default    | unset                     |
-
-See [Runtimeclassname](workload/podSpec/runtimeClassName.md) for full configuration.
-
----
-
-### `common.schedulerName`
-
-See [Scheduler Name](/truecharts-common/workload#schedulername)
-
-| Field      | Value                  |
-| ---------- | ---------------------- |
-| Key        | `common.schedulerName` |
-| Type       | `string`               |
-| Required   | ❌                     |
-| Helm `tpl` | ❌                     |
-| Default    | unset                  |
-
-See [Schedulername](workload/podSpec/schedulerName.md) for full configuration.
 
 ---
 
@@ -1442,22 +1076,6 @@ See [Serviceaccount](serviceAccount.md) for full configuration.
 
 ---
 
-### `common.shareProcessNamespace`
-
-See [Share Process Namespace](/truecharts-common/workload#shareprocessnamespace)
-
-| Field      | Value                          |
-| ---------- | ------------------------------ |
-| Key        | `common.shareProcessNamespace` |
-| Type       | `boolean`                      |
-| Required   | ❌                             |
-| Helm `tpl` | ❌                             |
-| Default    | unset                          |
-
-See [Shareprocessnamespace](workload/podSpec/shareProcessNamespace.md) for full configuration.
-
----
-
 ### `common.storageClass`
 
 Define storage classes
@@ -1487,70 +1105,6 @@ Image `tailscaleImage`, selected by containers with `imageSelector: tailscaleIma
 | Default    | unset                   |
 
 See [Tailscaleimage](images.md) for full configuration.
-
----
-
-### `common.termination`
-
-See [termination](/truecharts-common/workload/container/termination)
-
-| Field      | Value                |
-| ---------- | -------------------- |
-| Key        | `common.termination` |
-| Type       | `map`                |
-| Required   | ❌                   |
-| Helm `tpl` | ❌                   |
-| Default    | unset                |
-
-See [Termination](workload/container/termination.md) for full configuration.
-
----
-
-### `common.terminationGracePeriodSeconds`
-
-See [Termination Grace Period Seconds](/truecharts-common/workload#terminationgraceperiodseconds)
-
-| Field      | Value                                  |
-| ---------- | -------------------------------------- |
-| Key        | `common.terminationGracePeriodSeconds` |
-| Type       | `integer, string`                      |
-| Required   | ❌                                     |
-| Helm `tpl` | ❌                                     |
-| Default    | unset                                  |
-
-See [Terminationgraceperiodseconds](workload/terminationGracePeriodSeconds.md) for full configuration.
-
----
-
-### `common.tolerations`
-
-See [Tolerations](/truecharts-common/workload#tolerations)
-
-| Field      | Value                |
-| ---------- | -------------------- |
-| Key        | `common.tolerations` |
-| Type       | `list of map`        |
-| Required   | ❌                   |
-| Helm `tpl` | ❌                   |
-| Default    | unset                |
-
-See [Tolerations](podOptions/tolerations.md) for full configuration.
-
----
-
-### `common.topologySpreadConstraints`
-
-See [Topology Spread Constraints](/truecharts-common/workload#topologyspreadconstraints)
-
-| Field      | Value                              |
-| ---------- | ---------------------------------- |
-| Key        | `common.topologySpreadConstraints` |
-| Type       | `list of map`                      |
-| Required   | ❌                                 |
-| Helm `tpl` | ❌                                 |
-| Default    | unset                              |
-
-See [Topologyspreadconstraints](podOptions/topologySpreadConstraints.md) for full configuration.
 
 ---
 

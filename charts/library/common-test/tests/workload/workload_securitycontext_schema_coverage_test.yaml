@@ -14,8 +14,6 @@ tests:
           fsGroup: 1000
           seccompProfile:
             type: RuntimeDefault
-        pod:
-          fsgroup: 1000
       workload:
         my-workload:
           enabled: true
@@ -71,19 +69,16 @@ tests:
       - failedTemplate:
           errorPattern: "at '/securityContext/container/seccompProfile': additional properties 'unknownKey' not allowed"
 
-  - it: should fail on unknown keys, fsgroup below the minimum and incomplete sysctls in securityContext pod
+  - it: should fail on unknown keys and incomplete sysctls in securityContext pod
     set:
       securityContext:
         pod:
           unknownKey: value
-          fsgroup: -1
           sysctls:
             - unknownKey: value
     asserts:
       - failedTemplate:
           errorPattern: "at '/securityContext/pod': additional properties 'unknownKey' not allowed"
-      - failedTemplate:
-          errorPattern: "at '/securityContext/pod/fsgroup': minimum: got -1, want 0"
       - failedTemplate:
           errorPattern: "at '/securityContext/pod/sysctls/0': additional properties 'unknownKey' not allowed"
       - failedTemplate:

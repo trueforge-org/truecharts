@@ -70,7 +70,6 @@ global:
     - name: ''
   minNodePort: 0
   stopAll: false
-  ignoreIsStopped: true
   podCIDR: ''
   svcCIDR: ''
 namespace: ''
@@ -115,7 +114,6 @@ securityContext:
     sysctls:
     - name: ''
       value: ''
-    fsgroup: 33
 resources:
   limits:
     cpu: ''
@@ -3405,7 +3403,6 @@ service:
         type: ''
         hostPort: 0
         nodePort: 0
-        protcol: ''
         appProtocol: ''
     targetSelector: ''
     clusterIP: ''
@@ -4999,7 +4996,6 @@ ingress:
       comm: ''
       my-service2: ''
     certificateIssuer: ''
-    autoLink: true
     annotationsList:
     - name: ''
       value: ''
@@ -7117,7 +7113,6 @@ redis:
   username: ''
   redisUsername: ''
   password: ''
-hostNetwork: true
 mongodb:
   enabled: true
   mongodbUsername: ''
@@ -7129,10 +7124,6 @@ clickhouse:
   clickhouseDatabase: ''
   password: ''
 password: ''
-env:
-  DBNAME: ''
-  DBTYPE: ''
-  MY_VAR: ''
 memcached:
   enabled: true
   password: ''
@@ -7284,6 +7275,8 @@ cron: ''
 someTimezone: ''
 command:
 - ''
+env:
+  MY_VAR: ''
 fixedEnv:
   TZ: ''
 probes:
@@ -7308,6 +7301,7 @@ hostAliases:
   hostnames:
   - ''
 hostIPC: false
+hostNetwork: false
 hostPID: false
 hostUsers: false
 nodeSelector:
