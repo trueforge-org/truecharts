@@ -97,4 +97,5 @@ workload:
             VALIDATE: "false"
           probes:
             startup:
-              failureThreshold: 360
+              spec:
+                failureThreshold: 360
