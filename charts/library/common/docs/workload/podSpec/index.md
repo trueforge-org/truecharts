@@ -19,6 +19,8 @@ title: Pod Spec
 
 - [Container](/truecharts-common/workload/podSpec/containers)
 - [Init Containers](/truecharts-common/workload/podSpec/initContainers)
+- [dnsConfig](/truecharts-common/workload/podSpec/dnsConfig)
+- [tolerations](/truecharts-common/workload/podSpec/tolerations)
 - [securityContext](/truecharts-common/workload/podSpec/securityContext)
 - [hostAliases](/truecharts-common/workload/podSpec/hostAliases)
 
@@ -427,7 +429,7 @@ See [hostAliases](/truecharts-common/workload/podSpec/hostAliases) for all keys 
 | Field | Value |
 | --- | --- |
 | Key | `workload.$name.podSpec.hostAliases` |
-| Type | `list of map` |
+| Type | `list of map or string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | unset |
@@ -452,7 +454,7 @@ DNS policy of the pods (`dnsPolicy`): `ClusterFirst`, `ClusterFirstWithHostNet`,
 
 Extra DNS settings of the pods (`dnsConfig`). Overrides `podOptions.dnsConfig` for this workload.
 
-See [dnsConfig](/truecharts-common/podOptions/dnsConfig) for all keys of this object.
+See [dnsConfig](/truecharts-common/workload/podSpec/dnsConfig) for all keys of this object.
 
 | Field | Value |
 | --- | --- |
@@ -468,7 +470,7 @@ See [dnsConfig](/truecharts-common/podOptions/dnsConfig) for all keys of this ob
 
 Taints the pods tolerate (`tolerations`). Overrides `podOptions.tolerations` for this workload.
 
-See [tolerations](/truecharts-common/podOptions/tolerations) for all keys of this object.
+See [tolerations](/truecharts-common/workload/podSpec/tolerations) for all keys of this object.
 
 | Field | Value |
 | --- | --- |

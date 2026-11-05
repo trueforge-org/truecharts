@@ -22,7 +22,7 @@ Extra entries for the `/etc/hosts` file of the pods (`hostAliases`). Overrides `
 | Field | Value |
 | --- | --- |
 | Key | `workload.$name.podSpec.hostAliases` |
-| Type | `list of map` |
+| Type | `list of map or string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | unset |

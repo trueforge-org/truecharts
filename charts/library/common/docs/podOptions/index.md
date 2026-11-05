@@ -174,7 +174,7 @@ See [hostAliases](/truecharts-common/workload/podSpec/hostAliases) for all keys 
 | Field | Value |
 | --- | --- |
 | Key | `podOptions.hostAliases` |
-| Type | `list of map` |
+| Type | `list of map or string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | `[]` |

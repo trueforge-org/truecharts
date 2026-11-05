@@ -231,20 +231,101 @@
             "x-helm-tpl": true
           },
           "dnsConfig": {
-            "allOf": [
-              {
-                "$ref": "../podOptions/dnsConfig.json"
+            "type": "object",
+            "properties": {
+              "nameservers": {
+                "type": "array",
+                "description": "IP addresses of extra DNS servers, at most 3. Added to the servers of `dnsPolicy`.",
+                "x-helm-tpl": "On each entry",
+                "examples": [
+                  [
+                    "1.1.1.1"
+                  ]
+                ]
+              },
+              "searches": {
+                "type": "array",
+                "description": "Extra DNS search domains, at most 6. Added to the search domains of `dnsPolicy`.",
+                "x-helm-tpl": "On each entry",
+                "examples": [
+                  [
+                    "example.com"
+                  ]
+                ]
+              },
+              "options": {
+                "type": "array",
+                "description": "Resolver options of the pods, eg `ndots`.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the resolver option, eg `ndots`.",
+                      "x-helm-tpl": true,
+                      "x-docs-required": true,
+                      "examples": [
+                        "ndots"
+                      ]
+                    },
+                    "value": {
+                      "type": "string",
+                      "description": "Value of the resolver option.",
+                      "x-helm-tpl": true,
+                      "examples": [
+                        "2"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "A resolver option, with a name and an optional value."
+                }
               }
-            ],
+            },
+            "additionalProperties": false,
             "description": "Extra DNS settings of the pods (`dnsConfig`). Overrides `podOptions.dnsConfig` for this workload."
           },
           "tolerations": {
-            "allOf": [
-              {
-                "$ref": "../podOptions/tolerations.json"
-              }
-            ],
-            "description": "Taints the pods tolerate (`tolerations`). Overrides `podOptions.tolerations` for this workload."
+            "type": "array",
+            "description": "Taints the pods tolerate (`tolerations`). Overrides `podOptions.tolerations` for this workload.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "operator": {
+                  "type": "string",
+                  "description": "How the taint is matched: `Exists` matches any value of the key, `Equal` requires `value` to be equal.",
+                  "x-helm-tpl": true,
+                  "x-docs-required": true,
+                  "examples": [
+                    "Equal"
+                  ]
+                },
+                "key": {
+                  "type": "string",
+                  "description": "Key of the taint. Required when `operator` is `Equal`.",
+                  "x-helm-tpl": true
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Value of the taint. Required when `operator` is `Equal`, and must be empty when it is `Exists`.",
+                  "x-helm-tpl": true
+                },
+                "effect": {
+                  "type": "string",
+                  "description": "Effect of the taint to tolerate: `NoSchedule`, `PreferNoSchedule` or `NoExecute`. All effects match when empty.",
+                  "x-helm-tpl": true
+                },
+                "tolerationSeconds": {
+                  "type": "number",
+                  "description": "Seconds the pod stays bound to a node with a `NoExecute` taint before it is evicted. Only applies to the `NoExecute` effect.",
+                  "examples": [
+                    300
+                  ]
+                }
+              },
+              "additionalProperties": false,
+              "description": "A toleration of a node taint."
+            }
           },
           "runtimeClassName": {
             "$ref": "podSpec/runtimeClassName.json",
@@ -370,7 +451,7 @@
         ]
       },
       "completions": {
-        "type": "integer",
+        "type": "number",
         "description": "Number of pods that must finish successfully for a Job to complete (`completions`).",
         "x-docs-appliesTo": [
           "CronJob",

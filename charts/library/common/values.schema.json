@@ -131,7 +131,7 @@
   },
   "ingressMiddlewares": {
    "$ref": "#/definitions/ingressMiddlewares.ingressMiddlewares",
-   "description": "Ingress middlewares (Traefik Middleware objects), keyed by ingress controller and then by name. See [middlewares](/truecharts-common/middlewares)."
+   "description": "Ingress middlewares (Traefik Middleware objects), keyed by ingress controller and then by name. See [middlewares](/truecharts-common/ingressMiddlewares)."
   },
   "persistence": {
    "$ref": "#/definitions/persistence.persistence",
@@ -2005,7 +2005,7 @@
        "$ref": "#/definitions/workload.podSpec.containers.env"
       }
      ],
-     "description": "Environment variables of the PostgreSQL instances, keyed by name. See [env](/truecharts-common/container/env).",
+     "description": "Environment variables of the PostgreSQL instances, keyed by name. See [env](/truecharts-common/workload/podSpec/containers/env).",
      "default": {}
     },
     "envFrom": {
@@ -2049,7 +2049,7 @@
       },
       "additionalProperties": false
      },
-     "description": "ConfigMaps and Secrets whose keys become environment variables of the PostgreSQL instances. See [envFrom](/truecharts-common/container/envFrom).",
+     "description": "ConfigMaps and Secrets whose keys become environment variables of the PostgreSQL instances. See [envFrom](/truecharts-common/workload/podSpec/containers/envFrom).",
      "default": {}
     },
     "instances": {
@@ -6226,7 +6226,7 @@
     },
     "fallbackDefaults": {
      "$ref": "#/definitions/global.fallbackDefaults",
-     "description": "Defaults used when a value is not set on the object itself. See [fallbackDefaults](/truecharts-common/fallbackDefaults).",
+     "description": "Defaults used when a value is not set on the object itself. See [fallbackDefaults](/truecharts-common/global/fallbackDefaults).",
      "type": "object"
     },
     "traefik": {
@@ -7287,7 +7287,7 @@
           "$ref": "#/definitions/ingress.traefik"
          }
         ],
-        "description": "Traefik integration, see [Traefik](/truecharts-common/ingress/traefik).",
+        "description": "Traefik integration, see [Traefik](/truecharts-common/ingress/integrations/traefik).",
         "type": "object",
         "default": {}
        },
@@ -7297,7 +7297,7 @@
           "$ref": "#/definitions/ingress.integrations.homepage"
          }
         ],
-        "description": "Homepage dashboard integration, see [Homepage](/truecharts-common/ingress/homepage).",
+        "description": "Homepage dashboard integration, see [Homepage](/truecharts-common/ingress/integrations/homepage).",
         "type": "object",
         "default": {}
        },
@@ -7307,7 +7307,7 @@
           "$ref": "#/definitions/ingress.certManager"
          }
         ],
-        "description": "cert-manager integration, see [cert-manager](/truecharts-common/ingress/certManager).",
+        "description": "cert-manager integration, see [cert-manager](/truecharts-common/ingress/integrations/certManager).",
         "type": "object",
         "default": {}
        },
@@ -7399,7 +7399,7 @@
          }
         },
         "additionalProperties": false,
-        "description": "ingress-nginx integration, see [nginx](/truecharts-common/ingress/nginx)."
+        "description": "ingress-nginx integration, see [nginx](/truecharts-common/ingress/integrations/nginx)."
        }
       },
       "additionalProperties": false,
@@ -7799,11 +7799,11 @@
       "additionalProperties": false,
       "description": "A middleware applied to the Ingress."
      },
-     "description": "Same as `middlewares`, but meant for the chart developer to add middlewares specific to this Ingress. See [Traefik](/truecharts-common/ingress/traefik).",
+     "description": "Same as `middlewares`, but meant for the chart developer to add middlewares specific to this Ingress. See [Traefik](/truecharts-common/ingress/integrations/traefik).",
      "default": []
     }
    },
-   "description": "Traefik integration. Adds annotations and middlewares to the Ingress, see [Traefik](/truecharts-common/ingress/traefik).",
+   "description": "Traefik integration. Adds annotations and middlewares to the Ingress, see [Traefik](/truecharts-common/ingress/integrations/traefik).",
    "additionalProperties": false
   },
   "ingressMiddlewares.ingressMiddlewares": {
@@ -7943,7 +7943,7 @@
          "strip-prefix-regex",
          "strip-prefix"
         ],
-        "description": "Type of the Middleware, for example `basicAuth` or `redirectScheme`. It decides which `data` keys are used, see [Traefik middlewares](/truecharts-common/middlewares/traefik)."
+        "description": "Type of the Middleware, for example `basicAuth` or `redirectScheme`. It decides which `data` keys are used, see [Traefik middlewares](/truecharts-common/ingressMiddlewares/traefik)."
        },
        "namespace": {
         "allOf": [
@@ -8689,7 +8689,7 @@
     "description": "Middlewares of this provider, keyed by name. Available providers: `traefik`.",
     "default": {}
    },
-   "description": "Traefik Middleware objects, keyed by provider and name. See [Middlewares](/truecharts-common/middlewares)."
+   "description": "Traefik Middleware objects, keyed by provider and name. See [Middlewares](/truecharts-common/ingressMiddlewares)."
   },
   "listener": {
    "type": "object",
@@ -11884,7 +11884,10 @@
    "additionalProperties": false
   },
   "podOptions.hostAliases": {
-   "type": "array",
+   "type": [
+    "array",
+    "string"
+   ],
    "description": "Extra entries for the `/etc/hosts` file of the pods (`hostAliases`), each with an IP and its host names.",
    "items": {
     "type": "object",
@@ -15541,7 +15544,7 @@
     "object",
     "null"
    ],
-   "description": "Environment variables, keyed by name. See [env](/truecharts-common/container/env).",
+   "description": "Environment variables, keyed by name. See [env](/truecharts-common/workload/podSpec/containers/env).",
    "properties": {},
    "additionalProperties": {
     "type": [
@@ -15659,7 +15662,7 @@
     "additionalProperties": false,
     "description": "A ConfigMap or Secret to load the environment variables from. Set one of `configMapRef` or `secretRef`."
    },
-   "description": "ConfigMaps and Secrets whose keys all become environment variables of the container. See [envFrom](/truecharts-common/container/envFrom)."
+   "description": "ConfigMaps and Secrets whose keys all become environment variables of the container. See [envFrom](/truecharts-common/workload/podSpec/containers/envFrom)."
   },
   "workload.podSpec.containers.fixedEnv": {
    "type": "object",
@@ -15711,7 +15714,7 @@
   },
   "workload.podSpec.containers.lifecycle": {
    "type": "object",
-   "description": "Hooks that run when the container starts or before it stops. Does **not** apply to `initContainers`. See [lifecycle](/truecharts-common/container/lifecycle).",
+   "description": "Hooks that run when the container starts or before it stops. Does **not** apply to `initContainers`. See [lifecycle](/truecharts-common/workload/podSpec/containers/lifecycle).",
    "properties": {
     "preStop": {
      "type": "object",
@@ -15826,19 +15829,19 @@
   },
   "workload.podSpec.containers.probes": {
    "type": "object",
-   "description": "Liveness, readiness and startup probes of the container. Does **not** apply to `initContainers`. See [probes](/truecharts-common/container/probes).",
+   "description": "Liveness, readiness and startup probes of the container. Does **not** apply to `initContainers`. See [probes](/truecharts-common/workload/podSpec/containers/probes).",
    "properties": {
     "liveness": {
      "$ref": "#/definitions/workload.podSpec.containers.probes.probe",
-     "description": "Liveness probe. When it fails, Kubernetes restarts the container. See [probe](/truecharts-common/container/probe)."
+     "description": "Liveness probe. When it fails, Kubernetes restarts the container. See [probe](/truecharts-common/workload/podSpec/containers/probe)."
     },
     "readiness": {
      "$ref": "#/definitions/workload.podSpec.containers.probes.probe",
-     "description": "Readiness probe. While it fails, the pod is removed from the endpoints of Services. See [probe](/truecharts-common/container/probe)."
+     "description": "Readiness probe. While it fails, the pod is removed from the endpoints of Services. See [probe](/truecharts-common/workload/podSpec/containers/probe)."
     },
     "startup": {
      "$ref": "#/definitions/workload.podSpec.containers.probes.probe",
-     "description": "Startup probe. The other probes wait until it succeeds, which is useful for slow starting apps. See [probe](/truecharts-common/container/probe)."
+     "description": "Startup probe. The other probes wait until it succeeds, which is useful for slow starting apps. See [probe](/truecharts-common/workload/podSpec/containers/probe)."
     }
    },
    "additionalProperties": false
@@ -15953,7 +15956,7 @@
     }
    },
    "additionalProperties": false,
-   "description": "A probe of the container. See [probe](/truecharts-common/container/probe)."
+   "description": "A probe of the container. See [probe](/truecharts-common/workload/podSpec/containers/probe)."
   },
   "workload.podSpec.containers.resources": {
    "type": "object",
@@ -16147,7 +16150,7 @@
     }
    },
    "additionalProperties": false,
-   "description": "Security context of the container. Overrides `securityContext.container` for this container. See [securityContext](/truecharts-common/container/securityContext)."
+   "description": "Security context of the container. Overrides `securityContext.container` for this container. See [securityContext](/truecharts-common/workload/podSpec/containers/securityContext)."
   },
   "workload.podSpec.dnsPolicy": {
    "type": "string",
@@ -16233,7 +16236,7 @@
     "additionalProperties": false,
     "description": "An init container of the pod. It supports the settings of a container, except `lifecycle`, `primary` and working probes."
    },
-   "description": "Init containers of the pod, keyed by name. They run before the other containers start. See [initContainers](/truecharts-common/container/initContainers)."
+   "description": "Init containers of the pod, keyed by name. They run before the other containers start. See [initContainers](/truecharts-common/workload/podSpec/initContainers)."
   },
   "workload.podSpec.priorityClassName": {
    "type": "string",
@@ -16331,7 +16334,7 @@
          "properties": {
           "env": {
            "$ref": "#/definitions/workload.podSpec.containers.env",
-           "description": "Environment variables of the container, keyed by name. See [env](/truecharts-common/container/env)."
+           "description": "Environment variables of the container, keyed by name. See [env](/truecharts-common/workload/podSpec/containers/env)."
           },
           "resources": {
            "$ref": "#/definitions/workload.podSpec.containers.resources",
@@ -16339,7 +16342,7 @@
           },
           "securityContext": {
            "$ref": "#/definitions/workload.podSpec.containers.securityContext",
-           "description": "Security context of the container. Overrides `securityContext.container` for this container. See [securityContext](/truecharts-common/container/securityContext)."
+           "description": "Security context of the container. Overrides `securityContext.container` for this container. See [securityContext](/truecharts-common/workload/podSpec/containers/securityContext)."
           },
           "enabled": {
            "type": [
@@ -16366,31 +16369,31 @@
           },
           "probes": {
            "$ref": "#/definitions/workload.podSpec.containers.probes",
-           "description": "Liveness, readiness and startup probes of the container. Does **not** apply to `initContainers`. See [probes](/truecharts-common/container/probes)."
+           "description": "Liveness, readiness and startup probes of the container. Does **not** apply to `initContainers`. See [probes](/truecharts-common/workload/podSpec/containers/probes)."
           },
           "command": {
            "$ref": "#/definitions/workload.podSpec.containers.command",
-           "description": "Entrypoint of the container (`command`), which replaces the entrypoint of the image. A single command can be given as a string. See [command](/truecharts-common/container/command)."
+           "description": "Entrypoint of the container (`command`), which replaces the entrypoint of the image. A single command can be given as a string. See [command](/truecharts-common/workload/podSpec/containers/command)."
           },
           "lifecycle": {
            "$ref": "#/definitions/workload.podSpec.containers.lifecycle",
-           "description": "`postStart` and `preStop` hooks of the container. See [lifecycle](/truecharts-common/container/lifecycle)."
+           "description": "`postStart` and `preStop` hooks of the container. See [lifecycle](/truecharts-common/workload/podSpec/containers/lifecycle)."
           },
           "envFrom": {
            "$ref": "#/definitions/workload.podSpec.containers.envFrom",
-           "description": "ConfigMaps and Secrets whose keys all become environment variables of the container. See [envFrom](/truecharts-common/container/envFrom)."
+           "description": "ConfigMaps and Secrets whose keys all become environment variables of the container. See [envFrom](/truecharts-common/workload/podSpec/containers/envFrom)."
           },
           "termination": {
            "$ref": "#/definitions/workload.container.termination",
-           "description": "Where the termination message of the container is read from. See [termination](/truecharts-common/container/termination)."
+           "description": "Where the termination message of the container is read from. See [termination](/truecharts-common/workload/podSpec/containers/termination)."
           },
           "fixedEnv": {
            "$ref": "#/definitions/workload.podSpec.containers.fixedEnv",
-           "description": "Overrides of the environment variables that common sets on every container: `TZ`, `UMASK`, `PUID` and `NVIDIA_CAPS`. See [fixedEnv](/truecharts-common/container/fixedEnv)."
+           "description": "Overrides of the environment variables that common sets on every container: `TZ`, `UMASK`, `PUID` and `NVIDIA_CAPS`. See [fixedEnv](/truecharts-common/workload/podSpec/containers/fixedEnv)."
           },
           "args": {
            "$ref": "#/definitions/workload.podSpec.containers.args",
-           "description": "Arguments of the container (`args`), which replace the `CMD` of the image. A single argument can be given as a string. See [args](/truecharts-common/container/args)."
+           "description": "Arguments of the container (`args`), which replace the `CMD` of the image. A single argument can be given as a string. See [args](/truecharts-common/workload/podSpec/containers/args)."
           },
           "extraArgs": {
            "oneOf": [
@@ -16408,13 +16411,13 @@
           }
          },
          "additionalProperties": false,
-         "description": "A container of the pod. The shared container settings are in [container](/truecharts-common/container)."
+         "description": "A container of the pod. The shared container settings are in [container](/truecharts-common/workload/podSpec/containers)."
         },
         "description": "Containers of the pod, keyed by name."
        },
        "initContainers": {
         "$ref": "#/definitions/workload.podSpec.initContainers",
-        "description": "Init containers of the pod, keyed by name. See [initContainers](/truecharts-common/container/initContainers)."
+        "description": "Init containers of the pod, keyed by name. See [initContainers](/truecharts-common/workload/podSpec/initContainers)."
        },
        "labels": {
         "allOf": [
@@ -16524,20 +16527,91 @@
         "description": "DNS policy of the pods (`dnsPolicy`): `ClusterFirst`, `ClusterFirstWithHostNet`, `Default` or `None`. It is forced to `ClusterFirstWithHostNet` when `hostNetwork` is `true`. Overrides `podOptions.dnsPolicy` for this workload."
        },
        "dnsConfig": {
-        "allOf": [
-         {
-          "$ref": "#/definitions/podOptions.dnsConfig"
+        "type": "object",
+        "properties": {
+         "nameservers": {
+          "type": "array",
+          "description": "IP addresses of extra DNS servers, at most 3. Added to the servers of `dnsPolicy`.",
+          "examples": [
+           [
+            "1.1.1.1"
+           ]
+          ]
+         },
+         "searches": {
+          "type": "array",
+          "description": "Extra DNS search domains, at most 6. Added to the search domains of `dnsPolicy`.",
+          "examples": [
+           [
+            "example.com"
+           ]
+          ]
+         },
+         "options": {
+          "type": "array",
+          "description": "Resolver options of the pods, eg `ndots`.",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string",
+             "description": "Name of the resolver option, eg `ndots`.",
+             "examples": [
+              "ndots"
+             ]
+            },
+            "value": {
+             "type": "string",
+             "description": "Value of the resolver option.",
+             "examples": [
+              "2"
+             ]
+            }
+           },
+           "additionalProperties": false,
+           "description": "A resolver option, with a name and an optional value."
+          }
          }
-        ],
+        },
+        "additionalProperties": false,
         "description": "Extra DNS settings of the pods (`dnsConfig`). Overrides `podOptions.dnsConfig` for this workload."
        },
        "tolerations": {
-        "allOf": [
-         {
-          "$ref": "#/definitions/podOptions.tolerations"
-         }
-        ],
-        "description": "Taints the pods tolerate (`tolerations`). Overrides `podOptions.tolerations` for this workload."
+        "type": "array",
+        "description": "Taints the pods tolerate (`tolerations`). Overrides `podOptions.tolerations` for this workload.",
+        "items": {
+         "type": "object",
+         "properties": {
+          "operator": {
+           "type": "string",
+           "description": "How the taint is matched: `Exists` matches any value of the key, `Equal` requires `value` to be equal.",
+           "examples": [
+            "Equal"
+           ]
+          },
+          "key": {
+           "type": "string",
+           "description": "Key of the taint. Required when `operator` is `Equal`."
+          },
+          "value": {
+           "type": "string",
+           "description": "Value of the taint. Required when `operator` is `Equal`, and must be empty when it is `Exists`."
+          },
+          "effect": {
+           "type": "string",
+           "description": "Effect of the taint to tolerate: `NoSchedule`, `PreferNoSchedule` or `NoExecute`. All effects match when empty."
+          },
+          "tolerationSeconds": {
+           "type": "number",
+           "description": "Seconds the pod stays bound to a node with a `NoExecute` taint before it is evicted. Only applies to the `NoExecute` effect.",
+           "examples": [
+            300
+           ]
+          }
+         },
+         "additionalProperties": false,
+         "description": "A toleration of a node taint."
+        }
        },
        "runtimeClassName": {
         "$ref": "#/definitions/workload.podSpec.runtimeClassName",
@@ -16627,7 +16701,7 @@
       "description": "Number of retries before a Job is marked as failed (`backoffLimit`)."
      },
      "completions": {
-      "type": "integer",
+      "type": "number",
       "description": "Number of pods that must finish successfully for a Job to complete (`completions`)."
      },
      "parallelism": {

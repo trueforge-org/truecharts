@@ -59,7 +59,7 @@ Number of pods that must finish successfully for a Job to complete (`completions
 | Field | Value |
 | --- | --- |
 | Key | `workload.$name.completions` |
-| Type | `int` |
+| Type | `number` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | unset |

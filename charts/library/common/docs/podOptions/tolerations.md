@@ -11,7 +11,6 @@ title: tolerations
 ## Appears in
 
 - `.Values.podOptions.tolerations`
-- `.Values.workload.$name.podSpec.tolerations`
 
 ---
 
