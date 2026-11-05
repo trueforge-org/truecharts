@@ -54,25 +54,19 @@ workload:
           probes:
             liveness:
               enabled: true
-              custom: true
-              spec:
-                exec:
-                  command:
-                    - /bin/check-health
+              type: exec
+              command:
+                - /bin/check-health
             readiness:
               enabled: true
-              custom: true
-              spec:
-                exec:
-                  command:
-                    - /bin/check-health
+              type: exec
+              command:
+                - /bin/check-health
             startup:
               enabled: true
-              custom: true
-              spec:
-                exec:
-                  command:
-                    - /bin/check-health
+              type: exec
+              command:
+                - /bin/check-health
           env:
             DISABLE_IPV6: true
             DB_MYSQL_PORT: 3306
