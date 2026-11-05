@@ -24,35 +24,32 @@ workload:
         main:
           probes:
             liveness:
-              custom: true
               enabled: true
+              type: http
+              path: /actuator/health/livenessState
+              port: 5076
               spec:
                 failureThreshold: 5
-                httpGet:
-                  path: /actuator/health/livenessState
-                  port: main
                 initialDelaySeconds: 30
                 periodSeconds: 10
                 timeoutSeconds: 10
             readiness:
-              custom: true
               enabled: true
+              type: http
+              path: /actuator/health/readinessState
+              port: 5076
               spec:
                 failureThreshold: 5
-                httpGet:
-                  path: /actuator/health/readinessState
-                  port: main
                 initialDelaySeconds: 30
                 periodSeconds: 10
                 timeoutSeconds: 10
             startup:
-              custom: true
               enabled: true
+              type: http
+              path: /actuator/health/readinessState
+              port: 5076
               spec:
                 failureThreshold: 5
-                httpGet:
-                  path: /actuator/health/readinessState
-                  port: main
                 initialDelaySeconds: 30
                 periodSeconds: 10
                 timeoutSeconds: 10
