@@ -28,6 +28,12 @@ tests:
           mountPath: /mnt/volume3
           targetSelectAll: true
           mountPropagation: HostToContainer
+        my-volume4:
+          enabled: true
+          type: emptyDir
+          mountPath: /mnt/volume4
+          targetSelectAll: true
+          mountPropagation: Bidirectional
       workload:
         my-workload:
           enabled: true
@@ -62,4 +68,14 @@ tests:
             mountPath: /mnt/volume1
             subPath: some-sub-path
             mountPropagation: None
+            readOnly: false
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: my-volume4
+            mountPath: /mnt/volume4
+            mountPropagation: Bidirectional
             readOnly: false
