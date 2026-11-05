@@ -28,17 +28,13 @@ workload:
           probes:
             liveness:
               enabled: true
-              ## Set this to true if you wish to specify your own livenessProbe
-              custom: true
-              ## The spec field contains the values for the default livenessProbe.
-              ## If you selected custom: true, this field holds the definition of the livenessProbe.
+              type: exec
+              command:
+                - /usr/bin/env
+                - bash
+                - -c
+                - curl --fail localhost:6969/api/v3/stable/status?apiKey=`IFS=\> && while read -d \< E C; do if [[ $E = "ApiKey" ]]; then echo $C; fi; done < /config/config.xml`
               spec:
-                exec:
-                  command:
-                    - /usr/bin/env
-                    - bash
-                    - -c
-                    - curl --fail localhost:6969/api/v3/stable/status?apiKey=`IFS=\> && while read -d \< E C; do if [[ $E = "ApiKey" ]]; then echo $C; fi; done < /config/config.xml`
                 failureThreshold: 5
                 initialDelaySeconds: 60
                 periodSeconds: 10
