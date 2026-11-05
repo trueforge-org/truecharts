@@ -157,20 +157,6 @@ Define the port dict
 
 ---
 
-### `service.ports.type`
-
-Legacy port-level `type` used in some stable chart values (for example `docker`). The templates ignore this key on ports, set `type` on the service instead (`service.<name>.type`).
-
-| Field      | Value                |
-| ---------- | -------------------- |
-| Key        | `service.ports.type` |
-| Type       | `string`             |
-| Required   | ❌                   |
-| Helm `tpl` | ❌                   |
-| Default    | unset                |
-
----
-
 ## Full Examples
 
 Full examples can be found under each service type

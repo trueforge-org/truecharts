@@ -1,0 +1,76 @@
+# Legacy or wrong keys that charts under charts/stable and charts/incubator still set, but that no template of
+# common reads. The templates of common are leading, so these keys are not in the values schema.
+# test_schema.py leaves them out of a chart's values before it validates the chart, and
+# generate_complete_values_structure.py ignores them, so they do not end up in the schema.
+# Paths are relative to the chart values; `*` matches any one key. Remove an entry once no chart sets the key anymore.
+keys:
+  - path: workload.*.podSpec.type
+    reason: "Misplaced workload-level `type`; common reads `workload.<name>.type`."
+    charts:
+      - intel-gpu-plugin
+  - path: workload.*.podSpec.containers.*.type
+    reason: "Only init containers read a container `type`; the container template ignores it."
+    charts:
+      - multus-cni
+  - path: workload.*.podSpec.containers.*.probes.*.custom
+    reason: "Legacy probe flag from the old common; the probe templates ignore it. Use `type` and `spec`."
+    charts:
+      - dashy
+      - miniflux
+      - mongodb
+      - nginx-proxy-manager
+      - nullserv
+      - nzbhydra
+      - whisparr
+  - path: workload.*.podSpec.containers.*.probes.*.exec
+    reason: "Legacy exec handler; the probe templates ignore it. Use `type: exec` with `command`."
+    charts:
+      - rtorrent-rutorrent
+  - path: workload.*.podSpec.containers.*.probes.*.initialDelaySeconds
+    reason: "Legacy top-level delay; the probe templates ignore it. Use `spec.initialDelaySeconds`."
+    charts:
+      - docker
+  - path: workload.*.podSpec.containers.*.probes.*.failureThreshold
+    reason: "Legacy top-level threshold; the probe templates ignore it. Use `spec.failureThreshold`."
+    charts:
+      - sdtd
+  - path: workload.*.podSpec.containers.*.probes.*.spec.exec
+    reason: "Legacy exec handler; the probe templates ignore it. Use `type: exec` with `command`."
+    charts:
+      - dashy
+      - mongodb
+      - nginx-proxy-manager
+      - whisparr
+  - path: workload.*.podSpec.containers.*.probes.*.spec.httpGet
+    reason: "Legacy HTTP handler; the probe templates ignore it. Use top-level `path` and `port` with `type: http`."
+    charts:
+      - miniflux
+      - nullserv
+      - nzbhydra
+  - path: workload.*.podSpec.initContainers.*.image
+    reason: "The init container template ignores it and reads `imageSelector` instead."
+    charts:
+      - dispatcharr
+  - path: workload.*.podSpec.initContainers.*.name
+    reason: "Ignored; the chart replaces the init container name with a generated name."
+    charts:
+      - dispatcharr
+  - path: securityContext.container.fsGroup
+    reason: "A container security context has no `fsGroup`; it is a pod setting (`securityContext.pod.fsGroup`)."
+    charts:
+      - chevereto
+      - docker
+      - gitea
+      - kasm
+      - n8n
+      - netdata
+      - pgadmin
+      - trilium-notes
+      - weblate
+      - youtubedl-material
+  - path: service.*.ports.*.type
+    reason: "Ports have no `type`; set `type` on the service instead."
+    charts:
+      - docker
+      - mkvcleaver
+      - promcord

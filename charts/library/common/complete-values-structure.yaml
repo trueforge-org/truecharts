@@ -208,15 +208,15 @@ workload:
               spec:
                 periodSeconds: 60
                 failureThreshold: 5
-                httpGet:
-                  path: ''
-                  port: ''
                 initialDelaySeconds: 30
                 timeoutSeconds: 10
+                successThreshold: 1
                 exec:
                   command:
                   - ''
-                successThreshold: 1
+                httpGet:
+                  path: ''
+                  port: 0
               httpHeaders:
                 Host: ''
                 Accept: ''
@@ -225,11 +225,11 @@ workload:
                 X-Number: 2
                 X-Bool: true
               custom: true
-              initialDelaySeconds: 30
+              failureThreshold: 3
+              initialDelaySeconds: 1
               exec:
                 command:
                 - ''
-              failureThreshold: 3
             readiness:
               enabled: true
               type: ''
@@ -239,24 +239,16 @@ workload:
               spec:
                 periodSeconds: 60
                 failureThreshold: 5
+                initialDelaySeconds: 30
+                timeoutSeconds: 10
                 httpGet:
                   path: ''
                   port: ''
-                initialDelaySeconds: 30
-                timeoutSeconds: 10
-                exec:
-                  command:
-                  - ''
                 successThreshold: 5
               httpHeaders:
                 Host: ''
                 Accept: ''
                 Authorization: ''
-              custom: true
-              initialDelaySeconds: 30
-              exec:
-                command:
-                - ''
             startup:
               enabled: true
               type: ''
@@ -267,25 +259,13 @@ workload:
               spec:
                 periodSeconds: 60
                 failureThreshold: 5
-                httpGet:
-                  path: ''
-                  port: ''
                 initialDelaySeconds: 30
                 timeoutSeconds: 10
-                exec:
-                  command:
-                  - ''
                 successThreshold: 1
-              custom: true
-              initialDelaySeconds: 30
               httpHeaders:
                 Host: ''
                 Accept: ''
                 Authorization: ''
-              exec:
-                command:
-                - ''
-              failureThreshold: 0
           env:
             MYSQL_USERNAME: ''
             MYSQL_HOST:
@@ -3036,11 +3016,11 @@ workload:
                 X-Bool: true
           extraArgs:
           - ''
-          type: ''
           fixedEnv:
             TZ: ''
             UMASK: ''
             PUID: ''
+          type: ''
       initContainers:
         objectname:
           enabled: ''
@@ -3127,10 +3107,10 @@ workload:
               enabled: true
       automountServiceAccountToken: true
       hostname: ''
-      type: ''
       restartPolicy: ''
       hostNetwork: true
       terminationGracePeriodSeconds: 3
+      type: ''
       labels:
         pod-label1: ''
         pod-label2: ''
@@ -3400,9 +3380,9 @@ service:
         port: 0
         targetPort: 0
         targetSelector: ''
-        type: ''
         hostPort: 0
         nodePort: 0
+        type: ''
         appProtocol: ''
     targetSelector: ''
     clusterIP: ''

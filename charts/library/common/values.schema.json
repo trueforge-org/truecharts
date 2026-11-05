@@ -12810,10 +12810,6 @@
     "primary": {
      "type": "boolean",
      "description": "Make this the primary port of the service."
-    },
-    "type": {
-     "type": "string",
-     "description": "Legacy port-level `type` used in some stable chart values (for example `docker`). The templates ignore this key on ports, set `type` on the service instead (`service.<name>.type`)."
     }
    },
    "additionalProperties": false
@@ -15006,38 +15002,6 @@
        "type": "integer",
        "minimum": 1,
        "description": "Failed probes in a row before the probe fails."
-      },
-      "exec": {
-       "type": "object",
-       "properties": {
-        "command": {
-         "type": "array",
-         "items": {
-          "type": "string"
-         },
-         "description": "Command to run."
-        }
-       },
-       "additionalProperties": false,
-       "description": "Legacy exec handler set by `stable/dashy`, `stable/mongodb`, `stable/nginx-proxy-manager`, and `stable/whisparr`. The probe templates ignore it. Use top-level `command` with `type: exec` instead."
-      },
-      "httpGet": {
-       "type": "object",
-       "properties": {
-        "path": {
-         "type": "string",
-         "description": "Request path."
-        },
-        "port": {
-         "type": [
-          "integer",
-          "string"
-         ],
-         "description": "Port number or name."
-        }
-       },
-       "additionalProperties": false,
-       "description": "Legacy HTTP handler set by `stable/miniflux`, `stable/nullserv`, and `stable/nzbhydra`. The probe templates ignore it. Use top-level `type`, `path`, and `port` instead."
       }
      },
      "additionalProperties": false,
@@ -15052,34 +15016,6 @@
      "items": {
       "type": "string"
      }
-    },
-    "custom": {
-     "type": "boolean",
-     "description": "Legacy probe flag set by `stable/dashy`, `stable/miniflux`, `stable/mongodb`, `stable/nginx-proxy-manager`, `stable/nullserv`, `stable/nzbhydra`, and `stable/whisparr`. The probe templates ignore it. Use `type` with `path`, `port`, or `command` instead."
-    },
-    "exec": {
-     "type": "object",
-     "properties": {
-      "command": {
-       "type": "array",
-       "items": {
-        "type": "string"
-       },
-       "description": "Command to run."
-      }
-     },
-     "additionalProperties": false,
-     "description": "Legacy exec handler set by `stable/rtorrent-rutorrent`. The probe templates ignore it. Use `type: exec` with `command` instead."
-    },
-    "initialDelaySeconds": {
-     "type": "integer",
-     "minimum": 0,
-     "description": "Legacy top-level delay set by `stable/docker`. The probe templates ignore it. Use `spec.initialDelaySeconds` instead."
-    },
-    "failureThreshold": {
-     "type": "integer",
-     "minimum": 1,
-     "description": "Legacy top-level failure threshold set by the `stable/sdtd` startup probe. The probe templates ignore it. Use `spec.failureThreshold` instead."
     }
    },
    "additionalProperties": false,
@@ -15196,11 +15132,6 @@
     "runAsGroup": {
      "type": "integer",
      "description": "Define the runAsGroup for the container"
-    },
-    "fsGroup": {
-     "type": "integer",
-     "minimum": 0,
-     "description": "Legacy container-level `fsGroup`, set by `stable/chevereto` and `stable/n8n` as `securityContext.container.fsGroup`. The container security context template does not read it, and `fsGroup` is a pod-level field in Kubernetes. Set `fsGroup` under `securityContext.pod` instead."
     },
     "readOnlyRootFilesystem": {
      "type": "boolean",
@@ -15335,14 +15266,6 @@
      "termination": {
       "$ref": "#/definitions/workload.container.termination",
       "description": "Define termination for the init container"
-     },
-     "image": {
-      "type": "string",
-      "description": "Legacy init container `image`, set by `stable/dispatcharr`. The init container template ignores it and reads `imageSelector` instead."
-     },
-     "name": {
-      "type": "string",
-      "description": "Ignored. The chart replaces the init container name with a generated name."
      },
      "probes": {
       "$ref": "#/definitions/workload.podSpec.containers.probes",
@@ -15528,10 +15451,6 @@
             }
            ],
            "description": "Define extraArg(s). Those are appended **after** the `args`."
-          },
-          "type": {
-           "type": "string",
-           "description": "Legacy container `type`. Only `initContainers` read it, so the container template ignores it here. Set by `stable/multus-cni` on its `cleanup` container."
           }
          },
          "additionalProperties": false,
@@ -15724,10 +15643,6 @@
        "securityContext": {
         "$ref": "#/definitions/workload.podSpec.securityContext",
         "description": "Pod-level security context."
-       },
-       "type": {
-        "type": "string",
-        "description": "Legacy misplacement of the workload-level `type`. `stable/intel-gpu-plugin` sets `podSpec.type: DaemonSet`. The templates read only the workload-level `type` and ignore this key."
        }
       },
       "additionalProperties": false,

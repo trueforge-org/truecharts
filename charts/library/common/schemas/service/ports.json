@@ -76,10 +76,6 @@
     "primary": {
       "type": "boolean",
       "description": "Make this the primary port of the service."
-    },
-    "type": {
-      "type": "string",
-      "description": "Legacy port-level `type` used in some stable chart values (for example `docker`). The templates ignore this key on ports, set `type` on the service instead (`service.<name>.type`)."
     }
   },
   "additionalProperties": false

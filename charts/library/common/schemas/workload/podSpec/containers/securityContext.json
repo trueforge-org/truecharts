@@ -39,11 +39,6 @@
       "description": "Define the runAsGroup for the container",
       "x-docs-required": true
     },
-    "fsGroup": {
-      "type": "integer",
-      "minimum": 0,
-      "description": "Legacy container-level `fsGroup`, set by `stable/chevereto` and `stable/n8n` as `securityContext.container.fsGroup`. The container security context template does not read it, and `fsGroup` is a pod-level field in Kubernetes. Set `fsGroup` under `securityContext.pod` instead."
-    },
     "readOnlyRootFilesystem": {
       "type": "boolean",
       "description": "Define the readOnlyRootFilesystem for the container",
