@@ -3287,6 +3287,9 @@ vpa:
           memory: 0
         controlledResources:
         - ''
+  vpa-ns:
+    enabled: true
+    namespace: ''
 hpa:
   main:
     enabled: false
@@ -3348,6 +3351,16 @@ hpa:
           type: ''
           value: 30
           averageValue: 30
+  hpa-ns:
+    enabled: true
+    namespace: ''
+    metrics:
+    - type: ''
+      resource:
+        name: ''
+        target:
+          type: ''
+          averageUtilization: 80
   vpa-name:
     enabled: true
   hpa-name:
@@ -4128,6 +4141,7 @@ volumeSnapshots:
     enabled: ''
     source:
       persistentVolumeClaimName: ''
+    namespace: ''
 imagePullSecret:
   image-secret-name:
     enabled: true
@@ -4355,6 +4369,8 @@ configmap:
     - name: ''
       value: ''
     namespace: ''
+    binaryData:
+      file.bin: ''
 configMapsFromFolder:
   enabled: false
   basePath: ''
@@ -4546,6 +4562,7 @@ serviceAccount:
   my-sa:
     enabled: true
     primary: true
+    automountServiceAccountToken: true
   my-other-sa:
     enabled: true
     primary: false

@@ -73,6 +73,16 @@
         "default": false,
         "x-helm-tpl": true,
         "x-docs-required": true
+      },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "special/namespaces.json"
+          }
+        ],
+        "description": "Define the namespace for this object",
+        "default": "",
+        "x-helm-tpl": true
       }
     },
     "additionalProperties": false,

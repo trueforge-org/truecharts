@@ -66,6 +66,28 @@ Additional annotations as a list of name and value pairs, merged into the annota
 
 ---
 
+### `serviceAccount.$name.automountServiceAccountToken`
+
+Sets automountServiceAccountToken on the ServiceAccount
+
+| Field      | Value                                               |
+| ---------- | --------------------------------------------------- |
+| Key        | `serviceAccount.$name.automountServiceAccountToken` |
+| Type       | `boolean`                                           |
+| Required   | ❌                                                  |
+| Helm `tpl` | ❌                                                  |
+| Default    | `false`                                             |
+
+Example
+
+```yaml
+serviceAccount:
+  $name:
+    automountServiceAccountToken: false
+```
+
+---
+
 ### `serviceAccount.$name.enabled`
 
 Enables or Disables the serviceAccount

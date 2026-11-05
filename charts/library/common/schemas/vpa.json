@@ -175,6 +175,16 @@
         "additionalProperties": false,
         "description": "Limits of the recommendations, per container.",
         "default": {}
+      },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "special/namespaces.json"
+          }
+        ],
+        "description": "Define the namespace for this object",
+        "default": "",
+        "x-helm-tpl": true
       }
     },
     "additionalProperties": false,

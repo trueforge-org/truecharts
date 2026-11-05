@@ -36,3 +36,19 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "at '/configmap/my-configmap': (additional properties|additionalProperties)"
+
+  - it: should render configmap with binaryData when binaryData is set
+    set:
+      configmap:
+        my-configmap:
+          enabled: true
+          binaryData:
+            file.bin: aGVsbG8=
+    asserts:
+      - isKind:
+          of: ConfigMap
+        documentIndex: 0
+      - equal:
+          path: binaryData["file.bin"]
+          value: aGVsbG8=
+        documentIndex: 0

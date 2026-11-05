@@ -125,6 +125,28 @@ Additional labels as a list of name and value pairs, merged into the labels
 
 ---
 
+### `volumeSnapshots.$name.namespace`
+
+Define the namespace for this object
+
+| Field      | Value                             |
+| ---------- | --------------------------------- |
+| Key        | `volumeSnapshots.$name.namespace` |
+| Type       | `string`                          |
+| Required   | ❌                                |
+| Helm `tpl` | ✅                                |
+| Default    | `""`                              |
+
+Example
+
+```yaml
+volumeSnapshots:
+  $name:
+    namespace: ""
+```
+
+---
+
 ### `volumeSnapshots.$name.source`
 
 Define the source of the volume snapshot At least one of the following keys must be defined
