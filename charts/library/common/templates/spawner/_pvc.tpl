@@ -212,7 +212,7 @@
       {{- end -}}
 
       {{- if eq $objectData.type "iscsi" -}}
-        {{- if or $objectData.iscsi.authSession $objectData.iscsi.authDiscovery -}}
+        {{- if and $objectData.iscsi (or $objectData.iscsi.authSession $objectData.iscsi.authDiscovery) -}}
           {{/* Set the name of the PVC */}}
           {{- $_ := set $objectData "name" (include "tc.v1.common.lib.storage.pvc.name" (dict "rootCtx" $ "objectName" $name "objectData" $objectData)) -}}
           {{- $_ := set $objectData "shortName" $name -}}

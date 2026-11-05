@@ -22,7 +22,7 @@ Define securityContext for the container
 | Field      | Value                                         |
 | ---------- | --------------------------------------------- |
 | Key        | `workload.podSpec.containers.securityContext` |
-| Type       | `map, null`                                   |
+| Type       | `map`                                         |
 | Required   | ❌                                            |
 | Helm `tpl` | ❌                                            |
 | Default    | unset                                         |
@@ -197,7 +197,7 @@ Define the seccompProfile for the container.
 | Field      | Value                                                        |
 | ---------- | ------------------------------------------------------------ |
 | Key        | `workload.podSpec.containers.securityContext.seccompProfile` |
-| Type       | `map, null`                                                  |
+| Type       | `map`                                                        |
 | Required   | ✅                                                           |
 | Helm `tpl` | ❌                                                           |
 | Default    | `{"type": "RuntimeDefault"}`                                 |

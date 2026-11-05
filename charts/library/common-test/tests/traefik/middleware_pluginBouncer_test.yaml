@@ -177,4 +177,4 @@ tests:
               enabled: some-value
     asserts:
       - failedTemplate:
-          errorMessage: Middleware (plugin-bouncer) - Expected [enabled] to be a boolean, but got [string]
+          errorPattern: "at '/ingressMiddlewares/traefik/my-middleware1/data/enabled'"

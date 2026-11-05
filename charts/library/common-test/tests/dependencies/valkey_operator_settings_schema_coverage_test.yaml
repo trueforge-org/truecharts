@@ -1,0 +1,231 @@
+suite: valkey operator settings schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+- it: should render valkey operator users
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          users:
+          - name: app
+            enabled: true
+            passwordSecret:
+              name: app-secret
+              keys:
+              - pw
+            nopass: false
+            resetpass: false
+            commands:
+              allow:
+              - '@read'
+              - get
+              - config|get
+              - cluster-info.x|a.b
+              deny:
+              - '@dangerous'
+              - a-b_c
+            keys:
+              readWrite:
+              - a:*
+              readOnly:
+              - b:*
+              writeOnly:
+              - c:*
+            channels:
+              patterns:
+              - ch*
+            permissions: +@all
+          - name: nopw
+            nopass: true
+  asserts:
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    isKind:
+      of: ValkeyCluster
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.users[1].name
+      value: app
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.users[1].commands.deny
+      value:
+      - '@dangerous'
+      - a-b_c
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.users[2].nopass
+      value: true
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.users[1].channels.patterns
+      value:
+      - ch*
+- it: should render valkey operator imagePullSecrets, podMetadata and PodDisruptionBudget
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          imagePullSecrets:
+          - a
+          - name: b
+          podMetadata:
+            labels:
+              a: b
+            annotations:
+              c: d
+          podDisruptionBudget:
+            mode: Cluster
+  asserts:
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    isKind:
+      of: ValkeyCluster
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.imagePullSecrets
+      value:
+      - name: a
+      - name: b
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.podMetadata.labels.a
+      value: b
+- it: should render valkey operator disabled PodDisruptionBudget and Hostname discovery
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          podDisruptionBudget:
+            mode: Disabled
+          networking:
+            clusterDomain: cluster.local
+            discovery:
+              preferredEndpointType: Hostname
+  asserts:
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    isKind:
+      of: ValkeyCluster
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.podDisruptionBudget.mode
+      value: Disabled
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.networking.discovery.preferredEndpointType
+      value: Hostname
+- it: should render valkey operator IP discovery
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          networking:
+            discovery:
+              preferredEndpointType: IP
+  asserts:
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    isKind:
+      of: ValkeyCluster
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.networking.discovery.preferredEndpointType
+      value: IP
+- it: should render valkey operator with an empty discovery type, StatefulSet and a number config
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          workloadType: StatefulSet
+          terminationGracePeriodSeconds: null
+          config:
+            maxclients: 100
+          networking:
+            discovery:
+              preferredEndpointType: ''
+  asserts:
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    isKind:
+      of: ValkeyCluster
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.workloadType
+      value: StatefulSet
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.config.maxclients
+      value: '100'
+- it: should render valkey operator Deployment workloadType without persistence
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          workloadType: Deployment
+          persistence:
+            enabled: false
+            size: 1Gi
+            storageClass: x
+            retain: false
+  asserts:
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    isKind:
+      of: ValkeyCluster
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.workloadType
+      value: Deployment

@@ -71,20 +71,6 @@ Reference an entry from a Secret.
 
 ---
 
-### `workload.podSpec.containers.env.$name.value`
-
-Direct value for the environment variable.
-
-| Field      | Value                                         |
-| ---------- | --------------------------------------------- |
-| Key        | `workload.podSpec.containers.env.$name.value` |
-| Type       | `string`                                      |
-| Required   | ❌                                            |
-| Helm `tpl` | ❌                                            |
-| Default    | unset                                         |
-
----
-
 ## Full Examples
 
 ```yaml

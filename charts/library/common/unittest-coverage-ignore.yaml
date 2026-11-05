@@ -1,4 +1,8 @@
 # Items that check_unittest_schema_coverage.py may skip, because a unittest cannot reach them.
 # Every entry needs the item id as the script prints it ("<schema file>#<pointer> <kind>") and a reason.
 # Entries that are unknown or already covered make the check fail, so remove them when they are no longer needed.
-ignore: []
+ignore:
+  - item: "values.schema.source.json#/properties/lifecycle key"
+    reason: "Not read by common: kept in the schema only so existing charts that still set a root lifecycle keep validating; setting it in a unittest would make it a library root key."
+  - item: "values.schema.source.json#/properties/lifecycle type:object"
+    reason: "Not read by common: kept in the schema only so existing charts that still set a root lifecycle keep validating; setting it in a unittest would make it a library root key."

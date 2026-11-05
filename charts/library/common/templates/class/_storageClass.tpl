@@ -43,7 +43,7 @@ provisioner: {{ $objectData.provisioner }}
 {{- with $objectData.parameters }}
 parameters: {{/* TODO: */}}
   {{- range $k, $v := . -}}
-    {{- $val := tpl $v $rootCtx }}
+    {{- $val := tpl ($v | toString) $rootCtx }}
   {{ $k }}: {{ include "tc.v1.common.helper.makeIntOrNoop" $val | quote }}
   {{- end -}}
 {{- end }}

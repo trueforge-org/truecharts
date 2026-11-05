@@ -284,9 +284,11 @@ Settings of the iSCSI target, for `type: iscsi`.
 | ---------- | ------------------------- |
 | Key        | `persistence.$name.iscsi` |
 | Type       | `map`                     |
-| Required   | ✅                        |
+| Required   | ❌                        |
 | Helm `tpl` | ❌                        |
 | Default    | unset                     |
+
+See [$name.iscsi](special/iscsi.md) for full configuration.
 
 ---
 

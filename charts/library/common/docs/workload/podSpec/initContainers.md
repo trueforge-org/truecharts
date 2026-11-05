@@ -188,7 +188,7 @@ Define securityContext for the init container
 | Field      | Value                                                   |
 | ---------- | ------------------------------------------------------- |
 | Key        | `workload.podSpec.initContainers.$name.securityContext` |
-| Type       | `map, null`                                             |
+| Type       | `map`                                                   |
 | Required   | ❌                                                      |
 | Helm `tpl` | ❌                                                      |
 | Default    | unset                                                   |

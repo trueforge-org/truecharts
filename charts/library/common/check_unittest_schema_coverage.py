@@ -124,9 +124,19 @@ def expand(node: Node, seen: frozenset[str] = frozenset()) -> list[Node]:
     return nodes
 
 
+# Annotation keywords do not validate anything, any other keyword (required, enum, bounds, ...) does
+ANNOTATION_KEYWORDS = ("description", "title", "default", "examples", "$comment", "deprecated", "$id", "$schema")
+
+
 def is_passthrough(node: Node) -> bool:
-    """A schema with only a description is passed on as is, so nothing below it is checked."""
-    return not any(k in node.schema for k in STRUCTURE_KEYWORDS)
+    """A schema with only annotations is passed on as is, so nothing below it is checked.
+
+    A schema that only validates (for example just `required`) is not a passthrough, as the
+    sibling schemas of the same allOf still have to be walked.
+    """
+    if any(k in node.schema for k in STRUCTURE_KEYWORDS):
+        return False
+    return all(k in ANNOTATION_KEYWORDS for k in node.schema)
 
 
 def branch_keyword(schema: dict) -> str | None:

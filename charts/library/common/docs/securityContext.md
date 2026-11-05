@@ -36,7 +36,7 @@ Default security context for all containers.
 | Field      | Value                       |
 | ---------- | --------------------------- |
 | Key        | `securityContext.container` |
-| Type       | `map, null`                 |
+| Type       | `map`                       |
 | Required   | ❌                          |
 | Helm `tpl` | ❌                          |
 | Default    | unset                       |

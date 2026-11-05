@@ -314,22 +314,49 @@
                 "type": "null"
               },
               {
-                "type": "string"
-              },
-              {
-                "type": "number"
-              },
-              {
-                "type": "integer"
-              },
-              {
-                "type": "boolean"
-              },
-              {
-                "type": "object"
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the group. Defaults to the key."
+                    },
+                    "rules": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "alert": {
+                            "type": "string",
+                            "description": "Name of the alert."
+                          },
+                          "expr": {
+                            "type": "string",
+                            "description": "PromQL expression."
+                          },
+                          "for": {
+                            "type": "string",
+                            "description": "How long the expression has to be true before the alert fires."
+                          }
+                        },
+                        "additionalProperties": false,
+                        "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules.$item`."
+                      },
+                      "description": "Rules of the group."
+                    },
+                    "additionalrules": {
+                      "type": "array",
+                      "description": "Additional rules of the group, next to `rules`."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item`."
+                },
+                "description": "Groups keyed by name. The key is used as the group name when `name` is not set."
               }
             ],
-            "description": "Additional groups of rules, as a list."
+            "description": "Additional groups of rules, as a list or as a map keyed by group name."
           }
         },
         "additionalProperties": false,

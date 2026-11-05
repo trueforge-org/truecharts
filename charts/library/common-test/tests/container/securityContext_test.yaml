@@ -918,7 +918,7 @@ tests:
                 probes: *probes
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected non-empty [.Values.securityContext.container]
+          errorPattern: "at '/securityContext/container': got null, want object"
 
   - it: should fail with readOnlyRootFilesystem not a bool
     set:
@@ -1066,7 +1066,7 @@ tests:
                 probes: *probes
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected [securityContext.seccompProfile] to be defined
+          errorPattern: "at '/securityContext/container/seccompProfile': got null, want object"
 
   - it: should fail with invalid seccompProfile
     set:

@@ -73,7 +73,7 @@ Individual keys to fetch from the provider, supports Helm `tpl`.
 | Field      | Value                       |
 | ---------- | --------------------------- |
 | Key        | `externalSecret.$name.data` |
-| Type       | `list, string`              |
+| Type       | `list of map`               |
 | Required   | ❌                          |
 | Helm `tpl` | ❌                          |
 | Default    | `[]`                        |

@@ -1,0 +1,105 @@
+suite: ingress schema coverage
+templates:
+  - common.yaml
+chart:
+  appVersion: v9.9.9
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render ingress with autoLink, required, certificateIssuer and overrideService
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 80
+      ingress:
+        my-ingress:
+          enabled: true
+          primary: true
+          autoLink: true
+          required: true
+          certificateIssuer: some-issuer
+          hosts: &hosts
+            - host: test-host
+              paths:
+                - path: /test-path
+                  overrideService:
+                    name: some-other-service
+                    expandObjectName: "false"
+                    port: "8080"
+          tls:
+            - hosts:
+                - test-host
+              secretName: some-secret
+          integrations: &integrations
+            traefik:
+              enabled: false
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: Ingress
+      - documentIndex: 1
+        equal:
+          path: spec.rules[0].http.paths[0].backend.service.name
+          value: some-other-service
+
+  - it: should render ingress with the certManager integration
+    set:
+      service: *service
+      ingress:
+        my-ingress:
+          enabled: true
+          primary: true
+          hosts: *hosts
+          integrations:
+            traefik:
+              enabled: false
+            certManager:
+              enabled: true
+              certificateIssuer: some-issuer
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: Ingress
+
+  - it: should fail on unknown keys in ingress, hosts, paths, overrideService, tls and integrations
+    set:
+      service: *service
+      ingress:
+        my-ingress:
+          enabled: true
+          primary: true
+          unknownKey: value
+          hosts:
+            - unknownKey: value
+              paths:
+                - unknownKey: value
+                  overrideService:
+                    unknownKey: value
+          tls:
+            - unknownKey: value
+          integrations:
+            unknownKey: value
+            certManager:
+              unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/ingress/my-ingress': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/ingress/my-ingress/hosts/0': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/ingress/my-ingress/hosts/0/paths/0': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/ingress/my-ingress/hosts/0/paths/0/overrideService': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/ingress/my-ingress/tls/0': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/ingress/my-ingress/integrations': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/ingress/my-ingress/integrations/certManager': additional properties 'unknownKey' not allowed"

@@ -503,14 +503,14 @@ Seconds a CronJob can start late.
 
 ### `workload.$name.strategy`
 
-Define the strategy of the workload
+Define the strategy type of the workload. Set `maxUnavailable`, `maxSurge` and `partition` under `rollingUpdate`
 
 A single replica Deployment uses `Recreate` if it mounts a `ReadWriteOnce` or `ReadWriteOncePod` volume. See `allowRollingUpdateWithRWO` to keep `RollingUpdate` with `ReadWriteOnce`.
 
 | Field      | Value                                   |
 | ---------- | --------------------------------------- |
 | Key        | `workload.$name.strategy`               |
-| Type       | `string, map`                           |
+| Type       | `string`                                |
 | Required   | ❌                                      |
 | Helm `tpl` | ❌                                      |
 | Default    | unset                                   |

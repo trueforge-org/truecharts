@@ -1,0 +1,182 @@
+suite: service schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render service session affinity, ip family and selector settings
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+      service:
+        my-service:
+          enabled: "true"
+          primary: true
+          type: ClusterIP
+          expandObjectName: "true"
+          appProtocol: https
+          sharedKey: my-shared-key
+          ipFamilyPolicy: SingleStack
+          sessionAffinity: ClientIP
+          sessionAffinityConfig:
+            clientIP:
+              timeoutSeconds: 100
+          selectorLabels:
+            app: my-app
+          ports:
+            port-name:
+              enabled: true
+              primary: true
+              port: 12345
+              hostPort: "12345"
+              protcol: tcp
+              type: web
+        other-service:
+          enabled: true
+          type: ClusterIP
+          ipFamilyPolicy: RequireDualStack
+          sessionAffinity: "None"
+          externalIPs: []
+          ports:
+            port-name:
+              enabled: true
+              primary: true
+              port: 12345
+        third-service:
+          enabled: true
+          type: "{{ \"ClusterIP\" }}"
+          ports:
+            port-name:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - hasDocuments:
+          count: 4
+      - documentIndex: 1
+        isKind:
+          of: Service
+      - documentIndex: 1
+        equal:
+          path: spec.sessionAffinity
+          value: ClientIP
+      - documentIndex: 1
+        equal:
+          path: spec.selector
+          value:
+            app: my-app
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-other-service
+        isKind:
+          of: Service
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-other-service
+        equal:
+          path: spec.ipFamilyPolicy
+          value: RequireDualStack
+
+  - it: should render service with useSlice as an object
+    set:
+      workload: *workload
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          type: ExternalIP
+          externalIP: 1.1.1.1
+          useSlice: {}
+          ports:
+            port-name:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: Service
+
+  - it: should fail on unknown keys in service, session affinity config and integrations
+    set:
+      workload: *workload
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          unknownKey: value
+          sessionAffinityConfig:
+            unknownKey: value
+            clientIP:
+              unknownKey: value
+          integrations:
+            unknownKey: value
+            cilium:
+              unknownKey: value
+            metallb:
+              unknownKey: value
+            traefik:
+              unknownKey: value
+          ports:
+            port-name:
+              unknownKey: value
+              port: 0
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/service/my-service': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/service/my-service/sessionAffinityConfig': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/service/my-service/sessionAffinityConfig/clientIP': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/service/my-service/integrations': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/service/my-service/integrations/cilium': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/service/my-service/integrations/metallb': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/service/my-service/integrations/traefik': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/service/my-service/ports/port-name': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/service/my-service/ports/port-name/port': minimum: got 0, want 1"
+
+  - it: should fail on values matching no branch in service type, ip family policy and session affinity
+    set:
+      workload: *workload
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          type: Unknown
+          ipFamilyPolicy: Unknown
+          sessionAffinity: Unknown
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/service/my-service/type': 'oneOf' failed, none matched"
+      - failedTemplate:
+          errorPattern: "at '/service/my-service/ipFamilyPolicy': 'oneOf' failed, none matched"
+      - failedTemplate:
+          errorPattern: "at '/service/my-service/sessionAffinity': 'oneOf' failed, none matched"
+
+  - it: should fail on externalIPs set to a string
+    set:
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          type: ClusterIP
+          externalIPs: 10.0.0.1
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 80
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/service/my-service/externalIPs'"

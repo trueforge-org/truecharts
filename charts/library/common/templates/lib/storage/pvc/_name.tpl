@@ -16,10 +16,9 @@ objectData: The object data to be used to render the Pod.
   {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $renderedName) -}}
 
   {{- $modes := (list "smb" "nfs") -}}
+  {{- $size := $objectData.size | default $rootCtx.Values.global.fallbackDefaults.pvcSize -}}
   {{- if $objectData.static -}}
     {{- if and $objectData.static.mode (mustHas $objectData.static.mode $modes) -}}
-
-      {{- $size := $objectData.size | default $rootCtx.Values.global.fallbackDefaults.pvcSize -}}
 
       {{/* Create a unique name taking into account server and share,
           without this, changing one of those values is not possible */}}
@@ -30,7 +29,7 @@ objectData: The object data to be used to render the Pod.
       {{- end -}}
 
     {{- else if eq $objectData.static.mode "custom" -}}
-      {{- $hashValues = (printf "%s-%v" $size $objectData.csi) -}}
+      {{- $hashValues = (printf "%s-%s-%s" $size $objectData.static.provisioner $objectData.static.driver) -}}
     {{- end -}}
   {{- end -}}
 

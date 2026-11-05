@@ -1,0 +1,142 @@
+suite: vpa schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render vpa update policy with every update mode and eviction requirements
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+      vpa:
+        vpa-a:
+          enabled: "true"
+          updatePolicy:
+            updateMode: Auto
+            minReplicas: 2
+            evictionRequirements:
+              - resources:
+                  - cpu
+                  - memory
+                changeRequirement: TargetHigherThanRequests
+        vpa-b:
+          enabled: true
+          updatePolicy:
+            updateMode: "Off"
+        vpa-c:
+          enabled: true
+          updatePolicy:
+            updateMode: Initial
+        vpa-d:
+          enabled: true
+          updatePolicy:
+            updateMode: Recreate
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: VerticalPodAutoscaler
+      - documentIndex: 1
+        equal:
+          path: spec.updatePolicy.updateMode
+          value: Auto
+      - documentIndex: 2
+        equal:
+          path: spec.updatePolicy.updateMode
+          value: "Off"
+      - documentIndex: 3
+        equal:
+          path: spec.updatePolicy.updateMode
+          value: Initial
+      - documentIndex: 4
+        equal:
+          path: spec.updatePolicy.updateMode
+          value: Recreate
+
+  - it: should render vpa resource policy with numeric allowed quantities and requests only
+    set:
+      workload: *workload
+      vpa:
+        my-vpa:
+          enabled: true
+          resourcePolicy:
+            containerPolicies:
+              - containerName: "*"
+                mode: Auto
+                controlledValues: RequestsOnly
+                minAllowed:
+                  cpu: 1
+                  memory: 1024
+                maxAllowed:
+                  cpu: 2
+                  memory: 2048
+                controlledResources:
+                  - cpu
+                  - memory
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: VerticalPodAutoscaler
+      - documentIndex: 1
+        equal:
+          path: spec.resourcePolicy.containerPolicies[0].controlledValues
+          value: RequestsOnly
+
+  - it: should fail on unknown keys and bad enums in vpa
+    set:
+      workload: *workload
+      vpa:
+        my-vpa:
+          enabled: true
+          unknownKey: value
+          updatePolicy:
+            unknownKey: value
+            updateMode: Sometimes
+            minReplicas: 0
+            evictionRequirements:
+              - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/vpa/my-vpa': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/vpa/my-vpa/updatePolicy': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/vpa/my-vpa/updatePolicy/updateMode': value must be one of 'Auto', 'Off', 'Initial', 'Recreate'"
+      - failedTemplate:
+          errorPattern: "at '/vpa/my-vpa/updatePolicy/minReplicas': minimum: got 0, want 1"
+      - failedTemplate:
+          errorPattern: "at '/vpa/my-vpa/updatePolicy/evictionRequirements/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys and bad enums in vpa resource policy
+    set:
+      workload: *workload
+      vpa:
+        my-vpa:
+          enabled: true
+          resourcePolicy:
+            unknownKey: value
+            containerPolicies:
+              - unknownKey: value
+                mode: Sometimes
+                controlledValues: Everything
+                minAllowed:
+                  unknownKey: value
+                maxAllowed:
+                  unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/vpa/my-vpa/resourcePolicy': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/vpa/my-vpa/resourcePolicy/containerPolicies/0': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/vpa/my-vpa/resourcePolicy/containerPolicies/0/mode': value must be one of 'Auto', 'Off'"
+      - failedTemplate:
+          errorPattern: "at '/vpa/my-vpa/resourcePolicy/containerPolicies/0/controlledValues': value must be one of 'RequestsAndLimits', 'RequestsOnly'"
+      - failedTemplate:
+          errorPattern: "at '/vpa/my-vpa/resourcePolicy/containerPolicies/0/minAllowed': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/vpa/my-vpa/resourcePolicy/containerPolicies/0/maxAllowed': additional properties 'unknownKey' not allowed"

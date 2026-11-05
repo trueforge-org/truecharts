@@ -1,0 +1,92 @@
+suite: ingress nginx schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render ingress nginx integration with themePark, themepark and auth settings
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 80
+      ingress:
+        my-ingress:
+          enabled: "true"
+          primary: true
+          hosts: &hosts
+            - host: test-host
+              paths:
+                - path: /test-path
+          integrations:
+            traefik:
+              enabled: false
+            nginx:
+              enabled: "true"
+              themePark:
+                enabled: "true"
+                css: https://example.com/theme.css
+              themepark:
+                enabled: "false"
+                css: https://example.com/other.css
+              auth:
+                type: authentik
+                internalHost: internal.host
+                externalHost: external.host
+                responseHeaders:
+                  - X-authentik-username
+        my-ingress2:
+          enabled: true
+          hosts: *hosts
+          integrations:
+            traefik:
+              enabled: false
+            nginx:
+              enabled: true
+              themepark:
+                enabled: false
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: Ingress
+      - documentIndex: 1
+        isSubset:
+          path: metadata.annotations
+          content:
+            nginx.ingress.kubernetes.io/auth-response-headers: X-authentik-username
+      - documentIndex: 2
+        isKind:
+          of: Ingress
+
+  - it: should fail on unknown keys in ingress nginx integration
+    set:
+      service: *service
+      ingress:
+        my-ingress:
+          enabled: true
+          primary: true
+          hosts: *hosts
+          integrations:
+            nginx:
+              unknownKey: value
+              themePark:
+                unknownKey: value
+              themepark:
+                unknownKey: value
+              auth:
+                unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/ingress/my-ingress/integrations/nginx': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/ingress/my-ingress/integrations/nginx/themePark': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/ingress/my-ingress/integrations/nginx/themepark': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/ingress/my-ingress/integrations/nginx/auth': additional properties 'unknownKey' not allowed"

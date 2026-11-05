@@ -51,7 +51,6 @@
   "TZ": {
    "$ref": "#/definitions/TZ",
    "description": "Timezone that is used everywhere applicable, unless overridden at the container level",
-   "type": "object",
    "default": "UTC"
   },
   "diagnosticMode": {
@@ -453,47 +452,8 @@
     },
     "vpn": {
      "type": "object",
-     "properties": {
-      "type": {
-       "type": "string",
-       "description": "Legacy vpn add-on type. Not used, rendering fails when `addons.vpn` is set."
-      },
-      "env": {
-       "type": "object",
-       "additionalProperties": {
-        "type": "string"
-       },
-       "description": "Legacy environment variables for the vpn add-on. Not used, rendering fails when `addons.vpn` is set."
-      },
-      "targetSelector": {
-       "type": "array",
-       "items": {
-        "type": "string"
-       },
-       "description": "Legacy workloads for the vpn add-on. Not used, rendering fails when `addons.vpn` is set."
-      },
-      "config": {
-       "type": "string",
-       "description": "Legacy configuration for the vpn add-on. Not used, rendering fails when `addons.vpn` is set."
-      },
-      "scripts": {
-       "type": "object",
-       "properties": {
-        "up": {
-         "type": "string",
-         "description": "Legacy script run when the vpn connects. Not used, rendering fails when `addons.vpn` is set."
-        },
-        "down": {
-         "type": "string",
-         "description": "Legacy script run when the vpn disconnects. Not used, rendering fails when `addons.vpn` is set."
-        }
-       },
-       "additionalProperties": false,
-       "description": "Legacy scripts for the vpn add-on. Not used, rendering fails when `addons.vpn` is set."
-      }
-     },
      "additionalProperties": false,
-     "description": "Removed vpn add-on. Setting `addons.vpn` fails rendering (see `templates/values/_deprecations.tpl`), use `addons.gluetun` or `addons.tailscale` instead."
+     "description": "Removed vpn add-on. Only an empty object is accepted, any key is rejected, use `addons.gluetun` or `addons.tailscale` instead."
     }
    },
    "additionalProperties": false,
@@ -1192,14 +1152,13 @@
       "minLength": 1
      },
      "hosts": {
-      "type": [
-       "array",
-       "string"
-      ],
-      "properties": {},
-      "additionalProperties": false,
+      "type": "array",
       "description": "Define the hosts for this certificate",
-      "default": "false"
+      "default": "false",
+      "items": {
+       "type": "string",
+       "description": "Host (DNS name) of the certificate"
+      }
      }
     },
     "additionalProperties": false,
@@ -1336,10 +1295,7 @@
       "default": true
      },
      "data": {
-      "type": [
-       "object",
-       "string"
-      ],
+      "type": "object",
       "properties": {},
       "additionalProperties": {
        "type": "string",
@@ -5262,10 +5218,7 @@
       "description": "The Kubernetes Secret created by the External Secrets Operator."
      },
      "data": {
-      "type": [
-       "array",
-       "string"
-      ],
+      "type": "array",
       "items": {
        "type": "object",
        "properties": {
@@ -6588,17 +6541,6 @@
        "description": "Configuration for `hpa.main.metrics.$item`."
       },
       "description": "Metrics the number of replicas is calculated from."
-     },
-     "workload": {
-      "type": "object",
-      "properties": {
-       "type": {
-        "type": "string",
-        "description": "Kind of the targeted workload."
-       }
-      },
-      "additionalProperties": false,
-      "description": "Set by the library to a copy of the workload this HPA targets. Any value set by the user is overwritten."
      }
     },
     "additionalProperties": false,
@@ -7986,13 +7928,8 @@
           "description": "Maximum size of a request body sent to the plugin, in bytes."
          },
          "enabled": {
-          "type": [
-           "boolean",
-           "string"
-          ],
-          "properties": {},
-          "additionalProperties": false,
-          "description": "Enable the middleware."
+          "type": "boolean",
+          "description": "Enable the plugin. Must be a boolean."
          },
          "logLevel": {
           "type": "string",
@@ -8968,22 +8905,49 @@
           "type": "null"
          },
          {
-          "type": "string"
-         },
-         {
-          "type": "number"
-         },
-         {
-          "type": "integer"
-         },
-         {
-          "type": "boolean"
-         },
-         {
-          "type": "object"
+          "type": "object",
+          "additionalProperties": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string",
+             "description": "Name of the group. Defaults to the key."
+            },
+            "rules": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "alert": {
+                "type": "string",
+                "description": "Name of the alert."
+               },
+               "expr": {
+                "type": "string",
+                "description": "PromQL expression."
+               },
+               "for": {
+                "type": "string",
+                "description": "How long the expression has to be true before the alert fires."
+               }
+              },
+              "additionalProperties": false,
+              "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules.$item`."
+             },
+             "description": "Rules of the group."
+            },
+            "additionalrules": {
+             "type": "array",
+             "description": "Additional rules of the group, next to `rules`."
+            }
+           },
+           "additionalProperties": false,
+           "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item`."
+          },
+          "description": "Groups keyed by name. The key is used as the group name when `name` is not set."
          }
         ],
-        "description": "Additional groups of rules, as a list."
+        "description": "Additional groups of rules, as a list or as a map keyed by group name."
        }
       },
       "additionalProperties": false,
@@ -9749,6 +9713,9 @@
       "targetSelectAll": {
        "type": "boolean",
        "description": "Define persistence objects"
+      },
+      "iscsi": {
+       "$ref": "#/definitions/special.iscsi"
       }
      },
      "additionalProperties": false,
@@ -9790,6 +9757,9 @@
       "targetSelectAll": {
        "type": "boolean",
        "description": "Define persistence objects"
+      },
+      "iscsi": {
+       "$ref": "#/definitions/special.iscsi"
       }
      },
      "additionalProperties": false,
@@ -9831,6 +9801,9 @@
       "targetSelectAll": {
        "type": "boolean",
        "description": "Define persistence objects"
+      },
+      "iscsi": {
+       "$ref": "#/definitions/special.iscsi"
       }
      },
      "additionalProperties": false,
@@ -9872,6 +9845,9 @@
       "targetSelectAll": {
        "type": "boolean",
        "description": "Define persistence objects"
+      },
+      "iscsi": {
+       "$ref": "#/definitions/special.iscsi"
       }
      },
      "additionalProperties": false,
@@ -9913,6 +9889,9 @@
       "targetSelectAll": {
        "type": "boolean",
        "description": "Define persistence objects"
+      },
+      "iscsi": {
+       "$ref": "#/definitions/special.iscsi"
       }
      },
      "additionalProperties": false,
@@ -9954,6 +9933,9 @@
       "targetSelectAll": {
        "type": "boolean",
        "description": "Define persistence objects"
+      },
+      "iscsi": {
+       "$ref": "#/definitions/special.iscsi"
       }
      },
      "additionalProperties": false,
@@ -10006,91 +9988,7 @@
       "description": "Define a list of items for secret."
      },
      "iscsi": {
-      "type": "object",
-      "properties": {
-       "authSession": {
-        "type": "object",
-        "properties": {
-         "password": {
-          "type": "string",
-          "description": "CHAP password of the target."
-         },
-         "username": {
-          "type": "string",
-          "description": "CHAP user name of the target."
-         },
-         "usernameInitiator": {
-          "type": "string",
-          "description": "CHAP user name of the initiator."
-         },
-         "passwordInitiator": {
-          "type": "string",
-          "description": "CHAP password of the initiator."
-         }
-        },
-        "additionalProperties": false,
-        "description": "CHAP authentication of the iSCSI session."
-       },
-       "authDiscovery": {
-        "type": "object",
-        "properties": {
-         "username": {
-          "type": "string",
-          "description": "CHAP user name of the target."
-         },
-         "password": {
-          "type": "string",
-          "description": "CHAP password of the target."
-         },
-         "usernameInitiator": {
-          "type": "string",
-          "description": "CHAP user name of the initiator."
-         },
-         "passwordInitiator": {
-          "type": "string",
-          "description": "CHAP password of the initiator."
-         }
-        },
-        "additionalProperties": false,
-        "description": "CHAP authentication of the discovery session."
-       },
-       "fsType": {
-        "type": "string",
-        "description": "File system of the volume, eg `ext4`."
-       },
-       "targetPortal": {
-        "type": "string",
-        "description": "Portal of the target, as `host:port`."
-       },
-       "iqn": {
-        "type": "string",
-        "description": "iSCSI qualified name of the target."
-       },
-       "lun": {
-        "type": [
-         "integer",
-         "string"
-        ],
-        "description": "LUN number of the target."
-       },
-       "initiatorName": {
-        "type": "string",
-        "description": "iSCSI initiator name of the node."
-       },
-       "iscsiInterface": {
-        "type": "string",
-        "description": "iSCSI interface of the node, eg `default`."
-       },
-       "portals": {
-        "type": "array",
-        "items": {
-         "type": "string"
-        },
-        "description": "Additional portals of the target, as `host:port`."
-       }
-      },
-      "additionalProperties": false,
-      "description": "Settings of the iSCSI target, for `type: iscsi`."
+      "$ref": "#/definitions/special.iscsi"
      },
      "path": {
       "type": "string",
@@ -11797,8 +11695,9 @@
     "properties": {
      "subjects": {
       "type": "array",
-      "properties": {},
-      "additionalProperties": {
+      "description": "Define `subjects` for (Cluster)RoleBinding",
+      "default": [],
+      "items": {
        "type": "object",
        "properties": {
         "apiGroup": {
@@ -11815,10 +11714,8 @@
         }
        },
        "additionalProperties": false,
-       "description": "Configuration for `$name.subjects.$name`."
-      },
-      "description": "Define `subjects` for (Cluster)RoleBinding",
-      "default": []
+       "description": "Configuration for an entry of `$name.subjects`."
+      }
      },
      "enabled": {
       "type": [
@@ -11886,23 +11783,12 @@
       "description": "Whether to assign all service accounts or not to the (Cluster)RoleBinding"
      },
      "serviceAccounts": {
-      "oneOf": [
-       {
-        "type": "array",
-        "items": {
-         "type": "string"
-        }
-       },
-       {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": {
-         "description": "A setting passed on as is."
-        }
-       }
-      ],
-      "description": "Define the service account(s) to assign the (Cluster)RoleBinding",
       "type": "array",
+      "items": {
+       "type": "string",
+       "description": "Name of a `serviceAccount` object."
+      },
+      "description": "Define the service account(s) to assign the (Cluster)RoleBinding, by `serviceAccount` object name",
       "default": []
      },
      "rules": {
@@ -12773,10 +12659,7 @@
     "type": "object",
     "properties": {
      "data": {
-      "type": [
-       "object",
-       "string"
-      ],
+      "type": "object",
       "properties": {},
       "additionalProperties": {
        "type": "string",
@@ -13316,10 +13199,7 @@
       "description": "Settings of the session affinity."
      },
      "externalIPs": {
-      "type": [
-       "array",
-       "string"
-      ],
+      "type": "array",
       "items": {
        "type": "string"
       },
@@ -13484,6 +13364,93 @@
     "additionalProperties": false
    },
    "description": "Additional annotations as a list of name and value pairs. Merged into the `annotations` of the object."
+  },
+  "special.iscsi": {
+   "type": "object",
+   "properties": {
+    "authSession": {
+     "type": "object",
+     "properties": {
+      "password": {
+       "type": "string",
+       "description": "CHAP password of the target."
+      },
+      "username": {
+       "type": "string",
+       "description": "CHAP user name of the target."
+      },
+      "usernameInitiator": {
+       "type": "string",
+       "description": "CHAP user name of the initiator."
+      },
+      "passwordInitiator": {
+       "type": "string",
+       "description": "CHAP password of the initiator."
+      }
+     },
+     "additionalProperties": false,
+     "description": "CHAP authentication of the iSCSI session."
+    },
+    "authDiscovery": {
+     "type": "object",
+     "properties": {
+      "username": {
+       "type": "string",
+       "description": "CHAP user name of the target."
+      },
+      "password": {
+       "type": "string",
+       "description": "CHAP password of the target."
+      },
+      "usernameInitiator": {
+       "type": "string",
+       "description": "CHAP user name of the initiator."
+      },
+      "passwordInitiator": {
+       "type": "string",
+       "description": "CHAP password of the initiator."
+      }
+     },
+     "additionalProperties": false,
+     "description": "CHAP authentication of the discovery session."
+    },
+    "fsType": {
+     "type": "string",
+     "description": "File system of the volume, eg `ext4`."
+    },
+    "targetPortal": {
+     "type": "string",
+     "description": "Portal of the target, as `host:port`."
+    },
+    "iqn": {
+     "type": "string",
+     "description": "iSCSI qualified name of the target."
+    },
+    "lun": {
+     "type": [
+      "integer",
+      "string"
+     ],
+     "description": "LUN number of the target."
+    },
+    "initiatorName": {
+     "type": "string",
+     "description": "iSCSI initiator name of the node."
+    },
+    "iscsiInterface": {
+     "type": "string",
+     "description": "iSCSI interface of the node, eg `default`."
+    },
+    "portals": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     },
+     "description": "Additional portals of the target, as `host:port`."
+    }
+   },
+   "additionalProperties": false,
+   "description": "Settings of the iSCSI target, for `type: iscsi`."
   },
   "special.labelSelector": {
    "type": "object",
@@ -13680,10 +13647,7 @@
     "type": "object",
     "properties": {
      "parameters": {
-      "type": [
-       "object",
-       "string"
-      ],
+      "type": "object",
       "properties": {},
       "additionalProperties": {
        "type": [
@@ -14020,17 +13984,6 @@
       "additionalProperties": false,
       "description": "Limits of the recommendations, per container.",
       "default": {}
-     },
-     "workload": {
-      "type": "object",
-      "properties": {
-       "type": {
-        "type": "string",
-        "description": "Kind of the targeted workload (Deployment, StatefulSet or DaemonSet)."
-       }
-      },
-      "additionalProperties": false,
-      "description": "Set by the library to a copy of the workload this VPA targets. Any value set by the user is overwritten."
      }
     },
     "additionalProperties": false,
@@ -14616,6 +14569,22 @@
            "service"
           ]
          }
+        },
+        "namespaceSelector": {
+         "allOf": [
+          {
+           "$ref": "#/definitions/special.labelSelector"
+          }
+         ],
+         "description": "Namespaces the webhook applies to, by labels."
+        },
+        "objectSelector": {
+         "allOf": [
+          {
+           "$ref": "#/definitions/special.labelSelector"
+          }
+         ],
+         "description": "Objects the webhook applies to, by labels."
         }
        },
        "additionalProperties": false,
@@ -14772,15 +14741,10 @@
      "integer",
      "boolean",
      "object",
-     "array",
      "null"
     ],
-    "description": "Environment variable entry by key.",
+    "description": "Environment variable entry by key. A scalar or null is the value, a map holds exactly one of `configMapKeyRef`, `secretKeyRef` or `fieldRef`.",
     "properties": {
-     "value": {
-      "type": "string",
-      "description": "Direct value for the environment variable."
-     },
      "configMapKeyRef": {
       "type": "object",
       "description": "Reference an entry from a ConfigMap.",
@@ -14841,27 +14805,7 @@
       "additionalProperties": false
      }
     },
-    "additionalProperties": false,
-    "items": {
-     "properties": {
-      "secretRef": {
-       "type": "object",
-       "description": "Legacy list-form Secret reference set by `stable/lldap` (`LLDAP_JWT_SECRET: [{secretRef: ...}]`). The env template renders list values as plain values and does not read this key. Use `secretKeyRef` instead.",
-       "properties": {
-        "name": {
-         "type": "string",
-         "description": "Secret name."
-        },
-        "key": {
-         "type": "string",
-         "description": "Secret key."
-        }
-       },
-       "additionalProperties": false
-      }
-     },
-     "description": "Item of a list-valued environment variable."
-    }
+    "additionalProperties": false
    }
   },
   "workload.podSpec.containers.envFrom": {
@@ -15303,16 +15247,10 @@
    "description": "The resources that the container can use."
   },
   "workload.podSpec.containers.securityContext": {
-   "type": [
-    "object",
-    "null"
-   ],
+   "type": "object",
    "properties": {
     "seccompProfile": {
-     "type": [
-      "object",
-      "null"
-     ],
+     "type": "object",
      "properties": {
       "profile": {
        "type": "string",
@@ -15909,60 +15847,13 @@
       ]
      },
      "strategy": {
-      "oneOf": [
-       {
-        "type": "string",
-        "enum": [
-         "Recreate",
-         "RollingUpdate",
-         "OnDelete"
-        ]
-       },
-       {
-        "type": "object",
-        "properties": {
-         "type": {
-          "type": "string",
-          "enum": [
-           "Recreate",
-           "RollingUpdate",
-           "OnDelete"
-          ],
-          "description": "Define the strategy type of the workload"
-         },
-         "rollingUpdate": {
-          "type": "object",
-          "properties": {
-           "maxUnavailable": {
-            "type": [
-             "integer",
-             "string"
-            ],
-            "description": "Pods that can be unavailable during an update, a number or percentage."
-           },
-           "partition": {
-            "type": [
-             "integer",
-             "string"
-            ],
-            "description": "Pods with a lower ordinal are not updated, for staged rollouts of a StatefulSet."
-           },
-           "maxSurge": {
-            "type": [
-             "integer",
-             "string"
-            ],
-            "description": "Pods that can be created above the replicas during an update, a number or percentage."
-           }
-          },
-          "additionalProperties": false,
-          "description": "Define rollingUpdate options under strategy"
-         }
-        },
-        "additionalProperties": false
-       }
+      "type": "string",
+      "enum": [
+       "Recreate",
+       "RollingUpdate",
+       "OnDelete"
       ],
-      "description": "Define the strategy of the workload\n\nA single replica Deployment uses `Recreate` if it mounts a `ReadWriteOnce` or `ReadWriteOncePod` volume. See [`allowRollingUpdateWithRWO`](#workloadnameallowrollingupdatewithrwo) to keep `RollingUpdate` with `ReadWriteOnce`."
+      "description": "Define the strategy type of the workload. Set `maxUnavailable`, `maxSurge` and `partition` under [`rollingUpdate`](#workloadnamerollingupdate)\n\nA single replica Deployment uses `Recreate` if it mounts a `ReadWriteOnce` or `ReadWriteOncePod` volume. See [`allowRollingUpdateWithRWO`](#workloadnameallowrollingupdatewithrwo) to keep `RollingUpdate` with `ReadWriteOnce`."
      },
      "rollingUpdate": {
       "type": "object",

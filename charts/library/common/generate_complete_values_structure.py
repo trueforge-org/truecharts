@@ -17,7 +17,6 @@ The file is rebuilt from these sources on every run, so keys removed from the so
 import argparse
 import copy
 import sys
-import warnings
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -77,8 +76,21 @@ def make_yaml_loader(source: str, line_offset: int = 0) -> Any:
                 node.value = merge_duplicate_pairs(self, node.value, source, line_offset)
             return super().construct_mapping(node, maptyp, deep)
 
+    from ruamel.yaml.composer import Composer
+    from ruamel.yaml.events import AliasEvent
+
+    class AnchorReusingComposer(Composer):
+        # An anchor name may be defined again, the later one wins, as in the Go YAML parser
+        def compose_node(self, parent, index):
+            event = self.parser.peek_event()
+            anchor = getattr(event, "anchor", None)
+            if anchor is not None and not isinstance(event, AliasEvent):
+                self.anchors.pop(anchor, None)
+            return super().compose_node(parent, index)
+
     yaml_loader = YAML()
     yaml_loader.Constructor = DuplicateKeyMergingConstructor
+    yaml_loader.Composer = AnchorReusingComposer
     yaml_loader.preserve_quotes = True
     yaml_loader.default_flow_style = False
     return yaml_loader
@@ -89,8 +101,17 @@ def make_safe_loader(source: str) -> Any:
     import yaml
 
     class DuplicateKeyMergingLoader(yaml.SafeLoader):
+        # An anchor name may be defined again, the later one wins, as in the Go YAML parser
+        def compose_node(self, parent, index):
+            event = self.peek_event()
+            anchor = getattr(event, "anchor", None)
+            if anchor is not None and not isinstance(event, yaml.AliasEvent):
+                self.anchors.pop(anchor, None)
+            return super().compose_node(parent, index)
+
         def construct_mapping(self, node, deep=False):
             if node.id == "mapping":
+                self.flatten_mapping(node)
                 node.value = merge_duplicate_pairs(self, node.value, source)
             return super().construct_mapping(node, deep=deep)
 
@@ -351,10 +372,7 @@ def load_unittest_set_values(file_path: Path) -> List[Dict[str, Any]]:
     a template failure are skipped, as their values are invalid on purpose
     (eg `targetSelector` given as a mapping to check that it is rejected).
     """
-    with warnings.catch_warnings():
-        # ruamel warns when a unittest file reuses an anchor across its tests
-        warnings.simplefilter("ignore")
-        suite = load_yaml_file(file_path)
+    suite = load_yaml_file(file_path)
 
     set_blocks = []
     if isinstance(suite.get("set"), dict):

@@ -141,7 +141,7 @@ Define the hosts for this certificate
 | Field      | Value                     |
 | ---------- | ------------------------- |
 | Key        | `certificate.$name.hosts` |
-| Type       | `list, string`            |
+| Type       | `list of string`          |
 | Required   | ✅                        |
 | Helm `tpl` | ✅ (On each entry)         |
 | Default    | `"false"`                 |

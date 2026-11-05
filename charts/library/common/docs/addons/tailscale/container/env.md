@@ -71,20 +71,6 @@ Reference an entry from a Secret.
 
 ---
 
-### `addons.tailscale.container.env.$name.value`
-
-Direct value for the environment variable.
-
-| Field      | Value                                        |
-| ---------- | -------------------------------------------- |
-| Key        | `addons.tailscale.container.env.$name.value` |
-| Type       | `string`                                     |
-| Required   | ❌                                           |
-| Helm `tpl` | ❌                                           |
-| Default    | unset                                        |
-
----
-
 ### `addons.tailscale.container.env.TS_ACCEPT_DNS`
 
 Accept the DNS settings of the tailnet.

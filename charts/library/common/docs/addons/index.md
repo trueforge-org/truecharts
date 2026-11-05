@@ -95,7 +95,7 @@ See [Tailscale](tailscale/) for full configuration.
 
 ### `addons.vpn`
 
-Removed vpn add-on. Setting `addons.vpn` fails rendering (see `templates/values/_deprecations.tpl`), use `addons.gluetun` or `addons.tailscale` instead.
+Removed vpn add-on. Only an empty object is accepted, any key is rejected, use `addons.gluetun` or `addons.tailscale` instead.
 
 | Field      | Value        |
 | ---------- | ------------ |

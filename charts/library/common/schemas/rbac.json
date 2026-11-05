@@ -7,8 +7,9 @@
     "properties": {
       "subjects": {
         "type": "array",
-        "properties": {},
-        "additionalProperties": {
+        "description": "Define `subjects` for (Cluster)RoleBinding",
+        "default": [],
+        "items": {
           "type": "object",
           "properties": {
             "apiGroup": {
@@ -25,10 +26,8 @@
             }
           },
           "additionalProperties": false,
-          "description": "Configuration for `$name.subjects.$name`."
-        },
-        "description": "Define `subjects` for (Cluster)RoleBinding",
-        "default": []
+          "description": "Configuration for an entry of `$name.subjects`."
+        }
       },
       "enabled": {
         "type": [
@@ -101,23 +100,12 @@
         "description": "Whether to assign all service accounts or not to the (Cluster)RoleBinding"
       },
       "serviceAccounts": {
-        "oneOf": [
-          {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          {
-            "type": "object",
-            "properties": {},
-            "additionalProperties": {
-              "description": "A setting passed on as is."
-            }
-          }
-        ],
-        "description": "Define the service account(s) to assign the (Cluster)RoleBinding",
         "type": "array",
+        "items": {
+          "type": "string",
+          "description": "Name of a `serviceAccount` object."
+        },
+        "description": "Define the service account(s) to assign the (Cluster)RoleBinding, by `serviceAccount` object name",
         "default": []
       },
       "rules": {

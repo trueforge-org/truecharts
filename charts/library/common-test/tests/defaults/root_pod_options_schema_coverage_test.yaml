@@ -1,0 +1,58 @@
+suite: root pod option keys schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render with root pod option keys set
+    set:
+      dnsConfig:
+        nameservers:
+          - 1.1.1.1
+        searches:
+          - example.local
+      dnsPolicy: ClusterFirst
+      enableServiceLinks: false
+      hostAliases:
+        - ip: 192.0.2.10
+          hostnames:
+            - my-host.example.local
+      hostIPC: false
+      hostNetwork: false
+      hostPID: false
+      hostUsers: false
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      priorityClassName: my-priority
+      restartPolicy: Always
+      runtimeClassName: my-runtime
+      schedulerName: my-scheduler
+      shareProcessNamespace: false
+      terminationGracePeriodSeconds: 30
+      automountServiceAccountToken: false
+      tolerations:
+        - key: my-key
+          operator: Exists
+          effect: NoSchedule
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - isKind:
+          of: Service
+        documentIndex: 0
+      - equal:
+          path: metadata.name
+          value: test-release-name-common-test
+        documentIndex: 0

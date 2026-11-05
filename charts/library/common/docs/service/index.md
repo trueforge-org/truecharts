@@ -203,7 +203,7 @@ Define externalIPs
 | Field      | Value                       |
 | ---------- | --------------------------- |
 | Key        | `service.$name.externalIPs` |
-| Type       | `list, string`              |
+| Type       | `list of string`            |
 | Required   | ❌                          |
 | Helm `tpl` | ✅ (On entries only)         |
 | Default    | `[]`                        |

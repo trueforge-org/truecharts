@@ -1,0 +1,38 @@
+suite: configmap schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render configmap with string typed enabled and expandObjectName
+    set:
+      configmap:
+        my-configmap1:
+          enabled: "true"
+          expandObjectName: "false"
+          data:
+            foo: bar
+        my-configmap2:
+          enabled: true
+          expandObjectName: false
+          data:
+            foo: bar
+    asserts:
+      - isKind:
+          of: ConfigMap
+        documentIndex: 0
+      - equal:
+          path: data.foo
+          value: bar
+        documentIndex: 0
+
+  - it: should fail on unknown keys in configmap
+    set:
+      configmap:
+        my-configmap:
+          enabled: true
+          unknown: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/configmap/my-configmap': (additional properties|additionalProperties)"

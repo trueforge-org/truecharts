@@ -228,7 +228,7 @@ Security context of the container.
 | Field      | Value                              |
 | ---------- | ---------------------------------- |
 | Key        | `addons.container.securityContext` |
-| Type       | `map, null`                        |
+| Type       | `map`                              |
 | Required   | ❌                                 |
 | Helm `tpl` | ❌                                 |
 | Default    | unset                              |

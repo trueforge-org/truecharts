@@ -1,0 +1,120 @@
+suite: ingress homepage schema coverage
+templates:
+  - common.yaml
+chart:
+  appVersion: v9.9.9
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render ingress homepage integration with href and widget custom values
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 80
+      ingress:
+        my-ingress:
+          enabled: true
+          primary: true
+          hosts: &hosts
+            - host: test-host
+              paths:
+                - path: /test-path
+          integrations:
+            traefik:
+              enabled: false
+            homepage:
+              enabled: true
+              href: https://example.com
+              widget:
+                type: some-type
+                url: https://example.com
+                custom:
+                  some-string: value
+                  some-number: 0.0
+                  some-bool: false
+                  some-null: null
+        my-ingress2:
+          enabled: true
+          hosts: *hosts
+          integrations:
+            traefik:
+              enabled: false
+            homepage:
+              enabled: true
+              widget:
+                type: some-type
+                url: https://example.com
+                custom: null
+                customkv: null
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: Ingress
+      - documentIndex: 1
+        isSubset:
+          path: metadata.annotations
+          content:
+            gethomepage.dev/href: https://example.com
+            gethomepage.dev/widget.some-string: value
+      - documentIndex: 2
+        isKind:
+          of: Ingress
+
+  - it: should render truthy number and boolean widget custom values as strings
+    set:
+      service: *service
+      ingress:
+        my-ingress:
+          enabled: true
+          primary: true
+          hosts: *hosts
+          integrations:
+            traefik:
+              enabled: false
+            homepage:
+              enabled: true
+              widget:
+                type: some-type
+                url: https://example.com
+                custom:
+                  some-number: 5
+                  some-bool: true
+                  some-templated: "{{ .Release.Name }}"
+    asserts:
+      - documentIndex: 1
+        isSubset:
+          path: metadata.annotations
+          content:
+            gethomepage.dev/widget.some-number: "5"
+            gethomepage.dev/widget.some-bool: "true"
+            gethomepage.dev/widget.some-templated: test-release-name
+
+  - it: should fail on unknown keys in ingress homepage integration
+    set:
+      service: *service
+      ingress:
+        my-ingress:
+          enabled: true
+          primary: true
+          hosts: *hosts
+          integrations:
+            homepage:
+              unknownKey: value
+              widget:
+                unknownKey: value
+                customkv:
+                  - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/ingress/my-ingress/integrations/homepage': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/ingress/my-ingress/integrations/homepage/widget': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/ingress/my-ingress/integrations/homepage/widget/customkv/0': additional properties 'unknownKey' not allowed"

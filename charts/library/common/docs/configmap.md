@@ -73,7 +73,7 @@ Data entries of the ConfigMap, keyed by file or variable name
 | Field      | Value                  |
 | ---------- | ---------------------- |
 | Key        | `configmap.$name.data` |
-| Type       | `map, string`          |
+| Type       | `map`                  |
 | Required   | ✅                     |
 | Helm `tpl` | ✅                     |
 | Default    | unset                  |

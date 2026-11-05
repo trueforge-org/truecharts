@@ -1,0 +1,92 @@
+suite: addon netshoot schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render the netshoot addon container on a selected workload
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes: &probes
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          targetSelector: my-workload
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      addons:
+        netshoot:
+          enabled: "true"
+          targetSelector:
+            - my-workload
+          container:
+            enabled: "true"
+            primary: false
+            targetSelector:
+              - my-workload
+    asserts:
+      - documentIndex: &deploymentDoc 0
+        isKind:
+          of: Deployment
+      - documentIndex: *deploymentDoc
+        equal:
+          path: spec.template.spec.containers[1].name
+          value: test-release-name-common-test-netshoot
+
+  - it: should fail on unknown keys in addons netshoot
+    set:
+      workload: *workload
+      service: *service
+      addons:
+        netshoot:
+          enabled: true
+          unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/addons/netshoot': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in addons netshoot container
+    set:
+      workload: *workload
+      service: *service
+      addons:
+        netshoot:
+          enabled: true
+          container:
+            unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/addons/netshoot/container': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on a wrong type in addons netshoot targetSelector
+    set:
+      workload: *workload
+      service: *service
+      addons:
+        netshoot:
+          enabled: true
+          targetSelector: my-workload
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/addons/netshoot/targetSelector'"

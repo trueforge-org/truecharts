@@ -77,8 +77,6 @@ global:
 hpa:
   objectName:
     targetSelector: variableName
-    workload:
-      objectName: {}
 imagePullSecret:
   objectName:
     enabled: variableName
@@ -91,7 +89,6 @@ ingress:
     integrations:
       certManager:
         enabled: variableName
-    name: variableName
     primary: variableName
     required: variableName
     tls: variableName
@@ -129,9 +126,7 @@ persistence:
     labels: variableName
     mountPath: variableName
     mountPropagation: variableName
-    name: variableName
     readOnly: variableName
-    shortName: variableName
     size: variableName
     static:
       driver: variableName
@@ -145,7 +140,6 @@ persistence:
     targetSelector: variableName
     type: variableName
     volsync: variableName
-    volumeName: variableName
     volumeSnapshots: {}
 podDisruptionBudget: {}
 podOptions:
@@ -191,7 +185,9 @@ securityContext:
     PUID: variableName
     UMASK: variableName
     runAsGroup: variableName
+    runAsNonRoot: variableName
     runAsUser: variableName
+    seccompProfile: variableName
   pod:
     fsGroup: variableName
 service:
@@ -227,8 +223,6 @@ volumeSnapshots: {}
 vpa:
   objectName:
     targetSelector: variableName
-    workload:
-      objectName: {}
 webhook:
   objectName:
     type: variableName

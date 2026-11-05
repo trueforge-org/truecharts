@@ -1,0 +1,100 @@
+suite: metrics selector schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render a servicemonitor with a selector object
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          selector:
+            matchLabels:
+              app: placeholder
+            matchExpressions:
+              - key: tier
+                operator: In
+                values:
+                  - frontend
+          endpoints:
+            - port: main
+    asserts:
+      - documentSelector: &sm
+          path: kind
+          value: ServiceMonitor
+        equal:
+          path: spec.selector
+          value:
+            matchLabels:
+              app: placeholder
+            matchExpressions:
+              - key: tier
+                operator: In
+                values:
+                  - frontend
+
+  - it: should render a servicemonitor with a selector string
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          selector: "matchLabels: {app: placeholder}"
+          endpoints:
+            - port: main
+    asserts:
+      - documentSelector: *sm
+        equal:
+          path: spec.selector
+          value: "matchLabels: {app: placeholder}"
+
+  - it: should fail on unknown keys in selector and its matchExpressions
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          selector:
+            unknownKey: value
+            matchExpressions:
+              - unknownKey: value
+          endpoints:
+            - port: main
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics/selector': .*unknownKey"
+
+  - it: should fail on wrong value types in selector
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          selector:
+            matchLabels:
+              app: [a]
+            matchExpressions:
+              - key: [a]
+                operator: [a]
+                values:
+                  - [a]
+          endpoints:
+            - port: main
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics/selector/matchLabels/app'"

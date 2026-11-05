@@ -36,7 +36,7 @@ Timezone that is used everywhere applicable, unless overridden at the container 
 | Field      | Value                    |
 | ---------- | ------------------------ |
 | Key        | `dependencies.valkey.TZ` |
-| Type       | `map`                    |
+| Type       | `string`                 |
 | Required   | ✅                       |
 | Helm `tpl` | ❌                       |
 | Default    | `"UTC"`                  |

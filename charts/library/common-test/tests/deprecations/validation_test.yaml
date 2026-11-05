@@ -296,14 +296,14 @@ tests:
       - hasDocuments:
           count: 0
 
-  - it: should fail with the removed vpn add-on
+  - it: should reject the removed vpn add-on
     set:
       addons:
         vpn:
           type: wireguard
     asserts:
       - failedTemplate:
-          errorMessage: Your current Common-Chart version does not support [.Values.addons.vpn] please use [.Values.addons.tailscale] or [.Values.addons.gluetun] instead
+          errorPattern: "at '/addons/vpn': additional properties 'type' not allowed"
 
   - it: should not fail with the supported add-ons
     set:

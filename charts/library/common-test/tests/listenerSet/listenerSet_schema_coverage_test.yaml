@@ -1,0 +1,149 @@
+suite: listenerSet schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render a listenerSet with string enabled, expandObjectName, annotationsList and labelsList
+    set:
+      listenerSet:
+        my-set:
+          enabled: "true"
+          expandObjectName: "true"
+          parentRef:
+            name: some-gateway
+          annotationsList:
+            - name: my-annotation
+              value: my-value
+          labelsList:
+            - name: my-label
+              value: my-value
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+    asserts:
+      - documentSelector: &ls
+          path: kind
+          value: ListenerSet
+        equal:
+          path: metadata.annotations.my-annotation
+          value: my-value
+      - documentSelector: *ls
+        equal:
+          path: metadata.labels.my-label
+          value: my-value
+
+  - it: should render a listenerSet with parentRef group and kind
+    set:
+      listenerSet:
+        my-set:
+          enabled: true
+          parentRef:
+            group: gateway.networking.k8s.io
+            kind: Gateway
+            name: some-gateway
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+    asserts:
+      - documentSelector: *ls
+        equal:
+          path: spec.parentRef.kind
+          value: Gateway
+
+  - it: should render a listenerSet with a null parentRef namespace
+    set:
+      listenerSet:
+        my-set:
+          enabled: true
+          parentRef:
+            name: some-gateway
+            namespace: null
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+    asserts:
+      - documentSelector: *ls
+        isKind:
+          of: ListenerSet
+
+  - it: should render a listenerSet with a null parentRef name and a targetSelector
+    set:
+      gateway:
+        main:
+          enabled: true
+          gatewayClassName: test-gateway-class
+          allowedListeners:
+            namespaces:
+              from: Same
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+      listenerSet:
+        my-set:
+          enabled: true
+          targetSelector: main
+          parentRef:
+            name: null
+          listeners:
+            - name: https
+              port: 443
+              protocol: HTTPS
+    asserts:
+      - documentSelector: *ls
+        isKind:
+          of: ListenerSet
+
+  - it: should render a listenerSet with a null targetSelector
+    set:
+      listenerSet:
+        my-set:
+          enabled: true
+          targetSelector: null
+          parentRef:
+            name: some-gateway
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+    asserts:
+      - documentSelector: *ls
+        isKind:
+          of: ListenerSet
+
+  - it: should fail on unknown keys in listenerSet
+    set:
+      listenerSet:
+        my-set:
+          enabled: true
+          parentRef:
+            name: some-gateway
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+          unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/listenerSet/my-set': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in listenerSet parentRef
+    set:
+      listenerSet:
+        my-set:
+          enabled: true
+          parentRef:
+            name: some-gateway
+            unknownKey: value
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/listenerSet/my-set/parentRef': additional properties 'unknownKey' not allowed"
