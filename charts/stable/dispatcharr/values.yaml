@@ -3,6 +3,10 @@ image:
   pullPolicy: IfNotPresent
   repository: ghcr.io/dispatcharr/dispatcharr
   tag: 0.33.0@sha256:96bc548978c68e684677da7895692eeeefb7f0b2edfa38311dac2b702c61d236
+alpineImage:
+  repository: docker.io/library/alpine
+  pullPolicy: IfNotPresent
+  tag: 3.24@sha256:be2656061b536c1883c4034790e21d0a09c5aaaf51968b89368a3c0371ea2c9a
 securityContext:
   container:
     readOnlyRootFilesystem: false
@@ -22,8 +26,7 @@ workload:
         setup-postgres-dirs:
           enabled: true
           type: init
-          name: setup-postgres-dirs
-          image: alpine:3.24@sha256:be2656061b536c1883c4034790e21d0a09c5aaaf51968b89368a3c0371ea2c9a
+          imageSelector: alpineImage
           command:
             - /bin/sh
             - -c
