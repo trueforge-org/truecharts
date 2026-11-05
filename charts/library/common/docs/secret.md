@@ -73,7 +73,7 @@ Data of the Secret, keyed by name.
 | Field      | Value               |
 | ---------- | ------------------- |
 | Key        | `secret.$name.data` |
-| Type       | `map, string`       |
+| Type       | `map`               |
 | Required   | ✅                  |
 | Helm `tpl` | ✅                  |
 | Default    | unset               |

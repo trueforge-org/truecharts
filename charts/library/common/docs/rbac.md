@@ -230,15 +230,15 @@ rbac:
 
 ### `rbac.$name.serviceAccounts`
 
-Define the service account(s) to assign the (Cluster)RoleBinding
+Define the service account(s) to assign the (Cluster)RoleBinding, by `serviceAccount` object name
 
-| Field      | Value                                  |
-| ---------- | -------------------------------------- |
-| Key        | `rbac.$name.serviceAccounts`           |
-| Type       | `list of unknown, list of string, map` |
-| Required   | ❌                                     |
-| Helm `tpl` | ❌                                     |
-| Default    | `[]`                                   |
+| Field      | Value                        |
+| ---------- | ---------------------------- |
+| Key        | `rbac.$name.serviceAccounts` |
+| Type       | `list of string`             |
+| Required   | ❌                           |
+| Helm `tpl` | ❌                           |
+| Default    | `[]`                         |
 
 Example
 
@@ -258,7 +258,7 @@ Define `subjects` for (Cluster)RoleBinding
 | Field      | Value                 |
 | ---------- | --------------------- |
 | Key        | `rbac.$name.subjects` |
-| Type       | `list of unknown`     |
+| Type       | `list of map`         |
 | Required   | ❌                    |
 | Helm `tpl` | ❌                    |
 | Default    | `[]`                  |

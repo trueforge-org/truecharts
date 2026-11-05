@@ -153,6 +153,23 @@ def extract_variable_property_accesses(content: str, var_map: Dict[str, str]) ->
         property_path = match.group(2)
         
         if var_name in var_map:
+            # A key the template sets itself (set $var "prop" <value>) is internal, not user input,
+            # unless the value defaults to/derives from the same user key or is just an empty dict
+            first_segment = property_path.split(".")[0]
+            set_matches = list(re.finditer(
+                r'set\s+\$' + re.escape(var_name) + r'\s+"' + re.escape(first_segment) + r'"\s+(.*?)\s*-?\}\}',
+                content,
+            ))
+            own_ref = f"${var_name}.{first_segment}"
+            # Only when the template sets it before it first reads it (a read before the set is user input)
+            first_read = re.search(r'\$' + re.escape(var_name) + r'\.' + re.escape(first_segment) + r'\b', content)
+            if (
+                set_matches
+                and all(own_ref not in m.group(1) and m.group(1).strip() != "dict" for m in set_matches)
+                and first_read
+                and set_matches[0].start() < first_read.start()
+            ):
+                continue
             # Construct full path from variable origin + property access
             full_path = f"{var_map[var_name]}.{property_path}"
             paths.add(full_path)

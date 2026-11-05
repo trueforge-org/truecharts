@@ -6541,17 +6541,6 @@
        "description": "Configuration for `hpa.main.metrics.$item`."
       },
       "description": "Metrics the number of replicas is calculated from."
-     },
-     "workload": {
-      "type": "object",
-      "properties": {
-       "type": {
-        "type": "string",
-        "description": "Kind of the targeted workload."
-       }
-      },
-      "additionalProperties": false,
-      "description": "Set by the library to a copy of the workload this HPA targets. Any value set by the user is overwritten."
      }
     },
     "additionalProperties": false,
@@ -13995,17 +13984,6 @@
       "additionalProperties": false,
       "description": "Limits of the recommendations, per container.",
       "default": {}
-     },
-     "workload": {
-      "type": "object",
-      "properties": {
-       "type": {
-        "type": "string",
-        "description": "Kind of the targeted workload (Deployment, StatefulSet or DaemonSet)."
-       }
-      },
-      "additionalProperties": false,
-      "description": "Set by the library to a copy of the workload this VPA targets. Any value set by the user is overwritten."
      }
     },
     "additionalProperties": false,

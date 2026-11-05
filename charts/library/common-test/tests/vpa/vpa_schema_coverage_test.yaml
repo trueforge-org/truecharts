@@ -86,19 +86,6 @@ tests:
           path: spec.resourcePolicy.containerPolicies[0].controlledValues
           value: RequestsOnly
 
-  - it: should render vpa with the library managed workload key
-    set:
-      workload: *workload
-      vpa:
-        my-vpa:
-          enabled: true
-          workload:
-            type: Deployment
-    asserts:
-      - documentIndex: 1
-        isKind:
-          of: VerticalPodAutoscaler
-
   - it: should fail on unknown keys and bad enums in vpa
     set:
       workload: *workload
@@ -106,8 +93,6 @@ tests:
         my-vpa:
           enabled: true
           unknownKey: value
-          workload:
-            unknownKey: value
           updatePolicy:
             unknownKey: value
             updateMode: Sometimes
@@ -117,8 +102,6 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "at '/vpa/my-vpa': additional properties 'unknownKey' not allowed"
-      - failedTemplate:
-          errorPattern: "at '/vpa/my-vpa/workload': additional properties 'unknownKey' not allowed"
       - failedTemplate:
           errorPattern: "at '/vpa/my-vpa/updatePolicy': additional properties 'unknownKey' not allowed"
       - failedTemplate:

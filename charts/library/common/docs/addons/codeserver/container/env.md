@@ -71,20 +71,6 @@ Reference an entry from a Secret.
 
 ---
 
-### `addons.codeserver.container.env.$name.value`
-
-Direct value for the environment variable.
-
-| Field      | Value                                         |
-| ---------- | --------------------------------------------- |
-| Key        | `addons.codeserver.container.env.$name.value` |
-| Type       | `string`                                      |
-| Required   | ❌                                            |
-| Helm `tpl` | ❌                                            |
-| Default    | unset                                         |
-
----
-
 ### `addons.codeserver.container.env.DEFAULT_WORKSPACE`
 
 Default workspace path.

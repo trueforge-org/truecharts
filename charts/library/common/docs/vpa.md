@@ -139,20 +139,6 @@ How the recommendations are applied.
 
 ---
 
-### `vpa.$name.workload`
-
-Set by the library to a copy of the workload this VPA targets. Any value set by the user is overwritten.
-
-| Field      | Value                |
-| ---------- | -------------------- |
-| Key        | `vpa.$name.workload` |
-| Type       | `map`                |
-| Required   | ❌                   |
-| Helm `tpl` | ❌                   |
-| Default    | unset                |
-
----
-
 ## Full Examples
 
 ```yaml

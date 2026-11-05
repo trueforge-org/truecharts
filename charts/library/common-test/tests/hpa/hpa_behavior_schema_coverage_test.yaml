@@ -60,19 +60,6 @@ tests:
           path: spec.behavior.scaleUp.selectPolicy
           value: Min
 
-  - it: should render hpa with the library managed workload key
-    set:
-      workload: *workload
-      hpa:
-        my-hpa:
-          enabled: true
-          workload:
-            type: Deployment
-    asserts:
-      - isKind:
-          of: HorizontalPodAutoscaler
-        documentIndex: 1
-
   - it: should fail on unknown keys and missing required keys in hpa behavior
     set:
       workload: *workload
@@ -91,8 +78,6 @@ tests:
               unknownKey: value
               policies:
                 - unknownKey: value
-          workload:
-            unknownKey: value
     asserts:
       - failedTemplate:
           errorPattern: "at '/hpa/my-hpa/behavior/scaleUp/policies/0': missing properties 'type'"
@@ -100,5 +85,3 @@ tests:
           errorPattern: "at '/hpa/my-hpa/behavior/scaleDown/policies/0': additional properties 'unknownKey' not allowed"
       - failedTemplate:
           errorPattern: "at '/hpa/my-hpa/behavior/scaleUp/selectPolicy': value must be one of 'Max', 'Min', 'Disabled'"
-      - failedTemplate:
-          errorPattern: "at '/hpa/my-hpa/workload': additional properties 'unknownKey' not allowed"

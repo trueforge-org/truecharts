@@ -19,9 +19,11 @@ global:
   labels:
     g_label1: ''
     g_label2: ''
+    global-label: ''
   annotations:
     g_annotation1: ''
     g_annotation2: ''
+    global-annotation: ''
   namespace: ''
   diagnosticMode:
     enabled: false
@@ -95,6 +97,7 @@ securityContext:
     privileged: false
     seccompProfile:
       type: ''
+      profile: ''
     capabilities:
       add:
       - ''
@@ -246,6 +249,7 @@ workload:
                 exec:
                   command:
                   - ''
+                successThreshold: 5
               httpHeaders:
                 Host: ''
                 Accept: ''
@@ -273,6 +277,7 @@ workload:
                 exec:
                   command:
                   - ''
+                successThreshold: 1
               custom: true
               initialDelaySeconds: 30
               httpHeaders:
@@ -2843,7 +2848,11 @@ workload:
                 expandObjectName: false
                 name: ''
                 key: ''
+            CLICKHOUSE_PORT: ''
+            CLICKHOUSE_PING: ''
+            CLICKHOUSE_JDBC: ''
             OPERATOR_VERSION: ''
+            MONGODB_PORT: ''
             INTERFACE: ''
             APIKEY: ''
             ENABLE_ADDITIONAL_METRICS: false
@@ -2977,6 +2986,9 @@ workload:
             readOnlyRootFilesystem: false
             runAsNonRoot: true
             allowPrivilegeEscalation: true
+            seccompProfile:
+              type: ''
+              profile: ''
           resources:
             limits:
               cpu: ''
@@ -2996,6 +3008,7 @@ workload:
           - ''
           termination:
             messagePolicy: ''
+            messagePath: ''
           tty: true
           stdin: true
           command:
@@ -3009,6 +3022,9 @@ workload:
               httpHeaders:
                 X-Bool: true
                 X-Number: 0
+                key: ''
+              host: ''
+              path: ''
             preStop:
               type: ''
               command:
@@ -3092,11 +3108,25 @@ workload:
             NODE_IP:
               fieldRef:
                 fieldPath: ''
+            key: ''
+            key2: ''
+            key3:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
           envFrom:
           - configMapRef:
               name: ''
           name: ''
           image: ''
+          probes:
+            liveness:
+              enabled: true
+            readiness:
+              enabled: true
+            startup:
+              enabled: true
       automountServiceAccountToken: true
       hostname: ''
       type: ''
@@ -3137,6 +3167,7 @@ workload:
       priorityClassName: ''
       runtimeClassName: ''
       schedulerName: ''
+      serviceAccountName: ''
       shareProcessNamespace: false
       tolerations:
       - operator: ''
@@ -3197,6 +3228,29 @@ vpa:
           memory: ''
         controlledResources:
         - ''
+  vpa-name:
+    enabled: true
+    targetSelector:
+    - ''
+    updatePolicy:
+      minReplicas: 2
+      evictionRequirements:
+      - resources:
+        - ''
+        changeRequirement: ''
+    resourcePolicy:
+      containerPolicies:
+      - containerName: ''
+        mode: ''
+        controlledResources:
+        - ''
+        controlledValues: ''
+        minAllowed:
+          cpu: ''
+          memory: ''
+        maxAllowed:
+          cpu: ''
+          memory: ''
   vpa-a:
     enabled: ''
     updatePolicy:
@@ -3233,8 +3287,6 @@ vpa:
           memory: 0
         controlledResources:
         - ''
-    workload:
-      objectname: ''
 hpa:
   main:
     enabled: false
@@ -3296,10 +3348,35 @@ hpa:
           type: ''
           value: 30
           averageValue: 30
-  my-hpa:
+  vpa-name:
     enabled: true
-    workload:
-      objectname: ''
+  hpa-name:
+    enabled: true
+    targetSelector:
+    - ''
+    minReplicas: 50
+    maxReplicas: 100
+    behavior:
+      scaleUp:
+        stabilizationWindowSeconds: 50
+        policies:
+        - type: ''
+          value: 10
+          periodSeconds: 60
+      scaleDown:
+        selectPolicy: ''
+        stabilizationWindowSeconds: 0
+        policies:
+        - type: ''
+          value: 20
+          periodSeconds: 60
+    metrics:
+    - type: ''
+      resource:
+        name: ''
+        target:
+          type: ''
+          averageUtilization: 80
 service:
   objectname:
     enabled: true
@@ -3316,6 +3393,7 @@ service:
         hostPort: 0
         nodePort: 0
         protcol: ''
+        appProtocol: ''
     targetSelector: ''
     clusterIP: ''
     type: ''
@@ -3328,25 +3406,12 @@ service:
       app: ''
     publishNotReadyAddresses: true
     loadBalancerIP: ''
-    ipFamilyPolicy: ''
-    ipFamilies:
-    - ''
-    externalIPs:
-    - ''
-    sessionAffinity: ''
-    sessionAffinityConfig:
-      clientIP:
-        timeoutSeconds: ''
-    externalName: ''
-    externalTrafficPolicy: ''
     loadBalancerIPs:
     - ''
-    loadBalancerSourceRanges:
-    - ''
-    allocateLoadBalancerNodePorts: true
-    appProtocol: ''
-    sharedKey: ''
     integrations:
+      cilium:
+        enabled: true
+        sharedKey: ''
       traefik:
         enabled: true
         rootCAs:
@@ -3356,6 +3421,39 @@ service:
         forceTLS: true
         insecureSkipVerify: true
         serverName: ''
+      metallb:
+        enabled: true
+        sharedKey: ''
+    ipFamilyPolicy: ''
+    ipFamilies:
+    - ''
+    externalIPs:
+    - ''
+    sessionAffinity: ''
+    sessionAffinityConfig:
+      clientIP:
+        timeoutSeconds: ''
+    externalTrafficPolicy: ''
+    addressType: ''
+    namespace: ''
+    externalName: ''
+    loadBalancerSourceRanges:
+    - ''
+    allocateLoadBalancerNodePorts: true
+    appProtocol: ''
+    sharedKey: ''
+    labels:
+      label1: ''
+      label2: ''
+    annotations:
+      annotation1: ''
+      annotation2: ''
+    annotationsList:
+    - name: ''
+      value: ''
+    labelsList:
+    - name: ''
+      value: ''
 credentials:
   mys3:
     type: ''
@@ -3364,6 +3462,11 @@ credentials:
     accessKey: ''
     secretKey: ''
     encrKey: ''
+    region: ''
+    customCA: ''
+    customCASecretRef:
+      name: ''
+      key: ''
   test:
     type: ''
     url: ''
@@ -3373,6 +3476,31 @@ credentials:
     secretKey: ''
     region: ''
     customCA: ''
+    path: ''
+    customCASecretRef:
+      name: ''
+      key: ''
+  other:
+    type: ''
+    accessKey: ''
+    secretKey: ''
+    bucket: ''
+    url: ''
+    encrKey: ''
+  from:
+    type: ''
+    accessKey: ''
+    secretKey: ''
+    bucket: ''
+    encrKey: ''
+    url: ''
+  to:
+    type: ''
+    accessKey: ''
+    secretKey: ''
+    bucket: ''
+    encrKey: ''
+    url: ''
   my-creds:
     type: ''
     url: ''
@@ -3384,6 +3512,14 @@ credentials:
       name: ''
       key: ''
       expandObjectName: false
+  MyS3:
+    type: ''
+    url: ''
+    bucket: ''
+    encrKey: ''
+    accessKey: ''
+    secretKey: ''
+    customCA: ''
 ingressMiddlewares:
   traefik:
     tc-basic-secure-headers:
@@ -3414,18 +3550,40 @@ ingressMiddlewares:
       type: ''
       data:
         enabled: true
+    my-mw:
+      enabled: true
+      type: ''
+      data:
+        prefix: ''
+    my-mw2:
+      enabled: true
+      type: ''
+      data:
+        prefix: ''
     common-mw:
       enabled: false
       type: ''
       data:
         prefix:
         - ''
-    my-mw:
+    some-unused-middleware:
+      enabled: false
+      type: ''
+    some-middleware:
       enabled: false
       type: ''
       data:
-        prefix:
-        - ''
+        maxRequestBodyBytes: 0
+    some-chart-middleware:
+      enabled: false
+      type: ''
+      data:
+        maxRequestBodyBytes: 0
+    some-user-middleware:
+      enabled: false
+      type: ''
+      data:
+        maxRequestBodyBytes: 0
     my-middleware1:
       enabled: true
       type: ''
@@ -3446,6 +3604,16 @@ ingressMiddlewares:
         middlewares:
         - name: ''
           expandObjectName: false
+        address: ''
+        authResponseHeadersRegex: ''
+        trustForwardHeader: true
+        maxResponseBodySize: 0
+        authResponseHeaders:
+        - ''
+        authRequestHeaders:
+        - ''
+        tls:
+          insecureSkipVerify: true
         customRequestHeaders:
           some-name: ''
           some-other-name: ''
@@ -3689,13 +3857,17 @@ persistence:
         password: ''
         usernameInitiator: ''
         passwordInitiator: ''
+      initiatorName: ''
+      iscsiInterface: ''
+      portals:
+      - ''
     medium: ''
     targetSelector:
       main:
         main:
           mountPath: ''
-          subPath: ''
           readOnly: true
+          subPath: ''
         init-perms:
           mountPath: ''
         1-create-key-file: {}
@@ -3778,6 +3950,19 @@ persistence:
       geoip:
         geoip:
           mountPath: ''
+      workload-name1:
+        container-name2: {}
+      workload-name:
+        container-name2: {}
+        container-name1:
+          mountPath: ''
+          readOnly: false
+          mountPropagation: ''
+          subPath: ''
+      workload-name2:
+        container-name1: {}
+      other-workload:
+        other-container: {}
     size: ''
     accessMode: ''
     subPath: ''
@@ -3790,6 +3975,7 @@ persistence:
     items:
     - key: ''
       path: ''
+    optional: true
     volsync:
     - name: ''
       type: ''
@@ -3799,6 +3985,8 @@ persistence:
       src:
         enabled: false
     copyMethod: ''
+    accessModes:
+    - ''
     autoPermissions:
       enabled: true
       chown: true
@@ -3811,6 +3999,8 @@ persistence:
       label1: ''
       label2: ''
     storageClass: ''
+    server: ''
+    path: ''
     fsType: ''
     targetPortal: ''
     iqn: ''
@@ -3852,9 +4042,6 @@ persistence:
       driver: ''
     mountOptions:
     - key: ''
-    existingClaim: ''
-    accessModes: ''
-    volumeName: ''
     annotations:
       annotation1: ''
       annotation2: ''
@@ -3865,9 +4052,10 @@ persistence:
     - name: ''
       value: ''
     retain: true
+    existingClaim: ''
+    volumeName: ''
     namespace: ''
-    path: ''
-    server: ''
+    expandObjectName: false
 volumeSnapshotClass:
   class1:
     enabled: true
@@ -3930,10 +4118,12 @@ volumeSnapshots:
     labelsList:
     - name: ''
       value: ''
+    volumeSnapshotClassName: ''
   example2:
     enabled: true
     source:
       volumeSnapshotContentName: ''
+      persistentVolumeClaimName: ''
   my-vs:
     enabled: ''
     source:
@@ -3990,6 +4180,29 @@ imagePullSecret:
       password: ''
       email: ''
   my-pull-secret3:
+    enabled: true
+    existingSecret: ''
+  pull-secret1:
+    enabled: true
+    data:
+      registry: ''
+      username: ''
+      password: ''
+      email: ''
+    targetSelectAll: true
+    targetSelector:
+    - ''
+  pull-secret2:
+    enabled: true
+    data:
+      registry: ''
+      username: ''
+      password: ''
+      email: ''
+    targetSelectAll: true
+    targetSelector:
+    - ''
+  pull-secret3:
     enabled: true
     existingSecret: ''
 configmap:
@@ -4124,6 +4337,7 @@ configmap:
       key3: ''
       nginx.conf2: ''
       foo: ''
+      some-key: ''
       ca.crt: ''
     labels:
       grafana_dashboard: ''
@@ -4182,7 +4396,11 @@ secret:
       key2: ''
       key3: ''
       nginx.conf2: ''
+      key4: ''
+      my-key: ''
       foo: ''
+      some-key: ''
+      ca.crt: ''
     type: ''
     labels:
       label1: ''
@@ -4314,14 +4532,27 @@ serviceAccount:
     enabled: true
     targetSelector:
     - ''
+  sa-name1:
+    enabled: true
+    primary: true
+    targetSelectAll: true
+    targetSelector:
+    - ''
+  sa-name2:
+    enabled: true
+    primary: false
+    targetSelector:
+    - ''
   my-sa:
     enabled: true
     primary: true
-  other-sa:
+  my-other-sa:
     enabled: true
+    primary: false
   my-sa1:
     enabled: true
     primary: true
+    namespace: ''
     labels:
       label1: ''
       label2: ''
@@ -4334,7 +4565,8 @@ serviceAccount:
     labelsList:
     - name: ''
       value: ''
-    namespace: ''
+  other-sa:
+    enabled: true
   my-sa2:
     enabled: true
 rbac:
@@ -4462,6 +4694,16 @@ rbac:
       apiGroup: ''
     serviceAccounts:
     - ''
+  z-rbac:
+    enabled: true
+    primary: true
+    rules:
+    - apiGroups:
+      - ''
+      resources:
+      - ''
+      verbs:
+      - ''
   my-rbac2:
     enabled: true
     clusterWide: true
@@ -4473,9 +4715,21 @@ rbac:
       - ''
       verbs:
       - ''
+    subjects:
+    - kind: ''
+      name: ''
+      apiGroup: ''
+    primary: false
+    labels:
+      label1: ''
+      label2: ''
+    annotations:
+      annotation1: ''
+      annotation2: ''
   my-rbac3:
     enabled: true
-    allServiceAccounts: true
+    serviceAccounts:
+    - ''
     rules:
     - apiGroups:
       - ''
@@ -4483,6 +4737,30 @@ rbac:
       - ''
       verbs:
       - ''
+    allServiceAccounts: true
+  my-rbac1:
+    enabled: true
+    primary: true
+    labels:
+      label1: ''
+      label2: ''
+    annotations:
+      annotation1: ''
+      annotation2: ''
+    annotationsList:
+    - name: ''
+      value: ''
+    labelsList:
+    - name: ''
+      value: ''
+    rules:
+    - apiGroups:
+      - ''
+      resources:
+      - ''
+      verbs:
+      - ''
+    namespace: ''
 notes:
   header: ''
   custom: ''
@@ -4656,7 +4934,8 @@ ingress:
         themepark:
           enabled: false
           css: ''
-        ipWhitelist: []
+        ipWhitelist:
+        - ''
         auth:
           type: ''
           internalHost: ''
@@ -4982,7 +5261,8 @@ route:
     kind: ''
     annotations:
       some-key: ''
-    labels: {}
+    labels:
+      my-label: ''
     gateway: ''
     listenerSet: ''
     gatewayNamespace: ''
@@ -5022,6 +5302,10 @@ route:
         - name: ''
         ipStrategy:
           depth: 1
+          excludedIPs:
+          - ''
+          ipv6Subnet: 64
+        chartMiddlewares: []
       envoy:
         enabled: false
         ipWhitelist:
@@ -5061,10 +5345,15 @@ route:
           custom:
             some-key: ''
             some-empty-key: ''
+            some-string: ''
+            some-number: 0
+            some-bool: false
+            some-null: null
           customkv:
           - key: ''
             value: ''
           enabled: false
+          version: 2
         weight: 1
         href: ''
         podSelector:
@@ -5085,6 +5374,7 @@ podDisruptionBudget:
     minAvailable: 1
     customLabels:
       label1: ''
+      label2: ''
     labels:
       label1: ''
       label2: ''
@@ -5099,6 +5389,8 @@ podDisruptionBudget:
       value: ''
     namespace: ''
     maxUnavailable: 1
+    unhealthyPodEvictionPolicy: ''
+    targetSelector: ''
   my-pdb2:
     enabled: true
     customLabels:
@@ -5255,6 +5547,22 @@ priorityClass:
     description: ''
   example1:
     enabled: true
+    labels:
+      label1: ''
+      label2: ''
+    annotations:
+      annotation1: ''
+      annotation2: ''
+    annotationsList:
+    - name: ''
+      value: ''
+    labelsList:
+    - name: ''
+      value: ''
+    value: 0
+    preemptionPolicy: ''
+    globalDefault: true
+    description: ''
   example2:
     enabled: true
   my-priority:
@@ -5269,6 +5577,26 @@ storageClass:
   example1:
     enabled: true
     provisioner: ''
+    labels:
+      label1: ''
+      label2: ''
+    annotations:
+      annotation1: ''
+      annotation2: ''
+    annotationsList:
+    - name: ''
+      value: ''
+    labelsList:
+    - name: ''
+      value: ''
+    isDefault: true
+    reclaimPolicy: ''
+    allowVolumeExpansion: false
+    parameters:
+      param1: ''
+      param2: ''
+    mountOptions:
+    - ''
   example2:
     enabled: true
     provisioner: ''
@@ -5552,7 +5880,26 @@ addons:
     enabled: false
     targetSelector:
     - ''
-    secret: null
+    secret:
+      objectname:
+        basePath: ''
+        defaultMode: ''
+        namespace: ''
+        type: ''
+        labels:
+          label1: ''
+        annotations:
+          annotation1: ''
+        labelsList:
+        - name: ''
+          value: ''
+        annotationsList:
+        - name: ''
+          value: ''
+        data:
+          wg0.conf: ''
+          up.sh: ''
+          down.sh: ''
     container:
       enabled: true
       imageSelector: ''
@@ -5579,6 +5926,10 @@ addons:
         FIREWALL: ''
         FIREWALL_OUTBOUND_SUBNETS: ''
         FIREWALL_INPUT_PORTS: ''
+        key: ''
+        key1: ''
+        key2: ''
+        key3: ''
   tailscale:
     enabled: false
     targetSelector:
@@ -5601,6 +5952,16 @@ addons:
         TS_KUBE_SECRET: ''
         TS_SOCKET: ''
         TS_STATE_DIR: ''
+        TS_USERSPACE: true
+        TS_AUTH_ONCE: true
+        TS_ACCEPT_DNS: false
+        TS_AUTH_KEY: ''
+        TS_TAILSCALED_EXTRA_ARGS: ''
+        TS_EXTRA_ARGS: ''
+        TS_SOCKS5_SERVER: ''
+        TS_DEST_IP: ''
+        TS_ROUTES: ''
+        TS_OUTBOUND_HTTP_PROXY_LISTEN: ''
       securityContext:
         capabilities:
           add:
@@ -5617,7 +5978,8 @@ addons:
       extra_args: ''
       daemon_extra_args: ''
       outbound_http_proxy_listen: ''
-    annotations: {}
+    annotations:
+      annotation1: ''
   codeserver:
     enabled: false
     container:
@@ -5641,6 +6003,12 @@ addons:
       imageSelector: ''
       resources:
         excludeExtra: true
+        limits:
+          cpu: ''
+          memory: ''
+        requests:
+          cpu: ''
+          memory: ''
       securityContext:
         runAsUser: 0
         runAsGroup: 0
@@ -5691,6 +6059,15 @@ addons:
         - path: ''
           pathType: ''
       tls: []
+      integrations:
+        traefik:
+          enabled: false
+      my-ingress:
+        enabled: true
+        hosts:
+        - host: ''
+          paths:
+          - path: ''
     route:
       enabled: false
       kind: ''
@@ -5745,6 +6122,7 @@ addons:
       - ''
     targetSelector:
     - ''
+  vpn: {}
 dependencies:
   clickhouse:
     enabled: false
@@ -5804,6 +6182,10 @@ dependencies:
             protocol: ''
             port: 0
             targetPort: 0
+            primary: false
+            enabled: true
+        primary: false
+        enabled: true
     persistence:
       objectname:
         mountPath: ''
@@ -5874,6 +6256,10 @@ dependencies:
             protocol: ''
             port: 0
             targetPort: 0
+            primary: false
+            enabled: true
+        primary: false
+        enabled: true
     persistence:
       objectname:
         mountPath: ''
@@ -5899,9 +6285,11 @@ dependencies:
       labels:
         label1: ''
         label2: ''
+        cnpg-label: ''
       annotations:
         annotation1: ''
         annotation2: ''
+        cnpg-annotation: ''
       type: ''
       mode: ''
       cluster:
@@ -5909,21 +6297,55 @@ dependencies:
           label3: ''
         annotations:
           annotation3: ''
-        env: {}
+        env:
+          VAR1: ''
+          VAR2:
+            configMapKeyRef:
+              name: ''
+              key: ''
+          VAR3:
+            secretKeyRef:
+              name: ''
+              key: ''
         envFrom:
         - configMapRef:
             name: ''
-            expandObjectName: false
         instances: 2
         singleNode: false
         primaryUpdateMethod: ''
         primaryUpdateStrategy: ''
         logLevel: ''
         postgresql:
+          key1: ''
+          key2: ''
           max_connections: ''
         initdb:
+          dataChecksums: false
+          encoding: ''
+          localeCollate: ''
+          localeCtype: ''
           walSegmentSize: 16
+          postInitApplicationSQL:
+          - ''
+          postInitSQL:
+          - ''
+          postInitTemplateSQL:
+          - ''
         skipEmptyWalArchiveCheck: false
+        postgresUID: 0
+        postgresGID: 0
+        enableSuperuserAccess: false
+        imageName: ''
+        nodeMaintenanceWindow:
+          reusePVC: false
+          inProgress: true
+        resources:
+          limits:
+            cpu: ''
+            memory: ''
+          requests:
+            cpu: ''
+            memory: ''
         storage:
           size: ''
           accessModes:
@@ -5937,14 +6359,22 @@ dependencies:
             apiGroup: ''
             kind: ''
             name: ''
+        walStorage:
+          size: ''
+          accessModes:
+          - ''
+        preloadLibraries:
+        - ''
       monitoring:
         enablePodMonitor: false
         disableDefaultQueries: false
         customQueries:
         - name: ''
-          key: ''
           query: ''
-          expandObjectName: false
+          metrics:
+          - a-gauge:
+              usage: ''
+              description: ''
       recovery:
         method: ''
         serverName: ''
@@ -5996,11 +6426,19 @@ dependencies:
             annotation4: ''
         labels:
           label5: ''
+          backups-label: ''
         annotations:
           annotation5: ''
+          backups-annotation: ''
         revision: ''
         compression:
-          enabled: true
+          enabled: false
+        instanceSidecarConfiguration:
+          retentionPolicyIntervalSeconds: 0
+          resources:
+            requests:
+              cpu: ''
+              memory: ''
         jobs: 2
       pooler:
         enabled: false
@@ -6171,6 +6609,10 @@ dependencies:
             protocol: ''
             port: 0
             targetPort: 0
+            primary: false
+            enabled: true
+        primary: false
+        enabled: true
     persistence:
       objectname:
         mountPath: ''
@@ -6198,7 +6640,16 @@ dependencies:
       workloadType: ''
       config:
         maxclients: 100
-      resources: {}
+        maxmemory-policy: ''
+        appendonly: true
+        maxmemory: ''
+      resources:
+        requests:
+          cpu: ''
+          memory: ''
+        limits:
+          cpu: ''
+          memory: ''
       persistence:
         enabled: true
         size: ''
@@ -6387,8 +6838,10 @@ dependencies:
       podMetadata:
         labels:
           a: ''
+          foo: ''
         annotations:
           c: ''
+          bar: ''
       imagePullSecrets:
       - ''
       podSecurityContext:
@@ -6421,7 +6874,7 @@ dependencies:
           hostProcess: false
           runAsUserName: ''
       serviceAccountName: ''
-      terminationGracePeriodSeconds: null
+      terminationGracePeriodSeconds: 60
       containers:
       - name: ''
         livenessProbe:
@@ -6477,8 +6930,10 @@ dependencies:
           patterns:
           - ''
         permissions: ''
-      labels: {}
-      annotations: {}
+      labels:
+        cluster-label: ''
+      annotations:
+        cluster-annotation: ''
     depconfig:
       password: ''
       creds:
@@ -6518,6 +6973,7 @@ dependencies:
                   enabled: false
               enabled: true
               primary: true
+        primary: true
         enabled: true
     service:
       objectname:
@@ -6535,6 +6991,8 @@ dependencies:
         targetSelector:
           main:
             main: {}
+        type: ''
+        size: ''
     addons:
       netshoot:
         enabled: true
@@ -6543,6 +7001,9 @@ dependencies:
         route:
           enabled: true
           gateway: ''
+    serviceAccount:
+      main:
+        primary: true
   mydep:
     enabled: true
     depconfig:
@@ -6615,6 +7076,10 @@ extraTpl:
     name: ''
   data:
     foo: ''
+mariadb:
+  enabled: true
+  mariadbUsername: ''
+  mariadbDatabase: ''
 cnpg:
   main:
     enabled: true
@@ -6646,6 +7111,7 @@ clickhouse:
   clickhouseUsername: ''
   clickhouseDatabase: ''
   password: ''
+password: ''
 env:
   DBNAME: ''
   DBTYPE: ''
@@ -6680,11 +7146,6 @@ additionalContainers:
         port: 0
         type: ''
         path: ''
-lifecycle:
-  postStart:
-    exec:
-      command:
-      - ''
 args:
 - ''
 registry: ''
@@ -6774,8 +7235,19 @@ annotation1: ''
 annotation2: ''
 annotation3: ''
 key: ''
+createChartContextConfigmap: true
+enabled: true
+port: 0
+ip: ''
+path: ''
+ext1: ''
+ext2: ''
 param: ''
 data: ''
+some_port: 80
+some_path: ''
+some_config_name: ''
+some_secret_name: ''
 some_value: ''
 some_other_value: 2
 imageDictToUse: ''
@@ -6783,6 +7255,14 @@ imageGPU:
   repository: ''
   tag: ''
   pullPolicy: ''
+some_command: ''
+some_host: ''
+some_protocol: ''
+probe_type: ''
+some_policy: ''
+some_propagation: ''
+some_sub_path: ''
+flag: false
 cron: ''
 someTimezone: ''
 command:
@@ -6830,6 +7310,13 @@ topologySpreadConstraints:
 - maxSkew: 1
   topologyKey: ''
   whenUnsatisfiable: ''
+useMemcached: false
+otherValkeyImage:
+  repository: ''
+  tag: ''
+otherExporterImage:
+  repository: ''
+  tag: ''
 solr:
   enabled: false
   password: ''
@@ -6851,11 +7338,20 @@ k5: ''
 k6: ''
 someHost: ''
 somePath: ''
+someType: ''
+otherhost: ''
+othercertissuer: ''
+initType: ''
+render: true
+initImage:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
 component: ''
 selector:
   app: ''
 someIP: ''
-some_propagation: ''
+version: 0
 some_mode: ''
 some_size: ''
 some_vol_name: ''
@@ -6865,7 +7361,6 @@ s1: ''
 property: ''
 value: 2
 policy: ''
-ip: ''
 host1: ''
 host2: ''
 disk_type: ''
@@ -6877,23 +7372,50 @@ op: ''
 effect: ''
 op1: ''
 effect1: ''
-some_path: ''
+some_object: ''
+some_key: ''
 some_type: ''
+some_medium: ''
+some_lun: 0
+some_iqn: ''
+some_targetPortal: ''
+some_fsType: ''
+some_initiatorName: ''
+some_interface: ''
+some_portals:
+- ''
+username: ''
 some_server: ''
-some_policy: ''
+some_audience: ''
+some_ref: ''
+some_container: ''
+some_resource: ''
+percentage: ''
+some_verb: ''
+some_group: ''
+some_kind: ''
+some_name: ''
+some_api_group: ''
+some_non_resource_url: ''
 some_family: ''
 some_ip: ''
 some_other_ip: ''
 some_affinity: ''
 some_timeout: 100
-some_port: 0
 some_target_port: 0
-some_protocol: ''
-some_name: ''
+some_external_ip: ''
+some_address_type: ''
+some_app_protocol: ''
 some_extra_ip: ''
 some_range: ''
+proto: ''
+some_nodePort: 0
+disabled: false
+test:
+  key1: ''
+  key2: ''
+authHost: ''
 some_driver: ''
-some_key: ''
 k7: ''
 k8: ''
 k9: ''

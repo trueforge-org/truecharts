@@ -200,7 +200,7 @@ Define a volume snapshot class
 | Field      | Value                                  |
 | ---------- | -------------------------------------- |
 | Key        | `volumeSnapshotClass.$name.parameters` |
-| Type       | `map, string`                          |
+| Type       | `map`                                  |
 | Required   | ❌                                     |
 | Helm `tpl` | ✅ (On both key and value)              |
 | Default    | `{}`                                   |

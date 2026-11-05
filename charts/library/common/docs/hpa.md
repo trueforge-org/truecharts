@@ -158,20 +158,6 @@ hpa:
 
 ---
 
-### `hpa.$name.workload`
-
-Set by the library to a copy of the workload this HPA targets. Any value set by the user is overwritten.
-
-| Field      | Value                |
-| ---------- | -------------------- |
-| Key        | `hpa.$name.workload` |
-| Type       | `map`                |
-| Required   | ❌                   |
-| Helm `tpl` | ❌                   |
-| Default    | unset                |
-
----
-
 ## Full Examples
 
 ```yaml

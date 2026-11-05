@@ -37,32 +37,6 @@ tests:
         isKind:
           of: Deployment
 
-  - it: should accept an empty root lifecycle object
-    set:
-      lifecycle: {}
-      workload:
-        my-workload:
-          enabled: true
-          primary: true
-          type: Deployment
-          podSpec:
-            containers:
-              my-container:
-                enabled: true
-                primary: true
-                imageSelector: ubuntuImage
-                probes:
-                  liveness:
-                    enabled: false
-                  readiness:
-                    enabled: false
-                  startup:
-                    enabled: false
-    asserts:
-      - documentIndex: 0
-        isKind:
-          of: Deployment
-
   - it: should fail on unknown keys in root resources
     set:
       resources:
