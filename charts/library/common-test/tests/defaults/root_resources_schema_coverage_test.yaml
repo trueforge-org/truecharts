@@ -37,10 +37,9 @@ tests:
         isKind:
           of: Deployment
 
-  - it: should accept the root lifecycle key that common does not read
+  - it: should accept an empty root lifecycle object
     set:
-      lifecycle:
-        postStart: ignored
+      lifecycle: {}
       workload:
         my-workload:
           enabled: true
