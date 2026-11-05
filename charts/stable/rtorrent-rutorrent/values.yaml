@@ -72,17 +72,17 @@ workload:
         main:
           probes:
             liveness:
-              exec:
-                command:
-                  - /usr/local/bin/healthcheck
+              type: exec
+              command:
+                - /usr/local/bin/healthcheck
             readiness:
-              exec:
-                command:
-                  - /usr/local/bin/healthcheck
+              type: exec
+              command:
+                - /usr/local/bin/healthcheck
             startup:
-              exec:
-                command:
-                  - /usr/local/bin/healthcheck
+              type: exec
+              command:
+                - /usr/local/bin/healthcheck
           env:
             RUTORRENT_PORT: "{{ .Values.service.main.ports.main.port }}"
             PORT_RTORRENT: "{{ .Values.service.rtorrent.ports.rtorrent.port }}"
