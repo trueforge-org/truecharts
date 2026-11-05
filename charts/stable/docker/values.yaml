@@ -3,7 +3,8 @@ image:
   repository: docker
   pullPolicy: IfNotPresent
   tag: 29.9.3-dind@sha256:d035bd30886e451b2727ef3cdb9af9a5c537a10d4bc5d18c08d0ffa597e46aeb
-hostNetwork: true
+podOptions:
+  hostNetwork: true
 securityContext:
   container:
     privileged: true
