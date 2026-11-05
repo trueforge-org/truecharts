@@ -43,28 +43,22 @@ workload:
           probes:
             liveness:
               enabled: true
-              custom: true
-              spec:
-                exec:
-                  command:
-                    - node
-                    - /app/services/healthcheck
+              type: exec
+              command:
+                - node
+                - /app/services/healthcheck
             readiness:
               enabled: true
-              custom: true
-              spec:
-                exec:
-                  command:
-                    - node
-                    - /app/services/healthcheck
+              type: exec
+              command:
+                - node
+                - /app/services/healthcheck
             startup:
               enabled: true
-              custom: true
-              spec:
-                exec:
-                  command:
-                    - node
-                    - /app/services/healthcheck
+              type: exec
+              command:
+                - node
+                - /app/services/healthcheck
 persistence:
   icons:
     enabled: true
