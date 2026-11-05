@@ -317,7 +317,6 @@ workload:
       containers:
         cleanup:
           enabled: "{{ .Values.multus.uninstall }}"
-          type: init
           imageSelector: ubuntuImage
           command:
             - sh
