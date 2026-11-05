@@ -34,9 +34,7 @@ workload:
           probes:
             readiness:
               enabled: true
-              custom: true
-              spec:
-                httpGet:
-                  path: /welcome.txt
-                  port: main
+              type: http
+              path: /welcome.txt
+              port: 80
     replicas: 2
