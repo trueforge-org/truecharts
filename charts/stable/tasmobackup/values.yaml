@@ -4,10 +4,6 @@ image:
   tag: 1.08.01@sha256:edd9bad4b1744f000ef43b9096740258901c8b0c6e3540d1945641bdec40b0da
   pullPolicy: IfNotPresent
 
-env:
-  DBNAME: data/tasmobackup
-  DBTYPE: sqlite
-
 securityContext:
   container:
     readOnlyRootFilesystem: false
