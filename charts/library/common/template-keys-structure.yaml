@@ -8,7 +8,7 @@ addons:
   codeserver:
     enabled: variableName
     service:
-      objectName:
+      main:
         ports:
           codeserver:
             port: variableName
@@ -55,7 +55,8 @@ global:
     accessModes: variableName
     allowRollingUpdateWithRWO: variableName
     cnpg:
-      objectName: {}
+      pgVersion: variableName
+      skipEmptyWalArchiveCheck: variableName
     persistenceType: variableName
     probeTimeouts: variableName
     probeType: variableName
@@ -64,7 +65,7 @@ global:
     routeListenerPort: variableName
     serviceProtocol: variableName
     serviceType: variableName
-    storageClass: {}
+    storageClass: variableName
     topologyKey: variableName
     vctAccessModes: variableName
     vctSize: variableName
@@ -93,7 +94,7 @@ ingress:
     required: variableName
     tls: variableName
 ingressMiddlewares:
-  objectName: {}
+  traefik: variableName
 listenerSet: variableName
 metrics:
   objectName:
@@ -134,13 +135,13 @@ persistence:
       password: variableName
       provisioner: variableName
       username: variableName
-    storageClass: {}
+    storageClass: variableName
     subPath: variableName
     targetSelectAll: variableName
     targetSelector: variableName
     type: variableName
     volsync: variableName
-    volumeSnapshots: {}
+    volumeSnapshots: variableName
 podDisruptionBudget: {}
 podOptions:
   affinity: variableName
@@ -173,7 +174,7 @@ rbac:
     enabled: variableName
     primary: variableName
 resources:
-  objectName:
+  limits:
     memory: variableName
 route:
   objectName:
