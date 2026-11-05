@@ -106,7 +106,6 @@ securityContext:
     PUID: 0
     UMASK: ''
     runAsNonRoot: false
-    fsGroup: 0
   pod:
     fsGroup: 0
     fsGroupChangePolicy: ''
@@ -211,12 +210,6 @@ workload:
                 initialDelaySeconds: 30
                 timeoutSeconds: 10
                 successThreshold: 1
-                exec:
-                  command:
-                  - ''
-                httpGet:
-                  path: ''
-                  port: 0
               httpHeaders:
                 Host: ''
                 Accept: ''
@@ -224,12 +217,6 @@ workload:
                 X-String: ''
                 X-Number: 2
                 X-Bool: true
-              custom: true
-              failureThreshold: 3
-              initialDelaySeconds: 1
-              exec:
-                command:
-                - ''
             readiness:
               enabled: true
               type: ''
@@ -241,9 +228,6 @@ workload:
                 failureThreshold: 5
                 initialDelaySeconds: 30
                 timeoutSeconds: 10
-                httpGet:
-                  path: ''
-                  port: ''
                 successThreshold: 5
               httpHeaders:
                 Host: ''
@@ -3020,7 +3004,6 @@ workload:
             TZ: ''
             UMASK: ''
             PUID: ''
-          type: ''
       initContainers:
         objectname:
           enabled: ''
@@ -3096,8 +3079,6 @@ workload:
           envFrom:
           - configMapRef:
               name: ''
-          name: ''
-          image: ''
           probes:
             liveness:
               enabled: true
@@ -3110,7 +3091,6 @@ workload:
       restartPolicy: ''
       hostNetwork: true
       terminationGracePeriodSeconds: 3
-      type: ''
       labels:
         pod-label1: ''
         pod-label2: ''
@@ -3382,7 +3362,6 @@ service:
         targetSelector: ''
         hostPort: 0
         nodePort: 0
-        type: ''
         appProtocol: ''
     targetSelector: ''
     clusterIP: ''
