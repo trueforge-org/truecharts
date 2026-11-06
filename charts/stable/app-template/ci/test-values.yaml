@@ -19,17 +19,14 @@ service:
       main:
         port: 8080
         targetPort: 8080
-    portsList:
-      - name: "extraport"
+      extraport:
         enabled: true
         port: 9118
         targetPort: 9118
-
-serviceList:
-  - name: extraservice
+  extraservice:
     enabled: true
-    portsList:
-      - name: "extrasvcport"
+    ports:
+      extrasvcport:
         enabled: true
         port: 9119
         targetPort: 9119
