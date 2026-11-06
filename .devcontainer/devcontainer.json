@@ -2,7 +2,14 @@
   "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
   "name": "TrueCharts",
   "image": "oci.trueforge.org/containerforge/devcontainer:4.1.1@sha256:07a5ae18b432aee9a2b4e9c50db005dc10f679214c611f0dbd0cb22f133d13e9",
+  "initializeCommand": "mkdir -p ${localEnv:HOME}${localEnv:USERPROFILE}/.claude",
   "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+  "mounts": [
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.claude,target=/config/.claude,type=bind,consistency=cached"
+  ],
+  "containerEnv": {
+    "CLAUDE_CONFIG_DIR": "/config/.claude"
+  },
   "customizations": {
     "vscode": {
       "extensions": [
