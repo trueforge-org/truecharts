@@ -27,6 +27,11 @@ objectData:
 
     {{- if (ne $enabled "true") -}}{{- continue -}}{{- end -}}
 
+    {{/* A volume only limits the strategy of the workloads that mount it */}}
+    {{- if not (include "tc.v1.common.lib.pod.volumes.isSelected" (dict "objectData" $objectData "persistence" $persistence)) -}}
+      {{- continue -}}
+    {{- end -}}
+
     {{- $type := ($persistence.type | default $rootCtx.Values.global.fallbackDefaults.persistenceType) -}}
     {{- $typesWithAccessMode := (list "pvc") -}}
 
