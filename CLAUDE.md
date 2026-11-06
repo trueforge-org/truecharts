@@ -22,4 +22,10 @@ agents. Use parallel execution when appropriate.
 The main agent coordinates work; sub-agents perform their
 respective specialties.
 
+### General rules for agents
+
+- Using agents is often preferred over doing the work yourself. Delegate work that splits into independent parts, is repetitive (many pages, files or charts), or runs long (test runs, bulk edits, reviews), and run independent agents in parallel.
+- Before you use a general-purpose agent (`general-purpose` or `claude`), evaluate whether a more specific agent fits the task, for example `haiku-docs` for docs and example files, `haiku-triage` for test and lint runs, `haiku-test-scaffold` for new unit tests, `haiku-bulk-edit` for one mechanical change in many files, `haiku-drafter` for commit and PR text, `haiku-lookup` for quick read-only questions, `Explore` for searching and `Plan` for designing. Use a general-purpose agent only when none of them fits.
+- Check the result of an agent before you rely on it. Agents can be wrong or can go beyond their task.
+
 @AGENTS.md
