@@ -373,6 +373,48 @@ Provisioner annotation of the PersistentVolume. Only for `mode: custom`.
 
 ---
 
+## `static.volumeHandle`
+
+Handle of the volume in the CSI driver. Defaults to the name of the PersistentVolume. Only for `mode: custom`.
+
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.static.volumeHandle` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+
+---
+
+## `static.volumeAttributes`
+
+Attributes of the volume that are passed to the CSI driver. Supports Helm `tpl` on values. Only for `mode: custom`.
+
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.static.volumeAttributes` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | unset |
+
+---
+
+## `static.volumeAttributes.$name`
+
+Value of the attribute.
+
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.static.volumeAttributes.$name` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
 ## `mountOptions`
 
 Mount options of the PersistentVolume. Only for `static.mode: nfs` and `static.mode: smb`.
@@ -686,6 +728,9 @@ persistence:
       mode: custom
       driver: some-driver
       provisioner: some-provisioner
+      volumeHandle: some-volume
+      volumeAttributes:
+        some-attribute: some-value
     mountPath: /data
 ```
 

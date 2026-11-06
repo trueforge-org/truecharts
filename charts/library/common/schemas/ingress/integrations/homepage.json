@@ -100,9 +100,11 @@
           "additionalProperties": {
             "type": [
               "string",
+              "number",
+              "boolean",
               "null"
             ],
-            "description": "Value of the widget setting. Supports Helm `tpl`, empty values are skipped.",
+            "description": "Value of the widget setting. Supports Helm `tpl`, empty values are skipped. Numbers and booleans are rendered as a string.",
             "x-helm-tpl": true
           }
         }

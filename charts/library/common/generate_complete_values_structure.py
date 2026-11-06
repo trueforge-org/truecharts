@@ -21,14 +21,13 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List
 
-from legacy_keys import load_legacy_paths, stale_paths, strip_legacy_keys
+import yaml
 
 # Try to import ruamel.yaml first (preserves comments), fall back to PyYAML
 try:
     from ruamel.yaml import YAML
     HAS_RUAMEL = True
 except ImportError:
-    import yaml
     HAS_RUAMEL = False
     print("Warning: ruamel.yaml not found. Comments will not be preserved.", file=sys.stderr)
     print("Install with: pip install ruamel.yaml", file=sys.stderr)
@@ -442,8 +441,6 @@ def generate_complete_structure(repo_root: Path) -> Dict[str, Any]:
     values_files = collect_all_values_files(repo_root)
     print(f"Found {len(values_files)} values files to process", file=sys.stderr)
     library_root_keys = collect_library_root_keys(repo_root)
-    legacy_paths = load_legacy_paths()
-    used_legacy_paths: set = set()
 
     complete_structure = {}
     for i, values_file in enumerate(values_files, 1):
@@ -453,12 +450,7 @@ def generate_complete_structure(repo_root: Path) -> Dict[str, Any]:
         values_data = load_yaml_file(values_file)
         if is_chart_values_file(values_file, repo_root):
             values_data = {key: value for key, value in (values_data or {}).items() if key in library_root_keys}
-            # Keys that no template of common reads (stable-legacy-keys.yaml) must not end up in the schema
-            used_legacy_paths |= strip_legacy_keys(values_data, legacy_paths)
         complete_structure = merge_into_structure(complete_structure, values_data)
-
-    for path in stale_paths(legacy_paths, used_legacy_paths):
-        print(f"WARNING: no chart sets {path} anymore, remove it from stable-legacy-keys.yaml", file=sys.stderr)
 
     unittest_files = collect_unittest_files(repo_root)
     print(f"Found {len(unittest_files)} common-test unittest files", file=sys.stderr)

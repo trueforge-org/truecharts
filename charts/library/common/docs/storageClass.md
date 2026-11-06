@@ -196,12 +196,12 @@ Parameters passed to the provisioner. Supports Helm `tpl` on values.
 
 ## `$name.parameters.$name`
 
-Value of the parameter.
+Value of the parameter. Numbers and booleans are rendered as a string.
 
 | Field | Value |
 | --- | --- |
 | Key | `storageClass.$name.parameters.$name` |
-| Type | `string` |
+| Type | `string or number or bool` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | unset |

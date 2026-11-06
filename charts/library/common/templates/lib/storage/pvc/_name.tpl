@@ -29,7 +29,14 @@ objectData: The object data to be used to render the Pod.
       {{- end -}}
 
     {{- else if eq $objectData.static.mode "custom" -}}
-      {{- $hashValues = (printf "%s-%v" $size $objectData.csi) -}}
+
+      {{/* The csi source of a PV is immutable, so a change to it needs a new PV */}}
+      {{- $hashValues = (printf "%s-%s-%s-%s-%s" $size
+                          $objectData.static.provisioner
+                          $objectData.static.driver
+                          ($objectData.static.volumeHandle | default "")
+                          ($objectData.static.volumeAttributes | default dict | mustToJson)) -}}
+
     {{- end -}}
   {{- end -}}
 

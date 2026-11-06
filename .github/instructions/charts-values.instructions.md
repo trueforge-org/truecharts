@@ -12,7 +12,7 @@ description: "Rules for application chart values.yaml and ci values: common sche
 
 These rules apply to `values.yaml` and `ci/*-values.yaml` of application charts. They add to [`charts.instructions.md`](charts.instructions.md) and [`AGENTS.md`](../../AGENTS.md).
 
-- Keep the first line exactly: `# yaml-language-server: $schema=./values.schema.json`. The chart's `values.schema.json` is not committed. It is the schema of the `common` version the chart depends on, added on release and while linting. To get it for your editor, run `.github/scripts/add_chart_schema.sh charts/stable/<chart>`.
+- Keep the first line exactly: `# yaml-language-server: $schema=./values.schema.json`. The chart's `values.schema.json` is not committed, and is not added on release or while linting. To use it in your editor, copy `charts/library/common/values.schema.json` to the chart and do not commit it.
 - Every key must be valid for the `common` values schema (`charts/library/common/values.schema.json`). CI validates every chart's `values.yaml` against it.
 - Only set values that differ from the `common` defaults in `charts/library/common/values.yaml`. Do not copy defaults.
 - Images: `image: { repository, pullPolicy: IfNotPresent, tag: <version>@sha256:<digest> }`. Put extra images in `<name>Image` keys (e.g. `postgresImage`) and select them in containers with `imageSelector: <name>Image`.

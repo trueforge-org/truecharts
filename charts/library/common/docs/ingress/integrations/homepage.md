@@ -284,12 +284,12 @@ Custom widget settings as a map of `key: value`. Each entry sets a `gethomepage.
 
 ## `widget.custom.$name`
 
-Value of the widget setting. Supports Helm `tpl`, empty values are skipped.
+Value of the widget setting. Supports Helm `tpl`, empty values are skipped. Numbers and booleans are rendered as a string.
 
 | Field | Value |
 | --- | --- |
 | Key | `ingress.$name.integrations.homepage.widget.custom.$name` |
-| Type | `string or null` |
+| Type | `number or bool or null` |
 | Required | ❌ |
 | Helm `tpl` | ✅ |
 | Default | unset |

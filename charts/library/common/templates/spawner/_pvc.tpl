@@ -64,6 +64,8 @@
             {{- $_ := set $objectData.static "driver" "nfs.csi.k8s.io" -}}
 
           {{- else if eq $objectData.static.mode "custom" -}}
+            {{/* Validate custom CSI */}}
+            {{- include "tc.v1.common.lib.storage.customCSI.validation" (dict "objectData" $objectData) -}}
 
             {{- $_ := set $objectData "provisioner" $objectData.static.provisioner -}}
             {{- $_ := set $objectData.static "driver" $objectData.static.driver -}}

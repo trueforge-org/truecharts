@@ -4,14 +4,9 @@ import argparse
 import json
 import shutil
 import subprocess
-import tempfile
 import sys
 from pathlib import Path
 from urllib.parse import urldefrag
-
-import yaml
-
-from legacy_keys import load_legacy_paths, stale_paths, strip_legacy_keys
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -127,44 +122,25 @@ def validate_values_file_with_helm(
     values_path: Path,
     common_chart_dir: Path,
     helm_bin: str,
-    legacy_paths: list[str] | None = None,
-    used_legacy_paths: set[str] | None = None,
 ) -> tuple[bool, list[str]]:
     if not values_path.exists():
         return False, [f"values file missing: {values_path}"]
-
-    lint_path = values_path
-    temp_path = None
-    if legacy_paths and used_legacy_paths is not None:
-        # Keys that no template of common reads (stable-legacy-keys.yaml) are left out, they are not in the schema
-        values = yaml.safe_load(values_path.read_text(encoding="utf-8")) or {}
-        matched = strip_legacy_keys(values, legacy_paths) if isinstance(values, dict) else set()
-        if matched:
-            used_legacy_paths.update(matched)
-            with tempfile.NamedTemporaryFile("w", suffix=".yaml", delete=False, encoding="utf-8") as handle:
-                yaml.safe_dump(values, handle)
-                temp_path = Path(handle.name)
-            lint_path = temp_path
 
     command = [
         helm_bin,
         "lint",
         str(common_chart_dir),
         "-f",
-        str(lint_path),
+        str(values_path),
         "--quiet",
     ]
 
-    try:
-        result = subprocess.run(
-            command,
-            text=True,
-            capture_output=True,
-            check=False,
-        )
-    finally:
-        if temp_path is not None:
-            temp_path.unlink(missing_ok=True)
+    result = subprocess.run(
+        command,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
 
     output_lines = [
         line.rstrip()
@@ -255,9 +231,6 @@ def main() -> int:
         for values_file in common_test_values_files
     )
 
-    legacy_paths = load_legacy_paths()
-    used_legacy_paths: set[str] = set()
-
     total = 0
     failed = 0
     failed_targets: list[str] = []
@@ -265,13 +238,10 @@ def main() -> int:
 
     for target_name, values_file in validation_targets:
         total += 1
-        is_chart = target_name.startswith("stable/")
         valid, output_lines = validate_values_file_with_helm(
             values_file,
             common_chart_dir,
             args.helm_bin,
-            legacy_paths if is_chart else None,
-            used_legacy_paths if is_chart else None,
         )
         if not valid:
             failed += 1
@@ -298,15 +268,6 @@ def main() -> int:
     emit(f"- Total charts checked: {total}", output_file)
     emit(f"- Passed: {passed}", output_file)
     emit(f"- Failed: {failed}", output_file)
-    if used_legacy_paths:
-        emit(
-            f"- Legacy chart keys left out of the validation (stable-legacy-keys.yaml): {len(used_legacy_paths)}",
-            output_file,
-        )
-    if not stopped_early:
-        # A stopped run did not look at every chart, so it can not tell which entries are stale
-        for path in stale_paths(legacy_paths, used_legacy_paths):
-            emit(f"- WARNING: no chart sets {path} anymore, remove it from stable-legacy-keys.yaml", output_file)
     if stopped_early:
         emit("- Stopped early: yes", output_file)
     if failed_targets:

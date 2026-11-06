@@ -161,10 +161,6 @@ jobs:
       - name: Install Python dependencies
         run: pip install PyYAML ruamel.yaml
 
-      - name: Generate complete values structure
-        run: |
-          python3 charts/library/common/generate_complete_values_structure.py
-
       # Each check also writes its output to coverage-report/, for the PR comment on failure
       - name: Run schema validation
         id: schema
@@ -174,6 +170,12 @@ jobs:
           (
             set -e
             python3 charts/library/common/generate_bundled_schema.py --check
+            python3 charts/library/common/generate_template_keys_structure.py --check
+            # The values of charts change without a change in common, so an outdated file is not an error of this PR.
+            # The coverage check below uses the rebuilt file.
+            python3 charts/library/common/generate_complete_values_structure.py --check ||
+              echo "::warning::complete-values-structure.yaml is not up to date, run generate_complete_values_structure.py"
+            python3 charts/library/common/generate_complete_values_structure.py
             python3 charts/library/common/test_schema.py --max-failures 0 --output-file stable_schema_validation.log
             python3 charts/library/common/check_complete_values_schema_coverage.py
           ) 2>&1 | tee coverage-report/schema.log
@@ -209,6 +211,7 @@ jobs:
           UNITTEST_OUTCOME: ${{ steps.unittest.outcome }}
           DOCS_OUTCOME: ${{ steps.docs.outcome }}
         run: |
+          mkdir -p coverage-report
           cd coverage-report
           echo "$PR_NUMBER" > pr-number
           echo "$HEAD_SHA" > head-sha
@@ -218,10 +221,16 @@ jobs:
                          "unittest|Unittest schema coverage|$UNITTEST_OUTCOME" \
                          "docs|Docs|$DOCS_OUTCOME"; do
               IFS='|' read -r id title outcome <<< "$check"
-              [ "$outcome" = "failure" ] || continue
+              # A skipped check did not pass either, for example when a step before it failed
+              [ "$outcome" != "success" ] || continue
               failed=1
               echo "### ❌ $title"
               echo
+              if [ ! -f "$id.log" ]; then
+                echo "The check has no output (outcome: $outcome), see the workflow run."
+                echo
+                continue
+              fi
               if [ -f "$id-summary.md" ]; then
                 cat "$id-summary.md"
                 echo
@@ -273,7 +282,7 @@ jobs:
 
       - name: Upload schema validation log
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: stable-schema-validation-log
           path: stable_schema_validation.log

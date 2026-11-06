@@ -660,6 +660,21 @@
             "type": "string",
             "description": "Provisioner annotation of the PersistentVolume. Only for `mode: custom`.",
             "x-docs-required": true
+          },
+          "volumeHandle": {
+            "type": "string",
+            "description": "Handle of the volume in the CSI driver. Defaults to the name of the PersistentVolume. Only for `mode: custom`.",
+            "x-helm-tpl": true
+          },
+          "volumeAttributes": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": {
+              "type": "string",
+              "description": "Value of the attribute."
+            },
+            "description": "Attributes of the volume that are passed to the CSI driver. Supports Helm `tpl` on values. Only for `mode: custom`.",
+            "x-helm-tpl": "On value only"
           }
         },
         "additionalProperties": false,

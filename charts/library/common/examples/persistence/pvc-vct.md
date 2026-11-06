@@ -144,6 +144,9 @@ persistence:
       mode: custom
       driver: some-driver
       provisioner: some-provisioner
+      volumeHandle: some-volume
+      volumeAttributes:
+        some-attribute: some-value
     mountPath: /data
 ```
 

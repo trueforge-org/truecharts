@@ -5,18 +5,12 @@
   "global": {
    "$ref": "#/definitions/global.global",
    "description": "Global values that apply to the chart and its dependencies. See [global](/truecharts-common/global).",
-   "type": "object",
-   "x-docs-page": {
-    "title": "Global"
-   }
+   "type": "object"
   },
   "namespace": {
    "$ref": "#/definitions/namespace",
    "description": "Namespace to create all objects in, unless overridden at the object level. Does not apply to chart dependencies, use `global.namespace` for that.",
-   "default": "",
-   "x-docs-page": {
-    "title": "Namespace"
-   }
+   "default": ""
   },
   "image": {
    "$ref": "#/definitions/image",
@@ -26,11 +20,6 @@
     "repository": "oci.trueforge.org/containerforge/whoami",
     "pullPolicy": "IfNotPresent",
     "tag": "1.12.0@sha256:ab5d621fc3ecf2ddcc52a728551bab0b942c1e777126b9595df1cfa4e7b9adfa"
-   },
-   "x-docs-page": {
-    "title": "Image",
-    "compact": true,
-    "file": "image.md"
    }
   },
   "chartContext": {
@@ -40,25 +29,16 @@
     "appUrl": "",
     "podCIDR": "",
     "svcCIDR": ""
-   },
-   "x-docs-page": {
-    "title": "Chart Context"
    }
   },
   "createChartContextConfigmap": {
    "type": "boolean",
    "default": false,
-   "description": "Creates a ConfigMap `chart-context` with the generated `chartContext`. Only used in CI and unittests, to check the generated chart context.",
-   "x-docs-page": {
-    "file": "chartContext.md"
-   }
+   "description": "Creates a ConfigMap `chart-context` with the generated `chartContext`. Only used in CI and unittests, to check the generated chart context."
   },
   "common": {
    "$ref": "#/definitions/common",
-   "description": "Values merged into the common defaults before the values of the chart. Takes the same values as the chart itself.",
-   "x-docs-page": {
-    "title": "Common"
-   }
+   "description": "Values merged into the common defaults before the values of the chart. Takes the same values as the chart itself."
   },
   "securityContext": {
    "$ref": "#/definitions/securityContext",
@@ -90,9 +70,6 @@
      "supplementalGroups": [],
      "sysctls": []
     }
-   },
-   "x-docs-page": {
-    "title": "Security Context"
    }
   },
   "resources": {
@@ -118,18 +95,12 @@
     "NVIDIA_CAPS": [
      "all"
     ]
-   },
-   "x-docs-page": {
-    "title": "Container Options"
    }
   },
   "podOptions": {
    "$ref": "#/definitions/podOptions.podOptions",
    "description": "Options that apply to all pods, unless overridden at the pod level. See [podOptions](/truecharts-common/podOptions).",
-   "type": "object",
-   "x-docs-page": {
-    "title": "Pod Options"
-   }
+   "type": "object"
   },
   "workload": {
    "$ref": "#/definitions/workload.workload",
@@ -138,185 +109,77 @@
   "TZ": {
    "$ref": "#/definitions/TZ",
    "description": "Timezone set as the `TZ` environment variable of the containers, unless overridden at the container level.",
-   "default": "UTC",
-   "x-docs-page": {
-    "title": "Time Zone"
-   }
+   "default": "UTC"
   },
   "diagnosticMode": {
    "$ref": "#/definitions/diagnosticMode",
    "description": "Run the containers with a sleep command instead of the app, so you can exec into them to debug.",
    "default": {
     "enabled": false
-   },
-   "x-docs-page": {
-    "title": "Diagnostic Mode"
    }
   },
   "vpa": {
    "$ref": "#/definitions/vpa",
-   "description": "VerticalPodAutoscalers, keyed by name. Each one scales the resources of a workload.",
-   "x-docs-page": {
-    "title": "VPA"
-   }
+   "description": "VerticalPodAutoscalers, keyed by name. Each one scales the resources of a workload."
   },
   "hpa": {
    "$ref": "#/definitions/hpa",
-   "description": "HorizontalPodAutoscalers, keyed by name. Each one scales the replicas of a workload.",
-   "x-docs-page": {
-    "title": "HPA"
-   }
+   "description": "HorizontalPodAutoscalers, keyed by name. Each one scales the replicas of a workload."
   },
   "service": {
    "$ref": "#/definitions/service.service",
-   "description": "Services, keyed by name. Each one exposes a workload on one or more ports. See [service](/truecharts-common/service).",
-   "x-docs-page": {
-    "title": "Service",
-    "types": {
-     "ClusterIP": {
-      "file": "ClusterIP",
-      "title": "ClusterIP"
-     },
-     "LoadBalancer": {
-      "file": "LoadBalancer",
-      "title": "LoadBalancer"
-     },
-     "NodePort": {
-      "file": "NodePort",
-      "title": "NodePort"
-     },
-     "ExternalIP": {
-      "file": "ExternalIP",
-      "title": "ExternalIP"
-     },
-     "ExternalName": {
-      "file": "ExternalName",
-      "title": "ExternalName"
-     }
-    }
-   }
+   "description": "Services, keyed by name. Each one exposes a workload on one or more ports. See [service](/truecharts-common/service)."
   },
   "credentials": {
    "$ref": "#/definitions/credentials",
-   "description": "Credentials for S3 compatible backup targets, keyed by name.",
-   "x-docs-page": {
-    "title": "Credentials"
-   }
+   "description": "Credentials for S3 compatible backup targets, keyed by name."
   },
   "ingressMiddlewares": {
    "$ref": "#/definitions/ingressMiddlewares.ingressMiddlewares",
-   "description": "Ingress middlewares (Traefik Middleware objects), keyed by ingress controller and then by name. See [middlewares](/truecharts-common/ingressMiddlewares).",
-   "x-docs-page": {
-    "title": "Middlewares"
-   }
+   "description": "Ingress middlewares (Traefik Middleware objects), keyed by ingress controller and then by name. See [middlewares](/truecharts-common/ingressMiddlewares)."
   },
   "persistence": {
    "$ref": "#/definitions/persistence.persistence",
-   "description": "Volumes, keyed by name. Each one is a PVC, emptyDir, hostPath, secret, configmap or other volume type, mounted into containers. See [persistence](/truecharts-common/persistence).",
-   "x-docs-page": {
-    "title": "Persistence",
-    "types": {
-     "configmap": {
-      "file": "configmap",
-      "title": "ConfigMap"
-     },
-     "device": {
-      "file": "device",
-      "title": "Device"
-     },
-     "emptyDir": {
-      "file": "emptyDir",
-      "title": "EmptyDir"
-     },
-     "hostPath": {
-      "file": "hostPath",
-      "title": "HostPath"
-     },
-     "iscsi": {
-      "file": "iscsi",
-      "title": "iSCSI"
-     },
-     "nfs": {
-      "file": "nfs",
-      "title": "NFS"
-     },
-     "secret": {
-      "file": "secret",
-      "title": "Secret"
-     },
-     "pvc-vct": {
-      "file": "pvc-vct",
-      "title": "PVC and VCT",
-      "tokens": [
-       "pvc",
-       "vct"
-      ]
-     }
-    }
-   }
+   "description": "Volumes, keyed by name. Each one is a PVC, emptyDir, hostPath, secret, configmap or other volume type, mounted into containers. See [persistence](/truecharts-common/persistence)."
   },
   "volumeSnapshotClass": {
    "$ref": "#/definitions/volumeSnapshotClass",
    "description": "VolumeSnapshotClasses, keyed by name.",
-   "default": {},
-   "x-docs-page": {
-    "title": "Volume Snapshot Class"
-   }
+   "default": {}
   },
   "volumeSnapshots": {
    "$ref": "#/definitions/volumeSnapshots",
    "description": "VolumeSnapshots, keyed by name.",
-   "default": {},
-   "x-docs-page": {
-    "title": "Volume Snapshot"
-   }
+   "default": {}
   },
   "imagePullSecret": {
    "$ref": "#/definitions/imagePullSecret",
    "description": "Image pull secrets, keyed by name, for pulling images from a private registry.",
-   "default": {},
-   "x-docs-page": {
-    "title": "Image Pull Secret"
-   }
+   "default": {}
   },
   "configmap": {
    "$ref": "#/definitions/configmap",
    "description": "ConfigMaps, keyed by name.",
-   "default": {},
-   "x-docs-page": {
-    "title": "ConfigMap"
-   }
+   "default": {}
   },
   "secret": {
    "$ref": "#/definitions/secret",
    "description": "Secrets, keyed by name.",
-   "default": {},
-   "x-docs-page": {
-    "title": "Secret"
-   }
+   "default": {}
   },
   "serviceAccount": {
    "$ref": "#/definitions/serviceAccount",
    "description": "ServiceAccounts, keyed by name.",
-   "default": {},
-   "x-docs-page": {
-    "title": "Service Account"
-   }
+   "default": {}
   },
   "rbac": {
    "$ref": "#/definitions/rbac",
    "description": "Roles and RoleBindings (or ClusterRoles and ClusterRoleBindings), keyed by name.",
-   "default": {},
-   "x-docs-page": {
-    "title": "RBAC"
-   }
+   "default": {}
   },
   "notes": {
    "$ref": "#/definitions/notes",
-   "description": "Content of `NOTES.txt`, shown after install and upgrade.",
-   "x-docs-page": {
-    "title": "Notes"
-   }
+   "description": "Content of `NOTES.txt`, shown after install and upgrade."
   },
   "gluetunImage": {
    "$ref": "#/definitions/images/properties/gluetunImage",
@@ -325,9 +188,6 @@
     "repository": "oci.trueforge.org/tccr/gluetun",
     "tag": "v3.40.0@sha256:a8189e29155e0f8142be1500ae068a92b189b1b25abbba036321e74d6389bf2b",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "netshootImage": {
@@ -337,9 +197,6 @@
     "repository": "oci.trueforge.org/tccr/netshoot",
     "tag": "v0.14.0@sha256:28ede4317d22391e7d89a15eb78dc2afc3587ece02c76c983dde7239a0e43679",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "tailscaleImage": {
@@ -349,9 +206,6 @@
     "repository": "oci.trueforge.org/tccr/tailscale",
     "tag": "v1.88.3@sha256:878612592f133bc0728e978558b10a1c457371ac5949985d0584664c8e92c2f9",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "codeserverImage": {
@@ -361,9 +215,6 @@
     "repository": "oci.trueforge.org/containerforge/code-server",
     "tag": "4.141.0@sha256:7539bf1f492206f49dfc22b483adfcefd010e6a2be6be4e42a04376fa7f9338f",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "ubuntuImage": {
@@ -373,9 +224,6 @@
     "repository": "oci.trueforge.org/containerforge/ubuntu",
     "tag": "26.4@sha256:a3ec289cfc10acc23a20cfb4fe5033c944ce3073dc4a53157c093ffb52f983b1",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "kubectlImage": {
@@ -385,9 +233,6 @@
     "repository": "oci.trueforge.org/containerforge/kubectl",
     "tag": "1.31.1@sha256:4a51a8930e778b7f996ab476e5fcef4385453d1b78362c878bcc2b2501f99a24",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "postgresClientImage": {
@@ -397,9 +242,6 @@
     "repository": "oci.trueforge.org/containerforge/postgresql-client",
     "tag": "9.6.24@sha256:65e2aaef5c5decd8ed06f5c41cb77de6406e44006d6f3db12d0faac3f88fa1c8",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "mariadbClientImage": {
@@ -409,9 +251,6 @@
     "repository": "oci.trueforge.org/containerforge/mariadb-client",
     "tag": "13.0.2@sha256:acc2ae890ada19a833be764eb3960746d337ef8da4c6a72cf365dc1c1efaab69",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "valkeyClientImage": {
@@ -421,9 +260,6 @@
     "repository": "oci.trueforge.org/containerforge/valkey-tools",
     "tag": "1.1.0@sha256:4b3672ee5f6896b5c2dcb3d0d23da2fe3cfe721bfdc40339e383ed7a4cc18fbe",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "mongodbClientImage": {
@@ -433,9 +269,6 @@
     "repository": "oci.trueforge.org/containerforge/mongosh",
     "tag": "2.14.1@sha256:3dca8f9bde2eec214ae0718ac2a9de2f27809761f150b634a1533d98b53a6d08",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "postgres15Image": {
@@ -445,9 +278,6 @@
     "repository": "ghcr.io/cloudnative-pg/postgresql",
     "tag": "15.19@sha256:11274300143f02d369ea2ff6082b028b6b662915f06bf59f26b808b53823475a",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "postgres16Image": {
@@ -457,9 +287,6 @@
     "repository": "ghcr.io/cloudnative-pg/postgresql",
     "tag": "16.15@sha256:34cd4159d07b3410a1b29da35072e2e927a0905e717a61afa3814624a2e8859a",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "postgresPostgis15Image": {
@@ -469,9 +296,6 @@
     "repository": "ghcr.io/cloudnative-pg/postgis",
     "tag": "15-3.4@sha256:4596b193991cd2463a07d40e3d3d62c59f046a7dece8f163ad1aba15925a38e4",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "postgresPostgis16Image": {
@@ -481,9 +305,6 @@
     "repository": "ghcr.io/cloudnative-pg/postgis",
     "tag": "16-3.4@sha256:bb5a8590a8c934767482e34e1d103253f412aec703b77bbc52ad9044bf6e56f9",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "postgresVectors15Image": {
@@ -493,9 +314,6 @@
     "repository": "ghcr.io/tensorchord/cloudnative-pgvecto.rs",
     "tag": "15.7-v0.2.1@sha256:dbdeddf0d635f76df41f745407816c87c7468df35e3b7b0665ca4e0500ff3048",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "postgresVectors16Image": {
@@ -505,9 +323,6 @@
     "repository": "ghcr.io/tensorchord/cloudnative-pgvecto.rs",
     "tag": "16.3-v0.2.1@sha256:f1a19d4fc4073b0671a72ad34ef012aa20d21b3ddf5b4b0c9077d54450db679a",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "postgresVectorchord15Image": {
@@ -517,9 +332,6 @@
     "repository": "ghcr.io/tensorchord/cloudnative-vectorchord",
     "tag": "15.19-1.1.1@sha256:69194e365f89b2cb3e85facec3e905605407b97bf6dfbe4b538d8aea924e5df7",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "postgresVectorchord16Image": {
@@ -529,135 +341,80 @@
     "repository": "ghcr.io/tensorchord/cloudnative-vectorchord",
     "tag": "16.15-1.1.1@sha256:f5a17fa05faf25e81304ee95e9f920d8ae077ac4a4ef0a1251e09c7197cbb236",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "ingress": {
    "$ref": "#/definitions/ingress.ingress",
-   "description": "Ingresses, keyed by name. Each one routes external traffic to a service. See [ingress](/truecharts-common/ingress).",
-   "x-docs-page": {
-    "title": "Ingress"
-   }
+   "description": "Ingresses, keyed by name. Each one routes external traffic to a service. See [ingress](/truecharts-common/ingress)."
   },
   "certificate": {
    "$ref": "#/definitions/certificate",
    "description": "cert-manager Certificates, keyed by name.",
-   "default": {},
-   "x-docs-page": {
-    "title": "Certificate"
-   }
+   "default": {}
   },
   "route": {
    "$ref": "#/definitions/route",
-   "description": "Gateway API routes (HTTPRoute, GRPCRoute, TCPRoute, TLSRoute, UDPRoute), keyed by name. See [route](/truecharts-common/route).",
-   "x-docs-page": {
-    "title": "Route"
-   }
+   "description": "Gateway API routes (HTTPRoute, GRPCRoute, TCPRoute, TLSRoute, UDPRoute), keyed by name. See [route](/truecharts-common/route)."
   },
   "podDisruptionBudget": {
    "$ref": "#/definitions/podDisruptionBudget",
-   "description": "Pod Disruption Budgets, keyed by name.",
-   "x-docs-page": {
-    "title": "Pod Disruption Budget"
-   }
+   "description": "Pod Disruption Budgets, keyed by name."
   },
   "webhook": {
    "$ref": "#/definitions/webhook",
-   "description": "Webhook configurations (validating and mutating), keyed by name.",
-   "x-docs-page": {
-    "title": "Webhook"
-   }
+   "description": "Webhook configurations (validating and mutating), keyed by name."
   },
   "priorityClass": {
    "$ref": "#/definitions/priorityClass",
    "description": "PriorityClasses, keyed by name.",
-   "default": {},
-   "x-docs-page": {
-    "title": "Priority Class"
-   }
+   "default": {}
   },
   "storageClass": {
    "$ref": "#/definitions/storageClass",
    "description": "StorageClasses, keyed by name.",
-   "default": {},
-   "x-docs-page": {
-    "title": "Storage Class"
-   }
+   "default": {}
   },
   "metrics": {
    "$ref": "#/definitions/metrics",
-   "description": "ServiceMonitors, PodMonitors and PrometheusRules, keyed by name. See [metrics](/truecharts-common/metrics).",
-   "x-docs-page": {
-    "title": "Metrics"
-   }
+   "description": "ServiceMonitors, PodMonitors and PrometheusRules, keyed by name. See [metrics](/truecharts-common/metrics)."
   },
   "addons": {
    "$ref": "#/definitions/addons.addons",
-   "description": "Addons that add containers or objects to the workloads, such as a VPN, Tailscale or code-server. See [addons](/truecharts-common/addons).",
-   "x-docs-page": {
-    "title": "Addons",
-    "overview": true
-   }
+   "description": "Addons that add containers or objects to the workloads, such as a VPN, Tailscale or code-server. See [addons](/truecharts-common/addons)."
   },
   "dependencies": {
    "$ref": "#/definitions/dependencies",
-   "description": "Services the app needs, such as a database or cache, deployed with the chart. See [dependencies](/truecharts-common/dependencies).",
-   "x-docs-page": {
-    "title": "Dependencies"
-   }
+   "description": "Services the app needs, such as a database or cache, deployed with the chart. See [dependencies](/truecharts-common/dependencies)."
   },
   "cnpg": {
    "$ref": "#/definitions/cnpg",
-   "description": "CloudNativePG clusters, keyed by name (`main` by default). See [cnpg](/truecharts-common/cnpg).",
-   "x-docs-page": {
-    "title": "CNPG"
-   }
+   "description": "CloudNativePG clusters, keyed by name (`main` by default). See [cnpg](/truecharts-common/cnpg)."
   },
   "redis": {
    "$ref": "#/definitions/redis",
-   "description": "Redis dependency configuration. See [redis](/truecharts-common/redis).",
-   "x-docs-page": {
-    "title": "Redis"
-   }
+   "description": "Redis dependency configuration. See [redis](/truecharts-common/redis)."
   },
   "mariadb": {
    "$ref": "#/definitions/mariadb",
-   "description": "MariaDB dependency configuration. See [mariadb](/truecharts-common/mariadb).",
-   "x-docs-page": {
-    "title": "MariaDB"
-   }
+   "description": "MariaDB dependency configuration. See [mariadb](/truecharts-common/mariadb)."
   },
   "mongodb": {
    "$ref": "#/definitions/mongodb",
-   "description": "MongoDB dependency configuration. See [mongodb](/truecharts-common/mongodb).",
-   "x-docs-page": {
-    "title": "MongoDB"
-   }
+   "description": "MongoDB dependency configuration. See [mongodb](/truecharts-common/mongodb)."
   },
   "clickhouse": {
    "$ref": "#/definitions/clickhouse",
-   "description": "ClickHouse dependency configuration. See [clickhouse](/truecharts-common/clickhouse).",
-   "x-docs-page": {
-    "title": "ClickHouse"
-   }
+   "description": "ClickHouse dependency configuration. See [clickhouse](/truecharts-common/clickhouse)."
   },
   "solr": {
    "$ref": "#/definitions/solr",
-   "description": "Solr dependency configuration. See [solr](/truecharts-common/solr).",
-   "x-docs-page": {
-    "title": "Solr"
-   }
+   "description": "Solr dependency configuration. See [solr](/truecharts-common/solr)."
   },
   "extraTpl": {
    "$ref": "#/definitions/extraTpl",
    "description": "Extra Kubernetes resources to render, one per list item, as a YAML object or as a string. Helm `tpl` is resolved in each item.",
    "type": "array",
-   "default": [],
-   "x-docs-page": {
-    "title": "Extra Templates"
-   }
+   "default": []
   },
   "alpineImage": {
    "$ref": "#/definitions/images/properties/alpineImage",
@@ -666,9 +423,6 @@
     "repository": "oci.trueforge.org/tccr/alpine",
     "tag": "v3.22.1@sha256:6dc807ae4f2867cb2d00d061f8f579f1966420ad792c179ac68072ab235109f8",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "scratchImage": {
@@ -678,9 +432,6 @@
     "repository": "oci.trueforge.org/containerforge/scratch",
     "tag": "1.0.0@sha256:84182a2371dd7584ad752326b7150b4e928c640b7f70a249a3994b40f1db11fd",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "wgetImage": {
@@ -690,9 +441,6 @@
     "repository": "oci.trueforge.org/containerforge/ubuntu",
     "tag": "26.4@sha256:a3ec289cfc10acc23a20cfb4fe5033c944ce3073dc4a53157c093ffb52f983b1",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "yqImage": {
@@ -702,9 +450,6 @@
     "repository": "oci.trueforge.org/containerforge/go-yq",
     "tag": "4.54.1@sha256:c72dd476916ea3c51292adf9914780a2c4a978def8479053bb1ea37993cdbd53",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "redisClientImage": {
@@ -714,9 +459,6 @@
     "repository": "oci.trueforge.org/containerforge/valkey-tools",
     "tag": "1.1.0@sha256:4b3672ee5f6896b5c2dcb3d0d23da2fe3cfe721bfdc40339e383ed7a4cc18fbe",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "openvpnImage": {
@@ -726,9 +468,6 @@
     "repository": "oci.trueforge.org/tccr/openvpn-client",
     "tag": "latest@sha256:9bfdf50791d6e51056e31c03f73c9db329b2b72e7746155cfdc63e0c8b49b55a",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "wireguardImage": {
@@ -738,25 +477,14 @@
     "repository": "oci.trueforge.org/tccr/wireguard",
     "tag": "v1.0.20210914@sha256:683b8b74d64ebd07f9955147539834c2a4b60fee51d2a36fa76b9aba689601bf",
     "pullPolicy": "IfNotPresent"
-   },
-   "x-docs-page": {
-    "file": "image.md"
    }
   },
   "networkPolicy": {
    "$ref": "#/definitions/networkPolicy",
-   "description": "Network policies, keyed by name. See [networkPolicy](/truecharts-common/networkPolicy).",
-   "x-docs-page": {
-    "title": "Network Policy"
-   }
+   "description": "Network policies, keyed by name. See [networkPolicy](/truecharts-common/networkPolicy)."
   }
  },
  "additionalProperties": true,
- "x-docs-page": {
-  "title": "Common Chart Documentation",
-  "intro": "This applies across all the documentation:\n\n- Helm `tpl`:\n  - ❌ means that the value is not templated\n  - ✅ means that the value is templated, for example instead of a hardcoded value, you can set it to `{{ .Values.some.value }}` and it will be replaced by the value contained in `.Values.some.value` at the installation/upgrade time.\n\nThe pages are generated from the schema. The keywords the generator reads are on the [Schema Options](/truecharts-common/schemaOptions) page.",
-  "overview": true
- },
  "definitions": {
   "TZ": {
    "type": "string",
@@ -771,43 +499,19 @@
    "properties": {
     "codeserver": {
      "$ref": "#/definitions/addons.codeserver",
-     "description": "A code-server container to edit the files of the app.",
-     "x-docs-page": {
-      "title": "Code Server",
-      "collapse": {
-       "service": "service/index.md",
-       "ingress": "ingress/index.md"
-      }
-     }
+     "description": "A code-server container to edit the files of the app."
     },
     "gluetun": {
      "$ref": "#/definitions/addons.gluetun",
-     "description": "A gluetun VPN container that routes the traffic of the pod.",
-     "x-docs-page": {
-      "title": "Gluetun",
-      "collapse": {
-       "service": "service/index.md",
-       "ingress": "ingress/index.md"
-      }
-     }
+     "description": "A gluetun VPN container that routes the traffic of the pod."
     },
     "netshoot": {
      "$ref": "#/definitions/addons.netshoot",
-     "description": "A netshoot container to debug the network of the pod.",
-     "x-docs-page": {
-      "title": "Netshoot",
-      "collapse": {
-       "service": "service/index.md",
-       "ingress": "ingress/index.md"
-      }
-     }
+     "description": "A netshoot container to debug the network of the pod."
     },
     "tailscale": {
      "$ref": "#/definitions/addons.tailscale.tailscale",
-     "description": "A tailscale container that connects the pod to a tailnet.",
-     "x-docs-page": {
-      "title": "Tailscale"
-     }
+     "description": "A tailscale container that connects the pod to a tailnet."
     },
     "vpn": {
      "type": "object",
@@ -2381,10 +2085,7 @@
     }
    },
    "additionalProperties": false,
-   "description": "Database cluster configuration.",
-   "x-docs-page": {
-    "title": "CNPG Cluster"
-   }
+   "description": "Database cluster configuration."
   },
   "cnpg.cluster.initdb": {
    "type": "object",
@@ -3076,10 +2777,7 @@
     }
    },
    "additionalProperties": false,
-   "description": "Defaults used when a value is not set on the object itself.",
-   "x-docs-page": {
-    "title": "Fallback Defaults"
-   }
+   "description": "Defaults used when a value is not set on the object itself."
   },
   "global.global": {
    "type": "object",
@@ -4121,10 +3819,7 @@
      "default": ""
     }
    },
-   "additionalProperties": false,
-   "x-docs-page": {
-    "title": "Cert Manager Integration"
-   }
+   "additionalProperties": false
   },
   "ingress.ingress": {
    "type": "object",
@@ -4253,19 +3948,12 @@
          }
         },
         "additionalProperties": false,
-        "description": "ingress-nginx integration, see [nginx](/truecharts-common/ingress/integrations/nginx).",
-        "x-docs-page": {
-         "title": "Nginx Integration"
-        }
+        "description": "ingress-nginx integration, see [nginx](/truecharts-common/ingress/integrations/nginx)."
        }
       },
       "additionalProperties": false,
       "description": "Integrations that add annotations, middlewares or certificates to the Ingress.",
-      "default": {},
-      "x-docs-page": {
-       "title": "Ingress Integrations",
-       "overview": true
-      }
+      "default": {}
      },
      "enabled": {
       "type": [
@@ -4557,9 +4245,11 @@
        "additionalProperties": {
         "type": [
          "string",
+         "number",
+         "boolean",
          "null"
         ],
-        "description": "Value of the widget setting. Supports Helm `tpl`, empty values are skipped."
+        "description": "Value of the widget setting. Supports Helm `tpl`, empty values are skipped. Numbers and booleans are rendered as a string."
        }
       }
      },
@@ -4568,10 +4258,7 @@
      "default": {}
     }
    },
-   "additionalProperties": false,
-   "x-docs-page": {
-    "title": "Homepage Integration"
-   }
+   "additionalProperties": false
   },
   "ingress.traefik": {
    "type": "object",
@@ -4666,10 +4353,7 @@
     }
    },
    "description": "Traefik integration. Adds annotations and middlewares to the Ingress, see [Traefik](/truecharts-common/ingress/integrations/traefik).",
-   "additionalProperties": false,
-   "x-docs-page": {
-    "title": "Traefik Integration"
-   }
+   "additionalProperties": false
   },
   "ingressMiddlewares.ingressMiddlewares": {
    "type": "object",
@@ -5460,104 +5144,7 @@
       "additionalProperties": false,
       "description": "A Traefik Middleware, keyed by name."
      },
-     "description": "Traefik middlewares, keyed by name.",
-     "x-docs-page": {
-      "title": "Traefik Middlewares",
-      "types": {
-       "add-prefix": {
-        "file": "add-prefix",
-        "title": "add-prefix"
-       },
-       "basic-auth": {
-        "file": "basic-auth",
-        "title": "basic-auth"
-       },
-       "buffering": {
-        "file": "buffering",
-        "title": "buffering"
-       },
-       "chain": {
-        "file": "chain",
-        "title": "chain"
-       },
-       "compress": {
-        "file": "compress",
-        "title": "compress"
-       },
-       "content-type": {
-        "file": "content-type",
-        "title": "content-type"
-       },
-       "forward-auth": {
-        "file": "forward-auth",
-        "title": "forward-auth"
-       },
-       "headers": {
-        "file": "headers",
-        "title": "headers"
-       },
-       "ip-allow-list": {
-        "file": "ip-allow-list",
-        "title": "ip-allow-list"
-       },
-       "plugin-bouncer": {
-        "file": "plugin-bouncer",
-        "title": "plugin-bouncer"
-       },
-       "plugin-geoblock": {
-        "file": "plugin-geoblock",
-        "title": "plugin-geoblock"
-       },
-       "plugin-mod-security": {
-        "file": "plugin-mod-security",
-        "title": "plugin-mod-security"
-       },
-       "plugin-real-ip": {
-        "file": "plugin-real-ip",
-        "title": "plugin-real-ip"
-       },
-       "plugin-rewrite-response-headers": {
-        "file": "plugin-rewrite-response-headers",
-        "title": "plugin-rewrite-response-headers"
-       },
-       "plugin-theme-park": {
-        "file": "plugin-theme-park",
-        "title": "plugin-theme-park"
-       },
-       "rate-limit": {
-        "file": "rate-limit",
-        "title": "rate-limit"
-       },
-       "redirect-regex": {
-        "file": "redirect-regex",
-        "title": "redirect-regex"
-       },
-       "redirect-scheme": {
-        "file": "redirect-scheme",
-        "title": "redirect-scheme"
-       },
-       "replace-path-regex": {
-        "file": "replace-path-regex",
-        "title": "replace-path-regex"
-       },
-       "replace-path": {
-        "file": "replace-path",
-        "title": "replace-path"
-       },
-       "retry": {
-        "file": "retry",
-        "title": "retry"
-       },
-       "strip-prefix-regex": {
-        "file": "strip-prefix-regex",
-        "title": "strip-prefix-regex"
-       },
-       "strip-prefix": {
-        "file": "strip-prefix",
-        "title": "strip-prefix"
-       }
-      }
-     }
+     "description": "Traefik middlewares, keyed by name."
     }
    },
    "additionalProperties": {
@@ -7036,6 +6623,19 @@
        "provisioner": {
         "type": "string",
         "description": "Provisioner annotation of the PersistentVolume. Only for `mode: custom`."
+       },
+       "volumeHandle": {
+        "type": "string",
+        "description": "Handle of the volume in the CSI driver. Defaults to the name of the PersistentVolume. Only for `mode: custom`."
+       },
+       "volumeAttributes": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+         "type": "string",
+         "description": "Value of the attribute."
+        },
+        "description": "Attributes of the volume that are passed to the CSI driver. Supports Helm `tpl` on values. Only for `mode: custom`."
        }
       },
       "additionalProperties": false,
@@ -9068,10 +8668,7 @@
     }
    },
    "description": "Traefik settings for the backend of the Service, set as annotations on the Service.",
-   "additionalProperties": false,
-   "x-docs-page": {
-    "title": "Service Traefik Integration"
-   }
+   "additionalProperties": false
   },
   "service.ports": {
    "type": "object",
@@ -9153,10 +8750,7 @@
      "description": "Make this the primary port of the Service. Only 1 port can be primary."
     }
    },
-   "additionalProperties": false,
-   "x-docs-page": {
-    "title": "Ports"
-   }
+   "additionalProperties": false
   },
   "service.service": {
    "type": "object",
@@ -9216,11 +8810,7 @@
       },
       "additionalProperties": false,
       "description": "Integrations that add annotations to the Service.",
-      "default": {},
-      "x-docs-page": {
-       "title": "Service Integrations",
-       "overview": true
-      }
+      "default": {}
      },
      "externalName": {
       "allOf": [
@@ -9696,10 +9286,7 @@
     "type": "string",
     "description": "Value of the annotation"
    },
-   "description": "Common annotations object.",
-   "x-docs-page": {
-    "file": "metadata.md"
-   }
+   "description": "Common annotations object."
   },
   "special.annotationsList": {
    "type": "array",
@@ -9721,10 +9308,7 @@
     ],
     "additionalProperties": false
    },
-   "description": "Additional annotations as a list of name and value pairs. Merged into the `annotations` of the object.",
-   "x-docs-page": {
-    "file": "metadata.md"
-   }
+   "description": "Additional annotations as a list of name and value pairs. Merged into the `annotations` of the object."
   },
   "special.iscsi": {
    "type": "object",
@@ -9823,11 +9407,7 @@
     }
    },
    "additionalProperties": false,
-   "description": "Settings of the iSCSI target, for `type: iscsi`.",
-   "x-docs-page": {
-    "title": "iSCSI Authentication",
-    "file": "persistence/iscsiConfig.md"
-   }
+   "description": "Settings of the iSCSI target, for `type: iscsi`."
   },
   "special.labelSelector": {
    "type": "object",
@@ -9877,11 +9457,7 @@
     "type": "string",
     "description": "Value of the label"
    },
-   "description": "Common labels object.",
-   "x-docs-page": {
-    "title": "Labels, Annotations and Namespace",
-    "file": "metadata.md"
-   }
+   "description": "Common labels object."
   },
   "special.labelsList": {
    "type": "array",
@@ -9903,17 +9479,11 @@
     ],
     "additionalProperties": false
    },
-   "description": "Additional labels as a list of name and value pairs. Merged into the `labels` of the object.",
-   "x-docs-page": {
-    "file": "metadata.md"
-   }
+   "description": "Additional labels as a list of name and value pairs. Merged into the `labels` of the object."
   },
   "special.namespaces": {
    "type": "string",
-   "description": "Name of a namespace.",
-   "x-docs-page": {
-    "file": "metadata.md"
-   }
+   "description": "Name of a namespace."
   },
   "storageClass": {
    "type": "object",
@@ -9992,8 +9562,12 @@
       "type": "object",
       "properties": {},
       "additionalProperties": {
-       "type": "string",
-       "description": "Value of the parameter."
+       "type": [
+        "string",
+        "number",
+        "boolean"
+       ],
+       "description": "Value of the parameter. Numbers and booleans are rendered as a string."
       },
       "description": "Parameters passed to the provisioner. Supports Helm `tpl` on values.",
       "default": {}
@@ -11115,10 +10689,7 @@
      ]
     }
    },
-   "additionalProperties": false,
-   "x-docs-page": {
-    "title": "Termination"
-   }
+   "additionalProperties": false
   },
   "workload.podSpec.automountServiceAccountToken": {
    "type": "boolean",
@@ -11142,10 +10713,7 @@
     [
      "--port=8080"
     ]
-   ],
-   "x-docs-page": {
-    "title": "Args"
-   }
+   ]
   },
   "workload.podSpec.containers.command": {
    "oneOf": [
@@ -11165,10 +10733,7 @@
     [
      "/bin/sh"
     ]
-   ],
-   "x-docs-page": {
-    "title": "Command"
-   }
+   ]
   },
   "workload.podSpec.containers.env": {
    "type": [
@@ -11252,10 +10817,6 @@
      }
     },
     "additionalProperties": false
-   },
-   "x-docs-page": {
-    "title": "Env",
-    "file": "workload/podSpec/containers/env.md"
    }
   },
   "workload.podSpec.containers.envFrom": {
@@ -11297,10 +10858,7 @@
     "additionalProperties": false,
     "description": "A ConfigMap or Secret to load the environment variables from. Set one of `configMapRef` or `secretRef`."
    },
-   "description": "ConfigMaps and Secrets whose keys all become environment variables of the container. See [envFrom](/truecharts-common/workload/podSpec/containers/envFrom).",
-   "x-docs-page": {
-    "title": "Env From"
-   }
+   "description": "ConfigMaps and Secrets whose keys all become environment variables of the container. See [envFrom](/truecharts-common/workload/podSpec/containers/envFrom)."
   },
   "workload.podSpec.containers.fixedEnv": {
    "type": "object",
@@ -11348,10 +10906,7 @@
      ]
     }
    },
-   "additionalProperties": false,
-   "x-docs-page": {
-    "title": "Fixed Env"
-   }
+   "additionalProperties": false
   },
   "workload.podSpec.containers.lifecycle": {
    "type": "object",
@@ -11466,10 +11021,7 @@
      "description": "Hook that runs right after the container is created. The container is not marked as running until it completes."
     }
    },
-   "additionalProperties": false,
-   "x-docs-page": {
-    "title": "Lifecycle"
-   }
+   "additionalProperties": false
   },
   "workload.podSpec.containers.probes": {
    "type": "object",
@@ -11488,10 +11040,7 @@
      "description": "Startup probe. The other probes wait until it succeeds, which is useful for slow starting apps. See [probe](/truecharts-common/workload/podSpec/containers/probe)."
     }
    },
-   "additionalProperties": false,
-   "x-docs-page": {
-    "title": "Probes"
-   }
+   "additionalProperties": false
   },
   "workload.podSpec.containers.probes.probe": {
    "type": "object",
@@ -11603,11 +11152,7 @@
     }
    },
    "additionalProperties": false,
-   "description": "A probe of the container. See [probe](/truecharts-common/workload/podSpec/containers/probe).",
-   "x-docs-page": {
-    "title": "Probe",
-    "file": "workload/podSpec/containers/probe.md"
-   }
+   "description": "A probe of the container. See [probe](/truecharts-common/workload/podSpec/containers/probe)."
   },
   "workload.podSpec.containers.resources": {
    "type": "object",
@@ -11696,10 +11241,7 @@
     }
    },
    "additionalProperties": false,
-   "description": "CPU, memory and extended resources of the container. Overrides the top-level `resources` for this container. See [resources](/truecharts-common/workload/podSpec/containers/resources).",
-   "x-docs-page": {
-    "title": "Resources"
-   }
+   "description": "CPU, memory and extended resources of the container. Overrides the top-level `resources` for this container. See [resources](/truecharts-common/workload/podSpec/containers/resources)."
   },
   "workload.podSpec.containers.securityContext": {
    "type": "object",
@@ -11804,11 +11346,7 @@
     }
    },
    "additionalProperties": false,
-   "description": "Security context of the container. Overrides `securityContext.container` for this container. See [securityContext](/truecharts-common/workload/podSpec/containers/securityContext).",
-   "x-docs-page": {
-    "title": "Container Security Context",
-    "file": "workload/podSpec/containers/securityContext.md"
-   }
+   "description": "Security context of the container. Overrides `securityContext.container` for this container. See [securityContext](/truecharts-common/workload/podSpec/containers/securityContext)."
   },
   "workload.podSpec.dnsPolicy": {
    "type": "string",
@@ -11892,10 +11430,7 @@
      }
     },
     "additionalProperties": false,
-    "description": "An init container of the pod. It supports the settings of a container, except `lifecycle`, `primary` and working probes.",
-    "x-docs-page": {
-     "title": "Init Containers"
-    }
+    "description": "An init container of the pod. It supports the settings of a container, except `lifecycle`, `primary` and working probes."
    },
    "description": "Init containers of the pod, keyed by name. They run before the other containers start. See [initContainers](/truecharts-common/workload/podSpec/initContainers)."
   },
@@ -12095,10 +11630,7 @@
           }
          },
          "additionalProperties": false,
-         "description": "A container of the pod. The shared container settings are in [container](/truecharts-common/workload/podSpec/containers).",
-         "x-docs-page": {
-          "title": "Container"
-         }
+         "description": "A container of the pod. The shared container settings are in [container](/truecharts-common/workload/podSpec/containers)."
         },
         "description": "Containers of the pod, keyed by name."
        },
@@ -12240,10 +11772,7 @@
       },
       "additionalProperties": false,
       "description": "Settings of the pods of the workload: containers, init containers and pod level options.",
-      "default": {},
-      "x-docs-page": {
-       "title": "Pod Spec"
-      }
+      "default": {}
      },
      "replicas": {
       "type": [
@@ -12449,32 +11978,7 @@
     },
     "additionalProperties": false,
     "description": "A workload, spawned as a Deployment, StatefulSet, DaemonSet, Job or CronJob.",
-    "default": {},
-    "x-docs-page": {
-     "title": "Workload",
-     "types": {
-      "Deployment": {
-       "file": "deployment",
-       "title": "Deployment"
-      },
-      "StatefulSet": {
-       "file": "statefulset",
-       "title": "StatefulSet"
-      },
-      "DaemonSet": {
-       "file": "daemonset",
-       "title": "DaemonSet"
-      },
-      "CronJob": {
-       "file": "cronjob",
-       "title": "CronJob"
-      },
-      "Job": {
-       "file": "job",
-       "title": "Job"
-      }
-     }
-    }
+    "default": {}
    },
    "description": "Workloads of the chart, keyed by name."
   }

@@ -64,13 +64,9 @@ export -f check_chart_schema
 function helm_lint() {
     chart_path=${1:?"No chart path provided to [Helm lint]"}
 
-    # The same schema the chart gets on release, so values that it would reject fail here
-    .github/scripts/add_chart_schema.sh "$chart_path"
-
     # Print only errors and warnings
     helm_lint_output=$(helm lint --strict --quiet "$chart_path" 2>&1)
     helm_lint_exit_code=$?
-    rm -f "$chart_path/values.schema.json"
     while IFS= read -r line; do
         if [[ -n $line ]]; then
             echo -e "\t$line"

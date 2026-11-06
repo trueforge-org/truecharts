@@ -43,7 +43,8 @@ def bundle(source_file: Path) -> dict:
         if isinstance(node, dict):
             result = {}
             for key, value in node.items():
-                if key in DROPPED_KEYS and not isinstance(value, dict):
+                # A dict under another dropped name is a property with that name, x-docs-page is always the keyword
+                if key in DROPPED_KEYS and (key == "x-docs-page" or not isinstance(value, dict)):
                     continue
                 if key == "$ref" and isinstance(value, str):
                     result[key] = resolve_ref(value, current_file)
