@@ -18,17 +18,17 @@ title: "Labels, Annotations and Namespace"
 - `.Values.gatewayClass.$name.labels`
 - `.Values.hpa.$name.labels`
 - `.Values.imagePullSecret.$name.labels`
-- and 182 more places
+- and 187 more places
 
 ---
 
-## `global.labels`
+## `workload.$name.podSpec.labels`
 
 Common labels object.
 
 | Field | Value |
 | --- | --- |
-| Key | `global.labels` |
+| Key | `workload.$name.podSpec.labels` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -36,13 +36,13 @@ Common labels object.
 
 ---
 
-## `global.labels.$name`
+## `workload.$name.podSpec.labels.$name`
 
 Value of the label
 
 | Field | Value |
 | --- | --- |
-| Key | `global.labels.$name` |
+| Key | `workload.$name.podSpec.labels.$name` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -50,13 +50,13 @@ Value of the label
 
 ---
 
-## `global.annotations`
+## `workload.$name.podSpec.annotations`
 
 Common annotations object.
 
 | Field | Value |
 | --- | --- |
-| Key | `global.annotations` |
+| Key | `workload.$name.podSpec.annotations` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -64,13 +64,13 @@ Common annotations object.
 
 ---
 
-## `global.annotations.$name`
+## `workload.$name.podSpec.annotations.$name`
 
 Value of the annotation
 
 | Field | Value |
 | --- | --- |
-| Key | `global.annotations.$name` |
+| Key | `workload.$name.podSpec.annotations.$name` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -78,13 +78,13 @@ Value of the annotation
 
 ---
 
-## `certificate.$name.annotationsList`
+## `workload.$name.annotationsList`
 
 Additional annotations as a list of name and value pairs. Merged into the `annotations` of the object.
 
 | Field | Value |
 | --- | --- |
-| Key | `certificate.$name.annotationsList` |
+| Key | `workload.$name.annotationsList` |
 | Type | `list of map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -92,11 +92,11 @@ Additional annotations as a list of name and value pairs. Merged into the `annot
 
 ---
 
-## `certificate.$name.annotationsList[]`
+## `workload.$name.annotationsList[]`
 
 | Field | Value |
 | --- | --- |
-| Key | `certificate.$name.annotationsList[]` |
+| Key | `workload.$name.annotationsList[]` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -104,13 +104,13 @@ Additional annotations as a list of name and value pairs. Merged into the `annot
 
 ---
 
-## `certificate.$name.annotationsList[].name`
+## `workload.$name.annotationsList[].name`
 
 Name of the annotation
 
 | Field | Value |
 | --- | --- |
-| Key | `certificate.$name.annotationsList[].name` |
+| Key | `workload.$name.annotationsList[].name` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -118,13 +118,13 @@ Name of the annotation
 
 ---
 
-## `certificate.$name.annotationsList[].value`
+## `workload.$name.annotationsList[].value`
 
 Value of the annotation
 
 | Field | Value |
 | --- | --- |
-| Key | `certificate.$name.annotationsList[].value` |
+| Key | `workload.$name.annotationsList[].value` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -132,13 +132,13 @@ Value of the annotation
 
 ---
 
-## `certificate.$name.labelsList`
+## `workload.$name.labelsList`
 
 Additional labels as a list of name and value pairs. Merged into the `labels` of the object.
 
 | Field | Value |
 | --- | --- |
-| Key | `certificate.$name.labelsList` |
+| Key | `workload.$name.labelsList` |
 | Type | `list of map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -146,11 +146,11 @@ Additional labels as a list of name and value pairs. Merged into the `labels` of
 
 ---
 
-## `certificate.$name.labelsList[]`
+## `workload.$name.labelsList[]`
 
 | Field | Value |
 | --- | --- |
-| Key | `certificate.$name.labelsList[]` |
+| Key | `workload.$name.labelsList[]` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -158,13 +158,13 @@ Additional labels as a list of name and value pairs. Merged into the `labels` of
 
 ---
 
-## `certificate.$name.labelsList[].name`
+## `workload.$name.labelsList[].name`
 
 Name of the label
 
 | Field | Value |
 | --- | --- |
-| Key | `certificate.$name.labelsList[].name` |
+| Key | `workload.$name.labelsList[].name` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -172,13 +172,13 @@ Name of the label
 
 ---
 
-## `certificate.$name.labelsList[].value`
+## `workload.$name.labelsList[].value`
 
 Value of the label
 
 | Field | Value |
 | --- | --- |
-| Key | `certificate.$name.labelsList[].value` |
+| Key | `workload.$name.labelsList[].value` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -186,13 +186,13 @@ Value of the label
 
 ---
 
-## `certificate.$name.namespace`
+## `service.$name.namespace`
 
 Name of a namespace.
 
 | Field | Value |
 | --- | --- |
-| Key | `certificate.$name.namespace` |
+| Key | `service.$name.namespace` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |

@@ -26,6 +26,7 @@ title: Container
 - [Lifecycle](/truecharts-common/workload/podSpec/containers/lifecycle)
 - [Probe](/truecharts-common/workload/podSpec/containers/probe)
 - [Probes](/truecharts-common/workload/podSpec/containers/probes)
+- [Resources](/truecharts-common/workload/podSpec/containers/resources)
 - [Termination](/truecharts-common/workload/podSpec/containers/termination)
 
 ---
@@ -62,9 +63,9 @@ See [Env](/truecharts-common/workload/podSpec/containers/env) for all keys of th
 
 ## `resources`
 
-CPU, memory and extended resources the container requests and may use. See [resources](/truecharts-common/resources).
+CPU, memory and extended resources the container requests and may use. See [resources](/truecharts-common/workload/podSpec/containers/resources).
 
-See [Resources](/truecharts-common/resources) for all keys of this object.
+See [Resources](/truecharts-common/workload/podSpec/containers/resources) for all keys of this object.
 
 | Field | Value |
 | --- | --- |

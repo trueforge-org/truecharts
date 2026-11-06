@@ -37,7 +37,7 @@ IP addresses of extra DNS servers, at most 3. Added to the servers of `dnsPolicy
 | Key | `workload.$name.podSpec.dnsConfig.nameservers` |
 | Type | `list` |
 | Required | ❌ |
-| Helm `tpl` | ✅ (On each entry) |
+| Helm `tpl` | ✅ (On entries only) |
 | Default | unset |
 
 Example
@@ -62,7 +62,7 @@ Extra DNS search domains, at most 6. Added to the search domains of `dnsPolicy`.
 | Key | `workload.$name.podSpec.dnsConfig.searches` |
 | Type | `list` |
 | Required | ❌ |
-| Helm `tpl` | ✅ (On each entry) |
+| Helm `tpl` | ✅ (On entries only) |
 | Default | unset |
 
 Example

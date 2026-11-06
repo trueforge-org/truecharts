@@ -11,6 +11,10 @@ title: Env
 
 ## Appears in
 
+- `.Values.addons.codeserver.container.env`
+- `.Values.addons.gluetun.container.env`
+- `.Values.addons.netshoot.container.env`
+- `.Values.addons.tailscale.container.env`
 - `.Values.dependencies.postgresql.operator.cluster.env`
 - `.Values.workload.$name.podSpec.containers.$name.env`
 - `.Values.workload.$name.podSpec.initContainers.$name.env`
@@ -23,7 +27,7 @@ Environment variables, keyed by name. See [env](/truecharts-common/workload/podS
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.cluster.env` |
+| Key | `workload.$name.podSpec.containers.$name.env` |
 | Type | `map or null` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -37,7 +41,7 @@ Environment variable entry by key. A scalar or null is the value, a map holds ex
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.cluster.env.$name` |
+| Key | `workload.$name.podSpec.containers.$name.env.$name` |
 | Type | `number or int or bool or map or null` |
 | Required | ✅ |
 | Helm `tpl` | ✅ (On value only) |
@@ -51,7 +55,7 @@ Use a key of a ConfigMap as value.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.cluster.env.$name.configMapKeyRef` |
+| Key | `workload.$name.podSpec.containers.$name.env.$name.configMapKeyRef` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -65,7 +69,7 @@ Name of the ConfigMap. Expanded to `<fullname>-<name>` unless `expandObjectName`
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.cluster.env.$name.configMapKeyRef.name` |
+| Key | `workload.$name.podSpec.containers.$name.env.$name.configMapKeyRef.name` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ✅ |
@@ -79,7 +83,7 @@ Key in the ConfigMap whose value is used.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.cluster.env.$name.configMapKeyRef.key` |
+| Key | `workload.$name.podSpec.containers.$name.env.$name.configMapKeyRef.key` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -93,7 +97,7 @@ Whether the name is expanded to `<fullname>-<name>`, the name of a ConfigMap of 
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.cluster.env.$name.configMapKeyRef.expandObjectName` |
+| Key | `workload.$name.podSpec.containers.$name.env.$name.configMapKeyRef.expandObjectName` |
 | Type | `bool` |
 | Required | ❌ |
 | Helm `tpl` | ✅ |
@@ -107,7 +111,7 @@ Use a key of a Secret as value.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.cluster.env.$name.secretKeyRef` |
+| Key | `workload.$name.podSpec.containers.$name.env.$name.secretKeyRef` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -121,7 +125,7 @@ Name of the Secret. Expanded to `<fullname>-<name>` unless `expandObjectName` is
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.cluster.env.$name.secretKeyRef.name` |
+| Key | `workload.$name.podSpec.containers.$name.env.$name.secretKeyRef.name` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ✅ |
@@ -135,7 +139,7 @@ Key in the Secret whose value is used.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.cluster.env.$name.secretKeyRef.key` |
+| Key | `workload.$name.podSpec.containers.$name.env.$name.secretKeyRef.key` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -149,7 +153,7 @@ Whether the name is expanded to `<fullname>-<name>`, the name of a Secret of thi
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.cluster.env.$name.secretKeyRef.expandObjectName` |
+| Key | `workload.$name.podSpec.containers.$name.env.$name.secretKeyRef.expandObjectName` |
 | Type | `bool` |
 | Required | ❌ |
 | Helm `tpl` | ✅ |
@@ -163,7 +167,7 @@ Use a field of the pod as value, eg its name or IP.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.cluster.env.$name.fieldRef` |
+| Key | `workload.$name.podSpec.containers.$name.env.$name.fieldRef` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -177,7 +181,7 @@ Path of the field, eg `metadata.name` or `status.podIP`.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.cluster.env.$name.fieldRef.fieldPath` |
+| Key | `workload.$name.podSpec.containers.$name.env.$name.fieldRef.fieldPath` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -186,14 +190,15 @@ Path of the field, eg `metadata.name` or `status.podIP`.
 Example
 
 ```yaml
-dependencies:
-  postgresql:
-    operator:
-      cluster:
-        env:
-          example:
-            fieldRef:
-              fieldPath: metadata.name
+workload:
+  example:
+    podSpec:
+      containers:
+        example:
+          env:
+            example:
+              fieldRef:
+                fieldPath: metadata.name
 ```
 
 ---
@@ -204,7 +209,7 @@ API version of the field path. Kubernetes uses `v1` when empty.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.cluster.env.$name.fieldRef.apiVersion` |
+| Key | `workload.$name.podSpec.containers.$name.env.$name.fieldRef.apiVersion` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |

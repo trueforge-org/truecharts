@@ -122,7 +122,7 @@ Valkey configuration directives (valkey.conf), eg `maxmemory-policy: allkeys-lru
 
 Resources of the Valkey containers. Defaults to the `resources` of the chart.
 
-See [Resources](/truecharts-common/resources) for all keys of this object.
+See [Resources](/truecharts-common/workload/podSpec/containers/resources) for all keys of this object.
 
 | Field | Value |
 | --- | --- |

@@ -32,7 +32,8 @@ tests:
                 - 10.0.0.0/8
               auth:
                 type: ""
-                responseHeaders: []
+                responseHeaders:
+                  - X-Auth-User
               themePark:
                 enabled: "true"
                 css: https://example.com/theme.css
@@ -161,3 +162,29 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "at '/route/my-route/integrations/envoy/redirectRegex/0': missing propert"
+
+  - it: should fail on a responseHeaders item that is not a string in route integrations envoy auth
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          integrations:
+            envoy:
+              enabled: true
+              auth:
+                type: forward
+                responseHeaders:
+                  - 5
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/integrations/envoy/auth/responseHeaders/0': got .*, want string"

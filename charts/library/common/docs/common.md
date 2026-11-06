@@ -8,6 +8,12 @@ title: Common
 
 :::
 
+:::warning
+
+These keys are only for the internal use of common. Do not use them in charts that are based on common: they can change or be removed at any time, without a breaking change.
+
+:::
+
 ## Appears in
 
 - `.Values.common`

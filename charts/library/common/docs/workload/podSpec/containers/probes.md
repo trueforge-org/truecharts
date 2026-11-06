@@ -10,6 +10,9 @@ title: Probes
 
 ## Appears in
 
+- `.Values.addons.codeserver.container.probes`
+- `.Values.addons.gluetun.container.probes`
+- `.Values.addons.netshoot.container.probes`
 - `.Values.workload.$name.podSpec.containers.$name.probes`
 - `.Values.workload.$name.podSpec.initContainers.$name.probes`
 

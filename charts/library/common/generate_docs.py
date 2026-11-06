@@ -28,6 +28,10 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 TPL_PATTERN_MARKER = "{{"
 MAX_DEPTH = 14
 MAX_APPEARS_IN = 8
+INTERNAL_WARNING = (
+    "These keys are only for the internal use of common. Do not use them in charts that are based on common: "
+    "they can change or be removed at any time, without a breaking change."
+)
 PAGE_LIMIT = 450  # lines of keys per page, bigger subtrees get a page of their own
 SPLIT_MIN = 60  # smallest subtree (in lines) that is worth a page
 LONG_DEFAULT = 100
@@ -68,9 +72,11 @@ class Node:
     identity: str | None = None
     root_values: bool = False
     primary: bool = False
+    internal: bool = False
     page_specs: list[dict] = field(default_factory=list)  # x-docs-page on the node itself
     frag_specs: list[tuple[str, dict]] = field(default_factory=list)  # x-docs-page on a referenced schema
     alt_idents: list[str] = field(default_factory=list)  # refs inside oneOf or anyOf
+    chain: list[str] = field(default_factory=list)  # more refs to refs, after the first
 
 
 class Schemas:
@@ -148,6 +154,8 @@ class Schemas:
                     n.page_specs.append(sp)
         if raw.get("x-docs-primary"):
             n.primary = True
+        if raw.get("x-docs-internal"):
+            n.internal = True
         # Later allOf entries are overrides of earlier ones, so they are read first.
         for sub in reversed(raw.get("allOf", [])):
             self._absorb(n, sub, file, "all" if mode == "base" else mode, via)
@@ -159,6 +167,8 @@ class Schemas:
             else:
                 if n.identity is None and mode in ("base", "all"):
                     n.identity = ident
+                elif mode in ("base", "all") and ident != n.identity and ident not in n.chain:
+                    n.chain.append(ident)
                 elif mode == "alt" and ident not in n.alt_idents:
                     n.alt_idents.append(ident)
                 self._absorb(n, target, tfile, mode, ident)
@@ -274,6 +284,7 @@ class Page:
     handwritten: bool = False
     description: str = ""
     collapse: dict[str, str] = field(default_factory=dict)
+    body: str | None = None  # a page that is not built from the schema
 
     def example_files(self) -> list[str]:
         """Paths of the example file of the page: x/index.md may also be examples/x.md."""
@@ -361,6 +372,78 @@ class Entry:
     required: bool
     link: Page | None = None
     recursive: bool = False
+    internal: bool = False
+
+
+SCHEMA_OPTIONS_BODY = """\
+The docs are generated from the schema: `values.schema.source.json` and the files in `schemas/`. Besides the standard JSON Schema keywords, the schema has keywords that start with `x-`. They only tell the docs generator what to show, and are left out of the bundled `values.schema.json`, so they never change which values are valid.
+
+This page is for people who work on common. Charts based on common do not need it.
+
+## Standard keywords
+
+| Keyword | Shown as |
+| --- | --- |
+| `description` | The text of the key. Plain markdown, one or two sentences. Links to other pages are written as `/truecharts-common/<page path>`, with the exact case, and are checked. |
+| `type` | Type. A type list such as `["boolean", "string"]` is shown as `bool or string`, unless `x-helm-tpl` is set, see below. |
+| `default` | Default. Keep it the same as the value in `values.yaml`. |
+| `examples` | The first item is shown as the example of the key. |
+| `enum` | Allowed values. |
+| `pattern` | Pattern. |
+| `minimum`, `maximum`, `minLength`, `maxLength`, `minItems`, `maxItems` | Range, Length and Items. |
+| `required` | Required, for the keys in the list. |
+| `$ref` | The referenced schema is read as part of the key. A schema that is used in several places is documented once and linked from the others. |
+| `allOf` | All entries are read. A later entry overrides an earlier one. |
+| `oneOf`, `anyOf` | The keys of all branches are shown. A branch that is a string with a `{{` pattern means that the value can be a Helm `tpl` template. |
+
+## Docs keywords
+
+| Keyword | Value | Use |
+| --- | --- | --- |
+| `x-helm-tpl` | `true`, `"On value only"`, `"On entries only"` or `"On keys and values"` | The value is passed through Helm `tpl`. Shown in the Helm `tpl` row, with the text next to it. For a type list like `["boolean", "string"]` it means that the string is a template, not a string value. |
+| `x-docs-required` | `true` or `false` | Required for keys that a chart has to set, even though common gives them a default. `false` overrides a `required` that is inherited from a shared schema. |
+| `x-docs-appliesTo` | List of values of `type` | The key is only used for these types. It is left out of the page of the object, and shown on the page of the type. |
+| `x-docs-page` | `true`, an object or a list of objects | The key, or the schema file that is referenced, gets a page. See below. |
+| `x-docs-primary` | `true` | The key is the home of the objects it contains. When the same schema is used in several places, the page of the primary key documents it, and the others link to it. Used for `workload`, `service` and `ingress`. |
+| `x-docs-internal` | `true` | The key is only for the internal use of common. It is shown in a separate section of its page, under a warning. A page of a key that is internal gets the warning at the top. |
+
+## Pages
+
+A page is created for every key or schema file with `x-docs-page`. Its file is the values path without `$name` and `[]`, so the folders follow the tree of `values.yaml`: `ingress.$name.integrations.traefik` is `ingress/integrations/traefik.md`. A page with sub pages becomes `index.md` in a folder, and its URL stays the same.
+
+```json
+"integrations": {
+  "x-docs-page": {"title": "Ingress Integrations", "overview": true}
+}
+```
+
+| Option | Use |
+| --- | --- |
+| `file` | The file of the page, when it is not the one from the values path. Needed to put several keys on one page: give each of them the same `file`. |
+| `title` | The title of the page. Default is the name of the key. |
+| `intro` | Text below the title. |
+| `overview` | Show a table of the keys, instead of a section for each key. |
+| `compact` | Show the keys after the first one on the page as one row each. |
+| `handwritten` | The page is written by hand, and not generated. |
+| `collapse` | Show a key of the page as a link to another page, for example `{"service": "service/index.md"}`. |
+| `types` | Names the pages of the types of the object, see below. |
+
+A page that gets longer than about 450 lines of keys is split: the biggest subtrees get a page of their own, named after their values path.
+
+## Types
+
+An object with a `type` that has a list of values gets a page for each value, in the folder of its page, when some of its keys have `x-docs-appliesTo`. The page shows the keys of that type. `types` changes how the pages are named, or joins types:
+
+```json
+"x-docs-page": {
+  "title": "Persistence",
+  "types": {
+    "nfs": {"file": "nfs", "title": "NFS"},
+    "pvc-vct": {"title": "PVC and VCT", "tokens": ["pvc", "vct"]}
+  }
+}
+```
+"""
 
 
 class Generator:
@@ -373,6 +456,7 @@ class Generator:
         self.root_node = self.schemas.node(*self.schemas.root())
         self._index_occurrences()
         self._build_pages()
+        self.pages.append(Page(file="schemaOptions.md", title="Schema Options", roots=[], body=SCHEMA_OPTIONS_BODY))
         self._index_roots()
         self._fold_indexes()
 
@@ -394,10 +478,11 @@ class Generator:
                 if ("r", ident, id(sp)) not in seen_specs:
                     seen_specs.add(("r", ident, id(sp)))
                     self._found.append(("ref", ident, sp, n))
-            if n.identity:
-                paths = self.occurrences.setdefault(n.identity, [])
+            for ident in ([n.identity] if n.identity else []) + n.chain:
+                paths = self.occurrences.setdefault(ident, [])
                 if path not in paths:
                     paths.append(path)
+            if n.identity:
                 if n.identity in stack:
                     return
                 stack = stack + (n.identity,)
@@ -405,6 +490,27 @@ class Generator:
                 walk(c, join(path, k), stack, depth + 1)
 
         walk(self.root_node, "", (), 0)
+
+    def home_paths(self, ident: str) -> list[str]:
+        """Where a shared schema appears, the places of primary keys (workload, service, ingress) first."""
+        primary = {k for k, c in self.schemas.children(self.root_node) if c.primary}
+        paths = [p for p in self.occurrences.get(ident, []) if p and not p.startswith("common.")]
+        return sorted(paths, key=lambda p: re.split(r"[.\[]", p)[0] not in primary)
+
+    @staticmethod
+    def generalize(paths: list[str]) -> str | None:
+        """The shortest path, with the one name that differs between the places as $name (addons.$name.container)."""
+        if not paths:
+            return None
+        first = paths[0]
+        parts = [p.split(".") for p in paths]
+        if len(parts) > 1 and all(len(q) == len(parts[0]) for q in parts):
+            differing = [i for i in range(len(parts[0])) if len({q[i] for q in parts}) > 1]
+            if len(differing) == 1 and all(not q[differing[0]].endswith("]") for q in parts):
+                out = parts[0][:]
+                out[differing[0]] = "$name"
+                return ".".join(out)
+        return first
 
     @staticmethod
     def default_file(label: str) -> str:
@@ -418,8 +524,8 @@ class Generator:
             if kind == "path":
                 label, root = where, {"path": where}
             else:
-                shortest = self.appears_in(where, [])
-                label, root = (shortest[0] if shortest else Path(where.split("#")[0]).stem), {"ref": where}
+                homes = self.home_paths(where)
+                label, root = (self.generalize(homes) if homes else Path(where.split("#")[0]).stem), {"ref": where}
             file = spec.get("file") or self.default_file(label)
             groups.setdefault(file, []).append((label, root, spec, node))
         for file, items in groups.items():
@@ -448,8 +554,8 @@ class Generator:
         if "ref" in root:
             ref = root["ref"]
             n = self.schemas.node({"$ref": ref}, self.schemas.base / "_root.json")
-            where = self.appears_in(n.identity, [])
-            label = root.get("key") or (where[0] if where else Path(ref.split("#")[0]).stem)
+            where = self.home_paths(n.identity) if n.identity else []
+            label = root.get("key") or self.generalize(where) or Path(ref.split("#")[0]).stem
             return n, label, n.identity
         path = root.get("path", "")
         n = self.root_node
@@ -648,10 +754,11 @@ class Generator:
 
         out: list[Entry] = []
 
-        def walk(node, path, parent, key, stack, depth, top, typed_ok=False):
+        def walk(node, path, parent, key, stack, depth, top, typed_ok=False, internal=False):
             if depth > MAX_DEPTH:
                 return
             emit = not top or (page.applies is None and not page.overview_only)
+            internal = internal or (node.internal and not top)
             child_typed = typed_ok
             if not top:
                 if page.applies is None:
@@ -670,6 +777,7 @@ class Generator:
                     node=node,
                     required=node.docs_required is True
                     or (node.docs_required is None and bool(parent and key in parent.required)),
+                    internal=internal and not top,
                 )
                 other = None if top else self._other_page(page, path, node, root_idx)
                 target = None if top else page.collapse.get(entry.rel)
@@ -689,7 +797,7 @@ class Generator:
             if depth_limit is not None and depth >= depth_limit:
                 return
             for k, c in self.schemas.children(node):
-                walk(c, join(path, k), node, k, stack, depth + 1, False, child_typed)
+                walk(c, join(path, k), node, k, stack, depth + 1, False, child_typed, internal)
 
         walk(n, base_path, None, "", (), 0, True)
         return n, label, ident, out
@@ -700,7 +808,7 @@ class Generator:
             return p
         if p is page and path not in [r.get("path") for r in page.roots[:1]]:
             pass
-        for ident in ([node.identity] if node.identity else []) + node.alt_idents:
+        for ident in ([node.identity] if node.identity else []) + node.chain + node.alt_idents:
             q = self.root_by_ident.get(ident)
             if q is not None and q is not page:
                 return q
@@ -802,9 +910,13 @@ class Generator:
         return "\n".join(lines)
 
     def render_page(self, page: Page, examples_dir: Path) -> tuple[str, list[str]]:
+        if page.body is not None:
+            return f"---\ntitle: {page.title}\n---\n\n{page.body.strip()}\n", []
         problems: list[str] = []
         body: list[str] = []
         sections: list[str] = []
+        internal_sections: list[str] = []
+        page_internal = False
         appears: list[str] = []
         intro_desc = ""
         has_examples = False
@@ -814,6 +926,7 @@ class Generator:
                 continue
             n, label, ident, entries = self.entries(page, i)
             if i == 0:
+                page_internal = n.internal
                 intro_desc = n.description
                 if "ref" in root:
                     appears += self.appears_in(ident, [])
@@ -832,7 +945,7 @@ class Generator:
                     problems.append(f"{page.file}: bad character in {e.path}")
                 if e.node.examples:
                     has_examples = True
-                sections.append(text)
+                (internal_sections if e.internal else sections).append(text)
         if page.overview_only:
             sections.append(self.render_overview(page))
         if links:
@@ -868,6 +981,8 @@ class Generator:
                     ":::",
                     "",
                 ]
+        if page_internal:
+            out += [":::warning", "", INTERNAL_WARNING, "", ":::", ""]
         if page.intro:
             out += [page.intro, ""]
         appears = [a for a in dict.fromkeys(appears) if a]
@@ -885,6 +1000,9 @@ class Generator:
                 out.append(f"- [{c.title}]({self.url(c)})")
             out += ["", "---", ""]
         out += [s + "\n" for s in sections]
+        if internal_sections:
+            out += ["## Internal Common Keys", "", ":::warning", "", INTERNAL_WARNING, "", ":::", "", "---", ""]
+            out += [s + "\n" for s in internal_sections]
         if examples_text:
             if not re.match(r"^##\s+Full Examples", examples_text):
                 problems.append(f"examples/{page.file}: must start with '## Full Examples'")

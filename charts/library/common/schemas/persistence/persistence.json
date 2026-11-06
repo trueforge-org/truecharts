@@ -601,7 +601,8 @@
       },
       "accessMode": {
         "type": "string",
-        "description": "Legacy singular spelling of `accessModes`. Set by common-test fixtures (statefulset) but ignored by the templates, which read `accessModes`."
+        "description": "Legacy singular spelling of `accessModes`. Set by common-test fixtures (statefulset) but ignored by the templates, which read `accessModes`.",
+        "x-docs-internal": true
       },
       "copyMethod": {
         "type": "string",
@@ -610,7 +611,8 @@
           "Direct",
           "Snapshot"
         ],
-        "description": "Define the VolSync copyMethod at item level. Set by common-test volsync fixtures, but the templates only read `copyMethod` inside `volsync` entries, so it is ignored here."
+        "description": "Define the VolSync copyMethod at item level. Set by common-test volsync fixtures, but the templates only read `copyMethod` inside `volsync` entries, so it is ignored here.",
+        "x-docs-internal": true
       },
       "volumeName": {
         "type": "string",
@@ -902,11 +904,13 @@
       },
       "name": {
         "type": "string",
-        "description": "Set by the chart, the name of the generated persistence resource. Do not set this manually"
+        "description": "Set by the chart, the name of the generated persistence resource. Do not set this manually",
+        "x-docs-internal": true
       },
       "shortName": {
         "type": "string",
-        "description": "Set by the chart, the short name of the persistence used in generated resource names. Do not set this manually"
+        "description": "Set by the chart, the short name of the persistence used in generated resource names. Do not set this manually",
+        "x-docs-internal": true
       },
       "autoPermissions": {
         "type": "object",

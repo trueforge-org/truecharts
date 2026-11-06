@@ -11,6 +11,9 @@ title: Command
 
 ## Appears in
 
+- `.Values.addons.codeserver.container.command`
+- `.Values.addons.gluetun.container.command`
+- `.Values.addons.netshoot.container.command`
 - `.Values.workload.$name.podSpec.containers.$name.command`
 - `.Values.workload.$name.podSpec.initContainers.$name.command`
 

@@ -10,6 +10,9 @@ title: Lifecycle
 
 ## Appears in
 
+- `.Values.addons.codeserver.container.lifecycle`
+- `.Values.addons.gluetun.container.lifecycle`
+- `.Values.addons.netshoot.container.lifecycle`
 - `.Values.workload.$name.podSpec.containers.$name.lifecycle`
 
 ---

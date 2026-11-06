@@ -54,7 +54,8 @@
       "description": "Values merged into the common defaults before the values of the chart. Takes the same values as the chart itself.",
       "x-docs-page": {
         "title": "Common"
-      }
+      },
+      "x-docs-internal": true
     },
     "securityContext": {
       "$ref": "schemas/securityContext.json",
@@ -95,7 +96,7 @@
     },
     "resources": {
       "$ref": "schemas/workload/podSpec/containers/resources.json",
-      "description": "Default CPU and memory resources of each container, unless overridden at the container level. They apply to every container, not to the pod as a whole. See [resources](/truecharts-common/resources).",
+      "description": "Default CPU and memory resources of each container, unless overridden at the container level. They apply to every container, not to the pod as a whole. See [resources](/truecharts-common/workload/podSpec/containers/resources).",
       "type": "object",
       "x-docs-required": true,
       "x-helm-tpl": false,
@@ -844,7 +845,7 @@
   "additionalProperties": true,
   "x-docs-page": {
     "title": "Common Chart Documentation",
-    "intro": "This applies across all the documentation:\n\n- Helm `tpl`:\n  - ❌ means that the value is not templated\n  - ✅ means that the value is templated, for example instead of a hardcoded value, you can set it to `{{ .Values.some.value }}` and it will be replaced by the value contained in `.Values.some.value` at the installation/upgrade time.",
+    "intro": "This applies across all the documentation:\n\n- Helm `tpl`:\n  - ❌ means that the value is not templated\n  - ✅ means that the value is templated, for example instead of a hardcoded value, you can set it to `{{ .Values.some.value }}` and it will be replaced by the value contained in `.Values.some.value` at the installation/upgrade time.\n\nThe pages are generated from the schema. The keywords the generator reads are on the [Schema Options](/truecharts-common/schemaOptions) page.",
     "overview": true
   }
 }

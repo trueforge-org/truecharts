@@ -29,7 +29,7 @@ A probe of the container. See [probe](/truecharts-common/workload/podSpec/contai
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.codeserver.container.probes.liveness` |
+| Key | `workload.$name.podSpec.containers.$name.probes.liveness` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -43,7 +43,7 @@ Whether the probe is added to the container.
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.codeserver.container.probes.liveness.enabled` |
+| Key | `workload.$name.podSpec.containers.$name.probes.liveness.enabled` |
 | Type | `bool` |
 | Required | ✅ |
 | Helm `tpl` | ✅ |
@@ -57,7 +57,7 @@ How the probe checks the container: `exec` runs `command`, `http` and `https` se
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.codeserver.container.probes.liveness.type` |
+| Key | `workload.$name.podSpec.containers.$name.probes.liveness.type` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ✅ |
@@ -73,7 +73,7 @@ Port that is probed. Used by `http`, `https`, `tcp` and `grpc` probes.
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.codeserver.container.probes.liveness.port` |
+| Key | `workload.$name.podSpec.containers.$name.probes.liveness.port` |
 | Type | `int` |
 | Required | ✅ |
 | Helm `tpl` | ✅ |
@@ -82,12 +82,14 @@ Port that is probed. Used by `http`, `https`, `tcp` and `grpc` probes.
 Example
 
 ```yaml
-addons:
-  codeserver:
-    container:
-      probes:
-        liveness:
-          port: 8080
+workload:
+  example:
+    podSpec:
+      containers:
+        example:
+          probes:
+            liveness:
+              port: 8080
 ```
 
 ---
@@ -98,7 +100,7 @@ Request path of `http` and `https` probes.
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.codeserver.container.probes.liveness.path` |
+| Key | `workload.$name.podSpec.containers.$name.probes.liveness.path` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ✅ |
@@ -107,12 +109,14 @@ Request path of `http` and `https` probes.
 Example
 
 ```yaml
-addons:
-  codeserver:
-    container:
-      probes:
-        liveness:
-          path: /healthz
+workload:
+  example:
+    podSpec:
+      containers:
+        example:
+          probes:
+            liveness:
+              path: /healthz
 ```
 
 ---
@@ -123,7 +127,7 @@ Extra headers of the request of `http` and `https` probes, keyed by header name.
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.codeserver.container.probes.liveness.httpHeaders` |
+| Key | `workload.$name.podSpec.containers.$name.probes.liveness.httpHeaders` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ✅ (On value only) |
@@ -137,7 +141,7 @@ Value of the header.
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.codeserver.container.probes.liveness.httpHeaders.$name` |
+| Key | `workload.$name.podSpec.containers.$name.probes.liveness.httpHeaders.$name` |
 | Type | `string or number or bool` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -151,7 +155,7 @@ Timing and threshold settings of the probe. Unset values default to `global.fall
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.codeserver.container.probes.liveness.spec` |
+| Key | `workload.$name.podSpec.containers.$name.probes.liveness.spec` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -165,7 +169,7 @@ Number of successful probes in a row before the container is considered healthy 
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.codeserver.container.probes.liveness.spec.successThreshold` |
+| Key | `workload.$name.podSpec.containers.$name.probes.liveness.spec.successThreshold` |
 | Type | `int` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -180,7 +184,7 @@ Seconds to wait after the container starts before the first probe.
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.codeserver.container.probes.liveness.spec.initialDelaySeconds` |
+| Key | `workload.$name.podSpec.containers.$name.probes.liveness.spec.initialDelaySeconds` |
 | Type | `int` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -195,7 +199,7 @@ Seconds between two probes.
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.codeserver.container.probes.liveness.spec.periodSeconds` |
+| Key | `workload.$name.podSpec.containers.$name.probes.liveness.spec.periodSeconds` |
 | Type | `int` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -210,7 +214,7 @@ Seconds after which a probe times out.
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.codeserver.container.probes.liveness.spec.timeoutSeconds` |
+| Key | `workload.$name.podSpec.containers.$name.probes.liveness.spec.timeoutSeconds` |
 | Type | `int` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -225,7 +229,7 @@ Number of failed probes in a row before the probe is considered failed.
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.codeserver.container.probes.liveness.spec.failureThreshold` |
+| Key | `workload.$name.podSpec.containers.$name.probes.liveness.spec.failureThreshold` |
 | Type | `int` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -240,7 +244,7 @@ Command that is run by `exec` probes. A single command can be given as a string.
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.codeserver.container.probes.liveness.command` |
+| Key | `workload.$name.podSpec.containers.$name.probes.liveness.command` |
 | Type | `list of string` |
 | Required | ❌ |
 | Helm `tpl` | ✅ |
@@ -249,14 +253,16 @@ Command that is run by `exec` probes. A single command can be given as a string.
 Example
 
 ```yaml
-addons:
-  codeserver:
-    container:
-      probes:
-        liveness:
-          command:
-            - cat
-            - /tmp/healthy
+workload:
+  example:
+    podSpec:
+      containers:
+        example:
+          probes:
+            liveness:
+              command:
+                - cat
+                - /tmp/healthy
 ```
 
 ---

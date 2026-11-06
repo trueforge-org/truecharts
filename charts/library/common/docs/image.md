@@ -11,14 +11,14 @@ title: Image
 
 ## Appears in
 
-- `.Values.image`
-- `.Values.gluetunImage`
-- `.Values.netshootImage`
-- `.Values.tailscaleImage`
+- `.Values.clickhouseImage`
 - `.Values.codeserverImage`
-- `.Values.ubuntuImage`
+- `.Values.gluetunImage`
+- `.Values.image`
 - `.Values.kubectlImage`
-- `.Values.postgresClientImage`
+- `.Values.mariadbClientImage`
+- `.Values.mariadbImage`
+- `.Values.memcachedImage`
 - and 25 more places
 
 ---

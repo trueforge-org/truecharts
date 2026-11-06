@@ -89,7 +89,7 @@
   },
   "resources": {
    "$ref": "#/definitions/workload.podSpec.containers.resources",
-   "description": "Default CPU and memory resources of each container, unless overridden at the container level. They apply to every container, not to the pod as a whole. See [resources](/truecharts-common/resources).",
+   "description": "Default CPU and memory resources of each container, unless overridden at the container level. They apply to every container, not to the pod as a whole. See [resources](/truecharts-common/workload/podSpec/containers/resources).",
    "type": "object",
    "default": {
     "limits": {
@@ -825,7 +825,7 @@
  "additionalProperties": true,
  "x-docs-page": {
   "title": "Common Chart Documentation",
-  "intro": "This applies across all the documentation:\n\n- Helm `tpl`:\n  - ❌ means that the value is not templated\n  - ✅ means that the value is templated, for example instead of a hardcoded value, you can set it to `{{ .Values.some.value }}` and it will be replaced by the value contained in `.Values.some.value` at the installation/upgrade time.",
+  "intro": "This applies across all the documentation:\n\n- Helm `tpl`:\n  - ❌ means that the value is not templated\n  - ✅ means that the value is templated, for example instead of a hardcoded value, you can set it to `{{ .Values.some.value }}` and it will be replaced by the value contained in `.Values.some.value` at the installation/upgrade time.\n\nThe pages are generated from the schema. The keywords the generator reads are on the [Schema Options](/truecharts-common/schemaOptions) page.",
   "overview": true
  },
  "definitions": {
@@ -16582,7 +16582,7 @@
     }
    },
    "additionalProperties": false,
-   "description": "CPU, memory and extended resources of the container. Overrides the top-level `resources` for this container. See [resources](/truecharts-common/resources).",
+   "description": "CPU, memory and extended resources of the container. Overrides the top-level `resources` for this container. See [resources](/truecharts-common/workload/podSpec/containers/resources).",
    "x-docs-page": {
     "title": "Resources"
    }
@@ -16885,7 +16885,7 @@
           },
           "resources": {
            "$ref": "#/definitions/workload.podSpec.containers.resources",
-           "description": "CPU, memory and extended resources the container requests and may use. See [resources](/truecharts-common/resources)."
+           "description": "CPU, memory and extended resources the container requests and may use. See [resources](/truecharts-common/workload/podSpec/containers/resources)."
           },
           "securityContext": {
            "$ref": "#/definitions/workload.podSpec.containers.securityContext",

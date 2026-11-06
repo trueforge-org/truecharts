@@ -12,18 +12,21 @@ title: Container Security Context
 ## Appears in
 
 - `.Values.securityContext.container`
+- `.Values.addons.codeserver.container.securityContext`
+- `.Values.addons.gluetun.container.securityContext`
+- `.Values.addons.netshoot.container.securityContext`
 - `.Values.workload.$name.podSpec.containers.$name.securityContext`
 - `.Values.workload.$name.podSpec.initContainers.$name.securityContext`
 
 ---
 
-## `container`
+## `securityContext`
 
 Security context of the container. Overrides `securityContext.container` for this container. See [securityContext](/truecharts-common/workload/podSpec/containers/securityContext).
 
 | Field | Value |
 | --- | --- |
-| Key | `securityContext.container` |
+| Key | `workload.$name.podSpec.containers.$name.securityContext` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -37,7 +40,7 @@ Seccomp profile of the container (`seccompProfile`), which restricts the system 
 
 | Field | Value |
 | --- | --- |
-| Key | `securityContext.container.seccompProfile` |
+| Key | `workload.$name.podSpec.containers.$name.securityContext.seccompProfile` |
 | Type | `map` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -51,7 +54,7 @@ Path of the profile on the node, relative to the kubelet seccomp directory. Requ
 
 | Field | Value |
 | --- | --- |
-| Key | `securityContext.container.seccompProfile.profile` |
+| Key | `workload.$name.podSpec.containers.$name.securityContext.seccompProfile.profile` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -65,7 +68,7 @@ Kind of seccomp profile: `RuntimeDefault` for the profile of the container runti
 
 | Field | Value |
 | --- | --- |
-| Key | `securityContext.container.seccompProfile.type` |
+| Key | `workload.$name.podSpec.containers.$name.securityContext.seccompProfile.type` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -80,7 +83,7 @@ User ID the container process runs as (`runAsUser`).
 
 | Field | Value |
 | --- | --- |
-| Key | `securityContext.container.runAsUser` |
+| Key | `workload.$name.podSpec.containers.$name.securityContext.runAsUser` |
 | Type | `int` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -94,7 +97,7 @@ Group ID the container process runs as (`runAsGroup`).
 
 | Field | Value |
 | --- | --- |
-| Key | `securityContext.container.runAsGroup` |
+| Key | `workload.$name.podSpec.containers.$name.securityContext.runAsGroup` |
 | Type | `int` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -108,7 +111,7 @@ Whether the root filesystem of the container is read-only (`readOnlyRootFilesyst
 
 | Field | Value |
 | --- | --- |
-| Key | `securityContext.container.readOnlyRootFilesystem` |
+| Key | `workload.$name.podSpec.containers.$name.securityContext.readOnlyRootFilesystem` |
 | Type | `bool` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -122,7 +125,7 @@ Whether a process can gain more privileges than its parent (`allowPrivilegeEscal
 
 | Field | Value |
 | --- | --- |
-| Key | `securityContext.container.allowPrivilegeEscalation` |
+| Key | `workload.$name.podSpec.containers.$name.securityContext.allowPrivilegeEscalation` |
 | Type | `bool` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -136,7 +139,7 @@ Whether the container runs in privileged mode, with almost all the capabilities 
 
 | Field | Value |
 | --- | --- |
-| Key | `securityContext.container.privileged` |
+| Key | `workload.$name.podSpec.containers.$name.securityContext.privileged` |
 | Type | `bool` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -150,7 +153,7 @@ Whether the container must run as a non-root user (`runAsNonRoot`). Calculated f
 
 | Field | Value |
 | --- | --- |
-| Key | `securityContext.container.runAsNonRoot` |
+| Key | `workload.$name.podSpec.containers.$name.securityContext.runAsNonRoot` |
 | Type | `bool` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -164,7 +167,7 @@ Linux capabilities of the container (`capabilities`). Only rendered when at leas
 
 | Field | Value |
 | --- | --- |
-| Key | `securityContext.container.capabilities` |
+| Key | `workload.$name.podSpec.containers.$name.securityContext.capabilities` |
 | Type | `map` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -178,7 +181,7 @@ Capabilities that are added to the container, eg `NET_ADMIN`. Names are without 
 
 | Field | Value |
 | --- | --- |
-| Key | `securityContext.container.capabilities.add` |
+| Key | `workload.$name.podSpec.containers.$name.securityContext.capabilities.add` |
 | Type | `list of string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -187,11 +190,15 @@ Capabilities that are added to the container, eg `NET_ADMIN`. Names are without 
 Example
 
 ```yaml
-securityContext:
-  container:
-    capabilities:
-      add:
-        - NET_ADMIN
+workload:
+  example:
+    podSpec:
+      containers:
+        example:
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
 ```
 
 ---
@@ -202,7 +209,7 @@ Capabilities that are dropped from the container. `ALL` drops every capability.
 
 | Field | Value |
 | --- | --- |
-| Key | `securityContext.container.capabilities.drop` |
+| Key | `workload.$name.podSpec.containers.$name.securityContext.capabilities.drop` |
 | Type | `list of string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -216,7 +223,7 @@ Disable the capabilities that common adds automatically for S6 based images (`CH
 
 | Field | Value |
 | --- | --- |
-| Key | `securityContext.container.capabilities.disableS6Caps` |
+| Key | `workload.$name.podSpec.containers.$name.securityContext.capabilities.disableS6Caps` |
 | Type | `bool` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -230,7 +237,7 @@ User ID that is passed to the container as the `PUID` environment variable. Over
 
 | Field | Value |
 | --- | --- |
-| Key | `securityContext.container.PUID` |
+| Key | `workload.$name.podSpec.containers.$name.securityContext.PUID` |
 | Type | `int` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -244,7 +251,7 @@ File creation mask that is passed to the container as the `UMASK` environment va
 
 | Field | Value |
 | --- | --- |
-| Key | `securityContext.container.UMASK` |
+| Key | `workload.$name.podSpec.containers.$name.securityContext.UMASK` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |

@@ -42,20 +42,6 @@ A priority class.
 
 ---
 
-## `$name.provisioner`
-
-Not used by the priority class templates. Only set in the priority class fixture of common-test.
-
-| Field | Value |
-| --- | --- |
-| Key | `priorityClass.$name.provisioner` |
-| Type | `string` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
 ## `$name.preemptionPolicy`
 
 Whether pods of this class may preempt lower priority pods.
@@ -204,6 +190,30 @@ Description of the priority class.
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | `"No description given"` |
+
+---
+
+## Internal Common Keys
+
+:::warning
+
+These keys are only for the internal use of common. Do not use them in charts that are based on common: they can change or be removed at any time, without a breaking change.
+
+:::
+
+---
+
+## `$name.provisioner`
+
+Not used by the priority class templates. Only set in the priority class fixture of common-test.
+
+| Field | Value |
+| --- | --- |
+| Key | `priorityClass.$name.provisioner` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 

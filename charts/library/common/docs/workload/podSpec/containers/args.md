@@ -11,6 +11,9 @@ title: Args
 
 ## Appears in
 
+- `.Values.addons.codeserver.container.args`
+- `.Values.addons.gluetun.container.args`
+- `.Values.addons.netshoot.container.args`
 - `.Values.workload.$name.podSpec.containers.$name.args`
 - `.Values.workload.$name.podSpec.initContainers.$name.args`
 

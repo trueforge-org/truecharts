@@ -77,7 +77,7 @@ The main keys and where to read more about them:
 - `workload` defines the pods and their containers, see [Workload](/truecharts-common/workload) and [Container](/truecharts-common/workload/podSpec/containers).
 - `service`, `ingress` and `route` expose the workload, see [Service](/truecharts-common/service), [Ingress](/truecharts-common/ingress) and [Route](/truecharts-common/route).
 - `persistence` defines the volumes, see [Persistence](/truecharts-common/persistence).
-- `securityContext`, `containerOptions`, `podOptions` and `resources` set the defaults for all pods and containers, see [Security Context](/truecharts-common/securityContext), [Container Options](/truecharts-common/containerOptions), [Pod Options](/truecharts-common/podOptions) and [Resources](/truecharts-common/resources).
+- `securityContext`, `containerOptions`, `podOptions` and `resources` set the defaults for all pods and containers, see [Security Context](/truecharts-common/securityContext), [Container Options](/truecharts-common/containerOptions), [Pod Options](/truecharts-common/podOptions) and [Resources](/truecharts-common/workload/podSpec/containers/resources).
 
 ### Defaults for all pods and containers
 

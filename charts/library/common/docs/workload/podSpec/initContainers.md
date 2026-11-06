@@ -174,7 +174,7 @@ See [Env From](/truecharts-common/workload/podSpec/containers/envFrom) for all k
 
 CPU, memory and extended resources the init container requests and may use.
 
-See [Resources](/truecharts-common/resources) for all keys of this object.
+See [Resources](/truecharts-common/workload/podSpec/containers/resources) for all keys of this object.
 
 | Field | Value |
 | --- | --- |

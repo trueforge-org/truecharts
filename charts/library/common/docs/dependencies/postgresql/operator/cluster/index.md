@@ -432,7 +432,7 @@ Whether the PVCs of an instance are reused when the instance is recreated during
 
 Resources of the PostgreSQL instances. Gets scaled to 0 if hibernation is true.
 
-See [Resources](/truecharts-common/resources) for all keys of this object.
+See [Resources](/truecharts-common/workload/podSpec/containers/resources) for all keys of this object.
 
 | Field | Value |
 | --- | --- |

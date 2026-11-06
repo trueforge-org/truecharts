@@ -165,7 +165,7 @@ See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all key
 
 Define the resources of the VolSync mover
 
-See [Resources](/truecharts-common/resources) for all keys of this object.
+See [Resources](/truecharts-common/workload/podSpec/containers/resources) for all keys of this object.
 
 | Field | Value |
 | --- | --- |

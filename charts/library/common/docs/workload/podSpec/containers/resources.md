@@ -5,28 +5,31 @@ title: Resources
 :::note
 
 - Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/resources#full-examples) section for complete examples.
+- See the [Full Examples](/truecharts-common/workload/podSpec/containers/resources#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
 - `.Values.resources`
+- `.Values.addons.codeserver.container.resources`
+- `.Values.addons.gluetun.container.resources`
+- `.Values.addons.netshoot.container.resources`
 - `.Values.dependencies.valkey.operator.resources`
 - `.Values.persistence.$name.volsync[].resources`
 - `.Values.dependencies.postgresql.operator.cluster.resources`
 - `.Values.workload.$name.podSpec.containers.$name.resources`
-- `.Values.workload.$name.podSpec.initContainers.$name.resources`
+- and 1 more places
 
 ---
 
 ## `resources`
 
-CPU, memory and extended resources of the container. Overrides the top-level `resources` for this container. See [resources](/truecharts-common/resources).
+CPU, memory and extended resources of the container. Overrides the top-level `resources` for this container. See [resources](/truecharts-common/workload/podSpec/containers/resources).
 
 | Field | Value |
 | --- | --- |
-| Key | `resources` |
+| Key | `workload.$name.podSpec.containers.$name.resources` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -40,7 +43,7 @@ Maximum amount of resources the container can use. Limits are **optional**. Set 
 
 | Field | Value |
 | --- | --- |
-| Key | `resources.limits` |
+| Key | `workload.$name.podSpec.containers.$name.resources.limits` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -54,7 +57,7 @@ Maximum CPU the container can use, in cores or millicores.
 
 | Field | Value |
 | --- | --- |
-| Key | `resources.limits.cpu` |
+| Key | `workload.$name.podSpec.containers.$name.resources.limits.cpu` |
 | Type | `string or number` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -63,9 +66,14 @@ Maximum CPU the container can use, in cores or millicores.
 Example
 
 ```yaml
-resources:
-  limits:
-    cpu: 1500m
+workload:
+  example:
+    podSpec:
+      containers:
+        example:
+          resources:
+            limits:
+              cpu: 1500m
 ```
 
 ---
@@ -76,7 +84,7 @@ Maximum memory the container can use. The container is killed when it uses more.
 
 | Field | Value |
 | --- | --- |
-| Key | `resources.limits.memory` |
+| Key | `workload.$name.podSpec.containers.$name.resources.limits.memory` |
 | Type | `string or number` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -85,9 +93,14 @@ Maximum memory the container can use. The container is killed when it uses more.
 Example
 
 ```yaml
-resources:
-  limits:
-    memory: 2Gi
+workload:
+  example:
+    podSpec:
+      containers:
+        example:
+          resources:
+            limits:
+              memory: 2Gi
 ```
 
 ---
@@ -98,7 +111,7 @@ Extended resource quantity, keyed by resource name (for example `nvidia.com/gpu`
 
 | Field | Value |
 | --- | --- |
-| Key | `resources.limits.$name` |
+| Key | `workload.$name.podSpec.containers.$name.resources.limits.$name` |
 | Type | `string or number` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -112,7 +125,7 @@ Minimum amount of resources the container needs, which the scheduler reserves on
 
 | Field | Value |
 | --- | --- |
-| Key | `resources.requests` |
+| Key | `workload.$name.podSpec.containers.$name.resources.requests` |
 | Type | `map` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -126,7 +139,7 @@ CPU the scheduler reserves for the container, in cores or millicores.
 
 | Field | Value |
 | --- | --- |
-| Key | `resources.requests.cpu` |
+| Key | `workload.$name.podSpec.containers.$name.resources.requests.cpu` |
 | Type | `string or number` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -135,9 +148,14 @@ CPU the scheduler reserves for the container, in cores or millicores.
 Example
 
 ```yaml
-resources:
-  requests:
-    cpu: 100m
+workload:
+  example:
+    podSpec:
+      containers:
+        example:
+          resources:
+            requests:
+              cpu: 100m
 ```
 
 ---
@@ -148,7 +166,7 @@ Memory the scheduler reserves for the container.
 
 | Field | Value |
 | --- | --- |
-| Key | `resources.requests.memory` |
+| Key | `workload.$name.podSpec.containers.$name.resources.requests.memory` |
 | Type | `string or number` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -157,9 +175,14 @@ Memory the scheduler reserves for the container.
 Example
 
 ```yaml
-resources:
-  requests:
-    memory: 256Mi
+workload:
+  example:
+    podSpec:
+      containers:
+        example:
+          resources:
+            requests:
+              memory: 256Mi
 ```
 
 ---
@@ -170,7 +193,7 @@ Extended resource quantity, keyed by resource name (for example `ephemeral-stora
 
 | Field | Value |
 | --- | --- |
-| Key | `resources.requests.$name` |
+| Key | `workload.$name.podSpec.containers.$name.resources.requests.$name` |
 | Type | `string or number` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -184,7 +207,7 @@ Leave out the extra resources (for example GPUs) that common adds to this contai
 
 | Field | Value |
 | --- | --- |
-| Key | `resources.excludeExtra` |
+| Key | `workload.$name.podSpec.containers.$name.resources.excludeExtra` |
 | Type | `bool` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |

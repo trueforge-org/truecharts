@@ -160,6 +160,8 @@ Content of the file
 
 Namespace of the secret. Defaults to the namespace of the release.
 
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
 | Field | Value |
 | --- | --- |
 | Key | `addons.gluetun.secret.$name.namespace` |
@@ -174,6 +176,8 @@ Namespace of the secret. Defaults to the namespace of the release.
 
 Additional labels for secret.
 
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
 | Field | Value |
 | --- | --- |
 | Key | `addons.gluetun.secret.$name.labels` |
@@ -184,23 +188,11 @@ Additional labels for secret.
 
 ---
 
-## `secret.$name.labels.$name`
-
-Value of the label
-
-| Field | Value |
-| --- | --- |
-| Key | `addons.gluetun.secret.$name.labels.$name` |
-| Type | `string` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
 ## `secret.$name.annotationsList`
 
 Additional annotations as a list of name and value pairs, merged into the annotations.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
 | Field | Value |
 | --- | --- |
@@ -212,49 +204,11 @@ Additional annotations as a list of name and value pairs, merged into the annota
 
 ---
 
-## `secret.$name.annotationsList[]`
-
-| Field | Value |
-| --- | --- |
-| Key | `addons.gluetun.secret.$name.annotationsList[]` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `secret.$name.annotationsList[].name`
-
-Name of the annotation
-
-| Field | Value |
-| --- | --- |
-| Key | `addons.gluetun.secret.$name.annotationsList[].name` |
-| Type | `string` |
-| Required | ✅ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `secret.$name.annotationsList[].value`
-
-Value of the annotation
-
-| Field | Value |
-| --- | --- |
-| Key | `addons.gluetun.secret.$name.annotationsList[].value` |
-| Type | `string` |
-| Required | ✅ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
 ## `secret.$name.labelsList`
 
 Additional labels as a list of name and value pairs, merged into the labels.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
 | Field | Value |
 | --- | --- |
@@ -266,49 +220,11 @@ Additional labels as a list of name and value pairs, merged into the labels.
 
 ---
 
-## `secret.$name.labelsList[]`
-
-| Field | Value |
-| --- | --- |
-| Key | `addons.gluetun.secret.$name.labelsList[]` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `secret.$name.labelsList[].name`
-
-Name of the label
-
-| Field | Value |
-| --- | --- |
-| Key | `addons.gluetun.secret.$name.labelsList[].name` |
-| Type | `string` |
-| Required | ✅ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `secret.$name.labelsList[].value`
-
-Value of the label
-
-| Field | Value |
-| --- | --- |
-| Key | `addons.gluetun.secret.$name.labelsList[].value` |
-| Type | `string` |
-| Required | ✅ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
 ## `secret.$name.annotations`
 
 Additional annotations for secret.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
 | Field | Value |
 | --- | --- |
@@ -317,20 +233,6 @@ Additional annotations for secret.
 | Required | ❌ |
 | Helm `tpl` | ✅ (On value only) |
 | Default | `{}` |
-
----
-
-## `secret.$name.annotations.$name`
-
-Value of the annotation
-
-| Field | Value |
-| --- | --- |
-| Key | `addons.gluetun.secret.$name.annotations.$name` |
-| Type | `string` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
 
 ---
 

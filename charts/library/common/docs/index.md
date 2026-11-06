@@ -14,6 +14,8 @@ This applies across all the documentation:
   - ❌ means that the value is not templated
   - ✅ means that the value is templated, for example instead of a hardcoded value, you can set it to `{{ .Values.some.value }}` and it will be replaced by the value contained in `.Values.some.value` at the installation/upgrade time.
 
+The pages are generated from the schema. The keywords the generator reads are on the [Schema Options](/truecharts-common/schemaOptions) page.
+
 ## Keys
 
 | Key | Type | Description |
@@ -24,7 +26,7 @@ This applies across all the documentation:
 | [`chartContext`](/truecharts-common/chartContext) | `map` | Details about the release that common works out on every render, such as the URL of the app. Common sets these itself. |
 | [`common`](/truecharts-common/common) | `any` | Values merged into the common defaults before the values of the chart. Takes the same values as the chart itself. |
 | [`securityContext`](/truecharts-common/securityContext) | `map` | Default security contexts for all containers and pods, unless overridden at the container or pod level. See [securityContext](/truecharts-common/securityContext). |
-| [`resources`](/truecharts-common/resources) | `map` | Default CPU and memory resources of each container, unless overridden at the container level. They apply to every container, not to the pod as a whole. See [resources](/truecharts-common/resources). |
+| [`resources`](/truecharts-common/workload/podSpec/containers/resources) | `map` | Default CPU and memory resources of each container, unless overridden at the container level. They apply to every container, not to the pod as a whole. See [resources](/truecharts-common/workload/podSpec/containers/resources). |
 | [`containerOptions`](/truecharts-common/containerOptions) | `map` | Options that apply to all containers, unless overridden at the container level. See [containerOptions](/truecharts-common/containerOptions). |
 | [`podOptions`](/truecharts-common/podOptions) | `map` | Options that apply to all pods, unless overridden at the pod level. See [podOptions](/truecharts-common/podOptions). |
 | [`workload`](/truecharts-common/workload) | `map` | Workloads (Deployment, StatefulSet, DaemonSet, Job, CronJob), keyed by name. Each one holds a pod spec and its containers. See [workload](/truecharts-common/workload). |
@@ -175,7 +177,7 @@ The main keys and where to read more about them:
 - `workload` defines the pods and their containers, see [Workload](/truecharts-common/workload) and [Container](/truecharts-common/workload/podSpec/containers).
 - `service`, `ingress` and `route` expose the workload, see [Service](/truecharts-common/service), [Ingress](/truecharts-common/ingress) and [Route](/truecharts-common/route).
 - `persistence` defines the volumes, see [Persistence](/truecharts-common/persistence).
-- `securityContext`, `containerOptions`, `podOptions` and `resources` set the defaults for all pods and containers, see [Security Context](/truecharts-common/securityContext), [Container Options](/truecharts-common/containerOptions), [Pod Options](/truecharts-common/podOptions) and [Resources](/truecharts-common/resources).
+- `securityContext`, `containerOptions`, `podOptions` and `resources` set the defaults for all pods and containers, see [Security Context](/truecharts-common/securityContext), [Container Options](/truecharts-common/containerOptions), [Pod Options](/truecharts-common/podOptions) and [Resources](/truecharts-common/workload/podSpec/containers/resources).
 
 ### Defaults for all pods and containers
 

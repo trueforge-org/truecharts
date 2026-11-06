@@ -89,20 +89,6 @@ workload:
 
 ---
 
-## `initContainers`
-
-Not used. Init containers go under `podSpec.initContainers`.
-
-| Field | Value |
-| --- | --- |
-| Key | `workload.$name.initContainers` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | `{}` |
-
----
-
 ## `suspend`
 
 Whether the CronJob is suspended, so no new Jobs start (`suspend`). Forced to `true` when `stopAll` is enabled.
@@ -273,6 +259,44 @@ Kind of the workload: `Deployment`, `DaemonSet`, `StatefulSet`, `CronJob` or `Jo
 
 ---
 
+## `dbWait`
+
+Whether init containers that wait for the enabled dependencies (mariadb, postgresql, mongodb, clickhouse, valkey) are added to the workload. The workloads of [dependencies](/truecharts-common/dependencies) default to `false`, so they do not wait for themselves.
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.dbWait` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## Internal Common Keys
+
+:::warning
+
+These keys are only for the internal use of common. Do not use them in charts that are based on common: they can change or be removed at any time, without a breaking change.
+
+:::
+
+---
+
+## `initContainers`
+
+Not used. Init containers go under `podSpec.initContainers`.
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.initContainers` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
 ## `serviceAccountName`
 
 Not used. Set the service account of the pods with `podSpec.serviceAccountName`, or with the top-level `serviceAccount` key and its `targetSelector`.
@@ -298,20 +322,6 @@ Not used. Containers go under `podSpec.containers`.
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | `{}` |
-
----
-
-## `dbWait`
-
-Whether init containers that wait for the enabled dependencies (mariadb, postgresql, mongodb, clickhouse, valkey) are added to the workload. The workloads of [dependencies](/truecharts-common/dependencies) default to `false`, so they do not wait for themselves.
-
-| Field | Value |
-| --- | --- |
-| Key | `workload.$name.dbWait` |
-| Type | `bool` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
 
 ---
 

@@ -21,7 +21,7 @@
                 },
                 "resources": {
                   "$ref": "podSpec/containers/resources.json",
-                  "description": "CPU, memory and extended resources the container requests and may use. See [resources](/truecharts-common/resources).",
+                  "description": "CPU, memory and extended resources the container requests and may use. See [resources](/truecharts-common/workload/podSpec/containers/resources).",
                   "x-docs-required": true
                 },
                 "securityContext": {
@@ -239,7 +239,7 @@
               "nameservers": {
                 "type": "array",
                 "description": "IP addresses of extra DNS servers, at most 3. Added to the servers of `dnsPolicy`.",
-                "x-helm-tpl": "On each entry",
+                "x-helm-tpl": "On entries only",
                 "examples": [
                   [
                     "1.1.1.1"
@@ -249,7 +249,7 @@
               "searches": {
                 "type": "array",
                 "description": "Extra DNS search domains, at most 6. Added to the search domains of `dnsPolicy`.",
-                "x-helm-tpl": "On each entry",
+                "x-helm-tpl": "On entries only",
                 "examples": [
                   [
                     "example.com"
@@ -434,7 +434,8 @@
         "properties": {},
         "additionalProperties": false,
         "description": "Not used. Init containers go under `podSpec.initContainers`.",
-        "default": {}
+        "default": {},
+        "x-docs-internal": true
       },
       "completionMode": {
         "type": "string",
@@ -638,14 +639,16 @@
         "type": "string",
         "description": "Not used. Set the service account of the pods with `podSpec.serviceAccountName`, or with the top-level `serviceAccount` key and its `targetSelector`.",
         "default": "",
-        "x-helm-tpl": "On value only"
+        "x-helm-tpl": "On value only",
+        "x-docs-internal": true
       },
       "containers": {
         "type": "object",
         "properties": {},
         "additionalProperties": false,
         "description": "Not used. Containers go under `podSpec.containers`.",
-        "default": {}
+        "default": {},
+        "x-docs-internal": true
       },
       "dbWait": {
         "type": "boolean",

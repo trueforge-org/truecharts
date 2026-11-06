@@ -282,35 +282,6 @@ See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all key
 
 ---
 
-## `$name.accessMode`
-
-Legacy singular spelling of `accessModes`. Set by common-test fixtures (statefulset) but ignored by the templates, which read `accessModes`.
-
-| Field | Value |
-| --- | --- |
-| Key | `persistence.$name.accessMode` |
-| Type | `string` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `$name.copyMethod`
-
-Define the VolSync copyMethod at item level. Set by common-test volsync fixtures, but the templates only read `copyMethod` inside `volsync` entries, so it is ignored here.
-
-| Field | Value |
-| --- | --- |
-| Key | `persistence.$name.copyMethod` |
-| Type | `string` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-| Allowed values | `"Clone"`, `"Direct"`, `"Snapshot"` |
-
----
-
 ## `$name.domain`
 
 Domain of the SMB share, used by the SMB CSI driver.
@@ -318,34 +289,6 @@ Domain of the SMB share, used by the SMB CSI driver.
 | Field | Value |
 | --- | --- |
 | Key | `persistence.$name.domain` |
-| Type | `string` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `$name.name`
-
-Set by the chart, the name of the generated persistence resource. Do not set this manually
-
-| Field | Value |
-| --- | --- |
-| Key | `persistence.$name.name` |
-| Type | `string` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `$name.shortName`
-
-Set by the chart, the short name of the persistence used in generated resource names. Do not set this manually
-
-| Field | Value |
-| --- | --- |
-| Key | `persistence.$name.shortName` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -508,6 +451,73 @@ Mount the volume in all containers of all workloads, instead of using `targetSel
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | `false` |
+
+---
+
+## Internal Common Keys
+
+:::warning
+
+These keys are only for the internal use of common. Do not use them in charts that are based on common: they can change or be removed at any time, without a breaking change.
+
+:::
+
+---
+
+## `$name.accessMode`
+
+Legacy singular spelling of `accessModes`. Set by common-test fixtures (statefulset) but ignored by the templates, which read `accessModes`.
+
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.accessMode` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.copyMethod`
+
+Define the VolSync copyMethod at item level. Set by common-test volsync fixtures, but the templates only read `copyMethod` inside `volsync` entries, so it is ignored here.
+
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.copyMethod` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Allowed values | `"Clone"`, `"Direct"`, `"Snapshot"` |
+
+---
+
+## `$name.name`
+
+Set by the chart, the name of the generated persistence resource. Do not set this manually
+
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.name` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.shortName`
+
+Set by the chart, the short name of the persistence used in generated resource names. Do not set this manually
+
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.shortName` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
