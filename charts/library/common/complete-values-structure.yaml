@@ -5758,7 +5758,19 @@ redis:
     objectname:
       enabled: false
   redisUsername: ''
+  global:
+    stopAll: false
+  workload:
+    objectname:
+      enabled: true
+  persistence:
+    objectname:
+      enabled: true
+      type: ''
   redisDatabase: ''
+  service:
+    objectname:
+      enabled: true
 mariadb:
   enabled: false
   includeCommon: false
@@ -5778,6 +5790,12 @@ mariadb:
     jdbcmariadb: ''
   mariadbUsername: ''
   mariadbDatabase: ''
+  workload:
+    objectname:
+      enabled: true
+  service:
+    objectname:
+      enabled: true
 mongodb:
   enabled: false
   includeCommon: false
@@ -5796,6 +5814,12 @@ mongodb:
     jdbc: ''
   mongodbUsername: ''
   mongodbDatabase: ''
+  workload:
+    objectname:
+      enabled: true
+  service:
+    objectname:
+      enabled: true
 clickhouse:
   enabled: false
   includeCommon: false
@@ -5811,6 +5835,12 @@ clickhouse:
     jdbc: ''
   clickhouseUsername: ''
   clickhouseDatabase: ''
+  workload:
+    objectname:
+      enabled: true
+  service:
+    objectname:
+      enabled: true
 solr:
   enabled: false
   includeCommon: false
@@ -5824,6 +5854,12 @@ solr:
     portHost: ''
     url: ''
   solrUsername: ''
+  workload:
+    objectname:
+      enabled: true
+  service:
+    objectname:
+      enabled: true
 extraTpl:
 - apiVersion: ''
   kind: ''

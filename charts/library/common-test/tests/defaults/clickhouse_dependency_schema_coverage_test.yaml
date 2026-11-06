@@ -50,16 +50,6 @@ tests:
       - failedTemplate:
           errorPattern: 'at ''/clickhouse/password'': minLength: got 0, want 1'
 
-  - it: should fail with an unknown key in clickhouse
-    set:
-      clickhouse:
-        enabled: true
-        password: my-password
-        bogus: value
-    asserts:
-      - failedTemplate:
-          errorPattern: 'at ''/clickhouse'': additional properties ''bogus'' not allowed'
-
   - it: should fail with an unknown key in clickhouse creds
     set:
       clickhouse:
@@ -70,3 +60,31 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: 'at ''/clickhouse/creds'': additional properties ''bogus'' not allowed'
+
+  - it: should accept the values of a clickhouse subchart next to the keys read by common
+    set:
+      clickhouse:
+        enabled: true
+        password: my-password
+        workload:
+          main:
+            enabled: true
+        service:
+          main:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Secret
+        documentIndex: 0
+
+  - it: should fail with a wrong type in the clickhouse subchart values
+    set:
+      clickhouse:
+        enabled: true
+        password: my-password
+        workload: str
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/clickhouse/workload'''

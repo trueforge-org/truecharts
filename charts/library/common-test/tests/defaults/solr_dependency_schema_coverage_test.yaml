@@ -62,16 +62,6 @@ tests:
       - failedTemplate:
           errorPattern: 'at ''/solr/password'': minLength: got 0, want 1'
 
-  - it: should fail with an unknown key in solr
-    set:
-      solr:
-        enabled: true
-        password: my-password
-        bogus: value
-    asserts:
-      - failedTemplate:
-          errorPattern: 'at ''/solr'': additional properties ''bogus'' not allowed'
-
   - it: should fail with an unknown key in solr creds
     set:
       solr:
@@ -82,3 +72,31 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: 'at ''/solr/creds'': additional properties ''bogus'' not allowed'
+
+  - it: should accept the values of a solr subchart next to the keys read by common
+    set:
+      solr:
+        enabled: true
+        password: my-password
+        workload:
+          main:
+            enabled: true
+        service:
+          main:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Secret
+        documentIndex: 0
+
+  - it: should fail with a wrong type in the solr subchart values
+    set:
+      solr:
+        enabled: true
+        password: my-password
+        workload: str
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/solr/workload'''

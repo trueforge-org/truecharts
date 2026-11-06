@@ -1,0 +1,52 @@
+suite: dependency with subchart values test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should still inject the redis credentials when subchart values are set next to the keys read by common
+    set:
+      redis:
+        enabled: true
+        password: my-password
+        global:
+          stopAll: false
+        workload:
+          main:
+            enabled: true
+        persistence:
+          data:
+            enabled: true
+            type: emptyDir
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Secret
+        documentIndex: 0
+      - equal:
+          path: stringData.plainhost
+          value: test-release-name-redis
+        documentIndex: 0
+
+  - it: should still inject the mariadb credentials when subchart values are set next to the keys read by common
+    set:
+      mariadb:
+        enabled: true
+        password: my-password
+        rootPassword: my-root-password
+        mariadbDatabase: mydb
+        workload:
+          main:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Secret
+        documentIndex: 0
+      - equal:
+          path: stringData.plainhost
+          value: test-release-name-mariadb
+        documentIndex: 0

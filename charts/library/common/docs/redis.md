@@ -18,6 +18,12 @@ title: Redis
 
 Redis dependency configuration. See [redis](/truecharts-common/redis).
 
+:::warning
+
+This object also takes all keys of the root values, for example `workload`, `service` and `persistence`. They come from the Helm subchart dependency that defines this object: Helm adds the default values of the subchart here. Do not set them in the values of the chart.
+
+:::
+
 | Field | Value |
 | --- | --- |
 | Key | `redis` |

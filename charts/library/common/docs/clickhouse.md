@@ -18,6 +18,12 @@ title: ClickHouse
 
 ClickHouse dependency configuration. See [clickhouse](/truecharts-common/clickhouse).
 
+:::warning
+
+This object also takes all keys of the root values, for example `workload`, `service` and `persistence`. They come from the Helm subchart dependency that defines this object: Helm adds the default values of the subchart here. Do not set them in the values of the chart.
+
+:::
+
 | Field | Value |
 | --- | --- |
 | Key | `clickhouse` |

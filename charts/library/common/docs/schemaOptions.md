@@ -32,7 +32,7 @@ This page is for people who work on common. Charts based on common do not need i
 | `x-docs-page` | `true`, an object or a list of objects | The key, or the schema file that is referenced, gets a page. See below. |
 | `x-docs-primary` | `true` | The key is the home of the objects it contains. When the same schema is used in several places, the page of the primary key documents it, and the others link to it. Used for `workload`, `service` and `ingress`. |
 | `x-docs-extends` | A values path, such as `workload.$name.podSpec.containers.$name` | The object takes over the keys of another object, and adds its own. The keys that are a `$ref` to the same schema as the key of the other object are left out of the docs, and the page says that it takes the same keys. Used for the container of an addon. |
-| `x-docs-internal` | `true` | The key is only for the internal use of common. It is shown in a separate section of its page, under a warning. A page of a key that is internal gets the warning at the top. On a `$ref` to the whole root values (the dependencies take all keys of the root values) it marks only that part as internal, and the object itself stays public. |
+| `x-docs-internal` | `true` | The key is only for the internal use of common. It is shown in a separate section of its page, under a warning. A page of a key that is internal gets the warning at the top. On a `$ref` to the whole root values (the dependencies take all keys of the root values) it marks only that part as internal, and the object itself stays public. A string instead of `true` is shown as the text of the warning. |
 
 ## Pages
 

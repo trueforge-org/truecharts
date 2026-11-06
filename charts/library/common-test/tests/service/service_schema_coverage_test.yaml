@@ -148,7 +148,7 @@ tests:
           sessionAffinity: Unknown
     asserts:
       - failedTemplate:
-          errorPattern: "at '/service/my-service/type': 'oneOf' failed, none matched"
+          errorPattern: "at '/service/my-service/type': value must be one of"
       - failedTemplate:
           errorPattern: "at '/service/my-service/ipFamilyPolicy': 'oneOf' failed, none matched"
       - failedTemplate:

@@ -63,16 +63,6 @@ tests:
       - failedTemplate:
           errorPattern: 'at ''/mongodb/rootPassword'': minLength: got 0, want 1'
 
-  - it: should fail with an unknown key in mongodb
-    set:
-      mongodb:
-        enabled: true
-        password: my-password
-        bogus: value
-    asserts:
-      - failedTemplate:
-          errorPattern: 'at ''/mongodb'': additional properties ''bogus'' not allowed'
-
   - it: should fail with an unknown key in mongodb creds
     set:
       mongodb:
@@ -83,3 +73,31 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: 'at ''/mongodb/creds'': additional properties ''bogus'' not allowed'
+
+  - it: should accept the values of a mongodb subchart next to the keys read by common
+    set:
+      mongodb:
+        enabled: true
+        password: my-password
+        workload:
+          main:
+            enabled: true
+        service:
+          main:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Secret
+        documentIndex: 0
+
+  - it: should fail with a wrong type in the mongodb subchart values
+    set:
+      mongodb:
+        enabled: true
+        password: my-password
+        workload: str
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/mongodb/workload'''
