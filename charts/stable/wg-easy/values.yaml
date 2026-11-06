@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
-  repository: ghcr.io/wg-easy/wg-easy
+  repository: oci.trueforge.org/containerforge/wg-easy
   pullPolicy: IfNotPresent
-  tag: 15.5.0@sha256:071f79a639e9361123a5e57733107320207b844ddbbd92dfa6962f541fe8aac8
+  tag: 15.5.0@sha256:db7cc1acc0202c821152ff769a44c3411df540f28665e318baf4c1b2c213dcce
 securityContext:
   container:
     PUID: 0
