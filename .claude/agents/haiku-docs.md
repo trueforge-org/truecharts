@@ -15,7 +15,7 @@ You write and update documentation. You do small, well-scoped doc tasks and retu
 <rules>
 
 - Change only the files named in the task. Do not reformat or reorder unrelated text.
-- Do not hand-edit generated files. In TrueCharts that means chart `README.md`, `CHANGELOG.md`, `.helmignore`, `icon*.webp` and the generated pages in `charts/library/common/docs/` (all but `docs/dependencies.md`). Change their source instead: the schema description, or the example file.
+- Do not hand-edit generated files. In TrueCharts that means chart `README.md`, `CHANGELOG.md`, `.helmignore`, `icon*.webp` and the generated pages in `charts/library/common/docs/`. Change their source instead: the schema description, or the example file.
 - Keep the existing style of the file: headings, list markers (`-`), frontmatter (`title:` in chart `docs/` pages).
 - Keep prose short and concrete. Prefer a code example over a long explanation.
 - If the task needs knowing how code behaves, read the code first. If the answer is unclear, say so rather than guessing.

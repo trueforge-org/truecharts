@@ -605,8 +605,7 @@
    "$ref": "#/definitions/dependencies",
    "description": "Services the app needs, such as a database or cache, deployed with the chart. See [dependencies](/truecharts-common/dependencies).",
    "x-docs-page": {
-    "title": "Dependencies",
-    "handwritten": true
+    "title": "Dependencies"
    }
   },
   "cnpg": {
@@ -1485,78 +1484,84 @@
    }
   },
   "clickhouse": {
-   "type": "object",
-   "properties": {
-    "enabled": {
-     "type": [
-      "boolean",
-      "string"
-     ],
-     "description": "Enables the ClickHouse dependency. Supports Helm `tpl`.",
-     "default": false
+   "allOf": [
+    {
+     "$ref": "#"
     },
-    "includeCommon": {
-     "type": "boolean",
-     "description": "Marker for charts that the dependency uses common. Not read by common.",
-     "default": false
-    },
-    "password": {
-     "type": "string",
-     "description": "Password of the database user.",
-     "minLength": 1,
-     "default": "PLACEHOLDERPASSWORD"
-    },
-    "clickhouseUsername": {
-     "type": "string",
-     "description": "Name of the database user, used in the connection URLs."
-    },
-    "clickhouseDatabase": {
-     "type": "string",
-     "description": "Name of the database, used in the connection URLs."
-    },
-    "creds": {
+    {
      "type": "object",
      "properties": {
-      "clickhousePassword": {
-       "type": "string",
-       "description": "Password."
+      "enabled": {
+       "type": [
+        "boolean",
+        "string"
+       ],
+       "description": "Enables the ClickHouse dependency. Supports Helm `tpl`.",
+       "default": false
       },
-      "plain": {
-       "type": "string",
-       "description": "Hostname."
+      "includeCommon": {
+       "type": "boolean",
+       "description": "Marker for charts that the dependency uses common. Not read by common.",
+       "default": false
       },
-      "plainhost": {
+      "password": {
        "type": "string",
-       "description": "Hostname."
+       "description": "Password of the database user.",
+       "minLength": 1,
+       "default": "PLACEHOLDERPASSWORD"
       },
-      "plainport": {
+      "clickhouseUsername": {
        "type": "string",
-       "description": "Hostname and port."
+       "description": "Name of the database user, used in the connection URLs."
       },
-      "plainporthost": {
+      "clickhouseDatabase": {
        "type": "string",
-       "description": "Hostname and port."
+       "description": "Name of the database, used in the connection URLs."
       },
-      "ping": {
-       "type": "string",
-       "description": "URL of the ping endpoint, used by the wait container."
-      },
-      "complete": {
-       "type": "string",
-       "description": "Connection URL."
-      },
-      "jdbc": {
-       "type": "string",
-       "description": "JDBC URL."
+      "creds": {
+       "type": "object",
+       "properties": {
+        "clickhousePassword": {
+         "type": "string",
+         "description": "Password."
+        },
+        "plain": {
+         "type": "string",
+         "description": "Hostname."
+        },
+        "plainhost": {
+         "type": "string",
+         "description": "Hostname."
+        },
+        "plainport": {
+         "type": "string",
+         "description": "Hostname and port."
+        },
+        "plainporthost": {
+         "type": "string",
+         "description": "Hostname and port."
+        },
+        "ping": {
+         "type": "string",
+         "description": "URL of the ping endpoint, used by the wait container."
+        },
+        "complete": {
+         "type": "string",
+         "description": "Connection URL."
+        },
+        "jdbc": {
+         "type": "string",
+         "description": "JDBC URL."
+        }
+       },
+       "additionalProperties": false,
+       "description": "Connection details written by common, so apps using the dependency can use them. Read only.",
+       "default": {}
       }
-     },
-     "additionalProperties": false,
-     "description": "Connection details written by common, so apps using the dependency can use them. Read only.",
-     "default": {}
+     }
     }
-   },
-   "additionalProperties": false,
-   "description": "ClickHouse dependency configuration."
+   ],
+   "description": "ClickHouse dependency configuration. The root values keys are also accepted, as the content of the Helm subchart that defines this dependency."
   },
   "cnpg": {
    "type": "object",
@@ -5645,96 +5650,102 @@
    "description": "Traefik Middleware objects, keyed by provider and name. See [Middlewares](/truecharts-common/ingressMiddlewares)."
   },
   "mariadb": {
-   "type": "object",
-   "properties": {
-    "enabled": {
-     "type": [
-      "boolean",
-      "string"
-     ],
-     "description": "Enables the MariaDB dependency. Supports Helm `tpl`.",
-     "default": false
+   "allOf": [
+    {
+     "$ref": "#"
     },
-    "includeCommon": {
-     "type": "boolean",
-     "description": "Marker for charts that the dependency uses common. Not read by common.",
-     "default": false
-    },
-    "password": {
-     "type": "string",
-     "description": "Password of the database user.",
-     "minLength": 1,
-     "default": "PLACEHOLDERPASSWORD"
-    },
-    "rootPassword": {
-     "type": "string",
-     "description": "Password of the `root` user.",
-     "minLength": 1,
-     "default": "PLACEHOLDERROOTPASSWORD"
-    },
-    "mariadbUsername": {
-     "type": "string",
-     "description": "Name of the database user, used in the connection URLs."
-    },
-    "mariadbDatabase": {
-     "type": "string",
-     "description": "Name of the database, used in the connection URLs."
-    },
-    "creds": {
+    {
      "type": "object",
      "properties": {
-      "mariadbPassword": {
-       "type": "string",
-       "description": "Password."
+      "enabled": {
+       "type": [
+        "boolean",
+        "string"
+       ],
+       "description": "Enables the MariaDB dependency. Supports Helm `tpl`.",
+       "default": false
       },
-      "mariadbRootPassword": {
-       "type": "string",
-       "description": "Password of the `root` user."
+      "includeCommon": {
+       "type": "boolean",
+       "description": "Marker for charts that the dependency uses common. Not read by common.",
+       "default": false
       },
-      "plain": {
+      "password": {
        "type": "string",
-       "description": "Hostname."
+       "description": "Password of the database user.",
+       "minLength": 1,
+       "default": "PLACEHOLDERPASSWORD"
       },
-      "plainhost": {
+      "rootPassword": {
        "type": "string",
-       "description": "Hostname."
+       "description": "Password of the `root` user.",
+       "minLength": 1,
+       "default": "PLACEHOLDERROOTPASSWORD"
       },
-      "plainport": {
+      "mariadbUsername": {
        "type": "string",
-       "description": "Hostname and port."
+       "description": "Name of the database user, used in the connection URLs."
       },
-      "plainporthost": {
+      "mariadbDatabase": {
        "type": "string",
-       "description": "Hostname and port."
+       "description": "Name of the database, used in the connection URLs."
       },
-      "complete": {
-       "type": "string",
-       "description": "Connection URL."
-      },
-      "urlnossl": {
-       "type": "string",
-       "description": "Connection URL with `sslmode=disable`."
-      },
-      "jdbc": {
-       "type": "string",
-       "description": "JDBC URL."
-      },
-      "jdbcmysql": {
-       "type": "string",
-       "description": "JDBC URL for MySQL."
-      },
-      "jdbcmariadb": {
-       "type": "string",
-       "description": "JDBC URL for MariaDB."
+      "creds": {
+       "type": "object",
+       "properties": {
+        "mariadbPassword": {
+         "type": "string",
+         "description": "Password."
+        },
+        "mariadbRootPassword": {
+         "type": "string",
+         "description": "Password of the `root` user."
+        },
+        "plain": {
+         "type": "string",
+         "description": "Hostname."
+        },
+        "plainhost": {
+         "type": "string",
+         "description": "Hostname."
+        },
+        "plainport": {
+         "type": "string",
+         "description": "Hostname and port."
+        },
+        "plainporthost": {
+         "type": "string",
+         "description": "Hostname and port."
+        },
+        "complete": {
+         "type": "string",
+         "description": "Connection URL."
+        },
+        "urlnossl": {
+         "type": "string",
+         "description": "Connection URL with `sslmode=disable`."
+        },
+        "jdbc": {
+         "type": "string",
+         "description": "JDBC URL."
+        },
+        "jdbcmysql": {
+         "type": "string",
+         "description": "JDBC URL for MySQL."
+        },
+        "jdbcmariadb": {
+         "type": "string",
+         "description": "JDBC URL for MariaDB."
+        }
+       },
+       "additionalProperties": false,
+       "description": "Connection details written by common, so apps using the dependency can use them. Read only.",
+       "default": {}
       }
-     },
-     "additionalProperties": false,
-     "description": "Connection details written by common, so apps using the dependency can use them. Read only.",
-     "default": {}
+     }
     }
-   },
-   "additionalProperties": false,
-   "description": "MariaDB dependency configuration."
+   ],
+   "description": "MariaDB dependency configuration. The root values keys are also accepted, as the content of the Helm subchart that defines this dependency."
   },
   "metrics": {
    "type": "object",
@@ -6100,92 +6111,98 @@
    "description": "Metrics objects, keyed by name. Every enabled entry renders a ServiceMonitor or PodMonitor and optionally a PrometheusRule, see [Metrics](/truecharts-common/metrics)."
   },
   "mongodb": {
-   "type": "object",
-   "properties": {
-    "enabled": {
-     "type": [
-      "boolean",
-      "string"
-     ],
-     "description": "Enables the MongoDB dependency. Supports Helm `tpl`.",
-     "default": false
+   "allOf": [
+    {
+     "$ref": "#"
     },
-    "includeCommon": {
-     "type": "boolean",
-     "description": "Marker for charts that the dependency uses common. Not read by common.",
-     "default": false
-    },
-    "password": {
-     "type": "string",
-     "description": "Password of the database user.",
-     "minLength": 1,
-     "default": "PLACEHOLDERPASSWORD"
-    },
-    "rootPassword": {
-     "type": "string",
-     "description": "Password of the `root` user.",
-     "minLength": 1,
-     "default": "PLACEHOLDERROOTPASSWORD"
-    },
-    "mongodbUsername": {
-     "type": "string",
-     "description": "Name of the database user, used in the connection URLs."
-    },
-    "mongodbDatabase": {
-     "type": "string",
-     "description": "Name of the database, used in the connection URLs and the wait container."
-    },
-    "creds": {
+    {
      "type": "object",
      "properties": {
-      "mongodbPassword": {
-       "type": "string",
-       "description": "Password."
+      "enabled": {
+       "type": [
+        "boolean",
+        "string"
+       ],
+       "description": "Enables the MongoDB dependency. Supports Helm `tpl`.",
+       "default": false
       },
-      "mongodbRootPassword": {
-       "type": "string",
-       "description": "Password of the `root` user."
+      "includeCommon": {
+       "type": "boolean",
+       "description": "Marker for charts that the dependency uses common. Not read by common.",
+       "default": false
       },
-      "plain": {
+      "password": {
        "type": "string",
-       "description": "Hostname."
+       "description": "Password of the database user.",
+       "minLength": 1,
+       "default": "PLACEHOLDERPASSWORD"
       },
-      "plainhost": {
+      "rootPassword": {
        "type": "string",
-       "description": "Hostname."
+       "description": "Password of the `root` user.",
+       "minLength": 1,
+       "default": "PLACEHOLDERROOTPASSWORD"
       },
-      "plainport": {
+      "mongodbUsername": {
        "type": "string",
-       "description": "Hostname and port."
+       "description": "Name of the database user, used in the connection URLs."
       },
-      "plainporthost": {
+      "mongodbDatabase": {
        "type": "string",
-       "description": "Hostname and port."
+       "description": "Name of the database, used in the connection URLs and the wait container."
       },
-      "complete": {
-       "type": "string",
-       "description": "Connection URL."
-      },
-      "urlssl": {
-       "type": "string",
-       "description": "Connection URL with SSL."
-      },
-      "urltls": {
-       "type": "string",
-       "description": "Connection URL with TLS."
-      },
-      "jdbc": {
-       "type": "string",
-       "description": "JDBC URL."
+      "creds": {
+       "type": "object",
+       "properties": {
+        "mongodbPassword": {
+         "type": "string",
+         "description": "Password."
+        },
+        "mongodbRootPassword": {
+         "type": "string",
+         "description": "Password of the `root` user."
+        },
+        "plain": {
+         "type": "string",
+         "description": "Hostname."
+        },
+        "plainhost": {
+         "type": "string",
+         "description": "Hostname."
+        },
+        "plainport": {
+         "type": "string",
+         "description": "Hostname and port."
+        },
+        "plainporthost": {
+         "type": "string",
+         "description": "Hostname and port."
+        },
+        "complete": {
+         "type": "string",
+         "description": "Connection URL."
+        },
+        "urlssl": {
+         "type": "string",
+         "description": "Connection URL with SSL."
+        },
+        "urltls": {
+         "type": "string",
+         "description": "Connection URL with TLS."
+        },
+        "jdbc": {
+         "type": "string",
+         "description": "JDBC URL."
+        }
+       },
+       "additionalProperties": false,
+       "description": "Connection details written by common, so apps using the dependency can use them. Read only.",
+       "default": {}
       }
-     },
-     "additionalProperties": false,
-     "description": "Connection details written by common, so apps using the dependency can use them. Read only.",
-     "default": {}
+     }
     }
-   },
-   "additionalProperties": false,
-   "description": "MongoDB dependency configuration."
+   ],
+   "description": "MongoDB dependency configuration. The root values keys are also accepted, as the content of the Helm subchart that defines this dependency."
   },
   "namespace": {
    "type": "string",
@@ -8473,102 +8490,108 @@
    "description": "RBAC objects, keyed by name. Each one creates a Role and RoleBinding, or a ClusterRole and ClusterRoleBinding when `clusterWide` is true."
   },
   "redis": {
-   "type": "object",
-   "properties": {
-    "enabled": {
-     "type": [
-      "boolean",
-      "string"
-     ],
-     "description": "Enables the Redis dependency. Supports Helm `tpl`.",
-     "default": false
+   "allOf": [
+    {
+     "$ref": "#"
     },
-    "includeCommon": {
-     "type": "boolean",
-     "description": "Marker for charts that the dependency uses common. Not read by common.",
-     "default": false
-    },
-    "password": {
-     "type": "string",
-     "description": "Password of the database user.",
-     "minLength": 1,
-     "default": "PLACEHOLDERPASSWORD"
-    },
-    "redisUsername": {
-     "type": "string",
-     "description": "Username used in the connection URL. Empty when not set.",
-     "default": ""
-    },
-    "redisDatabase": {
-     "type": "string",
-     "description": "Index of the database used in the connection URL. Uses `0` when unset."
-    },
-    "secret": {
+    {
      "type": "object",
      "properties": {
-      "credentials": {
+      "enabled": {
+       "type": [
+        "boolean",
+        "string"
+       ],
+       "description": "Enables the Redis dependency. Supports Helm `tpl`.",
+       "default": false
+      },
+      "includeCommon": {
+       "type": "boolean",
+       "description": "Marker for charts that the dependency uses common. Not read by common.",
+       "default": false
+      },
+      "password": {
+       "type": "string",
+       "description": "Password of the database user.",
+       "minLength": 1,
+       "default": "PLACEHOLDERPASSWORD"
+      },
+      "redisUsername": {
+       "type": "string",
+       "description": "Username used in the connection URL. Empty when not set.",
+       "default": ""
+      },
+      "redisDatabase": {
+       "type": "string",
+       "description": "Index of the database used in the connection URL. Uses `0` when unset."
+      },
+      "secret": {
        "type": "object",
        "properties": {
-        "enabled": {
-         "type": "boolean",
+        "credentials": {
+         "type": "object",
+         "properties": {
+          "enabled": {
+           "type": "boolean",
+           "description": "Not read by common.",
+           "default": false
+          }
+         },
+         "additionalProperties": false,
          "description": "Not read by common.",
-         "default": false
+         "default": {
+          "enabled": false
+         }
         }
        },
        "additionalProperties": false,
-       "description": "Not read by common.",
+       "description": "Not read by common, the credentials Secret is always created when the dependency is enabled.",
        "default": {
-        "enabled": false
+        "credentials": {
+         "enabled": false
+        }
        }
-      }
-     },
-     "additionalProperties": false,
-     "description": "Not read by common, the credentials Secret is always created when the dependency is enabled.",
-     "default": {
-      "credentials": {
-       "enabled": false
+      },
+      "creds": {
+       "type": "object",
+       "properties": {
+        "redisPassword": {
+         "type": "string",
+         "description": "Password."
+        },
+        "plain": {
+         "type": "string",
+         "description": "Hostname."
+        },
+        "plainhost": {
+         "type": "string",
+         "description": "Hostname."
+        },
+        "plainport": {
+         "type": "string",
+         "description": "Hostname and port."
+        },
+        "plainporthost": {
+         "type": "string",
+         "description": "Hostname and port."
+        },
+        "plainhostpass": {
+         "type": "string",
+         "description": "User, password and hostname."
+        },
+        "url": {
+         "type": "string",
+         "description": "Connection URL."
+        }
+       },
+       "additionalProperties": false,
+       "description": "Connection details written by common, so apps using the dependency can use them. Read only.",
+       "default": {}
       }
      }
-    },
-    "creds": {
-     "type": "object",
-     "properties": {
-      "redisPassword": {
-       "type": "string",
-       "description": "Password."
-      },
-      "plain": {
-       "type": "string",
-       "description": "Hostname."
-      },
-      "plainhost": {
-       "type": "string",
-       "description": "Hostname."
-      },
-      "plainport": {
-       "type": "string",
-       "description": "Hostname and port."
-      },
-      "plainporthost": {
-       "type": "string",
-       "description": "Hostname and port."
-      },
-      "plainhostpass": {
-       "type": "string",
-       "description": "User, password and hostname."
-      },
-      "url": {
-       "type": "string",
-       "description": "Connection URL."
-      }
-     },
-     "additionalProperties": false,
-     "description": "Connection details written by common, so apps using the dependency can use them. Read only.",
-     "default": {}
     }
-   },
-   "additionalProperties": false,
-   "description": "Redis dependency configuration."
+   ],
+   "description": "Redis dependency configuration. The root values keys are also accepted, as the content of the Helm subchart that defines this dependency."
   },
   "route": {
    "type": "object",
@@ -9586,79 +9609,85 @@
    "description": "ServiceAccounts, keyed by name."
   },
   "solr": {
-   "type": "object",
-   "properties": {
-    "enabled": {
-     "type": [
-      "boolean",
-      "string"
-     ],
-     "description": "Enables the Solr dependency. Supports Helm `tpl`.",
-     "default": false
+   "allOf": [
+    {
+     "$ref": "#"
     },
-    "includeCommon": {
-     "type": "boolean",
-     "description": "Marker for charts that the dependency uses common. Not read by common.",
-     "default": false
-    },
-    "password": {
-     "type": "string",
-     "description": "Password of the database user.",
-     "minLength": 1,
-     "default": "PLACEHOLDERPASSWORD"
-    },
-    "solrUsername": {
-     "type": "string",
-     "description": "Name of the admin user, used in the connection URL and the wait container."
-    },
-    "solrCores": {
-     "type": [
-      "integer",
-      "string"
-     ],
-     "description": "Name or number of the core used in the connection URL and the wait container.",
-     "default": 1
-    },
-    "solrEnableAuthentication": {
-     "type": "string",
-     "description": "Whether the wait container authenticates with `solrUsername` and the password.",
-     "enum": [
-      "yes",
-      "no"
-     ],
-     "default": "no"
-    },
-    "creds": {
+    {
      "type": "object",
      "properties": {
-      "solrPassword": {
-       "type": "string",
-       "description": "Password."
+      "enabled": {
+       "type": [
+        "boolean",
+        "string"
+       ],
+       "description": "Enables the Solr dependency. Supports Helm `tpl`.",
+       "default": false
       },
-      "plain": {
-       "type": "string",
-       "description": "Hostname."
+      "includeCommon": {
+       "type": "boolean",
+       "description": "Marker for charts that the dependency uses common. Not read by common.",
+       "default": false
       },
-      "plainhost": {
+      "password": {
        "type": "string",
-       "description": "Hostname."
+       "description": "Password of the database user.",
+       "minLength": 1,
+       "default": "PLACEHOLDERPASSWORD"
       },
-      "portHost": {
+      "solrUsername": {
        "type": "string",
-       "description": "Hostname and port."
+       "description": "Name of the admin user, used in the connection URL and the wait container."
       },
-      "url": {
+      "solrCores": {
+       "type": [
+        "integer",
+        "string"
+       ],
+       "description": "Name or number of the core used in the connection URL and the wait container.",
+       "default": 1
+      },
+      "solrEnableAuthentication": {
        "type": "string",
-       "description": "Connection URL."
+       "description": "Whether the wait container authenticates with `solrUsername` and the password.",
+       "enum": [
+        "yes",
+        "no"
+       ],
+       "default": "no"
+      },
+      "creds": {
+       "type": "object",
+       "properties": {
+        "solrPassword": {
+         "type": "string",
+         "description": "Password."
+        },
+        "plain": {
+         "type": "string",
+         "description": "Hostname."
+        },
+        "plainhost": {
+         "type": "string",
+         "description": "Hostname."
+        },
+        "portHost": {
+         "type": "string",
+         "description": "Hostname and port."
+        },
+        "url": {
+         "type": "string",
+         "description": "Connection URL."
+        }
+       },
+       "additionalProperties": false,
+       "description": "Connection details written by common, so apps using the dependency can use them. Read only.",
+       "default": {}
       }
-     },
-     "additionalProperties": false,
-     "description": "Connection details written by common, so apps using the dependency can use them. Read only.",
-     "default": {}
+     }
     }
-   },
-   "additionalProperties": false,
-   "description": "Solr dependency configuration."
+   ],
+   "description": "Solr dependency configuration. The root values keys are also accepted, as the content of the Helm subchart that defines this dependency."
   },
   "special.annotations": {
    "type": "object",

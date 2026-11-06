@@ -2,34 +2,85 @@
 title: Dependencies
 ---
 
-Dependencies are services the app needs, such as a database or a cache. They are deployed with the chart, and they are switched on with an `enabled` key. There are two ways to add them.
+:::note
 
-## Predefined services
+- See the [Full Examples](/truecharts-common/dependencies#full-examples) section for complete examples.
 
-The root keys `cnpg`, `redis`, `mariadb`, `mongodb`, `clickhouse` and `solr` set up a service that common knows about. They are disabled by default.
+:::
 
-- [CNPG](/truecharts-common/cnpg) (`cnpg.<name>`) creates a CloudNativePG `Cluster` of PostgreSQL. It can have several named entries, and each one is switched on with its own `enabled`.
-- [Redis](/truecharts-common/redis), [MariaDB](/truecharts-common/mariadb), [MongoDB](/truecharts-common/mongodb), [ClickHouse](/truecharts-common/clickhouse) and [Solr](/truecharts-common/solr) use the `enabled` key and the `password` and user settings of their page.
+## Appears in
 
-When one of the database keys is enabled, common creates a Secret with the connection details under `creds`, and adds a wait container to the workloads, so they start after the service is reachable.
+- `.Values.dependencies`
 
-```yaml
-redis:
-  enabled: true
-  password: example-placeholder-password
-```
+---
 
-## Dependency sets
+## `dependencies`
 
-`dependencies.<name>` is a map of sets of chart values. Each entry needs an `enabled` key. When it is `true`, its values are merged into the values of the chart, and they override the values of the chart and of `common` for the keys they set. A disabled entry is ignored.
+Services the app needs, such as a database or cache, deployed with the chart. See [dependencies](/truecharts-common/dependencies).
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name`
+
+A dependency, keyed by name: a set of chart values with an `enabled` key, merged into the values of the chart when enabled.
+
+:::warning
+
+This object also takes all keys of the root values, for example `workload`, `service` and `persistence`. Common sets them for the dependency. They are only for the internal use of common: do not use them in charts that are based on common.
+
+:::
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.$name` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.enabled`
+
+Whether the dependency is enabled. The values of disabled dependencies are not merged into the chart. Supports Helm `tpl`.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.$name.enabled` |
+| Type | `bool` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+
+---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
 
 ```yaml
 dependencies:
-  cache:
+  postgresql:
     enabled: true
-    redis:
-      enabled: true
-      password: example-placeholder-password
+    depconfig:
+      postgresqlUsername: app
+      postgresqlDatabase: app
 ```
 
-The entry is merged as a whole, so keys that are not set in it keep the value of the chart.
+```yaml
+dependencies:
+  postgresql:
+    enabled: true
+    operator:
+      backups:
+        enabled: true
+        credentials: mys3
+```

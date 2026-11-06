@@ -36,7 +36,7 @@ This is a condensed summary. The full, canonical instructions are in [`AGENTS.md
   - arbitrary keys (services, workloads, ingresses, envs, anything with an `objectName` or a spawner) use `"properties": {}` with the typed object schema in `additionalProperties`, see the library schema instructions
   - only put a key in the schema when `common` reads or defines it, never because a stable or incubator chart sets it; fix such a chart in a separate PR to `master` instead
   - never use a placeholder `"additionalProperties": true` to skip listing the keys of a fixed object; type every key, and type the values of name-keyed maps
-  - don't edit the generated `docs/` pages (except `docs/dependencies.md`); change the schema or `examples/` and run `generate_docs.py`, and regenerate `complete-values-structure.yaml` and `template-keys-structure.yaml`
+  - don't edit the generated `docs/` pages; change the schema or `examples/` and run `generate_docs.py`, and regenerate `complete-values-structure.yaml` and `template-keys-structure.yaml`
   - change the schema in `values.schema.source.json` and `schemas/`, and regenerate `values.schema.json` with `generate_bundled_schema.py`
   - bump `common`'s version, but never `common-test`'s
   - keep it compatible with Helm 3.14+ and Kubernetes 1.33+

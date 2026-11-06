@@ -9,7 +9,7 @@ description: "Rules for the common library dependencies.<name> system: predefine
 
 # Common library dependencies
 
-These rules apply to the `dependencies` section of `charts/library/common/values.yaml`, `templates/lib/dependencies/` (including the injectors) and the hand-written `docs/dependencies.md`. They add to the library rules in [`common-library.instructions.md`](common-library.instructions.md) and the general rules in [`AGENTS.md`](../../AGENTS.md).
+These rules apply to the `dependencies` section of `charts/library/common/values.yaml`, `templates/lib/dependencies/` (including the injectors) and the generated `docs/dependencies.md`. They add to the library rules in [`common-library.instructions.md`](common-library.instructions.md) and the general rules in [`AGENTS.md`](../../AGENTS.md).
 
 `dependencies.<name>` replaces Helm chart dependencies (subcharts) for the services an app needs. `docs/dependencies.md` describes it in full.
 
