@@ -14,6 +14,7 @@ title: Fixed Env
 - `.Values.addons.codeserver.container.fixedEnv`
 - `.Values.addons.gluetun.container.fixedEnv`
 - `.Values.addons.netshoot.container.fixedEnv`
+- `.Values.addons.tailscale.container.fixedEnv`
 - `.Values.workload.$name.podSpec.containers.$name.fixedEnv`
 
 ---

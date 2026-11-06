@@ -19,6 +19,7 @@ title: LoadBalancer
 ## Appears in
 
 - `.Values.service.$name`
+- `.Values.addons.codeserver.service.$name`
 
 ---
 

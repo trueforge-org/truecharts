@@ -14,6 +14,7 @@ title: Termination
 - `.Values.addons.codeserver.container.termination`
 - `.Values.addons.gluetun.container.termination`
 - `.Values.addons.netshoot.container.termination`
+- `.Values.addons.tailscale.container.termination`
 - `.Values.workload.$name.podSpec.containers.$name.termination`
 - `.Values.workload.$name.podSpec.initContainers.$name.termination`
 

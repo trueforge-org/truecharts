@@ -15,12 +15,6 @@ title: Tailscale
 
 ---
 
-## Child Pages
-
-- [container](/truecharts-common/addons/tailscale/container)
-
----
-
 ## `tailscale`
 
 A tailscale container that connects the pod to a tailnet.
@@ -74,14 +68,226 @@ addons:
 
 ## `container`
 
-Container of the tailscale addon. It supports the same settings as a container of a workload.
+Container of the tailscale add-on. It takes the same keys as a container of a workload.
 
-See [container](/truecharts-common/addons/tailscale/container) for all keys of this object.
+Takes the same keys as the [Container](/truecharts-common/workload/podSpec/containers) page, next to the keys below.
 
 | Field | Value |
 | --- | --- |
 | Key | `addons.tailscale.container` |
 | Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `container.env`
+
+Environment variables of the container, keyed by name.
+
+Takes the same keys as the [Env](/truecharts-common/workload/podSpec/containers/env) page, next to the keys below.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.tailscale.container.env` |
+| Type | `map or null` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `container.env.TS_KUBE_SECRET`
+
+Secret the state of tailscale is stored in.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.tailscale.container.env.TS_KUBE_SECRET` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `""` |
+
+---
+
+## `container.env.TS_SOCKET`
+
+Path of the tailscaled socket.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.tailscale.container.env.TS_SOCKET` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `"/var/run/tailscale/tailscaled.sock"` |
+
+---
+
+## `container.env.TS_STATE_DIR`
+
+Directory the state of tailscale is stored in.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.tailscale.container.env.TS_STATE_DIR` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `"/var/lib/tailscale/state"` |
+
+---
+
+## `container.env.TS_USERSPACE`
+
+Run tailscale in userspace networking mode.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.tailscale.container.env.TS_USERSPACE` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `container.env.TS_AUTH_ONCE`
+
+Only log in when the node is not logged in yet.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.tailscale.container.env.TS_AUTH_ONCE` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `container.env.TS_ACCEPT_DNS`
+
+Accept the DNS settings of the tailnet.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.tailscale.container.env.TS_ACCEPT_DNS` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `container.env.TS_AUTH_KEY`
+
+The Tailscale auth key. Use `addons.tailscale.settings.authkey` instead, which stores the key in a secret instead of a plain environment variable.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.tailscale.container.env.TS_AUTH_KEY` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `container.env.TS_TAILSCALED_EXTRA_ARGS`
+
+Extra arguments of `tailscaled`.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.tailscale.container.env.TS_TAILSCALED_EXTRA_ARGS` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `container.env.TS_EXTRA_ARGS`
+
+Extra arguments of `tailscale up`.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.tailscale.container.env.TS_EXTRA_ARGS` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `container.env.TS_SOCKS5_SERVER`
+
+Address of a SOCKS5 proxy.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.tailscale.container.env.TS_SOCKS5_SERVER` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `container.env.TS_DEST_IP`
+
+IP that the traffic is forwarded to.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.tailscale.container.env.TS_DEST_IP` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `container.env.TS_ROUTES`
+
+Subnet routes that are advertised.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.tailscale.container.env.TS_ROUTES` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `container.env.TS_OUTBOUND_HTTP_PROXY_LISTEN`
+
+Address of an outbound HTTP proxy.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.tailscale.container.env.TS_OUTBOUND_HTTP_PROXY_LISTEN` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `container.targetSelector`
+
+Workloads to which this container is attached.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.tailscale.container.targetSelector` |
+| Type | `list of string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | unset |

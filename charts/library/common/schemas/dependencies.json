@@ -5,7 +5,8 @@
     "valkey": {
       "allOf": [
         {
-          "$ref": "../values.schema.source.json"
+          "$ref": "../values.schema.source.json",
+          "x-docs-internal": true
         },
         {
           "$ref": "#/additionalProperties/allOf/1"
@@ -32,7 +33,8 @@
     "postgresql": {
       "allOf": [
         {
-          "$ref": "../values.schema.source.json"
+          "$ref": "../values.schema.source.json",
+          "x-docs-internal": true
         },
         {
           "$ref": "#/additionalProperties/allOf/1"
@@ -100,7 +102,8 @@
     "mariadb": {
       "allOf": [
         {
-          "$ref": "../values.schema.source.json"
+          "$ref": "../values.schema.source.json",
+          "x-docs-internal": true
         },
         {
           "$ref": "#/additionalProperties/allOf/1"
@@ -157,7 +160,8 @@
     "mongodb": {
       "allOf": [
         {
-          "$ref": "../values.schema.source.json"
+          "$ref": "../values.schema.source.json",
+          "x-docs-internal": true
         },
         {
           "$ref": "#/additionalProperties/allOf/1"
@@ -214,7 +218,8 @@
     "clickhouse": {
       "allOf": [
         {
-          "$ref": "../values.schema.source.json"
+          "$ref": "../values.schema.source.json",
+          "x-docs-internal": true
         },
         {
           "$ref": "#/additionalProperties/allOf/1"
@@ -270,7 +275,8 @@
     "memcached": {
       "allOf": [
         {
-          "$ref": "../values.schema.source.json"
+          "$ref": "../values.schema.source.json",
+          "x-docs-internal": true
         },
         {
           "$ref": "#/additionalProperties/allOf/1"
@@ -291,7 +297,8 @@
   "additionalProperties": {
     "allOf": [
       {
-        "$ref": "../values.schema.source.json"
+        "$ref": "../values.schema.source.json",
+        "x-docs-internal": true
       },
       {
         "type": "object",

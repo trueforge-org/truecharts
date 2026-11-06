@@ -13,6 +13,7 @@ title: Env From
 - `.Values.addons.codeserver.container.envFrom`
 - `.Values.addons.gluetun.container.envFrom`
 - `.Values.addons.netshoot.container.envFrom`
+- `.Values.addons.tailscale.container.envFrom`
 - `.Values.workload.$name.podSpec.containers.$name.envFrom`
 - `.Values.workload.$name.podSpec.initContainers.$name.envFrom`
 

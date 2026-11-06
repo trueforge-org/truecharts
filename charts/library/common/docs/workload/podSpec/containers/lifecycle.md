@@ -13,6 +13,7 @@ title: Lifecycle
 - `.Values.addons.codeserver.container.lifecycle`
 - `.Values.addons.gluetun.container.lifecycle`
 - `.Values.addons.netshoot.container.lifecycle`
+- `.Values.addons.tailscale.container.lifecycle`
 - `.Values.workload.$name.podSpec.containers.$name.lifecycle`
 
 ---

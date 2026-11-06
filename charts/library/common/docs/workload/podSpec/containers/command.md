@@ -14,6 +14,7 @@ title: Command
 - `.Values.addons.codeserver.container.command`
 - `.Values.addons.gluetun.container.command`
 - `.Values.addons.netshoot.container.command`
+- `.Values.addons.tailscale.container.command`
 - `.Values.workload.$name.podSpec.containers.$name.command`
 - `.Values.workload.$name.podSpec.initContainers.$name.command`
 

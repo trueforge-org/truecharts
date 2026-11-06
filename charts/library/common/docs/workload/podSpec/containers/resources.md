@@ -15,11 +15,11 @@ title: Resources
 - `.Values.addons.codeserver.container.resources`
 - `.Values.addons.gluetun.container.resources`
 - `.Values.addons.netshoot.container.resources`
+- `.Values.addons.tailscale.container.resources`
 - `.Values.dependencies.valkey.operator.resources`
 - `.Values.persistence.$name.volsync[].resources`
 - `.Values.dependencies.postgresql.operator.cluster.resources`
-- `.Values.workload.$name.podSpec.containers.$name.resources`
-- and 1 more places
+- and 2 more places
 
 ---
 

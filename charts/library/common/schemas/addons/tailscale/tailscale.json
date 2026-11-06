@@ -23,120 +23,21 @@
       ]
     },
     "container": {
-      "type": "object",
-      "properties": {
-        "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
-          "description": "Whether the tailscale container is created.",
-          "x-helm-tpl": true
+      "allOf": [
+        {
+          "$ref": "../container.json"
         },
-        "imageSelector": {
-          "type": "string",
-          "description": "Name of the image to use, a key on the root of the values. Defaults to `tailscaleImage`."
-        },
-        "probes": {
+        {
           "type": "object",
           "properties": {
-            "liveness": {
-              "type": "object",
-              "properties": {
-                "enabled": {
-                  "type": [
-                    "boolean",
-                    "string"
-                  ],
-                  "description": "Whether the liveness probe is added to the tailscale container.",
-                  "x-helm-tpl": true
-                }
-              },
-              "additionalProperties": false,
-              "description": "The liveness probe."
-            },
-            "readiness": {
-              "type": "object",
-              "properties": {
-                "enabled": {
-                  "type": [
-                    "boolean",
-                    "string"
-                  ],
-                  "description": "Whether the readiness probe is added to the tailscale container.",
-                  "x-helm-tpl": true
-                }
-              },
-              "additionalProperties": false,
-              "description": "The readiness probe."
-            },
-            "startup": {
-              "type": "object",
-              "properties": {
-                "enabled": {
-                  "type": [
-                    "boolean",
-                    "string"
-                  ],
-                  "description": "Whether the startup probe is added to the tailscale container.",
-                  "x-helm-tpl": true
-                }
-              },
-              "additionalProperties": false,
-              "description": "The startup probe."
+            "env": {
+              "$ref": "container/env.json",
+              "description": "Environment variables of the container, keyed by name."
             }
-          },
-          "additionalProperties": false,
-          "description": "Probes of the container."
-        },
-        "command": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "description": "One entry of the command."
-          },
-          "description": "Command of the container."
-        },
-        "resources": {
-          "type": "object",
-          "properties": {
-            "excludeExtra": {
-              "type": "boolean",
-              "description": "Leave out the extra resources, like GPUs, of the chart."
-            }
-          },
-          "additionalProperties": false,
-          "description": "Resources of the container."
-        },
-        "env": {
-          "$ref": "container/env.json",
-          "description": "Environment variables of the container, keyed by name."
-        },
-        "securityContext": {
-          "type": "object",
-          "properties": {
-            "capabilities": {
-              "type": "object",
-              "properties": {
-                "add": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Name of a Linux capability, eg `NET_ADMIN`."
-                  },
-                  "description": "Capabilities that are added."
-                }
-              },
-              "additionalProperties": false,
-              "description": "Linux capabilities of the container."
-            }
-          },
-          "additionalProperties": false,
-          "description": "Security context of the container."
+          }
         }
-      },
-      "additionalProperties": false,
-      "description": "Container of the tailscale addon. It supports the same settings as a container of a workload."
+      ],
+      "description": "Container of the tailscale add-on. It takes the same keys as a container of a workload."
     },
     "settings": {
       "type": "object",

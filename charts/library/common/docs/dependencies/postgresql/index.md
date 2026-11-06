@@ -29,7 +29,11 @@ title: PostgreSQL
 
 The postgresql dependency. In `operator` mode (default) a CloudNativePG `Cluster` is spawned from `operator`.
 
-Takes the same keys as the [root values](/truecharts-common), next to the keys below.
+:::warning
+
+This object also takes all keys of the root values, for example `workload`, `service` and `persistence`. Common sets them for the dependency. They are only for the internal use of common: do not use them in charts that are based on common.
+
+:::
 
 | Field | Value |
 | --- | --- |

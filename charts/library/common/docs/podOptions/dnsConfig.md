@@ -11,6 +11,7 @@ title: dnsConfig
 ## Appears in
 
 - `.Values.podOptions.dnsConfig`
+- `.Values.workload.$name.podSpec.dnsConfig`
 
 ---
 

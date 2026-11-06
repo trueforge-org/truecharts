@@ -1337,116 +1337,21 @@
      ]
     },
     "container": {
-     "type": "object",
-     "properties": {
-      "enabled": {
-       "type": [
-        "boolean",
-        "string"
-       ],
-       "description": "Whether the tailscale container is created."
+     "allOf": [
+      {
+       "$ref": "#/definitions/addons.container"
       },
-      "imageSelector": {
-       "type": "string",
-       "description": "Name of the image to use, a key on the root of the values. Defaults to `tailscaleImage`."
-      },
-      "probes": {
+      {
        "type": "object",
        "properties": {
-        "liveness": {
-         "type": "object",
-         "properties": {
-          "enabled": {
-           "type": [
-            "boolean",
-            "string"
-           ],
-           "description": "Whether the liveness probe is added to the tailscale container."
-          }
-         },
-         "additionalProperties": false,
-         "description": "The liveness probe."
-        },
-        "readiness": {
-         "type": "object",
-         "properties": {
-          "enabled": {
-           "type": [
-            "boolean",
-            "string"
-           ],
-           "description": "Whether the readiness probe is added to the tailscale container."
-          }
-         },
-         "additionalProperties": false,
-         "description": "The readiness probe."
-        },
-        "startup": {
-         "type": "object",
-         "properties": {
-          "enabled": {
-           "type": [
-            "boolean",
-            "string"
-           ],
-           "description": "Whether the startup probe is added to the tailscale container."
-          }
-         },
-         "additionalProperties": false,
-         "description": "The startup probe."
+        "env": {
+         "$ref": "#/definitions/addons.tailscale.container.env",
+         "description": "Environment variables of the container, keyed by name."
         }
-       },
-       "additionalProperties": false,
-       "description": "Probes of the container."
-      },
-      "command": {
-       "type": "array",
-       "items": {
-        "type": "string",
-        "description": "One entry of the command."
-       },
-       "description": "Command of the container."
-      },
-      "resources": {
-       "type": "object",
-       "properties": {
-        "excludeExtra": {
-         "type": "boolean",
-         "description": "Leave out the extra resources, like GPUs, of the chart."
-        }
-       },
-       "additionalProperties": false,
-       "description": "Resources of the container."
-      },
-      "env": {
-       "$ref": "#/definitions/addons.tailscale.container.env",
-       "description": "Environment variables of the container, keyed by name."
-      },
-      "securityContext": {
-       "type": "object",
-       "properties": {
-        "capabilities": {
-         "type": "object",
-         "properties": {
-          "add": {
-           "type": "array",
-           "items": {
-            "type": "string",
-            "description": "Name of a Linux capability, eg `NET_ADMIN`."
-           },
-           "description": "Capabilities that are added."
-          }
-         },
-         "additionalProperties": false,
-         "description": "Linux capabilities of the container."
-        }
-       },
-       "additionalProperties": false,
-       "description": "Security context of the container."
+       }
       }
-     },
-     "additionalProperties": false,
-     "description": "Container of the tailscale addon. It supports the same settings as a container of a workload."
+     ],
+     "description": "Container of the tailscale add-on. It takes the same keys as a container of a workload."
     },
     "settings": {
      "type": "object",
@@ -17083,91 +16988,20 @@
         "description": "DNS policy of the pods (`dnsPolicy`): `ClusterFirst`, `ClusterFirstWithHostNet`, `Default` or `None`. It is forced to `ClusterFirstWithHostNet` when `hostNetwork` is `true`. Overrides `podOptions.dnsPolicy` for this workload."
        },
        "dnsConfig": {
-        "type": "object",
-        "properties": {
-         "nameservers": {
-          "type": "array",
-          "description": "IP addresses of extra DNS servers, at most 3. Added to the servers of `dnsPolicy`.",
-          "examples": [
-           [
-            "1.1.1.1"
-           ]
-          ]
-         },
-         "searches": {
-          "type": "array",
-          "description": "Extra DNS search domains, at most 6. Added to the search domains of `dnsPolicy`.",
-          "examples": [
-           [
-            "example.com"
-           ]
-          ]
-         },
-         "options": {
-          "type": "array",
-          "description": "Resolver options of the pods, eg `ndots`.",
-          "items": {
-           "type": "object",
-           "properties": {
-            "name": {
-             "type": "string",
-             "description": "Name of the resolver option, eg `ndots`.",
-             "examples": [
-              "ndots"
-             ]
-            },
-            "value": {
-             "type": "string",
-             "description": "Value of the resolver option.",
-             "examples": [
-              "2"
-             ]
-            }
-           },
-           "additionalProperties": false,
-           "description": "A resolver option, with a name and an optional value."
-          }
+        "allOf": [
+         {
+          "$ref": "#/definitions/podOptions.dnsConfig"
          }
-        },
-        "additionalProperties": false,
+        ],
         "description": "Extra DNS settings of the pods (`dnsConfig`). Overrides `podOptions.dnsConfig` for this workload."
        },
        "tolerations": {
-        "type": "array",
-        "description": "Taints the pods tolerate (`tolerations`). Overrides `podOptions.tolerations` for this workload.",
-        "items": {
-         "type": "object",
-         "properties": {
-          "operator": {
-           "type": "string",
-           "description": "How the taint is matched: `Exists` matches any value of the key, `Equal` requires `value` to be equal.",
-           "examples": [
-            "Equal"
-           ]
-          },
-          "key": {
-           "type": "string",
-           "description": "Key of the taint. Required when `operator` is `Equal`."
-          },
-          "value": {
-           "type": "string",
-           "description": "Value of the taint. Required when `operator` is `Equal`, and must be empty when it is `Exists`."
-          },
-          "effect": {
-           "type": "string",
-           "description": "Effect of the taint to tolerate: `NoSchedule`, `PreferNoSchedule` or `NoExecute`. All effects match when empty."
-          },
-          "tolerationSeconds": {
-           "type": "number",
-           "description": "Seconds the pod stays bound to a node with a `NoExecute` taint before it is evicted. Only applies to the `NoExecute` effect.",
-           "examples": [
-            300
-           ]
-          }
-         },
-         "additionalProperties": false,
-         "description": "A toleration of a node taint."
-        }
+        "allOf": [
+         {
+          "$ref": "#/definitions/podOptions.tolerations"
+         }
+        ],
+        "description": "Taints the pods tolerate (`tolerations`). Overrides `podOptions.tolerations` for this workload."
        },
        "runtimeClassName": {
         "$ref": "#/definitions/workload.podSpec.runtimeClassName",

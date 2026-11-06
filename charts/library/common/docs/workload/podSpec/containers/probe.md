@@ -19,7 +19,7 @@ title: Probe
 - `.Values.addons.gluetun.container.probes.startup`
 - `.Values.addons.netshoot.container.probes.liveness`
 - `.Values.addons.netshoot.container.probes.readiness`
-- and 7 more places
+- and 10 more places
 
 ---
 

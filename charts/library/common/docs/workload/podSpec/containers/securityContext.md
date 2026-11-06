@@ -15,6 +15,7 @@ title: Container Security Context
 - `.Values.addons.codeserver.container.securityContext`
 - `.Values.addons.gluetun.container.securityContext`
 - `.Values.addons.netshoot.container.securityContext`
+- `.Values.addons.tailscale.container.securityContext`
 - `.Values.workload.$name.podSpec.containers.$name.securityContext`
 - `.Values.workload.$name.podSpec.initContainers.$name.securityContext`
 

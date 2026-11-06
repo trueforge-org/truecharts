@@ -71,9 +71,11 @@ class Node:
     applies: list[str] = field(default_factory=list)
     identity: str | None = None
     root_values: bool = False
+    root_values_internal: bool = False  # the whole values tree is taken over, for the internal use of common
     primary: bool = False
     internal: bool = False
     extends: str | None = None  # values path of an object whose keys this object takes over
+    raws: list[int] = field(default_factory=list)  # ids of the schemas the node is made of
     page_specs: list[dict] = field(default_factory=list)  # x-docs-page on the node itself
     frag_specs: list[tuple[str, dict]] = field(default_factory=list)  # x-docs-page on a referenced schema
     alt_idents: list[str] = field(default_factory=list)  # refs inside oneOf or anyOf
@@ -88,6 +90,7 @@ class Schemas:
         # The raw object is kept next to the node so its id() can not be reused.
         self._cache: dict[tuple[int, Path], tuple[Any, Node]] = {}
         self._multi: dict[tuple, tuple[Any, Node]] = {}
+        self.ref_idents: dict[int, str] = {}  # raw schema that is the target of a $ref -> its identity
 
     def load(self, path: Path) -> Any:
         path = path.resolve()
@@ -113,7 +116,9 @@ class Schemas:
         for part in [p for p in fragment.split("/") if p]:
             part = part.replace("~1", "/").replace("~0", "~")
             node = node[int(part)] if isinstance(node, list) else node[part]
-        return node, path, self.ident(path, fragment)
+        ident = self.ident(path, fragment)
+        self.ref_idents[id(node)] = ident
+        return node, path, ident
 
     def node(self, raw: Any, file: Path) -> Node:
         key = (id(raw), file)
@@ -143,6 +148,7 @@ class Schemas:
         if not isinstance(raw, dict):
             return
         # Keywords next to the $ref win over the referenced schema.
+        n.raws.append(id(raw))
         self._own(n, raw, file, mode)
         spec = raw.get("x-docs-page")
         if spec:
@@ -156,7 +162,10 @@ class Schemas:
         if raw.get("x-docs-primary"):
             n.primary = True
         if raw.get("x-docs-internal"):
-            n.internal = True
+            if "$ref" in raw and self._is_root_ref(raw["$ref"], file):
+                n.root_values_internal = True  # only the part that takes over the root values is internal
+            else:
+                n.internal = True
         if n.extends is None and raw.get("x-docs-extends"):
             n.extends = raw["x-docs-extends"]
         # Later allOf entries are overrides of earlier ones, so they are read first.
@@ -181,6 +190,10 @@ class Schemas:
                     n.tpl = True
                 else:
                     self._absorb(n, branch, file, "alt", via)
+
+    def _is_root_ref(self, ref: str, file: Path) -> bool:
+        _, tfile, ident = self.follow(ref, file)
+        return tfile == self.root_file and ident == self.ident(tfile, "")
 
     @staticmethod
     def _is_tpl_branch(branch: Any) -> bool:
@@ -250,16 +263,18 @@ class Schemas:
                 n.applies.append(a)
 
     def inherited_keys(self, n: Node, base: Node) -> set[str]:
-        """Keys of n that are a $ref to the very same schema as the key of base: documented on the page of base."""
+        """Keys of n that are the very same schema as the key of base (or a $ref to it): documented on the page of base."""
         out = set()
         for k, sources in n.props.items():
             if k not in base.props:
                 continue
-            raw, file = sources[0]
-            if isinstance(raw, dict) and "$ref" in raw:
-                target = self.follow(raw["$ref"], file)[0]
-                if any(target is r for r, _ in base.props[k]):
-                    out.add(k)
+            same = True
+            for raw, file in sources:
+                target = self.follow(raw["$ref"], file)[0] if isinstance(raw, dict) and "$ref" in raw else raw
+                if not any(target is br for br, _ in base.props[k]):
+                    same = False
+            if same:
+                out.add(k)
         return out
 
     def children(self, n: Node):
@@ -422,7 +437,7 @@ This page is for people who work on common. Charts based on common do not need i
 | `x-docs-page` | `true`, an object or a list of objects | The key, or the schema file that is referenced, gets a page. See below. |
 | `x-docs-primary` | `true` | The key is the home of the objects it contains. When the same schema is used in several places, the page of the primary key documents it, and the others link to it. Used for `workload`, `service` and `ingress`. |
 | `x-docs-extends` | A values path, such as `workload.$name.podSpec.containers.$name` | The object takes over the keys of another object, and adds its own. The keys that are a `$ref` to the same schema as the key of the other object are left out of the docs, and the page says that it takes the same keys. Used for the container of an addon. |
-| `x-docs-internal` | `true` | The key is only for the internal use of common. It is shown in a separate section of its page, under a warning. A page of a key that is internal gets the warning at the top. |
+| `x-docs-internal` | `true` | The key is only for the internal use of common. It is shown in a separate section of its page, under a warning. A page of a key that is internal gets the warning at the top. On a `$ref` to the whole root values (the dependencies take all keys of the root values) it marks only that part as internal, and the object itself stays public. |
 
 ## Pages
 
@@ -585,7 +600,8 @@ class Generator:
             if nxt is None:
                 return None, path, None
             n = nxt
-        return n, path, n.identity
+        ident = n.identity or next((self.schemas.ref_idents[i] for i in n.raws if i in self.schemas.ref_idents), None)
+        return n, path, ident
 
     def _index_roots(self) -> None:
         self.root_by_path: dict[str, Page] = {}
@@ -901,7 +917,15 @@ class Generator:
             )
             if base_page is not None:
                 lines += [f"Takes the same keys as the [{base_page.title}]({self.url(base_page)}) page, next to the keys below.", ""]
-        if n.root_values:
+        if n.root_values_internal:
+            lines += [
+                ":::warning", "",
+                "This object also takes all keys of the root values, for example `workload`, `service` and `persistence`. "
+                "Common sets them for the dependency. They are only for the internal use of common: "
+                "do not use them in charts that are based on common.",
+                "", ":::", "",
+            ]
+        elif n.root_values:
             lines += [f"Takes the same keys as the [root values]({self.base_url}), next to the keys below.", ""]
         item = self.schemas.node(*n.items) if n.items else None
         rows = [
