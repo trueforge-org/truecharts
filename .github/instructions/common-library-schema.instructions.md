@@ -18,7 +18,7 @@ These rules apply to `charts/library/common/schemas/`, `values.schema.source.jso
 - The source and tooling of `common` are not packaged. They are listed in `templates/helmignore.tpl`, which `forgetool charts genmeta` writes to the `.helmignore` of every chart, so a new file in the root of `common` has to be added there too.
 - Every key in `values.yaml` and every key the templates read must be in the schema. When you add, rename or remove a key, change the schema in the same PR.
 - Only put a key in the schema when `common` itself uses it: a template reads it, or `values.yaml` defines it. Never add a key because a chart in `charts/stable` or `charts/incubator` sets it. A chart value that no common template reads is a mistake in that chart (a dead key, a misspelling, or a key in the wrong place). Fix the chart in a separate PR that targets `master`, move the value to the key that works if it was meant to do something, and keep the key out of the schema. If such a key is already in the schema, remove it once no chart sets it anymore. While charts still set it, list it in `charts/library/common/stable-legacy-keys.yaml` (path with `*` for any key, a reason, and the charts): `test_schema.py` leaves these keys out of a chart before it validates it, and `generate_complete_values_structure.py` ignores them. Remove an entry when no chart sets the key anymore, the scripts warn about stale entries.
-- Validate in the schema what the schema can express (types, enums, required keys without a default) instead of in the templates. Keep template checks for values rendered with `tpl`, checks across keys, and anything the schema can not express.
+- Validate in the schema what the schema can express (types, enums, required keys) instead of in the templates. Keep template checks for values rendered with `tpl`, checks across keys, and anything the schema can not express.
 
 ## No open objects
 
@@ -52,7 +52,7 @@ These rules apply to `charts/library/common/schemas/`, `values.schema.source.jso
 - Give every property a `description`, and a `default` that matches `values.yaml`.
 - The docs are built from the schema. They use `description`, `default`, `enum`, `pattern`, `minimum`/`maximum`, `minLength`/`maxLength`, `minItems`/`maxItems`, `examples` (the first one is shown as the example of the key), and these custom keywords:
   - `x-helm-tpl` for the Helm `tpl` column: `true`, or one of `On value only`, `On entries only`, `On keys and values`. A key typed `[boolean, string]` or with a `oneOf` of an enum and the `^\{\{.*\}\}$` pattern is shown as templated.
-  - `x-docs-required: true` for the Required column of keys a chart has to set but that common gives a default.
+  - `x-docs-required: true` for a key that is required, but not for every object, so that it can not be in `required`, for example when it depends on the `type`. A key is shown as required in the docs when it is in `required` or has `x-docs-required: true`.
   - `x-docs-appliesTo: ["<type>"]` on keys that only apply to some values of `type` (workload, persistence, service and middleware types). They get documented on the page of that type.
   - `x-docs-page` (the docs page of a key or schema file) and `x-docs-primary: true` (the key that documents a shared object). See [`common-library-docs.instructions.md`](common-library-docs.instructions.md).
 
@@ -60,7 +60,8 @@ These rules apply to `charts/library/common/schemas/`, `values.schema.source.jso
 
 ## `required` and existing charts
 
-- The schema of a chart sees its values before the defaults of `common` are merged. So only use `required` for keys without a default in `values.yaml`, like the items of a list. `required` also checks disabled objects. A `required` key with a default rejects any partial override of its parent.
+- Use `required` for every key that must be set, also when `values.yaml` has a default for it. The schema of a chart sees its values before the defaults of `common` are merged, so a chart that does not set the key, or a partial override of its parent, is rejected. Only make a key required when that is meant, and treat it as a breaking change for existing charts. `required` also checks disabled objects.
+- A key that is only required in some cases, for example for one `type` or when another key is set, must not be in `required`. Set `x-docs-required: true` on it so the docs show it as required, and check it in the template.
 - A change to the schema can break the values of app charts. Keep the schema accepting all existing chart values unless the change is meant to be breaking, except for keys that no common template reads, see above: those are fixed in the chart. `test_schema.py` checks this, see [Schema checks](#schema-checks).
 
 ## Schema checks

@@ -67,7 +67,7 @@ class Node:
     closed: bool = False
     tpl: bool = False
     helm_tpl: Any = None
-    docs_required: bool | None = None
+    docs_required: bool = False
     applies: list[str] = field(default_factory=list)
     identity: str | None = None
     root_values: bool = False
@@ -243,8 +243,8 @@ class Schemas:
             n.closed = True
         if n.helm_tpl is None and raw.get("x-helm-tpl") is not None:
             n.helm_tpl = raw["x-helm-tpl"]
-        if n.docs_required is None and "x-docs-required" in raw:
-            n.docs_required = bool(raw["x-docs-required"])
+        if raw.get("x-docs-required") is True:
+            n.docs_required = True
         for a in raw.get("x-docs-appliesTo", []):
             if a not in n.applies:
                 n.applies.append(a)
@@ -407,7 +407,7 @@ This page is for people who work on common. Charts based on common do not need i
 | `enum` | Allowed values. |
 | `pattern` | Pattern. |
 | `minimum`, `maximum`, `minLength`, `maxLength`, `minItems`, `maxItems` | Range, Length and Items. |
-| `required` | Required, for the keys in the list. |
+| `required` | Required, for the keys in the list. Use it for every key that must be set, also when the key has a default. Do not use it for a key that is only required in some cases (for example for one `type`): use `x-docs-required` for that. |
 | `$ref` | The referenced schema is read as part of the key. A schema that is used in several places is documented once and linked from the others. |
 | `allOf` | All entries are read. A later entry overrides an earlier one. |
 | `oneOf`, `anyOf` | The keys of all branches are shown. A branch that is a string with a `{{` pattern means that the value can be a Helm `tpl` template. |
@@ -417,7 +417,7 @@ This page is for people who work on common. Charts based on common do not need i
 | Keyword | Value | Use |
 | --- | --- | --- |
 | `x-helm-tpl` | `true`, `"On value only"`, `"On entries only"` or `"On keys and values"` | The value is passed through Helm `tpl`. Shown in the Helm `tpl` row, with the text next to it. For a type list like `["boolean", "string"]` it means that the string is a template, not a string value. |
-| `x-docs-required` | `true` or `false` | Required for keys that a chart has to set, even though common gives them a default. `false` overrides a `required` that is inherited from a shared schema. |
+| `x-docs-required` | `true` | The key is required, but not for every object, so it can not be in `required`: for example when it depends on the `type`. A key is shown as required when it is in `required` or has `x-docs-required: true`. |
 | `x-docs-appliesTo` | List of values of `type` | The key is only used for these types. It is left out of the page of the object, and shown on the page of the type. |
 | `x-docs-page` | `true`, an object or a list of objects | The key, or the schema file that is referenced, gets a page. See below. |
 | `x-docs-primary` | `true` | The key is the home of the objects it contains. When the same schema is used in several places, the page of the primary key documents it, and the others link to it. Used for `workload`, `service` and `ingress`. |
@@ -792,8 +792,7 @@ class Generator:
                     path=path,
                     rel=rel_of(path),
                     node=node,
-                    required=node.docs_required is True
-                    or (node.docs_required is None and bool(parent and key in parent.required)),
+                    required=node.docs_required is True or bool(parent and key in parent.required),
                     internal=internal and not top,
                 )
                 other = None if top or node.extends else self._other_page(page, path, node, root_idx)

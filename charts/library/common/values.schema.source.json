@@ -6,7 +6,6 @@
       "$ref": "schemas/global/global.json",
       "description": "Global values that apply to the chart and its dependencies. See [global](/truecharts-common/global).",
       "type": "object",
-      "x-docs-required": false,
       "x-helm-tpl": false,
       "x-docs-page": {
         "title": "Global"
@@ -115,7 +114,6 @@
       "$ref": "schemas/containerOptions.json",
       "description": "Options that apply to all containers, unless overridden at the container level. See [containerOptions](/truecharts-common/containerOptions).",
       "type": "object",
-      "x-docs-required": false,
       "x-helm-tpl": false,
       "default": {
         "NVIDIA_CAPS": [
@@ -130,7 +128,6 @@
       "$ref": "schemas/podOptions/podOptions.json",
       "description": "Options that apply to all pods, unless overridden at the pod level. See [podOptions](/truecharts-common/podOptions).",
       "type": "object",
-      "x-docs-required": false,
       "x-helm-tpl": false,
       "x-docs-page": {
         "title": "Pod Options"
@@ -835,7 +832,6 @@
       "description": "Extra Kubernetes resources to render, one per list item, as a YAML object or as a string. Helm `tpl` is resolved in each item.",
       "type": "array",
       "default": [],
-      "x-docs-required": false,
       "x-helm-tpl": true,
       "x-docs-page": {
         "title": "Extra Templates"
