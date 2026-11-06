@@ -71,3 +71,24 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware1/data/permanent'': got string, want boolean'
+
+  - it: should quote regex and replacement with special characters
+    set:
+      ingressMiddlewares:
+        traefik:
+          my-middleware1:
+            enabled: true
+            type: redirect-regex
+            data:
+              regex: "*.example.com: {path}"
+              replacement: "[https://example.com/${1}]"
+              permanent: true
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: spec
+          value:
+            redirectRegex:
+              regex: "*.example.com: {path}"
+              replacement: "[https://example.com/${1}]"
+              permanent: true
