@@ -17,12 +17,12 @@ title: Workload
 
 ## Child Pages
 
-- [Deployment](/truecharts-common/workload/deployment)
-- [StatefulSet](/truecharts-common/workload/statefulset)
-- [DaemonSet](/truecharts-common/workload/daemonset)
 - [CronJob](/truecharts-common/workload/cronjob)
+- [DaemonSet](/truecharts-common/workload/daemonset)
+- [Deployment](/truecharts-common/workload/deployment)
 - [Job](/truecharts-common/workload/job)
 - [Pod Spec](/truecharts-common/workload/podSpec)
+- [StatefulSet](/truecharts-common/workload/statefulset)
 
 ---
 

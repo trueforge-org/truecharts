@@ -10,10 +10,10 @@ title: PostgreSQL Operator
 
 ## Child Pages
 
-- [PostgreSQL Cluster](/truecharts-common/dependencies/postgresql/operator/cluster)
-- [PostgreSQL Backups](/truecharts-common/dependencies/postgresql/operator/backups)
-- [PostgreSQL Recovery](/truecharts-common/dependencies/postgresql/operator/recovery)
 - [monitoring](/truecharts-common/dependencies/postgresql/operator/monitoring)
+- [PostgreSQL Backups](/truecharts-common/dependencies/postgresql/operator/backups)
+- [PostgreSQL Cluster](/truecharts-common/dependencies/postgresql/operator/cluster)
+- [PostgreSQL Recovery](/truecharts-common/dependencies/postgresql/operator/recovery)
 
 ---
 

@@ -10,8 +10,8 @@ title: volsync
 
 ## Child Pages
 
-- [src](/truecharts-common/persistence/volsync/src)
 - [dest](/truecharts-common/persistence/volsync/dest)
+- [src](/truecharts-common/persistence/volsync/src)
 
 ---
 

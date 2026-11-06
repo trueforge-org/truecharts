@@ -17,12 +17,12 @@ title: Network Policy
 ## Child Pages
 
 - [egress](/truecharts-common/networkpolicy/egress)
-- [ingress](/truecharts-common/networkpolicy/ingress)
-- [podSelector](/truecharts-common/networkpolicy/podSelector)
 - [egressDeny](/truecharts-common/networkpolicy/egressDeny)
 - [endpointSelector](/truecharts-common/networkpolicy/endpointSelector)
+- [ingress](/truecharts-common/networkpolicy/ingress)
 - [ingressDeny](/truecharts-common/networkpolicy/ingressDeny)
 - [nodeSelector](/truecharts-common/networkpolicy/nodeSelector)
+- [podSelector](/truecharts-common/networkpolicy/podSelector)
 
 ---
 

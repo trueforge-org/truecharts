@@ -16,8 +16,8 @@ title: metrics
 
 ## Child Pages
 
-- [object](/truecharts-common/hpa/metrics/object)
 - [external](/truecharts-common/hpa/metrics/external)
+- [object](/truecharts-common/hpa/metrics/object)
 
 ---
 

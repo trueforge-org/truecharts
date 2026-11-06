@@ -14,12 +14,6 @@ title: PostgreSQL Backups
 
 ---
 
-## Child Pages
-
-- [instanceSidecarConfiguration](/truecharts-common/dependencies/postgresql/operator/backups/instanceSidecarConfiguration)
-
----
-
 ## `backups`
 
 Backups of the cluster, through the Barman Cloud plugin.
@@ -463,7 +457,7 @@ See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all key
 
 Settings of the Barman Cloud plugin sidecar.
 
-See [instanceSidecarConfiguration](/truecharts-common/dependencies/postgresql/operator/backups/instanceSidecarConfiguration) for all keys of this object.
+See [instanceSidecarConfiguration](/truecharts-common/dependencies/postgresql/operator/recovery/instanceSidecarConfiguration) for all keys of this object.
 
 | Field | Value |
 | --- | --- |

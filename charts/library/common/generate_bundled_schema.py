@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent
 SOURCE_FILE = BASE_DIR / "values.schema.source.json"
 OUTPUT_FILE = BASE_DIR / "values.schema.json"
 # Only used by the docs generator and the structure of a single file
-DROPPED_KEYS = {"$id", "$schema", "x-docs-required", "x-docs-helmTpl", "x-docs-defaultRaw", "x-docs-appliesTo", "x-helm-tpl"}
+DROPPED_KEYS = {"$id", "$schema", "x-docs-required", "x-docs-helmTpl", "x-docs-defaultRaw", "x-docs-appliesTo", "x-docs-page", "x-docs-primary", "x-helm-tpl"}
 
 
 def definition_name(path: Path, source_file: Path) -> str:

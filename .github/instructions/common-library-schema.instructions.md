@@ -54,6 +54,7 @@ These rules apply to `charts/library/common/schemas/`, `values.schema.source.jso
   - `x-helm-tpl` for the Helm `tpl` column: `true`, or one of `On value only`, `On entries only`, `On keys and values`. A key typed `[boolean, string]` or with a `oneOf` of an enum and the `^\{\{.*\}\}$` pattern is shown as templated.
   - `x-docs-required: true` for the Required column of keys a chart has to set but that common gives a default.
   - `x-docs-appliesTo: ["<type>"]` on keys that only apply to some values of `type` (workload, persistence, service and middleware types). They get documented on the page of that type.
+  - `x-docs-page` (the docs page of a key or schema file) and `x-docs-primary: true` (the key that documents a shared object). See [`common-library-docs.instructions.md`](common-library-docs.instructions.md).
 
   Write descriptions as plain sentences that start with a capital and end with a full stop. Link to other docs pages as `/truecharts-common/<page path>` with the exact case, see [`common-library-docs.instructions.md`](common-library-docs.instructions.md). The generator checks the links, and markdownlint rejects `[here](...)` and bare `*`.
 

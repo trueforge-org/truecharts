@@ -11,7 +11,7 @@ title: instanceSidecarConfiguration
 
 ## Child Pages
 
-- [env](/truecharts-common/dependencies/postgresql/operator/backups/instanceSidecarConfiguration/env)
+- [env](/truecharts-common/dependencies/postgresql/operator/recovery/instanceSidecarConfiguration/env)
 
 ---
 
@@ -21,7 +21,7 @@ Settings of the Barman Cloud plugin sidecar.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -35,7 +35,7 @@ Extra command-line arguments appended to the sidecar container. Do not set `--lo
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.additionalContainerArgs` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.additionalContainerArgs` |
 | Type | `list of string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -47,11 +47,11 @@ Extra command-line arguments appended to the sidecar container. Do not set `--lo
 
 Environment variables passed to the sidecar container.
 
-See [env](/truecharts-common/dependencies/postgresql/operator/backups/instanceSidecarConfiguration/env) for all keys of this object.
+See [env](/truecharts-common/dependencies/postgresql/operator/recovery/instanceSidecarConfiguration/env) for all keys of this object.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env` |
 | Type | `list of map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -65,7 +65,7 @@ Log level of the PostgreSQL instance sidecar.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.logLevel` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.logLevel` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -80,7 +80,7 @@ Compute resources of the sidecar container that runs in the instance pods.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.resources` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.resources` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -94,7 +94,7 @@ Resource claims used by the sidecar container.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.resources.claims` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.resources.claims` |
 | Type | `list of map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -106,7 +106,7 @@ Resource claims used by the sidecar container.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.resources.claims[]` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.resources.claims[]` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -120,7 +120,7 @@ Name of a resource from `spec.resourceClaims` used by the sidecar container.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.resources.claims[].name` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.resources.claims[].name` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -134,7 +134,7 @@ Name of the request in the referenced claim.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.resources.claims[].request` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.resources.claims[].request` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -148,7 +148,7 @@ Maximum compute resources allowed for the sidecar container, such as `cpu` or `m
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.resources.limits` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.resources.limits` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -160,7 +160,7 @@ Maximum compute resources allowed for the sidecar container, such as `cpu` or `m
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.resources.limits.$name` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.resources.limits.$name` |
 | Type | `int or string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -174,7 +174,7 @@ Minimum compute resources required by the sidecar container, such as `cpu` or `m
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.resources.requests` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.resources.requests` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -186,7 +186,7 @@ Minimum compute resources required by the sidecar container, such as `cpu` or `m
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.resources.requests.$name` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.resources.requests.$name` |
 | Type | `int or string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -200,7 +200,7 @@ Interval in seconds at which the sidecar checks and enforces retention policies.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.retentionPolicyIntervalSeconds` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.retentionPolicyIntervalSeconds` |
 | Type | `int` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |

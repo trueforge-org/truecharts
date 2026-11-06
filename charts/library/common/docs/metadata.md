@@ -78,60 +78,6 @@ Value of the annotation
 
 ---
 
-## `certificate.$name.labelsList`
-
-Additional labels as a list of name and value pairs. Merged into the `labels` of the object.
-
-| Field | Value |
-| --- | --- |
-| Key | `certificate.$name.labelsList` |
-| Type | `list of map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `certificate.$name.labelsList[]`
-
-| Field | Value |
-| --- | --- |
-| Key | `certificate.$name.labelsList[]` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `certificate.$name.labelsList[].name`
-
-Name of the label
-
-| Field | Value |
-| --- | --- |
-| Key | `certificate.$name.labelsList[].name` |
-| Type | `string` |
-| Required | ✅ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `certificate.$name.labelsList[].value`
-
-Value of the label
-
-| Field | Value |
-| --- | --- |
-| Key | `certificate.$name.labelsList[].value` |
-| Type | `string` |
-| Required | ✅ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
 ## `certificate.$name.annotationsList`
 
 Additional annotations as a list of name and value pairs. Merged into the `annotations` of the object.
@@ -179,6 +125,60 @@ Value of the annotation
 | Field | Value |
 | --- | --- |
 | Key | `certificate.$name.annotationsList[].value` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `certificate.$name.labelsList`
+
+Additional labels as a list of name and value pairs. Merged into the `labels` of the object.
+
+| Field | Value |
+| --- | --- |
+| Key | `certificate.$name.labelsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `certificate.$name.labelsList[]`
+
+| Field | Value |
+| --- | --- |
+| Key | `certificate.$name.labelsList[]` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `certificate.$name.labelsList[].name`
+
+Name of the label
+
+| Field | Value |
+| --- | --- |
+| Key | `certificate.$name.labelsList[].name` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `certificate.$name.labelsList[].value`
+
+Value of the label
+
+| Field | Value |
+| --- | --- |
+| Key | `certificate.$name.labelsList[].value` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |

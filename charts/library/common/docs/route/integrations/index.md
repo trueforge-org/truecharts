@@ -10,8 +10,8 @@ title: integrations
 
 ## Child Pages
 
-- [traefik](/truecharts-common/route/integrations/traefik)
 - [envoy](/truecharts-common/route/integrations/envoy)
+- [traefik](/truecharts-common/route/integrations/traefik)
 
 ---
 

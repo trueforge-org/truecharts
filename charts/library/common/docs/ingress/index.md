@@ -16,8 +16,8 @@ title: Ingress
 
 ## Child Pages
 
-- [Ingress Integrations](/truecharts-common/ingress/integrations)
 - [hosts](/truecharts-common/ingress/hosts)
+- [Ingress Integrations](/truecharts-common/ingress/integrations)
 
 ---
 

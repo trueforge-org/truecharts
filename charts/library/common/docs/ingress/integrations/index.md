@@ -13,9 +13,9 @@ Integrations that add annotations, middlewares or certificates to the Ingress.
 ## Child Pages
 
 - [Cert Manager Integration](/truecharts-common/ingress/integrations/certManager)
-- [Traefik Integration](/truecharts-common/ingress/integrations/traefik)
 - [Homepage Integration](/truecharts-common/ingress/integrations/homepage)
 - [Nginx Integration](/truecharts-common/ingress/integrations/nginx)
+- [Traefik Integration](/truecharts-common/ingress/integrations/traefik)
 
 ---
 

@@ -9,7 +9,10 @@
         }
       ],
       "description": "Configuration of the CNPG cluster.",
-      "x-docs-required": true
+      "x-docs-required": true,
+      "x-docs-page": {
+        "title": "PostgreSQL Cluster"
+      }
     },
     "hibernate": {
       "type": "boolean",
@@ -219,7 +222,10 @@
         }
       },
       "additionalProperties": false,
-      "description": "Create the cluster from a backup or an object store."
+      "description": "Create the cluster from a backup or an object store.",
+      "x-docs-page": {
+        "title": "PostgreSQL Recovery"
+      }
     },
     "backups": {
       "type": "object",
@@ -411,7 +417,10 @@
         }
       },
       "additionalProperties": false,
-      "description": "Backups of the cluster, through the Barman Cloud plugin."
+      "description": "Backups of the cluster, through the Barman Cloud plugin.",
+      "x-docs-page": {
+        "title": "PostgreSQL Backups"
+      }
     },
     "pooler": {
       "type": "object",

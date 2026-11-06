@@ -16,8 +16,8 @@ title: Metrics
 
 ## Child Pages
 
-- [prometheusRule](/truecharts-common/metrics/prometheusRule)
 - [endpoints](/truecharts-common/metrics/endpoints)
+- [prometheusRule](/truecharts-common/metrics/prometheusRule)
 
 ---
 

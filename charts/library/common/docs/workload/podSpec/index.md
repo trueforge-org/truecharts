@@ -18,11 +18,11 @@ title: Pod Spec
 ## Child Pages
 
 - [Container](/truecharts-common/workload/podSpec/containers)
-- [Init Containers](/truecharts-common/workload/podSpec/initContainers)
 - [dnsConfig](/truecharts-common/workload/podSpec/dnsConfig)
-- [tolerations](/truecharts-common/workload/podSpec/tolerations)
-- [securityContext](/truecharts-common/workload/podSpec/securityContext)
 - [hostAliases](/truecharts-common/workload/podSpec/hostAliases)
+- [Init Containers](/truecharts-common/workload/podSpec/initContainers)
+- [securityContext](/truecharts-common/workload/podSpec/securityContext)
+- [tolerations](/truecharts-common/workload/podSpec/tolerations)
 
 ---
 

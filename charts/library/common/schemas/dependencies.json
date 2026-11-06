@@ -15,13 +15,19 @@
           "properties": {
             "operator": {
               "$ref": "dependencies/valkey/operator/operator.json",
-              "description": "Settings of the `ValkeyCluster` of the [valkey-operator](https://github.com/valkey-io/valkey-operator), used when `mode` is `operator`. The credentials stay in `depconfig`. Never merged into the chart values."
+              "description": "Settings of the `ValkeyCluster` of the [valkey-operator](https://github.com/valkey-io/valkey-operator), used when `mode` is `operator`. The credentials stay in `depconfig`. Never merged into the chart values.",
+              "x-docs-page": {
+                "title": "Valkey Operator"
+              }
             },
             "image": false
           }
         }
       ],
-      "description": "The valkey dependency. In `operator` mode a `ValkeyCluster` is spawned from `operator`."
+      "description": "The valkey dependency. In `operator` mode a `ValkeyCluster` is spawned from `operator`.",
+      "x-docs-page": {
+        "title": "Valkey"
+      }
     },
     "postgresql": {
       "allOf": [
@@ -77,13 +83,19 @@
             },
             "operator": {
               "$ref": "dependencies/postgresql/operator/operator.json",
-              "description": "Settings of the CloudNativePG `Cluster`, used when `mode` is `operator`. The credentials stay in `depconfig`. Never merged into the chart values."
+              "description": "Settings of the CloudNativePG `Cluster`, used when `mode` is `operator`. The credentials stay in `depconfig`. Never merged into the chart values.",
+              "x-docs-page": {
+                "title": "PostgreSQL Operator"
+              }
             },
             "image": false
           }
         }
       ],
-      "description": "The postgresql dependency. In `operator` mode (default) a CloudNativePG `Cluster` is spawned from `operator`."
+      "description": "The postgresql dependency. In `operator` mode (default) a CloudNativePG `Cluster` is spawned from `operator`.",
+      "x-docs-page": {
+        "title": "PostgreSQL"
+      }
     },
     "mariadb": {
       "allOf": [
@@ -137,7 +149,10 @@
           }
         }
       ],
-      "description": "The mariadb dependency."
+      "description": "The mariadb dependency.",
+      "x-docs-page": {
+        "title": "MariaDB"
+      }
     },
     "mongodb": {
       "allOf": [
@@ -191,7 +206,10 @@
           }
         }
       ],
-      "description": "The mongodb dependency."
+      "description": "The mongodb dependency.",
+      "x-docs-page": {
+        "title": "MongoDB"
+      }
     },
     "clickhouse": {
       "allOf": [
@@ -244,7 +262,10 @@
           }
         }
       ],
-      "description": "The clickhouse dependency."
+      "description": "The clickhouse dependency.",
+      "x-docs-page": {
+        "title": "ClickHouse"
+      }
     },
     "memcached": {
       "allOf": [
@@ -261,7 +282,10 @@
           }
         }
       ],
-      "description": "The memcached dependency. It has no credentials, the chart connects to its primary service."
+      "description": "The memcached dependency. It has no credentials, the chart connects to its primary service.",
+      "x-docs-page": {
+        "title": "Memcached"
+      }
     }
   },
   "additionalProperties": {
@@ -349,7 +373,11 @@
           }
         }
       }
-    ]
+    ],
+    "x-docs-page": {
+      "title": "Custom Dependencies",
+      "file": "dependencies/custom.md"
+    }
   },
   "description": "Dependencies of the chart: databases and caches that common deploys with the chart. Each dependency contains a complete chart values structure, and its objects are merged into the chart under the name `<dependency>-<object>`. See [dependencies](/truecharts-common/dependencies)."
 }

@@ -61,7 +61,10 @@
       }
     },
     "additionalProperties": false,
-    "description": "An init container of the pod. It supports the settings of a container, except `lifecycle`, `primary` and working probes."
+    "description": "An init container of the pod. It supports the settings of a container, except `lifecycle`, `primary` and working probes.",
+    "x-docs-page": {
+      "title": "Init Containers"
+    }
   },
   "description": "Init containers of the pod, keyed by name. They run before the other containers start. See [initContainers](/truecharts-common/workload/podSpec/initContainers)."
 }

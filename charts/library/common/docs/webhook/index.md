@@ -16,9 +16,9 @@ title: Webhook
 
 ## Child Pages
 
-- [webhooks](/truecharts-common/webhook/webhooks)
 - [mutating](/truecharts-common/webhook/mutating)
 - [validating](/truecharts-common/webhook/validating)
+- [webhooks](/truecharts-common/webhook/webhooks)
 
 ---
 

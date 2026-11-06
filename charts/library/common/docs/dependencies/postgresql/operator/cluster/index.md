@@ -10,8 +10,8 @@ title: PostgreSQL Cluster
 
 ## Child Pages
 
-- [storage](/truecharts-common/dependencies/postgresql/operator/cluster/storage)
 - [initdb](/truecharts-common/dependencies/postgresql/operator/cluster/initdb)
+- [storage](/truecharts-common/dependencies/postgresql/operator/cluster/storage)
 
 ---
 

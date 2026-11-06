@@ -129,12 +129,19 @@
               }
             },
             "additionalProperties": false,
-            "description": "ingress-nginx integration, see [nginx](/truecharts-common/ingress/integrations/nginx)."
+            "description": "ingress-nginx integration, see [nginx](/truecharts-common/ingress/integrations/nginx).",
+            "x-docs-page": {
+              "title": "Nginx Integration"
+            }
           }
         },
         "additionalProperties": false,
         "description": "Integrations that add annotations, middlewares or certificates to the Ingress.",
-        "default": {}
+        "default": {},
+        "x-docs-page": {
+          "title": "Ingress Integrations",
+          "overview": true
+        }
       },
       "enabled": {
         "type": [

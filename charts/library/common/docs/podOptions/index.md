@@ -17,9 +17,9 @@ title: Pod Options
 
 ## Child Pages
 
-- [topologySpreadConstraints](/truecharts-common/podOptions/topologySpreadConstraints)
 - [dnsConfig](/truecharts-common/podOptions/dnsConfig)
 - [tolerations](/truecharts-common/podOptions/tolerations)
+- [topologySpreadConstraints](/truecharts-common/podOptions/topologySpreadConstraints)
 
 ---
 

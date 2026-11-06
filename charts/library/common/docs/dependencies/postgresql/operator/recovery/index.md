@@ -8,6 +8,12 @@ title: PostgreSQL Recovery
 
 ---
 
+## Child Pages
+
+- [instanceSidecarConfiguration](/truecharts-common/dependencies/postgresql/operator/recovery/instanceSidecarConfiguration)
+
+---
+
 ## `recovery`
 
 Create the cluster from a backup or an object store.
@@ -124,7 +130,7 @@ Revision appended to the `serverName` of the recovery archive, so restore and ba
 
 Settings of the Barman Cloud plugin sidecar.
 
-See [instanceSidecarConfiguration](/truecharts-common/dependencies/postgresql/operator/backups/instanceSidecarConfiguration) for all keys of this object.
+See [instanceSidecarConfiguration](/truecharts-common/dependencies/postgresql/operator/recovery/instanceSidecarConfiguration) for all keys of this object.
 
 | Field | Value |
 | --- | --- |

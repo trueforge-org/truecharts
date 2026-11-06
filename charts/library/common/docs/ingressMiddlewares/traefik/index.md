@@ -34,11 +34,11 @@ title: Traefik Middlewares
 - [rate-limit](/truecharts-common/ingressMiddlewares/traefik/rate-limit)
 - [redirect-regex](/truecharts-common/ingressMiddlewares/traefik/redirect-regex)
 - [redirect-scheme](/truecharts-common/ingressMiddlewares/traefik/redirect-scheme)
-- [replace-path-regex](/truecharts-common/ingressMiddlewares/traefik/replace-path-regex)
 - [replace-path](/truecharts-common/ingressMiddlewares/traefik/replace-path)
+- [replace-path-regex](/truecharts-common/ingressMiddlewares/traefik/replace-path-regex)
 - [retry](/truecharts-common/ingressMiddlewares/traefik/retry)
-- [strip-prefix-regex](/truecharts-common/ingressMiddlewares/traefik/strip-prefix-regex)
 - [strip-prefix](/truecharts-common/ingressMiddlewares/traefik/strip-prefix)
+- [strip-prefix-regex](/truecharts-common/ingressMiddlewares/traefik/strip-prefix-regex)
 
 ---
 

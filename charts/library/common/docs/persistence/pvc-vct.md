@@ -12,7 +12,7 @@ title: PVC and VCT
 :::tip
 
 - See all available keys of this object on the [Persistence](/truecharts-common/persistence) page.
-- These options apply only when `type: pvc`.
+- These options apply only when `type: pvc or vct`.
 
 :::
 

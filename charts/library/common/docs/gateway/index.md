@@ -17,8 +17,8 @@ title: Gateway
 
 ## Child Pages
 
-- [listeners](/truecharts-common/gateway/listeners)
 - [allowedListeners](/truecharts-common/gateway/allowedListeners)
+- [listeners](/truecharts-common/gateway/listeners)
 
 ---
 

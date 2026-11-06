@@ -19,11 +19,11 @@ title: Addon Container
 
 ## Child Pages
 
-- [lifecycle](/truecharts-common/addons/container/lifecycle)
-- [securityContext](/truecharts-common/addons/container/securityContext)
 - [env](/truecharts-common/addons/container/env)
-- [resources](/truecharts-common/addons/container/resources)
 - [fixedEnv](/truecharts-common/addons/container/fixedEnv)
+- [lifecycle](/truecharts-common/addons/container/lifecycle)
+- [resources](/truecharts-common/addons/container/resources)
+- [securityContext](/truecharts-common/addons/container/securityContext)
 
 ---
 

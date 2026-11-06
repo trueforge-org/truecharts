@@ -17,24 +17,25 @@ title: Persistence
 
 ## Child Pages
 
+- [autoPermissions](/truecharts-common/persistence/autoPermissions)
 - [ConfigMap](/truecharts-common/persistence/configmap)
+- [crontab](/truecharts-common/persistence/crontab)
 - [Device](/truecharts-common/persistence/device)
+- [devshm](/truecharts-common/persistence/devshm)
 - [EmptyDir](/truecharts-common/persistence/emptyDir)
 - [HostPath](/truecharts-common/persistence/hostPath)
 - [iSCSI](/truecharts-common/persistence/iscsi)
-- [NFS](/truecharts-common/persistence/nfs)
-- [Secret](/truecharts-common/persistence/secret)
-- [PVC and VCT](/truecharts-common/persistence/pvc-vct)
 - [iSCSI Authentication](/truecharts-common/persistence/iscsiConfig)
-- [volsync](/truecharts-common/persistence/volsync)
+- [NFS](/truecharts-common/persistence/nfs)
+- [projected](/truecharts-common/persistence/projected)
+- [PVC and VCT](/truecharts-common/persistence/pvc-vct)
+- [Secret](/truecharts-common/persistence/secret)
 - [sources](/truecharts-common/persistence/sources)
-- [autoPermissions](/truecharts-common/persistence/autoPermissions)
-- [crontab](/truecharts-common/persistence/crontab)
-- [devshm](/truecharts-common/persistence/devshm)
+- [targetSelector](/truecharts-common/persistence/targetSelector)
 - [tmp](/truecharts-common/persistence/tmp)
 - [varlogs](/truecharts-common/persistence/varlogs)
 - [varrun](/truecharts-common/persistence/varrun)
-- [targetSelector](/truecharts-common/persistence/targetSelector)
+- [volsync](/truecharts-common/persistence/volsync)
 
 ---
 

@@ -4,7 +4,7 @@ title: env
 
 ## Appears in
 
-- `.Values.dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env`
+- `.Values.dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env`
 
 ---
 
@@ -14,7 +14,7 @@ Environment variables passed to the sidecar container.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env` |
 | Type | `list of map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -26,7 +26,7 @@ Environment variables passed to the sidecar container.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[]` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[]` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -40,7 +40,7 @@ Name of the environment variable.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].name` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].name` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -54,7 +54,7 @@ Value of the environment variable. Cannot be used together with `valueFrom`.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].value` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].value` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -68,7 +68,7 @@ Source for the environment variable's value. Cannot be used if `value` is set.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -82,7 +82,7 @@ Selects a key of a ConfigMap.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom.configMapKeyRef` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom.configMapKeyRef` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -96,7 +96,7 @@ The key to select from the ConfigMap.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom.configMapKeyRef.key` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom.configMapKeyRef.key` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -110,7 +110,7 @@ Name of the ConfigMap.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom.configMapKeyRef.name` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom.configMapKeyRef.name` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -124,7 +124,7 @@ Whether the ConfigMap or its key must exist.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom.configMapKeyRef.optional` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom.configMapKeyRef.optional` |
 | Type | `bool` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -138,7 +138,7 @@ Selects a field of the Pod.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom.fieldRef` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom.fieldRef` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -152,7 +152,7 @@ Version of the schema the field path is written in, defaults to `v1`.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom.fieldRef.apiVersion` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom.fieldRef.apiVersion` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -166,7 +166,7 @@ Path of the Pod field to select.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom.fieldRef.fieldPath` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom.fieldRef.fieldPath` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -180,7 +180,7 @@ Selects a key of an env file.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom.fileKeyRef` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom.fileKeyRef` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -194,7 +194,7 @@ The key within the env file.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom.fileKeyRef.key` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom.fileKeyRef.key` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -208,7 +208,7 @@ Whether the file or its key must exist.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom.fileKeyRef.optional` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom.fileKeyRef.optional` |
 | Type | `bool` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -222,7 +222,7 @@ Path within the volume to select the file from. Must be relative.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom.fileKeyRef.path` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom.fileKeyRef.path` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -236,7 +236,7 @@ Name of the volume mount containing the env file.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom.fileKeyRef.volumeName` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom.fileKeyRef.volumeName` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -250,7 +250,7 @@ Selects a resource of the container.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom.resourceFieldRef` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom.resourceFieldRef` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -264,7 +264,7 @@ Container name, optional for env vars.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom.resourceFieldRef.containerName` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom.resourceFieldRef.containerName` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -278,7 +278,7 @@ Output format of the exposed resource, defaults to `1`.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom.resourceFieldRef.divisor` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom.resourceFieldRef.divisor` |
 | Type | `int or string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -292,7 +292,7 @@ Resource to select, such as `limits.cpu` or `requests.memory`.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom.resourceFieldRef.resource` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom.resourceFieldRef.resource` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -306,7 +306,7 @@ Selects a key of a Secret.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom.secretKeyRef` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom.secretKeyRef` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -320,7 +320,7 @@ The key of the Secret to select from.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom.secretKeyRef.key` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom.secretKeyRef.key` |
 | Type | `string` |
 | Required | ✅ |
 | Helm `tpl` | ❌ |
@@ -334,7 +334,7 @@ Name of the Secret.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom.secretKeyRef.name` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom.secretKeyRef.name` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -348,7 +348,7 @@ Whether the Secret or its key must exist.
 
 | Field | Value |
 | --- | --- |
-| Key | `dependencies.postgresql.operator.backups.instanceSidecarConfiguration.env[].valueFrom.secretKeyRef.optional` |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env[].valueFrom.secretKeyRef.optional` |
 | Type | `bool` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |

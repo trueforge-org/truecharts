@@ -10,12 +10,12 @@ title: Valkey Operator
 
 ## Child Pages
 
-- [Valkey Operator Containers](/truecharts-common/dependencies/valkey/operator/containers)
-- [Valkey Operator Scheduling](/truecharts-common/dependencies/valkey/operator/scheduling)
 - [exporter](/truecharts-common/dependencies/valkey/operator/exporter)
+- [persistence](/truecharts-common/dependencies/valkey/operator/persistence)
 - [podSecurityContext](/truecharts-common/dependencies/valkey/operator/podSecurityContext)
 - [users](/truecharts-common/dependencies/valkey/operator/users)
-- [persistence](/truecharts-common/dependencies/valkey/operator/persistence)
+- [Valkey Operator Containers](/truecharts-common/dependencies/valkey/operator/containers)
+- [Valkey Operator Scheduling](/truecharts-common/dependencies/valkey/operator/scheduling)
 
 ---
 

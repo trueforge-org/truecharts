@@ -17,8 +17,8 @@ title: Route
 ## Child Pages
 
 - [integrations](/truecharts-common/route/integrations)
-- [rules](/truecharts-common/route/rules)
 - [parentRefs](/truecharts-common/route/parentRefs)
+- [rules](/truecharts-common/route/rules)
 
 ---
 

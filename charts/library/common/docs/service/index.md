@@ -18,10 +18,10 @@ title: Service
 ## Child Pages
 
 - [ClusterIP](/truecharts-common/service/ClusterIP)
-- [LoadBalancer](/truecharts-common/service/LoadBalancer)
-- [NodePort](/truecharts-common/service/NodePort)
 - [ExternalIP](/truecharts-common/service/ExternalIP)
 - [ExternalName](/truecharts-common/service/ExternalName)
+- [LoadBalancer](/truecharts-common/service/LoadBalancer)
+- [NodePort](/truecharts-common/service/NodePort)
 - [Ports](/truecharts-common/service/ports)
 - [Service Integrations](/truecharts-common/service/integrations)
 

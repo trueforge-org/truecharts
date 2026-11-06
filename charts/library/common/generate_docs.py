@@ -5,7 +5,7 @@ The pages are built from the values tree: values.schema.source.json is walked
 from the root, every $ref is followed and every key gets its real path
 (``workload.$name.podSpec.hostNetwork``, ``hostAliases[].ip``).
 Which pages exist, and which part of the tree each page documents, is listed in
-docs-pages.yaml. Run with --check to verify that docs/ is up to date.
+the schema (x-docs-page). Run with --check to verify that docs/ is up to date.
 """
 
 import argparse
@@ -67,6 +67,10 @@ class Node:
     applies: list[str] = field(default_factory=list)
     identity: str | None = None
     root_values: bool = False
+    primary: bool = False
+    page_specs: list[dict] = field(default_factory=list)  # x-docs-page on the node itself
+    frag_specs: list[tuple[str, dict]] = field(default_factory=list)  # x-docs-page on a referenced schema
+    alt_idents: list[str] = field(default_factory=list)  # refs inside oneOf or anyOf
 
 
 class Schemas:
@@ -124,15 +128,29 @@ class Schemas:
             self._multi[key] = (sources, n)
         return self._multi[key][1]
 
-    def _absorb(self, n: Node, raw: Any, file: Path, mode: str) -> None:
-        """Merge raw into n; the first value found for a keyword wins."""
+    def _absorb(self, n: Node, raw: Any, file: Path, mode: str, via: str | None = None) -> None:
+        """Merge raw into n; the first value found for a keyword wins.
+
+        via is the identity of the $ref this schema was reached through, if any.
+        """
         if not isinstance(raw, dict):
             return
         # Keywords next to the $ref win over the referenced schema.
         self._own(n, raw, file, mode)
+        spec = raw.get("x-docs-page")
+        if spec:
+            spec = {} if spec is True else spec
+            specs = spec if isinstance(spec, list) else [spec]
+            for sp in specs:
+                if via:
+                    n.frag_specs.append((via, sp))
+                else:
+                    n.page_specs.append(sp)
+        if raw.get("x-docs-primary"):
+            n.primary = True
         # Later allOf entries are overrides of earlier ones, so they are read first.
         for sub in reversed(raw.get("allOf", [])):
-            self._absorb(n, sub, file, "all" if mode == "base" else mode)
+            self._absorb(n, sub, file, "all" if mode == "base" else mode, via)
         if "$ref" in raw:
             target, tfile, ident = self.follow(raw["$ref"], file)
             if tfile == self.root_file and ident == self.ident(tfile, ""):
@@ -141,13 +159,15 @@ class Schemas:
             else:
                 if n.identity is None and mode in ("base", "all"):
                     n.identity = ident
-                self._absorb(n, target, tfile, mode)
+                elif mode == "alt" and ident not in n.alt_idents:
+                    n.alt_idents.append(ident)
+                self._absorb(n, target, tfile, mode, ident)
         for key in ("oneOf", "anyOf"):
             for branch in raw.get(key, []):
                 if self._is_tpl_branch(branch):
                     n.tpl = True
                 else:
-                    self._absorb(n, branch, file, "alt")
+                    self._absorb(n, branch, file, "alt", via)
 
     @staticmethod
     def _is_tpl_branch(branch: Any) -> bool:
@@ -246,7 +266,9 @@ class Page:
     roots: list[dict]
     intro: str = ""
     parent: str | None = None
-    applies: str | None = None
+    applies: list[str] | None = None
+    types: dict[str, dict] = field(default_factory=dict)
+    primary: bool = False
     compact_links: bool = False
     overview_only: bool = False
     handwritten: bool = False
@@ -266,33 +288,6 @@ class Page:
         if p.endswith("/index"):
             p = p[: -len("/index")]
         return "" if p == "index" else p
-
-
-def load_pages(path: Path) -> tuple[list[Page], list[str]]:
-    data = yaml.safe_load(path.read_text())
-    pages = []
-    for entry in data["pages"]:
-        roots = entry.get("roots")
-        if roots is None:
-            roots = [{"path": entry.get("path", "")}] if "ref" not in entry else [{"ref": entry["ref"]}]
-            for extra in entry.get("include", []):
-                roots.append(extra if isinstance(extra, dict) else {"path": extra})
-        pages.append(
-            Page(
-                file=entry["file"],
-                title=entry.get("title") or Path(entry["file"]).stem,
-                roots=roots,
-                intro=(entry.get("intro") or "").strip(),
-                parent=entry.get("parent"),
-                applies=entry.get("applies"),
-                compact_links=bool(entry.get("compact_links")),
-                overview_only=bool(entry.get("overview_only")),
-                handwritten=bool(entry.get("handwritten")),
-                description=entry.get("description", ""),
-                collapse=entry.get("collapse") or {},
-            )
-        )
-    return pages, list(data.get("removed", []))
 
 
 # --------------------------------------------------------------------------
@@ -369,24 +364,36 @@ class Entry:
 
 
 class Generator:
-    def __init__(self, schema_file: Path, pages_file: Path, base_url: str):
+    def __init__(self, schema_file: Path, base_url: str):
         self.schemas = Schemas(schema_file)
-        self.pages, self.removed = load_pages(pages_file)
+        self.pages: list[Page] = []
+        self.removed: list[str] = []
         self.base_url = base_url.rstrip("/")
         self.errors: list[str] = []
         self.root_node = self.schemas.node(*self.schemas.root())
         self._index_occurrences()
+        self._build_pages()
         self._index_roots()
+        self._fold_indexes()
 
     # ---- indexes ---------------------------------------------------------
 
     def _index_occurrences(self) -> None:
         self.occurrences: dict[str, list[str]] = {}
-        seen_paths: set[str] = set()
+        self._found: list[tuple] = []
+        seen_specs: set = set()
 
         def walk(n: Node, path: str, stack: tuple, depth: int) -> None:
             if depth > MAX_DEPTH:
                 return
+            for sp in n.page_specs:
+                if ("p", id(sp)) not in seen_specs:
+                    seen_specs.add(("p", id(sp)))
+                    self._found.append(("path", path, sp, n))
+            for ident, sp in n.frag_specs:
+                if ("r", ident, id(sp)) not in seen_specs:
+                    seen_specs.add(("r", ident, id(sp)))
+                    self._found.append(("ref", ident, sp, n))
             if n.identity:
                 paths = self.occurrences.setdefault(n.identity, [])
                 if path not in paths:
@@ -398,7 +405,43 @@ class Generator:
                 walk(c, join(path, k), stack, depth + 1)
 
         walk(self.root_node, "", (), 0)
-        self.all_paths = seen_paths
+
+    @staticmethod
+    def default_file(label: str) -> str:
+        keys = [k for k in re.findall(r"\[\]|[^.\[\]]+", label) if k not in ("$name", "[]")]
+        return "/".join(keys) + ".md" if keys else "index.md"
+
+    def _build_pages(self) -> None:
+        """Pages come from x-docs-page in the schema: on a key, or on a schema file that is referenced."""
+        groups: dict[str, list[tuple]] = {}
+        for kind, where, spec, node in self._found:
+            if kind == "path":
+                label, root = where, {"path": where}
+            else:
+                shortest = self.appears_in(where, [])
+                label, root = (shortest[0] if shortest else Path(where.split("#")[0]).stem), {"ref": where}
+            file = spec.get("file") or self.default_file(label)
+            groups.setdefault(file, []).append((label, root, spec, node))
+        for file, items in groups.items():
+            opts: dict[str, Any] = {}
+            for _, _, spec, _ in items:
+                for k, v in spec.items():
+                    opts.setdefault(k, v)
+            label = items[0][0]
+            self.pages.append(
+                Page(
+                    file=file,
+                    title=opts.get("title") or (re.split(r"[.\[]", label.replace("[]", ""))[-1] if label else "Docs"),
+                    roots=[root for _, root, _, _ in items],
+                    intro=(opts.get("intro") or "").strip(),
+                    compact_links=bool(opts.get("compact")),
+                    overview_only=bool(opts.get("overview")),
+                    handwritten=bool(opts.get("handwritten")),
+                    collapse=dict(opts.get("collapse") or {}),
+                    types=dict(opts.get("types") or {}),
+                    primary=any(node.primary for _, _, _, node in items),
+                )
+            )
 
     def _resolve_root(self, root: dict) -> tuple[Node | None, str, str | None]:
         """Return (node, key label, identity) for a page root."""
@@ -425,8 +468,10 @@ class Generator:
         self.root_by_path: dict[str, Page] = {}
         self.root_by_ident: dict[str, Page] = {}
         self.resolved: dict[tuple[str, int], tuple[Node, str, str | None]] = {}
-        for page in self.pages:
+        # Pages of primary keys (workload, service, ingress) are registered first, so they win a shared schema.
+        for page in sorted(self.pages, key=lambda p: not p.primary):
             self._register(page)
+        self._typed_pages()
         self._auto_split()
 
     def _register(self, page: Page) -> None:
@@ -440,8 +485,96 @@ class Generator:
                 self.root_by_ident.setdefault(ident, page)
             elif page.applies is None:
                 self.root_by_path.setdefault(root.get("path", ""), page)
-                if root.get("link", True) and ident and i == 0 and not page.overview_only:
+                if ident and i == 0 and not page.overview_only:
                     self.root_by_ident.setdefault(ident, page)
+                if i == 0 and n.addl is not None and not n.props and not page.overview_only:
+                    child = self.schemas.node(*n.addl)  # a map of named objects: the page is the page of the objects
+                    if child.identity:
+                        self.root_by_ident.setdefault(child.identity, page)
+
+    def _folder(self, page: Page) -> str:
+        """The folder of the sub pages of a page; x.md becomes x/index.md when it gets sub pages."""
+        f = page.file
+        if f == "index.md" or f.endswith("/index.md"):
+            return f[: -len("index.md")]
+        folder = f[:-3] + "/"
+        old = f
+        page.file = folder + "index.md"
+        for p in self.pages:
+            if p.parent == old:
+                p.parent = page.file
+            p.collapse = {k: (page.file if v == old else v) for k, v in p.collapse.items()}
+        for key in [k for k in self.resolved if k[0] == old]:
+            self.resolved[(page.file, key[1])] = self.resolved.pop(key)
+        return folder
+
+    def _fold_indexes(self) -> None:
+        for page in list(self.pages):
+            stem = page.file[:-3]
+            if page.file != "index.md" and not page.file.endswith("/index.md"):
+                if any(o.file.startswith(stem + "/") for o in self.pages if o is not page):
+                    self._folder(page)
+
+    def _typed_pages(self) -> None:
+        """A page for each value of `type` of an object, from the enum of `type` and from x-docs-appliesTo."""
+        claimed: set[str] = set()  # objects that already have their type pages
+        todo = [
+            p for p in self.pages
+            if not (p.handwritten or p.overview_only or p.applies) and (p.file, 0) in self.resolved
+        ]
+        todo.sort(key=lambda p: (-self.resolved[(p.file, 0)][1].count("."), p.file))  # deepest first
+        for page in todo:
+            node, label, _ = self.resolved[(page.file, 0)]
+            found: dict[str, dict[str, set]] = {}
+            enums: dict[str, list[str]] = {}
+
+            def scan(n: Node, path: str, rpath: str | None, stack: tuple, depth: int) -> None:
+                if depth > MAX_DEPTH:
+                    return
+                if rpath is None and path.endswith("$name"):
+                    rpath = path
+                if rpath == path and "type" in n.props:
+                    tn = self.schemas.node_multi(n.props["type"])
+                    if tn.enum:
+                        enums[rpath] = [str(v) for v in tn.enum]
+                if n.applies:
+                    tokens = found.setdefault(rpath or label, {})
+                    for t in n.applies:
+                        tokens.setdefault(t, set()).add(path)
+                if n.identity:
+                    if n.identity in stack:
+                        return
+                    stack = stack + (n.identity,)
+                for k, c in self.schemas.children(n):
+                    cp = join(path, k)
+                    if cp[len(label) + 1:] in page.collapse:
+                        continue
+                    scan(c, cp, rpath, stack, depth + 1)
+
+            scan(node, label, None, (), 0)
+            for rpath, tokens in found.items():
+                if rpath not in enums or rpath in claimed:
+                    continue  # only objects with a `type` that has a list of values get type pages
+                claimed.add(rpath)
+                for t in enums[rpath]:
+                    tokens.setdefault(t, set())
+                # Types are documented one by one, unless the schema joins them (types: {"pvc-vct": {"tokens": [...]}}).
+                joined = {t: key for key, sp in page.types.items() for t in sp.get("tokens", [])}
+                groups: dict[str, list[str]] = {}
+                for t in tokens:
+                    groups.setdefault(joined.get(t, t), []).append(t)
+                folder = self._folder(page)
+                for key, toks in groups.items():
+                    spec = page.types.get(key) or {}
+                    child = Page(
+                        file=folder + (spec.get("file") or key) + ".md",
+                        title=spec.get("title") or key,
+                        roots=[{"path": rpath}],
+                        parent=page.file,
+                        applies=toks,
+                    )
+                    self.pages.append(child)
+                    self._register(child)
 
     def _auto_split(self) -> None:
         """Give subtrees that make a page too big a page of their own, in the folder of the page."""
@@ -481,19 +614,7 @@ class Generator:
         keys = [k for k in re.findall(r"\[\]|[^.\[\]]+", path[len(label):]) if k not in ("$name", "[]")]
         if not keys:
             return None
-        f = parent.file
-        if f == "index.md" or f.endswith("/index.md"):
-            folder = f[: -len("index.md")]
-        else:
-            folder = f[:-3] + "/"
-            old = f
-            parent.file = folder + "index.md"
-            for p in self.pages:
-                if p.parent == old:
-                    p.parent = parent.file
-                p.collapse = {k: (parent.file if v == old else v) for k, v in p.collapse.items()}
-            for key in [k for k in self.resolved if k[0] == old]:
-                self.resolved[(parent.file, key[1])] = self.resolved.pop(key)
+        folder = self._folder(parent)
         file = folder + "/".join(keys) + ".md"
         if any(p.file == file for p in self.pages):
             file = folder + "-".join(keys) + ".md"
@@ -538,9 +659,9 @@ class Generator:
                     if node.applies:
                         return
                 else:
-                    if node.applies and page.applies not in node.applies:
+                    if node.applies and not set(page.applies) & set(node.applies):
                         return
-                    child_typed = typed_ok or page.applies in node.applies
+                    child_typed = typed_ok or bool(set(page.applies) & set(node.applies))
                     emit = child_typed
             if emit:
                 entry = Entry(
@@ -579,8 +700,8 @@ class Generator:
             return p
         if p is page and path not in [r.get("path") for r in page.roots[:1]]:
             pass
-        if node.identity:
-            q = self.root_by_ident.get(node.identity)
+        for ident in ([node.identity] if node.identity else []) + node.alt_idents:
+            q = self.root_by_ident.get(ident)
             if q is not None and q is not page:
                 return q
         return None
@@ -742,7 +863,7 @@ class Generator:
                     ":::tip",
                     "",
                     f"- See all available keys of this object on the [{parent.title}]({self.url(parent)}) page.",
-                    f"- These options apply only when `type: {page.applies}`.",
+                    f"- These options apply only when `type: {' or '.join(page.applies)}`.",
                     "",
                     ":::",
                     "",
@@ -785,7 +906,7 @@ class Generator:
                 out.append(p)
         if d == "":
             return []
-        return out
+        return sorted(out, key=lambda c: (c.title.lower(), c.file))
 
     def render_overview(self, page: Page) -> str:
         n, label, _ = self.resolved[(page.file, 0)][0:3]
@@ -842,7 +963,7 @@ class Generator:
         problems = []
         for k, c in self.schemas.children(self.root_node):
             if self.page_for(k, c) is None:
-                problems.append(f"root key '{k}' is not covered by any page in docs-pages.yaml")
+                problems.append(f"root key '{k}' is not covered by any page (add x-docs-page to it in the schema)")
         files = [p.file for p in self.pages]
         for f in {f for f in files if files.count(f) > 1}:
             problems.append(f"page '{f}' is listed more than once")
@@ -1079,7 +1200,6 @@ def existing_files(out_dir: Path) -> set[str]:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--schema", type=Path, default=SCRIPT_DIR / "values.schema.source.json")
-    ap.add_argument("--pages", type=Path, default=SCRIPT_DIR / "docs-pages.yaml")
     ap.add_argument("--output", type=Path, default=SCRIPT_DIR / "docs")
     ap.add_argument("--examples", type=Path, default=SCRIPT_DIR / "examples")
     ap.add_argument("--base-url", default="/truecharts-common")
@@ -1088,7 +1208,7 @@ def main() -> int:
     ap.add_argument("--no-lint", action="store_true", help="skip markdownlint")
     args = ap.parse_args()
 
-    gen = Generator(args.schema, args.pages, args.base_url)
+    gen = Generator(args.schema, args.base_url)
     outputs, problems = gen.build(args.examples)
     problems += check_titles(gen)
 
@@ -1107,7 +1227,7 @@ def main() -> int:
     known_examples = {a for p in gen.pages for a in p.example_files()}
     for ex in sorted(existing_files(args.examples)):
         if ex not in known_examples:
-            problems.append(f"examples/{ex} has no page in docs-pages.yaml")
+            problems.append(f"examples/{ex} has no page")
 
     if args.check:
         stale = []

@@ -105,7 +105,10 @@
                 }
               },
               "additionalProperties": false,
-              "description": "A container of the pod. The shared container settings are in [container](/truecharts-common/workload/podSpec/containers)."
+              "description": "A container of the pod. The shared container settings are in [container](/truecharts-common/workload/podSpec/containers).",
+              "x-docs-page": {
+                "title": "Container"
+              }
             },
             "description": "Containers of the pod, keyed by name."
           },
@@ -340,7 +343,10 @@
         "additionalProperties": false,
         "description": "Settings of the pods of the workload: containers, init containers and pod level options.",
         "default": {},
-        "x-docs-required": true
+        "x-docs-required": true,
+        "x-docs-page": {
+          "title": "Pod Spec"
+        }
       },
       "replicas": {
         "type": [
@@ -649,7 +655,32 @@
     "additionalProperties": false,
     "description": "A workload, spawned as a Deployment, StatefulSet, DaemonSet, Job or CronJob.",
     "default": {},
-    "x-docs-required": true
+    "x-docs-required": true,
+    "x-docs-page": {
+      "title": "Workload",
+      "types": {
+        "Deployment": {
+          "file": "deployment",
+          "title": "Deployment"
+        },
+        "StatefulSet": {
+          "file": "statefulset",
+          "title": "StatefulSet"
+        },
+        "DaemonSet": {
+          "file": "daemonset",
+          "title": "DaemonSet"
+        },
+        "CronJob": {
+          "file": "cronjob",
+          "title": "CronJob"
+        },
+        "Job": {
+          "file": "job",
+          "title": "Job"
+        }
+      }
+    }
   },
   "description": "Workloads of the chart, keyed by name."
 }
