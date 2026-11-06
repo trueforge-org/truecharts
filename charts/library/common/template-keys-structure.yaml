@@ -212,7 +212,7 @@ priorityClass:
     labels: variableName
     preemptionPolicy: variableName
     value: variableName
-prometheusrule: variableName
+prometheusRule: variableName
 rbac:
   objectName:
     allServiceAccounts: variableName
@@ -249,7 +249,9 @@ securityContext:
     PUID: variableName
     UMASK: variableName
     runAsGroup: variableName
+    runAsNonRoot: variableName
     runAsUser: variableName
+    seccompProfile: variableName
   pod:
     fsGroup: variableName
 service:

@@ -74,6 +74,9 @@ tests:
                 fsGroup: 568
                 runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with overridden region
     set:
@@ -144,6 +147,9 @@ tests:
                 fsGroup: 568
                 runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with changed defaults
     set:
@@ -189,6 +195,9 @@ tests:
                 fsGroup: 568
                 runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with storageClassName
     set:
@@ -235,6 +244,9 @@ tests:
                 fsGroup: 568
                 runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with volumeSnapshotClass
     set:
@@ -281,6 +293,9 @@ tests:
                 fsGroup: 568
                 runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with volumeSnapshotClass and StorageClass
     set:
@@ -329,6 +344,9 @@ tests:
                 fsGroup: 568
                 runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with cleanup flags
     set:
@@ -374,6 +392,9 @@ tests:
                 fsGroup: 568
                 runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with destinationPVC
     set:
@@ -420,6 +441,9 @@ tests:
                 fsGroup: 568
                 runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with customCA
     set:
@@ -495,6 +519,9 @@ tests:
                 fsGroup: 568
                 runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with customCA and uppercase credentials name
     set:
@@ -570,6 +597,9 @@ tests:
                 fsGroup: 568
                 runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                seccompProfile:
+                  type: RuntimeDefault
 
   - it: should generate correct spec with customCASecretRef
     set:
@@ -652,3 +682,6 @@ tests:
                 fsGroup: 568
                 runAsUser: 568
                 runAsGroup: 568
+                runAsNonRoot: true
+                seccompProfile:
+                  type: RuntimeDefault

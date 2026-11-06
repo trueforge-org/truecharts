@@ -151,3 +151,45 @@ tests:
           value:
             - ReadWriteMany
             - ReadWriteOnce
+  - it: should leave strategy as defined when the RWO volume is mounted by another workload
+    set:
+      workload:
+        some-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          strategy: RollingUpdate
+          podSpec: {}
+        other-workload:
+          enabled: true
+          type: Deployment
+          strategy: RollingUpdate
+          podSpec: {}
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          accessModes:
+            - ReadWriteOnce
+          targetSelector:
+            other-workload:
+              other-workload:
+                mountPath: /data
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test
+        isKind:
+          of: Deployment
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test
+        equal:
+          path: spec.strategy.type
+          value: RollingUpdate
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-other-workload
+        equal:
+          path: spec.strategy.type
+          value: Recreate
