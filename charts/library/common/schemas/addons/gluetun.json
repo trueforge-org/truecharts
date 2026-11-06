@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "default": false,
+      "description": "Enable the Gluetun VPN addon."
+    },
+    "targetSelector": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "main"
+      ],
+      "description": "Workloads to which the Gluetun container is added. Defaults to the primary workload."
+    },
+    "container": {
+      "allOf": [
+        {
+          "$ref": "container.json"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "env": {
+              "$ref": "gluetun/container/env.json",
+              "description": "Environment variables of the gluetun container, for the VPN settings."
+            }
+          }
+        }
+      ],
+      "description": "Container of the gluetun add-on."
+    },
+    "secret": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "basePath": {
+            "type": "string",
+            "description": "Path in the container where the secret files are mounted."
+          },
+          "defaultMode": {
+            "type": "string",
+            "description": "Octal file mode of the mounted files, for example `0777`."
+          },
+          "data": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": {
+              "type": "string",
+              "description": "Content of the file"
+            },
+            "description": "Files of the secret, keyed by file name."
+          },
+          "namespace": {
+            "$ref": "../secret.json#/additionalProperties/properties/namespace",
+            "description": "Namespace of the secret. Defaults to the namespace of the release."
+          },
+          "labels": {
+            "$ref": "../secret.json#/additionalProperties/properties/labels",
+            "description": "Additional labels for secret."
+          },
+          "annotationsList": {
+            "$ref": "../secret.json#/additionalProperties/properties/annotationsList",
+            "description": "Additional annotations as a list of name and value pairs, merged into the annotations."
+          },
+          "labelsList": {
+            "$ref": "../secret.json#/additionalProperties/properties/labelsList",
+            "description": "Additional labels as a list of name and value pairs, merged into the labels."
+          },
+          "annotations": {
+            "$ref": "../secret.json#/additionalProperties/properties/annotations",
+            "description": "Additional annotations for secret."
+          },
+          "type": {
+            "$ref": "../secret.json#/additionalProperties/properties/type",
+            "description": "Kubernetes type of the secret, eg `Opaque`."
+          }
+        },
+        "required": [
+          "basePath"
+        ],
+        "additionalProperties": false,
+        "description": "Define a secret that is mounted into the Gluetun container."
+      },
+      "description": "Secrets mounted into the Gluetun container, for example the WireGuard configuration. Each key is a name for the secret."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Configuration for the Gluetun addon."
+}

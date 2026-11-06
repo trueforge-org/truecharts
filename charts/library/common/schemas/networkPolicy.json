@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "allOf": [
+      {
+        "$ref": "networkPolicy/policy.json"
+      }
+    ],
+    "description": "A network policy, keyed by name."
+  },
+  "description": "Network policies, keyed by name. Every enabled entry renders a NetworkPolicy, see [NetworkPolicy](/truecharts-common/networkPolicy)."
+}

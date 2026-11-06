@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "description": "Enables the MariaDB dependency. Supports Helm `tpl`.",
+      "default": false,
+      "x-helm-tpl": true
+    },
+    "includeCommon": {
+      "type": "boolean",
+      "description": "Marker for charts that the dependency uses common. Not read by common.",
+      "default": false
+    },
+    "password": {
+      "type": "string",
+      "description": "Password of the database user.",
+      "minLength": 1,
+      "default": "PLACEHOLDERPASSWORD"
+    },
+    "rootPassword": {
+      "type": "string",
+      "description": "Password of the `root` user.",
+      "minLength": 1,
+      "default": "PLACEHOLDERROOTPASSWORD"
+    },
+    "mariadbUsername": {
+      "type": "string",
+      "description": "Name of the database user, used in the connection URLs."
+    },
+    "mariadbDatabase": {
+      "type": "string",
+      "description": "Name of the database, used in the connection URLs."
+    },
+    "creds": {
+      "type": "object",
+      "properties": {
+        "mariadbPassword": {
+          "type": "string",
+          "description": "Password."
+        },
+        "mariadbRootPassword": {
+          "type": "string",
+          "description": "Password of the `root` user."
+        },
+        "plain": {
+          "type": "string",
+          "description": "Hostname."
+        },
+        "plainhost": {
+          "type": "string",
+          "description": "Hostname."
+        },
+        "plainport": {
+          "type": "string",
+          "description": "Hostname and port."
+        },
+        "plainporthost": {
+          "type": "string",
+          "description": "Hostname and port."
+        },
+        "complete": {
+          "type": "string",
+          "description": "Connection URL."
+        },
+        "urlnossl": {
+          "type": "string",
+          "description": "Connection URL with `sslmode=disable`."
+        },
+        "jdbc": {
+          "type": "string",
+          "description": "JDBC URL."
+        },
+        "jdbcmysql": {
+          "type": "string",
+          "description": "JDBC URL for MySQL."
+        },
+        "jdbcmariadb": {
+          "type": "string",
+          "description": "JDBC URL for MariaDB."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Connection details written by common, so apps using the dependency can use them. Read only.",
+      "default": {}
+    }
+  },
+  "additionalProperties": false,
+  "description": "MariaDB dependency configuration."
+}

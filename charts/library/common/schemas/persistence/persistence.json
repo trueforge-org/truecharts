@@ -1,0 +1,1437 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "shared": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Create the built-in `shared` volume. Set to `false` to remove it.",
+          "default": true,
+          "x-helm-tpl": true
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "pvc",
+            "hostPath",
+            "emptyDir",
+            "nfs",
+            "iscsi",
+            "device",
+            "configmap",
+            "secret",
+            "vct"
+          ],
+          "description": "Type of the volume, `emptyDir` for the built-in volumes. See [Persistence](/truecharts-common/persistence) for the other types.",
+          "default": "emptyDir"
+        },
+        "mountPath": {
+          "type": "string",
+          "description": "Path the volume is mounted at in the selected containers. Defaults to `/shared`.",
+          "default": "/shared"
+        },
+        "targetSelectAll": {
+          "type": "boolean",
+          "description": "Mount the volume in all containers of all workloads. Defaults to `true`.",
+          "default": true
+        },
+        "iscsi": {
+          "allOf": [
+            {
+              "$ref": "../special/iscsi.json"
+            }
+          ],
+          "description": "iSCSI settings, only used when `type` is `iscsi`. See [iSCSI](/truecharts-common/persistence/iscsi)."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Built-in `emptyDir` volume mounted at `/shared` in all containers of all workloads, to share files between containers. Enabled by default."
+    },
+    "varlogs": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Create the built-in `varlogs` volume. Set to `false` to remove it.",
+          "default": true,
+          "x-helm-tpl": true
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "pvc",
+            "hostPath",
+            "emptyDir",
+            "nfs",
+            "iscsi",
+            "device",
+            "configmap",
+            "secret",
+            "vct"
+          ],
+          "description": "Type of the volume, `emptyDir` for the built-in volumes. See [Persistence](/truecharts-common/persistence) for the other types.",
+          "default": "emptyDir"
+        },
+        "mountPath": {
+          "type": "string",
+          "description": "Path the volume is mounted at in the selected containers. Defaults to `/var/logs`.",
+          "default": "/var/logs"
+        },
+        "medium": {
+          "type": "string",
+          "description": "Medium of the `emptyDir`. `Memory` keeps the data in RAM (tmpfs), an empty string uses the disk of the node. Defaults to `Memory`.",
+          "default": "Memory"
+        },
+        "targetSelectAll": {
+          "type": "boolean",
+          "description": "Mount the volume in all containers of all workloads. Defaults to `true`.",
+          "default": true
+        },
+        "iscsi": {
+          "allOf": [
+            {
+              "$ref": "../special/iscsi.json"
+            }
+          ],
+          "description": "iSCSI settings, only used when `type` is `iscsi`. See [iSCSI](/truecharts-common/persistence/iscsi)."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Built-in in-memory `emptyDir` volume mounted at `/var/logs` in all containers of all workloads, so apps can write logs while the root filesystem is read-only. Enabled by default."
+    },
+    "varrun": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Create the built-in `varrun` volume. Set to `false` to remove it.",
+          "default": true,
+          "x-helm-tpl": true
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "pvc",
+            "hostPath",
+            "emptyDir",
+            "nfs",
+            "iscsi",
+            "device",
+            "configmap",
+            "secret",
+            "vct"
+          ],
+          "description": "Type of the volume, `emptyDir` for the built-in volumes. See [Persistence](/truecharts-common/persistence) for the other types.",
+          "default": "emptyDir"
+        },
+        "mountPath": {
+          "type": "string",
+          "description": "Path the volume is mounted at in the selected containers. Defaults to `/var/run`.",
+          "default": "/var/run"
+        },
+        "medium": {
+          "type": "string",
+          "description": "Medium of the `emptyDir`. `Memory` keeps the data in RAM (tmpfs), an empty string uses the disk of the node. Defaults to `Memory`.",
+          "default": "Memory"
+        },
+        "targetSelectAll": {
+          "type": "boolean",
+          "description": "Mount the volume in all containers of all workloads. Defaults to `true`.",
+          "default": true
+        },
+        "iscsi": {
+          "allOf": [
+            {
+              "$ref": "../special/iscsi.json"
+            }
+          ],
+          "description": "iSCSI settings, only used when `type` is `iscsi`. See [iSCSI](/truecharts-common/persistence/iscsi)."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Built-in in-memory `emptyDir` volume mounted at `/var/run` in all containers of all workloads, for PID files and sockets. Enabled by default."
+    },
+    "tmp": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Create the built-in `tmp` volume. Set to `false` to remove it.",
+          "default": true,
+          "x-helm-tpl": true
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "pvc",
+            "hostPath",
+            "emptyDir",
+            "nfs",
+            "iscsi",
+            "device",
+            "configmap",
+            "secret",
+            "vct"
+          ],
+          "description": "Type of the volume, `emptyDir` for the built-in volumes. See [Persistence](/truecharts-common/persistence) for the other types.",
+          "default": "emptyDir"
+        },
+        "mountPath": {
+          "type": "string",
+          "description": "Path the volume is mounted at in the selected containers. Defaults to `/tmp`.",
+          "default": "/tmp"
+        },
+        "medium": {
+          "type": "string",
+          "description": "Medium of the `emptyDir`. `Memory` keeps the data in RAM (tmpfs), an empty string uses the disk of the node. Defaults to `Memory`.",
+          "default": "Memory"
+        },
+        "targetSelectAll": {
+          "type": "boolean",
+          "description": "Mount the volume in all containers of all workloads. Defaults to `true`.",
+          "default": true
+        },
+        "iscsi": {
+          "allOf": [
+            {
+              "$ref": "../special/iscsi.json"
+            }
+          ],
+          "description": "iSCSI settings, only used when `type` is `iscsi`. See [iSCSI](/truecharts-common/persistence/iscsi)."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Built-in in-memory `emptyDir` volume mounted at `/tmp` in all containers of all workloads, as scratch space while the root filesystem is read-only. Enabled by default."
+    },
+    "devshm": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Create the built-in `devshm` volume. Set to `false` to remove it.",
+          "default": true,
+          "x-helm-tpl": true
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "pvc",
+            "hostPath",
+            "emptyDir",
+            "nfs",
+            "iscsi",
+            "device",
+            "configmap",
+            "secret",
+            "vct"
+          ],
+          "description": "Type of the volume, `emptyDir` for the built-in volumes. See [Persistence](/truecharts-common/persistence) for the other types.",
+          "default": "emptyDir"
+        },
+        "mountPath": {
+          "type": "string",
+          "description": "Path the volume is mounted at in the selected containers. Defaults to `/dev/shm`.",
+          "default": "/dev/shm"
+        },
+        "medium": {
+          "type": "string",
+          "description": "Medium of the `emptyDir`. `Memory` keeps the data in RAM (tmpfs), an empty string uses the disk of the node. Defaults to `Memory`.",
+          "default": "Memory"
+        },
+        "targetSelectAll": {
+          "type": "boolean",
+          "description": "Mount the volume in all containers of all workloads. Defaults to `true`.",
+          "default": true
+        },
+        "iscsi": {
+          "allOf": [
+            {
+              "$ref": "../special/iscsi.json"
+            }
+          ],
+          "description": "iSCSI settings, only used when `type` is `iscsi`. See [iSCSI](/truecharts-common/persistence/iscsi)."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Built-in in-memory `emptyDir` volume mounted at `/dev/shm` in all containers of all workloads, for shared memory. Enabled by default."
+    }
+  },
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "size": {
+        "type": "string",
+        "description": "Size limit of the `emptyDir`, as a quantity. Only for `type: emptyDir`.",
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "emptyDir",
+          "pvc",
+          "vct"
+        ],
+        "examples": [
+          "1Gi"
+        ]
+      },
+      "medium": {
+        "type": "string",
+        "description": "Medium of the `emptyDir`: `Memory` keeps the data in RAM (tmpfs), an empty string uses the disk of the node. Only for `type: emptyDir`.",
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "emptyDir"
+        ]
+      },
+      "objectName": {
+        "type": "string",
+        "description": "Name of the Secret or ConfigMap to mount. Only for `type: secret` and `type: configmap`.",
+        "x-helm-tpl": true,
+        "x-docs-required": true,
+        "x-docs-appliesTo": [
+          "configmap",
+          "secret"
+        ]
+      },
+      "expandObjectName": {
+        "type": "boolean",
+        "description": "Prefix `objectName` with the release fullname. Set to `false` for an object that is not created by this chart. Only for `type: secret` and `type: configmap`.",
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "configmap",
+          "secret"
+        ]
+      },
+      "optional": {
+        "type": "boolean",
+        "description": "Allow the pod to start when the Secret or ConfigMap does not exist. Only for `type: secret` and `type: configmap`.",
+        "x-docs-appliesTo": [
+          "configmap",
+          "secret"
+        ]
+      },
+      "defaultMode": {
+        "type": "string",
+        "description": "Permission mode of the files in the volume, as a quoted octal string. Only for `type: secret` and `type: configmap`.",
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "configmap",
+          "secret"
+        ],
+        "examples": [
+          "0644"
+        ]
+      },
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "A key of the Secret or ConfigMap and the file it is mounted as.",
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "Relative path of the file the key is mounted as.",
+              "x-helm-tpl": true,
+              "x-docs-required": true,
+              "x-docs-appliesTo": [
+                "configmap",
+                "secret"
+              ]
+            },
+            "key": {
+              "type": "string",
+              "description": "Key of the Secret or ConfigMap.",
+              "x-helm-tpl": true,
+              "x-docs-required": true,
+              "x-docs-appliesTo": [
+                "configmap",
+                "secret"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "description": "Keys of the Secret or ConfigMap to project, each to its own file. Without items, all keys are mounted.",
+        "x-docs-appliesTo": [
+          "configmap",
+          "secret"
+        ]
+      },
+      "iscsi": {
+        "allOf": [
+          {
+            "$ref": "../special/iscsi.json"
+          }
+        ],
+        "x-docs-appliesTo": [
+          "iscsi"
+        ],
+        "description": "iSCSI settings, only used when `type` is `iscsi`. See [iSCSI](/truecharts-common/persistence/iscsi)."
+      },
+      "path": {
+        "type": "string",
+        "description": "Path of the NFS export on the server. Only for `type: nfs`.",
+        "x-helm-tpl": true,
+        "x-docs-required": true,
+        "x-docs-appliesTo": [
+          "nfs"
+        ],
+        "examples": [
+          "/exports/data"
+        ]
+      },
+      "server": {
+        "type": "string",
+        "description": "Hostname or IP of the NFS server. Only for `type: nfs`.",
+        "x-helm-tpl": true,
+        "x-docs-required": true,
+        "x-docs-appliesTo": [
+          "nfs"
+        ],
+        "examples": [
+          "192.168.1.10"
+        ]
+      },
+      "targetSelector": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {},
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "readOnly": {
+                "type": "boolean",
+                "description": "Mount the volume read-only in this container."
+              },
+              "mountPath": {
+                "type": "string",
+                "description": "Path the volume is mounted at in this container.",
+                "x-helm-tpl": true
+              },
+              "mountPropagation": {
+                "type": "string",
+                "description": "Mount propagation in this container: `None`, `HostToContainer` or `Bidirectional`.",
+                "x-helm-tpl": true
+              },
+              "subPath": {
+                "type": "string",
+                "description": "Path within the volume that is mounted instead of its root.",
+                "x-helm-tpl": true
+              }
+            },
+            "additionalProperties": false,
+            "description": "Mount settings of this container."
+          },
+          "description": "Containers of this workload that mount the volume, keyed by container name.",
+          "default": {}
+        },
+        "description": "Where the volume is mounted, as a map of workload name to a map of container name to mount settings. Defaults to the primary workload and its primary container.",
+        "default": {}
+      },
+      "hostPath": {
+        "type": "string",
+        "description": "Path on the node. Only for `type: hostPath`.",
+        "x-helm-tpl": true,
+        "x-docs-required": true,
+        "x-docs-appliesTo": [
+          "device",
+          "hostPath"
+        ],
+        "examples": [
+          "/mnt/data"
+        ]
+      },
+      "hostPathType": {
+        "type": "string",
+        "description": "Type of the host path, eg `Directory` or `DirectoryOrCreate`. Only for `type: hostPath`.",
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "device",
+          "hostPath"
+        ]
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "../special/labels.json"
+          }
+        ],
+        "description": "Additional labels of the PVC. Only for `type: pvc` and `type: vct`.",
+        "x-helm-tpl": "On value only",
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
+      },
+      "annotationsList": {
+        "allOf": [
+          {
+            "$ref": "../special/annotationsList.json"
+          }
+        ],
+        "description": "Additional annotations as a list of name and value pairs, merged into the annotations"
+      },
+      "labelsList": {
+        "allOf": [
+          {
+            "$ref": "../special/labelsList.json"
+          }
+        ],
+        "description": "Additional labels as a list of name and value pairs, merged into the labels"
+      },
+      "annotations": {
+        "allOf": [
+          {
+            "$ref": "../special/annotations.json"
+          }
+        ],
+        "description": "Additional annotations of the PVC. Only for `type: pvc` and `type: vct`.",
+        "x-helm-tpl": "On value only",
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
+      },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "../special/namespaces.json"
+          }
+        ],
+        "description": "Namespace of the object. Defaults to the release namespace.",
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
+      },
+      "retain": {
+        "type": "boolean",
+        "description": "Add the Helm `helm.sh/resource-policy: keep` annotation, so Helm keeps the PVC on uninstall. This does not **guarantee** that the PVC is retained.",
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
+      },
+      "accessModes": {
+        "type": [
+          "array",
+          "string"
+        ],
+        "description": "Access modes of the PVC, for example `ReadWriteOnce`. A single mode can be a string, multiple modes a list.",
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
+      },
+      "accessMode": {
+        "type": "string",
+        "description": "Legacy singular spelling of `accessModes`. Set by common-test fixtures (statefulset) but ignored by the templates, which read `accessModes`.",
+        "x-docs-internal": true
+      },
+      "copyMethod": {
+        "type": "string",
+        "enum": [
+          "Clone",
+          "Direct",
+          "Snapshot"
+        ],
+        "description": "Define the VolSync copyMethod at item level. Set by common-test volsync fixtures, but the templates only read `copyMethod` inside `volsync` entries, so it is ignored here.",
+        "x-docs-internal": true
+      },
+      "volumeName": {
+        "type": "string",
+        "description": "Name of an existing PersistentVolume the claim binds to.",
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
+      },
+      "existingClaim": {
+        "type": "string",
+        "description": "Name of an existing PVC to use, instead of creating one.",
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
+      },
+      "storageClass": {
+        "type": "string",
+        "description": "StorageClass of the PVC. When unset, `global.fallbackDefaults.storageClass` is used, and when that is unset too, the default StorageClass of the cluster.",
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
+      },
+      "dataSource": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the data source.",
+            "x-docs-required": true
+          },
+          "kind": {
+            "type": "string",
+            "description": "Kind of the data source, for example `VolumeSnapshot`.",
+            "x-docs-required": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Data source the PVC is populated from, for example a VolumeSnapshot.",
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
+      },
+      "static": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "description": "Kind of PersistentVolume to create: `nfs`, `smb` or `custom`.",
+            "x-docs-required": true
+          },
+          "server": {
+            "type": "string",
+            "description": "Hostname or IP of the NFS or SMB server.",
+            "x-helm-tpl": true,
+            "x-docs-required": true,
+            "examples": [
+              "192.168.1.10"
+            ]
+          },
+          "share": {
+            "type": "string",
+            "description": "Path (NFS) or name (SMB) of the share on the server.",
+            "x-helm-tpl": true,
+            "x-docs-required": true,
+            "examples": [
+              "/exports/data"
+            ]
+          },
+          "username": {
+            "type": "string",
+            "description": "Username for the SMB share."
+          },
+          "user": {
+            "type": "string",
+            "description": "User for the SMB share.",
+            "x-docs-required": true
+          },
+          "password": {
+            "type": "string",
+            "description": "Password for the SMB share.",
+            "x-docs-required": true
+          },
+          "domain": {
+            "type": "string",
+            "description": "Domain of the SMB share."
+          },
+          "driver": {
+            "type": "string",
+            "description": "CSI driver of the PersistentVolume. Only for `mode: custom`.",
+            "x-docs-required": true
+          },
+          "provisioner": {
+            "type": "string",
+            "description": "Provisioner annotation of the PersistentVolume. Only for `mode: custom`.",
+            "x-docs-required": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Static provisioning of the PVC with a PersistentVolume that is created by common.",
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
+      },
+      "mountOptions": {
+        "type": "array",
+        "description": "Mount options of the PersistentVolume. Only for `static.mode: nfs` and `static.mode: smb`.",
+        "items": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": [
+                "number",
+                "string"
+              ],
+              "description": "Value of the mount option. Leave empty for an option without a value.",
+              "x-helm-tpl": true,
+              "x-docs-appliesTo": [
+                "pvc",
+                "vct"
+              ]
+            },
+            "key": {
+              "type": "string",
+              "description": "Name of the mount option, eg `nfsvers`.",
+              "x-helm-tpl": true,
+              "x-docs-required": true,
+              "x-docs-appliesTo": [
+                "pvc",
+                "vct"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "description": "A mount option of the PersistentVolume."
+        },
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
+      },
+      "volumeSnapshots": {
+        "type": "array",
+        "description": "VolumeSnapshots of the PVC that are created by the chart.",
+        "items": {
+          "type": "object",
+          "properties": {
+            "volumeSnapshotClassName": {
+              "type": "string",
+              "description": "VolumeSnapshotClass of the snapshot. Defaults to `global.fallbackDefaults.volumeSnapshotClass`.",
+              "x-docs-appliesTo": [
+                "pvc",
+                "vct"
+              ]
+            },
+            "name": {
+              "type": "string",
+              "description": "Name of the VolumeSnapshot, appended to the name of the PVC.",
+              "x-docs-appliesTo": [
+                "pvc",
+                "vct"
+              ]
+            },
+            "enabled": {
+              "type": [
+                "boolean",
+                "string"
+              ],
+              "properties": {},
+              "additionalProperties": false,
+              "description": "Create this VolumeSnapshot.",
+              "x-docs-appliesTo": [
+                "pvc",
+                "vct"
+              ],
+              "x-helm-tpl": true
+            },
+            "labels": {
+              "allOf": [
+                {
+                  "$ref": "../special/labels.json"
+                }
+              ],
+              "description": "Additional labels of the VolumeSnapshot.",
+              "x-helm-tpl": "On value only",
+              "x-docs-appliesTo": [
+                "pvc",
+                "vct"
+              ]
+            },
+            "annotations": {
+              "allOf": [
+                {
+                  "$ref": "../special/annotations.json"
+                }
+              ],
+              "description": "Additional annotations of the VolumeSnapshot.",
+              "x-helm-tpl": "On value only",
+              "x-docs-appliesTo": [
+                "pvc",
+                "vct"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "description": "A VolumeSnapshot of the PVC."
+        },
+        "x-docs-appliesTo": [
+          "pvc",
+          "vct"
+        ]
+      },
+      "fsType": {
+        "type": "string",
+        "description": "File system of the volume, eg `ext4`.",
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "iscsi"
+        ]
+      },
+      "targetPortal": {
+        "type": "string",
+        "description": "Portal of the target, as `host:port`.",
+        "x-helm-tpl": true,
+        "x-docs-required": true,
+        "x-docs-appliesTo": [
+          "iscsi"
+        ]
+      },
+      "iqn": {
+        "type": "string",
+        "description": "iSCSI qualified name of the target.",
+        "x-helm-tpl": true,
+        "x-docs-required": true,
+        "x-docs-appliesTo": [
+          "iscsi"
+        ]
+      },
+      "lun": {
+        "type": [
+          "integer",
+          "string"
+        ],
+        "description": "LUN number of the target.",
+        "x-helm-tpl": true,
+        "x-docs-required": true,
+        "x-docs-appliesTo": [
+          "iscsi"
+        ]
+      },
+      "initiatorName": {
+        "type": "string",
+        "description": "iSCSI initiator name of the node.",
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "iscsi"
+        ]
+      },
+      "iscsiInterface": {
+        "type": "string",
+        "description": "iSCSI interface of the node, eg `default`.",
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "iscsi"
+        ]
+      },
+      "portals": {
+        "type": "array",
+        "description": "Additional portals of the target, as `host:port`.",
+        "x-helm-tpl": "On entries only",
+        "x-docs-appliesTo": [
+          "iscsi"
+        ],
+        "items": {
+          "type": "string",
+          "description": "A portal, as `host:port`."
+        }
+      },
+      "domain": {
+        "type": "string",
+        "description": "Domain of the SMB share, used by the SMB CSI driver."
+      },
+      "name": {
+        "type": "string",
+        "description": "Set by the chart, the name of the generated persistence resource. Do not set this manually",
+        "x-docs-internal": true
+      },
+      "shortName": {
+        "type": "string",
+        "description": "Set by the chart, the short name of the persistence used in generated resource names. Do not set this manually",
+        "x-docs-internal": true
+      },
+      "autoPermissions": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "Run the permissions init container for this volume."
+          },
+          "chown": {
+            "type": "boolean",
+            "description": "Change the owner of the volume to `user` and `group`."
+          },
+          "chmod": {
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "Mode to apply to the volume, for example `775`.",
+            "examples": [
+              "775"
+            ]
+          },
+          "recursive": {
+            "type": "boolean",
+            "description": "Apply the chown and chmod recursively."
+          },
+          "user": {
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "User ID to change the owner of the volume to."
+          },
+          "group": {
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "Group ID to change the group of the volume to."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Set the ownership and mode of the volume with an init container before the app starts."
+      },
+      "volsync": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "A VolSync backup and restore pair.",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the VolSync backup, used in the names of the generated resources."
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "restic"
+              ],
+              "description": "VolSync mover type, for example `restic`."
+            },
+            "credentials": {
+              "type": "string",
+              "description": "Name of the entry in `credentials` that holds the backup repository settings."
+            },
+            "copyMethod": {
+              "type": "string",
+              "enum": [
+                "Clone",
+                "Direct",
+                "Snapshot"
+              ],
+              "description": "How VolSync copies the data: `Snapshot`, `Clone` or `Direct`. Defaults to `Snapshot`."
+            },
+            "cleanupTempPVC": {
+              "type": "boolean",
+              "description": "Delete the temporary PVC of the ReplicationDestination after the restore."
+            },
+            "cleanupCachePVC": {
+              "type": "boolean",
+              "description": "Delete the cache PVC of the ReplicationDestination after the restore."
+            },
+            "labels": {
+              "allOf": [
+                {
+                  "$ref": "../special/labels.json"
+                }
+              ],
+              "description": "Additional labels for the VolSync resources"
+            },
+            "annotations": {
+              "allOf": [
+                {
+                  "$ref": "../special/annotations.json"
+                }
+              ],
+              "description": "Additional annotations for the VolSync resources"
+            },
+            "src": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
+                  "description": "Enables or Disables the VolSync source, which backs up the data",
+                  "x-helm-tpl": true
+                },
+                "trigger": {
+                  "type": "object",
+                  "properties": {
+                    "schedule": {
+                      "type": "string",
+                      "description": "Cron schedule of the backup. Defaults to `0 0 * * *`.",
+                      "examples": [
+                        "0 3 * * *"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "When the backup is triggered."
+                },
+                "retain": {
+                  "type": "object",
+                  "properties": {
+                    "hourly": {
+                      "type": "integer",
+                      "description": "Define the number of hourly snapshots to retain, defaults to 6"
+                    },
+                    "daily": {
+                      "type": "integer",
+                      "description": "Define the number of daily snapshots to retain, defaults to 5"
+                    },
+                    "weekly": {
+                      "type": "integer",
+                      "description": "Define the number of weekly snapshots to retain, defaults to 4"
+                    },
+                    "monthly": {
+                      "type": "integer",
+                      "description": "Define the number of monthly snapshots to retain, defaults to 3"
+                    },
+                    "yearly": {
+                      "type": "integer",
+                      "description": "Define the number of yearly snapshots to retain, defaults to 1"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "How many snapshots to keep per interval."
+                },
+                "pruneIntervalDays": {
+                  "type": "integer",
+                  "description": "Days between prunes of old snapshots. Defaults to `7`."
+                },
+                "accessModes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "An access mode, for example `ReadWriteOnce`."
+                  },
+                  "description": "Access modes of the PVC used for the source."
+                },
+                "storageClassName": {
+                  "type": "string",
+                  "description": "Define the storageClassName of the source storage"
+                },
+                "volumeSnapshotClassName": {
+                  "type": "string",
+                  "description": "Define the volumeSnapshotClassName used for the source snapshots"
+                },
+                "cacheCapacity": {
+                  "type": "string",
+                  "description": "Size of the cache PVC, as a quantity. Defaults to `10Gi`.",
+                  "examples": [
+                    "10Gi"
+                  ]
+                },
+                "cacheStorageClassName": {
+                  "type": "string",
+                  "description": "Define the storageClassName of the cache PVC"
+                },
+                "cacheAccessModes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "An access mode, for example `ReadWriteOnce`."
+                  },
+                  "description": "Access modes of the cache PVC."
+                },
+                "moverSecurityContext": {
+                  "type": "object",
+                  "properties": {
+                    "fsGroup": {
+                      "type": "integer",
+                      "description": "Group ID owning the volumes of the pod, and the files created in them."
+                    },
+                    "runAsGroup": {
+                      "type": "integer",
+                      "description": "Group ID of the first process of the containers of the pod."
+                    },
+                    "runAsUser": {
+                      "type": "integer",
+                      "description": "User ID of the first process of the containers of the pod."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Pod security context of the VolSync mover pod of the source."
+                }
+              },
+              "required": [
+                "enabled"
+              ],
+              "additionalProperties": false,
+              "description": "The ReplicationSource, which backs up the data."
+            },
+            "dest": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
+                  "description": "Enables or Disables the VolSync destination, which restores the data",
+                  "x-helm-tpl": true
+                },
+                "capacity": {
+                  "type": "string",
+                  "description": "Size of the restored volume, as a quantity.",
+                  "examples": [
+                    "100Gi"
+                  ]
+                },
+                "accessModes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "An access mode, for example `ReadWriteOnce`."
+                  },
+                  "description": "Access modes of the restored volume."
+                },
+                "storageClassName": {
+                  "type": "string",
+                  "description": "Define the storageClassName of the destination storage"
+                },
+                "volumeSnapshotClassName": {
+                  "type": "string",
+                  "description": "Define the volumeSnapshotClassName used for the destination snapshots"
+                },
+                "cacheCapacity": {
+                  "type": "string",
+                  "description": "Size of the cache PVC, as a quantity. Defaults to `10Gi`.",
+                  "examples": [
+                    "10Gi"
+                  ]
+                },
+                "cacheStorageClassName": {
+                  "type": "string",
+                  "description": "Define the storageClassName of the cache PVC"
+                },
+                "cacheAccessModes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "An access mode, for example `ReadWriteOnce`."
+                  },
+                  "description": "Access modes of the cache PVC."
+                },
+                "moverSecurityContext": {
+                  "type": "object",
+                  "properties": {
+                    "fsGroup": {
+                      "type": "integer",
+                      "description": "Group ID owning the volumes of the pod, and the files created in them."
+                    },
+                    "runAsGroup": {
+                      "type": "integer",
+                      "description": "Group ID of the first process of the containers of the pod."
+                    },
+                    "runAsUser": {
+                      "type": "integer",
+                      "description": "User ID of the first process of the containers of the pod."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Pod security context of the VolSync mover pod of the destination."
+                }
+              },
+              "required": [
+                "enabled"
+              ],
+              "additionalProperties": false,
+              "description": "The ReplicationDestination, which restores the data."
+            }
+          },
+          "required": [
+            "name",
+            "type",
+            "credentials",
+            "src",
+            "dest"
+          ],
+          "additionalProperties": false
+        },
+        "description": "VolSync backups and restores of this PVC. Only for `type: pvc` and `type: vct`."
+      },
+      "sources": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "A source of the projected volume. Set one of `serviceAccountToken`, `secret`, `configMap` or `downwardAPI`.",
+          "properties": {
+            "serviceAccountToken": {
+              "type": "object",
+              "properties": {
+                "audience": {
+                  "type": "string",
+                  "description": "Intended audience of the token. Defaults to the audience of the API server."
+                },
+                "expirationSeconds": {
+                  "type": "integer",
+                  "minimum": 600,
+                  "description": "Requested lifetime of the token in seconds, at least `600`.",
+                  "examples": [
+                    3600
+                  ]
+                },
+                "path": {
+                  "type": "string",
+                  "description": "Path of the token file in the volume."
+                }
+              },
+              "required": [
+                "path"
+              ],
+              "additionalProperties": false,
+              "description": "Project a ServiceAccount token."
+            },
+            "secret": {
+              "type": "object",
+              "properties": {
+                "objectName": {
+                  "type": "string",
+                  "description": "Name of the Secret."
+                },
+                "optional": {
+                  "type": "boolean",
+                  "description": "Allow the pod to start when the Secret does not exist."
+                },
+                "expandObjectName": {
+                  "type": "boolean",
+                  "description": "Prefix `objectName` with the release fullname."
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "description": "A key of the Secret and the file it is projected to.",
+                    "properties": {
+                      "key": {
+                        "type": "string",
+                        "description": "Key of the Secret."
+                      },
+                      "path": {
+                        "type": "string",
+                        "description": "Relative path of the file the key is projected to."
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "path"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "description": "Keys of the Secret to project. Without items, all keys are projected."
+                }
+              },
+              "required": [
+                "objectName",
+                "items"
+              ],
+              "additionalProperties": false,
+              "description": "Project keys of a Secret."
+            },
+            "configMap": {
+              "type": "object",
+              "properties": {
+                "objectName": {
+                  "type": "string",
+                  "description": "Name of the ConfigMap."
+                },
+                "optional": {
+                  "type": "boolean",
+                  "description": "Allow the pod to start when the ConfigMap does not exist."
+                },
+                "expandObjectName": {
+                  "type": "boolean",
+                  "description": "Prefix `objectName` with the release fullname."
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "description": "A key of the ConfigMap and the file it is projected to.",
+                    "properties": {
+                      "key": {
+                        "type": "string",
+                        "description": "Key of the ConfigMap."
+                      },
+                      "path": {
+                        "type": "string",
+                        "description": "Relative path of the file the key is projected to."
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "path"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "description": "Keys of the ConfigMap to project. Without items, all keys are projected."
+                }
+              },
+              "required": [
+                "objectName",
+                "items"
+              ],
+              "additionalProperties": false,
+              "description": "Project keys of a ConfigMap."
+            },
+            "downwardAPI": {
+              "type": "object",
+              "properties": {
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "description": "A field of the pod or a container resource, and the file it is projected to.",
+                    "properties": {
+                      "path": {
+                        "type": "string",
+                        "description": "Relative path of the file in the volume."
+                      },
+                      "fieldRef": {
+                        "type": "object",
+                        "properties": {
+                          "apiVersion": {
+                            "type": "string",
+                            "description": "API version of the field path. Defaults to `v1`."
+                          },
+                          "fieldPath": {
+                            "type": "string",
+                            "description": "Path of the pod field to expose, eg `metadata.name`."
+                          }
+                        },
+                        "additionalProperties": false,
+                        "description": "A field of the pod to expose."
+                      },
+                      "resourceFieldRef": {
+                        "type": "object",
+                        "properties": {
+                          "containerName": {
+                            "type": "string",
+                            "description": "Name of the container the resource belongs to."
+                          },
+                          "resource": {
+                            "type": "string",
+                            "description": "Resource to expose, eg `limits.cpu` or `requests.memory`."
+                          },
+                          "divisor": {
+                            "type": [
+                              "integer",
+                              "string"
+                            ],
+                            "description": "Unit the resource is exposed in, eg `1Mi`. Defaults to `1`."
+                          }
+                        },
+                        "additionalProperties": false,
+                        "description": "A resource of a container to expose."
+                      }
+                    },
+                    "required": [
+                      "path"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "description": "Fields to project."
+                }
+              },
+              "required": [
+                "items"
+              ],
+              "additionalProperties": false,
+              "description": "Project fields of the pod or resources of a container as files."
+            }
+          },
+          "additionalProperties": false
+        },
+        "description": "Sources of a projected volume. Only for `type: projected`."
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Create this volume. Supports Helm `tpl`.",
+        "default": false,
+        "x-helm-tpl": true,
+        "x-docs-required": true
+      },
+      "type": {
+        "type": "string",
+        "description": "Type of the volume: `pvc`, `vct` (StatefulSet volume claim template), `emptyDir`, `hostPath`, `nfs`, `iscsi`, `device`, `configmap`, `secret` or `projected`. See [Persistence](/truecharts-common/persistence).",
+        "enum": [
+          "pvc",
+          "hostPath",
+          "emptyDir",
+          "nfs",
+          "iscsi",
+          "device",
+          "configmap",
+          "secret",
+          "vct",
+          "projected"
+        ]
+      },
+      "mountPath": {
+        "type": "string",
+        "description": "Path the volume is mounted at in all selected containers. Not mounted when empty.",
+        "minLength": 1,
+        "x-helm-tpl": true,
+        "x-docs-required": true,
+        "examples": [
+          "/config"
+        ]
+      },
+      "mountPropagation": {
+        "type": "string",
+        "description": "Mount propagation in all selected containers: `None`, `HostToContainer` or `Bidirectional`.",
+        "oneOf": [
+          {
+            "enum": [
+              "None",
+              "HostToContainer",
+              "Bidirectional"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ],
+        "default": "",
+        "x-helm-tpl": true
+      },
+      "subPath": {
+        "type": "string",
+        "description": "Path within the volume that is mounted instead of its root, in all selected containers.",
+        "default": "",
+        "x-helm-tpl": true
+      },
+      "readOnly": {
+        "type": "boolean",
+        "description": "Mount the volume read-only in all selected containers.",
+        "default": false
+      },
+      "targetSelectAll": {
+        "type": "boolean",
+        "description": "Mount the volume in all containers of all workloads, instead of using `targetSelector`.",
+        "default": false
+      }
+    },
+    "additionalProperties": false,
+    "description": "A volume, keyed by name. Its `type` decides which volume or claim is created and how it is mounted, see [Persistence](/truecharts-common/persistence).",
+    "default": {},
+    "x-docs-required": true
+  },
+  "description": "Volumes of the workloads, keyed by name. Includes the built-in volumes `shared`, `varlogs`, `varrun`, `tmp` and `devshm`, which are enabled by default."
+}

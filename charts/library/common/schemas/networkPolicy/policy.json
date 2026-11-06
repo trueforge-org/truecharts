@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "description": "Create this NetworkPolicy.",
+      "default": false,
+      "x-docs-required": true
+    },
+    "nameOverride": {
+      "type": "string",
+      "description": "Name appended to the chart fullname. Defaults to the name of the policy."
+    },
+    "labels": {
+      "allOf": [
+        {
+          "$ref": "../special/labels.json"
+        }
+      ],
+      "description": "Additional labels for this NetworkPolicy.",
+      "default": {}
+    },
+    "annotations": {
+      "allOf": [
+        {
+          "$ref": "../special/annotations.json"
+        }
+      ],
+      "description": "Additional annotations for this NetworkPolicy.",
+      "default": {}
+    },
+    "podSelector": {
+      "$ref": "labelSelector.json",
+      "description": "Custom Kubernetes label selector for the pods to which this policy applies, supports Helm `tpl`.",
+      "x-helm-tpl": true
+    },
+    "targetSelector": {
+      "type": "string",
+      "description": "Name of a workload of this chart the policy applies to. Defaults to the pods of the primary workload when `podSelector` is not set.",
+      "default": ""
+    },
+    "policyType": {
+      "type": "string",
+      "enum": [
+        "ingress",
+        "egress",
+        "ingress-egress"
+      ],
+      "description": "Type of the policy: `ingress`, `egress` or `ingress-egress`. When omitted, no `policyTypes` are set."
+    },
+    "ingress": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "ingressRule.json"
+          }
+        ],
+        "description": "An ingress rule."
+      },
+      "description": "Ingress rules.",
+      "default": []
+    },
+    "egress": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "egressRule.json"
+          }
+        ],
+        "description": "An egress rule."
+      },
+      "description": "Egress rules.",
+      "default": []
+    }
+  },
+  "additionalProperties": false,
+  "description": "A NetworkPolicy."
+}

@@ -1,0 +1,206 @@
+suite: metrics prometheusRule additionalgroups schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render prometheusRule additionalgroups set to null
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            enabled: true
+            rules:
+              - alert: SomeAlert
+                expr: up == 0
+            additionalgroups: null
+    asserts:
+      - documentSelector: &rule
+          path: kind
+          value: PrometheusRule
+        isKind:
+          of: PrometheusRule
+
+  - it: should render prometheusRule additionalgroups set to an empty object
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            enabled: true
+            rules:
+              - alert: SomeAlert
+                expr: up == 0
+            additionalgroups: {}
+    asserts:
+      - documentSelector: *rule
+        isKind:
+          of: PrometheusRule
+
+  - it: should fail on additionalgroups that match no allowed type
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            additionalgroups:
+              - name: [a]
+                rules: notalist
+                additionalrules: notalist
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics/prometheusRule/additionalgroups"
+
+  - it: should render prometheusRule additionalgroups as a list of groups
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            enabled: true
+            additionalgroups:
+              - name: listed
+                rules:
+                  - alert: ListAlert
+                    expr: up == 0
+                    for: 5m
+    asserts:
+      - documentSelector: *rule
+        equal:
+          path: spec.groups[0].name
+          value: test-release-name-common-test-listed
+      - documentSelector: *rule
+        equal:
+          path: spec.groups[0].rules[0].alert
+          value: ListAlert
+
+  - it: should render prometheusRule additionalgroups as a map keyed by group name
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            enabled: true
+            additionalgroups:
+              mapped:
+                rules:
+                  - alert: MapAlert
+                    expr: up == 0
+                    for: 5m
+                additionalrules:
+                  - alert: ExtraAlert
+                    expr: up == 1
+    asserts:
+      - documentSelector: *rule
+        isKind:
+          of: PrometheusRule
+      - documentSelector: *rule
+        matchRegex:
+          path: spec.groups[0].name
+          pattern: mapped$
+      - documentSelector: *rule
+        equal:
+          path: spec.groups[0].rules[0].alert
+          value: MapAlert
+
+  - it: should fail on additionalgroups set to a string
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            additionalgroups: notalist
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics/prometheusRule/additionalgroups"
+
+  - it: should fail on additionalgroups set to an integer
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            additionalgroups: 5
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics/prometheusRule/additionalgroups"
+
+  - it: should render a map group with an explicit name
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            enabled: true
+            additionalgroups:
+              mapped:
+                name: custom
+                rules:
+                  - alert: MapAlert
+                    expr: up == 0
+    asserts:
+      - documentSelector: *rule
+        equal:
+          path: spec.groups[0].name
+          value: test-release-name-common-test-custom
+
+  - it: should fail on unknown keys in a map group and its rules
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            additionalgroups:
+              mapped:
+                unknown: x
+                rules:
+                  - unknown: x
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics/prometheusRule/additionalgroups/mapped"

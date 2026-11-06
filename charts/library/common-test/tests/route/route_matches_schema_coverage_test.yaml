@@ -1,0 +1,146 @@
+suite: route matches schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render route matches with headers and queryParams
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          rules:
+            - matches:
+                - path:
+                    type: PathPrefix
+                    value: /
+                  method: GET
+                  headers:
+                    - name: x-exact
+                      value: one
+                      type: Exact
+                    - name: x-regex
+                      value: "on.*"
+                      type: RegularExpression
+                  queryParams:
+                    - name: q-exact
+                      value: one
+                      type: Exact
+                    - name: q-regex
+                      value: "on.*"
+                      type: RegularExpression
+    asserts:
+      - documentSelector: &route
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].matches[0].queryParams[0].name
+          value: q-exact
+      - documentSelector: *route
+        equal:
+          path: spec.rules[0].matches[0].headers[1].type
+          value: RegularExpression
+
+  - it: should fail on unknown keys in route matches
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          rules:
+            - matches:
+                - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/rules/0/matches/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in route matches path
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          rules:
+            - matches:
+                - path:
+                    unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/rules/0/matches/0/path': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in route matches headers
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          rules:
+            - matches:
+                - headers:
+                    - name: x-header
+                      unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/rules/0/matches/0/headers/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in route matches queryParams
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          rules:
+            - matches:
+                - queryParams:
+                    - name: q
+                      unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/rules/0/matches/0/queryParams/0': additional properties 'unknownKey' not allowed"

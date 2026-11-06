@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "from": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "peer.json"
+          }
+        ],
+        "description": "A peer that may send traffic."
+      },
+      "description": "Peers allowed to send traffic."
+    },
+    "ports": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "port.json"
+          }
+        ],
+        "description": "A port that traffic is allowed to."
+      },
+      "description": "Ports allowed by this rule."
+    }
+  },
+  "additionalProperties": false,
+  "description": "An ingress rule."
+}

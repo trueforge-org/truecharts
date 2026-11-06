@@ -1,0 +1,130 @@
+suite: addon codeserver container schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render the codeserver addon container with every container option
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes: &probes
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          targetSelector: my-workload
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      configmap:
+        my-config:
+          enabled: true
+          data:
+            key: value
+      addons:
+        codeserver:
+          enabled: true
+          targetSelector:
+            - my-workload
+          container:
+            enabled: true
+            primary: false
+            imageSelector: codeserverImage
+            stdin: true
+            tty: true
+            command:
+              - /bin/sh
+            args:
+              - -c
+              - sleep 1
+            extraArgs:
+              - --verbose
+            envFrom:
+              - configMapRef:
+                  name: my-config
+            fixedEnv:
+              PUID: 568
+            lifecycle:
+              postStart:
+                type: exec
+                command:
+                  - echo
+                  - hello
+            termination:
+              messagePath: /dev/termination-log
+              messagePolicy: File
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            securityContext:
+              runAsUser: 568
+            env:
+              PORT: 12321
+              DEFAULT_WORKSPACE: /config
+    asserts:
+      - documentIndex: &deploymentDoc 1
+        isKind:
+          of: Deployment
+      - documentIndex: *deploymentDoc
+        equal:
+          path: spec.template.spec.containers[0].name
+          value: test-release-name-common-test-codeserver
+      - documentIndex: *deploymentDoc
+        equal:
+          path: spec.template.spec.containers[0].command
+          value:
+            - /bin/sh
+      - documentIndex: *deploymentDoc
+        equal:
+          path: spec.template.spec.containers[0].stdin
+          value: true
+
+  - it: should fail on unknown keys in addons codeserver container
+    set:
+      workload: *workload
+      service: *service
+      addons:
+        codeserver:
+          enabled: true
+          container:
+            unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/addons/codeserver/container': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on a wrong type for addons codeserver container env
+    set:
+      workload: *workload
+      service: *service
+      addons:
+        codeserver:
+          enabled: true
+          container:
+            env:
+              PORT: not-a-number
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/addons/codeserver/container/env/PORT'"

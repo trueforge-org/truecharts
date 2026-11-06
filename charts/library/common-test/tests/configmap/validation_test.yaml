@@ -49,7 +49,7 @@ tests:
             foo: bar
     asserts:
       - failedTemplate:
-          errorMessage: ConfigMap - Expected [labels] to be a dictionary, but got [string]
+          errorPattern: 'at ''/configmap/my-configmap/labels'': got string, want object'
 
   - it: should fail with annotations not a dict
     set:
@@ -61,7 +61,7 @@ tests:
             foo: bar
     asserts:
       - failedTemplate:
-          errorMessage: ConfigMap - Expected [annotations] to be a dictionary, but got [string]
+          errorPattern: 'at ''/configmap/my-configmap/annotations'': got string, want object'
 
   - it: should fail with data not a dict
     set:
@@ -71,7 +71,7 @@ tests:
           data: "not a dict"
     asserts:
       - failedTemplate:
-          errorMessage: ConfigMap - Expected [data] to be a dictionary, but got [string]
+          errorPattern: "at '/configmap/my-configmap/data': got string, want object"
 
   - it: should fail with empty data
     set:
@@ -81,7 +81,7 @@ tests:
           data: {}
     asserts:
       - failedTemplate:
-          errorMessage: ConfigMap - Expected non-empty [data]
+          errorMessage: ConfigMap - Expected non-empty [data] or [binaryData]
 
   - it: should fail with empty enabled
     set:
@@ -92,4 +92,4 @@ tests:
             foo: bar
     asserts:
       - failedTemplate:
-          errorMessage: ConfigMap - Expected the defined key [enabled] in [configmap.my-configmap] to not be empty
+          errorPattern: 'at ''/configmap/my-configmap/enabled'': got null, want boolean or string'

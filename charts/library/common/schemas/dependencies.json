@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "allOf": [
+      {
+        "$ref": "../values.schema.source.json",
+        "x-docs-internal": true
+      },
+      {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": [
+              "boolean",
+              "string"
+            ],
+            "description": "Whether the dependency is enabled. The values of disabled dependencies are not merged into the chart. Supports Helm `tpl`.",
+            "x-helm-tpl": true
+          },
+          "dependencies": false
+        }
+      },
+      {
+        "required": [
+          "enabled"
+        ]
+      }
+    ],
+    "description": "A dependency, keyed by name: a set of chart values with an `enabled` key, merged into the values of the chart when enabled."
+  },
+  "description": "Dependencies of the chart: sets of chart values that are merged into the values of the chart when the dependency is enabled. Each dependency contains a complete chart values structure. See [dependencies](/truecharts-common/dependencies)."
+}

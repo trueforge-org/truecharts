@@ -1,0 +1,305 @@
+suite: cnpg cluster barman cloud plugin spec test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+capabilities:
+  apiVersions:
+    - barmancloud.cnpg.io/v1/ObjectStore
+tests:
+  - it: should use the plugin for wal archiving
+    set:
+      credentials:
+        test: &test
+          type: s3
+          accessKey: some-access-key
+          secretKey: some-secret-key
+          bucket: some-bucket
+          encrKey: some-encr-key
+          url: http://some-url
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              retentionPolicy: 10d
+              credentials: test
+    asserts:
+      - documentSelector: &cluster
+          path: kind
+          value: Cluster
+        equal:
+          path: spec.plugins
+          value:
+            - name: barman-cloud.cloudnative-pg.io
+              isWALArchiver: true
+              parameters:
+                barmanObjectName: test-release-name-common-test-cnpg-main-backup
+                serverName: test-release-name-common-test-cnpg-main
+      # The webhook rejects a WAL archiver plugin along with barmanObjectStore
+      - documentSelector: *cluster
+        notExists:
+          path: spec.backup
+
+  - it: should keep the backup target on the cluster
+    set:
+      credentials:
+        test: *test
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              target: primary
+              retentionPolicy: 10d
+              credentials: test
+    asserts:
+      - documentSelector: *cluster
+        equal:
+          path: spec.backup
+          value:
+            target: primary
+      - documentSelector: *cluster
+        exists:
+          path: spec.plugins
+
+  - it: should use the revision in serverName when set
+    set:
+      credentials:
+        test: *test
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              revision: some-revision
+    asserts:
+      - documentSelector: *cluster
+        equal:
+          path: spec.plugins[0].parameters.serverName
+          value: test-release-name-common-test-cnpg-main-rsome-revision
+
+  - it: should override serverName when set (and also take account revision)
+    set:
+      credentials:
+        test: *test
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+              serverName: some-server-name
+              revision: "1"
+    asserts:
+      - documentSelector: *cluster
+        equal:
+          path: spec.plugins[0].parameters.serverName
+          value: some-server-name-r1
+
+  - it: should not use the plugin without backups or recovery
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+    asserts:
+      - documentSelector: *cluster
+        notExists:
+          path: spec.plugins
+      - documentSelector: *cluster
+        notExists:
+          path: spec.backup
+
+  - it: should recover through the plugin, without archiving
+    set:
+      credentials:
+        test: *test
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: test
+    asserts:
+      - documentSelector: *cluster
+        equal:
+          path: spec.bootstrap
+          value:
+            recovery:
+              secret:
+                name: test-release-name-common-test-cnpg-main-user
+              owner: test-user
+              database: test-db
+              source: test-release-name-common-test-cnpg-main
+      - documentSelector: *cluster
+        equal:
+          path: spec.externalClusters
+          value:
+            - name: test-release-name-common-test-cnpg-main
+              plugin:
+                name: barman-cloud.cloudnative-pg.io
+                parameters:
+                  barmanObjectName: test-release-name-common-test-cnpg-main-recovery
+                  serverName: test-release-name-common-test-cnpg-main
+      - documentSelector: *cluster
+        notExists:
+          path: spec.plugins
+
+  - it: should use the revision and serverName in recovery source
+    set:
+      credentials:
+        test: *test
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: test
+              serverName: some-server-name
+              revision: "1"
+    asserts:
+      - documentSelector: *cluster
+        equal:
+          path: spec.bootstrap.recovery.source
+          value: some-server-name-r1
+      - documentSelector: *cluster
+        equal:
+          path: spec.externalClusters[0]
+          value:
+            name: some-server-name-r1
+            plugin:
+              name: barman-cloud.cloudnative-pg.io
+              parameters:
+                barmanObjectName: test-release-name-common-test-cnpg-main-recovery
+                serverName: some-server-name-r1
+
+  - it: should recover and archive using separate object stores
+    set:
+      credentials:
+        test: *test
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: test
+              pitrTarget:
+                time: "2026-01-01T00:00:00Z"
+            backups:
+              enabled: true
+              credentials: test
+              revision: "1"
+    asserts:
+      - documentSelector: *cluster
+        equal:
+          path: spec.bootstrap.recovery.recoveryTarget.targetTime
+          value: "2026-01-01T00:00:00Z"
+      - documentSelector: *cluster
+        equal:
+          path: spec.externalClusters[0].plugin.parameters
+          value:
+            barmanObjectName: test-release-name-common-test-cnpg-main-recovery
+            serverName: test-release-name-common-test-cnpg-main
+      - documentSelector: *cluster
+        equal:
+          path: spec.plugins[0].parameters
+          value:
+            barmanObjectName: test-release-name-common-test-cnpg-main-backup
+            serverName: test-release-name-common-test-cnpg-main-r1
+      - documentSelector: *cluster
+        notExists:
+          path: spec.backup
+
+  - it: should allow a false skipEmptyWalArchiveCheck to override the default
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            cluster:
+              skipEmptyWalArchiveCheck: false
+    asserts:
+      - documentSelector: *cluster
+        notExists:
+          path: metadata.annotations["cnpg.io/skipEmptyWalArchiveCheck"]
+
+  - it: should set the recovery target for point in time recovery
+    set:
+      credentials:
+        test:
+          type: s3
+          encrKey: some-encr-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+          bucket: some-bucket
+          url: http://some-url
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: test
+              pitrTarget:
+                time: "2026-10-31T12:00:00Z"
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: spec.bootstrap.recovery.recoveryTarget.targetTime
+          value: "2026-10-31T12:00:00Z"
+

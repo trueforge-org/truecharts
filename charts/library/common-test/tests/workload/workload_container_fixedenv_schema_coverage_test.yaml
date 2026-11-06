@@ -1,0 +1,88 @@
+suite: workload container fixedEnv schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render container fixedEnv with string values
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes: &probes
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+                fixedEnv:
+                  TZ: Europe/Amsterdam
+                  UMASK: "0027"
+                  PUID: "1000"
+    asserts:
+      - documentIndex: &deploymentDoc 0
+        isKind:
+          of: Deployment
+      - documentIndex: *deploymentDoc
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: TZ
+            value: Europe/Amsterdam
+
+  - it: should render container fixedEnv with an integer UMASK
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes: *probes
+                fixedEnv:
+                  UMASK: 27
+                  PUID: 1000
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: Deployment
+      - documentIndex: 0
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: UMASK
+            value: "27"
+
+  - it: should fail on unknown keys in container fixedEnv
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                fixedEnv:
+                  unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/fixedEnv': additional properties 'unknownKey' not allowed"

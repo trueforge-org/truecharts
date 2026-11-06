@@ -1,0 +1,147 @@
+suite: valkey operator container probes and lifecycle schema coverage failures
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+- it: should fail on unknown keys, missing required keys, bounds and enums in valkey operator container probes
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          containers:
+          - name: a
+            livenessProbe:
+              bogus: 1
+              initialDelaySeconds: x
+              timeoutSeconds: x
+              periodSeconds: x
+              successThreshold: x
+              failureThreshold: x
+              terminationGracePeriodSeconds: x
+              httpGet:
+                bogus: 1
+                path: 1
+                host: 1
+                scheme: X
+                protocol: X
+                httpHeaders:
+                - bogus: 1
+              tcpSocket:
+                bogus: 1
+                host: 1
+              exec:
+                bogus: 1
+                command:
+                - 1
+              grpc:
+                bogus: 1
+                port: 0
+                service: 1
+                mode: X
+            readinessProbe:
+              grpc:
+                port: 65536
+            startupProbe:
+              grpc: {}
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/initialDelaySeconds'': got string, want integer'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/timeoutSeconds'': got string, want integer'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/periodSeconds'': got string, want integer'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/successThreshold'': got string, want integer'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/failureThreshold'': got string, want integer'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/terminationGracePeriodSeconds'': got string, want integer'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/httpGet'': missing property ''port'''
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/httpGet'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/httpGet/path'': got number, want string'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/httpGet/host'': got number, want string'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/httpGet/scheme'': value must be one of'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/httpGet/protocol'': value must be one of'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/httpGet/httpHeaders/0'': missing properties ''name'', ''value'''
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/httpGet/httpHeaders/0'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/tcpSocket'': missing property ''port'''
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/tcpSocket'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/tcpSocket/host'': got number, want string'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/exec'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/exec/command/0'': got number, want string'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/grpc'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/grpc/port'': minimum: got'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/grpc/service'': got number, want string'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/livenessProbe/grpc/mode'': value must be one of'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/readinessProbe/grpc/port'': maximum: got'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/startupProbe/grpc'': missing property ''port'''
+- it: should fail on unknown keys, missing required keys and wrong types in valkey operator container lifecycle
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          containers:
+          - name: a
+            lifecycle:
+              bogus: 1
+              stopSignal: SIGNOPE
+              postStart:
+                bogus: 1
+                sleep:
+                  bogus: 1
+                  seconds: x
+                httpGet:
+                  path: /
+                tcpSocket: {}
+                exec:
+                  command: x
+              preStop:
+                sleep: {}
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/lifecycle'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/lifecycle/stopSignal'': value must be one of'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/lifecycle/postStart'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/lifecycle/postStart/sleep'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/lifecycle/postStart/sleep/seconds'': got string, want integer'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/lifecycle/postStart/httpGet'': missing property ''port'''
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/lifecycle/postStart/tcpSocket'': missing property ''port'''
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/lifecycle/postStart/exec/command'': got string, want array'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/containers/0/lifecycle/preStop/sleep'': missing property ''seconds'''

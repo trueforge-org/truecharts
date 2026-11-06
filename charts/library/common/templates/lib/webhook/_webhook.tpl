@@ -22,10 +22,10 @@
   {{- include "tc.v1.common.lib.webhook.rules" (dict "rootCtx" $rootCtx "rules" $webhook.rules) | trim | nindent 2 -}}
   {{- with $webhook.namespaceSelector }}
   namespaceSelector:
-    {{- tpl (toYaml $webhook.namespaceSelector) $rootCtx | nindent 2 -}}
+    {{- tpl (toYaml $webhook.namespaceSelector) $rootCtx | nindent 4 -}}
   {{- end -}}
   {{- with $webhook.objectSelector }}
   objectSelector:
-    {{- tpl (toYaml $webhook.objectSelector) $rootCtx | nindent 2 -}}
+    {{- tpl (toYaml $webhook.objectSelector) $rootCtx | nindent 4 -}}
   {{- end -}}
 {{- end -}}

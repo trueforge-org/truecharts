@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "description": "Add the Traefik annotations and middlewares to the Ingress.",
+      "default": false
+    },
+    "entrypoints": {
+      "type": "array",
+      "description": "Traefik entrypoints the Ingress is exposed on, set in the `traefik.ingress.kubernetes.io/router.entrypoints` annotation.",
+      "items": {
+        "type": "string",
+        "description": "Name of an entrypoint, eg `websecure`."
+      },
+      "default": [
+        "websecure"
+      ],
+      "examples": [
+        [
+          "websecure"
+        ]
+      ]
+    },
+    "forceTLS": {
+      "type": "boolean",
+      "description": "Only accept TLS connections on the router. Adds the `traefik.ingress.kubernetes.io/router.tls` annotation.",
+      "default": true
+    },
+    "middlewares": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "expandObjectName": {
+            "type": [
+              "boolean",
+              "string"
+            ],
+            "description": "Prefix `name` with the release fullname. Set to `false` for a middleware that is not created by this chart. Supports Helm `tpl`."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the middleware."
+          },
+          "namespace": {
+            "allOf": [
+              {
+                "$ref": "../special/namespaces.json"
+              }
+            ],
+            "description": "Namespace of the middleware. Defaults to the namespace of the Ingress."
+          }
+        },
+        "additionalProperties": false,
+        "description": "A middleware applied to the Ingress."
+      },
+      "description": "Traefik middlewares applied to the Ingress, in order. They can be created with `ingressMiddlewares.traefik`.",
+      "default": []
+    },
+    "chartMiddlewares": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "expandObjectName": {
+            "type": [
+              "boolean",
+              "string"
+            ],
+            "description": "Prefix `name` with the release fullname. Set to `false` for a middleware that is not created by this chart. Supports Helm `tpl`."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the middleware."
+          },
+          "namespace": {
+            "allOf": [
+              {
+                "$ref": "../special/namespaces.json"
+              }
+            ],
+            "description": "Namespace of the middleware. Defaults to the namespace of the Ingress."
+          }
+        },
+        "additionalProperties": false,
+        "description": "A middleware applied to the Ingress."
+      },
+      "description": "Same as `middlewares`, but meant for the chart developer to add middlewares specific to this Ingress. See [Traefik](/truecharts-common/ingress/integrations/traefik).",
+      "default": []
+    }
+  },
+  "description": "Traefik integration. Adds annotations and middlewares to the Ingress, see [Traefik](/truecharts-common/ingress/integrations/traefik).",
+  "additionalProperties": false,
+  "x-docs-page": {
+    "title": "Traefik Integration"
+  }
+}

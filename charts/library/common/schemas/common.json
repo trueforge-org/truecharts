@@ -1,0 +1,9 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "allOf": [
+    {
+      "$ref": "../values.schema.source.json"
+    }
+  ],
+  "description": "Values merged into the common defaults before the values of the chart. In a chart that depends on common, Helm puts the values of common here, so it takes the same values as the chart itself."
+}

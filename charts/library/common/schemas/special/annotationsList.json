@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "Name of the annotation"
+      },
+      "value": {
+        "type": "string",
+        "description": "Value of the annotation"
+      }
+    },
+    "required": [
+      "name",
+      "value"
+    ],
+    "additionalProperties": false
+  },
+  "description": "Additional annotations as a list of name and value pairs. Merged into the `annotations` of the object.",
+  "x-docs-page": {
+    "file": "metadata.md"
+  }
+}

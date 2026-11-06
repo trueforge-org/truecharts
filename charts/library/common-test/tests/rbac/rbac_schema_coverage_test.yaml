@@ -1,0 +1,129 @@
+suite: rbac schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render rbac with tpl enabled and subjects
+    set:
+      serviceAccount:
+        my-sa:
+          enabled: true
+          primary: true
+      rbac:
+        my-rbac:
+          enabled: "true"
+          primary: true
+          rules:
+            - apiGroups:
+                - ""
+              resources:
+                - pods
+              verbs:
+                - get
+          subjects:
+            - kind: Group
+              name: my-group
+              apiGroup: rbac.authorization.k8s.io
+    asserts:
+      - isKind:
+          of: RoleBinding
+        documentSelector:
+          path: kind
+          value: RoleBinding
+      - documentSelector:
+          path: kind
+          value: RoleBinding
+        contains:
+          path: subjects
+          content:
+            kind: Group
+            name: my-group
+            apiGroup: rbac.authorization.k8s.io
+
+  - it: should fail on unknown keys in rbac
+    set:
+      rbac:
+        my-rbac:
+          enabled: true
+          unknown: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/rbac/my-rbac': (additional properties|additionalProperties)"
+
+  - it: should fail on unknown keys in rbac rules entries
+    set:
+      rbac:
+        my-rbac:
+          enabled: true
+          rules:
+            - unknown: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/rbac/my-rbac/rules/0': (additional properties|additionalProperties)"
+
+  - it: should fail on serviceAccounts of a type that matches no branch
+    set:
+      rbac:
+        my-rbac:
+          enabled: true
+          serviceAccounts: my-sa
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/rbac/my-rbac/serviceAccounts'"
+
+  - it: should fail on unknown keys in rbac subjects entries
+    set:
+      rbac:
+        my-rbac:
+          enabled: true
+          subjects:
+            - kind: Group
+              unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/rbac/my-rbac/subjects/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail when rbac serviceAccounts is a map
+    set:
+      rbac:
+        my-rbac:
+          enabled: true
+          serviceAccounts:
+            my-sa: {}
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/rbac/my-rbac/serviceAccounts': "
+
+  - it: should render rbac with a list of serviceAccounts
+    set:
+      serviceAccount:
+        my-sa:
+          enabled: true
+          primary: true
+        other-sa:
+          enabled: true
+      rbac:
+        my-rbac:
+          enabled: true
+          primary: true
+          serviceAccounts:
+            - other-sa
+          rules:
+            - apiGroups:
+                - ""
+              resources:
+                - pods
+              verbs:
+                - get
+    asserts:
+      - documentSelector:
+          path: kind
+          value: RoleBinding
+        contains:
+          path: subjects
+          content:
+            kind: ServiceAccount
+            name: test-release-name-common-test-other-sa
+            namespace: test-release-namespace

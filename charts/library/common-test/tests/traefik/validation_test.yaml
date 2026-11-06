@@ -13,7 +13,7 @@ tests:
             enabled: true
             type: buffering
             data:
-              foo: bar
+              maxRequestBodyBytes: 1024
     asserts:
       - failedTemplate:
           errorMessage: Name [test-release-name-common-test-my-middleware-super-long-name-that-is-longer-than-253-characters-my-middleware-super-long-name-that-is-longer-than-253-characters-my-middleware-super-long-name-that-is-longer-than-253-characters-my-middleware-super-long-long-long-long-long-long-long-long-name] is not valid. Must start and end with an alphanumeric lowercase character. It can contain '-'. And must be at most 253 characters.
@@ -26,7 +26,7 @@ tests:
             enabled: true
             type: buffering
             data:
-              foo: bar
+              maxRequestBodyBytes: 1024
     asserts:
       - failedTemplate:
           errorMessage: Name [test-release-name-common-test-_my-middleware] is not valid. Must start and end with an alphanumeric lowercase character. It can contain '-'. And must be at most 253 characters.
@@ -40,7 +40,7 @@ tests:
             type: buffering
             namespace: my-extra-super-duper-long-name-that-is-longer-than-63-characters
             data:
-              foo: bar
+              maxRequestBodyBytes: 1024
     asserts:
       - failedTemplate:
           errorMessage: Middleware - Namespace [my-extra-super-duper-long-name-that-is-longer-than-63-characters] is not valid. Must start and end with an alphanumeric lowercase character. It can contain '-'. And must be at most 63 characters.
@@ -54,10 +54,10 @@ tests:
             type: buffering
             labels: "not a dict"
             data:
-              foo: bar
+              maxRequestBodyBytes: 1024
     asserts:
       - failedTemplate:
-          errorMessage: Middleware - Expected [labels] to be a dictionary, but got [string]
+          errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware/labels'': got string, want object'
 
   - it: should fail with annotations not a dict
     set:
@@ -68,10 +68,10 @@ tests:
             type: buffering
             annotations: "not a dict"
             data:
-              foo: bar
+              maxRequestBodyBytes: 1024
     asserts:
       - failedTemplate:
-          errorMessage: Middleware - Expected [annotations] to be a dictionary, but got [string]
+          errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware/annotations'': got string, want object'
 
   - it: should fail with data not a dict
     set:
@@ -83,7 +83,7 @@ tests:
             data: "not a dict"
     asserts:
       - failedTemplate:
-          errorMessage: Middleware - Expected [data] to be a dictionary, but got [string]
+          errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware/data'': got string, want object'
 
   - it: should fail with empty enabled
     set:
@@ -92,10 +92,10 @@ tests:
           my-middleware:
             enabled:
             data:
-              foo: bar
+              maxRequestBodyBytes: 1024
     asserts:
       - failedTemplate:
-          errorMessage: Middleware - Expected the defined key [enabled] in [middlewares.my-middleware] to not be empty
+          errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware/enabled'': got null, want boolean or string'
 
   - it: should fail with empty type
     set:
@@ -105,7 +105,7 @@ tests:
             enabled: true
             type:
             data:
-              foo: bar
+              maxRequestBodyBytes: 1024
     asserts:
       - failedTemplate:
-          errorMessage: Middleware - Expected [type] to be set
+          errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware/type'': got null, want string'

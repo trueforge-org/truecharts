@@ -1,0 +1,164 @@
+suite: persistence pvc schema coverage fail test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should fail on unknown keys in persistence pvc dataSource
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          dataSource:
+            unknownKey: value
+            name: some-name
+            kind: VolumeSnapshot
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/dataSource': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on a wrong type in persistence pvc dataSource
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          dataSource:
+            name: 1
+            kind: 2
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/dataSource/name': got number, want string"
+
+  - it: should fail on unknown keys in persistence pvc static
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          static:
+            mode: nfs
+            unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/static': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in persistence pvc mountOptions items
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          mountOptions:
+            - key: hard
+              unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/mountOptions/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in persistence pvc volumeSnapshots items
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          volumeSnapshots:
+            - name: example1
+              unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/volumeSnapshots/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on a wrong type in persistence pvc volumeSnapshots enabled
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          volumeSnapshots:
+            - name: example1
+              enabled: 1
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/volumeSnapshots/0/enabled': got number, want boolean or string"
+
+  - it: should fail on invalid copyMethod in persistence pvc
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          copyMethod: not-a-method
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/copyMethod': value must be one of 'Clone', 'Direct', 'Snapshot'"
+
+  - it: should fail on unknown keys in persistence autoPermissions
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: emptyDir
+          autoPermissions:
+            enabled: true
+            unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/autoPermissions': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on a wrong type in persistence autoPermissions user group and chmod
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: emptyDir
+          autoPermissions:
+            enabled: true
+            user: true
+            group: true
+            chmod: true
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/autoPermissions/user': got boolean, want integer or string"
+
+  - it: should fail on unknown keys in persistence secret items
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: secret
+          items:
+            - path: some-path
+              key: some-key
+              unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/items/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in persistence targetSelector container entries
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: emptyDir
+          targetSelector:
+            my-workload:
+              my-container:
+                mountPath: /mnt/data
+                unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/targetSelector/my-workload/my-container': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on invalid mountPropagation in persistence mounts
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: emptyDir
+          mountPropagation: not-a-propagation
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/mountPropagation'"

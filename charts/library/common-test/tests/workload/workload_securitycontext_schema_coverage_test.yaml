@@ -1,0 +1,98 @@
+suite: workload securityContext schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render the securityContext container and pod defaults
+    set:
+      securityContext:
+        container:
+          PUID: 1000
+          UMASK: "0027"
+          seccompProfile:
+            type: RuntimeDefault
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: Deployment
+      - documentIndex: 0
+        equal:
+          path: spec.template.spec.containers[0].securityContext.seccompProfile.type
+          value: RuntimeDefault
+
+  - it: should fail on unknown keys in securityContext
+    set:
+      securityContext:
+        unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/securityContext': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys, capabilities and seccompProfile in securityContext container
+    set:
+      securityContext:
+        container:
+          unknownKey: value
+          capabilities:
+            unknownKey: value
+          seccompProfile:
+            unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/securityContext/container': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/securityContext/container/capabilities': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/securityContext/container/seccompProfile': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys and incomplete sysctls in securityContext pod
+    set:
+      securityContext:
+        pod:
+          unknownKey: value
+          sysctls:
+            - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/securityContext/pod': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/securityContext/pod/sysctls/0': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/securityContext/pod/sysctls/0': missing properties 'name', 'value'"
+
+  - it: should fail when securityContext.container is null
+    set:
+      securityContext:
+        container: null
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/securityContext/container': "
+
+  - it: should fail when securityContext.container.seccompProfile is null
+    set:
+      securityContext:
+        container:
+          seccompProfile: null
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/securityContext/container/seccompProfile': "

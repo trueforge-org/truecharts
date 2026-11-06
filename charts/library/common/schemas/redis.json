@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "description": "Enables the Redis dependency. Supports Helm `tpl`.",
+      "default": false,
+      "x-helm-tpl": true
+    },
+    "includeCommon": {
+      "type": "boolean",
+      "description": "Marker for charts that the dependency uses common. Not read by common.",
+      "default": false
+    },
+    "password": {
+      "type": "string",
+      "description": "Password of the database user.",
+      "minLength": 1,
+      "default": "PLACEHOLDERPASSWORD"
+    },
+    "redisUsername": {
+      "type": "string",
+      "description": "Username used in the connection URL. Empty when not set.",
+      "default": ""
+    },
+    "redisDatabase": {
+      "type": "string",
+      "description": "Index of the database used in the connection URL. Uses `0` when unset."
+    },
+    "secret": {
+      "type": "object",
+      "properties": {
+        "credentials": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Not read by common.",
+              "default": false
+            }
+          },
+          "additionalProperties": false,
+          "description": "Not read by common.",
+          "default": {
+            "enabled": false
+          }
+        }
+      },
+      "additionalProperties": false,
+      "description": "Not read by common, the credentials Secret is always created when the dependency is enabled.",
+      "default": {
+        "credentials": {
+          "enabled": false
+        }
+      }
+    },
+    "creds": {
+      "type": "object",
+      "properties": {
+        "redisPassword": {
+          "type": "string",
+          "description": "Password."
+        },
+        "plain": {
+          "type": "string",
+          "description": "Hostname."
+        },
+        "plainhost": {
+          "type": "string",
+          "description": "Hostname."
+        },
+        "plainport": {
+          "type": "string",
+          "description": "Hostname and port."
+        },
+        "plainporthost": {
+          "type": "string",
+          "description": "Hostname and port."
+        },
+        "plainhostpass": {
+          "type": "string",
+          "description": "User, password and hostname."
+        },
+        "url": {
+          "type": "string",
+          "description": "Connection URL."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Connection details written by common, so apps using the dependency can use them. Read only.",
+      "default": {}
+    }
+  },
+  "additionalProperties": false,
+  "description": "Redis dependency configuration."
+}

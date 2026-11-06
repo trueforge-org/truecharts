@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "codeserver": {
+      "$ref": "codeserver.json",
+      "description": "A code-server container to edit the files of the app.",
+      "x-docs-page": {
+        "title": "Code Server",
+        "collapse": {
+          "service": "service/index.md",
+          "ingress": "ingress/index.md"
+        }
+      }
+    },
+    "gluetun": {
+      "$ref": "gluetun.json",
+      "description": "A gluetun VPN container that routes the traffic of the pod.",
+      "x-docs-page": {
+        "title": "Gluetun",
+        "collapse": {
+          "service": "service/index.md",
+          "ingress": "ingress/index.md"
+        }
+      }
+    },
+    "netshoot": {
+      "$ref": "netshoot.json",
+      "description": "A netshoot container to debug the network of the pod.",
+      "x-docs-page": {
+        "title": "Netshoot",
+        "collapse": {
+          "service": "service/index.md",
+          "ingress": "ingress/index.md"
+        }
+      }
+    },
+    "tailscale": {
+      "$ref": "tailscale/tailscale.json",
+      "description": "A tailscale container that connects the pod to a tailnet.",
+      "x-docs-page": {
+        "title": "Tailscale"
+      }
+    },
+    "vpn": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Removed vpn add-on. Only an empty object is accepted, any key is rejected, use `addons.gluetun` or `addons.tailscale` instead."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Addons that add a container, and the objects it needs, to a workload of the chart. See [addons](/truecharts-common/addons)."
+}

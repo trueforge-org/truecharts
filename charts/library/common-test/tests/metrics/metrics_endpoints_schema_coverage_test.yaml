@@ -1,0 +1,139 @@
+suite: metrics endpoints schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render a servicemonitor with all endpoint options
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+              interval: 30s
+              scrapeTimeout: 10s
+              path: /metrics
+              honorLabels: true
+              scheme: https
+              params:
+                module:
+                  - http_2xx
+              tlsConfig:
+                insecureSkipVerify: true
+              relabelings:
+                - sourceLabels:
+                    - __name__
+                  targetLabel: name
+              metricRelabelings:
+                - action: drop
+                  regex: go_.*
+                  sourceLabels:
+                    - __name__
+    asserts:
+      - documentSelector: &sm
+          path: kind
+          value: ServiceMonitor
+        equal:
+          path: spec.endpoints[0]
+          value:
+            port: main
+            interval: 30s
+            scrapeTimeout: 10s
+            path: /metrics
+            honorLabels: true
+            scheme: https
+            params:
+              module:
+                - http_2xx
+            tlsConfig:
+              insecureSkipVerify: true
+            relabelings:
+              - sourceLabels:
+                  - __name__
+                targetLabel: name
+            metricRelabelings:
+              - action: drop
+                regex: go_.*
+                sourceLabels:
+                  - __name__
+
+  - it: should render a servicemonitor with endpoints as a string
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints: "- port: main"
+    asserts:
+      - documentSelector: *sm
+        equal:
+          path: spec.endpoints
+          value: "- port: main"
+
+  - it: should fail on unknown keys in an endpoint
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+              unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics/endpoints/0': .*unknownKey"
+
+  - it: should fail on wrong value types in an endpoint
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: [a]
+              interval: [a]
+              scrapeTimeout: [a]
+              path: [a]
+              honorLabels: notabool
+              scheme: [a]
+              params: notamap
+              tlsConfig: notamap
+              relabelings: notalist
+              metricRelabelings: notalist
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics/endpoints/0/honorLabels'"
+
+  - it: should fail on wrong value types in endpoint params and relabelings
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+              params:
+                module: notalist
+              relabelings:
+                - notamap
+              metricRelabelings:
+                - notamap
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics/endpoints/0/params/module'"

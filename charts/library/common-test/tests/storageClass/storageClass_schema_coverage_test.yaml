@@ -1,0 +1,41 @@
+suite: storageClass schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render storage class with string typed enabled, Retain, Immediate and WaitForFirstConsumer
+    set:
+      storageClass:
+        my-sc1:
+          enabled: "true"
+          provisioner: some.provisioner.io
+          reclaimPolicy: Retain
+          volumeBindingMode: Immediate
+          parameters:
+            name: value
+        my-sc2:
+          enabled: true
+          provisioner: some.provisioner.io
+          reclaimPolicy: Delete
+          volumeBindingMode: WaitForFirstConsumer
+    asserts:
+      - isKind:
+          of: StorageClass
+        documentIndex: 0
+      - equal:
+          path: reclaimPolicy
+          value: Retain
+        documentIndex: 0
+
+  - it: should fail on unknown keys in storage class
+    set:
+      storageClass:
+        my-sc:
+          enabled: true
+          provisioner: some.provisioner.io
+          unknown: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/storageClass/my-sc': (additional properties|additionalProperties)"

@@ -1,0 +1,208 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "codeserverImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of the code-server container of the `addons.codeserver` addon."
+    },
+    "gluetunImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of the Gluetun VPN container of the `addons.gluetun` addon."
+    },
+    "kubectlImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image with `kubectl`, available to charts that need it in a container or init container through `imageSelector: kubectlImage`."
+    },
+    "mariadbClientImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of the mariadb client in the init container that waits for the `mariadb` dependency."
+    },
+    "mongodbClientImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of the mongodb client in the init container that waits for the `mongodb` dependency."
+    },
+    "netshootImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of the netshoot container of the `addons.netshoot` addon."
+    },
+    "postgres15Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "PostgreSQL 15 image for CNPG clusters. Selected with `cnpg.$name.type: postgres` and `pgVersion: 15`."
+    },
+    "postgres16Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "PostgreSQL 16 image for CNPG clusters. Selected with `cnpg.$name.type: postgres` and `pgVersion: 16`."
+    },
+    "postgresClientImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of the postgresql client in the init container that waits for the CNPG clusters."
+    },
+    "postgresPostgis15Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "PostgreSQL 15 image with PostGIS for CNPG clusters. Selected with `cnpg.$name.type: postgis` and `pgVersion: 15`."
+    },
+    "postgresPostgis16Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "PostgreSQL 16 image with PostGIS for CNPG clusters. Selected with `cnpg.$name.type: postgis` and `pgVersion: 16`."
+    },
+    "postgresVectorchord15Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "PostgreSQL 15 image with VectorChord for CNPG clusters. Selected with `cnpg.$name.type: vectorchord` and `pgVersion: 15`."
+    },
+    "postgresVectorchord16Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "PostgreSQL 16 image with VectorChord for CNPG clusters. Selected with `cnpg.$name.type: vectorchord` and `pgVersion: 16`."
+    },
+    "postgresVectors15Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "PostgreSQL 15 image with pgvecto.rs for CNPG clusters. Selected with `cnpg.$name.type: vectors` and `pgVersion: 15`."
+    },
+    "postgresVectors16Image": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "PostgreSQL 16 image with pgvecto.rs for CNPG clusters. Selected with `cnpg.$name.type: vectors` and `pgVersion: 16`."
+    },
+    "tailscaleImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of the tailscale container of the `addons.tailscale` addon."
+    },
+    "ubuntuImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of the init containers that set permissions (`autoperms`)."
+    },
+    "valkeyClientImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of the valkey client in the init container that waits for the `redis` dependency."
+    },
+    "alpineImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Alpine image, for helper containers."
+    },
+    "scratchImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Empty scratch image, for helper containers."
+    },
+    "wgetImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image with `wget`, used by the init containers that wait for the `clickhouse` and `solr` dependencies."
+    },
+    "yqImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image with `yq`, for helper containers."
+    },
+    "redisClientImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of the Redis client. Not read by common, the `redis` wait container uses `valkeyClientImage`."
+    },
+    "openvpnImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of the OpenVPN client, for the OpenVPN addon."
+    },
+    "wireguardImage": {
+      "allOf": [
+        {
+          "$ref": "image.json"
+        }
+      ],
+      "description": "Image of WireGuard, for the WireGuard addon."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Images of the addons, the dependencies and the helper containers of common. A container selects one with its `imageSelector`, the name of the image key."
+}

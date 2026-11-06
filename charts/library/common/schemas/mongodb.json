@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "description": "Enables the MongoDB dependency. Supports Helm `tpl`.",
+      "default": false,
+      "x-helm-tpl": true
+    },
+    "includeCommon": {
+      "type": "boolean",
+      "description": "Marker for charts that the dependency uses common. Not read by common.",
+      "default": false
+    },
+    "password": {
+      "type": "string",
+      "description": "Password of the database user.",
+      "minLength": 1,
+      "default": "PLACEHOLDERPASSWORD"
+    },
+    "rootPassword": {
+      "type": "string",
+      "description": "Password of the `root` user.",
+      "minLength": 1,
+      "default": "PLACEHOLDERROOTPASSWORD"
+    },
+    "mongodbUsername": {
+      "type": "string",
+      "description": "Name of the database user, used in the connection URLs."
+    },
+    "mongodbDatabase": {
+      "type": "string",
+      "description": "Name of the database, used in the connection URLs and the wait container."
+    },
+    "creds": {
+      "type": "object",
+      "properties": {
+        "mongodbPassword": {
+          "type": "string",
+          "description": "Password."
+        },
+        "mongodbRootPassword": {
+          "type": "string",
+          "description": "Password of the `root` user."
+        },
+        "plain": {
+          "type": "string",
+          "description": "Hostname."
+        },
+        "plainhost": {
+          "type": "string",
+          "description": "Hostname."
+        },
+        "plainport": {
+          "type": "string",
+          "description": "Hostname and port."
+        },
+        "plainporthost": {
+          "type": "string",
+          "description": "Hostname and port."
+        },
+        "complete": {
+          "type": "string",
+          "description": "Connection URL."
+        },
+        "urlssl": {
+          "type": "string",
+          "description": "Connection URL with SSL."
+        },
+        "urltls": {
+          "type": "string",
+          "description": "Connection URL with TLS."
+        },
+        "jdbc": {
+          "type": "string",
+          "description": "JDBC URL."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Connection details written by common, so apps using the dependency can use them. Read only.",
+      "default": {}
+    }
+  },
+  "additionalProperties": false,
+  "description": "MongoDB dependency configuration."
+}

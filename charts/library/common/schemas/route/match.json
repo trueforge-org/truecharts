@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "Exact",
+            "PathPrefix",
+            "RegularExpression"
+          ],
+          "description": "How the path is matched: `PathPrefix`, `Exact` or `RegularExpression`."
+        },
+        "value": {
+          "type": "string",
+          "description": "Path that is matched."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Path condition for the match."
+    },
+    "headers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "A header the request has to match.",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the header."
+          },
+          "value": {
+            "type": "string",
+            "description": "Value that is matched."
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "Exact",
+              "RegularExpression"
+            ],
+            "description": "How the value is matched: `Exact` or `RegularExpression`."
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "Headers the request has to match."
+    },
+    "queryParams": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "A query parameter the request has to match.",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the query parameter."
+          },
+          "value": {
+            "type": "string",
+            "description": "Value that is matched."
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "Exact",
+              "RegularExpression"
+            ],
+            "description": "How the value is matched: `Exact` or `RegularExpression`."
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "Query parameters the request has to match."
+    },
+    "method": {
+      "type": "string",
+      "description": "HTTP method of the request."
+    }
+  },
+  "additionalProperties": false,
+  "description": "A match condition for an HTTP route."
+}

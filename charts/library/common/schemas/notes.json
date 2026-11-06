@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "header": {
+      "type": "string",
+      "description": "Header text for NOTES.txt. Rendered first in the output.",
+      "default": "# Thank you for installing {{ .Chart.Name }} by TrueCharts.\n",
+      "x-helm-tpl": true
+    },
+    "custom": {
+      "type": "string",
+      "description": "Custom text for NOTES.txt. Rendered after header, before footer.",
+      "default": "{{- if .Values.chartContext.appUrl }}\n## Connecting externally\nYou can use this Chart by opening the following links in your browser:\n- {{ toYaml .Values.chartContext.appUrl }}\n{{- end }}\n\n{{ if .Chart.Dependencies }}\n## Dependencies for {{ .Chart.Name }}\n\n{{- range .Chart.Dependencies }}\n- Chart: {{ .Repository }}/{{ .Name }}\n  Version: {{ .Version }}\n{{- end }}\n{{- end }}\n{{- if .Values.chartContext.internalUrls }}\n## Connecting Internally\n\nYou can reach this chart inside your cluster, using the following service URLS:\n{{- range $url := .Values.chartContext.internalUrls -}}\n- {{ $url }}\n{{- end }}\n{{- end }}\n\n## Sources for {{ .Chart.Name }}\n\n{{- range .Chart.Sources }}\n- {{ . }}\n{{- end -}}\n\n{{- $link := .Chart.Annotations.docs -}}\n{{- if not $link -}}\n  {{- $link = .Chart.Home -}}\n{{- end }}\n\nSee more for **{{ $.Chart.Name }}** at ({{ $link }})\n",
+      "x-helm-tpl": true
+    },
+    "footer": {
+      "type": "string",
+      "description": "Footer text for NOTES.txt. Rendered after custom, before warnings.",
+      "default": "## Documentation\nPlease check out the TrueCharts documentation on:\nhttps://truecharts.org\n\nOpenSource can only exist with your help, please consider supporting TrueCharts:\nhttps://trueforge.org/sponsor\n",
+      "x-helm-tpl": true
+    },
+    "warnings": {
+      "type": "array",
+      "description": "Warning messages to show at the end of `NOTES.txt`.",
+      "items": {
+        "type": "string",
+        "description": "A warning message."
+      },
+      "default": []
+    }
+  },
+  "additionalProperties": false,
+  "description": "Output of `NOTES.txt`.\n\nRendering order: `header`, `custom`, `footer`, `warnings`.",
+  "default": {}
+}

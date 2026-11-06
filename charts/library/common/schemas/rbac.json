@@ -1,0 +1,196 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "subjects": {
+        "type": "array",
+        "description": "Extra `subjects` of the (Cluster)RoleBinding, besides the service accounts selected with `serviceAccounts` and `allServiceAccounts`.",
+        "default": [],
+        "items": {
+          "type": "object",
+          "properties": {
+            "apiGroup": {
+              "type": "string",
+              "description": "API group of the subject.",
+              "examples": [
+                "rbac.authorization.k8s.io"
+              ]
+            },
+            "kind": {
+              "type": "string",
+              "description": "Kind of the subject, eg `User`, `Group` or `ServiceAccount`."
+            },
+            "name": {
+              "type": "string",
+              "description": "Name of the subject."
+            }
+          },
+          "additionalProperties": false,
+          "description": "A subject of the (Cluster)RoleBinding."
+        }
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Create this RBAC (Cluster)Role and (Cluster)RoleBinding when true. Accepts a Helm `tpl` string that renders to `true` or `false`.",
+        "default": false,
+        "x-helm-tpl": true,
+        "x-docs-required": true
+      },
+      "primary": {
+        "type": "boolean",
+        "description": "Mark this RBAC object as the primary one.",
+        "default": false
+      },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "special/namespaces.json"
+          }
+        ],
+        "description": "Namespace to create this object in. Not used when `clusterWide` is true.",
+        "default": "",
+        "x-helm-tpl": true
+      },
+      "clusterWide": {
+        "type": "boolean",
+        "description": "Create a ClusterRole and ClusterRoleBinding instead of a Role and RoleBinding.",
+        "default": false
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Additional labels for rbac",
+        "default": {},
+        "x-helm-tpl": "On value only"
+      },
+      "annotationsList": {
+        "allOf": [
+          {
+            "$ref": "special/annotationsList.json"
+          }
+        ],
+        "description": "Additional annotations as a list of name and value pairs, merged into the annotations"
+      },
+      "labelsList": {
+        "allOf": [
+          {
+            "$ref": "special/labelsList.json"
+          }
+        ],
+        "description": "Additional labels as a list of name and value pairs, merged into the labels"
+      },
+      "annotations": {
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
+        "description": "Additional annotations for rbac",
+        "default": {},
+        "x-helm-tpl": "On value only"
+      },
+      "allServiceAccounts": {
+        "type": "boolean",
+        "description": "Bind the role to all service accounts of the chart."
+      },
+      "serviceAccounts": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "description": "Name of a `serviceAccount` object."
+        },
+        "description": "Names of the `serviceAccount` objects to bind the role to.",
+        "default": []
+      },
+      "rules": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "apiGroups": {
+              "type": "array",
+              "description": "API groups the rule applies to.",
+              "x-helm-tpl": "On entries only",
+              "x-docs-required": true,
+              "items": {
+                "type": "string",
+                "description": "An API group, `\"\"` for the core group.",
+                "examples": [
+                  ""
+                ]
+              }
+            },
+            "resources": {
+              "type": "array",
+              "description": "Resources the rule applies to, eg `pods`.",
+              "x-helm-tpl": "On entries only",
+              "x-docs-required": true,
+              "items": {
+                "type": "string",
+                "description": "A resource kind.",
+                "examples": [
+                  "pods"
+                ]
+              }
+            },
+            "resourceNames": {
+              "type": "array",
+              "description": "Names of resources the rule is limited to.",
+              "x-helm-tpl": "On entries only",
+              "items": {
+                "type": "string",
+                "description": "The name of a resource.",
+                "examples": [
+                  "my-pod"
+                ]
+              }
+            },
+            "verbs": {
+              "type": "array",
+              "description": "Verbs the rule allows, eg `get`, `list` or `watch`.",
+              "x-helm-tpl": "On entries only",
+              "x-docs-required": true,
+              "items": {
+                "type": "string",
+                "description": "A verb.",
+                "examples": [
+                  "get"
+                ]
+              }
+            },
+            "nonResourceURLs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "A non-resource URL path.",
+                "examples": [
+                  "/healthz"
+                ]
+              },
+              "description": "Non-resource URLs the rule applies to, eg `/healthz`. Only for cluster wide RBAC."
+            }
+          },
+          "additionalProperties": false,
+          "description": "A rule of the (Cluster)Role."
+        },
+        "description": "Rules of the (Cluster)Role.",
+        "default": [],
+        "x-docs-required": true
+      }
+    },
+    "additionalProperties": false,
+    "description": "An RBAC object.",
+    "default": {},
+    "x-docs-required": true
+  },
+  "description": "RBAC objects, keyed by name. Each one creates a Role and RoleBinding, or a ClusterRole and ClusterRoleBinding when `clusterWide` is true."
+}

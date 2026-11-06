@@ -1,0 +1,42 @@
+suite: workload podSpec schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should fail on unknown keys in workload podSpec dnsConfig and its options
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            dnsConfig:
+              unknownKey: value
+              options:
+                - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/dnsConfig': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/dnsConfig/options/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in workload podSpec hostAliases and tolerations
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            hostAliases:
+              - unknownKey: value
+            tolerations:
+              - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/hostAliases/0': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/tolerations/0': additional properties 'unknownKey' not allowed"

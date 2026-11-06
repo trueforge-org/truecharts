@@ -1,0 +1,152 @@
+suite: route integrations homepage schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+chart:
+  appVersion: v9.9.9
+tests:
+  - it: should render route homepage integration with string enabled, integer widget version and custom settings
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          hostnames:
+            - a.example.com
+          integrations:
+            homepage:
+              enabled: "true"
+              widget:
+                enabled: true
+                version: 2
+                type: some-type
+                custom:
+                  some-string: some-value
+                  some-number: 0
+                  some-bool: false
+                  some-null: null
+    asserts:
+      - documentSelector: &route
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: metadata.annotations["gethomepage.dev/widget.version"]
+          value: "2"
+
+  - it: should render route homepage integration with null custom and customkv widget settings
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          hostnames:
+            - a.example.com
+          integrations:
+            homepage:
+              enabled: true
+              widget:
+                type: some-type
+                custom: null
+                customkv: null
+    asserts:
+      - documentSelector: *route
+        isKind:
+          of: HTTPRoute
+
+  - it: should fail on unknown keys and missing required keys in route integrations homepage
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          hostnames:
+            - a.example.com
+          integrations:
+            homepage:
+              enabled: true
+              unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/integrations/homepage': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys and missing required keys in route integrations homepage widget
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          hostnames:
+            - a.example.com
+          integrations:
+            homepage:
+              enabled: true
+              widget:
+                unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/integrations/homepage/widget': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys and missing required keys in route integrations homepage widget customkv
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          hostnames:
+            - a.example.com
+          integrations:
+            homepage:
+              enabled: true
+              widget:
+                customkv:
+                  - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/integrations/homepage/widget/customkv/0': additional properties 'unknownKey' not allowed"

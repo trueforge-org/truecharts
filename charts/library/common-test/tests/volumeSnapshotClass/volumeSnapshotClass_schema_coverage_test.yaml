@@ -1,0 +1,48 @@
+suite: volumeSnapshotClass schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render volume snapshot class with string typed enabled, Retain and boolean parameter values
+    set:
+      volumeSnapshotClass:
+        my-vsc1:
+          enabled: "true"
+          driver: csi-hostpath-snapshots
+          deletionPolicy: Retain
+          parameters:
+            flag: true
+        my-vsc2:
+          enabled: true
+          driver: csi-hostpath-snapshots
+    asserts:
+      - isKind:
+          of: VolumeSnapshotClass
+        documentIndex: 0
+      - equal:
+          path: deletionPolicy
+          value: Retain
+        documentIndex: 0
+
+  - it: should fail on unknown keys in volume snapshot class
+    set:
+      volumeSnapshotClass:
+        my-vsc:
+          enabled: true
+          driver: csi-hostpath-snapshots
+          unknown: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/volumeSnapshotClass/my-vsc': (additional properties|additionalProperties)"
+
+  - it: should fail on empty driver in volume snapshot class
+    set:
+      volumeSnapshotClass:
+        my-vsc:
+          enabled: true
+          driver: ""
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/volumeSnapshotClass/my-vsc/driver': (minLength|length)"

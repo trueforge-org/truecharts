@@ -1,0 +1,128 @@
+suite: route parentRefs schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render route parentRefs with null namespace, sectionName and targetSelector
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+              namespace: null
+              sectionName: null
+              targetSelector: null
+    asserts:
+      - documentSelector: &route
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.parentRefs[0].name
+          value: some-gateway
+
+  - it: should render route parentRefs with a string port
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+              port: "8443"
+    asserts:
+      - documentSelector: *route
+        isKind:
+          of: HTTPRoute
+
+  - it: should render route parentRefs with a null port
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+              port: null
+    asserts:
+      - documentSelector: *route
+        isKind:
+          of: HTTPRoute
+
+  - it: should render route parentRefs with a null name and a targetSelector
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      gateway:
+        my-gateway:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: null
+              targetSelector: my-gateway
+    asserts:
+      - documentSelector: *route
+        isKind:
+          of: HTTPRoute
+
+  - it: should fail on unknown keys in route parentRefs
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+              unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/parentRefs/0': additional properties 'unknownKey' not allowed"

@@ -1,0 +1,8 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": [
+    "integer",
+    "string"
+  ],
+  "description": "Seconds Kubernetes waits for the containers to stop after they receive SIGTERM, before it kills them (`terminationGracePeriodSeconds`). Overrides `podOptions.terminationGracePeriodSeconds` for this workload."
+}

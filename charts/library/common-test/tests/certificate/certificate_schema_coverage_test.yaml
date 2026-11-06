@@ -1,0 +1,42 @@
+suite: certificate schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render certificate with string typed enabled
+    set:
+      my_hosts: host1.example.com
+      certificate:
+        my-certificate:
+          enabled: "true"
+          hosts:
+            - "{{ .Values.my_hosts }}"
+          certificateIssuer: some-issuer
+    asserts:
+      - isKind:
+          of: Certificate
+        documentIndex: 0
+
+  - it: should fail on unknown keys in certificate
+    set:
+      certificate:
+        my-certificate:
+          enabled: true
+          unknown: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/certificate/my-certificate': (additional properties|additionalProperties)"
+
+  - it: should fail on empty certificateIssuer in certificate
+    set:
+      certificate:
+        my-certificate:
+          enabled: true
+          hosts:
+            - host1.example.com
+          certificateIssuer: ""
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/certificate/my-certificate/certificateIssuer': (minLength|length)"

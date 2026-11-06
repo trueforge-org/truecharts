@@ -338,10 +338,10 @@ tests:
           defaultMode: 123
           sources:
             - serviceAccountToken:
-                name: some-secret
+                path: /some-path
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Expected [defaultMode] to be [string], but got [float64]
+          errorPattern: 'at ''/persistence/volume1/defaultMode'': got number, want string'
 
   - it: should fail with invalid format for defaultMode in projected
     set:
@@ -358,7 +358,7 @@ tests:
           defaultMode: "123"
           sources:
             - serviceAccountToken:
-                name: some-secret
+                path: /some-path
     asserts:
       - failedTemplate:
           errorMessage: Persistence - Expected [defaultMode] to have be in format of ["0777"], but got ["123"]
@@ -377,9 +377,12 @@ tests:
           type: projected
           sources:
             - serviceAccountToken:
-                name: some-secret
+                path: /some-path
               secret:
-                name: some-secret
+                objectName: some-secret
+                items:
+                  - key: some-key
+                    path: some-path
     asserts:
       - failedTemplate:
           errorMessage: Persistence - Expected only one source type per item in [projected] volume
@@ -401,7 +404,7 @@ tests:
                 name: some-secret
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Invalid source type [something] for projected. Valid sources are [clusterTrustBundle, configMap, downwardAPI, secret, serviceAccountToken]
+          errorPattern: 'at ''/persistence/volume1/sources/0'': additional properties ''something'' not allowed'
 
   # Service Account Token
   - it: should fail with too small expirationSeconds for serviceAccountToken in projected
@@ -421,7 +424,7 @@ tests:
                 expirationSeconds: 599
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Expected [expirationSeconds] to be greater than 600 seconds, but got [599]
+          errorPattern: 'at ''/persistence/volume1/sources/0/serviceAccountToken'': missing property ''path'''
 
   - it: should fail without path for serviceAccountToken in projected
     set:
@@ -440,7 +443,7 @@ tests:
                 expirationSeconds: 600
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Expected non-empty [path] on [serviceAccountToken] type
+          errorPattern: 'at ''/persistence/volume1/sources/0/serviceAccountToken'': missing property ''path'''
 
   # Downward API
   - it: should fail with downwardAPI not a dict for downwardAPI in projected
@@ -460,7 +463,7 @@ tests:
                 - items
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Expected [downwardAPI] in [sources] to be a map on [downwardAPI] type, but got [slice]
+          errorPattern: 'at ''/persistence/volume1/sources/0/downwardAPI'': got array, want object'
 
   - it: should fail without items for downwardAPI in projected
     set:
@@ -500,7 +503,7 @@ tests:
                       fieldPath: some-path
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Expected non-empty [path] on item in [downwardAPI] type
+          errorPattern: 'at ''/persistence/volume1/sources/0/downwardAPI/items/0'': missing property ''path'''
 
   - it: should fail with invalid item type for downwardAPI in projected
     set:
@@ -522,7 +525,7 @@ tests:
                     value: some-other-value
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Expected item in downwardAPI to have one of [fieldRef, resourceFieldRef] keys. But found [path, something, value]
+          errorPattern: 'at ''/persistence/volume1/sources/0/downwardAPI/items/0'': additional properties ''.*'' not allowed'
 
   - it: should fail without fieldPath under fieldRef for downwardAPI in projected
     set:
@@ -566,7 +569,7 @@ tests:
                     path: some-path
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Expected non-empty [objectName] on [secret] type
+          errorPattern: 'at ''/persistence/volume1/sources/0/secret'': missing property ''objectName'''
 
   - it: should fail without items in secret type
     set:
@@ -608,7 +611,7 @@ tests:
                   path: some-path
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Expected [items] to be a slice on [secret] type, but got [map]
+          errorPattern: 'at ''/persistence/volume1/sources/0/secret/items'': got object, want array'
 
   - it: should fail with referenced object in items not exist in secret type
     set:
@@ -698,7 +701,7 @@ tests:
                     path: some-path
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Expected non-empty [objectName] on [configMap] type
+          errorPattern: 'at ''/persistence/volume1/sources/0/configMap'': missing property ''objectName'''
 
   - it: should fail without items in configMap type
     set:
@@ -740,7 +743,7 @@ tests:
                   path: some-path
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Expected [items] to be a slice on [configMap] type, but got [map]
+          errorPattern: 'at ''/persistence/volume1/sources/0/configMap/items'': got object, want array'
 
   - it: should fail with referenced object in items not exist in configMap type
     set:

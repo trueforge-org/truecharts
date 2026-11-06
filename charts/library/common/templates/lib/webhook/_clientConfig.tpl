@@ -16,7 +16,7 @@ clientConfig:
     path: {{ tpl . $rootCtx | quote }}
     {{- end -}}
     {{- with $clientConfig.service.port }}
-    port: {{ tpl . $rootCtx }}
+    port: {{ tpl (toString .) $rootCtx }}
     {{- end -}}
   {{- end -}}
 {{- end -}}

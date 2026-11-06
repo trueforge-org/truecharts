@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "container": {
+      "$ref": "workload/podSpec/containers/securityContext.json",
+      "description": "Security context applied to all containers, unless overridden at the container level. See [securityContext](/truecharts-common/securityContext).",
+      "default": {
+        "runAsUser": 568,
+        "runAsGroup": 568,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "privileged": false,
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        },
+        "capabilities": {
+          "add": [],
+          "drop": [
+            "ALL"
+          ],
+          "disableS6Caps": false
+        },
+        "PUID": 568,
+        "UMASK": "0022"
+      }
+    },
+    "pod": {
+      "$ref": "workload/podSpec/securityContext.json",
+      "description": "Security context applied to all pods, unless overridden at the pod level. See [securityContext](/truecharts-common/securityContext).",
+      "default": {
+        "fsGroup": 568,
+        "fsGroupChangePolicy": "OnRootMismatch",
+        "supplementalGroups": [],
+        "sysctls": []
+      }
+    }
+  },
+  "additionalProperties": false,
+  "description": "Default security contexts for containers and pods. The defaults meet the Kubernetes Pod Security Standard `restricted`."
+}

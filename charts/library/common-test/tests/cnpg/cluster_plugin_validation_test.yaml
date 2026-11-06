@@ -1,0 +1,58 @@
+suite: cnpg cluster barman cloud plugin validation test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should fail with backups when the plugin is not installed
+    set:
+      credentials:
+        test:
+          type: s3
+          encrKey: some-encr-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+          bucket: some-bucket
+          url: http://some-url
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            backups:
+              enabled: true
+              credentials: test
+    asserts:
+      - failedTemplate:
+          errorMessage: CNPG - Backups and recovery need the Barman Cloud plugin, but API [barmancloud.cnpg.io/v1/ObjectStore] was not found, for CNPG cluster [test-release-name-common-test-cnpg-main]. Install the plugin in the namespace of the CloudNativePG operator. When rendering without access to a cluster, pass [--api-versions barmancloud.cnpg.io/v1/ObjectStore]
+
+  - it: should fail with object store recovery when the plugin is not installed
+    set:
+      credentials:
+        test:
+          type: s3
+          encrKey: some-encr-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+          bucket: some-bucket
+          url: http://some-url
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: recovery
+            recovery:
+              method: object_store
+              credentials: test
+    asserts:
+      - failedTemplate:
+          errorMessage: CNPG - Backups and recovery need the Barman Cloud plugin, but API [barmancloud.cnpg.io/v1/ObjectStore] was not found, for CNPG cluster [test-release-name-common-test-cnpg-main]. Install the plugin in the namespace of the CloudNativePG operator. When rendering without access to a cluster, pass [--api-versions barmancloud.cnpg.io/v1/ObjectStore]
+

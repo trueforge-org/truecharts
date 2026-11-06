@@ -1,0 +1,155 @@
+suite: workload container misc schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render a container with a string extraArgs
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                extraArgs: --extra
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: Deployment
+      - documentIndex: 0
+        equal:
+          path: spec.template.spec.containers[0].args
+          value:
+            - --extra
+
+  - it: should fail on unknown keys in a container
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on args that are neither a string nor a list
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                args:
+                  unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/args': "
+
+  - it: should fail on command that is neither a string nor a list
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                command:
+                  unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/command': "
+
+  - it: should fail on extraArgs that are neither a string nor a list
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                extraArgs:
+                  unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/extraArgs': "
+
+  - it: should fail on unknown keys in container envFrom configMapRef and secretRef
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                envFrom:
+                  - configMapRef:
+                      unknownKey: value
+                    secretRef:
+                      unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/envFrom/0/configMapRef': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/envFrom/0/secretRef': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in container termination
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                termination:
+                  unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/termination': additional properties 'unknownKey' not allowed"

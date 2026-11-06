@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "NVIDIA_CAPS": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "An NVIDIA driver capability, eg `compute`, `utility` or `all`.",
+        "examples": [
+          "all"
+        ]
+      },
+      "description": "Driver capabilities passed to the NVIDIA runtime as the `NVIDIA_DRIVER_CAPABILITIES` environment variable of a container that uses an NVIDIA GPU.",
+      "default": [
+        "all"
+      ],
+      "x-docs-required": true
+    }
+  },
+  "additionalProperties": false,
+  "description": "Options that apply to all containers, unless overridden at the container level. See [containerOptions](/truecharts-common/containerOptions)."
+}

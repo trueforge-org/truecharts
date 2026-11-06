@@ -32,8 +32,7 @@ tests:
           my-middleware1:
             enabled: true
             type: add-prefix
-            data:
-              foo: bar
+            data: {}
     asserts:
       - failedTemplate:
           errorMessage: Middleware (add-prefix) - Expected [prefix] to be set

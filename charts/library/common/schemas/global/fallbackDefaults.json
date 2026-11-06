@@ -1,0 +1,318 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "storageClass": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Storage class of a PVC that sets none. `-` leaves it unset.",
+      "default": null
+    },
+    "probeType": {
+      "type": "string",
+      "description": "Type of a probe that sets none, eg `http`, `tcp` or `grpc`.",
+      "default": "http",
+      "minLength": 1,
+      "x-docs-required": true
+    },
+    "serviceProtocol": {
+      "type": "string",
+      "description": "Protocol of a service port that sets none, eg `tcp` or `udp`.",
+      "default": "tcp",
+      "minLength": 1,
+      "x-docs-required": true
+    },
+    "serviceType": {
+      "type": "string",
+      "description": "Type of a service that sets none, eg `ClusterIP`.",
+      "default": "ClusterIP",
+      "minLength": 1,
+      "x-docs-required": true
+    },
+    "persistenceType": {
+      "type": "string",
+      "description": "Type of a persistence entry that sets none, eg `pvc`.",
+      "default": "pvc",
+      "minLength": 1,
+      "x-docs-required": true
+    },
+    "pvcRetain": {
+      "type": "boolean",
+      "description": "Keep the PVCs when the release is deleted, for persistence that sets no `retain`.",
+      "default": false,
+      "x-docs-required": true
+    },
+    "pvcSize": {
+      "type": "string",
+      "description": "Size of a pvc that sets none.",
+      "default": "100Gi",
+      "minLength": 1,
+      "x-docs-required": true,
+      "examples": [
+        "100Gi"
+      ]
+    },
+    "vctSize": {
+      "type": "string",
+      "description": "Size of a volume claim template that sets none.",
+      "default": "100Gi",
+      "minLength": 1,
+      "x-docs-required": true,
+      "examples": [
+        "100Gi"
+      ]
+    },
+    "accessModes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "An access mode, eg `ReadWriteOnce`.",
+        "examples": [
+          "ReadWriteOnce"
+        ]
+      },
+      "description": "Access modes of a pvc that sets none.",
+      "default": [
+        "ReadWriteOnce"
+      ],
+      "x-docs-required": true
+    },
+    "vctAccessModes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "An access mode, eg `ReadWriteOnce`.",
+        "examples": [
+          "ReadWriteOnce"
+        ]
+      },
+      "description": "Access modes of a volume claim template that sets none.",
+      "default": [
+        "ReadWriteOnce"
+      ]
+    },
+    "probeTimeouts": {
+      "type": "object",
+      "properties": {
+        "liveness": {
+          "type": "object",
+          "properties": {
+            "initialDelaySeconds": {
+              "type": "integer",
+              "description": "Seconds before the first probe.",
+              "default": 12,
+              "minimum": 1,
+              "x-docs-required": true
+            },
+            "periodSeconds": {
+              "type": "integer",
+              "description": "Seconds between probes.",
+              "default": 15,
+              "minimum": 1,
+              "x-docs-required": true
+            },
+            "timeoutSeconds": {
+              "type": "integer",
+              "description": "Seconds before a probe times out.",
+              "default": 5,
+              "minimum": 1,
+              "x-docs-required": true
+            },
+            "failureThreshold": {
+              "type": "integer",
+              "description": "Failed probes in a row before the probe fails.",
+              "default": 5,
+              "minimum": 1,
+              "x-docs-required": true
+            },
+            "successThreshold": {
+              "type": "integer",
+              "description": "Successful probes in a row before the probe succeeds.",
+              "default": 1,
+              "minimum": 1,
+              "x-docs-required": true
+            }
+          },
+          "additionalProperties": false,
+          "description": "Timings of liveness probes.",
+          "default": {
+            "initialDelaySeconds": 12,
+            "periodSeconds": 15,
+            "timeoutSeconds": 5,
+            "failureThreshold": 5,
+            "successThreshold": 1
+          },
+          "x-docs-required": true
+        },
+        "readiness": {
+          "type": "object",
+          "properties": {
+            "initialDelaySeconds": {
+              "type": "integer",
+              "description": "Seconds before the first probe.",
+              "default": 10,
+              "minimum": 1,
+              "x-docs-required": true
+            },
+            "periodSeconds": {
+              "type": "integer",
+              "description": "Seconds between probes.",
+              "default": 12,
+              "minimum": 1,
+              "x-docs-required": true
+            },
+            "timeoutSeconds": {
+              "type": "integer",
+              "description": "Seconds before a probe times out.",
+              "default": 5,
+              "minimum": 1,
+              "x-docs-required": true
+            },
+            "failureThreshold": {
+              "type": "integer",
+              "description": "Failed probes in a row before the probe fails.",
+              "default": 4,
+              "minimum": 1,
+              "x-docs-required": true
+            },
+            "successThreshold": {
+              "type": "integer",
+              "description": "Successful probes in a row before the probe succeeds.",
+              "default": 2,
+              "minimum": 1,
+              "x-docs-required": true
+            }
+          },
+          "additionalProperties": false,
+          "description": "Timings of readiness probes.",
+          "default": {
+            "initialDelaySeconds": 10,
+            "periodSeconds": 12,
+            "timeoutSeconds": 5,
+            "failureThreshold": 4,
+            "successThreshold": 2
+          },
+          "x-docs-required": true
+        },
+        "startup": {
+          "type": "object",
+          "properties": {
+            "initialDelaySeconds": {
+              "type": "integer",
+              "description": "Seconds before the first probe.",
+              "default": 10,
+              "minimum": 1,
+              "x-docs-required": true
+            },
+            "periodSeconds": {
+              "type": "integer",
+              "description": "Seconds between probes.",
+              "default": 5,
+              "minimum": 1,
+              "x-docs-required": true
+            },
+            "timeoutSeconds": {
+              "type": "integer",
+              "description": "Seconds before a probe times out.",
+              "default": 3,
+              "minimum": 1,
+              "x-docs-required": true
+            },
+            "failureThreshold": {
+              "type": "integer",
+              "description": "Failed probes in a row before the probe fails.",
+              "default": 60,
+              "minimum": 1,
+              "x-docs-required": true
+            },
+            "successThreshold": {
+              "type": "integer",
+              "description": "Successful probes in a row before the probe succeeds.",
+              "default": 1,
+              "minimum": 1,
+              "x-docs-required": true
+            }
+          },
+          "additionalProperties": false,
+          "description": "Timings of startup probes.",
+          "default": {
+            "initialDelaySeconds": 10,
+            "periodSeconds": 5,
+            "timeoutSeconds": 3,
+            "failureThreshold": 60,
+            "successThreshold": 1
+          },
+          "x-docs-required": true
+        }
+      },
+      "additionalProperties": false,
+      "description": "Timings of the probes that set none.",
+      "default": {
+        "liveness": {
+          "initialDelaySeconds": 12,
+          "periodSeconds": 15,
+          "timeoutSeconds": 5,
+          "failureThreshold": 5,
+          "successThreshold": 1
+        },
+        "readiness": {
+          "initialDelaySeconds": 10,
+          "periodSeconds": 12,
+          "timeoutSeconds": 5,
+          "failureThreshold": 4,
+          "successThreshold": 2
+        },
+        "startup": {
+          "initialDelaySeconds": 10,
+          "periodSeconds": 5,
+          "timeoutSeconds": 3,
+          "failureThreshold": 60,
+          "successThreshold": 1
+        }
+      },
+      "x-docs-required": true
+    },
+    "topologyKey": {
+      "type": "string",
+      "description": "Topology key of the default topology spread constraints, used when `defaultSpread` is true.",
+      "default": "kubernetes.io/hostname"
+    },
+    "cnpg": {
+      "type": "object",
+      "properties": {
+        "pgVersion": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Major PostgreSQL version of a cluster that sets no `pgVersion`.",
+          "default": 16,
+          "enum": [
+            15,
+            16,
+            "15",
+            "16"
+          ]
+        },
+        "skipEmptyWalArchiveCheck": {
+          "type": "boolean",
+          "description": "Skip the check that the WAL archive of a new cluster is empty. Can be overruled per cluster with `cluster.skipEmptyWalArchiveCheck`.",
+          "default": true
+        }
+      },
+      "additionalProperties": false,
+      "description": "Defaults of the CNPG clusters.",
+      "default": {
+        "pgVersion": 16,
+        "skipEmptyWalArchiveCheck": true
+      }
+    }
+  },
+  "additionalProperties": false,
+  "description": "Defaults used when a value is not set on the object itself.",
+  "x-docs-page": {
+    "title": "Fallback Defaults"
+  }
+}

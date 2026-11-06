@@ -1,0 +1,200 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Create this VerticalPodAutoscaler. Supports Helm `tpl`.",
+        "default": false,
+        "x-helm-tpl": true
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Additional labels of the VerticalPodAutoscaler."
+      },
+      "annotations": {
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
+        "description": "Additional annotations of the VerticalPodAutoscaler."
+      },
+      "targetSelector": {
+        "type": "array",
+        "description": "Workloads the VerticalPodAutoscaler applies to. Defaults to the primary workload.",
+        "default": [],
+        "items": {
+          "type": "string",
+          "description": "Name of a workload."
+        }
+      },
+      "updatePolicy": {
+        "type": "object",
+        "properties": {
+          "updateMode": {
+            "type": "string",
+            "enum": [
+              "Auto",
+              "Off",
+              "Initial",
+              "Recreate"
+            ],
+            "description": "How recommendations are applied: `Off`, `Initial`, `Recreate` or `Auto`."
+          },
+          "minReplicas": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Minimum number of replicas that have to be running before pods are evicted."
+          },
+          "evictionRequirements": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "resources": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "cpu",
+                      "memory"
+                    ],
+                    "description": "A resource, `cpu` or `memory`."
+                  },
+                  "description": "Resources the requirement applies to."
+                },
+                "changeRequirement": {
+                  "type": "string",
+                  "enum": [
+                    "TargetHigherThanRequests",
+                    "TargetLowerThanRequests"
+                  ],
+                  "description": "Which change allows an eviction: `TargetHigherThanRequests` or `TargetLowerThanRequests`."
+                }
+              },
+              "additionalProperties": false,
+              "description": "A condition for evicting a pod."
+            },
+            "description": "Conditions for evicting a pod to apply a recommendation."
+          }
+        },
+        "additionalProperties": false,
+        "description": "How the recommendations are applied."
+      },
+      "resourcePolicy": {
+        "type": "object",
+        "properties": {
+          "containerPolicies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "containerName": {
+                  "type": "string",
+                  "description": "Name of the container, `*` for all."
+                },
+                "mode": {
+                  "type": "string",
+                  "enum": [
+                    "Auto",
+                    "Off"
+                  ],
+                  "description": "Recommendations for the container, `Auto` or `Off`."
+                },
+                "controlledValues": {
+                  "type": "string",
+                  "enum": [
+                    "RequestsAndLimits",
+                    "RequestsOnly"
+                  ],
+                  "description": "Which values are set: `RequestsAndLimits` or `RequestsOnly`."
+                },
+                "minAllowed": {
+                  "type": "object",
+                  "properties": {
+                    "cpu": {
+                      "type": [
+                        "string",
+                        "number"
+                      ],
+                      "description": "CPU, as a quantity."
+                    },
+                    "memory": {
+                      "type": [
+                        "string",
+                        "number"
+                      ],
+                      "description": "Memory, as a quantity."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Minimum recommendation."
+                },
+                "maxAllowed": {
+                  "type": "object",
+                  "properties": {
+                    "cpu": {
+                      "type": [
+                        "string",
+                        "number"
+                      ],
+                      "description": "CPU, as a quantity."
+                    },
+                    "memory": {
+                      "type": [
+                        "string",
+                        "number"
+                      ],
+                      "description": "Memory, as a quantity."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Maximum recommendation."
+                },
+                "controlledResources": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "A resource, `cpu` or `memory`."
+                  },
+                  "description": "Resources that are recommended, `cpu` and `memory`."
+                }
+              },
+              "additionalProperties": false,
+              "description": "The policy for one container."
+            },
+            "description": "Policies per container."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Limits of the recommendations, per container.",
+        "default": {}
+      },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "special/namespaces.json"
+          }
+        ],
+        "description": "Namespace of the VerticalPodAutoscaler. Defaults to the release namespace.",
+        "default": "",
+        "x-helm-tpl": true
+      }
+    },
+    "additionalProperties": false,
+    "description": "A VerticalPodAutoscaler, keyed by name.",
+    "default": {}
+  },
+  "description": "VerticalPodAutoscalers, keyed by name. Every enabled entry renders a VPA, see [VPA](/truecharts-common/vpa)."
+}

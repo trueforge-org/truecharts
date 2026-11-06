@@ -1,0 +1,136 @@
+suite: dependencies databases depconfig schema coverage failures
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+- it: should fail on unknown keys, empty names and a non object creds in clickhouse depconfig
+  template: common.yaml
+  set:
+    dependencies:
+      clickhouse:
+        enabled: true
+        depconfig:
+          bogus: 1
+          clickhouseDatabase: ''
+          clickhouseUsername: ''
+          creds: x
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/clickhouse/depconfig'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/clickhouse/depconfig/clickhouseDatabase'': minLength'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/clickhouse/depconfig/clickhouseUsername'': minLength'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/clickhouse/depconfig/creds'': got string, want object'
+
+- it: should fail on a non string value in clickhouse depconfig creds
+  template: common.yaml
+  set:
+    dependencies:
+      clickhouse:
+        enabled: true
+        depconfig:
+          creds:
+            a: []
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/clickhouse/depconfig/creds/a'': got array, want string'
+
+- it: should fail on unknown keys, empty names and a non object creds in mariadb depconfig
+  template: common.yaml
+  set:
+    dependencies:
+      mariadb:
+        enabled: true
+        depconfig:
+          bogus: 1
+          mariadbDatabase: ''
+          mariadbUsername: ''
+          creds: x
+          rootPassword: ''
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/mariadb/depconfig'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/mariadb/depconfig/mariadbDatabase'': minLength'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/mariadb/depconfig/mariadbUsername'': minLength'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/mariadb/depconfig/creds'': got string, want object'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/mariadb/depconfig/rootPassword'': minLength'
+
+- it: should fail on a non string value in mariadb depconfig creds
+  template: common.yaml
+  set:
+    dependencies:
+      mariadb:
+        enabled: true
+        depconfig:
+          creds:
+            a: []
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/mariadb/depconfig/creds/a'': got array, want string'
+
+- it: should fail on unknown keys, empty names and a non object creds in mongodb depconfig
+  template: common.yaml
+  set:
+    dependencies:
+      mongodb:
+        enabled: true
+        depconfig:
+          bogus: 1
+          mongodbDatabase: ''
+          mongodbUsername: ''
+          creds: x
+          rootPassword: ''
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/mongodb/depconfig'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/mongodb/depconfig/mongodbDatabase'': minLength'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/mongodb/depconfig/mongodbUsername'': minLength'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/mongodb/depconfig/creds'': got string, want object'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/mongodb/depconfig/rootPassword'': minLength'
+
+- it: should fail on a non string value in mongodb depconfig creds
+  template: common.yaml
+  set:
+    dependencies:
+      mongodb:
+        enabled: true
+        depconfig:
+          creds:
+            a: []
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/mongodb/depconfig/creds/a'': got array, want string'
+
+- it: should fail on unknown keys in the depconfig of a generic dependency
+  template: common.yaml
+  set:
+    dependencies:
+      mydep:
+        enabled: true
+        depconfig:
+          bogus: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/mydep/depconfig'': additional properties ''bogus'' not allowed'
+
+- it: should fail on a dependency without the enabled key
+  template: common.yaml
+  set:
+    dependencies:
+      mydep:
+        mode: standalone
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/mydep'': missing property ''enabled'''

@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "description": "Enable the tailscale addon."
+    },
+    "targetSelector": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Name of a workload."
+      },
+      "description": "Workloads to which the tailscale container is added. Defaults to the primary workload.",
+      "examples": [
+        [
+          "main"
+        ]
+      ]
+    },
+    "container": {
+      "allOf": [
+        {
+          "$ref": "../container.json"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "env": {
+              "$ref": "container/env.json",
+              "description": "Environment variables of the container, keyed by name."
+            }
+          }
+        }
+      ],
+      "description": "Container of the tailscale add-on. It takes the same keys as a container of a workload."
+    },
+    "config": {
+      "type": "string",
+      "description": "Tailscale config file, passed to the container.",
+      "default": ""
+    },
+    "userspace": {
+      "type": "boolean",
+      "description": "Run tailscale in userspace networking mode."
+    },
+    "auth_once": {
+      "type": "boolean",
+      "description": "Only log in when the node is not logged in yet."
+    },
+    "accept_dns": {
+      "type": "boolean",
+      "description": "Accept the DNS settings of the tailnet."
+    },
+    "routes": {
+      "type": "string",
+      "description": "Subnet routes that are advertised, comma separated."
+    },
+    "dest_ip": {
+      "type": "string",
+      "description": "IP that the traffic is forwarded to."
+    },
+    "sock5_server": {
+      "type": "string",
+      "description": "Address of a SOCKS5 proxy, eg `:1080`."
+    },
+    "extra_args": {
+      "type": "string",
+      "description": "Extra arguments of `tailscale up`."
+    },
+    "daemon_extra_args": {
+      "type": "string",
+      "description": "Extra arguments of `tailscaled`."
+    },
+    "outbound_http_proxy_listen": {
+      "type": "string",
+      "description": "Address of an outbound HTTP proxy, eg `:1055`."
+    },
+    "authkey": {
+      "type": "string",
+      "description": "Auth key to connect to the VPN service.",
+      "default": ""
+    },
+    "annotations": {
+      "allOf": [
+        {
+          "$ref": "../../special/annotations.json"
+        }
+      ],
+      "description": "Additional annotations, keyed by name."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Configuration for the tailscale addon, which adds a tailscale container that connects the pod to a tailnet."
+}

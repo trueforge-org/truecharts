@@ -1,0 +1,778 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "global": {
+      "$ref": "schemas/global/global.json",
+      "description": "Global values that apply to the chart and its dependencies. See [global](/truecharts-common/global).",
+      "type": "object",
+      "x-helm-tpl": false,
+      "x-docs-page": {
+        "title": "Global"
+      }
+    },
+    "namespace": {
+      "$ref": "schemas/namespace.json",
+      "description": "Namespace to create all objects in, unless overridden at the object level. Does not apply to chart dependencies, use `global.namespace` for that.",
+      "default": "",
+      "x-docs-page": {
+        "title": "Namespace"
+      }
+    },
+    "image": {
+      "$ref": "schemas/image.json",
+      "description": "The main image of the chart, used by containers that do not select another image with `imageSelector`. See [image](/truecharts-common/image).",
+      "type": "object",
+      "x-docs-required": true,
+      "x-helm-tpl": false,
+      "default": {
+        "repository": "oci.trueforge.org/containerforge/whoami",
+        "pullPolicy": "IfNotPresent",
+        "tag": "1.12.0@sha256:ab5d621fc3ecf2ddcc52a728551bab0b942c1e777126b9595df1cfa4e7b9adfa"
+      },
+      "x-docs-page": {
+        "title": "Image",
+        "compact": true,
+        "file": "image.md"
+      }
+    },
+    "chartContext": {
+      "$ref": "schemas/chartContext.json",
+      "description": "Details about the release that common works out on every render, such as the URL of the app. Common sets these itself.",
+      "default": {
+        "appUrl": "",
+        "podCIDR": "",
+        "svcCIDR": ""
+      },
+      "x-docs-page": {
+        "title": "Chart Context"
+      }
+    },
+    "createChartContextConfigmap": {
+      "type": "boolean",
+      "default": false,
+      "description": "Creates a ConfigMap `chart-context` with the generated `chartContext`. Only used in CI and unittests, to check the generated chart context.",
+      "x-helm-tpl": false,
+      "x-docs-page": {
+        "file": "chartContext.md"
+      }
+    },
+    "common": {
+      "$ref": "schemas/common.json",
+      "description": "Values merged into the common defaults before the values of the chart. Takes the same values as the chart itself.",
+      "x-docs-page": {
+        "title": "Common"
+      },
+      "x-docs-internal": true
+    },
+    "securityContext": {
+      "$ref": "schemas/securityContext.json",
+      "description": "Default security contexts for all containers and pods, unless overridden at the container or pod level. See [securityContext](/truecharts-common/securityContext).",
+      "type": "object",
+      "x-docs-required": true,
+      "x-helm-tpl": false,
+      "default": {
+        "container": {
+          "runAsUser": 568,
+          "runAsGroup": 568,
+          "readOnlyRootFilesystem": true,
+          "allowPrivilegeEscalation": false,
+          "privileged": false,
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          },
+          "capabilities": {
+            "add": [],
+            "drop": [
+              "ALL"
+            ],
+            "disableS6Caps": false
+          },
+          "PUID": 568,
+          "UMASK": "0022"
+        },
+        "pod": {
+          "fsGroup": 568,
+          "fsGroupChangePolicy": "OnRootMismatch",
+          "supplementalGroups": [],
+          "sysctls": []
+        }
+      },
+      "x-docs-page": {
+        "title": "Security Context"
+      }
+    },
+    "resources": {
+      "$ref": "schemas/workload/podSpec/containers/resources.json",
+      "description": "Default CPU and memory resources of each container, unless overridden at the container level. They apply to every container, not to the pod as a whole. See [resources](/truecharts-common/workload/podSpec/containers/resources).",
+      "type": "object",
+      "x-docs-required": true,
+      "x-helm-tpl": false,
+      "default": {
+        "limits": {
+          "cpu": "1500m",
+          "memory": "2400Mi"
+        },
+        "requests": {
+          "cpu": "75m",
+          "memory": "200Mi"
+        }
+      }
+    },
+    "containerOptions": {
+      "$ref": "schemas/containerOptions.json",
+      "description": "Options that apply to all containers, unless overridden at the container level. See [containerOptions](/truecharts-common/containerOptions).",
+      "type": "object",
+      "x-helm-tpl": false,
+      "default": {
+        "NVIDIA_CAPS": [
+          "all"
+        ]
+      },
+      "x-docs-page": {
+        "title": "Container Options"
+      }
+    },
+    "podOptions": {
+      "$ref": "schemas/podOptions/podOptions.json",
+      "description": "Options that apply to all pods, unless overridden at the pod level. See [podOptions](/truecharts-common/podOptions).",
+      "type": "object",
+      "x-helm-tpl": false,
+      "x-docs-page": {
+        "title": "Pod Options"
+      }
+    },
+    "workload": {
+      "$ref": "schemas/workload/workload.json",
+      "description": "Workloads (Deployment, StatefulSet, DaemonSet, Job, CronJob), keyed by name. Each one holds a pod spec and its containers. See [workload](/truecharts-common/workload).",
+      "x-docs-primary": true
+    },
+    "TZ": {
+      "$ref": "schemas/TZ.json",
+      "description": "Timezone set as the `TZ` environment variable of the containers, unless overridden at the container level.",
+      "default": "UTC",
+      "x-docs-required": true,
+      "x-helm-tpl": false,
+      "x-docs-page": {
+        "title": "Time Zone"
+      }
+    },
+    "diagnosticMode": {
+      "$ref": "schemas/diagnosticMode.json",
+      "description": "Run the containers with a sleep command instead of the app, so you can exec into them to debug.",
+      "default": {
+        "enabled": false
+      },
+      "x-docs-page": {
+        "title": "Diagnostic Mode"
+      }
+    },
+    "vpa": {
+      "$ref": "schemas/vpa.json",
+      "description": "VerticalPodAutoscalers, keyed by name. Each one scales the resources of a workload.",
+      "x-docs-page": {
+        "title": "VPA"
+      }
+    },
+    "hpa": {
+      "$ref": "schemas/hpa.json",
+      "description": "HorizontalPodAutoscalers, keyed by name. Each one scales the replicas of a workload.",
+      "x-docs-page": {
+        "title": "HPA"
+      }
+    },
+    "service": {
+      "$ref": "schemas/service/service.json",
+      "description": "Services, keyed by name. Each one exposes a workload on one or more ports. See [service](/truecharts-common/service).",
+      "x-docs-page": {
+        "title": "Service",
+        "types": {
+          "ClusterIP": {
+            "file": "ClusterIP",
+            "title": "ClusterIP"
+          },
+          "LoadBalancer": {
+            "file": "LoadBalancer",
+            "title": "LoadBalancer"
+          },
+          "NodePort": {
+            "file": "NodePort",
+            "title": "NodePort"
+          },
+          "ExternalIP": {
+            "file": "ExternalIP",
+            "title": "ExternalIP"
+          },
+          "ExternalName": {
+            "file": "ExternalName",
+            "title": "ExternalName"
+          }
+        }
+      },
+      "x-docs-primary": true
+    },
+    "credentials": {
+      "$ref": "schemas/credentials.json",
+      "description": "Credentials for S3 compatible backup targets, keyed by name.",
+      "x-docs-page": {
+        "title": "Credentials"
+      }
+    },
+    "ingressMiddlewares": {
+      "$ref": "schemas/ingressMiddlewares/ingressMiddlewares.json",
+      "description": "Ingress middlewares (Traefik Middleware objects), keyed by ingress controller and then by name. See [middlewares](/truecharts-common/ingressMiddlewares).",
+      "x-docs-page": {
+        "title": "Middlewares"
+      }
+    },
+    "persistence": {
+      "$ref": "schemas/persistence/persistence.json",
+      "description": "Volumes, keyed by name. Each one is a PVC, emptyDir, hostPath, secret, configmap or other volume type, mounted into containers. See [persistence](/truecharts-common/persistence).",
+      "x-docs-page": {
+        "title": "Persistence",
+        "types": {
+          "configmap": {
+            "file": "configmap",
+            "title": "ConfigMap"
+          },
+          "device": {
+            "file": "device",
+            "title": "Device"
+          },
+          "emptyDir": {
+            "file": "emptyDir",
+            "title": "EmptyDir"
+          },
+          "hostPath": {
+            "file": "hostPath",
+            "title": "HostPath"
+          },
+          "iscsi": {
+            "file": "iscsi",
+            "title": "iSCSI"
+          },
+          "nfs": {
+            "file": "nfs",
+            "title": "NFS"
+          },
+          "secret": {
+            "file": "secret",
+            "title": "Secret"
+          },
+          "pvc-vct": {
+            "file": "pvc-vct",
+            "title": "PVC and VCT",
+            "tokens": [
+              "pvc",
+              "vct"
+            ]
+          }
+        }
+      }
+    },
+    "volumeSnapshotClass": {
+      "$ref": "schemas/volumeSnapshotClass.json",
+      "description": "VolumeSnapshotClasses, keyed by name.",
+      "default": {},
+      "x-docs-page": {
+        "title": "Volume Snapshot Class"
+      }
+    },
+    "volumeSnapshots": {
+      "$ref": "schemas/volumeSnapshots.json",
+      "description": "VolumeSnapshots, keyed by name.",
+      "default": {},
+      "x-docs-page": {
+        "title": "Volume Snapshot"
+      }
+    },
+    "imagePullSecret": {
+      "$ref": "schemas/imagePullSecret.json",
+      "description": "Image pull secrets, keyed by name, for pulling images from a private registry.",
+      "default": {},
+      "x-docs-page": {
+        "title": "Image Pull Secret"
+      }
+    },
+    "configmap": {
+      "$ref": "schemas/configmap.json",
+      "description": "ConfigMaps, keyed by name.",
+      "default": {},
+      "x-docs-page": {
+        "title": "ConfigMap"
+      }
+    },
+    "secret": {
+      "$ref": "schemas/secret.json",
+      "description": "Secrets, keyed by name.",
+      "default": {},
+      "x-docs-page": {
+        "title": "Secret"
+      }
+    },
+    "serviceAccount": {
+      "$ref": "schemas/serviceAccount.json",
+      "description": "ServiceAccounts, keyed by name.",
+      "default": {},
+      "x-docs-page": {
+        "title": "Service Account"
+      }
+    },
+    "rbac": {
+      "$ref": "schemas/rbac.json",
+      "description": "Roles and RoleBindings (or ClusterRoles and ClusterRoleBindings), keyed by name.",
+      "default": {},
+      "x-docs-page": {
+        "title": "RBAC"
+      }
+    },
+    "notes": {
+      "$ref": "schemas/notes.json",
+      "description": "Content of `NOTES.txt`, shown after install and upgrade.",
+      "x-docs-page": {
+        "title": "Notes"
+      }
+    },
+    "gluetunImage": {
+      "$ref": "schemas/images.json#/properties/gluetunImage",
+      "description": "Image of the gluetun VPN client, used by the gluetun addon.",
+      "default": {
+        "repository": "oci.trueforge.org/tccr/gluetun",
+        "tag": "v3.40.0@sha256:a8189e29155e0f8142be1500ae068a92b189b1b25abbba036321e74d6389bf2b",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "netshootImage": {
+      "$ref": "schemas/images.json#/properties/netshootImage",
+      "description": "Image of netshoot, a network troubleshooting toolbox, used by the netshoot addon.",
+      "default": {
+        "repository": "oci.trueforge.org/tccr/netshoot",
+        "tag": "v0.14.0@sha256:28ede4317d22391e7d89a15eb78dc2afc3587ece02c76c983dde7239a0e43679",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "tailscaleImage": {
+      "$ref": "schemas/images.json#/properties/tailscaleImage",
+      "description": "Image of Tailscale, used by the tailscale addon.",
+      "default": {
+        "repository": "oci.trueforge.org/tccr/tailscale",
+        "tag": "v1.88.3@sha256:878612592f133bc0728e978558b10a1c457371ac5949985d0584664c8e92c2f9",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "codeserverImage": {
+      "$ref": "schemas/images.json#/properties/codeserverImage",
+      "description": "Image of code-server, used by the codeserver addon.",
+      "default": {
+        "repository": "oci.trueforge.org/containerforge/code-server",
+        "tag": "4.141.0@sha256:7539bf1f492206f49dfc22b483adfcefd010e6a2be6be4e42a04376fa7f9338f",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "ubuntuImage": {
+      "$ref": "schemas/images.json#/properties/ubuntuImage",
+      "description": "Image of Ubuntu, used by the init containers that fix permissions (autoperms) and by the wait-for-database init containers.",
+      "default": {
+        "repository": "oci.trueforge.org/containerforge/ubuntu",
+        "tag": "26.4@sha256:a3ec289cfc10acc23a20cfb4fe5033c944ce3073dc4a53157c093ffb52f983b1",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "kubectlImage": {
+      "$ref": "schemas/images.json#/properties/kubectlImage",
+      "description": "Image of kubectl, for containers that select it with `imageSelector: kubectlImage`.",
+      "default": {
+        "repository": "oci.trueforge.org/containerforge/kubectl",
+        "tag": "1.31.1@sha256:4a51a8930e778b7f996ab476e5fcef4385453d1b78362c878bcc2b2501f99a24",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "postgresClientImage": {
+      "$ref": "schemas/images.json#/properties/postgresClientImage",
+      "description": "Image of the PostgreSQL client, used by the init container that waits for the postgresql dependency.",
+      "default": {
+        "repository": "oci.trueforge.org/containerforge/postgresql-client",
+        "tag": "9.6.24@sha256:65e2aaef5c5decd8ed06f5c41cb77de6406e44006d6f3db12d0faac3f88fa1c8",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "mariadbClientImage": {
+      "$ref": "schemas/images.json#/properties/mariadbClientImage",
+      "description": "Image of the MariaDB client, used by the init container that waits for the mariadb dependency.",
+      "default": {
+        "repository": "oci.trueforge.org/containerforge/mariadb-client",
+        "tag": "13.0.2@sha256:acc2ae890ada19a833be764eb3960746d337ef8da4c6a72cf365dc1c1efaab69",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "valkeyClientImage": {
+      "$ref": "schemas/images.json#/properties/valkeyClientImage",
+      "description": "Image of the Valkey client tools, used by the init container that waits for the valkey dependency.",
+      "default": {
+        "repository": "oci.trueforge.org/containerforge/valkey-tools",
+        "tag": "1.1.0@sha256:4b3672ee5f6896b5c2dcb3d0d23da2fe3cfe721bfdc40339e383ed7a4cc18fbe",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "mongodbClientImage": {
+      "$ref": "schemas/images.json#/properties/mongodbClientImage",
+      "description": "Image of the MongoDB shell, used by the init container that waits for the mongodb dependency.",
+      "default": {
+        "repository": "oci.trueforge.org/containerforge/mongosh",
+        "tag": "2.14.1@sha256:3dca8f9bde2eec214ae0718ac2a9de2f27809761f150b634a1533d98b53a6d08",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "postgres15Image": {
+      "$ref": "schemas/images.json#/properties/postgres15Image",
+      "description": "Image of PostgreSQL 15 (CloudNativePG), used by CNPG clusters of the postgresql dependency with `pgVersion: 15`.",
+      "default": {
+        "repository": "ghcr.io/cloudnative-pg/postgresql",
+        "tag": "15.19@sha256:11274300143f02d369ea2ff6082b028b6b662915f06bf59f26b808b53823475a",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "postgres16Image": {
+      "$ref": "schemas/images.json#/properties/postgres16Image",
+      "description": "Image of PostgreSQL 16 (CloudNativePG), used by CNPG clusters of the postgresql dependency with `pgVersion: 16`.",
+      "default": {
+        "repository": "ghcr.io/cloudnative-pg/postgresql",
+        "tag": "16.15@sha256:34cd4159d07b3410a1b29da35072e2e927a0905e717a61afa3814624a2e8859a",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "postgresPostgis15Image": {
+      "$ref": "schemas/images.json#/properties/postgresPostgis15Image",
+      "description": "Image of PostgreSQL 15 with PostGIS (CloudNativePG), used by CNPG clusters with `pgVersion: 15` and the `postgis` type.",
+      "default": {
+        "repository": "ghcr.io/cloudnative-pg/postgis",
+        "tag": "15-3.4@sha256:4596b193991cd2463a07d40e3d3d62c59f046a7dece8f163ad1aba15925a38e4",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "postgresPostgis16Image": {
+      "$ref": "schemas/images.json#/properties/postgresPostgis16Image",
+      "description": "Image of PostgreSQL 16 with PostGIS (CloudNativePG), used by CNPG clusters with `pgVersion: 16` and the `postgis` type.",
+      "default": {
+        "repository": "ghcr.io/cloudnative-pg/postgis",
+        "tag": "16-3.4@sha256:bb5a8590a8c934767482e34e1d103253f412aec703b77bbc52ad9044bf6e56f9",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "postgresVectors15Image": {
+      "$ref": "schemas/images.json#/properties/postgresVectors15Image",
+      "description": "Image of PostgreSQL 15 with pgvecto.rs (CloudNativePG), used by CNPG clusters with `pgVersion: 15` and the `vectors` type.",
+      "default": {
+        "repository": "ghcr.io/tensorchord/cloudnative-pgvecto.rs",
+        "tag": "15.7-v0.2.1@sha256:dbdeddf0d635f76df41f745407816c87c7468df35e3b7b0665ca4e0500ff3048",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "postgresVectors16Image": {
+      "$ref": "schemas/images.json#/properties/postgresVectors16Image",
+      "description": "Image of PostgreSQL 16 with pgvecto.rs (CloudNativePG), used by CNPG clusters with `pgVersion: 16` and the `vectors` type.",
+      "default": {
+        "repository": "ghcr.io/tensorchord/cloudnative-pgvecto.rs",
+        "tag": "16.3-v0.2.1@sha256:f1a19d4fc4073b0671a72ad34ef012aa20d21b3ddf5b4b0c9077d54450db679a",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "postgresVectorchord15Image": {
+      "$ref": "schemas/images.json#/properties/postgresVectorchord15Image",
+      "description": "Image of PostgreSQL 15 with VectorChord (CloudNativePG), used by CNPG clusters with `pgVersion: 15` and the `vectorchord` type.",
+      "default": {
+        "repository": "ghcr.io/tensorchord/cloudnative-vectorchord",
+        "tag": "15.19-1.1.1@sha256:69194e365f89b2cb3e85facec3e905605407b97bf6dfbe4b538d8aea924e5df7",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "postgresVectorchord16Image": {
+      "$ref": "schemas/images.json#/properties/postgresVectorchord16Image",
+      "description": "Image of PostgreSQL 16 with VectorChord (CloudNativePG), used by CNPG clusters with `pgVersion: 16` and the `vectorchord` type.",
+      "default": {
+        "repository": "ghcr.io/tensorchord/cloudnative-vectorchord",
+        "tag": "16.15-1.1.1@sha256:f5a17fa05faf25e81304ee95e9f920d8ae077ac4a4ef0a1251e09c7197cbb236",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "ingress": {
+      "$ref": "schemas/ingress/ingress.json",
+      "description": "Ingresses, keyed by name. Each one routes external traffic to a service. See [ingress](/truecharts-common/ingress).",
+      "x-docs-page": {
+        "title": "Ingress"
+      },
+      "x-docs-primary": true
+    },
+    "certificate": {
+      "$ref": "schemas/certificate.json",
+      "description": "cert-manager Certificates, keyed by name.",
+      "default": {},
+      "x-docs-page": {
+        "title": "Certificate"
+      }
+    },
+    "route": {
+      "$ref": "schemas/route.json",
+      "description": "Gateway API routes (HTTPRoute, GRPCRoute, TCPRoute, TLSRoute, UDPRoute), keyed by name. See [route](/truecharts-common/route).",
+      "x-docs-page": {
+        "title": "Route"
+      }
+    },
+    "podDisruptionBudget": {
+      "$ref": "schemas/podDisruptionBudget.json",
+      "description": "Pod Disruption Budgets, keyed by name.",
+      "x-docs-page": {
+        "title": "Pod Disruption Budget"
+      }
+    },
+    "webhook": {
+      "$ref": "schemas/webhook.json",
+      "description": "Webhook configurations (validating and mutating), keyed by name.",
+      "x-docs-page": {
+        "title": "Webhook"
+      }
+    },
+    "priorityClass": {
+      "$ref": "schemas/priorityClass.json",
+      "description": "PriorityClasses, keyed by name.",
+      "default": {},
+      "x-docs-page": {
+        "title": "Priority Class"
+      }
+    },
+    "storageClass": {
+      "$ref": "schemas/storageClass.json",
+      "description": "StorageClasses, keyed by name.",
+      "default": {},
+      "x-docs-page": {
+        "title": "Storage Class"
+      }
+    },
+    "metrics": {
+      "$ref": "schemas/metrics.json",
+      "description": "ServiceMonitors, PodMonitors and PrometheusRules, keyed by name. See [metrics](/truecharts-common/metrics).",
+      "x-docs-page": {
+        "title": "Metrics"
+      }
+    },
+    "addons": {
+      "$ref": "schemas/addons/addons.json",
+      "description": "Addons that add containers or objects to the workloads, such as a VPN, Tailscale or code-server. See [addons](/truecharts-common/addons).",
+      "x-docs-page": {
+        "title": "Addons",
+        "overview": true
+      }
+    },
+    "dependencies": {
+      "$ref": "schemas/dependencies.json",
+      "description": "Services the app needs, such as a database or cache, deployed with the chart. See [dependencies](/truecharts-common/dependencies).",
+      "x-docs-page": {
+        "title": "Dependencies",
+        "handwritten": true
+      }
+    },
+    "cnpg": {
+      "$ref": "schemas/cnpg.json",
+      "description": "CloudNativePG clusters, keyed by name (`main` by default). See [cnpg](/truecharts-common/cnpg).",
+      "x-docs-page": {
+        "title": "CNPG"
+      }
+    },
+    "redis": {
+      "$ref": "schemas/redis.json",
+      "description": "Redis dependency configuration. See [redis](/truecharts-common/redis).",
+      "x-docs-page": {
+        "title": "Redis"
+      }
+    },
+    "mariadb": {
+      "$ref": "schemas/mariadb.json",
+      "description": "MariaDB dependency configuration. See [mariadb](/truecharts-common/mariadb).",
+      "x-docs-page": {
+        "title": "MariaDB"
+      }
+    },
+    "mongodb": {
+      "$ref": "schemas/mongodb.json",
+      "description": "MongoDB dependency configuration. See [mongodb](/truecharts-common/mongodb).",
+      "x-docs-page": {
+        "title": "MongoDB"
+      }
+    },
+    "clickhouse": {
+      "$ref": "schemas/clickhouse.json",
+      "description": "ClickHouse dependency configuration. See [clickhouse](/truecharts-common/clickhouse).",
+      "x-docs-page": {
+        "title": "ClickHouse"
+      }
+    },
+    "solr": {
+      "$ref": "schemas/solr.json",
+      "description": "Solr dependency configuration. See [solr](/truecharts-common/solr).",
+      "x-docs-page": {
+        "title": "Solr"
+      }
+    },
+    "extraTpl": {
+      "$ref": "schemas/extraTpl.json",
+      "description": "Extra Kubernetes resources to render, one per list item, as a YAML object or as a string. Helm `tpl` is resolved in each item.",
+      "type": "array",
+      "default": [],
+      "x-helm-tpl": true,
+      "x-docs-page": {
+        "title": "Extra Templates"
+      }
+    },
+    "alpineImage": {
+      "$ref": "schemas/images.json#/properties/alpineImage",
+      "description": "Alpine image, for helper containers.",
+      "default": {
+        "repository": "oci.trueforge.org/tccr/alpine",
+        "tag": "v3.22.1@sha256:6dc807ae4f2867cb2d00d061f8f579f1966420ad792c179ac68072ab235109f8",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "scratchImage": {
+      "$ref": "schemas/images.json#/properties/scratchImage",
+      "description": "Empty scratch image, for helper containers.",
+      "default": {
+        "repository": "oci.trueforge.org/containerforge/scratch",
+        "tag": "1.0.0@sha256:84182a2371dd7584ad752326b7150b4e928c640b7f70a249a3994b40f1db11fd",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "wgetImage": {
+      "$ref": "schemas/images.json#/properties/wgetImage",
+      "description": "Image with `wget`, for helper containers.",
+      "default": {
+        "repository": "oci.trueforge.org/containerforge/ubuntu",
+        "tag": "26.4@sha256:a3ec289cfc10acc23a20cfb4fe5033c944ce3073dc4a53157c093ffb52f983b1",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "yqImage": {
+      "$ref": "schemas/images.json#/properties/yqImage",
+      "description": "Image with `yq`, for helper containers.",
+      "default": {
+        "repository": "oci.trueforge.org/containerforge/go-yq",
+        "tag": "4.54.1@sha256:c72dd476916ea3c51292adf9914780a2c4a978def8479053bb1ea37993cdbd53",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "redisClientImage": {
+      "$ref": "schemas/images.json#/properties/redisClientImage",
+      "description": "Image of the Redis client, used by the init container that waits for the redis dependency.",
+      "default": {
+        "repository": "oci.trueforge.org/containerforge/valkey-tools",
+        "tag": "1.1.0@sha256:4b3672ee5f6896b5c2dcb3d0d23da2fe3cfe721bfdc40339e383ed7a4cc18fbe",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "openvpnImage": {
+      "$ref": "schemas/images.json#/properties/openvpnImage",
+      "description": "Image of the OpenVPN client, for the OpenVPN addon.",
+      "default": {
+        "repository": "oci.trueforge.org/tccr/openvpn-client",
+        "tag": "latest@sha256:9bfdf50791d6e51056e31c03f73c9db329b2b72e7746155cfdc63e0c8b49b55a",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "wireguardImage": {
+      "$ref": "schemas/images.json#/properties/wireguardImage",
+      "description": "Image of WireGuard, for the WireGuard addon.",
+      "default": {
+        "repository": "oci.trueforge.org/tccr/wireguard",
+        "tag": "v1.0.20210914@sha256:683b8b74d64ebd07f9955147539834c2a4b60fee51d2a36fa76b9aba689601bf",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "networkPolicy": {
+      "$ref": "schemas/networkPolicy.json",
+      "description": "Network policies, keyed by name. See [networkPolicy](/truecharts-common/networkPolicy).",
+      "x-docs-page": {
+        "title": "Network Policy"
+      }
+    }
+  },
+  "additionalProperties": true,
+  "x-docs-page": {
+    "title": "Common Chart Documentation",
+    "intro": "This applies across all the documentation:\n\n- Helm `tpl`:\n  - ❌ means that the value is not templated\n  - ✅ means that the value is templated, for example instead of a hardcoded value, you can set it to `{{ .Values.some.value }}` and it will be replaced by the value contained in `.Values.some.value` at the installation/upgrade time.\n\nThe pages are generated from the schema. The keywords the generator reads are on the [Schema Options](/truecharts-common/schemaOptions) page.",
+    "overview": true
+  }
+}

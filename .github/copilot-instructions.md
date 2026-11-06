@@ -34,8 +34,9 @@ This is a condensed summary. The full, canonical instructions are in [`AGENTS.md
   - update the JSON schema in `schemas/` for every added, changed or removed key, and fail on removed keys in `templates/values/_deprecations.tpl`
   - set `"additionalProperties": false` on objects with a fixed set of keys; `"additionalProperties": true` is ONLY allowed on the values root
   - arbitrary keys (services, workloads, ingresses, envs, anything with an `objectName` or a spawner) use `"properties": {}` with the typed object schema in `additionalProperties`, see the library schema instructions
+  - only put a key in the schema when `common` reads or defines it, never because a stable or incubator chart sets it; fix such a chart in a separate PR to `master` instead
   - never use a placeholder `"additionalProperties": true` to skip listing the keys of a fixed object; type every key, and type the values of name-keyed maps
-  - don't edit the generated `docs/` pages (except `docs/dependencies.md`); change the schema or `examples/` and run `generate_docs.py`, and regenerate `complete-values-structure.yaml` and `template-keys-structure.yaml`
+  - don't edit the generated `docs/` pages (except `docs/dependencies/index.md`); change the schema or `examples/` and run `generate_docs.py`, and regenerate `complete-values-structure.yaml` and `template-keys-structure.yaml`
   - change the schema in `values.schema.source.json` and `schemas/`, and regenerate `values.schema.json` with `generate_bundled_schema.py`
   - bump `common`'s version, but never `common-test`'s
   - keep it compatible with Helm 3.14+ and Kubernetes 1.33+
@@ -47,7 +48,7 @@ This is a condensed summary. The full, canonical instructions are in [`AGENTS.md
 - For app charts:
   - `helm dependency build`, `helm lint --strict` and `helm template` on the chart
   - `result_file=/tmp/lint_result.txt .github/scripts/tc-lint.sh '["charts/stable/<chart>"]' origin/master`
-- For common library changes, run `./run_common_tests.sh`. It installs Helm and helm-unittest when missing (always the latest), runs the unit tests in a scratch copy, then runs the schema checks. `UNITTEST_FILES='tests/<area>/*.yaml' SKIP_SCHEMA_TESTS=1` runs a single area.
+- For common library changes, run `./run_common_tests.sh`. It installs Helm and helm-unittest when missing (always the latest), runs the unit tests in a scratch copy, then runs the schema checks, including `check_unittest_schema_coverage.py`, which needs a unittest for every schema key, type, enum value, pattern and other rule. `UNITTEST_FILES='tests/<area>/*.yaml' SKIP_SCHEMA_TESTS=1` runs a single area.
 - Use conventional-commit PR titles with the chart name as the scope, e.g. `fix(plex): ...`, and target `master`.
 - Tell the user that contributions need a signed [Contributor License Agreement](https://cla-assistant.io/trueforge-org/truecharts), which only they can sign. The `license/cla` check on the PR shows the status.
 - Fill in the [organization's PR template](https://github.com/trueforge-org/.github/blob/main/.github/PULL_REQUEST_TEMPLATE.md), and add the notice `🤖 This PR is AI generated.` to its Notes section when an AI agent wrote the PR. Use it instead of a "Generated with ..." line.

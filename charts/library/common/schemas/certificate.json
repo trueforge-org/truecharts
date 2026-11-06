@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "certificateSecretTemplate": {
+        "type": "object",
+        "properties": {
+          "annotations": {
+            "allOf": [
+              {
+                "$ref": "special/annotations.json"
+              }
+            ],
+            "description": "Annotations of the created Secret.",
+            "x-helm-tpl": "On value only"
+          },
+          "labels": {
+            "allOf": [
+              {
+                "$ref": "special/labels.json"
+              }
+            ],
+            "description": "Labels of the created Secret.",
+            "x-helm-tpl": "On value only"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Labels and annotations to put on the Secret that cert-manager creates. Set at least one of them.",
+        "default": {}
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Create this certificate when true. Accepts a Helm `tpl` string that renders to `true` or `false`.",
+        "default": false,
+        "x-helm-tpl": true,
+        "x-docs-required": true
+      },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "special/namespaces.json"
+          }
+        ],
+        "description": "Namespace to create this object in. Overrides the chart-wide `namespace` and `global.namespace`.",
+        "default": "",
+        "x-helm-tpl": "On value only"
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Labels of the Certificate.",
+        "default": {},
+        "x-helm-tpl": "On value only"
+      },
+      "annotationsList": {
+        "allOf": [
+          {
+            "$ref": "special/annotationsList.json"
+          }
+        ],
+        "description": "Additional annotations as a list of name and value pairs, merged into the annotations"
+      },
+      "labelsList": {
+        "allOf": [
+          {
+            "$ref": "special/labelsList.json"
+          }
+        ],
+        "description": "Additional labels as a list of name and value pairs, merged into the labels"
+      },
+      "annotations": {
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
+        "description": "Annotations of the Certificate.",
+        "default": {},
+        "x-helm-tpl": "On value only"
+      },
+      "certificateIssuer": {
+        "type": "string",
+        "description": "Name of the cert-manager (Cluster)Issuer that signs the certificate.",
+        "minLength": 1,
+        "x-helm-tpl": true,
+        "x-docs-required": true
+      },
+      "hosts": {
+        "type": "array",
+        "description": "Hosts (DNS names) the certificate is valid for.",
+        "default": "false",
+        "x-helm-tpl": "On entries only",
+        "x-docs-required": true,
+        "items": {
+          "type": "string",
+          "description": "Host (DNS name) of the certificate",
+          "x-helm-tpl": true
+        }
+      }
+    },
+    "additionalProperties": false,
+    "description": "A Certificate.",
+    "default": {},
+    "x-docs-required": true
+  },
+  "description": "cert-manager Certificates, keyed by name."
+}
