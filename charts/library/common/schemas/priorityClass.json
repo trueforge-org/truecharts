@@ -7,25 +7,24 @@
     "properties": {
       "provisioner": {
         "type": "string",
-        "description": "Provisioner name for the priority class. Set in the common-test priorityclass fixture; the priority class templates ignore it."
+        "description": "Not used by the priority class templates. Only set in the priority class fixture of common-test.",
+        "x-docs-internal": true
       },
       "preemptionPolicy": {
         "type": "string",
-        "description": "Define priority classes",
+        "description": "Whether pods of this class may preempt lower priority pods.",
         "enum": [
           "PreemptLowerPriority",
           "Never"
         ],
-        "default": "Immediate"
+        "default": "PreemptLowerPriority"
       },
       "enabled": {
         "type": [
           "boolean",
           "string"
         ],
-        "properties": {},
-        "additionalProperties": false,
-        "description": "Enables or Disables the priority class",
+        "description": "Create this priority class when true. Accepts a Helm `tpl` string that renders to `true` or `false`.",
         "default": false,
         "x-helm-tpl": true,
         "x-docs-required": true
@@ -36,7 +35,7 @@
             "$ref": "special/namespaces.json"
           }
         ],
-        "description": "Define the namespace for this object",
+        "description": "Namespace to create this object in. Overrides the chart-wide `namespace` and `global.namespace`.",
         "default": "",
         "x-helm-tpl": "On value only"
       },
@@ -78,24 +77,24 @@
       },
       "value": {
         "type": "integer",
-        "description": "Define the value for this priority class",
+        "description": "Priority value of the class. A higher value means a higher priority.",
         "default": 1000000
       },
       "globalDefault": {
         "type": "boolean",
-        "description": "Define if this priority class is the global default",
+        "description": "Use this class for pods that set no priority class. Only one class in the cluster can be the default.",
         "default": false
       },
       "description": {
         "type": "string",
-        "description": "Define the description for this priority class",
+        "description": "Description of the priority class.",
         "default": "No description given"
       }
     },
     "additionalProperties": false,
-    "description": "Define priority class",
+    "description": "A priority class.",
     "default": {},
     "x-docs-required": true
   },
-  "description": "Define priority classes"
+  "description": "Priority classes, keyed by name."
 }

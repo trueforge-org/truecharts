@@ -5,9 +5,14 @@ Common sets `chartContext` on every render, so it is only read, in Helm `tpl` st
 ```yaml
 workload:
   main:
+    enabled: true
+    primary: true
     podSpec:
       containers:
         main:
+          enabled: true
+          primary: true
+          imageSelector: image
           env:
             APP_URL: "{{ .Values.chartContext.appUrl }}"
             TRUSTED_PROXIES: "{{ .Values.chartContext.podCIDR }},{{ .Values.chartContext.svcCIDR }}"

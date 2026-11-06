@@ -7,11 +7,19 @@
     {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "string",
+        "description": "One entry of the list."
       }
     }
   ],
-  "description": "See [args](/truecharts-common/workload/podSpec/containers/args#args) ---",
-  "properties": {},
-  "additionalProperties": false
+  "description": "Arguments of the container (`args`), which replace the `CMD` of the image. A single argument can be given as a string, several as a list. Supports Helm `tpl`.",
+  "examples": [
+    [
+      "--port=8080"
+    ]
+  ],
+  "x-helm-tpl": true,
+  "x-docs-page": {
+    "title": "Args"
+  }
 }

@@ -43,4 +43,4 @@ Use the built-in options of `common`, never Helm chart dependencies or custom de
   ```
 
 - The same details are in `.Values.dependencies.<name>.depconfig.creds`, as quoted strings. Only use the host and port from there, with `| trimAll "\""`.
-- The top-level `redis`, `valkey`, `mariadb` and `cnpg` keys fail rendering when enabled. MongoDB, Solr, ClickHouse and Memcached are no longer available. See `charts/library/common/docs/dependencies.md`.
+- The top-level `redis`, `valkey`, `mariadb` and `cnpg` keys fail rendering when enabled. MongoDB, Solr, ClickHouse and Memcached are no longer available. See `charts/library/common/docs/dependencies/index.md`.

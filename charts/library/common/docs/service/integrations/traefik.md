@@ -1,146 +1,240 @@
 ---
-title: Traefik
+title: Service Traefik Integration
 ---
 
 :::note
 
-- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/service/integrations/traefik#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.service.integrations.traefik`
+- `.Values.service.$name.integrations.traefik`
+- `.Values.addons.codeserver.service.integrations.traefik`
+- `.Values.addons.codeserver.service.$name.integrations.traefik`
 
 ---
 
-## `service.integrations.traefik`
+## `traefik`
 
-Define service objects
+Traefik settings for the backend of the Service, set as annotations on the Service.
 
-| Field      | Value                          |
-| ---------- | ------------------------------ |
-| Key        | `service.integrations.traefik` |
-| Type       | `map`                          |
-| Required   | ❌                             |
-| Helm `tpl` | ❌                             |
-| Default    | unset                          |
-
----
-
-### `service.integrations.traefik.enabled`
-
-Enables or Disables the traefik integration
-
-| Field      | Value                                  |
-| ---------- | -------------------------------------- |
-| Key        | `service.integrations.traefik.enabled` |
-| Type       | `boolean`                              |
-| Required   | ❌                                     |
-| Helm `tpl` | ❌                                     |
-| Default    | `false`                                |
-
-Example
-
-```yaml
-service:
-  integrations:
-    traefik:
-      enabled: false
-```
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `service.integrations.traefik.forceTLS`
+## `enabled`
 
-Force TLS when talking to the backend service Adds the `traefik.ingress.kubernetes.io/service.serversscheme: "https"` annotation.
+Add the Traefik annotations to the Service.
 
-| Field      | Value                                   |
-| ---------- | --------------------------------------- |
-| Key        | `service.integrations.traefik.forceTLS` |
-| Type       | `boolean`                               |
-| Required   | ❌                                      |
-| Helm `tpl` | ❌                                      |
-| Default    | `false`                                 |
-
-Example
-
-```yaml
-service:
-  integrations:
-    traefik:
-      forceTLS: false
-```
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.enabled` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
 
 ---
 
-### `service.integrations.traefik.insecureSkipVerify`
+## `forceTLS`
 
-Skip TLS verification when talking to an HTTPS backend service Allows talking to HTTPS backend services which use self-signed certs.
+Talk to the backend over HTTPS. Adds the `traefik.ingress.kubernetes.io/service.serversscheme: "https"` annotation.
 
-| Field      | Value                                             |
-| ---------- | ------------------------------------------------- |
-| Key        | `service.integrations.traefik.insecureSkipVerify` |
-| Type       | `boolean`                                         |
-| Required   | ❌                                                |
-| Helm `tpl` | ❌                                                |
-| Default    | `false`                                           |
-
-Example
-
-```yaml
-service:
-  integrations:
-    traefik:
-      insecureSkipVerify: false
-```
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.forceTLS` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
 
 ---
 
-### `service.integrations.traefik.rootCAs`
+## `insecureSkipVerify`
 
-List of kubernetes secrets (in the same namespace) containing certificate authorities to use when performing TLS verification of the backend service.
+Skip TLS verification of the backend. Allows HTTPS backends with self-signed certificates.
 
-| Field      | Value                                  |
-| ---------- | -------------------------------------- |
-| Key        | `service.integrations.traefik.rootCAs` |
-| Type       | `list of map`                          |
-| Required   | ❌                                     |
-| Helm `tpl` | ❌                                     |
-| Default    | `[]`                                   |
-
-Example
-
-```yaml
-service:
-  integrations:
-    traefik:
-      rootCAs:
-        []
-```
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.insecureSkipVerify` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
 
 ---
 
-### `service.integrations.traefik.serverName`
+## `serverName`
 
-Set the hostname to use when talking to a backend service
+Server name (SNI) Traefik uses when talking to the backend.
 
-| Field      | Value                                     |
-| ---------- | ----------------------------------------- |
-| Key        | `service.integrations.traefik.serverName` |
-| Type       | `string`                                  |
-| Required   | ❌                                        |
-| Helm `tpl` | ❌                                        |
-| Default    | unset                                     |
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.serverName` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `rootCAs`
+
+ConfigMaps or Secrets, in the same namespace, with certificate authorities Traefik uses to verify the backend.
+
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.rootCAs` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `[]` |
+
+---
+
+## `rootCAs[]`
+
+A ConfigMap or Secret with a certificate authority. Set `configMapRef` or `secretRef`.
+
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.rootCAs[]` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `rootCAs[].configMapRef`
+
+A ConfigMap with the CA certificate.
+
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.rootCAs[].configMapRef` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
+## `rootCAs[].configMapRef.expandObjectName`
+
+Prefix the name with the release fullname.
+
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.rootCAs[].configMapRef.expandObjectName` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `true` |
+
+---
+
+## `rootCAs[].configMapRef.name`
+
+Name of the ConfigMap. Expanded to `fullname-name` unless `expandObjectName` is `false`.
+
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.rootCAs[].configMapRef.name` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Length | 1 to … |
+
+---
+
+## `rootCAs[].secretRef`
+
+A Secret with the CA certificate.
+
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.rootCAs[].secretRef` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
+## `rootCAs[].secretRef.name`
+
+Name of the Secret. Expanded to `fullname-name` unless `expandObjectName` is `false`.
+
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.rootCAs[].secretRef.name` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Length | 1 to … |
+
+---
+
+## `rootCAs[].secretRef.expandObjectName`
+
+Prefix the name with the release fullname.
+
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.rootCAs[].secretRef.expandObjectName` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `true` |
 
 ---
 
 ## Full Examples
 
+### Forced TLS
+
 ```yaml
 service:
   service-name:
+    enabled: true
+    primary: true
+    ports:
+      port-name:
+        enabled: true
+        primary: true
+        port: 443
+        protocol: https
+    integrations:
+      traefik:
+        enabled: true
+        forceTLS: true
+        insecureSkipVerify: true
+```
+
+### Custom root CAs
+
+```yaml
+service:
+  service-name:
+    enabled: true
+    primary: true
+    ports:
+      port-name:
+        enabled: true
+        primary: true
+        port: 443
+        protocol: https
     integrations:
       traefik:
         enabled: true

@@ -75,5 +75,6 @@
     }
   },
   "additionalProperties": false,
-  "description": "Container configuration for an addon."
+  "description": "Container configuration for an addon.",
+  "x-docs-extends": "workload.$name.podSpec.containers.$name"
 }

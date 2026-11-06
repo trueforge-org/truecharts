@@ -3,7 +3,12 @@
   "type": "object",
   "properties": {},
   "additionalProperties": {
-    "$ref": "networkpolicy/policy.json"
+    "allOf": [
+      {
+        "$ref": "networkpolicy/policy.json"
+      }
+    ],
+    "description": "A network policy, keyed by name."
   },
-  "description": "Create NetworkPolicy or CiliumNetworkPolicy objects"
+  "description": "Network policies, keyed by name. Every enabled entry renders a NetworkPolicy or CiliumNetworkPolicy, see [NetworkPolicy](/truecharts-common/networkpolicy)."
 }

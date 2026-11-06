@@ -1,10 +1,9 @@
 ---
-title: Operator
+title: PostgreSQL Operator
 ---
 
 :::note
 
-- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/dependencies/postgresql/operator#full-examples) section for complete examples.
 
 :::
@@ -15,233 +14,169 @@ title: Operator
 
 ---
 
-## `dependencies.postgresql.operator`
+## Child Pages
 
-Settings of the CloudNativePG cluster that provides the `postgresql` dependency in `operator` mode. Never merged into the chart values.
-
-| Field      | Value                              |
-| ---------- | ---------------------------------- |
-| Key        | `dependencies.postgresql.operator` |
-| Type       | `map`                              |
-| Required   | ❌                                 |
-| Helm `tpl` | ❌                                 |
-| Default    | unset                              |
+- [monitoring](/truecharts-common/dependencies/postgresql/operator/monitoring)
+- [PostgreSQL Backups](/truecharts-common/dependencies/postgresql/operator/backups)
+- [PostgreSQL Cluster](/truecharts-common/dependencies/postgresql/operator/cluster)
+- [PostgreSQL Recovery](/truecharts-common/dependencies/postgresql/operator/recovery)
 
 ---
 
-### `dependencies.postgresql.operator.annotations`
+## `operator`
 
-Additional annotations for all CNPG objects.
+Settings of the CloudNativePG `Cluster`, used when `mode` is `operator`. The credentials stay in `depconfig`. Never merged into the chart values.
 
-| Field      | Value                                          |
-| ---------- | ---------------------------------------------- |
-| Key        | `dependencies.postgresql.operator.annotations` |
-| Type       | `map`                                          |
-| Required   | ❌                                             |
-| Helm `tpl` | ✅ (On value only)                              |
-| Default    | `{}`                                           |
-
-Example
-
-```yaml
-dependencies:
-  postgresql:
-    operator:
-      annotations:
-        {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `dependencies.postgresql.operator.annotationsList`
-
-Additional annotations as a list of name and value pairs, merged into the `annotations` of all CNPG objects.
-
-| Field      | Value                                              |
-| ---------- | -------------------------------------------------- |
-| Key        | `dependencies.postgresql.operator.annotationsList` |
-| Type       | `list of map`                                      |
-| Required   | ❌                                                 |
-| Helm `tpl` | ❌                                                 |
-| Default    | unset                                              |
-
----
-
-### `dependencies.postgresql.operator.backups`
-
-Backups of the cluster, through the Barman Cloud plugin.
-
-| Field      | Value                                      |
-| ---------- | ------------------------------------------ |
-| Key        | `dependencies.postgresql.operator.backups` |
-| Type       | `map`                                      |
-| Required   | ❌                                         |
-| Helm `tpl` | ❌                                         |
-| Default    | unset                                      |
-
----
-
-### `dependencies.postgresql.operator.cluster`
+## `cluster`
 
 Configuration of the CNPG cluster.
 
-| Field      | Value                                      |
-| ---------- | ------------------------------------------ |
-| Key        | `dependencies.postgresql.operator.cluster` |
-| Type       | `map`                                      |
-| Required   | ✅                                         |
-| Helm `tpl` | ❌                                         |
-| Default    | unset                                      |
+See [PostgreSQL Cluster](/truecharts-common/dependencies/postgresql/operator/cluster) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.cluster` |
+| Type | `map` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `dependencies.postgresql.operator.hibernate`
+## `hibernate`
 
 Puts the CNPG cluster in hibernation mode.
 
-| Field      | Value                                        |
-| ---------- | -------------------------------------------- |
-| Key        | `dependencies.postgresql.operator.hibernate` |
-| Type       | `boolean`                                    |
-| Required   | ❌                                           |
-| Helm `tpl` | ❌                                           |
-| Default    | `false`                                      |
-
-Example
-
-```yaml
-dependencies:
-  postgresql:
-    operator:
-      hibernate: false
-```
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.hibernate` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
 
 ---
 
-### `dependencies.postgresql.operator.instances`
-
-Number of instances. Must be at least 1 when set. Only validated, the CNPG cluster uses `cluster.instances`.
-
-| Field      | Value                                        |
-| ---------- | -------------------------------------------- |
-| Key        | `dependencies.postgresql.operator.instances` |
-| Type       | `integer`                                    |
-| Required   | ❌                                           |
-| Helm `tpl` | ❌                                           |
-| Default    | unset                                        |
-
----
-
-### `dependencies.postgresql.operator.labels`
+## `labels`
 
 Additional labels for all CNPG objects.
 
-| Field      | Value                                     |
-| ---------- | ----------------------------------------- |
-| Key        | `dependencies.postgresql.operator.labels` |
-| Type       | `map`                                     |
-| Required   | ❌                                        |
-| Helm `tpl` | ✅ (On value only)                         |
-| Default    | `{}`                                      |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
-Example
-
-```yaml
-dependencies:
-  postgresql:
-    operator:
-      labels:
-        {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.labels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
 
 ---
 
-### `dependencies.postgresql.operator.labelsList`
+## `annotations`
+
+Additional annotations for all CNPG objects.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.annotations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
+
+---
+
+## `annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the `annotations` of all CNPG objects.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.annotationsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `labelsList`
 
 Additional labels as a list of name and value pairs, merged into the `labels` of all CNPG objects.
 
-| Field      | Value                                         |
-| ---------- | --------------------------------------------- |
-| Key        | `dependencies.postgresql.operator.labelsList` |
-| Type       | `list of map`                                 |
-| Required   | ❌                                            |
-| Helm `tpl` | ❌                                            |
-| Default    | unset                                         |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.labelsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `dependencies.postgresql.operator.mode`
-
-Cluster mode of operation. `standalone` creates a new or updates an existing CNPG cluster, `recovery` creates a cluster from a backup or object store. Not to be confused with `dependencies.postgresql.mode`.
-
-| Field      | Value                                   |
-| ---------- | --------------------------------------- |
-| Key        | `dependencies.postgresql.operator.mode` |
-| Type       | `string`                                |
-| Required   | ❌                                      |
-| Helm `tpl` | ❌                                      |
-| Default    | `"standalone"`                          |
-| Enum       | `standalone`, `recovery`                |
-
-Example
-
-```yaml
-dependencies:
-  postgresql:
-    operator:
-      mode: standalone
-```
-
----
-
-### `dependencies.postgresql.operator.monitoring`
-
-Monitoring of the cluster.
-
-| Field      | Value                                                                              |
-| ---------- | ---------------------------------------------------------------------------------- |
-| Key        | `dependencies.postgresql.operator.monitoring`                                      |
-| Type       | `map`                                                                              |
-| Required   | ❌                                                                                 |
-| Helm `tpl` | ❌                                                                                 |
-| Default    | `{"enablePodMonitor": false, "disableDefaultQueries": false, "customQueries": []}` |
-
-Example
-
-```yaml
-dependencies:
-  postgresql:
-    operator:
-      monitoring:
-        enablePodMonitor: false
-        disableDefaultQueries: false
-        customQueries:
-          []
-```
-
----
-
-### `dependencies.postgresql.operator.namespace`
+## `namespace`
 
 Namespace of the CNPG objects. Templated with `tpl`, and overrides `global.namespace` and `namespace`.
 
-| Field      | Value                                        |
-| ---------- | -------------------------------------------- |
-| Key        | `dependencies.postgresql.operator.namespace` |
-| Type       | `string`                                     |
-| Required   | ❌                                           |
-| Helm `tpl` | ❌                                           |
-| Default    | unset                                        |
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.namespace` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `dependencies.postgresql.operator.pgVersion`
+## `instances`
 
-Version of PostgreSQL to use, changes the cluster naming scheme. Without a value, `global.fallbackDefaults.cnpg.pgVersion` is used, and `type: vectors` uses `16` as it has no image for PostgreSQL 18. It only applies to `operator` mode, and is ignored in `standalone` mode.
+Number of instances. Must be at least 1 when set. Only validated, the CNPG cluster uses `cluster.instances`.
 
-It only applies to `operator` mode, and is ignored in `standalone` mode.
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.instances` |
+| Type | `int` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
-Without a value, `global.fallbackDefaults.cnpg.pgVersion` is used. `type: vectors` has no image for PostgreSQL 18, so without a value it uses `16`.
+---
+
+## `type`
+
+Flavor of the CloudNativePG cluster, which selects the image: `postgres` for plain PostgreSQL, `postgis` with PostGIS, `vectors` with pgvecto.rs or `vectorchord` with VectorChord.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.type` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `"postgres"` |
+| Allowed values | `"postgres"`, `"postgis"`, `"vectors"`, `"vectorchord"` |
+
+---
+
+## `pgVersion`
+
+Major version of PostgreSQL to use. It selects the image (`postgres<type><version>Image`, eg `postgres18Image`) and changes the cluster naming scheme. Without a value, `global.fallbackDefaults.cnpg.pgVersion` is used, except for `type: vectors`, which has no image for PostgreSQL 18 and uses `16`. It only applies to `operator` mode, and is ignored in `standalone` mode.
 
 :::caution[Changing the version of an existing cluster]
 
@@ -257,150 +192,233 @@ CloudNativePG upgrades an existing cluster in place when its major version chang
 
 :::
 
-| Field      | Value                                        |
-| ---------- | -------------------------------------------- |
-| Key        | `dependencies.postgresql.operator.pgVersion` |
-| Type       | `integer`                                    |
-| Required   | ✅                                           |
-| Helm `tpl` | ❌                                           |
-| Default    | `18`                                         |
-| Enum       | `15`, `16`, `17`, `18`                       |
-
-Example
-
-```yaml
-dependencies:
-  postgresql:
-    operator:
-      pgVersion: 18
-```
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.pgVersion` |
+| Type | `int` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | `18` |
+| Allowed values | `15`, `16`, `17`, `18` |
 
 ---
 
-### `dependencies.postgresql.operator.pooler`
+## `mode`
 
-PgBouncer pooler in front of the cluster.
+Cluster mode of operation. `standalone` creates a new or updates an existing CNPG cluster, `recovery` creates a cluster from a backup or object store. Not to be confused with `dependencies.postgresql.mode`.
 
-| Field      | Value                                     |
-| ---------- | ----------------------------------------- |
-| Key        | `dependencies.postgresql.operator.pooler` |
-| Type       | `map`                                     |
-| Required   | ❌                                        |
-| Helm `tpl` | ❌                                        |
-| Default    | unset                                     |
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.mode` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `"standalone"` |
+| Allowed values | `"standalone"`, `"recovery"` |
 
 ---
 
-### `dependencies.postgresql.operator.recovery`
+## `monitoring`
+
+Monitoring of the cluster.
+
+See [monitoring](/truecharts-common/dependencies/postgresql/operator/monitoring) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.monitoring` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{"enablePodMonitor": false, "disableDefaultQueries": false, "customQueries": []}` |
+
+---
+
+## `recovery`
 
 Create the cluster from a backup or an object store.
 
-| Field      | Value                                       |
-| ---------- | ------------------------------------------- |
-| Key        | `dependencies.postgresql.operator.recovery` |
-| Type       | `map`                                       |
-| Required   | ❌                                          |
-| Helm `tpl` | ❌                                          |
-| Default    | unset                                       |
+See [PostgreSQL Recovery](/truecharts-common/dependencies/postgresql/operator/recovery) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.recovery` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `dependencies.postgresql.operator.type`
+## `backups`
 
-Type of the CNPG database.
+Backups of the cluster, through the Barman Cloud plugin.
 
-| Field      | Value                                           |
-| ---------- | ----------------------------------------------- |
-| Key        | `dependencies.postgresql.operator.type`         |
-| Type       | `string`                                        |
-| Required   | ❌                                              |
-| Helm `tpl` | ❌                                              |
-| Default    | `"postgres"`                                    |
-| Enum       | `postgres`, `postgis`, `vectors`, `vectorchord` |
+See [PostgreSQL Backups](/truecharts-common/dependencies/postgresql/operator/backups) for all keys of this object.
 
-Example
-
-```yaml
-dependencies:
-  postgresql:
-    operator:
-      type: postgres
-```
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.backups` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-## Child Pages
+## `pooler`
 
-- [Cluster](cluster/) - Define a CNPG cluster
-- [Instancesidecarconfiguration](instanceSidecarConfiguration.md) - Configuration of the sidecar that runs in the CNPG instance pods. Passed verbatim to the `instanceSidecarConfiguration` of the CNPG ObjectStore.
+PgBouncer pooler in front of the cluster.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.pooler` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `pooler.enabled`
+
+Enable the pooler.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.pooler.enabled` |
+| Type | `bool or string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
+
+---
+
+## `pooler.createRO`
+
+Also create a pooler for the read-only instances.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.pooler.createRO` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
+
+---
+
+## `pooler.poolMode`
+
+Pool mode of PgBouncer, `session` or `transaction`.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.pooler.poolMode` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `"session"` |
+
+---
+
+## `pooler.instances`
+
+Number of pooler instances.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.pooler.instances` |
+| Type | `int` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `2` |
+
+---
+
+## `pooler.parameters`
+
+PgBouncer settings, keyed by name.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.pooler.parameters` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `pooler.parameters.$name`
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.pooler.parameters.$name` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `pooler.labels`
+
+Labels of the pooler.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.pooler.labels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
+## `pooler.annotations`
+
+Annotations of the pooler.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.pooler.annotations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
 ## Full Examples
 
+These examples are the part of the examples of other pages that is about this page.
+
 ```yaml
 dependencies:
   postgresql:
-    enabled: true
-    mode: operator
-    depconfig:
-      postgresqlUsername: "app"
-      postgresqlDatabase: "app"
-      password: "PLACEHOLDERPASSWORD"
     operator:
-      hibernate: false
-      type: postgres
-      pgVersion: 18
-      mode: standalone
-      cluster: {}
-      monitoring: {}
-      recovery: {}
-      backups: {}
-      pooler: {}
+      pgVersion: 17
 ```
 
-With labels and annotations on all CNPG objects:
-
 ```yaml
 dependencies:
   postgresql:
-    enabled: true
-    depconfig:
-      postgresqlUsername: "my-user"
-      postgresqlDatabase: "my-app"
-      password: "supersecret"
     operator:
-      labels:
-        label1: label1
-        label2: label2
-      annotations:
-        annotation1: annotation1
-        annotation2: annotation2
-```
-
-Backups through the Barman Cloud plugin, recovering from a previous archive:
-
-```yaml
-dependencies:
-  postgresql:
-    enabled: true
-    depconfig:
-      postgresqlUsername: "my-user"
-      postgresqlDatabase: "my-app"
-      password: "supersecret"
-    operator:
-      mode: recovery
-      recovery:
-        method: object_store
-        credentials: my-s3
       backups:
         enabled: true
-        credentials: my-s3
-        # Prevents archiving on top of the archive it recovers from
-        revision: "1"
-        retentionPolicy: "30d"
-        scheduledBackups:
-          - name: daily-backup
-            schedule: "0 0 0 * * *"
-            backupOwnerReference: self
+        credentials: mys3
+```
+
+```yaml
+dependencies:
+  postgresql:
+    operator:
+      pgVersion: 17
+      type: postgis
+      instances: 3
 ```

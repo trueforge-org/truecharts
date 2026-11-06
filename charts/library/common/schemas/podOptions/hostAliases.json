@@ -4,22 +4,36 @@
     "array",
     "string"
   ],
-  "description": "See [Host Aliases](/truecharts-common/workload#hostaliases)",
+  "description": "Extra entries for the `/etc/hosts` file of the pods (`hostAliases`), each with an IP and its host names.",
   "items": {
     "type": "object",
     "properties": {
       "ip": {
         "type": "string",
-        "description": "IP of the host entry."
+        "description": "IP address of the entry.",
+        "x-helm-tpl": true,
+        "x-docs-required": true,
+        "examples": [
+          "10.0.0.10"
+        ]
       },
       "hostnames": {
         "type": "array",
         "items": {
-          "type": "string"
+          "type": "string",
+          "description": "A host name."
         },
-        "description": "Host names of the IP."
+        "description": "Host names that resolve to the IP. At least one is required.",
+        "x-helm-tpl": "On entries only",
+        "x-docs-required": true,
+        "examples": [
+          [
+            "myhost.local"
+          ]
+        ]
       }
     },
-    "additionalProperties": false
+    "additionalProperties": false,
+    "description": "An `/etc/hosts` entry that maps one IP to one or more host names."
   }
 }

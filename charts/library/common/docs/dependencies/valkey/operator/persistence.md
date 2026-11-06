@@ -1,10 +1,9 @@
 ---
-title: Persistence
+title: persistence
 ---
 
 :::note
 
-- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/dependencies/valkey/operator/persistence#full-examples) section for complete examples.
 
 :::
@@ -15,33 +14,79 @@ title: Persistence
 
 ---
 
-## `dependencies.valkey.operator.persistence`
+## `persistence`
 
-No description provided.
+Persistence of the nodes. Requires `workloadType: StatefulSet`, and can not be added or removed after creation.
 
-| Field      | Value                                      |
-| ---------- | ------------------------------------------ |
-| Key        | `dependencies.valkey.operator.persistence` |
-| Type       | `map`                                      |
-| Required   | ❌                                         |
-| Helm `tpl` | ❌                                         |
-| Default    | unset                                      |
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.valkey.operator.persistence` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{"enabled": true, "size": "", "storageClass": "", "retain": false}` |
 
 ---
 
-### `dependencies.valkey.operator.persistence.enabled`
+## `enabled`
 
 Whether the nodes have a volume.
 
-| Field      | Value                                              |
-| ---------- | -------------------------------------------------- |
-| Key        | `dependencies.valkey.operator.persistence.enabled` |
-| Type       | `boolean`                                          |
-| Required   | ❌                                                 |
-| Helm `tpl` | ❌                                                 |
-| Default    | `true`                                             |
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.valkey.operator.persistence.enabled` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `true` |
 
-Example
+---
+
+## `size`
+
+Size of the volume of every node. Defaults to `global.fallbackDefaults.vctSize`.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.valkey.operator.persistence.size` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `""` |
+
+---
+
+## `storageClass`
+
+Storage class of the volumes. Defaults to `global.fallbackDefaults.storageClass`.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.valkey.operator.persistence.storageClass` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `""` |
+
+---
+
+## `retain`
+
+Whether the volumes are retained when a node is deleted. Defaults to `global.fallbackDefaults.pvcRetain`.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.valkey.operator.persistence.retain` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
+
+---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
 
 ```yaml
 dependencies:
@@ -49,78 +94,16 @@ dependencies:
     operator:
       persistence:
         enabled: true
+        size: 2Gi
 ```
-
----
-
-### `dependencies.valkey.operator.persistence.retain`
-
-Whether the volumes are retained when a node is deleted. Defaults to `global.fallbackDefaults.pvcRetain`.
-
-| Field      | Value                                             |
-| ---------- | ------------------------------------------------- |
-| Key        | `dependencies.valkey.operator.persistence.retain` |
-| Type       | `boolean`                                         |
-| Required   | ❌                                                |
-| Helm `tpl` | ❌                                                |
-| Default    | `false`                                           |
-
-Example
 
 ```yaml
 dependencies:
   valkey:
     operator:
       persistence:
-        retain: false
+        enabled: true
+        size: 5Gi
+        storageClass: fast-storage
+        retain: true
 ```
-
----
-
-### `dependencies.valkey.operator.persistence.size`
-
-Size of the volume of every node. Defaults to `global.fallbackDefaults.vctSize`.
-
-| Field      | Value                                           |
-| ---------- | ----------------------------------------------- |
-| Key        | `dependencies.valkey.operator.persistence.size` |
-| Type       | `string`                                        |
-| Required   | ❌                                              |
-| Helm `tpl` | ❌                                              |
-| Default    | `""`                                            |
-
-Example
-
-```yaml
-dependencies:
-  valkey:
-    operator:
-      persistence:
-        size: ""
-```
-
----
-
-### `dependencies.valkey.operator.persistence.storageClass`
-
-Storage class of the volumes. Defaults to `global.fallbackDefaults.storageClass`.
-
-| Field      | Value                                                   |
-| ---------- | ------------------------------------------------------- |
-| Key        | `dependencies.valkey.operator.persistence.storageClass` |
-| Type       | `string`                                                |
-| Required   | ❌                                                      |
-| Helm `tpl` | ❌                                                      |
-| Default    | `""`                                                    |
-
-Example
-
-```yaml
-dependencies:
-  valkey:
-    operator:
-      persistence:
-        storageClass: ""
-```
-
----

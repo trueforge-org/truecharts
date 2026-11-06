@@ -1,21 +1,30 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "array",
-  "description": "See [Topology Spread Constraints](/truecharts-common/workload#topologyspreadconstraints)",
+  "description": "Rules that spread the pods across topology domains such as nodes or zones (`topologySpreadConstraints`).",
   "items": {
     "type": "object",
     "properties": {
       "maxSkew": {
         "type": "integer",
-        "description": "Maximum difference in pods between two topology domains."
+        "description": "Maximum difference in the number of matching pods between any two topology domains.",
+        "examples": [
+          1
+        ]
       },
       "topologyKey": {
         "type": "string",
-        "description": "Node label of the topology domain, eg `kubernetes.io/hostname`."
+        "description": "Node label of the topology domain, eg `kubernetes.io/hostname`.",
+        "examples": [
+          "kubernetes.io/hostname"
+        ]
       },
       "whenUnsatisfiable": {
         "type": "string",
-        "description": "What happens when the constraint can not be met: `DoNotSchedule` or `ScheduleAnyway`."
+        "description": "What happens when the constraint can not be met: `DoNotSchedule` or `ScheduleAnyway`.",
+        "examples": [
+          "ScheduleAnyway"
+        ]
       },
       "labelSelector": {
         "allOf": [
@@ -23,18 +32,19 @@
             "$ref": "../special/labelSelector.json"
           }
         ],
-        "description": "Pods that are counted, by labels."
+        "description": "Selects the pods that are counted when the skew is calculated."
       },
       "minDomains": {
         "type": "integer",
-        "description": "Minimum number of eligible domains."
+        "description": "Minimum number of eligible domains. Only applies with `whenUnsatisfiable: DoNotSchedule`."
       },
       "matchLabelKeys": {
         "type": "array",
         "items": {
-          "type": "string"
+          "type": "string",
+          "description": "A label key of the pod."
         },
-        "description": "Label keys of the pod to select the pods that are counted."
+        "description": "Label keys of the pod. Their values are combined with `labelSelector` to select the pods that are counted."
       },
       "nodeAffinityPolicy": {
         "type": "string",
@@ -53,6 +63,7 @@
         "description": "Whether the node taints are honored when the skew is calculated."
       }
     },
-    "additionalProperties": false
+    "additionalProperties": false,
+    "description": "A topology spread constraint."
   }
 }

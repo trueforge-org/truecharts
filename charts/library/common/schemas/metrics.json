@@ -10,12 +10,13 @@
           "boolean",
           "string"
         ],
-        "description": "Enable the metrics object.",
-        "default": false
+        "description": "Create this monitor. Supports Helm `tpl`.",
+        "default": false,
+        "x-helm-tpl": true
       },
       "primary": {
         "type": "boolean",
-        "description": "Make this the primary metrics object."
+        "description": "Make this the primary metrics object. Only 1 can be primary."
       },
       "type": {
         "type": "string",
@@ -45,6 +46,7 @@
             "type": "array",
             "items": {
               "type": "object",
+              "description": "A label expression.",
               "properties": {
                 "key": {
                   "type": "string",
@@ -57,7 +59,8 @@
                 "values": {
                   "type": "array",
                   "items": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "A label value."
                   },
                   "description": "Values of the label. Empty for `Exists` and `DoesNotExist`."
                 }
@@ -77,7 +80,8 @@
           "string"
         ],
         "additionalProperties": {
-          "type": "string"
+          "type": "string",
+          "description": "Value of the label."
         },
         "description": "Labels that select the service or pods."
       },
@@ -119,7 +123,8 @@
               "additionalProperties": {
                 "type": "array",
                 "items": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "A value of the query parameter."
                 },
                 "description": "Values of the query parameter"
               },
@@ -159,7 +164,7 @@
             }
           },
           "additionalProperties": false,
-          "description": "Configuration for `metrics.main.endpoints.$item`."
+          "description": "An endpoint that is scraped."
         },
         "description": "Endpoints that are scraped."
       },
@@ -171,7 +176,8 @@
               "boolean",
               "string"
             ],
-            "description": "Create a PrometheusRule for this metrics object. Nothing is created when there are no rules."
+            "description": "Create a PrometheusRule for this metrics object. Nothing is created when there are no rules.",
+            "x-helm-tpl": true
           },
           "labels": {
             "allOf": [
@@ -192,7 +198,12 @@
           "rules": {
             "type": "array",
             "items": {
-              "$ref": "#/additionalProperties/properties/prometheusRule/properties/groups/additionalProperties/properties/rules/items"
+              "allOf": [
+                {
+                  "$ref": "#/additionalProperties/properties/prometheusRule/properties/groups/additionalProperties/properties/rules/items"
+                }
+              ],
+              "description": "An alerting or recording rule. Set `alert` or `record`."
             },
             "description": "Rules of a group named after the PrometheusRule. Use `groups` for more than one group."
           },
@@ -249,7 +260,7 @@
                       }
                     },
                     "additionalProperties": false,
-                    "description": "Configuration for `metrics.main.prometheusRule.groups.$name.rules.$item`."
+                    "description": "An alerting or recording rule. Set `alert` or `record`."
                   },
                   "description": "Rules of the group."
                 },
@@ -257,12 +268,17 @@
                   "type": "array",
                   "description": "Additional rules of the group, next to `rules`.",
                   "items": {
-                    "$ref": "#/additionalProperties/properties/prometheusRule/properties/groups/additionalProperties/properties/rules/items"
+                    "allOf": [
+                      {
+                        "$ref": "#/additionalProperties/properties/prometheusRule/properties/groups/additionalProperties/properties/rules/items"
+                      }
+                    ],
+                    "description": "An alerting or recording rule."
                   }
                 }
               },
               "additionalProperties": false,
-              "description": "Configuration for `metrics.main.prometheusRule.groups.$name`."
+              "description": "A group of rules, keyed by name."
             },
             "description": "Groups of rules, keyed by name.",
             "default": {}
@@ -271,6 +287,7 @@
             "oneOf": [
               {
                 "type": "array",
+                "description": "Additional groups as a list.",
                 "items": {
                   "type": "object",
                   "properties": {
@@ -297,7 +314,7 @@
                           }
                         },
                         "additionalProperties": false,
-                        "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules.$item`."
+                        "description": "An alerting rule."
                       },
                       "description": "Rules of the group."
                     },
@@ -307,11 +324,12 @@
                     }
                   },
                   "additionalProperties": false,
-                  "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item`."
+                  "description": "A group of rules."
                 }
               },
               {
-                "type": "null"
+                "type": "null",
+                "description": "No additional groups."
               },
               {
                 "type": "object",
@@ -341,7 +359,7 @@
                           }
                         },
                         "additionalProperties": false,
-                        "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item.rules.$item`."
+                        "description": "An alerting rule."
                       },
                       "description": "Rules of the group."
                     },
@@ -351,9 +369,9 @@
                     }
                   },
                   "additionalProperties": false,
-                  "description": "Configuration for `metrics.main.prometheusRule.additionalgroups.$item`."
+                  "description": "A group of rules, keyed by name."
                 },
-                "description": "Groups keyed by name. The key is used as the group name when `name` is not set."
+                "description": "Additional groups as a map keyed by group name. The key is used as the group name when `name` is not set."
               }
             ],
             "description": "Additional groups of rules, as a list or as a map keyed by group name."
@@ -361,7 +379,9 @@
         },
         "additionalProperties": false,
         "description": "A PrometheusRule with alerting and recording rules.",
-        "default": "{ enabled: false }"
+        "default": {
+          "enabled": false
+        }
       },
       "targetSelector": {
         "type": "string",
@@ -393,8 +413,8 @@
       }
     },
     "additionalProperties": false,
-    "description": "Configuration for `metrics.main`.",
+    "description": "A ServiceMonitor or PodMonitor, keyed by name.",
     "default": {}
   },
-  "description": "Configuration for `metrics`."
+  "description": "Metrics objects, keyed by name. Every enabled entry renders a ServiceMonitor or PodMonitor and optionally a PrometheusRule, see [Metrics](/truecharts-common/metrics)."
 }

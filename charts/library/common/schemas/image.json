@@ -4,23 +4,29 @@
   "properties": {
     "repository": {
       "type": "string",
-      "description": "Defines the image repository",
+      "description": "Repository of the image, without the tag.",
       "default": "",
-      "x-docs-required": true
+      "x-docs-required": true,
+      "examples": [
+        "oci.trueforge.org/containerforge/whoami"
+      ]
     },
     "pullPolicy": {
       "type": "string",
-      "description": "Defines the image pull policy",
+      "description": "When Kubernetes pulls the image: `Always`, `IfNotPresent` or `Never`.",
       "default": "IfNotPresent",
       "x-docs-required": true
     },
     "tag": {
       "type": "string",
-      "description": "Defines the image tag",
+      "description": "Tag of the image. Pin it by digest, as `<version>@sha256:<digest>`.",
       "default": "",
-      "x-docs-required": true
+      "x-docs-required": true,
+      "examples": [
+        "1.12.0@sha256:ab5d621fc3ecf2ddcc52a728551bab0b942c1e777126b9595df1cfa4e7b9adfa"
+      ]
     }
   },
   "additionalProperties": false,
-  "description": "Defines the image details"
+  "description": "An image: repository, tag and pull policy. A container selects an image by the name of its key on the root of the values, with `imageSelector`."
 }

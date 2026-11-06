@@ -1,30 +1,52 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "description": "See [fixedEnv](/truecharts-common/workload/podSpec/containers/fixedEnv).",
+  "description": "Overrides of the environment variables that common sets on every container. Each key replaces the value of `TZ`, `securityContext.container.UMASK`, `securityContext.container.PUID` or `containerOptions.NVIDIA_CAPS` for this container.",
   "properties": {
     "NVIDIA_CAPS": {
       "type": "array",
-      "description": "Override fixedEnv for the container By default it will set the following environment variables:"
+      "description": "Capabilities of the NVIDIA driver that are made available (`NVIDIA_DRIVER_CAPABILITIES`), for containers that use an `nvidia.com/gpu` resource. Allowed entries are `all`, `compute`, `utility`, `graphics` and `video`, and entries must be unique. Defaults to `containerOptions.NVIDIA_CAPS`.",
+      "items": {
+        "type": "string",
+        "description": "An NVIDIA driver capability."
+      },
+      "examples": [
+        [
+          "compute",
+          "utility"
+        ]
+      ]
     },
     "TZ": {
       "type": "string",
-      "description": "Override the timezone for the container"
+      "description": "Time zone of the container (`TZ`). Defaults to the top-level `TZ` value.",
+      "examples": [
+        "Europe/Amsterdam"
+      ]
     },
     "UMASK": {
       "type": [
         "string",
         "integer"
       ],
-      "description": "Override the umask for the container"
+      "description": "File creation mask of the container (`UMASK` and `UMASK_SET`). Defaults to `securityContext.container.UMASK`.",
+      "examples": [
+        "0022"
+      ]
     },
     "PUID": {
       "type": [
         "string",
         "integer"
       ],
-      "description": "Override the PUID for the container"
+      "description": "User ID of the container (`PUID`), used by images that drop privileges themselves. Defaults to `securityContext.container.PUID`.",
+      "examples": [
+        568
+      ]
     }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "x-docs-page": {
+    "title": "Fixed Env"
+  }
 }

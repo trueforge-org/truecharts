@@ -5,5 +5,5 @@
       "$ref": "../values.schema.source.json"
     }
   ],
-  "description": "Shared values merged into the common chart defaults before chart-specific values. In a chart that depends on common, Helm puts all values of common here, so it takes the same values as the chart itself."
+  "description": "Values merged into the common defaults before the values of the chart. In a chart that depends on common, Helm puts the values of common here, so it takes the same values as the chart itself."
 }

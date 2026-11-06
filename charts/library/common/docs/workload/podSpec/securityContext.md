@@ -1,125 +1,160 @@
 ---
-title: Securitycontext
+title: securityContext
 ---
 
 :::note
 
-- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/workload/podSpec/securityContext#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.workload.podSpec.securityContext`
+- `.Values.securityContext.pod`
+- `.Values.workload.$name.podSpec.securityContext`
 
 ---
 
-## `workload.podSpec.securityContext`
+## `securityContext`
 
 Pod-level security context.
 
-| Field      | Value                              |
-| ---------- | ---------------------------------- |
-| Key        | `workload.podSpec.securityContext` |
-| Type       | `map`                              |
-| Required   | ❌                                 |
-| Helm `tpl` | ❌                                 |
-| Default    | unset                              |
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.podSpec.securityContext` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `workload.podSpec.securityContext.fsGroup`
+## `fsGroup`
 
 Group ID applied to mounted volumes.
 
-| Field      | Value                                      |
-| ---------- | ------------------------------------------ |
-| Key        | `workload.podSpec.securityContext.fsGroup` |
-| Type       | `integer`                                  |
-| Required   | ❌                                         |
-| Helm `tpl` | ❌                                         |
-| Default    | `568`                                      |
-
-Example
-
-```yaml
-workload:
-  podSpec:
-    securityContext:
-      fsGroup: 568
-```
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.podSpec.securityContext.fsGroup` |
+| Type | `int` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `568` |
 
 ---
 
-### `workload.podSpec.securityContext.fsGroupChangePolicy`
+## `fsGroupChangePolicy`
 
 Policy controlling when ownership and permissions of volume contents are changed.
 
-| Field      | Value                                                  |
-| ---------- | ------------------------------------------------------ |
-| Key        | `workload.podSpec.securityContext.fsGroupChangePolicy` |
-| Type       | `string`                                               |
-| Required   | ❌                                                     |
-| Helm `tpl` | ❌                                                     |
-| Default    | `"OnRootMismatch"`                                     |
-| Enum       | `Always`, `OnRootMismatch`                             |
-
-Example
-
-```yaml
-workload:
-  podSpec:
-    securityContext:
-      fsGroupChangePolicy: OnRootMismatch
-```
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.podSpec.securityContext.fsGroupChangePolicy` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `"OnRootMismatch"` |
+| Allowed values | `"Always"`, `"OnRootMismatch"` |
 
 ---
 
-### `workload.podSpec.securityContext.supplementalGroups`
+## `supplementalGroups`
 
 Additional group IDs applied to containers in the pod.
 
-| Field      | Value                                                 |
-| ---------- | ----------------------------------------------------- |
-| Key        | `workload.podSpec.securityContext.supplementalGroups` |
-| Type       | `list of integer`                                     |
-| Required   | ❌                                                    |
-| Helm `tpl` | ❌                                                    |
-| Default    | `[]`                                                  |
-
-Example
-
-```yaml
-workload:
-  podSpec:
-    securityContext:
-      supplementalGroups:
-        []
-```
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.podSpec.securityContext.supplementalGroups` |
+| Type | `list of int` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `[]` |
 
 ---
 
-### `workload.podSpec.securityContext.sysctls`
+## `sysctls`
 
 Kernel parameters to set in the pod's network namespace.
 
-| Field      | Value                                      |
-| ---------- | ------------------------------------------ |
-| Key        | `workload.podSpec.securityContext.sysctls` |
-| Type       | `list of map`                              |
-| Required   | ❌                                         |
-| Helm `tpl` | ❌                                         |
-| Default    | `[]`                                       |
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.podSpec.securityContext.sysctls` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `[]` |
 
-Example
+---
+
+## `sysctls[]`
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.podSpec.securityContext.sysctls[]` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `sysctls[].name`
+
+Name of the sysctl.
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.podSpec.securityContext.sysctls[].name` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+
+---
+
+## `sysctls[].value`
+
+Value of the sysctl.
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.podSpec.securityContext.sysctls[].value` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+
+---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
 
 ```yaml
 workload:
-  podSpec:
-    securityContext:
-      sysctls:
-        []
+  workload-name:
+    podSpec:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups:
+          - 568
+        sysctls:
+          - name: net.ipv4.ip_local_port_range
+            value: 1024 65535
 ```
 
----
+```yaml
+workload:
+  workload-name:
+    podSpec:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups:
+          - 568
+          - 1000
+        sysctls:
+          - name: net.ipv4.ip_unprivileged_port_start
+            value: '0'
+```

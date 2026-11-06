@@ -4,13 +4,16 @@
   "properties": {
     "enabled": {
       "type": "boolean",
-      "description": "Enables or Disables the ConfigMaps from folder feature",
+      "description": "Generate ConfigMaps from the folders in `basePath` when true.",
       "default": false
     },
     "basePath": {
       "type": "string",
-      "description": "The path in your parent chart's filesystem where you can add files to be converted into individual ConfigMaps. Files should be organized two levels deep (basePath/configMapName/file)",
-      "default": ""
+      "description": "Path in the filesystem of the parent chart that holds the files to convert into ConfigMaps. Files are organised two levels deep: `basePath/configMapName/file`.",
+      "default": "",
+      "examples": [
+        "configmaps"
+      ]
     },
     "configMapsOverrides": {
       "type": "object",
@@ -75,5 +78,5 @@
     }
   },
   "additionalProperties": false,
-  "description": "Generate ConfigMaps from a folder structure in the Helm chart's filesystem"
+  "description": "Generates a ConfigMap for each folder in a directory of the parent chart, with the files of the folder as its entries."
 }

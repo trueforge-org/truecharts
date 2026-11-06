@@ -1,10 +1,9 @@
 ---
-title: Networkpolicy
+title: Network Policy
 ---
 
 :::note
 
-- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/networkpolicy#full-examples) section for complete examples.
 
 :::
@@ -15,29 +14,421 @@ title: Networkpolicy
 
 ---
 
-## `networkpolicy`
+## Child Pages
 
-Create NetworkPolicy or CiliumNetworkPolicy objects
-
-| Field      | Value           |
-| ---------- | --------------- |
-| Key        | `networkpolicy` |
-| Type       | `map`           |
-| Required   | ❌              |
-| Helm `tpl` | ❌              |
-| Default    | unset           |
+- [egress](/truecharts-common/networkpolicy/egress)
+- [egressDeny](/truecharts-common/networkpolicy/egressDeny)
+- [endpointSelector](/truecharts-common/networkpolicy/endpointSelector)
+- [ingress](/truecharts-common/networkpolicy/ingress)
+- [ingressDeny](/truecharts-common/networkpolicy/ingressDeny)
+- [nodeSelector](/truecharts-common/networkpolicy/nodeSelector)
+- [podSelector](/truecharts-common/networkpolicy/podSelector)
 
 ---
 
-## Child Pages
+## `networkpolicy`
 
-- [Egressrule](egressRule.md) - An egress rule.
-- [Ingressrule](ingressRule.md) - An ingress rule.
-- [Labelselector](labelSelector.md) - Kubernetes label selector.
-- [Peer](peer.md) - A peer allowed by a NetworkPolicy rule.
-- [Podselector](podSelector.md) - Kubernetes label selector, or a Helm template that renders one.
-- [Policy](policy.md) - Configuration for a NetworkPolicy.
-- [Port](port.md) - Port or port range for a NetworkPolicy rule.
+Network policies, keyed by name. See [networkpolicy](/truecharts-common/networkpolicy).
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name`
+
+A network policy, keyed by name.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.enabled`
+
+Create this NetworkPolicy.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.enabled` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `false` |
+
+---
+
+## `$name.primary`
+
+Mark this as the primary NetworkPolicy.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.primary` |
+| Type | `bool or string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
+
+---
+
+## `$name.expandObjectName`
+
+Prefix the name of the policy with the release fullname.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.expandObjectName` |
+| Type | `bool or string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
+
+---
+
+## `$name.namespace`
+
+Namespace of the policy. Defaults to the release namespace.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.namespace` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `""` |
+
+---
+
+## `$name.labels`
+
+Additional labels for this NetworkPolicy.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.labels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
+## `$name.annotations`
+
+Additional annotations for this NetworkPolicy.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.annotations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
+## `$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.annotationsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.labelsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.type`
+
+Type of policy to create. `kubernetes` creates a NetworkPolicy, `cilium` creates a CiliumNetworkPolicy and requires the Cilium CRDs
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.type` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `"kubernetes"` |
+| Allowed values | `"kubernetes"`, `"cilium"` |
+| Pattern | `^\{\{.*\}\}$` |
+
+---
+
+## `$name.clusterwide`
+
+Cilium only. Create a CiliumClusterwideNetworkPolicy instead of a CiliumNetworkPolicy, chart based selectors are pinned to the namespace of the chart
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.clusterwide` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
+
+---
+
+## `$name.description`
+
+Cilium only. Free form description of the policy, supports Helm `tpl`
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.description` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `""` |
+
+---
+
+## `$name.podSelector`
+
+Custom Kubernetes label selector for pods to which this policy applies.
+
+See [podSelector](/truecharts-common/networkpolicy/podSelector) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.podSelector` |
+| Type | `map or string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Pattern | `^\{\{.*\}\}$` |
+
+---
+
+## `$name.targetSelector`
+
+Target one or more workloads from this chart by name.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.targetSelector` |
+| Type | `string or list of string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `""` |
+
+---
+
+## `$name.targetSelectorRegex`
+
+Target workloads from this chart whose names match one or more regular expressions
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.targetSelectorRegex` |
+| Type | `string or list of string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `""` |
+
+---
+
+## `$name.targetAllPods`
+
+Target all pods in the namespace.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.targetAllPods` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
+
+---
+
+## `$name.endpointSelector`
+
+Cilium only. Select the endpoints to which this policy applies, supports Helm `tpl`
+
+See [endpointSelector](/truecharts-common/networkpolicy/endpointSelector) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.endpointSelector` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+
+---
+
+## `$name.nodeSelector`
+
+Cilium only. Host policy, select the nodes to which this policy applies instead of pods. Requires `clusterwide: true`, supports Helm `tpl`
+
+See [nodeSelector](/truecharts-common/networkpolicy/nodeSelector) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.nodeSelector` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+
+---
+
+## `$name.policyTypes`
+
+Policy types. When omitted, types are inferred from the configured rules.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.policyTypes` |
+| Type | `list of string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Allowed values | `"Ingress"`, `"Egress"` |
+
+---
+
+## `$name.enableDefaultDeny`
+
+Cilium only. Control whether the policy puts the selected endpoints in default deny mode
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.enableDefaultDeny` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.enableDefaultDeny.ingress`
+
+Put the selected endpoints in ingress default deny mode
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.enableDefaultDeny.ingress` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.enableDefaultDeny.egress`
+
+Put the selected endpoints in egress default deny mode
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.enableDefaultDeny.egress` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.ingress`
+
+Ingress rules.
+
+See [ingress](/truecharts-common/networkpolicy/ingress) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.ingress` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `[]` |
+
+---
+
+## `$name.ingressDeny`
+
+Cilium only. List of ingress deny rules, these take precedence over allow rules, supports Helm `tpl`
+
+See [ingressDeny](/truecharts-common/networkpolicy/ingressDeny) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.ingressDeny` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `[]` |
+
+---
+
+## `$name.egress`
+
+Egress rules.
+
+See [egress](/truecharts-common/networkpolicy/egress) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.egress` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `[]` |
+
+---
+
+## `$name.egressDeny`
+
+Cilium only. List of egress deny rules, these take precedence over allow rules, supports Helm `tpl`
+
+See [egressDeny](/truecharts-common/networkpolicy/egressDeny) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkpolicy.$name.egressDeny` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `[]` |
 
 ---
 

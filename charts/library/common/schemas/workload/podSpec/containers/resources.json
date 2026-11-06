@@ -10,16 +10,22 @@
             "string",
             "number"
           ],
-          "description": "The maximum amount of CPU that the container can use.",
-          "default": "1500m"
+          "description": "Maximum CPU the container can use, in cores or millicores.",
+          "default": "1500m",
+          "examples": [
+            "1500m"
+          ]
         },
         "memory": {
           "type": [
             "string",
             "number"
           ],
-          "description": "The resources that the container can use.",
-          "default": "2400Mi"
+          "description": "Maximum memory the container can use. The container is killed when it uses more.",
+          "default": "2400Mi",
+          "examples": [
+            "2Gi"
+          ]
         }
       },
       "additionalProperties": {
@@ -29,7 +35,7 @@
         ],
         "description": "Extended resource quantity, keyed by resource name (for example `nvidia.com/gpu`). Rendered as-is."
       },
-      "description": "The maximum amount of resources that the container can use. Limits are **optional**, can be set to \"unlimited\" by setting it's values (`cpu` and `memory`) to `0`.",
+      "description": "Maximum amount of resources the container can use. Limits are **optional**. Set `cpu` and `memory` to `0` to remove them.",
       "default": {
         "cpu": "1500m",
         "memory": "2400Mi"
@@ -43,18 +49,24 @@
             "string",
             "number"
           ],
-          "description": "The minimum amount of CPU that the container can use.",
+          "description": "CPU the scheduler reserves for the container, in cores or millicores.",
           "default": "75m",
-          "x-docs-required": true
+          "x-docs-required": true,
+          "examples": [
+            "100m"
+          ]
         },
         "memory": {
           "type": [
             "string",
             "number"
           ],
-          "description": "The minimum amount of memory that the container can use.",
+          "description": "Memory the scheduler reserves for the container.",
           "default": "200Mi",
-          "x-docs-required": true
+          "x-docs-required": true,
+          "examples": [
+            "256Mi"
+          ]
         }
       },
       "additionalProperties": {
@@ -64,7 +76,7 @@
         ],
         "description": "Extended resource quantity, keyed by resource name (for example `ephemeral-storage`). Rendered as-is."
       },
-      "description": "The minimum amount of resources that the container needs. Requests are **required**, because without it, kubernetes uses the `limits` as the `requests`.",
+      "description": "Minimum amount of resources the container needs, which the scheduler reserves on a node. Requests are **required**, because without them Kubernetes uses the `limits` as the `requests`.",
       "default": {
         "cpu": "75m",
         "memory": "200Mi"
@@ -73,9 +85,12 @@
     },
     "excludeExtra": {
       "type": "boolean",
-      "description": "Exclude non-CPU and memory resource values when rendering this container."
+      "description": "Leave out the extra resources (for example GPUs) that common adds to this container, so only `cpu` and `memory` are rendered."
     }
   },
   "additionalProperties": false,
-  "description": "The resources that the container can use."
+  "description": "CPU, memory and extended resources of the container. Overrides the top-level `resources` for this container. See [resources](/truecharts-common/workload/podSpec/containers/resources).",
+  "x-docs-page": {
+    "title": "Resources"
+  }
 }

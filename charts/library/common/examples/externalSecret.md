@@ -2,7 +2,7 @@
 
 ExternalSecrets require the [External Secrets Operator](https://external-secrets.io) CRDs to be installed in the cluster.
 
-### Fetch Individual Keys
+### Fetch individual keys
 
 Create a Secret named `<fullname>-credentials` with the keys `username` and `password`, fetched from a `ClusterSecretStore`:
 
@@ -25,7 +25,7 @@ externalSecret:
           property: password
 ```
 
-### Fetch All Keys of a Provider Entry
+### Fetch all keys of a provider entry
 
 Use `dataFrom` to copy every key of a provider entry into the Secret:
 
@@ -40,10 +40,32 @@ externalSecret:
           key: my-app/config
 ```
 
-### Custom Secret Name and Template
+### Find entries and rewrite the keys
 
-`target.template` is passed to the ExternalSecret as is, so the External Secrets Operator can evaluate its own templates in there.
-Values in `data` do support Helm `tpl`:
+`find` selects entries of the provider, and `rewrite` changes the names of the keys:
+
+```yaml
+externalSecret:
+  all-config:
+    enabled: true
+    refreshPolicy: Periodic
+    refreshInterval: 30m
+    secretStoreRef:
+      name: vault
+      kind: ClusterSecretStore
+    dataFrom:
+      - find:
+          name:
+            regexp: "^my-app-.*"
+        rewrite:
+          - regexp:
+              source: "my-app-(.*)"
+              target: "app_$1"
+```
+
+### Custom Secret name and template
+
+`target.template` is passed to the ExternalSecret as is, so the External Secrets Operator can evaluate its own templates in there. Values in `data` do support Helm `tpl`:
 
 ```yaml
 externalSecret:

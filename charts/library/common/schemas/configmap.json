@@ -10,18 +10,19 @@
           "boolean",
           "string"
         ],
-        "description": "Prefix the object name with the chart fullname",
-        "default": true
+        "description": "Prefix the name of the ConfigMap with the chart fullname.",
+        "default": true,
+        "x-helm-tpl": true
       },
       "data": {
         "type": "object",
         "properties": {},
         "additionalProperties": {
           "type": "string",
-          "description": "Content of the ConfigMap entry"
+          "description": "Content of the entry."
         },
-        "description": "Data entries of the ConfigMap, keyed by file or variable name",
-        "x-helm-tpl": true,
+        "description": "Data entries of the ConfigMap, keyed by file or variable name. Values are Helm `tpl` strings.",
+        "x-helm-tpl": "On value only",
         "x-docs-required": true
       },
       "enabled": {
@@ -29,7 +30,7 @@
           "boolean",
           "string"
         ],
-        "description": "Enables or Disables the Configmap",
+        "description": "Create this ConfigMap when true. Accepts a Helm `tpl` string that renders to `true` or `false`.",
         "default": false,
         "x-helm-tpl": true,
         "x-docs-required": true
@@ -40,7 +41,7 @@
             "$ref": "special/namespaces.json"
           }
         ],
-        "description": "Define the namespace for this object",
+        "description": "Namespace to create this object in. Overrides the chart-wide `namespace` and `global.namespace`.",
         "default": "",
         "x-helm-tpl": true
       },
@@ -87,13 +88,13 @@
           "type": "string",
           "description": "Base64 encoded content of the ConfigMap entry"
         },
-        "description": "Binary data entries of the ConfigMap, keyed by file name. Values must be base64 encoded"
+        "description": "Binary entries of the ConfigMap, keyed by file name. Values must be base64 encoded."
       }
     },
     "additionalProperties": false,
-    "description": "Define Configmap",
+    "description": "A ConfigMap.",
     "default": {},
     "x-docs-required": true
   },
-  "description": "Create Configmap objects"
+  "description": "ConfigMaps, keyed by name."
 }

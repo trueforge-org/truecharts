@@ -7,40 +7,40 @@
         "string",
         "null"
       ],
-      "description": "Storage class of a pvc that sets none. `-` leaves it unset.",
+      "description": "Storage class of a PVC that sets none. `-` leaves it unset.",
       "default": null
     },
     "probeType": {
       "type": "string",
-      "description": "Type of a probe that sets none.",
+      "description": "Type of a probe that sets none, eg `http`, `tcp` or `grpc`.",
       "default": "http",
       "minLength": 1,
       "x-docs-required": true
     },
     "serviceProtocol": {
       "type": "string",
-      "description": "Protocol of a service port that sets none.",
+      "description": "Protocol of a service port that sets none, eg `tcp` or `udp`.",
       "default": "tcp",
       "minLength": 1,
       "x-docs-required": true
     },
     "serviceType": {
       "type": "string",
-      "description": "Type of a service that sets none.",
+      "description": "Type of a service that sets none, eg `ClusterIP`.",
       "default": "ClusterIP",
       "minLength": 1,
       "x-docs-required": true
     },
     "persistenceType": {
       "type": "string",
-      "description": "Type of a persistence entry that sets none.",
+      "description": "Type of a persistence entry that sets none, eg `pvc`.",
       "default": "pvc",
       "minLength": 1,
       "x-docs-required": true
     },
     "pvcRetain": {
       "type": "boolean",
-      "description": "Keep the pvcs when the release is deleted, for persistence that sets no `retain`.",
+      "description": "Keep the PVCs when the release is deleted, for persistence that sets no `retain`.",
       "default": false,
       "x-docs-required": true
     },
@@ -49,20 +49,29 @@
       "description": "Size of a pvc that sets none.",
       "default": "100Gi",
       "minLength": 1,
-      "x-docs-required": true
+      "x-docs-required": true,
+      "examples": [
+        "100Gi"
+      ]
     },
     "vctSize": {
       "type": "string",
       "description": "Size of a volume claim template that sets none.",
       "default": "100Gi",
       "minLength": 1,
-      "x-docs-required": true
+      "x-docs-required": true,
+      "examples": [
+        "100Gi"
+      ]
     },
     "accessModes": {
       "type": "array",
       "items": {
         "type": "string",
-        "description": "Configuration for `global.fallbackDefaults.accessModes.$item`."
+        "description": "An access mode, eg `ReadWriteOnce`.",
+        "examples": [
+          "ReadWriteOnce"
+        ]
       },
       "description": "Access modes of a pvc that sets none.",
       "default": [
@@ -74,7 +83,10 @@
       "type": "array",
       "items": {
         "type": "string",
-        "description": "Configuration for `global.fallbackDefaults.vctAccessModes.$item`."
+        "description": "An access mode, eg `ReadWriteOnce`.",
+        "examples": [
+          "ReadWriteOnce"
+        ]
       },
       "description": "Access modes of a volume claim template that sets none.",
       "default": [
@@ -239,23 +251,23 @@
       "description": "Timings of the probes that set none.",
       "default": {
         "liveness": {
-          "initialDelaySeconds": 10,
-          "periodSeconds": 10,
+          "initialDelaySeconds": 12,
+          "periodSeconds": 15,
           "timeoutSeconds": 5,
           "failureThreshold": 5,
           "successThreshold": 1
         },
         "readiness": {
           "initialDelaySeconds": 10,
-          "periodSeconds": 10,
+          "periodSeconds": 12,
           "timeoutSeconds": 5,
-          "failureThreshold": 5,
+          "failureThreshold": 4,
           "successThreshold": 2
         },
         "startup": {
           "initialDelaySeconds": 10,
           "periodSeconds": 5,
-          "timeoutSeconds": 2,
+          "timeoutSeconds": 3,
           "failureThreshold": 60,
           "successThreshold": 1
         }
@@ -264,7 +276,7 @@
     },
     "topologyKey": {
       "type": "string",
-      "description": "Topology key of the default topology spread constraints.",
+      "description": "Topology key of the default topology spread constraints, used when `defaultSpread` is true.",
       "default": "kubernetes.io/hostname"
     },
     "allowRollingUpdateWithRWO": {
@@ -294,9 +306,16 @@
         }
       },
       "additionalProperties": false,
-      "description": "Defaults of the postgresql dependency in `operator` mode."
+      "description": "Defaults of the CNPG clusters of the postgresql dependency.",
+      "default": {
+        "pgVersion": 18,
+        "skipEmptyWalArchiveCheck": true
+      }
     }
   },
   "additionalProperties": false,
-  "description": "Configuration for `global.fallbackDefaults`."
+  "description": "Defaults used when a value is not set on the object itself.",
+  "x-docs-page": {
+    "title": "Fallback Defaults"
+  }
 }

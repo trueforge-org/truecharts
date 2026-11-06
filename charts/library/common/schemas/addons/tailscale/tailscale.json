@@ -7,127 +7,37 @@
         "boolean",
         "string"
       ],
-      "description": "Addons to the workloads"
+      "description": "Enable the tailscale addon."
     },
     "targetSelector": {
       "type": "array",
       "items": {
         "type": "string",
-        "description": "Configuration for `addons.tailscale.targetSelector.$item`."
+        "description": "Name of a workload."
       },
-      "description": "Addons to the workloads"
+      "description": "Workloads to which the tailscale container is added. Defaults to the primary workload.",
+      "examples": [
+        [
+          "main"
+        ]
+      ]
     },
     "container": {
-      "type": "object",
-      "properties": {
-        "enabled": {
-          "type": [
-            "boolean",
-            "string"
-          ],
-          "description": "Enable the container of the add-on."
+      "allOf": [
+        {
+          "$ref": "../container.json"
         },
-        "imageSelector": {
-          "type": "string",
-          "description": "Name of the image on the root of the values."
-        },
-        "probes": {
+        {
           "type": "object",
           "properties": {
-            "liveness": {
-              "type": "object",
-              "properties": {
-                "enabled": {
-                  "type": [
-                    "boolean",
-                    "string"
-                  ],
-                  "description": "Enable the container of the add-on."
-                }
-              },
-              "additionalProperties": false,
-              "description": "The liveness probe."
-            },
-            "readiness": {
-              "type": "object",
-              "properties": {
-                "enabled": {
-                  "type": [
-                    "boolean",
-                    "string"
-                  ],
-                  "description": "Enable the container of the add-on."
-                }
-              },
-              "additionalProperties": false,
-              "description": "The readiness probe."
-            },
-            "startup": {
-              "type": "object",
-              "properties": {
-                "enabled": {
-                  "type": [
-                    "boolean",
-                    "string"
-                  ],
-                  "description": "Enable the container of the add-on."
-                }
-              },
-              "additionalProperties": false,
-              "description": "The startup probe."
+            "env": {
+              "$ref": "container/env.json",
+              "description": "Environment variables of the container, keyed by name."
             }
-          },
-          "additionalProperties": false,
-          "description": "Probes of the container."
-        },
-        "command": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "description": "Configuration for `addons.tailscale.container.command.$item`."
-          },
-          "description": "Command of the container."
-        },
-        "resources": {
-          "type": "object",
-          "properties": {
-            "excludeExtra": {
-              "type": "boolean",
-              "description": "Leave out the extra resources, like GPUs, of the chart."
-            }
-          },
-          "additionalProperties": false,
-          "description": "Resources of the container."
-        },
-        "env": {
-          "$ref": "container/env.json",
-          "description": "Environment variables of the container, keyed by name."
-        },
-        "securityContext": {
-          "type": "object",
-          "properties": {
-            "capabilities": {
-              "type": "object",
-              "properties": {
-                "add": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Configuration for `addons.tailscale.container.securityContext.capabilities.add.$item`."
-                  },
-                  "description": "Capabilities that are added."
-                }
-              },
-              "additionalProperties": false,
-              "description": "Linux capabilities of the container."
-            }
-          },
-          "additionalProperties": false,
-          "description": "Security context of the container."
+          }
         }
-      },
-      "additionalProperties": false,
-      "description": "Addons to the workloads"
+      ],
+      "description": "Container of the tailscale add-on. It takes the same keys as a container of a workload."
     },
     "settings": {
       "type": "object",
@@ -178,7 +88,7 @@
         }
       },
       "additionalProperties": false,
-      "description": "Tailscale settings"
+      "description": "Tailscale settings. Each key sets the matching `TS_*` environment variable of the container."
     },
     "annotations": {
       "allOf": [
@@ -190,5 +100,5 @@
     }
   },
   "additionalProperties": false,
-  "description": "Addons to the workloads"
+  "description": "Configuration for the tailscale addon, which adds a tailscale container that connects the pod to a tailnet."
 }

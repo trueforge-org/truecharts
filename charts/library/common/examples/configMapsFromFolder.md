@@ -1,9 +1,10 @@
 ## Full Examples
 
-### Basic Example
+### Basic example
 
-Your file structure:
-```
+Every folder below `basePath` becomes a ConfigMap, and every file in it a key. Your file structure:
+
+```text
 myapp/
 ├── Chart.yaml
 ├── values.yaml
@@ -16,57 +17,65 @@ myapp/
             └── startup.sh
 ```
 
-Your values.yaml:
+Your `values.yaml`:
+
 ```yaml
 configMapsFromFolder:
   enabled: true
-  basePath: "files/configMaps"
+  basePath: files/configMaps
 ```
 
-This will create two ConfigMaps:
-- `myapp-app-config` with keys: `config.json`, `settings.yaml`
-- `myapp-scripts` with key: `startup.sh`
+This creates two ConfigMaps:
 
-### Advanced Example with Overrides
+- `myapp-app-config` with the keys `config.json` and `settings.yaml`.
+- `myapp-scripts` with the key `startup.sh`.
+
+### Advanced example with overrides
+
+Rename a ConfigMap, add labels and annotations, and change how single files are handled:
 
 ```yaml
 configMapsFromFolder:
   enabled: true
-  basePath: "files/configMaps"
+  basePath: files/configMaps
   configMapsOverrides:
     app-config:
-      forceRename: "my-custom-config-name"
+      forceRename: my-custom-config-name
       labels:
         environment: production
         team: platform
       annotations:
-        description: "Application configuration files"
+        description: Application configuration files
       fileAttributeOverrides:
         config.json:
           exclude: false
         template.tpl:
-          escaped: true  # Don't process Helm templates in this file
+          # Do not process Helm templates in this file
+          escaped: true
+        draft.yaml:
+          exclude: true
     scripts:
       fileAttributeOverrides:
         startup.sh:
           exclude: false
-        logo.png:
-          binary: true  # Treat as binary, will be base64 encoded
 ```
 
-### Example with Binary Files
+### Example with binary files
+
+Files marked as `binary` are base64 encoded and stored as `binaryData`:
 
 ```yaml
 configMapsFromFolder:
   enabled: true
-  basePath: "files/assets"
+  basePath: files/assets
   configMapsOverrides:
     images:
       fileAttributeOverrides:
         logo.png:
           binary: true
         icon.svg:
-          binary: false  # SVG can be stored as text
+          # SVG can be stored as text
+          binary: false
         favicon.ico:
           binary: true
 ```

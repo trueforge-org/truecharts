@@ -10,8 +10,9 @@
           "boolean",
           "string"
         ],
-        "description": "Enable the route.",
-        "default": false
+        "description": "Create this route. Supports Helm `tpl`.",
+        "default": false,
+        "x-helm-tpl": true
       },
       "primary": {
         "type": "boolean",
@@ -62,7 +63,7 @@
             "$ref": "special/namespaces.json"
           }
         ],
-        "description": "Namespace of the route."
+        "description": "Namespace of the route. Defaults to the release namespace."
       },
       "gateway": {
         "type": "string",
@@ -89,7 +90,8 @@
         ],
         "description": "A string selects a gateway in this chart and replaces `parentRefs`. A map of `service: port` selects the default backend, same as an ingress.",
         "additionalProperties": {
-          "type": "string"
+          "type": "string",
+          "description": "Name of the port of the Service."
         }
       },
       "parentRefs": {
@@ -147,14 +149,15 @@
             }
           },
           "additionalProperties": false,
-          "description": "Configuration for `route.main.parentRefs.$item`."
+          "description": "A Gateway or ListenerSet the route attaches to."
         },
         "description": "Gateways or ListenerSets the route attaches to."
       },
       "hostnames": {
         "type": "array",
         "items": {
-          "type": "string"
+          "type": "string",
+          "description": "A hostname, eg `app.example.com`."
         },
         "description": "Host addresses, supports Helm `tpl`. Required for `TLSRoute`, not supported by `TCPRoute` and `UDPRoute`.",
         "default": [],
@@ -165,11 +168,13 @@
         "description": "TLS for this route. Creates a ListenerSet on the selected gateway and attaches the route to it. Needs `gateway` or a `targetSelector` string. Only for `HTTPRoute` and `GRPCRoute`. Ignored when `integrations.certManager` is enabled.",
         "items": {
           "type": "object",
+          "description": "A TLS certificate for the route.",
           "properties": {
             "hosts": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "description": "A hostname, eg `app.example.com`."
               },
               "description": "Hostnames of this certificate. Supports Helm `tpl`.",
               "x-helm-tpl": true
@@ -212,7 +217,8 @@
                   "string"
                 ],
                 "description": "Enable the integration.",
-                "default": false
+                "default": false,
+                "x-helm-tpl": true
               },
               "certificateIssuer": {
                 "type": "string",
@@ -232,7 +238,8 @@
                   "string"
                 ],
                 "description": "Enable the integration.",
-                "default": false
+                "default": false,
+                "x-helm-tpl": true
               },
               "name": {
                 "type": "string",
@@ -265,7 +272,8 @@
               "podSelector": {
                 "type": "array",
                 "items": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "A pod selector."
                 },
                 "description": "Names of the pods to check for the status of the entry on the homepage."
               },
@@ -284,7 +292,7 @@
                   },
                   "type": {
                     "default": "",
-                    "description": "Type of the homepage widget."
+                    "description": "Type of the widget. Sets the `gethomepage.dev/widget.type` annotation."
                   },
                   "url": {
                     "type": "string",
@@ -319,11 +327,11 @@
                       "properties": {
                         "key": {
                           "type": "string",
-                          "description": "Define the key for the custom annotation. Sets the `gethomepage.dev/widget.$key` annotation"
+                          "description": "Name of the setting. Sets the `gethomepage.dev/widget.$key` annotation."
                         },
                         "value": {
                           "type": "string",
-                          "description": "Define the value for the custom annotation"
+                          "description": "Value of the setting."
                         }
                       },
                       "additionalProperties": false,
@@ -346,11 +354,16 @@
                   "string"
                 ],
                 "description": "Enable the integration.",
-                "default": false
+                "default": false,
+                "x-helm-tpl": true
               },
               "ipWhitelist": {
                 "type": "array",
-                "description": "Allowed source IPs, everything else is rejected."
+                "description": "Allowed source IPs, everything else is rejected.",
+                "items": {
+                  "type": "string",
+                  "description": "An allowed CIDR, eg `192.168.1.0/24`."
+                }
               },
               "ipStrategy": {
                 "type": "object",
@@ -366,7 +379,8 @@
                   "excludedIPs": {
                     "type": "array",
                     "items": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "An IP or CIDR."
                     },
                     "description": "IPs to skip in `X-Forwarded-For`."
                   },
@@ -400,7 +414,11 @@
                   },
                   "responseHeaders": {
                     "type": "array",
-                    "description": "Override the default response headers passed on to the app."
+                    "description": "Override the default response headers passed on to the app.",
+                    "items": {
+                      "type": "string",
+                      "description": "Name of a response header."
+                    }
                   }
                 },
                 "additionalProperties": false
@@ -416,7 +434,8 @@
                       "string"
                     ],
                     "description": "Enable the theme.",
-                    "default": false
+                    "default": false,
+                    "x-helm-tpl": true
                   },
                   "app": {
                     "type": "string",
@@ -503,11 +522,16 @@
                   "string"
                 ],
                 "description": "Enable the integration.",
-                "default": false
+                "default": false,
+                "x-helm-tpl": true
               },
               "ipWhitelist": {
                 "type": "array",
-                "description": "Allowed source IPs, everything else is rejected."
+                "description": "Allowed source IPs, everything else is rejected.",
+                "items": {
+                  "type": "string",
+                  "description": "An allowed CIDR, eg `192.168.1.0/24`."
+                }
               },
               "auth": {
                 "type": "object",
@@ -529,7 +553,11 @@
                   },
                   "responseHeaders": {
                     "type": "array",
-                    "description": "Override the default response headers passed on to the app."
+                    "description": "Override the default response headers passed on to the app.",
+                    "items": {
+                      "type": "string",
+                      "description": "Name of a response header."
+                    }
                   }
                 },
                 "additionalProperties": false
@@ -545,7 +573,8 @@
                       "string"
                     ],
                     "description": "Enable the theme.",
-                    "default": false
+                    "default": false,
+                    "x-helm-tpl": true
                   },
                   "css": {
                     "type": "string",
@@ -661,22 +690,24 @@
                     ],
                     "description": "Name of a service in this chart, or a map of `service: port` to select a port by name. Cannot be used with `name`.",
                     "additionalProperties": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "Name of the port of the Service."
                     }
                   },
                   "filters": {
                     "type": "array",
                     "items": {
                       "type": "object",
+                      "description": "A filter applied to this backend only.",
                       "additionalProperties": {
-                        "description": "A setting passed on as is."
+                        "description": "A setting of the filter, passed on as is."
                       }
                     },
                     "description": "Filters applied only to this backend. Only for `HTTPRoute` and `GRPCRoute`."
                   }
                 },
                 "additionalProperties": false,
-                "description": "Configuration for `route.main.rules.$item.backendRefs.$item`."
+                "description": "A backend the requests are sent to."
               },
               "description": "Where to send requests. Without this and without `filters`, the rule uses the primary service."
             },
@@ -684,7 +715,12 @@
               "type": "array",
               "description": "Conditions for matching requests. Only for `HTTPRoute` and `GRPCRoute`.",
               "items": {
-                "$ref": "route/match.json"
+                "allOf": [
+                  {
+                    "$ref": "route/match.json"
+                  }
+                ],
+                "description": "A condition that a request has to match."
               }
             },
             "name": {
@@ -695,8 +731,9 @@
               "type": "array",
               "items": {
                 "type": "object",
+                "description": "A filter applied to requests matching this rule.",
                 "additionalProperties": {
-                  "description": "A setting passed on as is."
+                  "description": "A setting of the filter, passed on as is."
                 }
               },
               "description": "Filters applied to requests matching this rule. Only for `HTTPRoute` and `GRPCRoute`. A rule with only filters needs no `backendRefs`, eg a redirect."
@@ -721,7 +758,7 @@
             }
           },
           "additionalProperties": false,
-          "description": "Configuration for `route.main.rules.$item`."
+          "description": "A routing rule."
         },
         "description": "Routing rules. Without rules everything goes to the primary service. Fields the route kind does not support fail rendering."
       },
@@ -732,8 +769,8 @@
       }
     },
     "additionalProperties": false,
-    "description": "Configuration for `route.main`.",
+    "description": "A Gateway API route, keyed by name.",
     "default": {}
   },
-  "description": "Configuration for `route`."
+  "description": "Routes, keyed by name. Every enabled entry renders a Gateway API route of `kind`, see [Route](/truecharts-common/route)."
 }

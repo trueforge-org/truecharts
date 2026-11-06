@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
+  "description": "A container of the valkey pods: patches `server` or `metrics-exporter`, or adds a sidecar. It follows the Kubernetes container spec.",
   "properties": {
     "name": {
       "type": "string",

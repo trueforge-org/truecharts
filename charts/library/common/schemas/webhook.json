@@ -10,7 +10,8 @@
             "boolean",
             "string"
           ],
-          "description": "Enable the webhook configuration."
+          "description": "Enable the webhook configuration.",
+          "x-helm-tpl": true
         },
         "type": {
           "type": "string",
@@ -36,7 +37,8 @@
                       "description": "API groups of the resources, `\"\"` for the core group.",
                       "minItems": 1,
                       "items": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "An API group."
                       }
                     },
                     "apiVersions": {
@@ -44,7 +46,8 @@
                       "description": "API versions of the resources.",
                       "minItems": 1,
                       "items": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "An API version."
                       }
                     },
                     "operations": {
@@ -52,7 +55,8 @@
                       "description": "Operations, eg `CREATE`, `UPDATE`, `DELETE` or `*`.",
                       "minItems": 1,
                       "items": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "An operation."
                       }
                     },
                     "resources": {
@@ -60,16 +64,17 @@
                       "description": "Resources, eg `pods` or `deployments/scale`.",
                       "minItems": 1,
                       "items": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "A resource."
                       }
                     },
                     "scope": {
                       "type": "string",
-                      "description": "Define the scope of the rule for the webhook"
+                      "description": "Scope of the rule: `Cluster`, `Namespaced` or `*`."
                     }
                   },
                   "additionalProperties": false,
-                  "description": "Create webhook objects",
+                  "description": "A rule of the webhook.",
                   "required": [
                     "apiGroups",
                     "apiVersions",
@@ -94,7 +99,8 @@
                     "pattern": "^\\{\\{.*\\}\\}$"
                   }
                 ],
-                "description": "What happens when the webhook fails: `Ignore` or `Fail`."
+                "description": "What happens when the webhook fails: `Ignore` or `Fail`.",
+                "x-helm-tpl": true
               },
               "matchPolicy": {
                 "oneOf": [
@@ -110,7 +116,8 @@
                     "pattern": "^\\{\\{.*\\}\\}$"
                   }
                 ],
-                "description": "How requests are matched to `rules`: `Exact` or `Equivalent`."
+                "description": "How requests are matched to `rules`: `Exact` or `Equivalent`.",
+                "x-helm-tpl": true
               },
               "sideEffects": {
                 "oneOf": [
@@ -126,7 +133,8 @@
                     "pattern": "^\\{\\{.*\\}\\}$"
                   }
                 ],
-                "description": "Side effects of the webhook: `None` or `NoneOnDryRun`."
+                "description": "Side effects of the webhook: `None` or `NoneOnDryRun`.",
+                "x-helm-tpl": true
               },
               "timeoutSeconds": {
                 "type": "integer",
@@ -135,7 +143,8 @@
               "admissionReviewVersions": {
                 "type": "array",
                 "items": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "An AdmissionReview version."
                 },
                 "description": "AdmissionReview versions the webhook accepts, eg `v1`.",
                 "minItems": 1
@@ -167,7 +176,7 @@
               }
             },
             "additionalProperties": false,
-            "description": "Create webhook objects",
+            "description": "A webhook.",
             "required": [
               "name",
               "admissionReviewVersions",
@@ -189,7 +198,8 @@
             "boolean",
             "string"
           ],
-          "description": "Enable the webhook configuration."
+          "description": "Enable the webhook configuration.",
+          "x-helm-tpl": true
         },
         "type": {
           "type": "string",
@@ -215,7 +225,8 @@
                       "description": "API groups of the resources, `\"\"` for the core group.",
                       "minItems": 1,
                       "items": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "An API group."
                       }
                     },
                     "apiVersions": {
@@ -223,7 +234,8 @@
                       "description": "API versions of the resources.",
                       "minItems": 1,
                       "items": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "An API version."
                       }
                     },
                     "operations": {
@@ -231,7 +243,8 @@
                       "description": "Operations, eg `CREATE`, `UPDATE`, `DELETE` or `*`.",
                       "minItems": 1,
                       "items": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "An operation."
                       }
                     },
                     "resources": {
@@ -239,16 +252,17 @@
                       "description": "Resources, eg `pods` or `deployments/scale`.",
                       "minItems": 1,
                       "items": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "A resource."
                       }
                     },
                     "scope": {
                       "type": "string",
-                      "description": "Define the scope of the rule for the webhook"
+                      "description": "Scope of the rule: `Cluster`, `Namespaced` or `*`."
                     }
                   },
                   "additionalProperties": false,
-                  "description": "Create webhook objects",
+                  "description": "A rule of the webhook.",
                   "required": [
                     "apiGroups",
                     "apiVersions",
@@ -273,7 +287,8 @@
                     "pattern": "^\\{\\{.*\\}\\}$"
                   }
                 ],
-                "description": "What happens when the webhook fails: `Ignore` or `Fail`."
+                "description": "What happens when the webhook fails: `Ignore` or `Fail`.",
+                "x-helm-tpl": true
               },
               "matchPolicy": {
                 "oneOf": [
@@ -289,7 +304,8 @@
                     "pattern": "^\\{\\{.*\\}\\}$"
                   }
                 ],
-                "description": "How requests are matched to `rules`: `Exact` or `Equivalent`."
+                "description": "How requests are matched to `rules`: `Exact` or `Equivalent`.",
+                "x-helm-tpl": true
               },
               "sideEffects": {
                 "oneOf": [
@@ -305,7 +321,8 @@
                     "pattern": "^\\{\\{.*\\}\\}$"
                   }
                 ],
-                "description": "Side effects of the webhook: `None` or `NoneOnDryRun`."
+                "description": "Side effects of the webhook: `None` or `NoneOnDryRun`.",
+                "x-helm-tpl": true
               },
               "reinvocationPolicy": {
                 "oneOf": [
@@ -321,7 +338,8 @@
                     "pattern": "^\\{\\{.*\\}\\}$"
                   }
                 ],
-                "description": "Call the webhook again after other mutations: `Never` or `IfNeeded`."
+                "description": "Call the webhook again after other mutations: `Never` or `IfNeeded`.",
+                "x-helm-tpl": true
               },
               "timeoutSeconds": {
                 "type": "integer",
@@ -330,7 +348,8 @@
               "admissionReviewVersions": {
                 "type": "array",
                 "items": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "An AdmissionReview version."
                 },
                 "description": "AdmissionReview versions the webhook accepts, eg `v1`.",
                 "minItems": 1
@@ -362,7 +381,7 @@
               }
             },
             "additionalProperties": false,
-            "description": "Create webhook objects",
+            "description": "A webhook.",
             "required": [
               "name",
               "admissionReviewVersions",
@@ -395,49 +414,49 @@
                     "description": "Resources, eg `pods` or `deployments/scale`.",
                     "minItems": 1,
                     "items": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "A resource."
                     },
-                    "x-helm-tpl": "On entries only",
-                    "x-docs-required": true
+                    "x-helm-tpl": "On entries only"
                   },
                   "scope": {
                     "type": "string",
-                    "description": "Define the scope of the rule for the webhook",
+                    "description": "Scope of the rule: `Cluster`, `Namespaced` or `*`.",
                     "x-helm-tpl": true
                   },
                   "apiGroups": {
                     "type": "array",
-                    "description": "Define the apiGroups of the rule for the webhook",
+                    "description": "API groups of the resources, `\"\"` for the core group.",
                     "minItems": 1,
                     "items": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "An API group."
                     },
-                    "x-helm-tpl": "On entries only",
-                    "x-docs-required": true
+                    "x-helm-tpl": "On entries only"
                   },
                   "apiVersions": {
                     "type": "array",
-                    "description": "Define the apiVersions of the rule for the webhook",
+                    "description": "API versions of the resources.",
                     "minItems": 1,
                     "items": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "An API version."
                     },
-                    "x-helm-tpl": "On entries only",
-                    "x-docs-required": true
+                    "x-helm-tpl": "On entries only"
                   },
                   "operations": {
                     "type": "array",
-                    "description": "Define the operations of the rule for the webhook",
+                    "description": "Operations, eg `CREATE`, `UPDATE`, `DELETE` or `*`.",
                     "minItems": 1,
                     "items": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "An operation."
                     },
-                    "x-helm-tpl": "On entries only",
-                    "x-docs-required": true
+                    "x-helm-tpl": "On entries only"
                   }
                 },
                 "additionalProperties": false,
-                "description": "Configuration for `$name.webhooks.$name.rules[]`.",
+                "description": "A rule of the webhook.",
                 "required": [
                   "apiGroups",
                   "apiVersions",
@@ -445,16 +464,14 @@
                   "resources"
                 ]
               },
-              "description": "Define the rules for the webhook",
-              "minItems": 1,
-              "x-docs-required": true
+              "description": "Operations and resources the webhook applies to.",
+              "minItems": 1
             },
             "name": {
               "type": "string",
-              "description": "Define the webhook name",
+              "description": "Name of the webhook, a fully qualified name like `check.example.com`.",
               "minLength": 1,
-              "x-helm-tpl": true,
-              "x-docs-required": true
+              "x-helm-tpl": true
             },
             "failurePolicy": {
               "oneOf": [
@@ -470,7 +487,7 @@
                   "pattern": "^\\{\\{.*\\}\\}$"
                 }
               ],
-              "description": "Define the failurePolicy for the webhook",
+              "description": "What happens when the webhook fails: `Ignore` or `Fail`.",
               "x-helm-tpl": true
             },
             "matchPolicy": {
@@ -487,7 +504,7 @@
                   "pattern": "^\\{\\{.*\\}\\}$"
                 }
               ],
-              "description": "Define the matchPolicy for the webhook",
+              "description": "How requests are matched to `rules`: `Exact` or `Equivalent`.",
               "x-helm-tpl": true
             },
             "sideEffects": {
@@ -504,7 +521,7 @@
                   "pattern": "^\\{\\{.*\\}\\}$"
                 }
               ],
-              "description": "Define the sideEffects for the webhook",
+              "description": "Side effects of the webhook: `None` or `NoneOnDryRun`.",
               "x-helm-tpl": true
             },
             "reinvocationPolicy": {
@@ -521,35 +538,35 @@
                   "pattern": "^\\{\\{.*\\}\\}$"
                 }
               ],
-              "description": "Define the reinvocationPolicy for the webhook",
+              "description": "Call the webhook again after other mutations: `Never` or `IfNeeded`. Only for mutating webhooks.",
               "x-helm-tpl": true
             },
             "timeoutSeconds": {
               "type": "integer",
-              "description": "Define the timeoutSeconds for the webhook",
+              "description": "Timeout of a call to the webhook, in seconds.",
               "x-helm-tpl": true
             },
             "admissionReviewVersions": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "description": "An AdmissionReview version."
               },
-              "description": "Define the admissionReviewVersions for the webhook",
+              "description": "AdmissionReview versions the webhook accepts, eg `v1`.",
               "minItems": 1,
-              "x-helm-tpl": true,
-              "x-docs-required": true
+              "x-helm-tpl": true
             },
             "clientConfig": {
               "type": "object",
               "properties": {
                 "caBundle": {
                   "type": "string",
-                  "description": "Define the caBundle in clientConfig for the webhook",
+                  "description": "Base64 encoded CA bundle used to verify the webhook server.",
                   "x-helm-tpl": true
                 },
                 "url": {
                   "type": "string",
-                  "description": "Define the url in clientConfig for the webhook, required if service is not defined in clientConfig",
+                  "description": "URL of the webhook. Required when `service` is not set.",
                   "x-helm-tpl": true
                 },
                 "service": {
@@ -557,10 +574,9 @@
                   "properties": {
                     "name": {
                       "type": "string",
-                      "description": "Define the service name in clientConfig for the webhook",
+                      "description": "Name of the Service.",
                       "minLength": 1,
-                      "x-helm-tpl": true,
-                      "x-docs-required": true
+                      "x-helm-tpl": true
                     },
                     "namespace": {
                       "allOf": [
@@ -568,13 +584,12 @@
                           "$ref": "special/namespaces.json"
                         }
                       ],
-                      "description": "Define the service namespace in clientConfig for the webhook",
-                      "x-helm-tpl": true,
-                      "x-docs-required": true
+                      "description": "Namespace of the Service.",
+                      "x-helm-tpl": true
                     },
                     "path": {
                       "type": "string",
-                      "description": "Define the service path in clientConfig for the webhook",
+                      "description": "Path on the Service the webhook is served on.",
                       "x-helm-tpl": true
                     },
                     "port": {
@@ -582,12 +597,12 @@
                         "integer",
                         "string"
                       ],
-                      "description": "Define the service port in clientConfig for the webhook",
+                      "description": "Port of the Service. Defaults to `443`.",
                       "x-helm-tpl": true
                     }
                   },
                   "additionalProperties": false,
-                  "description": "Define the service in clientConfig for the webhook, required if url is not defined in clientConfig",
+                  "description": "Service of the webhook. Required when `url` is not set.",
                   "required": [
                     "name",
                     "namespace"
@@ -595,15 +610,14 @@
                 }
               },
               "additionalProperties": false,
-              "description": "Define the clientConfig for the webhook",
+              "description": "How the API server reaches the webhook, by `url` or `service`.",
               "minProperties": 1,
               "not": {
                 "required": [
                   "url",
                   "service"
                 ]
-              },
-              "x-docs-required": true
+              }
             },
             "namespaceSelector": {
               "allOf": [
@@ -625,7 +639,7 @@
             }
           },
           "additionalProperties": false,
-          "description": "Configuration for `$name.webhooks.$name`.",
+          "description": "A webhook.",
           "required": [
             "name",
             "admissionReviewVersions",
@@ -633,7 +647,7 @@
             "rules"
           ]
         },
-        "description": "Define the webhooks.",
+        "description": "Webhooks of the configuration.",
         "default": [],
         "x-docs-required": true
       },
@@ -644,7 +658,7 @@
         ],
         "properties": {},
         "additionalProperties": false,
-        "description": "Enables or Disables the webhook",
+        "description": "Create this webhook configuration. Supports Helm `tpl`.",
         "default": false,
         "x-helm-tpl": true,
         "x-docs-required": true
@@ -655,7 +669,7 @@
             "$ref": "special/namespaces.json"
           }
         ],
-        "description": "Define the namespace for this object",
+        "description": "Namespace of the object. Defaults to the release namespace.",
         "default": "",
         "x-helm-tpl": "On value only"
       },
@@ -709,16 +723,16 @@
             "pattern": "^\\{\\{.*\\}\\}$"
           }
         ],
-        "description": "Define the type of the webhook.",
+        "description": "Type of the configuration: `validating` or `mutating`.",
         "default": "",
         "x-helm-tpl": true,
         "x-docs-required": true
       }
     },
     "additionalProperties": false,
-    "description": "Define a webhook object with the given name",
+    "description": "A webhook configuration, keyed by name.",
     "default": {},
     "x-docs-required": true
   },
-  "description": "Create webhook objects"
+  "description": "Webhook configurations, keyed by name. Every enabled entry renders a ValidatingWebhookConfiguration or MutatingWebhookConfiguration, see [Webhook](/truecharts-common/webhook)."
 }

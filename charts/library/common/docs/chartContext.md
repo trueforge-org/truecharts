@@ -1,10 +1,10 @@
 ---
-title: Chartcontext
+title: Chart Context
 ---
 
 :::note
 
-- This page is generated from JSON schema.
+- Examples under each key are only to be used as a placement guide
 - See the [Full Examples](/truecharts-common/chartContext#full-examples) section for complete examples.
 
 :::
@@ -17,71 +17,92 @@ title: Chartcontext
 
 ## `chartContext`
 
-Details about the release that common works out on every render, to use in Helm `tpl` strings such as `{{ .Values.chartContext.appUrl }}`. Common sets these keys itself and replaces values set here.
+Details about the release that common works out on every render, such as the URL of the app. Common sets these itself.
 
-| Field      | Value          |
-| ---------- | -------------- |
-| Key        | `chartContext` |
-| Type       | `map`          |
-| Required   | ❌             |
-| Helm `tpl` | ❌             |
-| Default    | unset          |
-
----
-
-### `chartContext.appUrl`
-
-URL of the app, from the primary ingress or route, eg `https://app.example.com/`. Without either, it points to `127.0.0.1`.
-
-| Field      | Value                 |
-| ---------- | --------------------- |
-| Key        | `chartContext.appUrl` |
-| Type       | `string`              |
-| Required   | ❌                    |
-| Helm `tpl` | ❌                    |
-| Default    | unset                 |
+| Field | Value |
+| --- | --- |
+| Key | `chartContext` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{"appUrl": "", "podCIDR": "", "svcCIDR": ""}` |
 
 ---
 
-### `chartContext.internalUrls`
+## `appUrl`
 
-Internal URLs of the services of the chart.
+URL of the app, taken from the primary ingress or route, eg `https://app.example.com/`. Points to `127.0.0.1` when there is neither.
 
-| Field      | Value                       |
-| ---------- | --------------------------- |
-| Key        | `chartContext.internalUrls` |
-| Type       | `list of string`            |
-| Required   | ❌                          |
-| Helm `tpl` | ❌                          |
-| Default    | unset                       |
+| Field | Value |
+| --- | --- |
+| Key | `chartContext.appUrl` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `""` |
 
----
+Example
 
-### `chartContext.podCIDR`
-
-CIDR of the pods, from `global.podCIDR`, defaults to `172.16.0.0/16`.
-
-| Field      | Value                  |
-| ---------- | ---------------------- |
-| Key        | `chartContext.podCIDR` |
-| Type       | `string`               |
-| Required   | ❌                     |
-| Helm `tpl` | ❌                     |
-| Default    | unset                  |
+```yaml
+chartContext:
+  appUrl: https://app.example.com/
+```
 
 ---
 
-### `chartContext.svcCIDR`
+## `podCIDR`
 
-CIDR of the services, from `global.svcCIDR`, defaults to `172.17.0.0/16`.
+CIDR of the pods, taken from `global.podCIDR`. Falls back to `172.16.0.0/16`.
 
-| Field      | Value                  |
-| ---------- | ---------------------- |
-| Key        | `chartContext.svcCIDR` |
-| Type       | `string`               |
-| Required   | ❌                     |
-| Helm `tpl` | ❌                     |
-| Default    | unset                  |
+| Field | Value |
+| --- | --- |
+| Key | `chartContext.podCIDR` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `""` |
+
+Example
+
+```yaml
+chartContext:
+  podCIDR: 172.16.0.0/16
+```
+
+---
+
+## `svcCIDR`
+
+CIDR of the services, taken from `global.svcCIDR`. Falls back to `172.17.0.0/16`.
+
+| Field | Value |
+| --- | --- |
+| Key | `chartContext.svcCIDR` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `""` |
+
+Example
+
+```yaml
+chartContext:
+  svcCIDR: 172.17.0.0/16
+```
+
+---
+
+## `internalUrls`
+
+Internal URLs of the services of the chart, filled in by common and shown in the notes.
+
+| Field | Value |
+| --- | --- |
+| Key | `chartContext.internalUrls` |
+| Type | `list of string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `[]` |
 
 ---
 
@@ -92,9 +113,14 @@ Common sets `chartContext` on every render, so it is only read, in Helm `tpl` st
 ```yaml
 workload:
   main:
+    enabled: true
+    primary: true
     podSpec:
       containers:
         main:
+          enabled: true
+          primary: true
+          imageSelector: image
           env:
             APP_URL: "{{ .Values.chartContext.appUrl }}"
             TRUSTED_PROXIES: "{{ .Values.chartContext.podCIDR }},{{ .Values.chartContext.svcCIDR }}"

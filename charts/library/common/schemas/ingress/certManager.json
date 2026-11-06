@@ -1,23 +1,22 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "description": "Create Ingress objects",
+  "description": "cert-manager integration. Requests a certificate for the TLS hosts of the Ingress.",
   "properties": {
     "enabled": {
       "type": "boolean",
-      "properties": {},
-      "additionalProperties": false,
-      "description": "Enables or Disables the cert-manager integration",
+      "description": "Add the cert-manager annotations to the Ingress, so cert-manager issues a certificate.",
       "default": false,
       "x-docs-required": true
     },
     "certificateIssuer": {
       "type": "string",
-      "properties": {},
-      "additionalProperties": false,
-      "description": "Define the certificate issuer for this cert-manager integration",
+      "description": "Name of the ClusterIssuer cert-manager uses to issue the certificate.",
       "default": ""
     }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "x-docs-page": {
+    "title": "Cert Manager Integration"
+  }
 }

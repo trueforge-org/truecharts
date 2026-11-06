@@ -28,7 +28,7 @@
           "$ref": "../../../workload/podSpec/containers/env.json"
         }
       ],
-      "description": "See [env](/truecharts-common/workload/podSpec/containers/env)",
+      "description": "Environment variables of the PostgreSQL instances, keyed by name. See [env](/truecharts-common/workload/podSpec/containers/env).",
       "default": {}
     },
     "envFrom": {
@@ -48,7 +48,7 @@
               },
               "name": {
                 "type": "string",
-                "description": "Define the configmap name. This will be automatically expanded to `fullname-configmap-name`."
+                "description": "Name of the ConfigMap. Expanded to `<fullname>-<name>` unless `expandObjectName` is `false`."
               }
             },
             "additionalProperties": false,
@@ -59,7 +59,7 @@
             "properties": {
               "name": {
                 "type": "string",
-                "description": "Define the secret name. This will be automatically expanded to `fullname-secret-name`."
+                "description": "Name of the Secret. Expanded to `<fullname>-<name>` unless `expandObjectName` is `false`."
               },
               "expandObjectName": {
                 "type": "boolean",
@@ -72,7 +72,7 @@
         },
         "additionalProperties": false
       },
-      "description": "See [envFrom](/truecharts-common/workload/podSpec/containers/envFrom)",
+      "description": "ConfigMaps and Secrets whose keys become environment variables of the PostgreSQL instances. See [envFrom](/truecharts-common/workload/podSpec/containers/envFrom).",
       "default": {}
     },
     "instances": {

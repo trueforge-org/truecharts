@@ -16,9 +16,9 @@
           ],
           "description": "Value of the parameter"
         },
-        "description": "Define a volume snapshot class",
+        "description": "Parameters passed to the CSI driver. Supports Helm `tpl` on keys and values.",
         "default": {},
-        "x-helm-tpl": "On both key and value"
+        "x-helm-tpl": "On keys and values"
       },
       "labels": {
         "allOf": [
@@ -26,7 +26,7 @@
             "$ref": "special/labels.json"
           }
         ],
-        "description": "Define the labels of the volume snapshot class",
+        "description": "Labels of the VolumeSnapshotClass.",
         "default": {},
         "x-helm-tpl": "On value only"
       },
@@ -52,7 +52,7 @@
             "$ref": "special/annotations.json"
           }
         ],
-        "description": "Define the annotations of the volume snapshot class",
+        "description": "Annotations of the VolumeSnapshotClass.",
         "default": {},
         "x-helm-tpl": "On value only"
       },
@@ -61,25 +61,25 @@
           "boolean",
           "string"
         ],
-        "properties": {},
-        "additionalProperties": false,
-        "description": "Enable volume snapshot class",
+        "description": "Create this volume snapshot class when true. Accepts a Helm `tpl` string that renders to `true` or `false`.",
         "default": false,
         "x-helm-tpl": true,
         "x-docs-required": true
       },
       "isDefault": {
         "type": "boolean",
-        "description": "Sets the annotation `snapshot.storage.kubernetes.io/is-default-class` to `\"true\"` or `\"false\"`",
+        "description": "Make this the default VolumeSnapshotClass. Sets the annotation `snapshot.storage.kubernetes.io/is-default-class` to `\"true\"` or `\"false\"`.",
         "default": false
       },
       "driver": {
         "type": "string",
-        "description": "Define the driver of the volume snapshot class",
-        "default": "",
+        "description": "CSI driver that takes the snapshots.",
         "minLength": 1,
         "x-helm-tpl": true,
-        "x-docs-required": true
+        "x-docs-required": true,
+        "examples": [
+          "driver.longhorn.io"
+        ]
       },
       "deletionPolicy": {
         "type": "string",
@@ -87,13 +87,13 @@
           "Retain",
           "Delete"
         ],
-        "description": "Define the deletion policy of the volume snapshot class",
+        "description": "What happens to the snapshot content when a VolumeSnapshot is deleted.",
         "default": "Retain"
       }
     },
     "additionalProperties": false,
-    "description": "Define a volume snapshot class",
+    "description": "A VolumeSnapshotClass.",
     "default": {}
   },
-  "description": "Define a volume snapshot class"
+  "description": "VolumeSnapshotClasses, keyed by name."
 }

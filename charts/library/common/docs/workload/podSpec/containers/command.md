@@ -4,32 +4,51 @@ title: Command
 
 :::note
 
-- This page is generated from JSON schema.
+- Examples under each key are only to be used as a placement guide
 - See the [Full Examples](/truecharts-common/workload/podSpec/containers/command#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.workload.podSpec.containers.command`
+- `.Values.addons.codeserver.container.command`
+- `.Values.addons.gluetun.container.command`
+- `.Values.addons.netshoot.container.command`
+- `.Values.addons.tailscale.container.command`
+- `.Values.workload.$name.podSpec.containers.$name.command`
+- `.Values.workload.$name.podSpec.initContainers.$name.command`
 
 ---
 
-## `workload.podSpec.containers.command`
+## `command`
 
-See [command](/truecharts-common/workload/podSpec/containers/command) ---
+Entrypoint of the container (`command`), which replaces the `ENTRYPOINT` of the image. A single command can be given as a string, several as a list. Supports Helm `tpl`.
 
-| Field      | Value                                 |
-| ---------- | ------------------------------------- |
-| Key        | `workload.podSpec.containers.command` |
-| Type       | `map, string, list of string`         |
-| Required   | ❌                                    |
-| Helm `tpl` | ❌                                    |
-| Default    | unset                                 |
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.podSpec.containers.$name.command` |
+| Type | `string or list of string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+
+Example
+
+```yaml
+workload:
+  example:
+    podSpec:
+      containers:
+        example:
+          command:
+            - /bin/sh
+```
 
 ---
 
 ## Full Examples
+
+### As a list
 
 ```yaml
 workload:
@@ -41,10 +60,22 @@ workload:
         container-name:
           enabled: true
           primary: true
-          # As a list
           command:
             - command1
             - command2
-          # As a string
+```
+
+### As a string
+
+```yaml
+workload:
+  workload-name:
+    enabled: true
+    primary: true
+    podSpec:
+      containers:
+        container-name:
+          enabled: true
+          primary: true
           command: command
 ```

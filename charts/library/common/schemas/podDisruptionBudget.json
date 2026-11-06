@@ -7,7 +7,7 @@
     "properties": {
       "unhealthyPodEvictionPolicy": {
         "type": "string",
-        "description": "Create Pod Disruption Budget objects",
+        "description": "Whether unhealthy pods may be evicted regardless of the budget. Leave empty to use the Kubernetes default.",
         "oneOf": [
           {
             "enum": [
@@ -28,9 +28,7 @@
           "boolean",
           "string"
         ],
-        "properties": {},
-        "additionalProperties": false,
-        "description": "Create Pod Disruption Budget objects",
+        "description": "Create this Pod Disruption Budget when true. Accepts a Helm `tpl` string that renders to `true` or `false`.",
         "default": false,
         "x-helm-tpl": true,
         "x-docs-required": true
@@ -41,7 +39,7 @@
             "$ref": "special/namespaces.json"
           }
         ],
-        "description": "Define the namespace for this object",
+        "description": "Namespace to create this object in. Overrides the chart-wide `namespace` and `global.namespace`.",
         "default": "",
         "x-helm-tpl": true
       },
@@ -86,26 +84,28 @@
           "integer",
           "string"
         ],
-        "properties": {},
-        "additionalProperties": false,
-        "description": "Define the minAvailable.",
+        "description": "Minimum number or percentage of pods that must stay available during a disruption. Do not combine with `maxUnavailable`.",
         "default": "",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "examples": [
+          "50%"
+        ]
       },
       "maxUnavailable": {
         "type": [
           "integer",
           "string"
         ],
-        "properties": {},
-        "additionalProperties": false,
-        "description": "Define the maxUnavailable.",
+        "description": "Maximum number or percentage of pods that may be unavailable during a disruption. Do not combine with `minAvailable`.",
         "default": "",
-        "x-helm-tpl": true
+        "x-helm-tpl": true,
+        "examples": [
+          "1"
+        ]
       },
       "targetSelector": {
         "type": "string",
-        "description": "Workloads the budget applies to. Defaults to the primary workload."
+        "description": "Name of the workload the budget applies to. Defaults to the primary workload."
       },
       "customLabels": {
         "allOf": [
@@ -113,13 +113,13 @@
             "$ref": "special/labels.json"
           }
         ],
-        "description": "Custom labels used to select the pods covered by this Pod Disruption Budget, replacing the automatically selected pod labels"
+        "description": "Labels used to select the pods covered by the budget, replacing the automatically selected pod labels."
       }
     },
     "additionalProperties": false,
-    "description": "Create Pod Disruption Budget objects",
+    "description": "A Pod Disruption Budget.",
     "default": {},
     "x-docs-required": true
   },
-  "description": "Create Pod Disruption Budget objects"
+  "description": "Pod Disruption Budgets, keyed by name."
 }

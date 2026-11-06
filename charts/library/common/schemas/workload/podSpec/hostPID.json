@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "boolean",
-  "description": "See [Host PID](/truecharts-common/workload#hostpid)",
-  "additionalProperties": false
+  "description": "Whether the containers can see the processes of the node (`hostPID`). Overrides `podOptions.hostPID` for this workload."
 }

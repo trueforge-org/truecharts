@@ -50,11 +50,18 @@ These rules apply to `charts/library/common/schemas/`, `values.schema.source.jso
 - Every schema file must be reachable from `values.schema.source.json`. Do not add files that only exist for the docs.
 - Keys that take a Helm `tpl` string instead of a boolean or number allow both, e.g. `"type": ["boolean", "string"]`.
 - Give every property a `description`, and a `default` that matches `values.yaml`.
-- The docs are built from the schema. They use `description`, `default`, `examples` (or `default` when there are none), `x-helm-tpl` for the Helm `tpl` column (`true`, or a string like `On value only` that is shown next to it), `x-docs-required: true` for the Required column of keys a chart has to set but that common gives a default, and on top-level keys the `x-docs-helmTpl` and `x-docs-defaultRaw` fields. See [`common-library-docs.instructions.md`](common-library-docs.instructions.md).
+- The docs are built from the schema. They use `description`, `default`, `enum`, `pattern`, `minimum`/`maximum`, `minLength`/`maxLength`, `minItems`/`maxItems`, `examples` (the first one is shown as the example of the key), and these custom keywords:
+  - `x-helm-tpl` for the Helm `tpl` column: `true`, or one of `On value only`, `On entries only`, `On keys and values`. A key typed `[boolean, string]` or with a `oneOf` of an enum and the `^\{\{.*\}\}$` pattern is shown as templated.
+  - `x-docs-required: true` for a key that is required but can not be in `required`: it has a default, or it is only required in some cases, for example for one `type`. A key is shown as required in the docs when it is in `required` or has `x-docs-required: true`.
+  - `x-docs-appliesTo: ["<type>"]` on keys that only apply to some values of `type` (workload, persistence, service and middleware types). They get documented on the page of that type.
+  - `x-docs-page` (the docs page of a key or schema file) and `x-docs-primary: true` (the key that documents a shared object). See [`common-library-docs.instructions.md`](common-library-docs.instructions.md).
+
+  Write descriptions as plain sentences that start with a capital and end with a full stop. Link to other docs pages as `/truecharts-common/<page path>` with the exact case, see [`common-library-docs.instructions.md`](common-library-docs.instructions.md). The generator checks the links, and markdownlint rejects `[here](...)` and bare `*`.
 
 ## `required` and existing charts
 
 - The schema of a chart sees its values before the defaults of `common` are merged. So only use `required` for keys without a default in `values.yaml`, like the items of a list. `required` also checks disabled objects. A `required` key with a default rejects any partial override of its parent.
+- A key that is required, but can not be in `required`, gets `x-docs-required: true`, so the docs show it as required. That is a key with a default, and a key that is only required in some cases, for example for one `type` or when another key is set. Check the second kind in the template.
 - A change to the schema can break the values of app charts. Keep the schema accepting all existing chart values unless the change is meant to be breaking, except for keys that no common template reads, see above: those are fixed in the chart. `test_schema.py` checks this, see [Schema checks](#schema-checks).
 
 ## Schema checks

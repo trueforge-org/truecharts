@@ -56,22 +56,34 @@
     },
     "fsType": {
       "type": "string",
-      "description": "File system of the volume, eg `ext4`."
+      "description": "File system of the volume, eg `ext4`.",
+      "examples": [
+        "ext4"
+      ]
     },
     "targetPortal": {
       "type": "string",
-      "description": "Portal of the target, as `host:port`."
+      "description": "Portal of the target, as `host:port`.",
+      "examples": [
+        "10.0.0.5:3260"
+      ]
     },
     "iqn": {
       "type": "string",
-      "description": "iSCSI qualified name of the target."
+      "description": "iSCSI qualified name of the target.",
+      "examples": [
+        "iqn.2001-04.com.example:storage.disk1"
+      ]
     },
     "lun": {
       "type": [
         "integer",
         "string"
       ],
-      "description": "LUN number of the target."
+      "description": "LUN number of the target.",
+      "examples": [
+        0
+      ]
     },
     "initiatorName": {
       "type": "string",
@@ -91,5 +103,9 @@
   },
   "additionalProperties": false,
   "description": "Settings of the iSCSI target, for `type: iscsi`.",
-  "x-docs-required": true
+  "x-docs-required": true,
+  "x-docs-page": {
+    "title": "iSCSI Authentication",
+    "file": "persistence/iscsiConfig.md"
+  }
 }

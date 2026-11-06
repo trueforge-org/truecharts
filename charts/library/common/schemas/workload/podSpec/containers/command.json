@@ -7,10 +7,19 @@
     {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "string",
+        "description": "One entry of the list."
       }
     }
   ],
-  "description": "See [command](/truecharts-common/workload/podSpec/containers/command) ---",
-  "additionalProperties": false
+  "description": "Entrypoint of the container (`command`), which replaces the `ENTRYPOINT` of the image. A single command can be given as a string, several as a list. Supports Helm `tpl`.",
+  "examples": [
+    [
+      "/bin/sh"
+    ]
+  ],
+  "x-helm-tpl": true,
+  "x-docs-page": {
+    "title": "Command"
+  }
 }

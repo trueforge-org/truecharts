@@ -35,7 +35,8 @@ tests:
                 ipv6Subnet: 64
               auth:
                 type: ""
-                responseHeaders: []
+                responseHeaders:
+                  - X-Auth-User
               chartMiddlewares: []
               themePark:
                 enabled: "true"
@@ -312,3 +313,29 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "at '/route/my-route/integrations/traefik/middlewares/0': missing property 'name'"
+
+  - it: should fail on a responseHeaders item that is not a string in route integrations traefik auth
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          integrations:
+            traefik:
+              enabled: true
+              auth:
+                type: forward
+                responseHeaders:
+                  - 5
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/integrations/traefik/auth/responseHeaders/0': got .*, want string"

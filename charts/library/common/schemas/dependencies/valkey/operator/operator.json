@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
+  "description": "Settings of the `ValkeyCluster` that the valkey-operator creates for the valkey dependency.",
   "properties": {
     "shards": {
       "type": "integer",
@@ -86,7 +87,10 @@
         }
       ],
       "default": {},
-      "description": "Scheduling of the pods: `tolerations`, `nodeSelector`, `affinity`, `topologySpreadConstraints`, `priorityClassName`, `node` and `zone` (spreading and pinning)."
+      "description": "Scheduling of the pods: `tolerations`, `nodeSelector`, `affinity`, `topologySpreadConstraints`, `priorityClassName`, `node` and `zone` (spreading and pinning).",
+      "x-docs-page": {
+        "title": "Valkey Operator Scheduling"
+      }
     },
     "podDisruptionBudget": {
       "allOf": [
@@ -165,7 +169,10 @@
         "$ref": "container.json"
       },
       "default": [],
-      "description": "Patches of the containers of the pods (strategic merge patch, by name: `server` and `metrics-exporter`), or additional sidecar containers."
+      "description": "Patches of the containers of the pods (strategic merge patch, by name: `server` and `metrics-exporter`), or additional sidecar containers.",
+      "x-docs-page": {
+        "title": "Valkey Operator Containers"
+      }
     },
     "networking": {
       "allOf": [

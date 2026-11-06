@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "string",
-  "description": "See [DNS Policy](/truecharts-common/workload#dnspolicy)",
-  "additionalProperties": false
+  "description": "DNS policy of the pods (`dnsPolicy`): `ClusterFirst`, `ClusterFirstWithHostNet`, `Default` or `None`. It is forced to `ClusterFirstWithHostNet` when `hostNetwork` is `true`. Overrides `podOptions.dnsPolicy` for this workload."
 }

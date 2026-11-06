@@ -1,10 +1,9 @@
 ---
-title: Volumesnapshots
+title: Volume Snapshot
 ---
 
 :::note
 
-- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/volumeSnapshots#full-examples) section for complete examples.
 
 :::
@@ -17,174 +16,185 @@ title: Volumesnapshots
 
 ## `volumeSnapshots`
 
-Define a volume snapshot
+VolumeSnapshots, keyed by name.
 
-| Field      | Value             |
-| ---------- | ----------------- |
-| Key        | `volumeSnapshots` |
-| Type       | `map`             |
-| Required   | ❌                |
-| Helm `tpl` | ❌                |
-| Default    | unset             |
-
----
-
-### `volumeSnapshots.$name.annotations`
-
-Define the annotations of the volume snapshot class
-
-| Field      | Value                               |
-| ---------- | ----------------------------------- |
-| Key        | `volumeSnapshots.$name.annotations` |
-| Type       | `map`                               |
-| Required   | ❌                                  |
-| Helm `tpl` | ✅ (On value only)                   |
-| Default    | `{}`                                |
-
-Example
-
-```yaml
-volumeSnapshots:
-  $name:
-    annotations:
-      {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `volumeSnapshots` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-### `volumeSnapshots.$name.annotationsList`
+## `$name`
+
+A VolumeSnapshot.
+
+| Field | Value |
+| --- | --- |
+| Key | `volumeSnapshots.$name` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
+## `$name.source`
+
+Source of the snapshot. Set one of `persistentVolumeClaimName` or `volumeSnapshotContentName`.
+
+| Field | Value |
+| --- | --- |
+| Key | `volumeSnapshots.$name.source` |
+| Type | `map` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
+## `$name.source.persistentVolumeClaimName`
+
+Name of the PersistentVolumeClaim to snapshot.
+
+| Field | Value |
+| --- | --- |
+| Key | `volumeSnapshots.$name.source.persistentVolumeClaimName` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.source.volumeSnapshotContentName`
+
+Name of an existing VolumeSnapshotContent to use.
+
+| Field | Value |
+| --- | --- |
+| Key | `volumeSnapshots.$name.source.volumeSnapshotContentName` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.volumeSnapshotClassName`
+
+Name of the VolumeSnapshotClass used to create the snapshot.
+
+| Field | Value |
+| --- | --- |
+| Key | `volumeSnapshots.$name.volumeSnapshotClassName` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.labels`
+
+Labels of the VolumeSnapshot.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `volumeSnapshots.$name.labels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
+
+---
+
+## `$name.annotationsList`
 
 Additional annotations as a list of name and value pairs, merged into the annotations
 
-| Field      | Value                                   |
-| ---------- | --------------------------------------- |
-| Key        | `volumeSnapshots.$name.annotationsList` |
-| Type       | `list of map`                           |
-| Required   | ❌                                      |
-| Helm `tpl` | ❌                                      |
-| Default    | unset                                   |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `volumeSnapshots.$name.annotationsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `volumeSnapshots.$name.enabled`
-
-Enable volume snapshot
-
-| Field      | Value                           |
-| ---------- | ------------------------------- |
-| Key        | `volumeSnapshots.$name.enabled` |
-| Type       | `boolean, string`               |
-| Required   | ✅                              |
-| Helm `tpl` | ✅                              |
-| Default    | `false`                         |
-
-Example
-
-```yaml
-volumeSnapshots:
-  $name:
-    enabled: false
-```
-
----
-
-### `volumeSnapshots.$name.labels`
-
-Define the labels of the volume snapshot
-
-| Field      | Value                          |
-| ---------- | ------------------------------ |
-| Key        | `volumeSnapshots.$name.labels` |
-| Type       | `map`                          |
-| Required   | ❌                             |
-| Helm `tpl` | ✅ (On value only)              |
-| Default    | `{}`                           |
-
-Example
-
-```yaml
-volumeSnapshots:
-  $name:
-    labels:
-      {}
-```
-
----
-
-### `volumeSnapshots.$name.labelsList`
+## `$name.labelsList`
 
 Additional labels as a list of name and value pairs, merged into the labels
 
-| Field      | Value                              |
-| ---------- | ---------------------------------- |
-| Key        | `volumeSnapshots.$name.labelsList` |
-| Type       | `list of map`                      |
-| Required   | ❌                                 |
-| Helm `tpl` | ❌                                 |
-| Default    | unset                              |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `volumeSnapshots.$name.labelsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `volumeSnapshots.$name.namespace`
+## `$name.annotations`
 
-Define the namespace for this object
+Annotations of the VolumeSnapshot.
 
-| Field      | Value                             |
-| ---------- | --------------------------------- |
-| Key        | `volumeSnapshots.$name.namespace` |
-| Type       | `string`                          |
-| Required   | ❌                                |
-| Helm `tpl` | ✅                                |
-| Default    | `""`                              |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
-Example
-
-```yaml
-volumeSnapshots:
-  $name:
-    namespace: ""
-```
+| Field | Value |
+| --- | --- |
+| Key | `volumeSnapshots.$name.annotations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
 
 ---
 
-### `volumeSnapshots.$name.source`
+## `$name.enabled`
 
-Define the source of the volume snapshot At least one of the following keys must be defined
+Create this volume snapshot when true. Accepts a Helm `tpl` string that renders to `true` or `false`.
 
-| Field      | Value                          |
-| ---------- | ------------------------------ |
-| Key        | `volumeSnapshots.$name.source` |
-| Type       | `map`                          |
-| Required   | ✅                             |
-| Helm `tpl` | ❌                             |
-| Default    | `{}`                           |
-
-Example
-
-```yaml
-volumeSnapshots:
-  $name:
-    source:
-      {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `volumeSnapshots.$name.enabled` |
+| Type | `bool` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | `false` |
 
 ---
 
-### `volumeSnapshots.$name.volumeSnapshotClassName`
+## `$name.namespace`
 
-Define the name of the volume snapshot class used to create the snapshot
+Namespace to create this object in. Overrides the chart-wide `namespace` and `global.namespace`.
 
-| Field      | Value                                           |
-| ---------- | ----------------------------------------------- |
-| Key        | `volumeSnapshots.$name.volumeSnapshotClassName` |
-| Type       | `string`                                        |
-| Required   | ❌                                              |
-| Helm `tpl` | ❌                                              |
-| Default    | unset                                           |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `volumeSnapshots.$name.namespace` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `""` |
 
 ---
 
 ## Full Examples
+
+### From an existing VolumeSnapshotContent
 
 ```yaml
 volumeSnapshots:
@@ -192,8 +202,38 @@ volumeSnapshots:
     enabled: true
     source:
       volumeSnapshotContentName: some-name
+```
+
+### From a PersistentVolumeClaim
+
+```yaml
+volumeSnapshots:
   example2:
     enabled: true
+    source:
+      persistentVolumeClaimName: some-pvc-name
+```
+
+### With a class
+
+`volumeSnapshotClassName` selects the VolumeSnapshotClass. The class can be created by the chart too, see [Volume Snapshot Class](/truecharts-common/volumeSnapshotClass):
+
+```yaml
+volumeSnapshotClass:
+  csi-class:
+    enabled: true
+    driver: csi-hostpath-snapshots
+    deletionPolicy: Delete
+
+volumeSnapshots:
+  example3:
+    enabled: true
+    namespace: some-namespace
+    volumeSnapshotClassName: csi-class
+    labels:
+      key: value
+    annotations:
+      key: value
     source:
       persistentVolumeClaimName: some-pvc-name
 ```

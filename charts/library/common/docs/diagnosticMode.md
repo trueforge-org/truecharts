@@ -1,10 +1,9 @@
 ---
-title: Diagnosticmode
+title: Diagnostic Mode
 ---
 
 :::note
 
-- This page is generated from JSON schema.
 - See the [Full Examples](/truecharts-common/diagnosticMode#full-examples) section for complete examples.
 
 :::
@@ -17,28 +16,39 @@ title: Diagnosticmode
 
 ## `diagnosticMode`
 
-Configuration for `diagnosticMode`.
+Run the containers with a sleep command instead of the app, so you can exec into them to debug.
 
-| Field      | Value            |
-| ---------- | ---------------- |
-| Key        | `diagnosticMode` |
-| Type       | `map`            |
-| Required   | ❌               |
-| Helm `tpl` | ❌               |
-| Default    | unset            |
+| Field | Value |
+| --- | --- |
+| Key | `diagnosticMode` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{"enabled": false}` |
+
+---
+
+## `enabled`
+
+Run the containers with a sleep command instead of the app, so you can exec into them to debug. Probes are disabled while it is on.
+
+| Field | Value |
+| --- | --- |
+| Key | `diagnosticMode.enabled` |
+| Type | `bool or string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
 
 ---
 
-### `diagnosticMode.enabled`
+## Full Examples
 
-Run the containers with a sleep command instead of the app, to debug them.
+Runs the containers with a sleep command instead of the app, so you can `exec` into them. The probes are disabled meanwhile:
 
-| Field      | Value                    |
-| ---------- | ------------------------ |
-| Key        | `diagnosticMode.enabled` |
-| Type       | `boolean, string`        |
-| Required   | ❌                       |
-| Helm `tpl` | ❌                       |
-| Default    | unset                    |
+```yaml
+diagnosticMode:
+  enabled: true
+```
 
----
+To do the same for the chart and all of its dependencies, use `global.diagnosticMode.enabled`.
