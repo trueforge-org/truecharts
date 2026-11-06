@@ -1,0 +1,50 @@
+suite: cnpg cluster postgresql schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should accept postgresql parameters as strings
+    set:
+      postgres16Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "16.3"
+        pullPolicy: IfNotPresent
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          cluster:
+            postgresql:
+              shared_buffers: 128MB
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: spec.postgresql.parameters.shared_buffers
+          value: 128MB
+
+  - it: should accept null postgresql
+    set:
+      postgres16Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "16.3"
+        pullPolicy: IfNotPresent
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          cluster:
+            postgresql: null
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Cluster
+        isKind:
+          of: Cluster

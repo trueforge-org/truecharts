@@ -2966,13 +2966,13 @@ workload:
                 X-Bool: true
           extraArgs:
           - ''
+          envList:
+          - name: ''
+            value: true
           fixedEnv:
             TZ: ''
             UMASK: ''
             PUID: ''
-          envList:
-          - name: ''
-            value: ''
       initContainers:
         objectname:
           enabled: ''
@@ -3060,9 +3060,6 @@ workload:
       restartPolicy: ''
       hostNetwork: true
       terminationGracePeriodSeconds: 3
-      my-container:
-        enabled: true
-        primary: true
       labels:
         pod-label1: ''
         pod-label2: ''
@@ -4277,6 +4274,7 @@ secret:
       some-key: ''
       ca.crt: ''
     type: ''
+    expandObjectName: false
     labels:
       label1: ''
       label2: ''
@@ -5210,14 +5208,18 @@ metrics:
         regex: ''
         sourceLabels:
         - ''
-    primary: true
-    nameOverride: ''
-    targetSelector: ''
+    labels:
+      my-label: ''
+    annotations:
+      my-annotation: ''
     prometheusRule:
       enabled: true
       groups:
         somegroup:
           rules:
+          - alert: ''
+            expr: ''
+          additionalrules:
           - alert: ''
             expr: ''
           name: ''
@@ -5227,6 +5229,9 @@ metrics:
         - alert: ''
           expr: ''
           for: ''
+    primary: true
+    nameOverride: ''
+    targetSelector: ''
     selector:
       matchLabels:
         app: ''
@@ -5397,6 +5402,9 @@ addons:
       termination:
         messagePath: ''
         messagePolicy: ''
+      envList:
+      - name: ''
+        value: ''
     service:
       enabled: true
       type: ''
@@ -5459,7 +5467,14 @@ addons:
     targetSelector:
     - ''
   vpn: {}
-dependencies: {}
+dependencies:
+  my-dependency:
+    enabled: true
+    configmap:
+      objectname:
+        enabled: true
+        data:
+          foo: ''
 cnpg:
   main:
     enabled: false
@@ -5627,6 +5642,15 @@ cnpg:
         size: ''
         accessModes:
         - ''
+        volumeName: ''
+        storageClass: ''
+        dataSource:
+          kind: ''
+          name: ''
+        dataSourceRef:
+          kind: ''
+          name: ''
+          apiGroup: ''
       walStorage:
         size: ''
         accessModes:
@@ -5634,6 +5658,7 @@ cnpg:
       postgresql:
         key1: ''
         key2: ''
+        shared_buffers: ''
       preloadLibraries:
       - ''
       env:
@@ -5649,6 +5674,15 @@ cnpg:
       envFrom:
       - configMapRef:
           name: ''
+      certificates:
+        serverCASecret: ''
+        serverTLSSecret: ''
+        replicationTLSSecret: ''
+        clientCASecret: ''
+        serverAltDNSNames:
+        - ''
+      singleNode: true
+      skipEmptyWalArchiveCheck: true
     mode: ''
     recovery:
       method: ''
@@ -5659,6 +5693,8 @@ cnpg:
       pitrTarget:
         time: ''
       serverName: ''
+      clusterName: ''
+      servername: ''
     pgVersion: 15
     type: ''
     monitoring:
@@ -5673,6 +5709,20 @@ cnpg:
             description: ''
     pooler:
       objectname: true
+    primary: false
+    upgradeMajor: false
+    creds:
+      password: ''
+      std: ''
+      nossl: ''
+      porthost: ''
+      host: ''
+      jdbc: ''
+      stdRO: ''
+      nosslRO: ''
+      porthostRO: ''
+      hostRO: ''
+      jdbcRO: ''
     hibernate: true
   my-pg2:
     enabled: true
@@ -5696,17 +5746,36 @@ redis:
   enabled: false
   includeCommon: false
   password: ''
-  creds: {}
+  creds:
+    redisPassword: ''
+    plain: ''
+    plainhost: ''
+    plainport: ''
+    plainporthost: ''
+    plainhostpass: ''
+    url: ''
   secret:
     objectname:
       enabled: false
   redisUsername: ''
+  redisDatabase: ''
 mariadb:
   enabled: false
   includeCommon: false
   password: ''
   rootPassword: ''
-  creds: {}
+  creds:
+    mariadbPassword: ''
+    mariadbRootPassword: ''
+    plain: ''
+    plainhost: ''
+    plainport: ''
+    plainporthost: ''
+    complete: ''
+    urlnossl: ''
+    jdbc: ''
+    jdbcmysql: ''
+    jdbcmariadb: ''
   mariadbUsername: ''
   mariadbDatabase: ''
 mongodb:
@@ -5714,14 +5783,32 @@ mongodb:
   includeCommon: false
   password: ''
   rootPassword: ''
-  creds: {}
+  creds:
+    mongodbPassword: ''
+    mongodbRootPassword: ''
+    plain: ''
+    plainhost: ''
+    plainport: ''
+    plainporthost: ''
+    complete: ''
+    urlssl: ''
+    urltls: ''
+    jdbc: ''
   mongodbUsername: ''
   mongodbDatabase: ''
 clickhouse:
   enabled: false
   includeCommon: false
   password: ''
-  creds: {}
+  creds:
+    clickhousePassword: ''
+    plain: ''
+    plainhost: ''
+    plainport: ''
+    plainporthost: ''
+    ping: ''
+    complete: ''
+    jdbc: ''
   clickhouseUsername: ''
   clickhouseDatabase: ''
 solr:
@@ -5730,7 +5817,13 @@ solr:
   password: ''
   solrCores: 1
   solrEnableAuthentication: ''
-  creds: {}
+  creds:
+    solrPassword: ''
+    plain: ''
+    plainhost: ''
+    portHost: ''
+    url: ''
+  solrUsername: ''
 extraTpl:
 - apiVersion: ''
   kind: ''

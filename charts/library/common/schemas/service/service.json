@@ -246,24 +246,15 @@
         "x-helm-tpl": "On value only"
       },
       "type": {
-        "oneOf": [
-          {
-            "type": "string",
-            "enum": [
-              "ClusterIP",
-              "LoadBalancer",
-              "NodePort",
-              "ExternalName",
-              "ExternalIP"
-            ]
-          },
-          {
-            "type": "string",
-            "pattern": "^\\{\\{.*\\}\\}$"
-          }
+        "type": "string",
+        "enum": [
+          "ClusterIP",
+          "LoadBalancer",
+          "NodePort",
+          "ExternalName",
+          "ExternalIP"
         ],
-        "description": "Type of the Service: `ClusterIP`, `LoadBalancer`, `NodePort`, `ExternalName` or `ExternalIP`. Supports Helm `tpl`.",
-        "x-helm-tpl": true
+        "description": "Type of the Service: `ClusterIP`, `LoadBalancer`, `NodePort`, `ExternalName` or `ExternalIP`."
       },
       "expandObjectName": {
         "type": [

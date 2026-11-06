@@ -14,11 +14,8 @@ tests:
           database: test-db
           backups:
             enabled: true
-            provider: azure
-            azure:
-              connectionString: some-connection-string
             scheduledBackups:
-              - name:
+              - name: ""
     asserts:
       - failedTemplate:
           errorMessage: CNPG Scheduled Backup - Expected non-empty [name] in [backups.scheduledBackups] entry
@@ -32,9 +29,6 @@ tests:
           database: test-db
           backups:
             enabled: true
-            provider: azure
-            azure:
-              connectionString: some-connection-string
             scheduledBackups:
               - name: daily
     asserts:
@@ -53,16 +47,13 @@ tests:
           database: test-db
           backups:
             enabled: true
-            provider: azure
-            azure:
-              connectionString: some-connection-string
             scheduledBackups:
               - name: daily
                 schedule: "0 0 * * *"
                 backupOwnerReference: invalid
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Scheduled Backup - Expected [backupOwnerReference] in [backups.scheduledBackups] entry to be one of [none, self, cluster], but got [invalid]
+          errorPattern: "at '/cnpg/my-pg/backups/scheduledBackups/0/backupOwnerReference': value must be one of"
 
   - it: should fail with invalid name in scheduledBackups backup
     set:
@@ -73,9 +64,6 @@ tests:
           database: test-db
           backups:
             enabled: true
-            provider: azure
-            azure:
-              connectionString: some-connection-string
             scheduledBackups:
               - name: _invalid
                 schedule: "0 0 * * *"
@@ -93,9 +81,6 @@ tests:
           database: test-db
           backups:
             enabled: true
-            provider: azure
-            azure:
-              connectionString: some-connection-string
             scheduledBackups:
               - name: _invalid
                 schedule: "0 0 * * *"
@@ -103,7 +88,7 @@ tests:
                 suspend: invalid
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Scheduled Backup - Expected [suspend] in [backups.scheduledBackups] entry to be a boolean, but got [string]
+          errorPattern: "at '/cnpg/my-pg/backups/scheduledBackups/0/suspend': got string, want boolean"
 
   - it: should fail with immediate not a bool in scheduledBackups backup
     set:
@@ -114,9 +99,6 @@ tests:
           database: test-db
           backups:
             enabled: true
-            provider: azure
-            azure:
-              connectionString: some-connection-string
             scheduledBackups:
               - name: _invalid
                 schedule: "0 0 * * *"
@@ -124,4 +106,4 @@ tests:
                 immediate: invalid
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Scheduled Backup - Expected [immediate] in [backups.scheduledBackups] entry to be a boolean, but got [string]
+          errorPattern: "at '/cnpg/my-pg/backups/scheduledBackups/0/immediate': got string, want boolean"

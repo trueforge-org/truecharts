@@ -1,0 +1,49 @@
+suite: dependencies schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should merge an enabled dependency into the values
+    set:
+      dependencies:
+        my-dependency:
+          enabled: true
+          configmap:
+            my-configmap:
+              enabled: true
+              data:
+                foo: bar
+    asserts:
+      - isKind:
+          of: ConfigMap
+        documentIndex: 0
+
+  - it: should merge a dependency with the string enabled key
+    set:
+      dependencies:
+        my-dependency:
+          enabled: "true"
+          configmap:
+            my-configmap:
+              enabled: true
+              data:
+                foo: bar
+    asserts:
+      - isKind:
+          of: ConfigMap
+        documentIndex: 0
+
+  - it: should fail with a dependency without enabled
+    set:
+      dependencies:
+        my-dependency:
+          configmap:
+            my-configmap:
+              enabled: true
+              data:
+                foo: bar
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/dependencies/my-dependency'': missing property ''enabled'''

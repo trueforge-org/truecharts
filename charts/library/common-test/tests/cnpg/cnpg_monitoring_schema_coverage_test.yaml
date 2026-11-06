@@ -1,0 +1,97 @@
+suite: cnpg monitoring schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should accept monitoring with every key
+    set:
+      postgres16Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "16.3"
+        pullPolicy: IfNotPresent
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          monitoring:
+            enablePodMonitor: true
+            disableDefaultQueries: true
+            customQueries:
+              - name: my-query
+                key: my-key
+                query: "SELECT 1"
+                expandObjectName: "true"
+                metrics:
+                  - my-column:
+                      usage: LABEL
+                      description: my description
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Cluster
+        isKind:
+          of: Cluster
+
+  - it: should fail with an unknown key in monitoring
+    set:
+      postgres16Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "16.3"
+        pullPolicy: IfNotPresent
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          monitoring:
+            unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/cnpg/my-pg/monitoring': additional properties 'unknownKey' not allowed"
+
+  - it: should fail with an unknown key in a custom query
+    set:
+      postgres16Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "16.3"
+        pullPolicy: IfNotPresent
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          monitoring:
+            customQueries:
+              - name: my-query
+                unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/cnpg/my-pg/monitoring/customQueries/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail with an unknown key in a custom query metric
+    set:
+      postgres16Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "16.3"
+        pullPolicy: IfNotPresent
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          monitoring:
+            customQueries:
+              - name: my-query
+                metrics:
+                  - my-column:
+                      unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/cnpg/my-pg/monitoring/customQueries/0/metrics/0/my-column': additional properties 'unknownKey' not allowed"

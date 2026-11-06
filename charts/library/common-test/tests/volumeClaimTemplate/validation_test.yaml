@@ -20,7 +20,7 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorMessage: Volume Claim Templates - Expected [annotations] to be a dictionary, but got [string]
+          errorPattern: "at '/persistence/volume1/annotations': got string, want object"
 
   - it: should fail with labels not a dict
     set:
@@ -37,7 +37,7 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorMessage: Volume Claim Templates - Expected [labels] to be a dictionary, but got [string]
+          errorPattern: "at '/persistence/volume1/labels': got string, want object"
 
   - it: should fail with pod targetSelector not a map
     set:
@@ -54,4 +54,4 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Expected [targetSelector] to be [dict], but got [string]
+          errorPattern: "at '/persistence/volume1/targetSelector': got string, want object"

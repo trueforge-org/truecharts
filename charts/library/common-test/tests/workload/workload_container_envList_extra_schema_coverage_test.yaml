@@ -1,0 +1,68 @@
+suite: workload container envList schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render container envList with a boolean value
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                envList:
+                  - name: BOOL_ENV
+                    value: true
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+    asserts:
+      - isKind:
+          of: Deployment
+        documentIndex: 0
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BOOL_ENV
+            value: "true"
+        documentIndex: 0
+
+  - it: should fail on unknown keys in a container envList item
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                envList:
+                  - name: BOOL_ENV
+                    value: true
+                    unknown: value
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec/containers/main/envList/0': additional properties 'unknown' not allowed"

@@ -1,0 +1,44 @@
+suite: metrics labels, annotations and prometheusRule group additionalrules schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render metrics with labels, annotations and group additionalrules
+    set:
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          labels:
+            my-label: value
+          annotations:
+            my-annotation: value
+          prometheusRule:
+            enabled: true
+            groups:
+              somegroup:
+                rules:
+                  - alert: SomeAlert
+                    expr: up == 0
+                additionalrules:
+                  - alert: SomeOtherAlert
+                    expr: up == 0
+    asserts:
+      - documentSelector: &rule
+          path: kind
+          value: ServiceMonitor
+        isKind:
+          of: ServiceMonitor

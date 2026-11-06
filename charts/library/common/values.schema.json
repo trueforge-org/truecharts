@@ -9338,23 +9338,15 @@
       "default": {}
      },
      "type": {
-      "oneOf": [
-       {
-        "type": "string",
-        "enum": [
-         "ClusterIP",
-         "LoadBalancer",
-         "NodePort",
-         "ExternalName",
-         "ExternalIP"
-        ]
-       },
-       {
-        "type": "string",
-        "pattern": "^\\{\\{.*\\}\\}$"
-       }
+      "type": "string",
+      "enum": [
+       "ClusterIP",
+       "LoadBalancer",
+       "NodePort",
+       "ExternalName",
+       "ExternalIP"
       ],
-      "description": "Type of the Service: `ClusterIP`, `LoadBalancer`, `NodePort`, `ExternalName` or `ExternalIP`. Supports Helm `tpl`."
+      "description": "Type of the Service: `ClusterIP`, `LoadBalancer`, `NodePort`, `ExternalName` or `ExternalIP`."
      },
      "expandObjectName": {
       "type": [
