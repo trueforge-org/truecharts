@@ -5,113 +5,113 @@ title: LoadBalancer
 :::note
 
 - Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/service/loadbalancer#full-examples) section for complete examples.
-- See the [Service](/truecharts-common/service) documentation for more information
+- See the [Full Examples](/truecharts-common/service/LoadBalancer#full-examples) section for complete examples.
+
+:::
+
+:::tip
+
+- See all available keys of this object on the [Service](/truecharts-common/service) page.
+- These options apply only when `type: LoadBalancer`.
 
 :::
 
 ## Appears in
 
 - `.Values.service.$name`
-
-:::tip
-
-- See available service keys [here](/truecharts-common/service).
-- This options apply only when `type: LoadBalancer`.
-
-:::
+- `.Values.addons.codeserver.service.$name`
 
 ---
 
 ## `sharedKey`
 
-Sets the shared key in `metallb.io/allow-shared-ip` **MetalLB** Annotation
+Value of the `metallb.io/allow-shared-ip` MetalLB annotation, so Services with the same key can share an IP. Only for `type: LoadBalancer`.
 
-|            |                           |
-| ---------- | ------------------------- |
-| Key        | `service.$name.sharedKey` |
-| Type       | `string`                  |
-| Required   | ❌                        |
-| Helm `tpl` | ✅                        |
-| Default    | `$FullName`               |
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.sharedKey` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Applies to | `LoadBalancer` |
 
-Example
-
-```yaml
-service:
-  some-service:
-    sharedKey: custom-shared-key
-```
+---
 
 ## `loadBalancerIP`
 
-Define the load balancer IP, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIPs`
+Requested IP of the load balancer, sets the `metallb.io/loadBalancerIPs` MetalLB annotation. Mutually exclusive with `loadBalancerIPs`.
 
-|            |                                |
-| ---------- | ------------------------------ |
-| Key        | `service.$name.loadBalancerIP` |
-| Type       | `string`                       |
-| Required   | ❌                             |
-| Helm `tpl` | ✅                             |
-| Default    | `""`                           |
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.loadBalancerIP` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Applies to | `LoadBalancer` |
 
 Example
 
 ```yaml
 service:
-  some-service:
-    loadBalancerIP: 1.2.3.4
+  example:
+    loadBalancerIP: 192.168.1.240
 ```
+
+---
 
 ## `loadBalancerIPs`
 
-Define the load balancer IPs, sets the `metallb.io/loadBalancerIPs` **MetalLB** annotation. Mutually exclusive with `loadBalancerIP`
+Requested IPs of the load balancer, sets the `metallb.io/loadBalancerIPs` MetalLB annotation. Mutually exclusive with `loadBalancerIP`.
 
-|            |                                 |
-| ---------- | ------------------------------- |
-| Key        | `service.$name.loadBalancerIPs` |
-| Type       | `list` of `string`              |
-| Required   | ❌                              |
-| Helm `tpl` | ✅ (On entries only)            |
-| Default    | `[]`                            |
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.loadBalancerIPs` |
+| Type | `list of string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On entries only) |
+| Default | unset |
+| Applies to | `LoadBalancer` |
 
 Example
 
 ```yaml
 service:
-  some-service:
+  example:
     loadBalancerIPs:
-      - 1.2.3.4
-      - 5.6.7.8
+      - 192.168.1.240
 ```
 
 ---
 
 ## `loadBalancerSourceRanges`
 
-Define the load balancer source ranges
+CIDRs that are allowed to reach the load balancer. Only for `type: LoadBalancer`.
 
-|            |                                          |
-| ---------- | ---------------------------------------- |
-| Key        | `service.$name.loadBalancerSourceRanges` |
-| Type       | `list` of `string`                       |
-| Required   | ❌                                       |
-| Helm `tpl` | ✅ (On entries only)                     |
-| Default    | `[]`                                     |
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.loadBalancerSourceRanges` |
+| Type | `list of string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On entries only) |
+| Default | unset |
+| Applies to | `LoadBalancer` |
 
 Example
 
 ```yaml
 service:
-  some-service:
+  example:
     loadBalancerSourceRanges:
-      - 10.100.100.0/24
-      - 10.100.200.0/24
+      - 192.168.1.0/24
 ```
 
 ---
 
 ## Full Examples
+
+### Every option
 
 ```yaml
 service:
@@ -122,6 +122,7 @@ service:
     loadBalancerIP: 10.100.100.2
     loadBalancerSourceRanges:
       - 10.100.100.0/24
+    allocateLoadBalancerNodePorts: false
     clusterIP: 172.16.20.233
     sharedKey: custom-shared-key
     publishNotReadyAddresses: true
@@ -135,13 +136,68 @@ service:
       clientIP:
         timeoutSeconds: 86400
     externalTrafficPolicy: Cluster
-    targetSelector: pod-name
+    targetSelector: workload-name
     ports:
       port-name:
         enabled: true
         primary: true
         targetSelector: container-name
         port: 80
-        protocol: HTTP
+        protocol: http
         targetPort: 8080
+```
+
+### Multiple addresses
+
+```yaml
+service:
+  service-lb:
+    enabled: true
+    primary: true
+    type: LoadBalancer
+    loadBalancerIPs:
+      - 10.100.100.2
+      - fd00::2
+    ipFamilyPolicy: RequireDualStack
+    ipFamilies:
+      - IPv4
+      - IPv6
+    externalTrafficPolicy: Local
+    ports:
+      port-name:
+        enabled: true
+        primary: true
+        port: 53
+        protocol: udp
+```
+
+### MetalLB and Cilium
+
+```yaml
+service:
+  service-metallb:
+    enabled: true
+    primary: true
+    type: LoadBalancer
+    integrations:
+      metallb:
+        enabled: true
+        sharedKey: shared-key
+    ports:
+      port-name:
+        enabled: true
+        primary: true
+        port: 80
+  service-cilium:
+    enabled: true
+    type: LoadBalancer
+    integrations:
+      cilium:
+        enabled: true
+        sharedKey: shared-key
+    ports:
+      port-name:
+        enabled: true
+        primary: true
+        port: 8080
 ```

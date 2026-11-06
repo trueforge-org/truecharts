@@ -6,13 +6,13 @@ title: StatefulSet
 
 - Examples under each key are only to be used as a placement guide
 - See the [Full Examples](/truecharts-common/workload/statefulset#full-examples) section for complete examples.
-- See the [Workload](/truecharts-common/workload) documentation for more information
 
 :::
 
 :::tip
 
-Replace references to `$name` with the actual name you want to use.
+- See all available keys of this object on the [Workload](/truecharts-common/workload) page.
+- These options apply only when `type: StatefulSet`.
 
 :::
 
@@ -20,51 +20,41 @@ Replace references to `$name` with the actual name you want to use.
 
 - `.Values.workload.$name`
 
-## Notes
-
-Value of `workload.$name.podSpec.restartPolicy` can only be `Always` for this type of workload
-
 ---
 
 ## `replicas`
 
-Define the number of replicas
+Number of pod replicas (`replicas`).
 
-|            |                           |
-| ---------- | ------------------------- |
-| Key        | `workload.$name.replicas` |
-| Type       | `int`                     |
-| Required   | ❌                        |
-| Helm `tpl` | ❌                        |
-| Default    | `1`                       |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    replicas: 1
-```
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.replicas` |
+| Type | `int or string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Applies to | `Deployment`, `StatefulSet` |
 
 ---
 
 ## `revisionHistoryLimit`
 
-Define the number of history revisions
+Number of old ReplicaSets, ControllerRevisions or history entries that are kept for rollbacks (`revisionHistoryLimit`).
 
-|            |                                       |
-| ---------- | ------------------------------------- |
-| Key        | `workload.$name.revisionHistoryLimit` |
-| Type       | `int`                                 |
-| Required   | ❌                                    |
-| Helm `tpl` | ❌                                    |
-| Default    | `3`                                   |
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.revisionHistoryLimit` |
+| Type | `int` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Applies to | `Deployment`, `StatefulSet`, `DaemonSet` |
 
 Example
 
 ```yaml
 workload:
-  workload-name:
+  example:
     revisionHistoryLimit: 3
 ```
 
@@ -72,128 +62,93 @@ workload:
 
 ## `strategy`
 
-Define the strategy of the workload
+Update strategy of the workload. Deployments accept `Recreate` and `RollingUpdate`, StatefulSets and DaemonSets accept `RollingUpdate` and `OnDelete`. Set `maxUnavailable`, `maxSurge` and `partition` under `rollingUpdate`.
 
-|            |                           |
-| ---------- | ------------------------- |
-| Key        | `workload.$name.strategy` |
-| Type       | `string`                  |
-| Required   | ❌                        |
-| Helm `tpl` | ❌                        |
-| Default    | `RollingUpdate`           |
+A Deployment with a single replica uses `Recreate` if it mounts a `ReadWriteOnce` volume.
 
-Valid Values:
-
-- `OnDelete`
-- `RollingUpdate`
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    strategy: RollingUpdate
-```
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.strategy` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Allowed values | `"Recreate"`, `"RollingUpdate"`, `"OnDelete"` |
+| Applies to | `Deployment`, `StatefulSet`, `DaemonSet` |
 
 ---
 
 ## `rollingUpdate`
 
-Define the rollingUpdate options
+Settings of the `RollingUpdate` strategy. Only used when `strategy` is `RollingUpdate`.
 
-:::note
-
-Can only be used when `workload.$name.strategy` is `RollingUpdate`
-
-:::
-
-|            |                                |
-| ---------- | ------------------------------ |
-| Key        | `workload.$name.rollingUpdate` |
-| Type       | `map`                          |
-| Required   | ❌                             |
-| Helm `tpl` | ❌                             |
-| Default    | `{}`                           |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    rollingUpdate:
-      maxUnavailable: 1
-      maxSurge: 1
-```
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.rollingUpdate` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Applies to | `Deployment`, `StatefulSet`, `DaemonSet` |
 
 ---
 
 ## `rollingUpdate.maxUnavailable`
 
-Define the maxUnavailable
+Maximum number of pods that can be unavailable during an update, as a number or a percentage like `25%`. Only used when `strategy` is `RollingUpdate`.
 
-:::note
-
-Can only be used when `workload.$name.strategy` is `RollingUpdate`
-
-:::
-
-|            |                                               |
-| ---------- | --------------------------------------------- |
-| Key        | `workload.$name.rollingUpdate.maxUnavailable` |
-| Type       | `int`                                         |
-| Required   | ❌                                            |
-| Helm `tpl` | ❌                                            |
-| Default    | unset                                         |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    rollingUpdate:
-      maxUnavailable: 1
-```
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.rollingUpdate.maxUnavailable` |
+| Type | `int or string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
 ## `rollingUpdate.partition`
 
-Define the partition
+Pods with an ordinal lower than this number are not updated (`partition`). Only used when `strategy` is `RollingUpdate`.
 
-:::note
-
-Can only be used when `workload.$name.strategy` is `RollingUpdate`
-
-:::
-
-|            |                                          |
-| ---------- | ---------------------------------------- |
-| Key        | `workload.$name.rollingUpdate.partition` |
-| Type       | `int`                                    |
-| Required   | ❌                                       |
-| Helm `tpl` | ❌                                       |
-| Default    | unset                                    |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    rollingUpdate:
-      partition: 1
-```
-
----
-
-Notes:
-
-View common `keys` of `workload` in [workload Documentation](/truecharts-common/workload).
-
-> Value of `workload.[workload-name].podSpec.restartPolicy` can only be `Always` for this type of workload
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.rollingUpdate.partition` |
+| Type | `int` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Applies to | `StatefulSet` |
 
 ---
 
 ## Full Examples
+
+### RollingUpdate
+
+```yaml
+workload:
+  workload-name:
+    enabled: true
+    primary: true
+    type: StatefulSet
+    replicas: 3
+    revisionHistoryLimit: 3
+    strategy: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      partition: 1
+    podSpec:
+      containers:
+        container-name:
+          enabled: true
+          primary: true
+          imageSelector: image
+```
+
+### OnDelete
+
+Pods are only replaced when they are deleted by hand.
 
 ```yaml
 workload:
@@ -202,22 +157,41 @@ workload:
     primary: true
     type: StatefulSet
     replicas: 1
-    revisionHistoryLimit: 3
-    strategy: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 1
-      partition: 1
-    podSpec: {}
+    strategy: OnDelete
+    podSpec:
+      containers:
+        container-name:
+          enabled: true
+          primary: true
+          imageSelector: image
+```
 
-  other-workload-name:
+### With volumeClaimTemplates
+
+Persistence of `type: vct` is rendered as a `volumeClaimTemplate` of the StatefulSet. See [PVC and VCT](/truecharts-common/persistence/pvc-vct).
+
+```yaml
+workload:
+  workload-name:
     enabled: true
-    primary: false
+    primary: true
     type: StatefulSet
-    replicas: 1
-    revisionHistoryLimit: 3
-    strategy: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 1
-      partition: 1
-    podSpec: {}
+    replicas: 3
+    podSpec:
+      containers:
+        container-name:
+          enabled: true
+          primary: true
+          imageSelector: image
+
+persistence:
+  data:
+    enabled: true
+    type: vct
+    size: 10Gi
+    accessModes: ReadWriteOnce
+    targetSelector:
+      workload-name:
+        container-name:
+          mountPath: /data
 ```

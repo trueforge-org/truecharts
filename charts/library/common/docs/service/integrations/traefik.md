@@ -1,352 +1,240 @@
 ---
-title: Traefik Integration
+title: Service Traefik Integration
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/service/integrations/traefik#full-examples)
-section for complete examples.
+- See the [Full Examples](/truecharts-common/service/integrations/traefik#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.service.$name.integration.traefik`
+- `.Values.service.$name.integrations.traefik`
+- `.Values.addons.codeserver.service.integrations.traefik`
+- `.Values.addons.codeserver.service.$name.integrations.traefik`
 
-:::tip
+---
 
-- Replace references to `$name` with the actual name you want to use.
+## `traefik`
 
-:::
+Traefik settings for the backend of the Service, set as annotations on the Service.
+
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
 ## `enabled`
 
-Enables or Disables the traefik integration
+Add the Traefik annotations to the Service.
 
-|            |                                              |
-| ---------- | -------------------------------------------- |
-| Key        | `service.$name.integrations.traefik.enabled` |
-| Type       | `bool`                                       |
-| Required   | ❌                                           |
-| Helm `tpl` | ❌                                           |
-| Default    | `false`                                      |
-
-Example
-
-```yaml
-service:
-  service-name:
-    integrations:
-      traefik:
-        enabled: true
-```
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.enabled` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
 
 ---
 
 ## `forceTLS`
 
-Force TLS when talking to the backend service
+Talk to the backend over HTTPS. Adds the `traefik.ingress.kubernetes.io/service.serversscheme: "https"` annotation.
 
-:::note
-
-Adds the `traefik.ingress.kubernetes.io/service.serversscheme: "https"` annotation.
-
-It does that both with this set OR when there is a service with only https ports
-
-:::
-
-|            |                                               |
-| ---------- | --------------------------------------------- |
-| Key        | `service.$name.integrations.traefik.forceTLS` |
-| Type       | `bool`                                        |
-| Required   | ❌                                            |
-| Helm `tpl` | ❌                                            |
-| Default    | `false`                                       |
-
-Example
-
-```yaml
-service:
-  service-name:
-    integrations:
-      traefik:
-        forceTLS: true
-```
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.forceTLS` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
 
 ---
 
 ## `insecureSkipVerify`
 
-Skip TLS verification when taling to an HTTPS backend service
+Skip TLS verification of the backend. Allows HTTPS backends with self-signed certificates.
 
-:::note
-
-Allows talking to HTTPS backend services which use self-signed certs.
-
-Alternatively you can set a [server name](/truecharts-common/service/integrations/traefik#servername)
-and [root CAs](/truecharts-common/service/integrations/traefik#rootcas) to use when performing
-TLS validation.
-
-:::
-
-|            |                                                         |
-| ---------- | ------------------------------------------------------- |
-| Key        | `service.$name.integrations.traefik.insecureSkipVerify` |
-| Type       | `bool`                                                  |
-| Required   | ❌                                                      |
-| Helm `tpl` | ❌                                                      |
-| Default    | `false`                                                 |
-
-Example
-
-```yaml
-service:
-  service-name:
-    integrations:
-      traefik:
-        insecureSkipVerify: false
-```
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.insecureSkipVerify` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
 
 ---
 
 ## `serverName`
 
-Set the hostname to use when talking to a backend service
+Server name (SNI) Traefik uses when talking to the backend.
 
-|            |                                                 |
-| ---------- | ----------------------------------------------- |
-| Key        | `service.$name.integrations.traefik.serverName` |
-| Type       | `string`                                        |
-| Required   | ❌                                              |
-| Helm `tpl` | ❌                                              |
-| Default    | ""                                              |
-
-Example
-
-```yaml
-service:
-  service-name:
-    integrations:
-      traefik:
-        serverName: "my.service.com"
-```
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.serverName` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
 ## `rootCAs`
 
-List of kubernetes secrets (in the same namespace) containing certificate
-authorities to use when performing TLS verification of the backend service.
+ConfigMaps or Secrets, in the same namespace, with certificate authorities Traefik uses to verify the backend.
 
-:::note
-
-The secrets must contain a key called `ca.crt`, `tls.crt` or `tls.ca` with the
-value being the certificate authority. For more information refer to the
-[official documentation](https://doc.traefik.io/traefik/reference/routing-configuration/kubernetes/crd/http/serverstransport/#serverstransport-rootcas)
-and [this fixture](https://github.com/traefik/traefik/blob/6df82676aaf8186215086a1d9e934170fb5db13f/pkg/provider/kubernetes/crd/fixtures/with_servers_transport.yml).
-
-:::
-
-|            |                                                 |
-| ---------- | ----------------------------------------------- |
-| Key        | `service.$name.integrations.traefik.rootCAs`    |
-| Type       | `list` of `map`                                 |
-| Required   | ❌                                              |
-| Helm `tpl` | ❌                                              |
-| Default    | `[]`                                            |
-
-Example
-
-```yaml
-service:
-  service-name:
-    integrations:
-      traefik:
-        rootCAs: []
-```
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.rootCAs` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `[]` |
 
 ---
 
-### `rootCAs.secretRef`
+## `rootCAs[]`
 
-Define the secretRef
+A ConfigMap or Secret with a certificate authority. Set `configMapRef` or `secretRef`.
 
-|            |                                                               |
-| ---------- | ------------------------------------------------------------- |
-| Key        | `service.$name.integrations.traefik.rootCAs[].secretRef`      |
-| Type       | `map`                                                         |
-| Required   | ❌                                                            |
-| Helm `tpl` | ❌                                                            |
-| Default    | `{}`                                                          |
-
-Example
-
-```yaml
-service:
-  service-name:
-    integrations:
-      traefik:
-        rootCAs:
-          - secretRef: {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.rootCAs[]` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-#### `rootCAs.secretRef.name`
+## `rootCAs[].configMapRef`
 
-Define the secret name
+A ConfigMap with the CA certificate.
 
-:::note
-
-This will be automatically expanded to `fullname-secret-name`.
-You can opt out of this by setting [`expandObjectName`](/truecharts-common/service/integrations/traefik#rootcassecretrefexpandobjectname)
-to `false`
-
-:::
-
-|            |                                                                    |
-| ---------- | ------------------------------------------------------------------ |
-| Key        | `service.$name.integrations.traefik.rootCAs[].secretRef.name`      |
-| Type       | `string`                                                           |
-| Required   | ✅                                                                 |
-| Helm `tpl` | ✅                                                                 |
-| Default    | `""`                                                               |
-
-Example
-
-```yaml
-service:
-  service-name:
-    integrations:
-      traefik:
-        rootCAs:
-          - secretRef:
-              name: secret-name
-```
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.rootCAs[].configMapRef` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-#### `rootCAs.secretRef.expandObjectName`
+## `rootCAs[].configMapRef.expandObjectName`
 
-Whether to expand (adding the fullname as prefix) the secret name
+Prefix the name with the release fullname.
 
-|            |                                                                                |
-| ---------- | ------------------------------------------------------------------------------ |
-| Key        | `service.$name.integrations.traefik.rootCAs[].secretRef.expandObjectName`      |
-| Type       | `bool`                                                                         |
-| Required   | ❌                                                                             |
-| Helm `tpl` | ❌                                                                             |
-| Default    | `true`                                                                         |
-
-Example
-
-```yaml
-service:
-  service-name:
-    integrations:
-      traefik:
-        rootCAs:
-          - secretRef:
-              name: secret-name
-              expandObjectName: false
-```
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.rootCAs[].configMapRef.expandObjectName` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `true` |
 
 ---
 
-### `rootCAs.configMapRef`
+## `rootCAs[].configMapRef.name`
 
-Define the configMapRef
+Name of the ConfigMap. Expanded to `fullname-name` unless `expandObjectName` is `false`.
 
-|            |                                                                  |
-| ---------- | ---------------------------------------------------------------- |
-| Key        | `service.$name.integrations.traefik.rootCAs[].configMapRef`      |
-| Type       | `map`                                                            |
-| Required   | ❌                                                               |
-| Helm `tpl` | ❌                                                               |
-| Default    | `{}`                                                             |
-
-Example
-
-```yaml
-service:
-  service-name:
-    integrations:
-      traefik:
-        rootCAs:
-          - configMapRef: {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.rootCAs[].configMapRef.name` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Length | 1 to … |
 
 ---
 
-#### `rootCAs.configMapRef.name`
+## `rootCAs[].secretRef`
 
-Define the configmap name
+A Secret with the CA certificate.
 
-:::note
-
-This will be automatically expanded to `fullname-configmap-name`.
-You can opt out of this by setting [`expandObjectName`](/truecharts-common/service/integrations/traefik#rootcasconfigmaprefexpandobjectname)
-to `false`
-
-:::
-
-|            |                                                                       |
-| ---------- | --------------------------------------------------------------------- |
-| Key        | `service.$name.integrations.traefik.rootCAs[].configMapRef.name`      |
-| Type       | `string`                                                              |
-| Required   | ✅                                                                    |
-| Helm `tpl` | ✅                                                                    |
-| Default    | `""`                                                                  |
-
-Example
-
-```yaml
-service:
-  service-name:
-    integrations:
-      traefik:
-        rootCAs:
-          - configMapRef:
-              name: configmap-name
-```
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.rootCAs[].secretRef` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-#### `rootCAs.configMapRef.expandObjectName`
+## `rootCAs[].secretRef.name`
 
-Whether to expand (adding the fullname as prefix) the configmap name
+Name of the Secret. Expanded to `fullname-name` unless `expandObjectName` is `false`.
 
-|            |                                                                                   |
-| ---------- | --------------------------------------------------------------------------------- |
-| Key        | `service.$name.integrations.traefik.rootCAs[].configMapRef.expandObjectName`      |
-| Type       | `bool`                                                                            |
-| Required   | ❌                                                                                |
-| Helm `tpl` | ❌                                                                                |
-| Default    | `true`                                                                            |
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.rootCAs[].secretRef.name` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Length | 1 to … |
 
-Example
+---
 
-```yaml
-service:
-  service-name:
-    integrations:
-      traefik:
-        rootCAs:
-          - configMapRef:
-              name: configmap-name
-              expandObjectName: false
-```
+## `rootCAs[].secretRef.expandObjectName`
+
+Prefix the name with the release fullname.
+
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.integrations.traefik.rootCAs[].secretRef.expandObjectName` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `true` |
 
 ---
 
 ## Full Examples
 
+### Forced TLS
+
 ```yaml
 service:
   service-name:
+    enabled: true
+    primary: true
+    ports:
+      port-name:
+        enabled: true
+        primary: true
+        port: 443
+        protocol: https
+    integrations:
+      traefik:
+        enabled: true
+        forceTLS: true
+        insecureSkipVerify: true
+```
+
+### Custom root CAs
+
+```yaml
+service:
+  service-name:
+    enabled: true
+    primary: true
+    ports:
+      port-name:
+        enabled: true
+        primary: true
+        port: 443
+        protocol: https
     integrations:
       traefik:
         enabled: true

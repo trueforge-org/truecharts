@@ -4,35 +4,36 @@ title: ClusterIP
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/service/clusterip#full-examples) section for complete examples.
-- See the [Service](/truecharts-common/service) documentation for more information
+- See the [Full Examples](/truecharts-common/service/ClusterIP#full-examples) section for complete examples.
+
+:::
+
+:::tip
+
+- See all available keys of this object on the [Service](/truecharts-common/service) page.
+- These options apply only when `type: ClusterIP`.
 
 :::
 
 ## Appears in
 
 - `.Values.service.$name`
-
-:::tip
-
-- See available service keys [here](/truecharts-common/service).
-- This options apply only when `type: ClusterIP`.
-
-:::
+- `.Values.addons.codeserver.service.$name`
 
 ---
 
 ## Full Examples
+
+### Every option
 
 ```yaml
 service:
   service-clusterip:
     enabled: true
     primary: true
+    type: ClusterIP
     publishNotReadyAddresses: true
     clusterIP: 172.16.20.233
-    publishNotReadyAddresses: true
     ipFamilyPolicy: SingleStack
     ipFamilies:
       - IPv4
@@ -42,7 +43,7 @@ service:
     sessionAffinityConfig:
       clientIP:
         timeoutSeconds: 86400
-    targetSelector: pod-name
+    targetSelector: workload-name
     ports:
       port-name:
         enabled: true
@@ -51,4 +52,41 @@ service:
         port: 80
         protocol: http
         targetPort: 8080
+```
+
+### Headless
+
+```yaml
+service:
+  service-headless:
+    enabled: true
+    primary: true
+    type: ClusterIP
+    clusterIP: None
+    publishNotReadyAddresses: true
+    ports:
+      port-name:
+        enabled: true
+        primary: true
+        port: 5432
+        protocol: tcp
+```
+
+### Dual stack
+
+```yaml
+service:
+  service-dualstack:
+    enabled: true
+    primary: true
+    type: ClusterIP
+    ipFamilyPolicy: PreferDualStack
+    ipFamilies:
+      - IPv4
+      - IPv6
+    ports:
+      port-name:
+        enabled: true
+        primary: true
+        port: 80
 ```

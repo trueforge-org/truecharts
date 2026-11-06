@@ -1,10 +1,9 @@
 ---
-title: Configmap
+title: ConfigMap
 ---
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
 - See the [Full Examples](/truecharts-common/configmap#full-examples) section for complete examples.
 
 :::
@@ -13,172 +12,178 @@ title: Configmap
 
 - `.Values.configmap`
 
-## Naming scheme
-
-- `$FullName-$ConfigmapName` (release-name-chart-name-configmap-name)
-
-:::tip
-
-- Replace references to `$name` with the actual name you want to use.
-
-:::
-
 ---
 
 ## `configmap`
 
-Create Configmap objects
+ConfigMaps, keyed by name.
 
-|            |             |
-| ---------- | ----------- |
-| Key        | `configmap` |
-| Type       | `map`       |
-| Required   | ❌          |
-| Helm `tpl` | ❌          |
-| Default    | `{}`        |
-
-Example
-
-```yaml
-configmap: {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `configmap` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-### `$name`
+## `$name`
 
-Define Configmap
+A ConfigMap.
 
-|            |                   |
-| ---------- | ----------------- |
-| Key        | `configmap.$name` |
-| Type       | `map`             |
-| Required   | ✅                |
-| Helm `tpl` | ❌                |
-| Default    | `{}`              |
-
-Example
-
-```yaml
-configmap:
-  configmap-name: {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name` |
+| Type | `map` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-#### `enabled`
+## `$name.expandObjectName`
 
-Enables or Disables the Configmap
+Prefix the name of the ConfigMap with the chart fullname.
 
-|            |                           |
-| ---------- | ------------------------- |
-| Key        | `configmap.$name.enabled` |
-| Type       | `bool`                    |
-| Required   | ✅                        |
-| Helm `tpl` | ✅                        |
-| Default    | `false`                   |
-
-Example
-
-```yaml
-configmap:
-  configmap-name:
-    enabled: true
-```
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.expandObjectName` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `true` |
 
 ---
 
-#### `namespace`
+## `$name.data`
 
-Define the namespace for this object
+Data entries of the ConfigMap, keyed by file or variable name. Values are Helm `tpl` strings.
 
-|            |                             |
-| ---------- | --------------------------- |
-| Key        | `configmap.$name.namespace` |
-| Type       | `string`                    |
-| Required   | ❌                          |
-| Helm `tpl` | ✅                          |
-| Default    | `""`                        |
-
-Example
-
-```yaml
-configmap:
-  configmap-name:
-    namespace: some-namespace
-```
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.data` |
+| Type | `map` |
+| Required | ✅ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | unset |
 
 ---
 
-#### `labels`
+## `$name.data.$name`
+
+Content of the entry.
+
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.data.$name` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.enabled`
+
+Create this ConfigMap when true. Accepts a Helm `tpl` string that renders to `true` or `false`.
+
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.enabled` |
+| Type | `bool` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | `false` |
+
+---
+
+## `$name.namespace`
+
+Namespace to create this object in. Overrides the chart-wide `namespace` and `global.namespace`.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.namespace` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `""` |
+
+---
+
+## `$name.labels`
 
 Additional labels for configmap
 
-|            |                          |
-| ---------- | ------------------------ |
-| Key        | `configmap.$name.labels` |
-| Type       | `map`                    |
-| Required   | ❌                       |
-| Helm `tpl` | ✅ (On value only)       |
-| Default    | `{}`                     |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
-Example
-
-```yaml
-configmap:
-  configmap-name:
-    labels:
-      key: value
-```
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.labels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
 
 ---
 
-#### `annotations`
+## `$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.annotationsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.labelsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.annotations`
 
 Additional annotations for configmap
 
-|            |                               |
-| ---------- | ----------------------------- |
-| Key        | `configmap.$name.annotations` |
-| Type       | `map`                         |
-| Required   | ❌                            |
-| Helm `tpl` | ✅ (On value only)            |
-| Default    | `{}`                          |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
-Example
-
-```yaml
-configmap:
-  configmap-name:
-    annotations:
-      key: value
-```
-
----
-
-#### `data`
-
-Define the data of the configmap
-
-|            |                        |
-| ---------- | ---------------------- |
-| Key        | `configmap.$name.data` |
-| Type       | `map`                  |
-| Required   | ✅                     |
-| Helm `tpl` | ✅                     |
-| Example    | `{}`                   |
-
-```yaml
-configmap:
-  configmap-name:
-    data:
-      key: value
-```
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.annotations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
 
 ---
 
 ## Full Examples
 
+### Basic ConfigMap
+
+The name of the ConfigMap is prefixed with the fullname of the chart:
+
 ```yaml
 configmap:
   configmap-name:
@@ -191,7 +196,12 @@ configmap:
       keytpl: "{{ .Values.some.value }}"
     data:
       key: value
+```
 
+### Multi line values and a namespace
+
+```yaml
+configmap:
   other-configmap-name:
     enabled: true
     namespace: some-namespace
@@ -199,4 +209,40 @@ configmap:
       key: |
         multi line
         text value
+      config.yaml: |
+        server:
+          port: 8080
+```
+
+### Exact name
+
+With `expandObjectName: false`, the name is not prefixed with the fullname of the chart:
+
+```yaml
+configmap:
+  exact-name:
+    enabled: true
+    expandObjectName: false
+    data:
+      key: value
+```
+
+### Use it in a volume
+
+```yaml
+configmap:
+  app-config:
+    enabled: true
+    data:
+      config.ini: |
+        [app]
+        debug = false
+
+persistence:
+  config:
+    enabled: true
+    type: configmap
+    objectName: app-config
+    mountPath: /etc/app
+    readOnly: true
 ```
