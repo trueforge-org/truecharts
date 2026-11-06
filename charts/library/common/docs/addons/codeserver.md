@@ -76,7 +76,7 @@ Takes the same keys as the [Container](/truecharts-common/workload/podSpec/conta
 
 Environment variables of the code-server container.
 
-See [Env](/truecharts-common/workload/podSpec/containers/env) for all keys of this object.
+Takes the same keys as the [Env](/truecharts-common/workload/podSpec/containers/env) page, next to the keys below.
 
 | Field | Value |
 | --- | --- |
@@ -85,6 +85,34 @@ See [Env](/truecharts-common/workload/podSpec/containers/env) for all keys of th
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | unset |
+
+---
+
+## `container.env.PORT`
+
+Code-server port.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.codeserver.container.env.PORT` |
+| Type | `int` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `12321` |
+
+---
+
+## `container.env.DEFAULT_WORKSPACE`
+
+Default workspace path.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.codeserver.container.env.DEFAULT_WORKSPACE` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `"/"` |
 
 ---
 

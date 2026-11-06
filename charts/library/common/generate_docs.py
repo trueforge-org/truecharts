@@ -796,7 +796,7 @@ class Generator:
                     or (node.docs_required is None and bool(parent and key in parent.required)),
                     internal=internal and not top,
                 )
-                other = None if top else self._other_page(page, path, node, root_idx)
+                other = None if top or node.extends else self._other_page(page, path, node, root_idx)
                 target = None if top else page.collapse.get(entry.rel)
                 if target:
                     other = next(p for p in self.pages if p.file == target)
@@ -818,6 +818,8 @@ class Generator:
                 base, _, _ = self._resolve_root({"path": node.extends})
                 if base is not None:
                     skip = self.schemas.inherited_keys(node, base)
+                    if node.addl is not None and base.addl is not None and node.addl[0] is base.addl[0]:
+                        skip.add("$name")
             for k, c in self.schemas.children(node):
                 if k in skip:
                     continue
@@ -894,7 +896,10 @@ class Generator:
         if e.link is not None:
             lines += [f"See [{e.link.title}]({self.url(e.link)}) for all keys of this object.", ""]
         if n.extends:
-            base_page = self.root_by_path.get(n.extends)
+            base_node, _, _ = self._resolve_root({"path": n.extends})
+            base_page = self.root_by_path.get(n.extends) or (
+                self.root_by_ident.get(base_node.identity) if base_node is not None and base_node.identity else None
+            )
             if base_page is not None:
                 lines += [f"Takes the same keys as the [{base_page.title}]({self.url(base_page)}) page, next to the keys below.", ""]
         if n.root_values:

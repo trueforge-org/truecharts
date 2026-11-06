@@ -995,11 +995,13 @@
    "properties": {
     "PORT": {
      "type": "integer",
-     "description": "Code-server port."
+     "description": "Code-server port.",
+     "default": 12321
     },
     "DEFAULT_WORKSPACE": {
      "type": "string",
-     "description": "Default workspace path."
+     "description": "Default workspace path.",
+     "default": "/"
     }
    }
   },
@@ -1191,26 +1193,31 @@
    "properties": {
     "DOT": {
      "type": "string",
-     "description": "DNS over TLS provider setting."
+     "description": "DNS over TLS provider setting.",
+     "default": "off"
     },
     "DNS_KEEP_NAMESERVER": {
      "type": [
       "boolean",
       "string"
      ],
-     "description": "Keep nameserver from host."
+     "description": "Keep nameserver from host.",
+     "default": "on"
     },
     "FIREWALL": {
      "type": "string",
-     "description": "Firewall mode."
+     "description": "Firewall mode.",
+     "default": "off"
     },
     "FIREWALL_OUTBOUND_SUBNETS": {
      "type": "string",
-     "description": "Allowed outbound subnets."
+     "description": "Allowed outbound subnets.",
+     "default": ""
     },
     "FIREWALL_INPUT_PORTS": {
      "type": "string",
-     "description": "Allowed inbound ports."
+     "description": "Allowed inbound ports.",
+     "default": ""
     }
    }
   },
@@ -1250,15 +1257,18 @@
    "properties": {
     "TS_KUBE_SECRET": {
      "type": "string",
-     "description": "Secret the state of tailscale is stored in."
+     "description": "Secret the state of tailscale is stored in.",
+     "default": ""
     },
     "TS_SOCKET": {
      "type": "string",
-     "description": "Path of the tailscaled socket."
+     "description": "Path of the tailscaled socket.",
+     "default": "/var/run/tailscale/tailscaled.sock"
     },
     "TS_STATE_DIR": {
      "type": "string",
-     "description": "Directory the state of tailscale is stored in."
+     "description": "Directory the state of tailscale is stored in.",
+     "default": "/var/lib/tailscale/state"
     },
     "TS_USERSPACE": {
      "type": "boolean",

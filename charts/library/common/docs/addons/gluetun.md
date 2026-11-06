@@ -76,7 +76,7 @@ Takes the same keys as the [Container](/truecharts-common/workload/podSpec/conta
 
 Environment variables of the gluetun container, for the VPN settings.
 
-See [Env](/truecharts-common/workload/podSpec/containers/env) for all keys of this object.
+Takes the same keys as the [Env](/truecharts-common/workload/podSpec/containers/env) page, next to the keys below.
 
 | Field | Value |
 | --- | --- |
@@ -85,6 +85,76 @@ See [Env](/truecharts-common/workload/podSpec/containers/env) for all keys of th
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | unset |
+
+---
+
+## `container.env.DOT`
+
+DNS over TLS provider setting.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.gluetun.container.env.DOT` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `"off"` |
+
+---
+
+## `container.env.DNS_KEEP_NAMESERVER`
+
+Keep nameserver from host.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.gluetun.container.env.DNS_KEEP_NAMESERVER` |
+| Type | `bool or string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `"on"` |
+
+---
+
+## `container.env.FIREWALL`
+
+Firewall mode.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.gluetun.container.env.FIREWALL` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `"off"` |
+
+---
+
+## `container.env.FIREWALL_OUTBOUND_SUBNETS`
+
+Allowed outbound subnets.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.gluetun.container.env.FIREWALL_OUTBOUND_SUBNETS` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `""` |
+
+---
+
+## `container.env.FIREWALL_INPUT_PORTS`
+
+Allowed inbound ports.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.gluetun.container.env.FIREWALL_INPUT_PORTS` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `""` |
 
 ---
 
