@@ -13,461 +13,368 @@ title: RBAC
 
 - `.Values.rbac`
 
-## Naming scheme
-
-- Primary: `$FullName` (release-name-chart-name)
-- Non-Primary: `$FullName-$RBACName` (release-name-chart-name-RBACName)
-
-:::tip
-
-- Replace references to `$name` with the actual name you want to use.
-
-:::
-
----
-
-## Target Selector
-
-- `allServiceAccounts` (bool): Whether to assign all service accounts or not to the (Cluster)RoleBinding
-- `serviceAccounts` (list): Define the service account(s) to assign the (Cluster)RoleBinding
-- `serviceAccounts` (empty): Assign the primary service account to the primary rbac
-
 ---
 
 ## `rbac`
 
-Create rbac objects
+Roles and RoleBindings (or ClusterRoles and ClusterRoleBindings), keyed by name.
 
-|            |        |
-| ---------- | ------ |
-| Key        | `rbac` |
-| Type       | `map`  |
-| Required   | ❌     |
-| Helm `tpl` | ❌     |
-| Default    | `{}`   |
-
-Example
-
-```yaml
-rbac: {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `rbac` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-### `$name`
+## `$name`
 
-Define rbac
+An RBAC object.
 
-|            |              |
-| ---------- | ------------ |
-| Key        | `rbac.$name` |
-| Type       | `map`        |
-| Required   | ✅           |
-| Helm `tpl` | ❌           |
-| Default    | `{}`         |
-
-Example
-
-```yaml
-rbac:
-  rbac-name: {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name` |
+| Type | `map` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-#### `enabled`
+## `$name.subjects`
 
-Enables or Disables the rbac
+Extra `subjects` of the (Cluster)RoleBinding, besides the service accounts selected with `serviceAccounts` and `allServiceAccounts`.
 
-|            |                      |
-| ---------- | -------------------- |
-| Key        | `rbac.$name.enabled` |
-| Type       | `bool`               |
-| Required   | ✅                   |
-| Helm `tpl` | ✅                   |
-| Default    | `false`              |
-
-Example
-
-```yaml
-rbac:
-  rbac-name:
-    enabled: true
-```
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.subjects` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `[]` |
 
 ---
 
-#### `primary`
+## `$name.subjects[]`
 
-Sets the rbac as primary
+A subject of the (Cluster)RoleBinding.
 
-|            |                      |
-| ---------- | -------------------- |
-| Key        | `rbac.$name.primary` |
-| Type       | `bool`               |
-| Required   | ❌                   |
-| Helm `tpl` | ❌                   |
-| Default    | `false`              |
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.subjects[]` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.subjects[].apiGroup`
+
+API group of the subject.
+
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.subjects[].apiGroup` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 Example
 
 ```yaml
 rbac:
-  rbac-name:
-    primary: true
+  example:
+    subjects:
+      - apiGroup: rbac.authorization.k8s.io
 ```
 
 ---
 
-#### `namespace`
+## `$name.subjects[].kind`
 
-Define the namespace for this object (Only when clusterWide is false)
+Kind of the subject, eg `User`, `Group` or `ServiceAccount`.
 
-|            |                        |
-| ---------- | ---------------------- |
-| Key        | `rbac.$name.namespace` |
-| Type       | `string`               |
-| Required   | ❌                     |
-| Helm `tpl` | ✅                     |
-| Default    | `""`                   |
-
-Example
-
-```yaml
-rbac:
-  rbac-name:
-    namespace: some-namespace
-```
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.subjects[].kind` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-#### `clusterWide`
+## `$name.subjects[].name`
 
-Sets the rbac as cluster wide (ClusterRole, ClusterRoleBinding)
+Name of the subject.
 
-|            |                          |
-| ---------- | ------------------------ |
-| Key        | `rbac.$name.clusterWide` |
-| Type       | `bool`                   |
-| Required   | ❌                       |
-| Helm `tpl` | ❌                       |
-| Default    | `false`                  |
-
-Example
-
-```yaml
-rbac:
-  rbac-name:
-    clusterWide: true
-```
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.subjects[].name` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-#### `labels`
+## `$name.enabled`
+
+Create this RBAC (Cluster)Role and (Cluster)RoleBinding when true. Accepts a Helm `tpl` string that renders to `true` or `false`.
+
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.enabled` |
+| Type | `bool` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | `false` |
+
+---
+
+## `$name.primary`
+
+Mark this RBAC object as the primary one.
+
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.primary` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
+
+---
+
+## `$name.namespace`
+
+Namespace to create this object in. Not used when `clusterWide` is true.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.namespace` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `""` |
+
+---
+
+## `$name.clusterWide`
+
+Create a ClusterRole and ClusterRoleBinding instead of a Role and RoleBinding.
+
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.clusterWide` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
+
+---
+
+## `$name.labels`
 
 Additional labels for rbac
 
-|            |                     |
-| ---------- | ------------------- |
-| Key        | `rbac.$name.labels` |
-| Type       | `map`               |
-| Required   | ❌                  |
-| Helm `tpl` | ✅ (On value only)  |
-| Default    | `{}`                |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
-Example
-
-```yaml
-rbac:
-  rbac-name:
-    labels:
-      key: value
-```
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.labels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
 
 ---
 
-#### `annotations`
+## `$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.annotationsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.labelsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.annotations`
 
 Additional annotations for rbac
 
-|            |                          |
-| ---------- | ------------------------ |
-| Key        | `rbac.$name.annotations` |
-| Type       | `map`                    |
-| Required   | ❌                       |
-| Helm `tpl` | ✅ (On value only)       |
-| Default    | `{}`                     |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
-Example
-
-```yaml
-rbac:
-  rbac-name:
-    annotations:
-      key: value
-```
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.annotations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
 
 ---
 
-#### `allServiceAccounts`
+## `$name.allServiceAccounts`
 
-Whether to assign all service accounts or not to the (Cluster)RoleBinding
+Bind the role to all service accounts of the chart.
 
-|            |                                 |
-| ---------- | ------------------------------- |
-| Key        | `rbac.$name.allServiceAccounts` |
-| Type       | `bool`                          |
-| Required   | ❌                              |
-| Helm `tpl` | ❌                              |
-| Default    | unset                           |
-
-Example
-
-```yaml
-rbac:
-  rbac-name:
-    allServiceAccounts: true
-```
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.allServiceAccounts` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-#### `serviceAccounts`
+## `$name.serviceAccounts`
 
-Define the service account(s) to assign the (Cluster)RoleBinding
+Names of the `serviceAccount` objects to bind the role to.
 
-|            |                              |
-| ---------- | ---------------------------- |
-| Key        | `rbac.$name.serviceAccounts` |
-| Type       | `list`                       |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
-| Default    | `[]`                         |
-
-Example
-
-```yaml
-rbac:
-  rbac-name:
-    serviceAccounts:
-      - service-account-name
-```
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.serviceAccounts` |
+| Type | `list of string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `[]` |
 
 ---
 
-#### `rules`
+## `$name.rules`
 
-Define the `rules` for the (Cluster)Role
+Rules of the (Cluster)Role.
 
-|            |                    |
-| ---------- | ------------------ |
-| Key        | `rbac.$name.rules` |
-| Type       | `list`             |
-| Required   | ✅                 |
-| Helm `tpl` | ❌                 |
-| Default    | `[]`               |
-
-Example
-
-```yaml
-rbac:
-  rbac-name:
-    rules: []
-```
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.rules` |
+| Type | `list of map` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | `[]` |
 
 ---
 
-##### `rules[].apiGroups`
+## `$name.rules[]`
 
-Define the `apiGroups` list for the `rules` for the (Cluster)Role
+A rule of the (Cluster)Role.
 
-|            |                                |
-| ---------- | ------------------------------ |
-| Key        | `rbac.$name.rules[].apiGroups` |
-| Type       | `list` of `string`             |
-| Required   | ✅                             |
-| Helm `tpl` | ✅ (On entries only)           |
-| Default    | `[]`                           |
-
-Example
-
-```yaml
-rbac:
-  rbac-name:
-    rules:
-      apiGroups:
-        - ""
-        - extensions
-```
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.rules[]` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-##### `rules[].resources`
+## `$name.rules[].apiGroups`
 
-Define the `resources` list for the `rules` for the (Cluster)Role
+API groups the rule applies to.
 
-|            |                                |
-| ---------- | ------------------------------ |
-| Key        | `rbac.$name.rules[].resources` |
-| Type       | `list` of `string`             |
-| Required   | ✅                             |
-| Helm `tpl` | ✅ (On entries only)           |
-| Default    | `[]`                           |
-
-Example
-
-```yaml
-rbac:
-  rbac-name:
-    rules:
-      resources:
-        - pods
-```
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.rules[].apiGroups` |
+| Type | `list of string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ (On entries only) |
+| Default | unset |
 
 ---
 
-##### `rules[].resourceNames`
+## `$name.rules[].resources`
 
-Define the `resourceNames` list for the `rules` for the (Cluster)Role
+Resources the rule applies to, eg `pods`.
 
-|            |                                    |
-| ---------- | ---------------------------------- |
-| Key        | `rbac.$name.rules[].resourceNames` |
-| Type       | `list` of `string`                 |
-| Required   | ❌                                 |
-| Helm `tpl` | ✅ (On entries only)               |
-| Default    | `[]`                               |
-
-Example
-
-```yaml
-rbac:
-  rbac-name:
-    rules:
-      resourceNames:
-        - my-pod
-```
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.rules[].resources` |
+| Type | `list of string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ (On entries only) |
+| Default | unset |
 
 ---
 
-##### `rules[].verbs`
+## `$name.rules[].resourceNames`
 
-Define the `verbs` list for the `rules` for the (Cluster)Role
+Names of resources the rule is limited to.
 
-|            |                            |
-| ---------- | -------------------------- |
-| Key        | `rbac.$name.rules[].verbs` |
-| Type       | `list` of `string`         |
-| Required   | ✅                         |
-| Helm `tpl` | ✅ (On entries only)       |
-| Default    | `[]`                       |
-
-Example
-
-```yaml
-rbac:
-  rbac-name:
-    rules:
-      verbs:
-        - get
-        - list
-        - watch
-```
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.rules[].resourceNames` |
+| Type | `list of string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On entries only) |
+| Default | unset |
 
 ---
 
-#### `subjects`
+## `$name.rules[].verbs`
 
-Define `subjects` for (Cluster)RoleBinding
+Verbs the rule allows, eg `get`, `list` or `watch`.
 
-|            |                       |
-| ---------- | --------------------- |
-| Key        | `rbac.$name.subjects` |
-| Type       | `list` of `map`       |
-| Required   | ❌                    |
-| Helm `tpl` | ❌                    |
-| Default    | `[]`                  |
-
-Example
-
-```yaml
-rbac:
-  rbac-name:
-    rules:
-      subjects: []
-```
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.rules[].verbs` |
+| Type | `list of string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ (On entries only) |
+| Default | unset |
 
 ---
 
-##### `subjects[].kind`
+## `$name.rules[].nonResourceURLs`
 
-Define the `kind` of `subjects` entry
+Non-resource URLs the rule applies to, eg `/healthz`. Only for cluster wide RBAC.
 
-|            |                              |
-| ---------- | ---------------------------- |
-| Key        | `rbac.$name.subjects[].kind` |
-| Type       | `string`                     |
-| Required   | ✅                           |
-| Helm `tpl` | ✅                           |
-| Default    | `""`                         |
-
-Example
-
-```yaml
-rbac:
-  rbac-name:
-    subjects:
-      - kind: my-kind
-```
-
----
-
-##### `subjects[].name`
-
-Define the `name` of `subjects` entry
-
-|            |                              |
-| ---------- | ---------------------------- |
-| Key        | `rbac.$name.subjects[].name` |
-| Type       | `string`                     |
-| Required   | ✅                           |
-| Helm `tpl` | ✅                           |
-| Default    | `""`                         |
-
-Example
-
-```yaml
-rbac:
-  rbac-name:
-    subjects:
-      - name: my-name
-```
-
----
-
-##### `subjects[].apiGroup`
-
-Define the `apiGroup` of `subjects` entry
-
-|            |                                  |
-| ---------- | -------------------------------- |
-| Key        | `rbac.$name.subjects[].apiGroup` |
-| Type       | `string`                         |
-| Required   | ✅                               |
-| Helm `tpl` | ✅                               |
-| Default    | `""`                             |
-
-Example
-
-```yaml
-rbac:
-  rbac-name:
-    subjects:
-      - apiGroup: my-api-group
-```
+| Field | Value |
+| --- | --- |
+| Key | `rbac.$name.rules[].nonResourceURLs` |
+| Type | `list of string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
 ## Full Examples
+
+### Role bound to all service accounts
+
+With `clusterWide`, a ClusterRole and ClusterRoleBinding are created instead of a Role and RoleBinding:
 
 ```yaml
 rbac:
@@ -493,11 +400,19 @@ rbac:
           - get
           - "{{ .Values.some.value }}"
           - watch
-    subjects:
-      - kind: my-kind
-        name: "{{ .Values.some.value }}"
-        apiGroup: my-api-group
+```
 
+### Role bound to a service account
+
+`serviceAccounts` lists the names of `serviceAccount` objects of the chart:
+
+```yaml
+serviceAccount:
+  service-account-name:
+    enabled: true
+    primary: true
+
+rbac:
   other-rbac-name:
     enabled: true
     namespace: some-namespace
@@ -512,8 +427,54 @@ rbac:
           - get
           - list
           - watch
+```
+
+### Extra subjects
+
+`subjects` are added besides the service accounts. This is how you bind a role to a user or group:
+
+```yaml
+rbac:
+  subjects-rbac:
+    enabled: true
+    rules:
+      - apiGroups:
+          - apps
+        resources:
+          - deployments
+        verbs:
+          - get
+          - list
     subjects:
-      - kind: my-kind
-        name: my-name
-        apiGroup: my-api-group
+      - kind: User
+        name: jane
+        apiGroup: rbac.authorization.k8s.io
+      - kind: Group
+        name: developers
+        apiGroup: rbac.authorization.k8s.io
+```
+
+### Non resource URLs
+
+```yaml
+rbac:
+  metrics-reader:
+    enabled: true
+    clusterWide: true
+    allServiceAccounts: true
+    rules:
+      - apiGroups:
+          - ""
+        resources:
+          - nodes/metrics
+        verbs:
+          - get
+      - nonResourceURLs:
+          - /metrics
+        apiGroups:
+          - ""
+        resources:
+          - nodes
+        verbs:
+          - get
 ```

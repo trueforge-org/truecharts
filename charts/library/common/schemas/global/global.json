@@ -1,0 +1,173 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "labels": {
+      "allOf": [
+        {
+          "$ref": "../special/labels.json"
+        }
+      ],
+      "description": "Labels added to all objects.",
+      "default": {},
+      "x-helm-tpl": "On value only"
+    },
+    "annotations": {
+      "allOf": [
+        {
+          "$ref": "../special/annotations.json"
+        }
+      ],
+      "description": "Annotations added to all objects.",
+      "default": {},
+      "x-helm-tpl": "On value only"
+    },
+    "namespace": {
+      "type": "string",
+      "description": "Namespace to create all objects in, unless overridden at the object level. Also applies to chart dependencies.",
+      "default": "",
+      "x-helm-tpl": true
+    },
+    "podCIDR": {
+      "type": "string",
+      "description": "CIDR of the pods of the cluster, used by addons such as gluetun to keep cluster traffic outside the VPN. Falls back to `172.16.0.0/16`.",
+      "examples": [
+        "172.16.0.0/16"
+      ]
+    },
+    "svcCIDR": {
+      "type": "string",
+      "description": "CIDR of the services of the cluster. Falls back to `172.17.0.0/16`.",
+      "examples": [
+        "172.17.0.0/16"
+      ]
+    },
+    "diagnosticMode": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Run the containers of the chart with a sleep command instead of the app, to debug them.",
+          "default": false
+        }
+      },
+      "additionalProperties": false,
+      "description": "Diagnostic mode for the chart."
+    },
+    "fallbackDefaults": {
+      "$ref": "fallbackDefaults.json",
+      "description": "Defaults used when a value is not set on the object itself. See [fallbackDefaults](/truecharts-common/global/fallbackDefaults).",
+      "type": "object",
+      "x-helm-tpl": false
+    },
+    "traefik": {
+      "type": "object",
+      "properties": {
+        "commonMiddlewares": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the middleware."
+              }
+            },
+            "additionalProperties": false,
+            "description": "A Traefik middleware."
+          },
+          "description": "Traefik middlewares added to every ingress and route that uses Traefik.",
+          "default": [
+            {
+              "name": "tc-basic-secure-headers"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "description": "Settings for the Traefik integration.",
+      "default": {
+        "commonMiddlewares": [
+          {
+            "name": "tc-basic-secure-headers"
+          }
+        ]
+      }
+    },
+    "minNodePort": {
+      "type": "integer",
+      "description": "Lowest `nodePort` that a service may use.",
+      "minimum": 1,
+      "default": 9000,
+      "x-docs-required": true
+    },
+    "stopAll": {
+      "type": "boolean",
+      "description": "Stop all objects of the chart and its dependencies, including CNPG clusters. Stand-alone pods are not stopped.",
+      "default": false
+    }
+  },
+  "additionalProperties": false,
+  "description": "Global values that apply to all charts. See [global](/truecharts-common/global).",
+  "default": {
+    "labels": {},
+    "annotations": {},
+    "namespace": "",
+    "diagnosticMode": {
+      "enabled": false
+    },
+    "fallbackDefaults": {
+      "storageClass": null,
+      "probeType": "http",
+      "serviceProtocol": "tcp",
+      "serviceType": "ClusterIP",
+      "persistenceType": "pvc",
+      "pvcRetain": false,
+      "pvcSize": "100Gi",
+      "vctSize": "100Gi",
+      "accessModes": [
+        "ReadWriteOnce"
+      ],
+      "vctAccessModes": [
+        "ReadWriteOnce"
+      ],
+      "probeTimeouts": {
+        "liveness": {
+          "initialDelaySeconds": 12,
+          "periodSeconds": 15,
+          "timeoutSeconds": 5,
+          "failureThreshold": 5,
+          "successThreshold": 1
+        },
+        "readiness": {
+          "initialDelaySeconds": 10,
+          "periodSeconds": 12,
+          "timeoutSeconds": 5,
+          "failureThreshold": 4,
+          "successThreshold": 2
+        },
+        "startup": {
+          "initialDelaySeconds": 10,
+          "periodSeconds": 5,
+          "timeoutSeconds": 3,
+          "failureThreshold": 60,
+          "successThreshold": 1
+        }
+      },
+      "topologyKey": "kubernetes.io/hostname",
+      "cnpg": {
+        "pgVersion": 16,
+        "skipEmptyWalArchiveCheck": true
+      }
+    },
+    "traefik": {
+      "commonMiddlewares": [
+        {
+          "name": "tc-basic-secure-headers"
+        }
+      ]
+    },
+    "minNodePort": 9000,
+    "stopAll": false
+  }
+}

@@ -1,0 +1,104 @@
+suite: mariadb dependency schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render the mariadb secret with all mariadb keys set
+    set:
+      mariadb:
+        enabled: true
+        includeCommon: true
+        password: my-password
+        rootPassword: my-root-password
+        mariadbUsername: my-user
+        mariadbDatabase: my-database
+        creds:
+          mariadbPassword: my-password
+          mariadbRootPassword: my-root-password
+          plain: my-mariadb
+          plainhost: my-mariadb
+          plainport: my-mariadb:3306
+          plainporthost: my-mariadb:3306
+          complete: sql://my-user:my-password@my-mariadb:3306/my-database
+          urlnossl: sql://my-user:my-password@my-mariadb:3306/my-database?sslmode=disable
+          jdbc: jdbc:sqlserver://my-mariadb:3306/my-database
+          jdbcmysql: jdbc:mysql://my-mariadb:3306/my-database
+          jdbcmariadb: jdbc:mariadb://my-mariadb:3306/my-database
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Secret
+        documentIndex: 0
+
+  - it: should render the mariadb secret with the string enabled key
+    set:
+      mariadb:
+        enabled: "true"
+        password: my-password
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Secret
+        documentIndex: 0
+
+  - it: should fail with an empty mariadb password
+    set:
+      mariadb:
+        enabled: true
+        password: ""
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/mariadb/password'': minLength: got 0, want 1'
+
+  - it: should fail with an empty mariadb root password
+    set:
+      mariadb:
+        enabled: true
+        password: my-password
+        rootPassword: ""
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/mariadb/rootPassword'': minLength: got 0, want 1'
+
+  - it: should fail with an unknown key in mariadb creds
+    set:
+      mariadb:
+        enabled: true
+        password: my-password
+        creds:
+          bogus: value
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/mariadb/creds'': additional properties ''bogus'' not allowed'
+
+  - it: should accept the values of a mariadb subchart next to the keys read by common
+    set:
+      mariadb:
+        enabled: true
+        password: my-password
+        workload:
+          main:
+            enabled: true
+        service:
+          main:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Secret
+        documentIndex: 0
+
+  - it: should fail with a wrong type in the mariadb subchart values
+    set:
+      mariadb:
+        enabled: true
+        password: my-password
+        workload: str
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/mariadb/workload'''

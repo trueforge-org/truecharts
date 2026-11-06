@@ -80,7 +80,7 @@ tests:
           url: ""
     asserts:
       - failedTemplate:
-          errorMessage: VolSync - Expected non-empty [url] in [credentials.my-secret]
+          errorPattern: "at '/credentials/my-secret/url': minLength: got"
 
   - it: should fail if credentials.bucket is empty
     set:
@@ -92,7 +92,7 @@ tests:
           bucket: ""
     asserts:
       - failedTemplate:
-          errorMessage: VolSync - Expected non-empty [bucket] in [credentials.my-secret]
+          errorPattern: "at '/credentials/my-secret/bucket': minLength: got"
 
   - it: should fail if credentials.encrKey is empty
     set:
@@ -105,7 +105,7 @@ tests:
           encrKey: ""
     asserts:
       - failedTemplate:
-          errorMessage: VolSync - Expected non-empty [encrKey] in [credentials.my-secret]
+          errorPattern: "at '/credentials/my-secret/encrKey': minLength: got"
 
   - it: should fail if credentials.accessKey is empty
     set:
@@ -119,7 +119,7 @@ tests:
           accessKey: ""
     asserts:
       - failedTemplate:
-          errorMessage: VolSync - Expected non-empty [accessKey] in [credentials.my-secret]
+          errorPattern: "at '/credentials/my-secret/accessKey': minLength: got"
 
   - it: should fail if credentials.secretKey is empty
     set:
@@ -134,7 +134,7 @@ tests:
           secretKey: ""
     asserts:
       - failedTemplate:
-          errorMessage: VolSync - Expected non-empty [secretKey] in [credentials.my-secret]
+          errorPattern: "at '/credentials/my-secret/secretKey': minLength: got"
 
   - it: should fail with invalid copy method
     set:
@@ -162,7 +162,7 @@ tests:
           secretKey: some-secret-key
     asserts:
       - failedTemplate:
-          errorMessage: VolSync - Expected [copyMethod] to be one of [Clone, Direct, Snapshot], but got [invalid]
+          errorPattern: "at '/persistence/src-backup/volsync/0/copyMethod': value must be one of"
 
   - it: should fail with empty type
     set:
@@ -181,7 +181,7 @@ tests:
                 enabled: false
     asserts:
       - failedTemplate:
-          errorMessage: VolSync - Expected non-empty [type]
+          errorPattern: "at '/persistence/src-backup/volsync/0/type': value must be"
 
   - it: should fail with invalid type
     set:
@@ -201,7 +201,7 @@ tests:
       credentials: *credentials
     asserts:
       - failedTemplate:
-          errorMessage: VolSync - Expected [type] to be one of [restic], but got [invalid]
+          errorPattern: "at '/persistence/src-backup/volsync/0/type': value must be"
 
   - it: should fail with invalid credentials type
     set:
@@ -223,4 +223,4 @@ tests:
           type: invalid
     asserts:
       - failedTemplate:
-          errorMessage: VolSync - Expected [type] in [credentials.my-creds] to be one of [s3], but got [invalid]
+          errorPattern: "at '/credentials/my-creds/type': value must be"

@@ -1,0 +1,25 @@
+suite: storageClass non-string parameters test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should accept numbers and booleans as parameters and render them as strings
+    set:
+      storageClass:
+        example1:
+          enabled: true
+          provisioner: some.provisioner.io
+          parameters:
+            size: 3
+            encrypted: true
+            type: some-type
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: parameters
+          value:
+            size: "3"
+            encrypted: "true"
+            type: some-type

@@ -9,78 +9,82 @@ title: Device
 
 :::
 
-## Appears in
-
-- `.Values.persistence.$name`
-
 :::tip
 
-- See available persistence keys [here](/truecharts-common/persistence).
-- This options apply only when `type: device`.
+- See all available keys of this object on the [Persistence](/truecharts-common/persistence) page.
+- These options apply only when `type: device`.
 
 :::
 
----
+## Appears in
 
-## Notes
-
-Type `device` is almost identical to `hostPath`. The only difference is that when a `device` type is defined,
-we take additional actions, like adding `supplementalGroups` or setting `hostPathType` automatically
-to the container assigned, so it can utilize the device.
+- `.Values.persistence.$name`
 
 ---
 
 ## `hostPath`
 
-Define the hostPath
+Path on the node. Only for `type: hostPath`.
 
-|            |                              |
-| ---------- | ---------------------------- |
-| Key        | `persistence.$name.hostPath` |
-| Type       | `string`                     |
-| Required   | ✅                           |
-| Helm `tpl` | ✅                           |
-| Default    | `""`                         |
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.hostPath` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Applies to | `device`, `hostPath` |
 
 Example
 
 ```yaml
 persistence:
-  device-vol:
-    hostPath: /path/to/host
+  example:
+    hostPath: /mnt/data
 ```
 
 ---
 
 ## `hostPathType`
 
-Define the hostPathType
+Type of the host path, eg `Directory` or `DirectoryOrCreate`. Only for `type: hostPath`.
 
-|            |                                  |
-| ---------- | -------------------------------- |
-| Key        | `persistence.$name.hostPathType` |
-| Type       | `string`                         |
-| Required   | ❌                               |
-| Helm `tpl` | ✅                               |
-| Default    | `""`                             |
-
-Example
-
-```yaml
-persistence:
-  device-vol:
-    hostPathType: BlockDevice
-```
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.hostPathType` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Applies to | `device`, `hostPath` |
 
 ---
 
 ## Full Examples
+
+### Block device
 
 ```yaml
 persistence:
   dev-vol:
     enabled: true
     type: device
-    hostPath: /path/to/host
+    hostPath: /dev/sda
     hostPathType: BlockDevice
+    mountPath: /dev/sda
+```
+
+### Character device
+
+```yaml
+persistence:
+  gpu:
+    enabled: true
+    type: device
+    hostPath: /dev/dri
+    hostPathType: CharDevice
+    targetSelector:
+      workload-name:
+        container-name:
+          mountPath: /dev/dri
 ```

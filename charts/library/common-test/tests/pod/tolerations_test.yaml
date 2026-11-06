@@ -201,4 +201,4 @@ tests:
                 tolerationSeconds: not-a-number
     asserts:
       - failedTemplate:
-          errorMessage: Expected [tolerations.tolerationSeconds] to be a number, but got [not-a-number]
+          errorPattern: 'at ''/workload/workload-name1/podSpec/tolerations/0/tolerationSeconds'': got string, want integer'

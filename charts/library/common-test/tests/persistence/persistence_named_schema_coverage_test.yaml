@@ -1,0 +1,414 @@
+suite: persistence default-named volumes schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render the default-named persistence objects as type pvc in persistence fixed-name volumes
+    set:
+      configmap:
+        my-configmap:
+          enabled: true
+          data:
+            foo: bar
+      persistence:
+        shared:
+          enabled: true
+          type: pvc
+          mountPath: /mnt/shared
+          targetSelectAll: true
+        varlogs:
+          enabled: true
+          type: pvc
+          mountPath: /mnt/varlogs
+          targetSelectAll: true
+        varrun:
+          enabled: true
+          type: pvc
+          mountPath: /mnt/varrun
+          targetSelectAll: true
+        tmp:
+          enabled: true
+          type: pvc
+          mountPath: /mnt/tmp
+          targetSelectAll: true
+        devshm:
+          enabled: true
+          type: pvc
+          mountPath: /mnt/devshm
+          targetSelectAll: true
+        crontab:
+          enabled: true
+          type: pvc
+          mountPath: /mnt/crontab
+          targetSelectAll: true
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-my-configmap
+        isKind:
+          of: ConfigMap
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-shared
+        isKind:
+          of: PersistentVolumeClaim
+  - it: should render the default-named persistence objects as type hostPath in persistence fixed-name volumes
+    set:
+      configmap:
+        my-configmap:
+          enabled: true
+          data:
+            foo: bar
+      persistence:
+        shared:
+          enabled: true
+          type: hostPath
+          mountPath: /mnt/shared
+          targetSelectAll: true
+        varlogs:
+          enabled: true
+          type: hostPath
+          mountPath: /mnt/varlogs
+          targetSelectAll: true
+        varrun:
+          enabled: true
+          type: hostPath
+          mountPath: /mnt/varrun
+          targetSelectAll: true
+        tmp:
+          enabled: true
+          type: hostPath
+          mountPath: /mnt/tmp
+          targetSelectAll: true
+        devshm:
+          enabled: true
+          type: hostPath
+          mountPath: /mnt/devshm
+          targetSelectAll: true
+        crontab:
+          enabled: true
+          type: hostPath
+          mountPath: /mnt/crontab
+          targetSelectAll: true
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-my-configmap
+        isKind:
+          of: ConfigMap
+  - it: should render the default-named persistence objects as type emptyDir in persistence fixed-name volumes
+    set:
+      configmap:
+        my-configmap:
+          enabled: true
+          data:
+            foo: bar
+      persistence:
+        shared:
+          enabled: true
+          type: emptyDir
+          mountPath: /mnt/shared
+          targetSelectAll: true
+        varlogs:
+          enabled: true
+          type: emptyDir
+          mountPath: /mnt/varlogs
+          targetSelectAll: true
+          medium: Memory
+        varrun:
+          enabled: true
+          type: emptyDir
+          mountPath: /mnt/varrun
+          targetSelectAll: true
+          medium: Memory
+        tmp:
+          enabled: true
+          type: emptyDir
+          mountPath: /mnt/tmp
+          targetSelectAll: true
+          medium: Memory
+        devshm:
+          enabled: true
+          type: emptyDir
+          mountPath: /mnt/devshm
+          targetSelectAll: true
+          medium: Memory
+        crontab:
+          enabled: true
+          type: emptyDir
+          mountPath: /mnt/crontab
+          targetSelectAll: true
+          medium: Memory
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-my-configmap
+        isKind:
+          of: ConfigMap
+  - it: should render the default-named persistence objects as type nfs in persistence fixed-name volumes
+    set:
+      configmap:
+        my-configmap:
+          enabled: true
+          data:
+            foo: bar
+      persistence:
+        shared:
+          enabled: true
+          type: nfs
+          mountPath: /mnt/shared
+          targetSelectAll: true
+        varlogs:
+          enabled: true
+          type: nfs
+          mountPath: /mnt/varlogs
+          targetSelectAll: true
+        varrun:
+          enabled: true
+          type: nfs
+          mountPath: /mnt/varrun
+          targetSelectAll: true
+        tmp:
+          enabled: true
+          type: nfs
+          mountPath: /mnt/tmp
+          targetSelectAll: true
+        devshm:
+          enabled: true
+          type: nfs
+          mountPath: /mnt/devshm
+          targetSelectAll: true
+        crontab:
+          enabled: true
+          type: nfs
+          mountPath: /mnt/crontab
+          targetSelectAll: true
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-my-configmap
+        isKind:
+          of: ConfigMap
+  - it: should render the default-named persistence objects as type device in persistence fixed-name volumes
+    set:
+      configmap:
+        my-configmap:
+          enabled: true
+          data:
+            foo: bar
+      persistence:
+        shared:
+          enabled: true
+          type: device
+          mountPath: /mnt/shared
+          targetSelectAll: true
+        varlogs:
+          enabled: true
+          type: device
+          mountPath: /mnt/varlogs
+          targetSelectAll: true
+        varrun:
+          enabled: true
+          type: device
+          mountPath: /mnt/varrun
+          targetSelectAll: true
+        tmp:
+          enabled: true
+          type: device
+          mountPath: /mnt/tmp
+          targetSelectAll: true
+        devshm:
+          enabled: true
+          type: device
+          mountPath: /mnt/devshm
+          targetSelectAll: true
+        crontab:
+          enabled: true
+          type: device
+          mountPath: /mnt/crontab
+          targetSelectAll: true
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-my-configmap
+        isKind:
+          of: ConfigMap
+  - it: should render the default-named persistence objects as type configmap in persistence fixed-name volumes
+    set:
+      configmap:
+        my-configmap:
+          enabled: true
+          data:
+            foo: bar
+      persistence:
+        shared:
+          enabled: true
+          type: configmap
+          mountPath: /mnt/shared
+          targetSelectAll: true
+        varlogs:
+          enabled: true
+          type: configmap
+          mountPath: /mnt/varlogs
+          targetSelectAll: true
+        varrun:
+          enabled: true
+          type: configmap
+          mountPath: /mnt/varrun
+          targetSelectAll: true
+        tmp:
+          enabled: true
+          type: configmap
+          mountPath: /mnt/tmp
+          targetSelectAll: true
+        devshm:
+          enabled: true
+          type: configmap
+          mountPath: /mnt/devshm
+          targetSelectAll: true
+        crontab:
+          enabled: true
+          type: configmap
+          mountPath: /mnt/crontab
+          targetSelectAll: true
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-my-configmap
+        isKind:
+          of: ConfigMap
+  - it: should render the default-named persistence objects as type secret in persistence fixed-name volumes
+    set:
+      configmap:
+        my-configmap:
+          enabled: true
+          data:
+            foo: bar
+      persistence:
+        shared:
+          enabled: true
+          type: secret
+          mountPath: /mnt/shared
+          targetSelectAll: true
+        varlogs:
+          enabled: true
+          type: secret
+          mountPath: /mnt/varlogs
+          targetSelectAll: true
+        varrun:
+          enabled: true
+          type: secret
+          mountPath: /mnt/varrun
+          targetSelectAll: true
+        tmp:
+          enabled: true
+          type: secret
+          mountPath: /mnt/tmp
+          targetSelectAll: true
+        devshm:
+          enabled: true
+          type: secret
+          mountPath: /mnt/devshm
+          targetSelectAll: true
+        crontab:
+          enabled: true
+          type: secret
+          mountPath: /mnt/crontab
+          targetSelectAll: true
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-my-configmap
+        isKind:
+          of: ConfigMap
+  - it: should render the default-named persistence objects as type vct in persistence fixed-name volumes
+    set:
+      configmap:
+        my-configmap:
+          enabled: true
+          data:
+            foo: bar
+      persistence:
+        shared:
+          enabled: true
+          type: vct
+          mountPath: /mnt/shared
+          targetSelectAll: true
+        varlogs:
+          enabled: true
+          type: vct
+          mountPath: /mnt/varlogs
+          targetSelectAll: true
+        varrun:
+          enabled: true
+          type: vct
+          mountPath: /mnt/varrun
+          targetSelectAll: true
+        tmp:
+          enabled: true
+          type: vct
+          mountPath: /mnt/tmp
+          targetSelectAll: true
+        devshm:
+          enabled: true
+          type: vct
+          mountPath: /mnt/devshm
+          targetSelectAll: true
+        crontab:
+          enabled: true
+          type: vct
+          mountPath: /mnt/crontab
+          targetSelectAll: true
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-my-configmap
+        isKind:
+          of: ConfigMap
+  - it: should render the default-named persistence objects with enabled as a string in persistence fixed-name volumes
+    set:
+      configmap:
+        my-configmap:
+          enabled: true
+          data:
+            foo: bar
+      persistence:
+        shared:
+          enabled: "{{ true }}"
+        varlogs:
+          enabled: "{{ true }}"
+        varrun:
+          enabled: "{{ true }}"
+        tmp:
+          enabled: "{{ true }}"
+        devshm:
+          enabled: "{{ true }}"
+        crontab:
+          enabled: "{{ true }}"
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-my-configmap
+        isKind:
+          of: ConfigMap
+
+  - it: should fail on unknown keys in persistence fixed-name volumes
+    set:
+      persistence:
+        shared:
+          unknownKey: value
+        varlogs:
+          unknownKey: value
+        varrun:
+          unknownKey: value
+        tmp:
+          unknownKey: value
+        devshm:
+          unknownKey: value
+        crontab:
+          unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/shared': additional properties 'unknownKey' not allowed"

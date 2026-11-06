@@ -1,0 +1,46 @@
+suite: global fallbackDefaults cnpg pgVersion string schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render with the string pgVersion 15 in fallbackDefaults
+    set:
+      global:
+        fallbackDefaults:
+          cnpg:
+            pgVersion: "15"
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - isKind:
+          of: Service
+        documentIndex: 0
+
+  - it: should render with the string pgVersion 16 in fallbackDefaults
+    set:
+      global:
+        fallbackDefaults:
+          cnpg:
+            pgVersion: "16"
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - isKind:
+          of: Service
+        documentIndex: 0

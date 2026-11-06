@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "description": "Add the Traefik annotations to the Service.",
+      "default": false
+    },
+    "forceTLS": {
+      "type": "boolean",
+      "description": "Talk to the backend over HTTPS. Adds the `traefik.ingress.kubernetes.io/service.serversscheme: \"https\"` annotation.",
+      "default": false
+    },
+    "insecureSkipVerify": {
+      "type": "boolean",
+      "description": "Skip TLS verification of the backend. Allows HTTPS backends with self-signed certificates.",
+      "default": false
+    },
+    "serverName": {
+      "type": "string",
+      "description": "Server name (SNI) Traefik uses when talking to the backend."
+    },
+    "rootCAs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "configMapRef": {
+            "type": "object",
+            "properties": {
+              "expandObjectName": {
+                "type": "boolean",
+                "description": "Prefix the name with the release fullname.",
+                "default": true
+              },
+              "name": {
+                "type": "string",
+                "description": "Name of the ConfigMap. Expanded to `fullname-name` unless `expandObjectName` is `false`.",
+                "minLength": 1,
+                "x-helm-tpl": true,
+                "x-docs-required": true
+              }
+            },
+            "additionalProperties": false,
+            "description": "A ConfigMap with the CA certificate.",
+            "default": {}
+          },
+          "secretRef": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the Secret. Expanded to `fullname-name` unless `expandObjectName` is `false`.",
+                "minLength": 1,
+                "x-helm-tpl": true,
+                "x-docs-required": true
+              },
+              "expandObjectName": {
+                "type": "boolean",
+                "description": "Prefix the name with the release fullname.",
+                "default": true
+              }
+            },
+            "additionalProperties": false,
+            "description": "A Secret with the CA certificate.",
+            "default": {}
+          }
+        },
+        "additionalProperties": false,
+        "description": "A ConfigMap or Secret with a certificate authority. Set `configMapRef` or `secretRef`."
+      },
+      "description": "ConfigMaps or Secrets, in the same namespace, with certificate authorities Traefik uses to verify the backend.",
+      "default": []
+    }
+  },
+  "description": "Traefik settings for the backend of the Service, set as annotations on the Service.",
+  "additionalProperties": false,
+  "x-docs-page": {
+    "title": "Service Traefik Integration"
+  }
+}

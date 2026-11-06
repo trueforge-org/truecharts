@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "limits": {
+      "type": "object",
+      "properties": {
+        "cpu": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "description": "Maximum CPU the container can use, in cores or millicores.",
+          "default": "1500m",
+          "examples": [
+            "1500m"
+          ]
+        },
+        "memory": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "description": "Maximum memory the container can use. The container is killed when it uses more.",
+          "default": "2400Mi",
+          "examples": [
+            "2Gi"
+          ]
+        }
+      },
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number"
+        ],
+        "description": "Extended resource quantity, keyed by resource name (for example `nvidia.com/gpu`). Rendered as-is."
+      },
+      "description": "Maximum amount of resources the container can use. Limits are **optional**. Set `cpu` and `memory` to `0` to remove them.",
+      "default": {
+        "cpu": "1500m",
+        "memory": "2400Mi"
+      }
+    },
+    "requests": {
+      "type": "object",
+      "properties": {
+        "cpu": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "description": "CPU the scheduler reserves for the container, in cores or millicores.",
+          "default": "75m",
+          "x-docs-required": true,
+          "examples": [
+            "100m"
+          ]
+        },
+        "memory": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "description": "Memory the scheduler reserves for the container.",
+          "default": "200Mi",
+          "x-docs-required": true,
+          "examples": [
+            "256Mi"
+          ]
+        }
+      },
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number"
+        ],
+        "description": "Extended resource quantity, keyed by resource name (for example `ephemeral-storage`). Rendered as-is."
+      },
+      "description": "Minimum amount of resources the container needs, which the scheduler reserves on a node. Requests are **required**, because without them Kubernetes uses the `limits` as the `requests`.",
+      "default": {
+        "cpu": "75m",
+        "memory": "200Mi"
+      },
+      "x-docs-required": true
+    },
+    "excludeExtra": {
+      "type": "boolean",
+      "description": "Leave out the extra resources (for example GPUs) that common adds to this container, so only `cpu` and `memory` are rendered."
+    }
+  },
+  "additionalProperties": false,
+  "description": "CPU, memory and extended resources of the container. Overrides the top-level `resources` for this container. See [resources](/truecharts-common/workload/podSpec/containers/resources).",
+  "x-docs-page": {
+    "title": "Resources"
+  }
+}

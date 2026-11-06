@@ -1,0 +1,173 @@
+suite: workload podOptions schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render podOptions with defaultAffinity, the OnFailure restartPolicy and tolerations
+    set:
+      podOptions:
+        defaultAffinity: true
+        restartPolicy: OnFailure
+        tolerations:
+          - key: my-key
+            operator: Equal
+            value: my-value
+            effect: NoSchedule
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Job
+          podSpec:
+            containers: &containers
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes: &probes
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+    asserts:
+      - documentIndex: &jobDoc 0
+        isKind:
+          of: Job
+      - documentIndex: *jobDoc
+        equal:
+          path: spec.template.spec.restartPolicy
+          value: OnFailure
+      - documentIndex: *jobDoc
+        contains:
+          path: spec.template.spec.tolerations
+          content:
+            key: my-key
+            operator: Equal
+            value: my-value
+            effect: NoSchedule
+
+  - it: should render podOptions with a templated restartPolicy
+    set:
+      podOptions:
+        restartPolicy: '{{ "Never" }}'
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Job
+          podSpec:
+            containers: *containers
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: Job
+      - documentIndex: 0
+        equal:
+          path: spec.template.spec.restartPolicy
+          value: Never
+
+  - it: should render podOptions topologySpreadConstraints with label selector expressions and the Ignore policies
+    set:
+      podOptions:
+        topologySpreadConstraints:
+          - maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: ScheduleAnyway
+            minDomains: 2
+            matchLabelKeys:
+              - pod-template-hash
+            nodeAffinityPolicy: Ignore
+            nodeTaintsPolicy: Ignore
+            labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - my-app
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers: *containers
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: Deployment
+      - documentIndex: 0
+        contains:
+          path: spec.template.spec.topologySpreadConstraints
+          content:
+            maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: ScheduleAnyway
+            minDomains: 2
+            matchLabelKeys:
+              - pod-template-hash
+            nodeAffinityPolicy: Ignore
+            nodeTaintsPolicy: Ignore
+            labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - my-app
+
+  - it: should fail on unknown keys in podOptions
+    set:
+      podOptions:
+        unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/podOptions': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys and too many items in podOptions dnsConfig
+    set:
+      podOptions:
+        dnsConfig:
+          unknownKey: value
+          nameservers: [1.1.1.1, 1.0.0.1, 8.8.8.8, 8.8.4.4]
+          searches: [a.local, b.local, c.local, d.local, e.local, f.local, g.local]
+          options:
+            - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/podOptions/dnsConfig': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/podOptions/dnsConfig/options/0': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/podOptions/dnsConfig/nameservers': maxItems: got 4, want 3"
+      - failedTemplate:
+          errorPattern: "at '/podOptions/dnsConfig/searches': maxItems: got 7, want 6"
+
+  - it: should fail on unknown keys in podOptions hostAliases and tolerations
+    set:
+      podOptions:
+        hostAliases:
+          - unknownKey: value
+        tolerations:
+          - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/podOptions/hostAliases/0': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/podOptions/tolerations/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in podOptions topologySpreadConstraints and its label selector expressions
+    set:
+      podOptions:
+        topologySpreadConstraints:
+          - unknownKey: value
+            labelSelector:
+              matchExpressions:
+                - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/podOptions/topologySpreadConstraints/0': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/podOptions/topologySpreadConstraints/0/labelSelector/matchExpressions/0': additional properties 'unknownKey' not allowed"

@@ -1,0 +1,137 @@
+suite: root fallbackDefaults, defaultSpread, chartContext, notes and diagnosticMode schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render with root fallbackDefaults and defaultSpread set
+    set:
+      fallbackDefaults: {}
+      defaultSpread: true
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - isKind:
+          of: Service
+        documentIndex: 0
+
+  - it: should render with chartContext keys set
+    set:
+      chartContext:
+        appUrl: https://app.example.com/
+        podCIDR: 172.16.0.0/16
+        svcCIDR: 172.17.0.0/16
+        internalUrls:
+          - my-service.test-release-namespace.svc.cluster.local:12345
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - isKind:
+          of: Service
+        documentIndex: 0
+
+  - it: should fail on unknown keys in chartContext
+    set:
+      chartContext:
+        unknown: value
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/chartContext': (additional properties|additionalProperties)"
+
+  - it: should render with notes keys set
+    set:
+      notes:
+        header: my header
+        custom: my custom
+        footer: my footer
+        warnings:
+          - my warning
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - isKind:
+          of: Service
+        documentIndex: 0
+
+  - it: should fail on unknown keys in notes
+    set:
+      notes:
+        unknown: value
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/notes': (additional properties|additionalProperties)"
+
+  - it: should render with diagnosticMode enabled as a string
+    set:
+      diagnosticMode:
+        enabled: "true"
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - isKind:
+          of: Service
+        documentIndex: 0
+
+  - it: should fail on unknown keys in diagnosticMode
+    set:
+      diagnosticMode:
+        unknown: value
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/diagnosticMode': (additional properties|additionalProperties)"

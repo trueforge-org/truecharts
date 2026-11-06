@@ -5,7 +5,7 @@ title: Image Pull Secret
 :::note
 
 - Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/imagepullsecret#full-examples) section for complete examples.
+- See the [Full Examples](/truecharts-common/imagePullSecret#full-examples) section for complete examples.
 
 :::
 
@@ -13,355 +13,272 @@ title: Image Pull Secret
 
 - `.Values.imagePullSecret`
 
-## Naming scheme
-
-- `$FullName-$ImagePullSecretName` (release-name-chart-name-imagePullSecretName)
-
-:::tip
-
-- Replace references to `$name` with the actual name you want to use.
-
-:::
-
----
-
-## Target Selector
-
-- `targetSelectAll` (bool): Whether to assign the secret to all pods or not. `targetSelector` is ignored in this case
-- `targetSelector` (list): Define the pod(s) to assign the secret
-- `targetSelector` (empty): Assign the secret to the primary pod
-
 ---
 
 ## `imagePullSecret`
 
-Define image pull secrets
+Image pull secrets, keyed by name, for pulling images from a private registry.
 
-|            |                   |
-| ---------- | ----------------- |
-| Key        | `imagePullSecret` |
-| Type       | `map`             |
-| Required   | ❌                 |
-| Helm `tpl` | ❌                 |
-| Default    | `{}`              |
-
-Example
-
-```yaml
-imagePullSecret: {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `imagePullSecret` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-### `$name`
+## `$name`
 
-Define image pull secret
+An image pull secret.
 
-|            |                         |
-| ---------- | ----------------------- |
-| Key        | `imagePullSecret.$name` |
-| Type       | `map`                   |
-| Required   | ✅                       |
-| Helm `tpl` | ❌                       |
-| Default    | `{}`                    |
-
-Example
-
-```yaml
-imagePullSecret:
-  pull-secret-name: {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `imagePullSecret.$name` |
+| Type | `map` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-#### `enabled`
+## `$name.data`
 
-Enables or Disables the image pull secret
+Registry credentials to store in the Secret. Not used when `existingSecret` is set.
 
-|            |                                 |
-| ---------- | ------------------------------- |
-| Key        | `imagePullSecret.$name.enabled` |
-| Type       | `bool`                          |
-| Required   | ✅                               |
-| Helm `tpl` | ✅                               |
-| Default    | `false`                         |
-
-Example
-
-```yaml
-imagePullSecret:
-  pull-secret-name:
-    enabled: true
-```
+| Field | Value |
+| --- | --- |
+| Key | `imagePullSecret.$name.data` |
+| Type | `map` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-#### `existingSecret`
+## `$name.data.email`
 
-Define the existing secret name
+Email address for the registry account.
 
-:::note
-
-If this is defined, only the following keys are used:
-
-- `enabled`
-- `targetSelectAll`
-- `targetSelector`
-
-:::
-
-|            |                                        |
-| ---------- | -------------------------------------- |
-| Key        | `imagePullSecret.$name.existingSecret` |
-| Type       | `string`                               |
-| Required   | ❌                                      |
-| Helm `tpl` | ❌                                      |
-| Default    | -                                      |
+| Field | Value |
+| --- | --- |
+| Key | `imagePullSecret.$name.data.email` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Length | 1 to … |
 
 Example
 
 ```yaml
 imagePullSecret:
-  pull-secret-name:
-    enabled: true
-    existingSecret: some-existing-secret
+  example:
+    data:
+      email: user@example.com
 ```
 
 ---
 
-#### `namespace`
+## `$name.data.registry`
 
-Define the namespace for this object
+Registry host the credentials are for.
 
-|            |                                   |
-| ---------- | --------------------------------- |
-| Key        | `imagePullSecret.$name.namespace` |
-| Type       | `string`                          |
-| Required   | ❌                                 |
-| Helm `tpl` | ✅ (On value only)                 |
-| Default    | `""`                              |
+| Field | Value |
+| --- | --- |
+| Key | `imagePullSecret.$name.data.registry` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Length | 1 to … |
 
 Example
 
 ```yaml
 imagePullSecret:
-  pull-secret-name:
-    namespace: some-namespace
+  example:
+    data:
+      registry: ghcr.io
 ```
 
 ---
 
-#### `labels`
+## `$name.data.username`
+
+Username for the registry.
+
+| Field | Value |
+| --- | --- |
+| Key | `imagePullSecret.$name.data.username` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Length | 1 to … |
+
+---
+
+## `$name.data.password`
+
+Password or token for the registry.
+
+| Field | Value |
+| --- | --- |
+| Key | `imagePullSecret.$name.data.password` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Length | 1 to … |
+
+---
+
+## `$name.enabled`
+
+Create this image pull secret when true. Accepts a Helm `tpl` string that renders to `true` or `false`.
+
+| Field | Value |
+| --- | --- |
+| Key | `imagePullSecret.$name.enabled` |
+| Type | `bool` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | `false` |
+
+---
+
+## `$name.existingSecret`
+
+Name of an existing Secret to use instead of creating one. When set, only `enabled`, `targetSelectAll` and `targetSelector` are used.
+
+| Field | Value |
+| --- | --- |
+| Key | `imagePullSecret.$name.existingSecret` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.namespace`
+
+Namespace to create this object in. Overrides the chart-wide `namespace` and `global.namespace`.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `imagePullSecret.$name.namespace` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `""` |
+
+---
+
+## `$name.labels`
 
 Additional labels for image pull secret
 
-|            |                                |
-| ---------- | ------------------------------ |
-| Key        | `imagePullSecret.$name.labels` |
-| Type       | `map`                          |
-| Required   | ❌                              |
-| Helm `tpl` | ✅ (On value only)              |
-| Default    | `{}`                           |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
-Example
-
-```yaml
-imagePullSecret:
-  pull-secret-name:
-    labels:
-      key: value
-```
+| Field | Value |
+| --- | --- |
+| Key | `imagePullSecret.$name.labels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
 
 ---
 
-#### `annotations`
+## `$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `imagePullSecret.$name.annotationsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `imagePullSecret.$name.labelsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.annotations`
 
 Additional annotations for image pull secret
 
-|            |                                     |
-| ---------- | ----------------------------------- |
-| Key        | `imagePullSecret.$name.annotations` |
-| Type       | `map`                               |
-| Required   | ❌                                   |
-| Helm `tpl` | ✅ (On value only)                   |
-| Default    | `{}`                                |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
-Example
-
-```yaml
-imagePullSecret:
-  pull-secret-name:
-    annotations:
-      key: value
-```
+| Field | Value |
+| --- | --- |
+| Key | `imagePullSecret.$name.annotations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
 
 ---
 
-#### `targetSelectAll`
+## `$name.targetSelectAll`
 
-Whether to assign the secret to all pods or not
+Add the pull secret to all pods.
 
-|            |                                         |
-| ---------- | --------------------------------------- |
-| Key        | `imagePullSecret.$name.targetSelectAll` |
-| Type       | `bool`                                  |
-| Required   | ❌                                       |
-| Helm `tpl` | ❌                                       |
-| Default    | unset                                   |
-
-Example
-
-```yaml
-imagePullSecret:
-  pull-secret-name:
-    targetSelectAll: true
-```
+| Field | Value |
+| --- | --- |
+| Key | `imagePullSecret.$name.targetSelectAll` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-#### `targetSelector`
+## `$name.targetSelector`
 
-Define the pod(s) to assign the secret
+Names of the workloads to add the pull secret to.
 
-|            |                                        |
-| ---------- | -------------------------------------- |
-| Key        | `imagePullSecret.$name.targetSelector` |
-| Type       | `list` of `string`                     |
-| Required   | ❌                                      |
-| Helm `tpl` | ❌                                      |
-| Default    | `[]`                                   |
-
-Example
-
-```yaml
-imagePullSecret:
-  pull-secret-name:
-    targetSelector:
-      - workload-name1
-      - workload-name2
-```
-
----
-
-#### `data`
-
-Define the data of the image pull secret
-
-|            |                              |
-| ---------- | ---------------------------- |
-| Key        | `imagePullSecret.$name.data` |
-| Type       | `map`                        |
-| Required   | ✅                            |
-| Helm `tpl` | ❌                            |
-| Default    | `{}`                         |
-
-Example
-
-```yaml
-imagePullSecret:
-  pull-secret-name:
-    data: {}
-```
-
----
-
-##### `data.registry`
-
-Define the registry of the image pull secret
-
-|            |                                       |
-| ---------- | ------------------------------------- |
-| Key        | `imagePullSecret.$name.data.registry` |
-| Type       | `string`                              |
-| Required   | ✅                                     |
-| Helm `tpl` | ✅                                     |
-| Default    | `""`                                  |
-
-Example
-
-```yaml
-imagePullSecret:
-  pull-secret-name:
-    data:
-      registry: quay.io
-```
-
----
-
-##### `data.username`
-
-Define the username of the image pull secret
-
-|            |                                       |
-| ---------- | ------------------------------------- |
-| Key        | `imagePullSecret.$name.data.username` |
-| Type       | `string`                              |
-| Required   | ✅                                     |
-| Helm `tpl` | ✅                                     |
-| Default    | `""`                                  |
-
-Example
-
-```yaml
-imagePullSecret:
-  pull-secret-name:
-    data:
-      username: my_user
-```
-
----
-
-##### `data.password`
-
-Define the password of the image pull secret
-
-|            |                                       |
-| ---------- | ------------------------------------- |
-| Key        | `imagePullSecret.$name.data.password` |
-| Type       | `string`                              |
-| Required   | ✅                                     |
-| Helm `tpl` | ✅                                     |
-| Default    | `""`                                  |
-
-Example
-
-```yaml
-imagePullSecret:
-  pull-secret-name:
-    data:
-      password: my_pass
-```
-
----
-
-##### `data.email`
-
-Define the email of the image pull secret
-
-|            |                                    |
-| ---------- | ---------------------------------- |
-| Key        | `imagePullSecret.$name.data.email` |
-| Type       | `string`                           |
-| Required   | ✅                                  |
-| Helm `tpl` | ✅                                  |
-| Default    | `""`                               |
-
-Example
-
-```yaml
-imagePullSecret:
-  pull-secret-name:
-    data:
-      email: my_email@example.com
-```
+| Field | Value |
+| --- | --- |
+| Key | `imagePullSecret.$name.targetSelector` |
+| Type | `list of string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `[]` |
 
 ---
 
 ## Full Examples
 
+### Credentials in the values
+
+Create a pull secret and attach it to all pods:
+
 ```yaml
 imagePullSecret:
-
   pull-secret-name:
     enabled: true
     namespace: some-namespace
@@ -371,22 +288,40 @@ imagePullSecret:
     annotations:
       key: value
       keytpl: "{{ .Values.some.value }}"
-      data:
-        registry: quay.io
-        username: my_user
-        password: my_pass
-        email: my_mail@example.com
-      targetSelectAll: true
+    data:
+      registry: quay.io
+      username: my_user
+      password: my_pass
+      email: my_mail@example.com
+    targetSelectAll: true
+```
 
+### Only some workloads, with Helm tpl
+
+`targetSelector` attaches the secret to the listed workloads only, and the credentials can be read from other values:
+
+```yaml
+imagePullSecret:
   other-pull-secret-name:
     enabled: true
-    namespace: some-namespace
-      data:
-        registry: "{{ .Values.my_registry }}"
-        username: "{{ .Values.my_user }}"
-        password: "{{ .Values.my_pass }}"
-        email: "{{ .Values.my_mail }}"
-      targetSelector:
-        - workload-name1
-        - workload-name2
+    data:
+      registry: "{{ .Values.my_registry }}"
+      username: "{{ .Values.my_user }}"
+      password: "{{ .Values.my_pass }}"
+      email: "{{ .Values.my_mail }}"
+    targetSelector:
+      - workload-name1
+      - workload-name2
+```
+
+### Existing secret
+
+With `existingSecret`, no secret is created. Only `enabled`, `targetSelectAll` and `targetSelector` are used:
+
+```yaml
+imagePullSecret:
+  existing-pull-secret:
+    enabled: true
+    existingSecret: my-registry-secret
+    targetSelectAll: true
 ```

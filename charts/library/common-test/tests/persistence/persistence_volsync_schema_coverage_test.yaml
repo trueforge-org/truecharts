@@ -1,0 +1,152 @@
+suite: persistence volsync schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render volsync source options in persistence volsync src
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          mountPath: /backedup
+          volsync:
+            - name: mybackup
+              type: restic
+              credentials: mys3
+              copyMethod: Direct
+              cleanupTempPVC: true
+              cleanupCachePVC: true
+              dest:
+                enabled: false
+              src:
+                enabled: "true"
+                trigger:
+                  schedule: "0 1 * * *"
+                retain:
+                  hourly: 1
+                  daily: 2
+                  weekly: 3
+                  monthly: 4
+                  yearly: 5
+                pruneIntervalDays: 7
+                accessModes:
+                  - ReadWriteOnce
+                storageClassName: some-class
+                volumeSnapshotClassName: some-snapshot-class
+                cacheCapacity: 5Gi
+                cacheStorageClassName: some-cache-class
+                cacheAccessModes:
+                  - ReadWriteOnce
+                moverSecurityContext:
+                  fsGroup: 1000
+                  runAsGroup: 1000
+                  runAsUser: 1000
+      credentials:
+        mys3:
+          type: s3
+          url: http://some-url
+          bucket: some-bucket
+          encrKey: some-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ReplicationSource
+        isKind:
+          of: ReplicationSource
+      - documentSelector:
+          path: kind
+          value: ReplicationSource
+        isSubset:
+          path: spec.restic
+          content:
+            copyMethod: Direct
+            pruneIntervalDays: 7
+            cacheCapacity: 5Gi
+            cacheStorageClassName: some-cache-class
+
+  - it: should render volsync copyMethod Clone and Snapshot in persistence volsync
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          mountPath: /backedup
+          volsync:
+            - name: mybackup
+              type: restic
+              credentials: mys3
+              copyMethod: Clone
+              dest:
+                enabled: false
+              src:
+                enabled: true
+            - name: mybackup2
+              type: restic
+              credentials: mys3
+              copyMethod: Snapshot
+              dest:
+                enabled: false
+              src:
+                enabled: true
+      credentials:
+        mys3:
+          type: s3
+          url: http://some-url
+          bucket: some-bucket
+          encrKey: some-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-my-volume-mybackup2
+        isKind:
+          of: ReplicationSource
+
+  - it: should render volsync destination options in persistence volsync dest
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          mountPath: /backedup
+          volsync:
+            - name: mybackup
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: "true"
+                capacity: 10Gi
+                accessModes:
+                  - ReadWriteOnce
+                storageClassName: some-class
+                volumeSnapshotClassName: some-snapshot-class
+                cacheCapacity: 5Gi
+                cacheStorageClassName: some-cache-class
+                cacheAccessModes:
+                  - ReadWriteOnce
+                moverSecurityContext:
+                  fsGroup: 1000
+                  runAsGroup: 1000
+                  runAsUser: 1000
+              src:
+                enabled: false
+      credentials:
+        mys3:
+          type: s3
+          url: http://some-url
+          bucket: some-bucket
+          encrKey: some-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ReplicationDestination
+        isKind:
+          of: ReplicationDestination

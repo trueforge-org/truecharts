@@ -81,7 +81,7 @@ tests:
             invalid: invalid
     asserts:
       - failedTemplate:
-          errorMessage: Volume Snapshot - Expected exactly one of the valid source types [volumeSnapshotContentName, persistentVolumeClaimName]. Found [0]
+          errorPattern: 'at ''/volumeSnapshots/example1/source'': additional properties ''invalid'' not allowed'
 
   - it: should fail with more than one valid source
     set:
@@ -98,8 +98,8 @@ tests:
   - it: should fail with empty enabled
     set:
       volumeSnapshots:
-        - name: example1
+        example1:
           enabled:
     asserts:
       - failedTemplate:
-          errorMessage: Volume Snapshot - Expected the defined key [enabled] in [volumeSnapshots.0] to not be empty
+          errorPattern: 'at ''/volumeSnapshots/example1/enabled'': got null, want boolean or string'

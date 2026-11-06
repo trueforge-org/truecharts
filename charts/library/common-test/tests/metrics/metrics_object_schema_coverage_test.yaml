@@ -1,0 +1,87 @@
+suite: metrics object schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render a servicemonitor with the object level options
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      metrics:
+        my-metrics:
+          enabled: true
+          primary: true
+          type: servicemonitor
+          nameOverride: extra
+          targetSelector: my-service
+          endpoints:
+            - port: main
+    asserts:
+      - documentSelector: &sm
+          path: kind
+          value: ServiceMonitor
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-extra
+      - documentSelector: *sm
+        isAPIVersion:
+          of: monitoring.coreos.com/v1
+
+  - it: should render a podmonitor
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+      metrics:
+        my-metrics:
+          enabled: true
+          type: podmonitor
+          targetSelector: my-workload
+          endpoints:
+            - port: main
+    asserts:
+      - documentSelector:
+          path: kind
+          value: PodMonitor
+        isAPIVersion:
+          of: monitoring.coreos.com/v1
+
+  - it: should fail on unknown keys in a metrics object
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics': .*unknownKey"
+
+  - it: should fail on an invalid type and wrong value types in a metrics object
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: invalid
+          primary: notabool
+          nameOverride: [a]
+          targetSelector: [a]
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics/type'"

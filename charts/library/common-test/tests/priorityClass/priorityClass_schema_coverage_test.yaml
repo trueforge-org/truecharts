@@ -1,0 +1,36 @@
+suite: priorityClass schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render priority class with string typed enabled and Never preemption policy, namespace and provisioner
+    set:
+      priorityClass:
+        my-priority:
+          enabled: "true"
+          namespace: my-namespace
+          provisioner: some.provisioner.io
+          preemptionPolicy: Never
+        my-priority2:
+          enabled: true
+          preemptionPolicy: PreemptLowerPriority
+    asserts:
+      - isKind:
+          of: PriorityClass
+        documentIndex: 0
+      - equal:
+          path: preemptionPolicy
+          value: Never
+        documentIndex: 0
+
+  - it: should fail on unknown keys in priority class
+    set:
+      priorityClass:
+        my-priority:
+          enabled: true
+          unknown: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/priorityClass/my-priority': (additional properties|additionalProperties)"

@@ -1,0 +1,35 @@
+suite: root dependency keys schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render with root dependency keys set to disabled
+    set:
+      clickhouse:
+        enabled: false
+      dependencies:
+        my-dependency:
+          enabled: false
+      mariadb:
+        enabled: false
+      mongodb:
+        enabled: false
+      redis:
+        enabled: false
+      solr:
+        enabled: false
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - isKind:
+          of: Service
+        documentIndex: 0

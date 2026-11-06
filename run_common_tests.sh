@@ -1,7 +1,8 @@
 #!/bin/bash
 # Runs the common library tests the same way CI does (.github/workflows/common-tests.yaml):
 #   1. helm-unittest suites of charts/library/common-test
-#   2. common JSON schema validation and coverage check (only when the schema tooling exists)
+#   2. common JSON schema validation and coverage checks, including the unittest coverage of the schema
+#      (only when the schema tooling exists)
 #
 # Missing tools are installed automatically, always the latest release:
 #   - Helm:          https://github.com/helm/helm (official get-helm-4 script)
@@ -18,9 +19,11 @@ cd "$(dirname "$0")" || exit 1
 
 common_schema_test_script="charts/library/common/test_schema.py"
 common_coverage_script="charts/library/common/check_complete_values_schema_coverage.py"
+common_unittest_coverage_script="charts/library/common/check_unittest_schema_coverage.py"
 helm_install_script="https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4"
 helm_unittest_repo="https://github.com/helm-unittest/helm-unittest"
 scratch_dir=""
+
 
 function cleanup {
   if [ -n "$scratch_dir" ] && [ -d "$scratch_dir" ]; then
@@ -85,19 +88,23 @@ trap cleanup EXIT
 trap 'exit 130' INT TERM
 
 # The unit tests run in a scratch copy, so no build artifacts or snapshots end up in the repository.
-# The "$id" of values.schema.json holds the CI checkout path, and its "$ref"s resolve relative to it.
-# The copy points it to itself, the file in the repository must keep the CI path.
 scratch_dir="$(mktemp -d)" || fail "Failed to create a scratch directory"
 cp -R charts/library "$scratch_dir/" || fail "Failed to copy charts/library"
 common_test_path="$scratch_dir/library/common-test"
-scratch_schema="$scratch_dir/library/common/values.schema.json"
 rm -rf "$common_test_path/charts" "$common_test_path/Chart.lock"
-if [ -f "$scratch_schema" ]; then
-  escaped_id="$(printf '%s' "file://$scratch_schema" | sed 's/[\\&#]/\\&/g')"
-  if ! sed -E "s#(\"\\\$id\"[[:space:]]*:[[:space:]]*\")[^\"]*\"#\1${escaped_id}\"#" "$scratch_schema" > "$scratch_schema.tmp" ||
-    ! mv "$scratch_schema.tmp" "$scratch_schema"; then
-    fail "Failed to point the \$id of values.schema.json to the scratch copy"
-  fi
+
+if [ "${SKIP_SCHEMA_TESTS:-}" = "1" ]; then
+  echo "⚠️ Schema checks skipped (SKIP_SCHEMA_TESTS=1), CI still runs them"
+else
+  ensure_python_deps
+
+  echo "📦 Checking the bundled schema..."
+  python3 charts/library/common/generate_bundled_schema.py --check || fail "values.schema.json is not up to date"
+  python3 charts/library/common/generate_docs.py --check || fail "The docs are not up to date"
+  python3 charts/library/common/generate_template_keys_structure.py --check || fail "template-keys-structure.yaml is not up to date, run generate_template_keys_structure.py"
+  # The values of charts change without a change in common, so this is not an error, same as in CI
+  python3 charts/library/common/generate_complete_values_structure.py --check ||
+    echo "⚠️ complete-values-structure.yaml is not up to date, run generate_complete_values_structure.py"
 fi
 
 echo "🔨 Building common..."
@@ -110,11 +117,7 @@ result=$?
 [ "$result" -eq 0 ] || fail "Unit tests failed" "$result"
 
 if [ -f "$common_schema_test_script" ]; then
-  if [ "${SKIP_SCHEMA_TESTS:-}" = "1" ]; then
-    echo "⚠️ Schema checks skipped (SKIP_SCHEMA_TESTS=1), CI still runs them"
-  else
-    ensure_python_deps
-
+  if [ "${SKIP_SCHEMA_TESTS:-}" != "1" ]; then
     echo "🧪 Running common schema validation..."
     schema_args=()
     if [ -n "${SCHEMA_MAX_FAILURES:-}" ]; then
@@ -128,7 +131,14 @@ if [ -f "$common_schema_test_script" ]; then
     python3 "$common_coverage_script"
     result=$?
     [ "$result" -eq 0 ] || fail "Schema coverage check failed" "$result"
+
+    echo "📊 Running unittest schema coverage check..."
+    python3 "$common_unittest_coverage_script"
+    result=$?
+    [ "$result" -eq 0 ] || fail "Unittest schema coverage check failed" "$result"
   fi
 fi
+
+cleanup
 
 echo "✅ Common tests passed"

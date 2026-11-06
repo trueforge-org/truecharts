@@ -1,0 +1,195 @@
+suite: persistence pvc schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render pvc basic settings in persistence pvc
+    set:
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          accessMode: ReadWriteOnce
+          name: some-name
+          shortName: some-short-name
+          domain: some-domain
+          copyMethod: Clone
+        my-volume2:
+          enabled: true
+          type: pvc
+          copyMethod: Direct
+        my-volume3:
+          enabled: true
+          type: pvc
+          copyMethod: Snapshot
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-my-volume2
+        isKind:
+          of: PersistentVolumeClaim
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-my-volume3
+        isKind:
+          of: PersistentVolumeClaim
+
+  - it: should render pvc dataSource in persistence pvc
+    set:
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          dataSource:
+            name: some-snapshot
+            kind: VolumeSnapshot
+    asserts:
+      - isKind:
+          of: PersistentVolumeClaim
+      - isSubset:
+          path: spec.dataSource
+          content:
+            name: some-snapshot
+            kind: VolumeSnapshot
+
+  - it: should render pvc volumeSnapshots labels annotations and enabled as string in persistence pvc
+    set:
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          volumeSnapshots:
+            - name: example1
+              enabled: "true"
+              volumeSnapshotClassName: some-name
+              labels:
+                label1: value1
+              annotations:
+                annotation1: value1
+            - name: example2
+              enabled: true
+              volumeSnapshotClassName: some-name
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-my-volume1-example1
+        isKind:
+          of: VolumeSnapshot
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-my-volume1-example1
+        equal:
+          path: metadata.labels.label1
+          value: value1
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-my-volume1-example1
+        equal:
+          path: metadata.annotations.annotation1
+          value: value1
+
+  - it: should render pvc static smb mode settings in persistence pvc
+    set:
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          domain: some-domain
+          static:
+            mode: smb
+            server: my-server
+            share: my-share
+            username: my-user
+            password: my-pass
+            user: some-user
+            domain: some-domain
+            provisioner: some.provisioner.io
+            driver: some.driver.io
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Secret
+        equal:
+          path: stringData.domain
+          value: some-domain
+      - documentSelector:
+          path: kind
+          value: PersistentVolume
+        equal:
+          path: spec.csi.driver
+          value: smb.csi.k8s.io
+
+  - it: should render nfs pv mountOptions in persistence pvc
+    set:
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          static:
+            mode: nfs
+            share: /my-path
+            server: my-server
+          mountOptions:
+            - key: hard
+            - key: nfsvers
+              value: 4.1
+            - key: timeo
+              value: "600"
+    asserts:
+      - documentSelector:
+          path: kind
+          value: PersistentVolume
+        isKind:
+          of: PersistentVolume
+
+  - it: should render autoPermissions in persistence emptyDir
+    set:
+      persistence:
+        my-volume1:
+          enabled: true
+          type: emptyDir
+          mountPath: /mnt/data
+          targetSelectAll: true
+          autoPermissions:
+            enabled: true
+            chown: true
+            chmod: "775"
+            recursive: true
+            user: 1000
+            group: 1000
+        my-volume2:
+          enabled: true
+          type: emptyDir
+          mountPath: /mnt/data2
+          targetSelectAll: true
+          autoPermissions:
+            enabled: true
+            chmod: 775
+            user: "1000"
+            group: "1000"
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              my-container:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        isKind:
+          of: Deployment

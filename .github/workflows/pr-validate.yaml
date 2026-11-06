@@ -3,9 +3,10 @@ name: "Pull Request: Validate"
 on:
   pull_request:
 
+# Per pull request, as branches of different forks can have the same name
 concurrency:
-  group: ${{ github.head_ref }}-pr-validate
-  # cancel-in-progress: true
+  group: pr-validate-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 
 jobs:
   pr-changes:

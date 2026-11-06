@@ -1,0 +1,340 @@
+suite: persistence volsync schema coverage fail test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should fail on unknown keys in persistence volsync item
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          volsync:
+            - name: mybackup
+              type: restic
+              credentials: mys3
+              unknownKey: value
+              src:
+                enabled: true
+              dest:
+                enabled: false
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/volsync/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on missing required keys in persistence volsync item
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          volsync:
+            - copyMethod: Direct
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/volsync/0': missing properties 'name', 'type', 'credentials', 'src', 'dest'"
+
+  - it: should fail on invalid type and copyMethod in persistence volsync item
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          volsync:
+            - name: mybackup
+              type: not-a-type
+              credentials: mys3
+              copyMethod: not-a-method
+              src:
+                enabled: true
+              dest:
+                enabled: false
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/volsync/0/type': value must be 'restic'"
+
+  - it: should fail on missing required keys in persistence volsync src and dest
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          volsync:
+            - name: mybackup
+              type: restic
+              credentials: mys3
+              src: {}
+              dest: {}
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/volsync/0/src': missing property 'enabled'"
+
+  - it: should fail on unknown keys in persistence volsync src
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          volsync:
+            - name: mybackup
+              type: restic
+              credentials: mys3
+              src:
+                enabled: true
+                unknownKey: value
+              dest:
+                enabled: false
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/volsync/0/src': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on a wrong type in persistence volsync src access modes and cache settings
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          volsync:
+            - name: mybackup
+              type: restic
+              credentials: mys3
+              src:
+                enabled: true
+                accessModes: 1
+                cacheAccessModes: 1
+                cacheCapacity: 1
+                cacheStorageClassName: 1
+              dest:
+                enabled: false
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/volsync/0/src/accessModes': got number, want array"
+
+  - it: should fail on a wrong type in persistence volsync src access modes items
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          volsync:
+            - name: mybackup
+              type: restic
+              credentials: mys3
+              src:
+                enabled: true
+                accessModes:
+                  - 1
+                cacheAccessModes:
+                  - 1
+              dest:
+                enabled: false
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/volsync/0/src/accessModes/0': got number, want string"
+
+  - it: should fail on unknown keys in persistence volsync src moverSecurityContext
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          volsync:
+            - name: mybackup
+              type: restic
+              credentials: mys3
+              src:
+                enabled: true
+                moverSecurityContext:
+                  unknownKey: value
+              dest:
+                enabled: false
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/volsync/0/src/moverSecurityContext': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on wrong types in persistence volsync src moverSecurityContext
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          volsync:
+            - name: mybackup
+              type: restic
+              credentials: mys3
+              src:
+                enabled: true
+                moverSecurityContext:
+                  fsGroup: notint
+                  runAsGroup: notint
+                  runAsUser: notint
+              dest:
+                enabled: false
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/volsync/0/src/moverSecurityContext/fsGroup': got string, want integer"
+
+  - it: should fail on unknown keys in persistence volsync dest
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          volsync:
+            - name: mybackup
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: true
+                unknownKey: value
+              src:
+                enabled: false
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/volsync/0/dest': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on a wrong type in persistence volsync dest access modes and cache settings
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          volsync:
+            - name: mybackup
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: true
+                accessModes: 1
+                cacheAccessModes: 1
+                cacheCapacity: 1
+                cacheStorageClassName: 1
+              src:
+                enabled: false
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/volsync/0/dest/accessModes': got number, want array"
+
+  - it: should fail on a wrong type in persistence volsync dest access modes items
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          volsync:
+            - name: mybackup
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: true
+                accessModes:
+                  - 1
+                cacheAccessModes:
+                  - 1
+              src:
+                enabled: false
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/volsync/0/dest/accessModes/0': got number, want string"
+
+  - it: should fail on unknown keys in persistence volsync dest moverSecurityContext
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          volsync:
+            - name: mybackup
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: true
+                moverSecurityContext:
+                  unknownKey: value
+              src:
+                enabled: false
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/volsync/0/dest/moverSecurityContext': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on wrong types in persistence volsync dest moverSecurityContext
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          volsync:
+            - name: mybackup
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: true
+                moverSecurityContext:
+                  fsGroup: notint
+                  runAsGroup: notint
+                  runAsUser: notint
+              src:
+                enabled: false
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/volsync/0/dest/moverSecurityContext/fsGroup': got string, want integer"
+
+  - it: should fail on unknown keys in persistence volsync src retain
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          volsync:
+            - name: mybackup
+              type: restic
+              credentials: mys3
+              src:
+                enabled: true
+                retain:
+                  unknownKey: value
+              dest:
+                enabled: false
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/volsync/0/src/retain': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in persistence volsync src trigger
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          volsync:
+            - name: mybackup
+              type: restic
+              credentials: mys3
+              src:
+                enabled: true
+                trigger:
+                  unknownKey: value
+              dest:
+                enabled: false
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/volsync/0/src/trigger': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on a wrong type in persistence volsync dest and src enabled
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: pvc
+          volsync:
+            - name: mybackup
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: 1
+              src:
+                enabled: false
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/volsync/0/dest/enabled': got number, want boolean or string"

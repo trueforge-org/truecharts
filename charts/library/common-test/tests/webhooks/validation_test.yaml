@@ -62,7 +62,7 @@ tests:
           labels: "not a dict"
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [labels] to be a dictionary, but got [string]
+          errorPattern: 'at ''/webhook/my-webhook/labels'': got string, want object'
 
   - it: should fail with annotations not a dict
     set:
@@ -73,7 +73,7 @@ tests:
           annotations: "not a dict"
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [annotations] to be a dictionary, but got [string]
+          errorPattern: 'at ''/webhook/my-webhook/annotations'': got string, want object'
 
   - it: should fail with invalid type
     set:
@@ -83,7 +83,7 @@ tests:
           type: "not valid"
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [type] in [webhook.my-webhook] to be one of [validating, mutating], but got [not valid]
+          errorPattern: 'at ''/webhook/my-webhook/type'': value must be one of ''mutating'', ''validating'''
 
   - it: should fail without type
     set:
@@ -93,7 +93,7 @@ tests:
           type:
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [type] in [webhook.my-webhook] to not be empty
+          errorPattern: 'at ''/webhook/my-webhook/type'': got null, want string'
 
   - it: should fail with empty webhooks
     set:
@@ -115,7 +115,7 @@ tests:
           webhooks: "not a list"
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [webhooks] in [webhook.my-webhook] to be a list, but got [string]
+          errorPattern: 'at ''/webhook/my-webhook/webhooks'': got string, want array'
 
   - it: should fail with empty enabled
     set:
@@ -124,7 +124,7 @@ tests:
           enabled:
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected the defined key [enabled] in [webhook.my-webhook] to not be empty
+          errorPattern: 'at ''/webhook/my-webhook/enabled'': got null, want boolean or string'
 
   - it: should fail without name in webhook
     set:
@@ -139,7 +139,7 @@ tests:
               rules: *rules
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [name] in [webhook.my-webhook] to not be empty
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0'': missing property ''name'''
 
   - it: should fail with invalid failurePolicy
     set:
@@ -156,7 +156,7 @@ tests:
               rules: *rules
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [failurePolicy] in [webhook.my-webhook.webhook1] to be one of [Ignore, Fail], but got [not valid]
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0/failurePolicy'': value must be one of ''Ignore'', ''Fail'''
 
   - it: should fail with invalid matchPolicy
     set:
@@ -173,7 +173,7 @@ tests:
               rules: *rules
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [matchPolicy] in [webhook.my-webhook.webhook1] to be one of [Exact, Equivalent], but got [not valid]
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0/matchPolicy'': value must be one of ''Exact'', ''Equivalent'''
 
   - it: should fail with defined reinvocationPolicy in validating webhook
     set:
@@ -207,7 +207,7 @@ tests:
               rules: *rules
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [reinvocationPolicy] in [webhook.my-webhook.webhook1] to be one of [Never, IfNeeded], but got [not valid]
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0/reinvocationPolicy'': value must be one of ''Never'', ''IfNeeded'''
 
   - it: should fail with invalid sideEffects
     set:
@@ -224,7 +224,7 @@ tests:
               rules: *rules
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [sideEffects] in [webhook.my-webhook.webhook1] to be one of [None, NoneOnDryRun], but got [not valid]
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0/sideEffects'': value must be one of ''None'', ''NoneOnDryRun'''
 
   - it: should fail with empty timeoutSeconds
     set:
@@ -241,7 +241,7 @@ tests:
               rules: *rules
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected the defined key [timeoutSeconds] in [webhook.my-webhook.webhook1] to not be empty
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0/timeoutSeconds'': got null, want integer'
 
   - it: should fail with timeoutSeconds not integer
     set:
@@ -258,7 +258,7 @@ tests:
               rules: *rules
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [timeoutSeconds] in [webhook.my-webhook.webhook1] to be an integer, but got [string]
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0/timeoutSeconds'': got string, want integer'
 
   - it: should fail with timeoutSeconds less that 1
     set:
@@ -307,7 +307,7 @@ tests:
                 - v1
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [clientConfig] in [webhook.my-webhook.webhook1] to not be empty
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0'': missing property ''clientConfig'''
 
   - it: should fail with both service and url defined
     set:
@@ -327,7 +327,7 @@ tests:
               rules: *rules
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected either [url] or [service] in [webhook.my-webhook.webhook1] to be defined, but got both
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0/clientConfig'': ''not'' failed'
 
   - it: should fail without service name
     set:
@@ -345,7 +345,7 @@ tests:
               rules: *rules
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [service.name] in [webhook.my-webhook.webhook1] to not be empty
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0/clientConfig/service'': missing property ''name'''
 
   - it: should fail without service namespace
     set:
@@ -363,7 +363,7 @@ tests:
               rules: *rules
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [service.namespace] in [webhook.my-webhook.webhook1] to not be empty
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0/clientConfig/service'': missing property ''namespace'''
 
   - it: should fail without rules
     set:
@@ -378,7 +378,7 @@ tests:
               clientConfig: *clientConfig
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [rules] in [webhook.my-webhook.webhook1] to not be empty
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0'': missing property ''rules'''
 
   - it: should fail with rules not a list
     set:
@@ -394,7 +394,7 @@ tests:
               rules: "not a list"
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [rules] in [webhook.my-webhook.webhook1] to be a list, but got [string]
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0/rules'': got string, want array'
 
   - it: should fail with empty apiGroups in rule
     set:
@@ -414,7 +414,7 @@ tests:
                     - pods
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [apiGroups] in [webhook.my-webhook.webhook1] to not be empty
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0/rules/0'': missing properties ''apiGroups'', ''operations'''
 
   - it: should fail with empty apiVersions in rule
     set:
@@ -434,7 +434,7 @@ tests:
                     - pods
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [apiGroups] in [webhook.my-webhook.webhook1] to not be empty
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0/rules/0'': missing properties ''apiGroups'', ''operations'''
 
   - it: should fail with empty operations in rule
     set:
@@ -456,7 +456,7 @@ tests:
                     - pods
     asserts:
       - failedTemplate:
-          errorMessage: Webhook - Expected [operations] in [webhook.my-webhook.webhook1] to not be empty
+          errorPattern: 'at ''/webhook/my-webhook/webhooks/0/rules/0'': missing property ''operations'''
 
   - it: should fail with invalid scope
     set:

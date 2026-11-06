@@ -70,6 +70,8 @@ spec:
       {{- include "tc.v1.common.lib.storage.smbCSI" (dict "rootCtx" $rootCtx "objectData" $objectData) | trim | nindent 2 -}}
     {{- else if eq "nfs" $objectData.static.mode -}}
       {{- include "tc.v1.common.lib.storage.nfsCSI" (dict "rootCtx" $rootCtx "objectData" $objectData) | trim | nindent 2 -}}
+    {{- else if eq "custom" $objectData.static.mode -}}
+      {{- include "tc.v1.common.lib.storage.customCSI" (dict "rootCtx" $rootCtx "objectData" $objectData) | trim | nindent 2 -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}

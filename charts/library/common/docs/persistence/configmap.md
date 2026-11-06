@@ -1,5 +1,5 @@
 ---
-title: Configmap
+title: ConfigMap
 ---
 
 :::note
@@ -9,182 +9,149 @@ title: Configmap
 
 :::
 
+:::tip
+
+- See all available keys of this object on the [Persistence](/truecharts-common/persistence) page.
+- These options apply only when `type: configmap`.
+
+:::
+
 ## Appears in
 
 - `.Values.persistence.$name`
-
-:::tip
-
-- See available persistence keys [here](/truecharts-common/persistence).
-- This options apply only when `type: configmap`.
-
-:::
 
 ---
 
 ## `objectName`
 
-Define the configmap name.
+Name of the Secret or ConfigMap to mount. Only for `type: secret` and `type: configmap`.
 
-|            |                                |
-| ---------- | ------------------------------ |
-| Key        | `persistence.$name.objectName` |
-| Type       | `string`                       |
-| Required   | ✅                             |
-| Helm `tpl` | ✅                             |
-| Default    | `""`                           |
-
-Example
-
-```yaml
-persistence:
-  configmap-vol:
-    objectName: configmap-name
-```
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.objectName` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Applies to | `configmap`, `secret` |
 
 ---
 
 ## `expandObjectName`
 
-Whether to expand (adding the fullname as prefix) the configmap name.
+Prefix `objectName` with the release fullname. Set to `false` for an object that is not created by this chart. Only for `type: secret` and `type: configmap`.
 
-|            |                                      |
-| ---------- | ------------------------------------ |
-| Key        | `persistence.$name.expandObjectName` |
-| Type       | `bool`                               |
-| Required   | ❌                                   |
-| Helm `tpl` | ✅                                   |
-| Default    | `true`                               |
-
-Example
-
-```yaml
-persistence:
-  configmap-vol:
-    expandObjectName: false
-```
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.expandObjectName` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Applies to | `configmap`, `secret` |
 
 ---
 
 ## `optional`
 
-Whether the configmap should be required or not.
+Allow the pod to start when the Secret or ConfigMap does not exist. Only for `type: secret` and `type: configmap`.
 
-|            |                              |
-| ---------- | ---------------------------- |
-| Key        | `persistence.$name.optional` |
-| Type       | `bool`                       |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
-| Default    | `false`                      |
-
-Example
-
-```yaml
-persistence:
-  configmap-vol:
-    optional: false
-```
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.optional` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Applies to | `configmap`, `secret` |
 
 ---
 
 ## `defaultMode`
 
-Define the defaultMode (must be a string in format of "0777").
+Permission mode of the files in the volume, as a quoted octal string. Only for `type: secret` and `type: configmap`.
 
-|            |                                 |
-| ---------- | ------------------------------- |
-| Key        | `persistence.$name.defaultMode` |
-| Type       | `string`                        |
-| Required   | ❌                              |
-| Helm `tpl` | ✅                              |
-| Default    | `""`                            |
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.defaultMode` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Applies to | `configmap`, `secret` |
 
 Example
 
 ```yaml
 persistence:
-  configmap-vol:
-    defaultMode: "0777"
+  example:
+    defaultMode: '0644'
 ```
 
 ---
 
 ## `items`
 
-Define a list of items for configmap.
+Keys of the Secret or ConfigMap to project, each to its own file. Without items, all keys are mounted.
 
-|            |                           |
-| ---------- | ------------------------- |
-| Key        | `persistence.$name.items` |
-| Type       | `list`                    |
-| Required   | ❌                        |
-| Helm `tpl` | ❌                        |
-| Default    | `[]`                      |
-
-Example
-
-```yaml
-persistence:
-  configmap-vol:
-    items:
-      - key: key1
-        path: path1
-      - key: key2
-        path: path2
-```
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.items` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Applies to | `configmap`, `secret` |
 
 ---
 
-### `items[].key`
+## `items[]`
 
-Define the key of the configmap.
+A key of the Secret or ConfigMap and the file it is mounted as.
 
-|            |                                 |
-| ---------- | ------------------------------- |
-| Key        | `persistence.$name.items[].key` |
-| Type       | `string`                        |
-| Required   | ✅                              |
-| Helm `tpl` | ✅                              |
-| Default    | `""`                            |
-
-Example
-
-```yaml
-persistence:
-  configmap-vol:
-    items:
-      - key: key1
-        path: path1
-```
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.items[]` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `items[].path`
+## `items[].path`
 
-Define the path.
+Relative path of the file the key is mounted as.
 
-|            |                                  |
-| ---------- | -------------------------------- |
-| Key        | `persistence.$name.items[].path` |
-| Type       | `string`                         |
-| Required   | ✅                               |
-| Helm `tpl` | ✅                               |
-| Default    | `""`                             |
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.items[].path` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Applies to | `configmap`, `secret` |
 
-Example
+---
 
-```yaml
-persistence:
-  configmap-vol:
-    items:
-      - key: key1
-        path: path1
-```
+## `items[].key`
+
+Key of the Secret or ConfigMap.
+
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.items[].key` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Applies to | `configmap`, `secret` |
 
 ---
 
 ## Full Examples
+
+### Whole configmap
 
 ```yaml
 persistence:
@@ -192,7 +159,20 @@ persistence:
     enabled: true
     type: configmap
     objectName: configmap-name
-    expandObjectName: false
+    mountPath: /config
+    targetSelectAll: true
+```
+
+### Selected items
+
+```yaml
+persistence:
+  configmap-vol:
+    enabled: true
+    type: configmap
+    # This will be expanded to 'fullname-configmap-name' unless expandObjectName is false
+    objectName: configmap-name
+    expandObjectName: true
     optional: false
     defaultMode: "0777"
     items:
@@ -200,4 +180,26 @@ persistence:
         path: path1
       - key: key2
         path: path2
+    targetSelector:
+      workload-name:
+        container-name:
+          mountPath: /config
+          readOnly: true
+```
+
+### Existing configmap
+
+```yaml
+persistence:
+  configmap-vol:
+    enabled: true
+    type: configmap
+    objectName: configmap-not-created-by-chart
+    expandObjectName: false
+    optional: true
+    targetSelector:
+      workload-name:
+        container-name:
+          mountPath: /etc/app/app.conf
+          subPath: app.conf
 ```

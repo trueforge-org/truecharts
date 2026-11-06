@@ -5,7 +5,14 @@ title: EmptyDir
 :::note
 
 - Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/persistence/emptydir#full-examples) section for complete examples.
+- See the [Full Examples](/truecharts-common/persistence/emptyDir#full-examples) section for complete examples.
+
+:::
+
+:::tip
+
+- See all available keys of this object on the [Persistence](/truecharts-common/persistence) page.
+- These options apply only when `type: emptyDir`.
 
 :::
 
@@ -13,71 +20,70 @@ title: EmptyDir
 
 - `.Values.persistence.$name`
 
-:::tip
-
-- See available persistence keys [here](/truecharts-common/persistence).
-- This options apply only when `type: emptyDir`.
-
-:::
-
 ---
 
 ## `size`
 
-Define the sizeLimit of the emptyDir
+Size limit of the `emptyDir`, as a quantity. Only for `type: emptyDir`.
 
-|            |                          |
-| ---------- | ------------------------ |
-| Key        | `persistence.$name.size` |
-| Type       | `string`                 |
-| Required   | ❌                       |
-| Helm `tpl` | ✅                       |
-| Default    | `""`                     |
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.size` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Applies to | `emptyDir`, `pvc`, `vct` |
 
 Example
 
 ```yaml
 persistence:
-  emptyDir-vol:
-    size: 2Gi
+  example:
+    size: 1Gi
 ```
 
 ---
 
 ## `medium`
 
-Define the medium of emptyDir (Memory, "")
+Medium of the `emptyDir`: `Memory` keeps the data in RAM (tmpfs), an empty string uses the disk of the node. Only for `type: emptyDir`.
 
-|            |                            |
-| ---------- | -------------------------- |
-| Key        | `persistence.$name.medium` |
-| Type       | `string`                   |
-| Required   | ❌                         |
-| Helm `tpl` | ✅                         |
-| Default    | `""`                       |
-
-Valid Values
-
-- `Memory`
-- `""`
-
-Example
-
-```yaml
-persistence:
-  emptyDir-vol:
-    medium: Memory
-```
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.medium` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Applies to | `emptyDir` |
 
 ---
 
 ## Full Examples
 
+### Default medium
+
 ```yaml
 persistence:
-  emptyDir-vol:
+  emptydir-vol:
+    enabled: true
+    type: emptyDir
+    size: 2Gi
+    mountPath: /cache
+```
+
+### In memory
+
+```yaml
+persistence:
+  emptydir-memory:
     enabled: true
     type: emptyDir
     medium: Memory
     size: 2Gi
+    targetSelector:
+      workload-name:
+        container-name:
+          mountPath: /dev/shm
 ```

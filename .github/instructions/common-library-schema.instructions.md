@@ -14,9 +14,11 @@ These rules apply to `charts/library/common/schemas/`, `values.schema.source.jso
 - `values.schema.source.json` is the source. Do not edit `values.schema.json` by hand, it is generated (see below).
 - `values.schema.source.json` (JSON Schema draft-07) is the root. Each top-level key has a `$ref` to its own file in `schemas/`, e.g. `schemas/configmap.json` or `schemas/workload/podSpec/containers/env.json`.
 - `generate_bundled_schema.py` bundles these into a single `values.schema.json`, without a `$id` and with only internal `$ref`s, because Helm only has that one file when it validates a packaged chart. CI fails when the file is not up to date. Run `python3 charts/library/common/generate_bundled_schema.py` after every added, changed or removed key.
-- Helm validates a subchart's schema only against that subchart's own values, not against the values of the chart. So `.github/scripts/add_chart_schema.sh` copies the schema of the `common` version a chart depends on into the chart: on release (`cr.sh`) and while linting (`tc-lint.sh`). These copies are not committed. `common-test` has the same setup: its `values.schema.json` is a symlink to the one of `common`, so every unit test and install test validates the schema.
+- Helm validates a subchart's schema only against that subchart's own values, not against the values of the chart. `common-test` has a `values.schema.json` that is a symlink to the one of `common`, so every unit test and install test validates the schema. Charts under `charts/stable` and `charts/incubator` do not get the schema on release or while linting: `test_schema.py` validates their `values.yaml` against it, and validating the values of users comes later.
+- On release, `.github/workflows/charts-release.yaml` copies the bundled `values.schema.json` to the website repository (`trueforge-org/websites`) as `truecharts/public/schemas/common/<version>.schema.json`, with the version from the `Chart.yaml` of `common`.
 - The source and tooling of `common` are not packaged. They are listed in `templates/helmignore.tpl`, which `forgetool charts genmeta` writes to the `.helmignore` of every chart, so a new file in the root of `common` has to be added there too.
 - Every key in `values.yaml` and every key the templates read must be in the schema. When you add, rename or remove a key, change the schema in the same PR.
+- Only put a key in the schema when `common` itself uses it: a template reads it, or `values.yaml` defines it. Never add a key because a chart in `charts/stable` or `charts/incubator` sets it. A chart value that no common template reads is a mistake in that chart (a dead key, a misspelling, or a key in the wrong place). Fix the chart in a separate PR that targets `master`, move the value to the key that works if it was meant to do something, and keep the key out of the schema. If such a key is already in the schema, remove it once no chart sets it anymore. A chart template or `tpl` value can read a key of its own: put that key in a root-level key of the chart, not under a key of `common`.
 - Validate in the schema what the schema can express (types, enums, required keys without a default) instead of in the templates. Keep template checks for values rendered with `tpl`, checks across keys, and anything the schema can not express.
 
 ## No open objects
@@ -49,16 +51,24 @@ These rules apply to `charts/library/common/schemas/`, `values.schema.source.jso
 - Every schema file must be reachable from `values.schema.source.json`. Do not add files that only exist for the docs.
 - Keys that take a Helm `tpl` string instead of a boolean or number allow both, e.g. `"type": ["boolean", "string"]`.
 - Give every property a `description`, and a `default` that matches `values.yaml`.
-- The docs are built from the schema. They use `description`, `default`, `examples` (or `default` when there are none), `x-helm-tpl` for the Helm `tpl` column (`true`, or a string like `On value only` that is shown next to it), `x-docs-required: true` for the Required column of keys a chart has to set but that common gives a default, and on top-level keys the `x-docs-helmTpl` and `x-docs-defaultRaw` fields. See [`common-library-docs.instructions.md`](common-library-docs.instructions.md).
+- The docs are built from the schema. They use `description`, `default`, `enum`, `pattern`, `minimum`/`maximum`, `minLength`/`maxLength`, `minItems`/`maxItems`, `examples` (the first one is shown as the example of the key), and these custom keywords:
+  - `x-helm-tpl` for the Helm `tpl` column: `true`, or one of `On value only`, `On entries only`, `On keys and values`. A key typed `[boolean, string]` or with a `oneOf` of an enum and the `^\{\{.*\}\}$` pattern is shown as templated.
+  - `x-docs-required: true` for a key that is required but can not be in `required`: it has a default, or it is only required in some cases, for example for one `type`. A key is shown as required in the docs when it is in `required` or has `x-docs-required: true`.
+  - `x-docs-appliesTo: ["<type>"]` on keys that only apply to some values of `type` (workload, persistence, service and middleware types). They get documented on the page of that type.
+  - `x-docs-page` (the docs page of a key or schema file) and `x-docs-primary: true` (the key that documents a shared object). See [`common-library-docs.instructions.md`](common-library-docs.instructions.md).
+
+  Write descriptions as plain sentences that start with a capital and end with a full stop. Link to other docs pages as `/truecharts-common/<page path>` with the exact case, see [`common-library-docs.instructions.md`](common-library-docs.instructions.md). The generator checks the links, and markdownlint rejects `[here](...)` and bare `*`.
 
 ## `required` and existing charts
 
 - The schema of a chart sees its values before the defaults of `common` are merged. So only use `required` for keys without a default in `values.yaml`, like the items of a list. `required` also checks disabled objects. A `required` key with a default rejects any partial override of its parent.
-- A change to the schema can break the values of app charts. Keep the schema accepting all existing chart values unless the change is meant to be breaking. `test_schema.py` checks this, see [Schema checks](#schema-checks).
+- A key that is required, but can not be in `required`, gets `x-docs-required: true`, so the docs show it as required. That is a key with a default, and a key that is only required in some cases, for example for one `type` or when another key is set. Check the second kind in the template.
+- A change to the schema can break the values of app charts. Keep the schema accepting all existing chart values unless the change is meant to be breaking, except for keys that no common template reads, see above: those are fixed in the chart. `test_schema.py` checks this, see [Schema checks](#schema-checks).
 
 ## Schema checks
 
-`./run_common_tests.sh` runs these after the unit tests, the same as the `schema-validation` job in CI. They need Python 3 with PyYAML.
+`./run_common_tests.sh` runs these after the unit tests, the same as the `coverage-validation` job in CI. They need Python 3 with PyYAML.
 
 - `test_schema.py` runs `helm lint` on `common` with every `charts/stable/*/values.yaml` and `common-test/ci/*values.yaml`. That is about 850 files and takes a few minutes, and writes the results to `stable_schema_validation.log`. Set `SCHEMA_MAX_FAILURES=<n>` to stop after `n` failures.
 - `check_complete_values_schema_coverage.py` must report 100% coverage of both structure files. See [`common-library-docs.instructions.md`](common-library-docs.instructions.md) for regenerating them.
+- `check_unittest_schema_coverage.py` must report 100% unittest coverage of the schema, see [Schema coverage by unittests](common-library-tests.instructions.md#schema-coverage-by-unittests).

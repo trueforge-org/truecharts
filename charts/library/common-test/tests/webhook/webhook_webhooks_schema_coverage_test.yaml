@@ -1,0 +1,363 @@
+suite: webhook webhooks schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render webhook webhooks with admissionReviewVersions and timeout in webhook webhooks
+    set:
+      webhook:
+        validating:
+          enabled: true
+          type: validating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1, v1beta1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: [""]
+                  apiVersions: [v1, v1beta1]
+                  operations: [CREATE]
+                  resources: [pods]
+              timeoutSeconds: 5
+        mutating:
+          enabled: true
+          type: mutating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1, v1beta1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: [""]
+                  apiVersions: [v1, v1beta1]
+                  operations: [CREATE]
+                  resources: [pods]
+              timeoutSeconds: 5
+        my-webhook:
+          enabled: true
+          type: mutating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1, v1beta1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: [""]
+                  apiVersions: [v1, v1beta1]
+                  operations: [CREATE]
+                  resources: [pods]
+              timeoutSeconds: 5
+    asserts:
+      - documentIndex: 2
+        isKind:
+          of: ValidatingWebhookConfiguration
+      - documentIndex: 2
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-validating
+      - documentIndex: 0
+        isKind:
+          of: MutatingWebhookConfiguration
+      - documentIndex: 0
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-mutating
+      - documentIndex: 1
+        isKind:
+          of: MutatingWebhookConfiguration
+      - documentIndex: 1
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-my-webhook
+      - documentIndex: 0
+        equal:
+          path: webhooks[0].admissionReviewVersions
+          value: [v1, v1beta1]
+
+  - it: should fail on unknown keys and missing required keys in webhook webhooks
+    set:
+      webhook:
+        validating:
+          enabled: true
+          type: validating
+          webhooks:
+            - unknown: x
+            - timeoutSeconds: 5
+        mutating:
+          enabled: true
+          type: mutating
+          webhooks:
+            - unknown: x
+            - timeoutSeconds: 5
+        my-webhook:
+          enabled: true
+          type: mutating
+          webhooks:
+            - unknown: x
+            - timeoutSeconds: 5
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/webhook/validating/webhooks/0'': '
+
+  - it: should fail on empty name and empty admissionReviewVersions in webhook webhooks
+    set:
+      webhook:
+        validating:
+          enabled: true
+          type: validating
+          webhooks:
+            - name: ''
+              admissionReviewVersions: []
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: [""]
+                  apiVersions: [v1]
+                  operations: [CREATE]
+                  resources: [pods]
+        mutating:
+          enabled: true
+          type: mutating
+          webhooks:
+            - name: ''
+              admissionReviewVersions: []
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: [""]
+                  apiVersions: [v1]
+                  operations: [CREATE]
+                  resources: [pods]
+        my-webhook:
+          enabled: true
+          type: mutating
+          webhooks:
+            - name: ''
+              admissionReviewVersions: []
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: [""]
+                  apiVersions: [v1]
+                  operations: [CREATE]
+                  resources: [pods]
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/webhook/validating/webhooks/0/name'': '
+
+  - it: should fail on wrong types in webhook webhooks
+    set:
+      webhook:
+        validating:
+          enabled: true
+          type: validating
+          webhooks:
+            - name: 1
+              admissionReviewVersions: [1]
+              timeoutSeconds: x
+              clientConfig: x
+              rules: x
+        mutating:
+          enabled: true
+          type: mutating
+          webhooks:
+            - name: 1
+              admissionReviewVersions: [1]
+              timeoutSeconds: x
+              clientConfig: x
+              rules: x
+        my-webhook:
+          enabled: true
+          type: mutating
+          webhooks:
+            - name: 1
+              admissionReviewVersions: [1]
+              timeoutSeconds: x
+              clientConfig: x
+              rules: x
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/webhook/validating/webhooks/0/name'': '
+
+  - it: should fail on wrong types in webhook entries
+    set:
+      webhook:
+        validating:
+          enabled: true
+          type: validating
+          webhooks:
+            x
+        mutating:
+          enabled: true
+          type: mutating
+          webhooks:
+            x
+        my-webhook:
+          enabled: true
+          type: mutating
+          webhooks:
+            x
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/webhook/validating/webhooks'': '
+
+  - it: should fail on unknown keys in webhook entries
+    set:
+      webhook:
+        validating:
+          enabled: true
+          type: validating
+          unknown: x
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: [""]
+                  apiVersions: [v1]
+                  operations: [CREATE]
+                  resources: [pods]
+        mutating:
+          enabled: true
+          type: mutating
+          unknown: x
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: [""]
+                  apiVersions: [v1]
+                  operations: [CREATE]
+                  resources: [pods]
+        my-webhook:
+          enabled: true
+          type: mutating
+          unknown: x
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: [""]
+                  apiVersions: [v1]
+                  operations: [CREATE]
+                  resources: [pods]
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/webhook/my-webhook'': '
+
+  - it: should fail on unknown keys in webhook selectors
+    set:
+      webhook:
+        validating:
+          enabled: true
+          type: validating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              namespaceSelector:
+                unknown: x
+              objectSelector:
+                unknown: x
+              rules:
+                - apiGroups: [""]
+                  apiVersions: [v1]
+                  operations: [CREATE]
+                  resources: [pods]
+        mutating:
+          enabled: true
+          type: mutating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              namespaceSelector:
+                unknown: x
+              objectSelector:
+                unknown: x
+              rules:
+                - apiGroups: [""]
+                  apiVersions: [v1]
+                  operations: [CREATE]
+                  resources: [pods]
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/webhook/validating/webhooks/0/namespaceSelector'': '
+
+  - it: should render matchLabels selectors on a named webhook as valid YAML
+    set:
+      webhook:
+        my-webhook:
+          enabled: true
+          type: validating
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+                  port: "8443"
+              namespaceSelector:
+                matchLabels:
+                  team: "{{ .Release.Name }}"
+              objectSelector:
+                matchExpressions:
+                  - key: skip
+                    operator: DoesNotExist
+              rules:
+                - apiGroups: [""]
+                  apiVersions: [v1]
+                  operations: [CREATE]
+                  resources: [pods]
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ValidatingWebhookConfiguration
+        equal:
+          path: webhooks[0].namespaceSelector.matchLabels.team
+          value: test-release-name
+      - documentSelector:
+          path: kind
+          value: ValidatingWebhookConfiguration
+        equal:
+          path: webhooks[0].objectSelector.matchExpressions[0].key
+          value: skip
+      - documentSelector:
+          path: kind
+          value: ValidatingWebhookConfiguration
+        equal:
+          path: webhooks[0].clientConfig.service.port
+          value: 8443

@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "provisioner": {
+        "type": "string",
+        "description": "Not used by the priority class templates. Only set in the priority class fixture of common-test.",
+        "x-docs-internal": true
+      },
+      "preemptionPolicy": {
+        "type": "string",
+        "description": "Whether pods of this class may preempt lower priority pods.",
+        "enum": [
+          "PreemptLowerPriority",
+          "Never"
+        ],
+        "default": "PreemptLowerPriority"
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Create this priority class when true. Accepts a Helm `tpl` string that renders to `true` or `false`.",
+        "default": false,
+        "x-helm-tpl": true,
+        "x-docs-required": true
+      },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "special/namespaces.json"
+          }
+        ],
+        "description": "Namespace to create this object in. Overrides the chart-wide `namespace` and `global.namespace`.",
+        "default": "",
+        "x-helm-tpl": "On value only"
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Additional labels for priority class",
+        "default": {},
+        "x-helm-tpl": "On value only"
+      },
+      "annotationsList": {
+        "allOf": [
+          {
+            "$ref": "special/annotationsList.json"
+          }
+        ],
+        "description": "Additional annotations as a list of name and value pairs, merged into the annotations"
+      },
+      "labelsList": {
+        "allOf": [
+          {
+            "$ref": "special/labelsList.json"
+          }
+        ],
+        "description": "Additional labels as a list of name and value pairs, merged into the labels"
+      },
+      "annotations": {
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
+        "description": "Additional annotations for priority class",
+        "default": {},
+        "x-helm-tpl": "On value only"
+      },
+      "value": {
+        "type": "integer",
+        "description": "Priority value of the class. A higher value means a higher priority.",
+        "default": 1000000
+      },
+      "globalDefault": {
+        "type": "boolean",
+        "description": "Use this class for pods that set no priority class. Only one class in the cluster can be the default.",
+        "default": false
+      },
+      "description": {
+        "type": "string",
+        "description": "Description of the priority class.",
+        "default": "No description given"
+      }
+    },
+    "additionalProperties": false,
+    "description": "A priority class.",
+    "default": {},
+    "x-docs-required": true
+  },
+  "description": "Priority classes, keyed by name."
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "configMapRef": {
+        "type": "object",
+        "properties": {
+          "expandObjectName": {
+            "type": "boolean",
+            "description": "Whether the name is expanded to `<fullname>-<name>`, the name of a ConfigMap of this chart. Set to `false` to use an existing ConfigMap."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the ConfigMap. Expanded to `<fullname>-<name>` unless `expandObjectName` is `false`.",
+            "x-helm-tpl": true,
+            "x-docs-required": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "A ConfigMap whose keys become environment variables."
+      },
+      "secretRef": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the Secret. Expanded to `<fullname>-<name>` unless `expandObjectName` is `false`.",
+            "x-helm-tpl": true,
+            "x-docs-required": true
+          },
+          "expandObjectName": {
+            "type": "boolean",
+            "description": "Whether the name is expanded to `<fullname>-<name>`, the name of a Secret of this chart. Set to `false` to use an existing Secret."
+          }
+        },
+        "additionalProperties": false,
+        "description": "A Secret whose keys become environment variables."
+      }
+    },
+    "additionalProperties": false,
+    "description": "A ConfigMap or Secret to load the environment variables from. Set one of `configMapRef` or `secretRef`."
+  },
+  "description": "ConfigMaps and Secrets whose keys all become environment variables of the container. See [envFrom](/truecharts-common/workload/podSpec/containers/envFrom).",
+  "x-docs-page": {
+    "title": "Env From"
+  }
+}

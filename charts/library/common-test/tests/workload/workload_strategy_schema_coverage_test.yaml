@@ -1,0 +1,128 @@
+suite: workload strategy schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render a deployment with the Recreate strategy
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          strategy: Recreate
+          podSpec:
+            containers: &containers
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes: &probes
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: Deployment
+      - documentIndex: 0
+        equal:
+          path: spec.strategy.type
+          value: Recreate
+
+  - it: should render a statefulset with the OnDelete strategy
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: StatefulSet
+          strategy: OnDelete
+          podSpec:
+            containers: *containers
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: StatefulSet
+      - documentIndex: 0
+        equal:
+          path: spec.updateStrategy.type
+          value: OnDelete
+
+  - it: should render a deployment with RollingUpdate and the workload rollingUpdate options
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          strategy: RollingUpdate
+          rollingUpdate:
+            maxSurge: 1
+            maxUnavailable: 25%
+          podSpec:
+            containers: *containers
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: spec.strategy
+          value:
+            type: RollingUpdate
+            rollingUpdate:
+              maxUnavailable: 25%
+              maxSurge: 1
+
+  - it: should render a statefulset with RollingUpdate and a partition
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: StatefulSet
+          strategy: RollingUpdate
+          rollingUpdate:
+            partition: 1
+          podSpec:
+            containers: *containers
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: spec.updateStrategy
+          value:
+            type: RollingUpdate
+            rollingUpdate:
+              partition: 1
+
+  - it: should fail when strategy is a map instead of a string
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          strategy:
+            type: RollingUpdate
+          podSpec: {}
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/strategy': "
+
+  - it: should fail on unknown keys in workload rollingUpdate
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          strategy: RollingUpdate
+          rollingUpdate:
+            unknownKey: value
+          podSpec: {}
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/rollingUpdate': additional properties 'unknownKey' not allowed"

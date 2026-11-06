@@ -1,0 +1,66 @@
+suite: pvc strategy type notes test
+templates:
+  - common.yaml
+  - NOTES.txt
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should warn about the default Recreate strategy with RWO
+    template: NOTES.txt
+    set:
+      workload:
+        some-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          accessModes:
+            - ReadWriteOnce
+    asserts:
+      - matchRegexRaw:
+          pattern: "WARNING: The \\[accessModes\\] on volume\\(s\\) \\[my-volume1\\] is set to \\[ReadWriteOnce\\] with a single replica and an strategy of \\[Recreate\\]"
+
+  - it: should not warn when RollingUpdate is changed to Recreate
+    template: NOTES.txt
+    set:
+      workload:
+        some-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          strategy: RollingUpdate
+          podSpec: {}
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          accessModes:
+            - ReadWriteOnce
+    asserts:
+      - notMatchRegexRaw:
+          pattern: "WARNING"
+
+  - it: should warn about RWO with more than 1 replica
+    template: NOTES.txt
+    set:
+      workload:
+        some-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          replicas: 2
+          podSpec: {}
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          accessModes:
+            - ReadWriteOnce
+    asserts:
+      - matchRegexRaw:
+          pattern: "WARNING: The \\[accessModes\\] on volume\\(s\\) \\[my-volume1\\] is set to \\[ReadWriteOnce\\] with a more than 1 replica"

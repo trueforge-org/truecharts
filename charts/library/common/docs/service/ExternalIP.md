@@ -5,123 +5,98 @@ title: ExternalIP
 :::note
 
 - Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/service/externalip#full-examples) section for complete examples.
-- See the [Service](/truecharts-common/service) documentation for more information
+- See the [Full Examples](/truecharts-common/service/ExternalIP#full-examples) section for complete examples.
+
+:::
+
+:::tip
+
+- See all available keys of this object on the [Service](/truecharts-common/service) page.
+- These options apply only when `type: ExternalIP`.
 
 :::
 
 ## Appears in
 
 - `.Values.service.$name`
-
-:::tip
-
-- See available service keys [here](/truecharts-common/service).
-- This options apply only when `type: ExternalIP`.
-
-:::
+- `.Values.addons.codeserver.service.$name`
 
 ---
 
 ## `externalIP`
 
-Configure External IP type
+External IP the Service points to. Only for `type: ExternalIP`.
 
-|            |                            |
-| ---------- | -------------------------- |
-| Key        | `service.$name.externalIP` |
-| Type       | `string`                   |
-| Required   | ✅                         |
-| Helm `tpl` | ✅                         |
-| Default    | `""`                       |
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.externalIP` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Applies to | `ExternalIP` |
 
 Example
 
 ```yaml
 service:
-  some-service:
-    externalIP: 1.2.3.4
+  example:
+    externalIP: 192.168.1.50
 ```
 
 ---
 
 ## `useSlice`
 
-Define whether to use `EndpointSlice` or `Endpoint`
+Create an `EndpointSlice` instead of an `Endpoints` object. Only for `type: ExternalIP`.
 
-|            |                          |
-| ---------- | ------------------------ |
-| Key        | `service.$name.useSlice` |
-| Type       | `bool`                   |
-| Required   | ❌                       |
-| Helm `tpl` | ❌                       |
-| Default    | `true`                   |
-
-Example
-
-```yaml
-service:
-  some-service:
-    useSlice: false
-```
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.useSlice` |
+| Type | `bool or map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Applies to | `ExternalIP` |
 
 ---
 
 ## `addressType`
 
-Define the addressType for External IP
+Address type of the EndpointSlice: `IPv4`, `IPv6` or `FQDN`. Only for `type: ExternalIP`.
 
-|            |                             |
-| ---------- | --------------------------- |
-| Key        | `service.$name.addressType` |
-| Type       | `string`                    |
-| Required   | ❌                          |
-| Helm `tpl` | ✅                          |
-| Default    | `IPv4`                      |
-
-Valid Values:
-
-- `IPv4`
-- `IPv6`
-- `FQDN`
-
-Example
-
-```yaml
-service:
-  some-service:
-    addressType: IPv6
-```
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.addressType` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Applies to | `ExternalIP` |
 
 ---
 
 ## `appProtocol`
 
-Define the appProtocol for External IP
+Application protocol of the ports of the EndpointSlice, eg `https`. Only for `type: ExternalIP`.
 
-|            |                             |
-| ---------- | --------------------------- |
-| Key        | `service.$name.appProtocol` |
-| Type       | `string`                    |
-| Required   | ❌                          |
-| Helm `tpl` | ✅                          |
-| Default    | `""`                        |
-
-Example
-
-```yaml
-service:
-  some-service:
-    appProtocol: http
-```
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.appProtocol` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Applies to | `ExternalIP` |
 
 ---
 
 ## Full Examples
 
+### Every option
+
 ```yaml
 service:
-  # Special type
   service-externalip:
     enabled: true
     primary: true
@@ -142,5 +117,23 @@ service:
         targetSelector: container-name
         port: 80
         targetPort: 8080
-        protocol: HTTP
+        protocol: http
+```
+
+### IPv6
+
+```yaml
+service:
+  service-externalip:
+    enabled: true
+    primary: true
+    type: ExternalIP
+    externalIP: "2001:db8::1"
+    addressType: IPv6
+    ports:
+      port-name:
+        enabled: true
+        primary: true
+        port: 443
+        protocol: https
 ```

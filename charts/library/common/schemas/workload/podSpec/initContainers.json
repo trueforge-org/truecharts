@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "type": {
+        "type": "string",
+        "description": "When the init container runs: `install` only on install, `upgrade` only on upgrade, `system` and `init` on every start. They are run in this order: `install`, `upgrade`, `system`, then `init`.",
+        "x-helm-tpl": true,
+        "x-docs-required": true,
+        "examples": [
+          "init"
+        ]
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Whether the init container is created.",
+        "x-helm-tpl": true
+      },
+      "imageSelector": {
+        "type": "string",
+        "description": "Name of the image to use. It is a key on the root of the values that holds `repository`, `tag` and `pullPolicy`, eg `image`.",
+        "x-helm-tpl": true
+      },
+      "command": {
+        "$ref": "containers/command.json",
+        "description": "Entrypoint of the init container (`command`). A single command can be given as a string."
+      },
+      "args": {
+        "$ref": "containers/args.json",
+        "description": "Arguments of the init container (`args`). A single argument can be given as a string."
+      },
+      "env": {
+        "$ref": "containers/env.json",
+        "description": "Environment variables of the init container, keyed by name."
+      },
+      "envFrom": {
+        "$ref": "containers/envFrom.json",
+        "description": "ConfigMaps and Secrets whose keys all become environment variables of the init container."
+      },
+      "resources": {
+        "$ref": "containers/resources.json",
+        "description": "CPU, memory and extended resources the init container requests and may use."
+      },
+      "securityContext": {
+        "$ref": "containers/securityContext.json",
+        "description": "Security context of the init container. Overrides `securityContext.container`."
+      },
+      "termination": {
+        "$ref": "../container/termination.json",
+        "description": "Where the termination message of the init container is read from."
+      },
+      "probes": {
+        "$ref": "containers/probes.json",
+        "description": "Accepted for compatibility with the shared container shape. The init container spawner replaces probes with disabled probes."
+      }
+    },
+    "additionalProperties": false,
+    "description": "An init container of the pod. It supports the settings of a container, except `lifecycle`, `primary` and working probes.",
+    "x-docs-page": {
+      "title": "Init Containers"
+    }
+  },
+  "description": "Init containers of the pod, keyed by name. They run before the other containers start. See [initContainers](/truecharts-common/workload/podSpec/initContainers)."
+}

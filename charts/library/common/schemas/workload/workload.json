@@ -1,0 +1,613 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "podSpec": {
+        "type": "object",
+        "properties": {
+          "containers": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "env": {
+                  "$ref": "podSpec/containers/env.json",
+                  "description": "Environment variables of the container, keyed by name. See [env](/truecharts-common/workload/podSpec/containers/env).",
+                  "x-helm-tpl": "On value only"
+                },
+                "resources": {
+                  "$ref": "podSpec/containers/resources.json",
+                  "description": "CPU, memory and extended resources the container requests and may use. See [resources](/truecharts-common/workload/podSpec/containers/resources).",
+                  "x-docs-required": true
+                },
+                "securityContext": {
+                  "$ref": "podSpec/containers/securityContext.json",
+                  "description": "Security context of the container. Overrides `securityContext.container` for this container. See [securityContext](/truecharts-common/workload/podSpec/containers/securityContext).",
+                  "x-docs-required": true
+                },
+                "enabled": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
+                  "description": "Whether the container is created.",
+                  "x-helm-tpl": true,
+                  "x-docs-required": true
+                },
+                "imageSelector": {
+                  "type": "string",
+                  "description": "Name of the image to use. It is a key on the root of the values that holds `repository`, `tag` and `pullPolicy`, eg `image`.",
+                  "x-helm-tpl": true,
+                  "x-docs-required": true
+                },
+                "primary": {
+                  "type": "boolean",
+                  "description": "Whether this is the primary container of the workload. Does **not** apply to `initContainers`.",
+                  "x-docs-required": true
+                },
+                "stdin": {
+                  "type": "boolean",
+                  "description": "Whether stdin stays open for the container (`stdin`)."
+                },
+                "tty": {
+                  "type": "boolean",
+                  "description": "Whether a TTY is allocated for the container (`tty`)."
+                },
+                "probes": {
+                  "$ref": "podSpec/containers/probes.json",
+                  "description": "Liveness, readiness and startup probes of the container. Does **not** apply to `initContainers`. See [probes](/truecharts-common/workload/podSpec/containers/probes).",
+                  "x-docs-required": true
+                },
+                "command": {
+                  "$ref": "podSpec/containers/command.json",
+                  "description": "Entrypoint of the container (`command`), which replaces the entrypoint of the image. A single command can be given as a string. See [command](/truecharts-common/workload/podSpec/containers/command).",
+                  "x-helm-tpl": true
+                },
+                "lifecycle": {
+                  "$ref": "podSpec/containers/lifecycle.json",
+                  "description": "`postStart` and `preStop` hooks of the container. See [lifecycle](/truecharts-common/workload/podSpec/containers/lifecycle)."
+                },
+                "envFrom": {
+                  "$ref": "podSpec/containers/envFrom.json",
+                  "description": "ConfigMaps and Secrets whose keys all become environment variables of the container. See [envFrom](/truecharts-common/workload/podSpec/containers/envFrom)."
+                },
+                "termination": {
+                  "$ref": "container/termination.json",
+                  "description": "Where the termination message of the container is read from. See [termination](/truecharts-common/workload/podSpec/containers/termination)."
+                },
+                "fixedEnv": {
+                  "$ref": "podSpec/containers/fixedEnv.json",
+                  "description": "Overrides of the environment variables that common sets on every container: `TZ`, `UMASK`, `PUID` and `NVIDIA_CAPS`. See [fixedEnv](/truecharts-common/workload/podSpec/containers/fixedEnv)."
+                },
+                "args": {
+                  "$ref": "podSpec/containers/args.json",
+                  "description": "Arguments of the container (`args`), which replace the `CMD` of the image. A single argument can be given as a string. See [args](/truecharts-common/workload/podSpec/containers/args).",
+                  "x-helm-tpl": true
+                },
+                "extraArgs": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  ],
+                  "description": "Arguments that are appended **after** `args`, as a string or a list.",
+                  "x-helm-tpl": true
+                },
+                "envList": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Name of the environment variable.",
+                        "x-docs-required": true
+                      },
+                      "value": {
+                        "type": [
+                          "string",
+                          "number",
+                          "boolean"
+                        ],
+                        "description": "Value of the environment variable. Supports Helm `tpl` on strings.",
+                        "x-helm-tpl": true
+                      }
+                    },
+                    "additionalProperties": false,
+                    "description": "An environment variable."
+                  },
+                  "description": "Environment variables of the container as a list of name and value pairs.",
+                  "x-helm-tpl": "On value only"
+                }
+              },
+              "additionalProperties": false,
+              "description": "A container of the pod. The shared container settings are in [container](/truecharts-common/workload/podSpec/containers).",
+              "x-docs-page": {
+                "title": "Container"
+              }
+            },
+            "description": "Containers of the pod, keyed by name."
+          },
+          "initContainers": {
+            "$ref": "podSpec/initContainers.json",
+            "description": "Init containers of the pod, keyed by name. See [initContainers](/truecharts-common/workload/podSpec/initContainers)."
+          },
+          "labels": {
+            "allOf": [
+              {
+                "$ref": "../special/labels.json"
+              }
+            ],
+            "description": "Additional labels for the pods of this workload.",
+            "x-helm-tpl": "On value only"
+          },
+          "annotations": {
+            "allOf": [
+              {
+                "$ref": "../special/annotations.json"
+              }
+            ],
+            "description": "Additional annotations for the pods of this workload.",
+            "x-helm-tpl": "On value only"
+          },
+          "automountServiceAccountToken": {
+            "$ref": "podSpec/automountServiceAccountToken.json",
+            "description": "Whether the service account token is mounted into the pods (`automountServiceAccountToken`). Overrides `podOptions.automountServiceAccountToken` for this workload."
+          },
+          "hostNetwork": {
+            "$ref": "podSpec/hostNetwork.json",
+            "description": "Whether the pods use the network namespace of the node (`hostNetwork`). `dnsPolicy` is set to `ClusterFirstWithHostNet` automatically when this is `true`. Overrides `podOptions.hostNetwork` for this workload."
+          },
+          "hostPID": {
+            "$ref": "podSpec/hostPID.json",
+            "description": "Whether the containers can see the processes of the node (`hostPID`). Overrides `podOptions.hostPID` for this workload."
+          },
+          "hostIPC": {
+            "$ref": "podSpec/hostIPC.json",
+            "description": "Whether the containers share the IPC namespace of the node (`hostIPC`). Overrides `podOptions.hostIPC` for this workload."
+          },
+          "hostUsers": {
+            "$ref": "podSpec/hostUsers.json",
+            "description": "Whether the pods use the user namespace of the node (`hostUsers`). When `false`, the pod gets its own user namespace. When not set, common calculates it. Overrides `podOptions.hostUsers` for this workload."
+          },
+          "shareProcessNamespace": {
+            "$ref": "podSpec/shareProcessNamespace.json",
+            "description": "Whether all containers of a pod share one process namespace (`shareProcessNamespace`), so they can see and signal each other's processes. Overrides `podOptions.shareProcessNamespace` for this workload."
+          },
+          "enableServiceLinks": {
+            "$ref": "podSpec/enableServiceLinks.json",
+            "description": "Whether Kubernetes injects environment variables for the Services of the namespace into the containers (`enableServiceLinks`). Overrides `podOptions.enableServiceLinks` for this workload."
+          },
+          "restartPolicy": {
+            "$ref": "podSpec/restartPolicy.json",
+            "description": "Restart policy of the pods (`restartPolicy`): `Always`, `OnFailure` or `Never`. Deployments, StatefulSets and DaemonSets only allow `Always`. Jobs and CronJobs default to `OnFailure` and do not allow `Always`. Overrides `podOptions.restartPolicy` for this workload.",
+            "x-helm-tpl": true
+          },
+          "schedulerName": {
+            "$ref": "podSpec/schedulerName.json",
+            "description": "Name of the scheduler that schedules the pods (`schedulerName`). The default scheduler is used when empty. Overrides `podOptions.schedulerName` for this workload.",
+            "x-helm-tpl": true
+          },
+          "priorityClassName": {
+            "$ref": "podSpec/priorityClassName.json",
+            "description": "Name of the PriorityClass of the pods (`priorityClassName`), which sets their scheduling priority. Overrides `podOptions.priorityClassName` for this workload.",
+            "x-helm-tpl": true
+          },
+          "hostname": {
+            "type": "string",
+            "description": "Hostname of the pods (`hostname`). It must be a valid DNS label.",
+            "x-helm-tpl": true,
+            "examples": [
+              "myapp"
+            ]
+          },
+          "affinity": {
+            "type": "object",
+            "properties": {},
+            "description": "Affinity rules of the pods, passed on as is. Overrides `podOptions.affinity` for this workload.",
+            "additionalProperties": {
+              "description": "A setting passed on as is."
+            }
+          },
+          "serviceAccountName": {
+            "type": "string",
+            "description": "Name of the service account the pods use (`serviceAccountName`). When not set, common uses the service account that targets this workload, or `default`. Supports Helm `tpl`.",
+            "x-helm-tpl": true
+          },
+          "terminationGracePeriodSeconds": {
+            "$ref": "terminationGracePeriodSeconds.json",
+            "description": "Seconds Kubernetes waits for the containers to stop after they receive SIGTERM, before it kills them (`terminationGracePeriodSeconds`). Overrides `podOptions.terminationGracePeriodSeconds` for this workload.",
+            "x-helm-tpl": true
+          },
+          "nodeSelector": {
+            "allOf": [
+              {
+                "$ref": "../podOptions/nodeSelector.json"
+              }
+            ],
+            "description": "Labels a node must have for the pods to be scheduled on it (`nodeSelector`). Overrides `podOptions.nodeSelector` for this workload.",
+            "x-helm-tpl": "On value only"
+          },
+          "topologySpreadConstraints": {
+            "allOf": [
+              {
+                "$ref": "../podOptions/topologySpreadConstraints.json"
+              }
+            ],
+            "description": "Rules that spread the pods across topology domains such as nodes or zones (`topologySpreadConstraints`). Overrides `podOptions.topologySpreadConstraints` for this workload."
+          },
+          "hostAliases": {
+            "allOf": [
+              {
+                "$ref": "../podOptions/hostAliases.json"
+              }
+            ],
+            "description": "Extra entries for the `/etc/hosts` file of the pods (`hostAliases`). Overrides `podOptions.hostAliases` for this workload."
+          },
+          "dnsPolicy": {
+            "$ref": "podSpec/dnsPolicy.json",
+            "description": "DNS policy of the pods (`dnsPolicy`): `ClusterFirst`, `ClusterFirstWithHostNet`, `Default` or `None`. It is forced to `ClusterFirstWithHostNet` when `hostNetwork` is `true`. Overrides `podOptions.dnsPolicy` for this workload.",
+            "x-helm-tpl": true
+          },
+          "dnsConfig": {
+            "allOf": [
+              {
+                "$ref": "../podOptions/dnsConfig.json"
+              }
+            ],
+            "description": "Extra DNS settings of the pods (`dnsConfig`). Overrides `podOptions.dnsConfig` for this workload."
+          },
+          "tolerations": {
+            "allOf": [
+              {
+                "$ref": "../podOptions/tolerations.json"
+              }
+            ],
+            "description": "Taints the pods tolerate (`tolerations`). Overrides `podOptions.tolerations` for this workload."
+          },
+          "runtimeClassName": {
+            "$ref": "podSpec/runtimeClassName.json",
+            "description": "Name of the RuntimeClass of the pods (`runtimeClassName`), to run them with another container runtime. Overrides `podOptions.runtimeClassName` for this workload.",
+            "x-helm-tpl": true
+          },
+          "securityContext": {
+            "$ref": "podSpec/securityContext.json",
+            "description": "Pod-level security context."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Settings of the pods of the workload: containers, init containers and pod level options.",
+        "default": {},
+        "x-docs-required": true,
+        "x-docs-page": {
+          "title": "Pod Spec"
+        }
+      },
+      "replicas": {
+        "type": [
+          "integer",
+          "string"
+        ],
+        "description": "Number of pod replicas (`replicas`).",
+        "x-docs-appliesTo": [
+          "Deployment",
+          "StatefulSet"
+        ]
+      },
+      "revisionHistoryLimit": {
+        "type": "integer",
+        "description": "Number of old ReplicaSets, ControllerRevisions or history entries that are kept for rollbacks (`revisionHistoryLimit`).",
+        "x-docs-appliesTo": [
+          "Deployment",
+          "StatefulSet",
+          "DaemonSet"
+        ],
+        "examples": [
+          3
+        ]
+      },
+      "strategy": {
+        "type": "string",
+        "enum": [
+          "Recreate",
+          "RollingUpdate",
+          "OnDelete"
+        ],
+        "description": "Update strategy of the workload. Deployments accept `Recreate` and `RollingUpdate`, StatefulSets and DaemonSets accept `RollingUpdate` and `OnDelete`. Set `maxUnavailable`, `maxSurge` and `partition` under `rollingUpdate`.\n\nA Deployment with a single replica uses `Recreate` if it mounts a `ReadWriteOnce` volume.",
+        "x-docs-appliesTo": [
+          "Deployment",
+          "StatefulSet",
+          "DaemonSet"
+        ]
+      },
+      "rollingUpdate": {
+        "type": "object",
+        "properties": {
+          "maxUnavailable": {
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "Maximum number of pods that can be unavailable during an update, as a number or a percentage like `25%`. Only used when `strategy` is `RollingUpdate`."
+          },
+          "partition": {
+            "type": "integer",
+            "description": "Pods with an ordinal lower than this number are not updated (`partition`). Only used when `strategy` is `RollingUpdate`.",
+            "x-docs-appliesTo": [
+              "StatefulSet"
+            ]
+          },
+          "maxSurge": {
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "Maximum number of pods that can be created above the desired number during an update, as a number or a percentage like `25%`. Only used when `strategy` is `RollingUpdate`.",
+            "x-docs-appliesTo": [
+              "Deployment",
+              "DaemonSet"
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "description": "Settings of the `RollingUpdate` strategy. Only used when `strategy` is `RollingUpdate`.",
+        "x-docs-appliesTo": [
+          "Deployment",
+          "StatefulSet",
+          "DaemonSet"
+        ]
+      },
+      "initContainers": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "description": "Not used. Init containers go under `podSpec.initContainers`.",
+        "default": {},
+        "x-docs-internal": true
+      },
+      "completionMode": {
+        "type": "string",
+        "enum": [
+          "Indexed",
+          "NonIndexed"
+        ],
+        "description": "Completion mode of a Job: `NonIndexed` or `Indexed` (`completionMode`).",
+        "x-docs-appliesTo": [
+          "CronJob",
+          "Job"
+        ]
+      },
+      "backoffLimit": {
+        "type": "integer",
+        "description": "Number of retries before a Job is marked as failed (`backoffLimit`).",
+        "x-docs-appliesTo": [
+          "CronJob",
+          "Job"
+        ]
+      },
+      "completions": {
+        "type": "number",
+        "description": "Number of pods that must finish successfully for a Job to complete (`completions`).",
+        "x-docs-appliesTo": [
+          "CronJob",
+          "Job"
+        ]
+      },
+      "parallelism": {
+        "type": "integer",
+        "description": "Maximum number of pods of a Job that run at the same time (`parallelism`).",
+        "x-docs-appliesTo": [
+          "CronJob",
+          "Job"
+        ]
+      },
+      "ttlSecondsAfterFinished": {
+        "type": "integer",
+        "description": "Seconds after which a finished Job is deleted automatically (`ttlSecondsAfterFinished`).",
+        "x-docs-appliesTo": [
+          "CronJob",
+          "Job"
+        ]
+      },
+      "activeDeadlineSeconds": {
+        "type": "integer",
+        "description": "Maximum number of seconds a Job can run before it is stopped (`activeDeadlineSeconds`).",
+        "x-docs-appliesTo": [
+          "CronJob",
+          "Job"
+        ]
+      },
+      "schedule": {
+        "type": "string",
+        "description": "Cron schedule of a CronJob, in the standard 5 field format (`schedule`).",
+        "x-helm-tpl": true,
+        "x-docs-required": true,
+        "x-docs-appliesTo": [
+          "CronJob"
+        ],
+        "examples": [
+          "0 3 * * *"
+        ]
+      },
+      "suspend": {
+        "type": "boolean",
+        "description": "Whether the CronJob is suspended, so no new Jobs start (`suspend`). Forced to `true` when `stopAll` is enabled."
+      },
+      "timezone": {
+        "type": "string",
+        "description": "Time zone of the schedule of a CronJob (`timeZone`), eg `Europe/Amsterdam`. Defaults to the `TZ` value.",
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "CronJob"
+        ],
+        "examples": [
+          "Europe/Amsterdam"
+        ]
+      },
+      "concurrencyPolicy": {
+        "type": "string",
+        "enum": [
+          "Allow",
+          "Replace",
+          "Forbid"
+        ],
+        "description": "What a CronJob does when the previous run is still running: `Allow` both, `Forbid` the new run or `Replace` the old one (`concurrencyPolicy`).",
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "CronJob"
+        ]
+      },
+      "failedJobsHistoryLimit": {
+        "type": "integer",
+        "description": "Number of failed Jobs of a CronJob that are kept (`failedJobsHistoryLimit`).",
+        "x-helm-tpl": true,
+        "x-docs-appliesTo": [
+          "CronJob"
+        ]
+      },
+      "successfulJobsHistoryLimit": {
+        "type": "integer",
+        "description": "Number of successful Jobs of a CronJob that are kept (`successfulJobsHistoryLimit`).",
+        "x-docs-appliesTo": [
+          "CronJob"
+        ]
+      },
+      "startingDeadlineSeconds": {
+        "type": "integer",
+        "description": "Seconds after the scheduled time in which a CronJob can still start a missed run (`startingDeadlineSeconds`).",
+        "x-docs-appliesTo": [
+          "CronJob"
+        ]
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Whether the workload is created.",
+        "default": false,
+        "x-helm-tpl": true,
+        "x-docs-required": true
+      },
+      "primary": {
+        "type": "boolean",
+        "description": "Whether this is the primary workload of the chart. A chart needs one primary workload.",
+        "default": false,
+        "x-docs-required": true
+      },
+      "annotationsList": {
+        "allOf": [
+          {
+            "$ref": "../special/annotationsList.json"
+          }
+        ],
+        "description": "Additional annotations as a list of name and value pairs, merged into the annotations of the workload."
+      },
+      "labelsList": {
+        "allOf": [
+          {
+            "$ref": "../special/labelsList.json"
+          }
+        ],
+        "description": "Additional labels as a list of name and value pairs, merged into the labels of the workload."
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "../special/labels.json"
+          }
+        ],
+        "description": "Additional labels for the workload object.",
+        "default": {},
+        "x-helm-tpl": "On value only"
+      },
+      "annotations": {
+        "allOf": [
+          {
+            "$ref": "../special/annotations.json"
+          }
+        ],
+        "description": "Additional annotations for the workload object.",
+        "default": {},
+        "x-helm-tpl": "On value only"
+      },
+      "namespace": {
+        "type": "string",
+        "description": "Namespace of the workload. Defaults to the namespace of the release.",
+        "default": "",
+        "x-helm-tpl": "On value only"
+      },
+      "type": {
+        "type": "string",
+        "enum": [
+          "Deployment",
+          "DaemonSet",
+          "StatefulSet",
+          "CronJob",
+          "Job"
+        ],
+        "description": "Kind of the workload: `Deployment`, `DaemonSet`, `StatefulSet`, `CronJob` or `Job`.",
+        "x-docs-required": true
+      },
+      "serviceAccountName": {
+        "type": "string",
+        "description": "Not used. Set the service account of the pods with `podSpec.serviceAccountName`, or with the top-level `serviceAccount` key and its `targetSelector`.",
+        "default": "",
+        "x-helm-tpl": "On value only",
+        "x-docs-internal": true
+      },
+      "containers": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "description": "Not used. Containers go under `podSpec.containers`.",
+        "default": {},
+        "x-docs-internal": true
+      },
+      "dbWait": {
+        "type": "boolean",
+        "description": "Not used by common itself. Kept for compatibility with existing values."
+      }
+    },
+    "additionalProperties": false,
+    "description": "A workload, spawned as a Deployment, StatefulSet, DaemonSet, Job or CronJob.",
+    "default": {},
+    "x-docs-required": true,
+    "x-docs-page": {
+      "title": "Workload",
+      "types": {
+        "Deployment": {
+          "file": "deployment",
+          "title": "Deployment"
+        },
+        "StatefulSet": {
+          "file": "statefulset",
+          "title": "StatefulSet"
+        },
+        "DaemonSet": {
+          "file": "daemonset",
+          "title": "DaemonSet"
+        },
+        "CronJob": {
+          "file": "cronjob",
+          "title": "CronJob"
+        },
+        "Job": {
+          "file": "job",
+          "title": "Job"
+        }
+      }
+    }
+  },
+  "description": "Workloads of the chart, keyed by name."
+}

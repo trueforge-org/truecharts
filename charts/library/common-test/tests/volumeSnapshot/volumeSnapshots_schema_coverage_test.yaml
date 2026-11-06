@@ -1,0 +1,47 @@
+suite: volumeSnapshots schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render volume snapshot with string typed enabled
+    set:
+      volumeSnapshots:
+        my-vs:
+          enabled: "true"
+          source:
+            persistentVolumeClaimName: some-pvc-name
+    asserts:
+      - isKind:
+          of: VolumeSnapshot
+        documentIndex: 0
+
+  - it: should fail on unknown keys in volume snapshot
+    set:
+      volumeSnapshots:
+        my-vs:
+          enabled: true
+          source:
+            persistentVolumeClaimName: some-pvc-name
+          unknown: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/volumeSnapshots/my-vs': (additional properties|additionalProperties)"
+
+  - it: should render volume snapshot in the namespace it is given when namespace is set
+    set:
+      volumeSnapshots:
+        my-vs:
+          enabled: true
+          namespace: snap-ns
+          source:
+            persistentVolumeClaimName: some-pvc-name
+    asserts:
+      - isKind:
+          of: VolumeSnapshot
+        documentIndex: 0
+      - equal:
+          path: metadata.namespace
+          value: snap-ns
+        documentIndex: 0

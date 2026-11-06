@@ -1,0 +1,46 @@
+suite: root resources and lifecycle schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render root resources with numeric requests and excludeExtra
+    set:
+      resources:
+        excludeExtra: true
+        requests:
+          cpu: 1
+          memory: 1024
+          example.com/extra: 2
+          other.example.com/extra: 1Gi
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              my-container:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: Deployment
+
+  - it: should fail on unknown keys in root resources
+    set:
+      resources:
+        unknownKey: true
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/resources': .*unknownKey"

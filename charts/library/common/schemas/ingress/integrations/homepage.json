@@ -1,0 +1,121 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Homepage (gethomepage.dev) integration. Adds the service discovery annotations to the Ingress.",
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "description": "Add the Homepage annotations to the Ingress.",
+      "default": false,
+      "x-docs-required": true
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the entry on the homepage. Sets the `gethomepage.dev/name` annotation."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the entry on the homepage. Sets the `gethomepage.dev/description` annotation."
+    },
+    "group": {
+      "type": "string",
+      "description": "Group of the entry on the homepage. Sets the `gethomepage.dev/group` annotation.",
+      "default": ""
+    },
+    "icon": {
+      "type": "string",
+      "description": "Icon of the entry on the homepage. Sets the `gethomepage.dev/icon` annotation."
+    },
+    "href": {
+      "type": "string",
+      "description": "Link of the entry on the homepage. Sets the `gethomepage.dev/href` annotation."
+    },
+    "weight": {
+      "type": "integer",
+      "description": "Sort weight of the entry within its group. Sets the `gethomepage.dev/weight` annotation."
+    },
+    "podSelector": {
+      "type": "array",
+      "description": "Selectors of the pods used for the status of the entry. Sets the `gethomepage.dev/pod-selector` annotation.",
+      "default": [],
+      "items": {
+        "type": "string",
+        "description": "A pod label selector."
+      }
+    },
+    "widget": {
+      "type": "object",
+      "properties": {
+        "customkv": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "Name of the setting. Sets the `gethomepage.dev/widget.$key` annotation.",
+                "x-docs-required": true
+              },
+              "value": {
+                "type": "string",
+                "description": "Value of the setting.",
+                "x-docs-required": true
+              }
+            },
+            "additionalProperties": false,
+            "description": "A custom widget setting."
+          },
+          "description": "Custom widget settings as a list of `key` and `value`. Each item sets a `gethomepage.dev/widget.$key` annotation.",
+          "default": null
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Add the widget annotations to the Ingress.",
+          "default": true
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of the widget. Sets the `gethomepage.dev/widget.type` annotation."
+        },
+        "version": {
+          "type": "integer",
+          "description": "Version of the widget. Sets the `gethomepage.dev/widget.version` annotation.",
+          "default": 1
+        },
+        "url": {
+          "type": "string",
+          "description": "URL the widget talks to. Sets the `gethomepage.dev/widget.url` annotation."
+        },
+        "custom": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {},
+          "description": "Custom widget settings as a map of `key: value`. Each entry sets a `gethomepage.dev/widget.$key` annotation.",
+          "default": null,
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ],
+            "description": "Value of the widget setting. Supports Helm `tpl`, empty values are skipped. Numbers and booleans are rendered as a string.",
+            "x-helm-tpl": true
+          }
+        }
+      },
+      "additionalProperties": false,
+      "description": "Widget shown with the entry on the homepage.",
+      "default": {}
+    }
+  },
+  "additionalProperties": false,
+  "x-docs-page": {
+    "title": "Homepage Integration"
+  }
+}

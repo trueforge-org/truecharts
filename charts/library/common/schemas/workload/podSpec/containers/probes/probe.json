@@ -1,0 +1,124 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "description": "Whether the probe is added to the container. Only a boolean is evaluated, any other value counts as `true`.",
+      "x-docs-required": true
+    },
+    "type": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "exec",
+            "http",
+            "https",
+            "tcp",
+            "grpc"
+          ]
+        },
+        {
+          "type": "string",
+          "pattern": "^\\{\\{.*\\}\\}$"
+        }
+      ],
+      "description": "How the probe checks the container: `exec` runs `command`, `http` and `https` send a GET request to `path`, `tcp` opens a connection to `port` and `grpc` calls the gRPC health service on `port`.",
+      "x-helm-tpl": true
+    },
+    "port": {
+      "type": [
+        "integer",
+        "string"
+      ],
+      "description": "Port that is probed. Used by `http`, `https`, `tcp` and `grpc` probes.",
+      "x-helm-tpl": true,
+      "x-docs-required": true,
+      "examples": [
+        8080
+      ]
+    },
+    "path": {
+      "type": "string",
+      "description": "Request path of `http` and `https` probes.",
+      "x-helm-tpl": true,
+      "examples": [
+        "/healthz"
+      ]
+    },
+    "httpHeaders": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "boolean"
+        ],
+        "description": "Value of the header."
+      },
+      "description": "Extra headers of the request of `http` and `https` probes, keyed by header name.",
+      "default": {},
+      "x-helm-tpl": "On value only"
+    },
+    "spec": {
+      "type": "object",
+      "properties": {
+        "successThreshold": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of successful probes in a row before the container is considered healthy again."
+        },
+        "initialDelaySeconds": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Seconds to wait after the container starts before the first probe."
+        },
+        "periodSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Seconds between two probes."
+        },
+        "timeoutSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Seconds after which a probe times out."
+        },
+        "failureThreshold": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of failed probes in a row before the probe is considered failed."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Timing and threshold settings of the probe. Unset values default to `global.fallbackDefaults.probeTimeouts`."
+    },
+    "command": {
+      "type": [
+        "array",
+        "string"
+      ],
+      "description": "Command that is run by `exec` probes. A single command can be given as a string. Only applies when `type` is `exec`.",
+      "items": {
+        "type": "string",
+        "description": "One entry of the command."
+      },
+      "x-helm-tpl": true,
+      "examples": [
+        [
+          "cat",
+          "/tmp/healthy"
+        ]
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "description": "A probe of the container. See [probe](/truecharts-common/workload/podSpec/containers/probe).",
+  "x-docs-page": {
+    "title": "Probe",
+    "file": "workload/podSpec/containers/probe.md"
+  }
+}

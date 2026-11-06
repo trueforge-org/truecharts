@@ -1,0 +1,149 @@
+suite: route parentRefs schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render route parentRefs with all keys
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - group: gateway.networking.k8s.io
+              kind: Gateway
+              name: some-gateway
+              namespace: gw-ns
+              sectionName: https
+    asserts:
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.parentRefs[0].sectionName
+          value: https
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.parentRefs[0].name
+          value: some-gateway
+
+  - it: should render route parentRefs with a null sectionName
+    set:
+      service: *service
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+              namespace: gw-ns
+              sectionName: null
+    asserts:
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.parentRefs[0].namespace
+          value: gw-ns
+
+  - it: should fail on a null name in route parentRefs
+    set:
+      service: *service
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: null
+              namespace: gw-ns
+    asserts:
+      - failedTemplate:
+          errorPattern: "parentRef name is required"
+
+  - it: should fail on a null namespace in route parentRefs
+    set:
+      service: *service
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+              namespace: null
+    asserts:
+      - failedTemplate:
+          errorPattern: "parentRef namespace is required"
+
+  - it: should fail on unknown keys in route parentRefs
+    set:
+      service: *service
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+              namespace: gw-ns
+              unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/parentRefs/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on a non-string group in route parentRefs
+    set:
+      service: *service
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+              namespace: gw-ns
+              group: 1
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/parentRefs/0/group'"
+
+  - it: should fail on a non-string kind in route parentRefs
+    set:
+      service: *service
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+              namespace: gw-ns
+              kind: 1
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/parentRefs/0/kind'"
+
+  - it: should fail on a non-array parentRefs in route
+    set:
+      service: *service
+      route:
+        my-route:
+          enabled: true
+          parentRefs: foo
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/parentRefs'"
+
+  - it: should accept null name and namespace in parentRefs of a disabled route
+    set:
+      service: *service
+      route:
+        my-route:
+          enabled: false
+          parentRefs:
+            - name: null
+              namespace: null
+    asserts:
+      - notFailedTemplate: {}

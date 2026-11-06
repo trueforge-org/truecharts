@@ -1,0 +1,118 @@
+suite: cnpg cluster envFrom schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render envFrom with configMapRef and secretRef
+    set:
+      postgres16Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "16.3"
+        pullPolicy: IfNotPresent
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          cluster:
+            envFrom:
+              - configMapRef:
+                  name: my-configmap
+                  expandObjectName: false
+              - secretRef:
+                  name: my-secret
+                  expandObjectName: false
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: spec.envFrom
+          value:
+            - configMapRef:
+                name: my-configmap
+            - secretRef:
+                name: my-secret
+
+  - it: should accept envFrom as an object
+    set:
+      postgres16Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "16.3"
+        pullPolicy: IfNotPresent
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          cluster:
+            envFrom: {}
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Cluster
+        isKind:
+          of: Cluster
+
+  - it: should fail with an unknown key in an envFrom item
+    set:
+      postgres16Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "16.3"
+        pullPolicy: IfNotPresent
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          cluster:
+            envFrom:
+              - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/cnpg/my-pg/cluster/envFrom/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail with an unknown key in envFrom configMapRef
+    set:
+      postgres16Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "16.3"
+        pullPolicy: IfNotPresent
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          cluster:
+            envFrom:
+              - configMapRef:
+                  unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/cnpg/my-pg/cluster/envFrom/0/configMapRef': additional properties 'unknownKey' not allowed"
+
+  - it: should fail with an unknown key in envFrom secretRef
+    set:
+      postgres16Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "16.3"
+        pullPolicy: IfNotPresent
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          cluster:
+            envFrom:
+              - secretRef:
+                  unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/cnpg/my-pg/cluster/envFrom/0/secretRef': additional properties 'unknownKey' not allowed"

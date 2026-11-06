@@ -1,0 +1,84 @@
+suite: service traefik rootCAs schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render service traefik integration rootCAs with expandObjectName on configMapRef
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          type: ClusterIP
+          integrations:
+            traefik:
+              enabled: true
+              rootCAs:
+                - configMapRef:
+                    name: my-map
+                    expandObjectName: false
+                - secretRef:
+                    name: my-secret
+                    expandObjectName: false
+          ports:
+            port-name:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - documentIndex: 2
+        isKind:
+          of: ServersTransport
+      - documentIndex: 2
+        equal:
+          path: spec.rootCAs
+          value:
+            - configMap: my-map
+            - secret: my-secret
+
+  - it: should fail on unknown keys and empty names in service traefik integration rootCAs
+    set:
+      workload: *workload
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          type: ClusterIP
+          integrations:
+            traefik:
+              enabled: true
+              rootCAs:
+                - unknownKey: value
+                  configMapRef:
+                    unknownKey: value
+                    name: ""
+                    expandObjectName: "false"
+                - secretRef:
+                    unknownKey: value
+                    name: ""
+          ports:
+            port-name:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/service/my-service/integrations/traefik/rootCAs/0': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/service/my-service/integrations/traefik/rootCAs/0/configMapRef': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/service/my-service/integrations/traefik/rootCAs/0/configMapRef/name': minLength: got 0, want 1"
+      - failedTemplate:
+          errorPattern: "at '/service/my-service/integrations/traefik/rootCAs/0/configMapRef/expandObjectName': got string, want boolean"
+      - failedTemplate:
+          errorPattern: "at '/service/my-service/integrations/traefik/rootCAs/1/secretRef': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/service/my-service/integrations/traefik/rootCAs/1/secretRef/name': minLength: got 0, want 1"

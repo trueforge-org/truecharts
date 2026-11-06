@@ -1,0 +1,50 @@
+suite: root helper image keys schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render with root helper image keys set
+    set:
+      alpineImage:
+        repository: oci.trueforge.org/tccr/alpine
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      openvpnImage:
+        repository: oci.trueforge.org/tccr/openvpn-client
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      scratchImage:
+        repository: oci.trueforge.org/containerforge/scratch
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      wgetImage:
+        repository: oci.trueforge.org/containerforge/ubuntu
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      wireguardImage:
+        repository: oci.trueforge.org/tccr/wireguard
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      yqImage:
+        repository: oci.trueforge.org/containerforge/go-yq
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      redisClientImage:
+        repository: oci.trueforge.org/containerforge/valkey-tools
+        tag: 1.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000
+        pullPolicy: IfNotPresent
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - isKind:
+          of: Service
+        documentIndex: 0

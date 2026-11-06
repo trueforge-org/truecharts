@@ -5,7 +5,7 @@ title: Storage Class
 :::note
 
 - Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/storageclass#full-examples) section for complete examples.
+- See the [Full Examples](/truecharts-common/storageClass#full-examples) section for complete examples.
 
 :::
 
@@ -13,284 +13,305 @@ title: Storage Class
 
 - `.Values.storageClass`
 
-## Naming scheme
-
-- `$FullName-$StorageClassName` (release-name-chart-name-storageClassName)
-
-:::tip
-
-- Replace references to `$name` with the actual name you want to use.
-
-:::
-
 ---
 
 ## `storageClass`
 
-Define storage classes
+StorageClasses, keyed by name.
 
-|            |                |
-| ---------- | -------------- |
-| Key        | `storageClass` |
-| Type       | `map`          |
-| Required   | ❌             |
-| Helm `tpl` | ❌             |
-| Default    | `{}`           |
-
-Example
-
-```yaml
-storageClass: {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `storageClass` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-### `$name`
+## `$name`
 
-Define storage class
+A StorageClass.
 
-|            |                      |
-| ---------- | -------------------- |
-| Key        | `storageClass.$name` |
-| Type       | `map`                |
-| Required   | ✅                   |
-| Helm `tpl` | ❌                   |
-| Default    | `{}`                 |
-
-Example
-
-```yaml
-storageClass:
-  storage-class-name: {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `storageClass.$name` |
+| Type | `map` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-#### `enabled`
+## `$name.mountOptions`
 
-Enables or Disables the storage class
+Mount options of volumes of this class. Supports Helm `tpl` on each entry.
 
-|            |                              |
-| ---------- | ---------------------------- |
-| Key        | `storageClass.$name.enabled` |
-| Type       | `bool`                       |
-| Required   | ✅                           |
-| Helm `tpl` | ✅                           |
-| Default    | `false`                      |
+| Field | Value |
+| --- | --- |
+| Key | `storageClass.$name.mountOptions` |
+| Type | `list of string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On entries only) |
+| Default | `[]` |
 
 Example
 
 ```yaml
 storageClass:
-  storage-class-name:
-    enabled: true
+  example:
+    mountOptions:
+      - nfsvers=4.1
 ```
 
 ---
 
-#### `labels`
+## `$name.enabled`
+
+Create this storage class when true. Accepts a Helm `tpl` string that renders to `true` or `false`.
+
+| Field | Value |
+| --- | --- |
+| Key | `storageClass.$name.enabled` |
+| Type | `bool` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | `false` |
+
+---
+
+## `$name.labels`
 
 Additional labels for storage class
 
-|            |                             |
-| ---------- | --------------------------- |
-| Key        | `storageClass.$name.labels` |
-| Type       | `map`                       |
-| Required   | ❌                          |
-| Helm `tpl` | ✅ (On value only)          |
-| Default    | `{}`                        |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
-Example
-
-```yaml
-storageClass:
-  storage-class-name:
-    labels:
-      key: value
-```
+| Field | Value |
+| --- | --- |
+| Key | `storageClass.$name.labels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
 
 ---
 
-#### `annotations`
+## `$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `storageClass.$name.annotationsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `storageClass.$name.labelsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.annotations`
 
 Additional annotations for storage class
 
-|            |                                  |
-| ---------- | -------------------------------- |
-| Key        | `storageClass.$name.annotations` |
-| Type       | `map`                            |
-| Required   | ❌                               |
-| Helm `tpl` | ✅ (On value only)               |
-| Default    | `{}`                             |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `storageClass.$name.annotations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
+
+---
+
+## `$name.provisioner`
+
+Provisioner (CSI driver) that provisions volumes of this class.
+
+| Field | Value |
+| --- | --- |
+| Key | `storageClass.$name.provisioner` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 Example
 
 ```yaml
 storageClass:
-  storage-class-name:
-    annotations:
-      key: value
-```
-
-#### `provisioner`
-
-Define the provisioner for this storage class
-
-|            |                                  |
-| ---------- | -------------------------------- |
-| Key        | `storageClass.$name.provisioner` |
-| Type       | `string`                         |
-| Required   | ✅                               |
-| Helm `tpl` | ❌                               |
-| Default    | `""`                             |
-
-Example
-
-```yaml
-storageClass:
-  storage-class-name:
-    provisioner: some.provisioner.io
+  example:
+    provisioner: nfs.csi.k8s.io
 ```
 
 ---
 
-#### `parameters`
+## `$name.isDefault`
 
-Define the parameters for this storage class
+Make this the default StorageClass of the cluster.
 
-|            |                                 |
-| ---------- | ------------------------------- |
-| Key        | `storageClass.$name.parameters` |
-| Type       | `map`                           |
-| Required   | ❌                              |
-| Helm `tpl` | ✅ (On value only)              |
-| Default    | `{}`                            |
-
-Example
-
-```yaml
-storageClass:
-  storage-class-name:
-    parameters:
-      key: value
-```
+| Field | Value |
+| --- | --- |
+| Key | `storageClass.$name.isDefault` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-#### `reclaimPolicy`
+## `$name.parameters`
 
-Define the reclaim policy for this storage class
+Parameters passed to the provisioner. Supports Helm `tpl` on values.
 
-|            |                                    |
-| ---------- | ---------------------------------- |
-| Key        | `storageClass.$name.reclaimPolicy` |
-| Type       | `string`                           |
-| Required   | ❌                                 |
-| Helm `tpl` | ❌                                 |
-| Default    | `Retain`                           |
-
-Valid values are:
-
-- `Delete`
-- `Retain`
-
-Example
-
-```yaml
-storageClass:
-  storage-class-name:
-    reclaimPolicy: retain
-```
+| Field | Value |
+| --- | --- |
+| Key | `storageClass.$name.parameters` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
 
 ---
 
-#### `allowVolumeExpansion`
+## `$name.parameters.$name`
 
-Define if volume expansion is allowed for this storage class
+Value of the parameter. Numbers and booleans are rendered as a string.
 
-|            |                                           |
-| ---------- | ----------------------------------------- |
-| Key        | `storageClass.$name.allowVolumeExpansion` |
-| Type       | `bool`                                    |
-| Required   | ❌                                        |
-| Helm `tpl` | ❌                                        |
-| Default    | `false`                                   |
-
-Example
-
-```yaml
-storageClass:
-  storage-class-name:
-    allowVolumeExpansion: true
-```
+| Field | Value |
+| --- | --- |
+| Key | `storageClass.$name.parameters.$name` |
+| Type | `string or number or bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-#### `volumeBindingMode`
+## `$name.reclaimPolicy`
 
-Define the volume binding mode for this storage class
+What happens to a volume when its claim is deleted.
 
-|            |                                        |
-| ---------- | -------------------------------------- |
-| Key        | `storageClass.$name.volumeBindingMode` |
-| Type       | `string`                               |
-| Required   | ❌                                     |
-| Helm `tpl` | ❌                                     |
-| Default    | `Immediate`                            |
-
-Valid values are:
-
-- `Immediate`
-- `WaitForFirstConsumer`
-
-Example
-
-```yaml
-storageClass:
-  storage-class-name:
-    volumeBindingMode: Immediate
-```
+| Field | Value |
+| --- | --- |
+| Key | `storageClass.$name.reclaimPolicy` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `"Retain"` |
+| Allowed values | `"Delete"`, `"Retain"` |
 
 ---
 
-#### `mountOptions`
+## `$name.allowVolumeExpansion`
 
-Define the mount options for this storage class
+Allow claims of this class to be resized.
 
-|            |                                   |
-| ---------- | --------------------------------- |
-| Key        | `storageClass.$name.mountOptions` |
-| Type       | `list` of `string`                |
-| Required   | ❌                                |
-| Helm `tpl` | ✅ (On each entry only)           |
-| Default    | `[]`                              |
+| Field | Value |
+| --- | --- |
+| Key | `storageClass.$name.allowVolumeExpansion` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
 
-Example
+---
 
-```yaml
-storageClass:
-  storage-class-name:
-    mountOptions:
-      - option1
-      - option2=value
-```
+## `$name.volumeBindingMode`
+
+When volumes are bound and provisioned. `WaitForFirstConsumer` waits until a pod uses the claim.
+
+| Field | Value |
+| --- | --- |
+| Key | `storageClass.$name.volumeBindingMode` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `"Immediate"` |
+| Allowed values | `"Immediate"`, `"WaitForFirstConsumer"` |
 
 ---
 
 ## Full Examples
 
+### Basic StorageClass
+
 ```yaml
 storageClass:
   example:
-    provisioner: some.provisioner.io
     enabled: true
+    provisioner: some.provisioner.io
     parameters:
       param1: value1
       param2: value2
-    reclaimPolicy: retain
+    reclaimPolicy: Retain
     allowVolumeExpansion: true
     volumeBindingMode: Immediate
     mountOptions:
       - option1
       - option2=value
+```
+
+### Default class that binds late
+
+`WaitForFirstConsumer` delays the volume until a pod uses it, so it is created on the right node:
+
+```yaml
+storageClass:
+  local:
+    enabled: true
+    provisioner: rancher.io/local-path
+    isDefault: true
+    reclaimPolicy: Delete
+    volumeBindingMode: WaitForFirstConsumer
+    labels:
+      key: value
+    annotations:
+      key: value
+```
+
+### Parameters and use
+
+Parameters can be numbers and booleans. A volume selects the class by name:
+
+```yaml
+storageClass:
+  nfs:
+    enabled: true
+    provisioner: nfs.csi.k8s.io
+    parameters:
+      server: nfs.example.com
+      share: /exports
+      mountPermissions: "0"
+      subDir: data
+    mountOptions:
+      - nfsvers=4.1
+
+persistence:
+  config:
+    enabled: true
+    type: pvc
+    storageClass: nfs
+    size: 10Gi
+    mountPath: /config
 ```

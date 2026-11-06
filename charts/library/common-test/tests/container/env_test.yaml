@@ -194,7 +194,7 @@ tests:
                     invalidKeyRef: {}
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected [env] in [containers.container-name1] with a ref to have one of [configMapKeyRef, secretKeyRef, fieldRef], but got [invalidKeyRef]
+          errorPattern: 'at ''/workload/workload-name/podSpec/containers/container-name1/env/VAR'': additional properties ''invalidKeyRef'' not allowed'
 
   - it: it should fail with more than one ref
     set:
@@ -469,4 +469,4 @@ tests:
                       key: secret-key
     asserts:
       - failedTemplate:
-          errorMessage: Container - Expected the defined key [expandObjectName] in [env.key1] to not be empty
+          errorPattern: 'at ''/workload/workload-name/podSpec/containers/container-name1/env/key1/secretKeyRef/expandObjectName'': got null, want boolean or string'

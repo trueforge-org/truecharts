@@ -1,0 +1,90 @@
+suite: clickhouse dependency schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render the clickhouse secret with all clickhouse keys set
+    set:
+      clickhouse:
+        enabled: true
+        includeCommon: true
+        password: my-password
+        clickhouseUsername: my-user
+        clickhouseDatabase: my-database
+        creds:
+          clickhousePassword: my-password
+          plain: my-clickhouse
+          plainhost: my-clickhouse
+          plainport: my-clickhouse:8123
+          plainporthost: my-clickhouse:8123
+          ping: http://my-clickhouse:8123/ping
+          complete: http://my-user:my-password@my-clickhouse:8123/my-database
+          jdbc: jdbc:ch://my-clickhouse:8123/my-database
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Secret
+        documentIndex: 0
+
+  - it: should render the clickhouse secret with the string enabled key
+    set:
+      clickhouse:
+        enabled: "true"
+        password: my-password
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Secret
+        documentIndex: 0
+
+  - it: should fail with an empty clickhouse password
+    set:
+      clickhouse:
+        enabled: true
+        password: ""
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/clickhouse/password'': minLength: got 0, want 1'
+
+  - it: should fail with an unknown key in clickhouse creds
+    set:
+      clickhouse:
+        enabled: true
+        password: my-password
+        creds:
+          bogus: value
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/clickhouse/creds'': additional properties ''bogus'' not allowed'
+
+  - it: should accept the values of a clickhouse subchart next to the keys read by common
+    set:
+      clickhouse:
+        enabled: true
+        password: my-password
+        workload:
+          main:
+            enabled: true
+        service:
+          main:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Secret
+        documentIndex: 0
+
+  - it: should fail with a wrong type in the clickhouse subchart values
+    set:
+      clickhouse:
+        enabled: true
+        password: my-password
+        workload: str
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/clickhouse/workload'''

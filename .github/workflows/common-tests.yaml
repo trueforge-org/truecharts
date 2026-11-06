@@ -138,11 +138,161 @@ jobs:
           helm dependency update
           helm unittest -f "tests/**/*.yaml" . -v ./unit-values.yaml
 
+  coverage-validation:
+    needs:
+      - lint
+    name: Coverage Validation
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 1
+
+      - name: Install Helm
+        uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4
+        with:
+          version: v3.20.0
+
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
+        with:
+          python-version: "3.10"
+
+      - name: Install Python dependencies
+        run: pip install PyYAML ruamel.yaml
+
+      # Each check also writes its output to coverage-report/, for the PR comment on failure
+      - name: Run schema validation
+        id: schema
+        shell: bash
+        run: |
+          mkdir -p coverage-report
+          (
+            set -e
+            python3 charts/library/common/generate_bundled_schema.py --check
+            python3 charts/library/common/generate_template_keys_structure.py --check
+            # The values of charts change without a change in common, so an outdated file is not an error of this PR.
+            # The coverage check below uses the rebuilt file.
+            python3 charts/library/common/generate_complete_values_structure.py --check ||
+              echo "::warning::complete-values-structure.yaml is not up to date, run generate_complete_values_structure.py"
+            python3 charts/library/common/generate_complete_values_structure.py
+            python3 charts/library/common/test_schema.py --max-failures 0 --output-file stable_schema_validation.log
+            python3 charts/library/common/check_complete_values_schema_coverage.py
+          ) 2>&1 | tee coverage-report/schema.log
+
+      # The checks below also run when an earlier one failed, so each reports its own result
+      - name: Run unittest schema coverage check
+        id: unittest
+        if: ${{ !cancelled() }}
+        shell: bash
+        run: |
+          mkdir -p coverage-report
+          python3 charts/library/common/check_unittest_schema_coverage.py --summary-md coverage-report/unittest-summary.md 2>&1 |
+            tee coverage-report/unittest.log
+
+      - name: Check docs
+        id: docs
+        if: ${{ !cancelled() }}
+        shell: bash
+        run: |
+          mkdir -p coverage-report
+          python3 charts/library/common/generate_docs.py --check 2>&1 | tee coverage-report/docs.log
+
+      # On a pull request, the "Pull Request: Coverage Comment" workflow posts this report as a comment.
+      # It runs from workflow_run, because the token of a pull_request from a fork can't comment.
+      - name: Build PR comment report
+        if: ${{ !cancelled() && github.event_name == 'pull_request' }}
+        shell: bash
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          SCHEMA_OUTCOME: ${{ steps.schema.outcome }}
+          UNITTEST_OUTCOME: ${{ steps.unittest.outcome }}
+          DOCS_OUTCOME: ${{ steps.docs.outcome }}
+        run: |
+          mkdir -p coverage-report
+          cd coverage-report
+          echo "$PR_NUMBER" > pr-number
+          echo "$HEAD_SHA" > head-sha
+          failed=0
+          {
+            for check in "schema|Schema validation|$SCHEMA_OUTCOME" \
+                         "unittest|Unittest schema coverage|$UNITTEST_OUTCOME" \
+                         "docs|Docs|$DOCS_OUTCOME"; do
+              IFS='|' read -r id title outcome <<< "$check"
+              # A skipped check did not pass either, for example when a step before it failed
+              [ "$outcome" != "success" ] || continue
+              failed=1
+              echo "### ❌ $title"
+              echo
+              if [ ! -f "$id.log" ]; then
+                echo "The check has no output (outcome: $outcome), see the workflow run."
+                echo
+                continue
+              fi
+              if [ -f "$id-summary.md" ]; then
+                cat "$id-summary.md"
+                echo
+              fi
+              echo "<details><summary>Output</summary>"
+              echo
+              echo '```text'
+              # A PR comment holds at most 65536 characters, so long output is cut in the middle
+              if [ "$(wc -c < "$id.log")" -gt 16000 ]; then
+                head -c 12000 "$id.log"
+                printf '\n\n... output cut, see the full log in the workflow run ...\n\n'
+                tail -c 4000 "$id.log"
+              else
+                cat "$id.log"
+              fi
+              echo '```'
+              echo
+              echo "</details>"
+              echo
+            done
+          } > failures.md
+          echo "$failed" > failed
+          {
+            if [ "$failed" = "1" ]; then
+              echo "## ❌ Common coverage validation failed"
+              echo
+              echo "Commit \`$HEAD_SHA\`, [workflow run]($RUN_URL)."
+              echo
+              cat failures.md
+            else
+              echo "## ✅ Common coverage validation passed"
+              echo
+              echo "Commit \`$HEAD_SHA\`, [workflow run]($RUN_URL)."
+            fi
+          } > comment.md
+          rm failures.md
+
+      - name: Upload PR comment report
+        if: ${{ !cancelled() && github.event_name == 'pull_request' }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: common-coverage-report
+          path: |
+            coverage-report/comment.md
+            coverage-report/failed
+            coverage-report/pr-number
+            coverage-report/head-sha
+          retention-days: 7
+
+      - name: Upload schema validation log
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: stable-schema-validation-log
+          path: stable_schema_validation.log
+
   install:
     # Install jobs are the slowest, do not start them if a fast check already failed
     needs:
       - lint
       - unittest
+      - coverage-validation
     name: Install Charts (${{ matrix.versions.k3s }}, ${{ matrix.versions.helm }}, ${{ matrix.values }})
     runs-on: ubuntu-latest
     strategy:
@@ -280,7 +430,7 @@ jobs:
 
   # Summarize matrix https://github.community/t/status-check-for-a-matrix-jobs/127354/7
   common-tests-complete:
-    needs: [check_changes, lint, unittest, install]
+    needs: [check_changes, lint, unittest, coverage-validation, install]
     if: ${{ always() }}
     name: Common Tests Completed
     runs-on:
@@ -290,9 +440,10 @@ jobs:
         run: |
           if [[ "${{ needs.check_changes.outputs.changes_detected }}" == 'true' && ( "${{ needs.lint.result }}" != "success" || \
                 "${{ needs.unittest.result }}" != "success" || \
+                "${{ needs.coverage-validation.result }}" != "success" || \
                 "${{ needs.install.result }}" != "success") ]]; then
             echo "One or more jobs failed!"
             exit 1
           else
-            echo "Common Lint, Tests and unittests Completed Successfully"
+            echo "Common Lint, Tests, Coverage Validation and unittests Completed Successfully"
           fi

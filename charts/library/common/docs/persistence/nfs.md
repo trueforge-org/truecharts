@@ -9,59 +9,61 @@ title: NFS
 
 :::
 
+:::tip
+
+- See all available keys of this object on the [Persistence](/truecharts-common/persistence) page.
+- These options apply only when `type: nfs`.
+
+:::
+
 ## Appears in
 
 - `.Values.persistence.$name`
-
-:::tip
-
-- See available persistence keys [here](/truecharts-common/persistence).
-- This options apply only when `type: nfs`.
-
-:::
 
 ---
 
 ## `path`
 
-Define the nfs export share path
+Path of the NFS export on the server. Only for `type: nfs`.
 
-|            |                          |
-| ---------- | ------------------------ |
-| Key        | `persistence.$name.path` |
-| Type       | `string`                 |
-| Required   | ✅                       |
-| Helm `tpl` | ✅                       |
-| Default    | `""`                     |
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.path` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Applies to | `nfs` |
 
 Example
 
 ```yaml
 persistence:
-  nfs-vol:
-    path: /path/of/nfs/share
+  example:
+    path: /exports/data
 ```
 
 ---
 
 ## `server`
 
-Define the nfs server
+Hostname or IP of the NFS server. Only for `type: nfs`.
 
-|            |                            |
-| ---------- | -------------------------- |
-| Key        | `persistence.$name.server` |
-| Type       | `string`                   |
-| Required   | ✅                         |
-| Helm `tpl` | ✅                         |
-| Default    | `""`                       |
+| Field | Value |
+| --- | --- |
+| Key | `persistence.$name.server` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Applies to | `nfs` |
 
 Example
 
 ```yaml
 persistence:
-  nfs-vol:
-    server: nfs-server
+  example:
+    server: 192.168.1.10
 ```
 
 ---
@@ -75,4 +77,21 @@ persistence:
     type: nfs
     path: /path/of/nfs/share
     server: nfs-server
+    mountPath: /data
+```
+
+### Read only in selected containers
+
+```yaml
+persistence:
+  nfs-media:
+    enabled: true
+    type: nfs
+    path: /mnt/tank/media
+    server: 10.0.0.10
+    targetSelector:
+      workload-name:
+        container-name:
+          mountPath: /media
+          readOnly: true
 ```

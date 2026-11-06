@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "allOf": [
+    {
+      "$ref": "../values.schema.source.json",
+      "x-docs-internal": "This object also takes all keys of the root values, for example `workload`, `service` and `persistence`. They come from the Helm subchart dependency that defines this object: Helm adds the default values of the subchart here. Do not set them in the values of the chart."
+    },
+    {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Enables the Solr dependency. Supports Helm `tpl`.",
+          "default": false,
+          "x-helm-tpl": true
+        },
+        "includeCommon": {
+          "type": "boolean",
+          "description": "Marker for charts that the dependency uses common. Not read by common.",
+          "default": false
+        },
+        "password": {
+          "type": "string",
+          "description": "Password of the database user.",
+          "minLength": 1,
+          "default": "PLACEHOLDERPASSWORD"
+        },
+        "solrUsername": {
+          "type": "string",
+          "description": "Name of the admin user, used in the connection URL and the wait container."
+        },
+        "solrCores": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Name or number of the core used in the connection URL and the wait container.",
+          "default": 1
+        },
+        "solrEnableAuthentication": {
+          "type": "string",
+          "description": "Whether the wait container authenticates with `solrUsername` and the password.",
+          "enum": [
+            "yes",
+            "no"
+          ],
+          "default": "no"
+        },
+        "creds": {
+          "type": "object",
+          "properties": {
+            "solrPassword": {
+              "type": "string",
+              "description": "Password."
+            },
+            "plain": {
+              "type": "string",
+              "description": "Hostname."
+            },
+            "plainhost": {
+              "type": "string",
+              "description": "Hostname."
+            },
+            "portHost": {
+              "type": "string",
+              "description": "Hostname and port."
+            },
+            "url": {
+              "type": "string",
+              "description": "Connection URL."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Connection details written by common, so apps using the dependency can use them. Read only.",
+          "default": {}
+        }
+      }
+    }
+  ],
+  "description": "Solr dependency configuration. The root values keys are also accepted, as the content of the Helm subchart that defines this dependency."
+}

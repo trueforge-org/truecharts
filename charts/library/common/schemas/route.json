@@ -1,0 +1,181 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "description": "Create this route.",
+        "default": false,
+        "x-docs-required": true
+      },
+      "primary": {
+        "type": "boolean",
+        "description": "Make this the primary route. It is used as the default route name when no `nameOverride` is set. When none is primary, the first enabled route is used."
+      },
+      "kind": {
+        "type": "string",
+        "enum": [
+          "GRPCRoute",
+          "HTTPRoute",
+          "TCPRoute",
+          "TLSRoute",
+          "UDPRoute"
+        ],
+        "description": "Kind of the route: `HTTPRoute`, `GRPCRoute`, `TCPRoute`, `TLSRoute` or `UDPRoute`.",
+        "default": "HTTPRoute"
+      },
+      "annotations": {
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
+        "description": "Additional annotations, keyed by name.",
+        "default": {}
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Additional labels, keyed by name.",
+        "default": {}
+      },
+      "nameOverride": {
+        "type": "string",
+        "description": "Name appended to the chart fullname for this route. Defaults to the name of the route, except for the primary route."
+      },
+      "parentRefs": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "group": {
+              "type": "string",
+              "description": "API group of the parent.",
+              "default": "gateway.networking.k8s.io"
+            },
+            "kind": {
+              "type": "string",
+              "description": "Kind of the parent.",
+              "default": "Gateway"
+            },
+            "name": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "Name of the Gateway.",
+              "x-docs-required": true
+            },
+            "namespace": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "Namespace of the Gateway.",
+              "x-docs-required": true
+            },
+            "sectionName": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "Attach to a single listener of the Gateway."
+            }
+          },
+          "additionalProperties": false,
+          "description": "A Gateway the route attaches to."
+        },
+        "description": "Gateways the route attaches to."
+      },
+      "hostnames": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "description": "A hostname, eg `app.example.com`."
+        },
+        "description": "Host addresses. Not used by `TCPRoute` and `UDPRoute`.",
+        "default": []
+      },
+      "rules": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "backendRefs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "group": {
+                    "type": "string",
+                    "description": "API group of the backend.",
+                    "default": ""
+                  },
+                  "kind": {
+                    "type": "string",
+                    "description": "Kind of the backend.",
+                    "default": "Service"
+                  },
+                  "name": {
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "description": "Name of the backend. Defaults to the primary service."
+                  },
+                  "namespace": {
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "description": "Namespace of the backend. Defaults to the release namespace."
+                  },
+                  "port": {
+                    "type": [
+                      "null",
+                      "integer"
+                    ],
+                    "description": "Port of the backend. Defaults to the primary port of the primary service."
+                  },
+                  "weight": {
+                    "type": "integer",
+                    "description": "Share of the requests for this backend.",
+                    "default": 1
+                  }
+                },
+                "additionalProperties": false,
+                "description": "A backend the requests are sent to."
+              },
+              "description": "Where to send requests. Defaults to the primary service."
+            },
+            "matches": {
+              "type": "array",
+              "description": "Conditions for matching requests. Only for `HTTPRoute`.",
+              "items": {
+                "allOf": [
+                  {
+                    "$ref": "route/match.json"
+                  }
+                ],
+                "description": "A condition that a request has to match."
+              }
+            }
+          },
+          "additionalProperties": false,
+          "description": "A routing rule."
+        },
+        "description": "Routing rules."
+      }
+    },
+    "additionalProperties": false,
+    "description": "A Gateway API route, keyed by name.",
+    "default": {}
+  },
+  "description": "Routes, keyed by name. Every enabled entry renders a Gateway API route of `kind`, see [Route](/truecharts-common/route)."
+}

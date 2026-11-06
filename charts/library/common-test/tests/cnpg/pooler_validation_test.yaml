@@ -17,7 +17,7 @@ tests:
             poolMode: invalid
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Pooler - Expected [poolMode] to be one of [session, transaction], but got [invalid]
+          errorPattern: "at '/cnpg/my-pg/pooler/poolMode': value must be one of"
 
   - it: should fail with pooler instances less than 1
     set:
@@ -31,4 +31,4 @@ tests:
             instances: 0
     asserts:
       - failedTemplate:
-          errorMessage: CNPG Pooler - Expected [instances] to be greater than 0, but got [0]
+          errorPattern: "at '/cnpg/my-pg/pooler/instances': minimum: got"

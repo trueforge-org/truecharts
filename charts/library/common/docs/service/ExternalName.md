@@ -4,52 +4,45 @@ title: ExternalName
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/service/externalname#full-examples) section for complete examples.
-- See the [Service](/truecharts-common/service) documentation for more information
+- See the [Full Examples](/truecharts-common/service/ExternalName#full-examples) section for complete examples.
+
+:::
+
+:::tip
+
+- See all available keys of this object on the [Service](/truecharts-common/service) page.
+- These options apply only when `type: ExternalName`.
 
 :::
 
 ## Appears in
 
 - `.Values.service.$name`
-
-:::tip
-
-- See available service keys [here](/truecharts-common/service).
-- This options apply only when `type: ExternalName`.
-
-:::
+- `.Values.addons.codeserver.service.$name`
 
 ---
 
 ## `externalName`
 
-Configure ExternalName type
+External hostname the Service resolves to. Only for `type: ExternalName`.
 
-|            |                              |
-| ---------- | ---------------------------- |
-| Key        | `service.$name.externalName` |
-| Type       | `string`                     |
-| Required   | ✅                           |
-| Helm `tpl` | ✅                           |
-| Default    | `""`                         |
-
-Example
-
-```yaml
-service:
-  some-service:
-    externalName: external-name
-```
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.externalName` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Applies to | `ExternalName` |
 
 ---
 
 ## Full Examples
 
+### Every option
+
 ```yaml
 service:
-  # Special type
   service-external-name:
     enabled: true
     primary: true
@@ -70,5 +63,22 @@ service:
         primary: true
         targetSelector: container-name
         port: 80
-        protocol: HTTP
+        protocol: http
+```
+
+### External host
+
+```yaml
+service:
+  database:
+    enabled: true
+    primary: true
+    type: ExternalName
+    externalName: db.example.com
+    ports:
+      db:
+        enabled: true
+        primary: true
+        port: 5432
+        protocol: tcp
 ```

@@ -1,0 +1,107 @@
+suite: ingress middlewares custom provider schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should accept the common keys of a middleware of another provider
+    set:
+      ingressMiddlewares:
+        custom:
+          my-middleware-bool:
+            enabled: true
+            type: headers
+            expandObjectName: false
+            namespace: some-namespace
+            labels:
+              key: value
+            annotations:
+              key: value
+            data: {}
+          my-middleware-string:
+            enabled: "false"
+            type: chain
+          my-middleware-type-0:
+            enabled: false
+            type: add-prefix
+          my-middleware-type-1:
+            enabled: false
+            type: basic-auth
+          my-middleware-type-2:
+            enabled: false
+            type: buffering
+          my-middleware-type-3:
+            enabled: false
+            type: chain
+          my-middleware-type-4:
+            enabled: false
+            type: compress
+          my-middleware-type-5:
+            enabled: false
+            type: content-type
+          my-middleware-type-6:
+            enabled: false
+            type: forward-auth
+          my-middleware-type-7:
+            enabled: false
+            type: headers
+          my-middleware-type-8:
+            enabled: false
+            type: ip-allow-list
+          my-middleware-type-9:
+            enabled: false
+            type: plugin-bouncer
+          my-middleware-type-10:
+            enabled: false
+            type: plugin-geoblock
+          my-middleware-type-11:
+            enabled: false
+            type: plugin-mod-security
+          my-middleware-type-12:
+            enabled: false
+            type: plugin-real-ip
+          my-middleware-type-13:
+            enabled: false
+            type: plugin-rewrite-response-headers
+          my-middleware-type-14:
+            enabled: false
+            type: plugin-theme-park
+          my-middleware-type-15:
+            enabled: false
+            type: rate-limit
+          my-middleware-type-16:
+            enabled: false
+            type: redirect-regex
+          my-middleware-type-17:
+            enabled: false
+            type: redirect-scheme
+          my-middleware-type-18:
+            enabled: false
+            type: replace-path
+          my-middleware-type-19:
+            enabled: false
+            type: replace-path-regex
+          my-middleware-type-20:
+            enabled: false
+            type: retry
+          my-middleware-type-21:
+            enabled: false
+            type: strip-prefix
+          my-middleware-type-22:
+            enabled: false
+            type: strip-prefix-regex
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should fail on unknown keys in ingressMiddlewares of another provider
+    set:
+      ingressMiddlewares:
+        custom:
+          my-middleware:
+            enabled: true
+            type: headers
+            unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/ingressMiddlewares/custom/my-middleware': "

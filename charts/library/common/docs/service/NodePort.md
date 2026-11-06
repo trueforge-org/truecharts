@@ -5,47 +5,52 @@ title: NodePort
 :::note
 
 - Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/service/nodeport#full-examples) section for complete examples.
-- See the [Service](/truecharts-common/service) documentation for more information
+- See the [Full Examples](/truecharts-common/service/NodePort#full-examples) section for complete examples.
+
+:::
+
+:::tip
+
+- See all available keys of this object on the [Service](/truecharts-common/service) page.
+- These options apply only when `type: NodePort`.
 
 :::
 
 ## Appears in
 
 - `.Values.service.$name`
-
-:::tip
-
-- See available service keys [here](/truecharts-common/service).
-- This options apply only when `type: NodePort`.
-
-:::
+- `.Values.addons.codeserver.service.$name`
 
 ---
 
-## `ports.$port-name.nodePort`
+## `ports.$name.nodePort`
 
-Define the node port that will be exposed on the node
+Port opened on every node. Only for `type: NodePort`.
 
-|            |                                           |
-| ---------- | ----------------------------------------- |
-| Key        | `service.$name.ports.$port-name.nodePort` |
-| Type       | `int`                                     |
-| Required   | ✅                                        |
-| Helm `tpl` | ✅                                        |
-| Default    | unset                                     |
+| Field | Value |
+| --- | --- |
+| Key | `service.$name.ports.$name.nodePort` |
+| Type | `int` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Applies to | `NodePort` |
 
 Example
 
 ```yaml
 service:
-  some-service:
-    nodePort: 30080
+  example:
+    ports:
+      example:
+        nodePort: 30080
 ```
 
 ---
 
 ## Full Examples
+
+### Every option
 
 ```yaml
 service:
@@ -62,7 +67,7 @@ service:
       clientIP:
         timeoutSeconds: 86400
     externalTrafficPolicy: Cluster
-    targetSelector: pod-name
+    targetSelector: workload-name
     ports:
       port-name:
         enabled: true
@@ -72,4 +77,32 @@ service:
         protocol: http
         targetPort: 8080
         nodePort: 30080
+```
+
+### Multiple ports
+
+```yaml
+service:
+  service-nodeport:
+    enabled: true
+    primary: true
+    type: NodePort
+    externalTrafficPolicy: Local
+    ports:
+      web:
+        enabled: true
+        primary: true
+        port: 8080
+        protocol: http
+        nodePort: 30080
+      websecure:
+        enabled: true
+        port: 8443
+        protocol: https
+        nodePort: 30443
+      dns:
+        enabled: true
+        port: 53
+        protocol: udp
+        nodePort: 30053
 ```

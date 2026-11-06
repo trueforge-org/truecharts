@@ -1,0 +1,511 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Create this HorizontalPodAutoscaler. Supports Helm `tpl`.",
+        "default": false,
+        "x-helm-tpl": true
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Additional labels of the HorizontalPodAutoscaler."
+      },
+      "annotations": {
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
+        "description": "Additional annotations of the HorizontalPodAutoscaler."
+      },
+      "targetSelector": {
+        "type": "array",
+        "description": "Workloads the HorizontalPodAutoscaler scales. Defaults to the primary workload.",
+        "default": [],
+        "items": {
+          "type": "string",
+          "description": "Name of a workload."
+        }
+      },
+      "minReplicas": {
+        "type": "integer",
+        "description": "Minimum number of replicas."
+      },
+      "maxReplicas": {
+        "type": "integer",
+        "description": "Maximum number of replicas."
+      },
+      "behavior": {
+        "type": "object",
+        "properties": {
+          "scaleUp": {
+            "type": "object",
+            "properties": {
+              "selectPolicy": {
+                "type": "string",
+                "enum": [
+                  "Max",
+                  "Min",
+                  "Disabled"
+                ],
+                "description": "Which policy wins: `Max`, `Min` or `Disabled`."
+              },
+              "stabilizationWindowSeconds": {
+                "type": "integer",
+                "description": "Seconds of past recommendations considered, to avoid flapping."
+              },
+              "policies": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "Pods",
+                        "Percent"
+                      ],
+                      "description": "Type of the policy, `Pods` or `Percent`."
+                    },
+                    "value": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "description": "Number of pods or percentage the policy allows within `periodSeconds`."
+                    },
+                    "periodSeconds": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 1800,
+                      "description": "Seconds the policy looks back."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "value",
+                    "periodSeconds"
+                  ],
+                  "additionalProperties": false,
+                  "description": "A scaling policy."
+                },
+                "description": "Policies that limit how fast the replicas change."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Scaling behavior when scaling up."
+          },
+          "scaleDown": {
+            "type": "object",
+            "properties": {
+              "selectPolicy": {
+                "type": "string",
+                "enum": [
+                  "Max",
+                  "Min",
+                  "Disabled"
+                ],
+                "description": "Which policy wins: `Max`, `Min` or `Disabled`."
+              },
+              "stabilizationWindowSeconds": {
+                "type": "integer",
+                "description": "Seconds of past recommendations considered, to avoid flapping."
+              },
+              "policies": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "Pods",
+                        "Percent"
+                      ],
+                      "description": "Type of the policy, `Pods` or `Percent`."
+                    },
+                    "value": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "description": "Number of pods or percentage the policy allows within `periodSeconds`."
+                    },
+                    "periodSeconds": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 1800,
+                      "description": "Seconds the policy looks back."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "value",
+                    "periodSeconds"
+                  ],
+                  "additionalProperties": false,
+                  "description": "A scaling policy."
+                },
+                "description": "Policies that limit how fast the replicas change."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Scaling behavior when scaling down."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Scaling behavior, for scaling up and down."
+      },
+      "metrics": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "Resource",
+                "Pods",
+                "Object",
+                "External",
+                "ContainerResource"
+              ],
+              "description": "Type of the metric: `Resource`, `ContainerResource`, `Pods`, `Object` or `External`."
+            },
+            "resource": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "enum": [
+                    "cpu",
+                    "memory"
+                  ],
+                  "description": "Name of the resource, `cpu` or `memory`."
+                },
+                "target": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "AverageValue",
+                        "Utilization"
+                      ],
+                      "description": "Type of the target, `Utilization`, `AverageValue` or `Value`."
+                    },
+                    "averageValue": {
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
+                      "description": "Target average value, as a quantity.",
+                      "examples": [
+                        "500m"
+                      ]
+                    },
+                    "averageUtilization": {
+                      "type": "integer",
+                      "description": "Target average utilization, in percent of the requests."
+                    },
+                    "value": {
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
+                      "description": "Target value, as a quantity."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Target value of the metric."
+                }
+              },
+              "additionalProperties": false,
+              "description": "A resource metric of the pods, like `cpu` or `memory`."
+            },
+            "containerResource": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "enum": [
+                    "cpu",
+                    "memory"
+                  ],
+                  "description": "Name of the resource, `cpu` or `memory`."
+                },
+                "container": {
+                  "type": "string",
+                  "description": "Name of the container."
+                },
+                "target": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "AverageValue",
+                        "Utilization"
+                      ],
+                      "description": "Type of the target, `Utilization`, `AverageValue` or `Value`."
+                    },
+                    "averageValue": {
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
+                      "description": "Target average value, as a quantity."
+                    },
+                    "averageUtilization": {
+                      "type": "integer",
+                      "description": "Target average utilization, in percent of the requests."
+                    },
+                    "value": {
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
+                      "description": "Target value, as a quantity."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Target value of the metric."
+                }
+              },
+              "additionalProperties": false,
+              "description": "A resource metric of a single container of the pods."
+            },
+            "pods": {
+              "type": "object",
+              "properties": {
+                "metric": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the metric."
+                    },
+                    "selector": {
+                      "type": "object",
+                      "properties": {
+                        "matchLabels": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": {
+                            "type": "string",
+                            "description": "Value of the label."
+                          },
+                          "description": "Labels of the metric, keyed by name."
+                        }
+                      },
+                      "additionalProperties": false,
+                      "description": "Labels that select the metric."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "The metric, by name and labels."
+                },
+                "target": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "AverageValue"
+                      ],
+                      "description": "Type of the target, pods metrics only support `AverageValue`."
+                    },
+                    "averageValue": {
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
+                      "description": "Target average value, as a quantity."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Target value of the metric."
+                }
+              },
+              "additionalProperties": false,
+              "description": "A metric of the pods, averaged over them."
+            },
+            "object": {
+              "type": "object",
+              "properties": {
+                "metric": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the metric."
+                    },
+                    "selector": {
+                      "type": "object",
+                      "properties": {
+                        "matchLabels": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": {
+                            "type": "string",
+                            "description": "Value of the label."
+                          },
+                          "description": "Labels of the metric, keyed by name."
+                        }
+                      },
+                      "additionalProperties": false,
+                      "description": "Labels that select the metric."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "The metric, by name and labels."
+                },
+                "target": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "AverageValue",
+                        "Value"
+                      ],
+                      "description": "Type of the target, `Utilization`, `AverageValue` or `Value`."
+                    },
+                    "averageValue": {
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
+                      "description": "Target average value, as a quantity."
+                    },
+                    "value": {
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
+                      "description": "Target value, as a quantity."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Target value of the metric."
+                },
+                "describedObject": {
+                  "type": "object",
+                  "properties": {
+                    "apiVersion": {
+                      "type": "string",
+                      "description": "API version of the object."
+                    },
+                    "kind": {
+                      "type": "string",
+                      "description": "Kind of the object."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the object."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "The object the metric describes."
+                }
+              },
+              "additionalProperties": false,
+              "description": "A metric of another Kubernetes object."
+            },
+            "external": {
+              "type": "object",
+              "properties": {
+                "metric": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the metric."
+                    },
+                    "selector": {
+                      "type": "object",
+                      "properties": {
+                        "matchLabels": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": {
+                            "type": "string",
+                            "description": "Value of the label."
+                          },
+                          "description": "Labels of the metric, keyed by name."
+                        }
+                      },
+                      "additionalProperties": false,
+                      "description": "Labels that select the metric."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "The metric, by name and labels."
+                },
+                "target": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "AverageValue",
+                        "Value"
+                      ],
+                      "description": "Type of the target, `Utilization`, `AverageValue` or `Value`."
+                    },
+                    "averageValue": {
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
+                      "description": "Target average value, as a quantity."
+                    },
+                    "value": {
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
+                      "description": "Target value, as a quantity."
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Target value of the metric."
+                }
+              },
+              "additionalProperties": false,
+              "description": "A metric from outside of the cluster."
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "description": "A metric the number of replicas is calculated from. Set the block that matches `type`."
+        },
+        "description": "Metrics the number of replicas is calculated from."
+      },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "special/namespaces.json"
+          }
+        ],
+        "description": "Namespace of the HorizontalPodAutoscaler. Defaults to the release namespace.",
+        "default": "",
+        "x-helm-tpl": true
+      }
+    },
+    "additionalProperties": false,
+    "description": "A HorizontalPodAutoscaler, keyed by name.",
+    "default": {}
+  },
+  "description": "HorizontalPodAutoscalers, keyed by name. Every enabled entry renders an HPA, see [HPA](/truecharts-common/hpa)."
+}

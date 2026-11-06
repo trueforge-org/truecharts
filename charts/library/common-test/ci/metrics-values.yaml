@@ -28,7 +28,6 @@ metrics:
   main:
     enabled: true
     type: "servicemonitor"
-    matchLabels: ""
     endpoints:
       - port: "8080"
         interval: "10s"
@@ -40,7 +39,6 @@ metrics:
   podmon:
     enabled: true
     type: "podmonitor"
-    matchLabels: ""
     endpoints:
       - port: "8080"
         interval: "10s"
@@ -52,7 +50,6 @@ metrics:
   promrule:
     enabled: true
     type: "servicemonitor"
-    matchLabels: ""
     endpoints:
       - port: "8080"
         interval: "10s"

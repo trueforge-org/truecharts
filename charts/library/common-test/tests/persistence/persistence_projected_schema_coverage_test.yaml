@@ -1,0 +1,112 @@
+suite: persistence projected sources schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render projected secret and configMap optional in persistence projected sources
+    set:
+      secret:
+        my-secret:
+          enabled: true
+          data:
+            foo: bar
+      configmap:
+        my-configmap:
+          enabled: true
+          data:
+            foo: bar
+      persistence:
+        my-volume1:
+          enabled: true
+          type: projected
+          mountPath: /mnt/volume1
+          targetSelectAll: true
+          sources:
+            - secret:
+                objectName: my-secret
+                optional: true
+                items:
+                  - key: foo
+                    path: foo-path
+            - configMap:
+                objectName: my-configmap
+                optional: false
+                items:
+                  - key: foo
+                    path: foo-path
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              my-container:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        isKind:
+          of: Deployment
+
+  - it: should render projected downwardAPI fieldRef apiVersion and resourceFieldRef divisor in persistence projected sources
+    set:
+      persistence:
+        my-volume1:
+          enabled: true
+          type: projected
+          mountPath: /mnt/volume1
+          targetSelectAll: true
+          sources:
+            - downwardAPI:
+                items:
+                  - path: some-path
+                    fieldRef:
+                      apiVersion: v1
+                      fieldPath: metadata.name
+                  - path: some-other-path
+                    resourceFieldRef:
+                      containerName: my-container
+                      resource: limits.cpu
+                      divisor: 1
+                  - path: some-third-path
+                    resourceFieldRef:
+                      containerName: my-container
+                      resource: limits.memory
+                      divisor: 1Mi
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              my-container:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        isKind:
+          of: Deployment

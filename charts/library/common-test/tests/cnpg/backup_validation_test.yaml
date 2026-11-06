@@ -9,8 +9,12 @@ tests:
     set:
       credentials:
         test:
-          type: azure
-          connectionString: some-connection-string
+          type: s3
+          url: http://some-url
+          bucket: some-bucket
+          encrKey: some-encr-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
       cnpg:
         my-pg:
           enabled: true
@@ -18,7 +22,7 @@ tests:
             enabled: true
             credentials: test
             manualBackups:
-              - name:
+              - name: ""
     asserts:
       - failedTemplate:
           errorMessage: CNPG Backup - Expected non-empty [name] in [backups.manualBackups] entry
@@ -27,8 +31,12 @@ tests:
     set:
       credentials:
         test:
-          type: azure
-          connectionString: some-connection-string
+          type: s3
+          url: http://some-url
+          bucket: some-bucket
+          encrKey: some-encr-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
       cnpg:
         my-pg:
           enabled: true

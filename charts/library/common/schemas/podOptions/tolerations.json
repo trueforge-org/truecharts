@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "description": "Taints the pods tolerate (`tolerations`), so they can be scheduled on nodes with these taints.",
+  "items": {
+    "type": "object",
+    "properties": {
+      "operator": {
+        "type": "string",
+        "description": "How the taint is matched: `Exists` matches any value of the key, `Equal` requires `value` to be equal.",
+        "x-helm-tpl": true,
+        "x-docs-required": true,
+        "examples": [
+          "Equal"
+        ]
+      },
+      "key": {
+        "type": "string",
+        "description": "Key of the taint. Required when `operator` is `Equal`.",
+        "x-helm-tpl": true
+      },
+      "value": {
+        "type": "string",
+        "description": "Value of the taint. Required when `operator` is `Equal`, and must be empty when it is `Exists`.",
+        "x-helm-tpl": true
+      },
+      "effect": {
+        "type": "string",
+        "description": "Effect of the taint to tolerate: `NoSchedule`, `PreferNoSchedule` or `NoExecute`. All effects match when empty.",
+        "x-helm-tpl": true
+      },
+      "tolerationSeconds": {
+        "type": "integer",
+        "description": "Seconds the pod stays bound to a node with a `NoExecute` taint before it is evicted. Only applies to the `NoExecute` effect.",
+        "examples": [
+          300
+        ]
+      }
+    },
+    "additionalProperties": false,
+    "description": "A toleration of a node taint."
+  }
+}

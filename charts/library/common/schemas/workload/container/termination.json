@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Where Kubernetes reads the termination message of the container from, which is shown when the container exits.",
+  "properties": {
+    "messagePolicy": {
+      "type": "string",
+      "description": "Where the termination message is taken from (`terminationMessagePolicy`): `File` reads only the message file, `FallbackToLogsOnError` uses the end of the container log when the file is empty and the container failed.",
+      "x-helm-tpl": true,
+      "examples": [
+        "FallbackToLogsOnError"
+      ]
+    },
+    "messagePath": {
+      "type": "string",
+      "description": "Path of the file the container writes its termination message to (`terminationMessagePath`). Kubernetes uses `/dev/termination-log` when empty.",
+      "x-helm-tpl": true,
+      "examples": [
+        "/dev/termination-log"
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "x-docs-page": {
+    "title": "Termination"
+  }
+}

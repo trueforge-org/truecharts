@@ -32,17 +32,6 @@ cnpg:
     database: "app"
     user: "app"
     password: test-password
-    # -- change to supervised to disable unsupervised updates
-    # Example of rolling update strategy:
-    # - unsupervised: automated update of the primary once all
-    #                 replicas have been upgraded (default)
-    # - supervised: requires manual supervision to perform
-    #               the switchover of the primary
-    primaryUpdateStrategy: unsupervised
-    # -- storage size for the two pvc's per instance
-    storage:
-      size: "256Gi"
-      walsize: "256Gi"
     pooler:
       # -- enable to create extra pgbouncer for readonly access
       createRO: false
@@ -59,16 +48,6 @@ cnpg:
     database: "app2"
     user: "app2"
     password: test-password
-    # Example of rolling update strategy:
-    # - unsupervised: automated update of the primary once all
-    #                 replicas have been upgraded (default)
-    # - supervised: requires manual supervision to perform
-    #               the switchover of the primary
-    primaryUpdateStrategy: unsupervised
-    # -- storage size for the two pvc's per instance
-    storage:
-      size: "256Gi"
-      walsize: "256Gi"
     pooler:
       # -- enable to create extra pgbouncer for readonly access
       createRO: true
@@ -85,17 +64,6 @@ cnpg:
     database: "app2"
     user: "app2"
     password: test-password
-    # -- change to supervised to disable unsupervised updates
-    # Example of rolling update strategy:
-    # - unsupervised: automated update of the primary once all
-    #                 replicas have been upgraded (default)
-    # - supervised: requires manual supervision to perform
-    #               the switchover of the primary
-    primaryUpdateStrategy: unsupervised
-    # -- storage size for the two pvc's per instance
-    storage:
-      size: "256Gi"
-      walsize: "256Gi"
     pooler:
       # -- enable to create extra pgbouncer for readonly access
       createRO: true

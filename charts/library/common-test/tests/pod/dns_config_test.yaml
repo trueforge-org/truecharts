@@ -216,7 +216,7 @@ tests:
                 - 1.1.1.1
     asserts:
       - failedTemplate:
-          errorMessage: Expected no more than [3] [dnsConfig.nameservers], but got [4]
+          errorPattern: "at '/workload/workload-name1/podSpec/dnsConfig/nameservers': maxItems: got 4, want 3"
 
   - it: should fail with more than 6 Searches
     set:
@@ -237,4 +237,4 @@ tests:
                 - example.com
     asserts:
       - failedTemplate:
-          errorMessage: Expected no more than [6] [dnsConfig.searches], but got [7]
+          errorPattern: "at '/workload/workload-name1/podSpec/dnsConfig/searches': maxItems: got 7, want 6"

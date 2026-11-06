@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "source": {
+        "type": "object",
+        "properties": {
+          "persistentVolumeClaimName": {
+            "type": "string",
+            "description": "Name of the PersistentVolumeClaim to snapshot."
+          },
+          "volumeSnapshotContentName": {
+            "type": "string",
+            "description": "Name of an existing VolumeSnapshotContent to use."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Source of the snapshot. Set one of `persistentVolumeClaimName` or `volumeSnapshotContentName`.",
+        "default": {},
+        "x-docs-required": true
+      },
+      "volumeSnapshotClassName": {
+        "type": "string",
+        "description": "Name of the VolumeSnapshotClass used to create the snapshot."
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Labels of the VolumeSnapshot.",
+        "default": {},
+        "x-helm-tpl": "On value only"
+      },
+      "annotationsList": {
+        "allOf": [
+          {
+            "$ref": "special/annotationsList.json"
+          }
+        ],
+        "description": "Additional annotations as a list of name and value pairs, merged into the annotations"
+      },
+      "labelsList": {
+        "allOf": [
+          {
+            "$ref": "special/labelsList.json"
+          }
+        ],
+        "description": "Additional labels as a list of name and value pairs, merged into the labels"
+      },
+      "annotations": {
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
+        "description": "Annotations of the VolumeSnapshot.",
+        "default": {},
+        "x-helm-tpl": "On value only"
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Create this volume snapshot when true. Accepts a Helm `tpl` string that renders to `true` or `false`.",
+        "default": false,
+        "x-helm-tpl": true,
+        "x-docs-required": true
+      },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "special/namespaces.json"
+          }
+        ],
+        "description": "Namespace to create this object in. Overrides the chart-wide `namespace` and `global.namespace`.",
+        "default": "",
+        "x-helm-tpl": true
+      }
+    },
+    "additionalProperties": false,
+    "description": "A VolumeSnapshot.",
+    "default": {}
+  },
+  "description": "VolumeSnapshots, keyed by name."
+}

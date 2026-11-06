@@ -1,0 +1,159 @@
+suite: persistence projected sources schema coverage fail test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should fail on unknown keys in persistence projected serviceAccountToken
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: projected
+          sources:
+            - serviceAccountToken:
+                path: some-path
+                unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/sources/0/serviceAccountToken': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in persistence projected secret
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: projected
+          sources:
+            - secret:
+                unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/sources/0/secret': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on missing required keys in persistence projected secret
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: projected
+          sources:
+            - secret:
+                optional: true
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/sources/0/secret': missing properties 'objectName', 'items'"
+
+  - it: should fail on unknown and missing keys in persistence projected secret items
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: projected
+          sources:
+            - secret:
+                objectName: my-secret
+                items:
+                  - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/sources/0/secret/items/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in persistence projected configMap
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: projected
+          sources:
+            - configMap:
+                unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/sources/0/configMap': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on missing required keys in persistence projected configMap
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: projected
+          sources:
+            - configMap:
+                optional: true
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/sources/0/configMap': missing properties 'objectName', 'items'"
+
+  - it: should fail on unknown and missing keys in persistence projected configMap items
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: projected
+          sources:
+            - configMap:
+                objectName: my-configmap
+                items:
+                  - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/sources/0/configMap/items/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in persistence projected downwardAPI
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: projected
+          sources:
+            - downwardAPI:
+                unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/sources/0/downwardAPI': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on missing required keys in persistence projected downwardAPI
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: projected
+          sources:
+            - downwardAPI: {}
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/sources/0/downwardAPI': missing property 'items'"
+
+  - it: should fail on unknown keys in persistence projected downwardAPI fieldRef
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: projected
+          sources:
+            - downwardAPI:
+                items:
+                  - path: some-path
+                    fieldRef:
+                      unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/sources/0/downwardAPI/items/0/fieldRef': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in persistence projected downwardAPI resourceFieldRef
+    set:
+      persistence:
+        my-volume:
+          enabled: true
+          type: projected
+          sources:
+            - downwardAPI:
+                items:
+                  - path: some-path
+                    resourceFieldRef:
+                      unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/persistence/my-volume/sources/0/downwardAPI/items/0/resourceFieldRef': additional properties 'unknownKey' not allowed"

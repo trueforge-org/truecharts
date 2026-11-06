@@ -1,0 +1,181 @@
+suite: metrics prometheusRule schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render prometheusRule rules with all rule options
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            enabled: true
+            groups:
+              somegroup:
+                rules:
+                    - alert: SomeAlert
+                      expr: up == 0
+                      for: 5m
+                      keep_firing_for: 10m
+                      labels:
+                        severity: warning
+                      annotations:
+                        summary: placeholder
+                    - record: some:recorded
+                      expr: sum(up)
+    asserts:
+      - documentSelector: &rule
+          path: kind
+          value: ServiceMonitor
+        isKind:
+          of: ServiceMonitor
+
+  - it: should render prometheusRule groups with a name
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            enabled: true
+            groups:
+              somegroup:
+                name: customname
+                rules:
+                  - alert: SomeAlert
+                    expr: up == 0
+    asserts:
+      - documentSelector: *rule
+        isKind:
+          of: ServiceMonitor
+
+  - it: should render prometheusRule additionalgroups with rules and additionalrules
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            enabled: true
+            additionalgroups:
+              - name: anothergroup
+                rules:
+                  - alert: SomeAlert
+                    expr: up == 0
+                    for: 5m
+                additionalrules:
+                  - alert: OtherAlert
+                    expr: up == 1
+    asserts:
+      - documentSelector: *rule
+        isKind:
+          of: ServiceMonitor
+
+  - it: should fail on unknown keys in prometheusRule and its groups and rules
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics/prometheusRule': .*unknownKey"
+
+  - it: should fail on unknown keys in prometheusRule groups
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            groups:
+              somegroup:
+                unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics/prometheusRule/groups/somegroup': .*unknownKey"
+
+  - it: should fail on unknown keys in prometheusRule rules
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            groups:
+              somegroup:
+                rules:
+                  - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics/prometheusRule/groups/somegroup/rules/0': .*unknownKey"
+
+  - it: should fail on unknown keys in prometheusRule additionalgroups and their rules
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            additionalgroups:
+              - unknownKey: value
+                rules:
+                  - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics/prometheusRule/additionalgroups/0': .*unknownKey"
+
+  - it: should fail on wrong value types in prometheusRule rules
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          endpoints:
+            - port: main
+          prometheusRule:
+            groups:
+              somegroup:
+                name: [a]
+                rules:
+                  - record: [a]
+                    for: [a]
+                    keep_firing_for: [a]
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics/prometheusRule/groups/somegroup/name'"

@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "A port of the Service, keyed by name.",
+  "properties": {
+    "nodePort": {
+      "type": [
+        "integer",
+        "string"
+      ],
+      "description": "Port opened on every node. Only for `type: NodePort`.",
+      "x-helm-tpl": true,
+      "x-docs-required": true,
+      "x-docs-appliesTo": [
+        "NodePort"
+      ],
+      "examples": [
+        30080
+      ]
+    },
+    "targetSelector": {
+      "type": "string",
+      "description": "Name of the container port or workload the port points to. Defaults to the primary workload.",
+      "x-helm-tpl": true
+    },
+    "port": {
+      "type": [
+        "integer",
+        "string"
+      ],
+      "description": "Port the Service listens on.",
+      "minimum": 1,
+      "x-helm-tpl": true,
+      "x-docs-required": true,
+      "examples": [
+        8080
+      ]
+    },
+    "targetPort": {
+      "type": [
+        "integer",
+        "string"
+      ],
+      "description": "Port on the pod the traffic is sent to, a number only. Defaults to `port`.",
+      "x-helm-tpl": true,
+      "examples": [
+        8080
+      ]
+    },
+    "protocol": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "tcp",
+            "udp",
+            "http",
+            "https"
+          ]
+        },
+        {
+          "type": "string",
+          "pattern": "^\\{\\{.*\\}\\}$"
+        }
+      ],
+      "description": "Protocol of the port: `tcp`, `udp`, `sctp`, `http` or `https`. `http` and `https` are used as `TCP` where needed. Also used by container ports and probes.",
+      "x-helm-tpl": true
+    },
+    "appProtocol": {
+      "type": "string",
+      "description": "Application protocol of the port, eg `https`. Also used by the `Endpoints` and `EndpointSlice` objects of `type: ExternalIP`."
+    },
+    "hostPort": {
+      "type": [
+        "integer",
+        "string"
+      ],
+      "description": "Port opened on the node by the container. Avoid this unless the app cannot work without it.",
+      "x-helm-tpl": true
+    },
+    "enabled": {
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "description": "Create this port. Supports Helm `tpl`.",
+      "x-helm-tpl": true
+    },
+    "primary": {
+      "type": "boolean",
+      "description": "Make this the primary port of the Service. Only 1 port can be primary."
+    }
+  },
+  "additionalProperties": false,
+  "x-docs-page": {
+    "title": "Ports"
+  }
+}

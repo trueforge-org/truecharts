@@ -161,8 +161,7 @@ tests:
           my-middleware1:
             enabled: true
             type: plugin-bouncer
-            data:
-              foo: bar
+            data: {}
     asserts:
       - failedTemplate:
           errorMessage: Middleware (plugin-bouncer) - Expected [enabled] to be set
@@ -178,4 +177,4 @@ tests:
               enabled: some-value
     asserts:
       - failedTemplate:
-          errorMessage: Middleware (plugin-bouncer) - Expected [enabled] to be a boolean, but got [string]
+          errorPattern: "at '/ingressMiddlewares/traefik/my-middleware1/data/enabled'"

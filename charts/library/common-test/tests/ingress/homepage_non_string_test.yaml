@@ -1,0 +1,54 @@
+suite: ingress - homepage non-string widget values test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should accept numbers and booleans in the custom widget settings and render them as strings
+    set:
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 80
+      ingress:
+        my-ingress1:
+          enabled: true
+          primary: true
+          integrations:
+            traefik:
+              enabled: false
+            homepage:
+              enabled: true
+              widget:
+                custom:
+                  some-bool: true
+                  some-number: 3
+                  some-null: null
+          hosts:
+            - host: test-host
+              paths:
+                - path: /test-path
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Ingress
+        equal:
+          path: metadata.annotations["gethomepage.dev/widget.some-bool"]
+          value: "true"
+      - documentSelector:
+          path: kind
+          value: Ingress
+        equal:
+          path: metadata.annotations["gethomepage.dev/widget.some-number"]
+          value: "3"
+      - documentSelector:
+          path: kind
+          value: Ingress
+        notExists:
+          path: metadata.annotations["gethomepage.dev/widget.some-null"]

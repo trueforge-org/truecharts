@@ -4,15 +4,14 @@ title: Job
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
 - See the [Full Examples](/truecharts-common/workload/job#full-examples) section for complete examples.
-- See the [Workload](/truecharts-common/workload) documentation for more information
 
 :::
 
 :::tip
 
-Replace references to `$name` with the actual name you want to use.
+- See all available keys of this object on the [Workload](/truecharts-common/workload) page.
+- These options apply only when `type: Job`.
 
 :::
 
@@ -20,150 +19,102 @@ Replace references to `$name` with the actual name you want to use.
 
 - `.Values.workload.$name`
 
-## Notes
-
-Value of `workload.$name.podSpec.restartPolicy` can **not** be `Always` for this type of workload
-
 ---
 
 ## `completionMode`
 
-Define the completionMode
+Completion mode of a Job: `NonIndexed` or `Indexed` (`completionMode`).
 
-|            |                                 |
-| ---------- | ------------------------------- |
-| Key        | `workload.$name.completionMode` |
-| Type       | `string`                        |
-| Required   | ❌                              |
-| Helm `tpl` | ❌                              |
-| Default    | `NonIndexed`                    |
-
-Valid Values:
-
-- `Indexed`
-- `NonIndexed`
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    completionMode: Indexed
-```
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.completionMode` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Allowed values | `"Indexed"`, `"NonIndexed"` |
+| Applies to | `CronJob`, `Job` |
 
 ---
 
 ## `backoffLimit`
 
-Define the backoffLimit
+Number of retries before a Job is marked as failed (`backoffLimit`).
 
-|            |                               |
-| ---------- | ----------------------------- |
-| Key        | `workload.$name.backoffLimit` |
-| Type       | `int`                         |
-| Required   | ❌                            |
-| Helm `tpl` | ❌                            |
-| Default    | `5`                           |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    backoffLimit: 5
-```
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.backoffLimit` |
+| Type | `int` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Applies to | `CronJob`, `Job` |
 
 ---
 
 ## `completions`
 
-Define the completions
+Number of pods that must finish successfully for a Job to complete (`completions`).
 
-|            |                              |
-| ---------- | ---------------------------- |
-| Key        | `workload.$name.completions` |
-| Type       | `int`                        |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
-| Default    | unset                        |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    completions: 5
-```
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.completions` |
+| Type | `number` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Applies to | `CronJob`, `Job` |
 
 ---
 
 ## `parallelism`
 
-Define the parallelism
+Maximum number of pods of a Job that run at the same time (`parallelism`).
 
-|            |                              |
-| ---------- | ---------------------------- |
-| Key        | `workload.$name.parallelism` |
-| Type       | `int`                        |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
-| Default    | `1`                          |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    parallelism: 5
-```
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.parallelism` |
+| Type | `int` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Applies to | `CronJob`, `Job` |
 
 ---
 
 ## `ttlSecondsAfterFinished`
 
-Define the ttlSecondsAfterFinished
+Seconds after which a finished Job is deleted automatically (`ttlSecondsAfterFinished`).
 
-|            |                                          |
-| ---------- | ---------------------------------------- |
-| Key        | `workload.$name.ttlSecondsAfterFinished` |
-| Type       | `int`                                    |
-| Required   | ❌                                       |
-| Helm `tpl` | ❌                                       |
-| Default    | `120`                                    |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    ttlSecondsAfterFinished: 100
-```
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.ttlSecondsAfterFinished` |
+| Type | `int` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Applies to | `CronJob`, `Job` |
 
 ---
 
 ## `activeDeadlineSeconds`
 
-Define the activeDeadlineSeconds
+Maximum number of seconds a Job can run before it is stopped (`activeDeadlineSeconds`).
 
-|            |                                        |
-| ---------- | -------------------------------------- |
-| Key        | `workload.$name.activeDeadlineSeconds` |
-| Type       | `int`                                  |
-| Required   | ❌                                     |
-| Helm `tpl` | ❌                                     |
-| Default    | unset                                  |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    activeDeadlineSeconds: 100
-```
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.activeDeadlineSeconds` |
+| Type | `int` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Applies to | `CronJob`, `Job` |
 
 ---
 
 ## Full Examples
+
+### Every option
 
 ```yaml
 workload:
@@ -177,12 +128,37 @@ workload:
     parallelism: 5
     ttlSecondsAfterFinished: 100
     activeDeadlineSeconds: 100
+    suspend: false
     podSpec:
       restartPolicy: Never
+      containers:
+        container-name:
+          enabled: true
+          primary: true
+          imageSelector: image
+```
 
-  other-workload-name:
+### NonIndexed
+
+```yaml
+workload:
+  workload-name:
     enabled: true
-    primary: false
+    primary: true
     type: Job
-    podSpec: {}
+    backoffLimit: 2
+    completionMode: NonIndexed
+    completions: 1
+    ttlSecondsAfterFinished: 3600
+    podSpec:
+      restartPolicy: OnFailure
+      containers:
+        container-name:
+          enabled: true
+          primary: true
+          imageSelector: image
+          command:
+            - /bin/sh
+            - -c
+            - echo "done"
 ```

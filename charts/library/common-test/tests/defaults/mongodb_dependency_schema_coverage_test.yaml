@@ -1,0 +1,103 @@
+suite: mongodb dependency schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render the mongodb secret with all mongodb keys set
+    set:
+      mongodb:
+        enabled: true
+        includeCommon: true
+        password: my-password
+        rootPassword: my-root-password
+        mongodbUsername: my-user
+        mongodbDatabase: my-database
+        creds:
+          mongodbPassword: my-password
+          mongodbRootPassword: my-root-password
+          plain: my-mongodb
+          plainhost: my-mongodb
+          plainport: my-mongodb:27017
+          plainporthost: my-mongodb:27017
+          complete: mongodb://my-user:my-password@my-mongodb:27017/my-database
+          urlssl: mongodb://my-user:my-password@my-mongodb:27017/my-database?ssl=true
+          urltls: mongodb://my-user:my-password@my-mongodb:27017/my-database?tls=true
+          jdbc: jdbc:mongodb://my-mongodb:27017/my-database
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Secret
+        documentIndex: 0
+
+  - it: should render the mongodb secret with the string enabled key
+    set:
+      mongodb:
+        enabled: "true"
+        password: my-password
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Secret
+        documentIndex: 0
+
+  - it: should fail with an empty mongodb password
+    set:
+      mongodb:
+        enabled: true
+        password: ""
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/mongodb/password'': minLength: got 0, want 1'
+
+  - it: should fail with an empty mongodb root password
+    set:
+      mongodb:
+        enabled: true
+        password: my-password
+        rootPassword: ""
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/mongodb/rootPassword'': minLength: got 0, want 1'
+
+  - it: should fail with an unknown key in mongodb creds
+    set:
+      mongodb:
+        enabled: true
+        password: my-password
+        creds:
+          bogus: value
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/mongodb/creds'': additional properties ''bogus'' not allowed'
+
+  - it: should accept the values of a mongodb subchart next to the keys read by common
+    set:
+      mongodb:
+        enabled: true
+        password: my-password
+        workload:
+          main:
+            enabled: true
+        service:
+          main:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Secret
+        documentIndex: 0
+
+  - it: should fail with a wrong type in the mongodb subchart values
+    set:
+      mongodb:
+        enabled: true
+        password: my-password
+        workload: str
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/mongodb/workload'''

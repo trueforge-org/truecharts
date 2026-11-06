@@ -13,7 +13,7 @@ tests:
           annotations: not-a-dict
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Expected [annotations] to be a dictionary, but got [string]
+          errorPattern: 'at ''/persistence/volume1/annotations'': got string, want object'
 
   - it: should fail with labels not a dict
     set:
@@ -23,7 +23,7 @@ tests:
           labels: not-a-dict
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Expected [labels] to be a dictionary, but got [string]
+          errorPattern: 'at ''/persistence/volume1/labels'': got string, want object'
 
   - it: should fail with pod targetSelector not a map
     set:
@@ -33,7 +33,7 @@ tests:
           targetSelector: not-a-map
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Expected [targetSelector] to be [dict], but got [string]
+          errorPattern: 'at ''/persistence/volume1/targetSelector'': got string, want object'
 
   - it: should fail with invalid type
     set:
@@ -43,7 +43,7 @@ tests:
           type: not-a-type
     asserts:
       - failedTemplate:
-          errorMessage: Persistence - Expected [type] to be one of [pvc, vct, emptyDir, nfs, iscsi, hostPath, secret, configmap, device, projected], but got [not-a-type]
+          errorPattern: 'at ''/persistence/volume1/type'': value must be one of ''pvc'', ''hostPath'', ''emptyDir'', ''nfs'', ''iscsi'', ''device'', ''configmap'', ''secret'', ''vct'', ''projected'''
 
   - it: should fail with invalid accessMode
     set:
@@ -292,7 +292,7 @@ tests:
             - not-a-map
     asserts:
       - failedTemplate:
-          errorMessage: SMB CSI - Expected [mountOption] item to be a dict, but got [string]
+          errorPattern: 'at ''/persistence/volume1/mountOptions/0'': got string, want object'
 
   - it: should fail with item in mountOptions not a map in pvc static nfs
     set:
@@ -308,7 +308,7 @@ tests:
             - not-a-map
     asserts:
       - failedTemplate:
-          errorMessage: NFS CSI - Expected [mountOption] item to be a dict, but got [string]
+          errorPattern: 'at ''/persistence/volume1/mountOptions/0'': got string, want object'
 
   - it: should fail with invalid static mode
     set:

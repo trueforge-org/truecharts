@@ -1,0 +1,309 @@
+suite: hpa metrics schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render hpa resource and containerResource metrics
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      hpa:
+        hpa-a:
+          enabled: true
+          metrics:
+            - type: Resource
+              resource:
+                name: cpu
+                target:
+                  type: Utilization
+                  averageUtilization: 80
+            - type: Resource
+              resource:
+                name: memory
+                target:
+                  type: AverageValue
+                  averageValue: 500
+                  value: 600
+        hpa-b:
+          enabled: true
+          metrics:
+            - type: ContainerResource
+              containerResource:
+                name: cpu
+                container: main
+                target:
+                  type: AverageValue
+                  averageValue: 200m
+                  value: 300m
+            - type: ContainerResource
+              containerResource:
+                name: memory
+                container: main
+                target:
+                  type: AverageValue
+                  averageValue: 200
+                  value: 300
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: HorizontalPodAutoscaler
+      - documentIndex: 1
+        equal:
+          path: spec.metrics[0].resource.name
+          value: cpu
+      - documentIndex: 2
+        equal:
+          path: spec.metrics[0].containerResource.container
+          value: main
+
+  - it: should render hpa pods, object and external metrics
+    set:
+      workload: *workload
+      hpa:
+        hpa-a:
+          enabled: true
+          metrics:
+            - type: Pods
+              pods:
+                metric:
+                  name: packets-per-second
+                  selector:
+                    matchLabels:
+                      app: demo
+                target:
+                  type: AverageValue
+                  averageValue: 1k
+            - type: Pods
+              pods:
+                metric:
+                  name: other-packets
+                target:
+                  type: AverageValue
+                  averageValue: 1000
+        hpa-b:
+          enabled: true
+          metrics:
+            - type: Object
+              object:
+                metric:
+                  name: requests-per-second
+                  selector:
+                    matchLabels:
+                      app: demo
+                describedObject:
+                  apiVersion: networking.k8s.io/v1
+                  kind: Ingress
+                  name: my-ingress
+                target:
+                  type: Value
+                  value: 10k
+            - type: Object
+              object:
+                metric:
+                  name: other-requests
+                describedObject:
+                  apiVersion: v1
+                  kind: Service
+                  name: my-service
+                target:
+                  type: AverageValue
+                  value: 10
+                  averageValue: 10
+        hpa-c:
+          enabled: true
+          metrics:
+            - type: External
+              external:
+                metric:
+                  name: queue-length
+                  selector:
+                    matchLabels:
+                      queue: work
+                target:
+                  type: Value
+                  value: 30
+                  averageValue: 30
+            - type: External
+              external:
+                metric:
+                  name: other-queue
+                target:
+                  type: AverageValue
+                  value: 30k
+                  averageValue: 30k
+    asserts:
+      - documentIndex: 1
+        equal:
+          path: spec.metrics[0].pods.metric.name
+          value: packets-per-second
+      - documentIndex: 2
+        equal:
+          path: spec.metrics[0].object.describedObject.kind
+          value: Ingress
+      - documentIndex: 3
+        equal:
+          path: spec.metrics[0].external.metric.name
+          value: queue-length
+
+  - it: should fail on unknown keys and missing required keys in hpa metrics
+    set:
+      workload: *workload
+      hpa:
+        my-hpa:
+          enabled: true
+          metrics:
+            - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/metrics/0': missing property 'type'"
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/metrics/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys and bad enums in hpa resource and containerResource metrics
+    set:
+      workload: *workload
+      hpa:
+        my-hpa:
+          enabled: true
+          metrics:
+            - type: Resource
+              resource:
+                name: disk
+                unknownKey: value
+                target:
+                  type: Value
+                  unknownKey: value
+            - type: ContainerResource
+              containerResource:
+                name: disk
+                unknownKey: value
+                target:
+                  type: Value
+                  unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/metrics/0/resource': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/metrics/0/resource/name': value must be one of 'cpu', 'memory'"
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/metrics/0/resource/target': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/metrics/0/resource/target/type': value must be one of 'AverageValue', 'Utilization'"
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/metrics/1/containerResource': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/metrics/1/containerResource/target': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys and bad enums in hpa pods metrics
+    set:
+      workload: *workload
+      hpa:
+        my-hpa:
+          enabled: true
+          metrics:
+            - type: Pods
+              pods:
+                unknownKey: value
+                metric:
+                  unknownKey: value
+                  selector:
+                    unknownKey: value
+                target:
+                  type: Value
+                  unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/metrics/0/pods': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/metrics/0/pods/metric': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/metrics/0/pods/metric/selector': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/metrics/0/pods/target': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/metrics/0/pods/target/type': value must be 'AverageValue'"
+
+  - it: should fail on unknown keys and bad enums in hpa object and external metrics
+    set:
+      workload: *workload
+      hpa:
+        my-hpa:
+          enabled: true
+          metrics:
+            - type: Object
+              object:
+                unknownKey: value
+                metric:
+                  unknownKey: value
+                  selector:
+                    unknownKey: value
+                describedObject:
+                  unknownKey: value
+                target:
+                  type: Utilization
+                  unknownKey: value
+            - type: External
+              external:
+                unknownKey: value
+                metric:
+                  unknownKey: value
+                  selector:
+                    unknownKey: value
+                target:
+                  type: Utilization
+                  unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/metrics/0/object': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/metrics/0/object/metric': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/metrics/0/object/metric/selector': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/metrics/0/object/describedObject': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/metrics/0/object/target': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/metrics/1/external/metric/selector': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/hpa/my-hpa/metrics/1/external/target': additional properties 'unknownKey' not allowed"
+
+  - it: should render hpa in the namespace it is given when namespace is set
+    set:
+      workload: *workload
+      hpa:
+        hpa-ns:
+          enabled: true
+          namespace: hpa-ns
+          metrics:
+            - type: Resource
+              resource:
+                name: cpu
+                target:
+                  type: Utilization
+                  averageUtilization: 80
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: HorizontalPodAutoscaler
+      - documentIndex: 1
+        equal:
+          path: metadata.namespace
+          value: hpa-ns

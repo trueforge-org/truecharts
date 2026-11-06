@@ -1,0 +1,102 @@
+suite: solr dependency schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render the solr secret with authentication enabled
+    set:
+      solr:
+        enabled: true
+        includeCommon: true
+        password: my-password
+        solrUsername: my-user
+        solrCores: my-core
+        solrEnableAuthentication: "yes"
+        creds:
+          solrPassword: my-password
+          plain: my-solr
+          plainhost: my-solr
+          portHost: my-solr:8983
+          url: http://my-user:my-password@my-solr:8983/url/my-core
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Secret
+        documentIndex: 0
+
+  - it: should render the solr secret with authentication disabled and numeric cores
+    set:
+      solr:
+        enabled: true
+        password: my-password
+        solrCores: 2
+        solrEnableAuthentication: "no"
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Secret
+        documentIndex: 0
+
+  - it: should render the solr secret with the string enabled key
+    set:
+      solr:
+        enabled: "true"
+        password: my-password
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Secret
+        documentIndex: 0
+
+  - it: should fail with an empty solr password
+    set:
+      solr:
+        enabled: true
+        password: ""
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/solr/password'': minLength: got 0, want 1'
+
+  - it: should fail with an unknown key in solr creds
+    set:
+      solr:
+        enabled: true
+        password: my-password
+        creds:
+          bogus: value
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/solr/creds'': additional properties ''bogus'' not allowed'
+
+  - it: should accept the values of a solr subchart next to the keys read by common
+    set:
+      solr:
+        enabled: true
+        password: my-password
+        workload:
+          main:
+            enabled: true
+        service:
+          main:
+            enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Secret
+        documentIndex: 0
+
+  - it: should fail with a wrong type in the solr subchart values
+    set:
+      solr:
+        enabled: true
+        password: my-password
+        workload: str
+    asserts:
+      - failedTemplate:
+          errorPattern: 'at ''/solr/workload'''

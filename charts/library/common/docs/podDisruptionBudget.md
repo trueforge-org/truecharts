@@ -5,7 +5,7 @@ title: Pod Disruption Budget
 :::note
 
 - Examples under each key are only to be used as a placement guide
-- See the [Full Examples](/truecharts-common/poddisruptionbudget#full-examples) section for complete examples.
+- See the [Full Examples](/truecharts-common/podDisruptionBudget#full-examples) section for complete examples.
 
 :::
 
@@ -13,230 +13,226 @@ title: Pod Disruption Budget
 
 - `.Values.podDisruptionBudget`
 
-## Naming scheme
-
-- `$FullName-$podDisruptionBudgetName` (release-name-chart-name-podDisruptionBudgetName)
-
-:::tip
-
-- Replace references to `$name` with the actual name you want to use.
-
-:::
-
 ---
 
 ## `podDisruptionBudget`
 
-Create Pod Disruption Budget objects
+Pod Disruption Budgets, keyed by name.
 
-|            |                       |
-| ---------- | --------------------- |
-| Key        | `podDisruptionBudget` |
-| Type       | `map`                 |
-| Required   | ❌                    |
-| Helm `tpl` | ❌                    |
-| Default    | `{}`                  |
-
-Example
-
-```yaml
-podDisruptionBudget: {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `podDisruptionBudget` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-### `$name`
+## `$name`
 
-Define Pod Disruption Budget
+A Pod Disruption Budget.
 
-:::note
-
-At least one of the following keys must be defined
-
-[`minAvailable`](/truecharts-common/poddisruptionbudget#minavailable), [`maxUnavailable`](/truecharts-common/poddisruptionbudget#maxunavailable)
-
-:::
-
-|            |                             |
-| ---------- | --------------------------- |
-| Key        | `podDisruptionBudget.$name` |
-| Type       | `map`                       |
-| Required   | ✅                          |
-| Helm `tpl` | ❌                          |
-| Default    | `{}`                        |
-
-Example
-
-```yaml
-podDisruptionBudget:
-  pdb-name: {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `podDisruptionBudget.$name` |
+| Type | `map` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-#### `enabled`
+## `$name.unhealthyPodEvictionPolicy`
 
-Enables or Disables the Pod Disruption Budget
+Whether unhealthy pods may be evicted regardless of the budget. Leave empty to use the Kubernetes default.
 
-|            |                                     |
-| ---------- | ----------------------------------- |
-| Key        | `podDisruptionBudget.$name.enabled` |
-| Type       | `bool`                              |
-| Required   | ✅                                  |
-| Helm `tpl` | ✅                                  |
-| Default    | `false`                             |
-
-Example
-
-```yaml
-podDisruptionBudget:
-  pdb-name:
-    enabled: true
-```
+| Field | Value |
+| --- | --- |
+| Key | `podDisruptionBudget.$name.unhealthyPodEvictionPolicy` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `""` |
+| Allowed values | `"IfHealthyBudget"`, `"AlwaysAllow"` |
+| Pattern | `^\{\{.*\}\}$` |
 
 ---
 
-#### `namespace`
+## `$name.enabled`
 
-Define the namespace for this object
+Create this Pod Disruption Budget when true. Accepts a Helm `tpl` string that renders to `true` or `false`.
 
-|            |                                       |
-| ---------- | ------------------------------------- |
-| Key        | `podDisruptionBudget.$name.namespace` |
-| Type       | `string`                              |
-| Required   | ❌                                    |
-| Helm `tpl` | ✅                                    |
-| Default    | `""`                                  |
-
-Example
-
-```yaml
-podDisruptionBudget:
-  pdb-name:
-    namespace: some-namespace
-```
+| Field | Value |
+| --- | --- |
+| Key | `podDisruptionBudget.$name.enabled` |
+| Type | `bool` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | `false` |
 
 ---
 
-#### `labels`
+## `$name.namespace`
+
+Namespace to create this object in. Overrides the chart-wide `namespace` and `global.namespace`.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `podDisruptionBudget.$name.namespace` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `""` |
+
+---
+
+## `$name.labels`
 
 Additional labels for Pod Disruption Budget
 
-|            |                                    |
-| ---------- | ---------------------------------- |
-| Key        | `podDisruptionBudget.$name.labels` |
-| Type       | `map`                              |
-| Required   | ❌                                 |
-| Helm `tpl` | ✅ (On value only)                 |
-| Default    | `{}`                               |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
-Example
-
-```yaml
-podDisruptionBudget:
-  pdb-name:
-    labels:
-      key: value
-```
+| Field | Value |
+| --- | --- |
+| Key | `podDisruptionBudget.$name.labels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
 
 ---
 
-#### `annotations`
+## `$name.annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `podDisruptionBudget.$name.annotationsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `podDisruptionBudget.$name.labelsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.annotations`
 
 Additional annotations for Pod Disruption Budget
 
-|            |                                         |
-| ---------- | --------------------------------------- |
-| Key        | `podDisruptionBudget.$name.annotations` |
-| Type       | `map`                                   |
-| Required   | ❌                                      |
-| Helm `tpl` | ✅ (On value only)                      |
-| Default    | `{}`                                    |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `podDisruptionBudget.$name.annotations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
+
+---
+
+## `$name.minAvailable`
+
+Minimum number or percentage of pods that must stay available during a disruption. Do not combine with `maxUnavailable`.
+
+| Field | Value |
+| --- | --- |
+| Key | `podDisruptionBudget.$name.minAvailable` |
+| Type | `int` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `""` |
 
 Example
 
 ```yaml
 podDisruptionBudget:
-  pdb-name:
-    annotations:
-      key: value
+  example:
+    minAvailable: 50%
 ```
 
 ---
 
-#### `minAvailable`
+## `$name.maxUnavailable`
 
-Define the minAvailable.
+Maximum number or percentage of pods that may be unavailable during a disruption. Do not combine with `minAvailable`.
 
-|            |                                          |
-| ---------- | ---------------------------------------- |
-| Key        | `podDisruptionBudget.$name.minAvailable` |
-| Type       | `int` or `string`                        |
-| Required   | ❌                                       |
-| Helm `tpl` | ✅                                       |
-| Default    | `""`                                     |
+| Field | Value |
+| --- | --- |
+| Key | `podDisruptionBudget.$name.maxUnavailable` |
+| Type | `int` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `""` |
 
 Example
 
 ```yaml
 podDisruptionBudget:
-  pdb-name:
-    minAvailable: 1
+  example:
+    maxUnavailable: '1'
 ```
 
 ---
 
-#### `maxUnavailable`
+## `$name.targetSelector`
 
-Define the maxUnavailable.
+Name of the workload the budget applies to. Defaults to the primary workload.
 
-|            |                                            |
-| ---------- | ------------------------------------------ |
-| Key        | `podDisruptionBudget.$name.maxUnavailable` |
-| Type       | `int` or `string`                          |
-| Required   | ❌                                         |
-| Helm `tpl` | ✅                                         |
-| Default    | `""`                                       |
-
-Example
-
-```yaml
-podDisruptionBudget:
-  pdb-name:
-    maxUnavailable: 1
-```
+| Field | Value |
+| --- | --- |
+| Key | `podDisruptionBudget.$name.targetSelector` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
-#### `unhealthyPodEvictionPolicy`
+## `$name.customLabels`
 
-Define the unhealthyPodEvictionPolicy
+Labels used to select the pods covered by the budget, replacing the automatically selected pod labels.
 
-|            |                                                        |
-| ---------- | ------------------------------------------------------ |
-| Key        | `podDisruptionBudget.$name.unhealthyPodEvictionPolicy` |
-| Type       | `string`                                               |
-| Required   | ❌                                                     |
-| Helm `tpl` | ✅                                                     |
-| Default    | `""`                                                   |
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
-Valid Values:
-
-- `IfHealthyBudget`
-- `AlwaysAllow`
-
-Example
-
-```yaml
-podDisruptionBudget:
-  pdb-name:
-    unhealthyPodEvictionPolicy: IfHealthyBudget
-```
+| Field | Value |
+| --- | --- |
+| Key | `podDisruptionBudget.$name.customLabels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
 ## Full Examples
 
+### minAvailable
+
+Keep at least one pod of the primary workload running during a voluntary disruption:
+
 ```yaml
 podDisruptionBudget:
   pdb-name:
@@ -248,11 +244,55 @@ podDisruptionBudget:
       key: value
       keytpl: "{{ .Values.some.value }}"
     minAvailable: 1
-    maxUnavailable: 1
     unhealthyPodEvictionPolicy: IfHealthyBudget
+```
 
+### maxUnavailable and a percentage
+
+Do not combine `minAvailable` and `maxUnavailable`. Both also accept a percentage:
+
+```yaml
+podDisruptionBudget:
   other-pdb-name:
     enabled: true
     namespace: some-namespace
+    maxUnavailable: 25%
+    unhealthyPodEvictionPolicy: AlwaysAllow
+```
+
+### Another workload
+
+`targetSelector` is the name of the workload the budget applies to, and defaults to the primary workload:
+
+```yaml
+podDisruptionBudget:
+  worker-pdb:
+    enabled: true
+    targetSelector: worker
+    minAvailable: 50%
+
+workload:
+  worker:
+    enabled: true
+    type: Deployment
+    podSpec:
+      containers:
+        worker:
+          enabled: true
+          primary: true
+          imageSelector: image
+```
+
+### Custom pod labels
+
+`customLabels` replaces the automatically selected pod labels:
+
+```yaml
+podDisruptionBudget:
+  custom-pdb:
+    enabled: true
     minAvailable: 1
+    customLabels:
+      app.kubernetes.io/name: my-app
+      tier: backend
 ```

@@ -4,1353 +4,313 @@ title: Workload
 
 :::note
 
-- Examples under each key are only to be used as a placement guide
 - See the [Full Examples](/truecharts-common/workload#full-examples) section for complete examples.
 
 :::
 
 ## Appears in
 
-- `.Values.workload`
+- `.Values.workload.$name`
 
-## Naming scheme
+---
 
-- Primary: `$FullName` (release-name-chart-name)
-- Non-Primary: `$FullName-$WorkloadName` (release-name-chart-name-workload-name)
+## Child Pages
 
-:::tip
+- [CronJob](/truecharts-common/workload/cronjob)
+- [DaemonSet](/truecharts-common/workload/daemonset)
+- [Deployment](/truecharts-common/workload/deployment)
+- [Job](/truecharts-common/workload/job)
+- [Pod Spec](/truecharts-common/workload/podSpec)
+- [StatefulSet](/truecharts-common/workload/statefulset)
 
-Replace references to `$name` with the actual name you want to use.
+---
+
+## `$name`
+
+A workload, spawned as a Deployment, StatefulSet, DaemonSet, Job or CronJob.
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name` |
+| Type | `map` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
+## `podSpec`
+
+Settings of the pods of the workload: containers, init containers and pod level options.
+
+See [Pod Spec](/truecharts-common/workload/podSpec) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.podSpec` |
+| Type | `map` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
+## `suspend`
+
+Whether the CronJob is suspended, so no new Jobs start (`suspend`). Forced to `true` when `stopAll` is enabled.
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.suspend` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `enabled`
+
+Whether the workload is created.
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.enabled` |
+| Type | `bool` |
+| Required | ✅ |
+| Helm `tpl` | ✅ |
+| Default | `false` |
+
+---
+
+## `primary`
+
+Whether this is the primary workload of the chart. A chart needs one primary workload.
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.primary` |
+| Type | `bool` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
+
+---
+
+## `annotationsList`
+
+Additional annotations as a list of name and value pairs, merged into the annotations of the workload.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.annotationsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `labelsList`
+
+Additional labels as a list of name and value pairs, merged into the labels of the workload.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.labelsList` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `labels`
+
+Additional labels for the workload object.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.labels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
+
+---
+
+## `annotations`
+
+Additional annotations for the workload object.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.annotations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `{}` |
+
+---
+
+## `namespace`
+
+Namespace of the workload. Defaults to the namespace of the release.
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.namespace` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `""` |
+
+---
+
+## `type`
+
+Kind of the workload: `Deployment`, `DaemonSet`, `StatefulSet`, `CronJob` or `Job`.
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.type` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Allowed values | `"Deployment"`, `"DaemonSet"`, `"StatefulSet"`, `"CronJob"`, `"Job"` |
+
+---
+
+## `dbWait`
+
+Not used by common itself. Kept for compatibility with existing values.
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.dbWait` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## Internal Common Keys
+
+:::warning
+
+These keys are only for the internal use of common. Do not use them in charts that are based on common: they can change or be removed at any time, without a breaking change.
 
 :::
 
 ---
 
-## `workload`
+## `initContainers`
 
-Define workload objects
+Not used. Init containers go under `podSpec.initContainers`.
 
-|            |            |
-| ---------- | ---------- |
-| Key        | `workload` |
-| Type       | `map`      |
-| Required   | ❌          |
-| Helm `tpl` | ❌          |
-| Default    | `{}`       |
-
-Example
-
-```yaml
-workload: {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.initContainers` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
-### `$name`
+## `serviceAccountName`
 
-Define workload
+Not used. Set the service account of the pods with `podSpec.serviceAccountName`, or with the top-level `serviceAccount` key and its `targetSelector`.
 
-|            |                  |
-| ---------- | ---------------- |
-| Key        | `workload.$name` |
-| Type       | `map`            |
-| Required   | ✅                |
-| Helm `tpl` | ❌                |
-| Default    | `{}`             |
-
-Example
-
-```yaml
-workload:
-  workload-name: {}
-```
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.serviceAccountName` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ (On value only) |
+| Default | `""` |
 
 ---
 
-#### `enabled`
-
-Enable or disable workload
-
-|            |                          |
-| ---------- | ------------------------ |
-| Key        | `workload.$name.enabled` |
-| Type       | `bool`                   |
-| Required   | ✅                        |
-| Helm `tpl` | ✅                        |
-| Default    | `false`                  |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    enabled: true
-```
-
----
-
-#### `primary`
-
-Set workload as primary
-
-|            |                          |
-| ---------- | ------------------------ |
-| Key        | `workload.$name.primary` |
-| Type       | `bool`                   |
-| Required   | ✅                        |
-| Helm `tpl` | ❌                        |
-| Default    | `false`                  |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    primary: true
-```
-
----
-
-#### `labels`
-
-Define labels for workload
-
-|            |                         |
-| ---------- | ----------------------- |
-| Key        | `workload.$name.labels` |
-| Type       | `map`                   |
-| Required   | ❌                       |
-| Helm `tpl` | ✅ (On value only)       |
-| Default    | `{}`                    |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    labels:
-      key: value
-```
-
----
-
-#### `annotations`
-
-Define annotations for workload
-
-|            |                              |
-| ---------- | ---------------------------- |
-| Key        | `workload.$name.annotations` |
-| Type       | `map`                        |
-| Required   | ❌                            |
-| Helm `tpl` | ✅ (On value only)            |
-| Default    | `{}`                         |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    annotations:
-      key: value
-```
-
----
-
-#### `namespace`
-
-Define the namespace for this object
-
-|            |                            |
-| ---------- | -------------------------- |
-| Key        | `workload.$name.namespace` |
-| Type       | `string`                   |
-| Required   | ❌                          |
-| Helm `tpl` | ✅ (On value only)          |
-| Default    | `""`                       |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    namespace: some-namespace
-```
-
----
-
-#### `type`
-
-Define the kind of the workload
-
-|            |                       |
-| ---------- | --------------------- |
-| Key        | `workload.$name.type` |
-| Type       | `string`              |
-| Required   | ✅                     |
-| Helm `tpl` | ❌                     |
-| Default    | `""`                  |
-
-Valid values
-
-- [`Deployment`](/truecharts-common/workload/deployment)
-- [`DaemonSet`](/truecharts-common/workload/daemonset)
-- [`StatefulSet`](/truecharts-common/workload/statefulset)
-- [`CronJob`](/truecharts-common/workload/cronjob)
-- [`Job`](/truecharts-common/workload/job)
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    type: Deployment
-```
-
----
-
-#### `podSpec`
-
-Define the podSpec for the workload
-
-|            |                          |
-| ---------- | ------------------------ |
-| Key        | `workload.$name.podSpec` |
-| Type       | `map`                    |
-| Required   | ✅                        |
-| Helm `tpl` | ❌                        |
-| Default    | `{}`                     |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec: {}
-```
-
----
-
-##### `labels`
-
-Define labels for podSpec
-
-|            |                                 |
-| ---------- | ------------------------------- |
-| Key        | `workload.$name.podSpec.labels` |
-| Type       | `map`                           |
-| Required   | ❌                               |
-| Helm `tpl` | ✅ (On value only)               |
-| Default    | `{}`                            |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      labels:
-        key: value
-```
-
----
-
-##### `annotations`
-
-Define annotations for podSpec
-
-|            |                                      |
-| ---------- | ------------------------------------ |
-| Key        | `workload.$name.podSpec.annotations` |
-| Type       | `map`                                |
-| Required   | ❌                                    |
-| Helm `tpl` | ✅ (On value only)                    |
-| Default    | `{}`                                 |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      annotations:
-        key: value
-```
-
----
-
-##### `automountServiceAccountToken`
-
-Pod's automountServiceAccountToken
-
-|            |                                                                     |
-| ---------- | ------------------------------------------------------------------- |
-| Key        | `workload.$name.podSpec.automountServiceAccountToken`               |
-| Type       | `bool`                                                              |
-| Required   | ❌                                                                   |
-| Helm `tpl` | ❌                                                                   |
-| Default    | See default [here](/truecharts-common/podoptions#automountserviceaccounttoken) |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      automountServiceAccountToken: true
-```
-
----
-
-##### `serviceAccountName`
-
-:::note
-
-Suggested is to use the top-level [serviceAccount](/truecharts-common/serviceaccount/) key
-to define the service account with `targetSelector`.
-
-Using this key here, is out of our support scope.
-
-:::
-
-Define the service account name for the workload
-
-|            |                                     |
-| ---------- | ----------------------------------- |
-| Key        | `workload.$name.serviceAccountName` |
-| Type       | `string`                            |
-| Required   | ❌                                   |
-| Helm `tpl` | ✅ (On value only)                   |
-| Default    | `""`                                |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    serviceAccountName: some-service-account
-```
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      serviceAccountName: some-service-account
-```
-
----
-
-##### `hostNetwork`
-
-Bind pod to host's network
-
-|            |                                                    |
-| ---------- | -------------------------------------------------- |
-| Key        | `workload.$name.podSpec.hostNetwork`               |
-| Type       | `bool`                                             |
-| Required   | ❌                                                  |
-| Helm `tpl` | ❌                                                  |
-| Default    | See default [here](/truecharts-common/podoptions#hostnetwork) |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      hostNetwork: true
-```
-
-##### `hostPID`
-
-Allow pod to access host's PID namespace
-
-|            |                                                |
-| ---------- | ---------------------------------------------- |
-| Key        | `workload.$name.podSpec.hostPID`               |
-| Type       | `bool`                                         |
-| Required   | ❌                                              |
-| Helm `tpl` | ❌                                              |
-| Default    | See default [here](/truecharts-common/podoptions#hostpid) |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      hostPID: true
-```
-
----
-
-##### `hostIPC`
-
-Allow pod to access host's IPC namespace
-
-|            |                                                |
-| ---------- | ---------------------------------------------- |
-| Key        | `workload.$name.podSpec.hostIPC`               |
-| Type       | `bool`                                         |
-| Required   | ❌                                              |
-| Helm `tpl` | ❌                                              |
-| Default    | See default [here](/truecharts-common/podoptions#hostipc) |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      hostIPC: true
-```
-
----
-
-##### `hostUsers`
-
-Allow pod to access host's users namespace
-
-|            |                                                  |
-| ---------- | ------------------------------------------------ |
-| Key        | `workload.$name.podSpec.hostUsers`               |
-| Type       | `bool`                                           |
-| Required   | ❌                                                |
-| Helm `tpl` | ❌                                                |
-| Default    | See default [here](/truecharts-common/podoptions#hostusers) |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      hostUsers: true
-```
-
----
-
-##### `shareProcessNamespace`
-
-Share Process Namespace with other containers in the pod
-
-|            |                                                              |
-| ---------- | ------------------------------------------------------------ |
-| Key        | `workload.$name.podSpec.shareProcessNamespace`               |
-| Type       | `bool`                                                       |
-| Required   | ❌                                                            |
-| Helm `tpl` | ❌                                                            |
-| Default    | See default [here](/truecharts-common/podoptions#shareprocessnamespace) |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      shareProcessNamespace: true
-```
-
----
-
-##### `enableServiceLinks`
-
-Pod's enableServiceLinks
-
-|            |                                                           |
-| ---------- | --------------------------------------------------------- |
-| Key        | `workload.$name.podSpec.enableServiceLinks`               |
-| Type       | `bool`                                                    |
-| Required   | ❌                                                         |
-| Helm `tpl` | ❌                                                         |
-| Default    | See default [here](/truecharts-common/podoptions#enableservicelinks) |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      enableServiceLinks: true
-```
-
----
-
-##### `restartPolicy`
-
-Pod's restartPolicy
-
-|            |                                                      |
-| ---------- | ---------------------------------------------------- |
-| Key        | `workload.$name.podSpec.restartPolicy`               |
-| Type       | `string`                                             |
-| Required   | ❌                                                    |
-| Helm `tpl` | ✅                                                    |
-| Default    | See default [here](/truecharts-common/podoptions#restartpolicy) |
-
-Valid values
-
-- `Always`
-- `Never`
-- `OnFailure`
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      restartPolicy: OnFailure
-```
-
----
-
-##### `schedulerName`
-
-Pod's schedulerName
-
-|            |                                                      |
-| ---------- | ---------------------------------------------------- |
-| Key        | `workload.$name.podSpec.schedulerName`               |
-| Type       | `string`                                             |
-| Required   | ❌                                                    |
-| Helm `tpl` | ✅                                                    |
-| Default    | See default [here](/truecharts-common/podoptions#schedulername) |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      schedulerName: some-scheduler
-```
-
----
-
-##### `priorityClassName`
-
-Pod's priorityClassName
-
-|            |                                                          |
-| ---------- | -------------------------------------------------------- |
-| Key        | `workload.$name.podSpec.priorityClassName`               |
-| Type       | `string`                                                 |
-| Required   | ❌                                                        |
-| Helm `tpl` | ✅                                                        |
-| Default    | See default [here](/truecharts-common/podoptions#priorityclassname) |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      priorityClassName: some-priority-class-name
-```
-
----
-
-##### `hostname`
-
-Pod's hostname
-
-|            |                                   |
-| ---------- | --------------------------------- |
-| Key        | `workload.$name.podSpec.hostname` |
-| Type       | `string`                          |
-| Required   | ❌                                 |
-| Helm `tpl` | ✅                                 |
-| Default    | `""`                              |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      hostname: some-hostname
-```
-
----
-
-##### `terminationGracePeriodSeconds`
-
-Pod's terminationGracePeriodSeconds
-
-|            |                                                                      |
-| ---------- | -------------------------------------------------------------------- |
-| Key        | `workload.$name.podSpec.terminationGracePeriodSeconds`               |
-| Type       | `int`                                                                |
-| Required   | ❌                                                                    |
-| Helm `tpl` | ✅                                                                    |
-| Default    | See default [here](/truecharts-common/podoptions#terminationgraceperiodseconds) |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      terminationGracePeriodSeconds: 100
-```
-
----
-
-##### `nodeSelector`
-
-Pod's nodeSelector
-
-|            |                                                     |
-| ---------- | --------------------------------------------------- |
-| Key        | `workload.$name.podSpec.nodeSelector`               |
-| Type       | `map`                                               |
-| Required   | ❌                                                   |
-| Helm `tpl` | ✅ (On value only)                                   |
-| Default    | See default [here](/truecharts-common/podoptions#nodeselector) |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      nodeSelector:
-        disk_type: ssd
-```
-
----
-
-##### `topologySpreadConstraints`
-
-Pod's topologySpreadConstraints
-
-|            |                                                                  |
-| ---------- | ---------------------------------------------------------------- |
-| Key        | `workload.$name.podSpec.topologySpreadConstraints`               |
-| Type       | `list` of `map`                                                  |
-| Required   | ❌                                                                |
-| Helm `tpl` | ❌                                                                |
-| Default    | See default [here](/truecharts-common/podoptions#topologyspreadconstraints) |
-
----
-
-##### `hostAliases`
-
-Pod's hostAliases
-
-|            |                                                    |
-| ---------- | -------------------------------------------------- |
-| Key        | `workload.$name.podSpec.hostAliases`               |
-| Type       | `list` of `map`                                    |
-| Required   | ❌                                                  |
-| Helm `tpl` | ❌                                                  |
-| Default    | See default [here](/truecharts-common/podoptions#hostaliases) |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      hostAliases: []
-```
-
----
-
-###### `ip`
-
-Pod's hostAliases ip
-
-|            |                                         |
-| ---------- | --------------------------------------- |
-| Key        | `workload.$name.podSpec.hostAliases.ip` |
-| Type       | `string`                                |
-| Required   | ✅                                       |
-| Helm `tpl` | ✅                                       |
-| Default    | `""`                                    |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      hostAliases:
-        - ip: 1.2.3.4
-```
-
----
-
-###### `hostnames`
-
-Pod's hostAliases hostnames
-
-|            |                                                |
-| ---------- | ---------------------------------------------- |
-| Key        | `workload.$name.podSpec.hostAliases.hostnames` |
-| Type       | `list` of `string`                             |
-| Required   | ✅                                              |
-| Helm `tpl` | ✅ (On each entry)                              |
-| Default    | `[]`                                           |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      hostAliases:
-        - ip: 1.2.3.4
-          hostnames:
-            - myserver.local
-            - storage.local
-```
-
----
-
-###### `dnsPolicy`
-
-Pod's dnsPolicy
-
-:::note
-
-`dnsPolicy` is set automatically to `ClusterFirstWithHostNet` when `hostNetwork` is `true`
-
-:::
-
-|            |                                                  |
-| ---------- | ------------------------------------------------ |
-| Key        | `workload.$name.podSpec.dnsPolicy`               |
-| Type       | `string`                                         |
-| Required   | ❌                                                |
-| Helm `tpl` | ✅                                                |
-| Default    | See default [here](/truecharts-common/podoptions#dnspolicy) |
-
-Valid values
-
-- `None`
-- `Default`
-- `ClusterFirst`
-- `ClusterFirstWithHostNet`
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      dnsPolicy: ClusterFirst
-```
-
----
-
-###### `dnsConfig`
-
-Pod's dnsConfig
-
-|            |                                                  |
-| ---------- | ------------------------------------------------ |
-| Key        | `workload.$name.podSpec.dnsConfig`               |
-| Type       | `map`                                            |
-| Required   | ❌                                                |
-| Helm `tpl` | ❌                                                |
-| Default    | See default [here](/truecharts-common/podoptions#dnsconfig) |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      dnsConfig: {}
-```
-
----
-
-###### `dnsConfig.nameservers`
-
-Pod's dnsConfig nameservers
-
-|            |                                                |
-| ---------- | ---------------------------------------------- |
-| Key        | `workload.$name.podSpec.dnsConfig.nameservers` |
-| Type       | `list` of `string`                             |
-| Required   | ❌                                              |
-| Helm `tpl` | ✅ (On each entry)                              |
-| Default    | `[]`                                           |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      dnsConfig:
-        nameservers:
-          - 1.1.1.1
-```
-
----
-
-###### `dnsConfig.searches`
-
-Pod's dnsConfig searches
-
-|            |                                             |
-| ---------- | ------------------------------------------- |
-| Key        | `workload.$name.podSpec.dnsConfig.searches` |
-| Type       | `list` of `string`                          |
-| Required   | ❌                                           |
-| Helm `tpl` | ✅ (On each entry)                           |
-| Default    | `[]`                                        |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      dnsConfig:
-        searches:
-          - ns1.svc.cluster-domain.example
-```
-
----
-
-###### `dnsConfig.options`
-
-Pod's dnsConfig options
-
-|            |                                            |
-| ---------- | ------------------------------------------ |
-| Key        | `workload.$name.podSpec.dnsConfig.options` |
-| Type       | `list` of `map`                            |
-| Required   | ❌                                          |
-| Helm `tpl` | ❌                                          |
-| Default    | `[{"ndots": "1"}]`                         |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      dnsConfig:
-        options: []
-```
-
----
-
-###### `dnsConfig.options.name`
-
-Pod's dnsConfig options name
-
-|            |                                                 |
-| ---------- | ----------------------------------------------- |
-| Key        | `workload.$name.podSpec.dnsConfig.options.name` |
-| Type       | `string`                                        |
-| Required   | ✅                                               |
-| Helm `tpl` | ✅                                               |
-| Default    | `""`                                            |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
-```
-
----
-
-###### `dnsConfig.options.value`
-
-Pod's dnsConfig options value
-
-|            |                                                  |
-| ---------- | ------------------------------------------------ |
-| Key        | `workload.$name.podSpec.dnsConfig.options.value` |
-| Type       | `string`                                         |
-| Required   | ❌                                                |
-| Helm `tpl` | ✅                                                |
-| Default    | `""`                                             |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
-```
-
----
-
-##### `tolerations`
-
-Pod's tolerations
-
-|            |                                                    |
-| ---------- | -------------------------------------------------- |
-| Key        | `workload.$name.podSpec.tolerations`               |
-| Type       | `list` of `map`                                    |
-| Required   | ❌                                                  |
-| Helm `tpl` | ❌                                                  |
-| Default    | See default [here](/truecharts-common/podoptions#tolerations) |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      tolerations: []
-```
-
----
-
-###### `tolerations.operator`
-
-Pod's tolerations operator
-
-|            |                                               |
-| ---------- | --------------------------------------------- |
-| Key        | `workload.$name.podSpec.tolerations.operator` |
-| Type       | `string`                                      |
-| Required   | ✅                                             |
-| Helm `tpl` | ✅                                             |
-| Default    | `""`                                          |
-
-Valid values
-
-- `Equal`
-- `Exists`
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      tolerations:
-        - operator: Exists
-```
-
----
-
-###### `tolerations.key`
-
-Pod's tolerations key
-
-:::note
-
-Required only when `operator` = `Equal`
-
-:::
-
-|            |                                          |
-| ---------- | ---------------------------------------- |
-| Key        | `workload.$name.podSpec.tolerations.key` |
-| Type       | `string`                                 |
-| Required   | ❌/✅                                      |
-| Helm `tpl` | ✅                                        |
-| Default    | `""`                                     |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      tolerations:
-        - operator: Equal
-          key: key
-```
-
----
-
-###### `tolerations.value`
-
-Pod's tolerations value
-
-:::note
-
-Required only when `operator` = `Equal`
-
-:::
-
-|            |                                            |
-| ---------- | ------------------------------------------ |
-| Key        | `workload.$name.podSpec.tolerations.value` |
-| Type       | `string`                                   |
-| Required   | ❌/✅                                        |
-| Helm `tpl` | ✅                                          |
-| Default    | `""`                                       |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      tolerations:
-        - operator: Equal
-          key: key
-          value: value
-```
-
----
-
-###### `tolerations.effect`
-
-Pod's tolerations effect
-
-|            |                                             |
-| ---------- | ------------------------------------------- |
-| Key        | `workload.$name.podSpec.tolerations.effect` |
-| Type       | `string`                                    |
-| Required   | ❌                                           |
-| Helm `tpl` | ✅                                           |
-| Default    | `""`                                        |
-
-Valid values
-
-- `NoExecute`
-- `NoSchedule`
-- `PreferNoSchedule`
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      tolerations:
-        - operator: Exists
-          effect: NoExecute
-```
-
----
-
-###### `tolerations.tolerationSeconds`
-
-Pod's tolerations tolerationSeconds
-
-|            |                                                        |
-| ---------- | ------------------------------------------------------ |
-| Key        | `workload.$name.podSpec.tolerations.tolerationSeconds` |
-| Type       | `int`                                                  |
-| Required   | ❌                                                      |
-| Helm `tpl` | ❌                                                      |
-| Default    | unset                                                  |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      tolerations:
-        - operator: Exists
-          effect: NoExecute
-          tolerationSeconds: 3600
-```
-
----
-
-##### `runtimeClassName`
-
-Pod's runtimeClassName
-
-:::note
-
-> Note that it will only set the `runtimeClassName` on the pod that this container belongs to.
-
-:::
-
-|            |                                                         |
-| ---------- | ------------------------------------------------------- |
-| Key        | `workload.$name.podSpec.runtimeClassName`               |
-| Type       | `string`                                                |
-| Required   | ❌                                                       |
-| Helm `tpl` | ✅                                                       |
-| Default    | See default [here](/truecharts-common/podoptions#runtimeclassname) |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      runtimeClassName: some-runtime-class
-```
-
----
-
-##### `securityContext`
-
-Pod's securityContext
-
-|            |                                                                |
-| ---------- | -------------------------------------------------------------- |
-| Key        | `workload.$name.podSpec.securityContext`                       |
-| Type       | `map`                                                          |
-| Required   | ❌                                                              |
-| Helm `tpl` | ❌                                                              |
-| Default    | See default [here](/truecharts-common/securitycontext#securitycontextpod) |
-
-Default
-
-```yaml
-securityContext:
-  pod:
-    fsGroup: 568
-    fsGroupChangePolicy: OnRootMismatch
-    supplementalGroups:
-      - 568
-```
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      securityContext: {}
-```
-
----
-
-###### `securityContext.fsGroup`
-
-Pod's securityContext fsGroup
-
-|            |                                                                        |
-| ---------- | ---------------------------------------------------------------------- |
-| Key        | `workload.$name.podSpec.securityContext.fsGroup`                       |
-| Type       | `int`                                                                  |
-| Required   | ❌                                                                      |
-| Helm `tpl` | ❌                                                                      |
-| Default    | See default [here](/truecharts-common/securitycontext/#securitycontextpodfsgroup) |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      securityContext:
-        fsGroup: 568
-```
-
----
-
-###### `securityContext.fsGroupChangePolicy`
-
-Pod's securityContext fsGroupChangePolicy
-
-|            |                                                                                   |
-| ---------- | --------------------------------------------------------------------------------- |
-| Key        | `workload.$name.podSpec.securityContext.fsGroupChangePolicy`                      |
-| Type       | `string`                                                                          |
-| Required   | ❌                                                                                 |
-| Helm `tpl` | ❌                                                                                 |
-| Default    | See default [here](/truecharts-common/securitycontext#securitycontextpodfsgroupchangepolicy) |
-
-Valid values
-
-- `Always`
-- `OnRootMismatch`
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      securityContext:
-        fsGroupChangePolicy: OnRootMismatch
-```
-
----
-
-###### `securityContext.supplementalGroups`
-
-Pod's securityContext supplementalGroups
-
-|            |                                                                                  |
-| ---------- | -------------------------------------------------------------------------------- |
-| Key        | `workload.$name.podSpec.securityContext.supplementalGroups`                      |
-| Type       | `list` of `int`                                                                  |
-| Required   | ❌                                                                                |
-| Helm `tpl` | ❌                                                                                |
-| Default    | See default [here](/truecharts-common/securitycontext#securitycontextpodsupplementalgroups) |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      securityContext:
-        supplementalGroups:
-          - 568
-```
-
----
-
-###### `securityContext.sysctls`
-
-:::note
-
-The **sysctl** `net.ipv4.ip_unprivileged_port_start` option will be automatically
-set to the lowest `targetPort` (or `port` if targetPort is not defined) number assigned
-to the pod. When hostNetwork is enabled the above **sysctl** option will not be added.
-
-:::
-
-|            |                                                                       |
-| ---------- | --------------------------------------------------------------------- |
-| Key        | `workload.$name.podSpec.securityContext.sysctls`                      |
-| Type       | `list` of `map`                                                       |
-| Required   | ❌                                                                     |
-| Helm `tpl` | ❌                                                                     |
-| Default    | See default [here](/truecharts-common/securitycontext#securitycontextpodsysctls) |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      securityContext:
-        sysctls: []
-```
-
----
-
-###### `securityContext.sysctls.name`
-
-Pod's securityContext sysctls name
-
-|            |                                                       |
-| ---------- | ----------------------------------------------------- |
-| Key        | `workload.$name.podSpec.securityContext.sysctls.name` |
-| Type       | `string`                                              |
-| Required   | ✅                                                     |
-| Helm `tpl` | ✅                                                     |
-| Default    | `""`                                                  |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      securityContext:
-        sysctls:
-          - name: net.ipv4.ip_local_port_range
-            value: 1024 65535
-```
-
----
-
-###### `securityContext.sysctls.value`
-
-Pod's securityContext sysctls value
-
-|            |                                                        |
-| ---------- | ------------------------------------------------------ |
-| Key        | `workload.$name.podSpec.securityContext.sysctls.value` |
-| Type       | `string`                                               |
-| Required   | ✅                                                      |
-| Helm `tpl` | ✅                                                      |
-| Default    | `""`                                                   |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    podSpec:
-      securityContext:
-        sysctls:
-          - name: net.ipv4.ip_local_port_range
-            value: 1024 65535
-```
-
----
-
-##### `containers`
-
-Define container(s) for the workload
-
-See [Container](/truecharts-common/container/) for more information
-
-|            |                             |
-| ---------- | --------------------------- |
-| Key        | `workload.$name.containers` |
-| Type       | `map`                       |
-| Required   | ❌                           |
-| Helm `tpl` | ❌                           |
-| Default    | `{}`                        |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    containers: {}
-```
-
----
-
-##### `initContainers`
-
-Define initContainer(s) for the workload
-
-See [Container](/truecharts-common/container/) for more information
-
-|            |                                 |
-| ---------- | ------------------------------- |
-| Key        | `workload.$name.initContainers` |
-| Type       | `map`                           |
-| Required   | ❌                               |
-| Helm `tpl` | ❌                               |
-| Default    | `{}`                            |
-
-Example
-
-```yaml
-workload:
-  workload-name:
-    initContainers: {}
-```
+## `containers`
+
+Not used. Containers go under `podSpec.containers`.
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.containers` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
 
 ---
 
 ## Full Examples
 
+### Workloads
+
+A chart can define several workloads. Exactly one is `primary`. See the page of each type for all its options:
+
+- [Deployment](/truecharts-common/workload/deployment)
+- [StatefulSet](/truecharts-common/workload/statefulset)
+- [DaemonSet](/truecharts-common/workload/daemonset)
+- [CronJob](/truecharts-common/workload/cronjob)
+- [Job](/truecharts-common/workload/job)
+
 ```yaml
 workload:
   workload-name:
     enabled: true
     primary: true
+    type: Deployment
     namespace: some-namespace
     labels:
       key: value
     annotations:
       key: value
+    serviceAccountName: some-service-account
+    dbWait: true
+    podSpec:
+      containers:
+        container-name:
+          enabled: true
+          primary: true
+          imageSelector: image
+
+  other-workload-name:
+    enabled: true
+    primary: false
+    type: CronJob
+    schedule: "0 3 * * *"
+    podSpec:
+      restartPolicy: OnFailure
+      containers:
+        container-name:
+          enabled: true
+          primary: true
+          imageSelector: image
+```
+
+### Pod spec
+
+See [Pod Spec](/truecharts-common/workload/podSpec) for the options of the pod.
+
+```yaml
+workload:
+  workload-name:
+    enabled: true
+    primary: true
     podSpec:
       labels:
         key: value
@@ -1372,10 +332,6 @@ workload:
           hostnames:
             - myserver.local
             - storage.local
-        - ip: 10.10.10.101
-          hostnames:
-            - myotherserver.local
-            - backups.local
       dnsPolicy: ClusterFirst
       dnsConfig:
         nameservers:
@@ -1383,7 +339,6 @@ workload:
           - 1.0.0.1
         searches:
           - ns1.svc.cluster-domain.example
-          - my.dns.search.suffix
         options:
           - name: ndots
             value: "1"
@@ -1400,13 +355,5 @@ workload:
           - 568
         sysctls:
           - name: net.ipv4.ip_local_port_range
-            value: 1024 65535
+            value: "1024 65535"
 ```
-
-Full examples for each workload type can be found here
-
-- [`Deployment`](/truecharts-common/workload/deployment)
-- [`DaemonSet`](/truecharts-common/workload/daemonset)
-- [`StatefulSet`](/truecharts-common/workload/statefulset)
-- [`CronJob`](/truecharts-common/workload/cronjob)
-- [`Job`](/truecharts-common/workload/job)

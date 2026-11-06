@@ -1,0 +1,282 @@
+suite: networkPolicy rules schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render ingress rules with podSelector, namespaceSelector and ports
+    set:
+      workload: &workload
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      networkPolicy:
+        my-policy:
+          enabled: true
+          policyType: ingress
+          ingress:
+            - from:
+                - namespaceSelector:
+                    matchLabels:
+                      ns: one
+                  podSelector:
+                    matchLabels:
+                      app: one
+              ports:
+                - protocol: TCP
+                  port: 8080
+                - protocol: UDP
+                  port: http
+                - protocol: SCTP
+                  port: 100
+                  endPort: 200
+                - port: null
+    asserts:
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.ingress[0].ports[0].port
+          value: 8080
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.ingress[0].ports[2].endPort
+          value: 200
+
+  - it: should render ingress rules with ipBlock
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - ipBlock:
+                    cidr: 10.0.0.0/8
+                    except:
+                      - 10.1.0.0/16
+    asserts:
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.ingress[0].from[0].ipBlock.cidr
+          value: 10.0.0.0/8
+
+  - it: should render ingress rules with matchExpressions
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - podSelector:
+                    matchExpressions:
+                      - key: app
+                        operator: In
+                        values:
+                          - one
+    asserts:
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.ingress[0].from[0].podSelector.matchExpressions[0].operator
+          value: In
+
+  - it: should fail on unknown keys in ingress rules
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in ingress peers
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0/from/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on a non-array from in ingress rules
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from: foo
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0/from'"
+
+  - it: should fail on a non-array ports in ingress rules
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - ports: foo
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0/ports'"
+
+  - it: should render egress rules with podSelector, namespaceSelector and ports
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          policyType: egress
+          egress:
+            - to:
+                - namespaceSelector:
+                    matchLabels:
+                      ns: one
+                  podSelector:
+                    matchLabels:
+                      app: one
+              ports:
+                - protocol: TCP
+                  port: 8080
+                - protocol: UDP
+                  port: http
+                - protocol: SCTP
+                  port: 100
+                  endPort: 200
+                - port: null
+    asserts:
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.egress[0].ports[0].port
+          value: 8080
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.egress[0].ports[2].endPort
+          value: 200
+
+  - it: should render egress rules with ipBlock
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          egress:
+            - to:
+                - ipBlock:
+                    cidr: 10.0.0.0/8
+                    except:
+                      - 10.1.0.0/16
+    asserts:
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.egress[0].to[0].ipBlock.cidr
+          value: 10.0.0.0/8
+
+  - it: should render egress rules with matchExpressions
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          egress:
+            - to:
+                - podSelector:
+                    matchExpressions:
+                      - key: app
+                        operator: In
+                        values:
+                          - one
+    asserts:
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.egress[0].to[0].podSelector.matchExpressions[0].operator
+          value: In
+
+  - it: should fail on unknown keys in egress rules
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          egress:
+            - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/egress/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in egress peers
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          egress:
+            - to:
+                - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/egress/0/to/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on a non-array to in egress rules
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          egress:
+            - to: foo
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/egress/0/to'"
+
+  - it: should fail on a non-array ports in egress rules
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          egress:
+            - ports: foo
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/egress/0/ports'"
+

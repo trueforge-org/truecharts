@@ -1,0 +1,122 @@
+suite: cnpg cluster initdb schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render initdb with every key
+    set:
+      postgres16Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "16.3"
+        pullPolicy: IfNotPresent
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          cluster:
+            initdb:
+              dataChecksums: true
+              encoding: UTF8
+              localeCollate: C
+              localeCtype: C
+              walSegmentSize: 16
+              postInitSQL:
+                - select 1
+              postInitApplicationSQL:
+                - select 2
+              postInitTemplateSQL:
+                - select 3
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: spec.bootstrap.initdb.dataChecksums
+          value: true
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: spec.bootstrap.initdb.encoding
+          value: UTF8
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: spec.bootstrap.initdb.localeCollate
+          value: C
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: spec.bootstrap.initdb.localeCtype
+          value: C
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: spec.bootstrap.initdb.walSegmentSize
+          value: 16
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: spec.bootstrap.initdb.postInitSQL
+          value:
+            - select 1
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: spec.bootstrap.initdb.postInitApplicationSQL
+          value:
+            - select 2
+      - documentSelector:
+          path: kind
+          value: Cluster
+        equal:
+          path: spec.bootstrap.initdb.postInitTemplateSQL
+          value:
+            - select 3
+
+  - it: should fail with walSegmentSize below the minimum
+    set:
+      postgres16Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "16.3"
+        pullPolicy: IfNotPresent
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          cluster:
+            initdb:
+              walSegmentSize: 0
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/cnpg/my-pg/cluster/initdb/walSegmentSize': minimum: got 0, want 1"
+
+  - it: should fail with an unknown key in initdb
+    set:
+      postgres16Image:
+        repository: ghcr.io/cloudnative-pg/postgresql
+        tag: "16.3"
+        pullPolicy: IfNotPresent
+      cnpg:
+        my-pg:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          cluster:
+            initdb:
+              unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/cnpg/my-pg/cluster/initdb': additional properties 'unknownKey' not allowed"

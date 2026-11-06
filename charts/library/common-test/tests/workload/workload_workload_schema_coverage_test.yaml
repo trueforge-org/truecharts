@@ -1,0 +1,194 @@
+suite: workload schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render a deployment with templated scalar workload fields
+    set:
+      workload:
+        my-workload:
+          enabled: "true"
+          primary: true
+          type: Deployment
+          replicas: "2"
+          serviceAccountName: my-sa
+          annotationsList:
+            - name: my-annotation
+              value: my-annotation-value
+          labelsList:
+            - name: my-label
+              value: my-label-value
+          rollingUpdate:
+            maxSurge: "25%"
+            maxUnavailable: "1"
+          containers: {}
+          initContainers: {}
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes: &probes
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+    asserts:
+      - documentIndex: &deploymentDoc 0
+        isKind:
+          of: Deployment
+      - documentIndex: *deploymentDoc
+        equal:
+          path: spec.replicas
+          value: 2
+      - documentIndex: *deploymentDoc
+        equal:
+          path: metadata.annotations.my-annotation
+          value: my-annotation-value
+      - documentIndex: *deploymentDoc
+        equal:
+          path: metadata.labels.my-label
+          value: my-label-value
+
+  - it: should render a cronjob with the Forbid concurrencyPolicy and a job with the NonIndexed completionMode
+    set:
+      workload:
+        my-cronjob:
+          enabled: true
+          primary: true
+          type: CronJob
+          schedule: "*/1 * * * *"
+          concurrencyPolicy: Forbid
+          podSpec:
+            containers: &containers
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes: *probes
+        my-job:
+          enabled: true
+          primary: false
+          type: Job
+          completionMode: NonIndexed
+          podSpec:
+            containers: *containers
+    asserts:
+      - documentIndex: &cronJobDoc 0
+        isKind:
+          of: CronJob
+      - documentIndex: *cronJobDoc
+        equal:
+          path: spec.concurrencyPolicy
+          value: Forbid
+      - documentIndex: &jobDoc 1
+        isKind:
+          of: Job
+      - documentIndex: *jobDoc
+        equal:
+          path: spec.completionMode
+          value: NonIndexed
+
+  - it: should render a cronjob with the Replace concurrencyPolicy
+    set:
+      workload:
+        my-cronjob:
+          enabled: true
+          primary: true
+          type: CronJob
+          schedule: "*/1 * * * *"
+          concurrencyPolicy: Replace
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes: *probes
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: CronJob
+      - documentIndex: 0
+        equal:
+          path: spec.concurrencyPolicy
+          value: Replace
+
+  - it: should fail on unknown keys in workload
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          unknownKey: value
+          podSpec: {}
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in workload podSpec
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/podSpec': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in workload containers and initContainers
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          containers:
+            unknownKey: value
+          initContainers:
+            unknownKey: value
+          podSpec: {}
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/containers': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in workload rollingUpdate
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          rollingUpdate:
+            unknownKey: value
+          podSpec: {}
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/rollingUpdate': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys and missing required keys in workload annotationsList and labelsList
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          annotationsList:
+            - unknownKey: value
+          labelsList:
+            - unknownKey: value
+          podSpec: {}
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/annotationsList/0': additional properties 'unknownKey' not allowed"
+      - failedTemplate:
+          errorPattern: "at '/workload/my-workload/annotationsList/0': missing properties 'name', 'value'"

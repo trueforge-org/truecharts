@@ -57,4 +57,4 @@ tests:
               forceSlash: some-value
     asserts:
       - failedTemplate:
-          errorMessage: Middleware (strip-prefix) - Expected [forceSlash] to be a boolean, but got [string]
+          errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware1/data/forceSlash'': got string, want boolean'

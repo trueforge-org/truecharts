@@ -1,0 +1,125 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "unhealthyPodEvictionPolicy": {
+        "type": "string",
+        "description": "Whether unhealthy pods may be evicted regardless of the budget. Leave empty to use the Kubernetes default.",
+        "oneOf": [
+          {
+            "enum": [
+              "IfHealthyBudget",
+              "AlwaysAllow"
+            ]
+          },
+          {
+            "type": "string",
+            "pattern": "^\\{\\{.*\\}\\}$"
+          }
+        ],
+        "default": "",
+        "x-helm-tpl": true
+      },
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Create this Pod Disruption Budget when true. Accepts a Helm `tpl` string that renders to `true` or `false`.",
+        "default": false,
+        "x-helm-tpl": true,
+        "x-docs-required": true
+      },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "special/namespaces.json"
+          }
+        ],
+        "description": "Namespace to create this object in. Overrides the chart-wide `namespace` and `global.namespace`.",
+        "default": "",
+        "x-helm-tpl": true
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Additional labels for Pod Disruption Budget",
+        "default": {},
+        "x-helm-tpl": "On value only"
+      },
+      "annotationsList": {
+        "allOf": [
+          {
+            "$ref": "special/annotationsList.json"
+          }
+        ],
+        "description": "Additional annotations as a list of name and value pairs, merged into the annotations"
+      },
+      "labelsList": {
+        "allOf": [
+          {
+            "$ref": "special/labelsList.json"
+          }
+        ],
+        "description": "Additional labels as a list of name and value pairs, merged into the labels"
+      },
+      "annotations": {
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
+        "description": "Additional annotations for Pod Disruption Budget",
+        "default": {},
+        "x-helm-tpl": "On value only"
+      },
+      "minAvailable": {
+        "type": [
+          "integer",
+          "string"
+        ],
+        "description": "Minimum number or percentage of pods that must stay available during a disruption. Do not combine with `maxUnavailable`.",
+        "default": "",
+        "x-helm-tpl": true,
+        "examples": [
+          "50%"
+        ]
+      },
+      "maxUnavailable": {
+        "type": [
+          "integer",
+          "string"
+        ],
+        "description": "Maximum number or percentage of pods that may be unavailable during a disruption. Do not combine with `minAvailable`.",
+        "default": "",
+        "x-helm-tpl": true,
+        "examples": [
+          "1"
+        ]
+      },
+      "targetSelector": {
+        "type": "string",
+        "description": "Name of the workload the budget applies to. Defaults to the primary workload."
+      },
+      "customLabels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Labels used to select the pods covered by the budget, replacing the automatically selected pod labels."
+      }
+    },
+    "additionalProperties": false,
+    "description": "A Pod Disruption Budget.",
+    "default": {},
+    "x-docs-required": true
+  },
+  "description": "Pod Disruption Budgets, keyed by name."
+}

@@ -1,0 +1,219 @@
+suite: networkPolicy core schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render a networkPolicy with labels, annotations, nameOverride and policyType ingress
+    set:
+      workload: &workload
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      networkPolicy:
+        my-policy:
+          enabled: true
+          nameOverride: custom
+          labels:
+            my-label: my-value
+          annotations:
+            my-ann: my-value
+          policyType: ingress
+          targetSelector: main
+    asserts:
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-custom
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: metadata.labels.my-label
+          value: my-value
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: metadata.annotations.my-ann
+          value: my-value
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.policyTypes[0]
+          value: Ingress
+
+  - it: should render a networkPolicy with policyType egress
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          policyType: egress
+    asserts:
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.policyTypes[0]
+          value: Egress
+
+  - it: should render a networkPolicy with policyType ingress-egress
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          policyType: ingress-egress
+    asserts:
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.policyTypes[1]
+          value: Egress
+
+  - it: should render a networkPolicy with a custom podSelector
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          podSelector:
+            matchLabels:
+              app: foo
+    asserts:
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.podSelector.matchLabels.app
+          value: foo
+
+  - it: should fail on an invalid policyType
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          policyType: foo
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/policyType'"
+
+  - it: should fail on unknown keys in networkPolicy
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on a non-boolean enabled in networkPolicy
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: foo
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/enabled'"
+
+  - it: should fail on a non-string nameOverride in networkPolicy
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          nameOverride: 1
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/nameOverride'"
+
+  - it: should fail on a non-string targetSelector in networkPolicy
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          targetSelector: 1
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/targetSelector'"
+
+  - it: should fail on a non-object labels in networkPolicy
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          labels: foo
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/labels'"
+
+  - it: should fail on a non-object annotations in networkPolicy
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          annotations: foo
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/annotations'"
+
+  - it: should fail on a non-array ingress in networkPolicy
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress: foo
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress'"
+
+  - it: should fail on a non-array egress in networkPolicy
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          egress: foo
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/egress'"
+
+  - it: should fail on a non-object podSelector in networkPolicy
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          podSelector: foo
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/podSelector'"
+
