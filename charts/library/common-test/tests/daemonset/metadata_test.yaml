@@ -146,7 +146,19 @@ tests:
           pattern: ^[0-9a-f]{64}$
       - documentIndex: *daemonSetDoc
         matchRegex:
+          path: spec.template.metadata.annotations.checksum/cnpg
+          pattern: ^[0-9a-f]{64}$
+      - documentIndex: *daemonSetDoc
+        matchRegex:
           path: spec.template.metadata.annotations.checksum/configmaps
+          pattern: ^[0-9a-f]{64}$
+      - documentIndex: *daemonSetDoc
+        matchRegex:
+          path: spec.template.metadata.annotations.checksum/mariadb
+          pattern: ^[0-9a-f]{64}$
+      - documentIndex: *daemonSetDoc
+        matchRegex:
+          path: spec.template.metadata.annotations.checksum/mongodb
           pattern: ^[0-9a-f]{64}$
       - documentIndex: *daemonSetDoc
         matchRegex:
@@ -154,11 +166,15 @@ tests:
           pattern: ^[0-9a-f]{64}$
       - documentIndex: *daemonSetDoc
         matchRegex:
-          path: spec.template.metadata.annotations.checksum/dependencies
+          path: spec.template.metadata.annotations.checksum/redis
           pattern: ^[0-9a-f]{64}$
       - documentIndex: *daemonSetDoc
         matchRegex:
           path: spec.template.metadata.annotations.checksum/services
+          pattern: ^[0-9a-f]{64}$
+      - documentIndex: *daemonSetDoc
+        matchRegex:
+          path: spec.template.metadata.annotations.checksum/solr
           pattern: ^[0-9a-f]{64}$
       - documentIndex: &otherDaemonSetDoc 1
         isKind:

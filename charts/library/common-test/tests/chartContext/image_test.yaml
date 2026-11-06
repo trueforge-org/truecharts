@@ -7,15 +7,13 @@ release:
 tests:
   - it: should make sure that postgres 15 uses correct image
     set:
-      dependencies:
-        postgresql:
+      cnpg:
+        my-15pg:
           enabled: true
-          depconfig:
-            postgresqlUsername: test-user
-            postgresqlDatabase: test-db
-            password: test-password
-          operator:
-            pgVersion: 15
+          user: test-user
+          database: test-db
+          password: test-password
+          pgVersion: 15
     asserts:
       - documentIndex: &clusterDoc 0
         isKind:
@@ -23,7 +21,7 @@ tests:
       - documentIndex: *clusterDoc
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-main
+          value: test-release-name-common-test-cnpg-my-15pg
       - documentIndex: *clusterDoc
         matchRegex:
           path: spec.imageName
@@ -31,16 +29,14 @@ tests:
 
   - it: should make sure that postgis 15 uses correct image
     set:
-      dependencies:
-        postgresql:
+      cnpg:
+        my-15postgis:
           enabled: true
-          depconfig:
-            postgresqlUsername: test-user
-            postgresqlDatabase: test-db
-            password: test-password
-          operator:
-            type: postgis
-            pgVersion: 15
+          user: test-user
+          database: test-db
+          password: test-password
+          type: postgis
+          pgVersion: 15
     asserts:
       - documentIndex: *clusterDoc
         isKind:
@@ -48,7 +44,7 @@ tests:
       - documentIndex: *clusterDoc
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-main
+          value: test-release-name-common-test-cnpg-my-15postgis
       - documentIndex: *clusterDoc
         matchRegex:
           path: spec.imageName
@@ -56,16 +52,14 @@ tests:
 
   - it: should make sure that vector 15 uses correct image
     set:
-      dependencies:
-        postgresql:
+      cnpg:
+        my-15vector:
           enabled: true
-          depconfig:
-            postgresqlUsername: test-user
-            postgresqlDatabase: test-db
-            password: test-password
-          operator:
-            type: vectors
-            pgVersion: 15
+          user: test-user
+          database: test-db
+          password: test-password
+          type: vectors
+          pgVersion: 15
     asserts:
       - documentIndex: *clusterDoc
         isKind:
@@ -73,7 +67,7 @@ tests:
       - documentIndex: *clusterDoc
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-main
+          value: test-release-name-common-test-cnpg-my-15vector
       - documentIndex: *clusterDoc
         matchRegex:
           path: spec.imageName
@@ -81,15 +75,13 @@ tests:
 
   - it: should make sure that postgres 16 uses correct image
     set:
-      dependencies:
-        postgresql:
+      cnpg:
+        my-16pg:
           enabled: true
-          depconfig:
-            postgresqlUsername: test-user
-            postgresqlDatabase: test-db
-            password: test-password
-          operator:
-            pgVersion: 16
+          user: test-user
+          database: test-db
+          password: test-password
+          pgVersion: 16
     asserts:
       - documentIndex: *clusterDoc
         isKind:
@@ -97,7 +89,7 @@ tests:
       - documentIndex: *clusterDoc
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-main
+          value: test-release-name-common-test-cnpg-my-16pg
       - documentIndex: *clusterDoc
         matchRegex:
           path: spec.imageName
@@ -105,16 +97,14 @@ tests:
 
   - it: should make sure that postgis 16 uses correct image
     set:
-      dependencies:
-        postgresql:
+      cnpg:
+        my-16postgis:
           enabled: true
-          depconfig:
-            postgresqlUsername: test-user
-            postgresqlDatabase: test-db
-            password: test-password
-          operator:
-            type: postgis
-            pgVersion: 16
+          user: test-user
+          database: test-db
+          password: test-password
+          type: postgis
+          pgVersion: 16
     asserts:
       - documentIndex: *clusterDoc
         isKind:
@@ -122,7 +112,7 @@ tests:
       - documentIndex: *clusterDoc
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-main
+          value: test-release-name-common-test-cnpg-my-16postgis
       - documentIndex: *clusterDoc
         matchRegex:
           path: spec.imageName
@@ -130,16 +120,14 @@ tests:
 
   - it: should make sure that vector 16 uses correct image
     set:
-      dependencies:
-        postgresql:
+      cnpg:
+        my-16vector:
           enabled: true
-          depconfig:
-            postgresqlUsername: test-user
-            postgresqlDatabase: test-db
-            password: test-password
-          operator:
-            pgVersion: 16
-            type: vectors
+          user: test-user
+          database: test-db
+          password: test-password
+          pgVersion: 16
+          type: vectors
     asserts:
       - documentIndex: *clusterDoc
         isKind:
@@ -147,7 +135,7 @@ tests:
       - documentIndex: *clusterDoc
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-main
+          value: test-release-name-common-test-cnpg-my-16vector
       - documentIndex: *clusterDoc
         matchRegex:
           path: spec.imageName

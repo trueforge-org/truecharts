@@ -8,22 +8,27 @@ tests:
   - it: should generate correct spec
     set:
       param: someValue
-      dependencies:
-        postgresql:
+      cnpg:
+        my-pg:
           enabled: true
-          depconfig:
-            postgresqlUsername: test-user
-            postgresqlDatabase: test-db
-            password: test-password
-          operator:
-            pooler:
-              enabled: true
-              createRO: true
-              poolMode: transaction
-              instances: 1
-              parameters:
-                some: value
-                someOther: "{{ .Values.param }}"
+          user: test-user
+          database: test-db
+          password: test-password
+          pooler:
+            enabled: true
+        my-pg2:
+          enabled: true
+          user: test-user
+          database: test-db
+          password: test-password
+          pooler:
+            enabled: true
+            createRO: true
+            poolMode: transaction
+            instances: 1
+            parameters:
+              some: value
+              someOther: "{{ .Values.param }}"
     asserts:
       - documentIndex: &poolerDoc 0
         isKind:
@@ -34,21 +39,18 @@ tests:
       - documentIndex: *poolerDoc
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-main-pooler-rw
+          value: test-release-name-common-test-cnpg-my-pg-pooler-rw
       - documentIndex: *poolerDoc
         equal:
           path: spec
           value:
             cluster:
-              name: test-release-name-common-test-cnpg-main
-            instances: 1
+              name: test-release-name-common-test-cnpg-my-pg
+            instances: 2
             type: rw
             pgbouncer:
-              poolMode: transaction
-              parameters:
-                some: value
-                someOther: someValue
-      - documentIndex: &otherpoolerDoc 1
+              poolMode: session
+      - documentIndex: &otherpoolerDoc 2
         isKind:
           of: Pooler
       - documentIndex: *otherpoolerDoc
@@ -57,13 +59,36 @@ tests:
       - documentIndex: *otherpoolerDoc
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-main-pooler-ro
+          value: test-release-name-common-test-cnpg-my-pg2-pooler-rw
       - documentIndex: *otherpoolerDoc
         equal:
           path: spec
           value:
             cluster:
-              name: test-release-name-common-test-cnpg-main
+              name: test-release-name-common-test-cnpg-my-pg2
+            instances: 1
+            type: rw
+            pgbouncer:
+              poolMode: transaction
+              parameters:
+                some: value
+                someOther: someValue
+      - documentIndex: &otherpoolerDoc 3
+        isKind:
+          of: Pooler
+      - documentIndex: *otherpoolerDoc
+        isAPIVersion:
+          of: postgresql.cnpg.io/v1
+      - documentIndex: *otherpoolerDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-cnpg-my-pg2-pooler-ro
+      - documentIndex: *otherpoolerDoc
+        equal:
+          path: spec
+          value:
+            cluster:
+              name: test-release-name-common-test-cnpg-my-pg2
             instances: 1
             type: ro
             pgbouncer:
@@ -71,33 +96,3 @@ tests:
               parameters:
                 some: value
                 someOther: someValue
-  - it: should generate correct spec with default pooler settings
-    set:
-      dependencies:
-        postgresql:
-          enabled: true
-          depconfig:
-            postgresqlUsername: test-user
-            postgresqlDatabase: test-db
-            password: test-password
-          operator:
-            pooler:
-              enabled: true
-    asserts:
-      - documentIndex: &defaultPoolerDoc 0
-        isKind:
-          of: Pooler
-      - documentIndex: *defaultPoolerDoc
-        equal:
-          path: metadata.name
-          value: test-release-name-common-test-cnpg-main-pooler-rw
-      - documentIndex: *defaultPoolerDoc
-        equal:
-          path: spec
-          value:
-            cluster:
-              name: test-release-name-common-test-cnpg-main
-            instances: 2
-            type: rw
-            pgbouncer:
-              poolMode: session

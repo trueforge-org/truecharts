@@ -4,9 +4,6 @@ templates:
 release:
   name: test-release-name
   namespace: test-release-namespace
-capabilities:
-  apiVersions:
-    - barmancloud.cnpg.io/v1/ObjectStore
 tests:
   - it: should pass with hibernate
     set:
@@ -18,26 +15,24 @@ tests:
           secretKey: some-secret-key
           bucket: some-bucket
           url: http://some-url
-      dependencies:
-        postgresql:
+      cnpg:
+        my-pg:
           enabled: true
-          depconfig:
-            postgresqlUsername: test-user
-            postgresqlDatabase: test-db
-            password: test-password
-          operator:
-            hibernate: true
-            backups:
-              enabled: true
-              target: primary
-              retentionPolicy: 10d
-              credentials: test
-              destinationPath: some-path
-              scheduledBackups:
-                - name: daily
-                  schedule: "0 0 * * *"
-                  suspend: false
-                  backupOwnerReference: self
+          user: test-user
+          database: test-db
+          password: test-password
+          hibernate: true
+          backups:
+            enabled: true
+            target: primary
+            retentionPolicy: 10d
+            credentials: test
+            destinationPath: some-path
+            scheduledBackups:
+              - name: daily
+                schedule: "0 0 * * *"
+                suspend: false
+                backupOwnerReference: self
     asserts:
       - documentIndex: &backupDoc 0
         isKind:
@@ -56,26 +51,24 @@ tests:
         test: *test
       global:
         stopAll: true
-      dependencies:
-        postgresql:
+      cnpg:
+        my-pg:
           enabled: true
-          depconfig:
-            postgresqlUsername: test-user
-            postgresqlDatabase: test-db
-            password: test-password
-          operator:
-            hibernate: false
-            backups:
-              enabled: true
-              target: primary
-              retentionPolicy: 10d
-              credentials: test
-              destinationPath: some-path
-              scheduledBackups:
-                - name: daily
-                  schedule: "0 0 * * *"
-                  suspend: false
-                  backupOwnerReference: self
+          user: test-user
+          database: test-db
+          password: test-password
+          hibernate: false
+          backups:
+            enabled: true
+            target: primary
+            retentionPolicy: 10d
+            credentials: test
+            destinationPath: some-path
+            scheduledBackups:
+              - name: daily
+                schedule: "0 0 * * *"
+                suspend: false
+                backupOwnerReference: self
     asserts:
       - documentIndex: &backupDoc 0
         isKind:

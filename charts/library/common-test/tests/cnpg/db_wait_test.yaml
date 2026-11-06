@@ -13,24 +13,15 @@ tests:
           enabled: true
           primary: true
           podSpec:
-            containers:
-              my-container:
-                enabled: true
-                primary: true
-                probes:
-                  liveness:
-                    enabled: false
-                  readiness:
-                    enabled: false
-                  startup:
-                    enabled: false
-      dependencies:
-        postgresql:
+            my-container:
+              enabled: true
+              primary: true
+      cnpg:
+        my-pg:
           enabled: true
-          depconfig:
-            postgresqlUsername: test-user
-            postgresqlDatabase: test-db
-            password: test-password
+          user: test-user
+          database: test-db
+          password: test-password
     asserts:
       - documentIndex: &deployDoc 3
         isKind:
@@ -41,7 +32,7 @@ tests:
       - documentIndex: *deployDoc
         equal:
           path: spec.template.spec.initContainers[0].name
-          value: test-release-name-common-test-system-postgresql-wait
+          value: test-release-name-common-test-system-cnpg-wait
       - documentIndex: *deployDoc
         equal:
           path: spec.template.spec.initContainers[0].command
@@ -53,28 +44,26 @@ tests:
               echo "Executing DB waits..."
               echo "Testing Database availability on [CNPG RW]"
               until
-                echo "Testing database on url: [test-release-name-common-test-cnpg-main-rw]"
-                pg_isready -U test-user -d test-db -h test-release-name-common-test-cnpg-main-rw
+                echo "Testing database on url: [test-release-name-common-test-cnpg-my-pg-rw]"
+                pg_isready -U test-user -d test-db -h test-release-name-common-test-cnpg-my-pg-rw
                 do sleep 5
               done
-              echo "Database available on url: [test-release-name-common-test-cnpg-main-rw]"
+              echo "Database available on url: [test-release-name-common-test-cnpg-my-pg-rw]"
               echo "Done executing DB waits..."
               EOF
 
   - it: should generate correct db-wait script with pooler, only rw
     set:
       workload: *workload
-      dependencies:
-        postgresql:
+      cnpg:
+        my-pg:
           enabled: true
-          depconfig:
-            postgresqlUsername: test-user
-            postgresqlDatabase: test-db
-            password: test-password
-          operator:
-            pooler:
-              enabled: true
-              createRO: false
+          user: test-user
+          database: test-db
+          password: test-password
+          pooler:
+            enabled: true
+            createRO: false
     asserts:
       - documentIndex: &deployDoc 4
         isKind:
@@ -85,7 +74,7 @@ tests:
       - documentIndex: *deployDoc
         equal:
           path: spec.template.spec.initContainers[0].name
-          value: test-release-name-common-test-system-postgresql-wait
+          value: test-release-name-common-test-system-cnpg-wait
       - documentIndex: *deployDoc
         equal:
           path: spec.template.spec.initContainers[0].command
@@ -97,35 +86,33 @@ tests:
               echo "Executing DB waits..."
               echo "Testing Database availability on [CNPG RW]"
               until
-                echo "Testing database on url: [test-release-name-common-test-cnpg-main-rw]"
-                pg_isready -U test-user -d test-db -h test-release-name-common-test-cnpg-main-rw
+                echo "Testing database on url: [test-release-name-common-test-cnpg-my-pg-rw]"
+                pg_isready -U test-user -d test-db -h test-release-name-common-test-cnpg-my-pg-rw
                 do sleep 5
               done
-              echo "Database available on url: [test-release-name-common-test-cnpg-main-rw]"
+              echo "Database available on url: [test-release-name-common-test-cnpg-my-pg-rw]"
               echo "Testing Database availability on [CNPG Pooler RW]"
               until
-                echo "Testing database on url: [test-release-name-common-test-cnpg-main-pooler-rw]"
-                pg_isready -U test-user -d test-db -h test-release-name-common-test-cnpg-main-pooler-rw
+                echo "Testing database on url: [test-release-name-common-test-cnpg-my-pg-pooler-rw]"
+                pg_isready -U test-user -d test-db -h test-release-name-common-test-cnpg-my-pg-pooler-rw
                 do sleep 5
               done
-              echo "Database available on url: [test-release-name-common-test-cnpg-main-pooler-rw]"
+              echo "Database available on url: [test-release-name-common-test-cnpg-my-pg-pooler-rw]"
               echo "Done executing DB waits..."
               EOF
 
   - it: should generate correct db-wait script with pooler rw and ro
     set:
       workload: *workload
-      dependencies:
-        postgresql:
+      cnpg:
+        my-pg:
           enabled: true
-          depconfig:
-            postgresqlUsername: test-user
-            postgresqlDatabase: test-db
-            password: test-password
-          operator:
-            pooler:
-              enabled: true
-              createRO: true
+          user: test-user
+          database: test-db
+          password: test-password
+          pooler:
+            enabled: true
+            createRO: true
     asserts:
       - documentIndex: &deployDoc 5
         isKind:
@@ -136,7 +123,7 @@ tests:
       - documentIndex: *deployDoc
         equal:
           path: spec.template.spec.initContainers[0].name
-          value: test-release-name-common-test-system-postgresql-wait
+          value: test-release-name-common-test-system-cnpg-wait
       - documentIndex: *deployDoc
         equal:
           path: spec.template.spec.initContainers[0].command
@@ -148,24 +135,24 @@ tests:
               echo "Executing DB waits..."
               echo "Testing Database availability on [CNPG RW]"
               until
-                echo "Testing database on url: [test-release-name-common-test-cnpg-main-rw]"
-                pg_isready -U test-user -d test-db -h test-release-name-common-test-cnpg-main-rw
+                echo "Testing database on url: [test-release-name-common-test-cnpg-my-pg-rw]"
+                pg_isready -U test-user -d test-db -h test-release-name-common-test-cnpg-my-pg-rw
                 do sleep 5
               done
-              echo "Database available on url: [test-release-name-common-test-cnpg-main-rw]"
+              echo "Database available on url: [test-release-name-common-test-cnpg-my-pg-rw]"
               echo "Testing Database availability on [CNPG Pooler RW]"
               until
-                echo "Testing database on url: [test-release-name-common-test-cnpg-main-pooler-rw]"
-                pg_isready -U test-user -d test-db -h test-release-name-common-test-cnpg-main-pooler-rw
+                echo "Testing database on url: [test-release-name-common-test-cnpg-my-pg-pooler-rw]"
+                pg_isready -U test-user -d test-db -h test-release-name-common-test-cnpg-my-pg-pooler-rw
                 do sleep 5
               done
-              echo "Database available on url: [test-release-name-common-test-cnpg-main-pooler-rw]"
+              echo "Database available on url: [test-release-name-common-test-cnpg-my-pg-pooler-rw]"
               echo "Testing Database availability on [CNPG Pooler RO]"
               until
-                echo "Testing database on url: [test-release-name-common-test-cnpg-main-pooler-ro]"
-                pg_isready -U test-user -d test-db -h test-release-name-common-test-cnpg-main-pooler-ro
+                echo "Testing database on url: [test-release-name-common-test-cnpg-my-pg-pooler-ro]"
+                pg_isready -U test-user -d test-db -h test-release-name-common-test-cnpg-my-pg-pooler-ro
                 do sleep 5
               done
-              echo "Database available on url: [test-release-name-common-test-cnpg-main-pooler-ro]"
+              echo "Database available on url: [test-release-name-common-test-cnpg-my-pg-pooler-ro]"
               echo "Done executing DB waits..."
               EOF

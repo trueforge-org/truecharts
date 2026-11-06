@@ -22,22 +22,7 @@ tests:
           required: true
     asserts:
       - failedTemplate:
-          errorMessage: Ingress - Expected ingress [my-ingress] to be enabled or at least one route to be enabled. This chart is designed to work only with ingress or route enabled.
-
-  - it: should not fail required ingress check when route is enabled
-    set:
-      service: *service
-      ingress:
-        my-ingress:
-          enabled: false
-          required: true
-      route:
-        my-route:
-          enabled: true
-          primary: true
-    asserts:
-      - failedTemplate:
-          errorMessage: parentRef name is required for HTTPRoute test-release-name-common-test
+          errorMessage: Ingress - Expected ingress [my-ingress] to be enabled. This chart is designed to work only with ingress enabled.
 
   - it: should fail with name longer than 253 characters
     set:
@@ -96,7 +81,7 @@ tests:
           labels: "not a dict"
     asserts:
       - failedTemplate:
-          errorPattern: 'at ''/ingress/my-ingress/labels'': got string, want object'
+          errorMessage: Ingress - Expected [labels] to be a dictionary, but got [string]
 
   - it: should fail with annotations not a dict
     set:
@@ -107,7 +92,7 @@ tests:
           annotations: "not a dict"
     asserts:
       - failedTemplate:
-          errorPattern: 'at ''/ingress/my-ingress/annotations'': got string, want object'
+          errorMessage: Ingress - Expected [annotations] to be a dictionary, but got [string]
 
   - it: should fail with empty enabled
     set:
@@ -116,7 +101,7 @@ tests:
           enabled:
     asserts:
       - failedTemplate:
-          errorPattern: 'at ''/ingress/my-ingress/enabled'': got null, want boolean or string'
+          errorMessage: Ingress - Expected the defined key [enabled] in [ingress.my-ingress] to not be empty
 
   - it: should fail with targetSelector not a map
     set:
@@ -127,7 +112,7 @@ tests:
           targetSelector: "not a map"
     asserts:
       - failedTemplate:
-          errorPattern: 'at ''/ingress/my-ingress/targetSelector'': got string, want object'
+          errorMessage: Ingress - Expected [targetSelector] to be a [map], but got [string]
 
   - it: should fail with targetSelector having more than one key
     set:
@@ -152,7 +137,7 @@ tests:
             main:
     asserts:
       - failedTemplate:
-          errorPattern: 'at ''/ingress/my-ingress/targetSelector/main'': got null, want string'
+          errorMessage: Ingress - Expected [targetSelector.main] to have a value
 
   - it: should fail with targetSelector key having non-string value
     set:
@@ -165,7 +150,7 @@ tests:
               - not a string
     asserts:
       - failedTemplate:
-          errorPattern: 'at ''/ingress/my-ingress/targetSelector/main'': got array, want string'
+          errorMessage: Ingress - Expected [targetSelector.main] to be a [string], but got [slice]
 
   - it: should fail with no hosts
     set:
@@ -187,7 +172,7 @@ tests:
           hosts: not-a-slice
     asserts:
       - failedTemplate:
-          errorPattern: 'at ''/ingress/my-ingress/hosts'': got string, want array'
+          errorMessage: Ingress - Expected [hosts] to be a [slice], but got [string]
 
   - it: should fail with no hosts.host
     set:
@@ -255,7 +240,7 @@ tests:
               paths: not-a-slice
     asserts:
       - failedTemplate:
-          errorPattern: 'at ''/ingress/my-ingress/hosts/0/paths'': got string, want array'
+          errorMessage: Ingress - Expected [hosts.paths] to be a [slice], but got [string]
 
   - it: should fail with invalid pathType
     set:
@@ -454,7 +439,7 @@ tests:
             - hosts: not-a-slice
     asserts:
       - failedTemplate:
-          errorPattern: 'at ''/ingress/my-ingress/tls/0/hosts'': got string, want array'
+          errorMessage: Ingress - Expected [tls.hosts] to be a [slice], but got [string]
 
   - it: should fail if tls.hosts.host is empty
     set:

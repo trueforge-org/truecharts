@@ -5,29 +5,6 @@ release:
   name: test-release-name
   namespace: test-release-namespace
 tests:
-  - it: should fail with the unused top level key
-    set:
-      volumeClaimTemplates:
-        data:
-          enabled: true
-          mountPath: /data
-    asserts:
-      - failedTemplate:
-          errorMessage: "Expected no [volumeClaimTemplates], as this key is not used, so [data] would not be persisted. Use [persistence] instead, a new volume on an existing StatefulSet can't use [type: vct]"
-
-  - it: should fail with the unused key on a dependency
-    set:
-      dependencies:
-        valkey:
-          enabled: true
-          volumeClaimTemplates:
-            data:
-              enabled: true
-              mountPath: /data
-    asserts:
-      - failedTemplate:
-          errorPattern: 'at ''/dependencies/valkey/volumeClaimTemplates'': false schema'
-
   - it: should fail with annotations not a dict
     set:
       persistence:
@@ -43,7 +20,7 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorPattern: 'at ''/persistence/volume1/annotations'': got string, want object'
+          errorMessage: Volume Claim Templates - Expected [annotations] to be a dictionary, but got [string]
 
   - it: should fail with labels not a dict
     set:
@@ -60,7 +37,7 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorPattern: 'at ''/persistence/volume1/labels'': got string, want object'
+          errorMessage: Volume Claim Templates - Expected [labels] to be a dictionary, but got [string]
 
   - it: should fail with pod targetSelector not a map
     set:
@@ -77,4 +54,4 @@ tests:
           podSpec: {}
     asserts:
       - failedTemplate:
-          errorPattern: 'at ''/persistence/volume1/targetSelector'': got string, want object'
+          errorMessage: Persistence - Expected [targetSelector] to be [dict], but got [string]

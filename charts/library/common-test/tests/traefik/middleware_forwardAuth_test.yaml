@@ -16,7 +16,6 @@ tests:
               address: some-address
               authResponseHeadersRegex: some-regex
               trustForwardHeader: true
-              maxResponseBodySize: 1048576
               authResponseHeaders:
                 - some-header
               authRequestHeaders:
@@ -35,50 +34,12 @@ tests:
               address: some-address
               authResponseHeadersRegex: some-regex
               trustForwardHeader: true
-              maxResponseBodySize: 1048576
               authResponseHeaders:
                 - some-header
               authRequestHeaders:
                 - some-header
               tls:
                 insecureSkipVerify: true
-
-  - it: should pass with templated address from values
-    set:
-      authHost: auth.example.com
-      ingressMiddlewares:
-        traefik:
-          my-middleware1:
-            enabled: true
-            type: forward-auth
-            data:
-              address: "https://{{ .Values.authHost }}/outpost.goauthentik.io/auth/traefik"
-    asserts:
-      - documentIndex: &middlewareDoc 0
-        isKind:
-          of: Middleware
-      - documentIndex: *middlewareDoc
-        equal:
-          path: spec.forwardAuth.address
-          value: https://auth.example.com/outpost.goauthentik.io/auth/traefik
-
-  - it: should pass with templated address from release context
-    set:
-      ingressMiddlewares:
-        traefik:
-          my-middleware1:
-            enabled: true
-            type: forward-auth
-            data:
-              address: "http://{{ .Release.Name }}-server.{{ .Release.Namespace }}.svc.cluster.local:9000/outpost.goauthentik.io/auth/traefik"
-    asserts:
-      - documentIndex: &middlewareDoc 0
-        isKind:
-          of: Middleware
-      - documentIndex: *middlewareDoc
-        equal:
-          path: spec.forwardAuth.address
-          value: http://test-release-name-server.test-release-namespace.svc.cluster.local:9000/outpost.goauthentik.io/auth/traefik
 
   - it: should fail with missing address
     set:
@@ -105,7 +66,7 @@ tests:
               authResponseHeaders: some-header
     asserts:
       - failedTemplate:
-          errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware1/data/authResponseHeaders'': got string, want array'
+          errorMessage: Middleware (forward-auth) - Expected [authResponseHeaders] to be a list, but got [string]
 
   - it: should fail with invalid authRequestHeaders
     set:
@@ -119,7 +80,7 @@ tests:
               authRequestHeaders: some-header
     asserts:
       - failedTemplate:
-          errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware1/data/authRequestHeaders'': got string, want array'
+          errorMessage: Middleware (forward-auth) - Expected [authRequestHeaders] to be a list, but got [string]
 
   - it: should fail with invalid tls.insecureSkipVerify
     set:
@@ -134,7 +95,7 @@ tests:
                 insecureSkipVerify: some-value
     asserts:
       - failedTemplate:
-          errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware1/data/tls/insecureSkipVerify'': got string, want boolean'
+          errorMessage: Middleware (forward-auth) - Expected [tls.insecureSkipVerify] to be a boolean, but got [string]
 
   - it: should fail with invalid trustForwardHeader
     set:
@@ -148,19 +109,4 @@ tests:
               trustForwardHeader: some-value
     asserts:
       - failedTemplate:
-          errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware1/data/trustForwardHeader'': got string, want boolean'
-
-  - it: should fail with invalid maxResponseBodySize
-    set:
-      ingressMiddlewares:
-        traefik:
-          my-middleware1:
-            enabled: true
-            type: forward-auth
-            data:
-              address: some-address
-              trustForwardHeader: true
-              maxResponseBodySize: a-string
-    asserts:
-      - failedTemplate:
-          errorPattern: 'at ''/ingressMiddlewares/traefik/my-middleware1/data/maxResponseBodySize'': got string, want integer'
+          errorMessage: Middleware (forward-auth) - Expected [trustForwardHeader] to be a boolean, but got [string]
