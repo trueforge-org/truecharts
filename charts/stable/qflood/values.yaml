@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
   pullPolicy: IfNotPresent
-  repository: ghcr.io/engels74/qflood
-  tag: release-v5.2.3@sha256:1ac5fd4bc1c5247f0f51e2a00e4c41686155cfa65af4cf705ed1c2d988e5d5d5
+  repository: oci.trueforge.org/containerforge/qflood
+  tag: 5.3.0@sha256:08f0c185423cf7729c9a04fdf692bfdb890d29c9bca35eabb7545f5d2c51641f
 persistence:
   config:
     enabled: true
@@ -11,11 +11,6 @@ persistence:
     enabled: true
     mountPath: /data
 
-securityContext:
-  container:
-    readOnlyRootFilesystem: false
-    runAsGroup: 0
-    runAsUser: 0
 service:
   hostportfor808:
     enabled: true
