@@ -205,6 +205,24 @@ jobs:
           rm -rf ./website/truecharts/src/content/docs-common
           mv ./website/truecharts/src/content/docs/charts/library/common ./website/truecharts/src/content/docs-common
 
+      # The combined (bundled) values schema of common, one file for each released version
+      - name: Copy common schema to website
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          #!/bin/bash
+          set -euo pipefail
+
+          schema="charts/library/common/values.schema.json"
+          version="$(awk '/^version:/ { print $2 }' charts/library/common/Chart.yaml)"
+          if [[ -z "$version" ]] || [[ ! -f "$schema" ]]; then
+            echo "No version or schema found for common, not copying the schema"
+            exit 1
+          fi
+
+          mkdir -p ./website/truecharts/public/schemas/common
+          cp "$schema" "./website/truecharts/public/schemas/common/${version}.schema.json"
+
       - name: Prefetch contributor icons
         shell: bash
         if: github.event_name == 'push'
