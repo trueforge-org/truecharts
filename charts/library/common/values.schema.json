@@ -1582,6 +1582,11 @@
       "description": "Puts the CNPG cluster in hibernation mode. Poolers and scheduled backups are stopped too.",
       "default": false
      },
+     "instances": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Only validated, must be greater than 0 when set. The number of instances of the cluster is set with `cluster.instances`."
+     },
      "labels": {
       "allOf": [
        {

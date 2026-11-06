@@ -3,5 +3,19 @@
 # test_schema.py leaves them out of a chart's values before it validates the chart, and
 # generate_complete_values_structure.py ignores them, so they do not end up in the schema.
 # Paths are relative to the chart values; `*` matches any one key. Remove an entry once no chart sets the key anymore.
-# Currently empty: all charts were fixed.
-keys: []
+keys:
+  - path: metrics.*.apiKey
+    reason: Not read by any template of common, the key does nothing.
+    charts: [bazarr, sabnzbd]
+  - path: metrics.*.prometheusRule.labels
+    reason: Not read by any template of common, a prometheusRule cannot be set under metrics.
+    charts: [blocky, grafana, kubelet-csr-approver, ntfy]
+  - path: metrics.*.prometheusRule.rules
+    reason: Not read by any template of common, rules go in prometheusRule.groups.
+    charts: [blocky, grafana, kubelet-csr-approver, ntfy]
+  - path: cnpg.*.username
+    reason: Not read by any template of common, the database user is set with `user`.
+    charts: [meshcentral]
+  - path: redis.username
+    reason: Not read by any template of common.
+    charts: [misskey, nextcloud]
