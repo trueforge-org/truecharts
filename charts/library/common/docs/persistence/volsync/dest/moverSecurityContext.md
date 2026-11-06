@@ -427,15 +427,64 @@ User name the first process of the containers runs as, Windows only.
 
 ## Full Examples
 
-A small example, built from the schema. It shows the keys that the page needs.
+### Run the mover as the app user
 
 ```yaml
 persistence:
-  example:
+  data:
+    enabled: true
+    type: pvc
+    size: 10Gi
+    mountPath: /data
     volsync:
-      - dest:
+      - name: mybackup
+        type: restic
+        credentials: mys3
+        src:
+          enabled: false
+        dest:
+          enabled: true
+          capacity: 10Gi
+          accessModes:
+            - ReadWriteOnce
+          storageClassName: some-storage-class
+          volumeSnapshotClassName: some-snapshot-class
           moverSecurityContext:
-            appArmorProfile:
-              type: Unconfined
-            fsGroup: 1
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+```
+
+### Hardened mover
+
+```yaml
+persistence:
+  data:
+    enabled: true
+    type: pvc
+    size: 10Gi
+    mountPath: /data
+    volsync:
+      - name: mybackup
+        type: restic
+        credentials: mys3
+        src:
+          enabled: false
+        dest:
+          enabled: true
+          capacity: 10Gi
+          accessModes:
+            - ReadWriteOnce
+          storageClassName: some-storage-class
+          volumeSnapshotClassName: some-snapshot-class
+          moverSecurityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+            seccompProfile:
+              type: RuntimeDefault
+            supplementalGroups:
+              - 44
 ```

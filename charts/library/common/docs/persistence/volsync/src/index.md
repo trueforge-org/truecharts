@@ -302,6 +302,14 @@ These examples are the part of the examples of other pages that is about this pa
 
 ```yaml
 persistence:
+  data:
+    volsync:
+      - src:
+          enabled: false
+```
+
+```yaml
+persistence:
   restored:
     volsync:
       - src:

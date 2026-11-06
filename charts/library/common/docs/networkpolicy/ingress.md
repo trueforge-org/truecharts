@@ -508,7 +508,7 @@ networkpolicy:
 
 ```yaml
 networkpolicy:
-  host-policy:
+  deny-ingress:
     ingress:
       - fromEntities:
           - cluster
@@ -516,9 +516,8 @@ networkpolicy:
 
 ```yaml
 networkpolicy:
-  allow-ingress-from-gateway:
+  host-policy:
     ingress:
-      - fromEndpoints:
-          - matchLabels:
-              k8s:io.kubernetes.pod.namespace: gateway-system
+      - fromEntities:
+          - cluster
 ```

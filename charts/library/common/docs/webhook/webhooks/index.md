@@ -313,98 +313,79 @@ These examples are the part of the examples of other pages that is about this pa
 
 ```yaml
 webhook:
-  webhook-name:
+  mutating:
     webhooks:
-      - name: webhook-name.example.com
+      - name: defaults.example.com
         failurePolicy: Fail
-        matchPolicy: Exact
         sideEffects: None
-        reinvocationPolicy: Never
-        timeoutSeconds: 30
+        reinvocationPolicy: IfNeeded
         admissionReviewVersions:
           - v1
-          - v1beta1
         clientConfig:
-          caBundle: <base64 encoded ca bundle>
           url: https://webhook.example.com/mutate
         rules:
-          - scope: Cluster
-            apiGroups:
-              - ''
-            apiVersions:
-              - v1
-            operations:
-              - CREATE
-              - UPDATE
-            resources:
-              - pods
-              - pods/status
-```
-
-```yaml
-webhook:
-  other-webhook-name:
-    webhooks:
-      - name: other-webhook-name.example.com
-        failurePolicy: Fail
-        matchPolicy: Exact
-        sideEffects: None
-        timeoutSeconds: 30
-        admissionReviewVersions:
-          - v1
-          - v1beta1
-        clientConfig:
-          caBundle: <base64 encoded ca bundle>
-          service:
-            name: my-webhook-service
-            namespace: my-namespace
-            path: /validate
-            port: 443
-        rules:
-          - scope: Namespaced
-            apiGroups:
-              - ''
-            apiVersions:
-              - v1
-            operations:
-              - CREATE
-              - UPDATE
-            resources:
-              - pods
-              - pods/status
-```
-
-```yaml
-webhook:
-  selective-webhook:
-    webhooks:
-      - name: selective.example.com
-        failurePolicy: Ignore
-        sideEffects: None
-        admissionReviewVersions:
-          - v1
-        clientConfig:
-          service:
-            name: my-webhook-service
-            namespace: my-namespace
-            path: /validate
-            port: 443
-        namespaceSelector:
-          matchLabels:
-            admission: enabled
-        objectSelector:
-          matchExpressions:
-            - key: skip-webhook
-              operator: DoesNotExist
-        rules:
-          - scope: '*'
-            apiGroups:
+          - apiGroups:
               - apps
             apiVersions:
               - v1
             operations:
               - CREATE
+              - UPDATE
             resources:
               - deployments
-              - statefulsets
+```
+
+```yaml
+webhook:
+  mutating:
+    webhooks:
+      - name: sidecar-injector.example.com
+        failurePolicy: Ignore
+        sideEffects: None
+        timeoutSeconds: 10
+        admissionReviewVersions:
+          - v1
+        clientConfig:
+          service:
+            name: sidecar-injector
+            namespace: injector-system
+            path: /mutate
+            port: 443
+        rules:
+          - apiGroups:
+              - ''
+            apiVersions:
+              - v1
+            operations:
+              - CREATE
+            resources:
+              - pods
+```
+
+```yaml
+webhook:
+  validating:
+    webhooks:
+      - name: policy.example.com
+        failurePolicy: Fail
+        sideEffects: None
+        timeoutSeconds: 10
+        admissionReviewVersions:
+          - v1
+        clientConfig:
+          service:
+            name: policy-webhook
+            namespace: policy-system
+            path: /validate
+            port: 443
+        rules:
+          - apiGroups:
+              - ''
+            apiVersions:
+              - v1
+            operations:
+              - CREATE
+              - UPDATE
+            resources:
+              - pods
 ```

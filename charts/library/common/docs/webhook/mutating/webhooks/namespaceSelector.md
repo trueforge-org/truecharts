@@ -134,16 +134,73 @@ Values of the label. Empty for `Exists` and `DoesNotExist`.
 
 ## Full Examples
 
-A small example, built from the schema. It shows the keys that the page needs.
+### Only namespaces with a label
 
 ```yaml
 webhook:
   mutating:
+    enabled: true
+    type: mutating
     webhooks:
-      - namespaceSelector:
+      - name: inject.example.com
+        failurePolicy: Ignore
+        sideEffects: None
+        admissionReviewVersions:
+          - v1
+        clientConfig:
+          service:
+            name: inject-webhook
+            namespace: inject-system
+            path: /mutate
+            port: 443
+        namespaceSelector:
           matchLabels:
-            example: example
+            injection: enabled
+        rules:
+          - apiGroups:
+              - ""
+            apiVersions:
+              - v1
+            operations:
+              - CREATE
+            resources:
+              - pods
+```
+
+### Skip system namespaces with matchExpressions
+
+```yaml
+webhook:
+  mutating:
+    enabled: true
+    type: mutating
+    webhooks:
+      - name: inject.example.com
+        failurePolicy: Ignore
+        sideEffects: None
+        admissionReviewVersions:
+          - v1
+        clientConfig:
+          service:
+            name: inject-webhook
+            namespace: inject-system
+            path: /mutate
+            port: 443
+        namespaceSelector:
           matchExpressions:
-            - key: example
-              operator: example
+            - key: kubernetes.io/metadata.name
+              operator: NotIn
+              values:
+                - kube-system
+                - kube-public
+                - inject-system
+        rules:
+          - apiGroups:
+              - ""
+            apiVersions:
+              - v1
+            operations:
+              - CREATE
+            resources:
+              - pods
 ```

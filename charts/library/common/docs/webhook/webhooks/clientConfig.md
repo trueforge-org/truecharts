@@ -135,34 +135,24 @@ These examples are the part of the examples of other pages that is about this pa
 
 ```yaml
 webhook:
-  webhook-name:
+  mutating:
     webhooks:
       - clientConfig:
-          caBundle: <base64 encoded ca bundle>
+          url: https://webhook.example.com/labels
+```
+
+```yaml
+webhook:
+  mutating:
+    webhooks:
+      - clientConfig:
           url: https://webhook.example.com/mutate
 ```
 
 ```yaml
 webhook:
-  selective-webhook:
+  mutating:
     webhooks:
       - clientConfig:
-          service:
-            name: my-webhook-service
-            namespace: my-namespace
-            path: /validate
-            port: 443
-```
-
-```yaml
-webhook:
-  other-webhook-name:
-    webhooks:
-      - clientConfig:
-          caBundle: <base64 encoded ca bundle>
-          service:
-            name: my-webhook-service
-            namespace: my-namespace
-            path: /validate
-            port: 443
+          url: https://webhook.example.com/resources
 ```

@@ -163,3 +163,34 @@ dependencies:
         pitrTarget:
           time: '2026-01-01 12:00:00.00000+00'
 ```
+
+```yaml
+dependencies:
+  postgresql:
+    operator:
+      recovery:
+        method: object_store
+        credentials: my-s3
+        serverName: previous-cluster
+        instanceSidecarConfiguration:
+          env:
+            - name: AWS_REQUEST_CHECKSUM_CALCULATION
+              value: when_required
+```
+
+```yaml
+dependencies:
+  postgresql:
+    operator:
+      recovery:
+        method: object_store
+        credentials: my-s3
+        serverName: previous-cluster
+        instanceSidecarConfiguration:
+          retentionPolicyIntervalSeconds: 600
+          additionalContainerArgs:
+            - --log-level=debug
+          env:
+            - name: AWS_REQUEST_CHECKSUM_CALCULATION
+              value: when_required
+```

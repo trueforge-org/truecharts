@@ -476,12 +476,36 @@ dependencies:
   valkey:
     operator:
       scheduling:
-        nodeSelector:
-          kubernetes.io/arch: amd64
-        tolerations:
-          - key: dedicated
-            operator: Equal
-            value: cache
-            effect: NoSchedule
-        priorityClassName: system-cluster-critical
+        topologySpreadConstraints:
+          - maxSkew: 1
+            topologyKey: topology.example.com/rack
+            whenUnsatisfiable: DoNotSchedule
+```
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      scheduling:
+        affinity:
+          podAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - topologyKey: kubernetes.io/hostname
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: myapp
+```
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      scheduling:
+        topologySpreadConstraints:
+          - maxSkew: 1
+            topologyKey: topology.kubernetes.io/region
+            whenUnsatisfiable: DoNotSchedule
+          - maxSkew: 2
+            topologyKey: topology.example.com/rack
+            whenUnsatisfiable: ScheduleAnyway
 ```

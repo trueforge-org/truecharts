@@ -487,29 +487,11 @@ These examples are the part of the examples of other pages that is about this pa
 dependencies:
   valkey:
     operator:
-      users:
-        - name: app
-          enabled: true
-          permissions: +@all -@dangerous
-          passwordSecret:
-            name: app-valkey-password
-            keys:
-              - password
-```
-
-```yaml
-dependencies:
-  valkey:
-    operator:
-      shards: 3
-      replicas: 1
-      config:
-        maxmemory-policy: allkeys-lru
-      persistence:
-        enabled: true
-        size: 2Gi
-      exporter:
-        enabled: true
+      containers:
+        - name: server
+          resources:
+            limits:
+              memory: 1Gi
 ```
 
 ```yaml
@@ -517,14 +499,22 @@ dependencies:
   valkey:
     operator:
       scheduling:
-        nodeSelector:
-          kubernetes.io/arch: amd64
-        tolerations:
-          - key: dedicated
-            operator: Equal
-            value: cache
-            effect: NoSchedule
-        priorityClassName: system-cluster-critical
-      podDisruptionBudget:
-        mode: Cluster
+        topologySpreadConstraints:
+          - maxSkew: 1
+            topologyKey: topology.example.com/rack
+            whenUnsatisfiable: DoNotSchedule
+```
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      containers:
+        - name: log-shipper
+          image: oci.trueforge.org/containerforge/busybox:1.37.0@sha256:387b5f54777a6451f73f1a49a45b5bb6d29e1e5838b7b5a9c84d80370995531e
+          lifecycle:
+            stopSignal: SIGTERM
+            preStop:
+              sleep:
+                seconds: 10
 ```

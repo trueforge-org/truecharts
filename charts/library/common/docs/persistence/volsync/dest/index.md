@@ -207,3 +207,20 @@ persistence:
           storageClassName: some-storage-class
           volumeSnapshotClassName: some-snapshot-class
 ```
+
+```yaml
+persistence:
+  data:
+    volsync:
+      - dest:
+          enabled: true
+          capacity: 10Gi
+          accessModes:
+            - ReadWriteOnce
+          storageClassName: some-storage-class
+          volumeSnapshotClassName: some-snapshot-class
+          moverSecurityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+```

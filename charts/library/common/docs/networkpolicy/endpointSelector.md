@@ -128,15 +128,41 @@ Values of the label. Empty for `Exists` and `DoesNotExist`.
 
 ## Full Examples
 
-A small example, built from the schema. It shows the keys that the page needs.
+### Select endpoints with matchLabels
 
 ```yaml
 networkpolicy:
-  example:
+  protect-database:
+    enabled: true
+    type: cilium
     endpointSelector:
       matchLabels:
-        example: example
+        app.kubernetes.io/name: postgresql
+    ingress:
+      - fromEndpoints:
+          - matchLabels:
+              app.kubernetes.io/name: my-app
+        toPorts:
+          - ports:
+              - port: "5432"
+                protocol: TCP
+```
+
+### Select endpoints with matchExpressions
+
+```yaml
+networkpolicy:
+  protect-workers:
+    enabled: true
+    type: cilium
+    endpointSelector:
       matchExpressions:
-        - key: example
-          operator: example
+        - key: app.kubernetes.io/component
+          operator: In
+          values:
+            - worker
+            - scheduler
+    ingress:
+      - fromEntities:
+          - cluster
 ```

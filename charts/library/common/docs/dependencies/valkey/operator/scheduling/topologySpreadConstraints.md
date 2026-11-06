@@ -260,15 +260,39 @@ Pod label keys whose values are combined with `labelSelector`.
 
 ## Full Examples
 
-A small example, built from the schema. It shows the keys that the page needs.
+### Spread over the racks
+
+Keep the number of Valkey pods per rack within one of each other, and keep a pod `Pending` when that is not possible:
 
 ```yaml
 dependencies:
   valkey:
+    enabled: true
+    mode: operator
     operator:
       scheduling:
         topologySpreadConstraints:
           - maxSkew: 1
-            topologyKey: example
+            topologyKey: topology.example.com/rack
             whenUnsatisfiable: DoNotSchedule
+```
+
+### More than one topology key
+
+Spread over the regions strictly, and over the racks as a preference:
+
+```yaml
+dependencies:
+  valkey:
+    enabled: true
+    mode: operator
+    operator:
+      scheduling:
+        topologySpreadConstraints:
+          - maxSkew: 1
+            topologyKey: topology.kubernetes.io/region
+            whenUnsatisfiable: DoNotSchedule
+          - maxSkew: 2
+            topologyKey: topology.example.com/rack
+            whenUnsatisfiable: ScheduleAnyway
 ```

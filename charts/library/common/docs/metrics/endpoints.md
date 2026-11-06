@@ -272,11 +272,9 @@ These examples are the part of the examples of other pages that is about this pa
 
 ```yaml
 metrics:
-  pods:
+  main:
     endpoints:
-      - port: metrics
-        interval: 15s
-        path: /metrics
+      - port: main
 ```
 
 ```yaml
@@ -285,32 +283,14 @@ metrics:
     endpoints:
       - port: main
         interval: 30s
-        scrapeTimeout: 10s
         path: /metrics
-        scheme: http
-        honorLabels: false
 ```
 
 ```yaml
 metrics:
-  secure:
+  pods:
     endpoints:
-      - port: https
-        interval: 1m
+      - port: metrics
+        interval: 15s
         path: /metrics
-        scheme: https
-        params:
-          format:
-            - prometheus
-        tlsConfig:
-          insecureSkipVerify: true
-        relabelings:
-          - sourceLabels:
-              - __meta_kubernetes_pod_node_name
-            targetLabel: node
-        metricRelabelings:
-          - sourceLabels:
-              - __name__
-            regex: go_.*
-            action: drop
 ```
