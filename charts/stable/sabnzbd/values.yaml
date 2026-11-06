@@ -62,7 +62,7 @@ workload:
             INTERFACE: 0.0.0.0
             PORT: "{{ .Values.service.metrics.ports.metrics.port }}"
             URL: '{{ printf "http://%v:%v" (include "tc.v1.common.lib.chart.names.fullname" $) .Values.service.main.ports.main.port }}'
-            APIKEY: "{{ .Values.metrics.main.apiKey }}"
+            APIKEY: "{{ .Values.exportarr.apiKey }}"
 persistence:
   config:
     enabled: true
@@ -73,6 +73,10 @@ persistence:
         exportarr:
           mountPath: /config
           readOnly: true
+exportarr:
+  # Required for exportarr
+  apiKey: ""
+
 metrics:
   main:
     enabled: false
@@ -81,8 +85,6 @@ metrics:
       - port: metrics
         path: /metrics
     targetSelector: metrics
-    # Required for exportarr
-    apiKey: ""
 
 resources:
   limits:
