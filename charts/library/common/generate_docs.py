@@ -407,7 +407,7 @@ This page is for people who work on common. Charts based on common do not need i
 | `enum` | Allowed values. |
 | `pattern` | Pattern. |
 | `minimum`, `maximum`, `minLength`, `maxLength`, `minItems`, `maxItems` | Range, Length and Items. |
-| `required` | Required, for the keys in the list. Use it for every key that must be set, also when the key has a default. Do not use it for a key that is only required in some cases (for example for one `type`): use `x-docs-required` for that. |
+| `required` | Required, for the keys in the list. Only for keys without a default, because the schema of a chart is checked before the defaults of common are merged. A key that is required but has a default, or that is only required in some cases, uses `x-docs-required`. |
 | `$ref` | The referenced schema is read as part of the key. A schema that is used in several places is documented once and linked from the others. |
 | `allOf` | All entries are read. A later entry overrides an earlier one. |
 | `oneOf`, `anyOf` | The keys of all branches are shown. A branch that is a string with a `{{` pattern means that the value can be a Helm `tpl` template. |
@@ -417,7 +417,7 @@ This page is for people who work on common. Charts based on common do not need i
 | Keyword | Value | Use |
 | --- | --- | --- |
 | `x-helm-tpl` | `true`, `"On value only"`, `"On entries only"` or `"On keys and values"` | The value is passed through Helm `tpl`. Shown in the Helm `tpl` row, with the text next to it. For a type list like `["boolean", "string"]` it means that the string is a template, not a string value. |
-| `x-docs-required` | `true` | The key is required, but not for every object, so it can not be in `required`: for example when it depends on the `type`. A key is shown as required when it is in `required` or has `x-docs-required: true`. |
+| `x-docs-required` | `true` | The key is required, but can not be in `required`: it has a default, or it is only required in some cases, for example for one `type`. A key is shown as required when it is in `required` or has `x-docs-required: true`. |
 | `x-docs-appliesTo` | List of values of `type` | The key is only used for these types. It is left out of the page of the object, and shown on the page of the type. |
 | `x-docs-page` | `true`, an object or a list of objects | The key, or the schema file that is referenced, gets a page. See below. |
 | `x-docs-primary` | `true` | The key is the home of the objects it contains. When the same schema is used in several places, the page of the primary key documents it, and the others link to it. Used for `workload`, `service` and `ingress`. |
