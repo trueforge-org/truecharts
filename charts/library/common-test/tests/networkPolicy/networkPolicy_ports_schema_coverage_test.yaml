@@ -1,0 +1,109 @@
+suite: networkPolicy ports schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render a port with protocol and a port number
+    set:
+      workload: &workload
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - ports:
+                - protocol: TCP
+                  port: 80
+    asserts:
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.ingress[0].ports[0].port
+          value: 80
+
+  - it: should fail on an invalid port protocol
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - ports:
+                - protocol: ICMP
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0/ports/0/protocol'"
+
+  - it: should fail on unknown keys in a port
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - ports:
+                - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0/ports/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on an invalid port type
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - ports:
+                - port: [80]
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0/ports/0/port'"
+
+  - it: should fail on an endPort below the minimum
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - ports:
+                - port: 80
+                  endPort: 0
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0/ports/0/endPort'"
+
+  - it: should fail on a non-integer endPort
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - ports:
+                - port: 80
+                  endPort: foo
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0/ports/0/endPort'"
+

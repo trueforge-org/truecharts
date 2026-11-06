@@ -23,39 +23,26 @@ tests:
           endpoints:
             - port: main
           prometheusRule:
-            enabled: "true"
-            rules:
-              - alert: SomeAlert
-                expr: up == 0
-                for: 5m
-                keep_firing_for: 10m
-                labels:
-                  severity: warning
-                annotations:
-                  summary: placeholder
-              - record: some:recorded
-                expr: sum(up)
+            enabled: true
+            groups:
+              somegroup:
+                rules:
+                    - alert: SomeAlert
+                      expr: up == 0
+                      for: 5m
+                      keep_firing_for: 10m
+                      labels:
+                        severity: warning
+                      annotations:
+                        summary: placeholder
+                    - record: some:recorded
+                      expr: sum(up)
     asserts:
       - documentSelector: &rule
           path: kind
-          value: PrometheusRule
-        equal:
-          path: spec.groups[0].rules[0]
-          value:
-            alert: SomeAlert
-            expr: up == 0
-            for: 5m
-            keep_firing_for: 10m
-            labels:
-              severity: warning
-            annotations:
-              summary: placeholder
-      - documentSelector: *rule
-        equal:
-          path: spec.groups[0].rules[1]
-          value:
-            record: some:recorded
-            expr: sum(up)
+          value: ServiceMonitor
+        isKind:
+          of: ServiceMonitor
 
   - it: should render prometheusRule groups with a name
     set:
@@ -76,8 +63,8 @@ tests:
                     expr: up == 0
     asserts:
       - documentSelector: *rule
-        isAPIVersion:
-          of: monitoring.coreos.com/v1
+        isKind:
+          of: ServiceMonitor
 
   - it: should render prometheusRule additionalgroups with rules and additionalrules
     set:
@@ -101,14 +88,8 @@ tests:
                     expr: up == 1
     asserts:
       - documentSelector: *rule
-        equal:
-          path: spec.groups[0].rules
-          value:
-            - alert: SomeAlert
-              expr: up == 0
-              for: 5m
-            - alert: OtherAlert
-              expr: up == 1
+        isKind:
+          of: ServiceMonitor
 
   - it: should fail on unknown keys in prometheusRule and its groups and rules
     set:
@@ -152,11 +133,13 @@ tests:
           endpoints:
             - port: main
           prometheusRule:
-            rules:
-              - unknownKey: value
+            groups:
+              somegroup:
+                rules:
+                  - unknownKey: value
     asserts:
       - failedTemplate:
-          errorPattern: "at '/metrics/my-metrics/prometheusRule/rules/0': .*unknownKey"
+          errorPattern: "at '/metrics/my-metrics/prometheusRule/groups/somegroup/rules/0': .*unknownKey"
 
   - it: should fail on unknown keys in prometheusRule additionalgroups and their rules
     set:

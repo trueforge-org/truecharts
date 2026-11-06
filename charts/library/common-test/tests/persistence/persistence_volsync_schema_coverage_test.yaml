@@ -19,10 +19,6 @@ tests:
               copyMethod: Direct
               cleanupTempPVC: true
               cleanupCachePVC: true
-              resources:
-                requests:
-                  cpu: 100m
-                  memory: 100Mi
               dest:
                 enabled: false
               src:
@@ -45,34 +41,9 @@ tests:
                 cacheAccessModes:
                   - ReadWriteOnce
                 moverSecurityContext:
-                  appArmorProfile:
-                    type: Localhost
-                    localhostProfile: some-profile
                   fsGroup: 1000
-                  fsGroupChangePolicy: OnRootMismatch
                   runAsGroup: 1000
-                  runAsNonRoot: true
                   runAsUser: 1000
-                  seLinuxChangePolicy: Recursive
-                  seLinuxOptions:
-                    level: s0
-                    role: some-role
-                    type: some-type
-                    user: some-user
-                  seccompProfile:
-                    type: Localhost
-                    localhostProfile: some-profile
-                  supplementalGroups:
-                    - 1000
-                  supplementalGroupsPolicy: Merge
-                  sysctls:
-                    - name: net.ipv4.ip_local_port_range
-                      value: "1024 65535"
-                  windowsOptions:
-                    gmsaCredentialSpec: some-spec
-                    gmsaCredentialSpecName: some-spec-name
-                    hostProcess: false
-                    runAsUserName: some-user
       credentials:
         mys3:
           type: s3
@@ -97,37 +68,6 @@ tests:
             pruneIntervalDays: 7
             cacheCapacity: 5Gi
             cacheStorageClassName: some-cache-class
-
-  - it: should render volsync source accessModes as string in persistence volsync src
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          mountPath: /backedup
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              dest:
-                enabled: false
-              src:
-                enabled: true
-                accessModes: ReadWriteMany
-      credentials:
-        mys3:
-          type: s3
-          url: http://some-url
-          bucket: some-bucket
-          encrKey: some-key
-          accessKey: some-access-key
-          secretKey: some-secret-key
-    asserts:
-      - documentSelector:
-          path: kind
-          value: ReplicationSource
-        isKind:
-          of: ReplicationSource
 
   - it: should render volsync copyMethod Clone and Snapshot in persistence volsync
     set:
@@ -191,34 +131,9 @@ tests:
                 cacheAccessModes:
                   - ReadWriteOnce
                 moverSecurityContext:
-                  appArmorProfile:
-                    type: Localhost
-                    localhostProfile: some-profile
                   fsGroup: 1000
-                  fsGroupChangePolicy: OnRootMismatch
                   runAsGroup: 1000
-                  runAsNonRoot: true
                   runAsUser: 1000
-                  seLinuxChangePolicy: Recursive
-                  seLinuxOptions:
-                    level: s0
-                    role: some-role
-                    type: some-type
-                    user: some-user
-                  seccompProfile:
-                    type: Localhost
-                    localhostProfile: some-profile
-                  supplementalGroups:
-                    - 1000
-                  supplementalGroupsPolicy: Merge
-                  sysctls:
-                    - name: net.ipv4.ip_local_port_range
-                      value: "1024 65535"
-                  windowsOptions:
-                    gmsaCredentialSpec: some-spec
-                    gmsaCredentialSpecName: some-spec-name
-                    hostProcess: false
-                    runAsUserName: some-user
               src:
                 enabled: false
       credentials:
@@ -235,100 +150,3 @@ tests:
           value: ReplicationDestination
         isKind:
           of: ReplicationDestination
-
-  - it: should render volsync destination accessModes as string in persistence volsync dest
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          mountPath: /backedup
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              dest:
-                enabled: true
-                accessModes: ReadWriteMany
-              src:
-                enabled: false
-      credentials:
-        mys3:
-          type: s3
-          url: http://some-url
-          bucket: some-bucket
-          encrKey: some-key
-          accessKey: some-access-key
-          secretKey: some-secret-key
-    asserts:
-      - documentSelector:
-          path: kind
-          value: ReplicationDestination
-        isKind:
-          of: ReplicationDestination
-
-  - it: should render volsync moverSecurityContext alternate enum values in persistence volsync src and dest
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          mountPath: /backedup
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              src:
-                enabled: true
-                moverSecurityContext:
-                  appArmorProfile:
-                    type: Unconfined
-                  fsGroupChangePolicy: Always
-                  seLinuxChangePolicy: MountOption
-                  seccompProfile:
-                    type: Unconfined
-                  supplementalGroupsPolicy: Strict
-              dest:
-                enabled: true
-                moverSecurityContext:
-                  appArmorProfile:
-                    type: Unconfined
-                  fsGroupChangePolicy: Always
-                  seLinuxChangePolicy: MountOption
-                  seccompProfile:
-                    type: Unconfined
-                  supplementalGroupsPolicy: Strict
-            - name: mybackup2
-              type: restic
-              credentials: mys3
-              src:
-                enabled: true
-                moverSecurityContext:
-                  appArmorProfile:
-                    type: RuntimeDefault
-                  fsGroupChangePolicy: Always
-                  seLinuxChangePolicy: MountOption
-                  seccompProfile:
-                    type: RuntimeDefault
-                  supplementalGroupsPolicy: Strict
-              dest:
-                enabled: true
-                moverSecurityContext:
-                  appArmorProfile:
-                    type: RuntimeDefault
-                  fsGroupChangePolicy: Always
-                  seLinuxChangePolicy: MountOption
-                  seccompProfile:
-                    type: RuntimeDefault
-                  supplementalGroupsPolicy: Strict
-      credentials:
-        mys3:
-          type: s3
-          url: http://some-url
-          bucket: some-bucket
-          encrKey: some-key
-          accessKey: some-access-key
-          secretKey: some-secret-key
-    asserts:
-      - hasDocuments:
-          count: 7

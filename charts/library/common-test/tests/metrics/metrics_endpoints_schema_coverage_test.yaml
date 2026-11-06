@@ -69,20 +69,6 @@ tests:
                 sourceLabels:
                   - __name__
 
-  - it: should render a servicemonitor with endpoints as a string
-    set:
-      service: *service
-      metrics:
-        my-metrics:
-          enabled: true
-          type: servicemonitor
-          endpoints: "- port: main"
-    asserts:
-      - documentSelector: *sm
-        equal:
-          path: spec.endpoints
-          value: "- port: main"
-
   - it: should fail on unknown keys in an endpoint
     set:
       service: *service

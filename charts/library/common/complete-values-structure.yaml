@@ -61,8 +61,6 @@ global:
     cnpg:
       pgVersion: 16
       skipEmptyWalArchiveCheck: true
-    allowRollingUpdateWithRWO: false
-    routeListenerPort: 0
   traefik:
     commonMiddlewares:
     - name: ''
@@ -3141,7 +3139,6 @@ workload:
     ttlSecondsAfterFinished: 100
     suspend: true
     revisionHistoryLimit: 4
-    allowRollingUpdateWithRWO: true
 TZ: ''
 diagnosticMode:
   enabled: false
@@ -4258,8 +4255,6 @@ configmap:
     - name: ''
       value: ''
     namespace: ''
-    binaryData:
-      file.bin: ''
 secret:
   objectname:
     enabled: true
@@ -4554,7 +4549,6 @@ notes:
   footer: ''
   warnings:
   - ''
-  showCredentials: false
 gluetunImage:
   repository: ''
   tag: ''
@@ -4719,8 +4713,6 @@ ingress:
           url: ''
           custom:
             some-string: ''
-            some-number: 0
-            some-bool: false
             some-null:
             some-templated: ''
             some-key: ''
@@ -5095,13 +5087,6 @@ storageClass:
     allowVolumeExpansion: true
     volumeBindingMode: ''
     mountOptions: []
-  my-sc:
-    enabled: true
-    provisioner: ''
-    parameters:
-      flag: true
-      count: 5
-      name: ''
   my-sc1:
     enabled: ''
     provisioner: ''
@@ -5227,27 +5212,21 @@ metrics:
         - ''
     primary: true
     nameOverride: ''
-    apiKey: ''
     targetSelector: ''
-    matchLabels:
-      app: ''
     prometheusRule:
       enabled: true
-      rules:
-      - alert: ''
-        expr: ''
+      groups:
+        somegroup:
+          rules:
+          - alert: ''
+            expr: ''
+          name: ''
       additionalgroups:
       - name: ''
         rules:
         - alert: ''
           expr: ''
           for: ''
-      groups:
-        somegroup:
-          name: ''
-          rules:
-          - alert: ''
-            expr: ''
     selector:
       matchLabels:
         app: ''
@@ -5360,18 +5339,6 @@ addons:
     outbound_http_proxy_listen: ''
     annotations:
       annotation1: ''
-    settings:
-      config: ''
-      authkey: ''
-      userspace: true
-      auth_once: true
-      accept_dns: false
-      routes: ''
-      dest_ip: ''
-      sock5_server: ''
-      extra_args: ''
-      daemon_extra_args: ''
-      outbound_http_proxy_listen: ''
   codeserver:
     enabled: false
     container:

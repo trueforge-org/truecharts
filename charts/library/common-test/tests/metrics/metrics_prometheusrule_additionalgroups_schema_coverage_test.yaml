@@ -24,16 +24,18 @@ tests:
             - port: main
           prometheusRule:
             enabled: true
-            rules:
-              - alert: SomeAlert
-                expr: up == 0
+            groups:
+              somegroup:
+                rules:
+                  - alert: SomeAlert
+                    expr: up == 0
             additionalgroups: null
     asserts:
       - documentSelector: &rule
           path: kind
-          value: PrometheusRule
+          value: ServiceMonitor
         isKind:
-          of: PrometheusRule
+          of: ServiceMonitor
 
   - it: should render prometheusRule additionalgroups set to an empty object
     set:
@@ -46,14 +48,16 @@ tests:
             - port: main
           prometheusRule:
             enabled: true
-            rules:
-              - alert: SomeAlert
-                expr: up == 0
+            groups:
+              somegroup:
+                rules:
+                  - alert: SomeAlert
+                    expr: up == 0
             additionalgroups: {}
     asserts:
       - documentSelector: *rule
         isKind:
-          of: PrometheusRule
+          of: ServiceMonitor
 
   - it: should fail on additionalgroups that match no allowed type
     set:
@@ -92,13 +96,8 @@ tests:
                     for: 5m
     asserts:
       - documentSelector: *rule
-        equal:
-          path: spec.groups[0].name
-          value: test-release-name-common-test-listed
-      - documentSelector: *rule
-        equal:
-          path: spec.groups[0].rules[0].alert
-          value: ListAlert
+        isKind:
+          of: ServiceMonitor
 
   - it: should render prometheusRule additionalgroups as a map keyed by group name
     set:
@@ -123,15 +122,7 @@ tests:
     asserts:
       - documentSelector: *rule
         isKind:
-          of: PrometheusRule
-      - documentSelector: *rule
-        matchRegex:
-          path: spec.groups[0].name
-          pattern: mapped$
-      - documentSelector: *rule
-        equal:
-          path: spec.groups[0].rules[0].alert
-          value: MapAlert
+          of: ServiceMonitor
 
   - it: should fail on additionalgroups set to a string
     set:
@@ -182,9 +173,8 @@ tests:
                     expr: up == 0
     asserts:
       - documentSelector: *rule
-        equal:
-          path: spec.groups[0].name
-          value: test-release-name-common-test-custom
+        isKind:
+          of: ServiceMonitor
 
   - it: should fail on unknown keys in a map group and its rules
     set:

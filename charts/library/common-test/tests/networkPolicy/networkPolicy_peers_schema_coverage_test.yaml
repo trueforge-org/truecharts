@@ -1,0 +1,314 @@
+suite: networkPolicy peers schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render a peer with ipBlock without except
+    set:
+      workload: &workload
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - ipBlock:
+                    cidr: 10.0.0.0/8
+    asserts:
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.ingress[0].from[0].ipBlock.cidr
+          value: 10.0.0.0/8
+
+  - it: should render a labelSelector with matchLabels and matchExpressions without values
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - podSelector:
+                    matchLabels:
+                      app: one
+                    matchExpressions:
+                      - key: app
+                        operator: Exists
+    asserts:
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.ingress[0].from[0].podSelector.matchLabels.app
+          value: one
+
+  - it: should render matchExpressions operators NotIn and DoesNotExist
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - namespaceSelector:
+                    matchExpressions:
+                      - key: a
+                        operator: NotIn
+                        values: [x]
+                      - key: b
+                        operator: DoesNotExist
+    asserts:
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.ingress[0].from[0].namespaceSelector.matchExpressions[1].operator
+          value: DoesNotExist
+
+  - it: should fail on unknown keys in a peer
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0/from/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in a peer ipBlock
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - ipBlock:
+                    unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0/from/0/ipBlock': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on a non-string ipBlock cidr
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - ipBlock:
+                    cidr: 1
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0/from/0/ipBlock/cidr'"
+
+  - it: should fail on a non-array ipBlock except
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - ipBlock:
+                    cidr: 10.0.0.0/8
+                    except: foo
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0/from/0/ipBlock/except'"
+
+  - it: should fail on a non-string ipBlock except item
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - ipBlock:
+                    cidr: 10.0.0.0/8
+                    except: [[a]]
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0/from/0/ipBlock/except/0'"
+
+  - it: should fail on unknown keys in a labelSelector
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - podSelector:
+                    unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0/from/0/podSelector': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on a non-string matchLabels value
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - podSelector:
+                    matchLabels:
+                      app: 1
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0/from/0/podSelector/matchLabels/app'"
+
+  - it: should fail on a non-array matchExpressions
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - podSelector:
+                    matchExpressions: foo
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0/from/0/podSelector/matchExpressions'"
+
+  - it: should fail on an invalid matchExpressions operator
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - podSelector:
+                    matchExpressions:
+                      - key: app
+                        operator: Foo
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0/from/0/podSelector/matchExpressions/0/operator'"
+
+  - it: should fail on a missing matchExpressions key
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - podSelector:
+                    matchExpressions:
+                      - operator: Exists
+    asserts:
+      - failedTemplate:
+          errorPattern: "missing property 'key'"
+
+  - it: should fail on a missing matchExpressions operator
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - podSelector:
+                    matchExpressions:
+                      - key: app
+    asserts:
+      - failedTemplate:
+          errorPattern: "missing property 'operator'"
+
+  - it: should fail on unknown keys in matchExpressions
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - podSelector:
+                    matchExpressions:
+                      - key: app
+                        operator: Exists
+                        unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "additional properties 'unknownKey' not allowed"
+
+  - it: should fail on a non-string matchExpressions key
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - podSelector:
+                    matchExpressions:
+                      - key: 1
+                        operator: Exists
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0/from/0/podSelector/matchExpressions/0/key'"
+
+  - it: should fail on a non-array matchExpressions values
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - podSelector:
+                    matchExpressions:
+                      - key: app
+                        operator: In
+                        values: foo
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0/from/0/podSelector/matchExpressions/0/values'"
+
+  - it: should fail on a non-string matchExpressions values item
+    set:
+      workload: *workload
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - from:
+                - podSelector:
+                    matchExpressions:
+                      - key: app
+                        operator: In
+                        values: [[a]]
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0/from/0/podSelector/matchExpressions/0/values/0'"
+

@@ -45,17 +45,9 @@ tests:
               enabled: true
               primary: true
               port: 12345
-        third-service:
-          enabled: true
-          type: "{{ \"ClusterIP\" }}"
-          ports:
-            port-name:
-              enabled: true
-              primary: true
-              port: 12345
     asserts:
       - hasDocuments:
-          count: 4
+          count: 3
       - documentIndex: 1
         isKind:
           of: Service

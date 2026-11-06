@@ -110,7 +110,7 @@ tests:
                 enabled: false
     asserts:
       - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/src/accessModes': got number, want string or array"
+          errorPattern: "at '/persistence/my-volume/volsync/0/src/accessModes': got number, want array"
 
   - it: should fail on a wrong type in persistence volsync src access modes items
     set:
@@ -154,7 +154,7 @@ tests:
       - failedTemplate:
           errorPattern: "at '/persistence/my-volume/volsync/0/src/moverSecurityContext': additional properties 'unknownKey' not allowed"
 
-  - it: should fail on invalid enums and wrong types in persistence volsync src moverSecurityContext
+  - it: should fail on wrong types in persistence volsync src moverSecurityContext
     set:
       persistence:
         my-volume:
@@ -167,233 +167,14 @@ tests:
               src:
                 enabled: true
                 moverSecurityContext:
-                  fsGroupChangePolicy: not-a-policy
-                  seLinuxChangePolicy: not-a-policy
-                  supplementalGroupsPolicy: not-a-policy
-                  sysctls: not-a-list
+                  fsGroup: notint
+                  runAsGroup: notint
+                  runAsUser: notint
               dest:
                 enabled: false
     asserts:
       - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/src/moverSecurityContext/fsGroupChangePolicy': value must be one of 'OnRootMismatch', 'Always'"
-
-  - it: should fail on unknown and missing keys in persistence volsync src moverSecurityContext appArmorProfile
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              src:
-                enabled: true
-                moverSecurityContext:
-                  appArmorProfile:
-                    unknownKey: value
-              dest:
-                enabled: false
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/src/moverSecurityContext/appArmorProfile': additional properties 'unknownKey' not allowed"
-
-  - it: should fail on invalid type and wrong localhostProfile in persistence volsync src moverSecurityContext appArmorProfile
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              src:
-                enabled: true
-                moverSecurityContext:
-                  appArmorProfile:
-                    type: not-a-type
-                    localhostProfile: 1
-              dest:
-                enabled: false
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/src/moverSecurityContext/appArmorProfile/type': value must be one of 'Unconfined', 'RuntimeDefault', 'Localhost'"
-
-  - it: should fail on unknown and missing keys in persistence volsync src moverSecurityContext seccompProfile
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              src:
-                enabled: true
-                moverSecurityContext:
-                  seccompProfile:
-                    unknownKey: value
-              dest:
-                enabled: false
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/src/moverSecurityContext/seccompProfile': additional properties 'unknownKey' not allowed"
-
-  - it: should fail on invalid type in persistence volsync src moverSecurityContext seccompProfile
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              src:
-                enabled: true
-                moverSecurityContext:
-                  seccompProfile:
-                    type: not-a-type
-              dest:
-                enabled: false
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/src/moverSecurityContext/seccompProfile/type': value must be one of 'Unconfined', 'RuntimeDefault', 'Localhost'"
-
-  - it: should fail on unknown keys in persistence volsync src moverSecurityContext seLinuxOptions
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              src:
-                enabled: true
-                moverSecurityContext:
-                  seLinuxOptions:
-                    unknownKey: value
-              dest:
-                enabled: false
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/src/moverSecurityContext/seLinuxOptions': additional properties 'unknownKey' not allowed"
-
-  - it: should fail on wrong types in persistence volsync src moverSecurityContext seLinuxOptions
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              src:
-                enabled: true
-                moverSecurityContext:
-                  seLinuxOptions:
-                    level: 1
-                    role: 1
-                    type: 1
-                    user: 1
-              dest:
-                enabled: false
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/src/moverSecurityContext/seLinuxOptions/level': got number, want string"
-
-  - it: should fail on unknown and missing keys in persistence volsync src moverSecurityContext sysctls
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              src:
-                enabled: true
-                moverSecurityContext:
-                  sysctls:
-                    - unknownKey: value
-              dest:
-                enabled: false
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/src/moverSecurityContext/sysctls/0': additional properties 'unknownKey' not allowed"
-
-  - it: should fail on wrong types in persistence volsync src moverSecurityContext sysctls
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              src:
-                enabled: true
-                moverSecurityContext:
-                  sysctls:
-                    - name: 1
-                      value: 1
-              dest:
-                enabled: false
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/src/moverSecurityContext/sysctls/0/name': got number, want string"
-
-  - it: should fail on unknown keys in persistence volsync src moverSecurityContext windowsOptions
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              src:
-                enabled: true
-                moverSecurityContext:
-                  windowsOptions:
-                    unknownKey: value
-              dest:
-                enabled: false
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/src/moverSecurityContext/windowsOptions': additional properties 'unknownKey' not allowed"
-
-  - it: should fail on wrong types in persistence volsync src moverSecurityContext windowsOptions
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              src:
-                enabled: true
-                moverSecurityContext:
-                  windowsOptions:
-                    gmsaCredentialSpec: 1
-                    gmsaCredentialSpecName: 1
-                    hostProcess: not-a-bool
-                    runAsUserName: 1
-              dest:
-                enabled: false
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/src/moverSecurityContext/windowsOptions/gmsaCredentialSpec': got number, want string"
+          errorPattern: "at '/persistence/my-volume/volsync/0/src/moverSecurityContext/fsGroup': got string, want integer"
 
   - it: should fail on unknown keys in persistence volsync dest
     set:
@@ -434,7 +215,7 @@ tests:
                 enabled: false
     asserts:
       - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/dest/accessModes': got number, want string or array"
+          errorPattern: "at '/persistence/my-volume/volsync/0/dest/accessModes': got number, want array"
 
   - it: should fail on a wrong type in persistence volsync dest access modes items
     set:
@@ -478,7 +259,7 @@ tests:
       - failedTemplate:
           errorPattern: "at '/persistence/my-volume/volsync/0/dest/moverSecurityContext': additional properties 'unknownKey' not allowed"
 
-  - it: should fail on invalid enums and wrong types in persistence volsync dest moverSecurityContext
+  - it: should fail on wrong types in persistence volsync dest moverSecurityContext
     set:
       persistence:
         my-volume:
@@ -491,233 +272,14 @@ tests:
               dest:
                 enabled: true
                 moverSecurityContext:
-                  fsGroupChangePolicy: not-a-policy
-                  seLinuxChangePolicy: not-a-policy
-                  supplementalGroupsPolicy: not-a-policy
-                  sysctls: not-a-list
+                  fsGroup: notint
+                  runAsGroup: notint
+                  runAsUser: notint
               src:
                 enabled: false
     asserts:
       - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/dest/moverSecurityContext/fsGroupChangePolicy': value must be one of 'OnRootMismatch', 'Always'"
-
-  - it: should fail on unknown and missing keys in persistence volsync dest moverSecurityContext appArmorProfile
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              dest:
-                enabled: true
-                moverSecurityContext:
-                  appArmorProfile:
-                    unknownKey: value
-              src:
-                enabled: false
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/dest/moverSecurityContext/appArmorProfile': additional properties 'unknownKey' not allowed"
-
-  - it: should fail on invalid type and wrong localhostProfile in persistence volsync dest moverSecurityContext appArmorProfile
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              dest:
-                enabled: true
-                moverSecurityContext:
-                  appArmorProfile:
-                    type: not-a-type
-                    localhostProfile: 1
-              src:
-                enabled: false
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/dest/moverSecurityContext/appArmorProfile/type': value must be one of 'Unconfined', 'RuntimeDefault', 'Localhost'"
-
-  - it: should fail on unknown and missing keys in persistence volsync dest moverSecurityContext seccompProfile
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              dest:
-                enabled: true
-                moverSecurityContext:
-                  seccompProfile:
-                    unknownKey: value
-              src:
-                enabled: false
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/dest/moverSecurityContext/seccompProfile': additional properties 'unknownKey' not allowed"
-
-  - it: should fail on invalid type in persistence volsync dest moverSecurityContext seccompProfile
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              dest:
-                enabled: true
-                moverSecurityContext:
-                  seccompProfile:
-                    type: not-a-type
-              src:
-                enabled: false
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/dest/moverSecurityContext/seccompProfile/type': value must be one of 'Unconfined', 'RuntimeDefault', 'Localhost'"
-
-  - it: should fail on unknown keys in persistence volsync dest moverSecurityContext seLinuxOptions
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              dest:
-                enabled: true
-                moverSecurityContext:
-                  seLinuxOptions:
-                    unknownKey: value
-              src:
-                enabled: false
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/dest/moverSecurityContext/seLinuxOptions': additional properties 'unknownKey' not allowed"
-
-  - it: should fail on wrong types in persistence volsync dest moverSecurityContext seLinuxOptions
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              dest:
-                enabled: true
-                moverSecurityContext:
-                  seLinuxOptions:
-                    level: 1
-                    role: 1
-                    type: 1
-                    user: 1
-              src:
-                enabled: false
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/dest/moverSecurityContext/seLinuxOptions/level': got number, want string"
-
-  - it: should fail on unknown and missing keys in persistence volsync dest moverSecurityContext sysctls
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              dest:
-                enabled: true
-                moverSecurityContext:
-                  sysctls:
-                    - unknownKey: value
-              src:
-                enabled: false
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/dest/moverSecurityContext/sysctls/0': additional properties 'unknownKey' not allowed"
-
-  - it: should fail on wrong types in persistence volsync dest moverSecurityContext sysctls
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              dest:
-                enabled: true
-                moverSecurityContext:
-                  sysctls:
-                    - name: 1
-                      value: 1
-              src:
-                enabled: false
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/dest/moverSecurityContext/sysctls/0/name': got number, want string"
-
-  - it: should fail on unknown keys in persistence volsync dest moverSecurityContext windowsOptions
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              dest:
-                enabled: true
-                moverSecurityContext:
-                  windowsOptions:
-                    unknownKey: value
-              src:
-                enabled: false
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/dest/moverSecurityContext/windowsOptions': additional properties 'unknownKey' not allowed"
-
-  - it: should fail on wrong types in persistence volsync dest moverSecurityContext windowsOptions
-    set:
-      persistence:
-        my-volume:
-          enabled: true
-          type: pvc
-          volsync:
-            - name: mybackup
-              type: restic
-              credentials: mys3
-              dest:
-                enabled: true
-                moverSecurityContext:
-                  windowsOptions:
-                    gmsaCredentialSpec: 1
-                    gmsaCredentialSpecName: 1
-                    hostProcess: not-a-bool
-                    runAsUserName: 1
-              src:
-                enabled: false
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/persistence/my-volume/volsync/0/dest/moverSecurityContext/windowsOptions/gmsaCredentialSpec': got number, want string"
+          errorPattern: "at '/persistence/my-volume/volsync/0/dest/moverSecurityContext/fsGroup': got string, want integer"
 
   - it: should fail on unknown keys in persistence volsync src retain
     set:

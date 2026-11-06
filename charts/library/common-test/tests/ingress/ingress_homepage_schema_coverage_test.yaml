@@ -37,8 +37,6 @@ tests:
                 url: https://example.com
                 custom:
                   some-string: value
-                  some-number: 0.0
-                  some-bool: false
                   some-null: null
         my-ingress2:
           enabled: true
@@ -67,7 +65,7 @@ tests:
         isKind:
           of: Ingress
 
-  - it: should render truthy number and boolean widget custom values as strings
+  - it: should render templated widget custom values
     set:
       service: *service
       ingress:
@@ -84,16 +82,12 @@ tests:
                 type: some-type
                 url: https://example.com
                 custom:
-                  some-number: 5
-                  some-bool: true
                   some-templated: "{{ .Release.Name }}"
     asserts:
       - documentIndex: 1
         isSubset:
           path: metadata.annotations
           content:
-            gethomepage.dev/widget.some-number: "5"
-            gethomepage.dev/widget.some-bool: "true"
             gethomepage.dev/widget.some-templated: test-release-name
 
   - it: should fail on unknown keys in ingress homepage integration

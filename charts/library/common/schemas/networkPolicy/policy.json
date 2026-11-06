@@ -32,8 +32,7 @@
     },
     "podSelector": {
       "$ref": "labelSelector.json",
-      "description": "Custom Kubernetes label selector for the pods to which this policy applies, supports Helm `tpl`.",
-      "x-helm-tpl": true
+      "description": "Custom Kubernetes label selector for the pods to which this policy applies."
     },
     "targetSelector": {
       "type": "string",
