@@ -5246,7 +5246,7 @@ addons:
     targetSelector:
     - ''
     secret:
-      objectname:
+      my-conf:
         basePath: ''
         defaultMode: ''
         namespace: ''
@@ -5263,6 +5263,10 @@ addons:
           value: ''
         data:
           wg0.conf: ''
+      scripts:
+        basePath: ''
+        defaultMode: ''
+        data:
           up.sh: ''
           down.sh: ''
     container:
@@ -5516,9 +5520,28 @@ cnpg:
       clusterName: ''
       destinationPath: ''
     backups:
-      objectname: false
+      enabled: false
+      encryption:
+        enabled: false
+      servername: ''
+      destinationPath: ''
+      target: ''
+      credentials: ''
+      scheduledBackups:
+      - name: ''
+        schedule: ''
+        backupOwnerReference: ''
+        immediate: true
+        suspend: false
+      retentionPolicy: ''
+      manualBackups: []
     pooler:
-      objectname: false
+      enabled: false
+      createRO: false
+      poolMode: ''
+      instances: 2
+      labels: {}
+      annotations: {}
     creds: {}
     instances: 2
   ro:
@@ -5528,7 +5551,8 @@ cnpg:
     user: ''
     password: ''
     pooler:
-      objectname: true
+      createRO: true
+      instances: 2
     monitoring:
       enablePodMonitor: false
     creds: {}
@@ -5539,7 +5563,8 @@ cnpg:
     user: ''
     password: ''
     pooler:
-      objectname: true
+      createRO: true
+      instances: 2
     monitoring:
       enablePodMonitor: true
     creds: {}
@@ -5601,7 +5626,41 @@ cnpg:
     - name: ''
       value: ''
     backups:
-      objectname: true
+      enabled: true
+      target: ''
+      retentionPolicy: ''
+      credentials: ''
+      destinationPath: ''
+      labels:
+        label5: ''
+      annotations:
+        annotation5: ''
+      manualBackups:
+      - name: ''
+        labels:
+          label3: ''
+          label4: ''
+        annotations:
+          annotation3: ''
+          annotation4: ''
+      revision: ''
+      serverName: ''
+      encryption:
+        enabled: true
+      compression:
+        enabled: false
+      jobs: 2
+      servername: ''
+      scheduledBackups:
+      - name: ''
+        schedule: ''
+        backupOwnerReference: ''
+        immediate: true
+        suspend: false
+        labels:
+          my-label: ''
+        annotations:
+          my-ann: ''
     namespace: ''
     cluster:
       labels:
@@ -5708,7 +5767,13 @@ cnpg:
             usage: ''
             description: ''
     pooler:
-      objectname: true
+      enabled: true
+      poolMode: ''
+      createRO: false
+      labels:
+        label3: ''
+      annotations:
+        annotation3: ''
     primary: false
     upgradeMajor: false
     creds:
@@ -5730,9 +5795,25 @@ cnpg:
     database: ''
     password: ''
     backups:
-      objectname: true
+      enabled: true
+      target: ''
+      retentionPolicy: ''
+      credentials: ''
+      destinationPath: ''
+      manualBackups:
+      - name: ''
+      scheduledBackups:
+      - name: ''
+        schedule: ''
+        backupOwnerReference: ''
     pooler:
-      objectname: true
+      enabled: true
+      createRO: true
+      poolMode: ''
+      instances: 1
+      parameters:
+        some: ''
+        someOther: ''
   mypg:
     enabled: true
     user: ''
@@ -5741,7 +5822,7 @@ cnpg:
     instances: 2
     hibernate: true
     pooler:
-      objectname: true
+      enabled: true
 redis:
   enabled: false
   includeCommon: false
@@ -5755,8 +5836,9 @@ redis:
     plainhostpass: ''
     url: ''
   secret:
-    objectname:
+    credentials:
       enabled: false
+  username: ''
   redisUsername: ''
   global:
     stopAll: false
@@ -5918,7 +6000,7 @@ credentialsList:
   secretKey: ''
   encrKey: ''
 networkPolicy:
-  main:
+  objectname:
     enabled: true
     ingress:
     - from:
@@ -5938,8 +6020,6 @@ networkPolicy:
       ports:
       - protocol: ''
         port: 0
-  my-policy:
-    enabled: true
     nameOverride: ''
     labels:
       my-label: ''
@@ -5950,21 +6030,6 @@ networkPolicy:
     podSelector:
       matchLabels:
         app: ''
-    ingress:
-    - from:
-      - ipBlock:
-          cidr: ''
-    egress:
-    - to:
-      - namespaceSelector:
-          matchLabels:
-            ns: ''
-        podSelector:
-          matchLabels:
-            app: ''
-      ports:
-      - protocol: ''
-        port: 0
 key1: ''
 key2: 80
 key3: ''

@@ -184,15 +184,13 @@ PARENT_KEYS_WITH_VARIABLE_CHILDREN = {
     'secret',        # secret.mysecret, secret.credentials, etc.
     'ingress',       # ingress.main, ingress.api, etc.
     'route',         # route.main, route.api, etc.
-    'networkpolicy', # networkpolicy.main, networkpolicy.allow-dns, etc.
+    'networkPolicy', # networkPolicy.main, networkPolicy.allow-dns, etc.
     'containers',    # containers.main, containers.sidecar, etc.
     'initContainers',# initContainers.init, initContainers.setup, etc.
     'ports',         # ports.main, ports.http, ports.metrics, etc.
     'hosts',         # hosts.main, hosts.api, etc.
     'middlewares',   # middlewares.auth, middlewares.rate-limit, etc.
     'rules',         # Various rules with variable names
-    'backups',       # backups.daily, backups.weekly, etc.
-    'pooler',        # pooler.ro, pooler.rw, etc.
 }
 
 
@@ -238,7 +236,11 @@ def normalize_value_to_placeholder(value: Any) -> Any:
         return value
 
 
-def normalize_variable_keys(data: Any, parent_key: str = "", in_operator: bool = False) -> Any:
+# Parent keys that hold named objects at the root only, a key with the same name deeper down has fixed keys
+ROOT_ONLY_PARENT_KEYS = {'secret'}
+
+
+def normalize_variable_keys(data: Any, parent_key: str = "", in_operator: bool = False, depth: int = 0) -> Any:
     """
     Replace variable dictionary keys with 'objectname' placeholder for known
     parent keys that contain user-defined object names.
@@ -263,14 +265,14 @@ def normalize_variable_keys(data: Any, parent_key: str = "", in_operator: bool =
         result = {}
 
     # Check if current parent_key is one that contains variable-named children
-    if parent_key in PARENT_KEYS_WITH_VARIABLE_CHILDREN and not in_operator:
+    if parent_key in PARENT_KEYS_WITH_VARIABLE_CHILDREN and not in_operator and (parent_key not in ROOT_ONLY_PARENT_KEYS or depth == 1):
         # This dict contains variable-named objects
         # Merge all the child objects into a single 'objectname' entry, so keys that only some children set are kept
         if data:
             template = None
             for child_value in data.values():
                 # The child keys are object names, so a name like `hosts` must not count as a parent key
-                normalized_child = normalize_variable_keys(child_value, "", in_operator)
+                normalized_child = normalize_variable_keys(child_value, "", in_operator, depth + 1)
                 template = merge_into_structure(template, normalized_child)
             result['objectname'] = template
             return result
@@ -282,7 +284,7 @@ def normalize_variable_keys(data: Any, parent_key: str = "", in_operator: bool =
         # Recursively process, passing the current key as parent_key for next level
         # The service, ingress and route of an addon are single objects, not collections
         next_parent = "" if parent_key in ADDONS_WITH_SINGLE_OBJECTS else key
-        result[key] = normalize_variable_keys(value, next_parent, in_operator or key == "operator")
+        result[key] = normalize_variable_keys(value, next_parent, in_operator or key == "operator", depth + 1)
 
     return result
 
